@@ -11,7 +11,8 @@ or phone.
 
 ## Setup
 
-Python 3.12+ and a virtual environment. NumPy is the only numerical dependency.
+Python 3.12+ and a virtual environment. Dependencies (pinned in `requirements.txt`): NumPy, pandas, pyarrow and
+LightGBM. On macOS LightGBM needs OpenMP: `brew install libomp`.
 
 ```sh
 python3 -m venv .venv
