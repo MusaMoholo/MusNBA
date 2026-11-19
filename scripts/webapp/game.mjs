@@ -1,6 +1,6 @@
 // Game Centre. One period selector (Q1–Q4, H1, H2, FG) drives the bezel and both views:
 // Player = per-period box scores, Team = per-period team lines and distributions. Matchup is separate.
-import {api, atLeast, barChart, dayLabel, defaultLine, esc, f1, heat, histogram, logo, over, pct, percentileOf,
+import {api, atLeast, modelPill, barChart, dayLabel, defaultLine, esc, f1, heat, histogram, logo, over, pct, percentileOf,
         probWhere, rate, record, seg, signed, stamp, statusTag, store, team, tipTimes} from './ui.mjs';
 
 export const PERIODS = [['q1', 'Q1', '1st quarter'], ['q2', 'Q2', '2nd quarter'], ['q3', 'Q3', '3rd quarter'], ['q4', 'Q4', '4th quarter'],
@@ -112,7 +112,7 @@ function bezel(data, period, {matchup, mode, base}) {
   const select = sim
     ? `<label class="sr" for="period-select">Period</label><select id="period-select" class="period"${matchup ? ' disabled' : ''}>${options([['Quarters', ['q1', 'q2', 'q3', 'q4']], ['Halves', ['h1', 'h2']], ['Game', ['fg']]])}</select>`
     : '<span class="pill">Full game only until the game simulation runs</span>';
-  const chips = P ? `<div class="chips"><span class="pill accent" title="${esc(P.model.label)}">Placeholder model</span>
+  const chips = P ? `<div class="chips">${modelPill(P.model)}
       <span class="pill ${P.kind === 'prospective' ? 'good' : 'warn'}">${P.kind === 'prospective' ? (P.pre_tip ? 'Pre-game' : 'Built after tip-off') : 'Retrospective'}</span>
       <span class="pill">${sim.sims.toLocaleString()} sims · ${esc(stamp(P.generated))}</span></div>`
     : tm ? '<div class="chips"><span class="pill">Team-strength estimate from the season simulation</span></div>' : '';

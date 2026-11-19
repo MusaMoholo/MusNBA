@@ -307,7 +307,15 @@ def simulate_game(game: dict, T: dict, lg: dict, P: dict, registry: dict, day: s
             box['stl'][:, :, k] = multinomial_rows(rng, rng.binomial(opp['tov_k'], np.clip(r['stl_share'], 0.3, 0.8)), arr('stl') * m * noise())
             box['blk'][:, :, k] = multinomial_rows(rng, rng.binomial(opp['missed'][:, k], np.clip(r['blk_per_miss'], 0.03, 0.2)), arr('blk') * m * noise())
 
-    out = {'game_id': game['game_id'], 'model': MODEL['id'], 'sims': W,
+    return package(game, teams, pts_by_period, n_ot, W, exp, MODEL['id'])
+
+
+def package(game: dict, teams: dict, pts_by_period: dict, n_ot: np.ndarray, W: int, exp: dict, model_id: str) -> dict:
+    """Game output in the app contract from per-world arrays: pts_by_period[side] (W, 5 periods: Q1–Q4, OT),
+    teams[side] with tid, players (player_inputs), box[stat] (W, players, 5) and minutes (W, players, 5).
+    Shared by the placeholder and the possession engine (scripts/engine.py)."""
+    sides = ('home', 'away')
+    out = {'game_id': game['game_id'], 'model': model_id, 'sims': W,
            'expectation': {k: round(v, 3) for k, v in exp.items()},
            'ot': round(float((n_ot > 0).mean()), 4), 'ot_periods': np.bincount(n_ot).astype(int).tolist(), 'periods': {}}
     for period, cols in SLICES.items():
@@ -357,9 +365,8 @@ def simulate_game(game: dict, T: dict, lg: dict, P: dict, registry: dict, day: s
         for period in team_means:
             team_means[period]['reb'] = round(team_means[period]['oreb'] + team_means[period]['dreb'], 3)
         out[side] = {'team_id': team['tid'], 'mu': round(float(exp['mu_home'] if side == 'home' else exp['mu_away']), 3),
-                     'strength': round(float(team['strength'].mean()), 4), 'box': team_means, 'players': players}
+                     'strength': round(float(np.mean(team.get('strength', 1.0))), 4), 'box': team_means, 'players': players}
     return out
-
 
 # ---------------------------------------------------------------------------- season
 

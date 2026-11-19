@@ -286,6 +286,16 @@ real minutes.
   what fouled-on-a-two +3.1 → +1.7 (but turnovers +2.6 → +4.1). Kept for event and turnover type (judgement: neutral
   log loss, measured bias fix with a known mechanism).
 
+## 3j. Engine v1 preview (`scripts/engine.py`; 19 Nov 2026 slate, 2,000 worlds per game)
+
+The v1 nodes played forward: sampled durations on the game clock, replayed rotations (M3 v0), each world's own score,
+team and personal fouls, foul-outs and in-game counts. Golden State–Memphis, per team: 114.0 / 114.4 points, 240.6
+team minutes, FGA 91–92, 3PA 42–46, FTA 22, assists 28–29, steals 10–11, blocks 5, turnovers 16–18, rebounds 45–48,
+≈105 possessions; total SD 16.7, overtime 2.2%; Q4 scoring lowest, as in real games. Against the league (§2): pace ≈ 3%
+high, turnovers, steals and rebounds a few percent high, and the spread too narrow (total SD ≈ 18–19 and OT 5.4% in
+real games) — per-world form (M8) and the duration node's possession count are the first suspects. Speed: 25 s per
+game at 2,000 worlds on a busy laptop (four games + season in 105 s). Re-simulates bit-for-bit (smoke).
+
 ## 4. Placeholder model `baseline-v0` (19 Nov 2026, superseded by `baseline-v1`)
 
 - Team score SD 11.25 with correlation 0.35 gives margin SD 12.8 and total SD ~19 in simulation.

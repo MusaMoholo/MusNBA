@@ -9,7 +9,9 @@ For every player before every game: decayed, shrunk rates built only from his ea
   3. Shrinkage toward position-group priors from earlier seasons: (count + k·prior) / (exposure + k).
 
 Outputs data/derived/features/pregame.parquet (one row per player-game, features as of tip-off),
-latest.parquet (profiles after each player's last game, for live projections) and features_report.json.
+latest.parquet (profiles after each player's last game, for live projections), team_pregame.parquet (team style,
+rest, day of season per team-game), team_latest.parquet (team style after each team's last game) and
+features_report.json.
 Decay and prior settings are starting values for the validation folds (TRAINING_PLAN §5, §7).
 """
 from __future__ import annotations
@@ -149,9 +151,11 @@ def team_profiles(tc: pd.DataFrame, half_life: float, carry: float) -> pd.DataFr
     """Pre-game team style (decayed, shrunk to the league rate of earlier seasons), rest days and day of season."""
     tc = tc.sort_values(['team', 'date_et', 'game_id'], kind='stable').reset_index(drop=True)
     cols = [f'{side}_{c}' for side in ('off', 'def') for c in TEAM_COUNT_COLUMNS]
-    sums, _ = decayed_pregame(tc.rename(columns={'team': 'player'}), cols, half_life, carry)
+    sums, latest = decayed_pregame(tc.rename(columns={'team': 'player'}), cols, half_life, carry)
     S = pd.DataFrame(sums, columns=cols)
     out = tc[['game_id', 'team', 'date_et', 'season']].copy()
+    last = tc.groupby('team').tail(1)[['team', 'date_et', 'season']].reset_index(drop=True)  # state after each team's last game
+    L = pd.DataFrame([latest[t] for t in last['team']], columns=cols)
     for side in ('off', 'def'):
         for feat, (num, den, k) in TEAM_RATES.items():
             league = {}
@@ -161,6 +165,9 @@ def team_profiles(tc: pd.DataFrame, half_life: float, carry: float) -> pd.DataFr
                 league[season] = base[f'{side}_{num}'].sum() / max(base[f'{side}_{den}'].sum(), 1e-9)
             prior = tc['season'].map(league).to_numpy()
             out[f'{side}{feat[1:]}'] = (S[f'{side}_{num}'] + k * prior) / (S[f'{side}_{den}'] + k)
+            lp = last['season'].map(league).to_numpy()
+            last[f'{side}{feat[1:]}'] = (L[f'{side}_{num}'] + k * lp) / (L[f'{side}_{den}'] + k)
+    out.attrs['latest'] = last.rename(columns={'date_et': 'last_game'})
     return out
 
 
@@ -293,7 +300,11 @@ def build(out: Path = OUT, families: dict | None = None, team_style: dict | None
     out.mkdir(parents=True, exist_ok=True)
     pre.to_parquet(out / 'pregame.parquet', index=False)
     teams = team_profiles(pd.concat(team_frames, ignore_index=True), team_style['half_life'], team_style['carry'])
+    team_latest = teams.attrs.pop('latest')
     teams = teams.merge(pd.concat(schedules, ignore_index=True), on=['game_id', 'team'], how='left')
+    seasons = pd.concat(schedules, ignore_index=True).merge(teams[['game_id', 'team', 'date_et', 'season']], on=['game_id', 'team'])
+    team_latest['season_start'] = team_latest['season'].map(seasons.groupby('season')['date_et'].min())
+    team_latest.to_parquet(out / 'team_latest.parquet', index=False)  # for games not yet played (engine)
     teams.to_parquet(out / 'team_pregame.parquet', index=False)
     # Latest profile per player: the state after his last game (for projections from today).
     last = df.groupby('player').tail(1).reset_index(drop=True)

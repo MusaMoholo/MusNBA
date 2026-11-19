@@ -28,6 +28,12 @@ from the labelled placeholder `baseline-v1`; the engine replaces it at M9.
   10–90% coverage 77–83%, CRPS 7–12% better than recent averages. Event accounting traced a +5% foul bias to fouls
   falling through every season (day of season now in event and turnover type). A full run on all 766 F4 games was
   run at the end of the session — numbers in FINDINGS §3i if present, else rerun it (step 2).
+- **Engine v1 preview is in the app** (owner request). `scripts/engine.py` plays today's games forward with the v1
+  nodes; `.venv/bin/python scripts/nightly.py [--offline] --engine` builds today's snapshot with it (2,000 worlds per
+  game, ~25 s each; backfills stay on the placeholder, whose results are kept beside the engine's in
+  `games_placeholder.json`). The app's chip reads "Engine v1 · preview" (`modelPill` in `webapp/ui.mjs`). Smoke
+  re-simulates the stored engine game bit-for-bit. Realism (FINDINGS §3j): box scores plausible; pace ≈ 3% high;
+  spread too narrow (total SD 16.7, OT 2.2% v ~18–19 and 5.4%). The owner's nightly must pass `--engine` to keep it.
 - **Problem found: live v history adapter skew** (FINDINGS §3h′). The live ESPN adapter (2026-27) and the hoopR
   history produce different segments at the same point of the season: actions within 2 s after an offensive rebound
   12% v 49%, non-shooting/shooting foul split 18.7/16.3 v 16.8/17.3 per game, live-ball turnovers 56.6% v 59.4%. Models
@@ -48,17 +54,32 @@ from the labelled placeholder `baseline-v1`; the engine replaces it at M9.
    `.venv/bin/python scripts/aggregate.py --config models/v1.json --games 0` (~40 min) and record it. (b) Trace the
    stars' +2–5% on points, free throws, turnovers and threes (who-node favourite bias by usage tier: compare forecast
    v hit rate for the top-usage candidate on folds) and the residual foul bias with the event table.
-3. **Experiments queued by this session's results** (each one run on the folds, `compare.py` against
+3. **Size and archetype priors** (owner, 19 Nov: "size and defence are important"; low-sample players should borrow
+   from similar players). (a) Fetch height/weight for every player in the registry and history (ESPN athlete endpoint,
+   polite spacing, raw kept under `data/raw/espn/athletes/`). (b) In `features.py`, cluster players (k-means on role
+   and style rates plus size, fitted on earlier seasons only) and shrink each rate toward the player's archetype
+   instead of his position group; rookies take the archetype nearest their position and size. (c) Ablate on the folds
+   with log loss reported by sample size (games_eff < 10, 10–40, 40+); keep if the low-sample buckets gain.
+   Add height and weight as inputs (body group) and lineup size sums in the same test.
+4. **On-court defensive impact** (owner realism sweep, PLAN §9): per-player pre-game rates of opponents' FG% by zone,
+   opponent turnover rate and opponent rim share while he is on the floor (decayed, shrunk to position priors) in
+   `features.py`; lineup sums in `nodes.py` (`def_*`); ablate on shot result, what, blocked, turnover type, rebound.
+5. **Experiments queued by this session's results** (each one run on the folds, `compare.py` against
    `…control2` with the seed noise): split the profile *usage* family so rebounding/defence rates (oreb, dreb, blk,
    stl, pf) get their own longer half-life (usage 30 helped blocker −0.26% and rebounder −0.06% but hurt what);
    accuracy half-life 120 and 160 games (80 trended better); finer location bands to recover part of the 0.50 nats per
    game that bands cost; team style for more nodes in combination.
-4. **Inference speed for M6.** One step for 10,000 worlds costs ~0.72 s summed over all nodes on a busy machine
+6. **Engine preview realism** (FINDINGS §3j): (a) compare simulated possessions per team with real (101.7) on
+   recent games — check duration sampling (bins are uniform within 2 s; ≥ 24 s → 24–26 s) and the end-of-period rule;
+   (b) variance — per-world player form (D3, M8) and team-level game-to-game variation; target total SD ≈ 18–19, OT
+   ≈ 5.4%; (c) turnovers/steals a few percent high — check against M6a event accounting on the same nodes.
+7. **Inference speed for M6.** One step for 10,000 worlds costs ~0.72 s summed over all nodes on a busy machine
    (`data/models/v1/config.json`, `predict_ms_10k_worlds`). Benchmark on a quiet machine, then design the engine
    step to score only the worlds that reach each node (blocker ≈ 5% of worlds, assister ≈ 25%, free throws ≈ 10%) and
    batch games together; target ≤ 60 s per game (D10).
-5. Then **M6** (engine v1 with replay rotations: the same chain as `aggregate.py`, but sampling duration and carrying
-   each world's own state — score, fouls, in-game counts — forward) → M7 (substitutions) → M8 (form, end-game) → M9.
+8. Then **M6** (engine v1 with replay rotations: the same chain as `aggregate.py`, but sampling duration and carrying
+   each world's own state — score, fouls, in-game counts — forward; rules for heaves, timeouts, technical free
+   throws) → M7 (substitutions — the biggest remaining risk for box scores) → M8 (form, end-game) → M9.
 
 ## File map
 
@@ -78,6 +99,7 @@ from the labelled placeholder `baseline-v1`; the engine replaces it at M9.
 | `scripts/train.py` | LightGBM per node and fold; experiment options; `--config` versions; `--final` persist + final test |
 | `scripts/compare.py`, `scripts/calibration.py` | Paired run comparison with seed-noise floor; calibration by period/margin |
 | `scripts/aggregate.py` | M6a: branch tables from real segments, 10,000-world sampler, box-score and event accounting |
+| `scripts/engine.py` | Engine v1 preview: today's games played forward with the v1 nodes, output via `projection.package` |
 | `models/v1.json` | v1 settings, the fold run that validated them, and why |
 | `scripts/season_stats.py`, `scripts/projection.py` | Live season stats; placeholder engine `baseline-v1` and season sim |
 | `scripts/nightly.py`, `scripts/views.py` | Live orchestration, snapshots, API views |
@@ -90,7 +112,8 @@ from the labelled placeholder `baseline-v1`; the engine replaces it at M9.
 ```sh
 git status && git log --oneline -5                                    # start of session; commit + push at checkpoints
 .venv/bin/python scripts/smoke.py [--fault]                           # 66 checks (the fault run must fail)
-.venv/bin/python scripts/nightly.py [--offline] [--backfill-days N]   # live: collect → snapshot → views
+.venv/bin/python scripts/nightly.py [--offline] [--engine] [--backfill-days N]   # live: collect → snapshot → views
+.venv/bin/python scripts/engine.py --game <id> [--worlds 2000]        # one game through the engine preview
 .venv/bin/python scripts/serve.py --port 8767                         # your own review server (owner uses :8766)
 .venv/bin/python scripts/history.py [--fetch]                         # history reconcile (M1)
 .venv/bin/python scripts/possessions.py [--history]                   # segments (M2)

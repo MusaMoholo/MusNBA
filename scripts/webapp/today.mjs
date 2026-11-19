@@ -1,5 +1,5 @@
 // Today: the slate for one ET game date, each game a card that opens Game Centre.
-import {api, esc, etToday, f1, logo, longDay, pct, record, stamp, team, tipTimes, dayLabel} from './ui.mjs';
+import {modelPill, api, esc, etToday, f1, logo, longDay, pct, record, stamp, team, tipTimes, dayLabel} from './ui.mjs';
 
 export function defaultDay(meta) {
   const day = etToday();
@@ -49,7 +49,7 @@ export async function render(view, {rest, meta, current}) {
 function modelNote(slate) {
   if (slate.snapshot) {
     const kind = slate.kind === 'prospective' ? '<span class="pill good">Pre-game snapshot</span>' : '<span class="pill warn" title="Rebuilt after the fact from box scores before this date; no injury news">Retrospective</span>';
-    return `<div class="model-note"><span class="pill accent">Placeholder model</span>${kind}<span>${slate.model.sims.toLocaleString()} sims per game · built ${esc(stamp(slate.generated))}</span></div>`;
+    return `<div class="model-note">${modelPill(slate.model)}${kind}<span>${slate.model.sims.toLocaleString()} sims per game · built ${esc(stamp(slate.generated))}</span></div>`;
   }
   if (slate.games.some(g => g.team_model)) return '<div class="model-note"><span class="pill">Team-strength estimate only</span><span>Game sims run on the morning of each slate.</span></div>';
   if (slate.games.length) return '<div class="model-note"><span class="pill">No projection retained for this date</span></div>';

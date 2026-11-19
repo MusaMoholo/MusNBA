@@ -47,7 +47,9 @@ def team_registry(run: Path) -> dict:
 
 
 def build_snapshot(day: str, teams: dict, master: list[dict], team_rows: list[dict], player_rows: list[dict],
-                   registry: dict, prospective: bool, sims: int, archive_root=None, period_rows=None) -> dict:
+                   registry: dict, prospective: bool, sims: int, archive_root=None, period_rows=None, engine_worlds: int = 0) -> dict:
+    """engine_worlds > 0 (prospective slates only): games come from the possession engine preview; the placeholder's
+    results are kept beside them (games_placeholder.json) for comparison."""
     started = time.time()
     T, lg = team_table(team_rows, day, teams)
     if lg['teams_gp'] < 20:
@@ -56,9 +58,18 @@ def build_snapshot(day: str, teams: dict, master: list[dict], team_rows: list[di
     Q, priors = period_profiles(period_rows if period_rows is not None else pbp.load(), player_rows, day, team_rows, blowout=15)
     slate = [r for r in master if r['date_et'] == day]
     generated = utc_now()
-    games, probs, pre_tip = {}, {}, {}
+    games, probs, pre_tip, placeholder = {}, {}, {}, {}
+    eng = None
+    if engine_worlds and prospective and slate:
+        from scripts import engine as engine_mod
+        eng = engine_mod.Engine()
     for game in slate:
         result = projection.simulate_game(game, T, lg, P, registry, day, prospective, sims, Q, priors)
+        if eng is not None:
+            placeholder[game['game_id']] = result
+            g = engine_mod.inputs_for(game, day, T, lg, P, registry, Q, priors)
+            result = eng.simulate(g, engine_worlds, projection.seed_for(engine_mod.ENGINE['id'], day, game['game_id']))
+            print(f"  engine {game['game_id']}: {result['periods']['fg']['home']['pts']['mean']:.1f}–{result['periods']['fg']['away']['pts']['mean']:.1f}", flush=True)
         games[game['game_id']] = result
         probs[game['game_id']] = result['periods']['fg']['home']['win']
         pre_tip[game['game_id']] = parse_utc(generated) < parse_utc(game['tip_utc'])
@@ -67,14 +78,20 @@ def build_snapshot(day: str, teams: dict, master: list[dict], team_rows: list[di
     meta = {
         'schema': 1, 'season': SEASON_LABEL, 'slate_date': day, 'cutoff': day_shift(day, -1),
         'kind': 'prospective' if prospective else 'retrospective', 'generated': generated,
-        'model': projection.MODEL, 'sims': sims, 'seeds': 'sha256(model|slate date|game) per game; (model|date|season)',
+        'model': ({**engine_mod.ENGINE, 'sims': engine_worlds, 'season_sims': sims} if eng is not None else projection.MODEL),
+        'sims': engine_worlds if eng is not None else sims, 'season_sims': sims,
+        'seeds': 'sha256(model|slate date|game) per game; (model|date|season)',
         'games': [g['game_id'] for g in slate], 'pre_tip': pre_tip,
         'inputs': {'master_sha256': sha256_file(MASTER_CSV),
                    'player_games_sha256': sha256_file(DERIVED / 'player_games.csv'),
                    'team_games_sha256': sha256_file(DERIVED / 'team_games.csv'),
                    'player_periods_sha256': sha256_file(DERIVED / 'player_periods.csv'),
                    'registry_run': read_json(DERIVED / 'players.json')['run'] if prospective else None,
-                   'completed_games_used': lg['games']},
+                   'completed_games_used': lg['games'],
+                   **({'engine_inputs_sha256': {n: sha256_file(f) for n, f in (
+                       ('latest', DERIVED / 'features' / 'latest.parquet'), ('team_latest', DERIVED / 'features' / 'team_latest.parquet'),
+                       ('stints', DERIVED / 'rotations' / 'stints.parquet'), ('models', DERIVED.parent / 'models' / 'v1' / 'config.json'))}}
+                      if eng is not None else {})},
         'notes': ([] if prospective else ['Retrospective reconstruction: built after the fact from cutoff-safe box scores; '
                                           'injury news from that date was not retained.']),
         'seconds': None,
@@ -87,12 +104,14 @@ def build_snapshot(day: str, teams: dict, master: list[dict], team_rows: list[di
     if staging.exists():
         shutil.rmtree(staging)
     write_json(staging / 'games.json', games)
+    if placeholder:
+        write_json(staging / 'games_placeholder.json', placeholder)
     write_json(staging / 'season.json', season)
     write_json(staging / 'stats.json', {'teams': T, 'league': lg, 'players': P})
     meta['seconds'] = round(time.time() - started, 2)
     write_json(staging / 'meta.json', meta, pretty=True)
     staging.rename(target)
-    print(f'snapshot {day} ({meta["kind"]}): {len(slate)} games, {sims:,} sims each, '
+    print(f'snapshot {day} ({meta["kind"]}, {meta["model"]["id"]}): {len(slate)} games, {meta["sims"]:,} sims each, '
           f'season {len(season["games"])} games · {meta["seconds"]}s', flush=True)
     return meta
 
@@ -105,6 +124,8 @@ def main():
     parser.add_argument('--backfill-days', type=int, default=0)
     parser.add_argument('--rebuild', action='store_true', help='Rebuild existing backfill snapshots too')
     parser.add_argument('--sims', type=int, default=projection.MODEL['sims'])
+    parser.add_argument('--engine', type=int, nargs='?', const=2000, default=0, metavar='WORLDS',
+                        help="today's slate from the possession engine preview (default 2,000 worlds per game); backfills stay on the placeholder")
     parser.add_argument('--archive-root', type=Path)
     args = parser.parse_args()
     day = args.date or today_et()
@@ -136,7 +157,8 @@ def main():
             continue
         build_snapshot(d, teams, master, team_rows, player_rows, registry, False, args.sims, args.archive_root, period_rows)
     if day in slate_dates:
-        build_snapshot(day, teams, master, team_rows, player_rows, registry, day == today_et(), args.sims, args.archive_root, period_rows)
+        build_snapshot(day, teams, master, team_rows, player_rows, registry, day == today_et(), args.sims, args.archive_root, period_rows,
+                       engine_worlds=args.engine)
     else:
         print(f'No games scheduled on {day}; views still rebuilt.', flush=True)
     views.build()

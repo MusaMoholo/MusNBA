@@ -271,7 +271,7 @@ def main():
                 seed_problems.append(f'{t} seeds sum {sum(f["seeds"]):.4f}')
             if not f['w'] <= f['mean_w'] <= f['w'] + f['remaining']:
                 seed_problems.append(f'{t} mean wins out of range')
-            if hist_total(f['wins']) != W:
+            if hist_total(f['wins']) != season['sims']:
                 seed_problems.append(f'{t} wins hist')
         check(f'{day}: season seeds partition and wins stay in range', not seed_problems, seed_problems[:3])
 
@@ -288,8 +288,24 @@ def main():
         if args.fault:
             stored = json.loads(json.dumps(stored))
             stored['periods']['fg']['home']['pts']['mean'] += 0.1
-        again = projection.simulate_game(by_id[gid], T, lg, P, registry, day, True, meta['sims'], Q, priors)
-        check(f'{day}: stored game {gid} re-simulates bit-for-bit', json.dumps(again, sort_keys=True) == json.dumps(stored, sort_keys=True))
+        if meta['model'].get('kind') == 'preview':  # possession engine: also needs its own inputs unchanged
+            from basketball_common import sha256_file
+            from scripts import engine as engine_mod
+            same = all(sha256_file(f) == meta['inputs']['engine_inputs_sha256'][k] for k, f in (
+                ('latest', DERIVED / 'features' / 'latest.parquet'), ('team_latest', DERIVED / 'features' / 'team_latest.parquet'),
+                ('stints', DERIVED / 'rotations' / 'stints.parquet'), ('models', DERIVED.parent / 'models' / 'v1' / 'config.json')))
+            if same:
+                g = engine_mod.inputs_for(by_id[gid], day, T, lg, P, registry, Q, priors)
+                again = engine_mod.Engine().simulate(g, meta['sims'], projection.seed_for(engine_mod.ENGINE['id'], day, gid))
+                again = json.loads(json.dumps(again))
+            else:
+                again = None
+                print(f'SKIP  engine re-simulation: engine inputs changed since the {day} snapshot')
+        else:
+            again = projection.simulate_game(by_id[gid], T, lg, P, registry, day, True, meta['sims'], Q, priors)
+        if again is not None:
+            check(f'{day}: stored game {gid} re-simulates bit-for-bit ({meta["model"]["id"]})',
+                  json.dumps(again, sort_keys=True) == json.dumps(stored, sort_keys=True))
     else:
         print(f'SKIP  re-simulation: inputs changed since the {day} snapshot (expected after new collections)')
 

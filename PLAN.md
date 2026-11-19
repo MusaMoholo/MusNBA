@@ -79,7 +79,7 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
 | M5 | LightGBM per decision (16 nodes, D20 + D21) | ✅ **v1 tuned, validated, persisted, final test scored once** — every node ≥ its best baseline on every fold and on the final test; settings `models/v1.json`; FINDINGS §3h–§3h′ | Every node ≥ its best baseline on every fold, well calibrated; per-node choice recorded; models persisted | `nodes.py`, `train.py`, `compare.py`, `calibration.py` |
 | M5b | Adapter parity: live ESPN v hoopR history | ☐ **next** — live data differ from history (short actions after rebounds 12% v 49%, foul split, turnover split; FINDINGS §3h′) | Same game through both adapters gives the same segments; season distributions match | `plays.py`, `possessions.py` |
 | M6a | Aggregation test with real rotations | ◐ **gate met on 300 F4 games** (team total −0.5%, player stats within ±2% for starters/bench, coverage 77–83%, CRPS +7–12% v recent averages); fouls +5% traced to in-season decline (day of season added); stars +2–5% to trace | Replayed held-out games: player box-score bias ≈ 0 by role tier, 80% coverage | `aggregate.py` |
-| M6 | Engine v1 (replay rotations) | ☐ | 10k sims per game in today's output contract | (to build) |
+| M6 | Engine v1 (replay rotations) | ◐ **preview in the app** (`nightly.py --engine`, labelled "Engine v1 · preview"): 2,000 worlds per game, 25 s per game; pace ≈ 3% high, spread too narrow (OT 2.2% v 5.4%) | 10k sims per game in today's output contract | `engine.py` |
 | M7 | Target-aware substitution model | ☐ | Minutes MAE < 5.2 and 10–90% coverage ≈ 80% (beats replay v0) | (to build) |
 | M8 | Per-player form + end-game checks | ☐ | Variance and overtime rate (5.4%) calibrated | (to build) |
 | M9 | Walk-forward backtest → switch the app | ☐ | Beats `baseline-v1` on game and player CRPS | (to build) |
@@ -122,9 +122,21 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
 2. Hosting the PWA: the repo is **private** (`MusaMoholo/MusNBA`, created 19 Nov); GitHub Pages needs a public repo
    or a paid plan — decide when the phone app is ready. App name MusNBA.
 3. iPhone acceptance of the PWA.
-4. **D21 (engineering, to confirm)**: a 16th decision, shot location (distance band within the zone), and team
-   turnovers as an event class — added because distance is the strongest input after zone (3.1 nats per game).
-5. Player heights/weights for defender size: history has none; a polite ESPN athlete fetch (~1,000 players) would add them.
+4. ~~Player heights/weights~~ — **owner (19 Nov): needed** ("size and defence are important"): a polite ESPN athlete
+   fetch (~1,000 players, one request each) for height and weight, then **archetype priors** — players clustered by
+   role, style and size; every rate shrinks toward the player's archetype instead of his position group; rookies
+   start from the archetype matched by position, size and draft slot (D5: no college data).
+
+Realism sweep with the owner (19 Nov) — gaps, in priority order (HANDOFF next actions):
+1. Live v history adapter skew (rebound timing, foul split) — M5b.
+2. Minutes: target-aware substitutions (blowouts, foul trouble, fatigue, closing lineups) — M7; the biggest risk.
+3. **Size and archetype priors** (owner: low-sample players borrow from similar players' profiles) — see item 4 above.
+4. **On-court defensive impact** per player (opponents' shooting by zone and turnover rate while he is on the floor,
+   shrunk) — positional defenders who force misses without blocks are invisible today; TRAINING_PLAN §2.1 lists it.
+5. Timeouts (after-timeout plays, late-game advance), end-of-period heaves, technical/flagrant free throws,
+   goaltending, lane violations — rules or small nodes in M6/M8.
+6. End-game behaviour (deliberate fouling, two-for-ones, last-shot holds), per-world form, overtime rate — M8.
+7. Nearest-defender and other tracking data need the NBA Stats API (decision 1 above).
 
 ## 10. Log
 
@@ -180,3 +192,10 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
   228.5 v 229.5, player points/rebounds/assists/threes within ±2% for starters and bench, 10–90% coverage 77–83%,
   CRPS 7–12% better than recent averages on every stat. Fouls +5% traced (event accounting) to the in-season foul
   decline; stars run 2–5% hot on points, free throws, turnovers and threes (to trace).
+- **19 Nov 2026** — Owner: put the current model in the dashboard. **Engine v1 preview** (`engine.py`): the v1 nodes
+  played forward possession by possession (sampled durations, replayed rotations, per-world score, fouls, foul-outs,
+  in-game counts), packaged in the app contract (`projection.package`); `nightly.py --engine` builds today's slate
+  with it (placeholder kept beside it in `games_placeholder.json`); the app labels it "Engine v1 · preview". Today's
+  four games: plausible box scores (114 points, 240.6 team minutes, 91 FGA, 22 FTA); pace ≈ 3% high and spread too
+  narrow (OT 2.2%) — the M8 work. Owner realism sweep recorded (PLAN §9): size + archetype priors (owner: needed), on-court
+  defensive impact, substitutions (M7) as the biggest remaining risk.
