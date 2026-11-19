@@ -5,9 +5,9 @@ pipeline collects box scores and play-by-play, simulates every game 10,000 times
 remaining season 10,000 times, and a static, offline-capable app shows the results on a laptop
 or phone.
 
-> Phase 1 (app shell) is live. Projections currently come from a **placeholder** box-score-rate
-> model, clearly labelled in the app; the possession-by-possession engine is phase 2.
-> See [PLAN.md](PLAN.md).
+> The app is live on localhost and as a static PWA. Today's projections come from the **possession engine v1**
+> (every possession simulated from 16 LightGBM decision models; the floor for later improvements, D22); past dates
+> rebuilt after the fact use a labelled placeholder. See [PLAN.md](PLAN.md) and [HANDOFF_NEXT.md](HANDOFF_NEXT.md).
 
 ## Setup
 
@@ -26,8 +26,8 @@ python3 -m venv .venv
 .venv/bin/python scripts/serve.py            # browse at http://127.0.0.1:8766
 ```
 
-- `nightly.py --engine` projects today's slate with the possession engine preview (labelled in the app); without
-  it the placeholder is used. `nightly.py --offline` reuses retained data; `--views-only` only rebuilds what the app reads;
+- Today's slate is projected by the possession engine v1 (the default, D22; ~20 s per game at 2,000 worlds);
+  `--placeholder` uses the old box-score placeholder instead, and backfilled past dates always do. `nightly.py --offline` reuses retained data; `--views-only` only rebuilds what the app reads;
   `--backfill-days N` adds retrospective snapshots (labelled as such) for the previous N slates.
 - The server reads files from disk: front-end edits appear on refresh, rebuilt views appear
   immediately; no restart needed. `serve.py --host 0.0.0.0` lets a phone on the same Wi-Fi in.
@@ -37,7 +37,7 @@ python3 -m venv .venv
 
 ```sh
 .venv/bin/python scripts/export_musnba.py --shell _site --base-path /MusNBA/   # data-free shell
-.venv/bin/python scripts/nightly_musnba.py [--engine]                          # nightly + iCloud export (--engine: preview)
+.venv/bin/python scripts/nightly_musnba.py                                     # nightly (engine) + iCloud export
 ```
 
 Host `_site` (e.g. GitHub Pages, `gh-pages` branch with `.nojekyll`). The shell never contains
@@ -60,7 +60,7 @@ checksum-verified and atomic; the previous data stays available if an import fai
 | `scripts/nodes.py`, `scripts/train.py` | Datasets for the 16 decisions (cached); LightGBM per decision on the folds, persisted versions, final test |
 | `scripts/compare.py`, `scripts/calibration.py` | Paired run comparisons (game-clustered, seed-noise floor); calibration by period and margin |
 | `scripts/aggregate.py` | M6a: replay held-out games with real lineups and clock, sample every decision, score box scores |
-| `scripts/engine.py` | Engine v1 preview: plays today's games possession by possession with the v1 models (`nightly.py --engine`) |
+| `scripts/engine.py` | Engine v1 (default projection): plays today's games possession by possession with the v1 models |
 | `scripts/season_stats.py` | Cutoff-safe team ratings and player season stats |
 | `scripts/projection.py` | Simulation engine (placeholder now; PBP engine in phase 2) and season sim |
 | `scripts/nightly.py`, `scripts/views.py` | Orchestration, immutable snapshots, API-ready views |

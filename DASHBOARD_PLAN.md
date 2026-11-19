@@ -37,3 +37,10 @@ As of **19 November 2026**. Proposals and progress live in [PLAN.md](PLAN.md).
 files plus logos, so laptop and phone responses are identical. Routes are hash-based for static hosting.
 In static mode `pwa.mjs` answers `/api/*` from IndexedDB and the service worker serves logos and the
 cached shell. Imports stage a new generation and switch one active pointer after verification.
+
+## Model chip (19 Nov 2026, D22)
+
+Every projection shows which model made it: **Engine v1** (green chip; today's slate by default) or **Placeholder
+model** (retrospective backfills, or a nightly run with `--placeholder`). The full label — with the engine's known
+gaps — is the chip's tooltip and appears in the Model & data panel. `modelPill` in `scripts/webapp/ui.mjs` is the
+single place this is decided.

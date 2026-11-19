@@ -48,8 +48,9 @@ def team_registry(run: Path) -> dict:
 
 def build_snapshot(day: str, teams: dict, master: list[dict], team_rows: list[dict], player_rows: list[dict],
                    registry: dict, prospective: bool, sims: int, archive_root=None, period_rows=None, engine_worlds: int = 0) -> dict:
-    """engine_worlds > 0 (prospective slates only): games come from the possession engine preview; the placeholder's
-    results are kept beside them (games_placeholder.json) for comparison."""
+    """engine_worlds > 0 (prospective slates only — the engine reads latest profiles, so past dates would leak): games
+    come from the possession engine (D22, the default); the placeholder's results are kept beside them
+    (games_placeholder.json) for comparison. Retrospective backfills always use the placeholder."""
     started = time.time()
     T, lg = team_table(team_rows, day, teams)
     if lg['teams_gp'] < 20:
@@ -124,8 +125,10 @@ def main():
     parser.add_argument('--backfill-days', type=int, default=0)
     parser.add_argument('--rebuild', action='store_true', help='Rebuild existing backfill snapshots too')
     parser.add_argument('--sims', type=int, default=projection.MODEL['sims'])
-    parser.add_argument('--engine', type=int, nargs='?', const=2000, default=0, metavar='WORLDS',
-                        help="today's slate from the possession engine preview (default 2,000 worlds per game); backfills stay on the placeholder")
+    parser.add_argument('--engine', type=int, default=2000, metavar='WORLDS',
+                        help="worlds per game for today's slate from the possession engine (default 2,000; D22: the default model)")
+    parser.add_argument('--placeholder', action='store_true',
+                        help='project today with the placeholder baseline-v1 instead of the engine (backfills always use it)')
     parser.add_argument('--archive-root', type=Path)
     args = parser.parse_args()
     day = args.date or today_et()
@@ -158,7 +161,7 @@ def main():
         build_snapshot(d, teams, master, team_rows, player_rows, registry, False, args.sims, args.archive_root, period_rows)
     if day in slate_dates:
         build_snapshot(day, teams, master, team_rows, player_rows, registry, day == today_et(), args.sims, args.archive_root, period_rows,
-                       engine_worlds=args.engine)
+                       engine_worlds=0 if args.placeholder else args.engine)
     else:
         print(f'No games scheduled on {day}; views still rebuilt.', flush=True)
     views.build()

@@ -294,7 +294,7 @@ everywhere; CRPS 6–11% better than recent averages (fouls 1–7%). Event accou
 before day of season), penalty trips +1.8%, and-ones +5.4%, offensive fouls +2.5%, shooting fouls on a two +3.4%, on a
 three −24% — the remaining bias sits in what/shot result's foul classes.
 
-## 3j. Engine v1 preview (`scripts/engine.py`; 19 Nov 2026 slate, 2,000 worlds per game)
+## 3j. Engine v1 (`scripts/engine.py`; the default since D22; 19 Nov 2026 slate, 2,000 worlds per game)
 
 The v1 nodes played forward: sampled durations on the game clock, replayed rotations (M3 v0), each world's own score,
 team and personal fouls, foul-outs and in-game counts. Golden State–Memphis, per team: 114.0 / 114.4 points, 240.6

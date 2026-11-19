@@ -74,11 +74,11 @@ export async function route() {
 function renderDataPanel(info) {
   const last = info.snapshots.at(-1);
   document.getElementById('data-line').textContent =
-    `Results through ${info.data.last_final ? dayLabel(info.data.last_final) : '—'} · ${info.model.kind === 'placeholder' ? 'placeholder model' : info.model.kind === 'preview' ? 'engine v1 preview' : info.model.id}`;
+    `Results through ${info.data.last_final ? dayLabel(info.data.last_final) : '—'} · ${info.model.kind === 'placeholder' ? 'placeholder model' : ['engine', 'preview'].includes(info.model.kind) ? `engine ${info.model.version || 'v1'}` : info.model.id}`;
   const rows = info.snapshots.slice().reverse().map(s =>
     `<tr><td class="l"><a href="#/today/${s.date}">${dayLabel(s.date)}</a></td><td class="l">${s.kind}</td><td>${s.games}</td><td class="l">${esc(stamp(s.generated))}</td><td class="l">${esc(s.model)}</td></tr>`).join('');
   document.getElementById('data-body').innerHTML = `
-    <p class="note"><b>${esc(info.model.label)}</b>. Each game is simulated ${info.model.sims.toLocaleString()} times; the season sims every unplayed fixture ${(info.model.season_sims || info.model.sims).toLocaleString()} times. ${info.model.kind === 'preview' ? 'Preview: the possession engine plays every possession of today\'s games; it becomes the main model once the backtest beats the placeholder (M9, PLAN.md).' : 'The play-by-play engine replaces this model in phase 2 (see PLAN.md).'}</p>
+    <p class="note"><b>${esc(info.model.label)}</b>. Each game is simulated ${info.model.sims.toLocaleString()} times; the season sims every unplayed fixture ${(info.model.season_sims || info.model.sims).toLocaleString()} times. ${['engine', 'preview'].includes(info.model.kind) ? 'The possession engine plays every possession of today\'s games; it is the floor — a new model replaces it only if the backtest says it is better (PLAN.md). Past dates rebuilt after the fact use the placeholder.' : 'Placeholder model — the possession engine is the default for today\'s slate (PLAN.md).'}</p>
     <p class="note">Season ${esc(info.season)} · ${info.data.finals} of ${info.data.games} scheduled games final · collection run ${esc(info.data.collected_run)} · views built ${esc(stamp(info.built))}. Source: ESPN public site API. Times in UK with ET.</p>
     <div class="scroll" style="margin-top:10px"><table><thead><tr><th class="l">Slate</th><th class="l">Kind</th><th>Games</th><th class="l">Generated</th><th class="l">Model</th></tr></thead><tbody>${rows}</tbody></table></div>
     <p class="note">Pre-game snapshots are built before tip-off with that day's injury report. Retrospective snapshots are rebuilt later from box scores before that date, without injury news.</p>`;

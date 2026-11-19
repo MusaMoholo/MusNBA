@@ -8,7 +8,7 @@ At every checkpoint the next session may be a different agent, so leave the docs
 1. **This file** — rules, owner preferences, checkpoint protocol.
 2. **[HANDOFF_NEXT.md](HANDOFF_NEXT.md)** — the current state and the exact next actions. Start working from there.
 3. **[PLAN.md](PLAN.md)** — goal, phases, milestone table (§6), open owner decisions, log.
-4. **[ENGINE_PLAN.md](ENGINE_PLAN.md)** — engine design and the owner's decisions D1–D20. Do not reopen a decision
+4. **[ENGINE_PLAN.md](ENGINE_PLAN.md)** — engine design and the owner's decisions D1–D22. Do not reopen a decision
    without new evidence; if evidence contradicts one, say so to the owner and record it.
 5. **[TRAINING_PLAN.md](TRAINING_PLAN.md)** — models, inputs, decay, folds, experiment protocol.
 6. **[FINDINGS.md](FINDINGS.md)** — measured facts and data quirks. Do not re-derive them; extend them.
@@ -34,10 +34,15 @@ Then do the first open item in HANDOFF_NEXT.md § Next actions. If smoke fails, 
   :8767 for your own checks). The PWA build is for the phone later.
 - UK-based; displayed times are UK with ET alongside. Slates are US Eastern dates.
 - Prefers you make engineering decisions yourself and explain them; ask only for real product choices (PLAN §9).
+- Likes short status bullets with real numbers; for long runs he asked for one progress bar per job, updated at
+  every 5% (finished jobs dropped). He is happy to see new data in the dashboard before it is validated, if labelled.
 
 ## 4. Rules
 
 - Use `.venv/bin/python`. Dependencies: NumPy, pandas, pyarrow, LightGBM. Node is optional (browser checks only).
+- **The engine is the floor (D22)**: today's projections come from the possession engine v1 by default. Replace it
+  (new nodes, settings, rules or model version) only when the measured tests say the change is better — paired fold
+  comparisons (`scripts/compare.py`), M6a (`scripts/aggregate.py`) and, once built, the M9 backtest — and record it.
 - **Serving never computes**: `serve.py`, `views.py` and the PWA never fetch, fit or simulate.
 - **Cutoff safety**: anything for a game on date D uses only games before D. Retrospective snapshots stay labelled.
 - **Final test stays untouched**: the 2026-27 season (from 2026-07-01) is scored once per model version, at

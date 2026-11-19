@@ -1,6 +1,6 @@
 # Engine plan — possession-level simulator (phase 2)
 
-**v6 + D18–D21 · 19 November 2026 · approved; in implementation — progress in PLAN.md §6, next steps in HANDOFF_NEXT.md.** Nothing here is implemented. Items marked
+**v6 + D18–D22 · 19 November 2026 · approved; in implementation — progress in PLAN.md §6, next steps in HANDOFF_NEXT.md.** Nothing here is implemented. Items marked
 **Proposed** become decisions once agreed; §14 lists the questions still open. Progress is tracked in
 [PLAN.md](PLAN.md); measured facts live in [FINDINGS.md](FINDINGS.md).
 
@@ -29,6 +29,7 @@
 | D20 | Decision chain | Owner left the number of steps to the data. Fifteen decisions in four stages — **clock**: time to the event, event type (action, defensive foul, violation); **action**: who (of five) → what (rim, paint, mid, corner 3, above-break 3, turnover, fouled on a 2, fouled on a 3) → shot result (miss, make, and-one); **credit**: assisted → assister, blocked → blocker, turnover type (steal, offensive foul, other) → stealer, fouler; **after**: free throw, rebound (offence/defence × player/team) → rebounder. Rules, not models: free-throw counts, penalty/bonus, shot clock, period ends, foul-outs. Every node has ≥ 50k training rows |
 | D17 | Long-range strength | MusSim's per-world pathway: each universe starts from a draw around today's strength and updates every team after every simulated game — near-term engine results included — by the rating system's own response to the result, against the world's own expectation, with one gain calibrated to real season dispersion (§12) |
 | D21 | Shot location; team turnovers | **Engineering decision from data (19 Nov); owner confirmed the location stage (19 Nov) — team turnovers and team rebounds stay outcomes of existing stages, not new ones.** A 16th decision, **location** — the shot's distance band (21 bands, 3–5 per zone) given zone, shooter and context — sits between *what* and *shot result*; later decisions see the band's mean distance and lateral offset. Reason: distance is the strongest input after zone (leaving it out costs 3.1 nats per game over the chain: blocked +3.8%, assisted +1.1%, shot result +1.0%) and no step produced it. *Event* gains a fourth class, **team turnover** (shot clock, 8 s; 5.3% of turnovers), which credits no player. All-Star and exhibition games are excluded from every dataset |
+| D22 | Default model and the floor | **Owner (19 Nov): the possession engine v1 (`scripts/engine.py`, `models/v1.json`) is the dashboard's default projection from now on, and it is the floor** — a later engine, model version or rule replaces it only when the backtest/aggregation tests show it is better (M6a, M9). The placeholder `baseline-v1` stays for retrospective backfills (the engine reads latest profiles, so past dates would leak) and as a comparison saved beside each engine snapshot. The season simulation is still the placeholder's team-strength pathway, fed the engine's win probabilities for today's games |
 
 ## 0. What "true to form" means
 

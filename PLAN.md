@@ -35,10 +35,10 @@ A local-first NBA simulator PWA, sibling to the owner's MusSim football app (`..
 
 ```
 LIVE (nightly)   ESPN site API → fetch_espn → data/raw/espn → master_fixtures, box_scores, pbp
-                 → projection (placeholder today; the engine later) → data/snapshots/<D> → views → serve / export → PWA
+                 → engine v1 (default, D22; placeholder for backfills) → data/snapshots/<D> → views → serve / export → PWA
 HISTORY + MODEL  sportsdataverse ESPN season files → history (+ plays: one schema) → possessions (segments)
                  → rotations (stints, windows) → features (point-in-time profiles) → nodes (datasets)
-                 → train (LightGBM per decision, rolling folds) → [M6] engine → [M9] replaces the placeholder
+                 → train (LightGBM per decision, rolling folds) → models/v1 → engine.py (M6) → [M9] backtest
 ```
 
 Slates are US Eastern game dates; tip-offs show UK time with ET alongside.
@@ -60,14 +60,14 @@ Slates are US Eastern game dates; tip-offs show UK time with ET alongside.
 | 0 | Discovery, data probe, plan | `██████████` done |
 | 1 | App shell, season stats, placeholder projections | `██████████` done — owner checks pending (iPhone, hosting) |
 | 1b | Per-period Game Centre (owner spec), play-by-play parser, quarter-aware placeholder | `██████████` done |
-| 2 | Possession engine (data → models → engine → backtest) | `██████░░░░` **M1–M5 done · M6a passing · adapter parity next** |
+| 2 | Possession engine (data → models → engine → backtest) | `██████░░░░` **M1–M5, M6a done · engine v1 is the app's default (D22) · adapter parity next** |
 | 3 | Evaluation and nightly feedback (Forecast Lab view, refit cadence) | not started |
 | 4 | Season on the engine: pathway calibration, availability, tiebreakers, play-in, Cup, what-ifs | not started |
 | 5 | Polish: hosting, iPhone acceptance, watch-a-sim, more views | not started |
 
 ## 6. Phase 2 milestones — the current work
 
-Design: [ENGINE_PLAN.md](ENGINE_PLAN.md) (decisions D1–D21). Training: [TRAINING_PLAN.md](TRAINING_PLAN.md).
+Design: [ENGINE_PLAN.md](ENGINE_PLAN.md) (decisions D1–D22). Training: [TRAINING_PLAN.md](TRAINING_PLAN.md).
 Do them in this order; each ends with its checks passing and a checkpoint (AGENTS.md).
 
 | # | Milestone | Status | Done when | Output |
@@ -79,10 +79,10 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
 | M5 | LightGBM per decision (16 nodes, D20 + D21) | ✅ **v1 tuned, validated, persisted, final test scored once** — every node ≥ its best baseline on every fold and on the final test; settings `models/v1.json`; FINDINGS §3h–§3h′ | Every node ≥ its best baseline on every fold, well calibrated; per-node choice recorded; models persisted | `nodes.py`, `train.py`, `compare.py`, `calibration.py` |
 | M5b | Adapter parity: live ESPN v hoopR history | ☐ **next** — live data differ from history (short actions after rebounds 12% v 49%, foul split, turnover split; FINDINGS §3h′) | Same game through both adapters gives the same segments; season distributions match | `plays.py`, `possessions.py` |
 | M6a | Aggregation test with real rotations | ✅ **gate met on all 766 F4 games** (player stats within ±1.3% for points/rebounds/assists/threes in every tier, coverage 77–81%, CRPS +6–11%; earlier 300-game run: team total −0.5%, coverage 77–83%); fouls traced to the in-season decline (day of season added); and-ones +5%, fouled-on-a-three −24% to trace) | Replayed held-out games: player box-score bias ≈ 0 by role tier, 80% coverage | `aggregate.py` |
-| M6 | Engine v1 (replay rotations) | ◐ **preview in the app** (`nightly.py --engine`, labelled "Engine v1 · preview"): 2,000 worlds per game, ~20 s per game; clock rules fixed (pace ≈ 2.5% low), strong offences under-expressed, spread too narrow | 10k sims per game in today's output contract | `engine.py` |
+| M6 | Engine v1 (replay rotations) | ◐ **the app's default (D22, the floor)** — `nightly.py` uses it for today's slate (chip "Engine v1"; `--placeholder` opts out): 2,000 worlds per game, ~20 s per game; clock rules fixed (pace ≈ 2.5% low), strong offences under-expressed, spread too narrow | 10k sims per game in today's output contract | `engine.py` |
 | M7 | Target-aware substitution model | ☐ | Minutes MAE < 5.2 and 10–90% coverage ≈ 80% (beats replay v0) | (to build) |
 | M8 | Per-player form + end-game checks | ☐ | Variance and overtime rate (5.4%) calibrated | (to build) |
-| M9 | Walk-forward backtest → switch the app | ☐ | Beats `baseline-v1` on game and player CRPS | (to build) |
+| M9 | Walk-forward backtest (engine on past games) | ☐ | Measures the engine (the floor, D22) and every candidate on game and player CRPS, win calibration and realism v `baseline-v1` and the current engine; a candidate replaces the engine only if better | (to build) |
 | M10 | Watch-a-sim view | ☐ | Replays render | (to build) |
 | M11 | Availability model | ☐ | Simulated games missed match history | (to build) |
 | M12 | Season pathway calibration | ☐ | Dispersion ≈ 1.0, persistence matches | (to build) |
@@ -203,3 +203,6 @@ Realism sweep with the owner (19 Nov) — gaps, in priority order (HANDOFF next 
   (8.4% of the clock, mostly 2.4 s from a miss to its rebound), whole-second durations within bins, end-of-period
   segments from real ones; the first two errors had cancelled (pace +3% → −5% → ≈ −2.5% after all three). Owner:
   scores too high on the first preview — they were (+1.5%, from pace); now slightly low, strong offences under-expressed.
+- **19 Nov 2026** — **Owner (D22): engine v1 is the dashboard default and the floor** — later changes replace it only when
+  measured better. `nightly.py` now uses the engine by default (`--placeholder` opts out); the chip reads "Engine v1";
+  backfills stay on the placeholder (cutoff safety). Docs brought up to date for a hand-over to a new agent.

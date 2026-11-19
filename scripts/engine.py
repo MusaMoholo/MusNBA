@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Possession engine v1 — preview (ENGINE_PLAN §2–§3; M6 brought forward as a labelled preview).
+"""Possession engine v1 — the default projection (D22; ENGINE_PLAN §2–§3; M6 brought forward).
 
 Plays a game forward, segment by segment on the game clock, in W worlds at once, with the persisted v1 node models
 (data/models/v1/): duration → event → who → what → location → shot result → assisted/assister, blocked/blocker →
@@ -8,9 +8,9 @@ its own score, team fouls, personal fouls (foul-outs), in-game counts and minute
 team's last ten games (M3 replay v0: a template per world, mapped to tonight's available players; overtime keeps the
 closing five). Output is the app's game contract (projection.package), so the app needs no change.
 
-Preview limits, labelled in the app: not yet backtested (M9 gate); rotations are replay v0 (M7 will be target-aware);
-end-of-period possessions shoot at the buzzer with the normal models (no heave rule); no timeouts or technical free
-throws; live-data adapter skew (FINDINGS §3h′) not yet fixed.
+Known limits (in the app's label; FINDINGS §3j): not yet backtested (M9); rotations are replay v0 (M7 will be
+target-aware); no heave rule, timeouts or technical free throws; live-data adapter skew (FINDINGS §3h′) not yet fixed.
+Owner (19 Nov, D22): this engine is the dashboard's default and the floor — a change replaces it only if it does better.
 
   .venv/bin/python scripts/engine.py --game <game_id> [--worlds 2000]     one game from the master fixtures (today's inputs)
 """
@@ -31,9 +31,10 @@ sys.path.insert(0, str(ROOT))
 from basketball_common import DERIVED  # noqa: E402
 from scripts import nodes, projection, rotations  # noqa: E402
 
-ENGINE = {'id': 'engine-v1-preview', 'kind': 'preview', 'version': 'v1', 'sims': 2000,
-          'label': 'Possession engine v1 (preview) — possession-by-possession simulation from the v1 decision models; '
-                   'rotations replayed from recent games; not yet backtested against the placeholder (M9)'}
+ENGINE = {'id': 'engine-v1', 'kind': 'engine', 'version': 'v1', 'sims': 2000,
+          'label': 'Possession engine v1 — the default projection since 19 Nov 2026 and the floor every change must beat; '
+                   'each game simulated possession by possession from the v1 decision models, rotations replayed from recent '
+                   'games. Known gaps: pace ≈ 2.5% low, strong offences under-expressed, outcomes too tightly spread (FINDINGS §3j)'}
 MODELS = DERIVED.parent / 'models'
 ZONES = nodes.ZONES
 NB = nodes.LOCATION_BANDS

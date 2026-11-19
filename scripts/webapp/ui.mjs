@@ -175,9 +175,9 @@ export function errorPanel(error) {
   return `<section class="panel"><h2>${missing ? 'Not available' : 'Something went wrong'}</h2><p class="note">${esc(error?.message || error)}</p>${missing ? '<p class="note">This view is built by the nightly pipeline on the laptop.</p>' : ''}<p><a class="btn ghost" href="#/">Back to today</a></p></section>`;
 }
 
-// Model chip: the placeholder, or the possession-engine preview (label in the tooltip).
+// Model chip: the possession engine (default, D22) or the placeholder (backfills); full label in the tooltip.
 export function modelPill(model) {
-  return model && model.kind === 'preview'
-    ? `<span class="pill warn" title="${esc(model.label)}">Engine v1 · preview</span>`
+  return model && (model.kind === 'engine' || model.kind === 'preview')
+    ? `<span class="pill good" title="${esc(model.label)}">Engine ${esc(model.version || 'v1')}</span>`
     : `<span class="pill accent" title="${esc(model ? model.label : '')}">Placeholder model</span>`;
 }

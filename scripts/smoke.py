@@ -288,7 +288,7 @@ def main():
         if args.fault:
             stored = json.loads(json.dumps(stored))
             stored['periods']['fg']['home']['pts']['mean'] += 0.1
-        if meta['model'].get('kind') == 'preview':  # possession engine: also needs its own inputs unchanged
+        if meta['model'].get('kind') in ('engine', 'preview'):  # possession engine: also needs its own inputs unchanged
             from basketball_common import sha256_file
             from scripts import engine as engine_mod
             same = all(sha256_file(f) == meta['inputs']['engine_inputs_sha256'][k] for k, f in (
@@ -296,7 +296,7 @@ def main():
                 ('stints', DERIVED / 'rotations' / 'stints.parquet'), ('models', DERIVED.parent / 'models' / 'v1' / 'config.json')))
             if same:
                 g = engine_mod.inputs_for(by_id[gid], day, T, lg, P, registry, Q, priors)
-                again = engine_mod.Engine().simulate(g, meta['sims'], projection.seed_for(engine_mod.ENGINE['id'], day, gid))
+                again = engine_mod.Engine().simulate(g, meta['sims'], projection.seed_for(meta['model']['id'], day, gid))
                 again = json.loads(json.dumps(again))
             else:
                 again = None
