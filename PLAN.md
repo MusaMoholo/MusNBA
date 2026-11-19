@@ -113,7 +113,8 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
 ## 9. Open decisions for the owner
 
 1. NBA Stats API via `nba_api` (browser-style headers) — allow, or stay on ESPN only?
-2. App name **MusNBA** and GitHub repo/Pages path; initialise git and commit (nothing committed yet).
+2. Hosting the PWA: the repo is **private** (`MusaMoholo/MusNBA`, created 19 Nov); GitHub Pages needs a public repo
+   or a paid plan — decide when the phone app is ready. App name MusNBA.
 3. iPhone acceptance of the PWA.
 
 ## 10. Log
@@ -154,4 +155,7 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
   assisted 25.5%, rebound 8.0%, blocked 6.4%, what 5.3%, turnover type 4.8%, assister 2.4%, shot result 2.1%, who 2.1%,
   fouler 1.6%, rebounder 1.5%, duration 1.3%, blocker 1.2%, free throw 0.1%, stealer 0.1%); ECE ≤ 0.016. Caught and fixed
   a label leak in the free-throw dataset (attempt order); real effect: second FT 80.4% v first 75.6%.
+- **19 Nov 2026** — Git: repository initialised with the owner's personal identity (as MusSim), first commit `3291ffc`,
+  pushed to the new **private** GitHub repo `MusaMoholo/MusNBA`. Owner's standing rule: agents commit and push at every
+  checkpoint (AGENTS.md §4–§5).
 

@@ -1,7 +1,10 @@
 # Handoff — state and next actions
 
-Updated **19 November 2026, ~20:00 UTC** (checkpoint: M5 v1 done). Read [AGENTS.md](AGENTS.md) first. Rewrite this
-file at every checkpoint; whoever reads it next may be a new agent.
+Updated **19 November 2026, ~20:15 UTC** (checkpoint: M5 v1 done; git set up). Read [AGENTS.md](AGENTS.md) first.
+Rewrite this file at every checkpoint, then commit and push; whoever reads it next may be a new agent.
+
+**Git:** private repo `MusaMoholo/MusNBA` (`main`), first commit `3291ffc` + this checkpoint's docs commit. Nothing is
+running in the background; the owner may have `scripts/serve.py` on :8766 open — leave it.
 
 ## State
 
@@ -68,6 +71,7 @@ season). Its known weakness — minutes spread too thin and team totals imposed 
 ## Commands
 
 ```sh
+git status && git log --oneline -5                                    # start of session; commit + push at checkpoints
 .venv/bin/python scripts/smoke.py [--fault]                           # checks (the fault run must fail)
 .venv/bin/python scripts/nightly.py [--offline] [--backfill-days N]   # live: collect → snapshot → views
 .venv/bin/python scripts/serve.py --port 8767                         # your own review server (owner uses :8766)

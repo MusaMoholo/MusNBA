@@ -17,7 +17,8 @@ At every checkpoint the next session may be a different agent, so leave the docs
 ## 2. First actions in a new session
 
 ```sh
-.venv/bin/python scripts/smoke.py        # must pass (59+ checks) before you change anything
+git status && git log --oneline -5      # clean tree expected; the last commit is the last checkpoint
+.venv/bin/python scripts/smoke.py        # must pass (61+ checks) before you change anything
 ls analysis/experiments/                 # latest experiment logs: what was last measured
 ```
 
@@ -46,7 +47,11 @@ Then do the first open item in HANDOFF_NEXT.md § Next actions. If smoke fails, 
   shells or bundles. Deterministic simulations: re-running identical inputs must reproduce stored results.
 - Missing data stays missing; never clamp; placeholders are labelled in the app.
 - NBA Stats/CDN with browser-imitating headers only if the owner authorises it (PLAN §9). ESPN requests stay polite.
-- Do not commit or push without an explicit owner request (git is not initialised yet).
+- **Git (owner's standing instruction, 19 Nov 2026): commit and push at every checkpoint** — see §5 step 7. The repo is
+  private, `MusaMoholo/MusNBA`, branch `main`. Its local git config carries the owner's personal identity (MusaMoholo,
+  GitHub no-reply email) and a personal credential helper: never use the global identity, never change these
+  settings, never force-push or rewrite history. Data, the virtualenv and exports stay out of git (`.gitignore`);
+  check `git status` before committing and never add secrets or `data/`.
 
 ## 5. Checkpoint protocol — do this at the end of every milestone or work session
 
@@ -60,7 +65,10 @@ Write as if you will not be the one to continue.
 5. **README / HANDOFF file map**: new scripts, outputs and commands.
 6. Run `.venv/bin/python scripts/smoke.py`; add a smoke check for every new output with an accounting identity, and
    confirm `--fault` still fails.
-7. Tell the owner, in a few bullets, what changed, what was measured and what is next.
+7. **Commit and push**: `git add -A && git status` (review: no `data/`, no secrets), then
+   `git commit -m "<milestone>: <what changed, key numbers>"` and `git push`. One commit per checkpoint at least; record
+   the commit in HANDOFF_NEXT.md's header on the next checkpoint. Follow any commit-trailer rules your harness gives.
+8. Tell the owner, in a few bullets, what changed, what was measured and what is next.
 
 ## 6. Conventions worth knowing
 
