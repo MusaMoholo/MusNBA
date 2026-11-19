@@ -151,6 +151,141 @@ Gain = held-out log-loss improvement over the better of the league and player-pr
   (2025-26). Lesson: any feature derived from within-segment order needs the real order.
 - "Stealer" and "free throw" sit at their baselines: steal rate and FT% carry nearly all the signal.
 
+## 3h. M5 tuning (folds F1–F4, 15 decisions; logs `analysis/experiments/20261119T19*`; 19 Nov 2026)
+
+All comparisons are paired on identical held-out rows (`scripts/compare.py`), standard errors clustered by game.
+
+- **Training noise.** Changing only the LightGBM seed moves a node's held-out log loss by (RMS over folds, % of loss):
+  who 0.012, what 0.018, shot result 0.017, rebounder 0.018, duration 0.024, rebound 0.026, free throw 0.048, stealer
+  0.055, assister 0.059, event 0.060, blocked 0.061, blocker 0.074, fouler 0.079, turnover type 0.108, assisted 0.154 —
+  with game-clustered |z| up to 3.4. The z-score alone is too lenient; verdicts now also require beating this floor.
+- **Sample-weight decay — negative result.** weight = 0.5^(age / half-life) on training rows, against no decay:
+  one season worse on 10 of 15 nodes (none better; chain +1.68 nats per game, z up to +22), two seasons worse on 6
+  (+0.69 nats per game). Shorter is worse. No decay is kept: all 2022-26 possessions count equally.
+  Half a season is worse on all 15 nodes (+4.53 nats per game).
+- **In-game form ("heat check", D3).** Leaving out the actor's makes, attempts and points so far this game costs
+  +0.30 nats per game: who +0.038% (z 5.3), what +0.044%, turnover type +0.136%. **No hot hand in shot making**: shot
+  result is unchanged without them (+0.001%, z 0.1) — a player's night changes how often and what he shoots, not whether
+  it goes in. Free throws are better without them (−0.066%, z −2.7): dropped for that node only.
+- **Team style (12 inputs: offence's pace, three/rim shares, turnover, foul-drawn and offensive-rebound rates; the same
+  allowed by the defence — style, not strength, D18)**: chain −1.31 nats per game (z −5 to −8). Better for duration
+  −0.174% (z −14.7), what −0.153% (z −9.1), shot result −0.033% (z −2.5); **worse** for assisted +0.159%, assister
+  +0.069%, blocker +0.094%, turnover type +0.128% and event; neutral elsewhere. Kept for duration, what and shot result.
+- **Schedule — negative result.** Rest days of both teams and day of season: chain +0.02 nats per game, no node better
+  (blocker and turnover type worse). Rest does not move possession-level decisions; fatigue belongs to minutes (M7).
+- **Clutch flag — negative result** (last 5 minutes, margin ≤ 5): chain +0.03 nats per game (z 0.3); trees already
+  combine period, clock and margin.
+- **Feature decay (profiles), against the defaults** (batch 2, All-Star games excluded): role half-life 3 games +0.02,
+  10 games +0.05 nats per game (neutral; 5 kept); usage 8 games **+1.04** (z +10; worse on 9 nodes, blocker +0.33%,
+  turnover type +0.20%) — a shorter usage memory loses signal; usage 30 games −0.13 (z −1.3, mixed: blocker −0.26% and
+  rebounder −0.06% better, what +0.04% and assister +0.03% worse — rebounding/defence rates settle slower than usage and
+  shot mix; next: split that family); accuracy 20 games +0.22 (z +2.8, worse), 80 games −0.08 (z −1.0; shot result
+  −0.021%, just beyond noise) — longer shooting memory trends better; 40 kept for v1, 120+ to test; free throws 30
+  attempts +0.11 (free throw +0.056%, worse), 120 −0.06 (z −0.8, neutral) — 60 kept. Single-node verdicts at ~1× the seed noise appear for
+  unrelated changes alike (any input change reshuffles the trees like a new seed) and are not read as effects.
+- **Playoff weights — negative result**: ×2 chain +0.29 nats per game (z +3.2), ×0.5 +0.13 (z +1.5); playoff rows count once.
+- **Shot distance is the strongest input after zone.** Leaving out distance and lateral offset: blocked +3.85% log
+  loss, assisted +1.13%, shot result +1.01%, blocker +0.41%, rebound +0.23%, rebounder +0.12% (every fold, z 3–34);
+  chain +3.08 nats per game. Nothing in the 15-decision chain produced a location, so a 16th decision was added (D21).
+  FG% falls with distance inside every zone (quintiles, 2023-24 → 2025-26): rim 75.9 → 54.3%, paint 46.2 → 44.3%,
+  mid 43.0 → 38.7%, corner 3 38.7 → 36.7%, above-break 3 36.7 → 31.9% (deepest fifth ≥ 27.3 ft).
+- **Team turnovers** (shot clock, 8-second; all dead ball) are 5.3% of turnovers (2024-25 + 2025-26) and carry no
+  player. The event model counted them as actions, so "who" would have credited them to players (+5–6% player
+  turnovers in simulation). Event now has a fourth class, team turnover.
+- **All-Star games in the history files.** 2023-24 (1 game) and 2025-26 (3 games, the three-team format) pass
+  reconciliation and were in training — about 400 segments (0.03%). Excluded from every dataset (ESPN franchise ids
+  1–30 only); found because a smoke check saw rest days of 0.
+- **Location (node 16, D21)**: +4.0 / +4.7 / +4.7 / +4.5% log loss over league band shares within the zone (F1–F4),
+  ECE 0.006. Event with team turnovers as a fourth class: +16.5–17.9% over its baseline.
+- **Banded distance.** Training later nodes on the band's mean distance instead of the exact one costs 0.50 nats per
+  game (assisted +0.49%, blocked +0.16%, shot result +0.15%, rebound +0.06%; others neutral) — bands keep ~84% of
+  distance's 3.1 nats. v1 trains on bands, since the engine samples a band; finer bands could close the gap.
+- **Level recalibration — negative result.** Refitting class intercepts on the latest 10% of the training window:
+  neutral on all 10 non-candidate nodes (chain −0.06 nats per game). The latest slice does not predict the next
+  season's level better than the whole window.
+- **Calibration by period and margin** (control run): in regulation, excess ECE over the perfect-calibration null is
+  within 0.003 for nearly every node and bucket, with no period pattern — no per-period temperature is needed. OT
+  buckets are small and noisy. The visible problem is a **level bias in every bucket**: "what" ≈ 0.8 points and
+  "turnover type" 1.0–1.8 points on one class — drift between the training window and the season that follows.
+
+## 3h′. Model v1 (settings `models/v1.json`; folds log `analysis/experiments/20261119T210324Z_v1_folds.json`)
+
+v1 = no sample-weight decay; profile half-lives role 5 / usage 15 / accuracy 40 / free throws 60 games; location bands
+for shot distance (banded inputs); team style for duration, what and shot result; day of season for event and turnover
+type; in-game form everywhere except free throws; All-Star games excluded.
+
+| Node | Mean gain v best baseline | Worst fold | Mean ECE |
+|---|---|---|---|
+| duration | +1.49% | +1.44% | 0.0025 |
+| event (4 classes) | +17.45% | +16.61% | 0.0026 |
+| who | +2.07% | +2.02% | 0.0019 |
+| what | +5.47% | +5.26% | 0.0048 |
+| location (new) | +4.48% | +3.96% | 0.0060 |
+| shot result | +2.00% | +1.94% | 0.0037 |
+| assisted | +25.15% | +24.59% | 0.0040 |
+| assister | +2.44% | +2.08% | 0.0059 |
+| blocked | +6.26% | +6.00% | 0.0049 |
+| blocker | +1.18% | +0.77% | 0.0075 |
+| rebound | +7.90% | +7.63% | 0.0065 |
+| rebounder | +1.51% | +1.39% | 0.0029 |
+| turnover type | +4.79% | +4.59% | 0.0113 |
+| stealer | +0.07% | +0.02% | 0.0021 |
+| fouler | +1.57% | +1.48% | 0.0020 |
+| free throw | +0.14% | +0.03% | 0.0041 |
+
+Against the clean-data control (v1 inputs, exact distance): chain −0.90 nats per game (z −9.3), net of the +0.50 that
+bands cost; against an equally banded baseline the tuning is worth ≈ −1.4 nats per game.
+
+**Final test, scored once (2026-27 to 18 Nov; trained on everything before 2026-07-01; log
+`analysis/experiments/20261119T212218Z_final_v1.json`, models `data/models/v1/`, 44 MB).** Gain over the best baseline:
+event +11.77%, assisted +22.68%, rebound +7.22%, blocked +6.19%, what +4.44%, location +2.94%, assister +2.89%, shot
+result +1.70%, blocker +1.69%, rebounder +1.61%, who +1.39%, duration +1.37%, fouler +1.36%, free throw +0.38%,
+stealer +0.12% — every node above its baselines. ECE is higher than on the folds (event 0.022, turnover type 0.033,
+rebound 0.018, duration 0.014, location 0.011) and the excess is a uniform level shift in every quarter and margin
+bucket, not noise — see the adapter skew below. Inference, one step for 10,000 worlds (50,000 candidate rows) on a
+busy machine: 721 ms summed over all 16 nodes (assister 109, what 84, fouler 82, location 64, who 61, duration 57).
+
+**Train/serve skew — the live ESPN adapter and the hoopR history differ** (Oct–Nov 2025 history, 294 games, v Oct–Nov
+2026 live, 221 games): actions within 2 s of the segment start 8.4% v 2.9% — concentrated after offensive rebounds
+(49% v 12% of oreb segments) and defensive rebounds (5.5% v 1.4%), so rebound times are stamped differently; non-shooting
+defensive fouls 16.8 v 18.7 per game and shooting fouls 17.3 v 16.3 (the total is equal: the split differs); and-ones
+4.9 v 4.5; live-ball share of turnovers 59.4% v 56.6%; offensive fouls 12.4% v 14.1%. Shot coordinates agree (rim
+distance 1.94 v 1.83 ft). Models trained on history then see shifted inputs on live data — this explains most of
+the final-test calibration gap and must be fixed before the engine runs on live games (M6).
+
+## 3i. M6a — aggregation test with real rotations (v1 candidate settings; log `analysis/experiments/20261119T204437Z_m6a.json`)
+
+300 random F4 held-out games (Jan–Apr 2026), node models trained through Dec 2025 only, 10,000 worlds per game.
+Every real segment keeps its lineups, clock, score and in-game counts; every decision is sampled (teacher forcing per
+segment — possessions, minutes and segment counts are real). Baseline = the player's last 20 games per minute × his
+real minutes.
+
+| Tier (player-games) | PTS bias | REB | AST | 3PM | STL | BLK | TOV | FTA | PF | 10–90% coverage | CRPS skill v baseline |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| Stars ≥ 25% usage (432) | +2.4% | −2.3% | −1.8% | +4.9% | +2.7% | −3.8% | +4.8% | +5.5% | +8.1% | 77–83% | +7.0 to +12.0% (PF +0.9%) |
+| Other starters (2,594) | −0.4% | −0.3% | −1.4% | −0.5% | +1.2% | −1.5% | +0.9% | +0.2% | +6.5% | 77–80% | +6.5 to +10.3% (PF +2.7%) |
+| Bench (3,434) | −1.8% | −0.8% | −1.7% | −3.1% | +1.1% | +4.4% | +3.1% | +7.6% | +2.5% | 78–82% | +7.3 to +10.8% |
+
+- Team points: simulated 228.5 v actual 229.5 per game (−0.5%); home −0.97, away −0.09; margin −0.89 (SE ≈ 1.0).
+  Simulated SD of the total 17.8 v real deviation around the simulation 18.2; margin 17.8 v 17.9; 10–90% coverage
+  77–81% — given real possessions, game-level spread is right.
+- Gate (bias ≈ 0 by tier, coverage ≈ 80%, CRPS better than recent averages): **met** for points, rebounds, assists,
+  threes, steals, blocks. To trace: personal fouls +4.9% overall (2.9% of real shooting fouls have no recorded fouler,
+  ≈ 1.3 points of it) and stars slightly hot on free throws, turnovers and threes.
+- Speed: ~1.5 s per game for the branch tables and 10,000 worlds on a quiet machine (3.7 s with 10 jobs running).
+- **Event accounting** (expected v actual counts in the same 300 games, `…205539Z_m6a.json`): actions −0.5%, FGA −1.1%,
+  3PA −1.7%, but every foul runs hot — non-shooting defensive fouls +4.6% (4,754 v 4,545), penalty trips +7.6%,
+  and-ones +4.6%, offensive fouls +7.8%, shooting fouls on a two +2.5% (on a three −21%, 162 v 206); violations +16%,
+  team turnovers +8.4%. The personal-foul and free-throw biases trace to the event and what nodes.
+- **Why: fouls fall through every season.** Non-shooting defensive fouls per game, Oct–Dec → Jan–Feb → Mar–Apr
+  (regular season): 2022-23 15.6 → 14.2 → 13.3; 2023-24 15.2 → 14.0 → 13.6; 2024-25 15.4 → 14.1 → 13.7; 2025-26 16.5 →
+  14.4 → 15.5. Models trained through December learn the new season's level from its foul-heavy first months. Day of
+  season was neutral on log loss (schedule group) but the level shift adds up in box scores. Tested alone on the four
+  foul-related nodes: log loss neutral (event −0.027%, others ±0.005%), signed class bias reduced — event defensive
+  fouls F4 +2.4 → −0.6 per 1,000 (mean |bias| over folds 2.1 → 1.2), turnover type offensive fouls F4 +4.5 → +1.6,
+  what fouled-on-a-two +3.1 → +1.7 (but turnovers +2.6 → +4.1). Kept for event and turnover type (judgement: neutral
+  log loss, measured bias fix with a known mechanism).
+
 ## 4. Placeholder model `baseline-v0` (19 Nov 2026, superseded by `baseline-v1`)
 
 - Team score SD 11.25 with correlation 0.35 gives margin SD 12.8 and total SD ~19 in simulation.

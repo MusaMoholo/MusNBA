@@ -1,6 +1,6 @@
 # MusNBA — game plan and progress
 
-Updated **19 November 2026**. The single record of scope, progress and decisions. Every agent updates it at
+Updated **19 November 2026 (evening)**. The single record of scope, progress and decisions. Every agent updates it at
 every checkpoint (AGENTS.md § Checkpoint protocol). New here? Read [AGENTS.md](AGENTS.md) first, then
 [HANDOFF_NEXT.md](HANDOFF_NEXT.md) — it says exactly what to do next.
 
@@ -60,14 +60,14 @@ Slates are US Eastern game dates; tip-offs show UK time with ET alongside.
 | 0 | Discovery, data probe, plan | `██████████` done |
 | 1 | App shell, season stats, placeholder projections | `██████████` done — owner checks pending (iPhone, hosting) |
 | 1b | Per-period Game Centre (owner spec), play-by-play parser, quarter-aware placeholder | `██████████` done |
-| 2 | Possession engine (data → models → engine → backtest) | `█████░░░░░` **M1–M4 done · M5 in progress** |
+| 2 | Possession engine (data → models → engine → backtest) | `██████░░░░` **M1–M5 done · M6a passing · adapter parity next** |
 | 3 | Evaluation and nightly feedback (Forecast Lab view, refit cadence) | not started |
 | 4 | Season on the engine: pathway calibration, availability, tiebreakers, play-in, Cup, what-ifs | not started |
 | 5 | Polish: hosting, iPhone acceptance, watch-a-sim, more views | not started |
 
 ## 6. Phase 2 milestones — the current work
 
-Design: [ENGINE_PLAN.md](ENGINE_PLAN.md) (decisions D1–D20). Training: [TRAINING_PLAN.md](TRAINING_PLAN.md).
+Design: [ENGINE_PLAN.md](ENGINE_PLAN.md) (decisions D1–D21). Training: [TRAINING_PLAN.md](TRAINING_PLAN.md).
 Do them in this order; each ends with its checks passing and a checkpoint (AGENTS.md).
 
 | # | Milestone | Status | Done when | Output |
@@ -76,8 +76,9 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
 | M2 | Segments (possessions) | ✅ | Points, clock, alternation, lineups, possessions reconcile | `possessions.py` |
 | M3 | Rotations + replay baseline | ✅ | Stints reconcile; replay backtest recorded | `rotations.py` |
 | M4 | Profiles + harness + baselines | ✅ core | Point-in-time profiles; baselines on folds | `features.py`, `evaluate.py` |
-| M5 | LightGBM per decision (15 nodes, D20) | ◐ **v1 done — every node ≥ baseline on every fold; tuning, calibration by period, persistence next** | Every node ≥ its best baseline on every fold, well calibrated (ECE ≤ baseline); per-node choice recorded; models persisted | `nodes.py`, `train.py` |
-| M6a | Aggregation test with real rotations | ☐ | Replayed held-out games: player box-score bias ≈ 0 by role tier, 80% coverage | (to build) |
+| M5 | LightGBM per decision (16 nodes, D20 + D21) | ✅ **v1 tuned, validated, persisted, final test scored once** — every node ≥ its best baseline on every fold and on the final test; settings `models/v1.json`; FINDINGS §3h–§3h′ | Every node ≥ its best baseline on every fold, well calibrated; per-node choice recorded; models persisted | `nodes.py`, `train.py`, `compare.py`, `calibration.py` |
+| M5b | Adapter parity: live ESPN v hoopR history | ☐ **next** — live data differ from history (short actions after rebounds 12% v 49%, foul split, turnover split; FINDINGS §3h′) | Same game through both adapters gives the same segments; season distributions match | `plays.py`, `possessions.py` |
+| M6a | Aggregation test with real rotations | ◐ **gate met on 300 F4 games** (team total −0.5%, player stats within ±2% for starters/bench, coverage 77–83%, CRPS +7–12% v recent averages); fouls +5% traced to in-season decline (day of season added); stars +2–5% to trace | Replayed held-out games: player box-score bias ≈ 0 by role tier, 80% coverage | `aggregate.py` |
 | M6 | Engine v1 (replay rotations) | ☐ | 10k sims per game in today's output contract | (to build) |
 | M7 | Target-aware substitution model | ☐ | Minutes MAE < 5.2 and 10–90% coverage ≈ 80% (beats replay v0) | (to build) |
 | M8 | Per-player form + end-game checks | ☐ | Variance and overtime rate (5.4%) calibrated | (to build) |
@@ -105,7 +106,12 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
 | `data/derived/history/<season>/segments.parquet` | One row per segment (M2); `game_ok` marks reconciled games |
 | `data/derived/history/<season>/{stints,windows,subs,on_court}.parquet` | Rotations (M3) |
 | `data/derived/features/pregame.parquet` | One row per player-game: profile as of tip-off (M4) |
-| `analysis/experiments/<UTC>_<name>.json` | Every experiment run: configuration, folds, per-node metrics |
+| `analysis/experiments/<UTC>_<name>.json` | Every experiment run: configuration, folds, per-node metrics, commit |
+| `data/derived/experiments/<UTC>_<name>.npz` | Per-row held-out log losses of a run (paired comparisons) |
+| `data/derived/features/team_pregame.parquet` | One row per team-game: team style as of tip-off, rest, day of season |
+| `data/derived/nodes/<key>/<node>.npz` | Cached datasets per decision (folder = hash of code + inputs) |
+| `models/<version>.json` | A model version's settings and the fold run that validated it (in git) |
+| `data/models/<version>/` | Fitted LightGBM files + `config.json` (inputs, temperatures, final-test scores) |
 | `data/snapshots/<D>/` | Immutable projections for slate D (meta, games, season, stats) |
 | `data/views/api/**.json` | API-ready presentation; rebuildable without simulation |
 | `MusNBA.musnba.gz` | gzip NDJSON bundle for the PWA |
@@ -116,6 +122,9 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
 2. Hosting the PWA: the repo is **private** (`MusaMoholo/MusNBA`, created 19 Nov); GitHub Pages needs a public repo
    or a paid plan — decide when the phone app is ready. App name MusNBA.
 3. iPhone acceptance of the PWA.
+4. **D21 (engineering, to confirm)**: a 16th decision, shot location (distance band within the zone), and team
+   turnovers as an event class — added because distance is the strongest input after zone (3.1 nats per game).
+5. Player heights/weights for defender size: history has none; a polite ESPN athlete fetch (~1,000 players) would add them.
 
 ## 10. Log
 
@@ -158,4 +167,16 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
 - **19 Nov 2026** — Git: repository initialised with the owner's personal identity (as MusSim), first commit `3291ffc`,
   pushed to the new **private** GitHub repo `MusaMoholo/MusNBA`. Owner's standing rule: agents commit and push at every
   checkpoint (AGENTS.md §4–§5).
-
+- **19 Nov 2026** — **M5 tuning** (≈1,000 fits, paired game-clustered comparisons with a seed-noise floor): no sample-weight
+  decay (every half-life worse; ½ season +4.5 nats per game); shot distance worth 3.1 nats per game → **D21: location node**
+  (16 decisions) and team turnovers as an event class; team style kept for duration/what/shot result (−1.3); in-game
+  form kept except free throws (no hot hand in shot making); schedule, clutch, playoff weights, recalibration and profile
+  decay variants not better; fouls fall through every season → day of season for event and turnover type. All-Star
+  games found in history and excluded. **v1** validated on folds (every node ≥ baseline on every fold, ECE ≤ 0.012),
+  persisted (`data/models/v1/`, 44 MB) and **final test scored once**: every node above its baselines (event +11.8%,
+  assisted +22.7%, rebound +7.2%, blocked +6.2%, what +4.4%). Final-test calibration exposed a **live-v-history adapter
+  skew** (M5b, next).
+- **19 Nov 2026** — **M6a** (`aggregate.py`): 300 F4 games × 10,000 worlds with real lineups and clock — team total
+  228.5 v 229.5, player points/rebounds/assists/threes within ±2% for starters and bench, 10–90% coverage 77–83%,
+  CRPS 7–12% better than recent averages on every stat. Fouls +5% traced (event accounting) to the in-season foul
+  decline; stars run 2–5% hot on points, free throws, turnovers and threes (to trace).

@@ -1,6 +1,6 @@
 # Engine plan — possession-level simulator (phase 2)
 
-**v6 + D18–D20 · 19 November 2026 · approved; in implementation — progress in PLAN.md §6, next steps in HANDOFF_NEXT.md.** Nothing here is implemented. Items marked
+**v6 + D18–D21 · 19 November 2026 · approved; in implementation — progress in PLAN.md §6, next steps in HANDOFF_NEXT.md.** Nothing here is implemented. Items marked
 **Proposed** become decisions once agreed; §14 lists the questions still open. Progress is tracked in
 [PLAN.md](PLAN.md); measured facts live in [FINDINGS.md](FINDINGS.md).
 
@@ -28,6 +28,7 @@
 | D19 | Game types | One model per decision across regular season, NBA Cup, play-in and playoffs, with game type (and playoff round) as an input; game-type sample weights tested on the folds. Measured: playoff starters +3.0 min, top player +3.6, top-8 share 93.8% v 90.6%, pace −4%, points per possession 1.108 v 1.128 |
 | D20 | Decision chain | Owner left the number of steps to the data. Fifteen decisions in four stages — **clock**: time to the event, event type (action, defensive foul, violation); **action**: who (of five) → what (rim, paint, mid, corner 3, above-break 3, turnover, fouled on a 2, fouled on a 3) → shot result (miss, make, and-one); **credit**: assisted → assister, blocked → blocker, turnover type (steal, offensive foul, other) → stealer, fouler; **after**: free throw, rebound (offence/defence × player/team) → rebounder. Rules, not models: free-throw counts, penalty/bonus, shot clock, period ends, foul-outs. Every node has ≥ 50k training rows |
 | D17 | Long-range strength | MusSim's per-world pathway: each universe starts from a draw around today's strength and updates every team after every simulated game — near-term engine results included — by the rating system's own response to the result, against the world's own expectation, with one gain calibrated to real season dispersion (§12) |
+| D21 | Shot location; team turnovers | **Engineering decision from data (19 Nov), within D20's "steps left to the data"; owner to confirm.** A 16th decision, **location** — the shot's distance band (21 bands, 3–5 per zone) given zone, shooter and context — sits between *what* and *shot result*; later decisions see the band's mean distance and lateral offset. Reason: distance is the strongest input after zone (leaving it out costs 3.1 nats per game over the chain: blocked +3.8%, assisted +1.1%, shot result +1.0%) and no step produced it. *Event* gains a fourth class, **team turnover** (shot clock, 8 s; 5.3% of turnovers), which credits no player. All-Star and exhibition games are excluded from every dataset |
 
 ## 0. What "true to form" means
 

@@ -19,7 +19,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from basketball_common import DERIVED, write_json  # noqa: E402
+from basketball_common import DERIVED, NBA_TEAM_IDS, write_json  # noqa: E402
 
 FOLDS = {  # name: (train through, validate from, validate through)  — TRAINING_PLAN §5
     'F1': ('2023-12-31', '2024-01-01', '2024-04-30'),
@@ -35,7 +35,8 @@ EXPERIMENTS = ROOT / 'analysis' / 'experiments'
 
 def load():
     seg = pd.concat([pd.read_parquet(p) for p in sorted((DERIVED / 'history').glob('*/segments.parquet'))], ignore_index=True)
-    seg = seg[seg['game_ok'] & (seg['date_et'] < TEST_FROM)].reset_index(drop=True)
+    nba = seg['offense'].astype(str).isin(NBA_TEAM_IDS) & seg['defense'].astype(str).isin(NBA_TEAM_IDS)  # no All-Star games
+    seg = seg[seg['game_ok'] & nba & (seg['date_et'] < TEST_FROM)].reset_index(drop=True)
     seg['seg_id'] = np.arange(len(seg))
     pre = pd.read_parquet(DERIVED / 'features' / 'pregame.parquet')
     return seg, pre

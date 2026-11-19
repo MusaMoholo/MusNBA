@@ -1,0 +1,71 @@
+{
+  "version": "v1",
+  "status": "validated on folds F1–F4 (every node at least level with its best baseline on every fold; ECE ≤ 0.012)",
+  "validated_by": "analysis/experiments/20261119T210324Z_v1_folds.json",
+  "default": {
+    "half_life": null,
+    "playoff_weight": 1.0,
+    "drop": [
+      "@team",
+      "@schedule",
+      "@clutch"
+    ],
+    "banded": true,
+    "recalibrate": false,
+    "features": null
+  },
+  "nodes": {
+    "duration": {
+      "drop": [
+        "@schedule",
+        "@clutch"
+      ]
+    },
+    "what": {
+      "drop": [
+        "@schedule",
+        "@clutch"
+      ]
+    },
+    "shot_result": {
+      "drop": [
+        "@schedule",
+        "@clutch"
+      ]
+    },
+    "free_throw": {
+      "drop": [
+        "@team",
+        "@schedule",
+        "@clutch",
+        "@heat"
+      ]
+    },
+    "event": {
+      "drop": [
+        "@team",
+        "@clutch",
+        "off_rest",
+        "def_rest"
+      ]
+    },
+    "turnover_type": {
+      "drop": [
+        "@team",
+        "@clutch",
+        "off_rest",
+        "def_rest"
+      ]
+    }
+  },
+  "why": {
+    "half_life": "no sample-weight decay: every half-life worse (½ season +4.5, 1 season +1.7, 2 seasons +0.7 nats per game)",
+    "@team": "team style kept only where it beats noise: duration, what, shot result (chain −1.3 nats per game)",
+    "@schedule": "rest days and day of season help no decision",
+    "@heat": "in-game form kept (+0.30 nats per game without it), except free throws (better without)",
+    "banded": "downstream nodes see the location band's mean distance — what the engine samples (costs 0.50 nats per game v exact distance)",
+    "recalibrate": "intercept refit on the latest training slice: neutral on all 10 nodes",
+    "season_day": "day of season kept for event and turnover type: log loss neutral, but it removes the level bias from fouls falling through every season (F4 defensive-foul bias +2.4 → −0.6 per 1,000; mean over folds 2.1 → 1.2)",
+    "other": "clutch, playoff weights ×2 / ×0.5, role decay 3 / 10, usage decay 8 / 30, accuracy decay 20 / 80, free-throw decay 30 / 120: not better — defaults kept"
+  }
+}

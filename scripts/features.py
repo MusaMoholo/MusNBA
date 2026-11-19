@@ -23,7 +23,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from basketball_common import DERIVED, write_json  # noqa: E402
+from basketball_common import DERIVED, NBA_TEAM_IDS, write_json  # noqa: E402
 
 OUT = DERIVED / 'features'
 ZONES = ('rim', 'paint', 'mid', 'corner3', 'above3')
@@ -54,7 +54,7 @@ def sources():
 
 def counts_for(seg: pd.DataFrame, on: pd.DataFrame) -> pd.DataFrame:
     """Per player-game exposures and events (reconciled games only)."""
-    seg = seg[seg['game_ok']].copy()
+    seg = seg[seg['game_ok'] & seg['offense'].astype(str).isin(NBA_TEAM_IDS) & seg['defense'].astype(str).isin(NBA_TEAM_IDS)].copy()  # reconciled NBA games (no All-Star games)
     seg['seg_id'] = np.arange(len(seg))
     off = seg.melt(id_vars=['seg_id', 'game_id', 'period'], value_vars=[f'off_{i}' for i in range(1, 6)], value_name='player').dropna(subset=['player'])
     dfn = seg.melt(id_vars=['seg_id', 'game_id'], value_vars=[f'def_{i}' for i in range(1, 6)], value_name='player').dropna(subset=['player'])
@@ -112,6 +112,68 @@ def counts_for(seg: pd.DataFrame, on: pd.DataFrame) -> pd.DataFrame:
     df['starts'] = df['starter'].astype(float)
     df['segs_on'] = df['off_segs'] + df['def_segs']
     return df
+
+
+TEAM_STYLE = {'half_life': 15, 'carry': 0.5}  # games; style follows the coach and roster, so it resets faster than skills
+TEAM_RATES = {  # feature: (numerator, denominator, prior strength) — style tendencies only, never strength (D18)
+    't_pace': ('t_sum', 'n_timed', 100), 't_three': ('three', 'shots', 200), 't_rim': ('rim', 'shots', 200),
+    't_tov': ('tov', 'uses', 200), 't_foul': ('fouled', 'uses', 200), 't_oreb': ('oreb', 'reb_opp', 200),
+}
+
+
+def team_counts(seg: pd.DataFrame) -> pd.DataFrame:
+    """Per team-game style counts as the offence (off_*) and as the defence (def_*), reconciled games only."""
+    seg = seg[seg['game_ok'] & seg['offense'].astype(str).isin(NBA_TEAM_IDS) & seg['defense'].astype(str).isin(NBA_TEAM_IDS)]
+    timed = (seg['start_clock'] > 24) & ~seg['end_type'].isin(['end_period', 'unknown']) & (seg['start_type'] != 'oreb')
+    use = seg['actor'].notna() & seg['end_type'].isin(['shot', 'fouled', 'turnover', 'foul']) & ~seg['heave'].fillna(False).astype(bool)
+    use &= (seg['end_type'] != 'foul') | (seg['fta'] > 0)
+    shots = use & (seg['end_type'] == 'shot') & seg['zone'].isin(ZONES)
+    c = pd.DataFrame({'n_timed': timed.astype(float), 't_sum': np.where(timed, seg['shot_time'].clip(lower=0), 0.0),
+                      'uses': use.astype(float), 'shots': shots.astype(float),
+                      'three': (shots & seg['zone'].isin(['corner3', 'above3'])).astype(float), 'rim': (shots & (seg['zone'] == 'rim')).astype(float),
+                      'tov': (use & (seg['end_type'] == 'turnover')).astype(float),
+                      'fouled': (use & seg['end_type'].isin(['fouled', 'foul'])).astype(float),
+                      'reb_opp': seg['rebound'].notna().astype(float), 'oreb': seg['rebound'].isin(['off', 'team_off']).astype(float)})
+    c[['game_id', 'offense', 'defense', 'date_et', 'season']] = seg[['game_id', 'offense', 'defense', 'date_et', 'season']]
+    cols = list(TEAM_COUNT_COLUMNS)
+    off = c.groupby(['game_id', 'offense', 'date_et', 'season'])[cols].sum().add_prefix('off_')
+    dfn = c.groupby(['game_id', 'defense', 'date_et', 'season'])[cols].sum().add_prefix('def_')
+    off.index.names = dfn.index.names = ['game_id', 'team', 'date_et', 'season']
+    return off.join(dfn, how='outer').fillna(0).reset_index()
+
+
+TEAM_COUNT_COLUMNS = ('n_timed', 't_sum', 'uses', 'shots', 'three', 'rim', 'tov', 'fouled', 'reb_opp', 'oreb')
+
+
+def team_profiles(tc: pd.DataFrame, half_life: float, carry: float) -> pd.DataFrame:
+    """Pre-game team style (decayed, shrunk to the league rate of earlier seasons), rest days and day of season."""
+    tc = tc.sort_values(['team', 'date_et', 'game_id'], kind='stable').reset_index(drop=True)
+    cols = [f'{side}_{c}' for side in ('off', 'def') for c in TEAM_COUNT_COLUMNS]
+    sums, _ = decayed_pregame(tc.rename(columns={'team': 'player'}), cols, half_life, carry)
+    S = pd.DataFrame(sums, columns=cols)
+    out = tc[['game_id', 'team', 'date_et', 'season']].copy()
+    for side in ('off', 'def'):
+        for feat, (num, den, k) in TEAM_RATES.items():
+            league = {}
+            for season in sorted(tc['season'].unique()):
+                base = tc[tc['season'] < season]
+                base = base if len(base) else tc[tc['season'] == season]
+                league[season] = base[f'{side}_{num}'].sum() / max(base[f'{side}_{den}'].sum(), 1e-9)
+            prior = tc['season'].map(league).to_numpy()
+            out[f'{side}{feat[1:]}'] = (S[f'{side}_{num}'] + k * prior) / (S[f'{side}_{den}'] + k)
+    return out
+
+
+def schedule(seg: pd.DataFrame) -> pd.DataFrame:
+    """Rest days (capped at 7; first game in the data = 7) and day of the season, per team-game, over every NBA game."""
+    seg = seg[seg['offense'].astype(str).isin(NBA_TEAM_IDS) & seg['defense'].astype(str).isin(NBA_TEAM_IDS)]
+    g = pd.concat([seg[['game_id', 'offense', 'date_et', 'season']].rename(columns={'offense': 'team'}),
+                   seg[['game_id', 'defense', 'date_et', 'season']].rename(columns={'defense': 'team'})]).drop_duplicates(['game_id', 'team'])
+    g = g.sort_values(['team', 'date_et', 'game_id']).reset_index(drop=True)
+    d = pd.to_datetime(g['date_et'])
+    g['rest_days'] = (d - d.groupby(g['team']).shift()).dt.days.clip(upper=7).fillna(7)
+    g['season_day'] = (d - d.groupby(g['season']).transform('min')).dt.days
+    return g[['game_id', 'team', 'rest_days', 'season_day']]
 
 
 FAMILY_COLUMNS = {
@@ -207,12 +269,19 @@ def profiles(df: pd.DataFrame, sums: dict, priors: dict) -> pd.DataFrame:
     return f
 
 
-def build() -> dict:
-    frames = [counts_for(pd.read_parquet(seg), pd.read_parquet(on)) for seg, on in sources()]
+def build(out: Path = OUT, families: dict | None = None, team_style: dict | None = None) -> dict:
+    families = families or FAMILIES
+    team_style = team_style or TEAM_STYLE
+    frames, team_frames, schedules = [], [], []
+    for seg_path, on_path in sources():
+        seg = pd.read_parquet(seg_path)
+        frames.append(counts_for(seg, pd.read_parquet(on_path)))
+        team_frames.append(team_counts(seg))
+        schedules.append(schedule(seg))
     df = pd.concat(frames, ignore_index=True)
     df = df.sort_values(['player', 'date_et', 'game_id'], kind='stable').reset_index(drop=True)
     sums, latest_sums = {}, {}
-    for family, (half_life, carry) in FAMILIES.items():
+    for family, (half_life, carry) in families.items():
         cols = FAMILY_COLUMNS[family]
         arr, latest = decayed_pregame(df, cols, half_life, carry)
         sums[family] = pd.DataFrame(arr, columns=cols, index=df.index)
@@ -221,13 +290,16 @@ def build() -> dict:
     feats = profiles(df, sums, priors)
     base = df[['game_id', 'player', 'date_et', 'season', 'season_type', 'team', 'pos', 'starter']]
     pre = pd.concat([base, feats], axis=1)
-    OUT.mkdir(parents=True, exist_ok=True)
-    pre.to_parquet(OUT / 'pregame.parquet', index=False)
+    out.mkdir(parents=True, exist_ok=True)
+    pre.to_parquet(out / 'pregame.parquet', index=False)
+    teams = team_profiles(pd.concat(team_frames, ignore_index=True), team_style['half_life'], team_style['carry'])
+    teams = teams.merge(pd.concat(schedules, ignore_index=True), on=['game_id', 'team'], how='left')
+    teams.to_parquet(out / 'team_pregame.parquet', index=False)
     # Latest profile per player: the state after his last game (for projections from today).
     last = df.groupby('player').tail(1).reset_index(drop=True)
-    lsums = {fam: pd.DataFrame([latest_sums[fam][p] for p in last['player']], columns=FAMILY_COLUMNS[fam]) for fam in FAMILIES}
+    lsums = {fam: pd.DataFrame([latest_sums[fam][p] for p in last['player']], columns=FAMILY_COLUMNS[fam]) for fam in families}
     latest = pd.concat([last[['player', 'date_et', 'season', 'team', 'pos']], profiles(last, lsums, priors)], axis=1)
-    latest.to_parquet(OUT / 'latest.parquet', index=False)
+    latest.to_parquet(out / 'latest.parquet', index=False)
     # Sanity: does the pre-game profile anticipate the game?
     game_usage = df['uses'] / df['off_segs'].where(df['off_segs'] > 0)
     big = (df['off_segs'] >= 25) & (feats['games_eff'] > 0)
@@ -238,14 +310,33 @@ def build() -> dict:
               'minutes_corr_pregame_v_game': round(float(np.corrcoef(feats.loc[feats['games_eff'] > 0, 'min_avg'], df.loc[feats['games_eff'] > 0, 'sec'] / 60)[0, 1]), 3),
               'three_share_corr': round(float(np.corrcoef((feats['mix_above3'] + feats['mix_corner3'])[big & (df['shots'] >= 8)],
                                                           (three / df['shots'])[big & (df['shots'] >= 8)])[0, 1]), 3),
-              'families': {k: {'half_life_games': v[0], 'season_carry': v[1]} for k, v in FAMILIES.items()},
+              'families': {k: {'half_life_games': v[0], 'season_carry': v[1]} for k, v in families.items()},
+              'team_style': team_style, 'team_games': len(teams), 'team_columns': [c for c in teams.columns if c not in ('game_id', 'team', 'date_et', 'season')],
               'feature_columns': list(feats.columns)}
-    write_json(OUT / 'features_report.json', report, pretty=True)
+    write_json(out / 'features_report.json', report, pretty=True)
     return report
 
 
-if __name__ == '__main__':
-    argparse.ArgumentParser(description=__doc__).parse_args()
+def main():
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument('--out', type=Path, default=OUT, help='output folder (variants for experiments: anywhere else)')
+    ap.add_argument('--family', action='append', default=[], metavar='NAME=HALF_LIFE[,CARRY]',
+                    help=f'override a stat family, e.g. usage=8 or role=3,0.3 (families: {", ".join(FAMILIES)})')
+    ap.add_argument('--team', default=None, metavar='HALF_LIFE[,CARRY]', help='team style decay (default 15,0.5)')
+    args = ap.parse_args()
+    families = dict(FAMILIES)
+    for spec in args.family:
+        name, value = spec.split('=')
+        hl, *rest = value.split(',')
+        families[name] = (float(hl), float(rest[0]) if rest else FAMILIES[name][1])
+    team = dict(TEAM_STYLE)
+    if args.team:
+        hl, *rest = args.team.split(',')
+        team = {'half_life': float(hl), 'carry': float(rest[0]) if rest else TEAM_STYLE['carry']}
     import json
-    r = build()
+    r = build(args.out, families, team)
     print(json.dumps({k: v for k, v in r.items() if k != 'feature_columns'}, indent=1))
+
+
+if __name__ == '__main__':
+    main()

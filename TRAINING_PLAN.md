@@ -1,6 +1,6 @@
 # Training plan — models for the possession engine
 
-**v2 · 19 November 2026 · approved (owner: as accurate as possible, rich data, experiment freely). M5 v1 results: FINDINGS §3g.** It details
+**v3 · 19 November 2026 · approved (owner: as accurate as possible, rich data, experiment freely). M5 v1 results: FINDINGS §3g; tuning: §3h.** It details
 [ENGINE_PLAN.md](ENGINE_PLAN.md) §6–§10 for the data built in M1–M3. Progress lives in [PLAN.md](PLAN.md).
 
 ## 1. What we are training (ENGINE_PLAN D20)
@@ -11,9 +11,10 @@ game type as inputs. Labels come from the M2 segments (history 2022-23 → 2025-
 | Stage | Node | Choice | Rows | Type |
 |---|---|---|---|---|
 | Clock | duration | time to the event, 13 two-second bins | 1.20M segments | multiclass |
-| Clock | event | offensive action · defensive foul · violation/jump ball | 1.23M | multiclass |
+| Clock | event | offensive action · defensive foul · violation/jump ball · team turnover (D21) | 1.23M | multiclass |
 | Action | who | which of the five ends it (incl. who is fouled in the penalty) | 1.15M × 5 | candidate |
 | Action | what | rim · paint · mid · corner 3 · above-break 3 · turnover · fouled on a 2 · on a 3 | 1.14M | multiclass |
+| Action | location (D21) | distance band within the zone: 21 bands, 3–5 per zone (`nodes.LOCATION_EDGES`) | 0.92M | multiclass, masked to the zone |
 | Action | shot result | miss · make · and-one | 0.92M | multiclass |
 | Credit | assisted / assister | assisted? then which of four | 0.43M / 0.27M × 4 | binary / candidate |
 | Credit | blocked / blocker | blocked? then which of five | 0.49M / 50k × 5 | binary / candidate |
@@ -82,7 +83,9 @@ start from their archetype, as agreed (D5).
 **Sample-weight decay: how much older possessions count when the models learn.** The league changes — more
 threes, more substitutions, rule tweaks — so a 2022-23 possession should teach the model less than one from
 last month. Proposed: weight = 0.5^(age / one season), with this season counted fully. Validation chooses
-among half-lives of half a season, one season, two seasons and no decay.
+among half-lives of half a season, one season, two seasons and no decay. **Measured (FINDINGS §3h): no decay wins** —
+every half-life is worse on nearly every node (one season: +1.7 nats per game over the chain; two: +0.7). League drift
+is carried by the season input; older possessions still teach the models.
 
 ## 4. Guarding against leakage
 
@@ -136,6 +139,15 @@ Decided by the folds above, not by default:
 
 Every run is logged (configuration, data range, per-fold metrics) under `analysis/experiments/`; measured wins
 and **negative results** go to FINDINGS so failed ideas are not repeated without a new reason.
+
+**How a change is judged (tooling, 19 Nov).** `scripts/nodes.py` caches the sixteen datasets (folder named by a hash
+of code and inputs), so runs that change only training load in seconds and run in parallel. `scripts/train.py` stores
+every held-out decision's log loss; `scripts/compare.py A B --noise S0 S1` compares two runs on identical rows, with
+standard errors clustered by game and a **training-noise floor** from two runs that differ only in seed (a seed change
+alone moves small nodes by up to 0.15% with |z| up to 3.4). A change is kept for a node when its mean change over the
+four folds beats −noise with pooled z ≤ −2 and no fold is worse by more than 2 × noise with z > 2; global changes
+(feature decay) are also read on the **chain** row — the change in log-likelihood of whole games, in nats per game.
+Settings that differ by node are kept per node in the version file (`models/<version>.json`).
 
 Richer sources needing an owner decision: NBA tracking data (drives, touches, catch-and-shoot v pull-up,
 defender distance) via the NBA Stats API (PLAN.md §7 item 1).

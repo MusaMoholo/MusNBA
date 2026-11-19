@@ -3,8 +3,9 @@
 
 Builds, from M2 segments and M4 point-in-time profiles, one dataset per decision:
 
-  stage 1  duration (time to the event, 2-second bins) · event (action / defensive foul / violation)
-  stage 2  who (of five) · what (5 zones, turnover, fouled on a 2 or a 3) · shot result (miss/make/and-one)
+  stage 1  duration (time to the event, 2-second bins) · event (action / defensive foul / violation / team turnover)
+  stage 2  who (of five) · what (5 zones, turnover, fouled on a 2 or a 3) · location (distance band within the zone)
+           · shot result (miss/make/and-one)
   stage 3  assisted · assister (of four) · blocked · blocker (of five) · turnover type · stealer · fouler
   stage 4  free throw · rebound (offence/defence × player/team) · rebounder (of five)
 
@@ -21,15 +22,35 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from basketball_common import DERIVED  # noqa: E402
+from basketball_common import DERIVED, NBA_TEAM_IDS  # noqa: E402
 
 ZONES = ['rim', 'paint', 'mid', 'corner3', 'above3']
 START_TYPES = ['period_start', 'made_fg', 'made_ft', 'dreb', 'steal', 'dead_turnover', 'oreb', 'foul', 'jump_ball', 'other']
-EVENT = ['action', 'def_foul', 'violation']
+EVENT = ['action', 'def_foul', 'violation', 'team_turnover']  # team turnovers (shot clock, 8 s) credit no player
 WHAT = ZONES + ['turnover', 'fouled_2', 'fouled_3']
 RESULT = ['miss', 'make', 'and_one']
 REBOUND = ['off', 'team_off', 'def', 'team_def']
 TOV_TYPE = ['live', 'offensive_foul', 'dead_other']
+# Shot location (node 16): distance bands within each zone, feet from the basket (FINDINGS §3h). The engine samples a
+# band after "what"; later nodes see the band's mean distance and lateral offset.
+LOCATION_EDGES = {'rim': [1, 2, 3], 'paint': [5, 7, 10, 14], 'mid': [12, 16, 19], 'corner3': [23.5, 24.5], 'above3': [25.5, 26.5, 28, 31]}
+LOCATION_OFFSET = dict(zip(ZONES, np.cumsum([0] + [len(LOCATION_EDGES[z]) + 1 for z in ZONES[:-1]]).tolist()))
+LOCATION_BANDS = sum(len(e) + 1 for e in LOCATION_EDGES.values())  # 21
+LOCATION_MASK = np.zeros((len(ZONES), LOCATION_BANDS), dtype=bool)  # zone → its bands
+for _i, _z in enumerate(ZONES):
+    LOCATION_MASK[_i, LOCATION_OFFSET[_z]:LOCATION_OFFSET[_z] + len(LOCATION_EDGES[_z]) + 1] = True
+
+
+def location_band(zone, distance) -> np.ndarray:
+    """Global band index (0–20) for each shot from its zone name and distance; -1 when either is missing."""
+    zone, distance = np.asarray(zone, dtype=object), np.asarray(distance, dtype=float)
+    out = np.full(len(zone), -1, dtype=int)
+    for z in ZONES:
+        m = (zone == z) & ~np.isnan(distance)
+        out[m] = LOCATION_OFFSET[z] + np.digitize(distance[m], LOCATION_EDGES[z])
+    return out
+
+
 DURATION_EDGES = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24]  # 13 bins: <2, 2–4, …, 22–24, ≥24
 PROFILE = ['games_eff', 'min_avg', 'start_share', 'off_segs_eff', 'usage', 'shot_share', 'tov_share', 'foul_drawn_share',
            'live_tov_share', 'assisted_share', 'ft_pct', 'fta_per_use', 'ast_rate', 'oreb_pct', 'dreb_pct', 'stl_rate',
@@ -38,6 +59,12 @@ PROFILE = ['games_eff', 'min_avg', 'start_share', 'off_segs_eff', 'usage', 'shot
 IN_GAME = ['sec_so_far', 'uses_so_far', 'fga_so_far', 'made_so_far', 'pts_so_far', 'pf_so_far', 'ast_so_far']
 CONTEXT = ['period', 'start_clock', 'sec_left_game', 'margin', 'fouls_def', 'fouls_off', 'off_home', 'season_type', 'season',
            'start_code']
+# Candidate inputs added in M5 tuning; each group must earn its place by ablation (train.py --drop @group).
+TEAM_STYLE = [f'team_o_{c}' for c in ('pace', 'three', 'rim', 'tov', 'foul', 'oreb')] + \
+             [f'team_d_{c}' for c in ('pace', 'three', 'rim', 'tov', 'foul', 'oreb')]  # style, never strength (D18)
+SCHEDULE = ['off_rest', 'def_rest', 'season_day']
+GROUPS = {'team': TEAM_STYLE, 'schedule': SCHEDULE, 'clutch': ['clutch'], 'heat': ['made_so_far', 'fga_so_far', 'pts_so_far']}
+CONTEXT = CONTEXT + TEAM_STYLE + SCHEDULE + ['clutch']
 LINEUP = ['off_usage_sum', 'off_usage_max', 'off_ast_sum', 'off_three_sum', 'off_oreb_sum', 'off_bigs', 'off_min_mean',
           'def_blk_sum', 'def_blk_max', 'def_stl_sum', 'def_dreb_sum', 'def_pf_sum', 'def_bigs', 'def_min_mean']
 
@@ -52,7 +79,7 @@ def load_segments(include_current: bool = False) -> pd.DataFrame:
     if include_current and (DERIVED / 'segments.parquet').exists():
         paths.append(DERIVED / 'segments.parquet')
     seg = pd.concat([pd.read_parquet(p) for p in paths], ignore_index=True)
-    seg = seg[seg['game_ok']].reset_index(drop=True)  # rows stay in game order within each game
+    seg = seg[seg['game_ok'] & seg['offense'].astype(str).isin(NBA_TEAM_IDS) & seg['defense'].astype(str).isin(NBA_TEAM_IDS)].reset_index(drop=True)  # reconciled NBA games, in game order
     seg['seg_id'] = np.arange(len(seg))
     seg['start_code'] = seg['start_type'].map({s: i for i, s in enumerate(START_TYPES)}).fillna(len(START_TYPES) - 1).astype(int)
     seg['margin'] = seg['score_off'] - seg['score_def']
@@ -62,7 +89,19 @@ def load_segments(include_current: bool = False) -> pd.DataFrame:
     seg['distance'] = np.sqrt((seg['x'] - 25) ** 2 + seg['y'] ** 2)
     seg['lateral'] = (seg['x'] - 25).abs()
     seg['made'] = seg['made'].astype(float)
+    seg['clutch'] = ((seg['period'] >= 4) & (seg['sec_left_game'] <= 300) & (seg['margin'].abs() <= 5)).astype(np.int8)
     return seg
+
+
+def attach_teams(seg: pd.DataFrame, teams: pd.DataFrame) -> pd.DataFrame:
+    """Offence team's offensive style, defence team's defensive style, and both teams' rest (features.team_profiles)."""
+    o = teams[['game_id', 'team', 'rest_days', 'season_day'] + [f'off_{c}' for c in ('pace', 'three', 'rim', 'tov', 'foul', 'oreb')]]
+    o = o.rename(columns={'team': 'offense', 'rest_days': 'off_rest', **{f'off_{c}': f'team_o_{c}' for c in ('pace', 'three', 'rim', 'tov', 'foul', 'oreb')}})
+    d = teams[['game_id', 'team', 'rest_days'] + [f'def_{c}' for c in ('pace', 'three', 'rim', 'tov', 'foul', 'oreb')]]
+    d = d.rename(columns={'team': 'defense', 'rest_days': 'def_rest', **{f'def_{c}': f'team_d_{c}' for c in ('pace', 'three', 'rim', 'tov', 'foul', 'oreb')}})
+    out = seg.merge(o, on=['game_id', 'offense'], how='left').merge(d, on=['game_id', 'defense'], how='left')
+    assert len(out) == len(seg)
+    return out
 
 
 def _cumulative_before(left: pd.DataFrame, events: pd.DataFrame, cols) -> pd.DataFrame:
@@ -78,9 +117,10 @@ def _cumulative_before(left: pd.DataFrame, events: pd.DataFrame, cols) -> pd.Dat
 class Chain:
     """Segments plus offence/defence candidate tables with profiles, relative roles and in-game counts."""
 
-    def __init__(self, include_current: bool = False):
-        seg = load_segments(include_current)
-        pre = pd.read_parquet(DERIVED / 'features' / 'pregame.parquet')
+    def __init__(self, include_current: bool = False, pregame: Path | None = None):
+        pregame = Path(pregame or DERIVED / 'features' / 'pregame.parquet')
+        seg = attach_teams(load_segments(include_current), pd.read_parquet(pregame.parent / 'team_pregame.parquet'))
+        pre = pd.read_parquet(pregame)
         pre['grp'] = pre['pos'].map(group)
         self.seg = seg
         self.off = self._side(seg, pre, 'off')
@@ -88,6 +128,9 @@ class Chain:
         self._in_game()
         self._relative()
         self._lineups()
+        for table in (self.off, self.dfn):  # halves memory; models train on float32 anyway
+            wide = table.select_dtypes('float64').columns
+            table[wide] = table[wide].astype(np.float32)
 
     @staticmethod
     def _side(seg, pre, side):
@@ -95,6 +138,7 @@ class Chain:
         long = seg[['seg_id', 'game_id', 'period'] + cols].melt(id_vars=['seg_id', 'game_id', 'period'], value_vars=cols,
                                                                value_name='player').dropna(subset=['player'])
         long = long.drop(columns='variable').merge(pre[['game_id', 'player', 'grp'] + PROFILE], on=['game_id', 'player'], how='left')
+        long[PROFILE] = long[PROFILE].astype(np.float32)
         long['is_big'] = (long['grp'] == 'C').astype(np.int8)
         long['grp_code'] = long['grp'].map({'G': 0, 'F': 1, 'C': 2}).fillna(1).astype(np.int8)
         q = long['period'].clip(upper=4).astype(int)
@@ -166,8 +210,9 @@ class Chain:
                               profile=('start_code', None))
         if name == 'event':
             rows = s[s['end_type'].isin(['shot', 'fouled', 'turnover', 'foul', 'violation', 'jump_ball'])]
-            y = np.select([rows['end_type'] == 'foul', rows['end_type'].isin(['violation', 'jump_ball'])], [1, 2], 0)
-            return self._pack(name, 'multiclass', self._frame(rows, ['shot_time']), y, rows, classes=3, profile=('start_code', None))
+            team_tov = (rows['end_type'] == 'turnover') & rows['actor'].isna()
+            y = np.select([rows['end_type'] == 'foul', rows['end_type'].isin(['violation', 'jump_ball']), team_tov], [1, 2, 3], 0)
+            return self._pack(name, 'multiclass', self._frame(rows, ['shot_time']), y, rows, classes=len(EVENT), profile=('start_code', None))
         usage = s[s['actor'].notna() & s['end_type'].isin(['shot', 'fouled', 'turnover', 'foul']) & ~s['heave']]
         usage = usage[((usage['end_type'] != 'foul') | (usage['fta'] > 0)) & ((usage['end_type'] != 'shot') | usage['zone'].isin(ZONES))]
         if name == 'who':
@@ -192,6 +237,14 @@ class Chain:
             X = pd.concat([self._frame(shots, ['shot_time', 'distance', 'lateral']), self._actor(shots),
                            shots[['zone']].assign(zone=shots['zone'].map({z: i for i, z in enumerate(ZONES)})).astype(np.float32)], axis=1)
             return self._pack(name, 'multiclass', X, y, shots, classes=3, profile=('shot_result', X))
+        if name == 'location':
+            rows = shots[shots['distance'].notna()]
+            y = location_band(rows['zone'].to_numpy(), rows['distance'].to_numpy())
+            zone = rows['zone'].map({z: i for i, z in enumerate(ZONES)})
+            X = pd.concat([self._frame(rows, ['shot_time']), self._actor(rows), zone.rename('zone').astype(np.float32).to_frame()], axis=1)
+            d = self._pack(name, 'multiclass', X, y, rows, classes=LOCATION_BANDS, profile=('location', None))
+            d['class_mask'] = LOCATION_MASK[zone.to_numpy()]  # the model chooses only among the zone's bands
+            return d
         made = shots[shots['made'] == 1]
         if name == 'assisted':
             y = made['assister'].notna().astype(int).to_numpy()
@@ -281,9 +334,15 @@ class Chain:
             return self._pack(name, 'binary', X, y, reps, profile=('actor_ft_pct', X))
         raise KeyError(name)
 
+    @staticmethod
+    def _meta(rows):
+        """Per-row identifiers for paired comparisons, sample weights and calibration breakdowns."""
+        return {'date': rows['date_et'].to_numpy(), 'game': rows['game_id'].to_numpy(), 'season_type': rows['season_type'].to_numpy(),
+                'period': rows['period'].to_numpy(), 'margin': rows['margin'].to_numpy()}
+
     def _pack(self, name, kind, X, y, rows, classes=None, profile=None):
         return {'name': name, 'kind': kind, 'X': X.reset_index(drop=True), 'y': np.asarray(y, dtype=int),
-                'date': rows['date_et'].to_numpy(), 'classes': classes, 'profile': profile,
+                'classes': classes, 'profile': profile, **self._meta(rows),
                 'zone': rows['zone'].to_numpy() if 'zone' in rows else None, 'start_code': rows['start_code'].to_numpy()}
 
     def _candidates(self, name, cand, cols, y, profile_col):
@@ -292,5 +351,101 @@ class Chain:
         keep = chosen == 1  # exactly one chosen candidate per segment (lineup glitches dropped)
         cand, y, groups = cand[keep], y[keep], groups[keep]
         X = cand[list(dict.fromkeys(cols))].astype(np.float32).reset_index(drop=True)
-        return {'name': name, 'kind': 'candidate', 'X': X, 'y': y, 'group': groups, 'date': cand['date_et'].to_numpy(),
+        return {'name': name, 'kind': 'candidate', 'X': X, 'y': y, 'group': groups, **self._meta(cand),
                 'profile_score': cand[profile_col].fillna(cand[profile_col].median()).to_numpy(dtype=float)}
+
+
+# ---------------------------------------------------------------------- dataset cache
+# Building the chain takes ~50 s and ~14 GB; experiments that only change training (weights, ablations, model
+# settings) reuse cached datasets. Each cache folder is named by a hash of this module's source and the input files
+# (path, size, modification time), so a change to segments, profiles or feature code starts a new folder and never
+# disturbs runs still reading an older one. Old folders stay until `nodes.py --prune`.
+CACHE = DERIVED / 'nodes'
+ARRAYS = ('y', 'date', 'game', 'season_type', 'period', 'margin', 'zone', 'start_code', 'group', 'profile_score', 'class_mask')
+
+
+def signature(pregame: Path | None = None) -> dict:
+    import hashlib
+    pregame = Path(pregame or DERIVED / 'features' / 'pregame.parquet')
+    files = sorted((DERIVED / 'history').glob('*/segments.parquet')) + [pregame, pregame.parent / 'team_pregame.parquet']
+    return {'code': hashlib.sha256(Path(__file__).read_bytes()).hexdigest()[:16],
+            'inputs': {str(f): [f.stat().st_size, int(f.stat().st_mtime)] for f in files}}
+
+
+def cache_dir(pregame: Path | None = None) -> Path:
+    import hashlib
+    import json
+    key = hashlib.sha256(json.dumps(signature(pregame), sort_keys=True).encode()).hexdigest()[:12]
+    return CACHE / f"{'default' if pregame is None else 'variant'}_{key}"
+
+
+def _save(d: dict, path: Path):
+    arrays = {k: d[k] for k in ARRAYS if d.get(k) is not None}
+    for k in ('date', 'game', 'zone'):
+        if k in arrays:
+            arrays[k] = arrays[k].astype(str)
+    np.savez(path, X=d['X'].to_numpy(np.float32), columns=np.array([str(c) for c in d['X'].columns], dtype=str), kind=d['kind'],
+             classes=d.get('classes') or 0, profile=(d['profile'][0] if d.get('profile') else ''), **arrays)
+
+
+def _load(path: Path, name: str) -> dict:
+    z = np.load(path, allow_pickle=False)
+    d = {'name': name, 'kind': str(z['kind']), 'classes': int(z['classes']) or None,
+         'X': pd.DataFrame(z['X'], columns=[str(c) for c in z['columns']])}
+    d['profile'] = (str(z['profile']), None) if str(z['profile']) else None
+    for k in ARRAYS:
+        d[k] = z[k] if k in z.files else None
+    if d['zone'] is not None:
+        d['zone'] = np.where(d['zone'] == 'None', None, d['zone']).astype(object)
+    return d
+
+
+def datasets(names, pregame: Path | None = None, include_current: bool = False):
+    """Yield the named datasets: from this signature's cache folder when present, else built (and cached)."""
+    import json
+    import os
+    folder = None if include_current else cache_dir(pregame)
+    if folder is not None:
+        folder.mkdir(parents=True, exist_ok=True)
+        (folder / 'signature.json').write_text(json.dumps(signature(pregame), sort_keys=True))
+    chain = None
+    for name in names:
+        path = folder / f'{name}.npz' if folder is not None else None
+        if path is not None and path.exists():
+            yield _load(path, name)
+            continue
+        if chain is None:
+            chain = Chain(include_current=include_current, pregame=pregame)
+        d = chain.dataset(name)
+        if path is not None:
+            tmp = path.with_name(f'{name}.tmp{os.getpid()}.npz')
+            _save(d, tmp)
+            os.replace(tmp, path)
+        yield d
+
+
+def main():
+    import argparse
+    import time
+    ap = argparse.ArgumentParser(description='Build (or refresh) the cached datasets for every decision.')
+    ap.add_argument('--features', type=Path, default=None, help='a pregame.parquet variant (scripts/features.py --out)')
+    ap.add_argument('--prune', action='store_true', help='delete every cache folder except the current default one')
+    args = ap.parse_args()
+    if args.prune:
+        import shutil
+        keep = cache_dir(None)
+        for folder in CACHE.glob('*/'):
+            if folder != keep:
+                shutil.rmtree(folder)
+                print(f'removed {folder}')
+        return
+    names = ['duration', 'event', 'who', 'what', 'location', 'shot_result', 'assisted', 'assister', 'blocked', 'blocker', 'rebound',
+             'rebounder', 'turnover_type', 'stealer', 'fouler', 'free_throw']
+    start = time.time()
+    for d in datasets(names, pregame=args.features):
+        print(f"{d['name']:14} {len(d['y']):>9,} rows  {d['X'].shape[1]:>3} columns  {time.time() - start:6.0f}s", flush=True)
+    print(f'cache: {cache_dir(args.features)}')
+
+
+if __name__ == '__main__':
+    main()

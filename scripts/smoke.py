@@ -18,7 +18,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from basketball_common import DERIVED, SNAPSHOTS, VIEWS, read_json  # noqa: E402
+from basketball_common import DERIVED, NBA_TEAM_IDS, SNAPSHOTS, VIEWS, read_json  # noqa: E402
 from scripts import box_scores, master_fixtures, pbp, projection  # noqa: E402
 from scripts.season_stats import period_profiles, player_table, team_table  # noqa: E402
 
@@ -97,8 +97,41 @@ def main():
         if agreement is not None and (h['points_attempted']['checked'] or 0) > 1000:
             check(f'history {path.parent.name}: inferred shot values agree where known (>=99.9%)', agreement >= 0.999, agreement)
 
+    versions = sorted((ROOT / 'models').glob('v*.json'))
+    if versions:
+        import numpy as np
+        spec = read_json(versions[-1])
+        v = spec['version']
+        fold_log = ROOT / spec['validated_by'] if spec.get('validated_by') else None
+        if fold_log and fold_log.exists():
+            res = read_json(fold_log)['results']
+            worst = {n: min(r['gain_vs_best_baseline'] for r in folds.values()) for n, folds in res.items()}
+            check(f'{v}: every node ({len(worst)}) at least level with its best baseline on every fold ({fold_log.name})',
+                  all(x >= -0.001 for x in worst.values()), {k: x for k, x in worst.items() if x < -0.001})
+            check(f'{v}: calibration error below 0.02 on every node and fold',
+                  all(r['ece_model'] < 0.02 for folds in res.values() for r in folds.values()))
+        cfg_path = DERIVED.parent / 'models' / v / 'config.json'
+        if cfg_path.exists():
+            import lightgbm as lgb
+            cfg = read_json(cfg_path)
+            problems = []
+            for node, m in cfg['nodes'].items():
+                booster = lgb.Booster(model_file=str(cfg_path.parent / m['file']))
+                x = np.full((3, len(m['columns'])), np.nan)
+                if args.fault and node == next(iter(cfg['nodes'])):
+                    x = np.full((3, len(m['columns']) + 1), np.nan)
+                try:
+                    pred = booster.predict(x, raw_score=m['kind'] == 'candidate')
+                except Exception as exc:  # wrong input width
+                    problems.append(f'{node}: {exc.__class__.__name__}')
+                    continue
+                if booster.num_feature() != len(m['columns']):
+                    problems.append(f'{node}: {booster.num_feature()} features v {len(m["columns"])} listed')
+                if m['kind'] == 'multiclass' and not np.allclose(pred.sum(axis=1), 1):
+                    problems.append(f'{node}: probabilities do not sum to 1')
+            check(f'{v}: all {len(cfg["nodes"])} persisted node models load, take their listed inputs and predict', not problems, problems)
     latest_by_node = {}
-    for path in sorted((ROOT / 'analysis' / 'experiments').glob('*_m5_lightgbm.json')):
+    for path in sorted((ROOT / 'analysis' / 'experiments').glob('*_m5_lightgbm.json')) if not versions else []:
         for node, folds in read_json(path)['results'].items():
             latest_by_node[node] = (path.name, folds)  # later runs supersede earlier ones per node
     if latest_by_node:
@@ -107,6 +140,51 @@ def main():
               {k: v for k, v in worst.items() if v < -0.001})
         check('M5: calibration error below 0.02 on every node and fold',
               all(r['ece_model'] < 0.02 for _, folds in latest_by_node.values() for r in folds.values()))
+    team_path = DERIVED / 'features' / 'team_pregame.parquet'
+    if team_path.exists():
+        import pandas as pd
+        teams = pd.read_parquet(team_path)
+        ok_games = set()
+        for seg_path in sorted((DERIVED / 'history').glob('*/segments.parquet')) + [DERIVED / 'segments.parquet']:
+            if seg_path.exists():
+                g = pd.read_parquet(seg_path, columns=['game_id', 'game_ok', 'offense', 'defense'])
+                nba = g['offense'].astype(str).isin(NBA_TEAM_IDS) & g['defense'].astype(str).isin(NBA_TEAM_IDS)
+                ok_games |= set(g.loc[g['game_ok'] & nba, 'game_id']) - set(g.loc[~nba, 'game_id'])
+        style = [c for c in teams.columns if c.startswith(('off_', 'def_'))]
+        check('team profiles: two rows per reconciled game, no missing style, rest 1-7 days',
+              len(teams) == 2 * len(ok_games) and not teams[style].isna().any().any() and teams['rest_days'].between(1, 7).all(),
+              {'rows': len(teams), 'games': len(ok_games)})
+    loss_runs = sorted((DERIVED / 'experiments').glob('*.npz'))
+    if loss_runs:
+        import numpy as np
+        from scripts import compare
+        run = compare.load(str(loss_runs[-1]))
+        node, fold = next(iter(run))
+        a = run[(node, fold)]
+        b_loss = a['loss'].copy()
+        if args.fault:
+            b_loss[0] += 0.5
+        mean, se, per_game = compare.paired(a['loss'], b_loss, a['game'])
+        check(f'compare: a run against itself changes nothing ({loss_runs[-1].stem} {node} {fold})', mean == 0 and se == 0, mean)
+        other = run[(node, fold)]
+        d = other['loss'].astype(float)[::-1].copy()  # any second loss vector on the same rows
+        mean, _, per_game = compare.paired(a['loss'], d, a['game'])
+        check('compare: per-game sums add up to the node total', abs(per_game.sum() - (d - a['loss']).sum()) < 1e-6 * max(1, len(d)))
+    m6a = sorted((DERIVED / 'experiments').glob('*_m6a.parquet'))
+    if m6a:
+        import numpy as np
+        import pandas as pd
+        r = pd.read_parquet(m6a[-1])
+        if args.fault:
+            r.loc[r.index[0], 'pts_sim'] += 0.5
+        bad = {}
+        for side in ('sim', 'actual'):
+            pts = 2 * r[f'fgm_{side}'] + r[f'fg3m_{side}'] + r[f'ftm_{side}']
+            bad[f'pts_{side}'] = float((r[f'pts_{side}'] - pts).abs().max())
+            bad[f'reb_{side}'] = float((r[f'reb_{side}'] - r[f'oreb_{side}'] - r[f'dreb_{side}']).abs().max())
+        pits = r[[c for c in r.columns if c.endswith('_pit')]].to_numpy()
+        check(f'M6a {m6a[-1].stem}: points = 2·FGM + 3PM + FTM and rebounds = OREB + DREB (sim and actual); PIT in [0, 1]',
+              max(bad.values()) < 1e-6 and np.nanmin(pits) >= 0 and np.nanmax(pits) <= 1, bad)
     for path in [DERIVED / 'rotations' / 'rotations_report.json'] + sorted((DERIVED / 'history').glob('*/rotations_report.json')):
         if not path.exists():
             continue

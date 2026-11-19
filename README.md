@@ -55,7 +55,10 @@ checksum-verified and atomic; the previous data stays available if an import fai
 | `scripts/plays.py`, `scripts/history.py` | One play schema for live and historical data; 2022-23 → 2025-26 history ingest and reconciliation |
 | `scripts/possessions.py` | Possessions/segments with lineups, state and the who → what → result chain (training data) |
 | `scripts/rotations.py` | Stints, substitution windows, on-court minute shares; replay-rotation baseline and minutes backtest |
-| `scripts/features.py`, `scripts/evaluate.py` | Point-in-time player profiles; rolling-fold evaluation harness and baselines |
+| `scripts/features.py`, `scripts/evaluate.py` | Point-in-time player and team-style profiles; rolling-fold evaluation harness and baselines |
+| `scripts/nodes.py`, `scripts/train.py` | Datasets for the 16 decisions (cached); LightGBM per decision on the folds, persisted versions, final test |
+| `scripts/compare.py`, `scripts/calibration.py` | Paired run comparisons (game-clustered, seed-noise floor); calibration by period and margin |
+| `scripts/aggregate.py` | M6a: replay held-out games with real lineups and clock, sample every decision, score box scores |
 | `scripts/season_stats.py` | Cutoff-safe team ratings and player season stats |
 | `scripts/projection.py` | Simulation engine (placeholder now; PBP engine in phase 2) and season sim |
 | `scripts/nightly.py`, `scripts/views.py` | Orchestration, immutable snapshots, API-ready views |
@@ -67,7 +70,18 @@ checksum-verified and atomic; the previous data stays available if an import fai
 ## Engine data and models (phase 2)
 
 Rebuild in order after new data: `scripts/history.py` → `scripts/possessions.py` → `scripts/rotations.py`
-→ `scripts/features.py` → `scripts/train.py`. State, next steps and commands: [HANDOFF_NEXT.md](HANDOFF_NEXT.md).
+→ `scripts/features.py` → `scripts/nodes.py` (dataset cache) → `scripts/train.py`. State, next steps and commands:
+[HANDOFF_NEXT.md](HANDOFF_NEXT.md).
+
+```sh
+.venv/bin/python scripts/train.py --name <label> [--drop @team …]     # an experiment on folds F1–F4 (~20 min)
+.venv/bin/python scripts/compare.py <run A> <run B> --noise <seed A> <seed B>   # keep / reject, per node
+.venv/bin/python scripts/train.py --config models/v1.json --final       # persist a version, score the final test once
+.venv/bin/python scripts/aggregate.py --config models/v1.json           # M6a aggregation test on F4 games
+```
+
+Fitted models live in `data/models/<version>/` (out of git, rebuilt by `--final`); the settings that define a version
+are `models/<version>.json` (in git).
 
 ## Verification
 

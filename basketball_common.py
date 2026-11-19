@@ -44,6 +44,9 @@ DIVISIONS = {
     'Southwest': ['DAL', 'HOU', 'MEM', 'NO', 'SA'],
 }
 EAST_DIVISIONS = {'Atlantic', 'Central', 'Southeast'}
+# ESPN franchise ids. All-Star and exhibition sides (31, 32, 111386, 132374, 132375 in 2022-26) have others and
+# are excluded from training data (FINDINGS §3h).
+NBA_TEAM_IDS = frozenset(str(i) for i in range(1, 31))
 DIVISION_OF = {abbr: div for div, teams in DIVISIONS.items() for abbr in teams}
 CONFERENCE_OF = {abbr: ('East' if div in EAST_DIVISIONS else 'West') for abbr, div in DIVISION_OF.items()}
 

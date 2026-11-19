@@ -1,0 +1,1507 @@
+{
+ "experiment": "m5_final_v1",
+ "run": "20261119T212218Z",
+ "commit": "539c0c7",
+ "version": "v1",
+ "config": {
+  "default": {
+   "half_life": null,
+   "playoff_weight": 1.0,
+   "drop": [
+    "@team",
+    "@schedule",
+    "@clutch"
+   ],
+   "banded": true,
+   "recalibrate": false,
+   "features": null,
+   "seed": 7,
+   "threads": 6,
+   "name": "v1_final"
+  },
+  "nodes": {
+   "duration": {
+    "drop": [
+     "@schedule",
+     "@clutch"
+    ]
+   },
+   "what": {
+    "drop": [
+     "@schedule",
+     "@clutch"
+    ]
+   },
+   "shot_result": {
+    "drop": [
+     "@schedule",
+     "@clutch"
+    ]
+   },
+   "free_throw": {
+    "drop": [
+     "@team",
+     "@schedule",
+     "@clutch",
+     "@heat"
+    ]
+   },
+   "event": {
+    "drop": [
+     "@team",
+     "@clutch",
+     "off_rest",
+     "def_rest"
+    ]
+   },
+   "turnover_type": {
+    "drop": [
+     "@team",
+     "@clutch",
+     "off_rest",
+     "def_rest"
+    ]
+   }
+  }
+ },
+ "folds": {
+  "final": [
+   "2026-06-30",
+   "2026-07-01",
+   "2100-01-01"
+  ]
+ },
+ "burn_in": "2022-12-01",
+ "losses": "data/derived/experiments/20261119T212218Z_final_v1.npz",
+ "results": {
+  "duration": {
+   "final": {
+    "rows_train": 1012218,
+    "rows_val": 52211,
+    "iterations": 62,
+    "seconds": 51.2,
+    "features": 36,
+    "top_features": [
+     "start_code",
+     "start_clock",
+     "sec_left_game",
+     "margin",
+     "team_o_pace",
+     "off_min_mean",
+     "off_usage_sum",
+     "def_min_mean"
+    ],
+    "model": 2.2754013107809317,
+    "league": 2.5014876762509317,
+    "profile": 2.3069876177908335,
+    "ece_model": 0.014201141149587202,
+    "ece_profile": 0.012699241959695452,
+    "calibration": {
+     "Q1": {
+      "n": 13061,
+      "ece": 0.01736,
+      "ece_null": 0.00299,
+      "bias": 0.05063
+     },
+     "Q2": {
+      "n": 13125,
+      "ece": 0.01377,
+      "ece_null": 0.00309,
+      "bias": 0.0517
+     },
+     "Q3": {
+      "n": 13091,
+      "ece": 0.01537,
+      "ece_null": 0.0036,
+      "bias": 0.05417
+     },
+     "Q4": {
+      "n": 12660,
+      "ece": 0.01203,
+      "ece_null": 0.00284,
+      "bias": 0.05953
+     },
+     "OT": {
+      "n": 274,
+      "ece": 0.02434,
+      "ece_null": 0.01821,
+      "bias": 0.04031
+     },
+     "m<=-15": {
+      "n": 6008,
+      "ece": 0.01713,
+      "ece_null": 0.0037,
+      "bias": 0.05859
+     },
+     "m-14..-6": {
+      "n": 10043,
+      "ece": 0.01388,
+      "ece_null": 0.00324,
+      "bias": 0.05315
+     },
+     "m-5..5": {
+      "n": 21859,
+      "ece": 0.0152,
+      "ece_null": 0.00255,
+      "bias": 0.05315
+     },
+     "m6..14": {
+      "n": 9044,
+      "ece": 0.01286,
+      "ece_null": 0.00434,
+      "bias": 0.05252
+     },
+     "m>=15": {
+      "n": 5257,
+      "ece": 0.0143,
+      "ece_null": 0.00354,
+      "bias": 0.05525
+     }
+    },
+    "class_bias": [
+     0.05388,
+     0.01783,
+     0.00189,
+     -0.00716,
+     -0.01627,
+     -0.01967,
+     -0.01646,
+     -0.00929,
+     -0.00464,
+     -0.00114,
+     0.00066,
+     0.00155,
+     -0.00119
+    ],
+    "gain_vs_best_baseline": 0.01369
+   }
+  },
+  "event": {
+   "final": {
+    "rows_train": 1042447,
+    "rows_val": 53773,
+    "iterations": 49,
+    "seconds": 12.4,
+    "features": 26,
+    "top_features": [
+     "shot_time",
+     "start_code",
+     "sec_left_game",
+     "margin",
+     "start_clock",
+     "off_min_mean",
+     "def_pf_sum",
+     "season_day"
+    ],
+    "model": 0.2896989916527804,
+    "league": 0.3335461788396275,
+    "profile": 0.3283316244564912,
+    "ece_model": 0.022284760241625023,
+    "ece_profile": 0.011908764554382037,
+    "calibration": {
+     "Q1": {
+      "n": 13443,
+      "ece": 0.01596,
+      "ece_null": 0.00192,
+      "bias": 0.01584
+     },
+     "Q2": {
+      "n": 13477,
+      "ece": 0.0227,
+      "ece_null": 0.00222,
+      "bias": 0.02268
+     },
+     "Q3": {
+      "n": 13467,
+      "ece": 0.02463,
+      "ece_null": 0.00288,
+      "bias": 0.02474
+     },
+     "Q4": {
+      "n": 13066,
+      "ece": 0.02624,
+      "ece_null": 0.00554,
+      "bias": 0.02635
+     },
+     "OT": {
+      "n": 320,
+      "ece": 0.03929,
+      "ece_null": 0.03381,
+      "bias": 0.03259
+     },
+     "m<=-15": {
+      "n": 6186,
+      "ece": 0.02303,
+      "ece_null": 0.00233,
+      "bias": 0.02329
+     },
+     "m-14..-6": {
+      "n": 10400,
+      "ece": 0.02261,
+      "ece_null": 0.00303,
+      "bias": 0.02241
+     },
+     "m-5..5": {
+      "n": 22489,
+      "ece": 0.02037,
+      "ece_null": 0.0026,
+      "bias": 0.02085
+     },
+     "m6..14": {
+      "n": 9311,
+      "ece": 0.02497,
+      "ece_null": 0.00395,
+      "bias": 0.02465
+     },
+     "m>=15": {
+      "n": 5387,
+      "ece": 0.02736,
+      "ece_null": 0.00428,
+      "bias": 0.0273
+     }
+    },
+    "class_bias": [
+     0.02225,
+     -0.02236,
+     0.00221,
+     -0.0021
+    ],
+    "gain_vs_best_baseline": 0.11766
+   }
+  },
+  "who": {
+   "final": {
+    "rows_train": 4842845,
+    "rows_val": 246320,
+    "iterations": 270,
+    "seconds": 54.3,
+    "features": 80,
+    "top_features": [
+     "usage_share",
+     "shot_time",
+     "usage",
+     "oreb_pct_share",
+     "usage_rank",
+     "start_code",
+     "off_usage_sum",
+     "start_clock"
+    ],
+    "temperature": 1.26,
+    "model": 1.5499501037304926,
+    "league": 1.6094379124341,
+    "profile": 1.5718471632553284,
+    "ece_model": 0.0010384242116578337,
+    "ece_profile": 0.013396699438587019,
+    "calibration": {
+     "Q1": {
+      "n": 62225,
+      "ece": 0.002,
+      "ece_null": 0.00092,
+      "bias": 0.00344
+     },
+     "Q2": {
+      "n": 61610,
+      "ece": 0.00258,
+      "ece_null": 0.00196,
+      "bias": 0.00028
+     },
+     "Q3": {
+      "n": 61735,
+      "ece": 0.00329,
+      "ece_null": 0.00258,
+      "bias": -0.00169
+     },
+     "Q4": {
+      "n": 59335,
+      "ece": 0.00133,
+      "ece_null": 0.00237,
+      "bias": 0.0094
+     },
+     "OT": {
+      "n": 1415,
+      "ece": 0.01301,
+      "ece_null": 0.02511,
+      "bias": -0.00533
+     },
+     "m<=-15": {
+      "n": 28085,
+      "ece": 0.00211,
+      "ece_null": 0.00275,
+      "bias": 0.00514
+     },
+     "m-14..-6": {
+      "n": 47680,
+      "ece": 0.00135,
+      "ece_null": 0.00359,
+      "bias": 0.01334
+     },
+     "m-5..5": {
+      "n": 103365,
+      "ece": 0.00281,
+      "ece_null": 0.00297,
+      "bias": -0.00472
+     },
+     "m6..14": {
+      "n": 42420,
+      "ece": 0.00064,
+      "ece_null": 0.00231,
+      "bias": 0.00791
+     },
+     "m>=15": {
+      "n": 24770,
+      "ece": 0.00183,
+      "ece_null": 0.00345,
+      "bias": 0.00197
+     }
+    },
+    "gain_vs_best_baseline": 0.01393
+   }
+  },
+  "what": {
+   "final": {
+    "rows_train": 962771,
+    "rows_val": 48921,
+    "iterations": 131,
+    "seconds": 75.4,
+    "features": 85,
+    "top_features": [
+     "shot_time",
+     "actor_mix_above3",
+     "actor_mix_rim",
+     "start_code",
+     "actor_mix_corner3",
+     "actor_mix_paint",
+     "actor_mix_mid",
+     "start_clock"
+    ],
+    "model": 1.6938880854137548,
+    "league": 1.8698681855164385,
+    "profile": 1.772649124658019,
+    "ece_model": 0.008845453695447604,
+    "ece_profile": 0.013384103548058225,
+    "calibration": {
+     "Q1": {
+      "n": 12485,
+      "ece": 0.00974,
+      "ece_null": 0.00588,
+      "bias": 0.01828
+     },
+     "Q2": {
+      "n": 12282,
+      "ece": 0.01109,
+      "ece_null": 0.00608,
+      "bias": 0.02084
+     },
+     "Q3": {
+      "n": 12235,
+      "ece": 0.01073,
+      "ece_null": 0.00481,
+      "bias": 0.02031
+     },
+     "Q4": {
+      "n": 11651,
+      "ece": 0.01082,
+      "ece_null": 0.00407,
+      "bias": 0.02064
+     },
+     "OT": {
+      "n": 268,
+      "ece": 0.03525,
+      "ece_null": 0.03466,
+      "bias": 0.01996
+     },
+     "m<=-15": {
+      "n": 5606,
+      "ece": 0.01153,
+      "ece_null": 0.00884,
+      "bias": 0.01757
+     },
+     "m-14..-6": {
+      "n": 9471,
+      "ece": 0.01215,
+      "ece_null": 0.00671,
+      "bias": 0.01987
+     },
+     "m-5..5": {
+      "n": 20554,
+      "ece": 0.00929,
+      "ece_null": 0.00331,
+      "bias": 0.01819
+     },
+     "m6..14": {
+      "n": 8398,
+      "ece": 0.01161,
+      "ece_null": 0.00523,
+      "bias": 0.02175
+     },
+     "m>=15": {
+      "n": 4892,
+      "ece": 0.01408,
+      "ece_null": 0.0076,
+      "bias": 0.02634
+     }
+    },
+    "class_bias": [
+     -0.01883,
+     0.0146,
+     0.00179,
+     0.00084,
+     0.00412,
+     -0.00143,
+     0.00017,
+     -0.00125
+    ],
+    "gain_vs_best_baseline": 0.04443
+   }
+  },
+  "location": {
+   "final": {
+    "rows_train": 778157,
+    "rows_val": 38866,
+    "iterations": 83,
+    "seconds": 71.6,
+    "features": 74,
+    "top_features": [
+     "zone",
+     "shot_time",
+     "start_clock",
+     "actor_mix_mid",
+     "actor_mix_above3",
+     "actor_mix_rim",
+     "start_code",
+     "actor_mix_paint"
+    ],
+    "model": 1.3445322039603462,
+    "league": 1.3852140333749063,
+    "profile": 1.385214033375184,
+    "ece_model": 0.010761914700026413,
+    "ece_profile": 0.009269309321288157,
+    "calibration": {
+     "Q1": {
+      "n": 10027,
+      "ece": 0.01152,
+      "ece_null": 0.00373,
+      "bias": 0.02652
+     },
+     "Q2": {
+      "n": 9695,
+      "ece": 0.01178,
+      "ece_null": 0.00278,
+      "bias": 0.02977
+     },
+     "Q3": {
+      "n": 9658,
+      "ece": 0.01053,
+      "ece_null": 0.00297,
+      "bias": 0.02702
+     },
+     "Q4": {
+      "n": 9270,
+      "ece": 0.01103,
+      "ece_null": 0.00343,
+      "bias": 0.02409
+     },
+     "OT": {
+      "n": 216,
+      "ece": 0.01979,
+      "ece_null": 0.01853,
+      "bias": 0.03084
+     },
+     "m<=-15": {
+      "n": 4385,
+      "ece": 0.01302,
+      "ece_null": 0.00434,
+      "bias": 0.02872
+     },
+     "m-14..-6": {
+      "n": 7581,
+      "ece": 0.01145,
+      "ece_null": 0.00408,
+      "bias": 0.02589
+     },
+     "m-5..5": {
+      "n": 16429,
+      "ece": 0.01046,
+      "ece_null": 0.00288,
+      "bias": 0.02578
+     },
+     "m6..14": {
+      "n": 6642,
+      "ece": 0.01149,
+      "ece_null": 0.00316,
+      "bias": 0.02641
+     },
+     "m>=15": {
+      "n": 3829,
+      "ece": 0.01312,
+      "ece_null": 0.0044,
+      "bias": 0.0316
+     }
+    },
+    "class_bias": [
+     -0.02086,
+     -0.00679,
+     0.01698,
+     0.01066,
+     -0.00173,
+     -0.00056,
+     -0.00035,
+     -0.00178,
+     0.00442,
+     -0.00129,
+     -0.00232,
+     -0.00015,
+     0.00375,
+     0.01949,
+     -0.01222,
+     -0.00727,
+     -0.02681,
+     0.00513,
+     0.01473,
+     0.00779,
+     -0.00085
+    ],
+    "gain_vs_best_baseline": 0.02937
+   }
+  },
+  "shot_result": {
+   "final": {
+    "rows_train": 778157,
+    "rows_val": 38866,
+    "iterations": 60,
+    "seconds": 15.2,
+    "features": 88,
+    "top_features": [
+     "distance",
+     "lateral",
+     "shot_time",
+     "start_code",
+     "zone",
+     "start_clock",
+     "actor_fg_rim",
+     "actor_fg_paint"
+    ],
+    "model": 0.7345006378032655,
+    "league": 0.7891596624155411,
+    "profile": 0.7472176514222728,
+    "ece_model": 0.0073381637373768635,
+    "ece_profile": 0.01020392989343696,
+    "calibration": {
+     "Q1": {
+      "n": 10027,
+      "ece": 0.01036,
+      "ece_null": 0.00991,
+      "bias": 0.00608
+     },
+     "Q2": {
+      "n": 9695,
+      "ece": 0.01389,
+      "ece_null": 0.00692,
+      "bias": 0.00652
+     },
+     "Q3": {
+      "n": 9658,
+      "ece": 0.01419,
+      "ece_null": 0.00815,
+      "bias": 0.00442
+     },
+     "Q4": {
+      "n": 9270,
+      "ece": 0.01161,
+      "ece_null": 0.00918,
+      "bias": 0.01108
+     },
+     "OT": {
+      "n": 216,
+      "ece": 0.06085,
+      "ece_null": 0.03495,
+      "bias": 0.0417
+     },
+     "m<=-15": {
+      "n": 4385,
+      "ece": 0.01618,
+      "ece_null": 0.01194,
+      "bias": 0.01224
+     },
+     "m-14..-6": {
+      "n": 7581,
+      "ece": 0.01285,
+      "ece_null": 0.01406,
+      "bias": 0.0077
+     },
+     "m-5..5": {
+      "n": 16429,
+      "ece": 0.00728,
+      "ece_null": 0.0083,
+      "bias": 0.00573
+     },
+     "m6..14": {
+      "n": 6642,
+      "ece": 0.013,
+      "ece_null": 0.00604,
+      "bias": 0.0067
+     },
+     "m>=15": {
+      "n": 3829,
+      "ece": 0.01183,
+      "ece_null": 0.01716,
+      "bias": 0.00816
+     }
+    },
+    "class_bias": [
+     -0.00629,
+     0.00707,
+     -0.00078
+    ],
+    "gain_vs_best_baseline": 0.01702
+   }
+  },
+  "assisted": {
+   "final": {
+    "rows_train": 366649,
+    "rows_val": 17893,
+    "iterations": 461,
+    "seconds": 11.0,
+    "features": 76,
+    "top_features": [
+     "distance",
+     "actor_assisted_share",
+     "shot_time",
+     "start_code",
+     "actor_ast_rate",
+     "zone",
+     "lateral",
+     "actor_oreb_pct"
+    ],
+    "model": 0.47270423813604817,
+    "league": 0.6474778771015569,
+    "profile": 0.6113900113936374,
+    "ece_model": 0.00885582905756324,
+    "ece_profile": 0.03475940293749311,
+    "calibration": {
+     "Q1": {
+      "n": 4609,
+      "ece": 0.01133,
+      "ece_null": 0.01498,
+      "bias": 0.00624
+     },
+     "Q2": {
+      "n": 4505,
+      "ece": 0.01087,
+      "ece_null": 0.0146,
+      "bias": 0.00508
+     },
+     "Q3": {
+      "n": 4518,
+      "ece": 0.021,
+      "ece_null": 0.01517,
+      "bias": 0.00276
+     },
+     "Q4": {
+      "n": 4179,
+      "ece": 0.01524,
+      "ece_null": 0.01401,
+      "bias": 0.00896
+     },
+     "m<=-15": {
+      "n": 1969,
+      "ece": 0.01775,
+      "ece_null": 0.01974,
+      "bias": 0.01682
+     },
+     "m-14..-6": {
+      "n": 3466,
+      "ece": 0.01735,
+      "ece_null": 0.01513,
+      "bias": 0.01234
+     },
+     "m-5..5": {
+      "n": 7598,
+      "ece": 0.00534,
+      "ece_null": 0.0103,
+      "bias": 0.0014
+     },
+     "m6..14": {
+      "n": 3090,
+      "ece": 0.02258,
+      "ece_null": 0.01585,
+      "bias": 0.00343
+     },
+     "m>=15": {
+      "n": 1770,
+      "ece": 0.02715,
+      "ece_null": 0.03428,
+      "bias": 0.00412
+     }
+    },
+    "class_bias": [
+     0.00584
+    ],
+    "gain_vs_best_baseline": 0.22684
+   }
+  },
+  "assister": {
+   "final": {
+    "rows_train": 909136,
+    "rows_val": 45817,
+    "iterations": 471,
+    "seconds": 20.2,
+    "features": 76,
+    "top_features": [
+     "ast_rate_share",
+     "ast_rate_rank",
+     "start_code",
+     "shot_time",
+     "ast_rate",
+     "oreb_pct",
+     "zone",
+     "distance"
+    ],
+    "temperature": 1.26,
+    "model": 1.2539988506210529,
+    "league": 1.3893634401874624,
+    "profile": 1.291273866558314,
+    "ece_model": 0.0076656442944799666,
+    "ece_profile": 0.020679610377706676,
+    "calibration": {
+     "Q1": {
+      "n": 12122,
+      "ece": 0.00597,
+      "ece_null": 0.0059,
+      "bias": 0.00633
+     },
+     "Q2": {
+      "n": 11537,
+      "ece": 0.01292,
+      "ece_null": 0.00676,
+      "bias": -0.00734
+     },
+     "Q3": {
+      "n": 11667,
+      "ece": 0.01014,
+      "ece_null": 0.00585,
+      "bias": 0.01325
+     },
+     "Q4": {
+      "n": 10323,
+      "ece": 0.01011,
+      "ece_null": 0.0059,
+      "bias": 0.01745
+     },
+     "m<=-15": {
+      "n": 4976,
+      "ece": 0.01172,
+      "ece_null": 0.01282,
+      "bias": -0.01845
+     },
+     "m-14..-6": {
+      "n": 8788,
+      "ece": 0.01111,
+      "ece_null": 0.00844,
+      "bias": 0.01251
+     },
+     "m-5..5": {
+      "n": 19482,
+      "ece": 0.01012,
+      "ece_null": 0.004,
+      "bias": 0.01275
+     },
+     "m6..14": {
+      "n": 7877,
+      "ece": 0.00782,
+      "ece_null": 0.0064,
+      "bias": -0.0007
+     },
+     "m>=15": {
+      "n": 4694,
+      "ece": 0.01196,
+      "ece_null": 0.00993,
+      "bias": 0.01415
+     }
+    },
+    "gain_vs_best_baseline": 0.02887
+   }
+  },
+  "blocked": {
+   "final": {
+    "rows_train": 411508,
+    "rows_val": 20973,
+    "iterations": 141,
+    "seconds": 4.8,
+    "features": 76,
+    "top_features": [
+     "distance",
+     "lateral",
+     "zone",
+     "shot_time",
+     "def_blk_sum",
+     "start_code",
+     "start_clock",
+     "def_blk_max"
+    ],
+    "model": 0.259085510209097,
+    "league": 0.33756763480312446,
+    "profile": 0.276194163024173,
+    "ece_model": 0.0052191934152890284,
+    "ece_profile": 0.007003735435873998,
+    "calibration": {
+     "Q1": {
+      "n": 5418,
+      "ece": 0.00861,
+      "ece_null": 0.00748,
+      "bias": -0.00861
+     },
+     "Q2": {
+      "n": 5190,
+      "ece": 0.00208,
+      "ece_null": 0.01033,
+      "bias": 0.00064
+     },
+     "Q3": {
+      "n": 5140,
+      "ece": 0.00832,
+      "ece_null": 0.00592,
+      "bias": -0.00475
+     },
+     "Q4": {
+      "n": 5091,
+      "ece": 0.00732,
+      "ece_null": 0.00665,
+      "bias": -0.00456
+     },
+     "m<=-15": {
+      "n": 2416,
+      "ece": 0.00793,
+      "ece_null": 0.00866,
+      "bias": 0.00136
+     },
+     "m-14..-6": {
+      "n": 4115,
+      "ece": 0.01104,
+      "ece_null": 0.00634,
+      "bias": -0.01052
+     },
+     "m-5..5": {
+      "n": 8831,
+      "ece": 0.00805,
+      "ece_null": 0.00782,
+      "bias": -0.00381
+     },
+     "m6..14": {
+      "n": 3552,
+      "ece": 0.00402,
+      "ece_null": 0.00851,
+      "bias": -0.00023
+     },
+     "m>=15": {
+      "n": 2059,
+      "ece": 0.01221,
+      "ece_null": 0.00908,
+      "bias": -0.00893
+     }
+    },
+    "class_bias": [
+     -0.00443
+    ],
+    "gain_vs_best_baseline": 0.06194
+   }
+  },
+  "blocker": {
+   "final": {
+    "rows_train": 211160,
+    "rows_val": 10890,
+    "iterations": 176,
+    "seconds": 3.6,
+    "features": 73,
+    "top_features": [
+     "blk_rate_share",
+     "blk_rate_rank",
+     "distance",
+     "blk_rate",
+     "start_code",
+     "dreb_pct",
+     "def_blk_max",
+     "oreb_pct"
+    ],
+    "temperature": 1.26,
+    "model": 1.3835169733581014,
+    "league": 1.6094379124341,
+    "profile": 1.407332521975209,
+    "ece_model": 0.007826449233294761,
+    "ece_profile": 0.01210111070865838,
+    "calibration": {
+     "Q1": {
+      "n": 2685,
+      "ece": 0.01437,
+      "ece_null": 0.0232,
+      "bias": 0.00445
+     },
+     "Q2": {
+      "n": 2620,
+      "ece": 0.01105,
+      "ece_null": 0.02266,
+      "bias": 0.01976
+     },
+     "Q3": {
+      "n": 2760,
+      "ece": 0.01628,
+      "ece_null": 0.01202,
+      "bias": 0.0354
+     },
+     "Q4": {
+      "n": 2745,
+      "ece": 0.01491,
+      "ece_null": 0.0083,
+      "bias": 0.01715
+     },
+     "m<=-15": {
+      "n": 1220,
+      "ece": 0.02184,
+      "ece_null": 0.02141,
+      "bias": 0.02733
+     },
+     "m-14..-6": {
+      "n": 2310,
+      "ece": 0.01741,
+      "ece_null": 0.01714,
+      "bias": 0.02467
+     },
+     "m-5..5": {
+      "n": 4510,
+      "ece": 0.01264,
+      "ece_null": 0.01275,
+      "bias": 0.02408
+     },
+     "m6..14": {
+      "n": 1735,
+      "ece": 0.01553,
+      "ece_null": 0.01749,
+      "bias": 0.00606
+     },
+     "m>=15": {
+      "n": 1115,
+      "ece": 0.01202,
+      "ece_null": 0.0218,
+      "bias": 0.0038
+     }
+    },
+    "gain_vs_best_baseline": 0.01692
+   }
+  },
+  "rebound": {
+   "final": {
+    "rows_train": 434661,
+    "rows_val": 22465,
+    "iterations": 47,
+    "seconds": 7.2,
+    "features": 32,
+    "top_features": [
+     "start_clock",
+     "distance",
+     "blocked",
+     "shot_time",
+     "start_code",
+     "sec_left_game",
+     "fta",
+     "off_oreb_sum"
+    ],
+    "model": 0.9279488706573561,
+    "league": 1.0050044154230995,
+    "profile": 1.0001131776056555,
+    "ece_model": 0.017494558363575437,
+    "ece_profile": 0.029601018305832207,
+    "calibration": {
+     "Q1": {
+      "n": 5731,
+      "ece": 0.01708,
+      "ece_null": 0.01362,
+      "bias": 0.02124
+     },
+     "Q2": {
+      "n": 5563,
+      "ece": 0.02852,
+      "ece_null": 0.01318,
+      "bias": 0.03664
+     },
+     "Q3": {
+      "n": 5525,
+      "ece": 0.01442,
+      "ece_null": 0.01535,
+      "bias": 0.01514
+     },
+     "Q4": {
+      "n": 5499,
+      "ece": 0.01354,
+      "ece_null": 0.01113,
+      "bias": 0.0175
+     },
+     "m<=-15": {
+      "n": 2636,
+      "ece": 0.01678,
+      "ece_null": 0.01152,
+      "bias": 0.02006
+     },
+     "m-14..-6": {
+      "n": 4404,
+      "ece": 0.01448,
+      "ece_null": 0.01115,
+      "bias": 0.01737
+     },
+     "m-5..5": {
+      "n": 9425,
+      "ece": 0.0195,
+      "ece_null": 0.01524,
+      "bias": 0.02399
+     },
+     "m6..14": {
+      "n": 3782,
+      "ece": 0.01726,
+      "ece_null": 0.01087,
+      "bias": 0.01778
+     },
+     "m>=15": {
+      "n": 2218,
+      "ece": 0.03003,
+      "ece_null": 0.01522,
+      "bias": 0.03957
+     }
+    },
+    "class_bias": [
+     -0.00945,
+     -0.00554,
+     0.02272,
+     -0.00773
+    ],
+    "gain_vs_best_baseline": 0.07216
+   }
+  },
+  "rebounder": {
+   "final": {
+    "rows_train": 1884570,
+    "rows_val": 94455,
+    "iterations": 176,
+    "seconds": 18.9,
+    "features": 76,
+    "top_features": [
+     "reb_share",
+     "reb_rank",
+     "is_shooter",
+     "distance",
+     "reb_side_pct",
+     "start_code",
+     "zone",
+     "offensive"
+    ],
+    "temperature": 1.26,
+    "model": 1.4913328693016559,
+    "league": 1.6094379124341003,
+    "profile": 1.515792760830152,
+    "ece_model": 0.004747853671579909,
+    "ece_profile": 0.008100941093741229,
+    "calibration": {
+     "Q1": {
+      "n": 24385,
+      "ece": 0.00553,
+      "ece_null": 0.00405,
+      "bias": 0.01217
+     },
+     "Q2": {
+      "n": 23075,
+      "ece": 0.00598,
+      "ece_null": 0.0043,
+      "bias": 0.00713
+     },
+     "Q3": {
+      "n": 23195,
+      "ece": 0.00432,
+      "ece_null": 0.00245,
+      "bias": 0.0057
+     },
+     "Q4": {
+      "n": 23180,
+      "ece": 0.00805,
+      "ece_null": 0.00475,
+      "bias": 0.00218
+     },
+     "OT": {
+      "n": 620,
+      "ece": 0.02495,
+      "ece_null": 0.01601,
+      "bias": -0.00783
+     },
+     "m<=-15": {
+      "n": 10990,
+      "ece": 0.01233,
+      "ece_null": 0.00517,
+      "bias": 0.00781
+     },
+     "m-14..-6": {
+      "n": 18440,
+      "ece": 0.00367,
+      "ece_null": 0.00315,
+      "bias": 0.00468
+     },
+     "m-5..5": {
+      "n": 39940,
+      "ece": 0.00528,
+      "ece_null": 0.00332,
+      "bias": 0.0106
+     },
+     "m6..14": {
+      "n": 15910,
+      "ece": 0.00696,
+      "ece_null": 0.00152,
+      "bias": 0.01116
+     },
+     "m>=15": {
+      "n": 9175,
+      "ece": 0.01015,
+      "ece_null": 0.01151,
+      "bias": -0.01461
+     }
+    },
+    "gain_vs_best_baseline": 0.01614
+   }
+  },
+  "turnover_type": {
+   "final": {
+    "rows_train": 116627,
+    "rows_val": 6444,
+    "iterations": 76,
+    "seconds": 4.5,
+    "features": 74,
+    "top_features": [
+     "shot_time",
+     "actor_live_tov_share",
+     "start_code",
+     "actor_oreb_pct",
+     "actor_ast_rate",
+     "sec_left_game",
+     "actor_pf_rate",
+     "def_stl_sum"
+    ],
+    "model": 0.9221940087197185,
+    "league": 0.960385757567241,
+    "profile": 0.952751917194094,
+    "ece_model": 0.032583579373287624,
+    "ece_profile": 0.029822871334660803,
+    "calibration": {
+     "Q1": {
+      "n": 1646,
+      "ece": 0.04754,
+      "ece_null": 0.02592,
+      "bias": 0.05484
+     },
+     "Q2": {
+      "n": 1642,
+      "ece": 0.03042,
+      "ece_null": 0.00986,
+      "bias": 0.035
+     },
+     "Q3": {
+      "n": 1662,
+      "ece": 0.02421,
+      "ece_null": 0.01437,
+      "bias": 0.01858
+     },
+     "Q4": {
+      "n": 1466,
+      "ece": 0.04429,
+      "ece_null": 0.01983,
+      "bias": 0.05075
+     },
+     "m<=-15": {
+      "n": 715,
+      "ece": 0.04458,
+      "ece_null": 0.01978,
+      "bias": 0.04944
+     },
+     "m-14..-6": {
+      "n": 1216,
+      "ece": 0.02628,
+      "ece_null": 0.01792,
+      "bias": 0.02512
+     },
+     "m-5..5": {
+      "n": 2655,
+      "ece": 0.04166,
+      "ece_null": 0.01926,
+      "bias": 0.04843
+     },
+     "m6..14": {
+      "n": 1157,
+      "ece": 0.02121,
+      "ece_null": 0.02174,
+      "bias": 0.02387
+     },
+     "m>=15": {
+      "n": 701,
+      "ece": 0.04543,
+      "ece_null": 0.03147,
+      "bias": 0.04712
+     }
+    },
+    "class_bias": [
+     0.03881,
+     -0.02249,
+     -0.01632
+    ],
+    "gain_vs_best_baseline": 0.03207
+   }
+  },
+  "stealer": {
+   "final": {
+    "rows_train": 340575,
+    "rows_val": 17930,
+    "iterations": 102,
+    "seconds": 3.3,
+    "features": 72,
+    "top_features": [
+     "stl_rate_share",
+     "stl_rate",
+     "stl_rate_rank",
+     "shot_time",
+     "def_stl_sum",
+     "start_code",
+     "blk_rate",
+     "assisted_share"
+    ],
+    "temperature": 1.189,
+    "model": 1.5862189432681146,
+    "league": 1.6094379124340996,
+    "profile": 1.5880622313777055,
+    "ece_model": 0.0022978704931541564,
+    "ece_profile": 0.006353025503772926,
+    "calibration": {
+     "Q1": {
+      "n": 4580,
+      "ece": 0.00173,
+      "ece_null": 0.00276,
+      "bias": 0.00455
+     },
+     "Q2": {
+      "n": 4440,
+      "ece": 0.0153,
+      "ece_null": 0.00812,
+      "bias": 0.02217
+     },
+     "Q3": {
+      "n": 4745,
+      "ece": 0.01158,
+      "ece_null": 0.00841,
+      "bias": -0.01999
+     },
+     "Q4": {
+      "n": 4080,
+      "ece": 0.00341,
+      "ece_null": 0.00648,
+      "bias": -0.01681
+     },
+     "m<=-15": {
+      "n": 2025,
+      "ece": 0.00372,
+      "ece_null": 0.00347,
+      "bias": 0.00308
+     },
+     "m-14..-6": {
+      "n": 3455,
+      "ece": 0.0095,
+      "ece_null": 0.00839,
+      "bias": -0.01691
+     },
+     "m-5..5": {
+      "n": 7310,
+      "ece": 0.01267,
+      "ece_null": 0.00117,
+      "bias": 0.01475
+     },
+     "m6..14": {
+      "n": 3255,
+      "ece": 0.00505,
+      "ece_null": 0.00429,
+      "bias": -0.0129
+     },
+     "m>=15": {
+      "n": 1885,
+      "ece": 0.01,
+      "ece_null": 0.0153,
+      "bias": -0.02698
+     }
+    },
+    "gain_vs_best_baseline": 0.00116
+   }
+  },
+  "fouler": {
+   "final": {
+    "rows_train": 753215,
+    "rows_val": 42055,
+    "iterations": 377,
+    "seconds": 14.1,
+    "features": 73,
+    "top_features": [
+     "pf_rate_share",
+     "shot_time",
+     "blk_rate",
+     "dreb_pct",
+     "start_code",
+     "shooting",
+     "pf_rate_rank",
+     "oreb_pct"
+    ],
+    "temperature": 1.122,
+    "model": 1.5704205598238556,
+    "league": 1.6094379124341,
+    "profile": 1.592089175254317,
+    "ece_model": 0.003439223743017086,
+    "ece_profile": 0.003025893674314437,
+    "calibration": {
+     "Q1": {
+      "n": 8735,
+      "ece": 0.00973,
+      "ece_null": 0.00442,
+      "bias": 0.02104
+     },
+     "Q2": {
+      "n": 10650,
+      "ece": 0.00382,
+      "ece_null": 0.00345,
+      "bias": 0.00678
+     },
+     "Q3": {
+      "n": 10815,
+      "ece": 0.00313,
+      "ece_null": 0.00443,
+      "bias": 0.00324
+     },
+     "Q4": {
+      "n": 11480,
+      "ece": 0.0025,
+      "ece_null": 0.00589,
+      "bias": -0.01058
+     },
+     "OT": {
+      "n": 375,
+      "ece": 0.01182,
+      "ece_null": 0.02788,
+      "bias": -0.00413
+     },
+     "m<=-15": {
+      "n": 5455,
+      "ece": 0.00244,
+      "ece_null": 0.01068,
+      "bias": -0.0066
+     },
+     "m-14..-6": {
+      "n": 8005,
+      "ece": 0.01062,
+      "ece_null": 0.00399,
+      "bias": 0.00514
+     },
+     "m-5..5": {
+      "n": 17050,
+      "ece": 0.00468,
+      "ece_null": 0.00292,
+      "bias": 0.00965
+     },
+     "m6..14": {
+      "n": 7415,
+      "ece": 0.00257,
+      "ece_null": 0.00581,
+      "bias": -0.01701
+     },
+     "m>=15": {
+      "n": 4130,
+      "ece": 0.00935,
+      "ece_null": 0.00807,
+      "bias": 0.03012
+     }
+    },
+    "gain_vs_best_baseline": 0.01361
+   }
+  },
+  "free_throw": {
+   "final": {
+    "rows_train": 193627,
+    "rows_val": 10751,
+    "iterations": 57,
+    "seconds": 2.2,
+    "features": 73,
+    "top_features": [
+     "actor_ft_pct",
+     "attempt",
+     "actor_mix_rim",
+     "actor_oreb_pct",
+     "actor_min_avg",
+     "actor_mix_above3",
+     "actor_shots_eff",
+     "sec_left_game"
+    ],
+    "model": 0.5130377539103211,
+    "league": 0.5292586070217405,
+    "profile": 0.5150072745695183,
+    "ece_model": 0.007760391077277278,
+    "ece_profile": 0.009376755928715206,
+    "calibration": {
+     "Q1": {
+      "n": 2170,
+      "ece": 0.01361,
+      "ece_null": 0.01018,
+      "bias": 0.00834
+     },
+     "Q2": {
+      "n": 2718,
+      "ece": 0.00996,
+      "ece_null": 0.01211,
+      "bias": -0.00328
+     },
+     "Q3": {
+      "n": 2735,
+      "ece": 0.0162,
+      "ece_null": 0.01491,
+      "bias": 0.00105
+     },
+     "Q4": {
+      "n": 3039,
+      "ece": 0.01425,
+      "ece_null": 0.01181,
+      "bias": 0.00959
+     },
+     "m<=-15": {
+      "n": 1415,
+      "ece": 0.00409,
+      "ece_null": 0.00728,
+      "bias": -0.00045
+     },
+     "m-14..-6": {
+      "n": 2030,
+      "ece": 0.01592,
+      "ece_null": 0.01013,
+      "bias": 0.01413
+     },
+     "m-5..5": {
+      "n": 4285,
+      "ece": 0.01242,
+      "ece_null": 0.00709,
+      "bias": 0.004
+     },
+     "m6..14": {
+      "n": 1908,
+      "ece": 0.0081,
+      "ece_null": 0.01943,
+      "bias": -0.00617
+     },
+     "m>=15": {
+      "n": 1113,
+      "ece": 0.01532,
+      "ece_null": 0.01537,
+      "bias": 0.00731
+     }
+    },
+    "class_bias": [
+     0.00387
+    ],
+    "gain_vs_best_baseline": 0.00382
+   }
+  }
+ }
+}
