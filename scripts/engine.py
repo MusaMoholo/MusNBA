@@ -65,8 +65,28 @@ class Models:
         self.nodes = self.cfg['nodes']
         self.boosters = {n: lgb.Booster(model_file=str(folder / m['file'])) for n, m in self.nodes.items()}
         hist = pd.concat([pd.read_parquet(p, columns=['date_et', 'game_ok', 'end_type', 'heave', 'zone', 'x', 'y', 'fta', 'period',
-                                                       'start_clock', 'fouls_def']) for p in sorted((DERIVED / 'history').glob('*/segments.parquet'))])
+                                                       'start_clock', 'fouls_def', 'made', 'duration', 'shot_time'])
+                          for p in sorted((DERIVED / 'history').glob('*/segments.parquet'))])
         hist = hist[hist['game_ok'] & (hist['date_et'] <= self.cfg['train_through'])]
+        # Clock between the action and the next segment (the duration node predicts time to the action only): a missed
+        # shot runs ~2.4 s until the rebound, a shooting foul ~0.5 s; made shots, turnovers and other fouls ~0 (FINDINGS §3j).
+        gap = (hist['duration'] - hist['shot_time'].clip(lower=0)).clip(lower=0)
+        missed = (hist['end_type'] == 'shot') & (hist['made'] != 1) & ~hist['heave'].fillna(False).astype(bool)
+        self.miss_gap = [gap[missed & (hist['zone'] == z)].to_numpy(np.float32) for z in ZONES]
+        self.foul_gap = gap[hist['end_type'] == 'fouled'].to_numpy(np.float32)
+        # Seconds within each duration bin, as recorded (clocks are mostly whole seconds: a 2–4 s bin holds 2 and 3, mean
+        # 2.5, not 3 — uniform sampling added ~0.5 s per segment).
+        timed = hist[(hist['start_clock'] > 24) & ~hist['end_type'].isin(['end_period', 'unknown'])]
+        t = timed['shot_time'].clip(lower=0).to_numpy(np.float32)
+        b = np.digitize(t, nodes.DURATION_EDGES)
+        self.bin_secs = [t[b == k] for k in range(len(nodes.DURATION_EDGES) + 1)]
+        # End of period (≤ 24 s left; the duration node was trained on longer clocks): time to the action, or no action
+        # before the buzzer, drawn from real segments that started with the same whole seconds left.
+        late = hist[hist['start_clock'] <= 24]
+        bucket = np.floor(late['start_clock']).clip(0, 24).astype(int).to_numpy()
+        lt = np.minimum(late['shot_time'].clip(lower=0).fillna(0).to_numpy(np.float32), late['start_clock'].to_numpy(np.float32))
+        none = late['end_type'].isin(['end_period', 'unknown']).to_numpy()
+        self.late = [(lt[bucket == k], none[bucket == k]) for k in range(25)]
         shots = hist[(hist['end_type'] == 'shot') & ~hist['heave'].fillna(False).astype(bool) & hist['zone'].isin(ZONES)]
         d = np.sqrt((shots['x'] - 25) ** 2 + shots['y'] ** 2).to_numpy()
         band = nodes.location_band(shots['zone'].to_numpy(), d)
@@ -171,6 +191,7 @@ class Worlds:
 class Engine:
     def __init__(self, version: str = 'v1'):
         self.m = Models(version)
+        self.diag = None  # set to [] to record (start type, seconds to action, clock) per segment
 
     # ----------------------------------------------------------------------------- inputs
     def _context(self, g, st, A, L_off, L_def):
@@ -272,12 +293,21 @@ class Engine:
             # duration
             P = m.predict('duration', ctx, n)
             b = draw(P, rng)
-            secs = np.where(b == 0, rng.random(n) * 2, 2 * b + rng.random(n) * 2)
-            secs = np.where(b == 12, 24 + rng.random(n) * 2, secs)
-            buzzer = secs >= st.clock[A]
-            secs = np.minimum(secs, st.clock[A])
-            quiet = st.clock[A] < 1.0  # under a second left: the period ends
+            secs = np.zeros(n)
+            for k in np.unique(b):
+                sel = b == k
+                secs[sel] = rng.choice(m.bin_secs[k], size=sel.sum())
+            late = np.flatnonzero(st.clock[A] <= 24)
+            quiet = np.zeros(n, bool)
+            for k in np.unique(np.floor(st.clock[A[late]]).astype(int)):
+                sel = late[np.floor(st.clock[A[late]]).astype(int) == k]
+                vals, none = m.late[k]
+                pick = rng.integers(0, len(vals), size=sel.size)
+                secs[sel], quiet[sel] = vals[pick], none[pick]
+            secs = np.where(quiet, st.clock[A], np.minimum(secs, st.clock[A]))  # no action: the period runs out
             ctx['shot_time'] = secs.astype(np.float32)
+            if self.diag is not None:
+                self.diag.append((st.start[A].copy(), secs.copy(), st.clock[A].copy() + 0))
             pidx = np.minimum(st.period[A] - 1, 4)
             for side_L in (L_off, L_def):
                 np.add.at(st.minutes, (A[:, None], side_L, pidx[:, None]), secs[:, None] / 60)
@@ -416,6 +446,19 @@ class Engine:
                                  'fta': trip[ftm_miss].astype(np.float32), 'ft_miss': (~is_and1).astype(np.float32),
                                  'blocked': np.zeros(ftm_miss.size, np.float32)}
                     self._rebound(g, st, A, ftm_miss, reb_extra, ctx, off_five, def_five, L_off, L_def, ft_actor, pidx, nxt_off, nxt_start, off, rng)
+            # game time after the action: rebound delay after a miss (by zone), the stop around a shooting foul
+            gap = np.zeros(n)
+            for zi in range(len(ZONES)):
+                sel = miss[zone[miss] == zi]
+                gap[sel] = rng.choice(m.miss_gap[zi], size=sel.size)
+            fouled = act[what[act] >= 6]
+            gap[fouled] = rng.choice(m.foul_gap, size=fouled.size)
+            gap = np.minimum(gap, st.clock[A])
+            if gap.any():
+                for side_L in (L_off, L_def):
+                    np.add.at(st.minutes, (A[:, None], side_L, pidx[:, None]), gap[:, None] / 60)
+                    st.ingame['sec_so_far'][A[:, None], side_L] += gap[:, None]
+                st.clock[A] -= gap
             # violations keep the ball; team turnovers give it away
             viol = np.flatnonzero(ev == 2)
             nxt_off[viol], nxt_start[viol] = off[viol], S['other']

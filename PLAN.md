@@ -78,8 +78,8 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
 | M4 | Profiles + harness + baselines | ✅ core | Point-in-time profiles; baselines on folds | `features.py`, `evaluate.py` |
 | M5 | LightGBM per decision (16 nodes, D20 + D21) | ✅ **v1 tuned, validated, persisted, final test scored once** — every node ≥ its best baseline on every fold and on the final test; settings `models/v1.json`; FINDINGS §3h–§3h′ | Every node ≥ its best baseline on every fold, well calibrated; per-node choice recorded; models persisted | `nodes.py`, `train.py`, `compare.py`, `calibration.py` |
 | M5b | Adapter parity: live ESPN v hoopR history | ☐ **next** — live data differ from history (short actions after rebounds 12% v 49%, foul split, turnover split; FINDINGS §3h′) | Same game through both adapters gives the same segments; season distributions match | `plays.py`, `possessions.py` |
-| M6a | Aggregation test with real rotations | ◐ **gate met on 300 F4 games** (team total −0.5%, player stats within ±2% for starters/bench, coverage 77–83%, CRPS +7–12% v recent averages); fouls +5% traced to in-season decline (day of season added); stars +2–5% to trace | Replayed held-out games: player box-score bias ≈ 0 by role tier, 80% coverage | `aggregate.py` |
-| M6 | Engine v1 (replay rotations) | ◐ **preview in the app** (`nightly.py --engine`, labelled "Engine v1 · preview"): 2,000 worlds per game, 25 s per game; pace ≈ 3% high, spread too narrow (OT 2.2% v 5.4%) | 10k sims per game in today's output contract | `engine.py` |
+| M6a | Aggregation test with real rotations | ✅ **gate met on all 766 F4 games** (player stats within ±1.3% for points/rebounds/assists/threes in every tier, coverage 77–81%, CRPS +6–11%; earlier 300-game run: team total −0.5%, coverage 77–83%); fouls traced to the in-season decline (day of season added); and-ones +5%, fouled-on-a-three −24% to trace) | Replayed held-out games: player box-score bias ≈ 0 by role tier, 80% coverage | `aggregate.py` |
+| M6 | Engine v1 (replay rotations) | ◐ **preview in the app** (`nightly.py --engine`, labelled "Engine v1 · preview"): 2,000 worlds per game, ~20 s per game; clock rules fixed (pace ≈ 2.5% low), strong offences under-expressed, spread too narrow | 10k sims per game in today's output contract | `engine.py` |
 | M7 | Target-aware substitution model | ☐ | Minutes MAE < 5.2 and 10–90% coverage ≈ 80% (beats replay v0) | (to build) |
 | M8 | Per-player form + end-game checks | ☐ | Variance and overtime rate (5.4%) calibrated | (to build) |
 | M9 | Walk-forward backtest → switch the app | ☐ | Beats `baseline-v1` on game and player CRPS | (to build) |
@@ -199,3 +199,7 @@ Realism sweep with the owner (19 Nov) — gaps, in priority order (HANDOFF next 
   four games: plausible box scores (114 points, 240.6 team minutes, 91 FGA, 22 FTA); pace ≈ 3% high and spread too
   narrow (OT 2.2%) — the M8 work. Owner realism sweep recorded (PLAN §9): size + archetype priors (owner: needed), on-court
   defensive impact, substitutions (M7) as the biggest remaining risk.
+- **19 Nov 2026** — M6a full run (766 F4 games): gate confirmed. Engine clock rules from data: post-action game time
+  (8.4% of the clock, mostly 2.4 s from a miss to its rebound), whole-second durations within bins, end-of-period
+  segments from real ones; the first two errors had cancelled (pace +3% → −5% → ≈ −2.5% after all three). Owner:
+  scores too high on the first preview — they were (+1.5%, from pace); now slightly low, strong offences under-expressed.

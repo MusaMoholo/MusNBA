@@ -1,0 +1,605 @@
+{
+ "experiment": "m6a_aggregation",
+ "run": "20261119T220658Z",
+ "commit": "c1f2f5b",
+ "config": "models/v1.json",
+ "fold": "F4",
+ "games": 766,
+ "worlds": 10000,
+ "seconds": 2747,
+ "node_fit": {
+  "event": {
+   "model": 0.24941246253055427,
+   "league": 0.3083935192081216,
+   "profile": 0.3036147247727473,
+   "gain_vs_best_baseline": 0.17852,
+   "ece_model": 0.0016345655362395629
+  },
+  "who": {
+   "model": 1.537391123266604,
+   "league": 1.6094379124341,
+   "profile": 1.5695182182935534,
+   "gain_vs_best_baseline": 0.02047,
+   "ece_model": 0.0018498667121678487
+  },
+  "what": {
+   "model": 1.6463815426772905,
+   "league": 1.8525243933165672,
+   "profile": 1.7447635144775335,
+   "gain_vs_best_baseline": 0.05639,
+   "ece_model": 0.0036123774989790065
+  },
+  "location": {
+   "model": 1.3128746302775693,
+   "league": 1.375246436118501,
+   "profile": 1.375246436118476,
+   "gain_vs_best_baseline": 0.04535,
+   "ece_model": 0.004805318618947155
+  },
+  "shot_result": {
+   "model": 0.7304008957664808,
+   "league": 0.7898228122507616,
+   "profile": 0.744843414272492,
+   "gain_vs_best_baseline": 0.01939,
+   "ece_model": 0.004692974657063667
+  },
+  "assisted": {
+   "model": 0.45632999047785106,
+   "league": 0.6552138688416096,
+   "profile": 0.6095550175747978,
+   "gain_vs_best_baseline": 0.25137,
+   "ece_model": 0.004183113097720351
+  },
+  "assister": {
+   "model": 1.2553335729014636,
+   "league": 1.3886275108510755,
+   "profile": 1.2852130227842433,
+   "gain_vs_best_baseline": 0.02325,
+   "ece_model": 0.007875403140230667
+  },
+  "blocked": {
+   "model": 0.25167906265398227,
+   "league": 0.33282990294843334,
+   "profile": 0.2688145600585704,
+   "gain_vs_best_baseline": 0.06374,
+   "ece_model": 0.002441888454745108
+  },
+  "blocker": {
+   "model": 1.3866757708582855,
+   "league": 1.6094379124341,
+   "profile": 1.4042219780196412,
+   "gain_vs_best_baseline": 0.0125,
+   "ece_model": 0.0064836530761910715
+  },
+  "rebound": {
+   "model": 0.8787676469940575,
+   "league": 0.9657352880960202,
+   "profile": 0.9587626715843374,
+   "gain_vs_best_baseline": 0.08344,
+   "ece_model": 0.004462268282360712
+  },
+  "rebounder": {
+   "model": 1.4955085912952815,
+   "league": 1.6094379124340998,
+   "profile": 1.5185051037592856,
+   "gain_vs_best_baseline": 0.01514,
+   "ece_model": 0.0024815608356704493
+  },
+  "turnover_type": {
+   "model": 0.8381384343375391,
+   "league": 0.8896321514868857,
+   "profile": 0.882267924683308,
+   "gain_vs_best_baseline": 0.05002,
+   "ece_model": 0.0059434092113656405
+  },
+  "stealer": {
+   "model": 1.5821732500995132,
+   "league": 1.6094379124340998,
+   "profile": 1.5836512507168898,
+   "gain_vs_best_baseline": 0.00093,
+   "ece_model": 0.002298756299110894
+  },
+  "fouler": {
+   "model": 1.562294259005678,
+   "league": 1.6094379124340996,
+   "profile": 1.5865312732039687,
+   "gain_vs_best_baseline": 0.01528,
+   "ece_model": 0.0018327190085360805
+  },
+  "free_throw": {
+   "model": 0.5137927668079869,
+   "league": 0.5288796987824144,
+   "profile": 0.5148351890002271,
+   "gain_vs_best_baseline": 0.00202,
+   "ece_model": 0.0024089181351067955
+  }
+ },
+ "summary": {
+  "star": {
+   "player_games": 1080,
+   "pts": {
+    "actual": 23.715,
+    "sim": 23.93,
+    "bias": 0.216,
+    "rel_bias": 0.0091,
+    "coverage_10_90": 0.806,
+    "crps": 3.8236,
+    "crps_baseline": 4.1472
+   },
+   "reb": {
+    "actual": 5.888,
+    "sim": 5.815,
+    "bias": -0.073,
+    "rel_bias": -0.0123,
+    "coverage_10_90": 0.782,
+    "crps": 1.3343,
+    "crps_baseline": 1.4195
+   },
+   "ast": {
+    "actual": 5.524,
+    "sim": 5.595,
+    "bias": 0.071,
+    "rel_bias": 0.0129,
+    "coverage_10_90": 0.79,
+    "crps": 1.2864,
+    "crps_baseline": 1.4406
+   },
+   "fg3m": {
+    "actual": 2.245,
+    "sim": 2.326,
+    "bias": 0.081,
+    "rel_bias": 0.0361,
+    "coverage_10_90": 0.801,
+    "crps": 0.8031,
+    "crps_baseline": 0.8648
+   },
+   "stl": {
+    "actual": 1.086,
+    "sim": 1.127,
+    "bias": 0.041,
+    "rel_bias": 0.0375,
+    "coverage_10_90": 0.802,
+    "crps": 0.5492,
+    "crps_baseline": 0.5917
+   },
+   "blk": {
+    "actual": 0.603,
+    "sim": 0.594,
+    "bias": -0.008,
+    "rel_bias": -0.0139,
+    "coverage_10_90": 0.805,
+    "crps": 0.344,
+    "crps_baseline": 0.372
+   },
+   "tov": {
+    "actual": 2.777,
+    "sim": 2.808,
+    "bias": 0.031,
+    "rel_bias": 0.0113,
+    "coverage_10_90": 0.797,
+    "crps": 0.8902,
+    "crps_baseline": 0.9659
+   },
+   "fga": {
+    "actual": 17.632,
+    "sim": 17.513,
+    "bias": -0.12,
+    "rel_bias": -0.0068,
+    "coverage_10_90": 0.762,
+    "crps": 2.2071,
+    "crps_baseline": 2.404
+   },
+   "fta": {
+    "actual": 5.855,
+    "sim": 6.061,
+    "bias": 0.207,
+    "rel_bias": 0.0353,
+    "coverage_10_90": 0.806,
+    "crps": 1.7543,
+    "crps_baseline": 1.9216
+   },
+   "pf": {
+    "actual": 2.053,
+    "sim": 2.115,
+    "bias": 0.063,
+    "rel_bias": 0.0305,
+    "coverage_10_90": 0.8,
+    "crps": 0.7722,
+    "crps_baseline": 0.7808
+   }
+  },
+  "starter": {
+   "player_games": 6642,
+   "pts": {
+    "actual": 13.872,
+    "sim": 13.927,
+    "bias": 0.055,
+    "rel_bias": 0.0039,
+    "coverage_10_90": 0.797,
+    "crps": 3.0789,
+    "crps_baseline": 3.3328
+   },
+   "reb": {
+    "actual": 5.36,
+    "sim": 5.363,
+    "bias": 0.003,
+    "rel_bias": 0.0005,
+    "coverage_10_90": 0.769,
+    "crps": 1.3182,
+    "crps_baseline": 1.4133
+   },
+   "ast": {
+    "actual": 3.246,
+    "sim": 3.222,
+    "bias": -0.024,
+    "rel_bias": -0.0075,
+    "coverage_10_90": 0.78,
+    "crps": 0.9842,
+    "crps_baseline": 1.0899
+   },
+   "fg3m": {
+    "actual": 1.562,
+    "sim": 1.582,
+    "bias": 0.019,
+    "rel_bias": 0.0125,
+    "coverage_10_90": 0.793,
+    "crps": 0.6395,
+    "crps_baseline": 0.689
+   },
+   "stl": {
+    "actual": 1.002,
+    "sim": 1.028,
+    "bias": 0.026,
+    "rel_bias": 0.0258,
+    "coverage_10_90": 0.798,
+    "crps": 0.5225,
+    "crps_baseline": 0.5633
+   },
+   "blk": {
+    "actual": 0.597,
+    "sim": 0.597,
+    "bias": -0.0,
+    "rel_bias": -0.0008,
+    "coverage_10_90": 0.795,
+    "crps": 0.3625,
+    "crps_baseline": 0.3937
+   },
+   "tov": {
+    "actual": 1.627,
+    "sim": 1.664,
+    "bias": 0.037,
+    "rel_bias": 0.0227,
+    "coverage_10_90": 0.802,
+    "crps": 0.666,
+    "crps_baseline": 0.7309
+   },
+   "fga": {
+    "actual": 10.705,
+    "sim": 10.689,
+    "bias": -0.016,
+    "rel_bias": -0.0015,
+    "coverage_10_90": 0.791,
+    "crps": 1.6788,
+    "crps_baseline": 1.8559
+   },
+   "fta": {
+    "actual": 2.69,
+    "sim": 2.699,
+    "bias": 0.009,
+    "rel_bias": 0.0034,
+    "coverage_10_90": 0.798,
+    "crps": 1.1587,
+    "crps_baseline": 1.2722
+   },
+   "pf": {
+    "actual": 2.205,
+    "sim": 2.291,
+    "bias": 0.086,
+    "rel_bias": 0.0389,
+    "coverage_10_90": 0.793,
+    "crps": 0.799,
+    "crps_baseline": 0.8165
+   }
+  },
+  "bench": {
+   "player_games": 8793,
+   "pts": {
+    "actual": 6.472,
+    "sim": 6.498,
+    "bias": 0.026,
+    "rel_bias": 0.004,
+    "coverage_10_90": 0.8,
+    "crps": 1.9676,
+    "crps_baseline": 2.1625
+   },
+   "reb": {
+    "actual": 2.799,
+    "sim": 2.772,
+    "bias": -0.026,
+    "rel_bias": -0.0094,
+    "coverage_10_90": 0.78,
+    "crps": 0.8843,
+    "crps_baseline": 0.9621
+   },
+   "ast": {
+    "actual": 1.501,
+    "sim": 1.485,
+    "bias": -0.016,
+    "rel_bias": -0.0107,
+    "coverage_10_90": 0.785,
+    "crps": 0.6004,
+    "crps_baseline": 0.6702
+   },
+   "fg3m": {
+    "actual": 0.84,
+    "sim": 0.843,
+    "bias": 0.002,
+    "rel_bias": 0.0029,
+    "coverage_10_90": 0.801,
+    "crps": 0.4162,
+    "crps_baseline": 0.4524
+   },
+   "stl": {
+    "actual": 0.572,
+    "sim": 0.572,
+    "bias": -0.0,
+    "rel_bias": -0.0003,
+    "coverage_10_90": 0.802,
+    "crps": 0.3439,
+    "crps_baseline": 0.3788
+   },
+   "blk": {
+    "actual": 0.321,
+    "sim": 0.321,
+    "bias": -0.001,
+    "rel_bias": -0.0018,
+    "coverage_10_90": 0.796,
+    "crps": 0.2161,
+    "crps_baseline": 0.2372
+   },
+   "tov": {
+    "actual": 0.798,
+    "sim": 0.815,
+    "bias": 0.017,
+    "rel_bias": 0.0208,
+    "coverage_10_90": 0.797,
+    "crps": 0.4232,
+    "crps_baseline": 0.4715
+   },
+   "fga": {
+    "actual": 5.179,
+    "sim": 5.126,
+    "bias": -0.052,
+    "rel_bias": -0.0101,
+    "coverage_10_90": 0.794,
+    "crps": 1.1129,
+    "crps_baseline": 1.2267
+   },
+   "fta": {
+    "actual": 1.15,
+    "sim": 1.221,
+    "bias": 0.071,
+    "rel_bias": 0.0617,
+    "coverage_10_90": 0.795,
+    "crps": 0.6669,
+    "crps_baseline": 0.7406
+   },
+   "pf": {
+    "actual": 1.395,
+    "sim": 1.404,
+    "bias": 0.009,
+    "rel_bias": 0.0065,
+    "coverage_10_90": 0.785,
+    "crps": 0.6001,
+    "crps_baseline": 0.6449
+   }
+  },
+  "all": {
+   "player_games": 16515,
+   "pts": {
+    "actual": 10.576,
+    "sim": 10.626,
+    "bias": 0.05,
+    "rel_bias": 0.0047,
+    "coverage_10_90": 0.799,
+    "crps": 2.5448,
+    "crps_baseline": 2.7724
+   },
+   "reb": {
+    "actual": 4.031,
+    "sim": 4.013,
+    "bias": -0.018,
+    "rel_bias": -0.0044,
+    "coverage_10_90": 0.776,
+    "crps": 1.0914,
+    "crps_baseline": 1.1768
+   },
+   "ast": {
+    "actual": 2.466,
+    "sim": 2.452,
+    "bias": -0.014,
+    "rel_bias": -0.0055,
+    "coverage_10_90": 0.784,
+    "crps": 0.8028,
+    "crps_baseline": 0.8928
+   },
+   "fg3m": {
+    "actual": 1.223,
+    "sim": 1.237,
+    "bias": 0.014,
+    "rel_bias": 0.0118,
+    "coverage_10_90": 0.798,
+    "crps": 0.5331,
+    "crps_baseline": 0.5765
+   },
+   "stl": {
+    "actual": 0.779,
+    "sim": 0.791,
+    "bias": 0.013,
+    "rel_bias": 0.0166,
+    "coverage_10_90": 0.8,
+    "crps": 0.4305,
+    "crps_baseline": 0.4683
+   },
+   "blk": {
+    "actual": 0.451,
+    "sim": 0.45,
+    "bias": -0.001,
+    "rel_bias": -0.0023,
+    "coverage_10_90": 0.796,
+    "crps": 0.2844,
+    "crps_baseline": 0.3101
+   },
+   "tov": {
+    "actual": 1.261,
+    "sim": 1.287,
+    "bias": 0.026,
+    "rel_bias": 0.0205,
+    "coverage_10_90": 0.799,
+    "crps": 0.5534,
+    "crps_baseline": 0.6103
+   },
+   "fga": {
+    "actual": 8.215,
+    "sim": 8.173,
+    "bias": -0.042,
+    "rel_bias": -0.0051,
+    "coverage_10_90": 0.791,
+    "crps": 1.4168,
+    "crps_baseline": 1.562
+   },
+   "fta": {
+    "actual": 2.077,
+    "sim": 2.132,
+    "bias": 0.055,
+    "rel_bias": 0.0265,
+    "coverage_10_90": 0.797,
+    "crps": 0.9401,
+    "crps_baseline": 1.0362
+   },
+   "pf": {
+    "actual": 1.764,
+    "sim": 1.807,
+    "bias": 0.043,
+    "rel_bias": 0.0246,
+    "coverage_10_90": 0.789,
+    "crps": 0.6927,
+    "crps_baseline": 0.724
+   }
+  },
+  "events": {
+   "action": {
+    "expected": 168730.1,
+    "actual": 168735.0,
+    "rel_bias": -0.0
+   },
+   "def_foul": {
+    "expected": 11543.0,
+    "actual": 11684.0,
+    "rel_bias": -0.0121
+   },
+   "violation": {
+    "expected": 1043.3,
+    "actual": 1025.0,
+    "rel_bias": 0.0178
+   },
+   "team_turnover": {
+    "expected": 1252.6,
+    "actual": 1125.0,
+    "rel_bias": 0.1134
+   },
+   "penalty_trips": {
+    "expected": 3096.2,
+    "actual": 3043.0,
+    "rel_bias": 0.0175
+   },
+   "fga": {
+    "expected": 134983.6,
+    "actual": 135678.0,
+    "rel_bias": -0.0051
+   },
+   "fgm": {
+    "expected": 63816.2,
+    "actual": 63884.0,
+    "rel_bias": -0.0011
+   },
+   "and_one": {
+    "expected": 3608.4,
+    "actual": 3423.0,
+    "rel_bias": 0.0542
+   },
+   "fg3a": {
+    "expected": 56056.5,
+    "actual": 56379.0,
+    "rel_bias": -0.0057
+   },
+   "turnover": {
+    "expected": 21249.8,
+    "actual": 20823.0,
+    "rel_bias": 0.0205
+   },
+   "live_turnover": {
+    "expected": 13048.0,
+    "actual": 12859.0,
+    "rel_bias": 0.0147
+   },
+   "offensive_foul": {
+    "expected": 2172.0,
+    "actual": 2119.0,
+    "rel_bias": 0.025
+   },
+   "shooting_foul_2": {
+    "expected": 12082.3,
+    "actual": 11688.0,
+    "rel_bias": 0.0337
+   },
+   "shooting_foul_3": {
+    "expected": 414.4,
+    "actual": 546.0,
+    "rel_bias": -0.241
+   }
+  },
+  "team": {
+   "away_pts": {
+    "games": 766,
+    "actual": 113.13,
+    "sim": 114.16,
+    "bias": 1.03,
+    "sim_sd": 12.63,
+    "actual_sd_around_sim": 13.18,
+    "coverage_10_90": 0.769,
+    "crps": 7.473
+   },
+   "home_pts": {
+    "games": 766,
+    "actual": 114.89,
+    "sim": 114.93,
+    "bias": 0.04,
+    "sim_sd": 12.62,
+    "actual_sd_around_sim": 12.94,
+    "coverage_10_90": 0.792,
+    "crps": 7.265
+   },
+   "margin": {
+    "games": 766,
+    "actual": 1.76,
+    "sim": 0.76,
+    "bias": -0.99,
+    "sim_sd": 17.86,
+    "actual_sd_around_sim": 18.18,
+    "coverage_10_90": 0.782,
+    "crps": 10.273
+   },
+   "total": {
+    "games": 766,
+    "actual": 228.02,
+    "sim": 229.09,
+    "bias": 1.07,
+    "sim_sd": 17.86,
+    "actual_sd_around_sim": 18.75,
+    "coverage_10_90": 0.781,
+    "crps": 10.53
+   }
+  }
+ }
+}

@@ -286,6 +286,14 @@ real minutes.
   what fouled-on-a-two +3.1 → +1.7 (but turnovers +2.6 → +4.1). Kept for event and turnover type (judgement: neutral
   log loss, measured bias fix with a known mechanism).
 
+**Full run, all 766 F4 games, final v1 settings** (`…220658Z_m6a.json`, 16,515 player-games): team total 229.1 v
+228.0 (+0.5%), margin −1.0 (home low, ≈ 1 SE), 10–90% coverage 78%, SD 17.9 v 18.8. Player bias, stars / starters /
+bench: points +0.9 / +0.4 / +0.4%, rebounds −1.2 / +0.1 / −0.9%, assists +1.3 / −0.8 / −1.1%, threes +3.6 / +1.2 /
++0.3%, turnovers +1.1 / +2.3 / +2.1%, free throws +3.5 / +0.3 / +6.2%, fouls +3.0 / +3.9 / +0.7%; coverage 77–81%
+everywhere; CRPS 6–11% better than recent averages (fouls 1–7%). Event accounting: defensive fouls −1.2% (was +4.6%
+before day of season), penalty trips +1.8%, and-ones +5.4%, offensive fouls +2.5%, shooting fouls on a two +3.4%, on a
+three −24% — the remaining bias sits in what/shot result's foul classes.
+
 ## 3j. Engine v1 preview (`scripts/engine.py`; 19 Nov 2026 slate, 2,000 worlds per game)
 
 The v1 nodes played forward: sampled durations on the game clock, replayed rotations (M3 v0), each world's own score,
@@ -295,6 +303,19 @@ team minutes, FGA 91–92, 3PA 42–46, FTA 22, assists 28–29, steals 10–11,
 high, turnovers, steals and rebounds a few percent high, and the spread too narrow (total SD ≈ 18–19 and OT 5.4% in
 real games) — per-world form (M8) and the duration node's possession count are the first suspects. Speed: 25 s per
 game at 2,000 worlds on a busy laptop (four games + season in 105 s). Re-simulates bit-for-bit (smoke).
+
+**Clock fixes (same evening).** (1) The duration node predicts time *to the action*; real game time also runs after it
+— 243 s per game (8.4%): a missed shot runs 2.44 s to the rebound (median 2.3, p90 4.0), a shooting foul 0.46 s; made
+shots, turnovers and other fouls ≈ 0. The engine now draws that gap from the real ones (by zone for misses).
+(2) Recorded clocks are mostly whole seconds, so a 2–4 s bin holds 2 and 3 s (mean 2.5): uniform sampling inside bins
+added ~0.5 s per segment; seconds are now drawn from the real values in each bin. (3) With ≤ 24 s left (4.5% of real
+segments, 4.8 s to the action; trained duration rows have > 24 s), time to the action — or no action before the
+buzzer — is drawn from real segments that started with the same whole seconds left (now 3.6%, 5.9 s). The errors
+had cancelled: without (1) pace was +3%; with (1) only, −5%. After all three, Golden State–Memphis: 108.5–109 points
+per team at ≈ 99 possessions v the teams' real 101.2 / 102.1; shooting on par with the league (2P 53–54%, 3P 35%);
+turnovers ≈ +1 per team; Memphis's offence simulated at ≈ 110 per 100 v 117.8 real this season — team-level offensive
+quality is under-expressed (candidates: live-adapter skew in this season's profiles, replay rotations, missing
+defensive inputs). That is the M9 backtest's question.
 
 ## 4. Placeholder model `baseline-v0` (19 Nov 2026, superseded by `baseline-v1`)
 
