@@ -1,0 +1,422 @@
+#!/usr/bin/env python3
+"""Placeholder projections: box-score-rate Monte Carlo with play-by-play quarter profiles.
+
+NOT the possession engine (PLAN.md phase 2). It fills the same output contract so the app is
+ready for it: every period (Q1–Q4, H1, H2, FG) has team and player distributions.
+
+Per simulated world:
+* team regulation scores from a calibrated bivariate model (ratings × pace, home court, lineup
+  strength), split into quarters by each team's (shrunk) quarter-scoring shares; overtime periods;
+* player minutes per quarter from each player's own play-by-play quarter profile (shrunk toward
+  starter/bench norms), fitted so each team-quarter holds 60 player-minutes; starters sit more of
+  Q4 when the game is a blowout after three quarters; closers play overtime;
+* every quarter's team points, misses, rebounds, assists, turnovers, steals and blocks are
+  allocated to the players on the floor by their rates and quarter usage — player points always sum
+  to the team's quarter score.
+
+Seeded per (model, slate date, game): identical inputs reproduce identical outputs.
+"""
+from __future__ import annotations
+
+import hashlib
+import math
+import sys
+from pathlib import Path
+
+import numpy as np
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+
+MODEL = {
+    'id': 'baseline-v1', 'kind': 'placeholder', 'sims': 10000,
+    'label': 'Placeholder baseline v1 — box-score rates with play-by-play quarter profiles, not the possession engine',
+    'home_court': 2.0, 'team_sd': 11.25, 'team_rho': 0.35, 'prior_games': 8, 'prior_minutes': 80,
+    'quarter_prior_seconds': 3600, 'usage_prior_points': 15, 'usage_prior_assists': 8,
+}
+AVAILABILITY = {'active': 1.0, 'probable': 0.9, 'day-to-day': 0.7, 'questionable': 0.5,
+                'doubtful': 0.15, 'out': 0.0, 'suspension': 0.0, 'suspended': 0.0, 'injured reserve': 0.0}
+PERIODS = ('q1', 'q2', 'q3', 'q4', 'h1', 'h2', 'fg')
+SLICES = {'q1': [0], 'q2': [1], 'q3': [2], 'q4': [3], 'h1': [0, 1], 'h2': [2, 3], 'fg': [0, 1, 2, 3, 4]}
+FG_DIST = ('min', 'pts', 'reb', 'ast', 'fg3m', 'stl', 'blk', 'tov', 'pra', 'pr', 'pa', 'ra', 'stocks', 'fga', 'fta', 'fg3a')
+PERIOD_DIST = ('min', 'pts', 'reb', 'ast', 'fg3m', 'stl', 'blk', 'pra')
+BOX = ('pts', 'fgm', 'fga', 'fg3m', 'fg3a', 'ftm', 'fta', 'oreb', 'dreb', 'ast', 'stl', 'blk', 'tov')
+
+
+def seed_for(*parts) -> int:
+    return int.from_bytes(hashlib.sha256('|'.join(map(str, parts)).encode()).digest()[:8], 'little')
+
+
+def rng_for(*parts) -> np.random.Generator:
+    return np.random.Generator(np.random.PCG64(seed_for(*parts)))
+
+
+def normal_cdf(x: float) -> float:
+    return 0.5 * (1 + math.erf(x / math.sqrt(2)))
+
+
+def shrink(value, n, prior, k):
+    if value is None or not n:
+        return prior
+    return (n * value + k * prior) / (n + k)
+
+
+def summary(values: np.ndarray, offset: bool = False) -> dict:
+    """Exact discrete summary of integer outcomes; histogram counts start at `min`."""
+    values = np.asarray(values, dtype=np.int64)
+    lo = int(values.min()) if offset else 0
+    counts = np.bincount(values - lo)
+    cum = np.cumsum(counts)
+    total = int(cum[-1])
+    quant = [int(np.searchsorted(cum, q * total, side='left')) + lo for q in (0.1, 0.25, 0.5, 0.75, 0.9)]
+    return {'mean': round(float(values.mean()), 3), 'sd': round(float(values.std()), 3), 'q': quant,
+            'min': lo, 'hist': counts.astype(int).tolist()}
+
+
+# ---------------------------------------------------------------------------- team model
+
+def team_expectation(T: dict, lg: dict, home: str, away: str, neutral: bool = False) -> dict:
+    k = MODEL['prior_games']
+    def get(tid, key, prior):
+        return shrink(T[tid][key], T[tid]['gp'], prior, k)
+    pace = get(home, 'pace', lg['pace']) * get(away, 'pace', lg['pace']) / lg['pace']
+    h_off, h_def = get(home, 'ortg', lg['ortg']), get(home, 'drtg', lg['ortg'])
+    a_off, a_def = get(away, 'ortg', lg['ortg']), get(away, 'drtg', lg['ortg'])
+    hca = 0 if neutral else MODEL['home_court']
+    mu_h = pace * (h_off * a_def / lg['ortg']) / 100 + hca / 2
+    mu_a = pace * (a_off * h_def / lg['ortg']) / 100 - hca / 2
+    sd_margin = MODEL['team_sd'] * math.sqrt(2 * (1 - MODEL['team_rho']))
+    return {'pace': pace, 'mu_home': mu_h, 'mu_away': mu_a, 'p_home': normal_cdf((mu_h - mu_a) / sd_margin)}
+
+
+def team_rates(T: dict, lg: dict, tid: str) -> dict:
+    k = MODEL['prior_games']
+    s, gp = T[tid], T[tid]['gp']
+    pg, lpg = s['per_game'], lg['per_game']
+    def per(key, prior):
+        return shrink(pg.get(key), gp, prior, k)
+    pts = per('pts', lpg['pts'])
+    quarters = s.get('quarters') or [None] * 4
+    qsum = sum(q for q in quarters if q) if all(quarters) else None
+    share = [shrink(q / qsum if qsum else None, gp, lg['quarter_share'][i], 10) for i, q in enumerate(quarters)]
+    return {
+        'share3': 3 * per('fg3m', lpg['fg3m']) / pts, 'shareft': per('ftm', lpg['ftm']) / pts,
+        'oreb_pct': shrink(s['oreb_pct'], gp, lg['oreb_pct'], k), 'dreb_pct': shrink(s['dreb_pct'], gp, 1 - lg['oreb_pct'], k),
+        'ast_rate': shrink(s['ast_rate'], gp, lg['ast_rate'], k),
+        'tov_pct': shrink(s['tov_pct'], gp, lg['tov_pct'], k), 'opp_tov_pct': shrink(s['opp_tov_pct'], gp, lg['tov_pct'], k),
+        'stl_share': (pg.get('stl') or lpg['stl']) / max(1e-9, (s['opp_per_game'].get('tov') or lpg['tov'])),
+        'blk_per_miss': (pg.get('blk') or lpg['blk']) / max(1e-9, ((s['opp_per_game'].get('fga') or lpg['fga']) - (s['opp_per_game'].get('fgm') or lpg['fgm']))),
+        'quarter_share': [x / sum(share) for x in share],
+    }
+
+
+# ---------------------------------------------------------------------------- players
+
+def availability(status: str | None) -> float:
+    return AVAILABILITY.get((status or 'active').strip().lower(), 0.6)
+
+
+def player_inputs(tid: str, P: dict, registry: dict, lg: dict, T: dict, prospective: bool,
+                  Q: dict | None = None, priors: dict | None = None) -> list[dict]:
+    if prospective:
+        ids = [pid for pid, r in registry.items() if r.get('on_roster') and r.get('team') == tid]
+    else:
+        ids = [pid for pid, p in P.items() if p['team'] == tid]
+    lpm = {k: v / 240 for k, v in lg['per_game'].items()}  # league per player-minute
+    K = MODEL['prior_minutes']
+    team_gp = max(1, T[tid]['gp'])
+    out = []
+    for pid in ids:
+        p, reg = P.get(pid), registry.get(pid, {})
+        t = p['totals'] if p else {}
+        gp, mins = (p['gp'], t.get('min', 0)) if p else (0, 0)
+        if prospective:
+            a = availability(reg.get('status'))
+            if p and a == 1.0 and p['recent_window'] >= 3 and p['recent_played'] == 0:
+                a = 0.8 if (p['min_ewma'] or 0) >= 20 else 0.5
+        else:
+            a = 1.0 if p and p['recent_played'] >= 1 else 0.2
+        m0 = (0.6 * p['min_ewma'] + 0.4 * mins / gp) if p and gp else 0.0
+        def rate(key, prior_key=None):
+            return (t.get(key, 0) + K * lpm[prior_key or key]) / (mins + K)
+        fg2m, fg2a = t.get('fgm', 0) - t.get('fg3m', 0), t.get('fga', 0) - t.get('fg3a', 0)
+        p3 = (t.get('fg3m', 0) + 15 * lg['fg3_pct']) / (t.get('fg3a', 0) + 15)
+        p2 = (fg2m + 25 * lg['fg2_pct']) / (fg2a + 25)
+        pft = (t.get('ftm', 0) + 10 * lg['ft_pct']) / (t.get('fta', 0) + 10)
+        r3 = rate('fg3m')
+        r2 = (fg2m + K * (lpm['fgm'] - lpm['fg3m'])) / (mins + K)
+        rft = rate('ftm')
+        out.append({
+            'id': pid, 'name': reg.get('name') or (p['name'] if p else pid), 'pos': reg.get('pos') or (p['pos'] if p else ''),
+            'jersey': reg.get('jersey', ''), 'status': reg.get('status', 'Active') if prospective else 'Unknown (retrospective)',
+            'injury': reg.get('injury') if prospective else None, 'availability': a, 'base_min': m0,
+            'recent_started': p['recent_started'] if p else 0, 'gp': gp,
+            'r3': r3, 'r2': r2, 'rft': rft, 'p3': p3, 'p2': p2, 'pft': pft,
+            'miss3': r3 / p3 * (1 - p3), 'miss2': r2 / p2 * (1 - p2), 'missft': rft / pft * (1 - pft),
+            'oreb': rate('oreb'), 'dreb': rate('dreb'), 'ast': rate('ast'), 'stl': rate('stl'), 'blk': rate('blk'), 'tov': rate('tov'),
+            'value': (t.get('pts', 0) + 0.7 * t.get('ast', 0) + K * (lpm['pts'] + 0.7 * lpm['ast']) * 0.8) / (mins + K),
+            'usual_min': mins / team_gp,
+        })
+    eligible = sorted([x for x in out if x['availability'] > 0 and x['base_min'] > 0],
+                      key=lambda x: (-x['recent_started'], -x['base_min'], x['id']))
+    starters = {x['id'] for x in eligible[:5]}
+    tau, beta_p, beta_a = MODEL['quarter_prior_seconds'], MODEL['usage_prior_points'], MODEL['usage_prior_assists']
+    for x in out:
+        x['starter'] = x['id'] in starters
+        prior = (priors or {}).get('starter' if x['starter'] else 'bench') or [0.25] * 4
+        prof = (Q or {}).get(x['id'])
+        sec = prof['sec'][:4] if prof else [0.0] * 4
+        S = sum(sec)
+        x['qshare'] = [(sec[k] + tau * prior[k]) / (S + tau) for k in range(4)]
+        def usage(stat, beta):
+            if not prof or not S:
+                return [1.0] * 4
+            total = sum(prof[stat][:4])
+            return [(prof[stat][k] + beta) / (total * sec[k] / S + beta) for k in range(4)]
+        x['u_pts'], x['u_ast'] = usage('pts', beta_p), usage('ast', beta_a)
+    out.sort(key=lambda x: (not x['starter'], -x['base_min'] * max(x['availability'], 0.01), x['id']))
+    return out
+
+
+def multinomial_rows(rng, n, weights):
+    totals = weights.sum(axis=1, keepdims=True)
+    probs = np.where(totals > 0, weights / np.where(totals > 0, totals, 1), 1.0 / weights.shape[1])
+    return rng.multinomial(n, probs)
+
+
+def quarter_minutes(mins, share, starters, blowout, rng):
+    """Per-world minutes by quarter: rows keep each player's game minutes, columns hold 60 player-minutes."""
+    X = mins[:, :, None] * share[None, :, :] * np.exp(rng.normal(0, 0.08, mins.shape + (4,)))
+    if starters.any() and (~starters).any():
+        X[:, starters, 3] *= (1 - 0.6 * blowout)[:, None]
+        X[:, ~starters, 3] *= (1 + blowout)[:, None]
+    target = X.sum(axis=2)
+    target *= 240 / np.maximum(target.sum(axis=1, keepdims=True), 1e-9)
+    for _ in range(8):
+        X *= 60 / np.maximum(X.sum(axis=1, keepdims=True), 1e-9)
+        np.minimum(X, 12, out=X)
+        X *= (target / np.maximum(X.sum(axis=2), 1e-9))[:, :, None]
+    X *= 60 / np.maximum(X.sum(axis=1, keepdims=True), 1e-9)
+    np.minimum(X, 12, out=X)
+    return X
+
+
+# ---------------------------------------------------------------------------- one game
+
+def simulate_game(game: dict, T: dict, lg: dict, P: dict, registry: dict, day: str, prospective: bool,
+                  sims: int | None = None, Q: dict | None = None, priors: dict | None = None) -> dict:
+    W = sims or MODEL['sims']
+    rng = rng_for(MODEL['id'], day, game['game_id'])
+    h, a = game['home_id'], game['away_id']
+    exp = team_expectation(T, lg, h, a, bool(int(game.get('neutral') or 0)))
+    sides = {'home': h, 'away': a}
+    other = {'home': 'away', 'away': 'home'}
+    teams = {}
+    for side, tid in sides.items():
+        players = player_inputs(tid, P, registry, lg, T, prospective, Q, priors)
+        n = len(players)
+        arr = lambda key, players=players: np.array([x[key] for x in players], dtype=float)
+        avail = rng.random((W, n)) < arr('availability')
+        raw = arr('base_min') * avail * np.exp(rng.normal(0, 0.10, (W, n)))
+        tot = raw.sum(axis=1, keepdims=True)
+        mins = np.minimum(raw * (240 / np.where(tot > 0, tot, 1)), 44.0)
+        mins *= 240 / np.maximum(mins.sum(axis=1, keepdims=True), 1e-9)
+        value = arr('value')
+        base = max(1e-9, float((value * arr('usual_min')).sum()))
+        strength = np.clip((mins * value).sum(axis=1) / base, 0.8, 1.2) ** 0.35
+        teams[side] = {'tid': tid, 'players': players, 'arr': arr, 'mins': mins, 'strength': strength,
+                       'rates': team_rates(T, lg, tid), 'starters': np.array([x['starter'] for x in players], dtype=bool),
+                       'qshare': np.array([x['qshare'] for x in players]).reshape(n, 4),
+                       'u_pts': np.array([x['u_pts'] for x in players]).reshape(n, 4),
+                       'u_ast': np.array([x['u_ast'] for x in players]).reshape(n, 4)}
+    sd, rho = MODEL['team_sd'], MODEL['team_rho']
+    z1, z2 = rng.standard_normal(W), rng.standard_normal(W)
+    zh, za = z1, rho * z1 + math.sqrt(1 - rho * rho) * z2
+    mu = {'home': exp['mu_home'] * teams['home']['strength'], 'away': exp['mu_away'] * teams['away']['strength']}
+    reg = {'home': np.maximum(60, np.rint(mu['home'] + sd * zh)).astype(np.int64),
+           'away': np.maximum(60, np.rint(mu['away'] + sd * za)).astype(np.int64)}
+    pts_by_period = {}
+    for side in sides:
+        shares = rng.dirichlet(400 * np.array(teams[side]['rates']['quarter_share']), size=W)
+        pts_by_period[side] = np.zeros((W, 5), np.int64)
+        pts_by_period[side][:, :4] = rng.multinomial(reg[side], shares)
+    n_ot = np.zeros(W, np.int64)
+    tied = reg['home'] == reg['away']
+    for _ in range(8):
+        idx = np.flatnonzero(tied)
+        if not idx.size:
+            break
+        for side in sides:
+            pts_by_period[side][idx, 4] += np.maximum(0, np.rint(rng.normal(mu[side][idx] * 5 / 48, 3.6))).astype(np.int64)
+        n_ot[idx] += 1
+        tied = pts_by_period['home'].sum(1) == pts_by_period['away'].sum(1)
+    pts_by_period['home'][np.flatnonzero(tied), 4] += 1  # vanishingly rare after eight periods
+    final = {s: pts_by_period[s].sum(1) for s in sides}
+    m3 = pts_by_period['home'][:, :3].sum(1) - pts_by_period['away'][:, :3].sum(1)
+    blowout = np.clip((np.abs(m3) - 12) / 15, 0, 1)
+
+    for side, team in teams.items():
+        X = quarter_minutes(team['mins'], team['qshare'], team['starters'], blowout, rng)
+        closers = X[:, :, 3] + 1e-9 * (team['mins'] > 0)
+        otm = (25 * n_ot)[:, None] * closers / np.maximum(closers.sum(axis=1, keepdims=True), 1e-12)
+        team['minutes'] = np.concatenate([X, np.minimum(otm, 5 * n_ot[:, None])[:, :, None]], axis=2)  # (W,P,5)
+        team['hot'] = np.exp(rng.normal(0, 0.25, (W, len(team['players']))))
+        team['hot_ast'] = np.exp(rng.normal(0, 0.25, (W, len(team['players']))))
+        team['box'] = {k: np.zeros((W, len(team['players']), 5), np.int64) for k in BOX}
+        team['missed'] = np.zeros((W, 5), np.int64)
+
+    lengths = [12, 12, 12, 12, 5]
+    for k in range(5):
+        for side, team in teams.items():
+            arr, r, box = team['arr'], team['rates'], team['box']
+            m = team['minutes'][:, :, k]
+            u = team['u_pts'][:, k] if k < 4 else 1.0
+            hot = team['hot'] * np.exp(rng.normal(0, 0.15, m.shape))
+            pts_k = pts_by_period[side][:, k]
+            m3k = rng.binomial(pts_k // 3, np.clip(r['share3'], 0.05, 0.6))
+            rest = pts_k - 3 * m3k
+            ftk = rng.binomial(rest, np.clip(r['shareft'] / (1 - r['share3']), 0.02, 0.6))
+            odd = ((rest - ftk) % 2) == 1
+            ftk = np.where(odd & (ftk < rest), ftk + 1, np.where(odd, ftk - 1, ftk))
+            m2k = (rest - ftk) // 2
+            p3m = multinomial_rows(rng, m3k, arr('r3') * m * hot * u)
+            p2m = multinomial_rows(rng, m2k, arr('r2') * m * hot * u)
+            pftm = multinomial_rows(rng, ftk, arr('rft') * m * np.sqrt(hot) * u)
+            miss3, miss2 = rng.poisson(arr('miss3') * m), rng.poisson(arr('miss2') * m)
+            box['fg3m'][:, :, k], box['fg3a'][:, :, k] = p3m, p3m + miss3
+            box['fgm'][:, :, k], box['fga'][:, :, k] = p3m + p2m, p3m + p2m + miss3 + miss2
+            box['ftm'][:, :, k], box['fta'][:, :, k] = pftm, pftm + rng.poisson(arr('missft') * m)
+            box['pts'][:, :, k] = 3 * p3m + 2 * p2m + pftm
+            assert np.array_equal(box['pts'][:, :, k].sum(axis=1), pts_k), 'player points must equal team period points'
+            team['missed'][:, k] = (miss3 + miss2).sum(axis=1)
+            share = lengths[k] / 48 * (n_ot if k == 4 else 1)
+            team['tov_k'] = rng.poisson((r['tov_pct'] + teams[other[side]]['rates']['opp_tov_pct']) / 2 * exp['pace'] * share)
+        for side, team in teams.items():
+            arr, r, box, opp = team['arr'], team['rates'], team['box'], teams[other[side]]
+            o = opp['rates']
+            m = team['minutes'][:, :, k]
+            noise = lambda: np.exp(rng.normal(0, 0.2, m.shape))
+            o_pct = np.clip((r['oreb_pct'] + (1 - o['dreb_pct'])) / 2, 0.1, 0.45)
+            d_pct = np.clip((r['dreb_pct'] + (1 - o['oreb_pct'])) / 2, 0.55, 0.9)
+            box['oreb'][:, :, k] = multinomial_rows(rng, rng.binomial(rng.binomial(team['missed'][:, k], 0.9), o_pct), arr('oreb') * m * noise())
+            box['dreb'][:, :, k] = multinomial_rows(rng, rng.binomial(rng.binomial(opp['missed'][:, k], 0.9), d_pct), arr('dreb') * m * noise())
+            ua = team['u_ast'][:, k] if k < 4 else 1.0
+            box['ast'][:, :, k] = multinomial_rows(rng, rng.binomial(box['fgm'][:, :, k].sum(axis=1), np.clip(r['ast_rate'], 0.4, 0.8)),
+                                                   arr('ast') * m * team['hot_ast'] * ua)
+            box['tov'][:, :, k] = multinomial_rows(rng, team['tov_k'], arr('tov') * m * noise())
+            box['stl'][:, :, k] = multinomial_rows(rng, rng.binomial(opp['tov_k'], np.clip(r['stl_share'], 0.3, 0.8)), arr('stl') * m * noise())
+            box['blk'][:, :, k] = multinomial_rows(rng, rng.binomial(opp['missed'][:, k], np.clip(r['blk_per_miss'], 0.03, 0.2)), arr('blk') * m * noise())
+
+    out = {'game_id': game['game_id'], 'model': MODEL['id'], 'sims': W,
+           'expectation': {k: round(v, 3) for k, v in exp.items()},
+           'ot': round(float((n_ot > 0).mean()), 4), 'ot_periods': np.bincount(n_ot).astype(int).tolist(), 'periods': {}}
+    for period, cols in SLICES.items():
+        ph, pa = pts_by_period['home'][:, cols].sum(1), pts_by_period['away'][:, cols].sum(1)
+        out['periods'][period] = {
+            'total': summary(ph + pa, offset=True), 'margin': summary(ph - pa, offset=True),
+            'home': {'pts': summary(ph, offset=True), 'win': round(float((ph > pa).mean()), 4), 'tie': round(float((ph == pa).mean()), 4)},
+            'away': {'pts': summary(pa, offset=True), 'win': round(float((pa > ph).mean()), 4), 'tie': round(float((ph == pa).mean()), 4)},
+        }
+    for side, team in teams.items():
+        box, minutes = team['box'], team['minutes']
+        players = []
+        fg = {k: box[k].sum(axis=2) for k in BOX}
+        tens = np.stack([fg['pts'] + 0 >= 10, (fg['oreb'] + fg['dreb']) >= 10, fg['ast'] >= 10, fg['stl'] >= 10, fg['blk'] >= 10]).sum(axis=0)
+        played_any = minutes.sum(axis=2) > 0
+        for i, x in enumerate(team['players']):
+            entry = {k: x[k] for k in ('id', 'name', 'pos', 'jersey', 'starter', 'status', 'injury')}
+            entry.update({'availability': round(x['availability'], 3), 'base_min': round(x['base_min'], 2),
+                          'played': round(float(played_any[:, i].mean()), 4),
+                          'double_double': round(float((tens[:, i] >= 2).mean()), 4),
+                          'triple_double': round(float((tens[:, i] >= 3).mean()), 4), 'periods': {}})
+            for period, cols in SLICES.items():
+                v = {k: box[k][:, i, cols].sum(axis=1) for k in BOX}
+                v['reb'] = v['oreb'] + v['dreb']
+                v['pra'], v['pr'], v['pa'], v['ra'] = v['pts'] + v['reb'] + v['ast'], v['pts'] + v['reb'], v['pts'] + v['ast'], v['reb'] + v['ast']
+                v['stocks'] = v['stl'] + v['blk']
+                mins_p = minutes[:, i, cols].sum(axis=1)
+                v['min'] = np.rint(mins_p).astype(np.int64)
+                dist = FG_DIST if period == 'fg' else PERIOD_DIST
+                entry['periods'][period] = {
+                    'sec': round(float(mins_p.mean() * 60), 1),
+                    'mean': {k: round(float(v[k].mean()), 3) for k in BOX + ('reb',)},
+                    'stats': {k: summary(v[k]) for k in dist},
+                }
+            if not played_any[:, i].any():
+                del entry['periods']  # ruled out in every world: identity and status only
+                players.append(entry)
+                continue
+            if 0 < played_any[:, i].mean() < 0.999:
+                mask = played_any[:, i]
+                entry['if_plays'] = {'min': round(float(minutes[mask, i].sum(axis=1).mean()), 3),
+                                     **{k: round(float(fg[k][mask, i].mean()), 3) for k in ('pts', 'ast', 'fg3m')},
+                                     'reb': round(float((fg['oreb'] + fg['dreb'])[mask, i].mean()), 3)}
+            players.append(entry)
+        team_means = {period: {k: round(float(box[k][:, :, cols].sum(axis=(1, 2)).mean()), 3) for k in BOX}
+                      for period, cols in SLICES.items()}
+        for period in team_means:
+            team_means[period]['reb'] = round(team_means[period]['oreb'] + team_means[period]['dreb'], 3)
+        out[side] = {'team_id': team['tid'], 'mu': round(float(exp['mu_home'] if side == 'home' else exp['mu_away']), 3),
+                     'strength': round(float(team['strength'].mean()), 4), 'box': team_means, 'players': players}
+    return out
+
+
+# ---------------------------------------------------------------------------- season
+
+def simulate_season(T: dict, lg: dict, master: list[dict], day: str, teams: dict,
+                    game_probs: dict, sims: int | None = None) -> dict:
+    W = sims or MODEL['sims']
+    rng = rng_for(MODEL['id'], day, 'season')
+    ids = sorted(teams, key=int)
+    index = {t: i for i, t in enumerate(ids)}
+    remaining = [r for r in master if r['date_et'] >= day]
+    unresolved = [r for r in master if r['date_et'] < day and r['status'] != 'final']
+    G = len(remaining)
+    p = np.empty(G)
+    rows = []
+    for g, r in enumerate(remaining):
+        if r['game_id'] in game_probs:
+            p[g] = game_probs[r['game_id']]
+            exp = None
+        else:
+            exp = team_expectation(T, lg, r['home_id'], r['away_id'], bool(int(r.get('neutral') or 0)))
+            p[g] = exp['p_home']
+        rows.append({'game_id': r['game_id'], 'p_home': round(float(p[g]), 4),
+                     **({'mu_home': round(exp['mu_home'], 2), 'mu_away': round(exp['mu_away'], 2)} if exp else {})})
+    H = np.zeros((G, len(ids)), np.float32)
+    A = np.zeros((G, len(ids)), np.float32)
+    for g, r in enumerate(remaining):
+        H[g, index[r['home_id']]] = 1
+        A[g, index[r['away_id']]] = 1
+    home_wins = (rng.random((W, G)) < p).astype(np.float32)
+    base_w = np.array([T[t]['w'] for t in ids], np.float32)
+    base_l = np.array([T[t]['l'] for t in ids], np.float32)
+    games_left = H.sum(0) + A.sum(0)
+    wins = np.rint(base_w + home_wins @ H + (1 - home_wins) @ A).astype(np.int64)
+    total_games = (base_w + base_l + games_left).astype(int)
+    tiebreak = rng.random((W, len(ids)))
+    seed = np.zeros((W, len(ids)), np.int64)
+    for conf in ('East', 'West'):
+        cols = np.array([index[t] for t in ids if teams[t]['conf'] == conf])
+        order = np.argsort(-(wins[:, cols] + 0.5 * tiebreak[:, cols]), axis=1, kind='stable')
+        ranks = np.empty_like(order)
+        ranks[np.arange(W)[:, None], order] = np.arange(1, len(cols) + 1)[None, :]
+        seed[:, cols] = ranks
+    league_key = wins + 0.5 * tiebreak
+    best, worst = np.argmax(league_key, axis=1), np.argmin(league_key, axis=1)
+    out = {}
+    for t in ids:
+        i = index[t]
+        s = seed[:, i]
+        seeds = np.bincount(s, minlength=16)[1:16] / W
+        out[t] = {'w': int(base_w[i]), 'l': int(base_l[i]), 'remaining': int(games_left[i]), 'scheduled': int(total_games[i]),
+                  'mean_w': round(float(wins[:, i].mean()), 3), 'mean_l': round(float(total_games[i] - wins[:, i].mean()), 3),
+                  'wins': summary(wins[:, i]), 'seed_mean': round(float(s.mean()), 3),
+                  'seeds': [round(float(x), 4) for x in seeds],
+                  'top6': round(float((s <= 6).mean()), 4), 'playin': round(float(((s >= 7) & (s <= 10)).mean()), 4),
+                  'out': round(float((s >= 11).mean()), 4), 'first': round(float((s == 1).mean()), 4),
+                  'best_record': round(float((best == i).mean()), 4), 'worst_record': round(float((worst == i).mean()), 4)}
+    return {'model': MODEL['id'], 'sims': W, 'teams': out, 'games': rows,
+            'unresolved_before': [r['game_id'] for r in unresolved],
+            'notes': ['Ties broken at random; NBA tiebreakers arrive with phase 4.',
+                      'Only games the provider has scheduled are simulated; NBA Cup-determined games appear once scheduled.']}

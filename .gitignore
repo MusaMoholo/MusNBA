@@ -1,0 +1,22 @@
+# Local environment and machine state
+/.venv/
+/.claude/
+.DS_Store
+__pycache__/
+*.py[cod]
+
+# Collected/derived data and generated deployments stay on the laptop/iCloud.
+/data/
+/exports/
+/_site/
+/dist/
+*.musnba
+*.musnba.gz
+*.csv
+*.log
+*.bak
+
+# Credentials and local configuration
+.env
+.env.*
+!.env.example

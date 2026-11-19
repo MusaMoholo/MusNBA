@@ -1,0 +1,1403 @@
+{
+ "experiment": "m5_lightgbm_v1",
+ "run": "20261119T183451Z",
+ "folds": {
+  "F1": [
+   "2023-12-31",
+   "2024-01-01",
+   "2024-04-30"
+  ],
+  "F2": [
+   "2024-12-31",
+   "2025-01-01",
+   "2025-04-30"
+  ],
+  "F3": [
+   "2025-09-30",
+   "2025-10-01",
+   "2025-12-31"
+  ],
+  "F4": [
+   "2025-12-31",
+   "2026-01-01",
+   "2026-04-30"
+  ]
+ },
+ "burn_in": "2022-12-01",
+ "results": {
+  "duration": {
+   "F1": {
+    "rows_train": 300914,
+    "rows_val": 175637,
+    "iterations": 58,
+    "seconds": 18.4,
+    "top_features": [
+     "start_code",
+     "start_clock",
+     "sec_left_game",
+     "margin",
+     "off_usage_max",
+     "off_min_mean",
+     "off_ast_sum",
+     "off_usage_sum"
+    ],
+    "model": 2.153158243081676,
+    "league": 2.519239951471533,
+    "profile": 2.1820550753558092,
+    "ece_model": 0.002855033659048116,
+    "ece_profile": 0.001742928316316894,
+    "gain_vs_best_baseline": 0.01324
+   },
+   "F2": {
+    "rows_train": 566245,
+    "rows_val": 180082,
+    "iterations": 58,
+    "seconds": 20.8,
+    "top_features": [
+     "start_code",
+     "start_clock",
+     "sec_left_game",
+     "margin",
+     "off_min_mean",
+     "off_usage_max",
+     "off_usage_sum",
+     "def_min_mean"
+    ],
+    "model": 2.1574553617686596,
+    "league": 2.517322950769752,
+    "profile": 2.1869987888173044,
+    "ece_model": 0.0020023109253088566,
+    "ece_profile": 0.0018344633009322066,
+    "gain_vs_best_baseline": 0.01351
+   },
+   "F3": {
+    "rows_train": 739385,
+    "rows_val": 115970,
+    "iterations": 64,
+    "seconds": 23.5,
+    "top_features": [
+     "start_code",
+     "start_clock",
+     "sec_left_game",
+     "margin",
+     "off_min_mean",
+     "off_usage_sum",
+     "off_usage_max",
+     "off_ast_sum"
+    ],
+    "model": 2.150728299192511,
+    "league": 2.5089073508002495,
+    "profile": 2.179180372452345,
+    "ece_model": 0.0030509079776041715,
+    "ece_profile": 0.003620369654755158,
+    "gain_vs_best_baseline": 0.01306
+   },
+   "F4": {
+    "rows_train": 842392,
+    "rows_val": 178225,
+    "iterations": 55,
+    "seconds": 22.5,
+    "top_features": [
+     "start_code",
+     "start_clock",
+     "sec_left_game",
+     "margin",
+     "off_min_mean",
+     "off_usage_sum",
+     "off_usage_max",
+     "def_min_mean"
+    ],
+    "model": 2.1532555185473243,
+    "league": 2.5135477500220182,
+    "profile": 2.1818562238589116,
+    "ece_model": 0.0019326325209358152,
+    "ece_profile": 0.0017357553218904926,
+    "gain_vs_best_baseline": 0.01311
+   }
+  },
+  "event": {
+   "F1": {
+    "rows_train": 309735,
+    "rows_val": 180749,
+    "iterations": 36,
+    "seconds": 3.6,
+    "top_features": [
+     "shot_time",
+     "start_code",
+     "sec_left_game",
+     "margin",
+     "start_clock",
+     "off_min_mean",
+     "off_oreb_sum",
+     "off_usage_max"
+    ],
+    "model": 0.2211073874712394,
+    "league": 0.258767519168158,
+    "profile": 0.25729702511559127,
+    "ece_model": 0.0027455108194465905,
+    "ece_profile": 0.0020269156448869253,
+    "gain_vs_best_baseline": 0.14065
+   },
+   "F2": {
+    "rows_train": 584746,
+    "rows_val": 185406,
+    "iterations": 55,
+    "seconds": 5.0,
+    "top_features": [
+     "shot_time",
+     "start_code",
+     "sec_left_game",
+     "margin",
+     "start_clock",
+     "off_min_mean",
+     "def_min_mean",
+     "def_stl_sum"
+    ],
+    "model": 0.21953661874507457,
+    "league": 0.25935953914181215,
+    "profile": 0.258028317024503,
+    "ece_model": 0.004361378474036715,
+    "ece_profile": 0.0022504374823525803,
+    "gain_vs_best_baseline": 0.14918
+   },
+   "F3": {
+    "rows_train": 761241,
+    "rows_val": 119620,
+    "iterations": 61,
+    "seconds": 5.6,
+    "top_features": [
+     "shot_time",
+     "start_code",
+     "sec_left_game",
+     "margin",
+     "start_clock",
+     "off_min_mean",
+     "def_pf_sum",
+     "def_min_mean"
+    ],
+    "model": 0.2349607068133178,
+    "league": 0.2817563599749392,
+    "profile": 0.27969463823284413,
+    "ece_model": 0.0032262582722671165,
+    "ece_profile": 0.006145335773367892,
+    "gain_vs_best_baseline": 0.15994
+   },
+   "F4": {
+    "rows_train": 867347,
+    "rows_val": 183470,
+    "iterations": 53,
+    "seconds": 5.5,
+    "top_features": [
+     "shot_time",
+     "start_code",
+     "sec_left_game",
+     "margin",
+     "start_clock",
+     "off_min_mean",
+     "fouls_def",
+     "def_pf_sum"
+    ],
+    "model": 0.22763595262710917,
+    "league": 0.2712887448478815,
+    "profile": 0.26953262069703066,
+    "ece_model": 0.004152498138705601,
+    "ece_profile": 0.001603998656060297,
+    "gain_vs_best_baseline": 0.15544
+   }
+  },
+  "who": {
+   "F1": {
+    "rows_train": 1447380,
+    "rows_val": 842390,
+    "iterations": 505,
+    "seconds": 16.0,
+    "top_features": [
+     "usage_share",
+     "shot_time",
+     "usage",
+     "oreb_pct_share",
+     "usage_rank",
+     "start_code",
+     "start_clock",
+     "oreb_pct"
+    ],
+    "temperature": 1.189,
+    "model": 1.5349721699132999,
+    "league": 1.6094379124341,
+    "profile": 1.5669178473129108,
+    "ece_model": 0.0022964869005672696,
+    "ece_profile": 0.011606847255779772,
+    "gain_vs_best_baseline": 0.02039
+   },
+   "F2": {
+    "rows_train": 2719260,
+    "rows_val": 863445,
+    "iterations": 203,
+    "seconds": 13.9,
+    "top_features": [
+     "usage_share",
+     "usage",
+     "shot_time",
+     "usage_rank",
+     "oreb_pct_share",
+     "start_code",
+     "oreb_pct",
+     "start_clock"
+    ],
+    "temperature": 1.26,
+    "model": 1.5377076951474018,
+    "league": 1.6094379124340998,
+    "profile": 1.569756217307135,
+    "ece_model": 0.0008170436419075265,
+    "ece_profile": 0.01048453410904319,
+    "gain_vs_best_baseline": 0.02042
+   },
+   "F3": {
+    "rows_train": 3549425,
+    "rows_val": 552920,
+    "iterations": 302,
+    "seconds": 22.7,
+    "top_features": [
+     "usage_share",
+     "usage",
+     "shot_time",
+     "oreb_pct_share",
+     "usage_rank",
+     "start_code",
+     "off_usage_sum",
+     "oreb_pct"
+    ],
+    "temperature": 1.26,
+    "model": 1.5361461231265352,
+    "league": 1.6094379124341,
+    "profile": 1.5711551887887403,
+    "ece_model": 0.0018919085592459311,
+    "ece_profile": 0.013381671202400266,
+    "gain_vs_best_baseline": 0.02228
+   },
+   "F4": {
+    "rows_train": 4041865,
+    "rows_val": 849780,
+    "iterations": 275,
+    "seconds": 24.4,
+    "top_features": [
+     "usage_share",
+     "shot_time",
+     "usage",
+     "oreb_pct_share",
+     "usage_rank",
+     "start_code",
+     "start_clock",
+     "off_usage_sum"
+    ],
+    "temperature": 1.26,
+    "model": 1.5377830301133768,
+    "league": 1.6094379124341003,
+    "profile": 1.5695901676607995,
+    "ece_model": 0.001895788817232746,
+    "ece_profile": 0.01246791682035661,
+    "gain_vs_best_baseline": 0.02026
+   }
+  },
+  "what": {
+   "F1": {
+    "rows_train": 287102,
+    "rows_val": 167844,
+    "iterations": 55,
+    "seconds": 14.3,
+    "top_features": [
+     "shot_time",
+     "actor_mix_above3",
+     "actor_mix_rim",
+     "start_code",
+     "actor_mix_corner3",
+     "actor_mix_mid",
+     "actor_mix_paint",
+     "start_clock"
+    ],
+    "model": 1.6467170057042282,
+    "league": 1.8444994044547576,
+    "profile": 1.7358483793272843,
+    "ece_model": 0.0023401508919874466,
+    "ece_profile": 0.010508856838284458,
+    "gain_vs_best_baseline": 0.05135
+   },
+   "F2": {
+    "rows_train": 540264,
+    "rows_val": 172057,
+    "iterations": 85,
+    "seconds": 22.1,
+    "top_features": [
+     "shot_time",
+     "actor_mix_above3",
+     "actor_mix_rim",
+     "start_code",
+     "actor_mix_corner3",
+     "actor_mix_mid",
+     "actor_mix_paint",
+     "start_clock"
+    ],
+    "model": 1.6455624051401718,
+    "league": 1.8435142860476028,
+    "profile": 1.7351479299402461,
+    "ece_model": 0.0073004511697673325,
+    "ece_profile": 0.010366030263483776,
+    "gain_vs_best_baseline": 0.05163
+   },
+   "F3": {
+    "rows_train": 705621,
+    "rows_val": 109745,
+    "iterations": 80,
+    "seconds": 23.5,
+    "top_features": [
+     "shot_time",
+     "actor_mix_above3",
+     "actor_mix_rim",
+     "start_code",
+     "actor_mix_corner3",
+     "actor_mix_mid",
+     "actor_mix_paint",
+     "start_clock"
+    ],
+    "model": 1.653979181626065,
+    "league": 1.8531447514219106,
+    "profile": 1.7508710955766356,
+    "ece_model": 0.00477632648664871,
+    "ece_profile": 0.01188585338724893,
+    "gain_vs_best_baseline": 0.05534
+   },
+   "F4": {
+    "rows_train": 803493,
+    "rows_val": 168957,
+    "iterations": 102,
+    "seconds": 28.6,
+    "top_features": [
+     "shot_time",
+     "actor_mix_above3",
+     "actor_mix_rim",
+     "start_code",
+     "actor_mix_corner3",
+     "actor_mix_mid",
+     "actor_mix_paint",
+     "start_clock"
+    ],
+    "model": 1.6490304011283403,
+    "league": 1.8524429225107268,
+    "profile": 1.744869806841692,
+    "ece_model": 0.0038155843049312486,
+    "ece_profile": 0.010237545764411111,
+    "gain_vs_best_baseline": 0.05493
+   }
+  },
+  "shot_result": {
+   "F1": {
+    "rows_train": 231800,
+    "rows_val": 136867,
+    "iterations": 54,
+    "seconds": 5.1,
+    "top_features": [
+     "distance",
+     "zone",
+     "shot_time",
+     "start_code",
+     "start_clock",
+     "actor_fg_rim",
+     "lateral",
+     "def_blk_max"
+    ],
+    "model": 0.7315597046758107,
+    "league": 0.790883187413862,
+    "profile": 0.7480379372813202,
+    "ece_model": 0.004421739926923393,
+    "ece_profile": 0.0041022822797674606,
+    "gain_vs_best_baseline": 0.02203
+   },
+   "F2": {
+    "rows_train": 437774,
+    "rows_val": 139660,
+    "iterations": 54,
+    "seconds": 6.1,
+    "top_features": [
+     "distance",
+     "zone",
+     "shot_time",
+     "start_code",
+     "start_clock",
+     "actor_fg_rim",
+     "lateral",
+     "actor_fg_paint"
+    ],
+    "model": 0.729846566734478,
+    "league": 0.787215177730008,
+    "profile": 0.7451580534930864,
+    "ece_model": 0.0069744058799182445,
+    "ece_profile": 0.001929208952316731,
+    "gain_vs_best_baseline": 0.02055
+   },
+   "F3": {
+    "rows_train": 571473,
+    "rows_val": 87671,
+    "iterations": 84,
+    "seconds": 8.5,
+    "top_features": [
+     "distance",
+     "zone",
+     "shot_time",
+     "start_code",
+     "start_clock",
+     "actor_fg_rim",
+     "lateral",
+     "actor_fg_paint"
+    ],
+    "model": 0.7362217209083556,
+    "league": 0.7945246911981647,
+    "profile": 0.7524173369235984,
+    "ece_model": 0.004670778087733083,
+    "ece_profile": 0.0052920934954584446,
+    "gain_vs_best_baseline": 0.02152
+   },
+   "F4": {
+    "rows_train": 650337,
+    "rows_val": 135866,
+    "iterations": 65,
+    "seconds": 7.8,
+    "top_features": [
+     "distance",
+     "zone",
+     "shot_time",
+     "start_code",
+     "start_clock",
+     "actor_fg_rim",
+     "lateral",
+     "actor_fg_paint"
+    ],
+    "model": 0.7298000198751073,
+    "league": 0.7897965995952502,
+    "profile": 0.7447731671990262,
+    "ece_model": 0.0054472057239842745,
+    "ece_profile": 0.005668667244710565,
+    "gain_vs_best_baseline": 0.0201
+   }
+  },
+  "assisted": {
+   "F1": {
+    "rows_train": 110033,
+    "rows_val": 64920,
+    "iterations": 222,
+    "seconds": 4.1,
+    "top_features": [
+     "actor_assisted_share",
+     "shot_time",
+     "zone",
+     "distance",
+     "start_code",
+     "actor_ast_rate",
+     "lateral",
+     "actor_oreb_pct"
+    ],
+    "model": 0.4541558408524455,
+    "league": 0.6567143952166135,
+    "profile": 0.6043994250927831,
+    "ece_model": 0.0036955592991747103,
+    "ece_profile": 0.031290146639596915,
+    "gain_vs_best_baseline": 0.24858
+   },
+   "F2": {
+    "rows_train": 207450,
+    "rows_val": 65463,
+    "iterations": 307,
+    "seconds": 6.2,
+    "top_features": [
+     "actor_assisted_share",
+     "shot_time",
+     "zone",
+     "distance",
+     "start_code",
+     "actor_ast_rate",
+     "lateral",
+     "actor_oreb_pct"
+    ],
+    "model": 0.45330906634401197,
+    "league": 0.6567095710421708,
+    "profile": 0.6062296151887326,
+    "ece_model": 0.0037730382414593176,
+    "ece_profile": 0.027704250835559625,
+    "gain_vs_best_baseline": 0.25225
+   },
+   "F3": {
+    "rows_train": 269132,
+    "rows_val": 41211,
+    "iterations": 427,
+    "seconds": 8.6,
+    "top_features": [
+     "actor_assisted_share",
+     "shot_time",
+     "zone",
+     "distance",
+     "start_code",
+     "actor_ast_rate",
+     "lateral",
+     "actor_oreb_pct"
+    ],
+    "model": 0.45192455641765006,
+    "league": 0.6574357019760364,
+    "profile": 0.6132005440872752,
+    "ece_model": 0.005291136609265161,
+    "ece_profile": 0.026603767024787898,
+    "gain_vs_best_baseline": 0.26301
+   },
+   "F4": {
+    "rows_train": 306226,
+    "rows_val": 63979,
+    "iterations": 403,
+    "seconds": 8.2,
+    "top_features": [
+     "actor_assisted_share",
+     "shot_time",
+     "zone",
+     "distance",
+     "start_code",
+     "actor_ast_rate",
+     "lateral",
+     "actor_oreb_pct"
+    ],
+    "model": 0.4547531808069256,
+    "league": 0.6552893930832203,
+    "profile": 0.6096655549429937,
+    "ece_model": 0.004259953037358522,
+    "ece_profile": 0.02626225513925741,
+    "gain_vs_best_baseline": 0.25409
+   }
+  },
+  "assister": {
+   "F1": {
+    "rows_train": 265273,
+    "rows_val": 163615,
+    "iterations": 322,
+    "seconds": 6.0,
+    "top_features": [
+     "ast_rate_share",
+     "ast_rate_rank",
+     "shot_time",
+     "start_code",
+     "ast_rate",
+     "distance",
+     "oreb_pct",
+     "dreb_pct"
+    ],
+    "temperature": 1.26,
+    "model": 1.250799036356,
+    "league": 1.3881694710738515,
+    "profile": 1.278094033517054,
+    "ece_model": 0.006155640344158865,
+    "ece_profile": 0.01505658526911312,
+    "gain_vs_best_baseline": 0.02136
+   },
+   "F2": {
+    "rows_train": 509645,
+    "rows_val": 164320,
+    "iterations": 287,
+    "seconds": 6.7,
+    "top_features": [
+     "ast_rate_share",
+     "ast_rate",
+     "shot_time",
+     "start_code",
+     "ast_rate_rank",
+     "distance",
+     "zone",
+     "dreb_pct"
+    ],
+    "temperature": 1.26,
+    "model": 1.250249720417353,
+    "league": 1.3883632777845094,
+    "profile": 1.2815414971173575,
+    "ece_model": 0.004154538140454755,
+    "ece_profile": 0.016417611475800335,
+    "gain_vs_best_baseline": 0.02442
+   },
+   "F3": {
+    "rows_train": 663956,
+    "rows_val": 103195,
+    "iterations": 366,
+    "seconds": 8.9,
+    "top_features": [
+     "ast_rate_share",
+     "ast_rate_rank",
+     "start_code",
+     "shot_time",
+     "ast_rate",
+     "distance",
+     "zone",
+     "oreb_pct"
+    ],
+    "temperature": 1.26,
+    "model": 1.2432409287231503,
+    "league": 1.3884358872175169,
+    "profile": 1.279799391056254,
+    "ece_model": 0.006244317209727084,
+    "ece_profile": 0.023226508586653646,
+    "gain_vs_best_baseline": 0.02857
+   },
+   "F4": {
+    "rows_train": 756666,
+    "rows_val": 161300,
+    "iterations": 324,
+    "seconds": 8.5,
+    "top_features": [
+     "ast_rate_share",
+     "ast_rate_rank",
+     "start_code",
+     "shot_time",
+     "ast_rate",
+     "distance",
+     "oreb_pct",
+     "zone"
+    ],
+    "temperature": 1.189,
+    "model": 1.2553636416223168,
+    "league": 1.3886245523568863,
+    "profile": 1.2853145450736718,
+    "ece_model": 0.007656161816593137,
+    "ece_profile": 0.01840004125693102,
+    "gain_vs_best_baseline": 0.0233
+   }
+  },
+  "blocked": {
+   "F1": {
+    "rows_train": 121767,
+    "rows_val": 71947,
+    "iterations": 74,
+    "seconds": 1.9,
+    "top_features": [
+     "distance",
+     "zone",
+     "shot_time",
+     "def_blk_sum",
+     "lateral",
+     "def_blk_max",
+     "actor_mix_rim",
+     "start_clock"
+    ],
+    "model": 0.26246190570344796,
+    "league": 0.3458247689912361,
+    "profile": 0.2808493238096529,
+    "ece_model": 0.006326894469396812,
+    "ece_profile": 0.00762882652531826,
+    "gain_vs_best_baseline": 0.06547
+   },
+   "F2": {
+    "rows_train": 231080,
+    "rows_val": 74197,
+    "iterations": 170,
+    "seconds": 3.7,
+    "top_features": [
+     "distance",
+     "zone",
+     "shot_time",
+     "def_blk_sum",
+     "lateral",
+     "def_blk_max",
+     "start_clock",
+     "start_code"
+    ],
+    "model": 0.24576326903203108,
+    "league": 0.32346484495481004,
+    "profile": 0.2625241966694975,
+    "ece_model": 0.0054236201680779045,
+    "ece_profile": 0.0024448473846986007,
+    "gain_vs_best_baseline": 0.06385
+   },
+   "F3": {
+    "rows_train": 301665,
+    "rows_val": 46460,
+    "iterations": 198,
+    "seconds": 4.5,
+    "top_features": [
+     "distance",
+     "zone",
+     "shot_time",
+     "def_blk_sum",
+     "lateral",
+     "def_blk_max",
+     "start_clock",
+     "start_code"
+    ],
+    "model": 0.24903209025096928,
+    "league": 0.3279544310410285,
+    "profile": 0.26521244999407256,
+    "ece_model": 0.005272796795689159,
+    "ece_profile": 0.001954716401619701,
+    "gain_vs_best_baseline": 0.06101
+   },
+   "F4": {
+    "rows_train": 343610,
+    "rows_val": 71887,
+    "iterations": 124,
+    "seconds": 3.5,
+    "top_features": [
+     "distance",
+     "zone",
+     "shot_time",
+     "def_blk_sum",
+     "lateral",
+     "start_code",
+     "def_blk_max",
+     "start_clock"
+    ],
+    "model": 0.2512739336371205,
+    "league": 0.33281713034058424,
+    "profile": 0.26883168559349274,
+    "ece_model": 0.0018207481937707387,
+    "ece_profile": 0.0027133764629850106,
+    "gain_vs_best_baseline": 0.06531
+   }
+  },
+  "blocker": {
+   "F1": {
+    "rows_train": 61360,
+    "rows_val": 39060,
+    "iterations": 70,
+    "seconds": 1.6,
+    "top_features": [
+     "blk_rate_share",
+     "blk_rate_rank",
+     "distance",
+     "start_code",
+     "def_blk_max",
+     "blk_rate",
+     "dreb_pct",
+     "stl_rate"
+    ],
+    "temperature": 1.335,
+    "model": 1.4026623905173745,
+    "league": 1.6094379124340998,
+    "profile": 1.4151268311562306,
+    "ece_model": 0.007838522508864994,
+    "ece_profile": 0.00489518348659506,
+    "gain_vs_best_baseline": 0.00881
+   },
+   "F2": {
+    "rows_train": 120690,
+    "rows_val": 36380,
+    "iterations": 78,
+    "seconds": 1.9,
+    "top_features": [
+     "blk_rate_share",
+     "blk_rate_rank",
+     "distance",
+     "start_code",
+     "blk_rate",
+     "def_blk_max",
+     "dreb_pct",
+     "pf_rate"
+    ],
+    "temperature": 1.335,
+    "model": 1.377270656298237,
+    "league": 1.6094379124341,
+    "profile": 1.3957109255118654,
+    "ece_model": 0.010253435100391565,
+    "ece_profile": 0.011534615627070397,
+    "gain_vs_best_baseline": 0.01321
+   },
+   "F3": {
+    "rows_train": 155255,
+    "rows_val": 23270,
+    "iterations": 153,
+    "seconds": 3.0,
+    "top_features": [
+     "blk_rate_share",
+     "blk_rate_rank",
+     "distance",
+     "blk_rate",
+     "start_code",
+     "def_blk_max",
+     "dreb_pct",
+     "pf_rate"
+    ],
+    "temperature": 1.335,
+    "model": 1.3741652422766784,
+    "league": 1.6094379124341,
+    "profile": 1.3933265558009287,
+    "ece_model": 0.00518696270607405,
+    "ece_profile": 0.014927494456342718,
+    "gain_vs_best_baseline": 0.01375
+   },
+   "F4": {
+    "rows_train": 176260,
+    "rows_val": 36760,
+    "iterations": 153,
+    "seconds": 3.1,
+    "top_features": [
+     "blk_rate_share",
+     "blk_rate_rank",
+     "distance",
+     "blk_rate",
+     "start_code",
+     "dreb_pct",
+     "oreb_pct",
+     "stl_rate"
+    ],
+    "temperature": 1.335,
+    "model": 1.3869834536406225,
+    "league": 1.6094379124340998,
+    "profile": 1.404406488175673,
+    "ece_model": 0.005096505228224995,
+    "ece_profile": 0.010408780441186292,
+    "gain_vs_best_baseline": 0.01241
+   }
+  },
+  "rebound": {
+   "F1": {
+    "rows_train": 128776,
+    "rows_val": 75664,
+    "iterations": 35,
+    "seconds": 4.2,
+    "top_features": [
+     "start_clock",
+     "distance",
+     "blocked",
+     "shot_time",
+     "fta",
+     "off_oreb_sum",
+     "sec_left_game",
+     "start_code"
+    ],
+    "model": 0.8318015833626143,
+    "league": 0.9120647903028503,
+    "profile": 0.9040624230201879,
+    "ece_model": 0.007159665235730418,
+    "ece_profile": 0.005515369774917858,
+    "gain_vs_best_baseline": 0.07993
+   },
+   "F2": {
+    "rows_train": 243780,
+    "rows_val": 78040,
+    "iterations": 44,
+    "seconds": 5.1,
+    "top_features": [
+     "start_clock",
+     "distance",
+     "blocked",
+     "shot_time",
+     "fta",
+     "start_code",
+     "off_oreb_sum",
+     "sec_left_game"
+    ],
+    "model": 0.8618031667837968,
+    "league": 0.9399646753835726,
+    "profile": 0.9331166447396134,
+    "ece_model": 0.004816333250028932,
+    "ece_profile": 0.012135524265562461,
+    "gain_vs_best_baseline": 0.07643
+   },
+   "F3": {
+    "rows_train": 318044,
+    "rows_val": 49580,
+    "iterations": 55,
+    "seconds": 5.9,
+    "top_features": [
+     "start_clock",
+     "distance",
+     "blocked",
+     "shot_time",
+     "start_code",
+     "fta",
+     "sec_left_game",
+     "off_oreb_sum"
+    ],
+    "model": 0.8916682577527907,
+    "league": 0.9729965265995435,
+    "profile": 0.9667785322247016,
+    "ece_model": 0.00842421770719052,
+    "ece_profile": 0.021101706575500652,
+    "gain_vs_best_baseline": 0.07769
+   },
+   "F4": {
+    "rows_train": 362412,
+    "rows_val": 76505,
+    "iterations": 40,
+    "seconds": 5.2,
+    "top_features": [
+     "start_clock",
+     "distance",
+     "blocked",
+     "shot_time",
+     "start_code",
+     "fta",
+     "sec_left_game",
+     "off_oreb_sum"
+    ],
+    "model": 0.878169870123065,
+    "league": 0.9656550308719832,
+    "profile": 0.9586698465004739,
+    "ece_model": 0.003167798530398692,
+    "ece_profile": 0.014121991227544263,
+    "gain_vs_best_baseline": 0.08397
+   }
+  },
+  "rebounder": {
+   "F1": {
+    "rows_train": 555970,
+    "rows_val": 330490,
+    "iterations": 153,
+    "seconds": 4.2,
+    "top_features": [
+     "reb_share",
+     "reb_rank",
+     "distance",
+     "is_shooter",
+     "reb_side_pct",
+     "start_code",
+     "zone",
+     "offensive"
+    ],
+    "temperature": 1.189,
+    "model": 1.4908705532854698,
+    "league": 1.6094379124341,
+    "profile": 1.5114631662921632,
+    "ece_model": 0.005115194638323303,
+    "ece_profile": 0.006655281449512823,
+    "gain_vs_best_baseline": 0.01362
+   },
+   "F2": {
+    "rows_train": 1061370,
+    "rows_val": 339100,
+    "iterations": 213,
+    "seconds": 7.0,
+    "top_features": [
+     "reb_share",
+     "reb_rank",
+     "distance",
+     "is_shooter",
+     "reb_side_pct",
+     "zone",
+     "start_code",
+     "offensive"
+    ],
+    "temperature": 1.26,
+    "model": 1.4895386050808734,
+    "league": 1.6094379124340998,
+    "profile": 1.5132897220294113,
+    "ece_model": 0.0033909543858879317,
+    "ece_profile": 0.005114896144158951,
+    "gain_vs_best_baseline": 0.0157
+   },
+   "F3": {
+    "rows_train": 1383890,
+    "rows_val": 212065,
+    "iterations": 219,
+    "seconds": 8.0,
+    "top_features": [
+     "reb_share",
+     "reb_rank",
+     "distance",
+     "is_shooter",
+     "reb_side_pct",
+     "start_code",
+     "zone",
+     "dreb_pct"
+    ],
+    "temperature": 1.26,
+    "model": 1.4932351591124362,
+    "league": 1.6094379124341003,
+    "profile": 1.5177447178783745,
+    "ece_model": 0.003185976454886198,
+    "ece_profile": 0.007068858178528033,
+    "gain_vs_best_baseline": 0.01615
+   },
+   "F4": {
+    "rows_train": 1572770,
+    "rows_val": 327490,
+    "iterations": 290,
+    "seconds": 10.6,
+    "top_features": [
+     "reb_share",
+     "reb_rank",
+     "distance",
+     "is_shooter",
+     "reb_side_pct",
+     "start_code",
+     "zone",
+     "dreb_pct"
+    ],
+    "temperature": 1.26,
+    "model": 1.495119239232023,
+    "league": 1.6094379124340998,
+    "profile": 1.5186063202910765,
+    "ece_model": 0.002085806204271639,
+    "ece_profile": 0.005641469840216611,
+    "gain_vs_best_baseline": 0.01547
+   }
+  },
+  "turnover_type": {
+   "F1": {
+    "rows_train": 34088,
+    "rows_val": 19621,
+    "iterations": 41,
+    "seconds": 3.6,
+    "top_features": [
+     "shot_time",
+     "actor_live_tov_share",
+     "start_code",
+     "actor_oreb_pct",
+     "actor_ast_rate",
+     "sec_left_game",
+     "def_stl_sum",
+     "margin"
+    ],
+    "model": 0.8723196156743577,
+    "league": 0.9243085124892503,
+    "profile": 0.9153346358822309,
+    "ece_model": 0.015073097859612172,
+    "ece_profile": 0.02738093791888696,
+    "gain_vs_best_baseline": 0.04699
+   },
+   "F2": {
+    "rows_train": 64946,
+    "rows_val": 20390,
+    "iterations": 43,
+    "seconds": 3.8,
+    "top_features": [
+     "shot_time",
+     "actor_live_tov_share",
+     "start_code",
+     "actor_ast_rate",
+     "actor_oreb_pct",
+     "sec_left_game",
+     "actor_pf_rate",
+     "margin"
+    ],
+    "model": 0.8390199313512311,
+    "league": 0.8902370054513135,
+    "profile": 0.8819266985095623,
+    "ece_model": 0.014466784487264694,
+    "ece_profile": 0.027053354998202925,
+    "gain_vs_best_baseline": 0.04865
+   },
+   "F3": {
+    "rows_train": 84440,
+    "rows_val": 13782,
+    "iterations": 45,
+    "seconds": 4.0,
+    "top_features": [
+     "shot_time",
+     "actor_live_tov_share",
+     "start_code",
+     "actor_oreb_pct",
+     "actor_ast_rate",
+     "sec_left_game",
+     "actor_pf_rate",
+     "margin"
+    ],
+    "model": 0.8652606123689037,
+    "league": 0.918304238580294,
+    "profile": 0.9099542162890066,
+    "ece_model": 0.012005562685320628,
+    "ece_profile": 0.02203184611345697,
+    "gain_vs_best_baseline": 0.04912
+   },
+   "F4": {
+    "rows_train": 96603,
+    "rows_val": 20848,
+    "iterations": 77,
+    "seconds": 5.3,
+    "top_features": [
+     "shot_time",
+     "actor_live_tov_share",
+     "start_code",
+     "actor_ast_rate",
+     "actor_oreb_pct",
+     "sec_left_game",
+     "actor_pf_rate",
+     "start_clock"
+    ],
+    "model": 0.8389037497252451,
+    "league": 0.8894137385388143,
+    "profile": 0.881985173837625,
+    "ece_model": 0.008499723751053078,
+    "ece_profile": 0.022267957030042133,
+    "gain_vs_best_baseline": 0.04885
+   }
+  },
+  "stealer": {
+   "F1": {
+    "rows_train": 93905,
+    "rows_val": 56985,
+    "iterations": 57,
+    "seconds": 1.5,
+    "top_features": [
+     "stl_rate_share",
+     "stl_rate",
+     "shot_time",
+     "ast_rate",
+     "def_stl_sum",
+     "assisted_share",
+     "usage",
+     "off_three_sum"
+    ],
+    "temperature": 1.122,
+    "model": 1.5831330096824743,
+    "league": 1.6094379124340998,
+    "profile": 1.5839944953036469,
+    "ece_model": 0.0010520543114196231,
+    "ece_profile": 0.0033865414076546356,
+    "gain_vs_best_baseline": 0.00054
+   },
+   "F2": {
+    "rows_train": 184525,
+    "rows_val": 61845,
+    "iterations": 61,
+    "seconds": 1.8,
+    "top_features": [
+     "stl_rate_share",
+     "stl_rate",
+     "shot_time",
+     "blk_rate",
+     "fg_rim",
+     "ast_rate",
+     "assisted_share",
+     "def_stl_sum"
+    ],
+    "temperature": 1.189,
+    "model": 1.5810112396727514,
+    "league": 1.6094379124341,
+    "profile": 1.5828922218588652,
+    "ece_model": 0.002149504156798262,
+    "ece_profile": 0.004214662657140696,
+    "gain_vs_best_baseline": 0.00119
+   },
+   "F3": {
+    "rows_train": 243280,
+    "rows_val": 40855,
+    "iterations": 90,
+    "seconds": 2.4,
+    "top_features": [
+     "stl_rate_share",
+     "stl_rate",
+     "shot_time",
+     "stl_rate_rank",
+     "assisted_share",
+     "start_code",
+     "def_stl_sum",
+     "usage_mult_q2"
+    ],
+    "temperature": 1.189,
+    "model": 1.584972729831232,
+    "league": 1.6094379124340998,
+    "profile": 1.5872382974707366,
+    "ece_model": 0.0020494880741927022,
+    "ece_profile": 0.005629213522567151,
+    "gain_vs_best_baseline": 0.00143
+   },
+   "F4": {
+    "rows_train": 279935,
+    "rows_val": 63725,
+    "iterations": 76,
+    "seconds": 2.3,
+    "top_features": [
+     "stl_rate_share",
+     "stl_rate",
+     "stl_rate_rank",
+     "def_stl_sum",
+     "shot_time",
+     "start_code",
+     "assisted_share",
+     "blk_rate"
+    ],
+    "temperature": 1.335,
+    "model": 1.5824588435872744,
+    "league": 1.6094379124340996,
+    "profile": 1.5836622530926805,
+    "ece_model": 0.004542082531490402,
+    "ece_profile": 0.0062944760579752915,
+    "gain_vs_best_baseline": 0.00076
+   }
+  },
+  "fouler": {
+   "F1": {
+    "rows_train": 225355,
+    "rows_val": 125010,
+    "iterations": 190,
+    "seconds": 3.8,
+    "top_features": [
+     "pf_rate_share",
+     "shot_time",
+     "dreb_pct",
+     "start_code",
+     "oreb_pct",
+     "shooting",
+     "pf_rate",
+     "sec_left_game"
+    ],
+    "temperature": 1.189,
+    "model": 1.5575254408251802,
+    "league": 1.6094379124340998,
+    "profile": 1.5801845508087178,
+    "ece_model": 0.00044759700189407994,
+    "ece_profile": 0.0014564792367385206,
+    "gain_vs_best_baseline": 0.01434
+   },
+   "F2": {
+    "rows_train": 419950,
+    "rows_val": 129350,
+    "iterations": 234,
+    "seconds": 5.2,
+    "top_features": [
+     "pf_rate_share",
+     "shot_time",
+     "dreb_pct",
+     "start_code",
+     "shooting",
+     "oreb_pct",
+     "blk_rate",
+     "sec_left_game"
+    ],
+    "temperature": 1.189,
+    "model": 1.5554482275746255,
+    "league": 1.6094379124340998,
+    "profile": 1.5786623967695719,
+    "ece_model": 0.002948159820100719,
+    "ece_profile": 0.00046411790481108494,
+    "gain_vs_best_baseline": 0.0147
+   },
+   "F3": {
+    "rows_train": 543290,
+    "rows_val": 91050,
+    "iterations": 279,
+    "seconds": 6.4,
+    "top_features": [
+     "pf_rate_share",
+     "shot_time",
+     "start_code",
+     "blk_rate",
+     "dreb_pct",
+     "shooting",
+     "oreb_pct",
+     "pf_rate_rank"
+    ],
+    "temperature": 1.189,
+    "model": 1.5590292330790947,
+    "league": 1.6094379124341,
+    "profile": 1.5872374787119334,
+    "ece_model": 0.001660906914222124,
+    "ece_profile": 0.0034372389978356917,
+    "gain_vs_best_baseline": 0.01777
+   },
+   "F4": {
+    "rows_train": 626350,
+    "rows_val": 133405,
+    "iterations": 493,
+    "seconds": 10.4,
+    "top_features": [
+     "pf_rate_share",
+     "shot_time",
+     "start_code",
+     "blk_rate",
+     "dreb_pct",
+     "shooting",
+     "sec_left_game",
+     "oreb_pct"
+    ],
+    "temperature": 1.189,
+    "model": 1.5607251128125976,
+    "league": 1.6094379124340996,
+    "profile": 1.5865346898065926,
+    "ece_model": 0.0018354331120890076,
+    "ece_profile": 0.0016155899766191178,
+    "gain_vs_best_baseline": 0.01627
+   }
+  },
+  "free_throw": {
+   "F1": {
+    "rows_train": 58877,
+    "rows_val": 31476,
+    "iterations": 80,
+    "seconds": 1.8,
+    "top_features": [
+     "last_of_trip",
+     "attempt",
+     "actor_ft_pct",
+     "trip",
+     "actor_mix_rim",
+     "and_one",
+     "def_stl_sum",
+     "actor_shots_eff"
+    ],
+    "model": 0.4358545712967864,
+    "league": 0.524381010590278,
+    "profile": 0.5107638889363482,
+    "ece_model": 0.006253228060095879,
+    "ece_profile": 0.0032408592970679757,
+    "gain_vs_best_baseline": 0.14666
+   },
+   "F2": {
+    "rows_train": 107681,
+    "rows_val": 32961,
+    "iterations": 82,
+    "seconds": 2.0,
+    "top_features": [
+     "last_of_trip",
+     "attempt",
+     "actor_ft_pct",
+     "trip",
+     "actor_mix_rim",
+     "and_one",
+     "actor_shots_eff",
+     "off_three_sum"
+    ],
+    "model": 0.43553958463468934,
+    "league": 0.5283777608511852,
+    "profile": 0.5129060360779766,
+    "ece_model": 0.004994095539161235,
+    "ece_profile": 0.004686888307932595,
+    "gain_vs_best_baseline": 0.15084
+   },
+   "F3": {
+    "rows_train": 139425,
+    "rows_val": 23680,
+    "iterations": 91,
+    "seconds": 2.2,
+    "top_features": [
+     "last_of_trip",
+     "attempt",
+     "actor_ft_pct",
+     "trip",
+     "actor_mix_rim",
+     "and_one",
+     "actor_min_avg",
+     "actor_shots_eff"
+    ],
+    "model": 0.42550837594891644,
+    "league": 0.5178450080531699,
+    "profile": 0.5038157127940913,
+    "ece_model": 0.007761237904753858,
+    "ece_profile": 0.005398266953790462,
+    "gain_vs_best_baseline": 0.15543
+   },
+   "F4": {
+    "rows_train": 160717,
+    "rows_val": 34325,
+    "iterations": 129,
+    "seconds": 2.9,
+    "top_features": [
+     "last_of_trip",
+     "attempt",
+     "actor_ft_pct",
+     "trip",
+     "actor_mix_rim",
+     "and_one",
+     "actor_min_avg",
+     "actor_min_share_q1"
+    ],
+    "model": 0.43642239270704875,
+    "league": 0.5289133992528683,
+    "profile": 0.5148598717206121,
+    "ece_model": 0.003032172681409644,
+    "ece_profile": 0.005674100769177402,
+    "gain_vs_best_baseline": 0.15235
+   }
+  }
+ }
+}

@@ -1,0 +1,236 @@
+#!/usr/bin/env python3
+"""Accounting and contract checks over retained data, snapshots and views.
+
+  .venv/bin/python scripts/smoke.py            all checks
+  .venv/bin/python scripts/smoke.py --fault    perturb one stored value in memory; must FAIL
+
+Independent identities: box-score points reconcile with team and master scores; standings W/L
+reconcile with finals; every histogram sums to the simulation count; win/margin/total summaries
+agree; seed probabilities partition; a stored game re-simulates bit-for-bit from its seed.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from collections import Counter, defaultdict
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+from basketball_common import DERIVED, SNAPSHOTS, VIEWS, read_json  # noqa: E402
+from scripts import box_scores, master_fixtures, pbp, projection  # noqa: E402
+from scripts.season_stats import period_profiles, player_table, team_table  # noqa: E402
+
+results = []
+
+
+def check(name, ok, detail=''):
+    results.append(ok)
+    print(f'{"PASS" if ok else "FAIL"}  {name}{"  " + str(detail) if detail and not ok else ""}')
+
+
+def hist_total(d):
+    return sum(d['hist'])
+
+
+def hist_mean(d):
+    return sum((d['min'] + i) * c for i, c in enumerate(d['hist'])) / hist_total(d)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument('--fault', action='store_true')
+    args = parser.parse_args()
+
+    master = master_fixtures.load()
+    ids = [r['game_id'] for r in master]
+    check('master: unique game ids', len(ids) == len(set(ids)))
+    per_team = Counter()
+    for r in master:
+        per_team[r['home_id']] += 1
+        per_team[r['away_id']] += 1
+    check('master: 30 teams, home != away', len(per_team) == 30 and all(r['home_id'] != r['away_id'] for r in master))
+    check('master: equal scheduled games per team', len(set(per_team.values())) == 1, dict(Counter(per_team.values())))
+    finals = [r for r in master if r['status'] == 'final']
+    check('master: finals have scores and no ties', all(r['home_pts'] and r['away_pts'] and r['home_pts'] != r['away_pts'] for r in finals))
+
+    team_rows, player_rows = box_scores.load_csv('team_games.csv'), box_scores.load_csv('player_games.csv')
+    pts = defaultdict(int)
+    for r in player_rows:
+        if r['dnp'] == '0':
+            pts[(r['game_id'], r['team_id'])] += int(r['pts'] or 0)
+    team_pts = {(r['game_id'], r['team_id']): int(r['pts']) for r in team_rows}
+    bad = [k for k, v in team_pts.items() if pts.get(k) != v]
+    check('box: player points sum to team points in every final', not bad, bad[:3])
+    by_id = {r['game_id']: r for r in master}
+    mismatch = [r['game_id'] for r in team_rows
+                if int(r['pts']) != int(by_id[r['game_id']]['home_pts' if r['home'] == '1' else 'away_pts'])]
+    check('box: team points match master scores', not mismatch, mismatch[:3])
+    quarters = [r['game_id'] for r in team_rows if r['q1'] and sum(int(r[q]) for q in ('q1', 'q2', 'q3', 'q4')) + int(r['ot'] or 0) != int(r['pts'])]
+    check('box: quarter scores sum to final', not quarters, quarters[:3])
+
+    report = read_json(DERIVED / 'pbp_report.json')
+    rates = report['mismatch_rates']
+    check('pbp: points reconcile with box scores (<0.5% of player-games)', rates.get('pts', 1) < 0.005, rates.get('pts'))
+    check('pbp: minutes reconcile within a minute (<2%)', rates.get('min', 1) < 0.02, rates.get('min'))
+    check('pbp: every counting stat reconciles (<1.5%)', all(v < 0.015 for v in rates.values()), {k: v for k, v in rates.items() if v >= 0.015})
+    period_rows = pbp.load()
+    team_q = defaultdict(int)
+    for r in team_rows:
+        for i, q in enumerate(('q1', 'q2', 'q3', 'q4'), 1):
+            if r[q]:
+                team_q[(r['game_id'], r['team_id'], i)] = int(r[q])
+    pbp_q = defaultdict(int)
+    for r in period_rows:
+        if int(r['period']) <= 4:
+            pbp_q[(r['game_id'], r['team_id'], int(r['period']))] += int(r['pts'])
+    off = [k for k, v in team_q.items() if pbp_q.get(k, 0) != v]
+    check('pbp: player quarter points sum to linescores (<1% of team-quarters)', len(off) < 0.01 * max(1, len(team_q)), len(off))
+
+    for path in sorted((DERIVED / 'history').glob('*/pbp_report.json')):
+        h = read_json(path)
+        r = h['mismatch_rates']
+        agreement = (h.get('points_attempted') or {}).get('agreement_where_known')
+        check(f'history {path.parent.name}: {h["games"]} games reconcile (points <0.5%, minutes <2%, stats <1.5%)',
+              r.get('pts', 1) < 0.005 and r.get('min', 1) < 0.02 and all(v < 0.015 for v in r.values()), r)
+        if agreement is not None and (h['points_attempted']['checked'] or 0) > 1000:
+            check(f'history {path.parent.name}: inferred shot values agree where known (>=99.9%)', agreement >= 0.999, agreement)
+
+    latest_by_node = {}
+    for path in sorted((ROOT / 'analysis' / 'experiments').glob('*_m5_lightgbm.json')):
+        for node, folds in read_json(path)['results'].items():
+            latest_by_node[node] = (path.name, folds)  # later runs supersede earlier ones per node
+    if latest_by_node:
+        worst = {node: min(r['gain_vs_best_baseline'] for r in folds.values()) for node, (_, folds) in latest_by_node.items()}
+        check(f'M5: every node ({len(worst)}) at least level with its best baseline on every fold', all(v >= -0.001 for v in worst.values()),
+              {k: v for k, v in worst.items() if v < -0.001})
+        check('M5: calibration error below 0.02 on every node and fold',
+              all(r['ece_model'] < 0.02 for _, folds in latest_by_node.values() for r in folds.values()))
+    for path in [DERIVED / 'rotations' / 'rotations_report.json'] + sorted((DERIVED / 'history').glob('*/rotations_report.json')):
+        if not path.exists():
+            continue
+        r = read_json(path)
+        label = 'current' if path.parent.name == 'rotations' else path.parent.name
+        check(f'rotations {label}: stints reconcile (minutes <1%, five on court >99%), 20-45 subs per team-game',
+              r['minutes_off_player_games'] < 0.01 and r['team_period_seconds_off'] < 0.01 and 20 <= r['subs_per_team_game'] <= 45,
+              {k: r[k] for k in ('minutes_off_player_games', 'team_period_seconds_off', 'subs_per_team_game')})
+    for path in [DERIVED / 'segments_report.json'] + sorted((DERIVED / 'history').glob('*/segments_report.json')):
+        if not path.exists():
+            continue
+        r = read_json(path)
+        label = 'current' if path.parent == DERIVED else path.parent.name
+        implicit = sum(v for key, v in r['issues'].items() if key.startswith('implicit')) / max(1, r['segments'])
+        poss_gap = abs(r['possessions_per_team_game'] - r['box_estimate_per_team_game']) / r['box_estimate_per_team_game']
+        check(f'segments {label}: {r["segments"]:,} segments — points, clock, alternation, lineups, possessions reconcile',
+              r['points_off_team_games'] < 0.01 and r['clock_off_periods'] < 0.01 and r['not_alternating'] < 0.005
+              and r['lineups_ok'] > 0.99 and poss_gap < 0.02 and implicit < 0.01,
+              {k: r[k] for k in ('points_off_team_games', 'clock_off_periods', 'not_alternating', 'lineups_ok')} | {'poss_gap': round(poss_gap, 4), 'implicit': round(implicit, 4)})
+
+    teams = read_json(DERIVED / 'teams.json')
+    registry = read_json(DERIVED / 'players.json')['players']
+    snaps = sorted(p for p in SNAPSHOTS.iterdir() if p.is_dir() and not p.name.startswith('.'))
+    check('snapshots exist', bool(snaps))
+    for snap in snaps:
+        day = snap.name
+        meta = read_json(snap / 'meta.json')
+        games = read_json(snap / 'games.json')
+        season = read_json(snap / 'season.json')
+        stats = read_json(snap / 'stats.json')
+        if args.fault and snap == snaps[-1]:
+            first = next(iter(games.values()))
+            first['periods']['fg']['home']['win'] = round(first['periods']['fg']['home']['win'] + 0.02, 4)
+        W = meta['sims']
+        before = [r for r in finals if r['date_et'] < day]
+        T = stats['teams']
+        check(f'{day}: W total = L total = finals before cutoff', sum(t['w'] for t in T.values()) == sum(t['l'] for t in T.values()) == len(before),
+              (sum(t['w'] for t in T.values()), len(before)))
+        problems = []
+        for gid, g in games.items():
+            for period, x in g['periods'].items():
+                total_p = x['home']['win'] + x['away']['win'] + (0 if period == 'fg' else x['home']['tie'])
+                if abs(total_p - 1) > 1e-3:
+                    problems.append(f'{gid} {period} win/tie probabilities sum {total_p}')
+                for name, d in [('margin', x['margin']), ('total', x['total']), ('home', x['home']['pts']), ('away', x['away']['pts'])]:
+                    if hist_total(d) != W:
+                        problems.append(f'{gid} {period} {name} hist {hist_total(d)}')
+                if abs(hist_mean(x['margin']) - (hist_mean(x['home']['pts']) - hist_mean(x['away']['pts']))) > 1e-6:
+                    problems.append(f'{gid} {period} margin mean')
+                for side in ('home', 'away'):
+                    playing = [p for p in g[side]['players'] if 'periods' in p]
+                    total = sum(p['periods'][period]['mean']['pts'] for p in playing)
+                    if abs(total - x[side]['pts']['mean']) > 0.005 * len(playing) + 0.01:
+                        problems.append(f'{gid} {side} {period} player points {total:.2f} vs team {x[side]["pts"]["mean"]:.2f}')
+                    if period in ('q1', 'q2', 'q3', 'q4'):
+                        seconds = sum(p['periods'][period]['sec'] for p in playing)
+                        if abs(seconds - 3600) > 30:
+                            problems.append(f'{gid} {side} {period} player-seconds {seconds:.0f} (expected 3600)')
+                    for p in playing:
+                        if any(hist_total(s) != W for s in p['periods'][period]['stats'].values()):
+                            problems.append(f'{gid} {p["id"]} {period} player hist')
+                            break
+            fg = g['periods']['fg']
+            p_home = sum(c for i, c in enumerate(fg['margin']['hist']) if fg['margin']['min'] + i > 0) / W
+            if abs(p_home - fg['home']['win']) > 1e-4:
+                problems.append(f'{gid} margin histogram win {p_home} vs {fg["home"]["win"]}')
+            for side in ('home', 'away'):
+                for p in g[side]['players']:
+                    if 'periods' not in p:
+                        continue
+                    parts = sum(p['periods'][q]['mean']['pts'] for q in ('q1', 'q2', 'q3', 'q4'))
+                    if parts > p['periods']['fg']['mean']['pts'] + 0.0025:  # four values rounded to 3 dp
+                        problems.append(f'{gid} {p["id"]} quarters exceed full game')
+        check(f'{day}: game simulations reconcile ({len(games)} games)', not problems, problems[:3])
+        seed_problems = []
+        for conf in ('East', 'West'):
+            members = [t for t in teams if teams[t]['conf'] == conf]
+            for k in range(15):
+                total = sum(season['teams'][t]['seeds'][k] for t in members)
+                if abs(total - 1) > 2e-3:
+                    seed_problems.append(f'{conf} seed {k + 1} sums {total:.4f}')
+        for t, f in season['teams'].items():
+            if abs(sum(f['seeds']) - 1) > 2e-3:
+                seed_problems.append(f'{t} seeds sum {sum(f["seeds"]):.4f}')
+            if not f['w'] <= f['mean_w'] <= f['w'] + f['remaining']:
+                seed_problems.append(f'{t} mean wins out of range')
+            if hist_total(f['wins']) != W:
+                seed_problems.append(f'{t} wins hist')
+        check(f'{day}: season seeds partition and wins stay in range', not seed_problems, seed_problems[:3])
+
+    latest = snaps[-1]
+    day = latest.name
+    meta = read_json(latest / 'meta.json')
+    games = read_json(latest / 'games.json')
+    if games and meta['inputs']['player_games_sha256'] == __import__('basketball_common').sha256_file(DERIVED / 'player_games.csv') and meta['kind'] == 'prospective' and meta['inputs'].get('registry_run') == read_json(DERIVED / 'players.json')['run']:
+        T, lg = team_table(team_rows, day, teams)
+        P = player_table(player_rows, day)
+        Q, priors = period_profiles(period_rows, player_rows, day, team_rows, blowout=15)
+        gid = sorted(games)[0]
+        stored = games[gid]
+        if args.fault:
+            stored = json.loads(json.dumps(stored))
+            stored['periods']['fg']['home']['pts']['mean'] += 0.1
+        again = projection.simulate_game(by_id[gid], T, lg, P, registry, day, True, meta['sims'], Q, priors)
+        check(f'{day}: stored game {gid} re-simulates bit-for-bit', json.dumps(again, sort_keys=True) == json.dumps(stored, sort_keys=True))
+    else:
+        print(f'SKIP  re-simulation: inputs changed since the {day} snapshot (expected after new collections)')
+
+    api = VIEWS / 'api'
+    view_meta = read_json(api / 'meta.json')
+    missing = [d for d in {r['date_et'] for r in master} if not (api / 'slate' / f'{d}.json').exists()]
+    check('views: every slate date has a view', not missing, missing[:3])
+    check('views: every game has a view', all((api / 'game' / f'{g}.json').exists() for g in ids))
+    check('views: meta latest = latest snapshot', view_meta['latest'] == day)
+    g0 = sorted(games)[0] if games else None
+    if g0:
+        view = read_json(api / 'game' / f'{g0}.json')
+        check('views: game view carries the snapshot projection',
+              view['projection'] and view['projection']['sim']['periods']['fg']['home']['win'] == games[g0]['periods']['fg']['home']['win'])
+
+    failed = results.count(False)
+    print(f'\n{len(results) - failed}/{len(results)} checks passed')
+    return 1 if failed else 0
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

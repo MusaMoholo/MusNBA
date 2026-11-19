@@ -1,0 +1,111 @@
+{
+ "experiment": "m5_lightgbm_v1",
+ "run": "20261119T182500Z",
+ "folds": {
+  "F4": [
+   "2025-12-31",
+   "2026-01-01",
+   "2026-04-30"
+  ]
+ },
+ "burn_in": "2022-12-01",
+ "results": {
+  "free_throw": {
+   "F4": {
+    "rows_train": 160717,
+    "rows_val": 34325,
+    "iterations": 54,
+    "seconds": 1.8,
+    "top_features": [
+     "actor_ft_pct",
+     "actor_mix_rim",
+     "actor_oreb_pct",
+     "actor_mix_above3",
+     "actor_shots_eff",
+     "actor_min_avg",
+     "actor_fg_corner3",
+     "actor_min_share_q2"
+    ],
+    "model": 0.5150883640438502,
+    "league": 0.5289133992528683,
+    "profile": 0.5148598717206121,
+    "ece_model": 0.004040022233141363,
+    "ece_profile": 0.005674100769177402,
+    "gain_vs_best_baseline": -0.00044
+   }
+  },
+  "blocked": {
+   "F4": {
+    "rows_train": 343610,
+    "rows_val": 71887,
+    "iterations": 124,
+    "seconds": 3.6,
+    "top_features": [
+     "distance",
+     "zone",
+     "shot_time",
+     "def_blk_sum",
+     "lateral",
+     "start_code",
+     "def_blk_max",
+     "start_clock"
+    ],
+    "model": 0.2512739336371205,
+    "league": 0.33281713034058424,
+    "profile": 0.26883168559349274,
+    "ece_model": 0.0018207481937707387,
+    "ece_profile": 0.0027133764629850106,
+    "gain_vs_best_baseline": 0.06531
+   }
+  },
+  "turnover_type": {
+   "F4": {
+    "rows_train": 96603,
+    "rows_val": 20848,
+    "iterations": 77,
+    "seconds": 5.4,
+    "top_features": [
+     "shot_time",
+     "actor_live_tov_share",
+     "start_code",
+     "actor_ast_rate",
+     "actor_oreb_pct",
+     "sec_left_game",
+     "actor_pf_rate",
+     "start_clock"
+    ],
+    "model": 0.8389037497252451,
+    "league": 0.8894137385388143,
+    "profile": 0.881985173837625,
+    "ece_model": 0.008499723751053078,
+    "ece_profile": 0.022267957030042133,
+    "gain_vs_best_baseline": 0.04885
+   }
+  },
+  "stealer": {
+   "F4": {
+    "rows_train": 279935,
+    "rows_val": 63725,
+    "iterations": 76,
+    "seconds": 2.3,
+    "top_features": [
+     "stl_rate_share",
+     "stl_rate",
+     "stl_rate_rank",
+     "def_stl_sum",
+     "shot_time",
+     "start_code",
+     "assisted_share",
+     "blk_rate"
+    ],
+    "temperature": 1.335,
+    "model": 1.5824588435872744,
+    "league": 1.6094379124340996,
+    "profile": 1.5836622530926805,
+    "ece_model": 0.004542082531490402,
+    "ece_profile": 0.0062944760579752915,
+    "gain_vs_best_baseline": 0.00076
+   }
+  }
+ }
+}

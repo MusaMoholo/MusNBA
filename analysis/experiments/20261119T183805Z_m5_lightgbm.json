@@ -1,0 +1,119 @@
+{
+ "experiment": "m5_lightgbm_v1",
+ "run": "20261119T183805Z",
+ "folds": {
+  "F1": [
+   "2023-12-31",
+   "2024-01-01",
+   "2024-04-30"
+  ],
+  "F2": [
+   "2024-12-31",
+   "2025-01-01",
+   "2025-04-30"
+  ],
+  "F3": [
+   "2025-09-30",
+   "2025-10-01",
+   "2025-12-31"
+  ],
+  "F4": [
+   "2025-12-31",
+   "2026-01-01",
+   "2026-04-30"
+  ]
+ },
+ "burn_in": "2022-12-01",
+ "results": {
+  "free_throw": {
+   "F1": {
+    "rows_train": 58877,
+    "rows_val": 31476,
+    "iterations": 39,
+    "seconds": 1.2,
+    "top_features": [
+     "actor_ft_pct",
+     "actor_mix_rim",
+     "attempt",
+     "actor_shots_eff",
+     "actor_oreb_pct",
+     "actor_min_avg",
+     "def_stl_sum",
+     "actor_fg_corner3"
+    ],
+    "model": 0.5105062250696702,
+    "league": 0.524381010590278,
+    "profile": 0.5107638889363482,
+    "ece_model": 0.005144308388730311,
+    "ece_profile": 0.0032408592970679757,
+    "gain_vs_best_baseline": 0.0005
+   },
+   "F2": {
+    "rows_train": 107681,
+    "rows_val": 32961,
+    "iterations": 93,
+    "seconds": 2.1,
+    "top_features": [
+     "actor_ft_pct",
+     "actor_mix_rim",
+     "attempt",
+     "actor_shots_eff",
+     "def_stl_sum",
+     "actor_oreb_pct",
+     "actor_fg_corner3",
+     "actor_min_avg"
+    ],
+    "model": 0.5128858594798562,
+    "league": 0.5283777608511852,
+    "profile": 0.5129060360779767,
+    "ece_model": 0.006317972376116105,
+    "ece_profile": 0.004686888307932595,
+    "gain_vs_best_baseline": 4e-05
+   },
+   "F3": {
+    "rows_train": 139425,
+    "rows_val": 23680,
+    "iterations": 64,
+    "seconds": 1.9,
+    "top_features": [
+     "actor_ft_pct",
+     "attempt",
+     "actor_mix_rim",
+     "actor_shots_eff",
+     "actor_min_avg",
+     "def_stl_sum",
+     "actor_mix_above3",
+     "actor_fg_paint"
+    ],
+    "model": 0.5028775600442587,
+    "league": 0.5178450080531699,
+    "profile": 0.5038157127940913,
+    "ece_model": 0.007497580951653085,
+    "ece_profile": 0.005398266953790462,
+    "gain_vs_best_baseline": 0.00186
+   },
+   "F4": {
+    "rows_train": 160717,
+    "rows_val": 34325,
+    "iterations": 82,
+    "seconds": 2.2,
+    "top_features": [
+     "actor_ft_pct",
+     "attempt",
+     "actor_mix_rim",
+     "actor_min_avg",
+     "actor_mix_above3",
+     "actor_shots_eff",
+     "actor_fg_mid",
+     "def_stl_sum"
+    ],
+    "model": 0.5132897254184667,
+    "league": 0.5289133992528683,
+    "profile": 0.5148598717206121,
+    "ece_model": 0.0018156209794562529,
+    "ece_profile": 0.005674100769177402,
+    "gain_vs_best_baseline": 0.00305
+   }
+  }
+ }
+}
