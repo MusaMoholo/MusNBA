@@ -18,7 +18,7 @@ At every checkpoint the next session may be a different agent, so leave the docs
 
 ```sh
 git status && git log --oneline -5      # clean tree expected; the last commit is the last checkpoint
-.venv/bin/python scripts/smoke.py        # must pass (73+ checks) before you change anything
+.venv/bin/python scripts/smoke.py        # must pass (80+ checks) before you change anything
 ls analysis/experiments/                 # latest experiment logs: what was last measured
 ```
 

@@ -64,7 +64,7 @@ Slates are US Eastern game dates; tip-offs show UK time with ET alongside.
 | sportsdataverse `sportsdataverse-data` releases (hoopR) | History 2022-23 → 2025-26: ESPN play-by-play and player box scores, same ids | In use (`scripts/history.py`) |
 | NBA Stats / CDN via `nba_api` | Richer: tracking, play types | **Owner decision open** (needs browser-style headers, blocked here) |
 | ESPN `pickcenter` lines | Benchmark only (D8) | Retained in raw summaries |
-| Projected starting lineups (owner, 20 Nov) | Starters and late status news for today's and tomorrow's games → D29's minutes priority and the opening lineup; measured nightly against actual starters | **To add**: RotoWire is blocked on the work network; reachable candidates Basketball Monster, FantasyPros, DailyFantasyFuel, CBS Sports (FINDINGS §1) — read terms of use first, one polite request per slate, raw retention |
+| Projected starting lineups (owner, 20 Nov) | Starters and late status news for today's and tomorrow's games → D29's minutes priority and the opening lineup; measured nightly against actual starters | **To add**: RotoWire is blocked on the work network; reachable candidates Basketball Monster, FantasyPros, DailyFantasyFuel, CBS Sports (FINDINGS §1) — read terms of use first, one polite request per slate, raw retention; **pick the source most honest about maybes** (owner: its maybes become lineup branches, D31; projected starters are enough, no pre-tip refresh) |
 | Basketball-Reference | Spot checks | Not a pipeline source |
 
 ## 5. Phases

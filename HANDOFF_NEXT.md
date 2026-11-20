@@ -1,11 +1,13 @@
 # Handoff — state and next actions
 
-Updated **20 November 2026, ~10:10 UK** (checkpoint: nightly input rebuild, **team pathway v1** in the app (D25–D27),
+Updated **20 November 2026, ~10:53 UK** (checkpoint: nightly input rebuild, **team pathway v1** in the app (D25–D27),
 first **engine backtest** (M9) and the first **walk-forward season test** (M12)). Read [AGENTS.md](AGENTS.md) first.
 Rewrite this file at every checkpoint, then commit and push; whoever reads it next may be a new agent.
 
-**Git:** private repo `MusaMoholo/MusNBA` (`main`). Previous checkpoint `043654c`; this session's commit follows it —
-`git log --oneline -3`. **Nothing runs in the background.** The owner keeps `scripts/serve.py` on :8766 open — leave it;
+**Git:** private repo `MusaMoholo/MusNBA` (`main`). This session (20 Nov): `e41d3be` (D26 flow, nightly input rebuild, team
+pathway v1, first backtest), then docs-only commits with the owner's design for the next chunk: `0fc42b0` (D28 players
+first), `ecf26bd` / `b3f99e5` (D29–D31 minutes, defence, lineup scenarios), `85ce8ea` + the last one (lineup source) —
+`git log --oneline -8`. **Nothing runs in the background.** The owner keeps `scripts/serve.py` on :8766 open — leave it;
 use :8767 for your own checks.
 
 **How the owner wants a chunk run (AGENTS §3):** state your understanding and **one or two headliners** that move the two
@@ -84,14 +86,16 @@ coverage, CRPS), then on the team sums. The engine stays the dashboard default.
    or the NBA Stats question (PLAN §9.1) to the owner with numbers.
    **Projected starters (owner, 20 Nov):** add a lineup source (`scripts/fetch_lineups.py`): RotoWire is blocked on the
    owner's work network; reachable candidates Basketball Monster, FantasyPros, DailyFantasyFuel, CBS Sports (FINDINGS §1).
+   **Choose the source most honest about maybes** (owner: projected starters are enough; its game-time decisions and
+   questionable starters become lineup branches in item 3, so late changes are already simulated — no pre-tip refresh).
    Read each site's terms of use first and skip any that forbid automated access; one request per slate, raw response
    retained under `data/raw/lineups/<source>/<UTC>/`; map names to ESPN athlete ids via team + name (the player registry);
    feed projected starters into D29's priority and the opening lineup (status news only as a recorded second opinion beside
    ESPN's report). No history exists for it, so measure it going forward: each night, projected v actual starters for the
    finished slate (FINDINGS). The nightly runs in the UK morning, so today's lineups are projections, not confirmations
-   (a pre-tip refresh is D12, deferred).
+   — fine: the maybes are branched (D31), and the owner does not want a pre-tip refresh (D12).
 3. **Lineup scenarios in the nightly (D31, owner).** After item 1: games with an uncertain high-impact player are played per
-   lineup scenario (X plays / X sits; 2 players → 4; more → each one out), **each an independent run with 10,000 sims**
+   lineup scenario (X plays / X sits — maybes from ESPN's report and the lineup source; 2 players → 4; more → each one out), **each an independent run with 10,000 sims**
    (owner; also raise the engine's default from 2,000 to 10,000 worlds per game, with 2–3 games in parallel to stay inside
    the 60-minute budget); Expected = the branches blended by the injury report's availability (not a third run);
    saved in the snapshot; views + a Game Centre lineup selector; browser checks; smoke: each
