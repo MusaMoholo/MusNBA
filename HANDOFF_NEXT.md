@@ -72,9 +72,10 @@ coverage, CRPS), then on the team sums. The engine stays the dashboard default.
    coverage → 80%, then points by tier and totals; also pick out returning-star games. Done when minutes beat v1.1's on the
    backtest and the nightly uses them.
 2. **Defence each player faces (play-by-play headliner; D30, owner: ESPN data, implicit, as far as it goes).** Shooters make
-   too much against good defences (opponent-defence loading 0.42 v 1.69 real; stars' points +8.8%). Build: (a) check that the
-   fouler on shooting fouls and the blocker are mostly the shooter's likely defender (size/position similarity) and fit a
-   soft assignment over the five on court from those records; (b) defender quality — opponent FG% allowed by zone with much
+   too much against good defences (opponent-defence loading 0.42 v 1.69 real; stars' points +8.8%). Build: (a) the fouler
+   on a shooting foul and the blocker are the defenders who affected the shot (owner) — use them for shot outcomes; fit a
+   soft assignment over the five on court (size, role, position) leaning on fouls on jump shots (on-ball) more than rim
+   blocks/fouls (help bigs); (b) defender quality — opponent FG% allowed by zone with much
    lighter shrinkage than §3l (`features.py --defence`), size, steal/block, recent form — weighted by the assignment for the
    shooter, plus rim protection on the floor for rim attempts, as inputs to what, shot result, event, turnover type; (c) shot
    type from the play text (pull-up, step-back, driving, cutting, alley-oop) as a shot-quality input. Fold models, then the
@@ -82,8 +83,10 @@ coverage, CRPS), then on the team sums. The engine stays the dashboard default.
    loss alone was misleading, TRAINING_PLAN §7). If player inputs cannot close the gap, take D18 (opponent defensive rates)
    or the NBA Stats question (PLAN §9.1) to the owner with numbers.
 3. **Lineup scenarios in the nightly (D31, owner).** After item 1: games with an uncertain high-impact player are played per
-   lineup scenario (X plays / X sits; 2 players → 4; more → each one out); Expected = availability-weighted mixture of the
-   scenario worlds (validate); saved in the snapshot; views + a Game Centre lineup selector; browser checks; smoke: each
+   lineup scenario (X plays / X sits; 2 players → 4; more → each one out), **each an independent run with 10,000 sims**
+   (owner; also raise the engine's default from 2,000 to 10,000 worlds per game, with 2–3 games in parallel to stay inside
+   the 60-minute budget); Expected = the branches blended by the injury report's availability (not a third run);
+   saved in the snapshot; views + a Game Centre lineup selector; browser checks; smoke: each
    scenario re-simulates, the mixture's world counts match the availability weights.
 4. **Team engine start and drift (M12 continues; FINDINGS §3n).** (a) Start ratings: last season's rating as a prior
    (carry-over) and opponent adjustment — November dispersion 0.84 → 1.0 honestly; (b) per-day drift so simulated
