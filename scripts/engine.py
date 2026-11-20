@@ -36,8 +36,9 @@ from scripts import nodes, projection, rotations  # noqa: E402
 ENGINE = {'id': 'engine-v1.1', 'kind': 'engine', 'version': 'v1.1', 'sims': 2000,
           'label': 'Possession engine v1.1 — the default projection and the floor every change must beat (D22); each game '
                    'simulated possession by possession from the v1.1 decision models (trained on the 2026-27 feed\'s rebound '
-                   'clocks, D23), rotations replayed from recent games. Known gaps: strong offences under-expressed, outcomes '
-                   'too tightly spread (FINDINGS §3j–§3k)'}
+                   'clocks, D23), rotations replayed from recent games. Known gaps: totals run high against the market (≈ +8 points on '
+                   'the 19 Nov slate), team strength under-expressed (spreads about half the market\'s), outcomes too tightly '
+                   'spread (FINDINGS §3j–§3m)'}
 MODELS = DERIVED.parent / 'models'
 ZONES = nodes.ZONES
 NB = nodes.LOCATION_BANDS

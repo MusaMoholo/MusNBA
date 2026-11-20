@@ -35,7 +35,7 @@ A local-first NBA simulator PWA, sibling to the owner's MusSim football app (`..
 
 ```
 LIVE (nightly)   ESPN site API → fetch_espn → data/raw/espn → master_fixtures, box_scores, pbp
-                 → engine v1 (default, D22; placeholder for backfills) → data/snapshots/<D> → views → serve / export → PWA
+                 → engine v1.1 (default, D22–D24: today + tomorrow; placeholder for backfills) → data/snapshots/<D> → views → serve / export → PWA
 HISTORY + MODEL  sportsdataverse ESPN season files → history (+ plays: one schema) → possessions (segments)
                  → rotations (stints, windows) → features (point-in-time profiles) → nodes (datasets)
                  → train (LightGBM per decision, rolling folds) → models/v1 → engine.py (M6) → [M9] backtest
@@ -83,7 +83,7 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
 | M7 | Target-aware substitution model | ☐ | Minutes MAE < 5.2 and 10–90% coverage ≈ 80% (beats replay v0) | (to build) |
 | M8 | Per-player form + end-game checks | ☐ | Variance and overtime rate (5.4%) calibrated | (to build) |
 | M9 | Walk-forward backtest (engine on past games) | ☐ `backtest.py` written (fold models, cutoff-safe inputs, team/player scores), not yet run | Measures the engine (the floor, D22) and every candidate on game and player CRPS, win calibration and realism v `baseline-v1` and the current engine; a candidate replaces the engine only if better | (to build) |
-| M10 | Watch-a-sim view | ☐ | Replays render | (to build) |
+| M10 | Watch-a-sim view (owner, 20 Nov: nba.com-style play-by-play list first, then visual play-through) | ☐ | A saved world's events list and replay in the Game Centre, phone and desktop | `engine.py` event log, views, `game.mjs` |
 | M11 | Availability model | ☐ | Simulated games missed match history | (to build) |
 | M12 | Season pathway calibration | ☐ | Dispersion ≈ 1.0, persistence matches | (to build) |
 
@@ -221,3 +221,8 @@ Realism sweep with the owner (19 Nov) — gaps, in priority order (HANDOFF next 
   v1.1 final test: duration ECE 0.002 (v1 0.014), event 0.009 (v1 0.022). Foul, turnover and held-ball shifts in 2026-27 are real. Heights/weights for 935 players;
   archetype priors and on-court defence: first ablations negative (only the location node gains). Owner asked for a
   MusSim-style per-world rating pathway beyond tomorrow (D25) — next session.
+- **20 Nov 2026** — Owner check against bet365/DraftKings (FINDINGS §3m): v1.1 totals run ≈ +8 points above the market on
+  the 19 Nov slate (NYK–MIN 231 v 216.5) and its spreads are about half the market's — efficiency +1.7%, and matchup
+  effects (totals and margins) under-expressed. Owner: the market is broadly rational (D8 note; compare with closing
+  lines). Owner request: the Game Centre should show a saved sim's play-by-play like nba.com, then a visual play-through
+  (D9, M10). Both queued in HANDOFF for the next agent.

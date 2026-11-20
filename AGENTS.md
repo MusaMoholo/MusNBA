@@ -18,7 +18,7 @@ At every checkpoint the next session may be a different agent, so leave the docs
 
 ```sh
 git status && git log --oneline -5      # clean tree expected; the last commit is the last checkpoint
-.venv/bin/python scripts/smoke.py        # must pass (66+ checks) before you change anything
+.venv/bin/python scripts/smoke.py        # must pass (73+ checks) before you change anything
 ls analysis/experiments/                 # latest experiment logs: what was last measured
 ```
 
@@ -35,12 +35,18 @@ Then do the first open item in HANDOFF_NEXT.md § Next actions. If smoke fails, 
 - UK-based; displayed times are UK with ET alongside. Slates are US Eastern dates.
 - Prefers you make engineering decisions yourself and explain them; ask only for real product choices (PLAN §9).
 - Likes short status bullets with real numbers; for long runs he asked for one progress bar per job, updated at
-  every 5% (finished jobs dropped). He is happy to see new data in the dashboard before it is validated, if labelled.
+  every 5% (finished jobs dropped), and for multi-step work a **progress board**: an overall bar across the agreed steps
+  plus a sub-bar per step, posted at every 10%. He sets explicit stop points mid-session ("stop when X is done") —
+  finish X, checkpoint, and leave the rest to HANDOFF. He is happy to see new data in the dashboard before it is
+  validated, if labelled.
+- He checks projections against bookmaker lines: treat the market as broadly rational (ENGINE_PLAN D8) — a benchmark to
+  investigate gaps against, never a target to fit.
 
 ## 4. Rules
 
 - Use `.venv/bin/python`. Dependencies: NumPy, pandas, pyarrow, LightGBM. Node is optional (browser checks only).
-- **The engine is the floor (D22)**: today's projections come from the possession engine v1 by default. Replace it
+- **The engine is the floor (D22)**: today's and tomorrow's projections (D24) come from the possession engine — model
+  **v1.1** since D23 (`ENGINE['version']` in `scripts/engine.py`, `models/v1.1.json`). Replace it
   (new nodes, settings, rules or model version) only when the measured tests say the change is better — paired fold
   comparisons (`scripts/compare.py`), M6a (`scripts/aggregate.py`) and, once built, the M9 backtest — and record it.
 - **Serving never computes**: `serve.py`, `views.py` and the PWA never fetch, fit or simulate.

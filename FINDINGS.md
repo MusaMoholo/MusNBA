@@ -414,6 +414,32 @@ data and are paired with `…224019Z_v1.1_folds` (identical rows); noise floor f
 - `games_eff` (role family, 5-game half-life) caps at ~7.7 and cannot define sample-size buckets; `scripts/buckets.py`
   uses decayed offensive segments.
 
+## 3m. Engine v1.1 v the betting market (19 Nov slate; benchmark only, D8)
+
+DraftKings lines retained in the scoreboard (`data/raw/espn/runs/20261119T235714Z/scoreboard_2026-11-19.json.gz`, four
+games); the owner's bet365 check agrees (NYK–MIN total 216.5, NYK −1.5). Four games — a direction, not a measurement.
+
+| Game | Market total | v1.1 | v1 | Placeholder | Market home margin | v1.1 home margin |
+|---|---|---|---|---|---|---|
+| GS @ MEM | 225.5 | 230.7 | 217.0 | 226.1 | +5.5 | −0.6 |
+| POR @ MIL | 230.5 | 238.2 | 221.1 | 229.5 | −11.5 | −4.7 |
+| NY @ MIN | 216.5 | 231.2 | 219.6 | 212.6 | −1.5 | −2.7 |
+| LAC @ SA | 224.5 | 227.5 | 217.4 | 222.0 | +15.5 | +7.2 |
+
+- **Totals run high:** v1.1 +7.7 points per game above the market (+3.0 to +14.7); v1 was −5.4 below, the placeholder −1.7.
+  Like for like (possessions counted as segments): the engine plays 101.3 possessions per team at 1.145 points each on
+  these games; real 2026-27 games average 101.05 at 1.125 (113.7 points; §2, §3c) — so **efficiency +1.7%, pace +0.3%**,
+  ≈ +4.6 points for an average matchup. The 2026-27 scoring level is not lower than history (1.125 v 1.128 per
+  possession, §3e). The rest is matchup: the market prices these four games 3.1 points *below* the league's average total
+  (224.3 v 227.4), the engine 4.5 *above* it (231.9) — matchup effects on totals are under-expressed, as on margins.
+  M6a (real possessions replayed) showed only +0.6% on totals (+1.4 points) on 2025-26 games, so suspect engine-only
+  effects first: free throws and the foul classes (and-ones +6.9%, team turnovers +9.7% in M6a), shot mix, end-of-period
+  play, replayed rotations (stars' minutes) — the M9 backtest is the tool to separate them.
+- **Spreads are about half the market's:** |0.6|, |4.7|, |2.7|, |7.2| v 5.5, 11.5, 1.5, 15.5 — team quality is
+  under-expressed (§3j, Memphis ≈ 113 per 100 v 117.8 real). Market lines also carry injury and rest news; the engine
+  reads the same injury report.
+- Only today's lines are retained (the collection fetches today's scoreboard); tomorrow's slate has none.
+
 ## 4. Placeholder model `baseline-v0` (19 Nov 2026, superseded by `baseline-v1`)
 
 - Team score SD 11.25 with correlation 0.35 gives margin SD 12.8 and total SD ~19 in simulation.
