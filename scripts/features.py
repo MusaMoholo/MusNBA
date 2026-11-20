@@ -37,25 +37,37 @@ PRIOR_K = {'usage': 200, 'shot_mix': 50, 'rim': 30, 'paint': 40, 'mid': 50, 'cor
            'tov': 100, 'foul_drawn': 100}
 
 
+DEF_ZONES = ('rim', 'paint', 'mid', 'three')
+DEFENCE_FAMILY = (30, 0.6)  # on-court defence settles slowly (lineup noise): long half-life, strong shrinkage
+DEFENCE_K = {'fg': 300, 'three': 600, 'tov': 600, 'share': 300}
+ARCH_STYLE = ['usage', 'shot_share', 'tov_share', 'foul_drawn_share', 'assisted_share', 'ast_rate', 'oreb_pct', 'dreb_pct',
+              'stl_rate', 'blk_rate', 'pf_rate'] + [f'mix_{z}' for z in ZONES]
+ARCH_BODY = ['height_in', 'weight_lb']
+ARCH_MIN_SEGS = 1000  # player-seasons with at least this many offensive segments (~10 games) define the archetypes
+
+
 def group(pos) -> str:
     p = str(pos or '').upper()
     return 'C' if p.startswith('C') else 'G' if p.startswith('G') or p in ('PG', 'SG') else 'F'
 
 
-def sources():
-    """(segments, on_court) per season, history first, then the current season."""
+def sources(segments: Path = DERIVED):
+    """(segments, on_court) per season, history first, then the current season. `segments` is the root holding
+    history/<season>/segments.parquet and segments.parquet (data/derived, or a variant from possessions.py --out);
+    on-court minutes always come from the rotations in data/derived (they are built from plays, not segments)."""
     out = []
     for season_dir in sorted((DERIVED / 'history').glob('*/')):
-        seg, on = season_dir / 'segments.parquet', season_dir / 'on_court.parquet'
+        seg, on = segments / 'history' / season_dir.name / 'segments.parquet', season_dir / 'on_court.parquet'
         if seg.exists() and on.exists():
             out.append((seg, on))
-    if (DERIVED / 'segments.parquet').exists() and (DERIVED / 'rotations' / 'on_court.parquet').exists():
-        out.append((DERIVED / 'segments.parquet', DERIVED / 'rotations' / 'on_court.parquet'))
+    if (segments / 'segments.parquet').exists() and (DERIVED / 'rotations' / 'on_court.parquet').exists():
+        out.append((segments / 'segments.parquet', DERIVED / 'rotations' / 'on_court.parquet'))
     return out
 
 
-def counts_for(seg: pd.DataFrame, on: pd.DataFrame) -> pd.DataFrame:
-    """Per player-game exposures and events (reconciled games only)."""
+def counts_for(seg: pd.DataFrame, on: pd.DataFrame, defence: bool = False) -> pd.DataFrame:
+    """Per player-game exposures and events (reconciled games only). defence=True adds what opponents did while he was
+    in the defensive five: their uses, turnovers and shots by zone (attempts, makes) — the on-court defence family."""
     seg = seg[seg['game_ok'] & seg['offense'].astype(str).isin(NBA_TEAM_IDS) & seg['defense'].astype(str).isin(NBA_TEAM_IDS)].copy()  # reconciled NBA games (no All-Star games)
     seg['seg_id'] = np.arange(len(seg))
     off = seg.melt(id_vars=['seg_id', 'game_id', 'period'], value_vars=[f'off_{i}' for i in range(1, 6)], value_name='player').dropna(subset=['player'])
@@ -103,6 +115,17 @@ def counts_for(seg: pd.DataFrame, on: pd.DataFrame) -> pd.DataFrame:
     parts.append(dfn.merge(two, on='seg_id').groupby(['game_id', 'player']).size().rename('blk_opp'))
     parts.append(seg[seg['stealer'].notna()].groupby(['game_id', 'stealer']).size().rename_axis(['game_id', 'player']).rename('stl'))
     parts.append(seg[seg['fouler'].notna()].groupby(['game_id', 'fouler']).size().rename_axis(['game_id', 'player']).rename('pf'))
+    if defence:
+        d_use = dfn.merge(use[['seg_id', 'end_type', 'zone', 'made']], on='seg_id')
+        parts.append(d_use.groupby(['game_id', 'player']).size().rename('d_uses'))
+        parts.append(d_use[d_use['end_type'] == 'turnover'].groupby(['game_id', 'player']).size().rename('d_tov'))
+        d_shot = d_use[d_use['end_type'] == 'shot']
+        parts.append(d_shot.groupby(['game_id', 'player']).size().rename('d_shots'))
+        d_shot = d_shot.assign(zone=d_shot['zone'].replace({'corner3': 'three', 'above3': 'three'}))
+        for z in DEF_ZONES:
+            dz = d_shot[d_shot['zone'] == z]
+            parts.append(dz.groupby(['game_id', 'player']).size().rename(f'd_att_{z}'))
+            parts.append(dz[dz['made'] == True].groupby(['game_id', 'player']).size().rename(f'd_made_{z}'))  # noqa: E712
     counts = pd.concat(parts, axis=1).fillna(0)
     minutes = on.copy()
     for q in (1, 2, 3, 4):
@@ -190,6 +213,7 @@ FAMILY_COLUMNS = {
              + [f'att_{z}' for z in ZONES] + [f'uses_q{q}' for q in (1, 2, 3, 4)] + [f'off_segs_q{q}' for q in (1, 2, 3, 4)],
     'accuracy': [f'att_{z}' for z in ZONES] + [f'made_{z}' for z in ZONES],
     'ft': ['fta', 'ftm'],
+    'defence': ['d_uses', 'd_tov', 'd_shots'] + [f'd_{k}_{z}' for z in ('rim', 'paint', 'mid', 'three') for k in ('att', 'made')],
 }
 
 
@@ -231,10 +255,11 @@ def priors_by_season(df: pd.DataFrame) -> dict:
     return out
 
 
-def profiles(df: pd.DataFrame, sums: dict, priors: dict) -> pd.DataFrame:
-    """Shrunk rates from decayed sums. `sums[family]` aligned with df rows."""
+def profiles(df: pd.DataFrame, sums: dict, priors: dict, key=None) -> pd.DataFrame:
+    """Shrunk rates from decayed sums. `sums[family]` aligned with df rows. Each rate shrinks toward the prior of the
+    row's key in `priors[season]`: the position group by default, or an archetype code (build(archetypes=K))."""
     f = pd.DataFrame(index=df.index)
-    grp = df['pos'].map(group)
+    grp = df['pos'].map(group) if key is None else pd.Series(np.asarray(key), index=df.index)
     def prior(num, den):
         return np.array([(priors[s].loc[g, num] / max(1e-9, priors[s].loc[g, den])) if g in priors[s].index else np.nan
                          for s, g in zip(df['season'], grp)])
@@ -273,19 +298,117 @@ def profiles(df: pd.DataFrame, sums: dict, priors: dict) -> pd.DataFrame:
         f[f'usage_mult_q{q}'] = np.where(overall > 0, 1 + w * (rate_q / np.maximum(overall, 1e-9) - 1), 1.0)
     f['shots_eff'] = acc[[f'att_{z}' for z in ZONES]].sum(axis=1)
     f['fta_eff'] = ft['fta']
+    if 'defence' in sums:
+        for z in DEF_ZONES:
+            f[f'd_fg_{z}'] = shrunk('defence', f'd_made_{z}', 'defence', f'd_att_{z}', DEFENCE_K['three' if z == 'three' else 'fg'])
+        f['d_tov_rate'] = shrunk('defence', 'd_tov', 'defence', 'd_uses', DEFENCE_K['tov'])
+        f['d_rim_share'] = shrunk('defence', 'd_att_rim', 'defence', 'd_shots', DEFENCE_K['share'])
+        f['d_three_share'] = shrunk('defence', 'd_att_three', 'defence', 'd_shots', DEFENCE_K['share'])
+        f['d_segs_eff'] = sums['defence']['d_uses']
     return f
 
 
-def build(out: Path = OUT, families: dict | None = None, team_style: dict | None = None) -> dict:
-    families = families or FAMILIES
+def season_rates(df: pd.DataFrame) -> pd.DataFrame:
+    """Unshrunk style rates per player-season (players with enough offensive segments), plus body."""
+    g = df.groupby(['player', 'season']).sum(numeric_only=True)
+    g = g[g['off_segs'] >= ARCH_MIN_SEGS]
+    r = pd.DataFrame(index=g.index)
+    r['usage'], r['shot_share'], r['tov_share'] = g['uses'] / g['off_segs'], g['shots'] / g['uses'], g['tov'] / g['uses']
+    r['foul_drawn_share'], r['assisted_share'] = g['fouls_drawn'] / g['uses'], g['assisted'] / g['made'].clip(lower=1)
+    r['ast_rate'], r['oreb_pct'], r['dreb_pct'] = g['ast'] / g['ast_opp'].clip(lower=1), g['oreb'] / g['oreb_opp'].clip(lower=1), g['dreb'] / g['dreb_opp'].clip(lower=1)
+    r['stl_rate'], r['blk_rate'], r['pf_rate'] = g['stl'] / g['def_segs'], g['blk'] / g['blk_opp'].clip(lower=1), g['pf'] / g['segs_on']
+    for z in ZONES:
+        r[f'mix_{z}'] = g[f'att_{z}'] / g['shots'].clip(lower=1)
+    body = df.groupby('player')[ARCH_BODY].first()
+    return r.join(body, on='player')
+
+
+def kmeans(X: np.ndarray, k: int, seed: int = 7, restarts: int = 10, iters: int = 100):
+    """Lloyd's k-means with k-means++ starts; the lowest within-cluster sum of squares wins (deterministic)."""
+    rng = np.random.default_rng(seed)
+    best = (np.inf, None)
+    for _ in range(restarts):
+        C = X[[rng.integers(len(X))]]
+        while len(C) < k:
+            d2 = ((X[:, None, :] - C[None]) ** 2).sum(-1).min(1)
+            C = np.vstack([C, X[rng.choice(len(X), p=d2 / d2.sum())]])
+        for _ in range(iters):
+            lab = ((X[:, None, :] - C[None]) ** 2).sum(-1).argmin(1)
+            new = np.array([X[lab == j].mean(0) if (lab == j).any() else C[j] for j in range(k)])
+            if np.allclose(new, C):
+                break
+            C = new
+        sse = ((X - C[lab]) ** 2).sum()
+        if sse < best[0]:
+            best = (sse, C)
+    return best[1]
+
+
+def archetypes(df: pd.DataFrame, feats: pd.DataFrame, k: int):
+    """Archetype per player-game and archetype priors per season (TRAINING_PLAN §2.1, §7a; owner: size matters).
+
+    For each season S, k-means on standardised style rates plus height and weight of player-seasons before S (the first
+    season uses itself, as the position priors do). A player-game's archetype is the centroid nearest his pre-game
+    profile (position-group shrinkage) and body — so a rookie lands on the archetype nearest his position's typical
+    style and his size. Priors for S pool the counts of earlier player-seasons by their archetype."""
+    rates = season_rates(df)
+    cols = ARCH_STYLE + ARCH_BODY
+    code = np.zeros(len(df), dtype=np.int64)
+    priors, fits = {}, {}
+    seasons = sorted(df['season'].unique())
+    for season in seasons:
+        base = rates[rates.index.get_level_values('season') < season]
+        if base.empty:
+            base = rates[rates.index.get_level_values('season') == season]
+        X = base[cols].to_numpy(float)
+        mu, sd = np.nanmean(X, 0), np.nanstd(X, 0) + 1e-9
+        Z = np.nan_to_num((X - mu) / sd)
+        C = kmeans(Z, k)
+        lab = ((Z[:, None, :] - C[None]) ** 2).sum(-1).argmin(1)
+        members = pd.Series(lab, index=base.index, name='arch')
+        prior_rows = df.join(members, on=['player', 'season'], how='inner')
+        priors[season] = prior_rows.groupby('arch').sum(numeric_only=True)
+        rows = (df['season'] == season).to_numpy()
+        now = pd.concat([feats.loc[rows, ARCH_STYLE], df.loc[rows, ARCH_BODY]], axis=1)[cols].to_numpy(float)
+        Zn = np.nan_to_num((now - mu) / sd)
+        code[rows] = ((Zn[:, None, :] - C[None]) ** 2).sum(-1).argmin(1)
+        fits[int(season)] = {'player_seasons': int(len(base)), 'sizes': np.bincount(lab, minlength=k).tolist(),
+                             'height_by_arch': [round(float(v), 1) for v in pd.Series(X[:, cols.index('height_in')]).groupby(lab).mean().reindex(range(k))],
+                             'usage_by_arch': [round(float(v), 3) for v in pd.Series(X[:, cols.index('usage')]).groupby(lab).mean().reindex(range(k))]}
+        fits[int(season)]['_model'] = (mu, sd, C)
+    return code, priors, fits
+
+
+def assign_archetype(fit, feats_rows: pd.DataFrame, body_rows: pd.DataFrame) -> np.ndarray:
+    mu, sd, C = fit['_model']
+    now = pd.concat([feats_rows[ARCH_STYLE], body_rows[ARCH_BODY]], axis=1)[ARCH_STYLE + ARCH_BODY].to_numpy(float)
+    Zn = np.nan_to_num((now - mu) / sd)
+    return ((Zn[:, None, :] - C[None]) ** 2).sum(-1).argmin(1)
+
+
+def attach_body(df: pd.DataFrame) -> pd.DataFrame:
+    """Height and weight per player (scripts/athletes.py); missing stays missing."""
+    body = pd.read_parquet(DERIVED / 'athletes.parquet', columns=['player', 'height_in', 'weight_lb'])
+    return df.drop(columns=[c for c in ARCH_BODY if c in df.columns]).merge(body, on='player', how='left')
+
+
+def build(out: Path = OUT, families: dict | None = None, team_style: dict | None = None, segments: Path = DERIVED,
+          body: bool = False, archetypes_k: int = 0, defence: bool = False) -> dict:
+    """Profiles. Options (variants; the default profiles carry none of them): body = height and weight columns;
+    archetypes_k = K archetypes as the shrinkage prior (and an arch_code column); defence = on-court defence family."""
+    families = dict(families or FAMILIES)
+    if defence:
+        families.setdefault('defence', DEFENCE_FAMILY)
     team_style = team_style or TEAM_STYLE
     frames, team_frames, schedules = [], [], []
-    for seg_path, on_path in sources():
+    for seg_path, on_path in sources(segments):
         seg = pd.read_parquet(seg_path)
-        frames.append(counts_for(seg, pd.read_parquet(on_path)))
+        frames.append(counts_for(seg, pd.read_parquet(on_path), defence))
         team_frames.append(team_counts(seg))
         schedules.append(schedule(seg))
     df = pd.concat(frames, ignore_index=True)
+    if body or archetypes_k:
+        df = attach_body(df)
     df = df.sort_values(['player', 'date_et', 'game_id'], kind='stable').reset_index(drop=True)
     sums, latest_sums = {}, {}
     for family, (half_life, carry) in families.items():
@@ -295,6 +418,13 @@ def build(out: Path = OUT, families: dict | None = None, team_style: dict | None
         latest_sums[family] = latest
     priors = priors_by_season(df)
     feats = profiles(df, sums, priors)
+    arch_report = None
+    if archetypes_k:
+        code, arch_priors, fits = archetypes(df, feats, archetypes_k)
+        feats = profiles(df, sums, arch_priors, key=code)
+        feats['arch_code'] = code.astype(np.float32)
+    if body or archetypes_k:
+        feats['height_in'], feats['weight_lb'] = df['height_in'].astype(np.float32), df['weight_lb'].astype(np.float32)
     base = df[['game_id', 'player', 'date_et', 'season', 'season_type', 'team', 'pos', 'starter']]
     pre = pd.concat([base, feats], axis=1)
     out.mkdir(parents=True, exist_ok=True)
@@ -309,7 +439,18 @@ def build(out: Path = OUT, families: dict | None = None, team_style: dict | None
     # Latest profile per player: the state after his last game (for projections from today).
     last = df.groupby('player').tail(1).reset_index(drop=True)
     lsums = {fam: pd.DataFrame([latest_sums[fam][p] for p in last['player']], columns=FAMILY_COLUMNS[fam]) for fam in families}
-    latest = pd.concat([last[['player', 'date_et', 'season', 'team', 'pos']], profiles(last, lsums, priors)], axis=1)
+    lprof = profiles(last, lsums, priors)
+    if archetypes_k:  # each player's state after his last game, placed with that season's archetype fit
+        lcode = np.zeros(len(last), dtype=np.int64)
+        for season in last['season'].unique():
+            rows = (last['season'] == season).to_numpy()
+            lcode[rows] = assign_archetype(fits[int(season)], lprof[rows], last[rows])
+        lprof = profiles(last, lsums, arch_priors, key=lcode)
+        lprof['arch_code'] = lcode.astype(np.float32)
+        arch_report = {s: {k: v for k, v in f.items() if k != '_model'} for s, f in fits.items()}
+    if body or archetypes_k:
+        lprof['height_in'], lprof['weight_lb'] = last['height_in'].astype(np.float32), last['weight_lb'].astype(np.float32)
+    latest = pd.concat([last[['player', 'date_et', 'season', 'team', 'pos']], lprof], axis=1)
     latest.to_parquet(out / 'latest.parquet', index=False)
     # Sanity: does the pre-game profile anticipate the game?
     game_usage = df['uses'] / df['off_segs'].where(df['off_segs'] > 0)
@@ -322,7 +463,8 @@ def build(out: Path = OUT, families: dict | None = None, team_style: dict | None
               'three_share_corr': round(float(np.corrcoef((feats['mix_above3'] + feats['mix_corner3'])[big & (df['shots'] >= 8)],
                                                           (three / df['shots'])[big & (df['shots'] >= 8)])[0, 1]), 3),
               'families': {k: {'half_life_games': v[0], 'season_carry': v[1]} for k, v in families.items()},
-              'team_style': team_style, 'team_games': len(teams), 'team_columns': [c for c in teams.columns if c not in ('game_id', 'team', 'date_et', 'season')],
+              'team_style': team_style, 'segments': str(segments), 'body': body, 'archetypes': archetypes_k, 'defence': defence,
+              'archetype_fits': arch_report, 'team_games': len(teams), 'team_columns': [c for c in teams.columns if c not in ('game_id', 'team', 'date_et', 'season')],
               'feature_columns': list(feats.columns)}
     write_json(out / 'features_report.json', report, pretty=True)
     return report
@@ -334,6 +476,10 @@ def main():
     ap.add_argument('--family', action='append', default=[], metavar='NAME=HALF_LIFE[,CARRY]',
                     help=f'override a stat family, e.g. usage=8 or role=3,0.3 (families: {", ".join(FAMILIES)})')
     ap.add_argument('--team', default=None, metavar='HALF_LIFE[,CARRY]', help='team style decay (default 15,0.5)')
+    ap.add_argument('--segments', type=Path, default=DERIVED, help='segments root (possessions.py --out; default data/derived)')
+    ap.add_argument('--body', action='store_true', help='height and weight columns (scripts/athletes.py)')
+    ap.add_argument('--archetypes', type=int, default=0, metavar='K', help='shrink toward K archetypes instead of position groups')
+    ap.add_argument('--defence', action='store_true', help='on-court defence family (opponents while he defends)')
     args = ap.parse_args()
     families = dict(FAMILIES)
     for spec in args.family:
@@ -345,7 +491,7 @@ def main():
         hl, *rest = args.team.split(',')
         team = {'half_life': float(hl), 'carry': float(rest[0]) if rest else TEAM_STYLE['carry']}
     import json
-    r = build(args.out, families, team)
+    r = build(args.out, families, team, args.segments, args.body, args.archetypes, args.defence)
     print(json.dumps({k: v for k, v in r.items() if k != 'feature_columns'}, indent=1))
 
 

@@ -1,6 +1,6 @@
 # App — shipped behaviour
 
-As of **19 November 2026**. Proposals and progress live in [PLAN.md](PLAN.md).
+As of **20 November 2026**. Proposals and progress live in [PLAN.md](PLAN.md).
 
 ## Navigation
 
@@ -38,9 +38,11 @@ files plus logos, so laptop and phone responses are identical. Routes are hash-b
 In static mode `pwa.mjs` answers `/api/*` from IndexedDB and the service worker serves logos and the
 cached shell. Imports stage a new generation and switch one active pointer after verification.
 
-## Model chip (19 Nov 2026, D22)
+## Model chip (19 Nov 2026, D22–D24)
 
-Every projection shows which model made it: **Engine v1** (green chip; today's slate by default) or **Placeholder
-model** (retrospective backfills, or a nightly run with `--placeholder`). The full label — with the engine's known
+Every projection shows which model made it: **Engine v1.1** (green chip; today's and tomorrow's slates by default, D24)
+or **Placeholder model** (retrospective backfills, or a nightly run with `--placeholder`). Tomorrow's slate is projected a
+day ahead from what is known today and rebuilt the next night; the app's as-of date (standings, rosters, schedules)
+stays the newest snapshot dated today or earlier. The full label — with the engine's known
 gaps — is the chip's tooltip and appears in the Model & data panel. `modelPill` in `scripts/webapp/ui.mjs` is the
 single place this is decided.

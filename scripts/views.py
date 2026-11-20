@@ -71,6 +71,15 @@ def team_slice(T: dict, tid: str) -> dict:
     return rounded(row)
 
 
+def current_snapshot(days) -> str:
+    """The snapshot the app treats as current: the newest dated today (ET) or earlier — tomorrow's slate is projected a
+    day ahead (D24) without becoming the as-of date for standings, rosters and team schedules."""
+    from basketball_common import today_et
+    days = sorted(days)
+    past = [d for d in days if d <= today_et()]
+    return past[-1] if past else days[-1]
+
+
 def build(views_root: Path = VIEWS) -> dict:
     teams = read_json(DERIVED / 'teams.json')
     registry = read_json(DERIVED / 'players.json')['players']
@@ -81,7 +90,7 @@ def build(views_root: Path = VIEWS) -> dict:
     snaps = load_snapshots()
     if not snaps:
         raise SystemExit('No snapshots yet: run scripts/nightly.py')
-    latest_day = sorted(snaps)[-1]
+    latest_day = current_snapshot(snaps)
     latest = snaps[latest_day]
     L = read_json(latest['path'] / 'stats.json')
     season_latest = read_json(latest['path'] / 'season.json')

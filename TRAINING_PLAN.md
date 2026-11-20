@@ -149,5 +149,16 @@ four folds beats −noise with pooled z ≤ −2 and no fold is worse by more th
 (feature decay) are also read on the **chain** row — the change in log-likelihood of whole games, in nats per game.
 Settings that differ by node are kept per node in the version file (`models/<version>.json`).
 
+**Train/serve parity (M5b, 19 Nov).** Inputs must be built the same way for training rows and for the games the engine
+serves. ESPN's 2026-27 feed stamps every rebound at the miss's clock (FINDINGS §3k), so segments use that convention
+for every season (`possessions.py --rebound-clock miss`). A data change like this cannot be judged on folds built the
+old way — the old models are right there by construction — so it is judged by a **paired cross-data test**:
+`train.py … --train-segments default --train-features default` trains each fold on the old data and scores it on the new
+data's held-out rows, paired with a run trained on the new data (`compare.py`). Data variants live under
+`data/derived/variants/<name>/`; a version file names its data (`"segments"`, `"features"`).
+
+**Sample-size buckets.** `games_eff` (role family, 5-game half-life) caps at ~7.7, so per-sample-size verdicts use the
+deciding player's decayed offensive segments (`scripts/buckets.py`: < 250, 250–750, 750+).
+
 Richer sources needing an owner decision: NBA tracking data (drives, touches, catch-and-shoot v pull-up,
 defender distance) via the NBA Stats API (PLAN.md §7 item 1).

@@ -5,9 +5,9 @@ pipeline collects box scores and play-by-play, simulates every game 10,000 times
 remaining season 10,000 times, and a static, offline-capable app shows the results on a laptop
 or phone.
 
-> The app is live on localhost and as a static PWA. Today's projections come from the **possession engine v1**
-> (every possession simulated from 16 LightGBM decision models; the floor for later improvements, D22); past dates
-> rebuilt after the fact use a labelled placeholder. See [PLAN.md](PLAN.md) and [HANDOFF_NEXT.md](HANDOFF_NEXT.md).
+> The app is live on localhost and as a static PWA. Today's and tomorrow's projections come from the **possession
+> engine v1.1** (every possession simulated from 16 LightGBM decision models; the floor for later improvements, D22–D24);
+> past dates rebuilt after the fact use a labelled placeholder. See [PLAN.md](PLAN.md) and [HANDOFF_NEXT.md](HANDOFF_NEXT.md).
 
 ## Setup
 
@@ -26,7 +26,8 @@ python3 -m venv .venv
 .venv/bin/python scripts/serve.py            # browse at http://127.0.0.1:8766
 ```
 
-- Today's slate is projected by the possession engine v1 (the default, D22; ~20 s per game at 2,000 worlds);
+- Today's and tomorrow's slates are projected by the possession engine v1.1 (the default, D22–D24; ~20 s per game at
+  2,000 worlds; `--ahead N` sets how many days after today);
   `--placeholder` uses the old box-score placeholder instead, and backfilled past dates always do. `nightly.py --offline` reuses retained data; `--views-only` only rebuilds what the app reads;
   `--backfill-days N` adds retrospective snapshots (labelled as such) for the previous N slates.
 - The server reads files from disk: front-end edits appear on refresh, rebuilt views appear
@@ -54,13 +55,16 @@ checksum-verified and atomic; the previous data stays available if an import fai
 | `scripts/master_fixtures.py`, `scripts/box_scores.py` | Master fixture list; player/team game logs; player registry |
 | `scripts/pbp.py` | Play-by-play: on-court seconds per period, per-period player box scores, reconciliation report |
 | `scripts/plays.py`, `scripts/history.py` | One play schema for live and historical data; 2022-23 → 2025-26 history ingest and reconciliation |
-| `scripts/possessions.py` | Possessions/segments with lineups, state and the who → what → result chain (training data) |
+| `scripts/possessions.py` | Possessions/segments with lineups, state and the who → what → result chain (training data); rebound-clock convention |
+| `scripts/parity.py` | Live ESPN v hoopR history: same games through both adapters; season distributions under both rebound clocks |
 | `scripts/rotations.py` | Stints, substitution windows, on-court minute shares; replay-rotation baseline and minutes backtest |
 | `scripts/features.py`, `scripts/evaluate.py` | Point-in-time player and team-style profiles; rolling-fold evaluation harness and baselines |
 | `scripts/nodes.py`, `scripts/train.py` | Datasets for the 16 decisions (cached); LightGBM per decision on the folds, persisted versions, final test |
 | `scripts/compare.py`, `scripts/calibration.py` | Paired run comparisons (game-clustered, seed-noise floor); calibration by period and margin |
 | `scripts/aggregate.py` | M6a: replay held-out games with real lineups and clock, sample every decision, score box scores |
-| `scripts/engine.py` | Engine v1 (default projection): plays today's games possession by possession with the v1 models |
+| `scripts/engine.py` | The engine (default projection, v1.1): plays games possession by possession |
+| `scripts/backtest.py` | Engine backtest on held-out fold games (M9 first cut; written, not yet run) |
+| `scripts/athletes.py`, `scripts/buckets.py` | Player heights/weights; paired comparisons by the player's sample size |
 | `scripts/season_stats.py` | Cutoff-safe team ratings and player season stats |
 | `scripts/projection.py` | Simulation engine (placeholder now; PBP engine in phase 2) and season sim |
 | `scripts/nightly.py`, `scripts/views.py` | Orchestration, immutable snapshots, API-ready views |
@@ -78,9 +82,15 @@ Rebuild in order after new data: `scripts/history.py` → `scripts/possessions.p
 ```sh
 .venv/bin/python scripts/train.py --name <label> [--drop @team …]     # an experiment on folds F1–F4 (~20 min)
 .venv/bin/python scripts/compare.py <run A> <run B> --noise <seed A> <seed B>   # keep / reject, per node
-.venv/bin/python scripts/train.py --config models/v1.json --final       # persist a version, score the final test once
-.venv/bin/python scripts/aggregate.py --config models/v1.json           # M6a aggregation test on F4 games
+.venv/bin/python scripts/train.py --config models/v1.1.json --final     # persist a version, score the final test once
+.venv/bin/python scripts/aggregate.py --config models/v1.1.json         # M6a aggregation test on F4 games
+.venv/bin/python scripts/parity.py [--fetch]                            # adapter and feed parity (M5b)
 ```
+
+Data variants live under `data/derived/variants/<name>/` (segments root + `features/`): `possessions.py --rebound-clock miss
+--out DIR` and `features.py --segments DIR --out DIR/features` build one; `nodes.py`/`train.py --segments DIR --features …`
+read it; a version file can name it (`"segments"`, `"features"`). `train.py … --train-segments default --train-features
+default` trains each fold on the canonical data and validates on the variant's rows (a paired cross-data test).
 
 Fitted models live in `data/models/<version>/` (out of git, rebuilt by `--final`); the settings that define a version
 are `models/<version>.json` (in git).

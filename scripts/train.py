@@ -14,6 +14,10 @@ decision's log loss is stored (data/derived/experiments/<run>.npz) for paired co
   options: --half-life S · --playoff-weight W · --drop f|@group … · --features DIR · --banded · --recalibrate · --seed
   .venv/bin/python scripts/train.py --config models/v1.json             the version's settings on the folds
   .venv/bin/python scripts/train.py --config models/v1.json --final     persist data/models/v1/ + score the final test once
+  … --segments DIR --features DIR/features/pregame.parquet              a segments variant (possessions.py --out)
+  … --train-segments DIR --train-features FILE   cross-data test: train each fold on that dataset's rows, validate on the
+                                                 main dataset's held-out rows (e.g. old-convention models on 2026-27-style
+                                                 inputs, paired with a run trained on the main dataset; FINDINGS §3k)
 """
 from __future__ import annotations
 
@@ -272,6 +276,32 @@ def params(kind, rows, cfg):
     return p
 
 
+def data_root(value: str):
+    """CLI value for a data location: 'default' = the canonical data in data/derived (None), else a path."""
+    return None if value == 'default' else Path(value)
+
+
+def hybrid(train_d: dict, val_d: dict, cut) -> dict:
+    """Training rows (up to the fold's cut-off) from `train_d`, validation rows from `val_d`, in `val_d`'s order — so the
+    held-out losses pair row by row with a run trained on `val_d` itself (scripts/compare.py)."""
+    train_to, val_from, val_to = cut
+    if list(train_d['X'].columns) != list(val_d['X'].columns):
+        raise SystemExit(f"{val_d['name']}: the two datasets have different columns")
+    a = train_d['date'] <= train_to
+    b = (val_d['date'] >= val_from) & (val_d['date'] <= val_to)
+    out = {k: val_d[k] for k in ('name', 'kind', 'classes', 'profile')}
+    out['X'] = pd.concat([train_d['X'][a], val_d['X'][b]], ignore_index=True)
+    for k in nodes.ARRAYS:
+        if train_d.get(k) is None or val_d.get(k) is None:
+            out[k] = None
+            continue
+        right = val_d[k][b]
+        if k == 'group':  # candidate groups (one per decision) must stay distinct across the two sources
+            right = right + (int(train_d[k][a].max()) + 1 if a.any() else 0)
+        out[k] = np.concatenate([train_d[k][a], right])
+    return out
+
+
 def run_node(d, fold, cut, cfg=None):
     """Fit one node on one fold. Returns the logged metrics and per-row held-out losses (one per decision)."""
     cfg = cfg or {}
@@ -393,6 +423,9 @@ def main():
     ap.add_argument('--playoff-weight', type=float, default=1.0, help='weight of playoff and play-in rows')
     ap.add_argument('--drop', nargs='*', default=[], help=f'features or @groups to leave out (ablation); groups: {", ".join(nodes.GROUPS)}')
     ap.add_argument('--features', type=Path, default=None, help='a pregame.parquet variant (scripts/features.py --out)')
+    ap.add_argument('--segments', type=Path, default=None, help='a segments root variant (scripts/possessions.py --out)')
+    ap.add_argument('--train-segments', type=data_root, default=False, help="cross-data test: segments root of the training rows ('default' = data/derived)")
+    ap.add_argument('--train-features', type=data_root, default=False, help="cross-data test: pregame.parquet of the training rows ('default' = data/derived/features)")
     ap.add_argument('--banded', action='store_true', help='shot distance as its location band mean (what the engine can sample)')
     ap.add_argument('--recalibrate', action='store_true', help='refit class intercepts on the early-stopping slice (latest 10%%)')
     ap.add_argument('--seed', type=int, default=7)
@@ -405,7 +438,8 @@ def main():
     args = ap.parse_args()
     base = {'half_life': args.half_life, 'playoff_weight': args.playoff_weight, 'drop': args.drop, 'banded': args.banded,
             'recalibrate': args.recalibrate,
-            'features': str(args.features) if args.features else None, 'seed': args.seed, 'threads': args.threads}
+            'features': str(args.features) if args.features else None, 'segments': str(args.segments) if args.segments else None,
+            'seed': args.seed, 'threads': args.threads}
     version = None
     if args.config:
         spec = json.loads(args.config.read_text())
@@ -418,17 +452,26 @@ def main():
         raise SystemExit('--final needs --config models/<version>.json')
     cfg_for = lambda node: {**base, **per_node.get(node, {}), 'name': args.name}
     features = Path(base['features']) if base['features'] else None
+    segments = Path(base['segments']) if base.get('segments') else None
+    cross = args.train_segments is not False or args.train_features is not False
+    train_segments, train_features = (args.train_segments or None), (args.train_features or None)
+    if cross and args.final:
+        raise SystemExit('--train-segments/--train-features are a fold test; not with --final')
+    if cross:
+        base['train_segments'] = str(train_segments) if train_segments else 'default'
+        base['train_features'] = str(train_features) if train_features else 'default'
     folds = {'final': (FINAL_TRAIN_TO, TEST_FROM, '2100-01-01')} if args.final else {f: FOLDS[f] for f in args.folds}
     stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
     name_tag = f'final_{version}' if args.final else args.name
     results, losses, saved = {}, {}, {}
     model_dir = MODELS / version if args.final else None
-    for d in nodes.datasets(args.nodes, pregame=features, include_current=args.final):
+    for d in nodes.datasets(args.nodes, pregame=features, include_current=args.final, segments=segments):
         name = d['name']
         cfg = cfg_for(name)
         results[name] = {}
+        train_d = next(nodes.datasets([name], pregame=train_features, segments=train_segments)) if cross else None
         for fold, cut in folds.items():
-            r, rows, fitted = run_node(d, fold, cut, cfg)
+            r, rows, fitted = run_node(hybrid(train_d, d, cut) if cross else d, fold, cut, cfg)
             results[name][fold] = r
             losses[f'{name}__{fold}__loss'], losses[f'{name}__{fold}__game'] = rows['loss'], rows['game']
             if args.final:
@@ -436,7 +479,7 @@ def main():
             print(f"{name:14} {fold}  league {r['league']:.4f}  profile {r['profile']:.4f}  model {r['model']:.4f}  "
                   f"gain {r['gain_vs_best_baseline']:+.2%}  ECE {r['ece_model']:.4f} (profile {r['ece_profile']:.4f})  "
                   f"it {r['iterations']}  {r['seconds']}s  top {', '.join(r['top_features'][:4])}", flush=True)
-        del d
+        del d, train_d
     LOSSES.mkdir(parents=True, exist_ok=True)
     np.savez_compressed(LOSSES / f'{stamp}_{name_tag}.npz', **losses)
     record = {'experiment': f'm5_{name_tag}', 'run': stamp, 'commit': git_commit(), 'version': version,
@@ -446,6 +489,7 @@ def main():
     if args.final:
         write_json(model_dir / 'config.json', {'version': version, 'created': stamp, 'commit': git_commit(), 'burn_in': BURN_IN,
                                                 'train_through': FINAL_TRAIN_TO, 'final_test_from': TEST_FROM,
+                                                'segments': base.get('segments'), 'features': base.get('features'),
                                                 'experiment': f'analysis/experiments/{stamp}_{name_tag}.json', 'nodes': saved}, pretty=True)
         print(f'models: {model_dir}')
     print(f'\nrun {stamp}_{name_tag}')

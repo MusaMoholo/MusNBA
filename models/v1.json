@@ -1,6 +1,6 @@
 {
   "version": "v1",
-  "status": "validated on folds F1–F4 (every node at least level with its best baseline on every fold; ECE ≤ 0.012)",
+  "status": "validated on folds F1–F4 (every node at least level with its best baseline on every fold; ECE ≤ 0.012); superseded by v1.1 (19 Nov 2026, D23) — trained on the feed's rebound clocks, kept in data/derived/variants/rebound_feed",
   "validated_by": "analysis/experiments/20261119T210324Z_v1_folds.json",
   "default": {
     "half_life": null,
@@ -12,7 +12,8 @@
     ],
     "banded": true,
     "recalibrate": false,
-    "features": null
+    "features": "data/derived/variants/rebound_feed/features/pregame.parquet",
+    "segments": "data/derived/variants/rebound_feed"
   },
   "nodes": {
     "duration": {

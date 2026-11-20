@@ -67,6 +67,22 @@ GROUPS = {'team': TEAM_STYLE, 'schedule': SCHEDULE, 'clutch': ['clutch'], 'heat'
 CONTEXT = CONTEXT + TEAM_STYLE + SCHEDULE + ['clutch']
 LINEUP = ['off_usage_sum', 'off_usage_max', 'off_ast_sum', 'off_three_sum', 'off_oreb_sum', 'off_bigs', 'off_min_mean',
           'def_blk_sum', 'def_blk_max', 'def_stl_sum', 'def_dreb_sum', 'def_pf_sum', 'def_bigs', 'def_min_mean']
+# Optional profile inputs (owner, 19 Nov: size and defence): used only when the features file carries them
+# (features.py --body/--archetypes/--defence), so datasets built from features without them are unchanged.
+BODY = ['height_in', 'weight_lb', 'arch_code']
+DEFENCE = ['d_fg_rim', 'd_fg_paint', 'd_fg_mid', 'd_fg_three', 'd_tov_rate', 'd_rim_share', 'd_three_share', 'd_segs_eff']
+OPTIONAL_PROFILE = BODY + DEFENCE
+OPTIONAL_LINEUP = {  # column: (side, profile column, aggregate)
+    'off_height_mean': ('off', 'height_in', 'mean'), 'off_weight_mean': ('off', 'weight_lb', 'mean'),
+    'def_height_mean': ('def', 'height_in', 'mean'), 'def_weight_mean': ('def', 'weight_lb', 'mean'),
+    'def_height_max': ('def', 'height_in', 'max'),
+    'def_d_fg_rim_mean': ('def', 'd_fg_rim', 'mean'), 'def_d_fg_paint_mean': ('def', 'd_fg_paint', 'mean'),
+    'def_d_fg_mid_mean': ('def', 'd_fg_mid', 'mean'), 'def_d_fg_three_mean': ('def', 'd_fg_three', 'mean'),
+    'def_d_tov_sum': ('def', 'd_tov_rate', 'sum'), 'def_d_rim_mean': ('def', 'd_rim_share', 'mean'),
+    'def_d_three_mean': ('def', 'd_three_share', 'mean'),
+}
+GROUPS['body'] = BODY + [c for c, (_, src, _) in OPTIONAL_LINEUP.items() if src in BODY]
+GROUPS['defence'] = DEFENCE + [c for c, (_, src, _) in OPTIONAL_LINEUP.items() if src in DEFENCE]
 
 
 def group(pos) -> str:
@@ -74,10 +90,18 @@ def group(pos) -> str:
     return 'C' if p.startswith('C') else 'G' if p.startswith('G') or p in ('PG', 'SG') else 'F'
 
 
-def load_segments(include_current: bool = False) -> pd.DataFrame:
-    paths = sorted((DERIVED / 'history').glob('*/segments.parquet'))
-    if include_current and (DERIVED / 'segments.parquet').exists():
-        paths.append(DERIVED / 'segments.parquet')
+def segment_files(include_current: bool = False, segments: Path | None = None) -> list:
+    """History (and optionally current-season) segment files under a root: data/derived, or a variant written by
+    `possessions.py --out` (e.g. the 2026-27 rebound convention, FINDINGS §3k)."""
+    root = Path(segments or DERIVED)
+    paths = sorted((root / 'history').glob('*/segments.parquet'))
+    if include_current and (root / 'segments.parquet').exists():
+        paths.append(root / 'segments.parquet')
+    return paths
+
+
+def load_segments(include_current: bool = False, segments: Path | None = None) -> pd.DataFrame:
+    paths = segment_files(include_current, segments)
     seg = pd.concat([pd.read_parquet(p) for p in paths], ignore_index=True)
     seg = seg[seg['game_ok'] & seg['offense'].astype(str).isin(NBA_TEAM_IDS) & seg['defense'].astype(str).isin(NBA_TEAM_IDS)].reset_index(drop=True)  # reconciled NBA games, in game order
     seg['seg_id'] = np.arange(len(seg))
@@ -117,14 +141,17 @@ def _cumulative_before(left: pd.DataFrame, events: pd.DataFrame, cols) -> pd.Dat
 class Chain:
     """Segments plus offence/defence candidate tables with profiles, relative roles and in-game counts."""
 
-    def __init__(self, include_current: bool = False, pregame: Path | None = None):
+    def __init__(self, include_current: bool = False, pregame: Path | None = None, segments: Path | None = None):
         pregame = Path(pregame or DERIVED / 'features' / 'pregame.parquet')
-        seg = attach_teams(load_segments(include_current), pd.read_parquet(pregame.parent / 'team_pregame.parquet'))
+        seg = attach_teams(load_segments(include_current, segments), pd.read_parquet(pregame.parent / 'team_pregame.parquet'))
         pre = pd.read_parquet(pregame)
         pre['grp'] = pre['pos'].map(group)
+        present = [c for c in OPTIONAL_PROFILE if c in pre.columns]
+        self.profile = PROFILE + present
+        self.lineup = LINEUP + [c for c, (_, src, _) in OPTIONAL_LINEUP.items() if src in present]
         self.seg = seg
-        self.off = self._side(seg, pre, 'off')
-        self.dfn = self._side(seg, pre, 'def')
+        self.off = self._side(seg, pre, 'off', self.profile)
+        self.dfn = self._side(seg, pre, 'def', self.profile)
         self._in_game()
         self._relative()
         self._lineups()
@@ -133,12 +160,12 @@ class Chain:
             table[wide] = table[wide].astype(np.float32)
 
     @staticmethod
-    def _side(seg, pre, side):
+    def _side(seg, pre, side, profile=PROFILE):
         cols = [f'{side}_{i}' for i in range(1, 6)]
         long = seg[['seg_id', 'game_id', 'period'] + cols].melt(id_vars=['seg_id', 'game_id', 'period'], value_vars=cols,
                                                                value_name='player').dropna(subset=['player'])
-        long = long.drop(columns='variable').merge(pre[['game_id', 'player', 'grp'] + PROFILE], on=['game_id', 'player'], how='left')
-        long[PROFILE] = long[PROFILE].astype(np.float32)
+        long = long.drop(columns='variable').merge(pre[['game_id', 'player', 'grp'] + profile], on=['game_id', 'player'], how='left')
+        long[profile] = long[profile].astype(np.float32)
         long['is_big'] = (long['grp'] == 'C').astype(np.int8)
         long['grp_code'] = long['grp'].map({'G': 0, 'F': 1, 'C': 2}).fillna(1).astype(np.int8)
         q = long['period'].clip(upper=4).astype(int)
@@ -185,16 +212,19 @@ class Chain:
                             'def_blk_sum': d['blk_rate'].sum(), 'def_blk_max': d['blk_rate'].max(), 'def_stl_sum': d['stl_rate'].sum(),
                             'def_dreb_sum': d['dreb_pct'].sum(), 'def_pf_sum': d['pf_rate'].sum(), 'def_bigs': d['is_big'].sum(),
                             'def_min_mean': d['min_avg'].mean()})
+        for col, (side, src, how) in OPTIONAL_LINEUP.items():
+            if col in self.lineup:
+                agg[col] = (o if side == 'off' else d)[src].agg(how)
         self.seg = self.seg.merge(agg, left_on='seg_id', right_index=True, how='left')
 
     # ------------------------------------------------------------------ datasets
     def _frame(self, rows, extra=()):
-        cols = list(dict.fromkeys(CONTEXT + LINEUP + list(extra)))
+        cols = list(dict.fromkeys(CONTEXT + self.lineup + list(extra)))
         return rows[cols].astype(np.float32)
 
     def _actor(self, rows, prefix='actor'):
         """Profile and in-game columns of the segment's actor, prefixed."""
-        a = self.off[['seg_id', 'player'] + PROFILE + IN_GAME + ['grp_code', 'usage_share', 'usage_rank', 'usage_mult_now']]
+        a = self.off[['seg_id', 'player'] + self.profile + IN_GAME + ['grp_code', 'usage_share', 'usage_rank', 'usage_mult_now']]
         m = rows[['seg_id', 'actor']].merge(a, left_on=['seg_id', 'actor'], right_on=['seg_id', 'player'], how='left')
         m = m.drop(columns=['seg_id', 'actor', 'player'])
         m.columns = [f'{prefix}_{c}' for c in m.columns]
@@ -216,13 +246,13 @@ class Chain:
         usage = s[s['actor'].notna() & s['end_type'].isin(['shot', 'fouled', 'turnover', 'foul']) & ~s['heave']]
         usage = usage[((usage['end_type'] != 'foul') | (usage['fta'] > 0)) & ((usage['end_type'] != 'shot') | usage['zone'].isin(ZONES))]
         if name == 'who':
-            ctx = usage[['seg_id', 'actor', 'end_type', 'shot_time', 'date_et'] + CONTEXT + LINEUP].copy()
+            ctx = usage[['seg_id', 'actor', 'end_type', 'shot_time', 'date_et'] + CONTEXT + self.lineup].copy()
             ctx['foul_event'] = (ctx['end_type'] == 'foul').astype(np.float32)
             cand = self.off[self.off['seg_id'].isin(ctx['seg_id'])]
             cand = cand.merge(ctx, on='seg_id', how='inner')
             y = (cand['player'] == cand['actor']).astype(int).to_numpy()
-            cols = PROFILE + IN_GAME + ['grp_code', 'usage_mult_now'] + [c for c in cand.columns if c.endswith('_share') or c.endswith('_rank')] \
-                   + CONTEXT + LINEUP + ['shot_time', 'foul_event']
+            cols = self.profile + IN_GAME + ['grp_code', 'usage_mult_now'] + [c for c in cand.columns if c.endswith('_share') or c.endswith('_rank')] \
+                   + CONTEXT + self.lineup + ['shot_time', 'foul_event']
             return self._candidates(name, cand, cols, y, 'usage_share')
         if name == 'what':
             rows = usage[usage['end_type'] != 'foul']
@@ -253,12 +283,12 @@ class Chain:
             return self._pack(name, 'binary', X, y, made, profile=('actor_assisted_share', X))
         if name == 'assister':
             rows = made[made['assister'].notna()]
-            ctx = rows[['seg_id', 'actor', 'assister', 'shot_time', 'distance', 'zone', 'date_et'] + CONTEXT + LINEUP].copy()
+            ctx = rows[['seg_id', 'actor', 'assister', 'shot_time', 'distance', 'zone', 'date_et'] + CONTEXT + self.lineup].copy()
             ctx['zone'] = ctx['zone'].map({z: i for i, z in enumerate(ZONES)})
             cand = self.off[self.off['seg_id'].isin(ctx['seg_id'])].merge(ctx, on='seg_id')
             cand = cand[cand['player'] != cand['actor']]
             y = (cand['player'] == cand['assister']).astype(int).to_numpy()
-            cols = PROFILE + IN_GAME + ['grp_code', 'ast_rate_share', 'ast_rate_rank', 'usage_share', 'usage_rank'] + CONTEXT + LINEUP + ['shot_time', 'distance', 'zone']
+            cols = self.profile + IN_GAME + ['grp_code', 'ast_rate_share', 'ast_rate_rank', 'usage_share', 'usage_rank'] + CONTEXT + self.lineup + ['shot_time', 'distance', 'zone']
             return self._candidates(name, cand, cols, y, 'ast_rate')
         missed = shots[shots['made'] == 0]
         if name == 'blocked':
@@ -268,11 +298,11 @@ class Chain:
             return self._pack(name, 'binary', X, y, missed, profile=('zone_rate', X))
         if name == 'blocker':
             rows = missed[missed['blocker'].notna()]
-            ctx = rows[['seg_id', 'blocker', 'distance', 'zone', 'date_et'] + CONTEXT + LINEUP].copy()
+            ctx = rows[['seg_id', 'blocker', 'distance', 'zone', 'date_et'] + CONTEXT + self.lineup].copy()
             ctx['zone'] = ctx['zone'].map({z: i for i, z in enumerate(ZONES)})
             cand = self.dfn[self.dfn['seg_id'].isin(ctx['seg_id'])].merge(ctx, on='seg_id')
             y = (cand['player'] == cand['blocker']).astype(int).to_numpy()
-            cols = PROFILE + IN_GAME + ['grp_code', 'blk_rate_share', 'blk_rate_rank'] + CONTEXT + LINEUP + ['distance', 'zone']
+            cols = self.profile + IN_GAME + ['grp_code', 'blk_rate_share', 'blk_rate_rank'] + CONTEXT + self.lineup + ['distance', 'zone']
             return self._candidates(name, cand, cols, y, 'blk_rate')
         if name == 'rebound':
             rows = s[s['rebound'].isin(REBOUND)]
@@ -284,7 +314,7 @@ class Chain:
             return self._pack(name, 'multiclass', X, y, rows, classes=4, profile=('rebound', X))
         if name == 'rebounder':
             rows = s[s['rebound'].isin(['off', 'def']) & s['rebounder'].notna()]
-            ctx = rows[['seg_id', 'rebound', 'rebounder', 'actor', 'distance', 'zone', 'date_et'] + CONTEXT + LINEUP].copy()
+            ctx = rows[['seg_id', 'rebound', 'rebounder', 'actor', 'distance', 'zone', 'date_et'] + CONTEXT + self.lineup].copy()
             ctx['zone'] = ctx['zone'].map({z: i for i, z in enumerate(ZONES)})
             off_c = self.off[self.off['seg_id'].isin(ctx.loc[ctx['rebound'] == 'off', 'seg_id'])].merge(ctx, on='seg_id')
             def_c = self.dfn[self.dfn['seg_id'].isin(ctx.loc[ctx['rebound'] == 'def', 'seg_id'])].merge(ctx, on='seg_id')
@@ -297,7 +327,7 @@ class Chain:
             cand = pd.concat([off_c, def_c], ignore_index=True)
             cand['is_shooter'] = (cand['player'] == cand['actor']).astype(float)
             y = (cand['player'] == cand['rebounder']).astype(int).to_numpy()
-            cols = PROFILE + IN_GAME + ['grp_code', 'reb_side_pct', 'reb_share', 'reb_rank', 'offensive', 'is_shooter'] + CONTEXT + LINEUP + ['distance', 'zone']
+            cols = self.profile + IN_GAME + ['grp_code', 'reb_side_pct', 'reb_share', 'reb_rank', 'offensive', 'is_shooter'] + CONTEXT + self.lineup + ['distance', 'zone']
             return self._candidates(name, cand, cols, y, 'reb_side_pct')
         tov = s[(s['end_type'] == 'turnover') & s['actor'].notna()]
         if name == 'turnover_type':
@@ -306,18 +336,18 @@ class Chain:
             return self._pack(name, 'multiclass', X, y, tov, classes=3, profile=('turnover_type', X))
         if name == 'stealer':
             rows = tov[(tov['turnover'] == 'live') & tov['stealer'].notna()]
-            ctx = rows[['seg_id', 'stealer', 'shot_time', 'date_et'] + CONTEXT + LINEUP]
+            ctx = rows[['seg_id', 'stealer', 'shot_time', 'date_et'] + CONTEXT + self.lineup]
             cand = self.dfn[self.dfn['seg_id'].isin(ctx['seg_id'])].merge(ctx, on='seg_id')
             y = (cand['player'] == cand['stealer']).astype(int).to_numpy()
-            cols = PROFILE + IN_GAME + ['grp_code', 'stl_rate_share', 'stl_rate_rank'] + CONTEXT + LINEUP + ['shot_time']
+            cols = self.profile + IN_GAME + ['grp_code', 'stl_rate_share', 'stl_rate_rank'] + CONTEXT + self.lineup + ['shot_time']
             return self._candidates(name, cand, cols, y, 'stl_rate')
         if name == 'fouler':
             rows = s[s['fouler'].notna() & (s['end_type'].isin(['fouled', 'foul']) | (s['and_one'] == True))]
-            ctx = rows[['seg_id', 'fouler', 'end_type', 'shot_time', 'date_et'] + CONTEXT + LINEUP].copy()
+            ctx = rows[['seg_id', 'fouler', 'end_type', 'shot_time', 'date_et'] + CONTEXT + self.lineup].copy()
             ctx['shooting'] = (ctx['end_type'] != 'foul').astype(float)
             cand = self.dfn[self.dfn['seg_id'].isin(ctx['seg_id'])].merge(ctx, on='seg_id')
             y = (cand['player'] == cand['fouler']).astype(int).to_numpy()
-            cols = PROFILE + IN_GAME + ['grp_code', 'pf_rate_share', 'pf_rate_rank'] + CONTEXT + LINEUP + ['shot_time', 'shooting']
+            cols = self.profile + IN_GAME + ['grp_code', 'pf_rate_share', 'pf_rate_rank'] + CONTEXT + self.lineup + ['shot_time', 'shooting']
             return self._candidates(name, cand, cols, y, 'pf_rate')
         if name == 'free_throw':
             rows = s[(s['fta'] > 0) & s['actor'].notna() & (s['ft_seq'].str.len() == s['fta'])]
@@ -364,19 +394,19 @@ CACHE = DERIVED / 'nodes'
 ARRAYS = ('y', 'date', 'game', 'season_type', 'period', 'margin', 'zone', 'start_code', 'group', 'profile_score', 'class_mask')
 
 
-def signature(pregame: Path | None = None) -> dict:
+def signature(pregame: Path | None = None, segments: Path | None = None) -> dict:
     import hashlib
     pregame = Path(pregame or DERIVED / 'features' / 'pregame.parquet')
-    files = sorted((DERIVED / 'history').glob('*/segments.parquet')) + [pregame, pregame.parent / 'team_pregame.parquet']
+    files = segment_files(False, segments) + [pregame, pregame.parent / 'team_pregame.parquet']
     return {'code': hashlib.sha256(Path(__file__).read_bytes()).hexdigest()[:16],
             'inputs': {str(f): [f.stat().st_size, int(f.stat().st_mtime)] for f in files}}
 
 
-def cache_dir(pregame: Path | None = None) -> Path:
+def cache_dir(pregame: Path | None = None, segments: Path | None = None) -> Path:
     import hashlib
     import json
-    key = hashlib.sha256(json.dumps(signature(pregame), sort_keys=True).encode()).hexdigest()[:12]
-    return CACHE / f"{'default' if pregame is None else 'variant'}_{key}"
+    key = hashlib.sha256(json.dumps(signature(pregame, segments), sort_keys=True).encode()).hexdigest()[:12]
+    return CACHE / f"{'default' if pregame is None and segments is None else 'variant'}_{key}"
 
 
 def _save(d: dict, path: Path):
@@ -400,14 +430,14 @@ def _load(path: Path, name: str) -> dict:
     return d
 
 
-def datasets(names, pregame: Path | None = None, include_current: bool = False):
+def datasets(names, pregame: Path | None = None, include_current: bool = False, segments: Path | None = None):
     """Yield the named datasets: from this signature's cache folder when present, else built (and cached)."""
     import json
     import os
-    folder = None if include_current else cache_dir(pregame)
+    folder = None if include_current else cache_dir(pregame, segments)
     if folder is not None:
         folder.mkdir(parents=True, exist_ok=True)
-        (folder / 'signature.json').write_text(json.dumps(signature(pregame), sort_keys=True))
+        (folder / 'signature.json').write_text(json.dumps(signature(pregame, segments), sort_keys=True))
     chain = None
     for name in names:
         path = folder / f'{name}.npz' if folder is not None else None
@@ -415,7 +445,7 @@ def datasets(names, pregame: Path | None = None, include_current: bool = False):
             yield _load(path, name)
             continue
         if chain is None:
-            chain = Chain(include_current=include_current, pregame=pregame)
+            chain = Chain(include_current=include_current, pregame=pregame, segments=segments)
         d = chain.dataset(name)
         if path is not None:
             tmp = path.with_name(f'{name}.tmp{os.getpid()}.npz')
@@ -429,6 +459,7 @@ def main():
     import time
     ap = argparse.ArgumentParser(description='Build (or refresh) the cached datasets for every decision.')
     ap.add_argument('--features', type=Path, default=None, help='a pregame.parquet variant (scripts/features.py --out)')
+    ap.add_argument('--segments', type=Path, default=None, help='segments root variant (scripts/possessions.py --out)')
     ap.add_argument('--prune', action='store_true', help='delete every cache folder except the current default one')
     args = ap.parse_args()
     if args.prune:
@@ -442,9 +473,9 @@ def main():
     names = ['duration', 'event', 'who', 'what', 'location', 'shot_result', 'assisted', 'assister', 'blocked', 'blocker', 'rebound',
              'rebounder', 'turnover_type', 'stealer', 'fouler', 'free_throw']
     start = time.time()
-    for d in datasets(names, pregame=args.features):
+    for d in datasets(names, pregame=args.features, segments=args.segments):
         print(f"{d['name']:14} {len(d['y']):>9,} rows  {d['X'].shape[1]:>3} columns  {time.time() - start:6.0f}s", flush=True)
-    print(f'cache: {cache_dir(args.features)}')
+    print(f'cache: {cache_dir(args.features, args.segments)}')
 
 
 if __name__ == '__main__':

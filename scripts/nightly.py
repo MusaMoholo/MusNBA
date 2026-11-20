@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Nightly pipeline: collect → master fixtures → box scores → snapshot(s) → views.
 
-  .venv/bin/python scripts/nightly.py                 collect, project today (ET), rebuild views
+  .venv/bin/python scripts/nightly.py                 collect, project today and tomorrow (ET; D24), rebuild views
   .venv/bin/python scripts/nightly.py --offline       reuse retained raw data
   .venv/bin/python scripts/nightly.py --backfill-days 7
         also build retrospective snapshots for the previous seven slate dates (cutoff-safe stats,
@@ -91,7 +91,7 @@ def build_snapshot(day: str, teams: dict, master: list[dict], team_rows: list[di
                    'completed_games_used': lg['games'],
                    **({'engine_inputs_sha256': {n: sha256_file(f) for n, f in (
                        ('latest', DERIVED / 'features' / 'latest.parquet'), ('team_latest', DERIVED / 'features' / 'team_latest.parquet'),
-                       ('stints', DERIVED / 'rotations' / 'stints.parquet'), ('models', DERIVED.parent / 'models' / 'v1' / 'config.json'))}}
+                       ('stints', DERIVED / 'rotations' / 'stints.parquet'), ('models', DERIVED.parent / 'models' / engine_mod.ENGINE['version'] / 'config.json'))}}
                       if eng is not None else {})},
         'notes': ([] if prospective else ['Retrospective reconstruction: built after the fact from cutoff-safe box scores; '
                                           'injury news from that date was not retained.']),
@@ -130,6 +130,8 @@ def main():
     parser.add_argument('--placeholder', action='store_true',
                         help='project today with the placeholder baseline-v1 instead of the engine (backfills always use it)')
     parser.add_argument('--archive-root', type=Path)
+    parser.add_argument('--ahead', type=int, default=1, metavar='DAYS',
+                        help='also project the next DAYS ET dates with the engine (D24, owner: today and tomorrow; default 1)')
     args = parser.parse_args()
     day = args.date or today_et()
     if args.views_only:
@@ -164,6 +166,11 @@ def main():
                        engine_worlds=0 if args.placeholder else args.engine)
     else:
         print(f'No games scheduled on {day}; views still rebuilt.', flush=True)
+    for k in range(1, args.ahead + 1):  # D24: tomorrow's slate too, from what is known today (rebuilt tomorrow)
+        d = day_shift(day, k)
+        if d in slate_dates:
+            build_snapshot(d, teams, master, team_rows, player_rows, registry, day == today_et(), args.sims, args.archive_root,
+                           period_rows, engine_worlds=0 if args.placeholder else args.engine)
     views.build()
     return 0
 

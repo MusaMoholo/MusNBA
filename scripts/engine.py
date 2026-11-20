@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
-"""Possession engine v1 — the default projection (D22; ENGINE_PLAN §2–§3; M6 brought forward).
+"""Possession engine — the default projection (D22; ENGINE_PLAN §2–§3; M6 brought forward); serves v1.1 (D23).
 
 Plays a game forward, segment by segment on the game clock, in W worlds at once, with the persisted v1 node models
-(data/models/v1/): duration → event → who → what → location → shot result → assisted/assister, blocked/blocker →
+(data/models/<ENGINE version>/): duration → event → who → what → location → shot result → assisted/assister, blocked/blocker →
 rebound/rebounder; turnover type → stealer; fouler; free throws; penalty from the team-foul state. Every world carries
 its own score, team fouls, personal fouls (foul-outs), in-game counts and minutes. Rotations are replayed from the
 team's last ten games (M3 replay v0: a template per world, mapped to tonight's available players; overtime keeps the
 closing five). Output is the app's game contract (projection.package), so the app needs no change.
 
-Known limits (in the app's label; FINDINGS §3j): not yet backtested (M9); rotations are replay v0 (M7 will be
-target-aware); no heave rule, timeouts or technical free throws; live-data adapter skew (FINDINGS §3h′) not yet fixed.
-Owner (19 Nov, D22): this engine is the dashboard's default and the floor — a change replaces it only if it does better.
+Known limits (in the app's label; FINDINGS §3j–§3k): not yet backtested (M9; scripts/backtest.py is written, not yet
+run); rotations are replay v0 (M7 will be target-aware); no heave rule, timeouts or technical free throws. The clock
+rules come from the segments the version was trained on (its config's "segments"; v1: the feed's rebound clocks, kept in
+data/derived/variants/rebound_feed; v1.1: the 2026-27 convention, D23). Owner (19 Nov, D22): this engine is the
+dashboard's default and the floor — a change replaces it only if it does better; D24: today's and tomorrow's slates.
 
   .venv/bin/python scripts/engine.py --game <game_id> [--worlds 2000]     one game from the master fixtures (today's inputs)
 """
@@ -31,10 +33,11 @@ sys.path.insert(0, str(ROOT))
 from basketball_common import DERIVED  # noqa: E402
 from scripts import nodes, projection, rotations  # noqa: E402
 
-ENGINE = {'id': 'engine-v1', 'kind': 'engine', 'version': 'v1', 'sims': 2000,
-          'label': 'Possession engine v1 — the default projection since 19 Nov 2026 and the floor every change must beat; '
-                   'each game simulated possession by possession from the v1 decision models, rotations replayed from recent '
-                   'games. Known gaps: pace ≈ 2.5% low, strong offences under-expressed, outcomes too tightly spread (FINDINGS §3j)'}
+ENGINE = {'id': 'engine-v1.1', 'kind': 'engine', 'version': 'v1.1', 'sims': 2000,
+          'label': 'Possession engine v1.1 — the default projection and the floor every change must beat (D22); each game '
+                   'simulated possession by possession from the v1.1 decision models (trained on the 2026-27 feed\'s rebound '
+                   'clocks, D23), rotations replayed from recent games. Known gaps: strong offences under-expressed, outcomes '
+                   'too tightly spread (FINDINGS §3j–§3k)'}
 MODELS = DERIVED.parent / 'models'
 ZONES = nodes.ZONES
 NB = nodes.LOCATION_BANDS
@@ -65,9 +68,13 @@ class Models:
         self.cfg = json.loads((folder / 'config.json').read_text())
         self.nodes = self.cfg['nodes']
         self.boosters = {n: lgb.Booster(model_file=str(folder / m['file'])) for n, m in self.nodes.items()}
+        # The data this version was trained on (config 'segments'/'features'; absent = data/derived, as for v1): the clock
+        # rules below must follow the version's rebound convention (FINDINGS §3k).
+        self.segments = Path(self.cfg['segments']) if self.cfg.get('segments') else DERIVED
+        self.features = Path(self.cfg['features']).parent if self.cfg.get('features') else DERIVED / 'features'
         hist = pd.concat([pd.read_parquet(p, columns=['date_et', 'game_ok', 'end_type', 'heave', 'zone', 'x', 'y', 'fta', 'period',
                                                        'start_clock', 'fouls_def', 'made', 'duration', 'shot_time'])
-                          for p in sorted((DERIVED / 'history').glob('*/segments.parquet'))])
+                          for p in sorted((self.segments / 'history').glob('*/segments.parquet'))])
         hist = hist[hist['game_ok'] & (hist['date_et'] <= self.cfg['train_through'])]
         # Clock between the action and the next segment (the duration node predicts time to the action only): a missed
         # shot runs ~2.4 s until the rebound, a shooting foul ~0.5 s; made shots, turnovers and other fouls ~0 (FINDINGS §3j).
@@ -97,7 +104,9 @@ class Models:
         f = hist[hist['end_type'] == 'foul']
         key = ((f['period'] >= 5).astype(int) * 10 + (f['start_clock'] <= 120).astype(int) * 5 + f['fouls_def'].clip(upper=4)).to_numpy()
         self.penalty = pd.Series(f['fta'].to_numpy() > 0).groupby(key).mean().reindex(range(20)).fillna(0.99).to_numpy()
-        pre = pd.read_parquet(DERIVED / 'features' / 'pregame.parquet', columns=list(OFF_REL + DEF_REL))
+        pre = pd.read_parquet(self.features / 'pregame.parquet', columns=['date_et'] + list(OFF_REL + DEF_REL))
+        if self.cfg.get('fold'):  # backtest fold models: fill medians from the training window only (cutoff safety)
+            pre = pre[pre['date_et'].astype(str) <= self.cfg['train_through']]
         self.median = {c: float(pre[c].median()) for c in OFF_REL + DEF_REL}
 
     def predict(self, node, cols: dict, n: int):
@@ -190,7 +199,8 @@ class Worlds:
 
 
 class Engine:
-    def __init__(self, version: str = 'v1'):
+    def __init__(self, version: str | None = None):
+        version = version or ENGINE['version']
         self.m = Models(version)
         self.diag = None  # set to [] to record (start type, seconds to action, clock) per segment
 
@@ -543,6 +553,7 @@ class Engine:
         n_ot = np.maximum(st.period - 4, 0)
         exp = {'mu_home': float(pts['home'].sum(1).mean()), 'mu_away': float(pts['away'].sum(1).mean()),
                'pace': float(st.poss.mean())}
+        self.last = st  # per-world state of the last game (scripts/backtest.py reads points, possessions and box scores)
         out = projection.package(g.game, teams, pts, n_ot, W, exp, ENGINE['id'])
         out['engine'] = {'fouled_out': int((st.box['pf'].sum(2) >= 6).sum()), 'pf_mean': {s: round(float(st.box['pf'][:, np.flatnonzero(g.side == i)].sum((1, 2)).mean()), 2)
                                                                                          for i, s in enumerate(g.sides)}}

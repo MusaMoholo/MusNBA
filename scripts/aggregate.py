@@ -381,15 +381,22 @@ def pit(x, y, rng):
 
 
 # ---------------------------------------------------------------------------------------------- driver
-def fit_models(fold, spec_path, threads):
+def fit_models(fold, spec_path, threads, train_segments=False, train_features=False, node_list=None):
     """Node models trained on the fold's training window only; kept in data/models/folds/ and reused while the settings
-    and the dataset cache signature are unchanged."""
+    and the dataset cache signature are unchanged. With train_segments/train_features (cross-data test) the training
+    rows come from that dataset instead (train.hybrid)."""
     import lightgbm as lgb
     spec = json.loads(Path(spec_path).read_text()) if spec_path else {'version': 'default', 'default': {}, 'nodes': {}}
     base = {'half_life': None, 'playoff_weight': 1.0, 'drop': [], 'features': None, 'seed': 7, **spec.get('default', {}), 'threads': threads}
     pregame = Path(base['features']) if base.get('features') else None
-    folder = train.MODELS / 'folds' / f"{spec.get('version', 'default')}_{fold}"
-    key = json.dumps({'spec': spec, 'signature': nodes.signature(pregame), 'nodes': SIM_NODES}, sort_keys=True, default=str)
+    segments = Path(base['segments']) if base.get('segments') else None
+    cross = train_segments is not False or train_features is not False
+    train_segments, train_features = (train_segments or None), (train_features or None)
+    node_list = list(node_list or SIM_NODES)
+    tag = ('_cross' if cross else '') + ('_all' if node_list != SIM_NODES else '')
+    folder = train.MODELS / 'folds' / f"{spec.get('version', 'default')}_{fold}{tag}"
+    sig = nodes.signature(train_features, train_segments) if cross else nodes.signature(pregame, segments)
+    key = json.dumps({'spec': spec, 'signature': sig, 'nodes': node_list}, sort_keys=True, default=str)
     meta_path = folder / 'meta.json'
     if meta_path.exists() and json.loads(meta_path.read_text())['key'] == key:
         meta = json.loads(meta_path.read_text())
@@ -397,7 +404,8 @@ def fit_models(fold, spec_path, threads):
         print(f'fold models reused from {folder}', flush=True)
         return fitted, meta['metrics'], spec
     fitted, metrics = {}, {}
-    for d in nodes.datasets(SIM_NODES, pregame=pregame):
+    source = nodes.datasets(node_list, pregame=train_features, segments=train_segments) if cross else nodes.datasets(node_list, pregame=pregame, segments=segments)
+    for d in source:  # only the training window matters here (run_node's held-out metrics are on the same source)
         cfg = {**base, **spec.get('nodes', {}).get(d['name'], {})}
         r, _, f = train.run_node(d, fold, FOLDS[fold], cfg)
         fitted[d['name']], metrics[d['name']] = f, {k: r[k] for k in ('model', 'league', 'profile', 'gain_vs_best_baseline', 'ece_model')}
@@ -436,11 +444,16 @@ def main():
     ap.add_argument('--worlds', type=int, default=10_000)
     ap.add_argument('--threads', type=int, default=12)
     ap.add_argument('--seed', type=int, default=20261119)
+    ap.add_argument('--train-segments', type=train.data_root, default=False, help="cross-data test: segments root the models train on ('default' = data/derived)")
+    ap.add_argument('--train-features', type=train.data_root, default=False, help="cross-data test: pregame.parquet the models train on ('default')")
+    ap.add_argument('--name', default='m6a', help='experiment label (log file suffix)')
     args = ap.parse_args()
     start = time.time()
     train_to, val_from, val_to = FOLDS[args.fold]
-    fitted, node_metrics, spec = fit_models(args.fold, args.config, args.threads)
-    base = nodes.Chain(pregame=Path(spec['default']['features']) if spec.get('default', {}).get('features') else None)
+    fitted, node_metrics, spec = fit_models(args.fold, args.config, args.threads, args.train_segments, args.train_features)
+    dflt = spec.get('default', {})
+    base = nodes.Chain(pregame=Path(dflt['features']) if dflt.get('features') else None,
+                       segments=Path(dflt['segments']) if dflt.get('segments') else None)
     assert (base.seg['seg_id'].to_numpy() == np.arange(len(base.seg))).all()
     base._pos_off, base._pos_def = _positions(base.off, len(base.seg)), _positions(base.dfn, len(base.seg))
     bands = band_table(base, train_to)
@@ -526,14 +539,15 @@ def main():
                        for m, g in teams.groupby('measure')}
     stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
     (DERIVED / 'experiments').mkdir(parents=True, exist_ok=True)
-    res.to_parquet(DERIVED / 'experiments' / f'{stamp}_m6a.parquet', index=False)
-    teams.to_parquet(DERIVED / 'experiments' / f'{stamp}_m6a_teams.parquet', index=False)
-    write_json(EXPERIMENTS / f'{stamp}_m6a.json', {'experiment': 'm6a_aggregation', 'run': stamp, 'commit': train.git_commit(),
-                                                   'config': str(args.config) if args.config else None, 'fold': args.fold,
-                                                   'games': len(games), 'worlds': args.worlds, 'seconds': round(time.time() - start),
-                                                   'node_fit': node_metrics, 'summary': summary}, pretty=True)
+    res.to_parquet(DERIVED / 'experiments' / f'{stamp}_{args.name}.parquet', index=False)
+    teams.to_parquet(DERIVED / 'experiments' / f'{stamp}_{args.name}_teams.parquet', index=False)
+    write_json(EXPERIMENTS / f'{stamp}_{args.name}.json', {
+        'experiment': 'm6a_aggregation', 'run': stamp, 'commit': train.git_commit(), 'config': str(args.config) if args.config else None,
+        'segments': dflt.get('segments'), 'train_segments': None if args.train_segments is False else str(args.train_segments or 'default'),
+        'train_features': None if args.train_features is False else str(args.train_features or 'default'), 'fold': args.fold,
+        'games': len(games), 'worlds': args.worlds, 'seconds': round(time.time() - start), 'node_fit': node_metrics, 'summary': summary}, pretty=True)
     print_summary(summary)
-    print(f'\nrun {stamp}_m6a  ({len(games)} games, {time.time() - start:.0f}s)')
+    print(f'\nrun {stamp}_{args.name}  ({len(games)} games, {time.time() - start:.0f}s)')
 
 
 def summarise(res):

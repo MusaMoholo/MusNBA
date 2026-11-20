@@ -97,10 +97,11 @@ def main():
         if agreement is not None and (h['points_attempted']['checked'] or 0) > 1000:
             check(f'history {path.parent.name}: inferred shot values agree where known (>=99.9%)', agreement >= 0.999, agreement)
 
-    versions = sorted((ROOT / 'models').glob('v*.json'))
-    if versions:
+    from scripts.engine import ENGINE
+    versions = [ROOT / 'models' / f"{ENGINE['version']}.json"]
+    if versions[0].exists():
         import numpy as np
-        spec = read_json(versions[-1])
+        spec = read_json(versions[0])
         v = spec['version']
         fold_log = ROOT / spec['validated_by'] if spec.get('validated_by') else None
         if fold_log and fold_log.exists():
@@ -170,7 +171,7 @@ def main():
         d = other['loss'].astype(float)[::-1].copy()  # any second loss vector on the same rows
         mean, _, per_game = compare.paired(a['loss'], d, a['game'])
         check('compare: per-game sums add up to the node total', abs(per_game.sum() - (d - a['loss']).sum()) < 1e-6 * max(1, len(d)))
-    m6a = sorted((DERIVED / 'experiments').glob('*_m6a.parquet'))
+    m6a = sorted(p for p in (DERIVED / 'experiments').glob('*_m6a*.parquet') if not p.stem.endswith('_teams'))
     if m6a:
         import numpy as np
         import pandas as pd
@@ -204,6 +205,45 @@ def main():
               r['points_off_team_games'] < 0.01 and r['clock_off_periods'] < 0.01 and r['not_alternating'] < 0.005
               and r['lineups_ok'] > 0.99 and poss_gap < 0.02 and implicit < 0.01,
               {k: r[k] for k in ('points_off_team_games', 'clock_off_periods', 'not_alternating', 'lineups_ok')} | {'poss_gap': round(poss_gap, 4), 'implicit': round(implicit, 4)})
+    variant = DERIVED / 'variants' / 'rebound_feed'  # D23: canonical = the 2026-27 rebound convention; v1's feed clocks kept here
+    if (variant / 'segments.parquet').exists():
+        import pandas as pd
+        pairs = [(DERIVED / 'segments_report.json', variant / 'segments_report.json')] + [
+            (p, variant / 'history' / p.parent.name / 'segments_report.json') for p in sorted((DERIVED / 'history').glob('*/segments_report.json'))]
+        moved = {}
+        for a_path, b_path in pairs:
+            if b_path.exists():
+                a, b = read_json(a_path), read_json(b_path)
+                if args.fault and a_path == pairs[-1][0]:
+                    b['games_flagged'] += 1
+                moved[a_path.parent.name] = [k for k in a if k != 'rebound_clock' and a[k] != b[k]]
+        check(f'rebound convention: identical games, segments and identities under both clocks ({len(moved)} seasons)',
+              not any(moved.values()), {k: v for k, v in moved.items() if v})
+        gaps, live_moved = {}, None
+        for p in sorted((DERIVED / 'history').glob('*/segments.parquet')) + [DERIVED / 'segments.parquet']:
+            s = pd.read_parquet(p, columns=['rebound', 'action_clock', 'end_clock'])
+            r = s[s['rebound'].notna()]
+            gaps[p.parent.name] = round(float((r['action_clock'] == r['end_clock']).mean()), 5)
+        a = pd.read_parquet(DERIVED / 'segments.parquet', columns=['start_clock', 'end_clock'])
+        b = pd.read_parquet(variant / 'segments.parquet', columns=['start_clock', 'end_clock'])
+        live_moved = int((a.to_numpy() != b.to_numpy()).any(axis=1).sum()) if len(a) == len(b) else -1
+        check("rebound convention: every rebound starts at its miss (>99.9% per season); a no-op on the live season (<0.1%)",
+              min(gaps.values()) > 0.999 and 0 <= live_moved < 0.001 * len(a), {'gap_zero': gaps, 'live_moved': live_moved})
+    if (DERIVED.parent / 'raw' / 'espn' / 'parity').exists():
+        from scripts import parity
+        same = parity.same_games()
+        bad = {g: r for g, r in same.items() if any(r[f'segment_differences_{rc}'] for rc in ('feed', 'miss'))}
+        check(f'parity: {len(same)} 2025-26 games give identical segments through the live and history adapters (both clocks)', not bad, bad)
+    import numpy as np
+    import pandas as pd
+    from scripts import train
+    toy = lambda X, dates, groups: {'name': 'toy', 'kind': 'candidate', 'classes': None, 'profile': None, 'X': pd.DataFrame({'a': X}),
+                                    'y': np.ones(len(X), int), 'date': np.array(dates), 'group': np.array(groups), 'game': np.array(groups).astype(str)}
+    old = toy([1.0, 2.0, 3.0], ['2024-01-01', '2024-06-01', '2025-02-01'], [0, 1, 2])
+    new = toy([10.0, 20.0, 30.0], ['2024-01-01', '2025-01-15', '2025-03-01'], [0, 1, 2])
+    h = train.hybrid(old, new, ('2024-12-31', '2025-01-01', '2025-04-30'))
+    check('train.hybrid: training rows from one dataset, validation rows from the other in order, candidate groups distinct',
+          h['X']['a'].tolist() == [1.0, 2.0, 20.0, 30.0] and len(set(h['group'])) == 4 and len(h['y']) == 4, h['X']['a'].tolist())
 
     teams = read_json(DERIVED / 'teams.json')
     registry = read_json(DERIVED / 'players.json')['players']
@@ -293,10 +333,10 @@ def main():
             from scripts import engine as engine_mod
             same = all(sha256_file(f) == meta['inputs']['engine_inputs_sha256'][k] for k, f in (
                 ('latest', DERIVED / 'features' / 'latest.parquet'), ('team_latest', DERIVED / 'features' / 'team_latest.parquet'),
-                ('stints', DERIVED / 'rotations' / 'stints.parquet'), ('models', DERIVED.parent / 'models' / 'v1' / 'config.json')))
+                ('stints', DERIVED / 'rotations' / 'stints.parquet'), ('models', DERIVED.parent / 'models' / meta['model'].get('version', 'v1') / 'config.json')))
             if same:
                 g = engine_mod.inputs_for(by_id[gid], day, T, lg, P, registry, Q, priors)
-                again = engine_mod.Engine().simulate(g, meta['sims'], projection.seed_for(meta['model']['id'], day, gid))
+                again = engine_mod.Engine(meta['model'].get('version', 'v1')).simulate(g, meta['sims'], projection.seed_for(meta['model']['id'], day, gid))
                 again = json.loads(json.dumps(again))
             else:
                 again = None
@@ -314,7 +354,8 @@ def main():
     missing = [d for d in {r['date_et'] for r in master} if not (api / 'slate' / f'{d}.json').exists()]
     check('views: every slate date has a view', not missing, missing[:3])
     check('views: every game has a view', all((api / 'game' / f'{g}.json').exists() for g in ids))
-    check('views: meta latest = latest snapshot', view_meta['latest'] == day)
+    from scripts.views import current_snapshot
+    check('views: meta latest = newest snapshot dated today (ET) or earlier', view_meta['latest'] == current_snapshot([p.name for p in snaps]))
     g0 = sorted(games)[0] if games else None
     if g0:
         view = read_json(api / 'game' / f'{g0}.json')

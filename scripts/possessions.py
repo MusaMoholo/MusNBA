@@ -13,6 +13,13 @@ at the start (score, team fouls in the period).
 
   .venv/bin/python scripts/possessions.py            current season (retained summaries)
   .venv/bin/python scripts/possessions.py --history  every downloaded historical season
+  … --rebound-clock miss --out DIR                   the 2026-27 feed's rebound convention, into a variant folder
+
+Rebound clock (M5b, FINDINGS §3k). Through 2025-26 ESPN stamps a rebound when it happens (2.4 s after a missed shot on
+average); from 2026-27 every rebound carries the clock of the miss it follows. `feed` (the default) keeps the clocks as
+stamped, so history and the live season differ; `miss` (the default since v1.1, D23) starts every rebound segment at
+the miss's clock for every source — exact for both, and a no-op on 2026-27 data. v1's data (feed clocks) is kept in
+data/derived/variants/rebound_feed/.
 """
 from __future__ import annotations
 
@@ -46,7 +53,11 @@ def zone(x, y, value):
     return 'mid'
 
 
-def parse_game(game: dict):
+REBOUND_CLOCKS = ('feed', 'miss')
+
+
+def parse_game(game: dict, rebound_clock: str = 'miss'):
+    assert rebound_clock in REBOUND_CLOCKS, rebound_clock
     team_of, starters, box, teams, by_minutes = pbp.game_context(game)
     issues = Counter()
     if len(teams) != 2:
@@ -70,9 +81,11 @@ def parse_game(game: dict):
         team_fouls = {t: 0 for t in teams}
         seg = None
         pending = None  # 'rebound' after a miss, 'ft' while a free-throw trip is unfinished
+        miss_clock = None  # clock of the segment's latest missed shot or free throw (rebound_clock='miss')
 
         def open_seg(clock, start_type, offense):
-            nonlocal seg, poss, pending
+            nonlocal seg, poss, pending, miss_clock
+            miss_clock = None
             if start_type in NEW_POSSESSION:
                 poss += 1
             d = other[offense]
@@ -159,6 +172,7 @@ def parse_game(game: dict):
                     open_seg(clock, 'foul' if retain else 'made_ft', team if retain else other[team])
                 else:
                     pending = 'rebound'
+                    miss_clock = clock
                 continue
             if e['shooting'] and e['points_attempted'] in (2, 3):
                 if not ensure(team, clock, 'shot'):
@@ -185,6 +199,7 @@ def parse_game(game: dict):
                     if len(parts) >= 2 and 'block' in text:
                         seg['blocker'] = parts[1]
                     pending = 'rebound'
+                    miss_clock = clock
                 continue
             if e['type_id'] in ('155', '156') or 'rebound' in k:
                 if pending == 'ft':
@@ -196,8 +211,9 @@ def parse_game(game: dict):
                 seg['rebound'] = ('off' if offensive else 'def') if parts else ('team_off' if offensive else 'team_def')
                 seg['rebounder'] = parts[0] if parts else None
                 offense = seg['offense']
-                close_seg(clock)
-                open_seg(clock, 'oreb' if offensive else 'dreb', offense if offensive else other[offense])
+                at = miss_clock if rebound_clock == 'miss' and miss_clock is not None else clock
+                close_seg(at)
+                open_seg(at, 'oreb' if offensive else 'dreb', offense if offensive else other[offense])
                 continue
             if pbp.is_turnover(e) or any(w in k for w in pbp.TEAM_TURNOVERS):
                 if not ensure(team, clock, 'turnover'):
@@ -308,10 +324,10 @@ def check_game(game, segments, extra, issues, checks) -> bool:
     return ok
 
 
-def parse_many(games):
+def parse_many(games, rebound_clock: str = 'miss'):
     rows, issues, checks = [], Counter(), Counter()
     for game in games:
-        segments, i, extra = parse_game(game)
+        segments, i, extra = parse_game(game, rebound_clock)
         issues.update(i)
         ok = check_game(game, segments, extra, issues, checks)
         checks['games_flagged'] += not ok
@@ -324,7 +340,7 @@ def parse_many(games):
               'not_alternating': n('not_alternating', 'handovers'), 'lineups_ok': n('lineups_ok', 'segments'),
               'possessions_per_team_game': round(checks['poss'] / max(1, checks['team_games']), 2),
               'box_estimate_per_team_game': round(checks['poss_box_estimate'] / max(1, checks['team_games']), 2),
-              'games_flagged': checks['games_flagged'],
+              'games_flagged': checks['games_flagged'], 'rebound_clock': rebound_clock,
               'issues': dict(issues)}
     return rows, report
 
@@ -344,22 +360,25 @@ def to_frame(rows):
     return pd.DataFrame(flat)
 
 
-def build_current():
+def build_current(rebound_clock: str = 'miss', root: Path = DERIVED):
+    """Current-season segments → root/segments.parquet (root = DERIVED, or a variant folder)."""
     games = (plays.from_summary(read_json(p)) for p in sorted((RAW / 'final').glob('*.json.gz')))
-    rows, report = parse_many(games)
-    to_frame(rows).to_parquet(DERIVED / 'segments.parquet', index=False)
-    write_json(DERIVED / 'segments_report.json', report, pretty=True)
+    rows, report = parse_many(games, rebound_clock)
+    root.mkdir(parents=True, exist_ok=True)
+    to_frame(rows).to_parquet(root / 'segments.parquet', index=False)
+    write_json(root / 'segments_report.json', report, pretty=True)
     return report
 
 
-def build_history(seasons=None):
+def build_history(seasons=None, rebound_clock: str = 'miss', root: Path = DERIVED):
+    """History segments → root/history/<season>/segments.parquet."""
     from scripts import history
     out = {}
     for season in seasons or history.SEASONS:
         if not (history.RAW_DIR / f'play_by_play_{season}.parquet').exists():
             continue
-        rows, report = parse_many(history.season_games(season))
-        target = history.OUT_DIR / str(season)
+        rows, report = parse_many(history.season_games(season), rebound_clock)
+        target = root / 'history' / str(season)
         target.mkdir(parents=True, exist_ok=True)
         to_frame(rows).to_parquet(target / 'segments.parquet', index=False)
         write_json(target / 'segments_report.json', report, pretty=True)
@@ -370,13 +389,16 @@ def build_history(seasons=None):
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--history', action='store_true')
+    parser.add_argument('--rebound-clock', choices=REBOUND_CLOCKS, default='miss',
+                        help="'miss' (default since v1.1, D23): rebound segments start at the miss's clock; 'feed': as stamped")
+    parser.add_argument('--out', type=Path, default=DERIVED, help='root folder (default data/derived; variants elsewhere)')
     args = parser.parse_args()
     import json
     if args.history:
-        for season, report in build_history().items():
+        for season, report in build_history(rebound_clock=args.rebound_clock, root=args.out).items():
             print(season, json.dumps(report))
     else:
-        print(json.dumps(build_current(), indent=1))
+        print(json.dumps(build_current(args.rebound_clock, args.out), indent=1))
 
 
 if __name__ == '__main__':

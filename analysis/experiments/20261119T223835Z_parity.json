@@ -1,0 +1,207 @@
+{
+ "experiment": "m5b_parity",
+ "run": "20261119T223835Z",
+ "same_games": {
+  "401809781": {
+   "plays": [
+    544,
+    544
+   ],
+   "play_field_differences": {
+    "x": 63,
+    "y": 63,
+    "clock": 81
+   },
+   "segments_feed": [
+    264,
+    264
+   ],
+   "segment_differences_feed": 0,
+   "segments_miss": [
+    264,
+    264
+   ],
+   "segment_differences_miss": 0
+  },
+  "401809783": {
+   "plays": [
+    473,
+    473
+   ],
+   "play_field_differences": {
+    "x": 33,
+    "y": 33,
+    "clock": 50
+   },
+   "segments_feed": [
+    248,
+    248
+   ],
+   "segment_differences_feed": 0,
+   "segments_miss": [
+    248,
+    248
+   ],
+   "segment_differences_miss": 0
+  },
+  "401809788": {
+   "plays": [
+    615,
+    615
+   ],
+   "play_field_differences": {
+    "x": 74,
+    "y": 74,
+    "clock": 107
+   },
+   "segments_feed": [
+    301,
+    301
+   ],
+   "segment_differences_feed": 0,
+   "segments_miss": [
+    301,
+    301
+   ],
+   "segment_differences_miss": 0
+  },
+  "401810054": {
+   "plays": [
+    589,
+    589
+   ],
+   "play_field_differences": {
+    "x": 64,
+    "y": 64,
+    "clock": 92,
+    "participants": 1
+   },
+   "segments_feed": [
+    290,
+    290
+   ],
+   "segment_differences_feed": 0,
+   "segments_miss": [
+    290,
+    290
+   ],
+   "segment_differences_miss": 0
+  },
+  "401810056": {
+   "plays": [
+    615,
+    615
+   ],
+   "play_field_differences": {
+    "x": 68,
+    "y": 68,
+    "clock": 97,
+    "participants": 3
+   },
+   "segments_feed": [
+    302,
+    302
+   ],
+   "segment_differences_feed": 0,
+   "segments_miss": [
+    302,
+    302
+   ],
+   "segment_differences_miss": 0
+  }
+ },
+ "seasons": {
+  "feed": {
+   "history_oct_nov": {
+    "games": 294,
+    "segments_per_game": 250.2,
+    "rebound_gap_zero_share": 0.107,
+    "rebound_gap_mean_s": 2.49,
+    "oreb_action_within_2s": 0.615,
+    "time_to_action_s": {
+     "made_fg": 15.47,
+     "dreb": 8.77,
+     "oreb": 2.87,
+     "steal": 6.4,
+     "dead_turnover": 13.35,
+     "made_ft": 14.68
+    },
+    "team_pace_input_s": 12.02,
+    "non_shooting_def_fouls_per_game": 16.8,
+    "shooting_fouls_per_game": 22.2,
+    "and_ones_per_game": 4.91,
+    "live_ball_turnover_share": 0.565,
+    "offensive_foul_turnover_share": 0.119,
+    "jump_ball_starts_per_game": 1.86
+   },
+   "live": {
+    "games": 221,
+    "segments_per_game": 248.6,
+    "rebound_gap_zero_share": 1.0,
+    "rebound_gap_mean_s": 0.0,
+    "oreb_action_within_2s": 0.219,
+    "time_to_action_s": {
+     "made_fg": 15.63,
+     "dreb": 11.69,
+     "oreb": 5.37,
+     "steal": 6.58,
+     "dead_turnover": 13.3,
+     "made_ft": 14.38
+    },
+    "team_pace_input_s": 12.93,
+    "non_shooting_def_fouls_per_game": 18.67,
+    "shooting_fouls_per_game": 20.85,
+    "and_ones_per_game": 4.51,
+    "live_ball_turnover_share": 0.536,
+    "offensive_foul_turnover_share": 0.134,
+    "jump_ball_starts_per_game": 1.06
+   }
+  },
+  "miss": {
+   "history_oct_nov": {
+    "games": 294,
+    "segments_per_game": 250.2,
+    "rebound_gap_zero_share": 1.0,
+    "rebound_gap_mean_s": 0.0,
+    "oreb_action_within_2s": 0.261,
+    "time_to_action_s": {
+     "made_fg": 15.47,
+     "dreb": 11.47,
+     "oreb": 5.12,
+     "steal": 6.4,
+     "dead_turnover": 13.35,
+     "made_ft": 14.68
+    },
+    "team_pace_input_s": 12.88,
+    "non_shooting_def_fouls_per_game": 16.8,
+    "shooting_fouls_per_game": 22.2,
+    "and_ones_per_game": 4.91,
+    "live_ball_turnover_share": 0.565,
+    "offensive_foul_turnover_share": 0.119,
+    "jump_ball_starts_per_game": 1.86
+   },
+   "live": {
+    "games": 221,
+    "segments_per_game": 248.6,
+    "rebound_gap_zero_share": 1.0,
+    "rebound_gap_mean_s": 0.0,
+    "oreb_action_within_2s": 0.219,
+    "time_to_action_s": {
+     "made_fg": 15.63,
+     "dreb": 11.69,
+     "oreb": 5.37,
+     "steal": 6.58,
+     "dead_turnover": 13.3,
+     "made_ft": 14.38
+    },
+    "team_pace_input_s": 12.93,
+    "non_shooting_def_fouls_per_game": 18.67,
+    "shooting_fouls_per_game": 20.85,
+    "and_ones_per_game": 4.51,
+    "live_ball_turnover_share": 0.536,
+    "offensive_foul_turnover_share": 0.134,
+    "jump_ball_starts_per_game": 1.06
+   }
+  }
+ }
+}

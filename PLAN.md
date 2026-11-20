@@ -1,6 +1,6 @@
 # MusNBA — game plan and progress
 
-Updated **19 November 2026 (evening)**. The single record of scope, progress and decisions. Every agent updates it at
+Updated **20 November 2026 (00:xx UK, end of the 19 Nov session)**. The single record of scope, progress and decisions. Every agent updates it at
 every checkpoint (AGENTS.md § Checkpoint protocol). New here? Read [AGENTS.md](AGENTS.md) first, then
 [HANDOFF_NEXT.md](HANDOFF_NEXT.md) — it says exactly what to do next.
 
@@ -60,14 +60,14 @@ Slates are US Eastern game dates; tip-offs show UK time with ET alongside.
 | 0 | Discovery, data probe, plan | `██████████` done |
 | 1 | App shell, season stats, placeholder projections | `██████████` done — owner checks pending (iPhone, hosting) |
 | 1b | Per-period Game Centre (owner spec), play-by-play parser, quarter-aware placeholder | `██████████` done |
-| 2 | Possession engine (data → models → engine → backtest) | `██████░░░░` **M1–M5, M6a done · engine v1 is the app's default (D22) · adapter parity next** |
+| 2 | Possession engine (data → models → engine → backtest) | `███████░░░` **M1–M5b, M6a done · engine v1.1 is the app's default (D22, D23) for today and tomorrow (D24) · backtest (M9) next** |
 | 3 | Evaluation and nightly feedback (Forecast Lab view, refit cadence) | not started |
 | 4 | Season on the engine: pathway calibration, availability, tiebreakers, play-in, Cup, what-ifs | not started |
 | 5 | Polish: hosting, iPhone acceptance, watch-a-sim, more views | not started |
 
 ## 6. Phase 2 milestones — the current work
 
-Design: [ENGINE_PLAN.md](ENGINE_PLAN.md) (decisions D1–D22). Training: [TRAINING_PLAN.md](TRAINING_PLAN.md).
+Design: [ENGINE_PLAN.md](ENGINE_PLAN.md) (decisions D1–D25). Training: [TRAINING_PLAN.md](TRAINING_PLAN.md).
 Do them in this order; each ends with its checks passing and a checkpoint (AGENTS.md).
 
 | # | Milestone | Status | Done when | Output |
@@ -77,12 +77,12 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
 | M3 | Rotations + replay baseline | ✅ | Stints reconcile; replay backtest recorded | `rotations.py` |
 | M4 | Profiles + harness + baselines | ✅ core | Point-in-time profiles; baselines on folds | `features.py`, `evaluate.py` |
 | M5 | LightGBM per decision (16 nodes, D20 + D21) | ✅ **v1 tuned, validated, persisted, final test scored once** — every node ≥ its best baseline on every fold and on the final test; settings `models/v1.json`; FINDINGS §3h–§3h′ | Every node ≥ its best baseline on every fold, well calibrated; per-node choice recorded; models persisted | `nodes.py`, `train.py`, `compare.py`, `calibration.py` |
-| M5b | Adapter parity: live ESPN v hoopR history | ☐ **next** — live data differ from history (short actions after rebounds 12% v 49%, foul split, turnover split; FINDINGS §3h′) | Same game through both adapters gives the same segments; season distributions match | `plays.py`, `possessions.py` |
-| M6a | Aggregation test with real rotations | ✅ **gate met on all 766 F4 games** (player stats within ±1.3% for points/rebounds/assists/threes in every tier, coverage 77–81%, CRPS +6–11%; earlier 300-game run: team total −0.5%, coverage 77–83%); fouls traced to the in-season decline (day of season added); and-ones +5%, fouled-on-a-three −24% to trace) | Replayed held-out games: player box-score bias ≈ 0 by role tier, 80% coverage | `aggregate.py` |
-| M6 | Engine v1 (replay rotations) | ◐ **the app's default (D22, the floor)** — `nightly.py` uses it for today's slate (chip "Engine v1"; `--placeholder` opts out): 2,000 worlds per game, ~20 s per game; clock rules fixed (pace ≈ 2.5% low), strong offences under-expressed, spread too narrow | 10k sims per game in today's output contract | `engine.py` |
+| M5b | Adapter parity: live ESPN v hoopR history | ✅ **adapters agree** (5 games, identical segments); ESPN's 2026-27 feed stamps every rebound at the miss's clock → one convention for all seasons (D23); timing distributions now match; foul/turnover/jump-ball shifts are real 2026-27 changes (FINDINGS §3k) | Same game through both adapters gives the same segments; season distributions match | `plays.py`, `possessions.py`, `parity.py` |
+| M6a | Aggregation test with real rotations | ✅ **v1.1 on all 766 F4 games** (2026-27-style inputs): player bias ≤ ±1.5% for points/rebounds/assists/threes/steals/turnovers, CRPS lower than v1 on every stat but blocks, coverage 77–80% (FINDINGS §3k). Earlier v1 **gate met on all 766 F4 games** (player stats within ±1.3% for points/rebounds/assists/threes in every tier, coverage 77–81%, CRPS +6–11%; earlier 300-game run: team total −0.5%, coverage 77–83%); fouls traced to the in-season decline (day of season added); and-ones +5%, fouled-on-a-three −24% to trace) | Replayed held-out games: player box-score bias ≈ 0 by role tier, 80% coverage | `aggregate.py` |
+| M6 | Engine (replay rotations) | ◐ **v1.1 is the app's default (D22, D23), today and tomorrow (D24)** — `nightly.py` (chip "Engine v1.1"; `--placeholder` opts out, `--ahead N`): 2,000 worlds per game, ~20 s per game; strong offences under-expressed, spread too narrow | 10k sims per game in today's output contract | `engine.py` |
 | M7 | Target-aware substitution model | ☐ | Minutes MAE < 5.2 and 10–90% coverage ≈ 80% (beats replay v0) | (to build) |
 | M8 | Per-player form + end-game checks | ☐ | Variance and overtime rate (5.4%) calibrated | (to build) |
-| M9 | Walk-forward backtest (engine on past games) | ☐ | Measures the engine (the floor, D22) and every candidate on game and player CRPS, win calibration and realism v `baseline-v1` and the current engine; a candidate replaces the engine only if better | (to build) |
+| M9 | Walk-forward backtest (engine on past games) | ☐ `backtest.py` written (fold models, cutoff-safe inputs, team/player scores), not yet run | Measures the engine (the floor, D22) and every candidate on game and player CRPS, win calibration and realism v `baseline-v1` and the current engine; a candidate replaces the engine only if better | (to build) |
 | M10 | Watch-a-sim view | ☐ | Replays render | (to build) |
 | M11 | Availability model | ☐ | Simulated games missed match history | (to build) |
 | M12 | Season pathway calibration | ☐ | Dispersion ≈ 1.0, persistence matches | (to build) |
@@ -127,11 +127,16 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
    role, style and size; every rate shrinks toward the player's archetype instead of his position group; rookies
    start from the archetype matched by position, size and draft slot (D5: no college data).
 
+5. **Owner (19 Nov, late):** the engine projects **today and tomorrow, always** (D24, replaces the seven-day window), and the
+   season sim should then play every later game with **per-world team ratings, MusSim-style** (D25) — left as future work
+   at the owner's request; built next.
+
 Realism sweep with the owner (19 Nov) — gaps, in priority order (HANDOFF next actions):
-1. Live v history adapter skew (rebound timing, foul split) — M5b.
+1. ~~Live v history adapter skew~~ — M5b done: ESPN's 2026-27 rebound stamp; one convention (D23); v1.1 promoted.
 2. Minutes: target-aware substitutions (blowouts, foul trouble, fatigue, closing lineups) — M7; the biggest risk.
-3. **Size and archetype priors** (owner: low-sample players borrow from similar players' profiles) — see item 4 above.
-4. **On-court defensive impact** per player (opponents' shooting by zone and turnover rate while he is on the floor,
+3. **Size and archetype priors** (owner: low-sample players borrow from similar players' profiles) — heights/weights fetched
+   (935 players); first ablation negative (low-sample players do not gain; FINDINGS §3l); location node gains — next test.
+4. **On-court defensive impact** (first ablation negative, FINDINGS §3l; helps location only) per player (opponents' shooting by zone and turnover rate while he is on the floor,
    shrunk) — positional defenders who force misses without blocks are invisible today; TRAINING_PLAN §2.1 lists it.
 5. Timeouts (after-timeout plays, late-game advance), end-of-period heaves, technical/flagrant free throws,
    goaltending, lane violations — rules or small nodes in M6/M8.
@@ -206,3 +211,13 @@ Realism sweep with the owner (19 Nov) — gaps, in priority order (HANDOFF next 
 - **19 Nov 2026** — **Owner (D22): engine v1 is the dashboard default and the floor** — later changes replace it only when
   measured better. `nightly.py` now uses the engine by default (`--placeholder` opts out); the chip reads "Engine v1";
   backfills stay on the placeholder (cutoff safety). Docs brought up to date for a hand-over to a new agent.
+- **19 Nov 2026 (late)** — **M5b**: the adapters agree (five 2025-26 games re-fetched: identical segments); ESPN's 2026-27 feed
+  stamps every rebound at the miss's clock (100% v 7–12% in every month since 2022), moving ~2.6 s of ball flight into
+  the next segment and making every team look 3–8% slower in team style. One convention for every season (**D23**):
+  on live-style held-out rows v1 is worse on 12 of 16 nodes (chain +34.1 nats per game; reproduces its final-test
+  miscalibration) and in M6a (threes +7.4%, steals +9.6%, defensive fouls −20.5% → v1.1 +1.0%, +0.8%, −1.0%).
+  **v1.1 promoted** (v1's settings on the new data; final test scored once) and the engine serves it for **today and
+  tomorrow (D24, owner)**: pace fixed (≈ 97 → ≈ 101 possessions per team on the 19 Nov slate; points ≈ 108 → ≈ 115).
+  v1.1 final test: duration ECE 0.002 (v1 0.014), event 0.009 (v1 0.022). Foul, turnover and held-ball shifts in 2026-27 are real. Heights/weights for 935 players;
+  archetype priors and on-court defence: first ablations negative (only the location node gains). Owner asked for a
+  MusSim-style per-world rating pathway beyond tomorrow (D25) — next session.

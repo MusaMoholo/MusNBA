@@ -251,7 +251,9 @@ busy machine: 721 ms summed over all 16 nodes (assister 109, what 84, fouler 82,
 defensive fouls 16.8 v 18.7 per game and shooting fouls 17.3 v 16.3 (the total is equal: the split differs); and-ones
 4.9 v 4.5; live-ball share of turnovers 59.4% v 56.6%; offensive fouls 12.4% v 14.1%. Shot coordinates agree (rim
 distance 1.94 v 1.83 ft). Models trained on history then see shifted inputs on live data — this explains most of
-the final-test calibration gap and must be fixed before the engine runs on live games (M6).
+the final-test calibration gap and must be fixed before the engine runs on live games (M6). **Traced in §3k (M5b):** the
+adapters agree; ESPN's 2026-27 feed stamps every rebound at the miss's clock (the timing skew), while the foul and
+turnover shifts are real 2026-27 differences.
 
 ## 3i. M6a — aggregation test with real rotations (v1 candidate settings; log `analysis/experiments/20261119T204437Z_m6a.json`)
 
@@ -316,6 +318,101 @@ per team at ≈ 99 possessions v the teams' real 101.2 / 102.1; shooting on par 
 turnovers ≈ +1 per team; Memphis's offence simulated at ≈ 110 per 100 v 117.8 real this season — team-level offensive
 quality is under-expressed (candidates: live-adapter skew in this season's profiles, replay rotations, missing
 defensive inputs). That is the M9 backtest's question.
+
+## 3k. M5b — adapter and feed parity (19 Nov 2026; `scripts/parity.py`, log `analysis/experiments/20261119T223835Z_parity.json`)
+
+**The adapters agree.** Five 2025-26 games (10 and 14 Nov 2025: NY–MIA, DET–PHI, DAL–LAC, DET–WSH, MIA–CLE) re-fetched
+as ESPN summaries today (`data/raw/espn/parity/`) match the hoopR files play for play — same count (544, 473, 615, 589,
+615), order, types, text, participants and shot coordinates. Only formatting differs: clocks under a minute (`59.1` v
+`0:59.1`, parsed equal), free-throw coordinates (none v (25, 13.75)) and the participants of four technical fouls.
+Through `possessions.py` both give identical segments (1,405 segments, zero field differences). ESPN has not revised
+2025-26 games since hoopR built them.
+
+**The skew is in ESPN's feed from 2026-27: every rebound carries the clock (and wallclock) of the miss it follows.**
+Share of rebounds stamped at the miss's clock, by month: 7–12% in every month from Oct 2022 to Jun 2026 (mean miss →
+rebound gap 2.1–2.6 s), then **100%** in Oct and Nov 2026 (22,573 rebounds; one exception). Free-throw rebounds too
+(2.3 s → 0). Shots are stamped alike in both seasons — time to the shot after a made basket 16.1 / 16.4 s (made /
+missed) live v 15.8 / 16.4 history; after a dead-ball turnover 13.8 / 14.1 v 13.8 / 14.4 — so the ~2.6 s of ball flight
+moves into the next segment: time to the action after a defensive rebound 11.7 s live v 8.8 s (Oct–Nov 2025), after an
+offensive rebound 5.4 v 2.9 s; offensive-rebound actions within 2 s 22% v 62%. Consequences under the feed's clocks:
+`shot_time` (an input to 15 of 16 nodes) is ~2.6 s longer on every live rebound-start segment, and team pace style
+(mean time to the action, offensive-rebound starts excluded) reads 12.93 s live v 12.02 s in Oct–Nov 2025 (+7.6%); the
+decayed team feature in November is 12.58 v 12.18 s (+3.3%, diluted by last season's carry-over). The engine sees every
+2026-27 team slower than it is — a candidate cause of its pace running ≈ 2.5% low (§3j).
+
+**The `miss` convention** (`possessions.py --rebound-clock miss`): every rebound segment starts at the miss's clock in
+every season. Games, segments and every reconciliation identity are unchanged in all four history seasons; ≥ 99.995% of
+rebounds then start at their miss; on the live season it moves one boundary (2 of 55,210 segments). Oct–Nov 2025 under
+it v live: time to the action after a defensive rebound 11.47 v 11.69 s, after an offensive rebound 5.12 v 5.37 s,
+offensive-rebound actions within 2 s 26% v 22%, team pace input 12.88 v 12.93 s. Other start types differ by ≤ 0.3 s
+either way (made basket 15.47 v 15.63, steal 6.40 v 6.58, dead-ball turnover 13.35 v 13.30, made free throw 14.68 v 14.38).
+
+**Not feed artefacts — real 2026-27 differences** (same labels, recorded the same way; Oct–Nov 2025, 294 games, v
+2026-27 to 18 Nov, 221 games): a "Personal Foul" gives free throws outside the penalty 0.15 times per game in both
+seasons (labels consistent), but non-shooting defensive fouls rise to 18.7 v 16.8 per game and shooting fouls fall to
+20.9 v 22.2 (and-ones 4.5 v 4.9); offensive-foul turnovers 4.1 v 3.6 per game and out-of-bounds bad passes 3.8 v 3.4,
+so the live-ball share of turnovers falls to 53.6% v 56.5% (steals are recorded identically: two participants). Held-ball
+jump balls all but vanish: 0.06 v 0.86 per game, with no other record in their place and implicit possession changes
+unchanged (0.86 v 0.85 per game) — either an unrecorded event or a rule change; 0.35% of segments. These shifts can only
+be learned from 2026-27 rows, which a single clock convention makes usable for training.
+
+**What the skew costs v1, measured on the folds (paired cross-data test; logs `…224019Z_v1_cross.json` and
+`…224019Z_v1.1_folds.json`).** v1's settings trained on the feed's clocks (as v1 was) and the same settings trained on
+the `miss` convention (v1.1), both scored on the same held-out rows in the `miss` convention — what the engine meets on
+live data. v1.1 is better on 12 of 16 nodes and worse on none; **chain −34.1 nats per game** (z −67 to −88 on every
+fold): duration −3.61%, event −6.07%, assisted −3.26%, location −1.15%, what −1.13%, turnover type −0.69%, who −0.57%,
+fouler −0.46%, shot result −0.35%, blocked −0.27%, assister −0.19%, rebound −0.16%; blocker, rebounder, stealer, free
+throw neutral. v1's calibration error on these rows reproduces its final-test pattern: duration ECE 0.015–0.017 (v1.1
+0.002–0.003; v1's own folds 0.0025, its final test 0.014), event 0.011–0.014 (v1.1 0.002–0.004; final test 0.022). The
+final-test miscalibration was the rebound stamp.
+
+**M6a on the same terms** (all 766 F4 games, 10,000 worlds, real lineups and clock in the `miss` convention; logs
+`…235141Z_m6a_v1_cross.json` — v1's settings trained on the feed's clocks — and `…235148Z_m6a_v1.1.json`). Bias over all
+16,514 player-games, v1 on live-style inputs → v1.1: points −0.3 → +0.6%, rebounds +2.4 → −0.4%, assists +2.5 → −0.6%,
+threes +7.4 → +1.0%, steals +9.6 → +0.8%, turnovers +8.0 → +1.5%, free throws −2.0 → +2.7%, fouls −5.7 → +2.6%; CRPS
+lower for every stat except blocks (level): points 2.563 → 2.546, rebounds 1.094 → 1.091, assists 0.808 → 0.802; 10–90%
+coverage 77–80% for both. Team points CRPS 7.40 / 7.60 → 7.30 / 7.51 (home / away), margin 10.49 → 10.29, total 10.67 →
+10.58; total bias −0.6 → +1.4 points. Event accounting: defensive fouls −20.5 → −1.0%, penalty trips −17.2 → +2.3%,
+turnovers +8.0 → +1.5%, threes attempted +6.0 → −0.9%. v1.1's remaining biases: team turnovers +9.7%, and-ones +6.9%,
+fouled on a three −28%, bench free throws +6.1%, stars' fouls +4.5%. **v1.1 replaced v1 as the engine's models (D23).**
+
+**v1.1 final test, scored once** (2026-27 to 18 Nov; `…235457Z_final_v1.1.json`, models `data/models/v1.1/`): every node
+above its baselines (event +18.3%, assisted +25.6%, rebound +7.3%, blocked +6.3%, what +5.7%, location +4.2%, assister
++3.1%, fouler +2.1%, shot result +2.1%, who +1.9%, blocker +1.7%, rebounder +1.6%, duration +1.6%, turnover type
++3.5%, free throw +0.4%, stealer +0.1%). ECE v v1's final test: duration 0.0021 v 0.014, event 0.0085 v 0.022, location
+0.0094 v 0.011; still high: turnover type 0.026 (v1 0.033) and rebound 0.017 (v1 0.018) — the real 2026-27 turnover and
+foul shifts, which only refits with this season's rows can learn.
+
+**Engine pace is fixed.** The same four games (19 Nov slate), engine v1 → v1.1: possessions per team 97.8 → 102.1
+(GS–MEM; the teams' real 101.2 / 102.1), 98.0 → 102.2 (POR–MIL; 102.7 / 102.4), 96.3 → 99.8 (NY–MIN; 97.5 / 103.4), 97.3 →
+101.2 (LAC–SA; 101.6 / 100.6); points per team ≈ 108 → ≈ 115 (league 113.7); total SD 16.2–17.2 → 16.9–17.8. The ≈ 2.5%
+pace shortfall (§3j) was the rebound stamp in the team pace input. Strong offences are still under-expressed (Memphis ≈
+113 per 100 v 117.8 real; was ≈ 110).
+
+## 3l. Size, archetype priors and on-court defence — first ablations (19 Nov 2026; negative results)
+
+Inputs: heights and weights for all 935 profiled players (`scripts/athletes.py`: 508 from retained rosters, 427 from
+one ESPN athlete request each, none missing; mean 78.4 in, 67–90; 215 lb, 159–305). Both runs use v1.1's settings and
+data and are paired with `…224019Z_v1.1_folds` (identical rows); noise floor from the seed pair.
+
+- **Archetype priors + body** (`features.py --body --archetypes 10`; run `…231756Z_v1.1_arch`): per season, k-means
+  (k = 10) on standardised style rates plus height and weight of earlier player-seasons (≥ 1,000 offensive segments);
+  each rate shrinks toward the player-game's archetype (nearest centroid to his pre-game profile and size) instead of his
+  position group; inputs height, weight, archetype and lineup height/weight means. Archetypes separate by size (74.6–82.9
+  in) and usage (0.12–0.27). Chain −0.21 nats per game, mixed across folds (F1 −1.07, F2 +0.33); better only for location
+  (−0.18%), worse for who (+0.015%, z +1.9) and what (+0.044%, z +3.2). **By the deciding player's sample size** (decayed
+  offensive segments): the low-sample bucket (< 250) gains nothing consistent (who −0.15% z −1.0, what +0.16%, rebounder
+  +0.25%); part-time players (250–750) gain on rebounder −0.37% (z −7.7), blocker −0.44%, stealer −0.23% but lose on who
+  +0.39% (z +9.5). Not kept: the owner's rule (low-sample buckets gain) is not met.
+- **On-court defence** (`features.py --defence`; run `…231756Z_v1.1_def`): opponents' FG% at the rim, in the paint,
+  mid-range and from three, turnover rate, rim and three shares while he defends (30-game half-life, strong shrinkage),
+  plus lineup means. Spread across player-games is small after shrinkage (rim 67.3% ± 1.5 points, three 36.0% ± 0.7).
+  Chain −0.27 nats per game, mixed (F2 +0.83); better for location (−0.25%), worse for event, who, assister, blocker and
+  turnover type. Not kept.
+- **Lead:** both variants help *location* (shot distance within the zone) on three or four folds — size and defence
+  inputs for that node alone are the next test. Location has no seed-noise run yet, so its floor is 0 (lenient).
+- `games_eff` (role family, 5-game half-life) caps at ~7.7 and cannot define sample-size buckets; `scripts/buckets.py`
+  uses decayed offensive segments.
 
 ## 4. Placeholder model `baseline-v0` (19 Nov 2026, superseded by `baseline-v1`)
 
