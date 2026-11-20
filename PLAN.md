@@ -131,7 +131,15 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
 
 ## 9. Open decisions for the owner
 
-1. NBA Stats API via `nba_api` (browser-style headers) — allow, or stay on ESPN only?
+1. NBA Stats API via `nba_api` (browser-style headers) — allow, or stay on ESPN only? **Owner (20 Nov): stay on ESPN and take
+   implicit matchups as far as possible (D30); revisit only if the backtest's defence loading stalls short of real.** What it
+   would add: per-game matchups (partial possessions each defender spent on each attacker, with points and shots),
+   shooting by closest-defender distance (player-season aggregates, not per shot), touches/drives/speed, hustle stats
+   (contests, deflections). Why it is not simple: stats.nba.com returns 403 to plain requests (measured 19 Nov) and answers
+   only requests imitating a browser on nba.com — unofficial use, hence the owner's sign-off; different player and game ids
+   (a crosswalk by name, team and date); endpoints that change or rate-limit (a second adapter with raw retention). ESPN
+   already gives shooter/assister/blocker/fouler/stealer, shot x/y, the ten on court and shot type in the play text — not
+   who guarded whom or defender distance.
 2. Hosting the PWA: the repo is **private** (`MusaMoholo/MusNBA`, created 19 Nov); GitHub Pages needs a public repo
    or a paid plan — decide when the phone app is ready. App name MusNBA.
 3. iPhone acceptance of the PWA.
@@ -157,6 +165,11 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
 3. **Competition tabs**: NBA regular season · **NBA Cup** · **NBA playoffs** — the playoffs tab seeds the bracket from the
    standings as they are expected to finish (per simulated season) and plays the play-in and every round per world,
    MusSim cup-style (bracket probabilities by round).
+
+4. **Lineup what-ifs** (owner, 20 Nov; D31): the nightly plays games with an uncertain high-impact player once per lineup
+   scenario (X plays / X sits) and the Game Centre offers a lineup selector; later a localhost **lineup editor** (default
+   expected lineup and minutes; change who plays and their minutes → minutes re-solved to 240 (D29), matchups re-formed
+   (D30)) through a separate what-if runner; the phone app shows precomputed scenarios only.
 
 ### 9c. Realism sweep (owner, 19 Nov) — gaps, in priority order (HANDOFF next actions)
 
@@ -260,3 +273,4 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
   1.2, margin slope 1.09), so v1.1's high totals and half-sized spreads are engine errors to fix (HANDOFF item 3).
 - **20 Nov 2026** — Owner: the product is two engines in one daily flow (**D26**); each chunk has one or two headliners that move them toward trust; every chunk ends with the dashboard on the newest systems; UX backlog §9b. **Nightly input rebuild:** segments → rotations → profiles from every final before today (~50 s; 4 new finals → engine inputs changed), next slate when today and tomorrow are empty. **Team pathway v1 (D25) in the app:** per-world offence/defence ratings, engine worlds for today + tomorrow, updates on the points surprise (D27: a good loss keeps ratings); walk-forward 2022-26: the old fixed-probability season sim had dispersion 1.53 and coverage 65%, v1 1.00 and 84%, CRPS −4% in every held-out season (still wide in November). **First engine backtest (M9, 200 F4 games):** pace +0.2%, totals +2.7, margin slope 1.45, defence expressed at ~25% of its real effect (offence ~70%), stars' minutes +6.5%; the team-rating model beats the engine on margin CRPS (9.32 v 9.64), totals and win log loss. Smoke 80/80, browser 38/38.
 - **20 Nov 2026** — Owner (**D28**): the guiding light is player outcomes — a team's results are the aggregation of its players, so minutes, performance and the defence each player faces come first and team results short and long term follow; the engine stays the dashboard default; the team-rating model is a yardstick only.
+- **20 Nov 2026** — Design with the owner for the next chunk (new agent): **D29** minutes — healthy-role minutes and priority, 240 per game allocated by priority (an absent star's minutes cascade and return), a learned return ramp; **D30** defence — stay on ESPN data (NBA Stats only if this stalls), soft matchup assignment over the five on court from size/role/position, learned from foul and block credits, defender quality weighted by it, shot type from the play text; **D31** lineup scenarios in the nightly for uncertain high-impact players (Expected = their availability-weighted mixture), later a localhost lineup editor.

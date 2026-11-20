@@ -38,13 +38,13 @@ of the training window, so probabilities exist only for players actually on cour
 |---|---|
 | Role | minutes per game, starts share, typical stint length, quarter minute shares, usage rate, archetype |
 | Usage by type | share of on-court segments he ends: shots, turnovers, fouls drawn; by quarter (the Doncic effect) |
-| Shot profile | zone shares (rim, paint, mid, corner 3, above-break 3); assisted share by zone (self-creation) |
+| Shot profile | zone shares (rim, paint, mid, corner 3, above-break 3); assisted share by zone (self-creation); **next (D30)**: shot type from the play text (pull-up, step-back, driving, cutting, alley-oop) |
 | Accuracy | FG% by zone, FT%, and-one rate, blocked rate |
 | Playmaking | assist rate on teammates' made shots while on court |
 | Ball security | turnover rate per use; live/dead split |
 | Fouls | fouls drawn (shooting / non-shooting), personal fouls committed per minute |
 | Rebounding | offensive and defensive rebound share of available rebounds while on court |
-| Defence | steal rate, block rate on opponent rim attempts, opponents' turnover and rim rates while he is on court |
+| Defence | steal rate, block rate on opponent rim attempts, opponents' turnover and rim rates while he is on court; **next (D30)**: opponent FG% allowed by zone (lighter shrinkage), weighted for each shooter by a soft matchup assignment over the five on court (size, role, position; learned from foul and block credits), plus help defence |
 | Body | height, weight, position, age, experience (from rosters) |
 | Reliability | sample sizes behind each rate (possessions, attempts), so the model knows how far to trust them |
 
