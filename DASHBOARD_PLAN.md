@@ -1,6 +1,6 @@
 # App — shipped behaviour
 
-As of **20 November 2026** (Lab view, minutes basis and engine v1.2 added in the D29–D30 chunk). Proposals and progress live in [PLAN.md](PLAN.md).
+As of **20 November 2026** (Scenarios, Given…, joint grids, drivers, averages deltas, Lab view, minutes basis and engine v1.3 added in the D29–D30 chunk). Proposals and progress live in [PLAN.md](PLAN.md).
 
 ## Navigation
 
@@ -46,7 +46,7 @@ cached shell. Imports stage a new generation and switch one active pointer after
 
 ## Model chip (19 Nov 2026, D22–D24)
 
-Every projection shows which model made it: **Engine v1.2** (green chip, since 20 Nov — v1.1's decision models with D29 minutes; Engine v1.1 on older snapshots; today's and tomorrow's slates by default, D24)
+Every projection shows which model made it: **Engine v1.3** (green chip, since 20 Nov — D30 defence inputs and D29 minutes; Engine v1.1/v1.2 on older snapshots; today's and tomorrow's slates by default, D24)
 or **Placeholder model** (retrospective backfills, or a nightly run with `--placeholder`). Tomorrow's slate is projected a
 day ahead from what is known today and rebuilt the next night; the app's as-of date (standings, rosters, schedules)
 stays the newest snapshot dated today or earlier. The full label — with the engine's known

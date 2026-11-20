@@ -66,7 +66,7 @@ checksum-verified and atomic; the previous data stays available if an import fai
 | `scripts/nodes.py`, `scripts/train.py` | Datasets for the 16 decisions (cached); LightGBM per decision on the folds, persisted versions, final test |
 | `scripts/compare.py`, `scripts/calibration.py` | Paired run comparisons (game-clustered, seed-noise floor); calibration by period and margin |
 | `scripts/aggregate.py` | M6a: replay held-out games with real lineups and clock, sample every decision, score box scores |
-| `scripts/engine.py` | The engine (default projection, v1.2 = v1.1 models + D29 minutes): plays games possession by possession; rotation tables rescaled to minutes targets |
+| `scripts/engine.py` | The engine (default projection, v1.3 = D30 defence inputs + D29 minutes): plays games possession by possession; rotation tables rescaled to minutes targets; profiles from the version's features variant (`features_dir`) |
 | `scripts/minutes.py` | D29 minutes: healthy-role minutes, priority, 240 per team by priority, return ramp, rotation share, per-world draws, projected starters |
 | `scripts/matchups.py` | D30 implicit matchups: soft assignment of defenders to shooters from foul/block credits; shot types from the play text |
 | `scripts/lineups.py` | Projected v actual starters for every finished snapshot (nightly record, D33) |
@@ -94,7 +94,7 @@ Rebuild in order after new data: `scripts/history.py` → `scripts/possessions.p
 .venv/bin/python scripts/train.py --config models/v1.1.json --final     # persist a version, score the final test once
 .venv/bin/python scripts/aggregate.py --config models/v1.1.json         # M6a aggregation test on F4 games
 .venv/bin/python scripts/parity.py [--fetch]                            # adapter and feed parity (M5b)
-.venv/bin/python scripts/backtest.py --config models/v1.1.json --games 200 --worlds 1000 --jobs 7 --rotation targets --models folds/v1.1_F4_all   # engine v1.2 backtest (M9)
+.venv/bin/python scripts/backtest.py --config models/v1.3.json --games 200 --worlds 1000 --jobs 7 --rotation targets [--models folds/v1.3_F4_all]   # engine v1.3 backtest (M9)
 .venv/bin/python scripts/backtest_compare.py <run A> <run B> [--log NAME]   # paired: player tiers, loading, margins, CRPS
 .venv/bin/python scripts/minutes.py --evaluate [--season 2025 --from 2025-01-01 --to 2025-04-30] [--set gamma=1]   # allocator v real (no engine)
 .venv/bin/python scripts/matchups.py --fit --through 2025-12-31            # D30 assignment θ → models/matchup_<through>.json

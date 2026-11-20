@@ -48,6 +48,9 @@ Then do the first open item in HANDOFF_NEXT.md § Next actions. If smoke fails, 
   tomorrow's games and a fresh 10,000-world season come from the latest engines that passed their tests. A chunk always
   brings new findings; when it cannot improve an engine (negative results happen), its headliner is a dashboard
   improvement from the owner's UX backlog (PLAN §9b) instead.
+- **Dashboard taste (owner, 20 Nov):** he cares about player and team game-outcome presentation (scenarios, joint and
+  conditional outcomes, deltas v averages); internal evaluation pages (the Lab) are not a priority. His examples are
+  illustrations — generalise the idea rather than building only the example.
 - Likes short status bullets with real numbers. For multi-step work he wants a **visual progress board** — an overall
   bar for the chunk plus a bar per subtask (text bars, e.g. `██████░░░░░░░░░░░░░░ 30%`) — **printed in the reply whenever a subtask reaches a new 10% mark or the chunk a new 5% mark**
   (owner, 20 Nov; finished jobs dropped from per-job bars). He sets explicit stop points mid-session ("stop when X is done") —
@@ -75,7 +78,9 @@ Then do the first open item in HANDOFF_NEXT.md § Next actions. If smoke fails, 
 - Raw data is never modified; archive outside the repo (`~/Basketball_archive_ops`) before replacing snapshots,
   shells or bundles. Deterministic simulations: re-running identical inputs must reproduce stored results.
 - Missing data stays missing; never clamp; placeholders are labelled in the app.
-- NBA Stats/CDN with browser-imitating headers only if the owner authorises it (PLAN §9). ESPN requests stay polite.
+- NBA Stats API with browser-style headers: **authorised by the owner (20 Nov, D32)** for the next chunk — polite spacing,
+  caching and raw retention as for ESPN; no other new source without his sign-off. Never scrape a site whose terms forbid
+  automated access (D33). ESPN requests stay polite.
 - **Git (owner's standing instruction, 19 Nov 2026): commit and push at every checkpoint** — see §5 step 7. The repo is
   private, `MusaMoholo/MusNBA`, branch `main`. Its local git config carries the owner's personal identity (MusaMoholo,
   GitHub no-reply email) and a personal credential helper: never use the global identity, never change these
