@@ -82,6 +82,14 @@ coverage, CRPS), then on the team sums. The engine stays the dashboard default.
    backtest — **judge by the backtest's player outcomes first, then `strength_loading.opp_defence` and margins** (node log
    loss alone was misleading, TRAINING_PLAN §7). If player inputs cannot close the gap, take D18 (opponent defensive rates)
    or the NBA Stats question (PLAN §9.1) to the owner with numbers.
+   **Projected starters (owner, 20 Nov):** add a lineup source (`scripts/fetch_lineups.py`): RotoWire is blocked on the
+   owner's work network; reachable candidates Basketball Monster, FantasyPros, DailyFantasyFuel, CBS Sports (FINDINGS §1).
+   Read each site's terms of use first and skip any that forbid automated access; one request per slate, raw response
+   retained under `data/raw/lineups/<source>/<UTC>/`; map names to ESPN athlete ids via team + name (the player registry);
+   feed projected starters into D29's priority and the opening lineup (status news only as a recorded second opinion beside
+   ESPN's report). No history exists for it, so measure it going forward: each night, projected v actual starters for the
+   finished slate (FINDINGS). The nightly runs in the UK morning, so today's lineups are projections, not confirmations
+   (a pre-tip refresh is D12, deferred).
 3. **Lineup scenarios in the nightly (D31, owner).** After item 1: games with an uncertain high-impact player are played per
    lineup scenario (X plays / X sits; 2 players → 4; more → each one out), **each an independent run with 10,000 sims**
    (owner; also raise the engine's default from 2,000 to 10,000 worlds per game, with 2–3 games in parallel to stay inside

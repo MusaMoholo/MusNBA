@@ -14,6 +14,7 @@ Measured facts only. Each entry states its date and population.
 - ESPN date-range scoreboard (`dates=YYYYMMDD-YYYYMMDD`) returns 400. NBA CDN/stats endpoints return 403
   to plain requests.
 - First collection: 345 requests, 222 finals, 0 failures, ~4 minutes at 0.35 s spacing.
+- **Projected-starter sources (probed 20 Nov 2026 from the owner's laptop, robots.txt and one page only):** RotoWire (`/basketball/nba-lineups.php`) and Lineups.com are **blocked by the work network's filter** (OpenDNS block page, HTTP 403); nba.com returns 403 to plain requests (as stats.nba.com). Reachable, with no blanket `Disallow: /` and no rule on lineup pages in robots.txt: Basketball Monster, FantasyPros, DailyFantasyFuel, CBS Sports, numberFire (redirects). Terms of use not yet read; no page content fetched.
 
 ## 2. League environment through 18 Nov 2026 (222 games)
 
