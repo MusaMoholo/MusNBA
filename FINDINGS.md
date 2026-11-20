@@ -439,6 +439,12 @@ games); the owner's bet365 check agrees (NYK–MIN total 216.5, NYK −1.5). Fou
   under-expressed (§3j, Memphis ≈ 113 per 100 v 117.8 real). Market lines also carry injury and rest news; the engine
   reads the same injury report.
 - Only today's lines are retained (the collection fetches today's scoreboard); tomorrow's slate has none.
+- **Is the market itself biased? No, on this season's games.** The final summaries' `pickcenter` (DraftKings; most likely
+  the closing line — no timestamp is kept) against the final scores of all 222 games of 2026-27 to 18 Nov: actual total
+  − line −0.64 ± 1.20 points (median −0.5, SD 17.8, 48.2% overs); mean line 228.1 v actual 227.5; actual home margin −
+  line −0.42 ± 0.98 (SD 14.5); slope of the actual margin on the line's margin 1.09 (full-sized, if anything slightly
+  small). So the engine's high totals and half-sized spreads on 19 Nov are the engine's errors, not the market's. The
+  owner's yardstick is real outcomes (D8 note); the market is a strong reference because it tracks them closely.
 
 ## 4. Placeholder model `baseline-v0` (19 Nov 2026, superseded by `baseline-v1`)
 

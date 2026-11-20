@@ -226,3 +226,6 @@ Realism sweep with the owner (19 Nov) — gaps, in priority order (HANDOFF next 
   effects (totals and margins) under-expressed. Owner: the market is broadly rational (D8 note; compare with closing
   lines). Owner request: the Game Centre should show a saved sim's play-by-play like nba.com, then a visual play-through
   (D9, M10). Both queued in HANDOFF for the next agent.
+- **20 Nov 2026** — Owner: the goal is a ground-up simulation as accurate as possible against real outcomes, not betting;
+  the market is a reference. Measured: DraftKings' lines are unbiased against 2026-27 results (222 games: totals −0.6 ±
+  1.2, margin slope 1.09), so v1.1's high totals and half-sized spreads are engine errors to fix (HANDOFF item 3).

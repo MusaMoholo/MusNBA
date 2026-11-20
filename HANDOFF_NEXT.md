@@ -40,7 +40,9 @@ background.** The owner keeps `scripts/serve.py` on :8766 open — leave it; use
 D22); backfills use the placeholder `baseline-v1`, saved beside each engine snapshot (`games_placeholder.json`).
 
 **Market check (owner, FINDINGS §3m):** on the 19 Nov slate v1.1 totals run ≈ +8 above DraftKings/bet365 (NYK–MIN 231 v
-216.5) and its spreads are about half the market's. The owner treats the market as broadly rational (D8) — item 3.
+216.5) and its spreads are about half the market's. The market itself is unbiased against 2026-27 results (222 games), so
+these gaps are the engine's. Owner's goal: a ground-up sim as accurate as possible against **real outcomes**, not
+betting — the market is a reference only (D8) — item 3.
 
 **Engine realism (still open, FINDINGS §3j):** strong offences under-expressed; outcomes too tightly spread (OT ≈ 3% v
 5.4%); v1.1's M6a biases: team turnovers +9.7%, and-ones +6.9%, fouled on a three −28%, total +1.4 points.
@@ -61,11 +63,12 @@ manual rebuild (now: games through 18 Nov). Next actions item 1.
    win calibration, OT, players by tier. **Never executed — expect to debug it first.** No `baseline-v1` comparison on
    history (its snapshots exist only for 2026-27). Add a smoke check for its output once it runs.
 3. **Scoring level and matchup expression (owner, FINDINGS §3m).** v1.1 totals ≈ +8 above the market on the 19 Nov slate
-   (efficiency +1.7%; matchups under-expressed in totals and margins — spreads about half the market's). (a) Build a
-   market benchmark (`scripts/market.py`, evaluation only, D8): closing lines from the final summaries' `pickcenter` v
-   each snapshot's engine and placeholder totals/margins, per day, with the line's timestamp; also make
-   `fetch_espn.collect` save tomorrow's scoreboard (D24) so pre-game lines are retained. Owner: the market is broadly
-   rational; we may differ far from tip-off — judge on closing lines. (b) Use the backtest (item 2) to separate causes:
+   (efficiency +1.7%; matchups under-expressed in totals and margins — spreads about half the market's). The market is
+   *not* biased on 2026-27 results (totals −0.6 ± 1.2 v actual, margin slope 1.09), so these are the engine's errors.
+   **Owner's target is accuracy against real outcomes, not the market** (D8 note). (a) Build an outcome-first benchmark
+   (`scripts/market.py`, evaluation only): for every engine/placeholder snapshot once its games are final — engine v
+   actual (bias, CRPS of total and margin, win log loss), closing line v actual, engine v closing line; also make
+   `fetch_espn.collect` save tomorrow's scoreboard (D24) so pre-game lines are kept. (b) Use the backtest (item 2) to separate causes:
    free throws and foul classes (M6a: and-ones +6.9%, team turnovers +9.7%), shot mix, end-of-period play, replayed
    rotations (stars' minutes), missing strength signal (strong offences under-expressed: Memphis ≈ 113 per 100 v 117.8).
 4. **Season pathway (D25, owner).** In `projection.simulate_season`: universe k plays engine world k (mod the engine's

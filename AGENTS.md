@@ -39,8 +39,10 @@ Then do the first open item in HANDOFF_NEXT.md § Next actions. If smoke fails, 
   plus a sub-bar per step, posted at every 10%. He sets explicit stop points mid-session ("stop when X is done") —
   finish X, checkpoint, and leave the rest to HANDOFF. He is happy to see new data in the dashboard before it is
   validated, if labelled.
-- He checks projections against bookmaker lines: treat the market as broadly rational (ENGINE_PLAN D8) — a benchmark to
-  investigate gaps against, never a target to fit.
+- His goal (20 Nov): **a ground-up simulation as accurate as possible against real outcomes** — not betting. He checks
+  projections against bookmaker lines; the market is a reference, not the target (ENGINE_PLAN D8): judge every change on
+  real results, use market gaps as signals to investigate, never fit to lines. (Measured: DraftKings' closing lines are
+  unbiased against 2026-27 results, FINDINGS §3m — so today's gaps are ours.)
 
 ## 4. Rules
 
