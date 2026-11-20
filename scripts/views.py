@@ -228,6 +228,9 @@ def build(views_root: Path = VIEWS) -> dict:
         write_json(api / 'standings' / f'{day}.json', {
             'date': day, 'kind': snap['meta']['kind'], 'generated': snap['meta']['generated'],
             'model': snap['meta']['model'], 'sims': season['sims'], 'notes': season['notes'],
+            'season_model': ({'id': season['model'], 'kind': season['pathway'].get('kind'), 'label': season['pathway'].get('label'),
+                              'as_of': season.get('as_of'), 'engine_games': len(season.get('engine_games', []))}
+                             if season.get('pathway') else {'id': season['model'], 'kind': 'placeholder', 'label': snap['meta']['model'].get('label')}),
             'unresolved_before': len(season['unresolved_before']), 'teams': rows})
 
     P = L['players']

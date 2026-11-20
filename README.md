@@ -5,9 +5,11 @@ pipeline collects box scores and play-by-play, simulates every game 10,000 times
 remaining season 10,000 times, and a static, offline-capable app shows the results on a laptop
 or phone.
 
-> The app is live on localhost and as a static PWA. Today's and tomorrow's projections come from the **possession
-> engine v1.1** (every possession simulated from 16 LightGBM decision models; the floor for later improvements, D22–D24);
-> past dates rebuilt after the fact use a labelled placeholder. See [PLAN.md](PLAN.md) and [HANDOFF_NEXT.md](HANDOFF_NEXT.md).
+> The app is live on localhost and as a static PWA. Two engines, one daily flow (D26): today's and tomorrow's games come
+> from the **possession engine v1.1** (every possession simulated from 16 LightGBM decision models, inputs rebuilt nightly
+> from every game so far; the floor for later improvements, D22–D24); every later game from the **team pathway v1**, where
+> each simulated season carries its own team ratings and updates them after every game (D25). Past dates rebuilt after the
+> fact use a labelled placeholder. See [PLAN.md](PLAN.md) and [HANDOFF_NEXT.md](HANDOFF_NEXT.md).
 
 ## Setup
 
@@ -27,7 +29,9 @@ python3 -m venv .venv
 ```
 
 - Today's and tomorrow's slates are projected by the possession engine v1.1 (the default, D22–D24; ~20 s per game at
-  2,000 worlds; `--ahead N` sets how many days after today);
+  2,000 worlds; `--ahead N` sets how many days after today; no games in that window → the next slate, D26). Before the
+  engine runs, its inputs (current-season segments, rotations, profiles) are rebuilt from every final before today
+  (~50 s; `--no-rebuild` skips). The season sim then plays every later game through the team pathway (D25);
   `--placeholder` uses the old box-score placeholder instead, and backfilled past dates always do. `nightly.py --offline` reuses retained data; `--views-only` only rebuilds what the app reads;
   `--backfill-days N` adds retrospective snapshots (labelled as such) for the previous N slates.
 - The server reads files from disk: front-end edits appear on refresh, rebuilt views appear
@@ -63,10 +67,12 @@ checksum-verified and atomic; the previous data stays available if an import fai
 | `scripts/compare.py`, `scripts/calibration.py` | Paired run comparisons (game-clustered, seed-noise floor); calibration by period and margin |
 | `scripts/aggregate.py` | M6a: replay held-out games with real lineups and clock, sample every decision, score box scores |
 | `scripts/engine.py` | The engine (default projection, v1.1): plays games possession by possession |
-| `scripts/backtest.py` | Engine backtest on held-out fold games (M9 first cut; written, not yet run) |
+| `scripts/backtest.py` | Engine backtest on held-out fold games (M9 first cut), with the team-rating model on the same games |
+| `scripts/pathway.py` | Team engine (D25, D26): per-world offensive/defensive ratings, updated after every simulated game |
+| `scripts/season_backtest.py` | Team engine trust test (M12 first cut): walk-forward seasons 2022-26, `--grid` calibration |
 | `scripts/athletes.py`, `scripts/buckets.py` | Player heights/weights; paired comparisons by the player's sample size |
 | `scripts/season_stats.py` | Cutoff-safe team ratings and player season stats |
-| `scripts/projection.py` | Simulation engine (placeholder now; PBP engine in phase 2) and season sim |
+| `scripts/projection.py` | Placeholder game model (`baseline-v1`, backfills) and the season sim (team pathway, D25) |
 | `scripts/nightly.py`, `scripts/views.py` | Orchestration, immutable snapshots, API-ready views |
 | `scripts/serve.py` | Read-only local server for the app and `/api/*` |
 | `scripts/export_musnba.py`, `scripts/nightly_musnba.py` | Static shell, data bundle, iCloud export |
@@ -85,6 +91,8 @@ Rebuild in order after new data: `scripts/history.py` → `scripts/possessions.p
 .venv/bin/python scripts/train.py --config models/v1.1.json --final     # persist a version, score the final test once
 .venv/bin/python scripts/aggregate.py --config models/v1.1.json         # M6a aggregation test on F4 games
 .venv/bin/python scripts/parity.py [--fetch]                            # adapter and feed parity (M5b)
+.venv/bin/python scripts/backtest.py --config models/v1.1.json --games 200 --worlds 1000 --jobs 4   # engine backtest (M9)
+.venv/bin/python scripts/season_backtest.py [--grid]                    # team engine walk-forward (M12; ~1–4 min)
 ```
 
 Data variants live under `data/derived/variants/<name>/` (segments root + `features/`): `possessions.py --rebound-clock miss

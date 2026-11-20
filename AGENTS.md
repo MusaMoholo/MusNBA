@@ -34,9 +34,19 @@ Then do the first open item in HANDOFF_NEXT.md § Next actions. If smoke fails, 
   :8767 for your own checks). The PWA build is for the phone later.
 - UK-based; displayed times are UK with ET alongside. Slates are US Eastern dates.
 - Prefers you make engineering decisions yourself and explain them; ask only for real product choices (PLAN §9).
-- Likes short status bullets with real numbers; for long runs he asked for one progress bar per job, updated at
-  every 5% (finished jobs dropped), and for multi-step work a **progress board**: an overall bar across the agreed steps
-  plus a sub-bar per step, posted at every 10%. He sets explicit stop points mid-session ("stop when X is done") —
+- **The product is two engines in one daily flow (ENGINE_PLAN D26, PLAN §1):** the play-by-play engine for today's and
+  tomorrow's games (or the next slate), with inputs carried over from every game before the date, then a MusSim-style
+  team engine for every later game — per-world offensive/defensive ratings updated after each simulated game, so
+  March is played from each world's own path, never today's ratings. **Every chunk of work has one or two headliners**
+  that move these engines toward a state he trusts against real outcomes, each with clear ideas of what comes next;
+  smoke, docs and plumbing ride along. Open each chunk by stating your understanding and the headliners.
+- **Every chunk ends with the dashboard on the newest, best systems** (owner, 20 Nov): rerun the nightly so today's and
+  tomorrow's games and a fresh 10,000-world season come from the latest engines that passed their tests. A chunk always
+  brings new findings; when it cannot improve an engine (negative results happen), its headliner is a dashboard
+  improvement from the owner's UX backlog (PLAN §9b) instead.
+- Likes short status bullets with real numbers. For multi-step work he wants a **visual progress board** — an overall
+  bar for the chunk plus a bar per subtask (text bars, e.g. `██████░░░░░░░░░░░░░░ 30%`) — **printed in the reply whenever a subtask reaches a new 10% mark or the chunk a new 5% mark**
+  (owner, 20 Nov; finished jobs dropped from per-job bars). He sets explicit stop points mid-session ("stop when X is done") —
   finish X, checkpoint, and leave the rest to HANDOFF. He is happy to see new data in the dashboard before it is
   validated, if labelled.
 - His goal (20 Nov): **a ground-up simulation as accurate as possible against real outcomes** — not betting. He checks
@@ -78,10 +88,12 @@ Write as if you will not be the one to continue.
 5. **README / HANDOFF file map**: new scripts, outputs and commands.
 6. Run `.venv/bin/python scripts/smoke.py`; add a smoke check for every new output with an accounting identity, and
    confirm `--fault` still fails.
-7. **Commit and push**: `git add -A && git status` (review: no `data/`, no secrets), then
+7. **Dashboard on the newest systems**: `.venv/bin/python scripts/nightly.py` (or `--offline --no-rebuild` when nothing
+   new was collected) so the slates and the 10k season come from the latest promoted engines; browser checks on :8767.
+8. **Commit and push**: `git add -A && git status` (review: no `data/`, no secrets), then
    `git commit -m "<milestone>: <what changed, key numbers>"` and `git push`. One commit per checkpoint at least; record
    the commit in HANDOFF_NEXT.md's header on the next checkpoint. Follow any commit-trailer rules your harness gives.
-8. Tell the owner, in a few bullets, what changed, what was measured and what is next.
+9. Tell the owner, in a few bullets, what changed, what was measured and what is next.
 
 ## 6. Conventions worth knowing
 

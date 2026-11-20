@@ -10,6 +10,12 @@ export async function render(view, ctx) {
 }
 
 // ------------------------------------------------------------------ standings
+function seasonPill(m) {  // which model made the season forecast (D25/D26: the team pathway; else the placeholder's)
+  return m && m.kind === 'team-pathway'
+    ? `<span class="pill good" title="${esc(m.label)}">Team pathway ${esc((m.id || '').replace('team-pathway-', ''))}</span>`
+    : `<span class="pill accent" title="${esc(m ? m.label : '')}">Placeholder model</span>`;
+}
+
 async function standings(view, {meta, current}) {
   const data = await api('standings/' + meta.latest);
   if (!current()) return;
@@ -24,12 +30,14 @@ async function standings(view, {meta, current}) {
     else body = ratingsTable(rows);
     view.innerHTML = `<section class="panel"><div class="row" style="justify-content:space-between;margin-bottom:10px">
         <div><h2 style="margin:0">Standings &amp; season forecast</h2><p class="note" style="margin:0">Through ${esc(dayLabel(data.date))} · ${data.sims.toLocaleString()} simulated seasons of every unplayed fixture</p></div>
-        <span class="pill accent" title="${esc(data.model.label)}">Placeholder model</span></div>
+        ${seasonPill(data.season_model)}</div>
       <div class="controls">${seg(confs, state.conf, 'data-conf')}${seg(views, state.view, 'data-view')}
         ${state.view === 'seeds' && state.conf !== 'League' ? seg([['exact', 'Exactly'], ['atleast', 'At least']], state.seedMode, 'data-seed') : ''}</div>
       ${body}
       <details style="margin-top:12px"><summary class="note" style="cursor:pointer">How the forecast works</summary>
-        <p class="note">Each unplayed game gets a home-win chance from shrunk team ratings (offence, defence, pace, home court); tonight's games use their full game simulation, including injuries. One simulated season settles every fixture once; standings come from 10,000 seasons. Top 6 = direct playoff seed; play-in = seeds 7–10. ${data.notes.map(esc).join(' ')}</p></details></section>`;
+        <p class="note">${data.season_model && data.season_model.kind === 'team-pathway'
+          ? "Today's and tomorrow's games come from the possession engine: each simulated season takes one of its simulated games. Every later game is played in date order with that season's own offensive and defensive rating for each team (pace and home court included), and after every game both teams' ratings move by how much they beat or missed that season's expectation — so a March game is played with ratings each season's own path produced, not today's."
+          : 'Each unplayed game gets a home-win chance from shrunk team ratings (offence, defence, pace, home court); tonight\'s games use their full game simulation, including injuries.'} One simulated season settles every fixture once; standings come from ${data.sims.toLocaleString()} seasons. Top 6 = direct playoff seed; play-in = seeds 7–10. ${data.notes.map(esc).join(' ')}</p></details></section>`;
     view.querySelectorAll('[data-conf]').forEach(b => b.onclick = () => { state.conf = b.dataset.conf; store.set('conf', state.conf); paint(); });
     view.querySelectorAll('[data-view]').forEach(b => b.onclick = () => { state.view = b.dataset.view; store.set('standings-view', state.view); paint(); });
     view.querySelectorAll('[data-seed]').forEach(b => b.onclick = () => { state.seedMode = b.dataset.seed; paint(); });

@@ -207,6 +207,84 @@ def summarise(games: pd.DataFrame, players: pd.DataFrame, pre: pd.DataFrame) -> 
     return out
 
 
+def _crps_normal(mu, sd, y):
+    from math import erf, exp, pi, sqrt
+    z = (y - mu) / sd
+    cdf = 0.5 * (1 + np.vectorize(erf)(z / sqrt(2)))
+    pdf = np.exp(-z * z / 2) / sqrt(2 * pi)
+    return sd * (z * (2 * cdf - 1) + 2 * pdf - 1 / sqrt(pi))
+
+
+def rating_baseline(games: pd.DataFrame) -> dict:
+    """The team engine's game model on the same games (D26): each side's expected points from ratings before the date
+    (`season_backtest.state_before`: box possessions, shrunk K = 8 — what the pathway starts from), scores normal with
+    baseline-v1's SD 11.25 and rho 0.35. Same measures as the engine's, so the two engines compare on real outcomes."""
+    from scripts import pathway, season_backtest
+    p = pathway.PATHWAY
+    out_rows = []
+    cache = {}
+    for r in games.itertuples():
+        season = int(r.date_et[:4]) + (1 if r.date_et[5:7] >= '07' else 0)
+        if season not in cache:
+            cache[season] = season_backtest.team_games(season)
+        T, lg = season_backtest.state_before(cache[season], r.date_et)
+        off, dfn, pace, _ = pathway.start_ratings(T, lg, [r.home, r.away], p['K'])
+        pace_g = pace[0] * pace[1] / lg['pace']
+        mu_h = pace_g * off[0] * dfn[1] / lg['ortg'] / 100 + p['home_court'] / 2
+        mu_a = pace_g * off[1] * dfn[0] / lg['ortg'] / 100 - p['home_court'] / 2
+        out_rows.append({'game_id': r.game_id, 'mu_h': mu_h, 'mu_a': mu_a, 'pace': pace_g,
+                         'off_h': off[0] - lg['ortg'], 'off_a': off[1] - lg['ortg'], 'def_h': dfn[0] - lg['ortg'], 'def_a': dfn[1] - lg['ortg']})
+    b = pd.DataFrame(out_rows)
+    g = games.merge(b, on='game_id')
+    sd, rho = p['team_sd'], p['team_rho']
+    sds = {'home': sd, 'away': sd, 'total': sd * np.sqrt(2 * (1 + rho)), 'margin': sd * np.sqrt(2 * (1 - rho))}
+    mus = {'home': g['mu_h'], 'away': g['mu_a'], 'total': g['mu_h'] + g['mu_a'], 'margin': g['mu_h'] - g['mu_a']}
+    ys = {'home': g['real_home'], 'away': g['real_away'], 'total': g['real_home'] + g['real_away'], 'margin': g['real_home'] - g['real_away']}
+    out = {'games': len(g)}
+    for m in mus:
+        out[m] = {'sim': round(float(mus[m].mean()), 2), 'bias': round(float((mus[m] - ys[m]).mean()), 2),
+                  'crps': round(float(_crps_normal(mus[m].to_numpy(), sds[m], ys[m].to_numpy()).mean()), 3),
+                  'actual_sd_around_sim': round(float((ys[m] - mus[m]).std()), 2)}
+    out['margin']['slope_real_on_sim'] = round(float(np.polyfit(mus['margin'], ys['margin'], 1)[0]), 3)
+    out['margin']['corr'] = round(float(np.corrcoef(mus['margin'], ys['margin'])[0, 1]), 3)
+    out['total']['slope_real_on_sim'] = round(float(np.polyfit(mus['total'], ys['total'], 1)[0]), 3)
+    from math import erf, sqrt
+    ph = np.clip(0.5 * (1 + np.vectorize(erf)(mus['margin'] / sds['margin'] / sqrt(2))), 1e-4, 1 - 1e-4)
+    win = (ys['margin'] > 0).astype(float)
+    out['win'] = {'brier': round(float(((ph - win) ** 2).mean()), 4),
+                  'log_loss': round(float(-(win * np.log(ph) + (1 - win) * np.log(1 - ph)).mean()), 4)}
+    # Strength expression: points per 100 per team-game on the side's offensive and the opponent's defensive rating
+    # (deviations from the league, ratings before the date) — engine v real loadings; 1:1 with real = fully expressed.
+    sides = pd.DataFrame({
+        'off': np.concatenate([g['off_h'], g['off_a']]), 'opp_def': np.concatenate([g['def_a'], g['def_h']]),
+        'sim': np.concatenate([100 * g['home_sim'] / g['sim_poss_home'], 100 * g['away_sim'] / g['sim_poss_away']]),
+        'real': np.concatenate([100 * g['real_home'] / g['real_poss_home'], 100 * g['real_away'] / g['real_poss_away']])})
+    X = np.column_stack([np.ones(len(sides)), sides['off'], sides['opp_def']])
+    out['strength_loading'] = {y: dict(zip(('intercept', 'offence', 'opp_defence'),
+                                           (round(float(v), 3) for v in np.linalg.lstsq(X, sides[y], rcond=None)[0])))
+                               for y in ('sim', 'real')}
+    out['engine_v_baseline_margin_corr'] = round(float(np.corrcoef(games.set_index('game_id').loc[g['game_id'], 'margin_sim'], mus['margin'])[0, 1]), 3)
+    return out
+
+
+def m6a_same_games(games: pd.DataFrame) -> dict | None:
+    """M6a (real possessions, lineups and clock replayed; v1.1 settings) on the same games: separates per-possession error
+    (shared with M6a) from what only the free-running engine adds (pace, rotations and minutes, end of game)."""
+    files = sorted((DERIVED / 'experiments').glob('*_m6a_v1.1_teams.parquet'))
+    if not files:
+        return None
+    m = pd.read_parquet(files[-1])
+    m = m[m['game_id'].isin(set(games['game_id']))].pivot(index='game_id', columns='measure', values='sim')
+    g = games.set_index('game_id').loc[m.index]
+    real_margin, real_total = g['real_home'] - g['real_away'], g['real_home'] + g['real_away']
+    return {'run': files[-1].stem, 'games': len(m),
+            'total_bias': round(float((m['total'] - real_total).mean()), 2),
+            'margin_bias': round(float((m['margin'] - real_margin).mean()), 2),
+            'margin_slope_real_on_sim': round(float(np.polyfit(m['margin'], real_margin, 1)[0]), 3),
+            'margin_corr': round(float(np.corrcoef(m['margin'], real_margin)[0, 1]), 3),
+            'engine_v_m6a_margin_corr': round(float(np.corrcoef(m['margin'], g['margin_sim'])[0, 1]), 3)}
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--config', type=Path, required=True, help='model version settings (models/<version>.json)')
@@ -217,9 +295,23 @@ def main():
     ap.add_argument('--threads', type=int, default=8, help='LightGBM threads for fitting fold models')
     ap.add_argument('--seed', type=int, default=20261119)
     ap.add_argument('--name', default=None)
+    ap.add_argument('--summarise', metavar='RUN', help='re-score a saved run (<stamp>_<name>) without simulating; updates its log')
     args = ap.parse_args()
     start = time.time()
     spec = json.loads(args.config.read_text())
+    if args.summarise:
+        frame = pd.read_parquet(DERIVED / 'experiments' / f'{args.summarise}.parquet')
+        players = pd.read_parquet(DERIVED / 'experiments' / f'{args.summarise}_players.parquet')
+        pre, *_ = load_inputs(spec, args.fold)
+        summary = summarise(frame, players, pre)
+        summary['team_rating_baseline'] = rating_baseline(frame)
+        summary['m6a_same_games'] = m6a_same_games(frame)
+        log = EXPERIMENTS / f'{args.summarise}.json'
+        record = json.loads(log.read_text())
+        record['summary'] = summary
+        write_json(log, record, pretty=True)
+        print(json.dumps(summary, indent=1))
+        return
     version = fold_engine_version(args.fold, args.config, args.threads)
     _, _, seg, _, _, _ = load_inputs(spec, args.fold)
     games = eligible_games(seg)
@@ -239,6 +331,8 @@ def main():
     frame = pd.DataFrame(results)
     pre, *_ = load_inputs(spec, args.fold)
     summary = summarise(frame, players, pre)
+    summary['team_rating_baseline'] = rating_baseline(frame)
+    summary['m6a_same_games'] = m6a_same_games(frame)
     name = args.name or f"backtest_{spec.get('version')}_{args.fold}"
     stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
     (DERIVED / 'experiments').mkdir(parents=True, exist_ok=True)

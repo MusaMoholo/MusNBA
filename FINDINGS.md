@@ -446,6 +446,77 @@ games); the owner's bet365 check agrees (NYK–MIN total 216.5, NYK −1.5). Fou
   small). So the engine's high totals and half-sized spreads on 19 Nov are the engine's errors, not the market's. The
   owner's yardstick is real outcomes (D8 note); the market is a strong reference because it tracks them closely.
 
+## 3o. Engine backtest — the play-by-play engine on past games (20 Nov 2026; M9 first run)
+
+`scripts/backtest.py --config models/v1.1.json --games 200 --worlds 1000 --jobs 4`: 200 random reconciled regular-season F4
+games (Jan–Apr 2026); all 16 node models fitted on the fold's training window (through Dec 2025; early stopping on the
+held-out window, as in every fold run); each game's pre-game profiles and team style, rotations replayed from the team's
+games before the date; **known availability** (the players who actually played). The engine plays its own clock — pace,
+minutes and score emerge. Log `analysis/experiments/20261120T100616Z_backtest_v1.1_F4.json` (35 min with the fits).
+Compared on the same games with the **team-rating model** — the team engine's game model (ratings before the date as
+`team_table`, shrunk K = 8; scores normal, SD 11.25, rho 0.35) — and M6a (real possessions replayed, `…235148Z_m6a_v1.1`).
+
+| Same 200 games | Engine v1.1 | Team-rating model | Paired difference (engine − team) |
+|---|---|---|---|
+| Total: bias / CRPS | +2.7 / 12.10 | −0.5 / 11.35 | CRPS +0.75 ± 0.29 (z +2.6) |
+| Margin: CRPS / corr with real / slope of real on predicted | 9.64 / 0.46 / 1.45 | 9.32 / 0.56 / 1.65 | CRPS +0.32 ± 0.19 (z +1.7) |
+| Win: log loss / Brier | 0.592 / 0.203 | 0.558 / 0.188 | +0.034 ± 0.018 (z +1.9) / +0.014 ± 0.008 |
+
+- **The engine does not yet beat a plain team-rating model on game results**, although it knows who played. Worse on every
+  game measure, consistently in direction (z 1.7–2.6 on 200 games).
+- **Pace is right** (possessions per team +0.2%); **efficiency +0.9%** (114.7 v 113.7 per 100) → totals +2.7 (+1.2%).
+- **Defence is the missing piece.** Points per 100 per team-game regressed on the side's offensive rating and the
+  opponent's defensive rating (deviations from the league, ratings before the date): real games load **1.14 on offence and
+  1.69 on the opponent's defence**; the engine **0.80 and 0.42** — offence at ~70% of its real effect, defence at ~25%.
+  The possession models see defenders only through steal, block, foul and rebound rates; shot-making suppression and
+  turnovers forced by a good defence barely reach them (the on-court defence profiles of §3l were shrunk to a small spread:
+  rim 67.3% ± 1.5 points). This is why margins are half-sized (slope 1.45; market spreads ~2× ours, §3m) and why strong
+  teams look ordinary (Memphis, §3j).
+- **Stars play too much**: minutes +6.5% (33.4 v 31.3), points +8.8%, assists +7.1%; bench points −4.4%, assists −7.6%;
+  starters +0.9% minutes. Replayed rotations (M3 v0) give stars their full-strength minutes in every world; part of the
+  total's +1.2% follows (more of the best players on the floor).
+- **Too narrow**: total simulated SD 17.0 v real deviation 21.0 (10–90% coverage 65%), margin 14.7 v 17.2 (72.5%),
+  minutes coverage 58–63% (target 80%) — per-world form and strength uncertainty (M8) and game-state substitutions (M7).
+- Overtime 2.8% v 2.5% on these games (small sample; 5.4% this season). Win calibration: in the 0.2–0.4 bin the home side
+  won 17% of 41 games at 33% predicted — favourites are under-rated, as the margin slope says.
+- M6a on the same games (real possessions, lineups and clock): total −1.0, margin corr 0.21 — teacher forcing replays each
+  game's real state, so its margins are not forecasts; it agrees that the per-possession models carry little team strength.
+
+## 3n. Team engine — the per-world season pathway, walk-forward (20 Nov 2026; M12 first cut, D25/D26)
+
+`scripts/season_backtest.py`: from 20 Nov, 25 Dec, 1 Feb and 10 Mar of each season 2022-23 → 2025-26 (16 starts × 30
+teams = 480 team-starts), ratings from the games before the date (as `team_table`: box possessions, shrunk with K = 8
+games), the real remaining regular-season schedule played in 10,000 universes by `scripts/pathway.py`; real final wins
+scored against the simulated distribution. Logs `analysis/experiments/20261120T093320Z_season_backtest.json` (variants)
+and `…093809Z_season_calibration.json` (36-setting grid with leave-one-season-out selection). History only; the
+2026-27 final test is untouched.
+
+| Variant (start draw × posterior SD, gain × estimator's, memory) | Dispersion (1.0) | 10–90% coverage (80%) | CRPS of final wins | Persistence, sim (real 0.40) |
+|---|---|---|---|---|
+| Fixed probabilities — the season sim the app used until today | 1.53 | 64.6% | 2.727 | 0.00 |
+| Start draw only (1, 0, —) | 1.10 | 79.4% | 2.621 | 0.31 |
+| Updates only (0, 1, —) | 1.19 | 76.2% | 2.630 | 0.24 |
+| v0: estimator's own response (1, 1, —) | 0.99 | 85.0% | 2.631 | 0.40 |
+| **v1, promoted: (0.4, 1, 20 games)** | **1.00** | **84.2%** | **2.611** | 0.36 |
+
+- **The old season sim was far too confident**: fixed per-game probabilities from today's ratings made real final wins
+  fall outside the simulated 10–90% interval 35% of the time (dispersion 1.53; 1.63 from 20 Nov). Real strength moves
+  during a season, and surprises persist: the correlation of a team's surprise (wins − expected) in the first and second
+  halves of the remaining games is **0.40 in real seasons at every start date** (0.39–0.41) — fixed strengths give 0.
+- **Per-world ratings fix most of it.** Leave one season out (choose by CRPS on three seasons, score the fourth): the chosen
+  setting is (0.4, 1, 20) in 3 of 4 folds; held-out CRPS v fixed −2.5%, −3.5%, −6.0%, −3.8% (every season better), v v0
+  −0.7%, −1.5%, +0.9%, −1.0%. CRPS is flat across most calibrated settings (2.61–2.64): the gain from fixed to any
+  per-world pathway is the big step; the fine settings matter less.
+- **What is still wrong — the shape by date.** v1 by start date: dispersion 0.84 / 1.00 / 1.07 / 1.06 (20 Nov / 25 Dec /
+  1 Feb / 10 Mar), coverage 88 / 84 / 79 / 85%, simulated persistence 0.52 / 0.42 / 0.31 / 0.18 against a flat real 0.40.
+  Too wide in November, a little narrow late; simulated surprises fade with the date while real ones do not (injuries,
+  trades, tanking and rest arrive all season). Candidates: a better start estimate (season-to-date raw ratings ignore last
+  season and the schedule — a carry-over prior and opponent adjustment would narrow November honestly) and a gain that does
+  not decay with games played (the 20-game memory helps; a per-day drift, as MusSim's, may fit the flat persistence).
+- Bias of the mean is zero by construction when pooled (every game has a winner); per-team bias is part of CRPS.
+- The NBA Cup final is a regular-season game in hoopR (83 games for the two finalists) but not in the standings; it is
+  in both the simulated and the real totals here, so the test is unaffected.
+
 ## 4. Placeholder model `baseline-v0` (19 Nov 2026, superseded by `baseline-v1`)
 
 - Team score SD 11.25 with correlation 0.35 gives margin SD 12.8 and total SD ~19 in simulation.

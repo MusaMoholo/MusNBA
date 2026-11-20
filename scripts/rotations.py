@@ -314,8 +314,8 @@ def main():
             if (history.RAW_DIR / f'play_by_play_{season}.parquet').exists():
                 print(season, json.dumps(build(history.season_games(season), history.OUT_DIR / str(season))))
         return
-    games = (plays.from_summary(read_json(p)) for p in sorted((RAW / 'final').glob('*.json.gz')))
-    print(json.dumps(build(games, DERIVED / 'rotations'), indent=1))
+    from scripts import possessions
+    print(json.dumps(build(possessions.current_games(), DERIVED / 'rotations'), indent=1))
 
 
 if __name__ == '__main__':

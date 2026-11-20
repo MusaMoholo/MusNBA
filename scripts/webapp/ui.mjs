@@ -119,7 +119,10 @@ export const percentileOf = (d, v) => {
   const below = probWhere(d, x => x < v), equal = probWhere(d, x => x === v);
   return below + equal / 2;
 };
-export const defaultLine = d => Math.max(0.5, d.q[2] - 0.5);
+/** Over/under lines are always x.5 (owner, 20 Nov: no pushes): the x.5 at or above-and-nearest a value, so a typed 4
+ * becomes 4.5 — the same "over" chance, since over means strictly more. */
+export const halfLine = v => Math.floor(v) + 0.5;
+export const defaultLine = d => halfLine(Math.max(0.5, d.q[2] - 0.5));
 
 /** Histogram of integer outcomes. Bars right of `line` are highlighted; `side` colours by sign. */
 export function histogram(d, {line = null, actual = null, side = false, height = 170, label = v => v} = {}) {

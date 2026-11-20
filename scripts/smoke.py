@@ -18,7 +18,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from basketball_common import DERIVED, NBA_TEAM_IDS, SNAPSHOTS, VIEWS, read_json  # noqa: E402
+from basketball_common import DERIVED, MASTER_CSV, NBA_TEAM_IDS, SNAPSHOTS, VIEWS, read_json  # noqa: E402
 from scripts import box_scores, master_fixtures, pbp, projection  # noqa: E402
 from scripts.season_stats import period_profiles, player_table, team_table  # noqa: E402
 
@@ -186,6 +186,18 @@ def main():
         pits = r[[c for c in r.columns if c.endswith('_pit')]].to_numpy()
         check(f'M6a {m6a[-1].stem}: points = 2·FGM + 3PM + FTM and rebounds = OREB + DREB (sim and actual); PIT in [0, 1]',
               max(bad.values()) < 1e-6 and np.nanmin(pits) >= 0 and np.nanmax(pits) <= 1, bad)
+    backtests = sorted(p for p in (DERIVED / 'experiments').glob('*_backtest_*.parquet') if not p.stem.endswith('_players'))
+    if backtests:  # M9: each game's simulated total and margin add up from the two teams; probabilities and PITs in [0, 1]
+        import numpy as np
+        import pandas as pd
+        b = pd.read_parquet(backtests[-1])
+        if args.fault:
+            b.loc[b.index[0], 'total_sim'] += 0.5
+        gap = max(float((b['total_sim'] - b['home_sim'] - b['away_sim']).abs().max()),
+                  float((b['margin_sim'] - b['home_sim'] + b['away_sim']).abs().max()))
+        pits = b[[c for c in b.columns if c.endswith('_pit')]].to_numpy()
+        check(f'backtest {backtests[-1].stem}: total = home + away and margin = home − away (sim); p and PIT in [0, 1]',
+              gap < 1e-6 and b['p_home'].between(0, 1).all() and np.nanmin(pits) >= 0 and np.nanmax(pits) <= 1, {'gap': gap})
     for path in [DERIVED / 'rotations' / 'rotations_report.json'] + sorted((DERIVED / 'history').glob('*/rotations_report.json')):
         if not path.exists():
             continue
@@ -208,8 +220,10 @@ def main():
     variant = DERIVED / 'variants' / 'rebound_feed'  # D23: canonical = the 2026-27 rebound convention; v1's feed clocks kept here
     if (variant / 'segments.parquet').exists():
         import pandas as pd
-        pairs = [(DERIVED / 'segments_report.json', variant / 'segments_report.json')] + [
-            (p, variant / 'history' / p.parent.name / 'segments_report.json') for p in sorted((DERIVED / 'history').glob('*/segments_report.json'))]
+        # History seasons are fixed: their reports must match field for field. The variant's live season is frozen at v1's
+        # data (games through 18 Nov) while the canonical one grows nightly (D26), so it is compared row by row below,
+        # on the games both hold.
+        pairs = [(p, variant / 'history' / p.parent.name / 'segments_report.json') for p in sorted((DERIVED / 'history').glob('*/segments_report.json'))]
         moved = {}
         for a_path, b_path in pairs:
             if b_path.exists():
@@ -224,9 +238,10 @@ def main():
             s = pd.read_parquet(p, columns=['rebound', 'action_clock', 'end_clock'])
             r = s[s['rebound'].notna()]
             gaps[p.parent.name] = round(float((r['action_clock'] == r['end_clock']).mean()), 5)
-        a = pd.read_parquet(DERIVED / 'segments.parquet', columns=['start_clock', 'end_clock'])
-        b = pd.read_parquet(variant / 'segments.parquet', columns=['start_clock', 'end_clock'])
-        live_moved = int((a.to_numpy() != b.to_numpy()).any(axis=1).sum()) if len(a) == len(b) else -1
+        a = pd.read_parquet(DERIVED / 'segments.parquet', columns=['game_id', 'start_clock', 'end_clock'])
+        b = pd.read_parquet(variant / 'segments.parquet', columns=['game_id', 'start_clock', 'end_clock'])
+        a = a[a['game_id'].isin(set(b['game_id']))]
+        live_moved = int((a[['start_clock', 'end_clock']].to_numpy() != b[['start_clock', 'end_clock']].to_numpy()).any(axis=1).sum()) if len(a) == len(b) else -1
         check("rebound convention: every rebound starts at its miss (>99.9% per season); a no-op on the live season (<0.1%)",
               min(gaps.values()) > 0.999 and 0 <= live_moved < 0.001 * len(a), {'gap_zero': gaps, 'live_moved': live_moved})
     if (DERIVED.parent / 'raw' / 'espn' / 'parity').exists():
@@ -314,6 +329,10 @@ def main():
             if hist_total(f['wins']) != season['sims']:
                 seed_problems.append(f'{t} wins hist')
         check(f'{day}: season seeds partition and wins stay in range', not seed_problems, seed_problems[:3])
+        if season.get('engine_games'):  # D25: universe k plays engine world k, so a game's season win % is the engine's
+            rows = {r['game_id']: r for r in season['games']}
+            off = [g for g in season['engine_games'] if g in games and abs(rows[g]['p_home'] - games[g]['periods']['fg']['home']['win']) > 5e-5]
+            check(f'{day}: season plays the engine\'s worlds ({len(season["engine_games"])} games, win % identical)', not off, off[:3])
 
     latest = snaps[-1]
     day = latest.name
@@ -348,6 +367,29 @@ def main():
                   json.dumps(again, sort_keys=True) == json.dumps(stored, sort_keys=True))
     else:
         print(f'SKIP  re-simulation: inputs changed since the {day} snapshot (expected after new collections)')
+
+    # Team pathway (D25): the season re-simulates bit-for-bit from the snapshot dated on its as-of day (its stats are the
+    # pathway's start) and the stored engine worlds, while the fixture list is unchanged.
+    pathway_snaps = [p for p in snaps if read_json(p / 'season.json').get('as_of') == p.name and (p / 'meta.json').exists()]
+    if pathway_snaps:
+        snap = pathway_snaps[-1]
+        meta, season = read_json(snap / 'meta.json'), read_json(snap / 'season.json')
+        if meta['inputs']['master_sha256'] == __import__('basketball_common').sha256_file(MASTER_CSV):
+            import numpy as np
+            st = read_json(snap / 'stats.json')
+            worlds = {}
+            for p in snaps:  # every snapshot written with this season carries its own slate's engine worlds
+                if (p / 'engine_worlds.npz').exists() and read_json(p / 'season.json').get('as_of') == snap.name:
+                    with np.load(p / 'engine_worlds.npz') as z:
+                        worlds.update({k: z[k] for k in z.files})
+            again = json.loads(json.dumps(projection.simulate_season(st['teams'], st['league'], master, snap.name, teams,
+                                                                     worlds or None, season['sims'], season['pathway'])))
+            if args.fault:
+                season['games'][0]['p_home'] += 1e-4
+            check(f'{snap.name}: season re-simulates bit-for-bit ({season["model"]}, {len(worlds)} engine games)',
+                  json.dumps(again, sort_keys=True) == json.dumps(season, sort_keys=True))
+        else:
+            print(f'SKIP  season re-simulation: fixtures changed since the {snap.name} snapshot')
 
     api = VIEWS / 'api'
     view_meta = read_json(api / 'meta.json')

@@ -1,6 +1,6 @@
 // Game Centre. One period selector (Q1–Q4, H1, H2, FG) drives the bezel and both views:
 // Player = per-period box scores, Team = per-period team lines and distributions. Matchup is separate.
-import {api, atLeast, modelPill, barChart, dayLabel, defaultLine, esc, f1, heat, histogram, logo, over, pct, percentileOf,
+import {api, atLeast, modelPill, barChart, dayLabel, defaultLine, esc, f1, halfLine, heat, histogram, logo, over, pct, percentileOf,
         probWhere, rate, record, seg, signed, stamp, statusTag, store, team, tipTimes} from './ui.mjs';
 
 export const PERIODS = [['q1', 'Q1', '1st quarter'], ['q2', 'Q2', '2nd quarter'], ['q3', 'Q3', '3rd quarter'], ['q4', 'Q4', '4th quarter'],
@@ -254,16 +254,16 @@ function stepLadder(d, {suffix = '+', minStep = 1} = {}) {
 }
 function distBlock(data, b) {
   const key = lineKey(data, b.id);
-  const line = state.lines.has(key) ? state.lines.get(key) : defaultLine(b.d);
-  const pOver = over(b.d, line), pPush = Number.isInteger(line) ? probWhere(b.d, v => v === line) : 0;
+  const line = state.lines.has(key) ? halfLine(state.lines.get(key)) : defaultLine(b.d);
+  const pOver = over(b.d, line);  // x.5 lines: no push
   return `<section class="panel" data-block="${b.id}">
     <div class="row" style="justify-content:space-between"><h2 style="margin:0">${esc(b.title)}</h2>
       <span class="note" style="margin:0">mean ${f1(b.d.mean)} · median ${b.d.q[2]} · 10–90%: ${b.d.q[0]} to ${b.d.q[4]}</span></div>
     <div class="dist" style="margin-top:8px"><div>${histogram(b.d, {line: b.side ? null : line, side: b.side, actual: b.actual ?? null})}
         <div class="lineinput"><label for="line-${b.id}">${b.side ? 'Margin over' : 'Over'}</label>
-          <input id="line-${b.id}" type="number" step="0.5" value="${line}" data-line="${b.id}">
+          <input id="line-${b.id}" type="number" step="1" value="${line}" data-line="${b.id}">
           <output>${b.side ? esc(marginText(line, b.A, b.H)) + ': ' : 'Over: '}${pct(pOver)}</output>
-          ${b.side ? '' : `<span class="dim">Under: ${pct(1 - pOver - pPush)}${pPush ? ` · push ${pct(pPush)}` : ''}</span>`}</div>
+          ${b.side ? '' : `<span class="dim">Under: ${pct(1 - pOver)}</span>`}</div>
         ${b.actual != null ? `<p class="note">Actual: <b>${b.actual}</b> · ${ordinal(Math.round(100 * percentileOf(b.d, b.actual)))} percentile of the simulations</p>` : ''}</div>
       <div class="scroll"><table><thead><tr><th class="l">${b.side ? 'Outcome' : 'Line'}</th><th>Chance</th></tr></thead><tbody>
         ${b.ladder(b.d).map(([label, p]) => `<tr><td class="l">${esc(label)}</td>${heat(p, {digits: 1})}</tr>`).join('')}</tbody></table></div></div></section>`;
@@ -271,7 +271,7 @@ function distBlock(data, b) {
 function wireBlocks(el, data, paint) {
   el.querySelectorAll('input[data-line]').forEach(input => input.onchange = () => {
     const v = Number(input.value);
-    if (Number.isFinite(v)) { state.lines.set(lineKey(data, input.dataset.line), v); paint(); }
+    if (Number.isFinite(v)) { state.lines.set(lineKey(data, input.dataset.line), halfLine(v)); paint(); }
   });
   el.querySelectorAll('[data-block] svg.hist').forEach(svg => svg.onclick = e => {
     const v = e.target.closest('rect.hit')?.dataset.v;
@@ -392,13 +392,13 @@ async function sheet(view, data, pid, current) {
   const statBlock = () => {
     const d = proj.stats[state.stat];
     const act = actualValue(actualRow, period, state.stat);
-    const line = state.lines.has(key()) ? state.lines.get(key()) : defaultLine(d);
-    const pOver = over(d, line), pPush = Number.isInteger(line) ? probWhere(d, v => v === line) : 0;
+    const line = state.lines.has(key()) ? halfLine(state.lines.get(key())) : defaultLine(d);
+    const pOver = over(d, line);  // x.5 lines: no push
     return `<section class="panel"><div class="row" style="justify-content:space-between"><h2 style="margin:0">${esc(NAME[state.stat] || LABEL[state.stat])} · ${esc(periodName(period))}</h2>
       <span class="note" style="margin:0">mean ${f1(d.mean)} · median ${d.q[2]} · 10–90%: ${d.q[0]} to ${d.q[4]}</span></div>
       <div class="dist" style="margin-top:8px"><div>${histogram(d, {line, actual: act})}
-        <div class="lineinput"><label for="line-stat">Over</label><input id="line-stat" type="number" step="0.5" min="0" value="${line}" data-line="stat">
-          <output>Over: ${pct(pOver)}</output><span class="dim">Under: ${pct(1 - pOver - pPush)}${pPush ? ` · push ${pct(pPush)}` : ''}</span></div>
+        <div class="lineinput"><label for="line-stat">Over</label><input id="line-stat" type="number" step="1" min="0.5" value="${line}" data-line="stat">
+          <output>Over: ${pct(pOver)}</output><span class="dim">Under: ${pct(1 - pOver)}</span></div>
         ${act != null ? `<p class="note">Actual: <b>${act}</b> · ${ordinal(Math.round(100 * percentileOf(d, act)))} percentile of the simulations</p>` : ''}</div>
         <div class="scroll"><table><thead><tr><th class="l">${esc(LABEL[state.stat])}</th><th>Chance</th></tr></thead><tbody>
         ${stepLadder(d).map(([label, pr]) => `<tr><td class="l">${esc(label)}</td>${heat(pr, {digits: 1})}</tr>`).join('')}</tbody></table></div></div></section>`;
@@ -426,7 +426,7 @@ async function sheet(view, data, pid, current) {
     view.querySelectorAll('[data-stat]').forEach(b => b.onclick = () => { state.stat = b.dataset.stat; store.set('stat', state.stat); paint(); });
     const block = view.querySelector('#stat-block');
     const input = block?.querySelector('input[data-line]');
-    if (input) input.onchange = () => { const v = Number(input.value); if (Number.isFinite(v)) { state.lines.set(key(), v); paint(); } };
+    if (input) input.onchange = () => { const v = Number(input.value); if (Number.isFinite(v)) { state.lines.set(key(), halfLine(Math.max(0, v))); paint(); } };
     const svg = block?.querySelector('svg.hist');
     if (svg) svg.onclick = e => { const v = e.target.closest('rect.hit')?.dataset.v; if (v != null) { state.lines.set(key(), Number(v) - 0.5); paint(); } };
   };

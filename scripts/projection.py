@@ -371,31 +371,32 @@ def package(game: dict, teams: dict, pts_by_period: dict, n_ot: np.ndarray, W: i
 # ---------------------------------------------------------------------------- season
 
 def simulate_season(T: dict, lg: dict, master: list[dict], day: str, teams: dict,
-                    game_probs: dict, sims: int | None = None) -> dict:
+                    engine_pts: dict | None = None, sims: int | None = None, params: dict | None = None) -> dict:
+    """The season from `day` on (D25, D26): every remaining game, in date order, through the team pathway
+    (`scripts/pathway.py`) — universe k carries its own offensive and defensive ratings, takes engine world k mod W for
+    the play-by-play engine's games (`engine_pts`: game_id → per-world, per-period points) and updates both teams after
+    every game. Win % for a game = share of universes in which the home side won it (D16)."""
+    from scripts import pathway
     W = sims or MODEL['sims']
-    rng = rng_for(MODEL['id'], day, 'season')
+    rng = rng_for(pathway.PATHWAY['id'], day, 'season')
     ids = sorted(teams, key=int)
     index = {t: i for i, t in enumerate(ids)}
-    remaining = [r for r in master if r['date_et'] >= day]
+    remaining = sorted((r for r in master if r['date_et'] >= day), key=lambda r: (r['date_et'], r['tip_utc'], r['game_id']))
     unresolved = [r for r in master if r['date_et'] < day and r['status'] != 'final']
     G = len(remaining)
-    p = np.empty(G)
+    played = pathway.play(T, lg, remaining, W, rng, engine_pts, params)
     rows = []
     for g, r in enumerate(remaining):
-        if r['game_id'] in game_probs:
-            p[g] = game_probs[r['game_id']]
-            exp = None
-        else:
-            exp = team_expectation(T, lg, r['home_id'], r['away_id'], bool(int(r.get('neutral') or 0)))
-            p[g] = exp['p_home']
-        rows.append({'game_id': r['game_id'], 'p_home': round(float(p[g]), 4),
-                     **({'mu_home': round(exp['mu_home'], 2), 'mu_away': round(exp['mu_away'], 2)} if exp else {})})
+        pts = played['points'][:, g]
+        rows.append({'game_id': r['game_id'], 'p_home': round(float(played['home_win'][:, g].mean()), 4),
+                     'mu_home': round(float(pts[:, 0].mean()), 2), 'mu_away': round(float(pts[:, 1].mean()), 2),
+                     'source': 'engine' if engine_pts and r['game_id'] in engine_pts else 'pathway'})
     H = np.zeros((G, len(ids)), np.float32)
     A = np.zeros((G, len(ids)), np.float32)
     for g, r in enumerate(remaining):
         H[g, index[r['home_id']]] = 1
         A[g, index[r['away_id']]] = 1
-    home_wins = (rng.random((W, G)) < p).astype(np.float32)
+    home_wins = played['home_win'].astype(np.float32)
     base_w = np.array([T[t]['w'] for t in ids], np.float32)
     base_l = np.array([T[t]['l'] for t in ids], np.float32)
     games_left = H.sum(0) + A.sum(0)
@@ -423,7 +424,12 @@ def simulate_season(T: dict, lg: dict, master: list[dict], day: str, teams: dict
                   'top6': round(float((s <= 6).mean()), 4), 'playin': round(float(((s >= 7) & (s <= 10)).mean()), 4),
                   'out': round(float((s >= 11).mean()), 4), 'first': round(float((s == 1).mean()), 4),
                   'best_record': round(float((best == i).mean()), 4), 'worst_record': round(float((worst == i).mean()), 4)}
-    return {'model': MODEL['id'], 'sims': W, 'teams': out, 'games': rows,
+    params = {**pathway.PATHWAY, **(params or {})}
+    return {'model': pathway.PATHWAY['id'], 'pathway': params, 'as_of': day, 'sims': W, 'teams': out, 'games': rows,
+            'engine_games': sorted(engine_pts) if engine_pts else [],
             'unresolved_before': [r['game_id'] for r in unresolved],
-            'notes': ['Ties broken at random; NBA tiebreakers arrive with phase 4.',
+            'notes': ['Team pathway (D25, D26): each universe carries its own offensive and defensive ratings, takes the '
+                      "possession engine's worlds for its games and updates both teams after every simulated game; its "
+                      'spread is calibrated walk-forward on 2022-26 (first cut, slightly wide in November).',
+                      'Ties broken at random; NBA tiebreakers arrive with phase 4.',
                       'Only games the provider has scheduled are simulated; NBA Cup-determined games appear once scheduled.']}

@@ -360,10 +360,20 @@ def to_frame(rows):
     return pd.DataFrame(flat)
 
 
-def build_current(rebound_clock: str = 'miss', root: Path = DERIVED):
-    """Current-season segments → root/segments.parquet (root = DERIVED, or a variant folder)."""
-    games = (plays.from_summary(read_json(p)) for p in sorted((RAW / 'final').glob('*.json.gz')))
-    rows, report = parse_many(games, rebound_clock)
+def current_games(before: str | None = None):
+    """This season's final games in the canonical schema. before = an ET date: only games dated earlier (master
+    fixtures), so inputs rebuilt for slate D never see a game played on D (cutoff safety for the nightly rebuild)."""
+    paths = sorted((RAW / 'final').glob('*.json.gz'))
+    if before:
+        from scripts import master_fixtures
+        dates = {r['game_id']: r['date_et'] for r in master_fixtures.load()}
+        paths = [p for p in paths if dates.get(p.name.split('.')[0], '9999') < before]
+    return (plays.from_summary(read_json(p)) for p in paths)
+
+
+def build_current(rebound_clock: str = 'miss', root: Path = DERIVED, before: str | None = None):
+    """Current-season segments → root/segments.parquet (root = DERIVED, or a variant folder); before: see current_games."""
+    rows, report = parse_many(current_games(before), rebound_clock)
     root.mkdir(parents=True, exist_ok=True)
     to_frame(rows).to_parquet(root / 'segments.parquet', index=False)
     write_json(root / 'segments_report.json', report, pretty=True)

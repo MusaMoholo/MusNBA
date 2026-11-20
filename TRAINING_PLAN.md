@@ -157,6 +157,12 @@ old way — the old models are right there by construction — so it is judged b
 data's held-out rows, paired with a run trained on the new data (`compare.py`). Data variants live under
 `data/derived/variants/<name>/`; a version file names its data (`"segments"`, `"features"`).
 
+**Game-level gate (20 Nov).** Node log loss is necessary, not sufficient: small per-possession effects add up over a game
+(on-court defence was neutral at node level, §3l, while the backtest shows defence expressed at ~25% of its real effect,
+FINDINGS §3o). Inputs aimed at team strength are judged by the engine backtest as well (`backtest.py`, same seed and games
+as the control run): `strength_loading`, margin slope, margin/total CRPS and win log loss against the current engine and
+the team-rating model.
+
 **Sample-size buckets.** `games_eff` (role family, 5-game half-life) caps at ~7.7, so per-sample-size verdicts use the
 deciding player's decayed offensive segments (`scripts/buckets.py`: < 250, 250–750, 750+).
 

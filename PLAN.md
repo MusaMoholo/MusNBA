@@ -16,6 +16,19 @@ A local-first NBA simulator PWA, sibling to the owner's MusSim football app (`..
 - **Feedback loop**: real results enter nightly; features update nightly, models refit weekly.
 - Lineup-sensitive and game-state-aware; coaching tendencies learned from data, not hand-labelled.
 
+**The daily flow — two engines (owner, 20 Nov; ENGINE_PLAN D26).** On any date D:
+1. **Result** every game played before D.
+2. **Play-by-play engine** — today's and tomorrow's games (if neither day has games, the next slate), possession by
+   possession, with player profiles, form, roles, rotations and injuries carried over from every game before D.
+3. **Team engine** — every later game, as MusSim: each world carries its own offensive and defensive rating per team,
+   starting from today's estimate (plus its uncertainty), taking in that world's play-by-play results first, then
+   updating after every simulated game in date order. March games use the ratings each world's own path produced —
+   never today's ratings frozen.
+4. **Season** outputs are counts over the worlds.
+
+Each chunk of work should move one or both engines closer to a state the owner trusts against real outcomes — the
+play-by-play engine by the backtest (M9), the team engine by the walk-forward season test (M12).
+
 ## 2. Principles (carried over from MusSim)
 
 | Principle | How it applies here |
@@ -60,9 +73,9 @@ Slates are US Eastern game dates; tip-offs show UK time with ET alongside.
 | 0 | Discovery, data probe, plan | `██████████` done |
 | 1 | App shell, season stats, placeholder projections | `██████████` done — owner checks pending (iPhone, hosting) |
 | 1b | Per-period Game Centre (owner spec), play-by-play parser, quarter-aware placeholder | `██████████` done |
-| 2 | Possession engine (data → models → engine → backtest) | `███████░░░` **M1–M5b, M6a done · engine v1.1 is the app's default (D22, D23) for today and tomorrow (D24) · backtest (M9) next** |
+| 2 | Possession engine (data → models → engine → backtest) | `███████░░░` **M1–M5b, M6a done · engine v1.1 is the app's default (D22–D24), inputs rebuilt nightly (D26) · first backtest run (M9): defence under-expressed — the next fix** |
 | 3 | Evaluation and nightly feedback (Forecast Lab view, refit cadence) | not started |
-| 4 | Season on the engine: pathway calibration, availability, tiebreakers, play-in, Cup, what-ifs | not started |
+| 4 | Season on the engine: pathway calibration, availability, tiebreakers, play-in, Cup, what-ifs | `██░░░░░░░░` **team pathway v1 in the app (D25): per-world ratings, engine worlds for today + tomorrow; walk-forward calibration first cut (M12)** |
 | 5 | Polish: hosting, iPhone acceptance, watch-a-sim, more views | not started |
 
 ## 6. Phase 2 milestones — the current work
@@ -82,10 +95,10 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
 | M6 | Engine (replay rotations) | ◐ **v1.1 is the app's default (D22, D23), today and tomorrow (D24)** — `nightly.py` (chip "Engine v1.1"; `--placeholder` opts out, `--ahead N`): 2,000 worlds per game, ~20 s per game; strong offences under-expressed, spread too narrow | 10k sims per game in today's output contract | `engine.py` |
 | M7 | Target-aware substitution model | ☐ | Minutes MAE < 5.2 and 10–90% coverage ≈ 80% (beats replay v0) | (to build) |
 | M8 | Per-player form + end-game checks | ☐ | Variance and overtime rate (5.4%) calibrated | (to build) |
-| M9 | Walk-forward backtest (engine on past games) | ☐ `backtest.py` written (fold models, cutoff-safe inputs, team/player scores), not yet run | Measures the engine (the floor, D22) and every candidate on game and player CRPS, win calibration and realism v `baseline-v1` and the current engine; a candidate replaces the engine only if better | (to build) |
+| M9 | Walk-forward backtest (engine on past games) | ◐ **first run (20 Nov, 200 F4 games)**: pace right (+0.2%), totals +2.7, margins half-sized (slope 1.45), defence expressed at ~25% of its real effect, stars' minutes +6.5%, totals too narrow (coverage 65%); **the team-rating model beats the engine on every game measure** (margin CRPS 9.32 v 9.64, win log loss 0.558 v 0.592) — FINDINGS §3o | Measures the engine (the floor, D22) and every candidate on game and player CRPS, win calibration and realism v the team-rating model and the current engine; a candidate replaces the engine only if better | `backtest.py` |
 | M10 | Watch-a-sim view (owner, 20 Nov: nba.com-style play-by-play list first, then visual play-through) | ☐ | A saved world's events list and replay in the Game Centre, phone and desktop | `engine.py` event log, views, `game.mjs` |
 | M11 | Availability model | ☐ | Simulated games missed match history | (to build) |
-| M12 | Season pathway calibration | ☐ | Dispersion ≈ 1.0, persistence matches | (to build) |
+| M12 | Season pathway calibration | ◐ **first cut (20 Nov): team pathway v1 in the app** — walk-forward 2022-26 (480 team-starts): dispersion 1.00 (fixed probabilities 1.53), 10–90% coverage 84% (65%), CRPS −4% in every held-out season; still wide in November (0.84) and surprises fade with the date (sim 0.52 → 0.18 v real 0.40 flat) | Dispersion ≈ 1.0 **at every start date**, persistence matches | `pathway.py`, `season_backtest.py` |
 
 ## 7. Phase 1 record (done)
 
@@ -129,14 +142,30 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
 
 5. **Owner (19 Nov, late):** the engine projects **today and tomorrow, always** (D24, replaces the seven-day window), and the
    season sim should then play every later game with **per-world team ratings, MusSim-style** (D25) — left as future work
-   at the owner's request; built next.
+   at the owner's request; **built 20 Nov** (team pathway v1, D25–D27).
 
-Realism sweep with the owner (19 Nov) — gaps, in priority order (HANDOFF next actions):
+6. **Engine v team model for today's win % (raised 20 Nov, open):** on past games the team-rating model predicts results better than engine v1.1 (FINDINGS §3o). Proposal: keep the engine as the dashboard default (ground-up goal, player and period outputs need it; D22) and fix defence first; alternatively show the team model's win % beside the engine's, labelled, until the engine beats it.
+
+### 9b. Dashboard UX backlog (owner, 20 Nov) — headliners for chunks that cannot improve an engine
+
+1. **Watch a sim, 2K-style** (M10, extends D9): a saved world played through time on an aerial view of the court — shots
+   placed where they were taken (zone, distance band, side), makes and misses, the clock running, the box score filling;
+   after the nba.com-style play-by-play list. Needs the engine's event log (five worlds per game) and shot coordinates
+   sampled within the band for display.
+2. **More depth on game outcomes**: richer, more sensitive graphs of player and team outcome distributions per game
+   (lines, ladders, joint outcomes, how a line moves with a player in or out).
+3. **Competition tabs**: NBA regular season · **NBA Cup** · **NBA playoffs** — the playoffs tab seeds the bracket from the
+   standings as they are expected to finish (per simulated season) and plays the play-in and every round per world,
+   MusSim cup-style (bracket probabilities by round).
+
+### 9c. Realism sweep (owner, 19 Nov) — gaps, in priority order (HANDOFF next actions)
+
 1. ~~Live v history adapter skew~~ — M5b done: ESPN's 2026-27 rebound stamp; one convention (D23); v1.1 promoted.
 2. Minutes: target-aware substitutions (blowouts, foul trouble, fatigue, closing lineups) — M7; the biggest risk.
 3. **Size and archetype priors** (owner: low-sample players borrow from similar players' profiles) — heights/weights fetched
    (935 players); first ablation negative (low-sample players do not gain; FINDINGS §3l); location node gains — next test.
-4. **On-court defensive impact** (first ablation negative, FINDINGS §3l; helps location only) per player (opponents' shooting by zone and turnover rate while he is on the floor,
+4. **On-court defensive impact** — **the top engine fix (backtest 20 Nov: the opponent's defence is expressed at ~25% of its real
+   effect, FINDINGS §3o)**; first ablation negative at node level (FINDINGS §3l; helps location only) per player (opponents' shooting by zone and turnover rate while he is on the floor,
    shrunk) — positional defenders who force misses without blocks are invisible today; TRAINING_PLAN §2.1 lists it.
 5. Timeouts (after-timeout plays, late-game advance), end-of-period heaves, technical/flagrant free throws,
    goaltending, lane violations — rules or small nodes in M6/M8.
@@ -229,3 +258,4 @@ Realism sweep with the owner (19 Nov) — gaps, in priority order (HANDOFF next 
 - **20 Nov 2026** — Owner: the goal is a ground-up simulation as accurate as possible against real outcomes, not betting;
   the market is a reference. Measured: DraftKings' lines are unbiased against 2026-27 results (222 games: totals −0.6 ±
   1.2, margin slope 1.09), so v1.1's high totals and half-sized spreads are engine errors to fix (HANDOFF item 3).
+- **20 Nov 2026** — Owner: the product is two engines in one daily flow (**D26**); each chunk has one or two headliners that move them toward trust; every chunk ends with the dashboard on the newest systems; UX backlog §9b. **Nightly input rebuild:** segments → rotations → profiles from every final before today (~50 s; 4 new finals → engine inputs changed), next slate when today and tomorrow are empty. **Team pathway v1 (D25) in the app:** per-world offence/defence ratings, engine worlds for today + tomorrow, updates on the points surprise (D27: a good loss keeps ratings); walk-forward 2022-26: the old fixed-probability season sim had dispersion 1.53 and coverage 65%, v1 1.00 and 84%, CRPS −4% in every held-out season (still wide in November). **First engine backtest (M9, 200 F4 games):** pace +0.2%, totals +2.7, margin slope 1.45, defence expressed at ~25% of its real effect (offence ~70%), stars' minutes +6.5%; the team-rating model beats the engine on margin CRPS (9.32 v 9.64), totals and win log loss. Smoke 80/80, browser 38/38.

@@ -1,122 +1,112 @@
 # Handoff — state and next actions
 
-Updated **20 November 2026, ~00:45 UK** (checkpoint: M5b done, engine **v1.1** promoted, today + tomorrow on the engine,
-owner's market and play-by-play notes recorded). Read [AGENTS.md](AGENTS.md) first. Rewrite this file at every
-checkpoint, then commit and push; whoever reads it next may be a new agent.
+Updated **20 November 2026, ~10:10 UK** (checkpoint: nightly input rebuild, **team pathway v1** in the app (D25–D27),
+first **engine backtest** (M9) and the first **walk-forward season test** (M12)). Read [AGENTS.md](AGENTS.md) first.
+Rewrite this file at every checkpoint, then commit and push; whoever reads it next may be a new agent.
 
-**Git:** private repo `MusaMoholo/MusNBA` (`main`). This session: `5ec598f` (M5b + v1.1 + D24) and a docs follow-up
-commit after it (owner's market check and play-by-play request) — `git log --oneline -3`. **Nothing runs in the
-background.** The owner keeps `scripts/serve.py` on :8766 open — leave it; use :8767 for your own checks.
+**Git:** private repo `MusaMoholo/MusNBA` (`main`). Previous checkpoint `043654c`; this session's commit follows it —
+`git log --oneline -3`. **Nothing runs in the background.** The owner keeps `scripts/serve.py` on :8766 open — leave it;
+use :8767 for your own checks.
+
+**How the owner wants a chunk run (AGENTS §3):** state your understanding and **one or two headliners** that move the two
+engines toward trust; print the progress board (active subtasks + overall, text bars) in your reply whenever a subtask
+reaches a new 10% mark or the chunk a new 5% mark.
+
+## The product in one paragraph (ENGINE_PLAN D26)
+
+On any date D: every game before D is resulted; the **play-by-play engine** (v1.1) simulates today's and tomorrow's
+games — or the next slate if neither has games — with inputs carried over from every game before D; the **team engine**
+(team pathway v1) plays every later game in each of 10,000 worlds with that world's own offensive and defensive ratings,
+updated after every game, so March is played from each world's own path. Season outputs are counts over the worlds.
 
 ## State
 
-**What changed this session (FINDINGS §3k–§3l, ENGINE_PLAN D23–D25).**
-- **M5b done.** The live and history adapters agree (five 2025-26 games re-fetched into `data/raw/espn/parity/`:
-  identical segments). The skew was ESPN's 2026-27 feed: every rebound carries the clock of the miss it follows (100% v
-  7–12% in every earlier month), so ~2.6 s of ball flight landed in the next segment and every team looked 3–8% slower in
-  team style. **D23:** every season now uses that convention (`possessions.py`, default `--rebound-clock miss`); the old
-  data is kept for v1 in `data/derived/variants/rebound_feed/` (its `config.json` and `models/v1.json` point there).
-- **v1.1 promoted** (D22's test): v1's settings on the new data. On live-style held-out rows v1 is worse on 12 of 16
-  nodes (chain +34.1 nats per game, `…224019Z_v1_cross` v `…224019Z_v1.1_folds`) and in M6a (`…235141Z_m6a_v1_cross` v
-  `…235148Z_m6a_v1.1`). Fitted files `data/models/v1.1/` (out of git); final test scored once (`…_final_v1.1.json`).
-- **Engine serves v1.1 for today and tomorrow (D24, owner).** `nightly.py --ahead 1` (default) also projects tomorrow's
-  slate from what is known today; it is rebuilt the next night (the old snapshot archived to `~/Basketball_archive_ops`).
-  The app's as-of date stays the newest snapshot dated today or earlier (`views.current_snapshot`). Chip "Engine v1.1".
-- **Pace fixed:** on the 19 Nov slate the engine now plays 99.8–102.2 possessions per team (v1: 96–98; the teams' real
-  97.5–103.4) and ≈ 115 points per team (v1 ≈ 108; league 113.7). Snapshots 2026-11-19 (4 games, pre-game, the v1
-  snapshot archived at `~/Basketball_archive_ops/archive_20261120T000217Z_13033`) and 2026-11-20 (9 games) are engine
-  v1.1; browser checks 38/38 on :8767.
-- **Season sim unchanged:** later games still use fixed per-game probabilities from team ratings. The owner wants a
-  MusSim-style per-world rating pathway (D25) — next actions item 4.
-- **Size and defence, first ablations — negative** (FINDINGS §3l): heights/weights for all 935 players
-  (`scripts/athletes.py`, `data/derived/athletes.parquet`); archetype priors (k = 10) and on-court defence rates are
-  options in `features.py` (`--body --archetypes K --defence`) and optional inputs in `nodes.py` (`@body`, `@defence`);
-  neither beats v1.1 overall; both help the **location** node.
-- **New tools:** `scripts/parity.py` (adapter/feed parity), `scripts/buckets.py` (paired comparison by the player's sample
-  size), `train.py --segments/--train-segments/--train-features` (variants and the paired cross-data test),
-  `aggregate.py --name/--train-segments/--train-features`, `scripts/backtest.py` (**written, not yet run**).
+**Play-by-play engine (v1.1, the floor, D22).**
+- **Inputs now carry over nightly (D26).** `nightly.py` rebuilds current-season segments → rotations → profiles from every
+  final before today (`rebuild_engine_inputs`, ~50 s; `--no-rebuild` skips), cutoff-safe (`possessions.current_games(before=)`
+  drops games dated today even if final). Verified 20 Nov: 4 new finals → `latest`, `team_latest` and `stints` hashes
+  changed; profiles through 19 Nov. No games today or tomorrow → the next slate (`nightly.engine_days`).
+- **Backtest (M9) — first run:** 200 F4 games (Jan–Apr 2026), fold models through Dec 2025, known availability (`…100616Z_backtest_v1.1_F4`, FINDINGS §3o). Pace right (+0.2%), efficiency +0.9% → totals +2.7; margins half-sized (slope of real on simulated 1.45); **defence expressed at ~25% of its real effect** (points per 100 load 0.42 on the opponent's defensive rating v 1.69 in real games; offence 0.80 v 1.14 — `strength_loading` in the log); stars' minutes +6.5% (points +8.8%), bench −2.6%; totals too narrow (SD 17.0 v 21.0, coverage 65%), minutes coverage 58–63%. **The team-rating model beats the engine on every game measure** on the same games: margin CRPS 9.32 v 9.64, total 11.35 v 12.10, win log loss 0.558 v 0.592 (paired z 1.7–2.6). Evidence recorded against D18 (ENGINE_PLAN); owner question PLAN §9.6.
+- Live symptoms (FINDINGS §3j, §3m): totals ≈ +8 v the market on the 19 Nov slate, spreads about half the market's
+  (the defence finding above), OT ≈ 3% v 5.4%; M6a biases: team turnovers +9.7%, and-ones +6.9%, fouled on a three −28%.
 
-**App.** Localhost (`serve.py`, :8766) and the static PWA. Today's and tomorrow's slates come from engine v1.1 (the floor,
-D22); backfills use the placeholder `baseline-v1`, saved beside each engine snapshot (`games_placeholder.json`).
+**Team engine (team pathway v1, D25) — new, in the app.**
+- `scripts/pathway.py` (called by `projection.simulate_season`): per-world offence/defence ratings start at the shrunk
+  season estimate (K = 8) + 0.4 × its posterior SD (11 / √(gp + 8)); engine games take universe k's result from engine
+  world k mod 2,000; every later game draws scores from the world's current ratings (baseline-v1's form: pace × off × def /
+  league, home court 2, SD 11.25, rho 0.35) and both teams update by the estimator's gain 1 / (min(n, 20) + 9) on the
+  surprise v the world's own expectation. ~1 s for 974 games × 10,000 worlds.
+- `nightly.py` now projects the engine days first (`project_slate`, keeps per-world points), runs **one season as of
+  today** with both days' engine worlds, and writes the same season into today's and tomorrow's snapshots
+  (`write_snapshot`; per-world points in `engine_worlds.npz`). Fixes a D24 bug: tomorrow's snapshot used to run its own
+  season without today's games.
+- **Walk-forward trust test (M12 first cut, FINDINGS §3n):** 2022-26 from 20 Nov / 25 Dec / 1 Feb / 10 Mar (480 team-starts):
+  the old fixed-probability season sim had dispersion 1.53 and 10–90% coverage 65%; v1 1.00 and 84%, CRPS −4% in every
+  held-out season. Still wide in November (0.84, coverage 88%) and simulated surprises fade with the date (0.52 → 0.18)
+  where real ones persist (0.40 at every date).
+- App: Standings chip "Team pathway v1" and a rewritten "How the forecast works" (`seasonPill`, `league.mjs`).
 
-**Market check (owner, FINDINGS §3m):** on the 19 Nov slate v1.1 totals run ≈ +8 above DraftKings/bet365 (NYK–MIN 231 v
-216.5) and its spreads are about half the market's. The market itself is unbiased against 2026-27 results (222 games), so
-these gaps are the engine's. Owner's goal: a ground-up sim as accurate as possible against **real outcomes**, not
-betting — the market is a reference only (D8) — item 3.
+**Checks:** smoke 80/80 (new: each engine game's season win % equals the engine's; the season re-simulates bit-for-bit;
+the backtest's totals and margins add up;
+rebound-convention checks now compare the live season on the games both copies hold); `--fault` fails 9; browser 38/38
+on :8767. Snapshots 2026-11-20 (9 games) and 2026-11-21 (6 games): engine v1.1 + team pathway v1; their engine games are
+byte-identical to the morning run (determinism).
 
-**Engine realism (still open, FINDINGS §3j):** strong offences under-expressed; outcomes too tightly spread (OT ≈ 3% v
-5.4%); v1.1's M6a biases: team turnovers +9.7%, and-ones +6.9%, fouled on a three −28%, total +1.4 points.
+## Next actions (in order — the owner may reorder)
 
-**Known gap:** `nightly.py` does not rebuild segments, rotations or features — the engine's profiles stay as of the last
-manual rebuild (now: games through 18 Nov). Next actions item 1.
+1. **Defence expression (play-by-play headliner).** The engine's opponent-defence loading is 0.42 v 1.69 real. Route
+   inside D18 first: on-court defence profiles (`features.py --defence`) with much lighter shrinkage (today rim 67.3% ± 1.5
+   points), fed to what, shot result, event and turnover type (the location test, old item 6, folds in here); then fold
+   models and the backtest. **Judge by the backtest, not node log loss alone** (§3l's node-level verdict was negative):
+   `backtest.py --config <version file> --games 200 --worlds 1000 --jobs 4` with the same seed (same games) and compare
+   with `…100616Z_backtest_v1.1_F4`: `strength_loading.sim.opp_defence` toward 1.69, margin slope toward 1, margin CRPS
+   and log loss below the team-rating model's (9.32, 0.558). If player inputs cannot close it, take the D18 question to
+   the owner (opponent defensive rates as inputs). Done when a candidate beats v1.1 on the backtest and the team model on
+   margins, or the owner has the D18 question with numbers.
+2. **Stars' minutes** (+6.5% in the backtest): replayed rotations give stars full-strength minutes in every world. Scale the
+   template minutes to each player's recent minutes distribution (or start M7); judge by the backtest's player tiers
+   (minutes bias ≈ 0, coverage toward 80%) and totals.
+3. **Team engine start and drift (M12 continues; FINDINGS §3n).** (a) Start ratings: last season's rating as a prior
+   (carry-over) and opponent adjustment — November dispersion 0.84 → 1.0 honestly; (b) per-day drift so simulated
+   persistence stays ≈ 0.40 through March (now 0.52 → 0.18); (c) owner's question: a results-only Elo variant as a
+   comparison on `season_backtest.py` (expected worse — margins carry most of the information; measure it); (d) a
+   basketball "xG" for real games: rate real results on shot quality (opponent three-point and free-throw shooting are
+   mostly luck) — the true good-loss rule for today's start ratings. Judge every variant with `season_backtest.py`
+   (by date) and keep the paired seed.
+4. **Outcome-first benchmark (owner):** `scripts/market.py` (evaluation only) — for every saved engine/placeholder
+   snapshot once its games are final: engine v actual (bias, CRPS of total and margin, win log loss), closing line v
+   actual, engine v line; also let `fetch_espn.collect` save tomorrow's scoreboard (D24) so pre-game lines are kept.
+5. **Spread:** per-world form and strength uncertainty (D3/M8) — totals coverage 65%, margin 72.5%; OT rate.
+6. **Dashboard UX backlog (PLAN §9b)** — the headliner of any chunk that cannot improve an engine: Game Centre
+   play-by-play of a saved sim (D9, M10: event log for worlds 0–4, `api/game/<id>/sim/<k>`, nba.com-style list, then a
+   2K-style aerial play-through), deeper outcome graphs, Reg season / NBA Cup / Playoffs tabs (bracket from expected
+   standings per world, MusSim cup-style).
+7. **Refits with 2026-27 data** (the D23 convention makes them usable; the 2026-27 foul and turnover shifts need them);
+   design the weekly refit (D11) and its test.
+8. Then M7 (target-aware substitutions) → M8 (form, end-game) → full M9 on all folds.
 
-## Next actions (in order — the owner may reorder; items 3–5 are his requests)
+**End every chunk with the dashboard on the newest systems** (AGENTS §5 step 7): rerun the nightly so the slates and the
+10k season come from the latest promoted engines.
 
-1. **Nightly rebuild of engine inputs.** `nightly.py` does not rebuild segments, rotations or features, so the engine's
-   profiles stay as of the last manual rebuild (games through 18 Nov). Add current-season `possessions.py` →
-   `rotations.py` → `features.py` (≈ 1–2 min) after collection and before the engine. Done when a nightly run after new
-   finals changes `engine_inputs_sha256` and smoke's bit-for-bit re-simulation still passes.
-2. **Engine backtest (M9 start)** — the yardstick every engine change must beat (D22).
-   `.venv/bin/python scripts/backtest.py --config models/v1.1.json --games 200 --worlds 1000 --jobs 4`: fits all 16 fold
-   models (`data/models/folds/v1.1_F4_all/`), plays F4 games forward with cutoff-safe inputs and real availability, scores
-   team points/total/margin (CRPS, coverage, **slope of real on simulated margin**), possessions and points per possession,
-   win calibration, OT, players by tier. **Never executed — expect to debug it first.** No `baseline-v1` comparison on
-   history (its snapshots exist only for 2026-27). Add a smoke check for its output once it runs.
-3. **Scoring level and matchup expression (owner, FINDINGS §3m).** v1.1 totals ≈ +8 above the market on the 19 Nov slate
-   (efficiency +1.7%; matchups under-expressed in totals and margins — spreads about half the market's). The market is
-   *not* biased on 2026-27 results (totals −0.6 ± 1.2 v actual, margin slope 1.09), so these are the engine's errors.
-   **Owner's target is accuracy against real outcomes, not the market** (D8 note). (a) Build an outcome-first benchmark
-   (`scripts/market.py`, evaluation only): for every engine/placeholder snapshot once its games are final — engine v
-   actual (bias, CRPS of total and margin, win log loss), closing line v actual, engine v closing line; also make
-   `fetch_espn.collect` save tomorrow's scoreboard (D24) so pre-game lines are kept. (b) Use the backtest (item 2) to separate causes:
-   free throws and foul classes (M6a: and-ones +6.9%, team turnovers +9.7%), shot mix, end-of-period play, replayed
-   rotations (stars' minutes), missing strength signal (strong offences under-expressed: Memphis ≈ 113 per 100 v 117.8).
-4. **Season pathway (D25, owner).** In `projection.simulate_season`: universe k plays engine world k (mod the engine's
-   worlds) for today's and tomorrow's games — `nightly.py` keeps each engine game's per-world points (`Engine.last.pts`)
-   and runs the season sim once with both days; every later game, in date order, draws both scores from that universe's
-   own ratings (offensive and defensive rating per team; start = today's shrunk estimate + a draw at its posterior SD
-   ≈ 11 / √(games + 8) per 100) and updates both teams by the estimator's own response, 1/(n + 1 + k) with k = 8, to
-   the surprise against that universe's expectation (zero on average). Long-range win % = share of universes won (D16).
-   Done when smoke passes, a season re-simulates bit-for-bit, and the app labels the gain as uncalibrated. Calibrating the
-   gain to real dispersion and persistence is M12 (walk-forward 2022-26, as MusSim's `analysis/calibrate_drift3.py`;
-   MusSim's pathway: `../Football/scripts/simulate_season.py`, class `_World`).
-5. **Game Centre play-by-play of a saved sim (owner; D9, M10).** (a) Engine: record an event log for five worlds per game
-   (deterministic: worlds 0–4) — period, clock, team, players, action (shot zone/band/value and result, assist, block,
-   rebound side and player, turnover live/dead and stealer, foul and free throws, substitutions in/out from the replayed
-   lineups, period start/end), score after each event — saved beside `games.json` in the snapshot (≈ 450 events × 5
-   worlds per game; keep it compact). (b) Views: `api/game/<id>/sim/<k>`. (c) App: a "Play-by-play" segment in the Game
-   Centre listing a chosen sim like nba.com (period tabs, clock, team logo, description, running score; each sim labelled
-   with its final score), both themes and phone width; then (d) a visual play-through on the running clock (box score
-   filling as it plays). Browser checks for the new view.
-6. **Location with size/defence:** keep `@body`/`@defence` inputs for the location node only (per-node `drop` in a version
-   file) and test against `…224019Z_v1.1_folds`; first run a seed pair for location (its noise floor is 0).
-7. **Engine realism:** spread (per-world form, D3/M8; targets total SD 18–19, OT 5.4%); the foul classes (fouled on a
-   three −28%).
-8. **Refits with 2026-27 data:** the single convention (D23) makes this season's rows usable for training — the 2026-27
-   foul and turnover shifts (FINDINGS §3k) can only be learned from them. Design the weekly refit (D11) and its test.
-9. Then M7 (target-aware substitutions — the biggest remaining risk) → M8 (form, end-game) → M9 (full backtest).
+**Housekeeping:** the dataset cache key includes the profile files' modification time, so every nightly rebuild makes the
+next training run build a new cache folder (~8 GB); run `nodes.py --prune` before training. `data/derived/variants/rebound_miss/`
+duplicates the canonical data (safe to delete except `features_arch/`, `features_def/`). Fold models refit themselves
+when their key changes.
 
-**Housekeeping before training anything:** the dataset caches in `data/derived/nodes/` are stale (built before D23 or for
-ablations); run `nodes.py --prune` then `nodes.py` to rebuild the default (~1 min, ~14 GB). Rows and columns then match
-the control run `…224019Z_v1.1_folds`. `data/derived/variants/rebound_miss/` duplicates the canonical data now (it
-validated v1.1; safe to delete except `features_arch/`, `features_def/` if ablations are re-run). Fold models in
-`data/models/folds/` refit themselves when their key changes.
+## How to judge a change
 
-## How to judge a change (TRAINING_PLAN §7)
+- **Play-by-play engine:** node changes by paired fold comparisons (TRAINING_PLAN §7: `nodes.py`, `train.py`,
+  `compare.py --noise 20261119T190747Z_control 20261119T190747Z_seed8`, `buckets.py`, `calibration.py`; control
+  `20261119T224019Z_v1.1_folds`), then M6a (`aggregate.py`) and the **backtest** (`backtest.py`, control run below), which
+  also scores the team-rating model and M6a on the same games — the engine should beat the team model on margins.
+- **Team engine:** `season_backtest.py` (dispersion ≈ 1.0 at every start date, coverage 80%, CRPS, persistence ≈ 0.40);
+  `--grid` with leave-one-season-out selection for settings. History only — never the 2026-27 final test.
 
 ```sh
-.venv/bin/python scripts/nodes.py                         # dataset cache for the current code + inputs (~1 min, ~14 GB)
-.venv/bin/python -u scripts/train.py --name <label> --threads 6 [--drop @team …]     # ~20 min; 2–4 in parallel
-.venv/bin/python scripts/compare.py <control> <run> --noise 20261119T190747Z_control 20261119T190747Z_seed8
-.venv/bin/python scripts/buckets.py <control> <run> --cache data/derived/nodes/<folder>   # by the player's sample size
-.venv/bin/python scripts/calibration.py <run>              # excess ECE by period and margin
+.venv/bin/python scripts/backtest.py --config models/v1.1.json --games 200 --worlds 1000 --jobs 4   # ~30 min with fits
+.venv/bin/python scripts/backtest.py --config models/v1.1.json --summarise <stamp>_backtest_v1.1_F4   # re-score a saved run
+.venv/bin/python scripts/season_backtest.py [--grid]                                                # 1 min / 4 min
 ```
-
-Control on the current data: `20261119T224019Z_v1.1_folds` (v1.1 = the engine's settings). A change is kept for a node
-when its mean change beats −noise with pooled z ≤ −2 and no fold is worse by more than 2 × noise; global changes are also
-read on the chain row (nats per game). **A change to how data are built** (like D23) is judged with the paired
-cross-data test (`--train-segments default --train-features default`, TRAINING_PLAN §7). Log every run; record wins and
-negative results in FINDINGS. Never edit `nodes.py` while runs read a cache built from it.
 
 ## File map
 
@@ -128,7 +118,7 @@ negative results in FINDINGS. Never edit `nodes.py` while runs read a cache buil
 | `scripts/plays.py` | Canonical game/play schema; adapters for live ESPN and history; shot-value inference |
 | `scripts/history.py` | History download (`--fetch`, manifest) and per-season reconciliation → `data/derived/history/<season>/` |
 | `scripts/pbp.py` | Per-period player box scores and on-court seconds; lineup helpers |
-| `scripts/possessions.py` | Segments (M2); rebound-clock convention (D23, `--rebound-clock`, `--out` for variants) |
+| `scripts/possessions.py` | Segments (M2); rebound-clock convention (D23); `current_games(before=)` (cutoff-safe live games) |
 | `scripts/parity.py` | M5b: same games through both adapters; Oct–Nov distributions under both conventions |
 | `scripts/rotations.py` | Stints, dead-ball windows, substitutions, on-court shares; replay v0 templates (used by the engine) |
 | `scripts/athletes.py` | Heights/weights/birth dates (rosters + ESPN athlete endpoint) → `data/derived/athletes.parquet` |
@@ -138,24 +128,26 @@ negative results in FINDINGS. Never edit `nodes.py` while runs read a cache buil
 | `scripts/train.py` | LightGBM per node and fold; `--config` versions; `--final`; variants and cross-data test (`hybrid`) |
 | `scripts/compare.py`, `scripts/buckets.py`, `scripts/calibration.py` | Paired comparisons (seed-noise floor; by sample size); calibration |
 | `scripts/aggregate.py` | M6a: real segments replayed, every decision sampled, box-score and event accounting |
-| `scripts/engine.py` | The engine (serves `ENGINE['version']` = v1.1); clock rules from the version's own segments |
-| `scripts/backtest.py` | M9 first cut: fold models + cutoff-safe inputs, games played forward, scored (not yet run) |
+| `scripts/engine.py` | The play-by-play engine (serves `ENGINE['version']` = v1.1); clock rules from the version's own segments |
+| `scripts/backtest.py` | M9: fold models + cutoff-safe inputs, games played forward, scored; team-rating model and M6a on the same games |
+| `scripts/pathway.py` | **Team engine** (D25, D26): per-world offence/defence ratings, engine worlds first, updates after every game |
+| `scripts/season_backtest.py` | **Team engine trust test** (M12): walk-forward 2022-26, variants and `--grid` (leave one season out) |
 | `models/v1.json`, `models/v1.1.json` | Version settings, data locations, validating runs, reasons |
-| `scripts/season_stats.py`, `scripts/projection.py` | Live season stats; placeholder `baseline-v1`, season sim, `package()` |
-| `scripts/nightly.py`, `scripts/views.py` | Live orchestration (engine today + tomorrow, D24), snapshots, API views |
+| `scripts/season_stats.py`, `scripts/projection.py` | Live season stats; placeholder `baseline-v1`; `simulate_season` (team pathway), `package()` |
+| `scripts/nightly.py`, `scripts/views.py` | Nightly: input rebuild → engine days (`project_slate`) → one season → snapshots (`write_snapshot`) → views |
 | `scripts/serve.py`, `scripts/export_musnba.py`, `scripts/nightly_musnba.py` | Local server; static shell + bundle; iCloud export |
-| `scripts/webapp/` | The app (ES modules, no build); `modelPill` in `ui.mjs` labels the model |
-| `scripts/smoke.py`, `analysis/*.mjs` | 70+ accounting/model checks (fault run must fail); browser and PWA checks |
+| `scripts/webapp/` | The app (ES modules, no build); `modelPill` (`ui.mjs`) and `seasonPill` (`league.mjs`) label the models |
+| `scripts/smoke.py`, `analysis/*.mjs` | 80 accounting/model checks (fault run must fail); browser and PWA checks |
 
-Data variants: `data/derived/variants/rebound_feed/` (v1's data, feed clocks), `data/derived/variants/rebound_miss/`
-(the validated v1.1 data; identical to the canonical data now) with `features_arch/` and `features_def/` (ablations).
+Data variants: `data/derived/variants/rebound_feed/` (v1's data, feed clocks; its live season frozen at 18 Nov),
+`data/derived/variants/rebound_miss/` (validated v1.1 data) with `features_arch/` and `features_def/` (ablations).
 
 ## Commands
 
 ```sh
 git status && git log --oneline -5                                    # start of session; commit + push at checkpoints
 .venv/bin/python scripts/smoke.py [--fault]                           # all checks (the fault run must fail)
-.venv/bin/python scripts/nightly.py [--offline] [--placeholder] [--ahead N] [--backfill-days N]   # today + tomorrow (engine)
+.venv/bin/python scripts/nightly.py [--offline] [--no-rebuild] [--placeholder] [--ahead N] [--backfill-days N]
 .venv/bin/python scripts/engine.py --game <id> [--worlds 2000]        # one game through the engine
 .venv/bin/python scripts/serve.py --port 8767                         # your own review server (owner uses :8766)
 node analysis/browser_check.mjs --base http://127.0.0.1:8767          # browser checks, both themes, phone/desktop
@@ -165,10 +157,8 @@ node analysis/browser_check.mjs --base http://127.0.0.1:8767          # browser 
 .venv/bin/python scripts/nodes.py [--segments DIR --features DIR/pregame.parquet | --prune]   # dataset cache
 .venv/bin/python scripts/train.py --config models/v1.1.json [--final]   # validate a version / persist + final test once
 .venv/bin/python -u scripts/aggregate.py --config models/v1.1.json [--games 300]   # M6a (~50 min for all 766)
-.venv/bin/python scripts/parity.py [--fetch]                          # adapter/feed parity
-.venv/bin/python scripts/athletes.py [--fetch]                        # player bodies
 ```
 
 Rebuild order after new data or a parser change: history → possessions (`--history` and current) → rotations
-(`--history` and current) → features → nodes → train. The laptop: 14 cores, 48 GB; a run from the cache needs ~2–4 GB, a
-chain build ~14 GB; `data/derived/nodes/` holds ~8 GB per cache folder (`nodes.py --prune` clears all but the default).
+(`--history` and current) → features → nodes → train (the nightly does the current-season part itself). The laptop:
+14 cores, 48 GB; a run from the cache needs ~2–4 GB, a chain build ~14 GB.
