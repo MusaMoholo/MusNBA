@@ -18,6 +18,7 @@ segments → rotations → player and team profiles — so form and roles carry 
 from __future__ import annotations
 
 import argparse
+import json
 import shutil
 import sys
 import time
@@ -66,7 +67,7 @@ def project_slate(day: str, teams: dict, master: list[dict], team_rows: list[dic
     Q, priors = period_profiles(period_rows if period_rows is not None else pbp.load(), player_rows, day, team_rows, blowout=15)
     slate = [r for r in master if r['date_et'] == day]
     generated = utc_now()
-    games, pre_tip, placeholder, worlds = {}, {}, {}, {}
+    games, pre_tip, placeholder, worlds, player_worlds = {}, {}, {}, {}, {}
     eng = engine_mod = None
     if engine_worlds and prospective and slate:
         from scripts import engine as engine_mod
@@ -78,15 +79,24 @@ def project_slate(day: str, teams: dict, master: list[dict], team_rows: list[dic
             g = engine_mod.inputs_for(game, day, T, lg, P, registry, Q, priors)
             result = eng.simulate(g, engine_worlds, projection.seed_for(engine_mod.ENGINE['id'], day, game['game_id']))
             worlds[game['game_id']] = eng.last.pts.astype(np.int16)  # (worlds, home/away, Q1–Q4 + OT)
+            st = eng.last  # per-world full-game player lines for the app's joint outcomes (views.WORLD_STATS order)
+            reb = st.box['oreb'].sum(2) + st.box['dreb'].sum(2)
+            lines = np.stack([np.rint(st.minutes.sum(2)), st.box['pts'].sum(2), reb, st.box['ast'].sum(2), st.box['fg3m'].sum(2),
+                              st.box['stl'].sum(2), st.box['blk'].sum(2), st.box['tov'].sum(2), st.box['fgm'].sum(2), st.box['fga'].sum(2),
+                              st.box['fg3a'].sum(2), st.box['fta'].sum(2)], axis=2)
+            player_worlds[game['game_id']] = {'ids': np.array([str(x) for x in g.ids]), 'side': g.side.astype(np.int8),
+                                              'lines': np.clip(lines, 0, 255).astype(np.uint8)}
             print(f"  engine {game['game_id']}: {result['periods']['fg']['home']['pts']['mean']:.1f}–{result['periods']['fg']['away']['pts']['mean']:.1f}", flush=True)
         games[game['game_id']] = result
         pre_tip[game['game_id']] = parse_utc(generated) < parse_utc(game['tip_utc'])
     model = {**engine_mod.ENGINE, 'sims': engine_worlds, 'season_sims': sims} if eng is not None else projection.MODEL
     engine_inputs = ({'engine_inputs_sha256': {n: sha256_file(f) for n, f in (
-        ('latest', DERIVED / 'features' / 'latest.parquet'), ('team_latest', DERIVED / 'features' / 'team_latest.parquet'),
-        ('stints', DERIVED / 'rotations' / 'stints.parquet'), ('models', DERIVED.parent / 'models' / engine_mod.ENGINE['version'] / 'config.json'))}}
+        ('latest', engine_mod.features_dir() / 'latest.parquet'), ('team_latest', engine_mod.features_dir() / 'team_latest.parquet'),
+        ('stints', DERIVED / 'rotations' / 'stints.parquet'), ('on_court', DERIVED / 'rotations' / 'on_court.parquet'),
+        ('models', DERIVED.parent / 'models' / engine_mod.ENGINE.get('models', engine_mod.ENGINE['version']) / 'config.json'))}}
         if eng is not None else {})
     return {'day': day, 'T': T, 'lg': lg, 'P': P, 'slate': slate, 'games': games, 'placeholder': placeholder, 'worlds': worlds,
+            'player_worlds': player_worlds,
             'pre_tip': pre_tip, 'prospective': prospective, 'generated': generated, 'started': started, 'model': model,
             'sims': engine_worlds if eng is not None else sims, 'season_sims': sims, 'engine_inputs': engine_inputs}
 
@@ -124,6 +134,8 @@ def write_snapshot(part: dict, season: dict, archive_root=None) -> dict:
         write_json(staging / 'games_placeholder.json', part['placeholder'])
     if part['worlds']:  # per-world engine points: the season re-simulates from them (smoke); views never read them
         np.savez_compressed(staging / 'engine_worlds.npz', **part['worlds'])
+    if part.get('player_worlds'):  # per-world player lines (app: joint and conditional outcomes; views packs them per game)
+        np.savez_compressed(staging / 'engine_players.npz', **{f'{gid}__{k}': v for gid, d in part['player_worlds'].items() for k, v in d.items()})
     write_json(staging / 'season.json', season)
     write_json(staging / 'stats.json', {'teams': T, 'league': lg, 'players': part['P']})
     meta['seconds'] = round(time.time() - part['started'], 2)
@@ -151,6 +163,12 @@ def rebuild_engine_inputs(day: str) -> dict:
     seg = possessions.build_current(before=day)
     rot = rotations.build(possessions.current_games(before=day), DERIVED / 'rotations')
     feat = features.build()
+    from scripts import engine as engine_mod  # the serving engine's profile variant (v1.3: defence + shot types, D30)
+    spec_path = ROOT / 'models' / f"{engine_mod.ENGINE['version']}.json"
+    variant = json.loads(spec_path.read_text()).get('features_variant') if spec_path.exists() else None
+    if variant:
+        features.build(ROOT / variant['out'], defence=variant.get('defence', False), defence_k_scale=variant.get('defence_k_scale', 1.0),
+                       matchup=ROOT / variant['matchup'] if variant.get('matchup') else None, shot_types=variant.get('shot_types', False))
     out = {'games': seg['games'], 'segments': seg['segments'], 'games_flagged': seg['games_flagged'], 'stints': rot['stints'],
            'player_games': feat['player_games'], 'seconds': round(time.time() - started, 1)}
     print(f"engine inputs rebuilt through {day_shift(day, -1)}: {out['games']} games · {out['segments']:,} segments · "
@@ -229,6 +247,13 @@ def main():
         season = projection.simulate_season(T, lg, master, day, teams, worlds or None, args.sims)
         for part in parts:
             write_snapshot(part, season, args.archive_root)
+    try:  # owner (20 Nov): projected v actual starters for every finished slate (scripts/lineups.py)
+        from scripts import lineups
+        acc = lineups.score().get('overall')
+        if acc:
+            print(f"projected starters so far: {acc['slot_accuracy']:.1%} of slots, all five {acc['all_five']:.1%} ({acc['team_games']} team-games)", flush=True)
+    except Exception as exc:  # measurement only: never blocks the nightly
+        print(f'lineup scoring skipped: {exc}', flush=True)
     views.build()
     return 0
 

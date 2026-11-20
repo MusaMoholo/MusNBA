@@ -333,6 +333,11 @@ def package(game: dict, teams: dict, pts_by_period: dict, n_ot: np.ndarray, W: i
         played_any = minutes.sum(axis=2) > 0
         for i, x in enumerate(team['players']):
             entry = {k: x[k] for k in ('id', 'name', 'pos', 'jersey', 'starter', 'status', 'injury')}
+            if x.get('minutes'):  # D29: what the engine's minutes rest on (engine v1.2+)
+                mm = x['minutes']
+                entry['minutes_basis'] = {'healthy': round(mm['healthy'], 1), 'target': round(mm.get('target', 0.0), 1),
+                                          'rotation': round(mm.get('rotation', 1.0), 3), 'missed': int(mm['missed']), 'k_back': int(mm['k_back']),
+                                          'ramp': round(mm['ramp'], 3), 'start_share': round(mm['start_share'], 3)}
             entry.update({'availability': round(x['availability'], 3), 'base_min': round(x['base_min'], 2),
                           'played': round(float(played_any[:, i].mean()), 4),
                           'double_double': round(float((tens[:, i] >= 2).mean()), 4),

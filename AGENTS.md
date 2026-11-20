@@ -62,10 +62,12 @@ Then do the first open item in HANDOFF_NEXT.md § Next actions. If smoke fails, 
 
 - Use `.venv/bin/python`. Dependencies: NumPy, pandas, pyarrow, LightGBM. Node is optional (browser checks only).
 - **The engine is the floor (D22)**: today's and tomorrow's projections (D24) come from the possession engine — model
-  **v1.1** since D23 (`ENGINE['version']` in `scripts/engine.py`, `models/v1.1.json`). Replace it
+  **v1.3** since D34 (`ENGINE` in `scripts/engine.py`: `version`, node `models`, `rotation`; `models/v1.3.json`). Replace it
   (new nodes, settings, rules or model version) only when the measured tests say the change is better — paired fold
-  comparisons (`scripts/compare.py`), M6a (`scripts/aggregate.py`) and, once built, the M9 backtest — and record it.
-- **Serving never computes**: `serve.py`, `views.py` and the PWA never fetch, fit or simulate.
+  comparisons (`scripts/compare.py`) and the M9 backtest on the same games (`scripts/backtest.py`,
+  `scripts/backtest_compare.py`: player tiers first, D28, then team sums) — and record it.
+- **Serving never computes**: `serve.py`, `views.py` and the PWA never fetch, fit or simulate. (The app's Scenarios and
+  Given… views only slice the engine's stored worlds.)
 - **Cutoff safety**: anything for a game on date D uses only games before D. Retrospective snapshots stay labelled.
 - **Final test stays untouched**: the 2026-27 season (from 2026-07-01) is scored once per model version, at
   promotion — never for choosing features, decay or hyperparameters. Choices use folds F1–F4 (`scripts/evaluate.py`).

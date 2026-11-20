@@ -1,0 +1,64 @@
+{
+  "version": "v1.2d_stype",
+  "status": "ablation only: the true shot type as an input to shot result, assisted and blocked (upper bound for a shot-type node; the engine cannot serve it)",
+  "default": {
+    "half_life": null,
+    "playoff_weight": 1.0,
+    "drop": [
+      "@team",
+      "@schedule",
+      "@clutch"
+    ],
+    "banded": true,
+    "recalibrate": false,
+    "features": "data/derived/variants/matchup/features/pregame.parquet",
+    "segments": null
+  },
+  "nodes": {
+    "duration": {
+      "drop": [
+        "@schedule",
+        "@clutch"
+      ]
+    },
+    "what": {
+      "drop": [
+        "@schedule",
+        "@clutch"
+      ]
+    },
+    "shot_result": {
+      "drop": [
+        "@schedule",
+        "@clutch"
+      ]
+    },
+    "free_throw": {
+      "drop": [
+        "@team",
+        "@schedule",
+        "@clutch",
+        "@heat"
+      ]
+    },
+    "event": {
+      "drop": [
+        "@team",
+        "@clutch",
+        "off_rest",
+        "def_rest"
+      ]
+    },
+    "turnover_type": {
+      "drop": [
+        "@team",
+        "@clutch",
+        "off_rest",
+        "def_rest"
+      ]
+    }
+  },
+  "why": {
+    "D30": "ENGINE_PLAN D30; FINDINGS §3o (defence loading 0.42 v 1.69 real)"
+  }
+}

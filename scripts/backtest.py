@@ -49,8 +49,11 @@ def fold_engine_version(fold: str, spec_path: Path, threads: int) -> str:
         z = np.load(cache / f'{n}.npz', allow_pickle=False)
         entry[n] = {'file': f'{n}.txt', 'kind': str(z['kind']), 'classes': int(z['classes']) or None, 'columns': f['columns'],
                     'categorical': f['categorical'], 'temperature': f['temperature'], 'intercepts': f.get('intercepts')}
+    report = (Path(dflt['features']).parent if dflt.get('features') else DERIVED / 'features') / 'features_report.json'
+    matchup = json.loads(report.read_text()).get('matchup') if report.exists() else None
     write_json(folder / 'config.json', {'version': f"{spec.get('version')}_{fold}", 'fold': True, 'train_through': FOLDS[fold][0],
-                                        'segments': dflt.get('segments'), 'features': dflt.get('features'), 'nodes': entry}, pretty=True)
+                                        'segments': dflt.get('segments'), 'features': dflt.get('features'), 'matchup': matchup,
+                                        'nodes': entry}, pretty=True)
     return str(folder.relative_to(train.MODELS))
 
 
@@ -84,11 +87,16 @@ def eligible_games(seg: pd.DataFrame) -> np.ndarray:
     return np.array(sorted(ok[ok].index))
 
 
-def _init(version, spec_path, fold, worlds):
+def _init(version, spec_path, fold, worlds, rotation='replay', known_starters=False):
     from scripts import engine
     spec = json.loads(Path(spec_path).read_text())
     _W.update({'engine': engine.Engine(version), 'mod': engine, 'inputs': load_inputs(spec, fold), 'worlds': worlds,
-               'teams': json.loads((DERIVED / 'teams.json').read_text())})
+               'teams': json.loads((DERIVED / 'teams.json').read_text()), 'rotation': rotation, 'known_starters': known_starters})
+    if rotation == 'targets':  # D29 minutes: pre-game states for every history player-game; ramp and spread from before the window
+        from scripts import minutes
+        m = minutes.build(FOLDS[fold][1], include_current=False)
+        m['by_game'] = m['rows'].set_index(['game_id', 'player'])
+        _W['minutes'] = m
 
 
 def run_game(gid: str) -> dict:
@@ -108,6 +116,15 @@ def run_game(gid: str) -> dict:
         players[side] = [{'id': r.player, 'name': r.player, 'pos': r.pos or '', 'jersey': '', 'starter': bool(r.starter), 'status': 'Active',
                           'injury': None, 'availability': 1.0, 'base_min': float(r.min_avg) if pd.notna(r.min_avg) else 0.0}
                          for r in rows.itertuples()]
+        if _W.get('rotation') == 'targets':
+            from scripts import minutes
+            m = _W['minutes']
+            for pl in players[side]:
+                key = (str(gid), str(pl['id']))
+                row = m['by_game'].loc[key] if key in m['by_game'].index else None
+                pl['minutes'] = minutes.player_state(m, tid, pl['id'], day, row) if row is not None else \
+                    {**minutes.player_state({'params': m['params'], 'latest': {}, 'team_dates': {}, 'ramp': m['ramp'], 'sd': m['sd']}, tid, pl['id'], day)}
+                pl['projected_starter'] = bool(pl['starter']) if _W.get('known_starters') else False
     game = {'game_id': gid, 'home_id': home, 'away_id': away}
     g = engine.Game(game, players, p.drop(columns=['game_id']), t.drop(columns=['game_id']), stints, day)
     g.season = season
@@ -295,6 +312,10 @@ def main():
     ap.add_argument('--threads', type=int, default=8, help='LightGBM threads for fitting fold models')
     ap.add_argument('--seed', type=int, default=20261119)
     ap.add_argument('--name', default=None)
+    ap.add_argument('--rotation', choices=('replay', 'targets'), default='replay',
+                    help='replay = M3 v0 templates (v1.1); targets = D29 minutes (healthy roles, 240 by priority, ramp)')
+    ap.add_argument('--models', default=None, help='reuse fitted fold models (e.g. folds/v1.1_F4_all) instead of fitting')
+    ap.add_argument('--known-starters', action='store_true', help='targets only: open with the real starters (a perfect lineup source)')
     ap.add_argument('--summarise', metavar='RUN', help='re-score a saved run (<stamp>_<name>) without simulating; updates its log')
     args = ap.parse_args()
     start = time.time()
@@ -312,7 +333,7 @@ def main():
         write_json(log, record, pretty=True)
         print(json.dumps(summary, indent=1))
         return
-    version = fold_engine_version(args.fold, args.config, args.threads)
+    version = args.models or fold_engine_version(args.fold, args.config, args.threads)
     _, _, seg, _, _, _ = load_inputs(spec, args.fold)
     games = eligible_games(seg)
     rng = np.random.default_rng(args.seed)
@@ -322,7 +343,7 @@ def main():
     os.environ['OMP_NUM_THREADS'] = str(max(1, (os.cpu_count() or 4) // max(1, args.jobs)))
     ctx = mp.get_context('spawn')
     results = []
-    with ctx.Pool(args.jobs, initializer=_init, initargs=(version, str(args.config), args.fold, args.worlds)) as pool:
+    with ctx.Pool(args.jobs, initializer=_init, initargs=(version, str(args.config), args.fold, args.worlds, args.rotation, args.known_starters)) as pool:
         for i, r in enumerate(pool.imap(run_game, list(games), chunksize=1), 1):
             results.append(r)
             if i % 10 == 0 or i == len(games):
@@ -340,7 +361,8 @@ def main():
     players.to_parquet(DERIVED / 'experiments' / f'{stamp}_{name}_players.parquet', index=False)
     write_json(EXPERIMENTS / f'{stamp}_{name}.json', {'experiment': 'm9_engine_backtest', 'run': stamp, 'commit': train.git_commit(),
                                                       'config': str(args.config), 'fold': args.fold, 'models': version, 'games': len(games),
-                                                      'worlds': args.worlds, 'seconds': round(time.time() - start), 'summary': summary}, pretty=True)
+                                                      'worlds': args.worlds, 'rotation': args.rotation, 'known_starters': args.known_starters,
+                                                      'seconds': round(time.time() - start), 'summary': summary}, pretty=True)
     print(json.dumps(summary, indent=1))
     print(f'\nrun {stamp}_{name}  ({len(games)} games, {time.time() - start:.0f}s)')
 

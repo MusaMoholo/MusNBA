@@ -1,6 +1,6 @@
 # MusNBA — game plan and progress
 
-Updated **20 November 2026 (00:xx UK, end of the 19 Nov session)**. The single record of scope, progress and decisions. Every agent updates it at
+Updated **20 November 2026 (afternoon UK, D29–D30 chunk)**. The single record of scope, progress and decisions. Every agent updates it at
 every checkpoint (AGENTS.md § Checkpoint protocol). New here? Read [AGENTS.md](AGENTS.md) first, then
 [HANDOFF_NEXT.md](HANDOFF_NEXT.md) — it says exactly what to do next.
 
@@ -74,8 +74,8 @@ Slates are US Eastern game dates; tip-offs show UK time with ET alongside.
 | 0 | Discovery, data probe, plan | `██████████` done |
 | 1 | App shell, season stats, placeholder projections | `██████████` done — owner checks pending (iPhone, hosting) |
 | 1b | Per-period Game Centre (owner spec), play-by-play parser, quarter-aware placeholder | `██████████` done |
-| 2 | Possession engine (data → models → engine → backtest) | `███████░░░` **M1–M5b, M6a done · engine v1.1 is the app's default (D22–D24), inputs rebuilt nightly (D26) · first backtest run (M9): defence under-expressed — the next fix** |
-| 3 | Evaluation and nightly feedback (Forecast Lab view, refit cadence) | not started |
+| 2 | Possession engine (data → models → engine → backtest) | `████████░░` **M1–M5b, M6a done · engine v1.2 (v1.1 models + D29 minutes) is the app's default · backtest (M9) is the gate · defence under-expressed (0.44 v 1.69) — next chunk on NBA Stats matchups (D32)** |
+| 3 | Evaluation and nightly feedback (Forecast Lab view, refit cadence) | `███░░░░░░░` **Forecast Lab page (`#/lab`), nightly projected-v-actual starters record (D33); refit cadence not started** |
 | 4 | Season on the engine: pathway calibration, availability, tiebreakers, play-in, Cup, what-ifs | `██░░░░░░░░` **team pathway v1 in the app (D25): per-world ratings, engine worlds for today + tomorrow; walk-forward calibration first cut (M12)** |
 | 5 | Polish: hosting, iPhone acceptance, watch-a-sim, more views | not started |
 
@@ -94,6 +94,7 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
 | M5b | Adapter parity: live ESPN v hoopR history | ✅ **adapters agree** (5 games, identical segments); ESPN's 2026-27 feed stamps every rebound at the miss's clock → one convention for all seasons (D23); timing distributions now match; foul/turnover/jump-ball shifts are real 2026-27 changes (FINDINGS §3k) | Same game through both adapters gives the same segments; season distributions match | `plays.py`, `possessions.py`, `parity.py` |
 | M6a | Aggregation test with real rotations | ✅ **v1.1 on all 766 F4 games** (2026-27-style inputs): player bias ≤ ±1.5% for points/rebounds/assists/threes/steals/turnovers, CRPS lower than v1 on every stat but blocks, coverage 77–80% (FINDINGS §3k). Earlier v1 **gate met on all 766 F4 games** (player stats within ±1.3% for points/rebounds/assists/threes in every tier, coverage 77–81%, CRPS +6–11%; earlier 300-game run: team total −0.5%, coverage 77–83%); fouls traced to the in-season decline (day of season added); and-ones +5%, fouled-on-a-three −24% to trace) | Replayed held-out games: player box-score bias ≈ 0 by role tier, 80% coverage | `aggregate.py` |
 | M6 | Engine (replay rotations) | ◐ **v1.1 is the app's default (D22, D23), today and tomorrow (D24)** — `nightly.py` (chip "Engine v1.1"; `--placeholder` opts out, `--ahead N`): 2,000 worlds per game, ~20 s per game; strong offences under-expressed, spread too narrow | 10k sims per game in today's output contract | `engine.py` |
+| M6c | **D29 minutes** (healthy roles, 240 by priority, return ramp, per-world draws) | ✅ **engine v1.2 (20 Nov)**: backtest on the same 200 F4 games — stars' minutes +6.5% → −1.0%, points +8.8% → +0.5%, minutes 10–90% coverage 58–63% → 77–84%, every player CRPS better or level (starters' minutes −18%, z −8.2); team sums level (FINDINGS §3p, §3r) | Minutes bias ≈ 0 by tier, coverage ≈ 80% | `minutes.py`, `engine.py` (`_target_tables`) |
 | M7 | Target-aware substitution model | ☐ | Minutes MAE < 5.2 and 10–90% coverage ≈ 80% (beats replay v0) | (to build) |
 | M8 | Per-player form + end-game checks | ☐ | Variance and overtime rate (5.4%) calibrated | (to build) |
 | M9 | Walk-forward backtest (engine on past games) | ◐ **first run (20 Nov, 200 F4 games)**: pace right (+0.2%), totals +2.7, margins half-sized (slope 1.45), defence expressed at ~25% of its real effect, stars' minutes +6.5%, totals too narrow (coverage 65%); **the team-rating model beats the engine on every game measure** (margin CRPS 9.32 v 9.64, win log loss 0.558 v 0.592) — FINDINGS §3o | Measures the engine (the floor, D22) and every candidate on game and player CRPS, win calibration and realism v the team-rating model and the current engine; a candidate replaces the engine only if better | `backtest.py` |
@@ -133,7 +134,9 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
 ## 9. Open decisions for the owner
 
 1. NBA Stats API via `nba_api` (browser-style headers) — allow, or stay on ESPN only? **Owner (20 Nov): stay on ESPN and take
-   implicit matchups as far as possible (D30); revisit only if the backtest's defence loading stalls short of real.** What it
+   implicit matchups as far as possible (D30); revisit only if the backtest's defence loading stalls short of real.**
+   **Owner (20 Nov, later): go with the NBA Stats API (D32)** — ESPN credits identify matchups only weakly (FINDINGS §3q);
+   the next chunk ingests and cleans it (adapter, id crosswalk, reconciliation), then rebuilds defence on real matchups. What it
    would add: per-game matchups (partial possessions each defender spent on each attacker, with points and shots),
    shooting by closest-defender distance (player-season aggregates, not per shot), touches/drives/speed, hustle stats
    (contests, deflections). Why it is not simple: stats.nba.com returns 403 to plain requests (measured 19 Nov) and answers
@@ -156,6 +159,9 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
 6. ~~Engine v team model for today's win %~~ — **owner (20 Nov, D28): players first.** The engine stays the default; team results follow from perfecting player outcomes (minutes, performance, defenders faced); the team model is only a yardstick.
 
 ### 9b. Dashboard UX backlog (owner, 20 Nov) — headliners for chunks that cannot improve an engine
+
+**Done 20 Nov:** item 2 first cut — joint and conditional outcomes (Scenarios tab, Given…, joint grids, drivers, averages
+deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 1. **Watch a sim, 2K-style** (M10, extends D9): a saved world played through time on an aerial view of the court — shots
    placed where they were taken (zone, distance band, side), makes and misses, the clock running, the box score filling;
@@ -275,3 +281,15 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
 - **20 Nov 2026** — Owner: the product is two engines in one daily flow (**D26**); each chunk has one or two headliners that move them toward trust; every chunk ends with the dashboard on the newest systems; UX backlog §9b. **Nightly input rebuild:** segments → rotations → profiles from every final before today (~50 s; 4 new finals → engine inputs changed), next slate when today and tomorrow are empty. **Team pathway v1 (D25) in the app:** per-world offence/defence ratings, engine worlds for today + tomorrow, updates on the points surprise (D27: a good loss keeps ratings); walk-forward 2022-26: the old fixed-probability season sim had dispersion 1.53 and coverage 65%, v1 1.00 and 84%, CRPS −4% in every held-out season (still wide in November). **First engine backtest (M9, 200 F4 games):** pace +0.2%, totals +2.7, margin slope 1.45, defence expressed at ~25% of its real effect (offence ~70%), stars' minutes +6.5%; the team-rating model beats the engine on margin CRPS (9.32 v 9.64), totals and win log loss. Smoke 80/80, browser 38/38.
 - **20 Nov 2026** — Owner (**D28**): the guiding light is player outcomes — a team's results are the aggregation of its players, so minutes, performance and the defence each player faces come first and team results short and long term follow; the engine stays the dashboard default; the team-rating model is a yardstick only.
 - **20 Nov 2026** — Design with the owner for the next chunk (new agent): **D29** minutes — healthy-role minutes and priority, 240 per game allocated by priority (an absent star's minutes cascade and return), a learned return ramp; **D30** defence — stay on ESPN data (NBA Stats only if this stalls), soft matchup assignment over the five on court from size/role/position, learned from foul and block credits, defender quality weighted by it, shot type from the play text; **D31** lineup scenarios in the nightly for uncertain high-impact players (Expected = their availability-weighted mixture), later a localhost lineup editor.
+- **20 Nov 2026 (afternoon, D29–D30 chunk)** — **Engine v1.2 → v1.3 promoted on the backtest (same 200 F4 games).** D29 minutes
+  (healthy roles, 240 by priority, return ramp, rotation share, per-world draws; `minutes.py`): stars' minutes +6.5% → −1.0%,
+  points +8.8% → +0.5%, minutes coverage 58–63% → 77–84%, team sums level. D30 defence (defender-side on-court defence with
+  ×0.2 shrinkage, a soft matchup assignment from foul/block credits — weak: top-1 26% v 20% — help at the rim, shot-type
+  shares): defence loading 0.44 → 0.69 (real 1.69), margin CRPS 9.67 → 9.37 (team model 9.32), total 12.00 → 11.72, win log
+  loss 0.595 → 0.571, players level or better. Shot type is real signal (−0.61% shot-result log loss on simple rates; node
+  ablation −0.34%). Lineups: Basketball Monster and CBS forbid scraping, DailyFantasyFuel has no NBA page, FantasyPros unclear
+  → our own projected starters (89.4% of slots on 2026 history) and a nightly record (D33). **Owner:** NBA Stats API for the
+  next chunk (D32: ingest, crosswalk, cleaning, then defence on real matchups); the Lab page is not a priority; this chunk's
+  UX headliner: joint and conditional outcomes — Game Centre Scenarios tab, Given…, joint grids, drivers, teammate
+  correlations, who-gains-if-X-sits, averages deltas, Today leaders (`outcomes.mjs`, `scenario.mjs`; worlds stored per game).
+

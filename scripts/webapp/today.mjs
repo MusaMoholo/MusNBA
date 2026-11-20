@@ -85,6 +85,7 @@ function card(g) {
     <div class="when"><span>${esc(t.label)}</span><span>${right}</span></div>
     ${side('away', pA, muA)}${side('home', pH, muH)}
     ${pA != null ? `<div class="winbar" aria-hidden="true"><i class="a" style="width:${(100 * pA).toFixed(1)}%"></i><i class="h" style="width:${(100 * pH).toFixed(1)}%"></i></div>` : ''}
+    ${pr?.leaders && !final ? `<div class="leaders">${['away', 'home'].map(k => (pr.leaders[k] || []).map(l => `<span><b>${esc(l.name.split(' ').slice(-1)[0])}</b> ${f1(l.pts)} pts · ${f1(l.reb)} reb · ${f1(l.ast)} ast</span>`).join('')).join('')}</div>` : ''}
     <div class="foot">${foot}</div></a>`;
 }
 

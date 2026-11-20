@@ -80,6 +80,75 @@ def current_snapshot(days) -> str:
     return past[-1] if past else days[-1]
 
 
+WORLD_STATS = ('min', 'pts', 'reb', 'ast', 'fg3m', 'stl', 'blk', 'tov', 'fgm', 'fga', 'fg3a', 'fta')  # nightly.project_slate's order
+AVG_STATS = ('min', 'pts', 'reb', 'ast', 'fg3m', 'stl', 'blk', 'tov')
+
+
+def averages(P: dict, pids) -> dict:
+    """Season and last-10 per-game averages (games played) as of the projection's cutoff (its stats.json)."""
+    out = {}
+    for pid in pids:
+        x = P.get(pid)
+        if not x or not x.get('gp'):
+            continue
+        played = [g for g in x.get('log', []) if not g.get('dnp')]
+        last = played[-10:]
+        out[pid] = {'gp': x['gp'], 'season': {k: round(x['totals'].get(k, 0) / x['gp'], 2) for k in AVG_STATS},
+                    'last10': {k: round(sum(g.get(k, 0) or 0 for g in last) / len(last), 2) for k in AVG_STATS} if last else None,
+                    'last10_n': len(last)}
+    return out
+
+
+def world_lines(path: Path, gid: str, sims: int) -> dict | None:
+    """One game's stored per-world player lines and team points, packed for the app (base64 uint8, row-major worlds ×
+    players × stats). The app only slices these worlds (conditional and joint outcomes); nothing is simulated here."""
+    import base64
+    import numpy as np
+    pl, tm = path / 'engine_players.npz', path / 'engine_worlds.npz'
+    if not pl.exists() or not tm.exists():
+        return None
+    with np.load(pl) as z, np.load(tm) as t:
+        if f'{gid}__lines' not in z.files or gid not in t.files:
+            return None
+        lines, ids, side = z[f'{gid}__lines'], z[f'{gid}__ids'], z[f'{gid}__side']
+        per = t[gid]  # (worlds, home/away, Q1–Q4 + OT)
+    stats = list(WORLD_STATS)[:lines.shape[2]]
+    return {'worlds': int(lines.shape[0]), 'stats': stats, 'players': [str(x) for x in ids], 'side': side.astype(int).tolist(),
+            'lines': base64.b64encode(np.ascontiguousarray(lines).tobytes()).decode(),
+            # team points per world and period: worlds × (home, away) × (Q1, Q2, Q3, Q4, OT), uint8
+            'team_periods': base64.b64encode(np.clip(per, 0, 255).astype(np.uint8).tobytes()).decode(), 'periods': ['q1', 'q2', 'q3', 'q4', 'ot']}
+
+
+def lab(serving: dict) -> dict:
+    """Forecast Lab (PLAN phase 3): the engine's trust tests as logged — every M9 backtest run (player tiers first, D28;
+    then strength loading, margins and game CRPS v the team-rating model), the minutes allocator check and the nightly
+    record of projected v actual starters. Read from analysis/experiments and data/derived only (serving never computes)."""
+    from scripts.evaluate import EXPERIMENTS
+    runs = []
+    for path in sorted(EXPERIMENTS.glob('*_backtest_*.json')):
+        r = read_json(path)
+        if r.get('experiment') != 'm9_engine_backtest' or 'summary' not in r:
+            continue
+        sm, t = r['summary'], r['summary'].get('team_rating_baseline', {})
+        runs.append({'run': path.stem, 'stamp': r['run'], 'config': Path(r.get('config', '')).stem, 'fold': r.get('fold'),
+                     'rotation': r.get('rotation', 'replay'), 'known_starters': bool(r.get('known_starters')), 'games': r.get('games'),
+                     'worlds': r.get('worlds'),
+                     'players': {tier: {k: {m: v[k][m] for m in ('actual', 'sim', 'rel_bias', 'coverage_10_90', 'crps')}
+                                        for k in ('min', 'pts', 'reb', 'ast') if k in v} | {'n': v.get('player_games')}
+                                 for tier, v in sm.get('players', {}).items()},
+                     'strength': t.get('strength_loading'), 'margin': {k: sm['margin'].get(k) for k in ('slope_real_on_sim', 'corr', 'crps', 'bias', 'coverage_10_90')},
+                     'total': {k: sm['total'].get(k) for k in ('bias', 'crps', 'coverage_10_90', 'sim_sd', 'actual_sd_around_sim')},
+                     'win_log_loss': sm['win']['log_loss'], 'possessions_bias': sm['possessions_per_team']['bias_pct'],
+                     'team_model': {'margin_crps': t.get('margin', {}).get('crps'), 'total_crps': t.get('total', {}).get('crps'),
+                                    'win_log_loss': t.get('win', {}).get('log_loss')}})
+    alloc = sorted(EXPERIMENTS.glob('*_minutes_alloc_*.json'))
+    lineups = DERIVED / 'lineups' / 'accuracy.json'
+    lin = read_json(lineups) if lineups.exists() else None
+    return {'serving': {k: serving.get(k) for k in ('id', 'version', 'label')}, 'backtests': runs,
+            'minutes_allocator': (lambda a: {'run': alloc[-1].stem, **{t: a[t] for t in ('star', 'starter', 'bench') if t in a}})(read_json(alloc[-1])) if alloc else None,
+            'lineups': ({'overall': lin.get('overall'), 'slates': [{k: v for k, v in x.items() if k != 'misses'} for x in lin['slates'].values()]} if lin else None)}
+
+
 def build(views_root: Path = VIEWS) -> dict:
     teams = read_json(DERIVED / 'teams.json')
     registry = read_json(DERIVED / 'players.json')['players']
@@ -149,7 +218,13 @@ def build(views_root: Path = VIEWS) -> dict:
                 'p_home': fg['home']['win'], 'p_away': fg['away']['win'],
                 'mu_home': fg['home']['pts']['mean'], 'mu_away': fg['away']['pts']['mean'],
                 'total': fg['total']['mean'], 'margin_mean': fg['margin']['mean'], 'margin_median': fg['margin']['q'][2],
-                'ot': p['sim']['ot']}
+                'ot': p['sim']['ot'],
+                # projected top performers for the slate card: each side's top scorer (pts, reb, ast means over all worlds)
+                'leaders': {side: [{'id': x['id'], 'name': x['name'], 'pts': x['periods']['fg']['mean']['pts'],
+                                    'reb': x['periods']['fg']['mean']['oreb'] + x['periods']['fg']['mean']['dreb'],
+                                    'ast': x['periods']['fg']['mean']['ast']}
+                                   for x in sorted((y for y in p['sim'][side]['players'] if y.get('periods')),
+                                                   key=lambda y: -y['periods']['fg']['mean']['pts'])[:1]] for side in ('away', 'home')}}
 
     slate_dates = sorted({r['date_et'] for r in master} | set(snaps))
     by_date = defaultdict(list)
@@ -201,13 +276,21 @@ def build(views_root: Path = VIEWS) -> dict:
                     'totals': {k: int(float(tb[k])) for k in ('pts', 'fgm', 'fga', 'fg3m', 'fg3a', 'ftm', 'fta', 'oreb', 'dreb', 'reb', 'ast', 'stl', 'blk', 'tov', 'pf') if tb.get(k) not in (None, '')},
                 }
         tm = team_model.get(gid)
+        avg = None
+        if p:
+            sim_ids = [x['id'] for side in ('home', 'away') for x in p['sim'][side]['players']]
+            avg = averages(stats_source['players'], sim_ids)
+            wl = world_lines(snaps[p['day']]['path'], gid, p['meta'].get('sims'))
+            if wl is not None:
+                write_json(api / 'game' / gid / 'worlds.json', wl)
         write_json(api / 'game' / f'{gid}.json', {
             'game': core,
             'projection': ({'snapshot': p['day'], 'kind': p['meta']['kind'], 'generated': p['meta']['generated'],
                             'pre_tip': p['meta']['pre_tip'].get(gid), 'model': p['meta']['model'], 'notes': p['meta']['notes'],
                             'cutoff': p['meta']['cutoff'], 'sim': p['sim']} if p else None),
             'team_model': ({'snapshot': latest_day, **tm} if tm and not p else None),
-            'actual': actual, 'comparison': comparison, 'comparison_as_of': as_of})
+            'actual': actual, 'comparison': comparison, 'comparison_as_of': as_of, 'averages': avg,
+            'worlds': bool(p and (api / 'game' / gid / 'worlds.json').exists())})
 
     for day, snap in snaps.items():
         stats = read_json(snap['path'] / 'stats.json')
@@ -314,6 +397,8 @@ def build(views_root: Path = VIEWS) -> dict:
             'log': p['log'] if p else [], 'next': nxt_out,
             'quarters': ([{k: round(Qall[pid][k][q], 1) for k in PERIOD_BOX} | {'games': Qall[pid]['games']} for q in range(4)]
                          if pid in Qall else None)})
+
+    write_json(api / 'lab.json', lab(latest['meta']['model']))
 
     snapshot_rows = [{'date': d, 'kind': s['meta']['kind'], 'cutoff': s['meta']['cutoff'], 'generated': s['meta']['generated'],
                       'model': s['meta']['model']['id'], 'games': len(s['meta']['games'])} for d, s in sorted(snaps.items())]

@@ -15,6 +15,7 @@ Measured facts only. Each entry states its date and population.
   to plain requests.
 - First collection: 345 requests, 222 finals, 0 failures, ~4 minutes at 0.35 s spacing.
 - **Projected-starter sources (probed 20 Nov 2026 from the owner's laptop, robots.txt and one page only):** RotoWire (`/basketball/nba-lineups.php`) and Lineups.com are **blocked by the work network's filter** (OpenDNS block page, HTTP 403); nba.com returns 403 to plain requests (as stats.nba.com). Reachable, with no blanket `Disallow: /` and no rule on lineup pages in robots.txt: Basketball Monster, FantasyPros, DailyFantasyFuel, CBS Sports, numberFire (redirects). Terms of use not yet read; no page content fetched.
+- **Terms of use read (20 Nov 2026, second session):** Basketball Monster (`/TermsOfUse.aspx`): "You may not scrape or otherwise copy our Content without permission … not to use any data mining, data gathering or extraction method" — **forbids**; CBS Sports (Paramount/CBSi terms of use, effective 27 May 2025, §10): bars accessing the services "using any interface other than ours" and unauthorised scraping and data mining — **forbids**; FantasyPros (`/about/legal/`): silent on automated access, but copying allowed only as "a single copy made for personal use" — **unclear, owner decision**; its lineup page showed empty "Projected Lineup" slots when read, status flags only OUT and DTD; DailyFantasyFuel (terms of service, 7 Jun 2026): silent on automated access and copying, but it has **no NBA starting-lineups page** (home page links MLB and NHL lineups only; `/nba/projections/` is a 25-player preview with one "Q" flag; one request each, 20 Nov). **No source passes yet**; the engine opens games with its own projected starters (`minutes.projected_starters`, §3p) and the nightly scores them (`scripts/lineups.py`).
 
 ## 2. League environment through 18 Nov 2026 (222 games)
 
@@ -482,6 +483,120 @@ Compared on the same games with the **team-rating model** — the team engine's 
   won 17% of 41 games at 33% predicted — favourites are under-rated, as the margin slope says.
 - M6a on the same games (real possessions, lineups and clock): total −1.0, margin corr 0.21 — teacher forcing replays each
   game's real state, so its margins are not forecasts; it agrees that the per-possession models carry little team strength.
+
+## 3p. Minutes — healthy roles, 240 by priority, return ramp (20 Nov 2026; D29, `scripts/minutes.py`)
+
+Regulation minutes from the M3 on-court shares, regular season 2022-23 → 2025-26 (105k player-games); allocator targets
+v real minutes with **known availability** (the players who played); tuned on Jan–Apr 2025, confirmed on Jan–Apr 2026
+(the backtest's season); logs `analysis/experiments/20261120T111337Z_minutes_alloc_F4.json`.
+
+- **Return ramp** (players with a 20+ minute role; minutes in the k-th game back over the role before the absence):
+  1 game missed 0.98 / 0.99 / 1.00; 2–3 missed 0.93 / 0.98 / 1.00; 4–6 0.90 / 0.96 / 0.99; 7–12 0.84 / 0.88 / 0.93 / 0.97
+  / 1.00; 13–25 0.78 / 0.87 / 0.92 / 0.96 / 0.97; 26+ ≈ 0.7 (small samples). Steady state 1.004 (57,682 player-games).
+  Learned per cutoff (`learn_ramp`, relative to the absence-only allocation, shrunk to 1).
+- **Absorption** (who takes an absent player's minutes): equal sharing weighted by each player's headroom under his own
+  recent maximum (gamma 0, room 1) beat proportional-to-role sharing (gamma 1): Jan–Apr 2025 MAE 4.91 v 5.03, RMSE 6.48 v
+  6.62; gamma 2 was worse (5.07). Stars absorb less than proportional — they are already near their maximum.
+- **Healthy minutes** with a half-strength absence correction (each game's minutes minus half the allocator's boost for
+  that night's absences): MAE 4.91 v 4.99 with the full correction and 5.31 without (raw recent minutes inside the
+  allocator: bench −4.4%, starters +4.3% by pre-game tier). Half-lives 3 / 8 and start bonus 0 / 8: neutral.
+- **Jan–Apr 2026 (held out)**, by pre-game tier (start share ≥ 0.5; stars usage ≥ 25%): bias stars −1.0% (recent-minutes
+  EWMA +1.8%), starters +2.9% (+2.1%), bench −1.9% (−3.8%); MAE 5.03 v 4.98 (level), RMSE 6.60 v 6.55; per-world draws
+  10–90% coverage stars 84%, starters 80%, bench 76%. Returning players (25+ min role, 5+ games missed, first game
+  back, n = 96): allocated 25.6 v real 22.7 (raw recent average 29.6).
+- **Rotation share** (live only): DNP – coach's decision is 80% of DNPs in the 2025-26 hoopR boxes and 91% in ours for
+  2026-27; healthy minutes average only games played, so live allocation uses healthy × rotation share (decayed share of
+  available games played). Without it a full live roster sums far above 240 and the squeeze zeroed 17–19-minute bench
+  players (Philadelphia, 21 Nov).
+- **Projected starters** (start share, then priority; ≤ 3 guards, 3 forwards, 2 centres), Jan–Apr 2026 with known
+  availability: 89.4% of starter slots right, all five in 53.5% of 1,474 team-games — the bar for a lineup source.
+  The snapshots' old rule (recent starts, then minutes; prospective availability), 12–19 Nov: 82.1% / 30.4% (112 team-games).
+
+## 3q. Implicit matchups and shot types (20 Nov 2026; D30, `scripts/matchups.py`)
+
+- **Shot type from the play text**: all 921,103 history shots match a typed play (52 labels → 8 families: drive 30.7%,
+  plain jump shot ≈ catch-and-shoot 29.2%, pull-up 13.5%, isolation/post (fade, turnaround, hook) 7.8%, cut/alley-oop 5.7%,
+  step-back 5.3%, putback/tip 4.4%, other 3.5%). **Signal, not noise**: at the rim, same distance band, cuts make 89% /
+  80%, drives 77% / 63%, putbacks 65% / 58% (1–2 ft / 2–3 ft); above the break catch 36–37% v pull-ups ~1.5 points lower;
+  mid-range step-backs and pull-ups slightly above isolation. Knowing the type lowers held-out (2025-26) shot-result log
+  loss by **0.61%** beyond zone and band (simple rates) — ~30% of the shot-result node's whole gain over baselines; part of
+  it the node already sees (putbacks follow offensive rebounds).
+- **Soft assignment** (weighted conditional logit on credited defenders, trained through 2025-12-31, log
+  `…_matchup_fit.json`, θ `models/matchup_2025-12-31.json`): credits — fouled on a three 1.0, fouled on a two 0.5, and-ones
+  1.0 (jump) / 0.3, blocks 1.0 (jump shot) / 0.25 (rim), steals 0.3. Matchup terms: −0.09 per 3 in of height gap, −0.07 per
+  20 lb, +0.11 same position group, +0.05 per 10 min role gap (≈ 0), big on a guard −0.14, guard on a big −0.22; propensity
+  terms (not part of the assignment): foul rate +0.25 SD, blocks +0.56 SD, steals +0.23 SD. Held-out (Jan–Apr 2026, 35,216
+  credits) log-likelihood per credit: uniform −1.609, propensity only −1.558, + matchup −1.544; on-ball credits (fouls on
+  threes, jump-shot blocks): top-1 26% v 20% random. **ESPN credits identify who-guards-whom only weakly** — the
+  assignment is soft (the best-matched defender ≈ 30%).
+- Consequence: assignment-weighted FG% allowed (decayed 40 games, shrinkage K 40 by zone, 80 for threes) correlates 0.96–0.97
+  with plain on-court FG% allowed; lighter on-court shrinkage (×0.2 of §3l) widens the spread across 2025-26 player-games:
+  rim 67.6% ± 2.6 points (§3l ± 1.5), three 35.9% ± 1.3 (± 0.7). Shot-type shares vary widely by player (self-created
+  24% ± 10%, cut 7% ± 7%, putback 5% ± 6%).
+
+- **Node level (F4 only, paired with v1.1 on identical rows; logs `…114726Z_v1.2d_F4`, `…120349Z_v1.2d_stype_F4`).**
+  v1.2d = v1.1 settings + defender-side on-court defence (shrinkage ×0.2), assignment-weighted matchup inputs for the actor
+  (mu_fg by zone, turnovers forced, fouls on his men, size gap), help at the rim (best rim protector on the floor) and
+  shot-type shares: location −0.35% (z −5.7) and shot result −0.056% (z −2.5; noise 0.017%) better, the other 14 nodes
+  neutral, chain −1.18 nats per game (z −6.0) — the first clean node-level gain from defence inputs (§3l's were mixed);
+  `mu_fg_shot` is among shot result's four top inputs. **Shot-type upper bound** (the true per-shot type as an input —
+  the engine cannot serve it): shot result −0.34% (z −9.9), blocked −1.34% (z −10.5), assisted −17.3% (z −59; partly a
+  near-label — alley-oops and cuts are assisted almost by definition), chain −7.4 nats per game. A shot-type node must
+  therefore be judged on the joint likelihood of the outcomes it shares (type marginalised) or the backtest, not on these
+  conditional gains.
+
+## 3r. Engine backtest with D29 minutes — v1.2 promoted (20 Nov 2026)
+
+Same 200 F4 games, seed and fold models as the control (`…100616Z_backtest_v1.1_F4`); the only change: rotation tables
+rescaled to D29 targets (`--rotation targets`; healthy roles, 240 by priority, ramp, per-world draws; starters projected
+from start share, not the real ones). Log `…114433Z_backtest_v1.1_minutes_F4`, paired comparison `…_compare_minutes_F4`
+(`scripts/backtest_compare.py`, standard errors clustered by game).
+
+| Tier | Minutes bias | Minutes 10–90% | Minutes CRPS (z) | Points bias | Points 10–90% | Points CRPS (z) | Rebounds bias | Assists bias |
+|---|---|---|---|---|---|---|---|---|
+| Stars | +6.5% → −1.0% | 63% → 84% | −9.8% (−2.2) | +8.8% → +0.5% | 76% → 82% | −1.3% (−0.5) | +3.2% → −4.3% | +7.1% → −0.6% |
+| Starters | +0.9% → −2.2% | 58% → 81% | −18.4% (−8.2) | +2.6% → −0.3% | 76% → 78% | −4.2% (−5.0) | +2.0% → −0.8% | +1.1% → −1.7% |
+| Bench | −2.6% → +3.3% | 62% → 77% | −8.5% (−4.5) | −4.4% → +3.1% | 71% → 74% | −1.9% (−1.7) | −0.9% → +5.0% | −7.6% → +0.1% |
+
+- Every player CRPS is better or level (rebounds −5.7% for starters, z −5.4; assists −2.8% to −2.9%, z −3 to −4).
+- Team sums level: total bias +2.7 → +2.2, total CRPS 12.10 → 12.00 (−0.10 ± 0.07), margin CRPS 9.64 → 9.67 (+0.03 ±
+  0.06), margin slope 1.45 → 1.48, defence loading 0.42 → 0.44 (real 1.69), win log loss 0.592 → 0.595. The team-rating
+  model still wins every game measure (margin CRPS 9.32) — minutes were not the cause of the half-sized margins.
+- New biases to watch: bench rebounds +5.0% and stars −4.3% (rebounding moves with the minutes shift), bench minutes +3.3%.
+- **Promoted as engine v1.2** (`models/v1.2.json`: v1.1 node models + D29 minutes; D22's test met on player outcomes,
+  team sums not worse).
+
+## 3s. Engine backtest with D30 defence inputs — v1.3 promoted (20 Nov 2026)
+
+Same 200 F4 games, seed and D29 minutes as v1.2; node models v1.2d fitted on the fold's training window (defender-side
+on-court defence with shrinkage ×0.2, assignment-weighted matchup inputs, help at the rim, shot-type shares; matchup θ
+through 2025-12-31). Log `…120816Z_backtest_v1.2d_minutes_F4`, paired comparison `…_compare_defence_F4`.
+
+| Same 200 games | v1.1 (control) | v1.2 (minutes) | **v1.3 (minutes + defence)** | Team-rating model |
+|---|---|---|---|---|
+| Defence loading (real 1.69) | 0.42 | 0.44 | **0.69** | — |
+| Offence loading (real 1.14) | 0.80 | 0.75 | 0.73 | — |
+| Margin CRPS / corr with real | 9.64 / 0.46 | 9.67 / 0.45 | **9.37 / 0.51** | 9.32 / 0.56 |
+| Total CRPS / bias | 12.10 / +2.7 | 12.00 / +2.2 | **11.72 / +1.8** | 11.35 / −0.5 |
+| Win log loss | 0.592 | 0.595 | **0.571** | 0.558 |
+
+- Paired v v1.2: margin CRPS −0.30 ± 0.08 (z −3.8), total −0.28 ± 0.11 (z −2.7), home points −0.31 ± 0.07.
+- Players level or better: bench CRPS better on every stat (assists z −2.0, points −1.7); stars rebounds −1.0% (z −2.2),
+  points −0.7% (z −0.9); starters assists −0.7% (z −2.5), points +0.3% (z +1.1, within noise). Biases: stars points
+  +1.8% (v1.2 +0.5%), stars and starters assists −2.5%, bench rebounds +5.7%.
+- The opponent's defence is now expressed at 41% of its real effect (26% before); the gap to the team-rating model on
+  margins is 0.05 CRPS (was 0.35). Offence is still at ~65% of real. Next: real matchup data (NBA Stats, D32).
+- **Promoted as engine v1.3** (`models/v1.3.json`: v1.2d settings + D29 minutes); production models trained on everything
+  before 2026-07-01, final test scored once (below).
+- **v1.3 final test, scored once** (2026-27 to 19 Nov; trained on everything before 2026-07-01; `…120935Z_final_v1.3`,
+  models `data/models/v1.3/`): every node above its baselines and level with v1.1's final test (§3k) — event +18.25%,
+  assisted +25.69%, rebound +7.30%, blocked +6.14%, what +5.66%, location +4.44% (v1.1 +4.2%), assister +2.97%, shot result
+  +2.13%, fouler +2.00%, who +1.93%, blocker +1.84%, rebounder +1.67%, duration +1.57%, turnover type +3.61%, free throw
+  +0.37%, stealer +0.18%; ECE ≤ 0.012 except rebound 0.017 and turnover type 0.024 (v1.1 0.017 / 0.026: the real 2026-27
+  foul and turnover shifts). The defence inputs' gain is a game-level effect (the backtest), not a node-level one.
+- **Engine teammates' points correlations** (live slate, 20 Nov, 2,000 worlds): all small negatives, −0.13 to −0.01 — shot
+  competition, but almost no shared upside (pace, a team's hot night). Consistent with totals too narrow (coverage 65–70%):
+  per-world form (M8) is missing.
 
 ## 3n. Team engine — the per-world season pathway, walk-forward (20 Nov 2026; M12 first cut, D25/D26)
 

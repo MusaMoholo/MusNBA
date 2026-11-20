@@ -4,9 +4,10 @@ import * as today from './today.mjs';
 import * as game from './game.mjs';
 import * as league from './league.mjs';
 import * as players from './players.mjs';
+import * as lab from './lab.mjs';
 
-const VIEWS = {today, game, standings: league, teams: league, team: league, players, player: players};
-const NAV = {today: 'today', game: 'today', standings: 'standings', teams: 'teams', team: 'teams', players: 'players', player: 'players'};
+const VIEWS = {today, game, standings: league, teams: league, team: league, players, player: players, lab};
+const NAV = {today: 'today', game: 'today', standings: 'standings', teams: 'teams', team: 'teams', players: 'players', player: 'players', lab: 'lab'};
 let token = 0;
 const scrolls = new Map();
 let lastHash = location.hash;

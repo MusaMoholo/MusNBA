@@ -1,0 +1,253 @@
+{
+ "experiment": "m9_engine_backtest",
+ "run": "20261120T114433Z",
+ "commit": "946314a",
+ "config": "models/v1.1.json",
+ "fold": "F4",
+ "models": "folds/v1.1_F4_all",
+ "games": 200,
+ "worlds": 1000,
+ "rotation": "targets",
+ "known_starters": false,
+ "seconds": 1672,
+ "summary": {
+  "games": 200,
+  "home": {
+   "actual": 115.36,
+   "sim": 116.84,
+   "bias": 1.47,
+   "sim_sd": 11.21,
+   "actual_sd_around_sim": 13.66,
+   "coverage_10_90": 0.71,
+   "crps": 7.809
+  },
+  "away": {
+   "actual": 115.44,
+   "sim": 116.19,
+   "bias": 0.74,
+   "sim_sd": 11.19,
+   "actual_sd_around_sim": 13.45,
+   "coverage_10_90": 0.71,
+   "crps": 7.662
+  },
+  "total": {
+   "actual": 230.81,
+   "sim": 233.02,
+   "bias": 2.21,
+   "sim_sd": 16.96,
+   "actual_sd_around_sim": 20.91,
+   "coverage_10_90": 0.68,
+   "crps": 12.004
+  },
+  "margin": {
+   "actual": -0.08,
+   "sim": 0.65,
+   "bias": 0.73,
+   "sim_sd": 14.65,
+   "actual_sd_around_sim": 17.26,
+   "coverage_10_90": 0.725,
+   "crps": 9.671,
+   "slope_real_on_sim": 1.481,
+   "corr": 0.453
+  },
+  "possessions_per_team": {
+   "actual": 101.54,
+   "sim": 101.69,
+   "bias_pct": 0.0015
+  },
+  "points_per_100": {
+   "actual": 113.65,
+   "sim": 114.58,
+   "slope_real_on_sim": 1.039,
+   "sim_sd_across_team_games": 3.71
+  },
+  "win": {
+   "brier": 0.2036,
+   "log_loss": 0.5945,
+   "base_rate_home": 0.52,
+   "mean_p_home": 0.517,
+   "calibration": {
+    "(-0.001, 0.2]": {
+     "n": 5,
+     "p": 0.152,
+     "won": 0.0
+    },
+    "(0.2, 0.4]": {
+     "n": 37,
+     "p": 0.327,
+     "won": 0.162
+    },
+    "(0.4, 0.6]": {
+     "n": 101,
+     "p": 0.51,
+     "won": 0.545
+    },
+    "(0.6, 0.8]": {
+     "n": 52,
+     "p": 0.669,
+     "won": 0.75
+    },
+    "(0.8, 1.0]": {
+     "n": 5,
+     "p": 0.842,
+     "won": 0.8
+    }
+   }
+  },
+  "overtime": {
+   "actual": 0.025,
+   "sim": 0.0283
+  },
+  "players": {
+   "bench": {
+    "player_games": 2332,
+    "pts": {
+     "actual": 6.6,
+     "sim": 6.81,
+     "rel_bias": 0.0308,
+     "coverage_10_90": 0.739,
+     "crps": 2.725
+    },
+    "reb": {
+     "actual": 2.77,
+     "sim": 2.91,
+     "rel_bias": 0.0503,
+     "coverage_10_90": 0.749,
+     "crps": 1.156
+    },
+    "ast": {
+     "actual": 1.58,
+     "sim": 1.58,
+     "rel_bias": 0.0007,
+     "coverage_10_90": 0.758,
+     "crps": 0.733
+    },
+    "min": {
+     "actual": 16.0,
+     "sim": 16.53,
+     "rel_bias": 0.0326,
+     "coverage_10_90": 0.768,
+     "crps": 3.917
+    }
+   },
+   "star": {
+    "player_games": 284,
+    "pts": {
+     "actual": 23.54,
+     "sim": 23.66,
+     "rel_bias": 0.0052,
+     "coverage_10_90": 0.82,
+     "crps": 4.514
+    },
+    "reb": {
+     "actual": 5.82,
+     "sim": 5.57,
+     "rel_bias": -0.0426,
+     "coverage_10_90": 0.739,
+     "crps": 1.532
+    },
+    "ast": {
+     "actual": 5.39,
+     "sim": 5.36,
+     "rel_bias": -0.0055,
+     "coverage_10_90": 0.827,
+     "crps": 1.306
+    },
+    "min": {
+     "actual": 31.32,
+     "sim": 31.02,
+     "rel_bias": -0.0097,
+     "coverage_10_90": 0.842,
+     "crps": 2.889
+    }
+   },
+   "starter": {
+    "player_games": 1730,
+    "pts": {
+     "actual": 13.92,
+     "sim": 13.88,
+     "rel_bias": -0.0029,
+     "coverage_10_90": 0.783,
+     "crps": 3.526
+    },
+    "reb": {
+     "actual": 5.3,
+     "sim": 5.26,
+     "rel_bias": -0.0076,
+     "coverage_10_90": 0.785,
+     "crps": 1.467
+    },
+    "ast": {
+     "actual": 3.24,
+     "sim": 3.18,
+     "rel_bias": -0.0173,
+     "coverage_10_90": 0.778,
+     "crps": 1.068
+    },
+    "min": {
+     "actual": 28.92,
+     "sim": 28.3,
+     "rel_bias": -0.0215,
+     "coverage_10_90": 0.806,
+     "crps": 3.232
+    }
+   }
+  },
+  "team_rating_baseline": {
+   "games": 200,
+   "home": {
+    "sim": 115.87,
+    "bias": 0.5,
+    "crps": 7.365,
+    "actual_sd_around_sim": 12.87
+   },
+   "away": {
+    "sim": 114.42,
+    "bias": -1.02,
+    "crps": 7.446,
+    "actual_sd_around_sim": 13.11
+   },
+   "total": {
+    "sim": 230.29,
+    "bias": -0.52,
+    "crps": 11.353,
+    "actual_sd_around_sim": 20.14,
+    "slope_real_on_sim": 1.6
+   },
+   "margin": {
+    "sim": 1.44,
+    "bias": 1.52,
+    "crps": 9.322,
+    "actual_sd_around_sim": 16.42,
+    "slope_real_on_sim": 1.648,
+    "corr": 0.556
+   },
+   "win": {
+    "brier": 0.1882,
+    "log_loss": 0.5584
+   },
+   "strength_loading": {
+    "sim": {
+     "intercept": 114.588,
+     "offence": 0.749,
+     "opp_defence": 0.44
+    },
+    "real": {
+     "intercept": 113.516,
+     "offence": 1.144,
+     "opp_defence": 1.685
+    }
+   },
+   "engine_v_baseline_margin_corr": 0.705
+  },
+  "m6a_same_games": {
+   "run": "20261119T235148Z_m6a_v1.1_teams",
+   "games": 200,
+   "total_bias": -1.0,
+   "margin_bias": 0.28,
+   "margin_slope_real_on_sim": 0.436,
+   "margin_corr": 0.212,
+   "engine_v_m6a_margin_corr": 0.593
+  }
+ }
+}

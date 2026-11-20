@@ -40,6 +40,7 @@ PRIOR_K = {'usage': 200, 'shot_mix': 50, 'rim': 30, 'paint': 40, 'mid': 50, 'cor
 DEF_ZONES = ('rim', 'paint', 'mid', 'three')
 DEFENCE_FAMILY = (30, 0.6)  # on-court defence settles slowly (lineup noise): long half-life, strong shrinkage
 DEFENCE_K = {'fg': 300, 'three': 600, 'tov': 600, 'share': 300}
+_DEFENCE_SCALE = 1.0  # set per build (features.build(defence_k_scale=…)); never mutates DEFENCE_K
 ARCH_STYLE = ['usage', 'shot_share', 'tov_share', 'foul_drawn_share', 'assisted_share', 'ast_rate', 'oreb_pct', 'dreb_pct',
               'stl_rate', 'blk_rate', 'pf_rate'] + [f'mix_{z}' for z in ZONES]
 ARCH_BODY = ['height_in', 'weight_lb']
@@ -65,7 +66,46 @@ def sources(segments: Path = DERIVED):
     return out
 
 
-def counts_for(seg: pd.DataFrame, on: pd.DataFrame, defence: bool = False) -> pd.DataFrame:
+MATCHUP_FAMILY = (40, 0.6)  # D30: assignment-weighted (implicit matchup) defence — light shrinkage, slower memory
+MATCHUP_K = {'fg': 40, 'three': 80, 'tov': 60, 'foul': 60}
+STYLE_FAMILY = (15, 0.6)  # shot types from the play text (as the usage family)
+STYLE = ('self', 'drive', 'cut', 'putback', 'catch')
+STYLE_OF = {'pullup': 'self', 'stepback': 'self', 'iso': 'self', 'drive': 'drive', 'cut': 'cut', 'putback': 'putback', 'catch': 'catch'}
+
+
+def matchup_counts(seg: pd.DataFrame, use: pd.DataFrame, look: pd.DataFrame, theta: dict) -> list:
+    """Per defender-game: what the players he (softly) guarded did — uses, turnovers, shooting fouls drawn, shots by zone
+    and makes — each weighted by his assignment probability for that actor (scripts/matchups.py, D30)."""
+    from scripts import matchups
+    cols = ['height_in', 'weight_lb', 'grp_code', 'min_avg']
+    gid = use['game_id'].astype(str).to_numpy()
+    def get(players):
+        return look.reindex(pd.MultiIndex.from_arrays([gid, players]))[cols]
+    sh = get(use['actor'].astype(str).to_numpy())
+    shc = {c: sh[c].to_numpy(float) for c in cols}
+    defs = use[[f'def_{i}' for i in range(1, 6)]].astype(str).to_numpy()
+    dd = {c: np.empty(defs.shape) for c in cols}
+    for j in range(5):
+        g = get(defs[:, j])
+        for c in cols:
+            dd[c][:, j] = g[c].to_numpy(float)
+    a = matchups.assignment(theta, shc, dd)
+    zone = use['zone'].replace({'corner3': 'three', 'above3': 'three'}).to_numpy()
+    is_shot = (use['end_type'] == 'shot').to_numpy()
+    made = (use['made'] == True).to_numpy()  # noqa: E712
+    flags = {'m_uses': np.ones(len(use)), 'm_tov': (use['end_type'] == 'turnover').to_numpy(float),
+             'm_fouled': use['end_type'].isin(['fouled', 'foul']).to_numpy(float)}
+    for z in DEF_ZONES:
+        flags[f'm_att_{z}'] = (is_shot & (zone == z)).astype(float)
+        flags[f'm_made_{z}'] = (is_shot & (zone == z) & made).astype(float)
+    long = pd.DataFrame({'game_id': np.repeat(use['game_id'].to_numpy(), 5), 'player': defs.reshape(-1), 'w': a.reshape(-1)})
+    for k, v in flags.items():
+        long[k] = np.repeat(v, 5) * long['w'].to_numpy()
+    g = long.drop(columns='w').groupby(['game_id', 'player']).sum()
+    return [g[c] for c in g.columns]
+
+
+def counts_for(seg: pd.DataFrame, on: pd.DataFrame, defence: bool = False, matchup=None) -> pd.DataFrame:
     """Per player-game exposures and events (reconciled games only). defence=True adds what opponents did while he was
     in the defensive five: their uses, turnovers and shots by zone (attempts, makes) — the on-court defence family."""
     seg = seg[seg['game_ok'] & seg['offense'].astype(str).isin(NBA_TEAM_IDS) & seg['defense'].astype(str).isin(NBA_TEAM_IDS)].copy()  # reconciled NBA games (no All-Star games)
@@ -115,6 +155,12 @@ def counts_for(seg: pd.DataFrame, on: pd.DataFrame, defence: bool = False) -> pd
     parts.append(dfn.merge(two, on='seg_id').groupby(['game_id', 'player']).size().rename('blk_opp'))
     parts.append(seg[seg['stealer'].notna()].groupby(['game_id', 'stealer']).size().rename_axis(['game_id', 'player']).rename('stl'))
     parts.append(seg[seg['fouler'].notna()].groupby(['game_id', 'fouler']).size().rename_axis(['game_id', 'player']).rename('pf'))
+    if matchup is not None:
+        parts += matchup_counts(seg, use, matchup['look'], matchup['theta'])
+    if 'stype' in seg.columns:
+        st = shots.assign(style=shots['stype'].map(STYLE_OF))
+        for k in STYLE:
+            parts.append(st[st['style'] == k].groupby(['game_id', 'player']).size().rename(f'st_{k}'))
     if defence:
         d_use = dfn.merge(use[['seg_id', 'end_type', 'zone', 'made']], on='seg_id')
         parts.append(d_use.groupby(['game_id', 'player']).size().rename('d_uses'))
@@ -214,6 +260,8 @@ FAMILY_COLUMNS = {
     'accuracy': [f'att_{z}' for z in ZONES] + [f'made_{z}' for z in ZONES],
     'ft': ['fta', 'ftm'],
     'defence': ['d_uses', 'd_tov', 'd_shots'] + [f'd_{k}_{z}' for z in ('rim', 'paint', 'mid', 'three') for k in ('att', 'made')],
+    'matchup': ['m_uses', 'm_tov', 'm_fouled'] + [f'm_{k}_{z}' for z in ('rim', 'paint', 'mid', 'three') for k in ('att', 'made')],
+    'style': [f'st_{k}' for k in ('self', 'drive', 'cut', 'putback', 'catch')] + ['shots'],
 }
 
 
@@ -300,11 +348,20 @@ def profiles(df: pd.DataFrame, sums: dict, priors: dict, key=None) -> pd.DataFra
     f['fta_eff'] = ft['fta']
     if 'defence' in sums:
         for z in DEF_ZONES:
-            f[f'd_fg_{z}'] = shrunk('defence', f'd_made_{z}', 'defence', f'd_att_{z}', DEFENCE_K['three' if z == 'three' else 'fg'])
-        f['d_tov_rate'] = shrunk('defence', 'd_tov', 'defence', 'd_uses', DEFENCE_K['tov'])
-        f['d_rim_share'] = shrunk('defence', 'd_att_rim', 'defence', 'd_shots', DEFENCE_K['share'])
-        f['d_three_share'] = shrunk('defence', 'd_att_three', 'defence', 'd_shots', DEFENCE_K['share'])
+            f[f'd_fg_{z}'] = shrunk('defence', f'd_made_{z}', 'defence', f'd_att_{z}', _DEFENCE_SCALE * DEFENCE_K['three' if z == 'three' else 'fg'])
+        f['d_tov_rate'] = shrunk('defence', 'd_tov', 'defence', 'd_uses', _DEFENCE_SCALE * DEFENCE_K['tov'])
+        f['d_rim_share'] = shrunk('defence', 'd_att_rim', 'defence', 'd_shots', _DEFENCE_SCALE * DEFENCE_K['share'])
+        f['d_three_share'] = shrunk('defence', 'd_att_three', 'defence', 'd_shots', _DEFENCE_SCALE * DEFENCE_K['share'])
         f['d_segs_eff'] = sums['defence']['d_uses']
+    if 'matchup' in sums:
+        for z in DEF_ZONES:
+            f[f'm_fg_{z}'] = shrunk('matchup', f'm_made_{z}', 'matchup', f'm_att_{z}', MATCHUP_K['three' if z == 'three' else 'fg'])
+        f['m_tov_rate'] = shrunk('matchup', 'm_tov', 'matchup', 'm_uses', MATCHUP_K['tov'])
+        f['m_foul_rate'] = shrunk('matchup', 'm_fouled', 'matchup', 'm_uses', MATCHUP_K['foul'])
+        f['m_uses_eff'] = sums['matchup']['m_uses']
+    if 'style' in sums:
+        for k in STYLE:
+            f[f'st_{k}'] = shrunk('style', f'st_{k}', 'style', 'shots', 50)
     return f
 
 
@@ -393,17 +450,40 @@ def attach_body(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def build(out: Path = OUT, families: dict | None = None, team_style: dict | None = None, segments: Path = DERIVED,
-          body: bool = False, archetypes_k: int = 0, defence: bool = False) -> dict:
+          body: bool = False, archetypes_k: int = 0, defence: bool = False, matchup: Path | None = None,
+          shot_types: bool = False, defence_k_scale: float = 1.0) -> dict:
     """Profiles. Options (variants; the default profiles carry none of them): body = height and weight columns;
     archetypes_k = K archetypes as the shrinkage prior (and an arch_code column); defence = on-court defence family."""
     families = dict(families or FAMILIES)
     if defence:
         families.setdefault('defence', DEFENCE_FAMILY)
+        global _DEFENCE_SCALE
+        _DEFENCE_SCALE = defence_k_scale  # D30: much lighter shrinkage than §3l's (scale < 1); applied in profiles()
+    mstate = None
+    if matchup is not None:
+        import json as _json
+        families.setdefault('matchup', MATCHUP_FAMILY)
+        look = pd.read_parquet(DERIVED / 'features' / 'pregame.parquet', columns=['game_id', 'player', 'pos', 'min_avg'])
+        look['game_id'], look['player'] = look['game_id'].astype(str), look['player'].astype(str)
+        sizes = pd.read_parquet(DERIVED / 'athletes.parquet', columns=['player', 'height_in', 'weight_lb'])
+        sizes['player'] = sizes['player'].astype(str)
+        look = look.merge(sizes, on='player', how='left')
+        p = look['pos'].fillna('').str.upper()
+        look['grp_code'] = np.where(p.str.startswith('C'), 2, np.where(p.str.startswith('G') | p.isin(['PG', 'SG']), 0, 1)).astype(float)
+        mstate = {'theta': _json.loads(Path(matchup).read_text()), 'look': look.set_index(['game_id', 'player'])}
+    types = None
+    if shot_types:
+        from scripts import matchups
+        families.setdefault('style', STYLE_FAMILY)
+        types = matchups.shot_types(include_current=(segments / 'segments.parquet').exists())
     team_style = team_style or TEAM_STYLE
     frames, team_frames, schedules = [], [], []
     for seg_path, on_path in sources(segments):
         seg = pd.read_parquet(seg_path)
-        frames.append(counts_for(seg, pd.read_parquet(on_path), defence))
+        if types is not None:
+            from scripts import matchups
+            seg['stype'] = matchups.attach_shot_types(seg, types)
+        frames.append(counts_for(seg, pd.read_parquet(on_path), defence, mstate))
         team_frames.append(team_counts(seg))
         schedules.append(schedule(seg))
     df = pd.concat(frames, ignore_index=True)
@@ -464,6 +544,7 @@ def build(out: Path = OUT, families: dict | None = None, team_style: dict | None
                                                           (three / df['shots'])[big & (df['shots'] >= 8)])[0, 1]), 3),
               'families': {k: {'half_life_games': v[0], 'season_carry': v[1]} for k, v in families.items()},
               'team_style': team_style, 'segments': str(segments), 'body': body, 'archetypes': archetypes_k, 'defence': defence,
+              'defence_k': {k: v * _DEFENCE_SCALE for k, v in DEFENCE_K.items()} if defence else None, 'matchup': str(matchup) if matchup else None, 'shot_types': shot_types,
               'archetype_fits': arch_report, 'team_games': len(teams), 'team_columns': [c for c in teams.columns if c not in ('game_id', 'team', 'date_et', 'season')],
               'feature_columns': list(feats.columns)}
     write_json(out / 'features_report.json', report, pretty=True)
@@ -480,6 +561,9 @@ def main():
     ap.add_argument('--body', action='store_true', help='height and weight columns (scripts/athletes.py)')
     ap.add_argument('--archetypes', type=int, default=0, metavar='K', help='shrink toward K archetypes instead of position groups')
     ap.add_argument('--defence', action='store_true', help='on-court defence family (opponents while he defends)')
+    ap.add_argument('--defence-k-scale', type=float, default=1.0, help='scale the on-court defence shrinkage (D30: lighter, e.g. 0.2)')
+    ap.add_argument('--matchup', type=Path, default=None, help='assignment-weighted matchup defence family (models/matchup_<through>.json)')
+    ap.add_argument('--shot-types', action='store_true', help='shot-type shares from the play text (self-created, drive, cut, putback, catch)')
     args = ap.parse_args()
     families = dict(FAMILIES)
     for spec in args.family:
@@ -491,7 +575,8 @@ def main():
         hl, *rest = args.team.split(',')
         team = {'half_life': float(hl), 'carry': float(rest[0]) if rest else TEAM_STYLE['carry']}
     import json
-    r = build(args.out, families, team, args.segments, args.body, args.archetypes, args.defence)
+    r = build(args.out, families, team, args.segments, args.body, args.archetypes, args.defence, args.matchup, args.shot_types,
+              args.defence_k_scale)
     print(json.dumps({k: v for k, v in r.items() if k != 'feature_columns'}, indent=1))
 
 

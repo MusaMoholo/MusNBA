@@ -174,6 +174,24 @@
   .kv dt{color:var(--dim)} .kv dd{margin:0;text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
   .lineinput{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:10px 0}
   .lineinput output{font-weight:650;font-variant-numeric:tabular-nums}
+  /* scenarios and joint outcomes (scenario.mjs, outcomes.mjs) */
+  .builder{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}
+  .builder select,.builder input{min-height:36px;max-width:100%}
+  .builder input{width:84px}
+  .chips.left{justify-content:flex-start;margin-top:4px}
+  button.chip{background:color-mix(in srgb,var(--accent) 16%,var(--panel2));border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);color:var(--ink);border-radius:20px;padding:4px 10px;font-size:12px;min-height:32px}
+  button.sm{padding:4px 10px;font-size:12px;min-height:32px}
+  .hist path.base{stroke:var(--ink);stroke-width:1.6;opacity:.55}
+  .legend-bar{display:inline-block;width:12px;height:9px;background:color-mix(in srgb,var(--dim) 45%,transparent);vertical-align:baseline}
+  .legend-line{display:inline-block;width:14px;border-top:2px solid var(--ink);opacity:.55;vertical-align:middle}
+  table.grid td,table.grid th{padding:4px 5px;text-align:center}
+  table.grid td.l,table.grid th.l{text-align:left}
+  td.corr{text-align:center;font-size:11.5px;background:color-mix(in srgb,var(--good) calc(var(--r) * 85%),transparent)}
+  td.corr[data-sign=neg]{background:color-mix(in srgb,var(--bad) calc(var(--r) * 85%),transparent)}
+  td .sub.up{color:var(--good)} td .sub.down{color:var(--bad)}
+  .note.warn{color:var(--warn)}
+  .game-card .leaders{display:flex;flex-wrap:wrap;gap:2px 12px;font-size:11.5px;color:var(--dim);margin:6px 0 0}
+  .game-card .leaders b{color:var(--ink);font-weight:600}
   .tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px;margin:4px 0 0}
   .tile{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:9px 11px}
   .tile span{display:block;font-size:10.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
@@ -240,7 +258,7 @@
   }
   @media (max-width:640px){
     .wrap{padding:max(12px,env(safe-area-inset-top)) max(10px,env(safe-area-inset-right)) 40px max(10px,env(safe-area-inset-left))}
-    .mainnav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+    .mainnav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
     .mainnav a{padding:8px 4px;min-height:var(--tap);font-size:13px}
     .games{grid-template-columns:minmax(0,1fr)}
     .seg{width:100%}
@@ -286,6 +304,7 @@
     <a href="#/standings" data-nav="standings">Standings</a>
     <a href="#/teams" data-nav="teams">Teams</a>
     <a href="#/players" data-nav="players">Players</a>
+    <a href="#/lab" data-nav="lab">Lab</a>
   </nav>
   <div id="app-notice" role="alert" hidden></div>
   <main id="view" tabindex="-1"><p class="loading">Loading…</p></main>

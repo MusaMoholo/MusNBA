@@ -33,13 +33,18 @@ sys.path.insert(0, str(ROOT))
 from basketball_common import DERIVED  # noqa: E402
 from scripts import nodes, projection, rotations  # noqa: E402
 
-ENGINE = {'id': 'engine-v1.1', 'kind': 'engine', 'version': 'v1.1', 'sims': 2000,
-          'label': 'Possession engine v1.1 — the default projection and the floor every change must beat (D22); each game '
-                   'simulated possession by possession from the v1.1 decision models (trained on the 2026-27 feed\'s rebound '
-                   'clocks, D23), rotations replayed from recent games. Known gaps: totals run high against the market (≈ +8 points on '
-                   'the 19 Nov slate), team strength under-expressed (spreads about half the market\'s), outcomes too tightly '
-                   'spread (FINDINGS §3j–§3m)'}
+ENGINE = {'id': 'engine-v1.3', 'kind': 'engine', 'version': 'v1.3', 'models': 'v1.3', 'rotation': 'targets', 'sims': 2000,
+          'label': 'Possession engine v1.3 — the default projection and the floor every change must beat (D22): each game '
+                   'simulated possession by possession; defence now enters every shot (D30: each shooter\'s likely defenders by '
+                   'size and position, their shooting allowed by zone, help at the rim; backtest: the opponent\'s defence '
+                   'expressed at 41% of its real effect, up from 26%; margin CRPS 9.67 → 9.37); minutes from healthy roles shared to '
+                   'exactly 240 per team by priority, with a return ramp and per-world ranges (D29: stars\' minutes +6.5% → −1%). '
+                   'Starters are our own projection (D33). Known gaps: defence still under-expressed (next: NBA Stats matchups, '
+                   'D32), outcomes too tightly spread (FINDINGS §3o, §3r, §3s)'}
 MODELS = DERIVED.parent / 'models'
+# D29 rotation tables (used when players carry minutes states): tables per side shared by worlds, 10-second bins,
+# template shapes smoothed over ~60 s (6 bins), offset fit to within 0.4 min of each table's targets.
+ROTATION = {'pool': 400, 'bin': 10, 'sigma': 6, 'iters': 80, 'tol': 0.4}
 ZONES = nodes.ZONES
 NB = nodes.LOCATION_BANDS
 BAND_ZONE = np.array([i for i, z in enumerate(ZONES) for _ in range(len(nodes.LOCATION_EDGES[z]) + 1)])
@@ -109,6 +114,15 @@ class Models:
         if self.cfg.get('fold'):  # backtest fold models: fill medians from the training window only (cutoff safety)
             pre = pre[pre['date_et'].astype(str) <= self.cfg['train_through']]
         self.median = {c: float(pre[c].median()) for c in OFF_REL + DEF_REL}
+        # D30 inputs (present only in versions trained on features with them): matchup assignment θ, optional columns
+        used = {c for m in self.nodes.values() for c in m['columns']}
+        self.optional_lineup = [c for c in nodes.OPTIONAL_LINEUP if c in used]
+        self.style = [c for c in nodes.OPTIONAL_PROFILE if c in used or f'actor_{c}' in used]
+        self.mu = [c for c in nodes.MU + nodes.MU_SHOT if c in used]
+        self.theta = None
+        if self.mu:
+            path = Path(self.cfg['matchup'])
+            self.theta = json.loads((path if path.is_absolute() else ROOT / path).read_text())
 
     def predict(self, node, cols: dict, n: int):
         m = self.nodes[node]
@@ -130,6 +144,12 @@ class Game:
         n = len(self.ids)
         prof = profiles.set_index('player').reindex(self.ids)
         self.P = {c: prof[c].to_numpy(np.float32) for c in nodes.PROFILE}
+        for c in nodes.OPTIONAL_PROFILE + nodes.DEF_SIDE:  # D30 columns when the profiles carry them
+            if c in prof.columns:
+                self.P[c] = prof[c].to_numpy(np.float32)
+        body = pd.read_parquet(DERIVED / 'athletes.parquet', columns=['player', 'height_in', 'weight_lb'])
+        body = body.assign(player=body['player'].astype(str)).drop_duplicates('player').set_index('player').reindex([str(x) for x in self.ids])
+        self.P['height_in'], self.P['weight_lb'] = body['height_in'].to_numpy(np.float32), body['weight_lb'].to_numpy(np.float32)
         grp = prof['pos'].fillna(pd.Series([p['pos'] for s in self.sides for p in players[s]], index=prof.index)).map(nodes.group)
         self.P['grp_code'] = grp.map({'G': 0, 'F': 1, 'C': 2}).fillna(1).to_numpy(np.float32)
         self.P['is_big'] = (grp == 'C').to_numpy(np.float32)
@@ -146,9 +166,23 @@ class Game:
         self.season_day = float((pd.Timestamp(day) - pd.Timestamp(start)).days)
         self.templates = {i: rotations.templates_for(stints, game[f'{s}_id'], day) for i, s in enumerate(self.sides)}
         self.n = n
+        # D29 minutes targets: present when every player carries a 'minutes' state (scripts/minutes.player_state)
+        flat = [p for s in self.sides for p in players[s]]
+        self.mstate = [p['minutes'] for p in flat] if flat and all(p.get('minutes') for p in flat) else None
+        self.lineup = {i: [k for k, p in enumerate(players[s]) if p.get('projected_starter')] for i, s in enumerate(self.sides)}
+        if self.mstate is not None:
+            from scripts import minutes as _minutes
+            for i in range(2):
+                idx = np.flatnonzero(self.side == i)
+                if idx.size:
+                    self.expected[idx] = _minutes.game_targets([self.mstate[j] for j in idx])
+            for j, p in enumerate(flat):  # the mean target if everyone listed plays (shown in the app)
+                p['minutes']['target'] = float(self.expected[j])
 
     def lineup_tables(self, avail_world: np.ndarray, rng):
         """Per world a combination (template per side, availability pattern) → table (2880 s, 5) of player indices."""
+        if self.mstate is not None:
+            return self._target_tables(avail_world, rng)
         W = avail_world.shape[0]
         combos, combo_of = {}, np.zeros((W, 2), dtype=np.int64)
         tables = []
@@ -178,6 +212,110 @@ class Game:
         top = np.argsort(-key, axis=0)[:5].T  # (2880, 5) local indices, on court first, then by expected minutes
         return idx[top]
 
+    # ------------------------------------------------------------- D29: replayed shapes rescaled to minutes targets
+    def _target_tables(self, avail_world: np.ndarray, rng):
+        """Rotation tables whose minutes follow D29's targets. Worlds sharing an availability pattern share a pool of
+        tables (ROTATION['pool'] over all worlds); each table: a replayed template's shape (when each slot is on court,
+        smoothed) mapped to tonight's players by priority — starters to the starting slots — and a per-player offset fitted
+        so his regulation minutes equal that table's own draw of his target (allocated to 240, noise by role, re-solved)."""
+        from scripts import minutes as _minutes
+        W = avail_world.shape[0]
+        R = ROTATION
+        tables, combo_of = [], np.zeros((W, 2), dtype=np.int64)
+        for i in range(2):
+            idx = np.flatnonzero(self.side == i)
+            temps = self.templates[i]
+            pats = {}
+            for w in range(W):
+                pats.setdefault(tuple(avail_world[w, idx]), []).append(w)
+            for pattern, worlds in pats.items():
+                av = np.flatnonzero(np.array(pattern))
+                if av.size < 5:  # fewer than five available: everyone on court (cannot happen with real rosters)
+                    av = np.arange(len(idx))
+                E = int(max(1, min(len(worlds), round(R['pool'] * len(worlds) / W))))
+                states = [self.mstate[idx[k]] for k in av]
+                mu = _minutes.game_targets(states)
+                cap = np.array([s['cap'] for s in states])
+                sd = _minutes.sd_for(states[0]['sd_table'], mu)
+                X = _minutes.redraw(mu, cap, sd, E, rng)
+                groups = [rotations.group(self.players[self.sides[i]][k]['pos']) for k in av]
+                given = [j for j, k in enumerate(av) if k in self.lineup[i]]
+                starters = given if len(given) == 5 else _minutes.projected_starters(states, groups)
+                choice = rng.choice(len(temps), size=E, p=(q := np.linspace(1, 2, len(temps))) / q.sum()) if temps else np.zeros(E, int)
+                curves = np.stack([self._curves(temps[c] if temps else None, av, states, groups, starters) for c in range(max(1, len(temps)))])
+                top = self._fit_offsets(curves[choice], X)  # (E, 5, bins) positions in av
+                local = av[top]
+                tab = np.repeat(np.sort(idx[local], axis=1), R['bin'], axis=2).transpose(0, 2, 1)[:, :2880]
+                base = len(tables)
+                tables.extend(tab.astype(np.int32))
+                combo_of[worlds, i] = base + rng.permutation(np.resize(np.arange(E), len(worlds)))
+        return np.stack(tables), combo_of
+
+    def _curves(self, template, av, states, groups, starters):
+        """(players, bins) on-court propensity for one template: the mapped slot's on-court share per bin, smoothed;
+        players without a slot get the template's average bench shape at a low level."""
+        R = ROTATION
+        nb = 2880 // R['bin']
+        out = np.zeros((len(av), nb))
+        if template is not None:
+            slots = template['slots']
+            start_slots = [j for j, s in enumerate(slots) if any(a <= 0.5 for a, _ in s['spans'])]
+            other = [j for j in range(len(slots)) if j not in start_slots]
+            order = sorted(range(len(av)), key=lambda j: -states[j]['priority'])
+            mapping = {}
+            for pool_players, pool_slots in (([j for j in order if j in starters], start_slots), ([j for j in order if j not in starters], other)):
+                free = list(pool_slots)
+                for j in pool_players:  # same position group first, then any free slot of the pool
+                    pick = next((s for s in free if rotations.group(slots[s]['pos']) == groups[j]), free[0] if free else None)
+                    if pick is not None:
+                        mapping[j] = pick
+                        free.remove(pick)
+            bench_shape = np.zeros(nb)
+            for j, s in enumerate(slots):
+                line = np.zeros(2880)
+                for a, b in s['spans']:
+                    line[int(a):int(np.ceil(b))] = 1.0
+                share = line.reshape(nb, R['bin']).mean(1)
+                if j in other:
+                    bench_shape += share
+                for p, sl in mapping.items():
+                    if sl == j:
+                        out[p] = share
+            bench_shape /= max(1, len(other))
+            for p in range(len(av)):
+                if p not in mapping:
+                    out[p] = 0.3 * bench_shape
+        k = np.exp(-0.5 * (np.arange(-3 * R['sigma'], 3 * R['sigma'] + 1) / R['sigma']) ** 2)
+        k /= k.sum()
+        out = np.stack([np.convolve(r, k, mode='same') for r in out])
+        for p in starters:  # the projected starters open the game
+            out[p, 0] += 2.0
+        return out
+
+    @staticmethod
+    def _fit_offsets(curves, X):
+        """Per table and player an offset b so that, choosing the five highest (curve + b) in each bin, his minutes match
+        the target X; returns (E, 5, bins) the five chosen players per bin."""
+        R = ROTATION
+        E, n, nb = curves.shape
+        per_bin = R['bin'] / 60
+        b = np.zeros((E, n))
+        step = 1.0 / 48
+        best, best_err = None, np.inf
+        for it in range(R['iters']):
+            score = curves + b[:, :, None]
+            top = np.argpartition(-score, 4, axis=1)[:, :5, :]
+            on = np.zeros((E, n, nb), bool)
+            np.put_along_axis(on, top, True, axis=1)
+            err = X - on.sum(2) * per_bin
+            e = np.abs(err).max()
+            if e < best_err:
+                best, best_err = top, e
+            if e <= R['tol']:
+                break
+            b += step * err * (0.96 ** it)
+        return best
+
 
 class Worlds:
     """State of W worlds of one game."""
@@ -201,7 +339,7 @@ class Worlds:
 
 class Engine:
     def __init__(self, version: str | None = None):
-        version = version or ENGINE['version']
+        version = version or ENGINE.get('models', ENGINE['version'])  # the node models' version (v1.2 serves v1.1's models)
         self.m = Models(version)
         self.diag = None  # set to [] to record (start type, seconds to action, clock) per segment
 
@@ -232,12 +370,25 @@ class Engine:
                   'def_blk_sum': np.nansum(d('blk_rate'), 1), 'def_blk_max': np.nanmax(d('blk_rate'), 1), 'def_stl_sum': np.nansum(d('stl_rate'), 1),
                   'def_dreb_sum': np.nansum(d('dreb_pct'), 1), 'def_pf_sum': np.nansum(d('pf_rate'), 1), 'def_bigs': d('is_big').sum(1),
                   'def_min_mean': np.nanmean(d('min_avg'), 1)})
+        for col in self.m.optional_lineup:
+            side, src, how = nodes.OPTIONAL_LINEUP[col]
+            v = o(src) if side == 'off' else d(src)
+            c[col] = {'mean': np.nanmean, 'max': np.nanmax, 'min': np.nanmin, 'sum': np.nansum}[how](v, 1).astype(np.float32)
         return c
+
+    def _mu(self, g, L_def, actor_glob, rows):
+        """Matchup inputs for the actor of each row (D30): his likely defenders' quality by the soft assignment."""
+        from scripts import matchups
+        P = g.P
+        Ld = L_def[rows]
+        A = {c: P[c][actor_glob[rows]].astype(float) for c in ('grp_code', 'min_avg', 'height_in', 'weight_lb')}
+        D = {c: P[c][Ld].astype(float) for c in ['grp_code', 'min_avg', 'height_in', 'weight_lb'] + [k for k in matchups.MU_SOURCES if k in P]}
+        return {k: v.astype(np.float32) for k, v in matchups.mu_columns(self.m.theta, A, D).items()}
 
     def _five(self, g, st, A, L, rel):
         """Per-candidate columns for a five (|A|, 5): profile, in-game, group, quarter usage now, shares and ranks."""
         P = g.P
-        c = {col: P[col][L] for col in nodes.PROFILE}
+        c = {col: P[col][L] for col in nodes.PROFILE + self.m.style}
         for col in IN_GAME:
             c[col] = np.take_along_axis(st.ingame[col][A], L, 1)
         c['grp_code'] = P['grp_code'][L]
@@ -262,9 +413,8 @@ class Engine:
             out = {k: v[keep] for k, v in out.items()}
         return out
 
-    @staticmethod
-    def _actor(five_cols, slot):
-        cols = list(nodes.PROFILE) + list(IN_GAME) + ['grp_code', 'usage_share', 'usage_rank', 'usage_mult_now']
+    def _actor(self, five_cols, slot):
+        cols = list(nodes.PROFILE) + self.m.style + list(IN_GAME) + ['grp_code', 'usage_share', 'usage_rank', 'usage_mult_now']
         r = np.arange(len(slot))
         return {f'actor_{c}': five_cols[c][r, slot] for c in cols}
 
@@ -339,6 +489,9 @@ class Engine:
                 actor[act] = self._choose('who', rows, 5, rng, act.size)
             a_glob = L_off[np.arange(n), actor]
             actor_cols = self._actor(off_five, actor)
+            if self.m.mu:
+                mu = self._mu(g, L_def, a_glob, np.arange(n))
+                actor_cols.update({k: v for k, v in mu.items() if k in self.m.mu})
             wctx = lambda idx, extra=None: {**{k: v[idx] for k, v in ctx.items()}, **{k: v[idx] for k, v in actor_cols.items()}, **(extra or {})}
             what = np.full(n, -1)
             if act.size:
@@ -347,10 +500,21 @@ class Engine:
             zone = np.where(what < 5, what, 0)
             band = np.zeros(n, int)
             res = np.zeros(n, int)
+            mu_shot = np.full(n, np.nan, np.float32)
             if shot.size:
-                Pl = m.predict('location', wctx(shot, {'zone': zone[shot].astype(np.float32)}), shot.size) * nodes.LOCATION_MASK[zone[shot]]
+                lx = {'zone': zone[shot].astype(np.float32)}
+                if 'mu_fg_shot' in m.mu:
+                    zk = np.array(['rim', 'paint', 'mid', 'three', 'three'])[zone[shot]]
+                    lx['mu_fg_shot'] = np.select([zk == z for z in ('rim', 'paint', 'mid', 'three')],
+                                                 [actor_cols[f'mu_fg_{z}'][shot] for z in ('rim', 'paint', 'mid', 'three')]).astype(np.float32)
+                Pl = m.predict('location', wctx(shot, lx), shot.size) * nodes.LOCATION_MASK[zone[shot]]
                 band[shot] = draw(Pl / Pl.sum(1, keepdims=True), rng)
                 loc = {'zone': zone[shot].astype(np.float32), 'distance': m.band_d[band[shot]], 'lateral': m.band_l[band[shot]]}
+                if 'mu_fg_shot' in m.mu:
+                    zk = np.array(['rim', 'paint', 'mid', 'three', 'three'])[zone[shot]]
+                    loc['mu_fg_shot'] = np.select([zk == z for z in ('rim', 'paint', 'mid', 'three')],
+                                                  [actor_cols[f'mu_fg_{z}'][shot] for z in ('rim', 'paint', 'mid', 'three')]).astype(np.float32)
+                    mu_shot[shot] = loc['mu_fg_shot']
                 res[shot] = draw(m.predict('shot_result', wctx(shot, loc), shot.size), rng)
             made = shot[res[shot] >= 1]
             and1 = shot[res[shot] == 2]
@@ -367,7 +531,7 @@ class Engine:
             st.ingame['uses_so_far'][A[act], a_glob[act]] += 1
             # assists
             if made.size:
-                loc = {'zone': zone[made].astype(np.float32), 'distance': m.band_d[band[made]], 'lateral': m.band_l[band[made]]}
+                loc = {'zone': zone[made].astype(np.float32), 'distance': m.band_d[band[made]], 'lateral': m.band_l[band[made]], 'mu_fg_shot': mu_shot[made]}
                 asst = made[rng.random(made.size) < m.predict('assisted', wctx(made, loc), made.size)]
                 if asst.size:
                     keep = (np.arange(5)[None, :] != actor[asst][:, None]).reshape(-1)
@@ -380,7 +544,7 @@ class Engine:
                     st.ingame['ast_so_far'][A[asst], who_ast] += 1
             # misses: blocks and rebounds
             if miss.size:
-                loc = {'zone': zone[miss].astype(np.float32), 'distance': m.band_d[band[miss]], 'lateral': m.band_l[band[miss]]}
+                loc = {'zone': zone[miss].astype(np.float32), 'distance': m.band_d[band[miss]], 'lateral': m.band_l[band[miss]], 'mu_fg_shot': mu_shot[miss]}
                 blocked = rng.random(miss.size) < m.predict('blocked', wctx(miss, loc), miss.size)
                 bl = miss[blocked]
                 if bl.size:
@@ -561,18 +725,44 @@ class Engine:
         return out
 
 
-def inputs_for(game: dict, day: str, T, lg, P, registry, Q=None, priors=None):
+def features_dir(models: str | None = None) -> Path:
+    """Where a node-model version's profiles live (its config's 'features' variant; default data/derived/features)."""
+    cfg = MODELS / (models or ENGINE.get('models', ENGINE['version'])) / 'config.json'
+    feat = json.loads(cfg.read_text()).get('features') if cfg.exists() else None
+    return (ROOT / feat).parent if feat and not Path(feat).is_absolute() else Path(feat).parent if feat else DERIVED / 'features'
+
+
+def inputs_for(game: dict, day: str, T, lg, P, registry, Q=None, priors=None, rotation: str | None = None, models: str | None = None):
     """Players (with injury availability and expected minutes) from the placeholder's inputs, profiles as of today."""
     players = {s: [p for p in projection.player_inputs(game[f'{s}_id'], P, registry, lg, T, True, Q, priors) if p['availability'] > 0]
                for s in ('home', 'away')}
-    profiles = pd.read_parquet(DERIVED / 'features' / 'latest.parquet')
-    team_latest = pd.read_parquet(DERIVED / 'features' / 'team_latest.parquet')
+    feats = features_dir(models)  # v1.3+: the defence variant's latest profiles (rebuilt nightly)
+    profiles = pd.read_parquet(feats / 'latest.parquet')
+    team_latest = pd.read_parquet(feats / 'team_latest.parquet')
     if profiles['date_et'].max() >= day or team_latest['last_game'].max() >= day:  # cutoff safety: today's slate only
         raise ValueError(f'profiles include games on or after {day}: the engine projects only slates after the latest game')
     stints = pd.read_parquet(DERIVED / 'rotations' / 'stints.parquet')
+    if (rotation or ENGINE.get('rotation')) == 'targets':  # D29: minutes targets from healthy roles (state through yesterday)
+        from scripts import minutes
+        m = _MINUTES.get(day)
+        if m is None:
+            m = _MINUTES[day] = minutes.build(day, include_current=True, upto=day)
+        for s in ('home', 'away'):
+            for p in players[s]:
+                p['minutes'] = minutes.player_state(m, game[f'{s}_id'], p['id'], day)
+            # projected starters (no lineup source passes yet — FINDINGS §1): start share, then priority; they open the
+            # game in the engine and are the starters the app shows
+            sure = [p for p in players[s] if p['availability'] >= 0.9] or players[s]
+            pick = minutes.projected_starters([p['minutes'] for p in sure], [rotations.group(p['pos']) for p in sure])
+            chosen = {sure[i]['id'] for i in pick}
+            for p in players[s]:
+                p['starter'] = p['projected_starter'] = p['id'] in chosen
     g = Game(game, players, profiles, team_latest, stints, day)
     g.season = int(profiles['season'].max())
     return g
+
+
+_MINUTES: dict = {}  # one minutes build per slate date
 
 
 def main():

@@ -2,6 +2,7 @@
 // Player = per-period box scores, Team = per-period team lines and distributions. Matchup is separate.
 import {api, atLeast, modelPill, barChart, dayLabel, defaultLine, esc, f1, halfLine, heat, histogram, logo, over, pct, percentileOf,
         probWhere, rate, record, seg, signed, stamp, statusTag, store, team, tipTimes} from './ui.mjs';
+import * as S from './scenario.mjs';
 
 export const PERIODS = [['q1', 'Q1', '1st quarter'], ['q2', 'Q2', '2nd quarter'], ['q3', 'Q3', '3rd quarter'], ['q4', 'Q4', '4th quarter'],
                         ['h1', 'H1', '1st half'], ['h2', 'H2', '2nd half'], ['fg', 'FG', 'Full game']];
@@ -25,18 +26,19 @@ export async function render(view, {rest, current}) {
     state.period = PERIOD_IDS.includes(rest[3]) ? rest[3] : state.period;
     return sheet(view, data, rest[2], current);
   }
-  const matchup = rest[1] === 'matchup';
-  const period = sims(data) && PERIOD_IDS.includes(rest[1]) ? rest[1] : (sims(data) ? state.period : 'fg');
+  const matchup = rest[1] === 'matchup', scenario = rest[1] === 'scenario' && Boolean(data.worlds);
+  const period = scenario ? 'fg' : sims(data) && PERIOD_IDS.includes(rest[1]) ? rest[1] : (sims(data) ? state.period : 'fg');
   const mode = rest[2] === 'team' ? 'team' : 'player';
   state.period = period;
   const base = `#/game/${gid}`;
   view.innerHTML = `<a class="crumb" href="#/today/${data.game.date}">‹ ${esc(dayLabel(data.game.date))} slate</a>
-    ${bezel(data, period, {matchup, mode, base})}<div id="game-body"></div>`;
+    ${bezel(data, period, {matchup, scenario, mode, base})}<div id="game-body"></div>`;
   const body = view.querySelector('#game-body');
   const go = (p, m) => location.replace(`${base}/${p}${m === 'team' ? '/team' : ''}`);
   view.querySelector('select.period')?.addEventListener('change', e => go(e.target.value, matchup ? 'player' : mode));
-  view.querySelectorAll('[data-view]').forEach(b => b.onclick = () => b.dataset.view === 'matchup' ? location.replace(`${base}/matchup`) : go(period, b.dataset.view));
+  view.querySelectorAll('[data-view]').forEach(b => b.onclick = () => ['matchup', 'scenario'].includes(b.dataset.view) ? location.replace(`${base}/${b.dataset.view}`) : go(period, b.dataset.view));
   if (matchup) return matchupView(body, data);
+  if (scenario) return S.scenarioView(body, data, rest[2]);
   if (!sims(data) && !data.actual) {
     body.innerHTML = '<section class="panel"><p class="note">Player and period projections appear when the game simulation runs on the morning of the slate.</p></section>';
     return;
@@ -68,7 +70,7 @@ function actualPoints(data, side, period) {
   return {q1: l[0], q2: l[1], q3: l[2], q4: l[3], h1: l[0] + l[1], h2: l[2] + l[3]}[period];
 }
 
-function bezel(data, period, {matchup, mode, base}) {
+function bezel(data, period, {matchup, scenario, mode, base}) {
   const g = data.game, P = data.projection, sim = sims(data), tm = data.team_model;
   const A = team(g.away.id), H = team(g.home.id);
   const t = tipTimes(g.tip_utc, g.date, g.time_valid);
@@ -110,7 +112,7 @@ function bezel(data, period, {matchup, mode, base}) {
   const status = final ? `Final${g.periods > 4 ? (g.periods > 5 ? `/${g.periods - 4}OT` : '/OT') : ''}` : g.status === 'live' ? esc(g.detail) : esc(t.uk) + ' UK';
   const options = groups => groups.map(([label, ids]) => `<optgroup label="${label}">${ids.map(id => `<option value="${id}"${id === period ? ' selected' : ''}>${PERIODS.find(p => p[0] === id)[1]} · ${periodName(id)}</option>`).join('')}</optgroup>`).join('');
   const select = sim
-    ? `<label class="sr" for="period-select">Period</label><select id="period-select" class="period"${matchup ? ' disabled' : ''}>${options([['Quarters', ['q1', 'q2', 'q3', 'q4']], ['Halves', ['h1', 'h2']], ['Game', ['fg']]])}</select>`
+    ? `<label class="sr" for="period-select">Period</label><select id="period-select" class="period"${matchup || scenario ? ' disabled' : ''}>${options([['Quarters', ['q1', 'q2', 'q3', 'q4']], ['Halves', ['h1', 'h2']], ['Game', ['fg']]])}</select>`
     : '<span class="pill">Full game only until the game simulation runs</span>';
   const chips = P ? `<div class="chips">${modelPill(P.model)}
       <span class="pill ${P.kind === 'prospective' ? 'good' : 'warn'}">${P.kind === 'prospective' ? (P.pre_tip ? 'Pre-game' : 'Built after tip-off') : 'Retrospective'}</span>
@@ -124,8 +126,8 @@ function bezel(data, period, {matchup, mode, base}) {
         <div class="bz-sub">${note}</div></div>
       ${block('home', H)}</div>
     <div class="bz-controls">${select}
-      ${seg([['player', 'Player'], ['team', 'Team']], matchup ? '' : mode, 'data-view')}
-      <span class="spacer"></span><button type="button" class="ghost${matchup ? ' on' : ''}" data-view="matchup" aria-pressed="${matchup}">Matchup</button></div>
+      ${seg([['player', 'Player'], ['team', 'Team']], matchup || scenario ? '' : mode, 'data-view')}
+      <span class="spacer"></span>${data.worlds ? `<button type="button" class="ghost${scenario ? ' on' : ''}" data-view="scenario" aria-pressed="${scenario}">Scenarios</button>` : ''}<button type="button" class="ghost${matchup ? ' on' : ''}" data-view="matchup" aria-pressed="${matchup}">Matchup</button></div>
     ${chips}</section>`;
 }
 
@@ -163,7 +165,7 @@ function playerView(el, data, period) {
   const mode = modes.some(m => m[0] === state.mode) ? state.mode : (sim && act ? 'cmp' : modes[0][0]);
   el.innerHTML = (modes.length > 1 ? `<div class="controls">${seg(modes, mode, 'data-mode')}</div>` : '') +
     ['away', 'home'].map(s => teamBox(data, s, mode, period)).join('') +
-    `<p class="note">${period === 'fg' ? 'Full game includes overtime.' : `${esc(periodName(period))} only; overtime counts in FG.`} Projected values are means over ${sim ? sim.sims.toLocaleString() : ''} simulated games. Tap a player for distributions and lines.</p>`;
+    `<p class="note">${period === 'fg' ? 'Full game includes overtime.' : `${esc(periodName(period))} only; overtime counts in FG.`} Projected values are means over ${sim ? sim.sims.toLocaleString() : ''} simulated games${mode === 'proj' && period === 'fg' && data.averages ? '; small numbers under MIN, PTS, REB and AST: projection minus his season average' : ''}. Tap a player for distributions, lines and what-ifs.</p>`;
   el.querySelectorAll('[data-mode]').forEach(b => b.onclick = () => { state.mode = b.dataset.mode; playerView(el, data, period); });
   el.querySelectorAll('tr[data-pid]').forEach(tr => {
     tr.onclick = () => { location.hash = `#/game/${data.game.id}/player/${tr.dataset.pid}/${period}`; };
@@ -179,8 +181,14 @@ function teamBox(data, side, mode, period) {
   const ruledOut = mode === 'act' || !sim ? [] : sim.players.filter(p => !p.periods && !actualIds.has(p.id));
   let rows = [];
   if (mode === 'proj') {
+    const avg = period === 'fg' ? data.averages || {} : {};
     rows = sim.players.filter(p => p.periods).map(p => ({id: p.id, name: p.name, pos: p.pos, starter: p.starter,
-      tag: statusTag(p.status, p.availability), cells: COLS.map(([k]) => projCell(p.periods[period], k))}));
+      tag: statusTag(p.status, p.availability), cells: COLS.map(([k]) => {
+        const cell = projCell(p.periods[period], k), a = avg[p.id]?.season;
+        if (!a || !['pts', 'reb', 'ast', 'min'].includes(k)) return cell;
+        const pv = k === 'min' ? p.periods.fg.sec / 60 : p.periods.fg.mean[k], d = pv - a[k];
+        return `${cell}<span class="sub ${d > 0.25 ? 'up' : d < -0.25 ? 'down' : ''}" title="v season average ${f1(a[k])}">${signed(d)}</span>`;
+      })}));
   } else if (mode === 'act') {
     rows = act.players.map(r => {
       const a = actualLine(r, period);
@@ -313,8 +321,11 @@ function teamView(el, data, period) {
     {id: period + '-margin', title: `Margin (${H.abbr} minus ${A.abbr})`, d: per.margin, side: true, A, H, ladder: margins, actual: has ? actual.home - actual.away : null},
   ];
   const paint = () => {
-    el.innerHTML = boxPanel + blocks.map(b => distBlock(data, b)).join('') + '<p class="note">Over = strictly more than the line. Tap a bar to move the line there.</p>';
+    el.innerHTML = boxPanel + blocks.map(b => distBlock(data, b)).join('') + '<p class="note">Over = strictly more than the line. Tap a bar to move the line there.</p>'
+      + (data.worlds && period === 'fg' ? '<div id="drivers"></div>' : '');
     wireBlocks(el, data, paint);
+    const drivers = el.querySelector('#drivers');
+    if (drivers) S.driversPanel(drivers, data);
   };
   paint();
 }
@@ -411,6 +422,7 @@ async function sheet(view, data, pid, current) {
       <div class="tile"><span>FG</span><b style="font-size:15px">${shoot(proj.mean.fgm, proj.mean.fga, true)}</b></div>
       <div class="tile"><span>Plays</span><b>${pct(p.played, 0)}</b><small>of sims</small></div>
       ${period === 'fg' ? `<div class="tile"><span>Double-double</span><b>${pct(p.double_double, 0)}</b></div>` : ''}</div>
+      ${p.minutes_basis ? `<p class="note">Minutes basis: healthy role ${f1(p.minutes_basis.healthy)} min${p.minutes_basis.rotation < 0.95 ? ` · plays ${pct(p.minutes_basis.rotation, 0)} of the games he is available for` : ''} · target ${f1(p.minutes_basis.target)} if the listed roster plays${p.minutes_basis.k_back > 0 && p.minutes_basis.ramp < 0.995 ? ` · game ${p.minutes_basis.k_back} back after ${p.minutes_basis.missed} missed (ramp ×${p.minutes_basis.ramp.toFixed(2)})` : ''}${p.starter ? ' · projected starter' : ''}. Team minutes are shared to exactly 240 by priority, so an absent teammate's minutes pass down the rotation.</p>` : ''}
       ${p.if_plays ? `<p class="note">If he plays (full game): ${f1(p.if_plays.min)} min · ${f1(p.if_plays.pts)} pts · ${f1(p.if_plays.reb)} reb · ${f1(p.if_plays.ast)} ast. ${esc(p.status)}${p.injury?.comment ? ' — ' + esc(p.injury.comment) : ''}</p>` : ''}`
     : `<p class="note">${p && !p.periods ? `Ruled out in every simulation (${esc(p.status)}).` : 'No projection for this player in this game.'}</p>`;
   const paint = () => {
@@ -420,6 +432,8 @@ async function sheet(view, data, pid, current) {
         ${sim ? `<label class="sr" for="sheet-period">Period</label><select id="sheet-period" class="period">${options}</select>` : ''}
         <a class="btn ghost" href="#/player/${pid}">Player page</a></div>${tiles}</section>
       ${proj ? `<div class="controls">${seg(choices.map(k => [k, LABEL[k]]), state.stat, 'data-stat')}</div><div id="stat-block">${statBlock()}</div>` : ''}
+      ${proj && period === 'fg' && data.worlds ? '<div id="what-if"></div>' : ''}
+      ${proj && period === 'fg' ? S.averagesPanel(data, pid, proj) : ''}
       ${context ? contextPanel(context, period) : ''}
       <p class="note">${sim ? `${sim.sims.toLocaleString()} simulated games from the ${esc(data.projection.kind)} snapshot of ${esc(dayLabel(data.projection.snapshot))}. Distributions include simulations where he does not play${period === 'fg' ? '' : '; overtime counts in FG only'}.` : ''}</p>`;
     view.querySelector('#sheet-period')?.addEventListener('change', e => location.replace(`#/game/${data.game.id}/player/${pid}/${e.target.value}`));
@@ -429,6 +443,11 @@ async function sheet(view, data, pid, current) {
     if (input) input.onchange = () => { const v = Number(input.value); if (Number.isFinite(v)) { state.lines.set(key(), halfLine(Math.max(0, v))); paint(); } };
     const svg = block?.querySelector('svg.hist');
     if (svg) svg.onclick = e => { const v = e.target.closest('rect.hit')?.dataset.v; if (v != null) { state.lines.set(key(), Number(v) - 0.5); paint(); } };
+    const whatIf = view.querySelector('#what-if');
+    if (whatIf) {
+      const d = proj.stats[state.stat];
+      S.sheetPanels(whatIf, data, pid, state.stat, state.lines.has(key()) ? halfLine(state.lines.get(key())) : defaultLine(d));
+    }
   };
   paint();
 }

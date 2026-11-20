@@ -1,0 +1,71 @@
+{
+  "version": "v1.2d",
+  "status": "candidate (D30): v1.1 settings + defender-side on-court defence (shrinkage ×0.2), assignment-weighted matchup defence, help at the rim, shot-type shares; judged by the F4 backtest",
+  "default": {
+    "half_life": null,
+    "playoff_weight": 1.0,
+    "drop": [
+      "@team",
+      "@schedule",
+      "@clutch",
+      "@stype"
+    ],
+    "banded": true,
+    "recalibrate": false,
+    "features": "data/derived/variants/matchup/features/pregame.parquet",
+    "segments": null
+  },
+  "nodes": {
+    "duration": {
+      "drop": [
+        "@schedule",
+        "@clutch",
+        "@stype"
+      ]
+    },
+    "what": {
+      "drop": [
+        "@schedule",
+        "@clutch",
+        "@stype"
+      ]
+    },
+    "shot_result": {
+      "drop": [
+        "@schedule",
+        "@clutch",
+        "@stype"
+      ]
+    },
+    "free_throw": {
+      "drop": [
+        "@team",
+        "@schedule",
+        "@clutch",
+        "@heat",
+        "@stype"
+      ]
+    },
+    "event": {
+      "drop": [
+        "@team",
+        "@clutch",
+        "off_rest",
+        "def_rest",
+        "@stype"
+      ]
+    },
+    "turnover_type": {
+      "drop": [
+        "@team",
+        "@clutch",
+        "off_rest",
+        "def_rest",
+        "@stype"
+      ]
+    }
+  },
+  "why": {
+    "D30": "ENGINE_PLAN D30; FINDINGS §3o (defence loading 0.42 v 1.69 real)"
+  }
+}

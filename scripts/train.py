@@ -209,6 +209,12 @@ def band_distances(X, tr):
     return X
 
 
+def _matchup_of(features):
+    """The matchup assignment θ a features variant was built with (features_report.json), for the engine (D30)."""
+    rep = (Path(features).parent if features else DERIVED / 'features') / 'features_report.json'
+    return json.loads(rep.read_text()).get('matchup') if rep.exists() else None
+
+
 def model_columns(X, drop):
     """Columns the model sees: `drop` removes a feature by name (also with the actor_ prefix) or a group (@team, …)."""
     drop = {c for item in (drop or ()) for c in (nodes.GROUPS[item[1:]] if item.startswith('@') else [item])}
@@ -490,6 +496,7 @@ def main():
         write_json(model_dir / 'config.json', {'version': version, 'created': stamp, 'commit': git_commit(), 'burn_in': BURN_IN,
                                                 'train_through': FINAL_TRAIN_TO, 'final_test_from': TEST_FROM,
                                                 'segments': base.get('segments'), 'features': base.get('features'),
+                                                'matchup': _matchup_of(base.get('features')),
                                                 'experiment': f'analysis/experiments/{stamp}_{name_tag}.json', 'nodes': saved}, pretty=True)
         print(f'models: {model_dir}')
     print(f'\nrun {stamp}_{name_tag}')

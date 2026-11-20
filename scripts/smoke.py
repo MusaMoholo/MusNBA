@@ -98,12 +98,14 @@ def main():
             check(f'history {path.parent.name}: inferred shot values agree where known (>=99.9%)', agreement >= 0.999, agreement)
 
     from scripts.engine import ENGINE
-    versions = [ROOT / 'models' / f"{ENGINE['version']}.json"]
+    versions = [ROOT / 'models' / f"{ENGINE.get('models', ENGINE['version'])}.json"]  # the node models' version file
     if versions[0].exists():
         import numpy as np
         spec = read_json(versions[0])
         v = spec['version']
-        fold_log = ROOT / spec['validated_by'] if spec.get('validated_by') else None
+        vb = spec.get('validated_by')
+        logs = [vb] if isinstance(vb, str) else list(vb or [])
+        fold_log = next((ROOT / x for x in logs if (ROOT / x).exists() and 'results' in read_json(ROOT / x)), None)  # the node-level fold run
         if fold_log and fold_log.exists():
             res = read_json(fold_log)['results']
             worst = {n: min(r['gain_vs_best_baseline'] for r in folds.values()) for n, folds in res.items()}
@@ -260,6 +262,53 @@ def main():
     check('train.hybrid: training rows from one dataset, validation rows from the other in order, candidate groups distinct',
           h['X']['a'].tolist() == [1.0, 2.0, 20.0, 30.0] and len(set(h['group'])) == 4 and len(h['y']) == 4, h['X']['a'].tolist())
 
+    import numpy as np
+    # D29 minutes: every allocation is exactly 240 regulation minutes, within [0, 48]; the ramp only lowers or keeps
+    from scripts import minutes as minutes_mod
+    mb = minutes_mod.build('2026-01-01', include_current=False)
+    sums = mb['rows'].groupby(['game_id', 'team'])['alloc'].agg(['sum', 'size'])
+    sums = sums[sums['size'] >= 5]['sum']
+    if args.fault:
+        sums.iloc[0] += 1.0
+    check(f'minutes: every allocation sums to 240 ({len(sums):,} team-games) and stays in [0, 48]',
+          bool((sums - 240).abs().max() < 1e-6) and bool(mb['rows']['alloc'].between(-1e-6, 48 + 1e-4).all()), float((sums - 240).abs().max()))
+    check('minutes: return-ramp ratios in (0.5, 1.1], absence-free player-games unramped',
+          all(0.5 < v <= 1.1 for v in mb['ramp'].values()) and bool((mb['rows'].loc[mb['rows']['k_back'] == 0, 'ramp'] == 1.0).all()),
+          {k: v for k, v in mb['ramp'].items() if not 0.5 < v <= 1.1})
+    rng_t = np.random.default_rng(3)
+    X = minutes_mod.redraw(np.array([34, 32, 30, 28, 26, 24, 20, 16, 12, 10, 8.0]), np.full(11, 40.0), np.full(11, 4.0), 200, rng_t)
+    check('minutes: per-world draws re-solve to 240 in every world', bool(np.abs(X.sum(1) - 240).max() < 1e-6), float(np.abs(X.sum(1) - 240).max()))
+    # D29 rotation tables: five distinct players of the side in every second; table minutes hit each table's targets
+    from scripts import engine as engine_mod
+    curves = np.clip(rng_t.random((3, 11, 288)), 0, 1)
+    top = engine_mod.Game._fit_offsets(curves, minutes_mod.redraw(np.array([34, 32, 30, 28, 26, 24, 20, 16, 12, 10, 8.0]), np.full(11, 40.0),
+                                                                         np.full(11, 3.0), 3, rng_t))
+    on = np.zeros((3, 11, 288), bool)
+    np.put_along_axis(on, top, True, axis=1)
+    check('rotation tables: five distinct players in every 10-second bin; 240 minutes per table',
+          bool((on.sum(1) == 5).all()) and bool(np.allclose(on.sum((1, 2)) * 10 / 60, 240)))
+    # D30 matchups: the soft assignment is a distribution over the five on court
+    from scripts import matchups as matchups_mod
+    theta_path = sorted((ROOT / 'models').glob('matchup_*.json'))
+    if theta_path:
+        th = json.loads(theta_path[-1].read_text())
+        A = {'height_in': rng_t.normal(78, 3, 50), 'weight_lb': rng_t.normal(215, 20, 50), 'grp_code': rng_t.integers(0, 3, 50).astype(float),
+             'min_avg': rng_t.uniform(10, 36, 50)}
+        D = {k: np.stack([v] * 5, 1) + rng_t.normal(0, 1, (50, 5)) for k, v in A.items()}
+        D['grp_code'] = rng_t.integers(0, 3, (50, 5)).astype(float)
+        a = matchups_mod.assignment(th, A, D)
+        check(f'matchups: assignment rows sum to 1 over the five defenders ({theta_path[-1].name})',
+              bool(np.allclose(a.sum(1), 1)) and bool((a > 0).all()))
+    # Projected starters record: overall = team-game-weighted mean of the slates; accuracies in [0, 1]
+    lin = DERIVED / 'lineups' / 'accuracy.json'
+    if lin.exists():
+        rec = json.loads(lin.read_text())
+        sl = list(rec['slates'].values())
+        n = sum(r['team_games'] for r in sl)
+        w = sum(r['slot_accuracy'] * r['team_games'] for r in sl) / max(1, n)
+        check(f'lineups: overall starter accuracy is the slates\' weighted mean ({len(sl)} slates, {n} team-games)',
+              abs(w - rec['overall']['slot_accuracy']) < 1e-3 and all(0 <= r['all_five'] <= r['slot_accuracy'] <= 1 for r in sl))
+
     teams = read_json(DERIVED / 'teams.json')
     registry = read_json(DERIVED / 'players.json')['players']
     snaps = sorted(p for p in SNAPSHOTS.iterdir() if p.is_dir() and not p.name.startswith('.'))
@@ -350,12 +399,15 @@ def main():
         if meta['model'].get('kind') in ('engine', 'preview'):  # possession engine: also needs its own inputs unchanged
             from basketball_common import sha256_file
             from scripts import engine as engine_mod
-            same = all(sha256_file(f) == meta['inputs']['engine_inputs_sha256'][k] for k, f in (
-                ('latest', DERIVED / 'features' / 'latest.parquet'), ('team_latest', DERIVED / 'features' / 'team_latest.parquet'),
-                ('stints', DERIVED / 'rotations' / 'stints.parquet'), ('models', DERIVED.parent / 'models' / meta['model'].get('version', 'v1') / 'config.json')))
+            node_models = meta['model'].get('models', meta['model'].get('version', 'v1'))  # v1.2+: node models named separately
+            hashed = meta['inputs']['engine_inputs_sha256']
+            same = all(sha256_file(f) == hashed[k] for k, f in (
+                ('latest', engine_mod.features_dir(node_models) / 'latest.parquet'), ('team_latest', engine_mod.features_dir(node_models) / 'team_latest.parquet'),
+                ('stints', DERIVED / 'rotations' / 'stints.parquet'), ('on_court', DERIVED / 'rotations' / 'on_court.parquet'),
+                ('models', DERIVED.parent / 'models' / node_models / 'config.json')) if k in hashed)
             if same:
-                g = engine_mod.inputs_for(by_id[gid], day, T, lg, P, registry, Q, priors)
-                again = engine_mod.Engine(meta['model'].get('version', 'v1')).simulate(g, meta['sims'], projection.seed_for(meta['model']['id'], day, gid))
+                g = engine_mod.inputs_for(by_id[gid], day, T, lg, P, registry, Q, priors, rotation=meta['model'].get('rotation', 'replay'), models=node_models)
+                again = engine_mod.Engine(node_models).simulate(g, meta['sims'], projection.seed_for(meta['model']['id'], day, gid))
                 again = json.loads(json.dumps(again))
             else:
                 again = None
@@ -403,6 +455,27 @@ def main():
         view = read_json(api / 'game' / f'{g0}.json')
         check('views: game view carries the snapshot projection',
               view['projection'] and view['projection']['sim']['periods']['fg']['home']['win'] == games[g0]['periods']['fg']['home']['win'])
+    # Joint outcomes (app Scenarios, Given…, drivers): in every stored world each side's player points sum to its points,
+    # and the worlds' means equal the snapshot's projected means
+    import base64
+    import numpy as np
+    wfiles = sorted((VIEWS / 'api' / 'game').glob('*/worlds.json'))
+    if wfiles:
+        wf = wfiles[0]
+        w = read_json(wf)
+        W_, n_ = w['worlds'], len(w['players'])
+        L = np.frombuffer(base64.b64decode(w['lines']), np.uint8).reshape(W_, n_, len(w['stats'])).astype(int)
+        T = np.frombuffer(base64.b64decode(w['team_periods']), np.uint8).reshape(W_, 2, 5).astype(int)
+        if args.fault:
+            T = T.copy()
+            T[0, 0, 0] += 1
+        side = np.array(w['side'])
+        pts = L[:, :, w['stats'].index('pts')]
+        ok = all(np.array_equal(pts[:, side == s].sum(1), T[:, s].sum(1)) for s in (0, 1))
+        gv = read_json(VIEWS / 'api' / 'game' / f'{wf.parent.name}.json')
+        home_mean = gv['projection']['sim']['periods']['fg']['home']['pts']['mean']
+        check(f'worlds: player points sum to team points in all {W_:,} worlds; mean equals the projection ({wf.parent.name}, {len(wfiles)} games)',
+              ok and abs(T[:, 0].sum(1).mean() - home_mean) < 0.05, (ok, round(float(T[:, 0].sum(1).mean()), 2), home_mean))
 
     failed = results.count(False)
     print(f'\n{len(results) - failed}/{len(results)} checks passed')

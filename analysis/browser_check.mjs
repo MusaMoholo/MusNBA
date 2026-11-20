@@ -35,6 +35,12 @@ const CASES = [
   ['team', '#/team/14', ['desktop', 'phone'], ['light']],
   ['players', '#/players', ['desktop', 'phone'], ['dark']],
   ['player', '#/player/3032977', ['desktop', 'phone'], ['dark']],
+  ['lab', '#/lab', ['desktop', 'phone'], ['dark', 'light']],
+  ['scenario', '#/game/401909305/scenario', ['desktop', 'phone'], ['dark', 'light']],
+  ['scenario-set', '#/game/401909305/scenario/' + encodeURIComponent(JSON.stringify([{subj: 'p:4701230', v: 'pts', op: 'ge', x: 30}, {subj: 't:home', v: 'win'}])), ['desktop', 'phone'], ['dark']],
+  ['team-drivers', '#/game/401909305/fg/team', ['desktop', 'phone'], ['light']],
+  ['sheet-whatif', '#/game/401909305/player/4701230/fg', ['desktop', 'phone'], ['dark', 'light']],
+  ['today-leaders', '#/today/2026-11-20', ['phone'], ['dark']],
 ].filter(c => (!only || only.includes(c[0])) && !(c[0] === 'future-game' && !args.future));
 
 const profile = mkdtempSync(join(tmpdir(), 'musnba-chrome-'));
@@ -97,7 +103,7 @@ for (const [name, hash, sizes, themes] of CASES) {
     const d = dims.value;
     const overflow = d.scrollWidth > d.innerWidth + 1;
     const shot = await send('Page.captureScreenshot', {format: 'png', captureBeyondViewport: true,
-      clip: {x: 0, y: 0, width, height: Math.min(d.height, mobile ? 3200 : 2600), scale: 1}}, sessionId);
+      clip: {x: 0, y: args.from ? Math.max(0, d.height - Number(args.from)) : 0, width, height: Math.min(args.from ? Number(args.from) : d.height, mobile ? 3200 : 2600), scale: 1}}, sessionId);
     const file = join(OUT, `${name}-${size}-${theme}.png`);
     writeFileSync(file, Buffer.from(shot.data, 'base64'));
     const ok = ready && !overflow && errors.length === 0;

@@ -1,0 +1,64 @@
+{
+ "experiment": "matchup_assignment",
+ "run": "20261120T111943Z",
+ "through": "2025-12-31",
+ "events": 195228,
+ "by_kind": {
+  "steal": 66886,
+  "foul2": 63040,
+  "block_rim": 34463,
+  "and1_rim": 16819,
+  "block_jump": 7903,
+  "and1_jump": 3522,
+  "foul3": 2595
+ },
+ "match": {
+  "abs_height": -0.0926,
+  "abs_weight": -0.0693,
+  "same_group": 0.1076,
+  "abs_role": 0.0469,
+  "big_on_small": -0.1413,
+  "small_on_big": -0.2194
+ },
+ "prop": {
+  "foul_pf": 0.2479,
+  "foul_big": 0.2318,
+  "block_blk": 0.5576,
+  "block_big": -0.0246,
+  "steal_stl": 0.2294,
+  "steal_big": 0.1366
+ },
+ "fill": {
+  "height_in": 78.0,
+  "weight_lb": 215.0,
+  "grp_code": 1.0,
+  "min_avg": 27.881751767780298,
+  "pf_rate": 0.015205870858315021,
+  "blk_rate": 0.014608099847218229,
+  "stl_rate": 0.012060939835118313
+ },
+ "shot_type_coverage": 1.0,
+ "shot_type_shares": {
+  "drive": 0.3067,
+  "catch": 0.2917,
+  "pullup": 0.1348,
+  "iso": 0.0783,
+  "cut": 0.057,
+  "stepback": 0.0527,
+  "putback": 0.0442,
+  "other": 0.0347
+ },
+ "train_loglik": {
+  "uniform": -1.6094,
+  "full": -1.5377,
+  "propensity_only": -1.5516
+ },
+ "holdout": {
+  "events": 35216,
+  "uniform": -1.6094,
+  "full": -1.5437,
+  "propensity_only": -1.5575,
+  "on_ball_top1": 0.2604,
+  "on_ball_events": 2608
+ }
+}

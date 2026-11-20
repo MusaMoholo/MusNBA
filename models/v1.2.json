@@ -1,0 +1,85 @@
+{
+  "version": "v1.2",
+  "models": "v1.1",
+  "rotation": "targets",
+  "status": "promoted 20 Nov 2026 (D29): v1.1 decision models; minutes from scripts/minutes.py (healthy roles, 240 by priority, return ramp, per-world draws) rescale the replayed stint templates",
+  "validated_by": [
+    "analysis/experiments/20261120T114433Z_backtest_v1.1_minutes_F4.json",
+    "analysis/experiments/20261120T111337Z_minutes_alloc_F4.json"
+  ],
+  "control": "analysis/experiments/20261120T100616Z_backtest_v1.1_F4.json",
+  "minutes": {
+    "half_life": 5,
+    "carry": 0.5,
+    "gamma": 0,
+    "room": 1,
+    "correct": 0.5,
+    "start_bonus": 4,
+    "cap_games": 30,
+    "ramp": "learned before the cutoff (minutes.learn_ramp)",
+    "pool_tables_per_side": 400,
+    "bin_seconds": 10,
+    "smoothing_bins": 6
+  },
+  "default": {
+    "half_life": null,
+    "playoff_weight": 1.0,
+    "drop": [
+      "@team",
+      "@schedule",
+      "@clutch"
+    ],
+    "banded": true,
+    "recalibrate": false,
+    "features": null,
+    "segments": null
+  },
+  "nodes": {
+    "duration": {
+      "drop": [
+        "@schedule",
+        "@clutch"
+      ]
+    },
+    "what": {
+      "drop": [
+        "@schedule",
+        "@clutch"
+      ]
+    },
+    "shot_result": {
+      "drop": [
+        "@schedule",
+        "@clutch"
+      ]
+    },
+    "free_throw": {
+      "drop": [
+        "@team",
+        "@schedule",
+        "@clutch",
+        "@heat"
+      ]
+    },
+    "event": {
+      "drop": [
+        "@team",
+        "@clutch",
+        "off_rest",
+        "def_rest"
+      ]
+    },
+    "turnover_type": {
+      "drop": [
+        "@team",
+        "@clutch",
+        "off_rest",
+        "def_rest"
+      ]
+    }
+  },
+  "why": {
+    "minutes": "Backtest, same 200 F4 games v v1.1: stars minutes +6.5% -> -1.0%, points +8.8% -> +0.5%; minutes 10-90% coverage 58-63% -> 77-84%; every player CRPS better or level (starters minutes -18%, z -8.2; points -4.2%, z -5.0); team sums level (total CRPS -0.10 +- 0.07, margin +0.03 +- 0.06)",
+    "final_test": "node models unchanged (v1.1 final test, FINDINGS §3k); an engine-level 2026-27 backtest needs backtest.py to read the live season (next)"
+  }
+}

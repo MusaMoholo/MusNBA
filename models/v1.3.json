@@ -1,0 +1,98 @@
+{
+  "version": "v1.3",
+  "status": "promoted 20 Nov 2026 (D30 + D29): v1.2d decision models (defender-side on-court defence with shrinkage ×0.2, assignment-weighted matchup inputs, help at the rim, shot-type shares) with D29 minutes",
+  "default": {
+    "half_life": null,
+    "playoff_weight": 1.0,
+    "drop": [
+      "@team",
+      "@schedule",
+      "@clutch",
+      "@stype"
+    ],
+    "banded": true,
+    "recalibrate": false,
+    "features": "data/derived/variants/matchup/features/pregame.parquet",
+    "segments": null
+  },
+  "nodes": {
+    "duration": {
+      "drop": [
+        "@schedule",
+        "@clutch",
+        "@stype"
+      ]
+    },
+    "what": {
+      "drop": [
+        "@schedule",
+        "@clutch",
+        "@stype"
+      ]
+    },
+    "shot_result": {
+      "drop": [
+        "@schedule",
+        "@clutch",
+        "@stype"
+      ]
+    },
+    "free_throw": {
+      "drop": [
+        "@team",
+        "@schedule",
+        "@clutch",
+        "@heat",
+        "@stype"
+      ]
+    },
+    "event": {
+      "drop": [
+        "@team",
+        "@clutch",
+        "off_rest",
+        "def_rest",
+        "@stype"
+      ]
+    },
+    "turnover_type": {
+      "drop": [
+        "@team",
+        "@clutch",
+        "off_rest",
+        "def_rest",
+        "@stype"
+      ]
+    }
+  },
+  "why": {
+    "D30": "Backtest, same 200 F4 games v v1.2 (minutes only): defence loading 0.44 -> 0.69 (real 1.69); margin CRPS 9.67 -> 9.37 (-0.30 +- 0.08), total 12.00 -> 11.72 (-0.28 +- 0.11), win log loss 0.595 -> 0.571; players level or better (no tier worse beyond noise). Node level F4: location -0.35% (z -5.7), shot result -0.056% (z -2.5), chain -1.18 nats per game",
+    "matchup_theta": "fitted through 2025-12-31 (the F4 cutoff) and kept for production, so the 2026-27 final test is out of sample for it too; refit with the weekly refit design (D11)"
+  },
+  "rotation": "targets",
+  "validated_by": [
+    "analysis/experiments/20261120T120816Z_backtest_v1.2d_minutes_F4.json",
+    "analysis/experiments/20261120T114726Z_v1.2d_F4.json"
+  ],
+  "control": "analysis/experiments/20261120T114433Z_backtest_v1.1_minutes_F4.json",
+  "features_variant": {
+    "out": "data/derived/variants/matchup/features",
+    "defence": true,
+    "defence_k_scale": 0.2,
+    "matchup": "models/matchup_2025-12-31.json",
+    "shot_types": true
+  },
+  "minutes": {
+    "half_life": 5,
+    "carry": 0.5,
+    "gamma": 0,
+    "room": 1,
+    "correct": 0.5,
+    "start_bonus": 4,
+    "cap_games": 30,
+    "ramp": "learned before the cutoff (minutes.learn_ramp)",
+    "pool_tables_per_side": 400,
+    "bin_seconds": 10,
+    "smoothing_bins": 6
+  }
+}

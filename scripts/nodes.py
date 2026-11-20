@@ -14,6 +14,7 @@ game situation, both lineups' aggregates, and in-game counts so far (minutes, us
 """
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -71,7 +72,16 @@ LINEUP = ['off_usage_sum', 'off_usage_max', 'off_ast_sum', 'off_three_sum', 'off
 # (features.py --body/--archetypes/--defence), so datasets built from features without them are unchanged.
 BODY = ['height_in', 'weight_lb', 'arch_code']
 DEFENCE = ['d_fg_rim', 'd_fg_paint', 'd_fg_mid', 'd_fg_three', 'd_tov_rate', 'd_rim_share', 'd_three_share', 'd_segs_eff']
-OPTIONAL_PROFILE = BODY + DEFENCE
+# D30 (20 Nov): defence columns are defender-side only — lineup aggregates, help at the rim and the actor's
+# assignment-weighted matchup (MU) — never the actor's own defence on offensive rows (noise in §3l). Shot-type shares
+# from the play text (features.py --shot-types) are offensive style.
+MATCHUP_PROFILE = ['m_fg_rim', 'm_fg_paint', 'm_fg_mid', 'm_fg_three', 'm_tov_rate', 'm_foul_rate', 'm_uses_eff']
+DEF_SIDE = DEFENCE + MATCHUP_PROFILE
+STYLE_COLS = [f'st_{k}' for k in ('self', 'drive', 'cut', 'putback', 'catch')]
+OPTIONAL_PROFILE = BODY + STYLE_COLS
+MU = ['mu_fg_rim', 'mu_fg_paint', 'mu_fg_mid', 'mu_fg_three', 'mu_tov', 'mu_foul', 'mu_height_gap']  # actor v his likely defenders
+MU_SHOT = ['mu_fg_shot']  # the zone of the shot, once known
+SHOT_TYPES = ['catch', 'pullup', 'stepback', 'iso', 'drive', 'cut', 'putback', 'other']  # ablation only (engine samples no type yet)
 OPTIONAL_LINEUP = {  # column: (side, profile column, aggregate)
     'off_height_mean': ('off', 'height_in', 'mean'), 'off_weight_mean': ('off', 'weight_lb', 'mean'),
     'def_height_mean': ('def', 'height_in', 'mean'), 'def_weight_mean': ('def', 'weight_lb', 'mean'),
@@ -80,9 +90,15 @@ OPTIONAL_LINEUP = {  # column: (side, profile column, aggregate)
     'def_d_fg_mid_mean': ('def', 'd_fg_mid', 'mean'), 'def_d_fg_three_mean': ('def', 'd_fg_three', 'mean'),
     'def_d_tov_sum': ('def', 'd_tov_rate', 'sum'), 'def_d_rim_mean': ('def', 'd_rim_share', 'mean'),
     'def_d_three_mean': ('def', 'd_three_share', 'mean'),
+    'def_d_fg_rim_min': ('def', 'd_fg_rim', 'min'),  # help: the best rim protector on the floor
+    'def_m_fg_rim_mean': ('def', 'm_fg_rim', 'mean'), 'def_m_fg_paint_mean': ('def', 'm_fg_paint', 'mean'),
+    'def_m_fg_mid_mean': ('def', 'm_fg_mid', 'mean'), 'def_m_fg_three_mean': ('def', 'm_fg_three', 'mean'),
+    'def_m_tov_mean': ('def', 'm_tov_rate', 'mean'), 'def_m_foul_mean': ('def', 'm_foul_rate', 'mean'),
 }
 GROUPS['body'] = BODY + [c for c, (_, src, _) in OPTIONAL_LINEUP.items() if src in BODY]
-GROUPS['defence'] = DEFENCE + [c for c, (_, src, _) in OPTIONAL_LINEUP.items() if src in DEFENCE]
+GROUPS['defence'] = DEF_SIDE + [c for c, (_, src, _) in OPTIONAL_LINEUP.items() if src in DEF_SIDE] + MU + MU_SHOT
+GROUPS['style'] = STYLE_COLS
+GROUPS['stype'] = ['stype_code']
 
 
 def group(pos) -> str:
@@ -147,17 +163,63 @@ class Chain:
         pre = pd.read_parquet(pregame)
         pre['grp'] = pre['pos'].map(group)
         present = [c for c in OPTIONAL_PROFILE if c in pre.columns]
+        def_present = [c for c in DEF_SIDE if c in pre.columns]
         self.profile = PROFILE + present
-        self.lineup = LINEUP + [c for c, (_, src, _) in OPTIONAL_LINEUP.items() if src in present]
+        self.lineup = LINEUP + [c for c, (side, src, _) in OPTIONAL_LINEUP.items() if src in present or (side == 'def' and src in def_present)]
+        report = pregame.parent / 'features_report.json'
+        report = json.loads(report.read_text()) if report.exists() else {}
         self.seg = seg
         self.off = self._side(seg, pre, 'off', self.profile)
-        self.dfn = self._side(seg, pre, 'def', self.profile)
+        self.dfn = self._side(seg, pre, 'def', self.profile + def_present)
+        self.mu_cols, self.mu_shot = [], []
+        if def_present and report.get('matchup'):
+            self._matchup(json.loads((ROOT / report['matchup']).read_text()) if not Path(report['matchup']).is_absolute()
+                          else json.loads(Path(report['matchup']).read_text()))
+        self.stype = False
+        if report.get('shot_types'):
+            from scripts import matchups
+            st = matchups.attach_shot_types(self.seg, matchups.shot_types(include_current=include_current))
+            self.seg['stype_code'] = st.map({k: i for i, k in enumerate(SHOT_TYPES)}).astype(np.float32)
+            self.stype = True
         self._in_game()
         self._relative()
         self._lineups()
         for table in (self.off, self.dfn):  # halves memory; models train on float32 anyway
             wide = table.select_dtypes('float64').columns
             table[wide] = table[wide].astype(np.float32)
+
+    def _matchup(self, theta: dict):
+        """Per segment with an actor: his likely defenders' quality, weighted by the soft assignment (scripts/matchups.py)."""
+        from scripts import matchups
+        rows = self.seg[self.seg['actor'].notna()][['seg_id', 'actor']]
+        body = pd.read_parquet(DERIVED / 'athletes.parquet', columns=['player', 'height_in', 'weight_lb'])
+        body['player'] = body['player'].astype(str)
+        cols = matchups.MU_SOURCES
+        dfn = self.dfn[['seg_id', 'player', 'grp_code', 'min_avg'] + [c for c in cols if c in self.dfn.columns]].merge(body, on='player', how='left')
+        dfn = dfn[dfn['seg_id'].isin(rows['seg_id'])]
+        dfn['slot'] = dfn.groupby('seg_id').cumcount()
+        dfn = dfn[dfn['slot'] < 5]
+        full = dfn.groupby('seg_id')['slot'].transform('size') == 5
+        dfn = dfn[full]
+        segs = np.sort(dfn['seg_id'].unique())
+        D = {c: dfn.pivot(index='seg_id', columns='slot', values=c).reindex(segs).to_numpy(float)
+             for c in ['grp_code', 'min_avg', 'height_in', 'weight_lb'] + [c for c in cols if c in dfn.columns]}
+        act = rows.set_index('seg_id').loc[segs, 'actor'].astype(str).to_numpy()
+        o = self.off[['seg_id', 'player', 'grp_code', 'min_avg']].merge(body, on='player', how='left')
+        o = o.set_index(['seg_id', 'player']).reindex(pd.MultiIndex.from_arrays([segs, act]))
+        A = {c: o[c].to_numpy(float) for c in ['grp_code', 'min_avg', 'height_in', 'weight_lb']}
+        mu = matchups.mu_columns(theta, A, D)
+        frame = pd.DataFrame({k: v.astype(np.float32) for k, v in mu.items()}, index=segs)
+        self.seg = self.seg.merge(frame, left_on='seg_id', right_index=True, how='left')
+        self.mu_cols = list(mu)
+        zone = self.seg['zone'].replace({'corner3': 'three', 'above3': 'three'})
+        shot = np.full(len(self.seg), np.nan, dtype=np.float32)
+        for z in ('rim', 'paint', 'mid', 'three'):
+            if f'mu_fg_{z}' in self.seg:
+                sel = (zone == z).to_numpy()
+                shot[sel] = self.seg.loc[sel, f'mu_fg_{z}'].to_numpy()
+        self.seg['mu_fg_shot'] = shot
+        self.mu_shot = ['mu_fg_shot']
 
     @staticmethod
     def _side(seg, pre, side, profile=PROFILE):
@@ -259,26 +321,28 @@ class Chain:
             label = np.where(rows['end_type'] == 'shot', rows['zone'], np.where(rows['end_type'] == 'turnover', 'turnover',
                              np.where(rows['fta'] >= 3, 'fouled_3', 'fouled_2')))
             y = pd.Series(label).map({c: i for i, c in enumerate(WHAT)}).to_numpy()
-            X = pd.concat([self._frame(rows, ['shot_time']), self._actor(rows)], axis=1)
+            X = pd.concat([self._frame(rows, ['shot_time'] + self.mu_cols), self._actor(rows)], axis=1)
             return self._pack(name, 'multiclass', X, y, rows, classes=len(WHAT), profile=('what', X))
         shots = s[(s['end_type'] == 'shot') & ~s['heave'] & s['zone'].isin(ZONES)]
         if name == 'shot_result':
             y = np.where(shots['made'] == 1, np.where(shots['and_one'], 2, 1), 0)
-            X = pd.concat([self._frame(shots, ['shot_time', 'distance', 'lateral']), self._actor(shots),
+            X = pd.concat([self._frame(shots, ['shot_time', 'distance', 'lateral'] + self.mu_cols + self.mu_shot + (['stype_code'] if self.stype else [])),
+                           self._actor(shots),
                            shots[['zone']].assign(zone=shots['zone'].map({z: i for i, z in enumerate(ZONES)})).astype(np.float32)], axis=1)
             return self._pack(name, 'multiclass', X, y, shots, classes=3, profile=('shot_result', X))
         if name == 'location':
             rows = shots[shots['distance'].notna()]
             y = location_band(rows['zone'].to_numpy(), rows['distance'].to_numpy())
             zone = rows['zone'].map({z: i for i, z in enumerate(ZONES)})
-            X = pd.concat([self._frame(rows, ['shot_time']), self._actor(rows), zone.rename('zone').astype(np.float32).to_frame()], axis=1)
+            X = pd.concat([self._frame(rows, ['shot_time'] + self.mu_cols + self.mu_shot), self._actor(rows), zone.rename('zone').astype(np.float32).to_frame()], axis=1)
             d = self._pack(name, 'multiclass', X, y, rows, classes=LOCATION_BANDS, profile=('location', None))
             d['class_mask'] = LOCATION_MASK[zone.to_numpy()]  # the model chooses only among the zone's bands
             return d
         made = shots[shots['made'] == 1]
         if name == 'assisted':
             y = made['assister'].notna().astype(int).to_numpy()
-            X = pd.concat([self._frame(made, ['shot_time', 'distance', 'lateral']), self._actor(made),
+            X = pd.concat([self._frame(made, ['shot_time', 'distance', 'lateral'] + self.mu_cols + self.mu_shot + (['stype_code'] if self.stype else [])),
+                           self._actor(made),
                            made[['zone']].assign(zone=made['zone'].map({z: i for i, z in enumerate(ZONES)})).astype(np.float32)], axis=1)
             return self._pack(name, 'binary', X, y, made, profile=('actor_assisted_share', X))
         if name == 'assister':
@@ -293,7 +357,8 @@ class Chain:
         missed = shots[shots['made'] == 0]
         if name == 'blocked':
             y = missed['blocker'].notna().astype(int).to_numpy()
-            X = pd.concat([self._frame(missed, ['shot_time', 'distance', 'lateral']), self._actor(missed),
+            X = pd.concat([self._frame(missed, ['shot_time', 'distance', 'lateral'] + self.mu_cols + self.mu_shot + (['stype_code'] if self.stype else [])),
+                           self._actor(missed),
                            missed[['zone']].assign(zone=missed['zone'].map({z: i for i, z in enumerate(ZONES)})).astype(np.float32)], axis=1)
             return self._pack(name, 'binary', X, y, missed, profile=('zone_rate', X))
         if name == 'blocker':
@@ -332,7 +397,7 @@ class Chain:
         tov = s[(s['end_type'] == 'turnover') & s['actor'].notna()]
         if name == 'turnover_type':
             y = np.select([tov['turnover'] == 'live', tov['fouler'] == tov['actor']], [0, 1], 2)
-            X = pd.concat([self._frame(tov, ['shot_time']), self._actor(tov)], axis=1)
+            X = pd.concat([self._frame(tov, ['shot_time'] + self.mu_cols), self._actor(tov)], axis=1)
             return self._pack(name, 'multiclass', X, y, tov, classes=3, profile=('turnover_type', X))
         if name == 'stealer':
             rows = tov[(tov['turnover'] == 'live') & tov['stealer'].notna()]
