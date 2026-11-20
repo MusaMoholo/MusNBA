@@ -26,7 +26,7 @@ updated after every game, so March is played from each world's own path. Season 
   final before today (`rebuild_engine_inputs`, ~50 s; `--no-rebuild` skips), cutoff-safe (`possessions.current_games(before=)`
   drops games dated today even if final). Verified 20 Nov: 4 new finals → `latest`, `team_latest` and `stints` hashes
   changed; profiles through 19 Nov. No games today or tomorrow → the next slate (`nightly.engine_days`).
-- **Backtest (M9) — first run:** 200 F4 games (Jan–Apr 2026), fold models through Dec 2025, known availability (`…100616Z_backtest_v1.1_F4`, FINDINGS §3o). Pace right (+0.2%), efficiency +0.9% → totals +2.7; margins half-sized (slope of real on simulated 1.45); **defence expressed at ~25% of its real effect** (points per 100 load 0.42 on the opponent's defensive rating v 1.69 in real games; offence 0.80 v 1.14 — `strength_loading` in the log); stars' minutes +6.5% (points +8.8%), bench −2.6%; totals too narrow (SD 17.0 v 21.0, coverage 65%), minutes coverage 58–63%. **The team-rating model beats the engine on every game measure** on the same games: margin CRPS 9.32 v 9.64, total 11.35 v 12.10, win log loss 0.558 v 0.592 (paired z 1.7–2.6). Evidence recorded against D18 (ENGINE_PLAN); owner question PLAN §9.6.
+- **Backtest (M9) — first run:** 200 F4 games (Jan–Apr 2026), fold models through Dec 2025, known availability (`…100616Z_backtest_v1.1_F4`, FINDINGS §3o). Pace right (+0.2%), efficiency +0.9% → totals +2.7; margins half-sized (slope of real on simulated 1.45); **defence expressed at ~25% of its real effect** (points per 100 load 0.42 on the opponent's defensive rating v 1.69 in real games; offence 0.80 v 1.14 — `strength_loading` in the log); stars' minutes +6.5% (points +8.8%), bench −2.6%; totals too narrow (SD 17.0 v 21.0, coverage 65%), minutes coverage 58–63%. **The team-rating model beats the engine on every game measure** on the same games: margin CRPS 9.32 v 9.64, total 11.35 v 12.10, win log loss 0.558 v 0.592 (paired z 1.7–2.6). Evidence recorded against D18 (ENGINE_PLAN). Owner (D28): players first — the engine stays the default; fix player outcomes.
 - Live symptoms (FINDINGS §3j, §3m): totals ≈ +8 v the market on the 19 Nov slate, spreads about half the market's
   (the defence finding above), OT ≈ 3% v 5.4%; M6a biases: team turnovers +9.7%, and-ones +6.9%, fouled on a three −28%.
 
@@ -54,7 +54,12 @@ byte-identical to the morning run (determinism).
 
 ## Next actions (in order — the owner may reorder)
 
-1. **Defence expression (play-by-play headliner).** The engine's opponent-defence loading is 0.42 v 1.69 real. Route
+**Guiding light (owner, D28): players first** — team results follow from player outcomes. The play-by-play headliners are
+the player-level gaps the backtest found; judge them on its player tiers first (minutes, points, rebounds, assists: bias,
+coverage, CRPS), then on the team sums. The engine stays the dashboard default.
+
+1. **Defence each player faces (play-by-play headliner).** Shooters make too much against good defences: the engine's
+   opponent-defence loading is 0.42 v 1.69 real, stars' points +8.8%. Route
    inside D18 first: on-court defence profiles (`features.py --defence`) with much lighter shrinkage (today rim 67.3% ± 1.5
    points), fed to what, shot result, event and turnover type (the location test, old item 6, folds in here); then fold
    models and the backtest. **Judge by the backtest, not node log loss alone** (§3l's node-level verdict was negative):
@@ -63,7 +68,7 @@ byte-identical to the morning run (determinism).
    and log loss below the team-rating model's (9.32, 0.558). If player inputs cannot close it, take the D18 question to
    the owner (opponent defensive rates as inputs). Done when a candidate beats v1.1 on the backtest and the team model on
    margins, or the owner has the D18 question with numbers.
-2. **Stars' minutes** (+6.5% in the backtest): replayed rotations give stars full-strength minutes in every world. Scale the
+2. **Player minutes (play-by-play headliner)** — stars +6.5% (33.4 v 31.3), minutes coverage 58–63% v 80%: replayed rotations give stars full-strength minutes in every world. Scale the
    template minutes to each player's recent minutes distribution (or start M7); judge by the backtest's player tiers
    (minutes bias ≈ 0, coverage toward 80%) and totals.
 3. **Team engine start and drift (M12 continues; FINDINGS §3n).** (a) Start ratings: last season's rating as a prior

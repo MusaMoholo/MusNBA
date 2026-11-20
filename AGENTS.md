@@ -34,6 +34,10 @@ Then do the first open item in HANDOFF_NEXT.md § Next actions. If smoke fails, 
   :8767 for your own checks). The PWA build is for the phone later.
 - UK-based; displayed times are UK with ET alongside. Slates are US Eastern dates.
 - Prefers you make engineering decisions yourself and explain them; ask only for real product choices (PLAN §9).
+- **Guiding light (owner, 20 Nov, D28): players first.** The play-by-play engine exists to show how individual players
+  perform; a team's results are the aggregation of its players. Get minutes and per-possession performance (against the
+  defenders actually faced) right and team results, short and long term, follow. Judge engine work on player outcomes
+  first, then on the team sums.
 - **The product is two engines in one daily flow (ENGINE_PLAN D26, PLAN §1):** the play-by-play engine for today's and
   tomorrow's games (or the next slate), with inputs carried over from every game before the date, then a MusSim-style
   team engine for every later game — per-world offensive/defensive ratings updated after each simulated game, so

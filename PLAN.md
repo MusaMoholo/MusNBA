@@ -144,7 +144,7 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
    season sim should then play every later game with **per-world team ratings, MusSim-style** (D25) — left as future work
    at the owner's request; **built 20 Nov** (team pathway v1, D25–D27).
 
-6. **Engine v team model for today's win % (raised 20 Nov, open):** on past games the team-rating model predicts results better than engine v1.1 (FINDINGS §3o). Proposal: keep the engine as the dashboard default (ground-up goal, player and period outputs need it; D22) and fix defence first; alternatively show the team model's win % beside the engine's, labelled, until the engine beats it.
+6. ~~Engine v team model for today's win %~~ — **owner (20 Nov, D28): players first.** The engine stays the default; team results follow from perfecting player outcomes (minutes, performance, defenders faced); the team model is only a yardstick.
 
 ### 9b. Dashboard UX backlog (owner, 20 Nov) — headliners for chunks that cannot improve an engine
 
@@ -259,3 +259,4 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
   the market is a reference. Measured: DraftKings' lines are unbiased against 2026-27 results (222 games: totals −0.6 ±
   1.2, margin slope 1.09), so v1.1's high totals and half-sized spreads are engine errors to fix (HANDOFF item 3).
 - **20 Nov 2026** — Owner: the product is two engines in one daily flow (**D26**); each chunk has one or two headliners that move them toward trust; every chunk ends with the dashboard on the newest systems; UX backlog §9b. **Nightly input rebuild:** segments → rotations → profiles from every final before today (~50 s; 4 new finals → engine inputs changed), next slate when today and tomorrow are empty. **Team pathway v1 (D25) in the app:** per-world offence/defence ratings, engine worlds for today + tomorrow, updates on the points surprise (D27: a good loss keeps ratings); walk-forward 2022-26: the old fixed-probability season sim had dispersion 1.53 and coverage 65%, v1 1.00 and 84%, CRPS −4% in every held-out season (still wide in November). **First engine backtest (M9, 200 F4 games):** pace +0.2%, totals +2.7, margin slope 1.45, defence expressed at ~25% of its real effect (offence ~70%), stars' minutes +6.5%; the team-rating model beats the engine on margin CRPS (9.32 v 9.64), totals and win log loss. Smoke 80/80, browser 38/38.
+- **20 Nov 2026** — Owner (**D28**): the guiding light is player outcomes — a team's results are the aggregation of its players, so minutes, performance and the defence each player faces come first and team results short and long term follow; the engine stays the dashboard default; the team-rating model is a yardstick only.
