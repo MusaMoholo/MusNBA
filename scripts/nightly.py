@@ -83,7 +83,8 @@ def project_slate(day: str, teams: dict, master: list[dict], team_rows: list[dic
             reb = st.box['oreb'].sum(2) + st.box['dreb'].sum(2)
             lines = np.stack([np.rint(st.minutes.sum(2)), st.box['pts'].sum(2), reb, st.box['ast'].sum(2), st.box['fg3m'].sum(2),
                               st.box['stl'].sum(2), st.box['blk'].sum(2), st.box['tov'].sum(2), st.box['fgm'].sum(2), st.box['fga'].sum(2),
-                              st.box['fg3a'].sum(2), st.box['fta'].sum(2)], axis=2)
+                              st.box['fg3a'].sum(2), st.box['fta'].sum(2), st.box['oreb'].sum(2), st.box['dreb'].sum(2),
+                              st.box['ftm'].sum(2)], axis=2)
             player_worlds[game['game_id']] = {'ids': np.array([str(x) for x in g.ids]), 'side': g.side.astype(np.int8),
                                               'lines': np.clip(lines, 0, 255).astype(np.uint8)}
             print(f"  engine {game['game_id']}: {result['periods']['fg']['home']['pts']['mean']:.1f}–{result['periods']['fg']['away']['pts']['mean']:.1f}", flush=True)
@@ -166,13 +167,56 @@ def rebuild_engine_inputs(day: str) -> dict:
     from scripts import engine as engine_mod  # the serving engine's profile variant (v1.3: defence + shot types, D30)
     spec_path = ROOT / 'models' / f"{engine_mod.ENGINE['version']}.json"
     variant = json.loads(spec_path.read_text()).get('features_variant') if spec_path.exists() else None
+    real = None
+    if (DERIVED.parent / 'raw' / 'nbastats' / 'boxscorematchupsv3').exists():  # D32/D37: matchups → ESPN ids, pair history
+        try:  # (the Matchup view's who-guards-whom and the engine variants that use them; games before `day` only)
+            real = refresh_real_matchups()
+        except Exception as e:  # noqa: BLE001 — the engine never depends on it unless its variant uses real matchups
+            print(f'real matchups refresh failed ({type(e).__name__}: {e})', file=sys.stderr, flush=True)
+            if variant and variant.get('real_matchups'):
+                raise
     if variant:
         features.build(ROOT / variant['out'], defence=variant.get('defence', False), defence_k_scale=variant.get('defence_k_scale', 1.0),
-                       matchup=ROOT / variant['matchup'] if variant.get('matchup') else None, shot_types=variant.get('shot_types', False))
+                       matchup=ROOT / variant['matchup'] if variant.get('matchup') else None, shot_types=variant.get('shot_types', False),
+                       real_matchups=ROOT / variant['real_matchups'] if variant.get('real_matchups') else None)
+        if variant.get('assign'):  # the version's assignment θ for mu_* (nodes.Chain, engine) — kept on the rebuilt report
+            rep_path = ROOT / variant['out'] / 'features_report.json'
+            rep = json.loads(rep_path.read_text())
+            rep['assign'] = variant['assign']
+            write_json(rep_path, rep, pretty=True)
     out = {'games': seg['games'], 'segments': seg['segments'], 'games_flagged': seg['games_flagged'], 'stints': rot['stints'],
-           'player_games': feat['player_games'], 'seconds': round(time.time() - started, 1)}
+           'player_games': feat['player_games'], 'real_matchups': real, 'seconds': round(time.time() - started, 1)}
     print(f"engine inputs rebuilt through {day_shift(day, -1)}: {out['games']} games · {out['segments']:,} segments · "
           f"{out['stints']:,} stints · {out['player_games']:,} player-games profiled · {out['seconds']}s", flush=True)
+    return out
+
+
+def fetch_nba_stats() -> dict:
+    """D32: today's copy of the NBA Stats season logs and the matchups of finals not yet retained (polite; ~10 requests).
+    A failure never stops the nightly: the engine then plays with the matchups already retained."""
+    from scripts import fetch_nbastats
+    try:
+        r = fetch_nbastats.recent(fetch_nbastats.Client())
+        m = r['matchups']
+        print(f"NBA Stats: {r['logs']['requests']} season logs · {m['requests']} new matchup games ({m['skipped']} retained)", flush=True)
+        return r
+    except Exception as e:  # noqa: BLE001 — unofficial source; keep going with what is retained
+        print(f'NBA Stats fetch failed ({type(e).__name__}: {e}); continuing with retained matchups', file=sys.stderr, flush=True)
+        return {'error': f'{type(e).__name__}: {e}'}
+
+
+def refresh_real_matchups() -> dict:
+    """Crosswalk, matchups in ESPN ids and the per-game pair history from the retained NBA Stats files."""
+    from scripts import nbastats, realmatch
+    T, P = nbastats.nba_tables()
+    E = nbastats.espn_tables()
+    cw = nbastats.crosswalk(T, P, E)
+    mt = nbastats.build_matchups()
+    h = realmatch.build_history()
+    realmatch._CACHE.clear()
+    out = {'games_matched': cw['games']['matched'], 'player_match_rate': cw['players']['match_rate'], 'matchup_games': mt.get('games_kept'),
+           'pair_rows': h['rows']}
+    print(f"real matchups: {out['matchup_games']} games · players matched {out['player_match_rate']:.3%} · {out['pair_rows']:,} pair rows", flush=True)
     return out
 
 
@@ -194,8 +238,8 @@ def main():
     parser.add_argument('--backfill-days', type=int, default=0)
     parser.add_argument('--rebuild', action='store_true', help='Rebuild existing backfill snapshots too')
     parser.add_argument('--sims', type=int, default=projection.MODEL['sims'])
-    parser.add_argument('--engine', type=int, default=2000, metavar='WORLDS',
-                        help="worlds per game for today's slate from the possession engine (default 2,000; D22: the default model)")
+    parser.add_argument('--engine', type=int, default=10000, metavar='WORLDS',
+                        help="worlds per game for today's slate from the possession engine (default 10,000, D36; D22: the default model)")
     parser.add_argument('--placeholder', action='store_true',
                         help='project today with the placeholder baseline-v1 instead of the engine (backfills always use it)')
     parser.add_argument('--archive-root', type=Path)
@@ -213,6 +257,7 @@ def main():
         if report['failures']:
             print(f'{len(report["failures"])} collection failures (see run report); continuing with retained data',
                   file=sys.stderr)
+        fetch_nba_stats()  # D32 (after ESPN: the crosswalk needs ESPN's finals)
     run = latest_run()
     teams = team_registry(run)
     master_fixtures.write(master_fixtures.build(run))

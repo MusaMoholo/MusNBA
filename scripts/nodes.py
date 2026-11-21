@@ -79,8 +79,14 @@ MATCHUP_PROFILE = ['m_fg_rim', 'm_fg_paint', 'm_fg_mid', 'm_fg_three', 'm_tov_ra
 DEF_SIDE = DEFENCE + MATCHUP_PROFILE
 STYLE_COLS = [f'st_{k}' for k in ('self', 'drive', 'cut', 'putback', 'catch')]
 OPTIONAL_PROFILE = BODY + STYLE_COLS
-MU = ['mu_fg_rim', 'mu_fg_paint', 'mu_fg_mid', 'mu_fg_three', 'mu_tov', 'mu_foul', 'mu_height_gap']  # actor v his likely defenders
-MU_SHOT = ['mu_fg_shot']  # the zone of the shot, once known
+MU = ['mu_fg_rim', 'mu_fg_paint', 'mu_fg_mid', 'mu_fg_three', 'mu_tov', 'mu_foul', 'mu_height_gap', 'mu_dx_three', 'mu_dx_rim']  # actor v his likely defenders
+TOP2 = [f'{p}_{k}' for p in ('mu1', 'mu2') for k in ('p', 'fg_rim', 'fg_paint', 'fg_mid', 'fg_three', 'tov')]  # v1.4f
+MU = MU + TOP2
+MU_SHOT = ['mu_fg_shot', 'mu1_fg_shot', 'mu2_fg_shot']  # the zone of the shot, once known (top-2 versions in v1.4f)
+ASSIGN_ONLY = ['m_stop', 'm_dx_three', 'm_dx_rim']  # D32: carried for the assignment / mu_* only, never a node input themselves
+DETERRENCE = ['m_dx_three', 'm_dx_rim']  # v1.4e: deterrence enters only through mu_dx_* (features report 'deterrence')
+WHO_MISMATCH = ['cand_edge', 'cand_edge_rank']  # D35 (v1.4d): each attacker's edge over his likely defenders, within the five
+MIX_ZONE = {'rim': ['mix_rim'], 'paint': ['mix_paint'], 'mid': ['mix_mid'], 'three': ['mix_corner3', 'mix_above3']}
 SHOT_TYPES = ['catch', 'pullup', 'stepback', 'iso', 'drive', 'cut', 'putback', 'other']  # ablation only (engine samples no type yet)
 OPTIONAL_LINEUP = {  # column: (side, profile column, aggregate)
     'off_height_mean': ('off', 'height_in', 'mean'), 'off_weight_mean': ('off', 'weight_lb', 'mean'),
@@ -98,6 +104,7 @@ OPTIONAL_LINEUP = {  # column: (side, profile column, aggregate)
 GROUPS['body'] = BODY + [c for c, (_, src, _) in OPTIONAL_LINEUP.items() if src in BODY]
 GROUPS['defence'] = DEF_SIDE + [c for c, (_, src, _) in OPTIONAL_LINEUP.items() if src in DEF_SIDE] + MU + MU_SHOT
 GROUPS['style'] = STYLE_COLS
+GROUPS['mismatch'] = WHO_MISMATCH
 GROUPS['stype'] = ['stype_code']
 
 
@@ -154,10 +161,26 @@ def _cumulative_before(left: pd.DataFrame, events: pd.DataFrame, cols) -> pd.Dat
     return merged[cols].fillna(0)
 
 
+def mismatch_edges(mus: list, mix: dict) -> np.ndarray:
+    """(n, 5) edge of each attacker over his likely defenders (D35): Σ_zone his shot mix × (his defenders' FG% allowed in
+    that zone − the five attackers' mean for the zone) — lineup-relative, so no league constant (datasets and engine alike).
+    mus: per attacker k, mu_columns(...) with mu_fg_<zone> arrays (n,); mix: zone → (n, 5) shot shares."""
+    n = len(next(iter(mix.values())))
+    out = np.zeros((n, 5))
+    for z, m in mix.items():
+        key = f'mu_fg_{z}'
+        if key not in mus[0]:
+            continue
+        v = np.column_stack([mus[k][key] for k in range(5)]).astype(float)
+        out += m * (v - np.nanmean(v, axis=1, keepdims=True))
+    return np.nan_to_num(out)
+
+
 class Chain:
     """Segments plus offence/defence candidate tables with profiles, relative roles and in-game counts."""
 
-    def __init__(self, include_current: bool = False, pregame: Path | None = None, segments: Path | None = None):
+    def __init__(self, include_current: bool = False, pregame: Path | None = None, segments: Path | None = None,
+                 assign_path: str | None = None):
         pregame = Path(pregame or DERIVED / 'features' / 'pregame.parquet')
         seg = attach_teams(load_segments(include_current, segments), pd.read_parquet(pregame.parent / 'team_pregame.parquet'))
         pre = pd.read_parquet(pregame)
@@ -172,9 +195,14 @@ class Chain:
         self.off = self._side(seg, pre, 'off', self.profile)
         self.dfn = self._side(seg, pre, 'def', self.profile + def_present)
         self.mu_cols, self.mu_shot = [], []
-        if def_present and report.get('matchup'):
-            self._matchup(json.loads((ROOT / report['matchup']).read_text()) if not Path(report['matchup']).is_absolute()
-                          else json.loads(Path(report['matchup']).read_text()))
+        theta_path = assign_path or report.get('assign') or report.get('matchup')
+        if def_present and theta_path:
+            self._assign_extra = pre[['game_id', 'player'] + [c for c in ASSIGN_ONLY if c in pre.columns]].copy()
+            self._deterrence = bool(report.get('deterrence'))
+            theta = json.loads((ROOT / theta_path).read_text()) if not Path(theta_path).is_absolute() else json.loads(Path(theta_path).read_text())
+            self._matchup(theta)
+            if report.get('who_mismatch'):
+                self._who_mismatch(theta)
         self.stype = False
         if report.get('shot_types'):
             from scripts import matchups
@@ -195,7 +223,10 @@ class Chain:
         body = pd.read_parquet(DERIVED / 'athletes.parquet', columns=['player', 'height_in', 'weight_lb'])
         body['player'] = body['player'].astype(str)
         cols = matchups.MU_SOURCES
-        dfn = self.dfn[['seg_id', 'player', 'grp_code', 'min_avg'] + [c for c in cols if c in self.dfn.columns]].merge(body, on='player', how='left')
+        dfn = self.dfn[['seg_id', 'game_id', 'player', 'grp_code', 'min_avg'] + [c for c in cols if c in self.dfn.columns]].merge(body, on='player', how='left')
+        if self._deterrence:  # v1.4e: the defenders' attempt shares allowed (D32), only as mu_dx_* for the actor
+            ex = self._assign_extra[['game_id', 'player'] + [c for c in DETERRENCE if c in self._assign_extra.columns]]
+            dfn = dfn.merge(ex.assign(game_id=ex['game_id'].astype(str), player=ex['player'].astype(str)), on=['game_id', 'player'], how='left')
         dfn = dfn[dfn['seg_id'].isin(rows['seg_id'])]
         dfn['slot'] = dfn.groupby('seg_id').cumcount()
         dfn = dfn[dfn['slot'] < 5]
@@ -208,18 +239,97 @@ class Chain:
         o = self.off[['seg_id', 'player', 'grp_code', 'min_avg']].merge(body, on='player', how='left')
         o = o.set_index(['seg_id', 'player']).reindex(pd.MultiIndex.from_arrays([segs, act]))
         A = {c: o[c].to_numpy(float) for c in ['grp_code', 'min_avg', 'height_in', 'weight_lb']}
-        mu = matchups.mu_columns(theta, A, D)
+        O = None
+        if theta.get('kind') == 'real':  # D32: the real-matchup assignment needs the offensive five, stopper, pair history
+            A, D, O = self._real_inputs(segs, act, A, D, dfn, body, theta)
+        self._mu_ctx = {'segs': segs, 'D': D, 'O': O, 'body': body, 'defp': getattr(self, '_defp', None)}
+        mu = matchups.mu_columns(theta, A, D, O)
         frame = pd.DataFrame({k: v.astype(np.float32) for k, v in mu.items()}, index=segs)
         self.seg = self.seg.merge(frame, left_on='seg_id', right_index=True, how='left')
         self.mu_cols = list(mu)
         zone = self.seg['zone'].replace({'corner3': 'three', 'above3': 'three'})
-        shot = np.full(len(self.seg), np.nan, dtype=np.float32)
-        for z in ('rim', 'paint', 'mid', 'three'):
-            if f'mu_fg_{z}' in self.seg:
-                sel = (zone == z).to_numpy()
-                shot[sel] = self.seg.loc[sel, f'mu_fg_{z}'].to_numpy()
-        self.seg['mu_fg_shot'] = shot
-        self.mu_shot = ['mu_fg_shot']
+        self.mu_shot = []
+        for pre in ('mu', 'mu1', 'mu2'):
+            if f'{pre}_fg_rim' not in self.seg:
+                continue
+            shot = np.full(len(self.seg), np.nan, dtype=np.float32)
+            for z in ('rim', 'paint', 'mid', 'three'):
+                if f'{pre}_fg_{z}' in self.seg:
+                    sel = (zone == z).to_numpy()
+                    shot[sel] = self.seg.loc[sel, f'{pre}_fg_{z}'].to_numpy()
+            self.seg[f'{pre}_fg_shot'] = shot
+            self.mu_shot.append(f'{pre}_fg_shot')
+
+    def _who_mismatch(self, theta: dict):
+        """D35 (v1.4d): for each of the five attackers, his likely defenders' FG% allowed weighted by his own shot mix,
+        relative to the five's mean (lineup-relative), and its rank (1 = the biggest mismatch) — `who` sees them, so a
+        possession can end with the attacker the offence is hunting for. Same assignment as the actor's mu_* inputs."""
+        from scripts import matchups
+        ctx = self._mu_ctx
+        segs, D, O, body = ctx['segs'], ctx['D'], ctx['O'], ctx['body']
+        mix_cols = [c for cs in MIX_ZONE.values() for c in cs]
+        o = self.off[['seg_id', 'player', 'grp_code', 'min_avg', 'usage'] + mix_cols].merge(body, on='player', how='left')
+        o = o[o['seg_id'].isin(segs)]
+        o['slot'] = o.groupby('seg_id').cumcount()
+        o = o[o['slot'] < 5]
+        piv = {c: o.pivot(index='seg_id', columns='slot', values=c).reindex(segs).to_numpy(float)
+               for c in ['grp_code', 'min_avg', 'height_in', 'weight_lb', 'usage'] + mix_cols}
+        offp = o.pivot(index='seg_id', columns='slot', values='player').reindex(segs).to_numpy().astype(str)
+        real = theta.get('kind') == 'real' and ctx.get('defp') is not None
+        if real:
+            from scripts import realmatch
+            hist = realmatch.load_pair_history().set_index(['espn_game', 'off_player', 'def_player'])
+            gid = self.seg.set_index('seg_id').loc[segs, 'game_id'].astype(str).to_numpy()
+            defp = ctx['defp']
+        mus = []
+        for k in range(5):
+            A = {c: piv[c][:, k] for c in ['grp_code', 'min_avg', 'height_in', 'weight_lb', 'usage']}
+            A['slot'] = np.full(len(segs), k)
+            Dk = dict(D)
+            if real:
+                for name in ('pair_hist', 'pair_met'):
+                    Dk[name] = np.column_stack([hist[name].reindex(pd.MultiIndex.from_arrays([gid, offp[:, k], defp[:, j]])).to_numpy(float)
+                                                for j in range(5)])
+            mus.append(matchups.mu_columns(theta, A, Dk, O))
+        mix = {z: np.column_stack([np.nan_to_num(sum(piv[c][:, k] for c in cs)) for k in range(5)]) for z, cs in MIX_ZONE.items()}
+        rel = mismatch_edges(mus, mix)
+        order = np.argsort(-rel, axis=1, kind='stable')
+        rank = np.empty_like(order)
+        np.put_along_axis(rank, order, np.arange(1, 6)[None, :].repeat(len(segs), 0), 1)
+        long = pd.DataFrame({'seg_id': np.repeat(segs, 5), 'player': offp.reshape(-1), 'cand_edge': rel.reshape(-1).astype(np.float32),
+                             'cand_edge_rank': rank.reshape(-1).astype(np.float32)})
+        self.off = self.off.merge(long, on=['seg_id', 'player'], how='left')
+
+    def _real_inputs(self, segs, act, A, D, dfn, body, theta):
+        """Columns for realmatch.real_assignment: actor usage and slot in the offensive five, the five's height and usage,
+        each defender's stopper tendency and the pair's pre-game history (realmatch.pair_history; cutoff-safe)."""
+        from scripts import realmatch
+        gid = self.seg.set_index('seg_id').loc[segs, 'game_id'].astype(str).to_numpy()
+        o = self.off[['seg_id', 'player', 'usage']].merge(body, on='player', how='left')
+        o = o[o['seg_id'].isin(segs)]
+        o['slot'] = o.groupby('seg_id').cumcount()
+        o = o[o['slot'] < 5]
+        O = {c: o.pivot(index='seg_id', columns='slot', values=c).reindex(segs).to_numpy(float) for c in ('height_in', 'usage')}
+        offp = o.pivot(index='seg_id', columns='slot', values='player').reindex(segs).to_numpy().astype(str)
+        hit = offp == act[:, None]
+        A = dict(A)
+        A['usage'] = np.where(hit.any(1), np.nansum(np.where(hit, O['usage'], 0), 1), np.nan)
+        A['slot'] = np.where(hit.any(1), hit.argmax(1), 0)
+        defp = dfn.pivot(index='seg_id', columns='slot', values='player').reindex(segs).to_numpy().astype(str)
+        self._defp = defp
+        ex = self._assign_extra.assign(game_id=self._assign_extra['game_id'].astype(str), player=self._assign_extra['player'].astype(str))
+        ex = ex.set_index(['game_id', 'player'])
+        hist = realmatch.load_pair_history().set_index(['espn_game', 'off_player', 'def_player'])
+        D = dict(D)
+        D['stop'] = np.empty(defp.shape)
+        D['pair_hist'] = np.empty(defp.shape)
+        D['pair_met'] = np.empty(defp.shape)
+        for j in range(5):
+            D['stop'][:, j] = ex['m_stop'].reindex(pd.MultiIndex.from_arrays([gid, defp[:, j]])).to_numpy(float) if 'm_stop' in ex else np.nan
+            idx = pd.MultiIndex.from_arrays([gid, act, defp[:, j]])
+            D['pair_hist'][:, j] = hist['pair_hist'].reindex(idx).to_numpy(float)
+            D['pair_met'][:, j] = hist['pair_met'].reindex(idx).to_numpy(float)
+        return A, D, O
 
     @staticmethod
     def _side(seg, pre, side, profile=PROFILE):
@@ -313,8 +423,8 @@ class Chain:
             cand = self.off[self.off['seg_id'].isin(ctx['seg_id'])]
             cand = cand.merge(ctx, on='seg_id', how='inner')
             y = (cand['player'] == cand['actor']).astype(int).to_numpy()
-            cols = self.profile + IN_GAME + ['grp_code', 'usage_mult_now'] + [c for c in cand.columns if c.endswith('_share') or c.endswith('_rank')] \
-                   + CONTEXT + self.lineup + ['shot_time', 'foul_event']
+            cols = self.profile + IN_GAME + ['grp_code', 'usage_mult_now'] + [c for c in cand.columns if (c.endswith('_share') or c.endswith('_rank')) and c not in WHO_MISMATCH] \
+                   + CONTEXT + self.lineup + ['shot_time', 'foul_event'] + [c for c in WHO_MISMATCH if c in cand.columns]
             return self._candidates(name, cand, cols, y, 'usage_share')
         if name == 'what':
             rows = usage[usage['end_type'] != 'foul']
@@ -463,8 +573,21 @@ def signature(pregame: Path | None = None, segments: Path | None = None) -> dict
     import hashlib
     pregame = Path(pregame or DERIVED / 'features' / 'pregame.parquet')
     files = segment_files(False, segments) + [pregame, pregame.parent / 'team_pregame.parquet']
-    return {'code': hashlib.sha256(Path(__file__).read_bytes()).hexdigest()[:16],
-            'inputs': {str(f): [f.stat().st_size, int(f.stat().st_mtime)] for f in files}}
+    sig = {'code': hashlib.sha256(Path(__file__).read_bytes()).hexdigest()[:16],
+           'inputs': {str(f): [f.stat().st_size, int(f.stat().st_mtime)] for f in files}}
+    report = pregame.parent / 'features_report.json'
+    if report.exists():  # D30/D32: the assignment θ and its inputs shape the mu_* columns
+        rep = json.loads(report.read_text())
+        theta = rep.get('assign') or rep.get('matchup')
+        if theta:
+            tp = Path(theta) if Path(theta).is_absolute() else ROOT / theta
+            sig['theta'] = hashlib.sha256(tp.read_bytes()).hexdigest()[:16] if tp.exists() else theta
+            sig['matchup_code'] = hashlib.sha256((ROOT / 'scripts' / 'matchups.py').read_bytes()).hexdigest()[:16]
+            if rep.get('assign'):
+                hist = DERIVED / 'nbastats' / 'pair_history.parquet'
+                sig['realmatch_code'] = hashlib.sha256((ROOT / 'scripts' / 'realmatch.py').read_bytes()).hexdigest()[:16]
+                sig['pair_history'] = [hist.stat().st_size, int(hist.stat().st_mtime)] if hist.exists() else None
+    return sig
 
 
 def cache_dir(pregame: Path | None = None, segments: Path | None = None) -> Path:

@@ -6,13 +6,23 @@ import {api, esc, pct, team} from './ui.mjs';
 const cache = new Map();
 const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
 
+// Owner (20 Nov): makes and the main stats (no combos or attempts); OREB/DREB where the stored worlds carry them
 export const PLAYER_VARS = [['plays', 'Plays'], ['sits', 'Sits (does not play)'], ['min', 'Minutes'], ['pts', 'Points'], ['reb', 'Rebounds'],
-  ['ast', 'Assists'], ['fg3m', 'Threes made'], ['pra', 'Pts + reb + ast'], ['stl', 'Steals'], ['blk', 'Blocks'], ['tov', 'Turnovers'],
-  ['fga', 'FG attempts'], ['fg3a', '3P attempts'], ['fta', 'FT attempts'], ['fgpct', 'FG% (of attempts)']];
-export const TEAM_VARS = [['win', 'Wins'], ['lose', 'Loses'], ['pts', 'Points'], ['margin', 'Margin'], ['h1m', 'Half-time margin'],
-  ['q1', 'Q1 points'], ['q4', 'Q4 points'], ['h2', '2nd-half points']];
-export const GAME_VARS = [['total', 'Total points'], ['absm', 'Margin either way'], ['ot', 'Goes to overtime'], ['not', 'No overtime']];
-const FLAGS = new Set(['plays', 'sits', 'win', 'lose', 'ot', 'not']);
+  ['oreb', 'Offensive rebounds'], ['dreb', 'Defensive rebounds'], ['ast', 'Assists'], ['fg3m', 'Threes made'], ['fgm', 'Field goals made'],
+  ['ftm', 'Free throws made'], ['stl', 'Steals'], ['blk', 'Blocks'], ['tov', 'Turnovers'], ['fgpct', 'FG% (of attempts)']];
+let worldStats = new Set();  // stats in the last loaded worlds (player variables shown only when they exist)
+export const TEAM_VARS = [['win', 'Wins'], ['lose', 'Loses'], ['pts', 'Points'], ['margin', 'Margin'],
+  ['q1', 'Q1 points'], ['q2', 'Q2 points'], ['q3', 'Q3 points'], ['q4', 'Q4 points'], ['h1', '1st-half points'], ['h2', '2nd-half points'],
+  ['wq1', 'Wins Q1'], ['wq2', 'Wins Q2'], ['wq3', 'Wins Q3'], ['wq4', 'Wins Q4'], ['wh1', 'Wins the 1st half'], ['wh2', 'Wins the 2nd half'],
+  ['q1m', 'Margin after Q1'], ['h1m', 'Half-time margin'], ['q3m', 'Margin after Q3'], ['q4m', 'Q4 margin'],
+  ['lead1', 'Leads after Q1'], ['leadh', 'Leads at half-time'], ['lead3', 'Leads after Q3'],
+  ['comeback', 'Wins from behind at half-time'], ['blown', 'Loses after leading at half-time'], ['wire', 'Leads at every break and wins'],
+  ['sweep', 'Wins every quarter'], ['qwins', 'Quarters won (of 4)']];
+export const GAME_VARS = [['total', 'Total points'], ['absm', 'Margin either way'], ['ot', 'Goes to overtime'], ['not', 'No overtime'],
+  ['t1', 'Q1 total'], ['th1', '1st-half total'], ['th2', '2nd-half total'], ['t4', 'Q4 total'],
+  ['changes', 'Leader changes at the breaks'], ['flip', 'Half-time leader loses'], ['close3', 'Within 5 after Q3']];
+const FLAGS = new Set(['plays', 'sits', 'win', 'lose', 'ot', 'not', 'wq1', 'wq2', 'wq3', 'wq4', 'wh1', 'wh2', 'lead1', 'leadh', 'lead3',
+  'comeback', 'blown', 'wire', 'sweep', 'flip', 'close3']);
 export const isFlag = v => FLAGS.has(v);
 
 export async function load(gid) {
@@ -31,6 +41,16 @@ export async function load(gid) {
   const add = (...cols) => { const out = new Float64Array(W); for (const c of cols) for (let w = 0; w < W; w++) out[w] += c[w]; return out; };
   const teamCol = (side, q) => { const s = side === 'home' ? 0 : 1, out = new Float64Array(W); for (let w = 0; w < W; w++) out[w] = tp[(w * 2 + s) * 5 + q]; return out; };
   const W_ = {W, ids: raw.players, side: raw.side.map(s => (s === 0 ? 'home' : 'away')), stats: raw.stats};
+  worldStats = new Set([...raw.stats, 'ftm']);
+  /** Side's cumulative margin after the first k quarters (k = 1..4), every world. */
+  W_.lead = (side, k) => {
+    const key = 'lead|' + side + '|' + k;
+    if (memo.has(key)) return memo.get(key);
+    const other = side === 'home' ? 'away' : 'home', out = new Float64Array(W);
+    for (let q = 0; q < k; q++) { const a = teamCol(side, q), b = teamCol(other, q); for (let w = 0; w < W; w++) out[w] += a[w] - b[w]; }
+    memo.set(key, out);
+    return out;
+  };
   /** Values of variable `v` for subject `subj` ('p:<id>', 't:home', 't:away', 'g') in every world, or null. */
   W_.values = (subj, v) => {
     const key = subj + '|' + v;
@@ -47,6 +67,7 @@ export async function load(gid) {
       else if (v === 'ra') out = add(c('reb'), c('ast'));
       else if (v === 'stocks') out = add(c('stl'), c('blk'));
       else if (v === 'fgpct') { const m = c('fgm'), a = c('fga'); out = m.map((x, w) => (a[w] > 0 ? Math.round(100 * x / a[w]) : NaN)); }
+      else if (v === 'ftm' && !raw.stats.includes('ftm')) { const p_ = c('pts'), m = c('fgm'), t = c('fg3m'); out = p_.map((x, w) => Math.max(0, x - 2 * m[w] - t[w])); }
       else out = statCol(i, v);
     } else if (subj.startsWith('t:')) {
       const side = subj.slice(2), other = side === 'home' ? 'away' : 'home';
@@ -55,14 +76,37 @@ export async function load(gid) {
       else if (v === 'margin' || v === 'win' || v === 'lose') {
         const a = pts(side), b = pts(other);
         out = a.map((x, w) => (v === 'margin' ? x - b[w] : v === 'win' ? (x > b[w] ? 1 : 0) : (x < b[w] ? 1 : 0)));
-      } else if (v === 'h1m') { const a = add(teamCol(side, 0), teamCol(side, 1)), b = add(teamCol(other, 0), teamCol(other, 1)); out = a.map((x, w) => x - b[w]); }
-      else if (v === 'h2') out = add(teamCol(side, 2), teamCol(side, 3));
+      } else if (v === 'h2') out = add(teamCol(side, 2), teamCol(side, 3));
+      else if (v === 'h1') out = add(teamCol(side, 0), teamCol(side, 1));
       else if (/^q[1-4]$/.test(v)) out = teamCol(side, Number(v[1]) - 1);
+      else if (/^wq[1-4]$/.test(v)) { const q = Number(v[2]) - 1, a = teamCol(side, q), b = teamCol(other, q); out = a.map((x, w) => (x > b[w] ? 1 : 0)); }
+      else if (v === 'q4m') { const a = teamCol(side, 3), b = teamCol(other, 3); out = a.map((x, w) => x - b[w]); }
+      else if (v === 'wh1' || v === 'wh2') { const qs = v === 'wh1' ? [0, 1] : [2, 3]; const a = add(...qs.map(q => teamCol(side, q))), b = add(...qs.map(q => teamCol(other, q))); out = a.map((x, w) => (x > b[w] ? 1 : 0)); }
+      else if (['q1m', 'h1m', 'q3m'].includes(v)) out = W_.lead(side, {q1m: 1, h1m: 2, q3m: 3}[v]);
+      else if (['lead1', 'leadh', 'lead3'].includes(v)) out = W_.lead(side, {lead1: 1, leadh: 2, lead3: 3}[v]).map(x => (x > 0 ? 1 : 0));
+      else if (v === 'comeback' || v === 'blown') {
+        const h = W_.lead(side, 2), win = W_.values(subj, 'win');
+        out = h.map((x, w) => (v === 'comeback' ? (x < 0 && win[w]) : (x > 0 && !win[w])) ? 1 : 0);
+      } else if (v === 'wire') {
+        const l1 = W_.lead(side, 1), l2 = W_.lead(side, 2), l3 = W_.lead(side, 3), win = W_.values(subj, 'win');
+        out = l1.map((x, w) => (x > 0 && l2[w] > 0 && l3[w] > 0 && win[w]) ? 1 : 0);
+      } else if (v === 'qwins' || v === 'sweep') {
+        const qs = [1, 2, 3, 4].map(q => W_.values(subj, 'wq' + q));
+        out = qs[0].map((_, w) => qs.reduce((a, c) => a + c[w], 0));
+        if (v === 'sweep') out = out.map(x => (x === 4 ? 1 : 0));
+      }
     } else if (subj === 'g') {
       const h = W_.values('t:home', 'pts'), a = W_.values('t:away', 'pts');
       if (v === 'total') out = h.map((x, w) => x + a[w]);
       else if (v === 'absm') out = h.map((x, w) => Math.abs(x - a[w]));
       else if (v === 'ot' || v === 'not') { const o = add(teamCol('home', 4), teamCol('away', 4)); out = o.map(x => (v === 'ot' ? x > 0 : x === 0) ? 1 : 0); }
+      else if (v === 't1' || v === 't4') { const q = v === 't1' ? 0 : 3; out = add(teamCol('home', q), teamCol('away', q)); }
+      else if (v === 'th1' || v === 'th2') { const qs = v === 'th1' ? [0, 1] : [2, 3]; out = add(...qs.flatMap(q => [teamCol('home', q), teamCol('away', q)])); }
+      else if (v === 'changes') {  // the leader changes between consecutive breaks (Q1, half, Q3, final); ties keep the leader
+        const L = [1, 2, 3].map(k => W_.lead('home', k)), fin = W_.values('t:home', 'margin');
+        out = fin.map((f, w) => { let n = 0, prev = Math.sign(L[0][w]); for (const x of [L[1][w], L[2][w], f]) { const s_ = Math.sign(x); if (s_ && prev && s_ !== prev) n++; if (s_) prev = s_; } return n; });
+      } else if (v === 'flip') { const h = W_.lead('home', 2), fin = W_.values('t:home', 'margin'); out = h.map((x, w) => (x * fin[w] < 0 ? 1 : 0)); }
+      else if (v === 'close3') out = W_.lead('home', 3).map(x => (Math.abs(x) <= 5 ? 1 : 0));
     }
     memo.set(key, out);
     return out;
@@ -125,8 +169,9 @@ export function label(c, names, teams) {
   const subj = c.subj.startsWith('p:') ? (names.get(c.subj.slice(2)) || 'Player') : c.subj.startsWith('t:') ? teams[c.subj.slice(2)] : 'Game';
   const vars = c.subj.startsWith('p:') ? PLAYER_VARS : c.subj.startsWith('t:') ? TEAM_VARS : GAME_VARS;
   const name = (vars.find(([k]) => k === c.v) || [c.v, c.v])[1];
-  if (isFlag(c.v)) return c.subj === 'g' ? name : `${subj} ${name.toLowerCase()}`;
-  return `${subj} ${name.toLowerCase()} ${c.op === 'le' ? '≤' : '≥'} ${c.x}`;
+  const lc = t => (/^[A-Z][a-z]/.test(t) ? t[0].toLowerCase() + t.slice(1) : t);  // "Wins Q1" → "wins Q1", keep "Q1 points"
+  if (isFlag(c.v)) return c.subj === 'g' ? name : `${subj} ${lc(name)}`;
+  return `${subj} ${lc(name)} ${c.op === 'le' ? '≤' : '≥'} ${c.x}`;
 }
 
 /** Overlaid histogram: the conditional distribution as bars, the baseline as a step outline (both as shares). */
@@ -211,7 +256,18 @@ export function subjectOptions(data, selected) {
   return `<optgroup label="Game">${opt('g', 'Game')}</optgroup><optgroup label="Teams">${opt('t:away', team(g.away.id).abbr)}${opt('t:home', team(g.home.id).abbr)}</optgroup>`
     + ['away', 'home'].map(side => `<optgroup label="${esc(team(g[side].id).abbr)} players">${players(side).map(p => opt('p:' + p.id, p.name)).join('')}</optgroup>`).join('');
 }
+// Grouped "what" options (owner: grouping in dropdowns); every variable belongs to one group
+const VAR_GROUPS = {
+  p: [['Availability', ['plays', 'sits', 'min']], ['Scoring', ['pts', 'fgm', 'fg3m', 'ftm', 'fgpct']], ['Rebounding', ['reb', 'oreb', 'dreb']],
+      ['Handling', ['ast', 'tov']], ['Defense', ['stl', 'blk']]],
+  t: [['Result', ['win', 'lose', 'margin']], ['Points', ['pts', 'h1', 'h2', 'q1', 'q2', 'q3', 'q4']],
+      ['Periods won', ['wq1', 'wq2', 'wq3', 'wq4', 'wh1', 'wh2', 'qwins', 'sweep']],
+      ['Leads', ['q1m', 'h1m', 'q3m', 'q4m', 'lead1', 'leadh', 'lead3']], ['Flow', ['comeback', 'blown', 'wire']]],
+  g: [['Totals', ['total', 'th1', 'th2', 't1', 't4']], ['Margin & flow', ['absm', 'close3', 'changes', 'flip']], ['Overtime', ['ot', 'not']]],
+};
 export function varOptions(subj, selected) {
-  const vars = subj.startsWith('p:') ? PLAYER_VARS : subj.startsWith('t:') ? TEAM_VARS : GAME_VARS;
-  return vars.map(([k, l]) => `<option value="${k}"${k === selected ? ' selected' : ''}>${esc(l)}</option>`).join('');
+  const kind = subj.startsWith('p:') ? 'p' : subj.startsWith('t:') ? 't' : 'g';
+  const vars = new Map((kind === 'p' ? PLAYER_VARS.filter(([k]) => !['oreb', 'dreb'].includes(k) || worldStats.has(k)) : kind === 't' ? TEAM_VARS : GAME_VARS));
+  const opt = k => `<option value="${k}"${k === selected ? ' selected' : ''}>${esc(vars.get(k))}</option>`;
+  return VAR_GROUPS[kind].map(([label, ks]) => { const o = ks.filter(k => vars.has(k)).map(opt).join(''); return o ? `<optgroup label="${esc(label)}">${o}</optgroup>` : ''; }).join('');
 }

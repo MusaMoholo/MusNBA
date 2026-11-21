@@ -1,0 +1,329 @@
+{
+ "experiment": "backtest_compare",
+ "run": "20261120T160622Z",
+ "runs": [
+  "20261120T120816Z_backtest_v1.2d_minutes_F4",
+  "20261120T160608Z_v1.4f_F4"
+ ],
+ "per_run": {
+  "20261120T120816Z_backtest_v1.2d_minutes_F4": {
+   "players": {
+    "bench": {
+     "min": {
+      "rel_bias": 0.0325,
+      "coverage_10_90": 0.765,
+      "crps": 3.897
+     },
+     "pts": {
+      "rel_bias": 0.0226,
+      "coverage_10_90": 0.738,
+      "crps": 2.716
+     },
+     "reb": {
+      "rel_bias": 0.0568,
+      "coverage_10_90": 0.753,
+      "crps": 1.155
+     },
+     "ast": {
+      "rel_bias": -0.0015,
+      "coverage_10_90": 0.761,
+      "crps": 0.73
+     }
+    },
+    "star": {
+     "min": {
+      "rel_bias": -0.0092,
+      "coverage_10_90": 0.827,
+      "crps": 2.901
+     },
+     "pts": {
+      "rel_bias": 0.0175,
+      "coverage_10_90": 0.813,
+      "crps": 4.485
+     },
+     "reb": {
+      "rel_bias": -0.0327,
+      "coverage_10_90": 0.743,
+      "crps": 1.517
+     },
+     "ast": {
+      "rel_bias": -0.0255,
+      "coverage_10_90": 0.82,
+      "crps": 1.307
+     }
+    },
+    "starter": {
+     "min": {
+      "rel_bias": -0.0217,
+      "coverage_10_90": 0.806,
+      "crps": 3.229
+     },
+     "pts": {
+      "rel_bias": -0.0045,
+      "coverage_10_90": 0.783,
+      "crps": 3.538
+     },
+     "reb": {
+      "rel_bias": -0.0038,
+      "coverage_10_90": 0.785,
+      "crps": 1.464
+     },
+     "ast": {
+      "rel_bias": -0.0251,
+      "coverage_10_90": 0.782,
+      "crps": 1.06
+     }
+    }
+   },
+   "strength_loading_sim": {
+    "intercept": 114.324,
+    "offence": 0.732,
+    "opp_defence": 0.686
+   },
+   "strength_loading_real": {
+    "intercept": 113.516,
+    "offence": 1.144,
+    "opp_defence": 1.685
+   },
+   "margin_slope": 1.512,
+   "margin_corr": 0.508,
+   "total": {
+    "bias": 1.79,
+    "crps": 11.721,
+    "coverage_10_90": 0.7,
+    "sim_sd": 16.96,
+    "actual_sd_around_sim": 20.45
+   },
+   "margin": {
+    "bias": 0.35,
+    "crps": 9.374,
+    "coverage_10_90": 0.74,
+    "sim_sd": 14.55,
+    "actual_sd_around_sim": 16.78
+   },
+   "win_log_loss": 0.5712,
+   "team_model": {
+    "total_crps": 11.353,
+    "margin_crps": 9.322,
+    "win_log_loss": 0.5584
+   },
+   "possessions_bias": 0.0016,
+   "points_per_100": {
+    "actual": 113.65,
+    "sim": 114.35,
+    "slope_real_on_sim": 1.237,
+    "sim_sd_across_team_games": 3.82
+   }
+  },
+  "20261120T160608Z_v1.4f_F4": {
+   "players": {
+    "bench": {
+     "min": {
+      "rel_bias": 0.033,
+      "coverage_10_90": 0.765,
+      "crps": 3.899
+     },
+     "pts": {
+      "rel_bias": 0.0248,
+      "coverage_10_90": 0.741,
+      "crps": 2.718
+     },
+     "reb": {
+      "rel_bias": 0.0554,
+      "coverage_10_90": 0.752,
+      "crps": 1.157
+     },
+     "ast": {
+      "rel_bias": -0.0019,
+      "coverage_10_90": 0.752,
+      "crps": 0.732
+     }
+    },
+    "star": {
+     "min": {
+      "rel_bias": -0.0088,
+      "coverage_10_90": 0.838,
+      "crps": 2.913
+     },
+     "pts": {
+      "rel_bias": 0.0222,
+      "coverage_10_90": 0.813,
+      "crps": 4.541
+     },
+     "reb": {
+      "rel_bias": -0.0363,
+      "coverage_10_90": 0.743,
+      "crps": 1.526
+     },
+     "ast": {
+      "rel_bias": -0.0247,
+      "coverage_10_90": 0.824,
+      "crps": 1.294
+     }
+    },
+    "starter": {
+     "min": {
+      "rel_bias": -0.0221,
+      "coverage_10_90": 0.797,
+      "crps": 3.249
+     },
+     "pts": {
+      "rel_bias": -0.0038,
+      "coverage_10_90": 0.786,
+      "crps": 3.541
+     },
+     "reb": {
+      "rel_bias": -0.0068,
+      "coverage_10_90": 0.786,
+      "crps": 1.465
+     },
+     "ast": {
+      "rel_bias": -0.0238,
+      "coverage_10_90": 0.775,
+      "crps": 1.069
+     }
+    }
+   },
+   "strength_loading_sim": {
+    "intercept": 114.502,
+    "offence": 0.754,
+    "opp_defence": 0.629
+   },
+   "strength_loading_real": {
+    "intercept": 113.516,
+    "offence": 1.144,
+    "opp_defence": 1.685
+   },
+   "margin_slope": 1.518,
+   "margin_corr": 0.497,
+   "total": {
+    "bias": 2.2,
+    "crps": 11.82,
+    "coverage_10_90": 0.685,
+    "sim_sd": 16.93,
+    "actual_sd_around_sim": 20.64
+   },
+   "margin": {
+    "bias": 0.37,
+    "crps": 9.43,
+    "coverage_10_90": 0.755,
+    "sim_sd": 14.67,
+    "actual_sd_around_sim": 16.88
+   },
+   "win_log_loss": 0.5776,
+   "team_model": {
+    "total_crps": 11.353,
+    "margin_crps": 9.322,
+    "win_log_loss": 0.5584
+   },
+   "possessions_bias": 0.002,
+   "points_per_100": {
+    "actual": 113.65,
+    "sim": 114.52,
+    "slope_real_on_sim": 1.156,
+    "sim_sd_across_team_games": 3.76
+   }
+  }
+ },
+ "paired_v_first": {
+  "20261120T160608Z_v1.4f_F4": {
+   "games": 200,
+   "total_crps": {
+    "change": 0.099,
+    "se": 0.082
+   },
+   "margin_crps": {
+    "change": 0.056,
+    "se": 0.061
+   },
+   "home_crps": {
+    "change": 0.145,
+    "se": 0.057
+   },
+   "away_crps": {
+    "change": 0.007,
+    "se": 0.05
+   },
+   "players": {
+    "bench": {
+     "min": {
+      "crps_change": 0.0015,
+      "se": 0.0137,
+      "z": 0.11,
+      "rel": 0.0004
+     },
+     "pts": {
+      "crps_change": 0.0027,
+      "se": 0.0063,
+      "z": 0.43,
+      "rel": 0.001
+     },
+     "reb": {
+      "crps_change": 0.0019,
+      "se": 0.0022,
+      "z": 0.86,
+      "rel": 0.0016
+     },
+     "ast": {
+      "crps_change": 0.0021,
+      "se": 0.0015,
+      "z": 1.33,
+      "rel": 0.0028
+     }
+    },
+    "star": {
+     "min": {
+      "crps_change": 0.0127,
+      "se": 0.0173,
+      "z": 0.73,
+      "rel": 0.0044
+     },
+     "pts": {
+      "crps_change": 0.0554,
+      "se": 0.0327,
+      "z": 1.7,
+      "rel": 0.0124
+     },
+     "reb": {
+      "crps_change": 0.0091,
+      "se": 0.007,
+      "z": 1.3,
+      "rel": 0.006
+     },
+     "ast": {
+      "crps_change": -0.013,
+      "se": 0.0065,
+      "z": -2.01,
+      "rel": -0.0099
+     }
+    },
+    "starter": {
+     "min": {
+      "crps_change": 0.0202,
+      "se": 0.0131,
+      "z": 1.54,
+      "rel": 0.0062
+     },
+     "pts": {
+      "crps_change": 0.0029,
+      "se": 0.0087,
+      "z": 0.33,
+      "rel": 0.0008
+     },
+     "reb": {
+      "crps_change": 0.001,
+      "se": 0.0038,
+      "z": 0.27,
+      "rel": 0.0007
+     },
+     "ast": {
+      "crps_change": 0.0084,
+      "se": 0.0027,
+      "z": 3.07,
+      "rel": 0.0079
+     }
+    }
+   }
+  }
+ }
+}

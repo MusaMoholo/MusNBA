@@ -50,7 +50,7 @@ def fold_engine_version(fold: str, spec_path: Path, threads: int) -> str:
         entry[n] = {'file': f'{n}.txt', 'kind': str(z['kind']), 'classes': int(z['classes']) or None, 'columns': f['columns'],
                     'categorical': f['categorical'], 'temperature': f['temperature'], 'intercepts': f.get('intercepts')}
     report = (Path(dflt['features']).parent if dflt.get('features') else DERIVED / 'features') / 'features_report.json'
-    matchup = json.loads(report.read_text()).get('matchup') if report.exists() else None
+    matchup = train._matchup_of(dflt.get('features'))  # the variant's assignment θ (D32 real, else D30 soft)
     write_json(folder / 'config.json', {'version': f"{spec.get('version')}_{fold}", 'fold': True, 'train_through': FOLDS[fold][0],
                                         'segments': dflt.get('segments'), 'features': dflt.get('features'), 'matchup': matchup,
                                         'nodes': entry}, pretty=True)
@@ -73,7 +73,7 @@ def load_inputs(spec: dict, fold: str):
     stints = pd.read_parquet(DERIVED / 'history' / str(season) / 'stints.parquet')
     on = pd.read_parquet(DERIVED / 'history' / str(season) / 'on_court.parquet', columns=['game_id', 'player', 'sec'])
     box = pd.read_parquet(ROOT / 'data' / 'raw' / 'hoopr' / f'player_box_{season}.parquet',
-                          columns=['game_id', 'athlete_id', 'team_id', 'points', 'rebounds', 'assists', 'minutes'])
+                          columns=['game_id', 'athlete_id', 'team_id', 'points', 'rebounds', 'assists', 'minutes'] + list(COMPONENT_BOX.values()))
     box = box.dropna(subset=['athlete_id', 'team_id'])
     box = box.assign(game_id=box['game_id'].astype('int64').astype(str), player=box['athlete_id'].astype('int64').astype(str),
                      team=box['team_id'].astype('int64').astype(str))
@@ -87,8 +87,10 @@ def eligible_games(seg: pd.DataFrame) -> np.ndarray:
     return np.array(sorted(ok[ok].index))
 
 
-def _init(version, spec_path, fold, worlds, rotation='replay', known_starters=False):
+def _init(version, spec_path, fold, worlds, rotation='replay', known_starters=False, pool=None):
     from scripts import engine
+    if pool is not None:  # D36: rotation-table pool (0 = one table per world)
+        engine.ROTATION['pool'] = pool
     spec = json.loads(Path(spec_path).read_text())
     _W.update({'engine': engine.Engine(version), 'mod': engine, 'inputs': load_inputs(spec, fold), 'worlds': worlds,
                'teams': json.loads((DERIVED / 'teams.json').read_text()), 'rotation': rotation, 'known_starters': known_starters})
@@ -151,6 +153,13 @@ def run_game(gid: str) -> dict:
         out[f'{m}_crps'] = float(aggregate.crps_samples(x[:, None], np.array([float(y)]))[0])
         out[f'{m}_pit'] = float(aggregate.pit(x[:, None], np.array([float(y)]), rng)[0])
     out['p_home'] = float((sim_pts[:, 0] > sim_pts[:, 1]).mean())
+    # components per side (where the points come from): simulated means v the real box (player sums, team turnovers excluded
+    # on both sides) — for the component loadings in summarise()
+    for side, i, tid in (('home', 0, home), ('away', 1, away)):
+        cols = np.flatnonzero(g.side == i)
+        for k, col in COMPONENT_BOX.items():
+            out[f'sim_{k}_{side}'] = float(st.box[k][:, cols].sum((1, 2)).mean())
+            out[f'real_{k}_{side}'] = float(gb.loc[gb['team'] == tid, col].sum())
     # players: simulated full-game boxes v the real box score
     rows = []
     idx = {pid: i for i, pid in enumerate(g.ids)}
@@ -172,6 +181,33 @@ def run_game(gid: str) -> dict:
             row[f'{k}_pit'] = float(aggregate.pit(x[:, None], np.array([float(real[k])]), rng)[0])
         rows.append(row)
     out['players'] = rows
+    return out
+
+
+COMPONENT_BOX = {'fga': 'field_goals_attempted', 'fgm': 'field_goals_made', 'fg3a': 'three_point_field_goals_attempted',
+                 'fg3m': 'three_point_field_goals_made', 'fta': 'free_throws_attempted', 'tov': 'turnovers', 'oreb': 'offensive_rebounds'}
+
+
+def component_loadings(g: pd.DataFrame) -> dict | None:
+    """Where the defence is (or is not) expressed: per team-game rates — FG%, 3P%, 3PA share, FTA, TOV and OREB per 100
+    possessions — regressed on the side's offensive and the opponent's defensive rating (as strength_loading), sim v real."""
+    if 'sim_fga_home' not in g.columns or 'off_h' not in g.columns:
+        return None
+    def side(prefix, s, o):
+        poss = g[f'{prefix}_poss_{s}'] if prefix == 'real' else g[f'sim_poss_{s}']
+        f = lambda k: g[f'{prefix}_{k}_{s}']
+        return pd.DataFrame({'fg_pct': f('fgm') / f('fga'), 'fg3_pct': f('fg3m') / f('fg3a'), 'fg3a_share': f('fg3a') / f('fga'),
+                             'fga_100': 100 * f('fga') / poss, 'fta_100': 100 * f('fta') / poss, 'tov_100': 100 * f('tov') / poss,
+                             'oreb_100': 100 * f('oreb') / poss, 'off': g[f'off_{o}'], 'opp_def': g[f'def_{"a" if o == "h" else "h"}']})
+    out = {}
+    for prefix in ('sim', 'real'):
+        d = pd.concat([side(prefix, 'home', 'h'), side(prefix, 'away', 'a')], ignore_index=True).replace([np.inf, -np.inf], np.nan).dropna()
+        X = np.column_stack([np.ones(len(d)), d['off'], d['opp_def']])
+        out[prefix] = {k: dict(zip(('offence', 'opp_defence'), (round(float(v), 5) for v in np.linalg.lstsq(X, d[k], rcond=None)[0][1:])))
+                       for k in ('fg_pct', 'fg3_pct', 'fg3a_share', 'fga_100', 'fta_100', 'tov_100', 'oreb_100')}
+        out[prefix]['means'] = {k: round(float(d[k].mean()), 4) for k in ('fg_pct', 'fg3_pct', 'fg3a_share', 'fga_100', 'fta_100', 'tov_100', 'oreb_100')}
+    out['ratio_sim_over_real_opp_defence'] = {k: (round(out['sim'][k]['opp_defence'] / out['real'][k]['opp_defence'], 3)
+                                                  if abs(out['real'][k]['opp_defence']) > 1e-9 else None) for k in out['sim'] if k != 'means'}
     return out
 
 
@@ -281,6 +317,7 @@ def rating_baseline(games: pd.DataFrame) -> dict:
                                            (round(float(v), 3) for v in np.linalg.lstsq(X, sides[y], rcond=None)[0])))
                                for y in ('sim', 'real')}
     out['engine_v_baseline_margin_corr'] = round(float(np.corrcoef(games.set_index('game_id').loc[g['game_id'], 'margin_sim'], mus['margin'])[0, 1]), 3)
+    out['component_loadings'] = component_loadings(g)
     return out
 
 
@@ -316,6 +353,7 @@ def main():
                     help='replay = M3 v0 templates (v1.1); targets = D29 minutes (healthy roles, 240 by priority, ramp)')
     ap.add_argument('--models', default=None, help='reuse fitted fold models (e.g. folds/v1.1_F4_all) instead of fitting')
     ap.add_argument('--known-starters', action='store_true', help='targets only: open with the real starters (a perfect lineup source)')
+    ap.add_argument('--pool', type=int, default=None, help='rotation tables per side shared by the worlds (default 400; 0 = one per world, D36)')
     ap.add_argument('--summarise', metavar='RUN', help='re-score a saved run (<stamp>_<name>) without simulating; updates its log')
     args = ap.parse_args()
     start = time.time()
@@ -343,7 +381,7 @@ def main():
     os.environ['OMP_NUM_THREADS'] = str(max(1, (os.cpu_count() or 4) // max(1, args.jobs)))
     ctx = mp.get_context('spawn')
     results = []
-    with ctx.Pool(args.jobs, initializer=_init, initargs=(version, str(args.config), args.fold, args.worlds, args.rotation, args.known_starters)) as pool:
+    with ctx.Pool(args.jobs, initializer=_init, initargs=(version, str(args.config), args.fold, args.worlds, args.rotation, args.known_starters, args.pool)) as pool:
         for i, r in enumerate(pool.imap(run_game, list(games), chunksize=1), 1):
             results.append(r)
             if i % 10 == 0 or i == len(games):
@@ -361,7 +399,7 @@ def main():
     players.to_parquet(DERIVED / 'experiments' / f'{stamp}_{name}_players.parquet', index=False)
     write_json(EXPERIMENTS / f'{stamp}_{name}.json', {'experiment': 'm9_engine_backtest', 'run': stamp, 'commit': train.git_commit(),
                                                       'config': str(args.config), 'fold': args.fold, 'models': version, 'games': len(games),
-                                                      'worlds': args.worlds, 'rotation': args.rotation, 'known_starters': args.known_starters,
+                                                      'worlds': args.worlds, 'rotation': args.rotation, 'known_starters': args.known_starters, 'pool': args.pool,
                                                       'seconds': round(time.time() - start), 'summary': summary}, pretty=True)
     print(json.dumps(summary, indent=1))
     print(f'\nrun {stamp}_{name}  ({len(games)} games, {time.time() - start:.0f}s)')

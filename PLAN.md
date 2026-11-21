@@ -1,6 +1,6 @@
 # MusNBA — game plan and progress
 
-Updated **20 November 2026 (afternoon UK, D29–D30 chunk)**. The single record of scope, progress and decisions. Every agent updates it at
+Updated **20 November 2026 (evening UK, D32 chunk: NBA Stats + real-matchup defence)**. The single record of scope, progress and decisions. Every agent updates it at
 every checkpoint (AGENTS.md § Checkpoint protocol). New here? Read [AGENTS.md](AGENTS.md) first, then
 [HANDOFF_NEXT.md](HANDOFF_NEXT.md) — it says exactly what to do next.
 
@@ -62,7 +62,7 @@ Slates are US Eastern game dates; tip-offs show UK time with ET alongside.
 |---|---|---|
 | ESPN site API (no key) | Live: schedules, rosters, injuries, box scores, play-by-play with athlete ids, shot x/y, substitutions | In use (unofficial; adapter + raw retention) |
 | sportsdataverse `sportsdataverse-data` releases (hoopR) | History 2022-23 → 2025-26: ESPN play-by-play and player box scores, same ids | In use (`scripts/history.py`) |
-| NBA Stats / CDN via `nba_api` | Richer: tracking, play types | **Owner decision open** (needs browser-style headers, blocked here) |
+| NBA Stats API (stats.nba.com; own stdlib adapter, D32) | Real matchups (who guarded whom, partial possessions), season logs (minutes to the second, possessions), tracking defence, play-by-play v3, hustle | **In use (owner, D32)**: `fetch_nbastats.py` — Chrome fetch headers required (FINDINGS §1), ~1 request/s, resumable, raw retention `data/raw/nbastats/` (gzip + manifest); history 2022-23 → today backfilled once, nightly adds new finals (~10–15 requests); crosswalk 5,508/5,508 games, 99.986% of player-games (FINDINGS §3t) |
 | ESPN `pickcenter` lines | Benchmark only (D8) | Retained in raw summaries |
 | Projected starting lineups (owner, 20 Nov) | Starters and late status news for today's and tomorrow's games → D29's minutes priority and the opening lineup; measured nightly against actual starters | **To add**: RotoWire is blocked on the work network; reachable candidates Basketball Monster, FantasyPros, DailyFantasyFuel, CBS Sports (FINDINGS §1) — read terms of use first, one polite request per slate, raw retention; **pick the source most honest about maybes** (owner: its maybes become lineup branches, D31; projected starters are enough, no pre-tip refresh) |
 | Basketball-Reference | Spot checks | Not a pipeline source |
@@ -74,7 +74,7 @@ Slates are US Eastern game dates; tip-offs show UK time with ET alongside.
 | 0 | Discovery, data probe, plan | `██████████` done |
 | 1 | App shell, season stats, placeholder projections | `██████████` done — owner checks pending (iPhone, hosting) |
 | 1b | Per-period Game Centre (owner spec), play-by-play parser, quarter-aware placeholder | `██████████` done |
-| 2 | Possession engine (data → models → engine → backtest) | `████████░░` **M1–M5b, M6a done · engine v1.3 (D30 defence inputs + D29 minutes, D34) is the app's default · backtest (M9) is the gate · defence still under-expressed (0.69 v 1.69) — next chunk on NBA Stats matchups (D32)** |
+| 2 | Possession engine (data → models → engine → backtest) | `████████░░` **M1–M5b, M6a done · engine v1.3 is the app's default (D34), 10,000 worlds per game (D36) · backtest (M9) is the gate · NBA Stats matchups ingested; real-matchup defence not promoted (D37): team differences are compressed generally (offence 0.73, defence 0.69 of real) — next: that compression, M7 substitutions** |
 | 3 | Evaluation and nightly feedback (Forecast Lab view, refit cadence) | `███░░░░░░░` **Forecast Lab page (`#/lab`), nightly projected-v-actual starters record (D33); refit cadence not started** |
 | 4 | Season on the engine: pathway calibration, availability, tiebreakers, play-in, Cup, what-ifs | `██░░░░░░░░` **team pathway v1 in the app (D25): per-world ratings, engine worlds for today + tomorrow; walk-forward calibration first cut (M12)** |
 | 5 | Polish: hosting, iPhone acceptance, watch-a-sim, more views | not started |
@@ -96,6 +96,7 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
 | M6 | Engine (replay rotations) | ◐ **v1.1 is the app's default (D22, D23), today and tomorrow (D24)** — `nightly.py` (chip "Engine v1.1"; `--placeholder` opts out, `--ahead N`): 2,000 worlds per game, ~20 s per game; strong offences under-expressed, spread too narrow | 10k sims per game in today's output contract | `engine.py` |
 | M6c | **D29 minutes** (healthy roles, 240 by priority, return ramp, per-world draws) | ✅ **engine v1.2 (20 Nov), kept in v1.3**: backtest on the same 200 F4 games — stars' minutes +6.5% → −1.0%, points +8.8% → +0.5%, minutes 10–90% coverage 58–63% → 77–84%, every player CRPS better or level (starters' minutes −18%, z −8.2); team sums level (FINDINGS §3p, §3r) | Minutes bias ≈ 0 by tier, coverage ≈ 80% | `minutes.py`, `engine.py` (`_target_tables`) |
 | M6d | **D30 defence inputs (ESPN only)** | ✅ **engine v1.3 (20 Nov, D34)**: defence loading 0.44 → 0.69 (real 1.69), margin CRPS 9.67 → 9.37 (team model 9.32), total 12.00 → 11.72, players level or better; final test scored once (FINDINGS §3q, §3s) | Defence loading toward real; margins v the team model | `matchups.py`, `features.py --defence --matchup --shot-types`, `models/v1.3.json` |
+| M6e | **D32 NBA Stats + defence on real matchups** | ✅ **ingest done; defence negative (D37)**: adapter, crosswalk (5,508/5,508 games, 99.986% player-games), reconciliation (points identical, minutes median gap 0 s, possessions +0.9), 1.04M matchup rows in ESPN ids, tracking defence per date retained; assignment on real shares top-1 36.4% → 50.2% (top-2 75%); defender traits (3PA share allowed r 0.77; 3P% allowed noise); three engine candidates (v1.4c/e/f) level or worse than v1.3 on the 200-game backtest — **v1.3 stays**; switch hunting not visible (D35, v1.4d not run); FINDINGS §3s′, §3t–§3w | Defence loading toward real; margin CRPS ≤ team model; no player tier worse | `fetch_nbastats.py`, `nbastats.py`, `realmatch.py`, `features.py --real-matchups` |
 | M7 | Target-aware substitution model | ☐ | Minutes MAE < 5.2 and 10–90% coverage ≈ 80% (beats replay v0) | (to build) |
 | M8 | Per-player form + end-game checks | ☐ | Variance and overtime rate (5.4%) calibrated | (to build) |
 | M9 | Walk-forward backtest (engine on past games) | ◐ **first run (20 Nov, 200 F4 games)**: pace right (+0.2%), totals +2.7, margins half-sized (slope 1.45), defence expressed at ~25% of its real effect, stars' minutes +6.5%, totals too narrow (coverage 65%); **the team-rating model beats the engine on every game measure** (margin CRPS 9.32 v 9.64, win log loss 0.558 v 0.592) — FINDINGS §3o | Measures the engine (the floor, D22) and every candidate on game and player CRPS, win calibration and realism v the team-rating model and the current engine; a candidate replaces the engine only if better | `backtest.py` |
@@ -145,6 +146,8 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
    (a crosswalk by name, team and date); endpoints that change or rate-limit (a second adapter with raw retention). ESPN
    already gives shooter/assister/blocker/fouler/stealer, shot x/y, the ten on court and shot type in the play text — not
    who guarded whom or defender distance.
+**Phone app (owner, 20 Nov, D36):** stripped back — 10,000-world distributions for the expected lineup (players, teams, periods);
+   no Scenarios, Given…, joint grids, duels or lineup branches (those stay on localhost).
 2. Hosting the PWA: the repo is **private** (`MusaMoholo/MusNBA`, created 19 Nov); GitHub Pages needs a public repo
    or a paid plan — decide when the phone app is ready. App name MusNBA.
 3. iPhone acceptance of the PWA.
@@ -293,4 +296,21 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
   next chunk (D32: ingest, crosswalk, cleaning, then defence on real matchups); the Lab page is not a priority; this chunk's
   UX headliner: joint and conditional outcomes — Game Centre Scenarios tab, Given…, joint grids, drivers, teammate
   correlations, who-gains-if-X-sits, averages deltas, Today leaders (`outcomes.mjs`, `scenario.mjs`; worlds stored per game).
-
+- **20 Nov 2026 (evening, D32 chunk)** — **NBA Stats ingested (D32):** own stdlib adapter (Chrome fetch headers needed; ~1 req/s,
+  resumable, gzip + manifest), 5,508 games 2022-23 → 19 Nov: season logs, `boxscorematchupsv3` (1.04M attacker–defender rows),
+  tracking defence per date (2,628), play-by-play v3 (in progress); crosswalk 5,508/5,508 games, 99.986% of player-games
+  (17 unmatched: one player without an ESPN id); reconciliation: points identical, our minutes within 60 s of NBA's in 99.87%,
+  possessions +0.9 per team-game; 2022-24 matchups over-count FGA (111%). **Real matchups:** who-guards-whom top-1 36.4% → 50.2%
+  (top-2 75%, confidence well ordered); defender traits — 3PA share allowed r 0.77, 2P% 0.49, 3P% −0.05 (noise) → shrinkage from
+  reliability; switch hunting not visible (D35). **Engine:** v1.3's defence gap is shot-making (FG% 37%, 3P% 18% of real) while
+  turnovers are 95%; v1.4c (real-share defence), v1.4e (+ deterrence: 3P% → 30%, FTA → 48%) and v1.4f (+ top-1/top-2 defenders,
+  owner's idea) all level or worse on margins/totals/players → **v1.3 stays (D37)**; reading: general compression of team
+  differences. **App:** who-guards-whom (Matchup), player head-to-head, game flow + duels in Scenarios, duel of the night,
+  standings Wins tab + wins/seed pickers + W%/Proj W/Proj L sortable, grouped controls, multi-doubles/5×5, OREB/DREB/FGM/FTM,
+  box and bezel Δs, phone bundle stripped back (D36), 10,000 worlds per game (D36).
+- **21 Nov 2026 (close-out of the D32 chunk)** — Close-out nightly (21 Nov, 23:01 UK): 10 new finals, 9 new NBA matchup games,
+  real matchups 5,513 games; snapshots 21 Nov (6 games) and 22 Nov (7) at **10,000 worlds per game with one rotation table
+  per world** (D36; backtest: players level, +5% time), ~130–150 s per game. App: spotlight v2 (headliner sparkline and
+  chances, breakout dumbbell with the why, chance to lead the night/game, games to watch), fixed layouts at 1440/960/390.
+  Docs made model- and environment-agnostic (AGENTS §6 long jobs, preferences moved out of private notes). Smoke 99/99
+  (`--fault` fails 19), browser 81/81.

@@ -69,6 +69,9 @@ checksum-verified and atomic; the previous data stays available if an import fai
 | `scripts/engine.py` | The engine (default projection, v1.3 = D30 defence inputs + D29 minutes): plays games possession by possession; rotation tables rescaled to minutes targets; profiles from the version's features variant (`features_dir`) |
 | `scripts/minutes.py` | D29 minutes: healthy-role minutes, priority, 240 per team by priority, return ramp, rotation share, per-world draws, projected starters |
 | `scripts/matchups.py` | D30 implicit matchups: soft assignment of defenders to shooters from foul/block credits; shot types from the play text |
+| `scripts/fetch_nbastats.py` | D32 NBA Stats adapter (browser fetch headers, ~1 request/s, resumable): season logs, `boxscorematchupsv3`, tracking defence, play-by-play v3 → `data/raw/nbastats/<endpoint>/<season>/` (gzip + manifest) |
+| `scripts/nbastats.py` | D32 crosswalk (games by date + teams, players by name/stat line), reconciliation v ESPN (points, minutes, possessions), real matchups in ESPN ids → `data/derived/nbastats/` |
+| `scripts/realmatch.py` | D32 real matchups: pre-game assignment fitted on real shares (ranks, stopper, pair history), per-game pair history (cutoff-safe) |
 | `scripts/lineups.py` | Projected v actual starters for every finished snapshot (nightly record, D33) |
 | `scripts/backtest.py`, `scripts/backtest_compare.py` | Engine backtest on held-out fold games (M9; `--rotation targets`, `--models` to reuse fold models), with the team-rating model on the same games; paired comparison of runs (players first) |
 | `scripts/pathway.py` | Team engine (D25, D26): per-world offensive/defensive ratings, updated after every simulated game |
@@ -98,6 +101,13 @@ Rebuild in order after new data: `scripts/history.py` → `scripts/possessions.p
 .venv/bin/python scripts/backtest_compare.py <run A> <run B> [--log NAME]   # paired: player tiers, loading, margins, CRPS
 .venv/bin/python scripts/minutes.py --evaluate [--season 2025 --from 2025-01-01 --to 2025-04-30] [--set gamma=1]   # allocator v real (no engine)
 .venv/bin/python scripts/matchups.py --fit --through 2025-12-31            # D30 assignment θ → models/matchup_<through>.json
+.venv/bin/python scripts/fetch_nbastats.py --logs --matchups [--ptdefend] [--pbp]   # D32 NBA Stats history (polite, resumable)
+.venv/bin/python scripts/nbastats.py --crosswalk --reconcile --matchups     # ids ↔ ESPN, reconciliation, matchups.parquet
+.venv/bin/python scripts/features.py --out data/derived/variants/realmatch/features --defence --defence-k-scale 0.2 \
+    --matchup models/matchup_2025-12-31.json --shot-types --real-matchups data/derived/nbastats/matchups.parquet
+.venv/bin/python scripts/realmatch.py --history                             # per-game pair history (cutoff-safe)
+.venv/bin/python scripts/realmatch.py --fit --through 2025-12-31 --save     # real-share θ → models/realmatch_<through>.json
+.venv/bin/python scripts/backtest.py --config models/v1.2d.json --models folds/v1.2d_F4_all --rotation targets --pool 0   # D36: one rotation table per world
 .venv/bin/python scripts/features.py --out data/derived/variants/matchup/features --defence --defence-k-scale 0.2 --matchup models/matchup_2025-12-31.json --shot-types
 .venv/bin/python scripts/lineups.py --score                                 # projected v actual starters (also in the nightly)
 .venv/bin/python scripts/season_backtest.py [--grid]                    # team engine walk-forward (M12; ~1–4 min)

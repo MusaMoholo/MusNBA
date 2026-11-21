@@ -18,7 +18,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from basketball_common import DERIVED, MASTER_CSV, NBA_TEAM_IDS, SNAPSHOTS, VIEWS, read_json  # noqa: E402
+from basketball_common import DATA, DERIVED, MASTER_CSV, NBA_TEAM_IDS, SNAPSHOTS, VIEWS, read_json  # noqa: E402
 from scripts import box_scores, master_fixtures, pbp, projection  # noqa: E402
 from scripts.season_stats import period_profiles, player_table, team_table  # noqa: E402
 
@@ -476,6 +476,93 @@ def main():
         home_mean = gv['projection']['sim']['periods']['fg']['home']['pts']['mean']
         check(f'worlds: player points sum to team points in all {W_:,} worlds; mean equals the projection ({wf.parent.name}, {len(wfiles)} games)',
               ok and abs(T[:, 0].sum(1).mean() - home_mean) < 0.05, (ok, round(float(T[:, 0].sum(1).mean()), 2), home_mean))
+
+    # D32 NBA Stats: raw retention, one-to-one crosswalk, matchups = raw, real weights sum to 1, pair history cutoff-safe
+    nb_raw, nb = DATA / 'raw' / 'nbastats', DERIVED / 'nbastats'
+    if (nb / 'games.parquet').exists():
+        import gzip
+        import hashlib
+        import json as _json
+        import pandas as pd
+        bad = 0
+        manifests = sorted(nb_raw.glob('*/*/manifest.json'))
+        for mf in manifests:
+            man = _json.loads(mf.read_text())
+            for key in list(man)[-2:]:
+                body = gzip.decompress((mf.parent / f'{key}.json.gz').read_bytes())
+                sha = man[key]['sha256'] if not (args.fault and mf == manifests[-1]) else '0' * 64
+                bad += hashlib.sha256(body).hexdigest() != sha or len(body) != man[key]['bytes']
+        check(f'nbastats: raw files match their manifests (sha256, bytes; {len(manifests)} folders)', bad == 0, bad)
+        g = pd.read_parquet(nb / 'games.parquet')
+        pl = pd.read_parquet(nb / 'players.parquet')
+        if args.fault:
+            pl = pd.concat([pl, pl.iloc[:1]])
+        check(f'nbastats: crosswalk one-to-one ({len(g):,} games, {len(pl):,} people)',
+              not g['espn_game'].duplicated().any() and not g['nba_game'].duplicated().any()
+              and not pl['person'].duplicated().any() and not pl['player'].duplicated().any())
+        if (nb / 'matchups.parquet').exists():
+            from scripts import nbastats, realmatch
+            M = pd.read_parquet(nb / 'matchups.parquet')
+            gid = M['nba_game'].iloc[-1]
+            season = g.loc[g['nba_game'] == gid, 'season'].iloc[0]
+            raw = pd.DataFrame(nbastats.matchup_rows(_json.loads(gzip.decompress((nb_raw / 'boxscorematchupsv3' / season / f'{gid}.json.gz').read_bytes()))))
+            mine = M[M['nba_game'] == gid]
+            tot = float(mine['pposs'].sum()) + (0.5 if args.fault else 0)
+            check(f'nbastats: matchups = raw response (game {gid}: {len(mine)} pairs, Σ partial possessions {tot:.1f})',
+                  len(raw) == len(mine) and abs(float(raw['pposs'].astype(float).sum()) - tot) < 1e-6)
+            from scripts import features
+            seg = pd.read_parquet(sorted((DERIVED / 'history').glob('*/segments.parquet'))[-1])
+            gsel = seg[seg['game_id'].astype(str) == str(mine['espn_game'].iloc[0])] if mine['espn_game'].iloc[0] in set(seg['game_id'].astype(str)) else seg[seg['game_id'] == seg['game_id'].iloc[-1]]
+            use = gsel[gsel['actor'].notna() & gsel['end_type'].isin(['shot', 'turnover', 'fouled'])]
+            defs = use[[f'def_{i}' for i in range(1, 6)]].astype(str).to_numpy()
+            Ms = M.assign(espn_game=M['espn_game'].astype(str), off_player=M['off_player'].astype(str), def_player=M['def_player'].astype(str))
+            Wr = features.real_weights(use, defs, np.full(defs.shape, 0.2), (use['made'] == True).to_numpy(), (use['end_type'] == 'shot').to_numpy(),  # noqa: E712
+                                       {'index': features.real_index(Ms[Ms['espn_game'].isin(set(use['game_id'].astype(str)))])})
+            if args.fault:
+                Wr[0, 0] += 0.1
+            check(f'features: real matchup weights over the five sum to 1 ({len(use)} uses)', np.allclose(Wr.sum(1), 1.0))
+            if (nb / 'pair_history.parquet').exists():
+                H = realmatch.load_pair_history()
+                Mr = realmatch.load()
+                last = H[H['pair_met'] > 0].iloc[-1]
+                day = str(H.loc[H['espn_game'] == last['espn_game'], 'date'].iloc[0])
+                st = realmatch.pair_state(Mr, day)
+                row = st[(st['off_player'] == last['off_player']) & (st['def_player'] == last['def_player'])]
+                v = float(row['pair_hist'].iloc[0]) + (0.1 if args.fault else 0) if len(row) else np.nan
+                check(f'realmatch: pair history uses only earlier games (game {last["espn_game"]}, pair state before {day})',
+                      len(row) == 1 and abs(v - float(last['pair_hist'])) < 1e-9, (v, float(last['pair_hist'])))
+
+    # D36 phone bundle: per-world files left out, the worlds flag off, no duel of the night (localhost views keep them)
+    from scripts import export_musnba
+    gfile = next(iter(sorted((VIEWS / 'api' / 'game').glob('*.json'))), None)
+    if gfile is not None:
+        gkey = '/api/game/' + gfile.stem
+        body = json.loads(export_musnba.phone_record(gkey, gfile.read_text()))
+        sfile = sorted((VIEWS / 'api' / 'slate').glob('*.json'))[-1]
+        slate = json.loads(export_musnba.phone_record('/api/slate/' + sfile.stem, sfile.read_text()))
+        dropped = export_musnba.phone_record(gkey + '/worlds', '{}') is None
+        if args.fault:
+            body['worlds'] = True
+        check('phone bundle: per-world files dropped, worlds flag off, no duel of the night (D36)',
+              dropped and body.get('worlds') is False and all('duel' not in (g.get('proj') or {}) for g in slate.get('games', [])))
+    # Multi-doubles and 5×5 (views, from the stored worlds): nested chances; final-wins distributions sum to the seasons
+    newest = sorted(d.name for d in SNAPSHOTS.iterdir() if d.is_dir())[-2:]  # today's and tomorrow's projected slates
+    slate_games = [g['id'] for d in newest if (VIEWS / 'api' / 'slate' / f'{d}.json').exists()
+                   for g in read_json(VIEWS / 'api' / 'slate' / f'{d}.json').get('games', [])]
+    multis = [m for gid in slate_games if (VIEWS / 'api' / 'game' / f'{gid}.json').exists()
+              for m in (read_json(VIEWS / 'api' / 'game' / f'{gid}.json').get('multi') or {}).values()]
+    if multis:
+        if args.fault:
+            multis[0] = {**multis[0], 'triple': multis[0]['double'] + 0.01}
+        ok = all(m['double'] >= m['triple'] >= m['quadruple'] >= m['quintuple'] >= 0 and m['five_by_five'] <= m['double'] + 1e-9 for m in multis)
+        check(f'multi-doubles nested: double ≥ triple ≥ quadruple ≥ quintuple, 5×5 ≤ double ({len(multis)} players)', ok)
+    st = read_json(sorted((VIEWS / 'api' / 'standings').glob('*.json'))[-1])
+    sims = st.get('sims')
+    tot = [sum(t['forecast']['wins']['hist']) for t in st['teams'] if t.get('forecast', {}).get('wins')]
+    if tot:
+        if args.fault:
+            tot[0] += 1
+        check(f'standings: every team\'s final-wins distribution sums to the {sims:,} simulated seasons (Wins tab)', all(x == sims for x in tot))
 
     failed = results.count(False)
     print(f'\n{len(results) - failed}/{len(results)} checks passed')

@@ -171,6 +171,9 @@ export function barChart(items, {height = 140} = {}) {
 
 // ------------------------------------------------------------------ misc
 export const normalise = s => String(s || '').normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase().trim();
+/** Grouped segmented controls: [[label, [[value, text], …]], …] — one labelled group per row unit (owner: stacking/grouping). */
+export const segGroups = (groups, active, attr = 'data-v') => `<div class="seg-groups">${groups.filter(([, items]) => items.length)
+  .map(([label, items]) => `<div class="seg-group" style="--n:${items.length}"><span class="seg-label">${esc(label)}</span>${seg(items, active, attr)}</div>`).join('')}</div>`;
 export const seg = (items, active, attr = 'data-v') =>
   `<div class="seg" role="group">${items.map(([v, label]) => `<button type="button" ${attr}="${esc(v)}" aria-pressed="${v === active}">${esc(label)}</button>`).join('')}</div>`;
 export function errorPanel(error) {

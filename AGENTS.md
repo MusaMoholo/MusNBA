@@ -1,14 +1,16 @@
 # Start here — working on MusNBA
 
 You are picking up a project mid-flight. Assume nothing from memory; the repository docs are the source of truth.
-At every checkpoint the next session may be a different agent, so leave the docs so that it can continue without you.
+At every checkpoint the next session may be a different agent — any model, any tool or environment — so leave the docs so
+that it can continue without you. Never leave knowledge only in a chat, a private memory or a tool's notes: if it matters
+for the next session, it goes in these files.
 
 ## 1. Read in this order
 
 1. **This file** — rules, owner preferences, checkpoint protocol.
 2. **[HANDOFF_NEXT.md](HANDOFF_NEXT.md)** — the current state and the exact next actions. Start working from there.
 3. **[PLAN.md](PLAN.md)** — goal, phases, milestone table (§6), open owner decisions, log.
-4. **[ENGINE_PLAN.md](ENGINE_PLAN.md)** — engine design and the owner's decisions D1–D22. Do not reopen a decision
+4. **[ENGINE_PLAN.md](ENGINE_PLAN.md)** — engine design and the owner's decisions D1–D37. Do not reopen a decision
    without new evidence; if evidence contradicts one, say so to the owner and record it.
 5. **[TRAINING_PLAN.md](TRAINING_PLAN.md)** — models, inputs, decay, folds, experiment protocol.
 6. **[FINDINGS.md](FINDINGS.md)** — measured facts and data quirks. Do not re-derive them; extend them.
@@ -18,8 +20,9 @@ At every checkpoint the next session may be a different agent, so leave the docs
 
 ```sh
 git status && git log --oneline -5      # clean tree expected; the last commit is the last checkpoint
-.venv/bin/python scripts/smoke.py        # must pass (80+ checks) before you change anything
+.venv/bin/python scripts/smoke.py        # must pass (95+ checks) before you change anything
 ls analysis/experiments/                 # latest experiment logs: what was last measured
+.venv/bin/python scripts/serve.py --port 8767 &   # your own review server (the owner's is :8766 — never stop it)
 ```
 
 Then do the first open item in HANDOFF_NEXT.md § Next actions. If smoke fails, fix or report that first.
@@ -50,10 +53,19 @@ Then do the first open item in HANDOFF_NEXT.md § Next actions. If smoke fails, 
   improvement from the owner's UX backlog (PLAN §9b) instead.
 - **Dashboard taste (owner, 20 Nov):** he cares about player and team game-outcome presentation (scenarios, joint and
   conditional outcomes, deltas v averages); internal evaluation pages (the Lab) are not a priority. His examples are
-  illustrations — generalise the idea rather than building only the example.
+  illustrations — generalise the idea rather than building only the example. He wants it **smooth and sleek at full width
+  (1440), half width (960) and phone (390)**, both themes, with grouped and stacked controls; he often sends UX requests
+  mid-chunk — do them alongside the headliners, run `node analysis/browser_check.mjs --base http://127.0.0.1:8767` on every
+  touched page and look at the screenshots (a pass only means no errors or overflow). Record every change in DASHBOARD_PLAN.
 - Likes short status bullets with real numbers. For multi-step work he wants a **visual progress board** — an overall
   bar for the chunk plus a bar per subtask (text bars, e.g. `██████░░░░░░░░░░░░░░ 30%`) — **printed in the reply whenever a subtask reaches a new 10% mark or the chunk a new 5% mark**
-  (owner, 20 Nov; finished jobs dropped from per-job bars). He sets explicit stop points mid-session ("stop when X is done") —
+  (owner, 20 Nov; finished jobs dropped from per-job bars). He is **critically dependent on these updates** (owner, 20 Nov,
+  third reminder), so **plan for them before working**: at the chunk's opening, write each subtask as a **ladder of ten
+  10% steps, each with a concrete done-when** (a background download counts per 10% of its items), give each subtask a
+  weight so the chunk % is a fixed weighted sum, and put the ladders in HANDOFF_NEXT.md § Progress ladders. Between steps
+  you then know which one you are on; post the board in your message to him right after the step that crosses a mark,
+  also during long builds, background jobs and while answering his questions. Never jump past marks. **Time estimates
+  come from measured rates** (a job's log: items done, seconds elapsed) and say so — he finds padded guesses unhelpful. He sets explicit stop points mid-session ("stop when X is done") —
   finish X, checkpoint, and leave the rest to HANDOFF. He is happy to see new data in the dashboard before it is
   validated, if labelled.
 - His goal (20 Nov): **a ground-up simulation as accurate as possible against real outcomes** — not betting. He checks
@@ -65,7 +77,8 @@ Then do the first open item in HANDOFF_NEXT.md § Next actions. If smoke fails, 
 
 - Use `.venv/bin/python`. Dependencies: NumPy, pandas, pyarrow, LightGBM. Node is optional (browser checks only).
 - **The engine is the floor (D22)**: today's and tomorrow's projections (D24) come from the possession engine — model
-  **v1.3** since D34 (`ENGINE` in `scripts/engine.py`: `version`, node `models`, `rotation`; `models/v1.3.json`). Replace it
+  **v1.3** since D34 (`ENGINE` in `scripts/engine.py`: `version`, node `models`, `rotation`, `sims` 10,000, `pool` 0 — D36;
+  `models/v1.3.json`; real-matchup candidates v1.4c/e/f not promoted, D37). Replace it
   (new nodes, settings, rules or model version) only when the measured tests say the change is better — paired fold
   comparisons (`scripts/compare.py`) and the M9 backtest on the same games (`scripts/backtest.py`,
   `scripts/backtest_compare.py`: player tiers first, D28, then team sums) — and record it.
@@ -78,10 +91,11 @@ Then do the first open item in HANDOFF_NEXT.md § Next actions. If smoke fails, 
 - Raw data is never modified; archive outside the repo (`~/Basketball_archive_ops`) before replacing snapshots,
   shells or bundles. Deterministic simulations: re-running identical inputs must reproduce stored results.
 - Missing data stays missing; never clamp; placeholders are labelled in the app.
-- NBA Stats API with browser-style headers: **authorised by the owner (20 Nov, D32)** for the next chunk — polite spacing,
-  caching and raw retention as for ESPN; no other new source without his sign-off. Never scrape a site whose terms forbid
-  automated access (D33). ESPN requests stay polite.
-- **Git (owner's standing instruction, 19 Nov 2026): commit and push at every checkpoint** — see §5 step 7. The repo is
+- NBA Stats API: **authorised by the owner (20 Nov, D32) and in use** — `scripts/fetch_nbastats.py` (Chrome fetch headers,
+  ~1 request/s, one stream at a time, resumable, raw retention + manifest); pause the history download while the nightly
+  fetches. No other new source without his sign-off. Never scrape a site whose terms forbid automated access (D33). ESPN
+  requests stay polite.
+- **Git (owner's standing instruction, 19 Nov 2026): commit and push at every checkpoint** — see §5 step 8. The repo is
   private, `MusaMoholo/MusNBA`, branch `main`. Its local git config carries the owner's personal identity (MusaMoholo,
   GitHub no-reply email) and a personal credential helper: never use the global identity, never change these
   settings, never force-push or rewrite history. Data, the virtualenv and exports stay out of git (`.gitignore`);
@@ -103,10 +117,25 @@ Write as if you will not be the one to continue.
    new was collected) so the slates and the 10k season come from the latest promoted engines; browser checks on :8767.
 8. **Commit and push**: `git add -A && git status` (review: no `data/`, no secrets), then
    `git commit -m "<milestone>: <what changed, key numbers>"` and `git push`. One commit per checkpoint at least; record
-   the commit in HANDOFF_NEXT.md's header on the next checkpoint. Follow any commit-trailer rules your harness gives.
+   the commit in HANDOFF_NEXT.md's header on the next checkpoint. If your environment asks for commit trailers or
+   attribution lines, add them; never change the repo's git identity.
 9. Tell the owner, in a few bullets, what changed, what was measured and what is next.
 
-## 6. Conventions worth knowing
+## 6. Running long jobs (any environment)
+
+Long jobs run detached with a log, e.g. `nohup .venv/bin/python -u scripts/backtest.py … > /tmp/bt.log 2>&1 &`, and you read
+the log's progress lines (`game N/200 Ts`, `engine <id>: …`) to report measured pace. Measured on the owner's laptop
+(14 cores, 48 GB): a 200-game backtest alone ≈ 22–27 min (two at once oversubscribe the CPU — each worker predicts on every
+core — and both take ~50 min); fitting 16 fold models ≈ 5 min; a node-dataset build ≈ 1–2 min and ~20 GB RAM; the nightly
+≈ 4 min of input rebuild + ~2 min per game at 10,000 worlds (≈ 30 min for 15 games). The NBA Stats history download is
+one polite stream (~1 request/s); pause it (it resumes) while the nightly fetches. Scratch files go outside the repo (a
+temp folder); experiment logs go to `analysis/experiments/` (committed) and their per-row data to `data/derived/experiments/`.
+
+## 7. Conventions worth knowing
+
+- Sibling project: the owner's **MusSim** football app (`../Football`, public github.com/MusaMoholo/MusSim) — MusNBA copies
+  its conventions (laptop pipeline + data-free static PWA, bundle import, serving never computes, raw retention, cutoff-safe
+  snapshots, deterministic sims, colour tokens, 1440/960/390 checks in both themes).
 
 - Game time: periods 720 s (OT 300 s); elapsed game time t = 0–2880 in regulation.
 - Segments: a possession can have several (offensive rebounds and defensive fouls without free throws continue it).

@@ -27,10 +27,13 @@ const CASES = [
   ['game-final-q4', '#/game/401910009/q4', ['phone'], ['light']],
   ['game-final-team', '#/game/401910009/fg/team', ['desktop'], ['dark']],
   ['game-matchup', '#/game/401910019/matchup', ['phone'], ['light']],
+  ['game-duels', '#/game/401910009/matchup', ['desktop', 'phone'], ['dark', 'light']],
+  ['game-proj', '#/game/401910029', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['sheet', '#/game/401910009/player/3032977', ['desktop', 'phone'], ['dark', 'light']],
   ['sheet-q1', '#/game/401910019/player/5041935/q1', ['phone'], ['dark']],
   ['future-game', '#/game/' + (args.future || ''), ['phone'], ['dark']],
-  ['standings', '#/standings', ['desktop', 'phone'], ['dark', 'light']],
+  ['standings', '#/standings/forecast', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['standings-wins', '#/standings/wins', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['teams', '#/teams', ['desktop', 'phone'], ['dark']],
   ['team', '#/team/14', ['desktop', 'phone'], ['light']],
   ['players', '#/players', ['desktop', 'phone'], ['dark']],
@@ -40,7 +43,8 @@ const CASES = [
   ['scenario-set', '#/game/401909305/scenario/' + encodeURIComponent(JSON.stringify([{subj: 'p:4701230', v: 'pts', op: 'ge', x: 30}, {subj: 't:home', v: 'win'}])), ['desktop', 'phone'], ['dark']],
   ['team-drivers', '#/game/401909305/fg/team', ['desktop', 'phone'], ['light']],
   ['sheet-whatif', '#/game/401909305/player/4701230/fg', ['desktop', 'phone'], ['dark', 'light']],
-  ['today-leaders', '#/today/2026-11-20', ['phone'], ['dark']],
+  ['today-leaders', '#/today/2026-11-21', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['tomorrow', '#/today/2026-11-22', ['desktop', 'half', 'phone'], ['dark']],
 ].filter(c => (!only || only.includes(c[0])) && !(c[0] === 'future-game' && !args.future));
 
 const profile = mkdtempSync(join(tmpdir(), 'musnba-chrome-'));

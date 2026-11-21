@@ -15,6 +15,13 @@ Measured facts only. Each entry states its date and population.
   to plain requests.
 - First collection: 345 requests, 222 finals, 0 failures, ~4 minutes at 0.35 s spacing.
 - **Projected-starter sources (probed 20 Nov 2026 from the owner's laptop, robots.txt and one page only):** RotoWire (`/basketball/nba-lineups.php`) and Lineups.com are **blocked by the work network's filter** (OpenDNS block page, HTTP 403); nba.com returns 403 to plain requests (as stats.nba.com). Reachable, with no blanket `Disallow: /` and no rule on lineup pages in robots.txt: Basketball Monster, FantasyPros, DailyFantasyFuel, CBS Sports, numberFire (redirects). Terms of use not yet read; no page content fetched.
+- **NBA Stats API (probed 20 Nov 2026, D32 chunk; owner-authorised, D32).** stats.nba.com is reachable from the owner's
+  network. Plain requests and requests with only the usual browser headers (User-Agent, Origin, Referer, `x-nba-stats-*`)
+  **connect (TLS in 40 ms) and never receive a byte** (timeouts at 25–40 s); adding Chrome's fetch headers (`Sec-Fetch-Site/
+  Mode/Dest`, `sec-ch-ua*`) gives 200 in 0.2–0.3 s over IPv4 and IPv6, HTTP/1.1 and HTTP/2, with stdlib urllib. Season logs
+  (`playergamelogs`, `teamgamelogs`) take 1–2 s each (4–5 MB JSON); per-game `boxscorematchupsv3` ~0.25 s (140–190 KB JSON,
+  14–19 KB gzip); the polite pace (1 s + 0–0.5 s jitter) gives ~0.8 games per second. From 2023-24 the NBA Cup games are
+  listed under both `Regular Season` and `IST` (deduplicated); neutral-site games carry "@" on both sides in the logs.
 - **Terms of use read (20 Nov 2026, second session):** Basketball Monster (`/TermsOfUse.aspx`): "You may not scrape or otherwise copy our Content without permission … not to use any data mining, data gathering or extraction method" — **forbids**; CBS Sports (Paramount/CBSi terms of use, effective 27 May 2025, §10): bars accessing the services "using any interface other than ours" and unauthorised scraping and data mining — **forbids**; FantasyPros (`/about/legal/`): silent on automated access, but copying allowed only as "a single copy made for personal use" — **unclear, owner decision**; its lineup page showed empty "Projected Lineup" slots when read, status flags only OUT and DTD; DailyFantasyFuel (terms of service, 7 Jun 2026): silent on automated access and copying, but it has **no NBA starting-lineups page** (home page links MLB and NHL lineups only; `/nba/projections/` is a 25-player preview with one "Q" flag; one request each, 20 Nov). **No source passes yet**; the engine opens games with its own projected starters (`minutes.projected_starters`, §3p) and the nightly scores them (`scripts/lineups.py`).
 
 ## 2. League environment through 18 Nov 2026 (222 games)
@@ -597,6 +604,146 @@ through 2025-12-31). Log `…120816Z_backtest_v1.2d_minutes_F4`, paired comparis
 - **Engine teammates' points correlations** (live slate, 20 Nov, 2,000 worlds): all small negatives, −0.13 to −0.01 — shot
   competition, but almost no shared upside (pace, a team's hot night). Consistent with totals too narrow (coverage 65–70%):
   per-world form (M8) is missing.
+
+## 3s′. Where the defence is missing — component loadings of engine v1.3 (20 Nov 2026; backtest rerun)
+
+`backtest.py --config models/v1.2d.json --models folds/v1.2d_F4_all --games 200 --worlds 1000 --rotation targets` rerun with
+per-side components (log `…133953Z_v1.3_components_F4`): **identical** to the stored v1.3 run on every summary number
+(CRPS, means, loadings) — the engine is deterministic. Per team-game rates regressed on the side's offensive and the
+opponent's defensive rating (as `strength_loading`), per point of the opponent's defensive rating (points per 100 worse):
+
+| Component | Real games | Engine v1.3 | Engine / real |
+|---|---|---|---|
+| FG% allowed | +0.62 points | +0.23 | 37% |
+| 3P% allowed | +0.22 points | +0.04 | 18% |
+| FGA per 100 possessions | +0.28 | +0.13 | 47% |
+| FTA per 100 | +0.30 | +0.12 | 40% |
+| Turnovers per 100 | −0.165 | −0.156 | **95%** |
+| Offensive rebounds per 100 | +0.19 | +0.04 | 20% |
+| 3PA share | 0.000 | +0.001 | — |
+
+- **Turnovers forced are fully expressed**; **shot-making allowed is the gap** — FG% carries ≈ 1.3 of the real 1.69 points
+  per 100 (0.0062 × 87 FGA × 2.4 points per make) and the engine gives ≈ 0.5; three-point defence is at 18%. Free throws
+  (defenders' foul rates, 40%) and defensive rebounding (20%) come next — fouler and rebound nodes, not the matchup inputs.
+- Offence side (per point of the side's own offensive rating): FG% real +0.28 points v engine +0.14, OREB +0.15 v +0.05 — the
+  offence under-expression (64%) is the same shape.
+- Levels: FG% 47.4% real v 47.2%, 3P% 36.2% v 36.3%, FTA per 100 22.3 v 23.6 (+5.6%), OREB per 100 10.8 v 11.1.
+
+## 3t. NBA Stats ingest — crosswalk and reconciliation with our ESPN data (20 Nov 2026; D32, `scripts/nbastats.py`)
+
+Raw retention `data/raw/nbastats/<endpoint>/<season>/` (gzip + manifest; `fetch_nbastats.py`); season logs for 2022-23 →
+2026-27 (51 requests), 5,508 games (regular season, Cup, play-in, playoffs; 2026-27 to 19 Nov). Report
+`data/derived/nbastats/report.json`, unmatched log `unmatched.json`.
+
+- **Games:** 5,508 of 5,508 matched both ways by ET date and the pair of teams (NBA tricodes NYK, SAS, GSW, NOP, UTA, WAS
+  ↔ ESPN NY, SA, GS, NO, UTAH, WSH); no duplicates, none unmatched on either side.
+- **Players:** 118,024 of 118,041 NBA player-games matched (99.986%): 118,014 by normalised name (accents, punctuation and
+  Jr./II/III stripped), 10 by a unique stat line; 935 people, each with one ESPN id (no conflicts either way). Seconds-long
+  appearances (0:01–0:29 in NBA's log) appear in ESPN's box with 0 minutes, so the candidate set keeps every ESPN row of the
+  team. The 17 unmatched are all **Lachlan Olbrich (CHI, 2025-26)**, whose ESPN box rows carry no athlete id or name — an
+  ESPN-side gap.
+- **Box scores agree:** points identical in every player-game where both sides have a value (2022-26: 0 of 112,935
+  differ); the 13 2026-27 "differences" are players NBA credits with seconds and 0 points whom our live ESPN box lists as DNP
+  (no line). FGA differ 0.012%, rebounds 0.046%, assists 0.016%; box minutes (rounded) never differ by more than 1.
+- **Minutes:** our on-court seconds (M3 rotations) v NBA's `MIN_SEC`: median absolute gap 0 s; > 30 s in 0.19% and > 60 s
+  in 0.13% of player-games (2022-23 0.33%, 2025-26 0.007%, 2026-27 0.26%); the worst are whole quarters missing in a few
+  2022-23 feed-gap games (e.g. 401468786, flagged `game_ok = false` already).
+- **Possessions:** NBA `POSS` 100.01 per team-game v our segments' possessions 100.91 (+0.9, +0.9%; reconciled games,
+  10,840 team-games), correlation 0.982; |difference| > 2 in 7.3%, > 5 in 0.15%. Our segment count runs one possession high
+  on average (end-of-period possessions and our start rules) — a convention difference, not missing play.
+- **Matchups (`boxscorematchupsv3`)** — per game, attacker × defender: partial possessions, seconds, the attacker's points,
+  FGM/FGA, threes, free throws, turnovers, assists while guarded, help blocks, switches. **All 5,508 games fetched** (4 empty
+  responses), 1,043,410 rows in 5,504 games; every person and game maps to an ESPN id. Partial possessions sum to **0.95 × (5 ×
+  NBA possessions)** per team-game (p10–p90 0.89–0.99: ~5% of offensive player-possessions have no matched defender); an
+  attacker meets 8.9 defenders per game and his main defender covers 36% of his partial possessions.
+- **Season quirk:** in **2022-23 and 2023-24** matchups over-count — matched FGA 111–112% of box FGA (above the box in ~48% of
+  attacker-games), points 105% — apparently some shots credited to two defenders (mid-possession switches); from **2024-25** they
+  are consistent: FGA 97–98% of the box (equal in 77–86% of attacker-games), points 98–99%. The real-share weights are shares
+  normalised over the five on court, so the early seasons are blurred, not biased; reliability measures use 2024-25 onward.
+- **Coverage of the real weights** (full variant): 1,174,044 of 1,212,535 actor uses (96.8%) weighted by the use's own category
+  (made/missed two/three, turnover, shooting foul), 37,452 (3.1%) by partial possessions, 1,039 (0.09%) by the soft fallback.
+
+## 3u. Real matchups — what a defender controls, who guards whom, switch hunting (20 Nov 2026; D32/D35, `scripts/realmatch.py`)
+
+Real NBA matchups (`boxscorematchupsv3`) in ESPN ids; first 3,220 games (2025-26, most of 2024-25) unless stated.
+
+- **Defender traits, split-half reliability** (odd v even games; defenders with enough attempts faced in both halves):
+
+| Trait (per defender, real matchups) | Defenders | Split-half r | Implied shrinkage K |
+|---|---|---|---|
+| Three-point attempt share allowed v his attackers' normal share (leave-one-out) | 407 (≥ 200 FGA per half) | **0.77** (0.73 at ≥ 100, 0.83 at ≥ 400); SD 4.4 points of share | ≈ 60–100 shots |
+| Points allowed per partial possession v attackers' own rate | 466 (≥ 400 per half) | **0.85**; SD 6.2 per 100 (includes team scheme: halves share the season) | — |
+| 2P% allowed | 363 (~370 attempts per half) | 0.49 | ≈ 400 attempts |
+| FG% allowed | 407 (~600 per half) | 0.30 | ≈ 1,400 |
+| **3P% allowed** | 375 (~260 per half) | **−0.05 (noise)** | ∞ — shrink to the prior |
+
+  Defenders do not control whether threes go in; they clearly control **how many threes their man takes** (closeouts,
+  run-off-the-line, drop coverage conceding pull-ups, size mismatches: attackers guarded by centres take 2.3 points fewer
+  threes than their mix). Engineering decision (applied to the real-matchup variants before any backtest):
+  `REAL_MATCHUP_K` = 2P zones 400, threes 3,000, deterrence 100 (the soft D30 variant v1.3 serves keeps its constants).
+- **Who guards whom (pre-game assignment on real shares), full data**: trained on 951,824 actor uses through 2025-12-31, held
+  out on Jan–Apr 2026 (166,725 uses): top-1 uniform 19.3%, old θ from ESPN credits 36.4%, refit with the same features 39.5%,
+  + height/usage ranks in both fives 44.0%, + stopper tendency 45.3%, **+ pair history 50.2%** (cross-entropy 1.609 → 1.508,
+  floor 1.331: 36% of the information captured v 15% for the old θ); 70% of attacker–defender pairs had met before (pair
+  history over 5,504 games). θ `models/realmatch_2025-12-31.json` (run `…144519Z_realmatch_fit`). First look on 660 games:
+  51.2% on Jan 1–22. At the shot (matchup FGA shares, partial data) the main defender is harder to predict: top-1 34% v 48%.
+- **Switch hunting (D35)** — in who guards whom, an attacker-usage × defender-weakness term adds nothing on the full data
+  (top-1 50.2% either way, cross-entropy 1.5084 → 1.5083) and its sign is slightly **negative** (θ −0.08): before the game, teams
+  keep weak defenders off the opponent's high-usage attackers rather than the offence pulling them on (first look, 1,312 games:
+  θ 0.005 over possessions, 0.008 at the shot). In *who ends the possession* (full data; each attacker's edge = his shot mix ×
+  his likely defenders' FG% allowed v the five's mean, `nodes.mismatch_edges`): the biggest mismatch on the floor ends 22.2% of
+  possessions v 19.1% for the smallest, but **within the same usage rank the gap is −0.7 to +0.3 points of share** (2024-26 and
+  all seasons alike) — the raw gradient is usage composition. **Negative result: v1.4d not run.** Whatever hunting exists happens
+  inside a possession (screens, switches), beyond a pre-game matchup.
+- **Top-1 and top-2 likely defenders (owner's idea, 20 Nov)**, held out Jan–Apr 2026 (166,725 uses): the real main defender is
+  the predicted top-1 50.2% of the time and in the predicted top-2 **75.0%**; the predicted top-2 hold 57.2% of his real partial
+  possessions (any two of five: 40%). The assignment's confidence is informative and well ordered — top-1 right 91% when the
+  top probability is ≥ 50% (6% of uses), 70% at 40–50% (16%), 49% at 30–40% (45%), 34% below 30% (32%) → v1.4f gives the
+  models the top-1/top-2 defenders' own numbers with their probabilities beside the blend.
+
+## 3v. Rough histograms — sampling noise, the rotation-table pool and game state (20 Nov 2026; 20 Nov snapshot, 2,000 worlds)
+
+- **Points:** for the 22 players projected 18+ points, bar-to-bar wiggle in the 5–95% core is **0.81× multinomial noise**
+  around a 5-point moving average (pure noise gives ≈ 0.8 after that smoothing); odd totals 49.3% of worlds (no parity
+  artefact). Luka Dončić 42 / 43 / 44 points: 62 / 76 / 61 of 2,000 worlds (SD ≈ ±8 each). The spikes are sampling noise —
+  10,000 worlds per game (D31/D36) shrink it by √5.
+- **Minutes:** regulation minutes come from the rotation tables, and the engine builds **400 tables per side shared across
+  the 2,000 worlds** (`ROTATION['pool']`, ~5 worlds per table) — effectively ~400 distinct minute draws, so the bars are
+  lumpier than 2,000 worlds suggest (Dončić: 31: 73, 32: 99, 33: 136, 34: 102, 35: 122; mean 35.6, SD 4.2, left-skewed with
+  a soft ceiling at 37–40 and OT to 45+). **One table per world** (`ENGINE['pool'] = 0`, D36; backtest `…162930Z_v1.3_pool_per_world_F4`
+  v `…133953Z_v1.3_components_F4`, same 200 games): every player measure level (all |z| < 1.7; stars' minutes CRPS 2.901 → 2.891,
+  z −0.57; starters' 3.229 → 3.219, z −0.95; coverage within ±0.01), total CRPS level (+0.00 ± 0.04), margin +0.04 ± 0.03 (noise);
+  cost +5% (1,365 s v 1,306 s) → adopted for the dashboard (pure Monte Carlo: more distinct minute draws, same expectations).
+- **Minutes do not respond to game state:** Dončić's simulated minutes by final margin — close (≤ 5) 35.4, 6–15 35.6,
+  blowout (16+) 35.7, overtime 37.0 (2.2% of worlds). Real stars lose 3–5 minutes in blowouts; the tables are fixed per world
+  before tip-off, so blowout benching and foul trouble are missing (M7, target-aware substitutions).
+
+## 3w. Defence on real matchups — engine backtests (20 Nov 2026; D32/D35; negative result, v1.3 stays)
+
+Same 200 F4 games, seed, 1,000 worlds and D29 minutes as v1.3's control (`…120816Z_backtest_v1.2d_minutes_F4`, reproduced
+exactly by `…133953Z_v1.3_components_F4`); node models fitted on the fold's training window; matchup θ fitted through
+2025-12-31 on real shares (§3u). Logs `…153853Z_v1.4c_F4`, `…153837Z_v1.4e_F4`, `…160608Z_v1.4f_F4`; paired comparisons
+`…_compare_v1.4{c,e,f}_F4`.
+
+| Same 200 games | v1.3 | **v1.4c** real-share defender quality + real-share θ | **v1.4e** + deterrence (attempt shares allowed) | **v1.4f** + top-1/top-2 defenders and confidence | Team model |
+|---|---|---|---|---|---|
+| Defence loading (real 1.69) | 0.686 | 0.652 | **0.738** | 0.629 | — |
+| Offence loading (real 1.14) | 0.732 | 0.762 | 0.774 | 0.754 | — |
+| Margin CRPS (paired v v1.3) | 9.374 | 9.384 (+0.01 ± 0.06) | 9.374 (+0.00 ± 0.06) | 9.430 (+0.06 ± 0.06) | 9.322 |
+| Total CRPS (paired) | 11.721 | 11.743 (+0.02 ± 0.09) | 11.842 (+0.12 ± 0.09) | 11.820 (+0.10 ± 0.08) | 11.353 |
+| Total bias | +1.8 | +2.8 | +2.7 | +2.2 | −0.5 |
+| Win log loss | 0.571 | 0.572 | 0.571 | 0.578 | 0.558 |
+| Opponent-defence expression: FG% / 3P% / FTA / TOV / OREB | 37 / 18 / 40 / 95 / 20% | 37 / 19 / 32 / 78 / 31% | 41 / **30** / **48** / 90 / 29% | 34 / 12 / 36 / 78 / **35%** | — |
+| Players (CRPS v v1.3, z) | — | level; stars' assists better (z −2.3) | level; stars' assists better (−2.1), stars' points +1.5 | **worse**: starters' assists (z +3.1), stars' points (+1.7) | — |
+
+- **None beats v1.3 on D22/D28's test** (players level or worse; margins and totals level or worse). v1.3 stays the engine.
+- Each input moves *its own* component — deterrence lifts 3P% defence from 18% to 30% of its real effect and FTA from 40% to
+  48%; top-2 defenders lift offensive-rebound expression from 20% to 35% — but others fall back and the team sums cancel. The
+  offence is compressed by the same amount (loading 0.73–0.77 v 1.14 real). **Reading:** the engine's under-expression is a
+  general compression of team differences through the decision chain (shrunk profiles, smoothed node models, many small
+  per-possession effects), not one missing defence input; better defender inputs alone do not lift the game-level signal.
+- All real-matchup variants raise the total bias by +0.4 to +1.0 point (+1.8 → +2.2–2.8) — to trace before any reuse.
+- Engine speed: the real-share assignment costs ~25% more per game (v1.4f alone 1,617 s v v1.3's 1,306 s, fits included).
 
 ## 3n. Team engine — the per-world season pathway, walk-forward (20 Nov 2026; M12 first cut, D25/D26)
 

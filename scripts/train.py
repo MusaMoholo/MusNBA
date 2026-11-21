@@ -212,7 +212,10 @@ def band_distances(X, tr):
 def _matchup_of(features):
     """The matchup assignment θ a features variant was built with (features_report.json), for the engine (D30)."""
     rep = (Path(features).parent if features else DERIVED / 'features') / 'features_report.json'
-    return json.loads(rep.read_text()).get('matchup') if rep.exists() else None
+    if not rep.exists():
+        return None
+    rep = json.loads(rep.read_text())
+    return rep.get('assign') or rep.get('matchup')  # D32: the real-matchup θ when the variant names one
 
 
 def model_columns(X, drop):

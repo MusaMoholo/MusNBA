@@ -122,15 +122,19 @@ def assignment(theta: dict, sh: dict, df: dict) -> np.ndarray:
 
 
 MU_SOURCES = ['m_fg_rim', 'm_fg_paint', 'm_fg_mid', 'm_fg_three', 'm_tov_rate', 'm_foul_rate',
-              'd_fg_rim', 'd_fg_paint', 'd_fg_mid', 'd_fg_three', 'd_tov_rate']
+              'd_fg_rim', 'd_fg_paint', 'd_fg_mid', 'd_fg_three', 'd_tov_rate', 'm_dx_three', 'm_dx_rim']
 
 
-def mu_columns(theta: dict, A: dict, D: dict) -> dict:
+def mu_columns(theta: dict, A: dict, D: dict, O: dict | None = None) -> dict:
     """The actor's likely defenders, weighted by the soft assignment: their matchup FG% allowed by zone (on-court
     values where the matchup family is absent), turnovers forced and shooting fouls on their men, and the size gap.
     A: actor columns (n,) — grp_code, min_avg, height_in, weight_lb; D: the five defenders' columns (n, 5).
     Shared by the datasets (nodes.Chain) and the engine so training and simulation see the same inputs."""
-    a = assignment(theta, A, D)
+    if theta.get('kind') == 'real':  # D32: fitted on real NBA matchup shares (scripts/realmatch.py)
+        from scripts import realmatch
+        a = realmatch.real_assignment(theta, _fill(A, theta), _fill(D, theta), _fill(O, theta))
+    else:
+        a = assignment(theta, A, D)
     def wavg(c):
         v = D[c]
         fill = np.nanmean(v, axis=1, keepdims=True)
@@ -145,8 +149,28 @@ def mu_columns(theta: dict, A: dict, D: dict) -> dict:
         out['mu_tov'] = wavg('m_tov_rate' if 'm_tov_rate' in D else 'd_tov_rate')
     if 'm_foul_rate' in D:
         out['mu_foul'] = wavg('m_foul_rate')
+    for k in ('three', 'rim'):  # D32 deterrence (v1.4e): attempt shares his likely defenders allow v expected
+        if f'm_dx_{k}' in D:
+            out[f'mu_dx_{k}'] = wavg(f'm_dx_{k}')
     hs = np.where(np.isnan(A['height_in']), theta['fill']['height_in'], A['height_in'])
     out['mu_height_gap'] = wavg('height_in') - hs
+    if theta.get('top2'):  # v1.4f (owner, 20 Nov): the two most likely defenders' own numbers and the assignment's confidence
+        order = np.argsort(-a, axis=1, kind='stable')
+        r = np.arange(len(a))
+        def filled(c):
+            v = D[c]
+            fill = np.nanmean(v, axis=1, keepdims=True)
+            return np.where(np.isnan(v), np.where(np.isnan(fill), np.nanmean(v), fill), v)
+        for k, pre in ((0, 'mu1'), (1, 'mu2')):
+            j = order[:, k]
+            out[f'{pre}_p'] = a[r, j]
+            for z in ('rim', 'paint', 'mid', 'three'):
+                src = f'm_fg_{z}' if f'm_fg_{z}' in D else f'd_fg_{z}'
+                if src in D:
+                    out[f'{pre}_fg_{z}'] = filled(src)[r, j]
+            src = 'm_tov_rate' if 'm_tov_rate' in D else 'd_tov_rate'
+            if src in D:
+                out[f'{pre}_tov'] = filled(src)[r, j]
     return out
 
 

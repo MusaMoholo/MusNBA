@@ -33,18 +33,20 @@ sys.path.insert(0, str(ROOT))
 from basketball_common import DERIVED  # noqa: E402
 from scripts import nodes, projection, rotations  # noqa: E402
 
-ENGINE = {'id': 'engine-v1.3', 'kind': 'engine', 'version': 'v1.3', 'models': 'v1.3', 'rotation': 'targets', 'sims': 2000,
+ENGINE = {'id': 'engine-v1.3', 'kind': 'engine', 'version': 'v1.3', 'models': 'v1.3', 'rotation': 'targets', 'sims': 10000, 'pool': 0,
           'label': 'Possession engine v1.3 — the default projection and the floor every change must beat (D22): each game '
                    'simulated possession by possession; defence now enters every shot (D30: each shooter\'s likely defenders by '
                    'size and position, their shooting allowed by zone, help at the rim; backtest: the opponent\'s defence '
                    'expressed at 41% of its real effect, up from 26%; margin CRPS 9.67 → 9.37); minutes from healthy roles shared to '
                    'exactly 240 per team by priority, with a return ramp and per-world ranges (D29: stars\' minutes +6.5% → −1%). '
-                   'Starters are our own projection (D33). Known gaps: defence still under-expressed (next: NBA Stats matchups, '
-                   'D32), outcomes too tightly spread (FINDINGS §3o, §3r, §3s)'}
+                   'Starters are our own projection (D33). 10,000 simulated games per game (D36). Known gaps: team differences '
+                   'compressed — real NBA matchups tested and not promoted (D37) — outcomes too tightly spread, minutes do not yet '
+                   'react to the score (FINDINGS §3o, §3s–§3w)'}
 MODELS = DERIVED.parent / 'models'
 # D29 rotation tables (used when players carry minutes states): tables per side shared by worlds, 10-second bins,
 # template shapes smoothed over ~60 s (6 bins), offset fit to within 0.4 min of each table's targets.
-ROTATION = {'pool': 400, 'bin': 10, 'sigma': 6, 'iters': 80, 'tol': 0.4}
+ROTATION = {'pool': 400, 'bin': 10, 'sigma': 6, 'iters': 80, 'tol': 0.4}  # pool 0 → one table per world (D36; ENGINE['pool'])
+ROTATION['pool'] = ENGINE.get('pool', ROTATION['pool'])  # the serving engine's rotation-table pool (D36)
 ZONES = nodes.ZONES
 NB = nodes.LOCATION_BANDS
 BAND_ZONE = np.array([i for i, z in enumerate(ZONES) for _ in range(len(nodes.LOCATION_EDGES[z]) + 1)])
@@ -119,6 +121,7 @@ class Models:
         self.optional_lineup = [c for c in nodes.OPTIONAL_LINEUP if c in used]
         self.style = [c for c in nodes.OPTIONAL_PROFILE if c in used or f'actor_{c}' in used]
         self.mu = [c for c in nodes.MU + nodes.MU_SHOT if c in used]
+        self.who_mm = [c for c in nodes.WHO_MISMATCH if c in self.nodes['who']['columns']]  # D35 (v1.4d)
         self.theta = None
         if self.mu:
             path = Path(self.cfg['matchup'])
@@ -144,9 +147,10 @@ class Game:
         n = len(self.ids)
         prof = profiles.set_index('player').reindex(self.ids)
         self.P = {c: prof[c].to_numpy(np.float32) for c in nodes.PROFILE}
-        for c in nodes.OPTIONAL_PROFILE + nodes.DEF_SIDE:  # D30 columns when the profiles carry them
+        for c in nodes.OPTIONAL_PROFILE + nodes.DEF_SIDE + nodes.ASSIGN_ONLY:  # D30/D32 columns when the profiles carry them
             if c in prof.columns:
                 self.P[c] = prof[c].to_numpy(np.float32)
+        self.day, self.pair_hist, self.pair_met = day, None, None  # D32 pair history: built on first use (Engine._mu)
         body = pd.read_parquet(DERIVED / 'athletes.parquet', columns=['player', 'height_in', 'weight_lb'])
         body = body.assign(player=body['player'].astype(str)).drop_duplicates('player').set_index('player').reindex([str(x) for x in self.ids])
         self.P['height_in'], self.P['weight_lb'] = body['height_in'].to_numpy(np.float32), body['weight_lb'].to_numpy(np.float32)
@@ -232,7 +236,8 @@ class Game:
                 av = np.flatnonzero(np.array(pattern))
                 if av.size < 5:  # fewer than five available: everyone on court (cannot happen with real rosters)
                     av = np.arange(len(idx))
-                E = int(max(1, min(len(worlds), round(R['pool'] * len(worlds) / W))))
+                # D36: pool 0 = one table per world (every world its own substitution schedule); else a shared pool
+                E = len(worlds) if not R['pool'] else int(max(1, min(len(worlds), round(R['pool'] * len(worlds) / W))))
                 states = [self.mstate[idx[k]] for k in av]
                 mu = _minutes.game_targets(states)
                 cap = np.array([s['cap'] for s in states])
@@ -376,14 +381,28 @@ class Engine:
             c[col] = {'mean': np.nanmean, 'max': np.nanmax, 'min': np.nanmin, 'sum': np.nansum}[how](v, 1).astype(np.float32)
         return c
 
-    def _mu(self, g, L_def, actor_glob, rows):
-        """Matchup inputs for the actor of each row (D30): his likely defenders' quality by the soft assignment."""
+    def _mu(self, g, L_def, actor_glob, rows, L_off=None, actor_slot=None):
+        """Matchup inputs for the actor of each row: his likely defenders' quality by the pre-game assignment — soft
+        (D30) or fitted on real NBA matchups (D32: ranks in both fives, stopper tendency, the pair's history)."""
         from scripts import matchups
         P = g.P
         Ld = L_def[rows]
-        A = {c: P[c][actor_glob[rows]].astype(float) for c in ('grp_code', 'min_avg', 'height_in', 'weight_lb')}
+        a = actor_glob[rows]
+        A = {c: P[c][a].astype(float) for c in ('grp_code', 'min_avg', 'height_in', 'weight_lb')}
         D = {c: P[c][Ld].astype(float) for c in ['grp_code', 'min_avg', 'height_in', 'weight_lb'] + [k for k in matchups.MU_SOURCES if k in P]}
-        return {k: v.astype(np.float32) for k, v in matchups.mu_columns(self.m.theta, A, D).items()}
+        O = None
+        if self.m.theta.get('kind') == 'real':
+            Lo = L_off[rows]
+            A['usage'], A['slot'] = P['usage'][a].astype(float), actor_slot[rows]
+            O = {'height_in': P['height_in'][Lo].astype(float), 'usage': P['usage'][Lo].astype(float)}
+            D['stop'] = P['m_stop'][Ld].astype(float) if 'm_stop' in P else np.full(Ld.shape, np.nan)
+            if g.pair_hist is None:  # the pair history before the game (cutoff-safe; zeros without retained matchups)
+                from scripts import realmatch
+                gid = g.game.get('game_id', g.game.get('id', '')) if isinstance(g.game, dict) else g.game
+                g.pair_hist, g.pair_met = realmatch.pair_matrix(str(gid), g.day, g.ids)
+            D['pair_hist'] = g.pair_hist[a[:, None], Ld].astype(float)
+            D['pair_met'] = g.pair_met[a[:, None], Ld].astype(float)
+        return {k: v.astype(np.float32) for k, v in matchups.mu_columns(self.m.theta, A, D, O).items()}
 
     def _five(self, g, st, A, L, rel):
         """Per-candidate columns for a five (|A|, 5): profile, in-game, group, quarter usage now, shares and ranks."""
@@ -480,6 +499,15 @@ class Engine:
             ev = np.where(quiet, -1, ev)
             off_five = self._five(g, st, A, L_off, OFF_REL)
             def_five = self._five(g, st, A, L_def, DEF_REL)
+            if m.who_mm:  # D35: each attacker's edge over his likely defenders, within the five (nodes.mismatch_edges)
+                rows_all = np.arange(n)
+                mus = [self._mu(g, L_def, L_off[:, k], rows_all, L_off, np.full(n, k)) for k in range(5)]
+                mix = {z: np.column_stack([np.nan_to_num(sum(g.P[c][L_off[:, k]] for c in cs)) for k in range(5)]) for z, cs in nodes.MIX_ZONE.items()}
+                rel = nodes.mismatch_edges(mus, mix)
+                order = np.argsort(-rel, axis=1, kind='stable')
+                rank = np.empty_like(order)
+                np.put_along_axis(rank, order, np.arange(1, 6)[None, :].repeat(n, 0), 1)
+                off_five['cand_edge'], off_five['cand_edge_rank'] = rel.astype(np.float32), rank.astype(np.float32)
             ctx_who = {**ctx, 'foul_event': np.zeros(n, np.float32)}
             nxt_off, nxt_start = 1 - off, np.full(n, S['made_fg'])
             act = np.flatnonzero(ev == 0)
@@ -490,7 +518,7 @@ class Engine:
             a_glob = L_off[np.arange(n), actor]
             actor_cols = self._actor(off_five, actor)
             if self.m.mu:
-                mu = self._mu(g, L_def, a_glob, np.arange(n))
+                mu = self._mu(g, L_def, a_glob, np.arange(n), L_off, actor)
                 actor_cols.update({k: v for k, v in mu.items() if k in self.m.mu})
             wctx = lambda idx, extra=None: {**{k: v[idx] for k, v in ctx.items()}, **{k: v[idx] for k, v in actor_cols.items()}, **(extra or {})}
             what = np.full(n, -1)
@@ -500,21 +528,19 @@ class Engine:
             zone = np.where(what < 5, what, 0)
             band = np.zeros(n, int)
             res = np.zeros(n, int)
-            mu_shot = np.full(n, np.nan, np.float32)
+            shot_keys = [k for k in nodes.MU_SHOT if k in m.mu]  # the defenders' FG% allowed at the shot's zone (blend, top-1, top-2)
+            mu_shot = {k: np.full(n, np.nan, np.float32) for k in shot_keys}
             if shot.size:
-                lx = {'zone': zone[shot].astype(np.float32)}
-                if 'mu_fg_shot' in m.mu:
-                    zk = np.array(['rim', 'paint', 'mid', 'three', 'three'])[zone[shot]]
-                    lx['mu_fg_shot'] = np.select([zk == z for z in ('rim', 'paint', 'mid', 'three')],
-                                                 [actor_cols[f'mu_fg_{z}'][shot] for z in ('rim', 'paint', 'mid', 'three')]).astype(np.float32)
+                zk = np.array(['rim', 'paint', 'mid', 'three', 'three'])[zone[shot]]
+                at_zone = {k: np.select([zk == z for z in ('rim', 'paint', 'mid', 'three')],
+                                        [actor_cols[f"{k[:-len('_fg_shot')]}_fg_{z}"][shot] for z in ('rim', 'paint', 'mid', 'three')]).astype(np.float32)
+                           for k in shot_keys}
+                lx = {'zone': zone[shot].astype(np.float32), **at_zone}
                 Pl = m.predict('location', wctx(shot, lx), shot.size) * nodes.LOCATION_MASK[zone[shot]]
                 band[shot] = draw(Pl / Pl.sum(1, keepdims=True), rng)
-                loc = {'zone': zone[shot].astype(np.float32), 'distance': m.band_d[band[shot]], 'lateral': m.band_l[band[shot]]}
-                if 'mu_fg_shot' in m.mu:
-                    zk = np.array(['rim', 'paint', 'mid', 'three', 'three'])[zone[shot]]
-                    loc['mu_fg_shot'] = np.select([zk == z for z in ('rim', 'paint', 'mid', 'three')],
-                                                  [actor_cols[f'mu_fg_{z}'][shot] for z in ('rim', 'paint', 'mid', 'three')]).astype(np.float32)
-                    mu_shot[shot] = loc['mu_fg_shot']
+                loc = {'zone': zone[shot].astype(np.float32), 'distance': m.band_d[band[shot]], 'lateral': m.band_l[band[shot]], **at_zone}
+                for k in shot_keys:
+                    mu_shot[k][shot] = at_zone[k]
                 res[shot] = draw(m.predict('shot_result', wctx(shot, loc), shot.size), rng)
             made = shot[res[shot] >= 1]
             and1 = shot[res[shot] == 2]
@@ -531,7 +557,7 @@ class Engine:
             st.ingame['uses_so_far'][A[act], a_glob[act]] += 1
             # assists
             if made.size:
-                loc = {'zone': zone[made].astype(np.float32), 'distance': m.band_d[band[made]], 'lateral': m.band_l[band[made]], 'mu_fg_shot': mu_shot[made]}
+                loc = {'zone': zone[made].astype(np.float32), 'distance': m.band_d[band[made]], 'lateral': m.band_l[band[made]], **{k: v[made] for k, v in mu_shot.items()}}
                 asst = made[rng.random(made.size) < m.predict('assisted', wctx(made, loc), made.size)]
                 if asst.size:
                     keep = (np.arange(5)[None, :] != actor[asst][:, None]).reshape(-1)
@@ -544,7 +570,7 @@ class Engine:
                     st.ingame['ast_so_far'][A[asst], who_ast] += 1
             # misses: blocks and rebounds
             if miss.size:
-                loc = {'zone': zone[miss].astype(np.float32), 'distance': m.band_d[band[miss]], 'lateral': m.band_l[band[miss]], 'mu_fg_shot': mu_shot[miss]}
+                loc = {'zone': zone[miss].astype(np.float32), 'distance': m.band_d[band[miss]], 'lateral': m.band_l[band[miss]], **{k: v[miss] for k, v in mu_shot.items()}}
                 blocked = rng.random(miss.size) < m.predict('blocked', wctx(miss, loc), miss.size)
                 bl = miss[blocked]
                 if bl.size:

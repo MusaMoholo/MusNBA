@@ -48,7 +48,7 @@ function wireBuilder(root, data, Wd, onChange, onAdd) {
     input.hidden = flag;
     if (!flag) { const d = O.dist(Wd.values(subj.value, v.value) || []); if (d) input.value = d.q[3]; }
   };
-  subj.onchange = () => { v.innerHTML = O.varOptions(subj.value, subj.value.startsWith('p:') ? 'pts' : subj.value === 'g' ? 'total' : 'win'); refreshValue(); onChange?.(readBuilder(root)); };
+  subj.onchange = () => { v.innerHTML = O.varOptions(subj.value, subj.value.startsWith('p:') ? 'pts' : subj.value === 'g' ? 'total' : variableOnly ? 'pts' : 'win'); refreshValue(); onChange?.(readBuilder(root)); };
   v.onchange = () => { refreshValue(); onChange?.(readBuilder(root)); };
   root.querySelector('[data-b="op"]').onchange = () => onChange?.(readBuilder(root));
   root.querySelector('[data-b="x"]').onchange = () => onChange?.(readBuilder(root));
@@ -56,26 +56,41 @@ function wireBuilder(root, data, Wd, onChange, onAdd) {
   if (add) add.onclick = () => onAdd?.(readBuilder(root));
 }
 
+/** Quick scenarios as [label, conditions, group]; shown in labelled rows (owner: grouping). */
 function presets(data, Wd) {
   const out = [], A = abbrs(data);
   for (const p of played(data)) {
     const sits = O.mean(Wd.values('p:' + p.id, 'sits'));
     if (sits != null && sits > 0.01 && sits < 0.99) {
-      out.push([`${p.name} sits (${pct(sits, 0)})`, [{subj: 'p:' + p.id, v: 'sits'}]]);
-      out.push([`${p.name} plays`, [{subj: 'p:' + p.id, v: 'plays'}]]);
+      out.push([`${p.name} sits (${pct(sits, 0)})`, [{subj: 'p:' + p.id, v: 'sits'}], 'Availability']);
+      out.push([`${p.name} plays`, [{subj: 'p:' + p.id, v: 'plays'}], 'Availability']);
     }
   }
   const total = O.dist(Wd.values('g', 'total'));
-  out.push([`${A.home} wins`, [{subj: 't:home', v: 'win'}]], [`${A.away} wins`, [{subj: 't:away', v: 'win'}]],
-    ['Close game (≤ 5)', [{subj: 'g', v: 'absm', op: 'le', x: 5}]], ['Blowout (15+)', [{subj: 'g', v: 'absm', op: 'ge', x: 15}]],
-    ['Overtime', [{subj: 'g', v: 'ot'}]], [`Shootout (total ${total.q[3]}+)`, [{subj: 'g', v: 'total', op: 'ge', x: total.q[3]}]],
-    [`Grind (total ≤ ${total.q[1]})`, [{subj: 'g', v: 'total', op: 'le', x: total.q[1]}]]);
+  out.push([`${A.away} wins`, [{subj: 't:away', v: 'win'}], 'Result'], [`${A.home} wins`, [{subj: 't:home', v: 'win'}], 'Result'],
+    ['Close game (≤ 5)', [{subj: 'g', v: 'absm', op: 'le', x: 5}], 'Result'], ['Blowout (15+)', [{subj: 'g', v: 'absm', op: 'ge', x: 15}], 'Result'],
+    ['Overtime', [{subj: 'g', v: 'ot'}], 'Result'],
+    [`Shootout (${total.q[3]}+)`, [{subj: 'g', v: 'total', op: 'ge', x: total.q[3]}], 'Totals'],
+    [`Grind (≤ ${total.q[1]})`, [{subj: 'g', v: 'total', op: 'le', x: total.q[1]}], 'Totals'],
+    [`${A.away} comes back from behind at half-time`, [{subj: 't:away', v: 'comeback'}], 'Game flow'], [`${A.home} comes back from behind at half-time`, [{subj: 't:home', v: 'comeback'}], 'Game flow'],
+    [`${A.away} wire to wire`, [{subj: 't:away', v: 'wire'}], 'Game flow'], [`${A.home} wire to wire`, [{subj: 't:home', v: 'wire'}], 'Game flow'],
+    ['Half-time leader loses', [{subj: 'g', v: 'flip'}], 'Game flow'], ['Within 5 after Q3', [{subj: 'g', v: 'close3'}], 'Game flow'],
+    ['Lead changes 2+ times at the breaks', [{subj: 'g', v: 'changes', op: 'ge', x: 2}], 'Game flow'],
+    [`${A.away} wins Q1`, [{subj: 't:away', v: 'wq1'}], 'Quarters'], [`${A.home} wins Q1`, [{subj: 't:home', v: 'wq1'}], 'Quarters'],
+    [`${A.away} wins Q4`, [{subj: 't:away', v: 'wq4'}], 'Quarters'], [`${A.home} wins Q4`, [{subj: 't:home', v: 'wq4'}], 'Quarters']);
   const stars = played(data).sort((a, b) => b.periods.fg.mean.pts - a.periods.fg.mean.pts).slice(0, 2);
   for (const p of stars) {
     const d = O.dist(Wd.values('p:' + p.id, 'pts'));
-    out.push([`${p.name} ${d.q[4]}+ pts`, [{subj: 'p:' + p.id, v: 'pts', op: 'ge', x: d.q[4]}]], [`${p.name} ≤ ${d.q[0]} pts`, [{subj: 'p:' + p.id, v: 'pts', op: 'le', x: d.q[0]}]]);
+    out.push([`${p.name} ${d.q[4]}+ pts`, [{subj: 'p:' + p.id, v: 'pts', op: 'ge', x: d.q[4]}], 'Stars'], [`${p.name} ≤ ${d.q[0]} pts`, [{subj: 'p:' + p.id, v: 'pts', op: 'le', x: d.q[0]}], 'Stars']);
   }
   return out;
+}
+const PRESET_GROUPS = ['Availability', 'Result', 'Totals', 'Game flow', 'Quarters', 'Stars'];
+function presetRows(pres) {
+  return `<div class="preset-groups">${PRESET_GROUPS.map(g => {
+    const items = pres.map((p, i) => [p, i]).filter(([p]) => p[2] === g);
+    return items.length ? `<span class="seg-label">${g}</span><div class="chips left">${items.map(([p, i]) => `<button type="button" class="ghost sm" data-pre="${i}">${esc(p[0])}</button>`).join('')}</div>` : '';
+  }).join('')}</div>`;
 }
 
 // ------------------------------------------------------------------ Scenarios tab
@@ -92,7 +107,7 @@ export async function scenarioView(el, data, encoded) {
     const m = O.mask(Wd, conds), n = O.count(m);
     const indep = conds.length > 1 ? conds.reduce((p, c) => p * O.count(O.mask(Wd, [c])) / Wd.W, 1) : null;
     const chips = conds.map((c, i) => `<button type="button" class="chip" data-del="${i}" title="Remove">${esc(O.label(c, N, A))} ×</button>`).join('');
-    const pre = presets(data, Wd).map(([l, cs], i) => `<button type="button" class="ghost sm" data-pre="${i}">${esc(l)}</button>`).join('');
+    const pre = presetRows(presets(data, Wd));
     let body = '';
     if (!n) body = '<section class="panel"><p class="note">No simulated game matches every condition — remove one.</p></section>';
     else {
@@ -118,23 +133,104 @@ export async function scenarioView(el, data, encoded) {
         }).join('');
         return `<section class="panel"><h3 style="margin-top:0">${esc(team(data.game[side].id).name)} under this scenario</h3><div class="scroll"><table class="box"><thead><tr><th class="name">Player</th>${BOX.map(([, l]) => `<th>${l}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div></section>`;
       }).join('');
+      const flow = flowPanel(data, Wd, m, base, A);
       body = `<section class="panel"><div class="tiles"><div class="tile"><span>Chance of this scenario</span><b>${pct(n / Wd.W, 1)}</b><small>${n.toLocaleString()} of ${Wd.W.toLocaleString()} worlds</small></div>
           ${indep != null ? `<div class="tile"><span>If the conditions were independent</span><b>${pct(indep, 1)}</b><small>${indep > 0 ? `×${(n / Wd.W / indep).toFixed(2)} correlation lift` : ''}</small></div>` : ''}</div>
         ${n < 60 ? `<p class="note warn">Only ${n} simulated games match — read the numbers below as rough.</p>` : ''}
-        <div class="scroll" style="margin-top:10px"><table><thead><tr><th class="l">Team</th><th>Points (Δ)</th><th>Win given</th><th>Win, all</th></tr></thead><tbody>${teamRows}${game}</tbody></table></div></section>${boxes}`;
+        <div class="scroll" style="margin-top:10px"><table><thead><tr><th class="l">Team</th><th>Points (Δ)</th><th>Win given</th><th>Win, all</th></tr></thead><tbody>${teamRows}${game}</tbody></table></div></section>${flow}<div id="duel-slot"></div>${boxes}`;
     }
     el.innerHTML = `<section class="panel"><h2 style="margin-top:0">Scenarios</h2>
         <p class="note" style="margin-top:0">Pick conditions; the game is re-read from the ${Wd.W.toLocaleString()} simulated games where all of them happen. Small grey numbers: change from all simulations.</p>
         <div class="chips left">${chips || '<span class="note" style="margin:0">No conditions — all simulations.</span>'}${conds.length ? '<button type="button" class="ghost sm" data-clear>Clear</button>' : ''}</div>
         ${builder(data, Wd, 'scn')}
-        <details style="margin-top:8px"><summary class="note" style="cursor:pointer">Quick scenarios</summary><div class="chips left" style="margin-top:6px">${pre}</div></details></section>${body}`;
+        <details style="margin-top:8px"><summary class="note" style="cursor:pointer">Quick scenarios</summary>${pre}</details></section>${body}`;
     const pres = presets(data, Wd);
     el.querySelectorAll('[data-del]').forEach(b => b.onclick = () => setConds(conds.filter((_, i) => i !== Number(b.dataset.del))));
     el.querySelector('[data-clear]')?.addEventListener('click', () => setConds([]));
     el.querySelectorAll('[data-pre]').forEach(b => b.onclick = () => setConds([...conds, ...pres[Number(b.dataset.pre)][1]]));
     wireBuilder(el.querySelector('[data-builder="scn"]'), data, Wd, null, c => setConds([...conds, c]));
+    const slot = el.querySelector('#duel-slot');
+    if (slot) duelPanel(slot, data, Wd, m, base, conds.length > 0);
   };
   paint();
+}
+
+// ------------------------------------------------------------------ duels: any two outcomes head to head
+const duels = new Map();  // game id → {a, b}
+function duelPresets(data) {
+  const lead = (side, k) => data.projection.sim[side].players.filter(p => p.periods).slice().sort((a, b) => (b.periods.fg.mean[k] ?? 0) - (a.periods.fg.mean[k] ?? 0))[0];
+  const reb = p => (p.periods.fg.mean.oreb ?? 0) + (p.periods.fg.mean.dreb ?? 0);
+  const topReb = side => data.projection.sim[side].players.filter(p => p.periods).slice().sort((a, b) => reb(b) - reb(a))[0];
+  const out = [];
+  for (const [label, k, pick] of [['Top scorers', 'pts', s => lead(s, 'pts')], ['Top rebounders', 'reb', topReb], ['Top passers', 'ast', s => lead(s, 'ast')], ['Top shooters (threes)', 'fg3m', s => lead(s, 'fg3m')]]) {
+    const a = pick('away'), b = pick('home');
+    if (a && b) out.push([`${label}: ${a.name} v ${b.name}`, {a: {subj: 'p:' + a.id, v: k}, b: {subj: 'p:' + b.id, v: k}}]);
+  }
+  const A = abbrs(data);
+  out.push([`Q1 points: ${A.away} v ${A.home}`, {a: {subj: 't:away', v: 'q1'}, b: {subj: 't:home', v: 'q1'}}],
+           [`2nd half: ${A.away} v ${A.home}`, {a: {subj: 't:away', v: 'h2'}, b: {subj: 't:home', v: 'h2'}}]);
+  return out;
+}
+function duelPanel(el, data, Wd, m, base, scenario) {
+  const pres = duelPresets(data);
+  const st = duels.get(data.game.id) || pres[0][1];
+  const N = names(data), A = abbrs(data);
+  const name = c => O.label({...c, op: 'ge', x: ''}, N, A).replace(/ ≥ $/, '');
+  const paint = () => {
+    const a = Wd.values(st.a.subj, st.a.v), b = Wd.values(st.b.subj, st.b.v);
+    const diff = a && b ? a.map((x, w) => x - b[w]) : null;
+    const res = mk => diff ? {gt: O.share(diff, mk, d => d > 0), eq: O.share(diff, mk, d => d === 0), lt: O.share(diff, mk, d => d < 0), ma: O.mean(a, mk), mb: O.mean(b, mk)} : null;
+    const r = res(m), r0 = res(base);
+    const sideOf = c => (c.subj.startsWith('t:') ? c.subj.slice(2) : played(data).find(p => 'p:' + p.id === c.subj)?.side);
+    const sa = sideOf(st.a), sb = sideOf(st.b);
+    const winA = diff ? O.mask(Wd, []).map((x, w) => (m[w] && diff[w] > 0 ? 1 : 0)) : null;
+    const tw = (side, mk) => (side && O.count(mk) ? O.mean(Wd.values('t:' + side, 'win'), mk) : null);
+    const dAll = diff ? O.dist(diff) : null, dCond = diff && scenario ? O.dist(diff, m) : null;
+    const btn = ([l], i) => `<button type="button" class="ghost sm" data-duel="${i}">${esc(l)}</button>`;
+    const pre = `<div class="preset-groups"><span class="seg-label">Players</span><div class="chips left">${pres.map(btn).filter((_, i) => pres[i][1].a.subj.startsWith('p:')).join('')}</div>
+      <span class="seg-label">Teams</span><div class="chips left">${pres.map(btn).filter((_, i) => pres[i][1].a.subj.startsWith('t:')).join('')}</div></div>`;
+    el.innerHTML = `<section class="panel"><h3 style="margin-top:0">Duel${scenario ? ' · under this scenario' : ''}</h3>
+      <div class="duel-pick"><span class="note" style="margin:0">A</span>${builder(data, Wd, 'duel-a', {subj: st.a.subj, v: st.a.v, button: '', variableOnly: true})}
+        <span class="note" style="margin:0">B</span>${builder(data, Wd, 'duel-b', {subj: st.b.subj, v: st.b.v, button: '', variableOnly: true})}</div>
+      ${pre}
+      ${r ? `<div class="tiles" style="margin-top:8px">
+          <div class="tile"><span>${esc(name(st.a))} more</span><b>${pct(r.gt, 1)}</b><small>${scenario ? `all ${pct(r0.gt, 1)}` : `mean ${f1(r.ma)}`}</small></div>
+          <div class="tile"><span>Level</span><b>${pct(r.eq, 1)}</b><small>${scenario ? `all ${pct(r0.eq, 1)}` : ''}</small></div>
+          <div class="tile"><span>${esc(name(st.b))} more</span><b>${pct(r.lt, 1)}</b><small>${scenario ? `all ${pct(r0.lt, 1)}` : `mean ${f1(r.mb)}`}</small></div></div>
+        <div class="dist" style="margin-top:8px"><div>${O.overlay(dAll, dCond, {line: 0})}
+          <p class="note">A − B in every simulation${scenario ? ': <span class="legend-bar"></span> under the scenario · <span class="legend-line"></span> all simulations' : ''} · right of the line: A more.</p></div>
+          <div class="scroll"><table><thead><tr><th class="l"></th><th>${scenario ? 'Given' : 'Mean'}</th>${scenario ? '<th>All</th>' : ''}</tr></thead><tbody>
+            <tr><td class="l">${esc(name(st.a))}</td><td><b>${f1(r.ma)}</b></td>${scenario ? `<td>${f1(r0.ma)}</td>` : ''}</tr>
+            <tr><td class="l">${esc(name(st.b))}</td><td><b>${f1(r.mb)}</b></td>${scenario ? `<td>${f1(r0.mb)}</td>` : ''}</tr>
+            ${sa && O.count(winA) ? `<tr class="sep"><td class="l">${esc(A[sa])} win when A wins the duel</td>${heat(tw(sa, winA), {digits: 0})}${scenario ? '<td></td>' : ''}</tr>` : ''}
+            ${sb && sb !== sa && O.count(winA) ? `<tr><td class="l">${esc(A[sb])} win when A wins the duel</td>${heat(tw(sb, winA), {digits: 0})}${scenario ? '<td></td>' : ''}</tr>` : ''}
+          </tbody></table></div></div>` : '<p class="note">Pick two numeric outcomes.</p>'}</section>`;
+    const set = (k, c) => { if (!O.isFlag(c.v)) { st[k] = {subj: c.subj, v: c.v}; duels.set(data.game.id, st); paint(); } };
+    wireBuilder(el.querySelector('[data-builder="duel-a"]'), data, Wd, c => set('a', c));
+    wireBuilder(el.querySelector('[data-builder="duel-b"]'), data, Wd, c => set('b', c));
+    el.querySelectorAll('[data-duel]').forEach(btn => btn.onclick = () => { const p_ = pres[Number(btn.dataset.duel)][1]; st.a = {...p_.a}; st.b = {...p_.b}; duels.set(data.game.id, st); paint(); });
+  };
+  paint();
+}
+
+/** Quarter by quarter and the game's flow under the scenario: each side's points and period wins, the lead at every
+ * break, comebacks and lead changes — all as chances over the matching worlds, with the change from all worlds. */
+function flowPanel(data, Wd, m, base, A) {
+  const g = (subj, v, mk) => O.mean(Wd.values(subj, v), mk);
+  const chance = (subj, v) => { const s = g(subj, v, m), b = g(subj, v, base); return `<td><b>${pct(s, 0)}</b>${delta(100 * (s - b), 0)}</td>`; };
+  const pts = (side, v) => { const s = g('t:' + side, v, m), b = g('t:' + side, v, base); return `<td><b>${f1(s)}</b>${delta(s - b)}</td>`; };
+  const lead = k => { const s = O.mean(Wd.lead('home', k), m), b = O.mean(Wd.lead('home', k), base); return `<td><b>${signed(s)}</b>${delta(s - b)}</td>`; };
+  const rows = [['Q1', 'q1', 'wq1', 1, 'lead1'], ['Q2', 'q2', 'wq2', 2, 'leadh'], ['Q3', 'q3', 'wq3', 3, 'lead3'], ['Q4', 'q4', 'wq4', 4, null]].map(([lab, q, wq, k, ld]) =>
+    `<tr><td class="l">${lab}</td>${pts('away', q)}${pts('home', q)}${chance('t:home', wq)}${chance('t:away', wq)}${lead(k)}${ld ? chance('t:home', ld) : chance('t:home', 'win')}</tr>`).join('');
+  const halves = [['1st half', 'h1', 'wh1'], ['2nd half', 'h2', 'wh2']].map(([lab, h, wh]) =>
+    `<tr><td class="l">${lab}</td>${pts('away', h)}${pts('home', h)}${chance('t:home', wh)}${chance('t:away', wh)}<td></td><td></td></tr>`).join('');
+  const tile = (label, subj, v, fmt = x => pct(x, 1)) => { const s = g(subj, v, m), b = g(subj, v, base); return `<div class="tile"><span>${esc(label)}</span><b>${fmt(s)}</b><small>all ${fmt(b)}</small></div>`; };
+  return `<section class="panel"><h3 style="margin-top:0">Quarter by quarter · game flow</h3>
+    <div class="scroll"><table><thead><tr><th class="l">Period</th><th>${esc(A.away)} pts</th><th>${esc(A.home)} pts</th><th>${esc(A.home)} wins it</th><th>${esc(A.away)} wins it</th><th>${esc(A.home)} lead at the end</th><th>${esc(A.home)} ahead</th></tr></thead>
+    <tbody>${rows}${halves}</tbody></table></div>
+    <p class="note">Leads are ${esc(A.home)} − ${esc(A.away)} after each quarter (Q4 row: final, regulation); "ahead" is the chance ${esc(A.home)} leads at that break (Q4 row: wins). Small numbers: change from all simulations (points; percentage points).</p>
+    <div class="tiles" style="margin-top:8px">${tile(`${A.away} wins from behind at half-time`, 't:away', 'comeback')}${tile(`${A.home} wins from behind at half-time`, 't:home', 'comeback')}
+      ${tile('Half-time leader loses', 'g', 'flip')}${tile('Leader changes at the breaks', 'g', 'changes', x => f1(x))}${tile(`${A.home} wins every quarter`, 't:home', 'sweep')}${tile(`${A.away} wins every quarter`, 't:away', 'sweep')}</div></section>`;
 }
 
 // ------------------------------------------------------------------ player sheet panels

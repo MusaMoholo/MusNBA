@@ -80,8 +80,8 @@ def current_snapshot(days) -> str:
     return past[-1] if past else days[-1]
 
 
-WORLD_STATS = ('min', 'pts', 'reb', 'ast', 'fg3m', 'stl', 'blk', 'tov', 'fgm', 'fga', 'fg3a', 'fta')  # nightly.project_slate's order
-AVG_STATS = ('min', 'pts', 'reb', 'ast', 'fg3m', 'stl', 'blk', 'tov')
+WORLD_STATS = ('min', 'pts', 'reb', 'ast', 'fg3m', 'stl', 'blk', 'tov', 'fgm', 'fga', 'fg3a', 'fta', 'oreb', 'dreb', 'ftm')  # nightly.project_slate's order (older snapshots: first 12)
+AVG_STATS = ('min', 'pts', 'reb', 'ast', 'fg3m', 'stl', 'blk', 'tov', 'fgm', 'fga', 'fg3a', 'ftm', 'fta')  # makes/attempts → season %
 
 
 def averages(P: dict, pids) -> dict:
@@ -97,6 +97,60 @@ def averages(P: dict, pids) -> dict:
                     'last10': {k: round(sum(g.get(k, 0) or 0 for g in last) / len(last), 2) for k in AVG_STATS} if last else None,
                     'last10_n': len(last)}
     return out
+
+
+DUEL_STATS = ('pposs', 'pts', 'fgm', 'fga', 'fg3m', 'fg3a', 'ftm', 'fta', 'tov')
+
+
+def load_matchups():
+    """Real NBA matchups in ESPN ids with game dates (D32; data/derived/nbastats), or None before the first ingest."""
+    path = DERIVED / 'nbastats' / 'matchups.parquet'
+    if not path.exists():
+        return None
+    import pandas as pd
+    M = pd.read_parquet(path, columns=['espn_game', 'off_player', 'def_player'] + list(DUEL_STATS))
+    g = pd.read_parquet(DERIVED / 'nbastats' / 'games.parquet', columns=['espn_game', 'date'])
+    M = M.merge(g, on='espn_game', how='left')
+    for c in ('espn_game', 'off_player', 'def_player'):
+        M[c] = M[c].astype(str)
+    return M
+
+
+def duels(M, gid: str, day: str, sides: dict, final: bool) -> dict | None:
+    """Who guards whom (D32): per attacker, his top defenders among tonight's opponents in earlier meetings (games before
+    `day` only, the last 365 days) — share of his partial possessions against these players, points, FG, meetings; and
+    for a final, that game's real matchups. sides: {'home'|'away': [(id, name, pts)]} ordered by importance."""
+    if M is None:
+        return None
+    from datetime import date, timedelta
+    since = (date.fromisoformat(day) - timedelta(days=365)).isoformat()
+    names = {str(i): n for s in sides.values() for i, n, _ in s}
+    out = {'since': since, 'sides': {}}
+    def top(frame, attacker):
+        x = frame[frame['off_player'] == attacker]
+        if x.empty:
+            return []
+        agg = x.groupby('def_player').agg(**{k: (k, 'sum') for k in DUEL_STATS}, meetings=('espn_game', 'nunique')).reset_index()
+        tot = float(agg['pposs'].sum())
+        agg = agg.sort_values('pposs', ascending=False).head(3)
+        return [{'id': r.def_player, 'name': names.get(r.def_player, r.def_player), 'share': round(r.pposs / tot, 3) if tot else None,
+                 **{k: (round(float(getattr(r, k)), 1) if k == 'pposs' else int(getattr(r, k))) for k in DUEL_STATS},
+                 'meetings': int(r.meetings)} for r in agg.itertuples(index=False)]
+    for att, dfn in (('away', 'home'), ('home', 'away')):
+        a_ids = [str(i) for i, _, _ in sides.get(att, [])]
+        d_ids = {str(i) for i, _, _ in sides.get(dfn, [])}
+        sub = M[M['off_player'].isin(a_ids)]
+        past = sub[(sub['date'] < day) & (sub['date'] >= since) & sub['def_player'].isin(d_ids)]
+        now = sub[sub['espn_game'] == str(gid)] if final else None
+        rows = []
+        for i, n, pts in sides.get(att, []):
+            r = {'id': str(i), 'name': n, 'past': top(past, str(i))}
+            if now is not None:
+                r['tonight'] = top(now, str(i))
+            if r['past'] or r.get('tonight'):
+                rows.append(r)
+        out['sides'][att] = rows
+    return out if any(out['sides'].values()) else None
 
 
 def world_lines(path: Path, gid: str, sims: int) -> dict | None:
@@ -117,6 +171,195 @@ def world_lines(path: Path, gid: str, sims: int) -> dict | None:
             'lines': base64.b64encode(np.ascontiguousarray(lines).tobytes()).decode(),
             # team points per world and period: worlds × (home, away) × (Q1, Q2, Q3, Q4, OT), uint8
             'team_periods': base64.b64encode(np.clip(per, 0, 255).astype(np.uint8).tobytes()).decode(), 'periods': ['q1', 'q2', 'q3', 'q4', 'ot']}
+
+
+def from_worlds(path: Path, gid: str, sim: dict) -> dict | None:
+    """From the stored worlds (nothing simulated): each player's double/triple/quadruple/quintuple-double and 5×5 chances, and
+    full-game distributions the snapshot lacks (FGM, FTM = PTS − 2·FGM − 3PM; OREB/DREB when the worlds carry them) — written
+    into the view's copy of the projection so the player sheet shows them for snapshots built before they were packaged."""
+    import numpy as np
+    from scripts.projection import summary
+    pl = path / 'engine_players.npz'
+    if not pl.exists():
+        return None
+    with np.load(pl) as z:
+        if f'{gid}__lines' not in z.files:
+            return None
+        lines, ids = z[f'{gid}__lines'].astype(np.int64), [str(x) for x in z[f'{gid}__ids']]
+    stats = list(WORLD_STATS)[:lines.shape[2]]
+    col = {k: lines[:, :, j] for j, k in enumerate(stats)}
+    if 'ftm' not in col:
+        col['ftm'] = np.clip(col['pts'] - 2 * col['fgm'] - col['fg3m'], 0, None)
+    tens = sum((col[k] >= 10).astype(int) for k in ('pts', 'reb', 'ast', 'stl', 'blk'))
+    multi = {}
+    for side in ('home', 'away'):
+        for x in sim[side]['players']:
+            if str(x['id']) not in ids or not x.get('periods'):
+                continue
+            i = ids.index(str(x['id']))
+            multi[str(x['id'])] = {k: round(float((tens[:, i] >= n).mean()), 5) for k, n in (('double', 2), ('triple', 3), ('quadruple', 4), ('quintuple', 5))}
+            multi[str(x['id'])]['five_by_five'] = round(float(np.all([col[k][:, i] >= 5 for k in ('pts', 'reb', 'ast', 'stl', 'blk')], axis=0).mean()), 5)
+            fg = x['periods']['fg']
+            for k in ('fgm', 'ftm', 'oreb', 'dreb'):
+                if k not in fg['stats'] and k in col:
+                    fg['stats'][k] = summary(col[k][:, i])
+    return multi
+
+
+SPOT_STATS = ('pts', 'reb', 'ast', 'fg3m', 'stl', 'blk')  # the six leader cards (owner, 20 Nov)
+FANTASY = {'pts': 1.0, 'reb': 1.2, 'ast': 1.5, 'stl': 3.0, 'blk': 3.0, 'tov': -1.0}  # NBA's standard fantasy weights (headliner)
+
+
+_LINES_CACHE: dict = {}
+
+
+def _game_lines(path: Path, gid: str):
+    """(lines worlds × players × stats, ids) of one game's stored worlds, cached per run (views only read them)."""
+    import numpy as np
+    key = (str(path), gid)
+    if key not in _LINES_CACHE:
+        pl = path / 'engine_players.npz'
+        out = None
+        if pl.exists():
+            with np.load(pl) as z:
+                if f'{gid}__lines' in z.files:
+                    out = (z[f'{gid}__lines'], [str(x) for x in z[f'{gid}__ids']])
+        _LINES_CACHE[key] = out
+    return _LINES_CACHE[key]
+
+
+def lead_chances(path: Path, gids: list, stat: str, pids: list) -> dict:
+    """Chance each of `pids` leads all players of `gids` in `stat` (ties split), pairing world k across games — games are
+    independent simulations, so world k of each game together is one simulated night. Read from stored worlds only."""
+    import numpy as np
+    cols, ids = [], []
+    for gid in gids:
+        got = _game_lines(path, gid)
+        if got is None:
+            return {}
+        lines, gids_ids = got
+        j = list(WORLD_STATS).index(stat)
+        cols.append(lines[:, :, j].astype(float))
+        ids += gids_ids
+    W = min(c.shape[0] for c in cols)
+    M = np.concatenate([c[:W] for c in cols], axis=1)
+    top = M.max(1, keepdims=True)
+    lead = (M == top)
+    share = (lead / lead.sum(1, keepdims=True)).mean(0)
+    pos = {p: i for i, p in enumerate(ids)}
+    return {p: round(float(share[pos[p]]), 4) for p in pids if p in pos}
+
+
+def spotlight(entries: list, season_of, path: Path | None = None) -> dict | None:
+    """Headliner, breakout watch and the six stat leaders (top three each) over projected players — a slate or one game
+    (owner, 20 Nov). entries: dicts with id, name, team, opp, home, game_id, tip_utc and the projection's full-game entry `x`;
+    season_of(pid) → season per-game averages or None. Read from stored projections; nothing simulated."""
+    rows = []
+    for e in entries:
+        fg = (e['x'].get('periods') or {}).get('fg')
+        if not fg:
+            continue
+        m = dict(fg['mean'])
+        m['min'] = fg['sec'] / 60
+        rows.append({**{k: e[k] for k in ('id', 'name', 'team', 'opp', 'home', 'game_id', 'tip_utc')}, 'mean': m, 'stats': fg['stats'],
+                     'played': e['x'].get('played', 1.0), 'season': season_of(e['id'])})
+    if not rows:
+        return None
+    fp = lambda v: sum(w * (v.get(k) or 0) for k, w in FANTASY.items())
+    def card(r, extra=None):
+        return {k: r[k] for k in ('id', 'name', 'team', 'opp', 'home', 'game_id', 'tip_utc', 'played')} | {
+            'mean': {k: round(r['mean'].get(k, 0) or 0, 2) for k in SPOT_STATS + ('min', 'tov')},
+            'fp': round(fp(r['mean']), 1), **(extra or {})}
+    def at_least(d, x):  # share of worlds with stat ≥ x from a stored {min, hist} distribution
+        tot = sum(d['hist']) or 1
+        return round(sum(c for i, c in enumerate(d['hist']) if i + d['min'] >= x) / tot, 4)
+    head = max(rows, key=lambda r: fp(r['mean']))
+    hp = head['stats'].get('pts')
+    hx = next(e['x'] for e in entries if e['id'] == head['id'])
+    head_extra = {}
+    if hp:
+        tot = sum(hp['hist']) or 1
+        cum, lo_i, hi_i = 0, 0, len(hp['hist']) - 1
+        for i, c in enumerate(hp['hist']):  # trim to the 1st–99th percentile for the sparkline
+            cum += c
+            if cum / tot < 0.01:
+                lo_i = i + 1
+            if cum / tot <= 0.99:
+                hi_i = i + 1
+        head_extra = {'spark': {'min': hp['min'] + lo_i, 'hist': hp['hist'][lo_i:hi_i + 1]},
+                      'chances': {'pts30': at_least(hp, 30), 'pts40': at_least(hp, 40), 'dd': hx.get('double_double'), 'td': hx.get('triple_double')}}
+    cands = [r for r in rows if r['season'] and r['season'].get('gp', 0) >= 8 and r['played'] >= 0.9 and r['mean']['min'] >= 18
+             and r['id'] != head['id']]  # two cards, two people
+    brk = None
+    if cands:
+        b = max(cands, key=lambda r: fp(r['mean']) - fp(r['season']['season']))
+        sa = b['season']['season']
+        dmin = b['mean']['min'] - (sa.get('min') or 0)
+        # the why: more minutes (a role change, often a teammate out) or the same minutes at higher rates
+        why = (f"more minutes: {b['mean']['min']:.1f} projected v {sa.get('min', 0):.1f} this season" if dmin >= 3 else
+               f"fewer minutes ({dmin:+.1f}) but higher rates per minute" if dmin <= -3 else
+               f"similar minutes ({dmin:+.1f}), higher rates per minute — tonight's matchup and lineup")
+        brk = card(b, {'season': {k: round(sa.get(k, 0) or 0, 2) for k in SPOT_STATS + ('min', 'tov')}, 'fp_season': round(fp(sa), 1),
+                       'gp': b['season']['gp'], 'why': why})
+    leaders = {k: [{**{f: r[f] for f in ('id', 'name', 'team', 'game_id')}, 'value': round(r['mean'].get(k, 0) or 0, 2)}
+                   for r in sorted(rows, key=lambda r: -(r['mean'].get(k, 0) or 0))[:3]] for k in SPOT_STATS}
+    if path is not None:  # chance each leader tops the slate (or the game) in that stat, over paired worlds
+        gids = sorted({r['game_id'] for r in rows})
+        for k, top3 in leaders.items():
+            ch = lead_chances(path, gids, k, [x['id'] for x in top3])
+            for x in top3:
+                x['lead'] = ch.get(x['id'])
+    return {'headliner': card(head, head_extra), 'breakout': brk, 'leaders': leaders}
+
+
+def games_to_watch(day_games: list) -> dict | None:
+    """Today strip: the closest finish (chance the final margin is within 5), the highest projected total and the likeliest
+    overtime, over a slate's projected games (stored distributions only)."""
+    rows = []
+    for gid, r, sim in day_games:
+        fg = sim['periods']['fg']
+        m = fg['margin']
+        tot = sum(m['hist']) or 1
+        close = sum(c for i, c in enumerate(m['hist']) if abs(i + m['min']) <= 5) / tot
+        rows.append({'game_id': gid, 'away': str(r['away_id']), 'home': str(r['home_id']), 'close': round(close, 4),
+                     'total': round(fg['total']['mean'], 1), 'ot': round(float(sim.get('ot') or 0), 4)})
+    if not rows:
+        return None
+    out, used = {}, set()
+    for name, key in (('closest', 'close'), ('shootout', 'total'), ('overtime', 'ot')):  # three different games when possible
+        pool = [x for x in rows if x['game_id'] not in used] or rows
+        out[name] = max(pool, key=lambda x: x[key])
+        used.add(out[name]['game_id'])
+    return out
+
+
+def spotlight_entries(gid: str, r: dict, sim: dict) -> list:
+    out = []
+    for side in ('home', 'away'):
+        tid, opp = (r['home_id'], r['away_id']) if side == 'home' else (r['away_id'], r['home_id'])
+        for x in sim[side]['players']:
+            out.append({'id': str(x['id']), 'name': x['name'], 'team': str(tid), 'opp': str(opp), 'home': side == 'home',
+                        'game_id': gid, 'tip_utc': r['tip_utc'], 'x': x})
+    return out
+
+
+def scorer_duel(path: Path, gid: str, a_id: str, b_id: str) -> dict | None:
+    """Duel of the night (Today card): the chance the away side's projected top scorer outscores the home side's, read
+    from the stored worlds (same worlds as the Game Centre; nothing simulated)."""
+    import numpy as np
+    pl = path / 'engine_players.npz'
+    if not pl.exists():
+        return None
+    with np.load(pl) as z:
+        if f'{gid}__lines' not in z.files:
+            return None
+        lines, ids = z[f'{gid}__lines'], [str(x) for x in z[f'{gid}__ids']]
+    if a_id not in ids or b_id not in ids:
+        return None
+    k = list(WORLD_STATS).index('pts')
+    d = lines[:, ids.index(a_id), k].astype(int) - lines[:, ids.index(b_id), k].astype(int)
+    return {'a': a_id, 'b': b_id, 'p_a': round(float((d > 0).mean()), 4), 'p_level': round(float((d == 0).mean()), 4),
+            'p_b': round(float((d < 0).mean()), 4), 'worlds': int(len(d))}
 
 
 def lab(serving: dict) -> dict:
@@ -224,18 +467,36 @@ def build(views_root: Path = VIEWS) -> dict:
                                     'reb': x['periods']['fg']['mean']['oreb'] + x['periods']['fg']['mean']['dreb'],
                                     'ast': x['periods']['fg']['mean']['ast']}
                                    for x in sorted((y for y in p['sim'][side]['players'] if y.get('periods')),
-                                                   key=lambda y: -y['periods']['fg']['mean']['pts'])[:1]] for side in ('away', 'home')}}
+                                                   key=lambda y: -y['periods']['fg']['mean']['pts'])[:1]] for side in ('away', 'home')},
+                'duel': None}
+
+    def with_duel(gid, summary):
+        if summary and summary['leaders'].get('away') and summary['leaders'].get('home'):
+            summary['duel'] = scorer_duel(snaps[projections[gid]['day']]['path'], gid, str(summary['leaders']['away'][0]['id']),
+                                          str(summary['leaders']['home'][0]['id']))
+        return summary
 
     slate_dates = sorted({r['date_et'] for r in master} | set(snaps))
     by_date = defaultdict(list)
     for r in master:
         by_date[r['date_et']].append(r)
+    spot_stats = {}
+    def season_lookup(day_):  # season averages as of a projection's snapshot (its stats.json)
+        if day_ not in spot_stats:
+            P_ = read_json(snaps[day_]['path'] / 'stats.json')['players']
+            spot_stats[day_] = lambda pid: averages(P_, [pid]).get(pid)
+        return spot_stats[day_]
     for day in slate_dates:
         snap = snaps.get(day)
         games = []
+        entries, watch = [], []
         for r in sorted(by_date.get(day, []), key=lambda r: (r['tip_utc'], r['game_id'])):
+            pj = projections.get(r['game_id'])
+            if pj and r['status'] != 'final':  # spotlight: projected, not yet played
+                entries += spotlight_entries(r['game_id'], r, pj['sim'])
+                watch.append((r['game_id'], r, pj['sim']))
             g = game_core(r)
-            g['proj'] = proj_summary(r['game_id'])
+            g['proj'] = with_duel(r['game_id'], proj_summary(r['game_id']))
             tm = team_model.get(r['game_id'])
             g['team_model'] = ({'p_home': tm['p_home'], 'mu_home': tm.get('mu_home'), 'mu_away': tm.get('mu_away'),
                                 'snapshot': latest_day} if tm and not g['proj'] else None)
@@ -244,9 +505,13 @@ def build(views_root: Path = VIEWS) -> dict:
             'date': day, 'snapshot': day if snap else None,
             'kind': snap['meta']['kind'] if snap else None,
             'generated': snap['meta']['generated'] if snap else None,
-            'model': snap['meta']['model'] if snap else None, 'games': games})
+            'model': snap['meta']['model'] if snap else None, 'games': games,
+            'spotlight': (spotlight(entries, season_lookup(projections[entries[0]['game_id']]['day']),
+                                    snaps[projections[entries[0]['game_id']]['day']]['path']) if entries else None),
+            'watch': games_to_watch(watch) if len(watch) > 1 else None})
 
     stats_cache = {latest_day: L}
+    M_real = load_matchups()
     for r in master:
         gid = r['game_id']
         core = game_core(r)
@@ -280,11 +545,24 @@ def build(views_root: Path = VIEWS) -> dict:
         if p:
             sim_ids = [x['id'] for side in ('home', 'away') for x in p['sim'][side]['players']]
             avg = averages(stats_source['players'], sim_ids)
+            multi = from_worlds(snaps[p['day']]['path'], gid, p['sim'])
             wl = world_lines(snaps[p['day']]['path'], gid, p['meta'].get('sims'))
             if wl is not None:
                 write_json(api / 'game' / gid / 'worlds.json', wl)
+        duel = None
+        if M_real is not None and (p or actual):
+            sides = {}
+            for s_ in ('home', 'away'):
+                if p:
+                    sides[s_] = sorted(((x['id'], x['name'], ((x.get('periods') or {}).get('fg') or {}).get('mean', {}).get('pts', 0))
+                                        for x in p['sim'][s_]['players'] if x.get('availability', 1) > 0), key=lambda t: -(t[2] or 0))
+                else:
+                    sides[s_] = sorted(((x['id'], x['name'], x.get('pts', 0)) for x in actual[s_]['players'] if not x['dnp']), key=lambda t: -(t[2] or 0))
+            duel = duels(M_real, gid, r['date_et'], sides, final=bool(actual))
         write_json(api / 'game' / f'{gid}.json', {
-            'game': core,
+            'game': core, 'duels': duel, 'multi': multi if p else None,
+            'spotlight': (spotlight(spotlight_entries(gid, r, p['sim']), season_lookup(p['day']), snaps[p['day']]['path'])
+                          if p and r['status'] != 'final' else None),
             'projection': ({'snapshot': p['day'], 'kind': p['meta']['kind'], 'generated': p['meta']['generated'],
                             'pre_tip': p['meta']['pre_tip'].get(gid), 'model': p['meta']['model'], 'notes': p['meta']['notes'],
                             'cutoff': p['meta']['cutoff'], 'sim': p['sim']} if p else None),
@@ -377,8 +655,9 @@ def build(views_root: Path = VIEWS) -> dict:
         tid = reg.get('team') or (p or {}).get('team')
         nxt = upcoming.get(tid, [None])[0] if tid else None
         nxt_out = None
-        if nxt:
-            sim = latest_games.get(nxt['game_id'])
+        if nxt:  # the next game's projection from whichever snapshot holds it (today's or tomorrow's slate, D24)
+            pj = projections.get(nxt['game_id'])
+            sim = pj['sim'] if pj else latest_games.get(nxt['game_id'])
             stats = None
             if sim:
                 side = 'home' if sim['home']['team_id'] == tid else 'away'

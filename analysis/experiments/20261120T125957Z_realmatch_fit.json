@@ -1,0 +1,119 @@
+{
+ "experiment": "real_matchup_assignment",
+ "run": "20261120T125957Z",
+ "through": "2025-12-31",
+ "holdout_to": "2026-04-30",
+ "matchup_games": 660,
+ "seasons_in_matchups": [
+  "2025",
+  "2026"
+ ],
+ "rows": {
+  "train": 108342,
+  "holdout": 34830
+ },
+ "holdout": {
+  "uniform": {
+   "cross_entropy": 1.6094,
+   "label_entropy": 1.3178,
+   "top1": 0.1993,
+   "top1_real_share": 0.1985
+  },
+  "old_theta_espn_credits": {
+   "cross_entropy": 1.5652,
+   "label_entropy": 1.3178,
+   "top1": 0.3654,
+   "top1_real_share": 0.2845
+  },
+  "old_pair_features": {
+   "cross_entropy": 1.5326,
+   "label_entropy": 1.3178,
+   "top1": 0.4092,
+   "top1_real_share": 0.3081
+  },
+  "+ranks": {
+   "cross_entropy": 1.5229,
+   "label_entropy": 1.3178,
+   "top1": 0.4521,
+   "top1_real_share": 0.3233
+  },
+  "+stopper": {
+   "cross_entropy": 1.5165,
+   "label_entropy": 1.3178,
+   "top1": 0.4715,
+   "top1_real_share": 0.3299
+  },
+  "+pair_history": {
+   "cross_entropy": 1.503,
+   "label_entropy": 1.3178,
+   "top1": 0.5122,
+   "top1_real_share": 0.3463
+  }
+ },
+ "holdout_shots": {
+  "cross_entropy": 1.5037,
+  "label_entropy": 1.3189,
+  "top1": 0.5103,
+  "top1_real_share": 0.3455
+ },
+ "theta": {
+  "old_pair_features": {
+   "abs_height": -0.1971,
+   "abs_weight": -0.1758,
+   "same_group": 0.2689,
+   "abs_role": -0.237,
+   "big_on_small": -0.2174,
+   "small_on_big": -0.6496
+  },
+  "+ranks": {
+   "abs_height": -0.0962,
+   "abs_weight": -0.1742,
+   "same_group": 0.2261,
+   "abs_role": -0.2181,
+   "big_on_small": -0.1597,
+   "small_on_big": -0.5821,
+   "rank_height": -0.1086,
+   "rank_usage": -0.0996
+  },
+  "+stopper": {
+   "abs_height": -0.0959,
+   "abs_weight": -0.1777,
+   "same_group": 0.2248,
+   "abs_role": -0.2098,
+   "big_on_small": -0.1487,
+   "small_on_big": -0.5681,
+   "rank_height": -0.1084,
+   "rank_usage": -0.0341,
+   "stop_x_usage": 0.3458
+  },
+  "+pair_history": {
+   "abs_height": -0.0868,
+   "abs_weight": -0.1644,
+   "same_group": 0.2067,
+   "abs_role": -0.1824,
+   "big_on_small": -0.1457,
+   "small_on_big": -0.533,
+   "rank_height": -0.1016,
+   "rank_usage": -0.0329,
+   "stop_x_usage": 0.305,
+   "pair_hist": 0.5491,
+   "pair_met": 0.0694
+  }
+ },
+ "fill": {
+  "height_in": 78.0,
+  "weight_lb": 215.0,
+  "grp_code": 1.0,
+  "min_avg": 23.19542808049666,
+  "usage": 0.170541075230887,
+  "stop": 0.1835519806421585
+ },
+ "settings": {
+  "pair_half_life_meetings": 3.0,
+  "pair_prior": [
+   0.1,
+   1.0
+  ],
+  "stop_half_life_games": 15.0
+ }
+}

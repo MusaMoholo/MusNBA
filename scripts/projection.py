@@ -38,8 +38,9 @@ AVAILABILITY = {'active': 1.0, 'probable': 0.9, 'day-to-day': 0.7, 'questionable
                 'doubtful': 0.15, 'out': 0.0, 'suspension': 0.0, 'suspended': 0.0, 'injured reserve': 0.0}
 PERIODS = ('q1', 'q2', 'q3', 'q4', 'h1', 'h2', 'fg')
 SLICES = {'q1': [0], 'q2': [1], 'q3': [2], 'q4': [3], 'h1': [0, 1], 'h2': [2, 3], 'fg': [0, 1, 2, 3, 4]}
-FG_DIST = ('min', 'pts', 'reb', 'ast', 'fg3m', 'stl', 'blk', 'tov', 'pra', 'pr', 'pa', 'ra', 'stocks', 'fga', 'fta', 'fg3a')
-PERIOD_DIST = ('min', 'pts', 'reb', 'ast', 'fg3m', 'stl', 'blk', 'pra')
+FG_DIST = ('min', 'pts', 'reb', 'oreb', 'dreb', 'ast', 'fg3m', 'fgm', 'ftm', 'stl', 'blk', 'tov', 'pra', 'pr', 'pa', 'ra', 'stocks',
+           'fga', 'fta', 'fg3a')
+PERIOD_DIST = ('min', 'pts', 'reb', 'oreb', 'dreb', 'ast', 'fg3m', 'fgm', 'ftm', 'stl', 'blk', 'pra')
 BOX = ('pts', 'fgm', 'fga', 'fg3m', 'fg3a', 'ftm', 'fta', 'oreb', 'dreb', 'ast', 'stl', 'blk', 'tov')
 
 
@@ -341,7 +342,11 @@ def package(game: dict, teams: dict, pts_by_period: dict, n_ot: np.ndarray, W: i
             entry.update({'availability': round(x['availability'], 3), 'base_min': round(x['base_min'], 2),
                           'played': round(float(played_any[:, i].mean()), 4),
                           'double_double': round(float((tens[:, i] >= 2).mean()), 4),
-                          'triple_double': round(float((tens[:, i] >= 3).mean()), 4), 'periods': {}})
+                          'triple_double': round(float((tens[:, i] >= 3).mean()), 4),
+                          'quadruple_double': round(float((tens[:, i] >= 4).mean()), 5),
+                          'quintuple_double': round(float((tens[:, i] >= 5).mean()), 5),
+                          'five_by_five': round(float(((fg['pts'][:, i] >= 5) & ((fg['oreb'] + fg['dreb'])[:, i] >= 5) & (fg['ast'][:, i] >= 5)
+                                                       & (fg['stl'][:, i] >= 5) & (fg['blk'][:, i] >= 5)).mean()), 5), 'periods': {}})
             for period, cols in SLICES.items():
                 v = {k: box[k][:, i, cols].sum(axis=1) for k in BOX}
                 v['reb'] = v['oreb'] + v['dreb']

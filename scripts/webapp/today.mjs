@@ -1,5 +1,14 @@
 // Today: the slate for one ET game date, each game a card that opens Game Centre.
 import {modelPill, api, esc, etToday, f1, logo, longDay, pct, record, stamp, team, tipTimes, dayLabel} from './ui.mjs';
+import {slateSpotlight} from './spotlight.mjs';
+
+// Card surname with its suffix ("Michael Porter Jr." → "Porter Jr."): the last word that is not a suffix, then the suffixes.
+const SUFFIX = /^(jr\.?|sr\.?|ii|iii|iv|v)$/i;
+const surname = name => {
+  const w = String(name || '').split(' ').filter(Boolean), tail = [];
+  while (w.length > 1 && SUFFIX.test(w[w.length - 1])) tail.unshift(w.pop());
+  return [w[w.length - 1] || '', ...tail].join(' ');
+};
 
 export function defaultDay(meta) {
   const day = etToday();
@@ -41,6 +50,7 @@ export async function render(view, {rest, meta, current}) {
       </div>
     </section>
     ${modelNote(slate)}
+    ${slate.spotlight ? `<div class="games spot-grid">${slateSpotlight(slate.spotlight, slate.watch)}</div>` : ''}
     <div class="games">${games.map(card).join('')}</div>`;
   view.querySelectorAll('[data-go]').forEach(b => b.onclick = () => { if (b.dataset.go) location.hash = '#/today/' + b.dataset.go; });
   view.querySelector('input[type=date]').onchange = e => { if (e.target.value) location.hash = '#/today/' + e.target.value; };
@@ -85,7 +95,8 @@ function card(g) {
     <div class="when"><span>${esc(t.label)}</span><span>${right}</span></div>
     ${side('away', pA, muA)}${side('home', pH, muH)}
     ${pA != null ? `<div class="winbar" aria-hidden="true"><i class="a" style="width:${(100 * pA).toFixed(1)}%"></i><i class="h" style="width:${(100 * pH).toFixed(1)}%"></i></div>` : ''}
-    ${pr?.leaders && !final ? `<div class="leaders">${['away', 'home'].map(k => (pr.leaders[k] || []).map(l => `<span><b>${esc(l.name.split(' ').slice(-1)[0])}</b> ${f1(l.pts)} pts · ${f1(l.reb)} reb · ${f1(l.ast)} ast</span>`).join('')).join('')}</div>` : ''}
+    ${pr?.leaders && !final ? `<div class="leaders">${['away', 'home'].map(k => (pr.leaders[k] || []).map(l => `<span><b>${esc(surname(l.name))}</b> ${f1(l.pts)} pts · ${f1(l.reb)} reb · ${f1(l.ast)} ast</span>`).join('')).join('')}</div>` : ''}
+    ${pr?.duel && !final ? (() => { const last = k => esc(surname(pr.leaders[k][0].name)); return `<div class="duel-line" title="Chance each top scorer outscores the other, over the engine's simulated games">Duel: <b>${last('away')}</b> outscores ${pct(pr.duel.p_a, 0)} · <b>${last('home')}</b> ${pct(pr.duel.p_b, 0)} · level ${pct(pr.duel.p_level, 0)}</div>`; })() : ''}
     <div class="foot">${foot}</div></a>`;
 }
 

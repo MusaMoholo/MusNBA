@@ -1,0 +1,59 @@
+{
+ "kind": "real",
+ "through": "2025-12-31",
+ "set": "+pair_history",
+ "match": {
+  "abs_height": -0.0706,
+  "abs_weight": -0.1333,
+  "same_group": 0.1724,
+  "abs_role": -0.1371,
+  "big_on_small": -0.0877,
+  "small_on_big": -0.3897,
+  "rank_height": -0.0896,
+  "rank_usage": -0.0371,
+  "stop_x_usage": 0.2662,
+  "pair_hist": 0.5481,
+  "pair_met": 0.1183
+ },
+ "fill": {
+  "height_in": 78.0,
+  "weight_lb": 215.0,
+  "grp_code": 1.0,
+  "min_avg": 23.19542808049666,
+  "usage": 0.170541075230887,
+  "stop": 0.18375236828819985,
+  "pair_hist": 0.0,
+  "pair_met": 0.0
+ },
+ "weak_norm": {
+  "rim": [
+   0.6750201316555953,
+   0.014031434348631761
+  ],
+  "mid": [
+   0.41862359948364786,
+   0.01016763852847858
+  ],
+  "three": [
+   0.3603383719690402,
+   0.003233881487155197
+  ]
+ },
+ "settings": {
+  "pair_half_life_meetings": 3.0,
+  "pair_prior": [
+   0.1,
+   1.0
+  ],
+  "stop_half_life_games": 15.0
+ },
+ "holdout": {
+  "cross_entropy": 1.5084,
+  "label_entropy": 1.3305,
+  "top1": 0.5019,
+  "top1_real_share": 0.3404
+ },
+ "run": "20261120T144519Z",
+ "top2": true,
+ "note": "v1.4f: + top-1/top-2 defenders and assignment confidence (owner, 20 Nov)"
+}

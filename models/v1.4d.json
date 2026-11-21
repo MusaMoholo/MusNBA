@@ -1,0 +1,71 @@
+{
+  "version": "v1.4d",
+  "status": "NOT RUN (D35/D37): switch hunting shows no effect in who shoots within usage rank (FINDINGS \u00a73u). candidate (D32 + D35): v1.4c + switch hunting in the who decision \u2014 each attacker's edge over his likely defenders (shot-mix-weighted FG% allowed, relative to the five) and its rank; judged by the F4 backtest v v1.3 and v1.4c",
+  "default": {
+    "half_life": null,
+    "playoff_weight": 1.0,
+    "drop": [
+      "@team",
+      "@schedule",
+      "@clutch",
+      "@stype"
+    ],
+    "banded": true,
+    "recalibrate": false,
+    "features": "data/derived/variants/realmatch_hunt/features/pregame.parquet",
+    "segments": null
+  },
+  "nodes": {
+    "duration": {
+      "drop": [
+        "@schedule",
+        "@clutch",
+        "@stype"
+      ]
+    },
+    "what": {
+      "drop": [
+        "@schedule",
+        "@clutch",
+        "@stype"
+      ]
+    },
+    "shot_result": {
+      "drop": [
+        "@schedule",
+        "@clutch",
+        "@stype"
+      ]
+    },
+    "free_throw": {
+      "drop": [
+        "@team",
+        "@schedule",
+        "@clutch",
+        "@heat",
+        "@stype"
+      ]
+    },
+    "event": {
+      "drop": [
+        "@team",
+        "@clutch",
+        "off_rest",
+        "def_rest",
+        "@stype"
+      ]
+    },
+    "turnover_type": {
+      "drop": [
+        "@team",
+        "@clutch",
+        "off_rest",
+        "def_rest",
+        "@stype"
+      ]
+    }
+  },
+  "why": {
+    "D30": "ENGINE_PLAN D30; FINDINGS \u00a73o (defence loading 0.42 v 1.69 real)"
+  }
+}

@@ -118,6 +118,26 @@ def verify(path: Path, header: dict, expected: int) -> None:
         assert ended
 
 
+def phone_record(key: str, text: str) -> str | None:
+    """D36 (owner, 20 Nov): the phone app is stripped back — the 10,000-world distributions for the expected lineup (players
+    and teams) only. No per-world files, so no Scenarios, Given…, joint grids, duels or lineup branches; no duel of the
+    night on the slate. Returns the record body to export, or None to leave it out. Localhost views keep everything."""
+    parts = key.strip('/').split('/')
+    if parts[:2] == ['api', 'game'] and len(parts) == 4 and parts[3] == 'worlds':
+        return None
+    if parts[:2] == ['api', 'game'] and len(parts) == 3:
+        d = json.loads(text)
+        d['worlds'] = False
+        return json.dumps(d, separators=(',', ':'), ensure_ascii=False)
+    if parts[:2] == ['api', 'slate']:
+        d = json.loads(text)
+        for g in d.get('games', []):
+            if isinstance(g.get('proj'), dict):
+                g['proj'].pop('duel', None)
+        return json.dumps(d, separators=(',', ':'), ensure_ascii=False)
+    return text
+
+
 def export_bundle(output: Path, archive_root=None) -> dict:
     output = Path(output).expanduser().absolute()
     if not output.name.endswith('.musnba.gz'):
@@ -147,7 +167,10 @@ def export_bundle(output: Path, archive_root=None) -> dict:
                 stream.write(packed(header) + '\n')
                 for path in sorted((frozen / 'api').rglob('*.json')):
                     key = '/api/' + path.relative_to(frozen / 'api').with_suffix('').as_posix()
-                    stream.write(packed(record(key, path.read_text(encoding='utf-8'))) + '\n')
+                    body = phone_record(key, path.read_text(encoding='utf-8'))
+                    if body is None:
+                        continue
+                    stream.write(packed(record(key, body)) + '\n')
                     count += 1
                 for path in sorted((frozen / 'logos').glob('*.png')):
                     stream.write(packed(record('/logos/' + path.name, base64.b64encode(path.read_bytes()).decode(), 'image/png', True)) + '\n')

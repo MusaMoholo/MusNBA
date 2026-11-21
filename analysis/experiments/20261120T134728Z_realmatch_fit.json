@@ -1,0 +1,162 @@
+{
+ "experiment": "real_matchup_assignment",
+ "run": "20261120T134728Z",
+ "through": "2025-12-31",
+ "features": "/Users/moholom/Repos/Sports/Basketball/data/derived/variants/realmatch/features/pregame.parquet",
+ "holdout_to": "2026-04-30",
+ "matchup_games": 1312,
+ "seasons_in_matchups": [
+  "2025",
+  "2026"
+ ],
+ "rows": {
+  "train": 108342,
+  "holdout": 166725
+ },
+ "holdout": {
+  "uniform": {
+   "cross_entropy": 1.6094,
+   "label_entropy": 1.3305,
+   "top1": 0.1934,
+   "top1_real_share": 0.1952
+  },
+  "old_theta_espn_credits": {
+   "cross_entropy": 1.568,
+   "label_entropy": 1.3305,
+   "top1": 0.364,
+   "top1_real_share": 0.2809
+  },
+  "old_pair_features": {
+   "cross_entropy": 1.5417,
+   "label_entropy": 1.3305,
+   "top1": 0.395,
+   "top1_real_share": 0.2981
+  },
+  "+ranks": {
+   "cross_entropy": 1.5326,
+   "label_entropy": 1.3305,
+   "top1": 0.4327,
+   "top1_real_share": 0.3123
+  },
+  "+stopper": {
+   "cross_entropy": 1.532,
+   "label_entropy": 1.3305,
+   "top1": 0.4345,
+   "top1_real_share": 0.3131
+  },
+  "+pair_history": {
+   "cross_entropy": 1.516,
+   "label_entropy": 1.3305,
+   "top1": 0.4849,
+   "top1_real_share": 0.3337
+  },
+  "+hunt": {
+   "cross_entropy": 1.5161,
+   "label_entropy": 1.3305,
+   "top1": 0.4855,
+   "top1_real_share": 0.3338
+  }
+ },
+ "holdout_shots": {
+  "+pair_history": {
+   "cross_entropy": 1.5172,
+   "label_entropy": 1.3316,
+   "top1": 0.4825,
+   "top1_real_share": 0.3324
+  },
+  "+hunt": {
+   "cross_entropy": 1.5172,
+   "label_entropy": 1.3316,
+   "top1": 0.4831,
+   "top1_real_share": 0.3326
+  }
+ },
+ "theta": {
+  "old_pair_features": {
+   "abs_height": -0.1971,
+   "abs_weight": -0.1758,
+   "same_group": 0.2689,
+   "abs_role": -0.237,
+   "big_on_small": -0.2174,
+   "small_on_big": -0.6496
+  },
+  "+ranks": {
+   "abs_height": -0.0952,
+   "abs_weight": -0.1738,
+   "same_group": 0.2289,
+   "abs_role": -0.1955,
+   "big_on_small": -0.1719,
+   "small_on_big": -0.5772,
+   "rank_height": -0.1084,
+   "rank_usage": -0.0912
+  },
+  "+stopper": {
+   "abs_height": -0.0953,
+   "abs_weight": -0.1743,
+   "same_group": 0.2288,
+   "abs_role": -0.1913,
+   "big_on_small": -0.1701,
+   "small_on_big": -0.575,
+   "rank_height": -0.1084,
+   "rank_usage": -0.0815,
+   "stop_x_usage": 0.0347
+  },
+  "+pair_history": {
+   "abs_height": -0.0858,
+   "abs_weight": -0.1606,
+   "same_group": 0.2088,
+   "abs_role": -0.1644,
+   "big_on_small": -0.1655,
+   "small_on_big": -0.5373,
+   "rank_height": -0.1011,
+   "rank_usage": -0.074,
+   "stop_x_usage": 0.0298,
+   "pair_hist": 0.5869,
+   "pair_met": 0.004
+  },
+  "+hunt": {
+   "abs_height": -0.0858,
+   "abs_weight": -0.1607,
+   "same_group": 0.2087,
+   "abs_role": -0.1644,
+   "big_on_small": -0.1652,
+   "small_on_big": -0.5373,
+   "rank_height": -0.1011,
+   "rank_usage": -0.0739,
+   "stop_x_usage": 0.0297,
+   "pair_hist": 0.5868,
+   "pair_met": 0.004,
+   "hunt": 0.0048
+  }
+ },
+ "weak_norm": {
+  "rim": [
+   0.6728561469034442,
+   0.019615609117627636
+  ],
+  "mid": [
+   0.4164371756212932,
+   0.013321061994541231
+  ],
+  "three": [
+   0.3601994940767072,
+   0.010457880784201564
+  ]
+ },
+ "fill": {
+  "height_in": 78.0,
+  "weight_lb": 215.0,
+  "grp_code": 1.0,
+  "min_avg": 23.19542808049666,
+  "usage": 0.170541075230887,
+  "stop": 0.0
+ },
+ "settings": {
+  "pair_half_life_meetings": 3.0,
+  "pair_prior": [
+   0.1,
+   1.0
+  ],
+  "stop_half_life_games": 15.0
+ }
+}
