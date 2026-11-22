@@ -281,6 +281,25 @@ The second-seed result, exact confirmation IDs, 10k subset and reproducibility m
 `analysis/experiments/20261122_a1_manifest.json`, pinned to source checkpoint `c6d5db4`; the later seed-list type
 annotation preserves the compiled function and all 3,036 recorded seeds.
 
+#### Chunk A A2 residual-dependence screen — 22 Nov, before measurement
+
+Use the immutable S01 F4 control's 200 games and 1,000-world player summaries, joined one-to-one to the independently
+fingerprinted, strictly pre-game S05 F4 role table. Report missing joins and unknown roles; never fill them from
+post-game information. This is a retrospective, actual-participant diagnostic, not an availability forecast. The
+F4 games end before the protected 2026–27 final test. Freeze this screen before examining its results.
+
+The supported sample has known star/starter/bench role, at least eight actual minutes and at least eight simulated
+mean minutes. Examine both all supported players and the pre-game star/starter subset. For each player compute
+minutes error `actual - simulated mean` and scoring-rate error
+`36 * (actual points / actual minutes - simulated mean points / simulated mean minutes)`. Subtract each role's
+sample mean separately for each error; re-estimate those role means in each bootstrap replicate. For each eligible
+team-game calculate the mean product across distinct ordered teammate pairs, then average team-games equally.
+Calculate the corresponding opponent-pair mean product, averaging games equally, as a comparison. Report both
+covariances, their difference, complete-game counts, player/team-game/pair counts and 10,000 complete-game bootstrap
+95% intervals (seed 20261122). Do not report a cohort without at least 50 distinct games and 100 contributing
+team-games. These are exploratory observed residual associations, not causal evidence, simulated-world covariance,
+or a model-selection/promotion result; actual-minute selection and ratio-of-means are explicit limitations.
+
 #### S03 signal-diagnosis specification — 22 Nov, before the diagnosis
 
 The fixed unit is a team-game side: the **200 unique S01 F4 game IDs** in the manifest, exactly matching the retained

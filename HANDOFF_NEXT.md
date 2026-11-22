@@ -1,6 +1,7 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A execution started; A1 contract frozen at 10%; S01–S07 remain complete**.
+Partial source checkpoint **4dce4a3** was pushed before the UX-delivery nightly.
 
 ## Read this first — live handoff
 
@@ -24,9 +25,22 @@ Updated **22 November 2026 — Chunk A execution started; A1 contract frozen at 
   `node analysis/pwa_import_check.mjs --url http://127.0.0.1:8768/MusNBA/ --bundle "$HOME/Library/Mobile Documents/com~apple~CloudDocs/MusNBA/MusNBA.musnba.gz" --require-shooting yes`.
   Recheck touched pages on :8767, publish only the reviewed shell to `gh-pages`, and record iCloud delivery separately
   from manual phone import. Then checkpoint before continuing A1's isolated foul-out work.
+- **Active nightly:** shell **2955**, wrapper PID **14660**, nightly PID **14661**, log
+  `/tmp/musnba_d44_nightly.log`. Launched at current ET origin with the default 10,000 game worlds and season
+  paths. Collection completed with **63 requests, 0 failures, 0 new finals**; NBA Stats had no new requests.
+  Input rebuilding is underway. Read the full result when done. Do not start a second NBA Stats stream. If it fails,
+  preserve the previous iCloud bundle and record the precise blocker before retrying.
+- **Independent A2 research:** while the nightly rebuilds inputs, the first A2 rung is beginning on the fixed S01
+  F4 control and fingerprinted prior-only S05 roles. The prespecified retrospective covariance screen is in
+  TRAINING_PLAN; its join audit found **4,320/4,346** matched player-games, with **26** missing joins and **12**
+  unknown-role matches. No residual results or candidate changes have been examined. A1 remains 10%, A2 0%.
+- **Prepared, unpublished Pages shell:** isolated worktree `/tmp/musnba-user-ux-pages`, `gh-pages` at `f2932e1`,
+  has only `assets/game.mjs`, `assets/players.mjs` and `sw.js` changed from the reviewed data-free shell
+  `614f3061d9dc69a41bc4`. The shell passed **18/18** checks with the previous bundle. Do not publish until the new
+  bundle and its period-shooting import/offline check pass; never add data or bundles to Pages.
 - **Doc review:** `DASHBOARD_PLAN`, `ENGINE_PLAN`, `FINDINGS`, `PLAN` and this handoff carry the new behaviour,
-  decision, measurement and live state. `TRAINING_PLAN` is unchanged because no training or selection gate changed;
-  `README` commands and file map are unchanged; `AGENTS.md` standing rules are unchanged.
+  decision, measurement and live state. `TRAINING_PLAN` freezes the independent A2 descriptive screen without
+  changing selection gates; `README` commands and file map are unchanged; `AGENTS.md` standing rules are unchanged.
 - **Progress:** original A1 **58.0%**, S01–S07 complete; S08–S12/S14 open, S13 historical forecast backfill
   deferred. New independent chunk boards: **A 3%** (A1 10%, A2/A3 0%) and **B 0%** (B1/B2/B3 all 0%). Keep
   the original A1 weights intact; new within-chunk weights do not reset or double-count A1.
@@ -56,8 +70,8 @@ Updated **22 November 2026 — Chunk A execution started; A1 contract frozen at 
   AGENTS §5 and PLAN §6c.
 - **Checkpoint orientation:** S07 delivery was **aa21515**; two-chunk planning **2a3155f**; View Centre planning
   **16893d9**. This live-handoff refresh is the subsequent docs-only checkpoint; use `git log -1` for its hash.
-  Earlier chronology below is historical evidence, not the current action list. The session-owned review servers
-  and active tests are listed in the current-action entry above; no nightly, backtest or history download is running.
+  Earlier chronology below is historical evidence, not the current action list. Session-owned review servers and
+  the active nightly are listed above; no backtest or separate history download is running.
 
 ## Earlier checkpoints and supporting evidence
 
@@ -1900,7 +1914,11 @@ do not resume U1–U22.
    **Next:** develop an isolated foul-out-only candidate preserving D29 schedules and normal random streams until
    a legal substitution is required. Reject unhandled short-roster cases explicitly; do not pretend this is the NBA
    technical-penalty exception. Independently audit legal fives and score/minute accounting, then test against the
-   frozen player-first control and applicable promotion gates. The guard remains the safe fallback if it fails.
+   frozen player-first control and applicable promotion gates. Important implementation hazard: the existing
+   `engine.py` `after_fouls` hook returns one boolean and recomputes lineup context for **every** active world
+   when any substitution occurs, after in-game state has changed. A foul-out-only repair cannot claim unaffected
+   worlds are unchanged if it uses that hook unmodified. Prove world-local context refresh or fail closed; retain
+   existing policy compatibility and the no-policy baseline. The guard remains the safe fallback if it fails.
    **Document review:** HANDOFF, PLAN, FINDINGS, ENGINE_PLAN and README record the experiment, guard and next
    action. AGENTS, TRAINING_PLAN and DASHBOARD_PLAN need no change: standing rules, frozen gates and shipped UI
    are unchanged.
