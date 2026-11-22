@@ -599,6 +599,30 @@ future roster membership, pre-tip report availability or a deployable season-abs
 label-coverage audit has already been seen, this is exploratory rather than a new untouched confirmation. A genuinely
 dated cohort and the frozen availability promotion gate remain mandatory.
 
+For S07's exploratory **recorded-spell and starter-frequency follow-up**, freeze the following before evaluating it.
+Use the already-audited sequence and F1–F4 fixed game manifests, and each fold's earlier fitted reason-only and
+reason-plus-duration rates from the frozen screen. Anchor a spell at a non-left-censored first recorded DNP whose
+next scheduled team game is in the fixed validation panel; follow that player's consecutive same-team listings
+for at most five next games, stopping at a return, an unlisted/unknown/traded/season-end outcome or the fold's
+validation end. The first DNP counts as one recorded missed game. Treat the latter outcomes as right-censored,
+not observed continued absences; do not extend a fold into the protected season. Compare baseline and candidate
+10,000-draw simulated recorded-spell lengths with the corresponding analytic survival and censor-aware observed
+return-time/recorded-games-missed estimates. Give risk/event/censor counts and 10,000 complete-anchor-game
+bootstrap intervals by prior role; require 100 at-risk observations across 30 games for each reported horizon.
+Kaplan–Meier comparisons assume non-informative censoring and remain explicitly descriptive because unlisted
+players may be selectively missing. The simulations model recorded listings and DNPs, not physical absence.
+
+Separately, on the already-audited inferred prior-box candidate rosters and complete observed five-starter
+team-games, draw 10,000 independent per-player no-report fallback states for each game/team with deterministic
+game/team seeds. Apply the existing as-of D29 starter ordering and G/F/C limits to each active world, not the
+observed lineup; count a world with fewer than five candidates or an active player of unknown position as
+unsupported rather than activating or imputing anyone. Report support, five-player identities and predicted versus
+observed starter frequency and Brier by pre-game role with game-cluster bootstrap intervals, plus observed
+starters outside inferred rosters. These are exploratory independent-fallback scenarios: the fallback was not
+validated as physical availability, independence is untested, and conditioning on complete known rosters/starter
+labels is not a dated pre-tip forecast. No candidate is promoted, and no fold, support threshold, horizon or
+setting is selected using these follow-up results.
+
 For S03's remaining flow diagnosis, reproduce the **same 200-game, 1,000-world** free-running control with its
 original seeds and opt-in diagnostics only; audit every original output field against the retained reproduction before
 using the extras. Record player FGA/FTA/turnovers and quarter minutes/scoring, simulated segment-clock summaries,
