@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {branchWeights, distribution, joint} from '../analysis/a1_weighted_browser.mjs';
+import {branchWeights, correlation, distribution, grid, joint} from '../analysis/a1_weighted_browser.mjs';
 
 const weight = (numerator, denominator) => ({numerator: String(numerator), denominator: String(denominator)});
 const {weights, denominator} = branchWeights([
@@ -31,6 +31,13 @@ const precise = distribution([0.1, 29.6, 30, 30.25], weights);
 assert.equal(precise.mean, (0.1 + 29.6 + 30 * 3 + 30.25 * 3) / 8);
 assert.deepEqual(precise.histogram, [[0.1, 1], [29.6, 1], [30, 3], [30.25, 3]]);
 assert.deepEqual(precise.quantiles, [0.1, 29.6, 30, 30.25, 30.25]);
+assert.ok(Math.abs(correlation([0, 1, 2, 3], [0, 2, 4, 6], weights) - 1) < 1e-12);
+assert.equal(correlation([0, 1, 2, 3], [2, 2, 2, 2], weights), null);
+assert.equal(correlation([0, 1, 2, 3], [0, 2, 4, 6], weights, [1, 1, 0, 0]), null);
+assert.deepEqual(grid([0, 1, 2, 3], [0, 2, 4, 6], weights,
+  [-Infinity, 2, Infinity], [-Infinity, 4, Infinity]),
+{cells: [[2, 0], [0, 6]], total: 8, columnMass: [2, 6], columnMean: [1, 5]});
+assert.throws(() => grid([0, 1, 2, 3], [0, 2, 4, 6], weights, [-Infinity, 2, 1, Infinity], [-Infinity, Infinity]), /edges/);
 
 const tiny = branchWeights([{worlds: 10000, weight: weight(1, 2)}, {worlds: 10000, weight: weight(1, 2)}]);
 const values = new Uint8Array(20000);

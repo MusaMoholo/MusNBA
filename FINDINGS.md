@@ -31,6 +31,13 @@ short-roster rejections in **28** attempts yielded **10** audited valid worlds i
 two rejections stopped on the third and saved its failure reasons. This is not a realistic NBA failure rate or
 an accuracy/bias comparison. Reports `20261122_chunk_a_a1_d48_five_player_{initial_failure,stress10,stress_cap}.json`.
 
+**22 Nov 2026 — artificial S06 penalty comparison:** the **18** seeds rejected by the deliberately five-player,
+synthetic-48-minute D29 branch stress each completed under the distinct S06 selected-timeout/foul-penalty policy.
+**13/18** had technical events, **35** events in total; **5** had none. Independent replay of the saved traces
+reconciled **10,698** fives and all events. The policies and random streams differ, so identical seeds do not
+reproduce the same game state and this is not an NBA rate, matched-rule effect or retry bias estimate. S06 remains
+unpromoted after its separate fixed-200 gates. Reports `20261122_chunk_a_a1_d48_penalty_five_player_compare_v2{,_audit}.json`.
+
 **22 Nov 2026 — isolated browser fixture size and accounting:** on one prospective two-selected-player game,
 four saved 10k branch captures pack to a **24,431,244-byte** uncompressed research JSON, or **8,138,597 bytes**
 in an in-memory gzip-6 probe. This is neither a complete bundle nor a phone transfer benchmark. An independent
@@ -67,6 +74,12 @@ fixtures are **16,935,858 / 37,871,388 bytes** raw and **6,633,644 / 13,715,049 
 probes; these are not phone/bundle measurements. Reports `20261122_chunk_a_a1_d47_{browser_fixture_one_v5_audit,
 browser_fixture_two_v5_audit,browser_weighted_one_1800sec_v2_audit,browser_weighted_two_1800sec_v2_audit}.json`.
 Production snapshots still have rounded player-world minutes, so existing imports do not gain this precision.
+
+**22 Nov 2026 — weighted browser grid accounting:** on the same one-/two-player **20,000 / 40,000** research
+worlds, a separate JS calculation agrees with Python on all cells of a fixed 30-minute × 115-home-points grid
+and weighted correlation to `1e-12`. The fixed thresholds are accounting examples, not current recommended
+conditions; neither correlation is a predictive/dependence validation. Reports
+`20261122_chunk_a_a1_d47_browser_grid_{one,two}_v2_audit.json`.
 
 **22 Nov 2026 — branch-label coverage:** across the two current-origin D47 10k branch cases, **71** ranked
 player records included **4** prior-only roles and **48** unlisted-active assumptions; all **3** selected

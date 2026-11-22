@@ -474,6 +474,11 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
   for the selected player, exact versus rounded 30-minute filters differ in **187 / 20,000** and
   **963 / 40,000** worlds on the one-/two-player games. Cross-language weighted accounting matches.
   This is research-only: existing dashboard imports still use rounded minutes. A1 remains **70%**.
+- **22 Nov 2026 · D48 penalty stress:** on the artificial five-player roster, the separate S06 policy completed
+  **18/18** previously rejected seeds, with **35** independently reconciled technicals in **13** worlds.
+  Different policies and streams preclude a matched-state or bias conclusion; neither is promoted. A1 remains **70%**.
+- **22 Nov 2026 · A1 80% grid groundwork:** isolated JS exact-mass grids and correlations agree with independent
+  Python on **20k / 40k** research worlds. UI consumers and phone checks remain open; A1 stays **70%**.
 - **22 Nov 2026 · dashboard house follow-up:** player box scores now precede game insights; game availability,
   bench, secondary team-roster groups and player game logs expand on demand. **61/61** responsive cases,
   laptop/phone offline **29/29 / 28/28** and laptop shell upgrade **31/31** passed. Startup race fixed in

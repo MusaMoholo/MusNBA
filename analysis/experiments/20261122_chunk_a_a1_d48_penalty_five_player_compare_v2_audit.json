@@ -1,0 +1,15 @@
+{
+ "kind": "independent saved-world accounting; artificial stress only",
+ "report": "analysis/experiments/20261122_chunk_a_a1_d48_penalty_five_player_compare_v2.json",
+ "report_sha256": "a6d24c7beff6987b056d6a654b9f67718c4b78c3911be12728f59802c90bd6d8",
+ "audit_sha256": "28732a2b82cd4d92f0c0aa473b21d7502fd209f2cfb712424372cb166e14c49e",
+ "worlds": 18,
+ "technical_events": 35,
+ "worlds_with_technical": 13,
+ "lineup_fives_checked": 10698,
+ "limitations": [
+  "Artificial five-player roster and synthetic 48-minute roles.",
+  "S06 and D29 repair differ in policy and streams; seed matching is not a matched-state comparison.",
+  "Not an NBA failure rate or a predictive test."
+ ]
+}

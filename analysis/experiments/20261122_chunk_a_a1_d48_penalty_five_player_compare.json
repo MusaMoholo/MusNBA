@@ -1,0 +1,706 @@
+{
+ "kind": "artificial five-player stress comparison; not an NBA rate or accuracy test",
+ "stress": "analysis/experiments/20261122_chunk_a_a1_d48_five_player_stress10.json",
+ "stress_sha256": "cad6f95908291f209dbfae2e309e5bafb6148125d4b3e5472b150c0b00a96128",
+ "candidate": "analysis/experiments/20261122_a1_s06_engine_models_F4.json",
+ "candidate_sha256": "794e1e06a193b097021e496a4d21d57ba61cf026b038bfb15d119991c6cde6d0",
+ "analysis_sha256": "5f5a11d358ab9fd318b963e5d29105a2f4dbb653d56ddf9d0d68ceaefd94e6d3",
+ "game": "401810327",
+ "elapsed_seconds": 8.436,
+ "worlds": [
+  {
+   "world": 1,
+   "attempt": 0,
+   "seed": "1415220768911242514",
+   "original_rejection": "branch game 401810327 world 0 side 1: fewer than five eligible players at period 4 clock 632.0",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 317,
+    "post_foul_snapshots": 56,
+    "lineup_fives_checked": 634,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0,
+    "foul_penalty_events": 2,
+    "foul_penalty_makes": 2,
+    "foul_penalty_lineups": 111
+   },
+   "technical_events": [
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 666.0,
+     "fouler": 10,
+     "shooter": 3,
+     "made": 1,
+     "probability": 0.8412324786186218
+    },
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 109.10000038146973,
+     "fouler": 10,
+     "shooter": 8,
+     "made": 1,
+     "probability": 0.7723144292831421
+    }
+   ]
+  },
+  {
+   "world": 1,
+   "attempt": 1,
+   "seed": "2282739932216541014",
+   "original_rejection": "branch game 401810327 world 0 side 1: fewer than five eligible players at period 3 clock 462.0",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 386,
+    "post_foul_snapshots": 141,
+    "lineup_fives_checked": 772,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0,
+    "foul_penalty_events": 3,
+    "foul_penalty_makes": 3,
+    "foul_penalty_lineups": 281
+   },
+   "technical_events": [
+    {
+     "world": 0,
+     "period": 2,
+     "clock": 231.5999994277954,
+     "fouler": 15,
+     "shooter": 3,
+     "made": 1,
+     "probability": 0.8412324786186218
+    },
+    {
+     "world": 0,
+     "period": 3,
+     "clock": 102.00000047683716,
+     "fouler": 10,
+     "shooter": 1,
+     "made": 1,
+     "probability": 0.8060159087181091
+    },
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 30.100000381469727,
+     "fouler": 10,
+     "shooter": 1,
+     "made": 1,
+     "probability": 0.8060159087181091
+    }
+   ]
+  },
+  {
+   "world": 1,
+   "attempt": 2,
+   "seed": "8738611326084970369",
+   "original_rejection": "branch game 401810327 world 0 side 1: fewer than five eligible players at period 3 clock 620.0",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 287,
+    "post_foul_snapshots": 27,
+    "lineup_fives_checked": 574,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0,
+    "foul_penalty_events": 1,
+    "foul_penalty_makes": 0,
+    "foul_penalty_lineups": 53
+   },
+   "technical_events": [
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 273.0,
+     "fouler": 11,
+     "shooter": 4,
+     "made": 0,
+     "probability": 0.8388305306434631
+    }
+   ]
+  },
+  {
+   "world": 2,
+   "attempt": 0,
+   "seed": "1768439139339038499",
+   "original_rejection": "branch game 401810327 world 0 side 1: fewer than five eligible players at period 4 clock 306.3",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 305,
+    "post_foul_snapshots": 44,
+    "lineup_fives_checked": 610,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0,
+    "foul_penalty_events": 2,
+    "foul_penalty_makes": 2,
+    "foul_penalty_lineups": 87
+   },
+   "technical_events": [
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 466.0,
+     "fouler": 13,
+     "shooter": 3,
+     "made": 1,
+     "probability": 0.8412324786186218
+    },
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 4.29999840259552,
+     "fouler": 15,
+     "shooter": 3,
+     "made": 1,
+     "probability": 0.8412324786186218
+    }
+   ]
+  },
+  {
+   "world": 2,
+   "attempt": 1,
+   "seed": "8706933062354888875",
+   "original_rejection": "branch game 401810327 world 0 side 1: fewer than five eligible players at period 4 clock 380.1",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 265,
+    "post_foul_snapshots": 20,
+    "lineup_fives_checked": 530,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0,
+    "foul_penalty_events": 1,
+    "foul_penalty_makes": 1,
+    "foul_penalty_lineups": 39
+   },
+   "technical_events": [
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 236.0,
+     "fouler": 13,
+     "shooter": 4,
+     "made": 1,
+     "probability": 0.8388305306434631
+    }
+   ]
+  },
+  {
+   "world": 4,
+   "attempt": 0,
+   "seed": "17252999677758840925",
+   "original_rejection": "branch game 401810327 world 0 side 1: fewer than five eligible players at period 4 clock 425.7",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 332,
+    "post_foul_snapshots": 87,
+    "lineup_fives_checked": 664,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0,
+    "foul_penalty_events": 3,
+    "foul_penalty_makes": 3,
+    "foul_penalty_lineups": 173
+   },
+   "technical_events": [
+    {
+     "world": 0,
+     "period": 3,
+     "clock": 273.7999999523163,
+     "fouler": 15,
+     "shooter": 3,
+     "made": 1,
+     "probability": 0.8412324786186218
+    },
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 457.10000026226044,
+     "fouler": 13,
+     "shooter": 4,
+     "made": 1,
+     "probability": 0.8388305306434631
+    },
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 35.30000054836273,
+     "fouler": 15,
+     "shooter": 4,
+     "made": 1,
+     "probability": 0.8388305306434631
+    }
+   ]
+  },
+  {
+   "world": 6,
+   "attempt": 0,
+   "seed": "14943930705197505584",
+   "original_rejection": "branch game 401810327 world 0 side 1: fewer than five eligible players at period 3 clock 591.0",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 256,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 512,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0,
+    "foul_penalty_events": 0,
+    "foul_penalty_makes": 0,
+    "foul_penalty_lineups": 0
+   },
+   "technical_events": []
+  },
+  {
+   "world": 6,
+   "attempt": 1,
+   "seed": "13153086190538847196",
+   "original_rejection": "branch game 401810327 world 0 side 1: fewer than five eligible players at period 4 clock 544.9",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 247,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 494,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0,
+    "foul_penalty_events": 0,
+    "foul_penalty_makes": 0,
+    "foul_penalty_lineups": 0
+   },
+   "technical_events": []
+  },
+  {
+   "world": 7,
+   "attempt": 0,
+   "seed": "15608515153573409744",
+   "original_rejection": "branch game 401810327 world 0 side 1: fewer than five eligible players at period 3 clock 269.0",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 351,
+    "post_foul_snapshots": 90,
+    "lineup_fives_checked": 702,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0,
+    "foul_penalty_events": 2,
+    "foul_penalty_makes": 1,
+    "foul_penalty_lineups": 179
+   },
+   "technical_events": [
+    {
+     "world": 0,
+     "period": 3,
+     "clock": 283.20000076293945,
+     "fouler": 15,
+     "shooter": 4,
+     "made": 0,
+     "probability": 0.8388305306434631
+    },
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 497.0,
+     "fouler": 15,
+     "shooter": 4,
+     "made": 1,
+     "probability": 0.8388305306434631
+    }
+   ]
+  },
+  {
+   "world": 8,
+   "attempt": 0,
+   "seed": "15948931454537728537",
+   "original_rejection": "branch game 401810327 world 0 side 1: fewer than five eligible players at period 4 clock 199.9",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 247,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 494,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0,
+    "foul_penalty_events": 0,
+    "foul_penalty_makes": 0,
+    "foul_penalty_lineups": 0
+   },
+   "technical_events": []
+  },
+  {
+   "world": 8,
+   "attempt": 1,
+   "seed": "14108143656332563649",
+   "original_rejection": "branch game 401810327 world 0 side 1: fewer than five eligible players at period 4 clock 504.0",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 302,
+    "post_foul_snapshots": 37,
+    "lineup_fives_checked": 604,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0,
+    "foul_penalty_events": 4,
+    "foul_penalty_makes": 4,
+    "foul_penalty_lineups": 73
+   },
+   "technical_events": [
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 375.80000019073486,
+     "fouler": 13,
+     "shooter": 4,
+     "made": 1,
+     "probability": 0.8388305306434631
+    },
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 340.80000019073486,
+     "fouler": 11,
+     "shooter": 4,
+     "made": 1,
+     "probability": 0.8388305306434631
+    },
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 311.80000019073486,
+     "fouler": 16,
+     "shooter": 4,
+     "made": 1,
+     "probability": 0.8388305306434631
+    },
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 219.00000095367432,
+     "fouler": 11,
+     "shooter": 4,
+     "made": 1,
+     "probability": 0.8388305306434631
+    }
+   ]
+  },
+  {
+   "world": 8,
+   "attempt": 2,
+   "seed": "15062367007338164480",
+   "original_rejection": "branch game 401810327 world 0 side 1: fewer than five eligible players at period 4 clock 426.0",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 321,
+    "post_foul_snapshots": 69,
+    "lineup_fives_checked": 642,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0,
+    "foul_penalty_events": 1,
+    "foul_penalty_makes": 1,
+    "foul_penalty_lineups": 137
+   },
+   "technical_events": [
+    {
+     "world": 0,
+     "period": 3,
+     "clock": 81.10000038146973,
+     "fouler": 15,
+     "shooter": 8,
+     "made": 1,
+     "probability": 0.7723144292831421
+    }
+   ]
+  },
+  {
+   "world": 8,
+   "attempt": 3,
+   "seed": "17120878733393274610",
+   "original_rejection": "branch game 401810327 world 0 side 1: fewer than five eligible players at period 4 clock 125.7",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 254,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 508,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0,
+    "foul_penalty_events": 0,
+    "foul_penalty_makes": 0,
+    "foul_penalty_lineups": 0
+   },
+   "technical_events": []
+  },
+  {
+   "world": 8,
+   "attempt": 4,
+   "seed": "298591288128542267",
+   "original_rejection": "branch game 401810327 world 0 side 1: fewer than five eligible players at period 4 clock 160.5",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 300,
+    "post_foul_snapshots": 27,
+    "lineup_fives_checked": 600,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0,
+    "foul_penalty_events": 2,
+    "foul_penalty_makes": 2,
+    "foul_penalty_lineups": 53
+   },
+   "technical_events": [
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 219.39999961853027,
+     "fouler": 15,
+     "shooter": 4,
+     "made": 1,
+     "probability": 0.8388305306434631
+    },
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 155.39999961853027,
+     "fouler": 16,
+     "shooter": 4,
+     "made": 1,
+     "probability": 0.8388305306434631
+    }
+   ]
+  },
+  {
+   "world": 9,
+   "attempt": 0,
+   "seed": "2986025332036386856",
+   "original_rejection": "branch game 401810327 world 0 side 1: fewer than five eligible players at period 4 clock 606.1",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 289,
+    "post_foul_snapshots": 33,
+    "lineup_fives_checked": 578,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0,
+    "foul_penalty_events": 3,
+    "foul_penalty_makes": 3,
+    "foul_penalty_lineups": 65
+   },
+   "technical_events": [
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 344.79999923706055,
+     "fouler": 16,
+     "shooter": 4,
+     "made": 1,
+     "probability": 0.8388305306434631
+    },
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 208.89999961853027,
+     "fouler": 15,
+     "shooter": 1,
+     "made": 1,
+     "probability": 0.8060159087181091
+    },
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 48.69999885559082,
+     "fouler": 10,
+     "shooter": 0,
+     "made": 1,
+     "probability": 0.7704553604125977
+    }
+   ]
+  },
+  {
+   "world": 9,
+   "attempt": 1,
+   "seed": "7055715828172615337",
+   "original_rejection": "branch game 401810327 world 0 side 1: fewer than five eligible players at period 3 clock 362.3",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 260,
+    "post_foul_snapshots": 12,
+    "lineup_fives_checked": 520,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0,
+    "foul_penalty_events": 1,
+    "foul_penalty_makes": 1,
+    "foul_penalty_lineups": 23
+   },
+   "technical_events": [
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 110.60000038146973,
+     "fouler": 15,
+     "shooter": 3,
+     "made": 1,
+     "probability": 0.8412324786186218
+    }
+   ]
+  },
+  {
+   "world": 9,
+   "attempt": 2,
+   "seed": "5900734901775324955",
+   "original_rejection": "branch game 401810327 world 0 side 1: fewer than five eligible players at period 4 clock 207.1",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 256,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 512,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0,
+    "foul_penalty_events": 0,
+    "foul_penalty_makes": 0,
+    "foul_penalty_lineups": 0
+   },
+   "technical_events": []
+  },
+  {
+   "world": 9,
+   "attempt": 3,
+   "seed": "10079003606226134033",
+   "original_rejection": "branch game 401810327 world 0 side 1: fewer than five eligible players at period 2 clock 235.5",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 374,
+    "post_foul_snapshots": 117,
+    "lineup_fives_checked": 748,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0,
+    "foul_penalty_events": 10,
+    "foul_penalty_makes": 8,
+    "foul_penalty_lineups": 233
+   },
+   "technical_events": [
+    {
+     "world": 0,
+     "period": 3,
+     "clock": 623.0,
+     "fouler": 15,
+     "shooter": 4,
+     "made": 0,
+     "probability": 0.8388305306434631
+    },
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 644.0,
+     "fouler": 13,
+     "shooter": 4,
+     "made": 1,
+     "probability": 0.8388305306434631
+    },
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 635.0,
+     "fouler": 13,
+     "shooter": 4,
+     "made": 1,
+     "probability": 0.8388305306434631
+    },
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 442.0,
+     "fouler": 15,
+     "shooter": 4,
+     "made": 1,
+     "probability": 0.8388305306434631
+    },
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 439.0,
+     "fouler": 13,
+     "shooter": 4,
+     "made": 1,
+     "probability": 0.8388305306434631
+    },
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 271.0,
+     "fouler": 13,
+     "shooter": 4,
+     "made": 0,
+     "probability": 0.8388305306434631
+    },
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 254.10000038146973,
+     "fouler": 13,
+     "shooter": 4,
+     "made": 1,
+     "probability": 0.8388305306434631
+    },
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 79.10000038146973,
+     "fouler": 15,
+     "shooter": 4,
+     "made": 1,
+     "probability": 0.8388305306434631
+    },
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 47.20000076293945,
+     "fouler": 15,
+     "shooter": 4,
+     "made": 1,
+     "probability": 0.8388305306434631
+    },
+    {
+     "world": 0,
+     "period": 4,
+     "clock": 30.200000762939453,
+     "fouler": 13,
+     "shooter": 4,
+     "made": 1,
+     "probability": 0.8388305306434631
+    }
+   ]
+  }
+ ],
+ "limitations": [
+  "Synthetic 48-minute roles on a deliberately restricted five-player roster.",
+  "S06 changes substitutions and random streams, so matching seeds are not matched game states.",
+  "Not a retry-versus-penalty bias or predictive accuracy comparison.",
+  "Neither policy is promoted or connected to production."
+ ]
+}

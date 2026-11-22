@@ -1,7 +1,7 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 70%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **1514575** (A1 70%, initial research fixture); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **a90e10e** (A1 70%, precise-time research); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
@@ -67,12 +67,19 @@ The preceding pushed checkpoint was **1514575** (A1 70%, initial research fixtur
   **39,675** available non-appearances across **500,000** player-world records; the v3 full-precision fixture
   is **16,935,858 bytes** raw, **6,633,644** in a gzip-6 memory probe.
   Reports `analysis/experiments/20261122_chunk_a_a1_d47_{browser_fixture_one_v5_audit,browser_fixture_two_v5_audit,
-  browser_weighted_one_v4_audit,browser_weighted_two_v4_audit,browser_weighted_one_1800sec_v2_audit,
-  browser_weighted_two_1800sec_v2_audit}.json`; prior fixture/audits are superseded.
+  browser_weighted_one_v5_audit,browser_weighted_two_v5_audit,browser_weighted_one_1800sec_v3_audit,
+  browser_weighted_two_1800sec_v3_audit}.json`; prior fixture/audits are superseded.
   These are experimental and **not** connected
   to the app or bundle; 80% remains open. **76** targeted Python tests pass; normal smoke **108/108**
   (`/tmp/musnba_a1_precision_smoke.log`), deliberate fault **86/108** with exit **1**
   (`/tmp/musnba_a1_70_fault_v3.log`).
+- **A1 80% weighted grid groundwork:** isolated browser arithmetic now also handles exact-mass 2-D cells and
+  weighted correlation without rounding player minutes. A separate Python reconstruction and JS audit matched
+  all four cells and the correlation within `1e-12` for the **20k / 40k** research worlds, using a 30-minute
+  and 115-home-point split. Report
+  `analysis/experiments/20261122_chunk_a_a1_d47_browser_grid_{one,two}_v2_audit.json`. The split is a fixed
+  accounting example, not a forecast or calibrated dependence claim. Actual scenario bins, grids and all other
+  existing consumers still need integration and browser/phone tests before this rung can be credited.
 - **Smoke integration:** newly retained weighted-season `.npz` files exposed that smoke previously treated every
   root experiment `.npz` as a training-loss file. Smoke now selects the timestamped filenames written by
   `train.py`; a focused regression test includes both a loss file and an unrelated season array. No accounting
@@ -106,6 +113,16 @@ The preceding pushed checkpoint was **1514575** (A1 70%, initial research fixtur
   pooled minutes CRPS **3.5662 → 3.5309** but established only **66/69** non-inferiority bounds, so it was not
   promoted. This selected-timeout policy differs from D29 branch repair, and no matched retry-versus-penalty bias
   comparison has been run. See FINDINGS S06; do not treat the two as the same simulation policy.
+- **D48 artificial S06 comparison:** on the **18** seeds rejected in the extreme synthetic five-player D29
+  stress, the distinct S06 selected-timeout/foul-penalty policy completed **18/18** single-world attempts.
+  **13** worlds recorded technicals, **35** technical events total. Independent saved-trace replay reconciled
+  **10,698** fives and all technicals. Different substitution policies and random streams mean the matched seeds
+  are **not** matched game states: five S06 worlds had no technical at all. This is neither an NBA failure rate
+  nor the missing retry-versus-penalty predictive/bias comparison. The first unsaved-capture run is
+  `analysis/experiments/20261122_chunk_a_a1_d48_penalty_five_player_compare.json`; reproducible saved-world
+  report/audit use `_compare_v2{,_audit}.json`, with ignored captures in
+  `data/derived/experiments/20261122_chunk_a_a1_d48_penalty_five_player_compare_v2/`. Reproduce the independent
+  audit under a new name with `.venv/bin/python analysis/a1_retry_penalty_stress_audit.py analysis/experiments/20261122_chunk_a_a1_d48_penalty_five_player_compare_v2.json --output analysis/experiments/<new-audit>.json`.
 - **Research checkpoint doc review:** HANDOFF and PLAN record progress and stop point; ENGINE_PLAN and
   TRAINING_PLAN record D48/D49 and their gates; FINDINGS records observations and limits; README maps the research
   scripts. AGENTS needs no change because standing rules are unchanged; DASHBOARD_PLAN needs no change because

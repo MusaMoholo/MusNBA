@@ -1,0 +1,26 @@
+{
+  "kind": "isolated browser weighted grid/correlation accounting; not a forecast or browser integration",
+  "source_sha256": {
+    "data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_one_v3.json": "a4888c105c581a0c06856afc044150e8a2853ec2e1e4cb583a7ac5020cd705e9",
+    "analysis/experiments/20261122_chunk_a_a1_d47_weighted_grid_one.json": "b95c5c11c200365ae4fbea69370fde70943c021a97c885dd2937b338c8577f4b",
+    "analysis/a1_weighted_browser.mjs": "bf74f3d850f3b748ba28d29e1145fe01829cc83bd60dcfcee4bc2e805360b069",
+    "analysis/a1_weighted_grid_audit.mjs": "cd2312b3612d9b5fe68a7bc74a33c439696a60967738a5894f5b56193f324f38"
+  },
+  "worlds": 20000,
+  "cells": [
+    [
+      8123,
+      13797
+    ],
+    [
+      6341,
+      11739
+    ]
+  ],
+  "total": 40000,
+  "correlation": 0.027959340989163747,
+  "limitations": [
+    "One research game; not an accuracy or dependence validation.",
+    "No phone or UI test is implied."
+  ]
+}

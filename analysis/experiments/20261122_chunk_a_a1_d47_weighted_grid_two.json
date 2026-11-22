@@ -1,0 +1,38 @@
+{
+ "kind": "research weighted minutes/score grid reference; not a forecast",
+ "game": "401910030",
+ "player": "3032977",
+ "source": "analysis/experiments/20261122_chunk_a_a1_d47_10000_two.json",
+ "source_sha256": "20204539755935dbd19a362d98210f9c5831077c2b657f9a8635ff72a00372ce",
+ "analysis_sha256": "9f96e867ec86b5aea384bd6e875385ce44ba2c1a3f9b402c414e33aac6341174",
+ "worlds": 40000,
+ "x_threshold_minutes": 30,
+ "y_threshold_home_points": 115,
+ "cells": [
+  [
+   {
+    "numerator": "15289",
+    "denominator": "80000"
+   },
+   {
+    "numerator": "13953",
+    "denominator": "80000"
+   }
+  ],
+  [
+   {
+    "numerator": "9707",
+    "denominator": "40000"
+   },
+   {
+    "numerator": "1959",
+    "denominator": "5000"
+   }
+  ]
+ ],
+ "correlation": 0.2026084725709997,
+ "limitations": [
+  "Uncalibrated branch probabilities; not a served forecast.",
+  "One research game; not an accuracy or dependence validation."
+ ]
+}

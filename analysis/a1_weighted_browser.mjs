@@ -77,7 +77,7 @@ export function distribution(values, weights, selection = null) {
     n++;
     histogram.set(value, (histogram.get(value) || 0) + w);
   }
-  if (!Number.isSafeInteger(selected)) throw new Error('Selected mass exceeds browser integer limit');
+  if (!Number.isSafeInteger(selected) || !Number.isFinite(sum)) throw new Error('Distribution exceeds browser numeric limits');
   if (!defined) return {selected, defined: 0, undefined: selected, mean: null, quantiles: null, histogram: [], n};
   const bins = [...histogram].sort((a, b) => a[0] - b[0]);
   const targets = [[1n, 10n], [1n, 4n], [1n, 2n], [3n, 4n], [9n, 10n]];
@@ -91,4 +91,51 @@ export function distribution(values, weights, selection = null) {
     }
   }
   return {selected, defined, undefined: selected - defined, mean: sum / defined, quantiles, histogram: bins, n};
+}
+
+export function correlation(a, b, weights, selection = null) {
+  validate(weights, selection);
+  if (a.length !== weights.length || b.length !== weights.length) throw new Error('World arrays must match');
+  let mass = 0, sa = 0, sb = 0, n = 0;
+  for (let i = 0; i < weights.length; i++) {
+    if ((selection && !selection[i]) || Number.isNaN(a[i]) || Number.isNaN(b[i])) continue;
+    if (!Number.isFinite(a[i]) || !Number.isFinite(b[i])) throw new Error('Infinite outcome is invalid');
+    mass += weights[i]; sa += weights[i] * a[i]; sb += weights[i] * b[i]; n++;
+  }
+  if (!Number.isSafeInteger(mass) || !Number.isFinite(sa) || !Number.isFinite(sb)) throw new Error('Correlation exceeds browser numeric limits');
+  if (n < 3) return null;
+  const ma = sa / mass, mb = sb / mass;
+  let aa = 0, bb = 0, ab = 0;
+  for (let i = 0; i < weights.length; i++) {
+    if ((selection && !selection[i]) || Number.isNaN(a[i]) || Number.isNaN(b[i])) continue;
+    const da = a[i] - ma, db = b[i] - mb;
+    aa += weights[i] * da * da; bb += weights[i] * db * db; ab += weights[i] * da * db;
+  }
+  if (!Number.isFinite(aa) || !Number.isFinite(bb) || !Number.isFinite(ab)) throw new Error('Correlation exceeds browser numeric limits');
+  return aa > 0 && bb > 0 ? ab / Math.sqrt(aa) / Math.sqrt(bb) : null;
+}
+
+export function grid(x, y, weights, xEdges, yEdges, selection = null) {
+  validate(weights, selection);
+  if (x.length !== weights.length || y.length !== weights.length) throw new Error('World arrays must match');
+  for (const edges of [xEdges, yEdges]) {
+    if (edges.length < 2 || edges[0] !== -Infinity || edges.at(-1) !== Infinity
+        || edges.some((v, i) => typeof v !== 'number' || Number.isNaN(v) || (i > 0 && v <= edges[i - 1]))) {
+      throw new Error('Grid edges must increase from negative to positive infinity');
+    }
+  }
+  const cells = Array.from({length: yEdges.length - 1}, () => Array(xEdges.length - 1).fill(0));
+  const columnMass = Array(xEdges.length - 1).fill(0), columnSum = columnMass.slice();
+  let total = 0;
+  for (let i = 0; i < weights.length; i++) {
+    if ((selection && !selection[i]) || Number.isNaN(x[i]) || Number.isNaN(y[i])) continue;
+    if (!Number.isFinite(x[i]) || !Number.isFinite(y[i])) throw new Error('Infinite outcome is invalid');
+    const xi = xEdges.findIndex((v, j) => j > 0 && x[i] < v) - 1;
+    const yi = yEdges.findIndex((v, j) => j > 0 && y[i] < v) - 1;
+    if (xi < 0 || yi < 0) throw new Error('Outcome is outside grid');
+    const w = weights[i];
+    cells[yi][xi] += w; columnMass[xi] += w; columnSum[xi] += w * y[i]; total += w;
+  }
+  if (!Number.isSafeInteger(total) || columnSum.some(v => !Number.isFinite(v))) throw new Error('Grid exceeds browser numeric limits');
+  return {cells, total, columnMass, columnMean: columnMass.map((mass, i) => mass ? columnSum[i] / mass : null)};
 }

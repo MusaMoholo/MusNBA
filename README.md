@@ -164,8 +164,10 @@ Dashboard routes: `#/standings/{forecast,seeds,wins,ratings,picture,races,movers
 | `scripts/a1_expected.py`, `scripts/a1_season_mixture.py` | Research-only exact-weight branch distributions and bounded weighted-season coupling; no serving or production integration |
 | `analysis/a1_expected_joint_audit.py`, `analysis/a1_season_dependence.py`, `analysis/a1_season_mixture_audit.py` | Reproducible weighted Given/Joint reconstruction, cross-game covariance and independent season replay; not acceptance or calibration |
 | `scripts/a1_world_retry.py`, `analysis/a1_world_retry_{probe,bias,stress}.py` | Research-only isolated retry coordinator, synthetic-injection/selection-bias and artificial short-roster probes; not connected to nightly |
+| `analysis/a1_retry_penalty_stress_compare.py`, `analysis/a1_retry_penalty_stress_audit.py` | Artificial five-player retry/S06 seed comparison and independent saved-trace accounting; policies and streams differ |
 | `analysis/a1_branch_browser_fixture.py`, `analysis/a1_branch_browser_fixture_audit.py` | Research-only browser-format branch fixture and independent decoder; no serving or bundle integration |
 | `analysis/a1_weighted_browser.mjs`, `analysis/a1_weighted_browser_audit.mjs` | Research-only exact integer-mass browser arithmetic and comparison with independently reconstructed Python reports; not wired into the UI |
+| `analysis/a1_weighted_grid_reference.py`, `analysis/a1_weighted_grid_audit.mjs` | Independent research comparison of weighted browser grids and correlations against saved branch captures |
 | `analysis/a1_expected_minutes_audit.py` | Research-only exact-second Given/Joint reconstruction from saved branch minutes; no production integration |
 | `scripts/a1_branch_foul_out.py` | Opt-in branch-only foul-out repair with world-local change masks and explicit short-roster failure; full-game audit still pending |
 | `scripts/a1_branch_world_probe.py` | Isolated fixed-F4 branch replay, `--repair` trace and independent world accounting; diagnostic only |
