@@ -98,8 +98,10 @@ def main() -> None:
     if args.output.exists():
         raise FileExistsError(f'refusing to overwrite {args.output}')
     report = assess(json.loads(args.comparison.read_text()), json.loads(args.seed_noise.read_text()))
-    report['input_sha256'] = {str(path): sha256_file(path) for path in
-                              (args.comparison, args.seed_noise, Path(__file__))}
+    inputs = [path.resolve() for path in (args.comparison, args.seed_noise, Path(__file__))]
+    if any(not path.is_relative_to(ROOT) for path in inputs):
+        raise ValueError('gate inputs must be inside the repository')
+    report['input_sha256'] = {str(path.relative_to(ROOT)): sha256_file(path) for path in inputs}
     write_json(args.output, report, pretty=True)
     print(f"pooled minutes screen: {report['pooled_minute_crps']['passes_uncorrected_screen']}; "
           f"non-inferiority: {report['non_inferiority']['established']}/"

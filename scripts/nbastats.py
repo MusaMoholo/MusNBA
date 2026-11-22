@@ -58,7 +58,7 @@ def tricode(espn_abbr: str) -> str:
 
 # ---------------------------------------------------------------- loading both sides
 
-def nba_tables(seasons=SEASONS):
+def nba_tables(seasons=SEASONS) -> tuple[pd.DataFrame, pd.DataFrame]:
     """(team games, player games) from the newest retained season logs, every season type."""
     teams, players = [], []
     for season in seasons:

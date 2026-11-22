@@ -1,0 +1,12 @@
+{
+ "experiment": "a1_s04_tracking_independent_accounting",
+ "source_files": 1692,
+ "source_dates": 846,
+ "unique_game_fives": 146581,
+ "shots": 921103,
+ "checked_values": 4605515,
+ "feature_report_sha256": "45424c7d458f1d92f58efeaf3f49594034e030be02bd2705ce8e5e2a1709c36b",
+ "feature_rows_sha256": "d88e47e20f6d22226047f78f62f41f0e9802eae6b984a404ce45df7ab952866e",
+ "auditor_sha256": "e56dbca02b285fcef261bdec767de4dc1e05100d65c295d83095dfbd09bb1721",
+ "limitations": "dated raw responses and crosswalk may have been revised after their historic dates"
+}

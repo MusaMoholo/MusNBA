@@ -1,9 +1,10 @@
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 import pandas as pd
 
-from scripts import a1_rim_calibration, a1_rim_screen, a1_tracking_features, a1_tracking_screen
+from scripts import a1_rim_calibration, a1_rim_screen, a1_tracking_audit, a1_tracking_features, a1_tracking_screen
 
 
 class RimCalibrationTests(unittest.TestCase):
@@ -57,6 +58,17 @@ class RimCalibrationTests(unittest.TestCase):
 
 
 class TrackingFeatureTests(unittest.TestCase):
+    def test_missing_and_nonfinite_nba_player_ids_are_rejected(self):
+        for person in (None, float('inf')):
+            logs = pd.DataFrame([('2024-01-01', person, 'BOS')],
+                                columns=['date', 'PLAYER_ID', 'TEAM_ABBREVIATION'])
+            with self.subTest(person=person), \
+                    patch.object(a1_tracking_features.nbastats, 'nba_tables', return_value=(pd.DataFrame(), logs)):
+                with self.assertRaisesRegex(ValueError, 'missing or non-finite'):
+                    a1_tracking_features.load_tracking()
+                with self.assertRaisesRegex(ValueError, 'missing or non-finite'):
+                    a1_tracking_audit.sources()
+
     def test_prior_rates_exclude_same_day_and_leave_unseen_players_missing(self):
         source = pd.DataFrame([
             ('2025-01-01', 'a', 'rim', 2, 4), ('2025-01-02', 'a', 'rim', 0, 6),

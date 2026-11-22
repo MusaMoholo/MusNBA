@@ -1295,6 +1295,31 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   attacker's shot/turnover choice in `who`/`what` before shot quality; test as a separate pre-origin increment
   rather than adding arbitrary points. These are future hypotheses, not results or approved promotions, and
   historical source revision timing remains an explicit limitation.
+- **S04 reproducibility after typed-ID guards:** the four-season NBA player/day/team lookup is unchanged across
+  **112,952** keys. Rebuilding the feature table produced a byte-identical **921,103**-row parquet
+  (`d88e47e2…b952866e`); an independent replay again checked **1,692** source files, **146,581** game-fives and
+  **4,605,515** values (`20261122_a1_s04_tracking_accounting_typed.json`). Missing or non-finite IDs now fail
+  explicitly rather than being silently converted to an integer. The original source/report hashes are preserved
+  in the preceding evidence checkpoint; this verification does not change either model decision.
+- **S05 NBA-only engine screen:** on the exact **200** fixed F4 games with **4,346** actual-participant
+  player-games, NBA-only minute history changed pooled MIN CRPS by **−0.00416** minutes (95% game-clustered
+  interval **−0.02699 to +0.01913**) against the registered **0.02634**-minute seed-noise floor: the primary screen does
+  not establish an improvement. Stars (**284** player-games) changed **−0.14916** (95% **−0.27174 to −0.03359**),
+  starters (**1,578**) **−0.02295** (**−0.04428 to −0.00263**) and bench (**2,472**) **+0.02440**
+  (**−0.00625 to +0.05688**); 12 unknown-tier rows are insufficient for a tier decision. Margin CRPS changed
+  **−0.08102** (95% **−0.14253 to −0.02176**) and total CRPS **+0.03237** (**−0.04004 to +0.10525**).
+  Independently reconciled **1,600** raw quarter scores and **4,346** 3PM actuals have zero mismatches; one
+  player and its team sum are incomplete. This is not a pre-game availability forecast, and the star gain cannot
+  override the pooled primary gate. Of **69** listed player-tier/game non-inferiority interval checks, **59**
+  are inside their frozen bounds; **10** are not established (six star bias/coverage and four game/quarter
+  coverage intervals). An additional **10/10** pooled-player bias/coverage intervals are inside the same bounds.
+  An interval crossing a bound is inconclusive, not proof of harm. Full paired comparisons and accounting:
+  `20261122_a1_s05_nba_only_fixed200_{comparison,accounting}.json`.
+- **Preliminary minute-gate defect:** the first and v2 gate reports used the seed interval's **0.01653** half-width
+  instead of the preregistered maximum absolute endpoint **0.02634** (interval **−0.00671 to +0.02634**).
+  They must not be used for selection. The NBA-only primary screen still fails under the correct floor and because
+  its 95% interval includes zero. Preserve the reports and their exact sources, then correct and regression-test
+  the checker before evaluating the strict-runtime candidate.
 - **Historical prior-box minute sensitivities:** the independently audited all-active and fixed no-report fallback
   screens cover F1–F4 respectively **200/200/195/200** games and **400/400/390/400** team-sides. The five F3
   season-opening games have no prior same-season team candidates; their players are not treated as zeroes. The

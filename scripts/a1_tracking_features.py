@@ -57,8 +57,11 @@ def load_tracking() -> tuple[pd.DataFrame, dict, list[Path]]:
     game_log = game_log.loc[game_log['date'] < TEST_FROM, ['date', 'PLAYER_ID', 'TEAM_ABBREVIATION']].drop_duplicates()
     if game_log.duplicated(['date', 'PLAYER_ID']).any():
         raise ValueError('NBA player/day is associated with more than one team')
-    teams = {(str(r.date), int(r.PLAYER_ID)): str(r.TEAM_ABBREVIATION)
-             for r in game_log.itertuples(index=False)}
+    if game_log['PLAYER_ID'].isna().any() or not np.isfinite(pd.to_numeric(game_log['PLAYER_ID'], errors='raise')).all():
+        raise ValueError('NBA player/day log has missing or non-finite player IDs')
+    people = game_log['PLAYER_ID'].to_numpy(dtype=np.int64)
+    teams = {(str(r.date), int(person)): str(r.TEAM_ABBREVIATION)
+             for r, person in zip(game_log.itertuples(index=False), people)}
     crosswalk_path = DERIVED / 'nbastats/players.parquet'
     crosswalk = pd.read_parquet(crosswalk_path)
     if crosswalk[['person', 'player']].isna().any().any() or crosswalk['person'].duplicated().any() or crosswalk['player'].duplicated().any():

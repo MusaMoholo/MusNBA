@@ -4,7 +4,47 @@ from unittest.mock import patch
 import numpy as np
 import pandas as pd
 
-from scripts import a1_availability_cohort as cohort, a1_minutes_audit, a1_minutes_candidate, a1_minutes_diagnose, a1_minutes_fold_eval, a1_minutes_no_report, a1_minutes_unconditional, a1_rotation_diagnose, engine, minutes
+from scripts import a1_availability_cohort as cohort, a1_minutes_audit, a1_minutes_candidate, a1_minutes_diagnose, a1_minutes_fold_eval, a1_minutes_gate, a1_minutes_no_report, a1_minutes_unconditional, a1_rotation_diagnose, engine, minutes
+
+
+class MinuteGateTests(unittest.TestCase):
+    def reports(self):
+        def metric():
+            return {'change': -0.02, 'ci_95': [-0.03, -0.01]}
+
+        def distribution():
+            return {'status': 'ok', 'crps': metric(), 'bias': metric(), 'coverage': metric()}
+
+        players = {tier: {stat: distribution() for stat in ('min', 'pts', 'reb', 'ast', 'fg3m')}
+                   for tier in ('all', 'star', 'starter', 'bench')}
+        games = {stat: distribution() for stat in ('margin', 'total')}
+        games.update({f'q{q}_{stat}': distribution() for q in range(1, 5) for stat in ('margin', 'total')})
+        population = {'fold': 'F4', 'games': 1, 'player_games': 1, 'game_ids': ['g']}
+        report = {'runs': {'control': 'control', 'candidate': 'candidate'}, 'population': population,
+                  'players': players, 'games': games,
+                  'win': {'status': 'ok', 'brier': metric(), 'log_loss': metric()}}
+        noise = {'runs': {'control': 'control'}, 'population': dict(population),
+                 'players': {'all': {'min': {'crps': {'ci_95': [-0.02, 0.02]}}}}}
+        return report, noise
+
+    def test_strict_bounds_noise_and_missing_intervals_cannot_pass(self):
+        report, noise = self.reports()
+        report['players']['star']['min']['crps']['ci_95'] = [-0.01, 0.0578]
+        report['players']['star']['pts']['coverage']['ci_95'] = None
+        report['win']['status'] = 'infinite_log_loss'
+        report['win']['log_loss']['ci_95'] = None
+        result = a1_minutes_gate.assess(report, noise)
+        self.assertFalse(result['pooled_minute_crps']['passes_uncorrected_screen'])
+        failed = {(row['outcome'], row['metric']) for row in result['non_inferiority']['not_established']}
+        self.assertEqual(failed, {('star min', 'crps'), ('star pts', 'coverage'), ('win', 'log_loss')})
+
+    def test_mismatched_games_and_invalid_intervals_raise(self):
+        report, noise = self.reports()
+        noise['population']['game_ids'] = ['different']
+        with self.assertRaisesRegex(ValueError, 'frozen control and games'):
+            a1_minutes_gate.assess(report, noise)
+        with self.assertRaisesRegex(ValueError, 'ordered finite'):
+            a1_minutes_gate.interval({'ci_95': [float('nan'), 0.0]})
 
 
 class AvailabilityCohortTests(unittest.TestCase):

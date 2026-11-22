@@ -27,7 +27,11 @@ def sources() -> tuple[dict, int]:
     logs = logs.loc[logs['date'] < TEST_FROM, ['date', 'PLAYER_ID', 'TEAM_ABBREVIATION']].drop_duplicates()
     if logs.duplicated(['date', 'PLAYER_ID']).any():
         raise ValueError('auditor found ambiguous NBA player/day teams')
-    day_teams = {(str(r.date), int(r.PLAYER_ID)): str(r.TEAM_ABBREVIATION) for r in logs.itertuples(index=False)}
+    if logs['PLAYER_ID'].isna().any() or not np.isfinite(pd.to_numeric(logs['PLAYER_ID'], errors='raise')).all():
+        raise ValueError('auditor found missing or non-finite NBA player IDs')
+    person_ids = logs['PLAYER_ID'].to_numpy(dtype=np.int64)
+    day_teams = {(str(r.date), int(person)): str(r.TEAM_ABBREVIATION)
+                 for r, person in zip(logs.itertuples(index=False), person_ids)}
     people = pd.read_parquet(DERIVED / 'nbastats/players.parquet')
     if people[['person', 'player']].isna().any().any() or people['person'].duplicated().any() or people['player'].duplicated().any():
         raise ValueError('auditor found an invalid identity crosswalk')
@@ -59,9 +63,7 @@ def sources() -> tuple[dict, int]:
     return result, files
 
 
-def audit() -> dict:
-    report_path = ROOT / 'analysis/experiments/20261122_a1_s04_tracking_features.json'
-    feature_path = DERIVED / 'experiments/20261122_a1_s04_tracking_features.parquet'
+def audit(report_path: Path, feature_path: Path) -> dict:
     report = json.loads(report_path.read_text())
     if sha256_file(feature_path) != report['rows_sha256']:
         raise ValueError('saved tracking shot features do not match their report')
@@ -108,7 +110,7 @@ def audit() -> dict:
         if cursor and source_days[cursor - 1] >= day:
             raise ValueError('auditor included a same-day or future tracking response')
         complete_five = all(pd.notna(player) for player in players) and len(set(players)) == 5
-        values = [complete_five]
+        values: list[bool | int | float] = [complete_five]
         for bucket in BUCKETS:
             rates = []
             for player in players:
@@ -143,12 +145,16 @@ def audit() -> dict:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--feature-report', type=Path,
+                        default=ROOT / 'analysis/experiments/20261122_a1_s04_tracking_features.json')
+    parser.add_argument('--features', type=Path,
+                        default=DERIVED / 'experiments/20261122_a1_s04_tracking_features.parquet')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     if args.output.exists():
         raise FileExistsError(f'refusing to overwrite {args.output}')
     print('independently rebuilding chronological defender histories and lineups', flush=True)
-    result = audit()
+    result = audit(args.feature_report, args.features)
     write_json(args.output, result, pretty=True)
     print(json.dumps(result, indent=1), flush=True)
 

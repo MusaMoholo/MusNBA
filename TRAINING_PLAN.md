@@ -356,6 +356,11 @@ redistributing only within legal regulation headroom; fewer than five available 
 NBA-only-history and strict-runtime switches separately identifiable so their effects and interaction can be tested.
 The history candidate currently learns past states with the original D29 allocator; do not describe that as a
 strict-allocation training rebuild.
+`scripts/a1_minutes_gate.py` is intended to apply the frozen pooled-MIN seed-noise screen and registered player/game
+non-inferiority bounds to a paired report. Its first and v2 reports used the seed interval's half-width rather than
+the registered maximum absolute endpoint; do not use it for selection until corrected and regression-tested.
+Even after correction its uncorrected 95% result is an early screen only: Holm-adjusted family confirmation, wider
+folds, mechanics and the other promotion gates still apply.
 Before using the strict candidate's first historical screen for selection, a deterministic defect was found:
 redistribution can activate a zero target even when already-positive targets can absorb the deficit, changing the
 `draw > 0` target-play diagnostic. Correct this invariant without changing the registered populations, normal
