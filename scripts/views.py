@@ -346,6 +346,49 @@ def role_changes(entries: list, season_of, limit: int = 10) -> list:
     return up + down  # risers first, then fallers
 
 
+def slate_review(done: list, box_by_game) -> dict | None:
+    """U4 "How we did": finished games with a pre-game projection — favourites' record, Brier and log loss of the home
+    win chance, total and margin errors, and the players furthest from their own projected points distribution
+    (percentile of the actual line in the simulated worlds)."""
+    import math
+    games, players = [], []
+    for gid, r, sim in done:
+        try:
+            hp, ap = int(r['home_pts']), int(r['away_pts'])
+        except (TypeError, ValueError):
+            continue
+        fg = sim['periods']['fg']
+        ph = fg['home']['win']
+        won = 1.0 if hp > ap else 0.0
+        games.append({'game_id': gid, 'p_home': ph, 'won': won, 'fav_won': (ph >= 0.5) == (won == 1.0),
+                      'total_err': (hp + ap) - fg['total']['mean'], 'margin_err': (hp - ap) - fg['margin']['mean']})
+        for side, tid in (('home', r['home_id']), ('away', r['away_id'])):
+            box = {b['player_id']: b for b in box_by_game[gid][tid]}
+            for x in sim[side]['players']:
+                b = box.get(str(x['id']))
+                d = ((x.get('periods') or {}).get('fg') or {}).get('stats', {}).get('pts')
+                if not b or not d or int(b.get('dnp') or 0) or b.get('pts') in ('', None):
+                    continue
+                a = int(b['pts'])
+                tot = sum(d['hist']) or 1
+                below = sum(c for i, c in enumerate(d['hist']) if i + d['min'] < a)
+                at = d['hist'][a - d['min']] if 0 <= a - d['min'] < len(d['hist']) else 0
+                players.append({'id': str(x['id']), 'name': x['name'], 'team': str(tid), 'game_id': gid, 'actual': a,
+                                'proj': round(d['mean'], 1), 'pct': round((below + at / 2) / tot, 3)})
+    if not games:
+        return None
+    n = len(games)
+    brier = sum((g['p_home'] - g['won']) ** 2 for g in games) / n
+    ll = -sum(math.log(max(1e-4, g['p_home'] if g['won'] else 1 - g['p_home'])) for g in games) / n
+    rated = [p for p in players if p['proj'] >= 8]
+    return {'games': n, 'fav_won': sum(g['fav_won'] for g in games), 'brier': round(brier, 3), 'log_loss': round(ll, 3),
+            'total_mae': round(sum(abs(g['total_err']) for g in games) / n, 1), 'total_bias': round(sum(g['total_err'] for g in games) / n, 1),
+            'margin_mae': round(sum(abs(g['margin_err']) for g in games) / n, 1),
+            'in_range_share': round(sum(0.1 <= p['pct'] <= 0.9 for p in players) / max(len(players), 1), 3), 'players': len(players),
+            'overs': sorted(rated, key=lambda p: (-p['pct'], -(p['actual'] - p['proj'])))[:4],
+            'unders': sorted(rated, key=lambda p: (p['pct'], p['actual'] - p['proj']))[:4]}
+
+
 def games_to_watch(day_games: list) -> dict | None:
     """Today strip: the closest finish (chance the final margin is within 5), the highest projected total and the likeliest
     overtime, over a slate's projected games (stored distributions only)."""
@@ -527,9 +570,11 @@ def build(views_root: Path = VIEWS) -> dict:
     for day in slate_dates:
         snap = snaps.get(day)
         games = []
-        entries, watch = [], []
+        entries, watch, done = [], [], []
         for r in sorted(by_date.get(day, []), key=lambda r: (r['tip_utc'], r['game_id'])):
             pj = projections.get(r['game_id'])
+            if pj and r['status'] == 'final' and pj['meta'].get('kind') == 'prospective':  # pre-game projections only
+                done.append((r['game_id'], r, pj['sim']))
             if pj and r['status'] != 'final':  # spotlight: projected, not yet played
                 entries += spotlight_entries(r['game_id'], r, pj['sim'])
                 watch.append((r['game_id'], r, pj['sim']))
@@ -547,7 +592,8 @@ def build(views_root: Path = VIEWS) -> dict:
             'spotlight': (spotlight(entries, season_lookup(projections[entries[0]['game_id']]['day']),
                                     snaps[projections[entries[0]['game_id']]['day']]['path']) if entries else None),
             'watch': games_to_watch(watch) if len(watch) > 1 else None,
-            'roles': role_changes(entries, season_lookup(projections[entries[0]['game_id']]['day'])) if entries else []})
+            'roles': role_changes(entries, season_lookup(projections[entries[0]['game_id']]['day'])) if entries else [],
+            'review': slate_review(done, box_by_game) if done else None})
 
     stats_cache = {latest_day: L}
     M_real = load_matchups()

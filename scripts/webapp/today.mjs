@@ -51,6 +51,7 @@ export async function render(view, {rest, meta, current}) {
     </section>
     ${modelNote(slate)}
     ${slateStrip(games, day)}
+    ${review(slate.review)}
     ${slate.spotlight ? `<div class="games spot-grid">${slateSpotlight(slate.spotlight, slate.watch, slate.roles)}</div>` : ''}
     <div class="games">${games.map(g => card(g, slate.watch?.closest?.game_id)).join('')}</div>`;
   view.querySelectorAll('[data-go]').forEach(b => b.onclick = () => { if (b.dataset.go) location.hash = '#/today/' + b.dataset.go; });
@@ -85,6 +86,20 @@ function slateStrip(games, day) {
   for (let t = Math.ceil(t0 / 3600e3) * 3600e3; t <= t0 + span; t += 3600e3) hours.push(`<span class="tl-hour" style="left:${(4 + 92 * (t - t0) / span).toFixed(1)}%">${ukHM(new Date(t))}</span>`);
   return `<section class="panel slate-strip"><div class="tiles">${tiles}</div>
     <div class="timeline" style="height:${depth * 26 + 26}px" aria-label="Tip times (UK)">${marks.join('')}<div class="tl-axis" style="top:${depth * 26 + 6}px"></div>${hours.map(h => h.replace('class="tl-hour"', `class="tl-hour" data-top="${depth * 26 + 8}"`)).join('')}</div></section>`;
+}
+
+// U4: "How we did" — finished games with a pre-game projection: favourites, win-chance scores, total/margin errors and the
+// players furthest from their own projected points distribution
+function review(r) {
+  if (!r) return '';
+  const who = p => `<a class="rv-p" href="#/game/${p.game_id}/player/${p.id}">${logo(p.team, 'sm')}<span>${esc(p.name)}</span><b>${p.actual}</b><small>proj ${f1(p.proj)} · ${Math.round(100 * p.pct)}th pct</small></a>`;
+  const tiles = [['Favourites won', `${r.fav_won} of ${r.games}`], ['Win % Brier · log loss', `${r.brier.toFixed(3)} · ${r.log_loss.toFixed(3)}`],
+    ['Total error (avg · bias)', `${f1(r.total_mae)} · ${r.total_bias > 0 ? '+' : ''}${f1(r.total_bias)}`], ['Margin error (avg)', f1(r.margin_mae)],
+    ['Players inside 10–90%', `${Math.round(100 * r.in_range_share)}% of ${r.players}`]].map(([l, v]) => `<div class="tile"><span>${l}</span><b>${v}</b></div>`).join('');
+  return `<section class="panel review"><h3 style="margin-top:0">How the projections did</h3><div class="tiles">${tiles}</div>
+    <div class="rv-cols"><div><span class="spot-kicker">Beat their projection</span>${r.overs.map(who).join('')}</div>
+      <div><span class="spot-kicker">Fell short</span>${r.unders.map(who).join('')}</div></div>
+    <p class="note">Pre-game projections only. Brier 0.25 = coin flip; a calibrated model has ~80% of player lines inside its 10–90% range. Percentile = where the actual points fell in his simulated games.</p></section>`;
 }
 
 function modelNote(slate) {
