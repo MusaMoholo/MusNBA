@@ -167,25 +167,26 @@ def log_key(name: str, season_type: str, season: str) -> str:
 
 def fetch_logs(client: Client, seasons: list[str], force_current: bool = True) -> dict:
     out = {'requests': 0, 'skipped': 0, 'empty': []}
-    store = None
     for season in seasons:
         store = Store('gamelogs', season)
-        for st in SEASON_TYPES:
-            if season == CURRENT and st != 'Regular Season':
-                continue
-            for name, (endpoint, extra) in LOG_SPECS.items():
-                key = log_key(name, st, season)
-                if store.has(key):
-                    out['skipped'] += 1
+        try:
+            for st in SEASON_TYPES:
+                if season == CURRENT and st != 'Regular Season':
                     continue
-                url = log_url(endpoint, season, st, extra)
-                body = client.get(url)
-                store.put(key, url, body)
-                out['requests'] += 1
-                rows = json.loads(body)['resultSets'][0]['rowSet']
-                if not rows:
-                    out['empty'].append(f'{season} {st} {name}')
-        store.flush()
+                for name, (endpoint, extra) in LOG_SPECS.items():
+                    key = log_key(name, st, season)
+                    if store.has(key):
+                        out['skipped'] += 1
+                        continue
+                    url = log_url(endpoint, season, st, extra)
+                    body = client.get(url)
+                    store.put(key, url, body)
+                    out['requests'] += 1
+                    rows = json.loads(body)['resultSets'][0]['rowSet']
+                    if not rows:
+                        out['empty'].append(f'{season} {st} {name}')
+        finally:
+            store.flush()
     return out
 
 
@@ -233,7 +234,9 @@ def fetch_games(client: Client, endpoint: str, seasons: list[str], max_requests:
         for season, st, gid, day in games:
             if day >= today:  # only finished slates (the logs list only played games; belt and braces)
                 continue
-            store = stores.setdefault(season, Store(endpoint, season))
+            if season not in stores:
+                stores[season] = Store(endpoint, season)
+            store = stores[season]
             if store.has(gid):
                 out['skipped'] += 1
                 continue
@@ -271,7 +274,9 @@ def fetch_ptdefend(client: Client, seasons: list[str], categories: list[str], ma
             for season, st, day in dates:
                 if day >= today:
                     continue
-                store = stores.setdefault(season, Store('leaguedashptdefend', season))
+                if season not in stores:
+                    stores[season] = Store('leaguedashptdefend', season)
+                store = stores[season]
                 key = f'{ck}_{day}'
                 if store.has(key):
                     out['skipped'] += 1
@@ -308,7 +313,9 @@ def fetch_hustle(client: Client, seasons: list[str], max_requests: int | None = 
         for season, st, day in dates:
             if day >= today:
                 continue
-            store = stores.setdefault(season, Store('leaguehustlestatsplayer', season))
+            if season not in stores:
+                stores[season] = Store('leaguehustlestatsplayer', season)
+            store = stores[season]
             if store.has(day):
                 out['skipped'] += 1
                 continue

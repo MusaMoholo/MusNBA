@@ -16,7 +16,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 from basketball_common import DERIVED, write_json  # noqa: E402
-from scripts import a1_compare, backtest  # noqa: E402
+from scripts import a1_compare, a1_manifest, backtest, train  # noqa: E402
 from scripts.evaluate import EXPERIMENTS, FOLDS  # noqa: E402
 
 
@@ -42,7 +42,7 @@ def legacy_check(new: pd.DataFrame, old: pd.DataFrame, keys: list[str], label: s
     return {'rows': len(old), 'columns': len(old.columns), 'absolute_tolerance': 1e-12}
 
 
-def audit(run: str, reference: str | None = None) -> dict:
+def audit(run: str, reference: str | None = None, pin_current_inputs: bool = False) -> dict:
     log = json.loads((EXPERIMENTS / f'{run}.json').read_text())
     frame = pd.read_parquet(DERIVED / 'experiments' / f'{run}.parquet')
     players = pd.read_parquet(DERIVED / 'experiments' / f'{run}_players.parquet')
@@ -138,6 +138,33 @@ def audit(run: str, reference: str | None = None) -> dict:
         report['legacy_reproduction'] = {'reference': reference,
                                          'games': legacy_check(frame, old, ['game_id'], 'game'),
                                          'players': legacy_check(players, old_players, ['game_id', 'player'], 'player')}
+    if pin_current_inputs:
+        feature_path = Path(spec.get('default', {}).get('features') or DERIVED / 'features' / 'pregame.parquet')
+        feature_path = feature_path if feature_path.is_absolute() else ROOT / feature_path
+        folder = train.MODELS / log['models']
+        config = json.loads((folder / 'config.json').read_text())
+        paths = [ROOT / 'basketball_common.py', ROOT / log['config'], feature_path,
+                 feature_path.parent / 'team_pregame.parquet', feature_path.parent / 'features_report.json',
+                 DERIVED / 'experiments' / f'{run}.parquet', DERIVED / 'experiments' / f'{run}_players.parquet',
+                 EXPERIMENTS / f'{run}.json', DERIVED / 'teams.json', DERIVED / 'athletes.parquet',
+                 DERIVED / 'history' / str(season) / 'stints.parquet',
+                 DERIVED / 'history' / str(season) / 'player_periods.csv.gz',
+                 ROOT / 'data' / 'raw' / 'hoopr' / f'play_by_play_{season}.parquet']
+        paths += [ROOT / 'scripts' / f'{name}.py' for name in (
+            'a1_manifest', 'a1_output_audit', 'aggregate', 'backtest', 'engine', 'evaluate', 'features', 'matchups', 'minutes', 'nodes',
+            'pbp', 'plays', 'projection', 'rotations', 'train')]
+        paths += a1_manifest.model_paths(folder)
+        if (folder / 'meta.json').exists():
+            paths.append(folder / 'meta.json')
+        for history in sorted((DERIVED / 'history').glob('*/')):
+            paths += [history / 'segments.parquet', history / 'on_court.parquet']
+        paths += sorted((ROOT / 'data' / 'raw' / 'hoopr').glob('player_box_*.parquet'))
+        if config.get('matchup'):
+            matchup = Path(config['matchup'])
+            paths.append(matchup if matchup.is_absolute() else ROOT / matchup)
+        report['input_fingerprints'] = [a1_manifest.fingerprint(p) for p in paths]
+        report['fingerprint_scope'] = ('Files hashed at audit time; verify they did not change since the run. '
+                                       'The log commit is only Git HEAD when the worktree is dirty.')
     return report
 
 
@@ -145,11 +172,13 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('run')
     ap.add_argument('--reference', help='legacy run to reproduce on this run’s exact games')
+    ap.add_argument('--pin-current-inputs', action='store_true',
+                    help='hash current source, model and feature files; only meaningful if unchanged since the run')
     ap.add_argument('--output', type=Path, required=True, help='new report path; existing reports are never overwritten')
     args = ap.parse_args()
     if args.output.exists():
         raise FileExistsError(f'refusing to overwrite {args.output}')
-    report = audit(args.run, args.reference)
+    report = audit(args.run, args.reference, args.pin_current_inputs)
     write_json(args.output, report, pretty=True)
     print(json.dumps(report, indent=2))
 

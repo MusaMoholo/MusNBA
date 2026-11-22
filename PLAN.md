@@ -1,6 +1,6 @@
 # MusNBA — game plan and progress
 
-Updated **22 November 2026 (dashboard complete/public; A1 S01 complete, S02 next)**. The single record of scope, progress and decisions. Every agent updates it at
+Updated **22 November 2026 (dashboard complete/public; A1 S01 complete, S02 underway)**. The single record of scope, progress and decisions. Every agent updates it at
 every checkpoint (AGENTS.md § Checkpoint protocol). New here? Read [AGENTS.md](AGENTS.md) first, then
 [HANDOFF_NEXT.md](HANDOFF_NEXT.md) — it says exactly what to do next.
 
@@ -108,7 +108,7 @@ Each subtask ends with evidence, current docs and a commit/push checkpoint (AGEN
 | M11 | Availability model | ☐ **A1 S07/S08/S10**: report coverage, play/start probabilities, branches and future absences | Held-out calibration and games-missed realism where dated development data supports them; honest fallbacks otherwise | Planned |
 | M12 | Season pathway calibration | ◐ **first cut (20 Nov): team pathway v1 in the app** — walk-forward 2022-26 (480 team-starts): dispersion 1.00 (fixed probabilities 1.53), 10–90% coverage 84% (65%), CRPS −4% in every held-out season; still wide in November (0.84) and surprises fade with the date (sim 0.52 → 0.18 v real 0.40 flat) | Dispersion ≈ 1.0 **at every start date**, persistence matches | `pathway.py`, `season_backtest.py` |
 | UX | Dashboard upgrade programme U1–U22 | ✅ **22 Nov:** all 22 shipped; U15–U22 adds roster roles, playoff picture, win ranges, races/movers/leaders inside Standings and model guide; 156 full + 12 final layout browser checks, hosted PWA 15/15 | Checked at 1440/960/390, both themes, stored data only | DASHBOARD_PLAN.md |
-| A1 | Expanded accuracy/robustness programme | ◐ **6.0% — S01 complete, S02 0%, 22 Nov**; 14 tasks, fixed weights, 140 rungs | Gates in §6b; final nightly + versioned history + successor chunk | HANDOFF § Progress ladders |
+| A1 | Expanded accuracy/robustness programme | ◐ **7.8% — S01 complete, S02 30%, 22 Nov**; 14 tasks, fixed weights, 140 rungs | Gates in §6b; final nightly + versioned history + successor chunk | HANDOFF § Progress ladders |
 
 ### 6a. Next chunk — A1: player accuracy, defence and trustworthy season paths
 
@@ -522,3 +522,37 @@ face cards and unrelated presentation remain §9b backlog. NBA history moved to 
   Smoke **102/102**, deliberate fault **22 detected** and **15 focused tests** passed; final manifest pins
   1,318 confirmation games and source checkpoint `c6d5db4`. No candidate, production model or PWA bundle changed;
   S02 begins with downloader integrity and history inventory.
+
+- **22 Nov 2026 · A1 S02 10%:** inventoried **10,094** NBA raw files and manifests with no missing, unindexed,
+  corrupt or hash/size-mismatched files; **45** entries lack acquisition metadata. **3,622** logged PBP games remain.
+  Eight hoopR files match their manifests; one 2025–26 box-only game has no retained ESPN play-by-play. Current ESPN
+  final summaries have no per-file acquisition/hash manifest. Production and PWA remain unchanged.
+
+- **22 Nov 2026 · A1 S02 20%:** fixed three eager per-season `Store` paths and added exceptional-exit flushing to
+  season logs; all **19** focused A1 tests pass, including the reproduced interruption and resume failures. One
+  363-request PBP batch is running; selected audit cases cover missing ESPN play-by-play, an unscored player and
+  overtime. Production models, forecasts and PWA remain unchanged.
+
+- **22 Nov 2026 · A1 S02 ongoing:** four history batches retained **1,452/3,622** originally missing games; batch 5
+  runs toward the half-queue rung. Across five retained seasons **14,235/1,216,437** actors are absent from the
+  segment-start offence. An isolated substitution-split/quarantine pilot on the fixed 200 F4 games reduces this
+  **489→6**, preserves event/possession accounting and reduces median credited-seconds discrepancy **13→0**;
+  70 unresolved segments remain quarantined. A history-only causal-prior build covers **111,075 player-games /
+  5,196 games**, with zero later-season differences across 38 player and 14 team columns; assignment/body cutoff
+  safety remains open. Production and PWA remain unchanged; full evidence and commands are in HANDOFF/FINDINGS.
+- **22 Nov 2026 · A1 S02 30%:** five batches retained **1,815/3,622** original PBP items, with no empty
+  responses; batch 6 runs in the same single stream. Fold-dated assignment diagnostics cover F1–F4. On F4's
+  **35,216** held-out credits, dropping historically unverified body measurements worsens weighted log likelihood
+  **−1.54347→−1.54611**; this is not an engine test. Chronological training-row assignment and position provenance
+  remain open. No production model, forecast or PWA bundle changed.
+- **22 Nov 2026 · A1 S02 ongoing:** nine batches retained **3,267/3,622** original items; the final 355-item batch runs. A
+  prior-position base keeps **891/111,075** player-games' positions unknown, including all **877** first observations.
+  Thirty monthly body-free assignment fits and four fold-frozen schedules are isolated; all four corresponding feature
+  snapshots are built. Sampled F1–F4 parity: **304,175/304,175** matchup, lineup and relative-column comparisons
+  match, excluding 36 actor/lineup conflicts. Full F4 chain built **16** datasets / **17,814,437** rows; accounting
+  passed, and a fitted-model wiring run completed **3 games × 20 worlds** with independent score/player accounting.
+  Real-slice injections left **3,098** earlier values unchanged and changed
+  **42** shot-derived and **47** minute/position-derived later values. A diagnostic baseline's held-out-batch fill now
+  uses training data.
+  Accepted-system smoke **102/102**, including bit-for-bit v1.3 replay; deliberate `--fault` exited 1 as intended
+  (**80/102** checks passed after injected corruption). No model, forecast or PWA bundle changed.

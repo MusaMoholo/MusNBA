@@ -1,0 +1,21 @@
+{
+  "version": "a1_s02_f4_causal_diagnostic",
+  "status": "isolated F4 causal-input wiring diagnostic; not promoted",
+  "default": {
+    "half_life": null,
+    "playoff_weight": 1.0,
+    "drop": ["@team", "@schedule", "@clutch", "@stype"],
+    "banded": true,
+    "recalibrate": false,
+    "features": "data/derived/variants/a1_scheduled_F4_20261122_v2/features/pregame.parquet",
+    "segments": null
+  },
+  "nodes": {
+    "duration": {"drop": ["@schedule", "@clutch", "@stype"]},
+    "what": {"drop": ["@schedule", "@clutch", "@stype"]},
+    "shot_result": {"drop": ["@schedule", "@clutch", "@stype"]},
+    "free_throw": {"drop": ["@team", "@schedule", "@clutch", "@heat", "@stype"]},
+    "event": {"drop": ["@team", "@clutch", "off_rest", "def_rest", "@stype"]},
+    "turnover_type": {"drop": ["@team", "@clutch", "off_rest", "def_rest", "@stype"]}
+  }
+}

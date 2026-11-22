@@ -80,6 +80,13 @@ class Models:
         # rules below must follow the version's rebound convention (FINDINGS §3k).
         self.segments = Path(self.cfg['segments']) if self.cfg.get('segments') else DERIVED
         self.features = Path(self.cfg['features']).parent if self.cfg.get('features') else DERIVED / 'features'
+        report_path = self.features / 'features_report.json'
+        report = json.loads(report_path.read_text()) if report_path.exists() else {}
+        self.relative_missing_policy = report.get('relative_missing_policy', 'legacy')
+        self.position_policy = 'prior_observed' if report.get('causal_positions') else 'legacy'
+        self.dated_candidate = False
+        if self.relative_missing_policy not in ('legacy', 'lineup_median'):
+            raise ValueError('unknown relative-profile missing policy')
         hist = pd.concat([pd.read_parquet(p, columns=['date_et', 'game_ok', 'end_type', 'heave', 'zone', 'x', 'y', 'fta', 'period',
                                                        'start_clock', 'fouls_def', 'made', 'duration', 'shot_time'])
                           for p in sorted((self.segments / 'history').glob('*/segments.parquet'))])
@@ -125,7 +132,18 @@ class Models:
         self.theta = None
         if self.mu:
             path = Path(self.cfg['matchup'])
-            self.theta = json.loads((path if path.is_absolute() else ROOT / path).read_text())
+            path = path if path.is_absolute() else ROOT / path
+            self.theta = json.loads(path.read_text())
+            if self.theta.get('kind') == 'dated_implicit_schedule':
+                from basketball_common import sha256_file
+                from scripts import matchups
+                if self.theta['training_through'] != self.cfg['train_through']:
+                    raise ValueError('assignment schedule and model training cutoffs differ')
+                if report.get('input_sha256', {}).get(self.cfg['matchup']) != sha256_file(path):
+                    raise ValueError('assignment schedule differs from the feature-build provenance')
+                next_day = str(np.datetime64(self.cfg['train_through']) + np.timedelta64(1, 'D'))
+                self.theta = matchups.dated_masks(self.theta, [next_day])[0][0]
+                self.dated_candidate = True
 
     def predict(self, node, cols: dict, n: int):
         m = self.nodes[node]
@@ -138,7 +156,8 @@ class Models:
 class Game:
     """One game's players (home then away in one index space), profiles, team style and rotation tables."""
 
-    def __init__(self, game, players: dict, profiles: pd.DataFrame, team_latest: pd.DataFrame, stints: pd.DataFrame, day: str):
+    def __init__(self, game, players: dict, profiles: pd.DataFrame, team_latest: pd.DataFrame, stints: pd.DataFrame,
+                 day: str, position_policy: str = 'legacy'):
         self.game = game
         self.sides = ('home', 'away')
         self.players = players
@@ -154,9 +173,17 @@ class Game:
         body = pd.read_parquet(DERIVED / 'athletes.parquet', columns=['player', 'height_in', 'weight_lb'])
         body = body.assign(player=body['player'].astype(str)).drop_duplicates('player').set_index('player').reindex([str(x) for x in self.ids])
         self.P['height_in'], self.P['weight_lb'] = body['height_in'].to_numpy(np.float32), body['weight_lb'].to_numpy(np.float32)
-        grp = prof['pos'].fillna(pd.Series([p['pos'] for s in self.sides for p in players[s]], index=prof.index)).map(nodes.group)
-        self.P['grp_code'] = grp.map({'G': 0, 'F': 1, 'C': 2}).fillna(1).to_numpy(np.float32)
-        self.P['is_big'] = (grp == 'C').to_numpy(np.float32)
+        if position_policy == 'prior_observed':
+            from scripts.features import known_group
+            grp = prof['pos'].map(known_group)
+            self.P['grp_code'] = grp.map({'G': 0, 'F': 1, 'C': 2}).to_numpy(np.float32)
+            self.P['is_big'] = np.where(grp.notna(), (grp == 'C').astype(float), np.nan).astype(np.float32)
+        elif position_policy == 'legacy':
+            grp = prof['pos'].fillna(pd.Series([p['pos'] for s in self.sides for p in players[s]], index=prof.index)).map(nodes.group)
+            self.P['grp_code'] = grp.map({'G': 0, 'F': 1, 'C': 2}).fillna(1).to_numpy(np.float32)
+            self.P['is_big'] = (grp == 'C').to_numpy(np.float32)
+        else:
+            raise ValueError(f'unknown position policy: {position_policy}')
         self.expected = np.array([p['base_min'] for s in self.sides for p in players[s]], dtype=float)
         self.avail = np.array([p['availability'] for s in self.sides for p in players[s]], dtype=float)
         tl = team_latest.set_index('team')
@@ -414,13 +441,17 @@ class Engine:
         q = np.clip(st.period[A], 1, 4)
         c['usage_mult_now'] = np.choose(q[:, None] - 1, [P[f'usage_mult_q{k}'][L] for k in (1, 2, 3, 4)])
         for col in rel:
-            v = np.where(np.isnan(c[col]), self.m.median[col], c[col])
-            tot = v.sum(1, keepdims=True)
-            c[f'{col}_share'] = np.where(tot > 0, v / np.where(tot > 0, tot, 1), np.nan)
-            order = np.argsort(-v, axis=1, kind='stable')
-            rank = np.empty_like(order)
-            np.put_along_axis(rank, order, np.arange(1, 6)[None, :].repeat(len(A), 0), 1)
-            c[f'{col}_rank'] = rank.astype(np.float32)
+            if self.m.relative_missing_policy == 'lineup_median':
+                share, rank = nodes.relative_lineup(c[col])
+                c[f'{col}_share'], c[f'{col}_rank'] = share.astype(np.float32), rank.astype(np.float32)
+            else:
+                v = np.where(np.isnan(c[col]), self.m.median[col], c[col])
+                tot = v.sum(1, keepdims=True)
+                c[f'{col}_share'] = np.where(tot > 0, v / np.where(tot > 0, tot, 1), np.nan)
+                order = np.argsort(-v, axis=1, kind='stable')
+                rank = np.empty_like(order)
+                np.put_along_axis(rank, order, np.arange(1, 6)[None, :].repeat(len(A), 0), 1)
+                c[f'{col}_rank'] = rank.astype(np.float32)
         return c
 
     @staticmethod
@@ -444,6 +475,8 @@ class Engine:
 
     # ----------------------------------------------------------------------------- one game
     def simulate(self, g: Game, W: int, seed) -> dict:
+        if self.m.dated_candidate and g.day <= self.m.cfg['train_through']:
+            raise ValueError('dated candidate cannot simulate a game at or before its training cutoff')
         rng = np.random.default_rng(seed)
         st = Worlds(g, W, rng)
         avail_world = rng.random((W, g.n)) < g.avail[None, :]
@@ -783,7 +816,10 @@ def inputs_for(game: dict, day: str, T, lg, P, registry, Q=None, priors=None, ro
             chosen = {sure[i]['id'] for i in pick}
             for p in players[s]:
                 p['starter'] = p['projected_starter'] = p['id'] in chosen
-    g = Game(game, players, profiles, team_latest, stints, day)
+    report_path = feats / 'features_report.json'
+    report = json.loads(report_path.read_text()) if report_path.exists() else {}
+    position_policy = 'prior_observed' if report.get('causal_positions') else 'legacy'
+    g = Game(game, players, profiles, team_latest, stints, day, position_policy=position_policy)
     g.season = int(profiles['season'].max())
     return g
 

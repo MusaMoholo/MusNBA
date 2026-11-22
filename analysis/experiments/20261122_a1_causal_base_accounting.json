@@ -1,0 +1,258 @@
+{
+ "experiment": "a1_causal_base_accounting",
+ "population": "four retained historical seasons, no final-test dates",
+ "date_min": "2022-10-18",
+ "date_max": "2026-06-13",
+ "player_games": 111075,
+ "games": 5196,
+ "team_games": 10392,
+ "first_date_player_rows": 45,
+ "first_date_usage_known": 0,
+ "players_vs_retained": {
+  "matched_rows": 111075,
+  "first_season": 2023,
+  "first_season_rows": 27278,
+  "later_season_rows": 83797,
+  "columns": {
+   "games_eff": {
+    "first_season_different": 0,
+    "later_seasons_different": 0
+   },
+   "min_avg": {
+    "first_season_different": 0,
+    "later_seasons_different": 0
+   },
+   "start_share": {
+    "first_season_different": 0,
+    "later_seasons_different": 0
+   },
+   "min_share_q1": {
+    "first_season_different": 0,
+    "later_seasons_different": 0
+   },
+   "min_share_q2": {
+    "first_season_different": 0,
+    "later_seasons_different": 0
+   },
+   "min_share_q3": {
+    "first_season_different": 0,
+    "later_seasons_different": 0
+   },
+   "min_share_q4": {
+    "first_season_different": 0,
+    "later_seasons_different": 0
+   },
+   "off_segs_eff": {
+    "first_season_different": 0,
+    "later_seasons_different": 0
+   },
+   "usage": {
+    "first_season_different": 27263,
+    "later_seasons_different": 0
+   },
+   "shot_share": {
+    "first_season_different": 27277,
+    "later_seasons_different": 0
+   },
+   "tov_share": {
+    "first_season_different": 27277,
+    "later_seasons_different": 0
+   },
+   "foul_drawn_share": {
+    "first_season_different": 27277,
+    "later_seasons_different": 0
+   },
+   "live_tov_share": {
+    "first_season_different": 27278,
+    "later_seasons_different": 0
+   },
+   "mix_rim": {
+    "first_season_different": 27278,
+    "later_seasons_different": 0
+   },
+   "fg_rim": {
+    "first_season_different": 27182,
+    "later_seasons_different": 0
+   },
+   "mix_paint": {
+    "first_season_different": 27207,
+    "later_seasons_different": 0
+   },
+   "fg_paint": {
+    "first_season_different": 27215,
+    "later_seasons_different": 0
+   },
+   "mix_mid": {
+    "first_season_different": 27267,
+    "later_seasons_different": 0
+   },
+   "fg_mid": {
+    "first_season_different": 27278,
+    "later_seasons_different": 0
+   },
+   "mix_corner3": {
+    "first_season_different": 27278,
+    "later_seasons_different": 0
+   },
+   "fg_corner3": {
+    "first_season_different": 27259,
+    "later_seasons_different": 0
+   },
+   "mix_above3": {
+    "first_season_different": 27264,
+    "later_seasons_different": 0
+   },
+   "fg_above3": {
+    "first_season_different": 27260,
+    "later_seasons_different": 0
+   },
+   "assisted_share": {
+    "first_season_different": 27278,
+    "later_seasons_different": 0
+   },
+   "ft_pct": {
+    "first_season_different": 27270,
+    "later_seasons_different": 0
+   },
+   "fta_per_use": {
+    "first_season_different": 0,
+    "later_seasons_different": 0
+   },
+   "ast_rate": {
+    "first_season_different": 27276,
+    "later_seasons_different": 0
+   },
+   "oreb_pct": {
+    "first_season_different": 27247,
+    "later_seasons_different": 0
+   },
+   "dreb_pct": {
+    "first_season_different": 27270,
+    "later_seasons_different": 0
+   },
+   "stl_rate": {
+    "first_season_different": 27215,
+    "later_seasons_different": 0
+   },
+   "blk_rate": {
+    "first_season_different": 27278,
+    "later_seasons_different": 0
+   },
+   "pf_rate": {
+    "first_season_different": 27237,
+    "later_seasons_different": 0
+   },
+   "usage_mult_q1": {
+    "first_season_different": 0,
+    "later_seasons_different": 0
+   },
+   "usage_mult_q2": {
+    "first_season_different": 0,
+    "later_seasons_different": 0
+   },
+   "usage_mult_q3": {
+    "first_season_different": 0,
+    "later_seasons_different": 0
+   },
+   "usage_mult_q4": {
+    "first_season_different": 0,
+    "later_seasons_different": 0
+   },
+   "shots_eff": {
+    "first_season_different": 0,
+    "later_seasons_different": 0
+   },
+   "fta_eff": {
+    "first_season_different": 0,
+    "later_seasons_different": 0
+   }
+  }
+ },
+ "teams_vs_retained": {
+  "matched_rows": 10392,
+  "first_season": 2023,
+  "first_season_rows": 2596,
+  "later_season_rows": 7796,
+  "columns": {
+   "off_pace": {
+    "first_season_different": 2594,
+    "later_seasons_different": 0
+   },
+   "off_three": {
+    "first_season_different": 2574,
+    "later_seasons_different": 0
+   },
+   "off_rim": {
+    "first_season_different": 2596,
+    "later_seasons_different": 0
+   },
+   "off_tov": {
+    "first_season_different": 2596,
+    "later_seasons_different": 0
+   },
+   "off_foul": {
+    "first_season_different": 2590,
+    "later_seasons_different": 0
+   },
+   "off_oreb": {
+    "first_season_different": 2586,
+    "later_seasons_different": 0
+   },
+   "def_pace": {
+    "first_season_different": 2594,
+    "later_seasons_different": 0
+   },
+   "def_three": {
+    "first_season_different": 2574,
+    "later_seasons_different": 0
+   },
+   "def_rim": {
+    "first_season_different": 2596,
+    "later_seasons_different": 0
+   },
+   "def_tov": {
+    "first_season_different": 2596,
+    "later_seasons_different": 0
+   },
+   "def_foul": {
+    "first_season_different": 2590,
+    "later_seasons_different": 0
+   },
+   "def_oreb": {
+    "first_season_different": 2586,
+    "later_seasons_different": 0
+   },
+   "rest_days": {
+    "first_season_different": 0,
+    "later_seasons_different": 0
+   },
+   "season_day": {
+    "first_season_different": 0,
+    "later_seasons_different": 0
+   }
+  }
+ },
+ "scope": "first-season player/team priors and same-day histories only; assignment, body and other fitted inputs require separate cutoff audits",
+ "input_sha256": {
+  "/Users/moholom/Repos/Sports/Basketball/scripts/features.py": "1e43c5e31b17ea45a366ee94f39655431a451e90fbfcd954e2bec53be057967c",
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/history/2023/segments.parquet": "813b53edadf92f6e6c607211b1d4c64b312aa9fbe689851110e912419101a76e",
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/history/2023/on_court.parquet": "ba9b4b13e16e5b839e5530905497d2d00d231413ea40f39ee46855f3ebce8c3b",
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/history/2024/segments.parquet": "4a7c3c2bce39580cc8e1092ffc215d11bbd49f7bf117b4551eee40337203d2c0",
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/history/2024/on_court.parquet": "5461947edb052ef9e62b4a70ba49e57a0f98d929f4a19167f03aad3972457f95",
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/history/2025/segments.parquet": "d9db732172894ed8d3c6e5e99e3cd1c197006da22799413034ce3ce18cc5aee2",
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/history/2025/on_court.parquet": "5bbabab60114aa3f7fa096d7708be96f47177c541debcae88059da6b1adb77e9",
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/history/2026/on_court.parquet": "1b0ffaf53490c3fda4edd28ac427766a0af3a1bfe86f1fece240cd63ed1e8410"
+ },
+ "output_sha256": {
+  "data/derived/variants/a1_causal_base_20261122_v2/features/pregame.parquet": "1bd657a66ef42e6f624b860f3ed235896a6a93baa94bb9b6c058ce8ebf74fd28",
+  "data/derived/variants/a1_causal_base_20261122_v2/features/latest.parquet": "b5958130a84008007a5f0e002ba64da5ae5ef50fa1092de5d4602e2453a251ba",
+  "data/derived/variants/a1_causal_base_20261122_v2/features/team_pregame.parquet": "ebb3f3205e75d68a868a2a98c7ea804865143ca3d623147d92b4b2156b358bb9",
+  "data/derived/variants/a1_causal_base_20261122_v2/features/team_latest.parquet": "2e664bb0730037dbda2ee308e5bd88689ce4c742bd053c07afd336cdeb3b0a0f",
+  "data/derived/variants/a1_causal_base_20261122_v2/features/features_report.json": "fd0953a066a354dff83cf6724d8f568c236f82646f4bb46fcd6e6a4ccfd15665"
+ },
+ "baseline_sha256": {
+  "data/derived/features/pregame.parquet": "fa3351e61579841b22cc33641e1afa8fe287e234799cc10ecc06b7ecf0f5ad03",
+  "data/derived/features/team_pregame.parquet": "852e1995e3a6dc64283085a1ae2e2f4b9dffcd433787f0142d9203ebbba0f336"
+ }
+}

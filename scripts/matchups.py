@@ -114,11 +114,59 @@ def pair_features(sh: dict, df: dict) -> dict:
 
 def assignment(theta: dict, sh: dict, df: dict) -> np.ndarray:
     """(n, 5) probability that each of the five defenders guards the shooter (rows sum to 1; missing inputs → filled)."""
+    body_policy = theta.get('body_policy', 'include')
+    if body_policy not in ('include', 'omit'):
+        raise ValueError(f'unknown assignment body policy: {body_policy}')
+    if body_policy == 'omit':
+        sh, df = dict(sh), dict(df)
+        for column in ('height_in', 'weight_lb'):
+            sh[column] = np.zeros_like(sh[column], dtype=float)
+            df[column] = np.zeros_like(df[column], dtype=float)
     f = pair_features(_fill(sh, theta), _fill(df, theta))
     z = sum(theta['match'][k] * f[k] for k in MATCH)
     z = z - z.max(1, keepdims=True)
     e = np.exp(z)
     return e / e.sum(1, keepdims=True)
+
+
+def dated_masks(schedule: dict, dates) -> list:
+    """Choose the most recent pre-date assignment, frozen at this fold's training cutoff."""
+    if schedule.get('kind') != 'dated_implicit_schedule' or not schedule.get('models'):
+        raise ValueError('expected a nonempty dated implicit-assignment schedule')
+    cutoff = np.datetime64(schedule['training_through'], 'D')
+    starts = []
+    for i, model in enumerate(schedule['models']):
+        start = np.datetime64(model['valid_from'], 'D')
+        through = model.get('through')
+        if model.get('body_policy') != 'omit' or model.get('missing_policy') != 'retain_missing':
+            raise ValueError('dated candidate requires body-free assignment and retained missing values')
+        if through is None:
+            if i != 0:
+                raise ValueError('only the first assignment may have no training cutoff')
+            if any(model['match'].get(k) != 0.0 for k in MATCH):
+                raise ValueError('cold-start assignment must have fixed uniform weights')
+        elif np.datetime64(through, 'D') >= start or np.datetime64(through, 'D') > cutoff:
+            raise ValueError('assignment is not dated safely within its fold')
+        if model.get('kind') == 'real' or model.get('top2'):
+            raise ValueError('dated candidate supports implicit blended matchups only')
+        if np.isnat(start) or (starts and start <= starts[-1]):
+            raise ValueError('assignment valid-from dates must be strictly increasing')
+        starts.append(start)
+    if schedule['models'][0].get('through') is not None or np.isnat(cutoff):
+        raise ValueError('dated assignment needs an unfitted cold-start model and a valid training cutoff')
+    game_dates = np.asarray(dates, dtype='datetime64[D]')
+    indices = np.searchsorted(np.asarray(starts), game_dates, side='right') - 1
+    if np.isnat(game_dates).any() or (indices < 0).any():
+        raise ValueError('dated assignment does not cover every game date')
+    return [(schedule['models'][i], indices == i) for i in np.unique(indices)]
+
+
+def dated_assignment(schedule: dict, sh: dict, df: dict, dates) -> np.ndarray:
+    """Apply the same point-in-time assignments while building defender histories."""
+    out = np.empty((len(dates), 5), dtype=float)
+    for theta, rows in dated_masks(schedule, dates):
+        out[rows] = assignment(theta, {k: v[rows] for k, v in sh.items()}, {k: v[rows] for k, v in df.items()})
+    return out
 
 
 MU_SOURCES = ['m_fg_rim', 'm_fg_paint', 'm_fg_mid', 'm_fg_three', 'm_tov_rate', 'm_foul_rate',
@@ -131,15 +179,26 @@ def mu_columns(theta: dict, A: dict, D: dict, O: dict | None = None) -> dict:
     A: actor columns (n,) — grp_code, min_avg, height_in, weight_lb; D: the five defenders' columns (n, 5).
     Shared by the datasets (nodes.Chain) and the engine so training and simulation see the same inputs."""
     if theta.get('kind') == 'real':  # D32: fitted on real NBA matchup shares (scripts/realmatch.py)
+        if theta.get('body_policy', 'include') != 'include':
+            raise ValueError('body-free real-matchup assignment is not supported')
         from scripts import realmatch
         a = realmatch.real_assignment(theta, _fill(A, theta), _fill(D, theta), _fill(O, theta))
     else:
         a = assignment(theta, A, D)
-    def wavg(c):
+    policy = theta.get('missing_policy', 'legacy_batch_mean')
+    if policy not in ('legacy_batch_mean', 'retain_missing'):
+        raise ValueError(f'unknown matchup missing-value policy: {policy}')
+    def filled(c):
         v = D[c]
+        if policy == 'retain_missing':
+            count = (~np.isnan(v)).sum(axis=1, keepdims=True)
+            total = np.nansum(v, axis=1, keepdims=True)
+            fill = np.divide(total, count, out=np.full(total.shape, np.nan), where=count > 0)
+            return np.where(np.isnan(v), fill, v)
         fill = np.nanmean(v, axis=1, keepdims=True)
-        v = np.where(np.isnan(v), np.where(np.isnan(fill), np.nanmean(v), fill), v)
-        return (a * v).sum(1)
+        return np.where(np.isnan(v), np.where(np.isnan(fill), np.nanmean(v), fill), v)
+    def wavg(c):
+        return (a * filled(c)).sum(1)
     out = {}
     for z in ('rim', 'paint', 'mid', 'three'):
         src = f'm_fg_{z}' if f'm_fg_{z}' in D else f'd_fg_{z}'
@@ -152,15 +211,14 @@ def mu_columns(theta: dict, A: dict, D: dict, O: dict | None = None) -> dict:
     for k in ('three', 'rim'):  # D32 deterrence (v1.4e): attempt shares his likely defenders allow v expected
         if f'm_dx_{k}' in D:
             out[f'mu_dx_{k}'] = wavg(f'm_dx_{k}')
-    hs = np.where(np.isnan(A['height_in']), theta['fill']['height_in'], A['height_in'])
-    out['mu_height_gap'] = wavg('height_in') - hs
+    if theta.get('body_policy', 'include') == 'omit':
+        out['mu_height_gap'] = np.full(len(a), np.nan)
+    else:
+        hs = np.where(np.isnan(A['height_in']), theta['fill']['height_in'], A['height_in'])
+        out['mu_height_gap'] = wavg('height_in') - hs
     if theta.get('top2'):  # v1.4f (owner, 20 Nov): the two most likely defenders' own numbers and the assignment's confidence
         order = np.argsort(-a, axis=1, kind='stable')
         r = np.arange(len(a))
-        def filled(c):
-            v = D[c]
-            fill = np.nanmean(v, axis=1, keepdims=True)
-            return np.where(np.isnan(v), np.where(np.isnan(fill), np.nanmean(v), fill), v)
         for k, pre in ((0, 'mu1'), (1, 'mu2')):
             j = order[:, k]
             out[f'{pre}_p'] = a[r, j]
@@ -174,6 +232,20 @@ def mu_columns(theta: dict, A: dict, D: dict, O: dict | None = None) -> dict:
     return out
 
 
+def dated_mu_columns(schedule: dict, A: dict, D: dict, dates) -> dict:
+    """Apply point-in-time assignments to node rows; live inference uses the selected single fit."""
+    out = {}
+    for theta, rows in dated_masks(schedule, dates):
+        values = mu_columns(theta, {k: v[rows] for k, v in A.items()}, {k: v[rows] for k, v in D.items()})
+        if out and values.keys() != out.keys():
+            raise ValueError('dated assignments produce different matchup columns')
+        for name, value in values.items():
+            if name not in out:
+                out[name] = np.full(len(dates), np.nan)
+            out[name][rows] = value
+    return out
+
+
 def _fill(cols: dict, theta: dict) -> dict:
     fill = theta.get('fill', {})
     return {k: np.where(np.isnan(v), fill.get(k, 0.0), v) if np.issubdtype(np.asarray(v).dtype, np.floating) else v for k, v in cols.items()}
@@ -181,14 +253,23 @@ def _fill(cols: dict, theta: dict) -> dict:
 
 # ---------------------------------------------------------------- fitting
 
-def _players(through: str | None):
-    pre = pd.read_parquet(DERIVED / 'features' / 'pregame.parquet', columns=['game_id', 'player', 'pos', 'min_avg', 'pf_rate', 'blk_rate', 'stl_rate'])
+def _players(through: str | None, pregame: Path | None = None, include_body: bool = True):
+    pre = pd.read_parquet(pregame or DERIVED / 'features' / 'pregame.parquet',
+                          columns=['game_id', 'player', 'pos', 'min_avg', 'pf_rate', 'blk_rate', 'stl_rate'])
     pre['game_id'], pre['player'] = pre['game_id'].astype(str), pre['player'].astype(str)
-    body = pd.read_parquet(DERIVED / 'athletes.parquet', columns=['player', 'height_in', 'weight_lb'])
-    body['player'] = body['player'].astype(str)
-    pre = pre.merge(body, on='player', how='left')
-    p = pre['pos'].fillna('').str.upper()
-    pre['grp_code'] = np.where(p.str.startswith('C'), 2, np.where(p.str.startswith('G') | p.isin(['PG', 'SG']), 0, 1)).astype(float)
+    if include_body:
+        body = pd.read_parquet(DERIVED / 'athletes.parquet', columns=['player', 'height_in', 'weight_lb'])
+        body['player'] = body['player'].astype(str)
+        pre = pre.merge(body, on='player', how='left')
+    else:
+        # A constant removes both geometry terms; it is not a recorded player measurement.
+        pre['height_in'], pre['weight_lb'] = 0.0, 0.0
+    if include_body:
+        p = pre['pos'].fillna('').str.upper()
+        pre['grp_code'] = np.where(p.str.startswith('C'), 2, np.where(p.str.startswith('G') | p.isin(['PG', 'SG']), 0, 1)).astype(float)
+    else:
+        from scripts.features import known_group
+        pre['grp_code'] = pre['pos'].map(known_group).map({'G': 0, 'F': 1, 'C': 2}).astype(float)
     return pre
 
 
@@ -211,8 +292,9 @@ def events(seg: pd.DataFrame, types: pd.Series) -> pd.DataFrame:
     return ev
 
 
-def design(seg: pd.DataFrame, ev: pd.DataFrame, pre: pd.DataFrame):
-    """Per event: (n, 5, k) features over the five defenders, the credited index, weights."""
+def design(seg: pd.DataFrame, ev: pd.DataFrame, pre: pd.DataFrame, preprocessing: dict | None = None,
+           return_preprocessing: bool = False):
+    """Per event: five-defender features, credited index and weights, with optional training-only preprocessing."""
     s = seg.set_index('seg_id').loc[ev['seg_id']]
     defs = s[[f'def_{i}' for i in range(1, 6)]].astype(str).to_numpy()
     gid = s['game_id'].astype(str).to_numpy()
@@ -229,12 +311,26 @@ def design(seg: pd.DataFrame, ev: pd.DataFrame, pre: pd.DataFrame):
         for c in cols:
             dd[c][:, j] = g[c].to_numpy(float)
     shc = {c: sh[c].to_numpy(float) for c in cols}
-    fill = {c: float(np.nanmedian(np.concatenate([shc[c], dd[c].ravel()]))) for c in cols}
+    if preprocessing is None:
+        fill = {c: float(np.nanmedian(np.concatenate([shc[c], dd[c].ravel()]))) for c in cols}
+    else:
+        fill = preprocessing['fill']
+    if any(c not in fill or not np.isfinite(fill[c]) for c in cols):
+        raise ValueError('assignment preprocessing has missing or non-finite fills')
     shc = {c: np.where(np.isnan(v), fill[c], v) for c, v in shc.items()}
     dd = {c: np.where(np.isnan(v), fill[c], v) for c, v in dd.items()}
     f = pair_features(shc, dd)
     ev_kind = ev['event'].to_numpy()
-    z = lambda c: (dd[c] - np.nanmean(dd[c])) / (np.nanstd(dd[c]) + 1e-9)
+    if preprocessing is None:
+        means = {c: float(np.nanmean(dd[c])) for c in ('pf_rate', 'blk_rate', 'stl_rate')}
+        scales = {c: float(np.nanstd(dd[c]) + 1e-9) for c in means}
+        preprocessing = {'fill': fill, 'means': means, 'scales': scales}
+    else:
+        means, scales = preprocessing['means'], preprocessing['scales']
+    if any(c not in means or c not in scales or not np.isfinite(means[c]) or
+           not np.isfinite(scales[c]) or scales[c] <= 0 for c in ('pf_rate', 'blk_rate', 'stl_rate')):
+        raise ValueError('assignment preprocessing has missing or invalid propensity scales')
+    z = lambda c: (dd[c] - means[c]) / scales[c]
     big = (dd['grp_code'] == 2).astype(float)
     g = {'foul_pf': z('pf_rate') * (ev_kind == 'foul')[:, None], 'foul_big': big * (ev_kind == 'foul')[:, None],
          'block_blk': z('blk_rate') * (ev_kind == 'block')[:, None], 'block_big': big * (ev_kind == 'block')[:, None],
@@ -242,7 +338,8 @@ def design(seg: pd.DataFrame, ev: pd.DataFrame, pre: pd.DataFrame):
     X = np.stack([f[k] for k in MATCH] + [g[k] for k in PROP], axis=2)
     y = (defs == ev['credit'].astype(str).to_numpy()[:, None])
     keep = (y.sum(1) == 1) & (defs != 'None').all(1) & (defs != 'nan').all(1)
-    return X[keep], y[keep].argmax(1), ev['w'].to_numpy()[keep], ev['kind'].to_numpy()[keep], fill
+    return X[keep], y[keep].argmax(1), ev['w'].to_numpy()[keep], ev['kind'].to_numpy()[keep], \
+        preprocessing if return_preprocessing else fill
 
 
 def fit_clogit(X, y, w, iters=30, ridge=1e-3):
@@ -280,18 +377,19 @@ def fit(through: str, holdout_to: str | None = None) -> dict:
     ev = events(seg, types)
     ev = ev.merge(seg[['seg_id', 'date_et']], on='seg_id')
     train = ev[ev['date_et'] <= through]
-    X, y, w, kind, fill = design(seg, train, pre)
+    X, y, w, kind, preprocessing = design(seg, train, pre, return_preprocessing=True)
     theta = fit_clogit(X, y, w)
     out = {'through': through, 'events': int(len(y)), 'by_kind': pd.Series(kind).value_counts().to_dict(),
            'match': dict(zip(MATCH, theta[:len(MATCH)].round(4).tolist())), 'prop': dict(zip(PROP, theta[len(MATCH):].round(4).tolist())),
-           'fill': fill, 'shot_type_coverage': round(float(types[seg['end_type'] == 'shot'].notna().mean()), 4),
+           'fill': preprocessing['fill'], 'preprocessing': preprocessing,
+           'shot_type_coverage': round(float(types[seg['end_type'] == 'shot'].notna().mean()), 4),
            'shot_type_shares': types.value_counts(normalize=True).round(4).to_dict()}
     nk = len(MATCH)
     out['train_loglik'] = {'uniform': round(-np.log(5), 4), 'full': round(loglik(X, y, w, theta), 4),
                            'propensity_only': round(loglik(X, y, w, np.r_[np.zeros(nk), fit_clogit(X[:, :, nk:], y, w)]), 4)}
     if holdout_to:
         test = ev[(ev['date_et'] > through) & (ev['date_et'] <= holdout_to)]
-        Xt, yt, wt, kt, _ = design(seg, test, pre)
+        Xt, yt, wt, kt, _ = design(seg, test, pre, preprocessing=preprocessing)
         th_p = fit_clogit(X[:, :, nk:], y, w)
         out['holdout'] = {'events': int(len(yt)), 'uniform': round(-np.log(5), 4), 'full': round(loglik(Xt, yt, wt, theta), 4),
                           'propensity_only': round(loglik(Xt, yt, wt, np.r_[np.zeros(nk), th_p]), 4)}

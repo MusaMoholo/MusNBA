@@ -159,6 +159,13 @@ old way — the old models are right there by construction — so it is judged b
 data's held-out rows, paired with a run trained on the new data (`compare.py`). Data variants live under
 `data/derived/variants/<name>/`; a version file names its data (`"segments"`, `"features"`).
 
+**A1 integrity candidate (22 Nov).** Historical assignment fits are body-free, dated before each row and frozen at
+the fold cutoff; position groups use only earlier observed games, and missing lineup-relative profiles are filled
+within that lineup. Sampled F1–F4 parity and an isolated F4 wiring run do not establish original publication timing
+or promotion. The `what` diagnostic profile baseline now fills from the training window, never the held-out batch;
+fold-model cache keys include the training-code hash. A reproduced `NaT` assignment-cutoff validation gap remains
+open until corrected and all dependent isolated artifacts are rebuilt (HANDOFF).
+
 **Game-level gate (20 Nov).** Node log loss is necessary, not sufficient: small per-possession effects add up over a game
 (on-court defence was neutral at node level, §3l, while the backtest shows defence expressed at ~25% of its real effect,
 FINDINGS §3o). Inputs aimed at team strength are judged by the engine backtest as well (`backtest.py`, same seed and games

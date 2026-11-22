@@ -10,7 +10,7 @@ or phone.
 > from games before the origin; 10,000 worlds per game, one rotation table per world; the floor for later improvements, D22–D24); every later game from the **team pathway v1**, where
 > each simulated season carries its own team ratings and updates them after every game (D25). Past dates rebuilt after the
 > fact currently use a labelled placeholder. U1–U22 and public Pages/iCloud delivery are complete. Accuracy chunk
-> **A1 (14 tasks)** has completed S01; S02 is next and versioned, cutoff-safe engine history remains planned.
+> **A1 (14 tasks)** has completed S01; S02 is active and versioned, cutoff-safe engine history remains planned.
 > See [PLAN.md](PLAN.md) and [HANDOFF_NEXT.md](HANDOFF_NEXT.md).
 
 ## Setup
@@ -123,7 +123,7 @@ Dashboard routes: `#/standings/{forecast,seeds,wins,ratings,picture,races,movers
 | `scripts/realmatch.py` | D32 real matchups: pre-game assignment fitted on real shares (ranks, stopper, pair history), per-game pair history (cutoff-safe) |
 | `scripts/lineups.py` | Projected v actual starters for every finished snapshot (nightly record, D33) |
 | `scripts/backtest.py`, `scripts/backtest_compare.py` | Engine backtest on held-out fold games (M9; `--rotation targets`, `--models` to reuse fold models), with the team-rating model on the same games; legacy paired scorecard |
-| `scripts/a1_compare.py`, `scripts/a1_manifest.py`, `scripts/a1_quarter_audit.py`, `scripts/a1_output_audit.py`, `scripts/a1_availability_cohort.py` | A1 paired bootstrap and frozen provenance; independent accounting and prior-box membership coverage |
+| `scripts/a1_compare.py`, `scripts/a1_manifest.py`, `scripts/a1_quarter_audit.py`, `scripts/a1_output_audit.py`, `scripts/a1_availability_cohort.py`, `scripts/a1_data_inventory.py`, `scripts/a1_reconcile.py`, `scripts/a1_rotation_audit.py`, `scripts/a1_tracking_coverage.py`, `scripts/a1_lineup_audit.py`, `scripts/a1_subsplit_audit.py`, `scripts/a1_feature_parity.py`, `scripts/a1_causal_audit.py`, `scripts/a1_assignment_audit.py`, `scripts/a1_assignment_schedule.py`, `scripts/a1_node_cache_audit.py`, `scripts/a1_future_injection.py` | A1 paired bootstrap, frozen provenance, independent accounting, data integrity, dated assignment fits, sampled train/engine parity and causal injection tests |
 | `scripts/pathway.py` | Team engine (D25, D26): per-world offensive/defensive ratings, updated after every simulated game |
 | `scripts/season_backtest.py` | Team engine trust test (M12 first cut): walk-forward seasons 2022-26, `--grid` calibration |
 | `scripts/athletes.py`, `scripts/buckets.py` | Player heights/weights; paired comparisons by the player's sample size |
@@ -153,8 +153,20 @@ Rebuild in order after new data: `scripts/history.py` → `scripts/possessions.p
 .venv/bin/python scripts/a1_manifest.py --output <new-manifest.json>    # freeze selected games, seeds and hashes
 .venv/bin/python scripts/a1_manifest.py --output <new-manifest.json> --control-run <run> --seed-run <run>  # final seed floors and provenance
 .venv/bin/python scripts/a1_quarter_audit.py --output <new-report.json> # validate quarter actuals against raw scoreboard
-.venv/bin/python scripts/a1_output_audit.py <run> [--reference <legacy-run>] --output <new-report.json> # output accounting
+.venv/bin/python -m scripts.a1_output_audit <run> [--reference <legacy-run>] [--pin-current-inputs] --output <new-report.json> # output accounting; hashes are as of audit time
 .venv/bin/python scripts/a1_availability_cohort.py <control-run> --output <new-report.json> --rows-output <new-cohort.parquet>
+.venv/bin/python scripts/a1_data_inventory.py --output <new-report.json> # verify retained NBA/ESPN source manifests
+.venv/bin/python -m scripts.a1_reconcile --output <new-report.json>    # per-season player/possession reconciliation
+.venv/bin/python -m scripts.a1_rotation_audit --output <new-report.json> # substitution and matchup source audit
+.venv/bin/python -m scripts.a1_tracking_coverage --output <new-report.json> # dated tracking-defence coverage
+.venv/bin/python -m scripts.a1_lineup_audit --output <new-report.json>  # event participants v segment-start lineups
+.venv/bin/python -m scripts.a1_subsplit_audit --limit 200 --output <new-report.json> # isolated fixed-F4 lineup pilot
+.venv/bin/python -m scripts.a1_feature_parity --output <new-report.json> # limited three-game matchup feature parity
+.venv/bin/python scripts/features.py --history-only --causal-first-priors --out <new-variant-dir> # isolated base; not complete cutoff certification
+.venv/bin/python -m scripts.a1_causal_audit --output <new-report.json>  # account for the pinned causal base build
+.venv/bin/python -m scripts.a1_assignment_audit --through 2025-12-31 --holdout-to 2026-04-30 --output <new-report.json> --model-output data/derived/variants/<new-model.json>  # isolated dated assignment, not a promotion
+.venv/bin/python -m scripts.a1_node_cache_audit --features <variant>/pregame.parquet --fold F4 --output <new-report.json> # audit a full isolated node cache
+.venv/bin/python -m scripts.a1_future_injection --output <new-report.json> # real-slice same-day/future injection audit
 .venv/bin/python -m unittest discover -s tests -p 'test_a1*.py'       # focused A1 evaluation checks
 .venv/bin/python scripts/minutes.py --evaluate [--season 2025 --from 2025-01-01 --to 2025-04-30] [--set gamma=1]   # allocator v real (no engine)
 .venv/bin/python scripts/matchups.py --fit --through 2025-12-31            # D30 assignment θ → models/matchup_<through>.json

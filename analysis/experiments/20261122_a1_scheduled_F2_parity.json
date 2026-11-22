@@ -1,0 +1,72 @@
+{
+ "experiment": "a1_matchup_train_engine_parity",
+ "game_ids": [
+  "401705022",
+  "401705023",
+  "401705024"
+ ],
+ "population": "first three pinned F2 games; matched real actor and five-defender segment states",
+ "scope": "matchup columns only; equality is not evidence that fitted parameters, priors, body measurements or underlying data were available before every historical origin",
+ "tolerance": {
+  "absolute": 1e-06,
+  "relative": 1e-06
+ },
+ "excluded_states": {
+  "actor_not_on_recorded_offensive_lineup": 8
+ },
+ "columns": {
+  "mu_fg_rim": {
+   "states": 655,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "mu_fg_paint": {
+   "states": 655,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "mu_fg_mid": {
+   "states": 655,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "mu_fg_three": {
+   "states": 655,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "mu_tov": {
+   "states": 655,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "mu_foul": {
+   "states": 655,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "mu_height_gap": {
+   "states": 655,
+   "mismatches": 0,
+   "both_missing": 655,
+   "max_absolute_difference": 0.0
+  }
+ },
+ "input_sha256": {
+  "analysis/experiments/20261122_a1_manifest.json": "0790a28ffadc3f09554c79661ccb80f631a4eb4b56f64030633a9a82d451e75e",
+  "data/derived/variants/a1_scheduled_F2_20261122_v1/features/pregame.parquet": "308e1451cb924122ba1fed762d37b5f4759e0575f30d1cc684051a3df97b84b9",
+  "data/derived/history/2025/segments.parquet": "d9db732172894ed8d3c6e5e99e3cd1c197006da22799413034ce3ce18cc5aee2",
+  "data/derived/athletes.parquet": "3b8e24488790edca5289a2a52f30867243a69f6cab57032e1c839967bb65d5be",
+  "data/derived/variants/a1_assignment_schedule_20261122_v1/F2.json": "6d4f904865cceebf76af212d5b044353e1813057dda24db0410544296ce859a6",
+  "scripts/nodes.py": "b7e4ab68c5b4efa525e6768d1505641216266798be458e7e4a126a1e3cbb5c39",
+  "scripts/engine.py": "48d09c8e5fa7f10a84fafc9ec61b38aae65d225b00f60b2775387963b75737e8",
+  "scripts/matchups.py": "f647266bc6890fdab20865073614f849c5677f00fe55eaba40df3dd3ffb2e513",
+  "data/derived/variants/a1_scheduled_F2_20261122_v1/features/features_report.json": "03789f5152b5d0de740d8736a8c39db949969eed16d41b9651230a521977a063"
+ }
+}

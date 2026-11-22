@@ -1,0 +1,33 @@
+{
+  "experiment": "a1_corrected_crosswalk_temporary_rebuild",
+  "population": "all 5518 mapped logged NBA/ESPN games in the retained snapshots, including one game on the current ET date; no model predictions",
+  "method": "scripts.nbastats.nba_tables and espn_tables, then crosswalk with OUT patched to a new temporary directory; compare player_games_map against retained derived mapping without replacing it",
+  "source_sha256": {
+    "scripts/nbastats.py": "c7b91aa8f39860bd6cf47b07bce0a4174e5d441ee5057bee4e1a40f2a14ae2fe"
+  },
+  "input_hashes": "analysis/experiments/20261122_a1_reconciliation.json input_sha256",
+  "elapsed_seconds": 61.6,
+  "retained_mapping": {
+    "player_games": 118225,
+    "missing_espn_player_id": 5
+  },
+  "corrected_mapping": {
+    "nba_player_games": 118242,
+    "matched_player_games": 118220,
+    "matched_by_name": 118215,
+    "matched_by_stat_line": 5,
+    "unmatched_player_games": 22,
+    "matched_missing_espn_player_id": 0,
+    "unique_people": 935,
+    "person_id_conflicts": 0,
+    "espn_ids_shared": 0
+  },
+  "unmatched_nba_person": 1642950,
+  "unmatched_nba_game_ids": [
+    "0022500295", "0022500314", "0022500329", "0022500345", "0022500361", "0022500503",
+    "0022500517", "0022500546", "0022500603", "0022500614", "0022500661", "0022500692",
+    "0022500705", "0022500722", "0022500736", "0022500752", "0022500778", "0022500836",
+    "0022500870", "0022500889", "0022500905", "0022500930"
+  ],
+  "limitation": "ESPN box rows lack a player ID; stat-line resemblance is not a valid identity. The corrected mapping was tested only in temporary storage, and the retained production mapping was not rebuilt in this experiment."
+}

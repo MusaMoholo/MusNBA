@@ -1,0 +1,54 @@
+{
+ "experiment": "a1_bodyfree_monthly_assignment_schedule",
+ "minimum_usable_events": 1000,
+ "fit_months": 30,
+ "skipped_months": [],
+ "folds": {
+  "F1": {
+   "training_through": "2023-12-31",
+   "models": 12,
+   "last_fit_through": "2023-12-31",
+   "path": "data/derived/variants/a1_assignment_schedule_20261122_v2/F1.json",
+   "sha256": "4d5aa04d7ad3a6f794d298176dc03eee4f7cc17271031b489830e3fcce09189d"
+  },
+  "F2": {
+   "training_through": "2024-12-31",
+   "models": 21,
+   "last_fit_through": "2024-12-31",
+   "path": "data/derived/variants/a1_assignment_schedule_20261122_v2/F2.json",
+   "sha256": "d1dd8752131222a15f1fe020fcc951cb124beeaf91e000b610b045badf94787b"
+  },
+  "F3": {
+   "training_through": "2025-09-30",
+   "models": 27,
+   "last_fit_through": "2025-06-30",
+   "path": "data/derived/variants/a1_assignment_schedule_20261122_v2/F3.json",
+   "sha256": "0e934e6e2d14002fbbda9394980c921df4b85e4eed4223435f74bc9f22e38657"
+  },
+  "F4": {
+   "training_through": "2025-12-31",
+   "models": 30,
+   "last_fit_through": "2025-12-31",
+   "path": "data/derived/variants/a1_assignment_schedule_20261122_v2/F4.json",
+   "sha256": "ff3633211a145595dedf37e021ad6f2f8451fed20c69f9050cebf51cd05b99d1"
+  }
+ },
+ "input_signature": "7c60045bcadc25ddc519041b92f3deec689d5c3b3393e86508a285ec57350dd3",
+ "input_sha256": {
+  "data/derived/variants/a1_causal_base_20261122_v4/features/pregame.parquet": "c63b535d8ed34aaedbaa2869f204555ff117be82a4abfe729a4e5bd2f7650b94",
+  "data/derived/variants/a1_causal_base_20261122_v4/features/features_report.json": "ad47c02874aa946c8f64b0485248d7b44c64a6b2d229ec6e958f1f70280b7775",
+  "/Users/moholom/Repos/Sports/Basketball/scripts/a1_assignment_schedule.py": "5cd024829f0c90c96590851e86b8fe2b92b525b265c837388f483469c6a66340",
+  "/Users/moholom/Repos/Sports/Basketball/scripts/matchups.py": "c849ab4854aff6b6085054573cba4344c06aabb186a77681affd186d945f2b18",
+  "/Users/moholom/Repos/Sports/Basketball/scripts/nodes.py": "78749b680b889993e83ba26baab51877cd7393ee0a5a3d9f4fdaf9123d3b161f",
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/history/2023/segments.parquet": "813b53edadf92f6e6c607211b1d4c64b312aa9fbe689851110e912419101a76e",
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/history/2024/segments.parquet": "4a7c3c2bce39580cc8e1092ffc215d11bbd49f7bf117b4551eee40337203d2c0",
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/history/2025/segments.parquet": "d9db732172894ed8d3c6e5e99e3cd1c197006da22799413034ce3ce18cc5aee2",
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+  "/Users/moholom/Repos/Sports/Basketball/data/raw/hoopr/play_by_play_2023.parquet": "f3fac3a58cf1be8813f1f4332edb7fc8d83936df703892a700095d62f71da886",
+  "/Users/moholom/Repos/Sports/Basketball/data/raw/hoopr/play_by_play_2024.parquet": "bda57bcb4f8aae57428979ac4a0f766f67c52c770d85b0e7fcf7237a333704b0",
+  "/Users/moholom/Repos/Sports/Basketball/data/raw/hoopr/play_by_play_2025.parquet": "71d7d02671268f793f13a13d1a8a271cba1241cd9ba28c3a363a3f16ad56acc7",
+  "/Users/moholom/Repos/Sports/Basketball/data/raw/hoopr/play_by_play_2026.parquet": "f7051c5c0c5b605419fcc0e0c13dd90df7803f96dab290554c1ef737433a98b2"
+ },
+ "elapsed_s": 22.13,
+ "limitations": "not promoted; later body data omitted, position uses strictly earlier game records whose original publication/revision timing is unverified; actual-participant diagnostics are not availability forecasts"
+}

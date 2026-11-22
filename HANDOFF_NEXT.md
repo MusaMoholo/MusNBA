@@ -1,11 +1,12 @@
 # Handoff — state and next actions
 
-Updated **22 November 2026 — A1 overnight execution, S01 complete; S02 next**. Dashboard U1–U22 complete and published.
-Dashboard close-out checkpoint **86c2a46**, A1 planning checkpoint **00a0731**; S01 partial source checkpoint
-**c6d5db4** is committed and pushed.
+Updated **22 November 2026 — A1 overnight execution, S01 complete; S02 active**. Dashboard U1–U22 complete and published.
+Dashboard close-out checkpoint **86c2a46**, A1 planning checkpoint **00a0731**; S01 completed checkpoint
+**c9d8008** is committed and pushed (its exact control source is in **c6d5db4**).
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
 product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01 is complete;
-S02 starts at 0%; A1 overall is 6.0%.** No candidate, model promotion, forecast or PWA change has been made.
+S02 is active at 30%; A1 overall is 7.8%.** Isolated assignment candidates have event-level diagnostics only;
+no candidate has had an engine-accuracy test, and no model promotion, forecast or PWA change has been made.
 
 **Use the app:** https://musamoholo.github.io/MusNBA/ — data-free GitHub Pages, source branch `gh-pages` at **e302d27**.
 iPhone: Safari → Share → Add to Home Screen → launch the icon → Offline data & installation → Import data.
@@ -19,7 +20,69 @@ per world; fresh **10,000-world season, 965 remaining games**, as of ET 21 Nov. 
 22 Nov 01:04 UK; finished-code views rebuilt at 01:05 before export (nightly had loaded views before U19 was added).
 Earlier snapshots/shells/bundles archived in `~/Basketball_archive_ops`. No fetch, training or model promotion in the dashboard close-out or this planning pass.
 
-**Running:** no A1 simulation or download. The original-stream regeneration completed as
+**Running:** one NBA PBP history stream, tenth/final batch, wrapper PID **62499**, worker **62500**:
+`.venv/bin/python -u scripts/fetch_nbastats.py --pbp --max 355`, log `/tmp/musnba_a1_s02_pbp_10.log`.
+Nine consecutive batches completed **363/363 each**, no empty responses: **3,267/3,622** original items retained
+(90.2%); final-batch baseline **5,162** total PBP gzip files. Check current file count and PID before acting.
+Report this batch's item marks at 36/71/107/142/178/213/249/284/320/355; measured throughput is about
+**0.8 responses/s**. Never launch a second stream; manifests flush every 25 responses and on normal/exceptional exit.
+Last observed final-batch count was **156/355**. The isolated F4 node-cache accounting completed all 16 datasets,
+log `/tmp/musnba_a1_scheduled_f4_nodes_audit.log`, report
+`analysis/experiments/20261122_a1_scheduled_F4_nodes_accounting.json`. The separate F4 wiring-only model fitting and
+three-game/20-world test completed in **325 s**, log `/tmp/musnba_a1_s02_causal_wiring.log`:
+`.venv/bin/python -u scripts/backtest.py --config models/a1_s02_f4_causal.json --fold F4 --games 3 --worlds 20
+--jobs 1 --threads 8 --rotation targets --pool 0 --known-starters --name a1_s02_causal_wiring`. Its scores are
+not selection or promotion evidence. Run `20261122T041531Z_a1_s02_causal_wiring`; independent accounting
+`analysis/experiments/20261122_a1_s02_wiring_accounting.json` checks **24** quarter scores, **63** player 3PM
+outcomes and **6** team sums with zero mismatches, and hashes the unchanged inputs and fitted models. Its original
+run log's `commit` is Git HEAD, not the dirty working-tree source; use the accounting fingerprints. No A1 simulation
+is running.
+**New corruption finding, not yet fixed:** `matchups.dated_masks` accepts the literal fitted cutoff `NaT`, because
+its date comparisons do not reject `NaT`. A direct injection reproduced this. Add explicit date/parameter validation
+and focused tests, then rebuild the dated schedules, all four feature snapshots, parity reports and F4 node/model
+artifacts under new isolated paths: their reports pin the old `matchups.py` hash. Do not silently reuse the old
+provenance. The original source and evidence must be checkpointed before changing the pinned file. Fresh smoke passed
+**102/102**; deliberate `--fault` exited 1 as intended (**80/102** passed after injected corruption).
+The isolated F4 assignment preprocessing audit finished (`/tmp/musnba_a1_assignment_f4.log`):
+`.venv/bin/python -u -m scripts.a1_assignment_audit --through 2025-12-31 --holdout-to 2026-04-30
+--output analysis/experiments/20261122_a1_assignment_f4_preprocessing.json
+--model-output data/derived/variants/a1_assignments_20261122/F4.json`. It loaded **1,261,174** historical segments
+and selected **195,228** usable training / **35,216** held-out credited events. With the same fitted parameters,
+holdout full log likelihood changed **−1.54375→−1.54347** when preprocessing used training rather than held-out
+statistics; top-1 on 2,608 on-ball credits was unchanged at **25.92%**. The fit uses the isolated causal-base
+profiles; body-measurement as-of provenance remains unproven, and the dated candidate must not be used before
+2026-01-01. It is not a promotion or a free-running engine-accuracy test.
+F1–F3 have now also been fitted through their own training cutoffs: **78,311 / 135,404 / 172,166** usable
+training credits and **33,476 / 34,586 / 23,062** held-out credits, respectively; evidence is
+`analysis/experiments/20261122_a1_assignment_f{1,2,3}_preprocessing.json` and isolated models are under
+`data/derived/variants/a1_assignments_20261122/`. They remain invalid before their own `valid_from` dates. A
+body-free F4 experiment omits the later roster/athlete measurements entirely in training and assignment, leaving
+the height-gap feature missing. On the same **35,216** held-out credits, body-included versus body-free log
+likelihood is **−1.54347 vs −1.54611** and on-ball top-1 is **25.92% vs 24.88%** over 2,608 credits
+(`analysis/experiments/20261122_a1_assignment_f4_bodyfree.json`). A future-body-injection test passes. These are
+isolated diagnostics, not a promotion or a fully verified end-to-end pipeline.
+The later isolated base `data/derived/variants/a1_causal_base_20261122_v4/features` uses positions observed strictly
+before each game date. It contains **111,075** rows and **891** unknown position rows; all **877** players' first
+observations are unknown. Original source publication/revision timing remains unverified. Monthly body-free θ fits
+now select only fits valid for each historical date and freeze at each fold cutoff; 30 fits and four schedules were
+written in **22.1 s** to `data/derived/variants/a1_assignment_schedule_20261122_v2/`, report
+`analysis/experiments/20261122_a1_assignment_monthly_schedule_v2.json`. Four isolated scheduled feature builds are
+complete under `data/derived/variants/a1_scheduled_F{1,2,3,4}_20261122_v2/features`. The candidate also replaces
+whole-dataset relative-profile median fills with lineup-local fills, preserves all-missing values, and uses the same tie-symmetric ranks in nodes and the engine. The final sampled F1–F4 parity
+reports `analysis/experiments/20261122_a1_scheduled_F{1,2,3,4}_parity_v3.json` match **304,175/304,175**
+matchup, lineup and relative-input comparisons, excluding **36** actor/lineup mismatches. This compares sampled
+calculations, not every model input or historical publication timing. The complete isolated F4 `nodes.py` chain
+built **16/16** datasets in **59 s**, using a **9.1 GiB** variant cache
+`data/derived/nodes/variant_9813f970d51d`; independent accounting found **17,814,437** rows and passed label,
+shape and candidate-group checks. On a five-game real slice with explicitly isolated on-court inputs, injected
+same-day/future shots and minutes left **3,098** earlier player/team feature values unchanged while changing **42**
+later shot-derived and **47** later minute/position-derived values
+(`analysis/experiments/20261122_a1_future_injection_real_slice.json`). Fourteen focused causal tests passed,
+including real `Models` loading with a mock booster, cutoff rejection, schedule tampering and missing-profile
+behavior; the real fitted models also completed the wiring test above. The legacy production path is unchanged.
+Smoke after the isolated
+engine changes passed **102/102**, including a bit-for-bit v1.3 stored-game replay.
+The original-stream regeneration completed as
 `20261122T022323Z_a1_s01_control` in **1,567 s**; independent seed `20261122T025114Z_a1_s01_seed2` completed in
 **1,566 s**, with log `/tmp/musnba_a1_s01_seed2.log`. Their independent accounting and paired-noise reports are
 `analysis/experiments/20261122_a1_{control_accounting,seed_accounting,seed_noise}.json`. Existing serving artifacts are not touched. Review/test
@@ -28,11 +91,48 @@ At the S01 checkpoint after the type-only annotation, smoke passed **102/102**, 
 checks (exit 1), all **15** focused A1 tests passed and the local bundle hash remained `3055d277...e5abd9ecf`.
 All eight root docs were reviewed: AGENTS needs no further change because its scoped overnight authority is already
 in `c6d5db4`; ENGINE and DASHBOARD only need status updates because no model design or app behaviour changed.
-NBA Stats pbp history remains paused: **1,895/5,517** logged games dated before ET 21 Nov are retained; **3,622**
-remain, including 235 current-season games. **45** retained manifest entries lack their original URL/fetch time.
+Before the active batch, **1,895/5,517** logged games dated before ET 21 Nov were retained; **3,622**
+remained, including 235 current-season games. **45** retained manifest entries lack their original URL/fetch time.
 Do not invent those fields. All eight 2022–26 hoopR parquets match their manifest hashes/bytes; ESPN game
 `401810469` has 25 player-box rows but no retained hoopR play-by-play, while mapped NBA play-by-play `0022500614`
 is retained. Investigate rather than inventing the missing ESPN events. Start your own :8767 server for checks.
+`analysis/experiments/20261122_a1_raw_inventory.json` verifies all **10,094** retained NBA manifest entries and
+files: no unindexed, missing, corrupt or hash/size-mismatched gzip; 45 lack acquisition metadata. The 236 current
+ESPN final summaries have no per-file acquisition/hash manifest.
+S02 also found five null-ID "matches" in the retained player crosswalk; the corrected code and regression test exclude
+them, and a **temporary** full rebuild reports **118,220/118,242** matched player-games, with **22** unmatched
+appearances for one player. The production mapping has not been overwritten. The completed-game
+`analysis/experiments/20261122_a1_reconciliation.json` lists per-season points/seconds/possessions and excluded games;
+all **118,187** known mapped player-point pairs agree, with **13** missing ESPN values.
+`analysis/experiments/20261122_a1_rotation_integrity.json` audits recorded no-sub/multiple-sub windows and early matchup
+attempt duplication: all five season window counts reconcile, but 22 repeated-entering rows and unclassified stoppages
+need review before substitution training. Early matchup FGA / box FGA is 1.1163 / 1.1120; identical pair keys are not
+duplicated. In `401810498` Q4 0:33.3, source sequence 709 occurs at home margin −3 but the stored grouped window
+labels it −4 after a later free throw; repeated entrants at that clock are separated by a reversal. S06 needs
+sequence-aware pre-substitution state rather than treating a clock group as one simultaneous opportunity.
+The tracking audit covers all but one retained logged date per category, but **8,637/113,089** Overall rows disagree
+with the dated NBA game-log team. Use the latter on a person/date join, never `PLAYER_LAST_TEAM_ABBREVIATION`; the
+three categories have different attempt-column names. See `analysis/experiments/20261122_a1_tracking_coverage.json`.
+Segment-start lineups are also stale after substitutions within an action-free segment: **14,235/1,216,437** known
+actors across five reconciled seasons are absent from their recorded offensive lineup
+(`analysis/experiments/20261122_a1_lineup_integrity.json`). A non-production `--split-substitutions` candidate splits
+only action-free segments, preserves possession IDs/points/period time, and flags unresolved lineups; candidate
+player features and node datasets quarantine flagged rows. On the fixed 200 F4 games, actor absence fell **489→6**
+and median segment-v-rotation seconds discrepancy **13→0**, with all source replays and event identities equal.
+**70** candidate segments are quarantined, 57 for rebounder-lineup conflicts, including subs after an and-one shot
+before its missed free throw/rebound. Evidence: `analysis/experiments/20261122_a1_subsplit_quarantine_f4_200.json`.
+This is a data-quality pilot, not an engine accuracy test, promotion, or proof all substitution situations are fixed.
+
+An isolated historical base build at `data/derived/variants/a1_causal_base_20261122_v2/features` implements
+first-season player/team priors from strictly earlier dates, same-day-safe decays/rest, and missing priors as missing;
+it contains **111,075 player-games, 5,196 games**, through 13 Jun 2026 only. Its report hashes code and inputs.
+Independent accounting `analysis/experiments/20261122_a1_causal_base_accounting.json` finds **zero** later-season
+differences across 38 shared player and 14 team columns on **83,797** player rows; the first day's 45 player rows
+have no invented usage prior. Synthetic same-day/future injection tests pass. This does **not** make assignment
+fits, body measurements or the complete pipeline cutoff-safe. `matchups.mu_columns` has an opt-in
+`missing_policy=retain_missing` candidate that keeps an all-missing five missing rather than borrowing unrelated
+batch rows; legacy serving remains unchanged. On three fixed F4 games, after excluding 10 actor/lineup mismatches,
+**4,753/4,753** shared matchup values agree (`analysis/experiments/20261122_a1_matchup_parity_after.json`).
 
 **Last dashboard-delivery checks:** smoke **102/102**; deliberate `--fault` fails **22** checks (exit 1); full browser sweep **156/156**, then
 **12/12** targeted cases for the final phone stacking correction; hosted PWA **15/15** (import, phone stacking, offline
@@ -41,9 +141,13 @@ still needs owner acceptance; iCloud file delivery itself is confirmed.
 
 **Owner preferences from the dashboard chunk:** season insights belong inside Standings; comparable card groups come in
 multiples of three (Leaders: 9 player + 6 team cards); changing copy/counts/dates/qualifiers/model labels must derive from
-loaded data/configuration. Phone can stay stripped back (D36). A1 S01 is underway below. The latest owner instruction makes the active dashboard
+loaded data/configuration. Phone can stay stripped back (D36). A1 S02 is underway below. The latest owner instruction makes the active dashboard
 history consistent with the current accepted model: retain daily Today forecasts, and support a season-start→now
 rebuild per model version with strictly dated inputs/fits. Earlier generations remain archived (ENGINE_PLAN D39).
+
+**Root-doc review for the pending partial checkpoint:** HANDOFF, PLAN, FINDINGS, TRAINING and README record the
+candidate work and commands; ENGINE corrects D38's stale planning-session wording. AGENTS needs no change because
+the scoped overnight authority is already recorded; DASHBOARD needs no change because no app or served output changed.
 
 **How the owner wants a chunk run (AGENTS §3):** state your understanding and **one or two headliners**; **plan every subtask as
 a ladder of ten 10% steps with done-when criteria** and weights for the chunk %, keep the ladders below, and print the board
@@ -85,7 +189,7 @@ weights, with the old and new accounting; do not hide unfinished tasks by deleti
 | Task | Weight | Progress | State / latest checkpoint |
 |---|---:|---:|---|
 | S01 Baseline and evaluation contract | 6% | 100% | Both controls audited; final manifest, seed floors and cutoff limits pinned; no candidate promoted |
-| S02 Data integrity and parity | 6% | 0% | Planned |
+| S02 Data integrity and parity | 6% | 30% | Nine batches retained; final batch runs; schedule guard/rebuild and checkpoint remain |
 | S03 Offence/defence signal diagnosis | 8% | 0% | Planned |
 | S04 Defence and shot quality | 12% | 0% | Planned |
 | S05 Roles and minute allocation | 8% | 0% | Planned |
@@ -99,8 +203,8 @@ weights, with the old and new accounting; do not hide unfinished tasks by deleti
 | S13 Current-model season history | 5% | 0% | Planned |
 | S14 Nightly, delivery, successor | 5% | 0% | Planned |
 
-**A1 overall: `█░░░░░░░░░░░░░░░░░░░ 6.0%`.** Both control seeds are complete; no candidate fit, model promotion or
-production/PWA change has started.
+**A1 overall: `██░░░░░░░░░░░░░░░░░░ 7.8%`.** Both control seeds are complete; only isolated assignment-event
+diagnostics have been scored. No candidate engine backtest, model promotion or production/PWA change has started.
 Each rung below is cumulative; 100% always includes updated docs, necessary PWA model/data/shell delivery, reviewed
 commit and push, plus the owner summary. See AGENTS §3/§5 and PLAN §6c for the per-subtask PWA checklist; research-only
 checkpoints record that the served bundle is unchanged. Delivery is not proof of manual phone import.
@@ -440,32 +544,40 @@ picker (Scoring · Rebounding ALL/OFF/DEF · Handling · Defense · Time; makes 
 STL/BLK, shooting x/y (z%) coloured per part); bezel points Δ v season (above the value; no win/total Δ); player page "Open
 simulation" for tomorrow's games; phone bundle stripped back (D36).
 
-## Next actions — start S02
+## Next actions — S02 rung 40
 
 **Owner's overnight authority:** execute S01–S14 without waiting for input; the earlier planning-only stop is lifted.
 The dashboard programme is done. Do not resume U1–U22, repeat rejected defence variants unchanged or begin at S13.
 
-1. **Inventory S02 data by season.** Extend the measured NBA/ESPN counts in FINDINGS §7 with a reproducible manifest,
-   hash/file-coverage report and explicit missing game/metadata counts. In particular investigate ESPN box-only game
-   `401810469` without inventing play-by-play. The current PBP queue is **3,622**, subject to a fresh dated inventory.
-2. **Fix and test ingestion before resuming the single polite history stream.** `fetch_games`, `fetch_ptdefend` and
-   `fetch_hustle` eagerly construct a `Store` on every `setdefault`; `fetch_logs` also fails to flush on an exception.
-   Reproduce both in isolated temporary storage, fix all affected paths, test resume and metadata retention, then use
-   `.venv/bin/python -u scripts/fetch_nbastats.py --pbp --max 363` in sequential logged batches. Recalculate each
-   10% item threshold from the actual queue, report measured throughput, and pause the stream during the final nightly.
-   Preserve the 45 entries with unknown original URL/time rather than inventing provenance.
-3. **Complete S02 reconciliation and train/serve parity.** Audit NBA/ESPN points, seconds, possession conventions,
-   unmatched/excluded games and historical publication limits; test cutoff-safe training/serving feature equality,
-   including first-season priors, dated assignment fits, missing-profile medians and the all-missing batch-fill risk.
-   Isolate corrections from v1.3 and do not claim a promotion gate until supported dated inputs exist.
-4. **Continue S03–S10 in dependency order.** Diagnose player/lineup offence and defence before selecting bounded
+1. **Continue the single polite history stream.** The eager `Store` constructions and interruption flush were fixed;
+   the active final batch and item thresholds are in State above. Check its log/status, then verify every original item
+   is retained or explicitly classified; previous batches were run sequentially
+   using `.venv/bin/python -u scripts/fetch_nbastats.py --pbp --max 363`; recalculate each 10% threshold for the
+   actual batch, report measured throughput, and pause the stream during the final nightly. Preserve the 45 entries
+   with unknown original URL/time rather than inventing provenance.
+2. **Complete S02 reconciliation and train/serve parity.** The four-season causal base and limited F4 parity audit are
+   recorded above. The chronological, fold-frozen body-free assignment and prior-position feature builds are done,
+   with all four sampled parity reports, F4 full-chain cache, actual fitted-model wiring, future injection and output
+   accounting complete on the original source; commit/push this partial checkpoint before changing `matchups.py`, then
+   fix the newly reproduced `NaT` cutoff guard and rebuild all affected
+   pinned isolated artifacts, then finish the remaining source retrieval, review and checkpoint checks.
+   Keep original report/revision timing limitations explicit; do not use the earlier single-fit candidates before their
+   dates. Audit any remaining missing-profile medians and
+   other populations for batch-fill leakage. Test the split/quarantine candidate and its feature/node accounting
+   independently, without changing production. Do not equate causal-first priors with a fully safe pipeline.
+   Initial audit cases: ESPN box-only `401810469` / NBA `0022500614`; unscored PBP player `5107156` in
+   `401810691` / NBA `0022500836`; overtime games `401810376` / NBA `0022500521` and `401810584` / NBA
+   `0022500729`. The source and derived-game reconciliation are logged, and the crosswalk fix has only been rebuilt in
+   temporary storage. Complete the substitution/tracking/cutoff audits, isolate corrections from v1.3 and do not claim
+   a promotion gate until supported dated inputs exist.
+3. **Continue S03–S10 in dependency order.** Diagnose player/lineup offence and defence before selecting bounded
    candidate families; keep conditional-engine and actual pre-game availability populations separate. Record
    negative results and preserve the accepted control.
-5. **S11 freezes the tested combination before promotion.** Confirm on the fixed wider folds and second seed, protect
+4. **S11 freezes the tested combination before promotion.** Confirm on the fixed wider folds and second seed, protect
    the final test and use player outcomes first.
-6. **S12/S13 implement model visibility and versioned daily history.** Preserve original and previous-version
+5. **S12/S13 implement model visibility and versioned daily history.** Preserve original and previous-version
    forecasts, reject future-trained inputs/fits and label retrospective histories; record any failed trust gate.
-7. **Finish S14** with a fresh live nightly, 10k games/branches and season, iCloud/PWA delivery and all checks. Build
+6. **Finish S14** with a fresh live nightly, 10k games/branches and season, iCloud/PWA delivery and all checks. Build
    the successor chunk in the same weighted, ten-rung format before the final commit/push.
 
 ## Completed S01 audit and reproduction
@@ -573,7 +685,7 @@ do not rebuild them. Tracking defence enters S04 only if it earns its place; its
 
 **Housekeeping:** node caches can be ~9 GB each; inventory dependencies before pruning, archive replaceable artifacts
 outside the repo, and never remove files a retained run needs to reproduce. Existing `nodes.py --prune` is not licence
-to delete candidate data blindly. NBA history remains paused until S02 deliberately resumes it.
+to delete candidate data blindly. NBA history is running as described in State; avoid duplicate provider streams.
 
 ## How to judge a change
 

@@ -111,14 +111,23 @@ def profile_baseline(d, tr, va):
         P = np.array([table.loc[c].to_numpy() if c in table.index else overall for c in sc[va]])
         return P / P.sum(axis=1, keepdims=True)
     if tag == 'what':
-        Xv = X[va]
-        three = Xv['actor_mix_corner3'] + Xv['actor_mix_above3']
-        fouled = Xv['actor_foul_drawn_share']
-        cols = [Xv['actor_shot_share'] * Xv[f'actor_mix_{z}'] for z in nodes.ZONES]
-        cols += [Xv['actor_tov_share'], fouled * (1 - 0.1 * three), fouled * 0.1 * three]
-        P = np.column_stack(cols).astype(float)
-        P = np.where(np.isnan(P), np.nanmean(P, axis=0), P)
-        return P / P.sum(axis=1, keepdims=True)
+        def probabilities(rows):
+            three = rows['actor_mix_corner3'] + rows['actor_mix_above3']
+            fouled = rows['actor_foul_drawn_share']
+            cols = [rows['actor_shot_share'] * rows[f'actor_mix_{z}'] for z in nodes.ZONES]
+            cols += [rows['actor_tov_share'], fouled * (1 - 0.1 * three), fouled * 0.1 * three]
+            return np.column_stack(cols).astype(float)
+
+        training, P = probabilities(X[tr]), probabilities(X[va])
+        known = np.isfinite(training).sum(axis=0)
+        if np.isinf(training).any() or np.isinf(P).any() or not np.all(known):
+            raise ValueError('what profile baseline has invalid or entirely missing training values')
+        fallback = np.nansum(training, axis=0) / known
+        P = np.where(np.isnan(P), fallback, P)
+        total = P.sum(axis=1, keepdims=True)
+        if np.any(P < 0) or not np.isfinite(total).all() or np.any(total <= 0):
+            raise ValueError('what profile baseline has invalid probabilities')
+        return P / total
     if tag == 'shot_result':
         zones = X['zone'].to_numpy().astype(int)
         fg = np.column_stack([X[f'actor_fg_{z}'] for z in nodes.ZONES])[np.arange(len(X)), zones]

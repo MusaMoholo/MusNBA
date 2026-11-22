@@ -56,7 +56,32 @@ def zone(x, y, value):
 REBOUND_CLOCKS = ('feed', 'miss')
 
 
-def parse_game(game: dict, rebound_clock: str = 'miss'):
+def lineup_issues(seg: dict) -> list[str]:
+    off, defense = seg['lineup_off'], seg['lineup_def']
+    issues = []
+    if len(off) != 5 or len(set(off)) != 5 or not all(off):
+        issues.append('invalid_offense')
+    if len(defense) != 5 or len(set(defense)) != 5 or not all(defense):
+        issues.append('invalid_defense')
+    if set(off) & set(defense):
+        issues.append('overlapping_lineups')
+    for participant, side, label in (
+            ('actor', off, 'actor_not_offense'), ('assister', off, 'assister_not_offense'),
+            ('blocker', defense, 'blocker_not_defense'), ('stealer', defense, 'stealer_not_defense')):
+        if seg[participant] is not None and seg[participant] not in side:
+            issues.append(label)
+    if seg['fouler'] is not None:
+        side = off if seg['end_type'] == 'turnover' else defense
+        if seg['fouler'] not in side:
+            issues.append('fouler_not_expected_side')
+    if seg['rebounder'] is not None and seg['rebound'] in ('off', 'def'):
+        side = off if seg['rebound'] == 'off' else defense
+        if seg['rebounder'] not in side:
+            issues.append('rebounder_not_expected_side')
+    return issues
+
+
+def parse_game(game: dict, rebound_clock: str = 'miss', split_substitutions: bool = False):
     assert rebound_clock in REBOUND_CLOCKS, rebound_clock
     team_of, starters, box, teams, by_minutes = pbp.game_context(game)
     issues = Counter()
@@ -83,10 +108,10 @@ def parse_game(game: dict, rebound_clock: str = 'miss'):
         pending = None  # 'rebound' after a miss, 'ft' while a free-throw trip is unfinished
         miss_clock = None  # clock of the segment's latest missed shot or free throw (rebound_clock='miss')
 
-        def open_seg(clock, start_type, offense):
+        def open_seg(clock, start_type, offense, sub_continuation=False):
             nonlocal seg, poss, pending, miss_clock
             miss_clock = None
-            if start_type in NEW_POSSESSION:
+            if start_type in NEW_POSSESSION and not sub_continuation:
                 poss += 1
             d = other[offense]
             seg = {'game_id': game['id'], 'date_et': game['date_et'], 'season': game['season'], 'season_type': game['season_type'],
@@ -97,6 +122,8 @@ def parse_game(game: dict, rebound_clock: str = 'miss'):
                    'end_type': None, 'actor': None, 'value': None, 'zone': None, 'x': None, 'y': None, 'made': None,
                    'heave': False, 'and_one': False, 'assister': None, 'blocker': None, 'stealer': None, 'fouler': None,
                    'turnover': None, 'fta': 0, 'ftm': 0, 'ft_seq': '', 'rebound': None, 'rebounder': None, 'points': 0}
+            if split_substitutions:
+                seg.update({'sub_prefix': False, 'sub_continuation': sub_continuation})
             pending = None
 
         def close_seg(clock, end_type=None):
@@ -108,6 +135,10 @@ def parse_game(game: dict, rebound_clock: str = 'miss'):
                 seg['end_type'] = end_type or 'unknown'
             if seg['action_clock'] is None:
                 seg['action_clock'] = clock
+            if split_substitutions:
+                problems = lineup_issues(seg)
+                seg['lineup_valid'] = not problems
+                seg['lineup_issues'] = ';'.join(problems)
             segments.append(seg)
             seg = None
 
@@ -134,10 +165,23 @@ def parse_game(game: dict, rebound_clock: str = 'miss'):
                 enter, leave = parts[0], parts[1]
                 t = team_of.get(enter) or team_of.get(leave)
                 if t in on:
+                    old_lineup = set(on[t])
                     if leave in on[t]:
                         on[t].remove(leave)
                     if enter not in on[t]:
                         on[t].append(enter)
+                    if split_substitutions and set(on[t]) != old_lineup and seg is not None \
+                            and seg['end_type'] is None and pending is None:
+                        if clock < seg['start_clock']:
+                            offense, start_type = seg['offense'], seg['start_type']
+                            seg['sub_prefix'] = True
+                            close_seg(clock, 'unknown')
+                            open_seg(clock, start_type, offense, sub_continuation=True)
+                        elif clock == seg['start_clock']:
+                            seg['lineup_off'] = sorted(on[seg['offense']])
+                            seg['lineup_def'] = sorted(on[seg['defense']])
+                        else:
+                            issues['sub_before_segment_clock'] += 1
                 continue
             if e['type_id'] in ('412', '402') or 'end period' in k or 'end game' in k:
                 close_seg(0.0, 'end_period')
@@ -305,12 +349,12 @@ def check_game(game, segments, extra, issues, checks) -> bool:
             ok = False
     last = {}
     for s in segments:
-        if s['start_type'] in NEW_POSSESSION and s['start_type'] not in ('period_start', 'jump_ball'):
+        if not s.get('sub_continuation') and s['start_type'] in NEW_POSSESSION and s['start_type'] not in ('period_start', 'jump_ball'):
             prev = last.get(s['period'])
             checks['handovers'] += 1
             if prev is not None and prev == s['offense']:
                 checks['not_alternating'] += 1
-        if s['start_type'] in NEW_POSSESSION:
+        if not s.get('sub_continuation') and s['start_type'] in NEW_POSSESSION:
             last[s['period']] = s['offense']
         checks['segments'] += 1
         if len(set(s['lineup_off'])) == 5 and len(set(s['lineup_def'])) == 5:
@@ -324,10 +368,10 @@ def check_game(game, segments, extra, issues, checks) -> bool:
     return ok
 
 
-def parse_many(games, rebound_clock: str = 'miss'):
+def parse_many(games, rebound_clock: str = 'miss', split_substitutions: bool = False):
     rows, issues, checks = [], Counter(), Counter()
     for game in games:
-        segments, i, extra = parse_game(game, rebound_clock)
+        segments, i, extra = parse_game(game, rebound_clock, split_substitutions)
         issues.update(i)
         ok = check_game(game, segments, extra, issues, checks)
         checks['games_flagged'] += not ok
@@ -342,6 +386,8 @@ def parse_many(games, rebound_clock: str = 'miss'):
               'box_estimate_per_team_game': round(checks['poss_box_estimate'] / max(1, checks['team_games']), 2),
               'games_flagged': checks['games_flagged'], 'rebound_clock': rebound_clock,
               'issues': dict(issues)}
+    if split_substitutions:
+        report['split_substitutions'] = True
     return rows, report
 
 
@@ -371,24 +417,33 @@ def current_games(before: str | None = None):
     return (plays.from_summary(read_json(p)) for p in paths)
 
 
-def build_current(rebound_clock: str = 'miss', root: Path = DERIVED, before: str | None = None):
+def build_current(rebound_clock: str = 'miss', root: Path = DERIVED, before: str | None = None,
+                  split_substitutions: bool = False):
     """Current-season segments → root/segments.parquet (root = DERIVED, or a variant folder); before: see current_games."""
-    rows, report = parse_many(current_games(before), rebound_clock)
+    if split_substitutions and root.resolve() == DERIVED.resolve():
+        raise ValueError('split-substitution candidate requires an isolated output root')
+    if split_substitutions and any((root / name).exists() for name in ('segments.parquet', 'segments_report.json')):
+        raise FileExistsError(f'candidate output already exists in {root}')
+    rows, report = parse_many(current_games(before), rebound_clock, split_substitutions)
     root.mkdir(parents=True, exist_ok=True)
     to_frame(rows).to_parquet(root / 'segments.parquet', index=False)
     write_json(root / 'segments_report.json', report, pretty=True)
     return report
 
 
-def build_history(seasons=None, rebound_clock: str = 'miss', root: Path = DERIVED):
+def build_history(seasons=None, rebound_clock: str = 'miss', root: Path = DERIVED, split_substitutions: bool = False):
     """History segments → root/history/<season>/segments.parquet."""
     from scripts import history
+    if split_substitutions and root.resolve() == DERIVED.resolve():
+        raise ValueError('split-substitution candidate requires an isolated output root')
     out = {}
     for season in seasons or history.SEASONS:
         if not (history.RAW_DIR / f'play_by_play_{season}.parquet').exists():
             continue
-        rows, report = parse_many(history.season_games(season), rebound_clock)
         target = root / 'history' / str(season)
+        if split_substitutions and any((target / name).exists() for name in ('segments.parquet', 'segments_report.json')):
+            raise FileExistsError(f'candidate output already exists in {target}')
+        rows, report = parse_many(history.season_games(season), rebound_clock, split_substitutions)
         target.mkdir(parents=True, exist_ok=True)
         to_frame(rows).to_parquet(target / 'segments.parquet', index=False)
         write_json(target / 'segments_report.json', report, pretty=True)
@@ -402,13 +457,16 @@ def main():
     parser.add_argument('--rebound-clock', choices=REBOUND_CLOCKS, default='miss',
                         help="'miss' (default since v1.1, D23): rebound segments start at the miss's clock; 'feed': as stamped")
     parser.add_argument('--out', type=Path, default=DERIVED, help='root folder (default data/derived; variants elsewhere)')
+    parser.add_argument('--split-substitutions', action='store_true',
+                        help='candidate: split action-free segments at substitutions; requires an isolated --out')
     args = parser.parse_args()
     import json
     if args.history:
-        for season, report in build_history(rebound_clock=args.rebound_clock, root=args.out).items():
+        for season, report in build_history(rebound_clock=args.rebound_clock, root=args.out,
+                                            split_substitutions=args.split_substitutions).items():
             print(season, json.dumps(report))
     else:
-        print(json.dumps(build_current(args.rebound_clock, args.out), indent=1))
+        print(json.dumps(build_current(args.rebound_clock, args.out, split_substitutions=args.split_substitutions), indent=1))
 
 
 if __name__ == '__main__':

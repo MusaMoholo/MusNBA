@@ -25,7 +25,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from basketball_common import DERIVED, NBA_TEAM_IDS, write_json  # noqa: E402
+from basketball_common import DERIVED, NBA_TEAM_IDS, sha256_file, write_json  # noqa: E402
 
 OUT = DERIVED / 'features'
 ZONES = ('rim', 'paint', 'mid', 'corner3', 'above3')
@@ -52,7 +52,39 @@ def group(pos) -> str:
     return 'C' if p.startswith('C') else 'G' if p.startswith('G') or p in ('PG', 'SG') else 'F'
 
 
-def sources(segments: Path = DERIVED):
+def known_group(pos) -> str | None:
+    if pd.isna(pos):
+        return None
+    p = str(pos).upper()
+    if p.startswith('C'):
+        return 'C'
+    if p.startswith('G') or p in ('PG', 'SG'):
+        return 'G'
+    if p.startswith('F') or p in ('PF', 'SF'):
+        return 'F'
+    return None
+
+
+def prior_positions(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
+    """Use only the last position observed on a strictly earlier game date."""
+    daily = df[['player', 'date_et', 'pos']].copy()
+    daily['date_et'] = daily['date_et'].astype(str)
+    daily['observed'] = daily['pos'].map(known_group)
+    grouped = daily.groupby(['player', 'date_et'], sort=True)['observed']
+    if (grouped.nunique() > 1).any():
+        raise ValueError('conflicting position groups for a player on one date')
+    daily = grouped.first().reset_index()
+    daily['known'] = daily.groupby('player')['observed'].ffill()
+    daily['prior'] = daily.groupby('player')['known'].shift()
+    lookup = daily.set_index(['player', 'date_et'])['prior']
+    keys = pd.MultiIndex.from_arrays([df['player'], df['date_et'].astype(str)])
+    out = df.copy()
+    out['pos'] = lookup.reindex(keys).to_numpy()
+    latest = daily.dropna(subset=['known']).groupby('player').tail(1).set_index('player')['known']
+    return out, latest
+
+
+def sources(segments: Path = DERIVED, include_current: bool = True):
     """(segments, on_court) per season, history first, then the current season. `segments` is the root holding
     history/<season>/segments.parquet and segments.parquet (data/derived, or a variant from possessions.py --out);
     on-court minutes always come from the rotations in data/derived (they are built from plays, not segments)."""
@@ -61,7 +93,7 @@ def sources(segments: Path = DERIVED):
         seg, on = segments / 'history' / season_dir.name / 'segments.parquet', season_dir / 'on_court.parquet'
         if seg.exists() and on.exists():
             out.append((seg, on))
-    if (segments / 'segments.parquet').exists() and (DERIVED / 'rotations' / 'on_court.parquet').exists():
+    if include_current and (segments / 'segments.parquet').exists() and (DERIVED / 'rotations' / 'on_court.parquet').exists():
         out.append((segments / 'segments.parquet', DERIVED / 'rotations' / 'on_court.parquet'))
     return out
 
@@ -95,7 +127,10 @@ def matchup_counts(seg: pd.DataFrame, use: pd.DataFrame, look: pd.DataFrame, the
         g = get(defs[:, j])
         for c in cols:
             dd[c][:, j] = g[c].to_numpy(float)
-    a = matchups.assignment(theta, shc, dd)
+    if theta.get('kind') == 'dated_implicit_schedule':
+        a = matchups.dated_assignment(theta, shc, dd, use['date_et'].astype(str).to_numpy())
+    else:
+        a = matchups.assignment(theta, shc, dd)
     zone = use['zone'].replace({'corner3': 'three', 'above3': 'three'}).to_numpy()
     is_shot = (use['end_type'] == 'shot').to_numpy()
     made = (use['made'] == True).to_numpy()  # noqa: E712
@@ -174,9 +209,14 @@ def counts_for(seg: pd.DataFrame, on: pd.DataFrame, defence: bool = False, match
     """Per player-game exposures and events (reconciled games only). defence=True adds what opponents did while he was
     in the defensive five: their uses, turnovers and shots by zone (attempts, makes) — the on-court defence family."""
     seg = seg[seg['game_ok'] & seg['offense'].astype(str).isin(NBA_TEAM_IDS) & seg['defense'].astype(str).isin(NBA_TEAM_IDS)].copy()  # reconciled NBA games (no All-Star games)
+    if 'lineup_valid' in seg:
+        if not pd.api.types.is_bool_dtype(seg['lineup_valid']) or seg['lineup_valid'].isna().any():
+            raise ValueError('candidate lineup validity is missing or not boolean')
+        seg = seg[seg['lineup_valid']]
     seg['seg_id'] = np.arange(len(seg))
-    off = seg.melt(id_vars=['seg_id', 'game_id', 'period'], value_vars=[f'off_{i}' for i in range(1, 6)], value_name='player').dropna(subset=['player'])
-    dfn = seg.melt(id_vars=['seg_id', 'game_id'], value_vars=[f'def_{i}' for i in range(1, 6)], value_name='player').dropna(subset=['player'])
+    exposure = seg[~seg['sub_prefix'].fillna(False)] if 'sub_prefix' in seg else seg
+    off = exposure.melt(id_vars=['seg_id', 'game_id', 'period'], value_vars=[f'off_{i}' for i in range(1, 6)], value_name='player').dropna(subset=['player'])
+    dfn = exposure.melt(id_vars=['seg_id', 'game_id'], value_vars=[f'def_{i}' for i in range(1, 6)], value_name='player').dropna(subset=['player'])
     parts = []
     parts.append(off.groupby(['game_id', 'player']).size().rename('off_segs'))
     for q in (1, 2, 3, 4):
@@ -281,11 +321,13 @@ def team_counts(seg: pd.DataFrame) -> pd.DataFrame:
 TEAM_COUNT_COLUMNS = ('n_timed', 't_sum', 'uses', 'shots', 'three', 'rim', 'tov', 'fouled', 'reb_opp', 'oreb')
 
 
-def team_profiles(tc: pd.DataFrame, half_life: float, carry: float) -> pd.DataFrame:
+def team_profiles(tc: pd.DataFrame, half_life: float, carry: float, causal_first: bool = False) -> pd.DataFrame:
     """Pre-game team style (decayed, shrunk to the league rate of earlier seasons), rest days and day of season."""
     tc = tc.sort_values(['team', 'date_et', 'game_id'], kind='stable').reset_index(drop=True)
     cols = [f'{side}_{c}' for side in ('off', 'def') for c in TEAM_COUNT_COLUMNS]
-    sums, latest = decayed_pregame(tc.rename(columns={'team': 'player'}), cols, half_life, carry)
+    if causal_first:
+        check_season_chronology(tc)
+    sums, latest = decayed_pregame(tc.rename(columns={'team': 'player'}), cols, half_life, carry, strict_dates=causal_first)
     S = pd.DataFrame(sums, columns=cols)
     out = tc[['game_id', 'team', 'date_et', 'season']].copy()
     last = tc.groupby('team').tail(1)[['team', 'date_et', 'season']].reset_index(drop=True)  # state after each team's last game
@@ -298,21 +340,39 @@ def team_profiles(tc: pd.DataFrame, half_life: float, carry: float) -> pd.DataFr
                 base = base if len(base) else tc[tc['season'] == season]
                 league[season] = base[f'{side}_{num}'].sum() / max(base[f'{side}_{den}'].sum(), 1e-9)
             prior = tc['season'].map(league).to_numpy()
-            out[f'{side}{feat[1:]}'] = (S[f'{side}_{num}'] + k * prior) / (S[f'{side}_{den}'] + k)
             lp = last['season'].map(league).to_numpy()
+            if causal_first:
+                first = min(league)
+                daily = tc[tc['season'].eq(first)].groupby('date_et')[[f'{side}_{num}', f'{side}_{den}']].sum()
+                previous = daily.cumsum().shift(fill_value=0)
+                rates = previous[f'{side}_{num}'] / previous[f'{side}_{den}'].where(previous[f'{side}_{den}'] > 0)
+                prior = np.where(tc['season'].eq(first), tc['date_et'].map(rates), prior)
+                lp = np.where(last['season'].eq(first), last['date_et'].map(rates), lp)
+            out[f'{side}{feat[1:]}'] = (S[f'{side}_{num}'] + k * prior) / (S[f'{side}_{den}'] + k)
             last[f'{side}{feat[1:]}'] = (L[f'{side}_{num}'] + k * lp) / (L[f'{side}_{den}'] + k)
+            if causal_first:
+                for frame, totals, p in ((out, S, prior), (last, L, lp)):
+                    n, d = totals[f'{side}_{num}'].to_numpy(), totals[f'{side}_{den}'].to_numpy()
+                    unshrunk = np.divide(n, d, out=np.full(len(n), np.nan), where=d > 0)
+                    frame[f'{side}{feat[1:]}'] = np.where(np.isnan(p), unshrunk, frame[f'{side}{feat[1:]}'])
     out.attrs['latest'] = last.rename(columns={'date_et': 'last_game'})
     return out
 
 
-def schedule(seg: pd.DataFrame) -> pd.DataFrame:
+def schedule(seg: pd.DataFrame, strict_dates: bool = False) -> pd.DataFrame:
     """Rest days (capped at 7; first game in the data = 7) and day of the season, per team-game, over every NBA game."""
     seg = seg[seg['offense'].astype(str).isin(NBA_TEAM_IDS) & seg['defense'].astype(str).isin(NBA_TEAM_IDS)]
     g = pd.concat([seg[['game_id', 'offense', 'date_et', 'season']].rename(columns={'offense': 'team'}),
                    seg[['game_id', 'defense', 'date_et', 'season']].rename(columns={'defense': 'team'})]).drop_duplicates(['game_id', 'team'])
     g = g.sort_values(['team', 'date_et', 'game_id']).reset_index(drop=True)
     d = pd.to_datetime(g['date_et'])
-    g['rest_days'] = (d - d.groupby(g['team']).shift()).dt.days.clip(upper=7).fillna(7)
+    if strict_dates:
+        days = g[['team', 'date_et']].drop_duplicates().copy()
+        dates = pd.to_datetime(days['date_et'])
+        days['rest_days'] = (dates - dates.groupby(days['team']).shift()).dt.days.clip(upper=7).fillna(7)
+        g = g.merge(days, on=['team', 'date_et'], how='left', validate='many_to_one')
+    else:
+        g['rest_days'] = (d - d.groupby(g['team']).shift()).dt.days.clip(upper=7).fillna(7)
     g['season_day'] = (d - d.groupby(g['season']).transform('min')).dt.days
     return g[['game_id', 'team', 'rest_days', 'season_day']]
 
@@ -330,7 +390,7 @@ FAMILY_COLUMNS = {
 }
 
 
-def decayed_pregame(df: pd.DataFrame, columns, half_life: float, carry: float):
+def decayed_pregame(df: pd.DataFrame, columns, half_life: float, carry: float, strict_dates: bool = False):
     """Decayed sums of each column over the player's earlier games (pre-game), plus the post-last-game state."""
     vals = df[columns].to_numpy(float)
     players, seasons = df['player'].to_numpy(), df['season'].to_numpy()
@@ -339,25 +399,55 @@ def decayed_pregame(df: pd.DataFrame, columns, half_life: float, carry: float):
     latest = {}
     S = np.zeros(len(columns))
     last_p, last_s = None, None
+    dates = df['date_et'].astype(str).to_numpy() if strict_dates else None
+    if dates is not None and df['date_et'].isna().any():
+        raise ValueError('missing date in cutoff-safe decay')
+    last_date, day_start = None, S.copy()
     for i in range(len(df)):
         if players[i] != last_p:
             if last_p is not None:
                 latest[last_p] = S.copy()
             S = np.zeros(len(columns))
             last_p, last_s = players[i], seasons[i]
+            last_date = None
         elif seasons[i] != last_s:
+            if dates is not None and dates[i] == last_date:
+                raise ValueError('one player has two seasons on the same date')
             S *= carry
             last_s = seasons[i]
-        out[i] = S
+        if dates is not None:
+            if last_date is not None and dates[i] < last_date:
+                raise ValueError('player games are not ordered by date')
+            if dates[i] != last_date:
+                day_start = S.copy()
+            out[i] = day_start
+            last_date = dates[i]
+        else:
+            out[i] = S
         S = S * d + vals[i]
     if last_p is not None:
         latest[last_p] = S.copy()
     return out, latest
 
 
-def priors_by_season(df: pd.DataFrame) -> dict:
+def check_season_chronology(df: pd.DataFrame) -> None:
+    if df['date_et'].isna().any() or df['season'].isna().any():
+        raise ValueError('missing season or date in cutoff-safe priors')
+    bounds = df.assign(_date=pd.to_datetime(df['date_et'], errors='raise')).groupby('season')['_date'].agg(['min', 'max'])
+    previous_max: pd.Timestamp | None = None
+    for row in bounds.sort_index().itertuples():
+        start, end = pd.Timestamp(str(row.min)), pd.Timestamp(str(row.max))
+        if previous_max is not None and previous_max >= start:
+            raise ValueError('season dates overlap; earlier-season pooled priors are not cutoff-safe')
+        previous_max = end
+
+
+def priors_by_season(df: pd.DataFrame, causal_first: bool = False) -> dict:
     """Position-group pooled rates from seasons before each season (the first season uses itself)."""
-    df = df.assign(group=df['pos'].map(group))
+    df = df.assign(group=df['pos'].map(known_group if causal_first else group))
+    if causal_first:
+        check_season_chronology(df)
+        df['date_et'] = df['date_et'].astype(str)
     out = {}
     for season in sorted(df['season'].unique()):
         base = df[df['season'] < season]
@@ -365,21 +455,55 @@ def priors_by_season(df: pd.DataFrame) -> dict:
             base = df[df['season'] == season]
         g = base.groupby('group').sum(numeric_only=True)
         out[season] = g
+    if causal_first:
+        first = min(out)
+        base = df[df['season'].eq(first)]
+        dates, groups = sorted(base['date_et'].unique()), sorted(base['group'].dropna().unique())
+        if not groups:
+            empty = base.groupby('group').sum(numeric_only=True)
+            for date in dates:
+                out[(first, date)] = empty
+            del out[first]
+            return out
+        index = pd.MultiIndex.from_product([dates, groups], names=['date_et', 'group'])
+        daily = base.groupby(['date_et', 'group']).sum(numeric_only=True).reindex(index, fill_value=0)
+        previous = daily.groupby(level='group').cumsum().groupby(level='group').shift(fill_value=0)
+        for date in dates:
+            out[(first, date)] = previous.loc[date]
+        del out[first]
     return out
 
 
-def profiles(df: pd.DataFrame, sums: dict, priors: dict, key=None) -> pd.DataFrame:
+def profiles(df: pd.DataFrame, sums: dict, priors: dict, key=None, causal_first: bool = False) -> pd.DataFrame:
     """Shrunk rates from decayed sums. `sums[family]` aligned with df rows. Each rate shrinks toward the prior of the
     row's key in `priors[season]`: the position group by default, or an archetype code (build(archetypes=K))."""
     f = pd.DataFrame(index=df.index)
-    grp = df['pos'].map(group) if key is None else pd.Series(np.asarray(key), index=df.index)
+    grp = df['pos'].map(known_group if causal_first else group) if key is None else pd.Series(np.asarray(key), index=df.index)
     def prior(num, den):
+        if causal_first:
+            values = {}
+            result = []
+            for season, date, g in zip(df['season'], df['date_et'].astype(str), grp):
+                bucket = (season, date) if (season, date) in priors else season
+                if bucket not in priors:
+                    raise ValueError(f'no causal prior for season {season}, date {date}')
+                lookup = (bucket, g)
+                if lookup not in values:
+                    table = priors[bucket]
+                    denominator = table.loc[g, den] if g in table.index else 0
+                    values[lookup] = table.loc[g, num] / denominator if denominator > 0 else np.nan
+                result.append(values[lookup])
+            return np.asarray(result)
         return np.array([(priors[s].loc[g, num] / max(1e-9, priors[s].loc[g, den])) if g in priors[s].index else np.nan
                          for s, g in zip(df['season'], grp)])
     def shrunk(fam_num, num, fam_den, den, k):
         n, e = sums[fam_num][num], sums[fam_den][den]
         p = prior(num, den)
-        return (n + k * p) / (e + k)
+        shrunk = (n + k * p) / (e + k)
+        if causal_first:
+            unshrunk = np.divide(n, e, out=np.full(len(n), np.nan), where=e > 0)
+            return np.where(np.isnan(p), unshrunk, shrunk)
+        return shrunk
     role, use, acc, ft = sums['role'], sums['usage'], sums['accuracy'], sums['ft']
     f['games_eff'] = role['games']
     f['min_avg'] = np.where(role['games'] > 0, role['sec'] / 60 / np.maximum(role['games'], 1e-9), np.nan)
@@ -524,9 +648,30 @@ def attach_body(df: pd.DataFrame) -> pd.DataFrame:
 
 def build(out: Path = OUT, families: dict | None = None, team_style: dict | None = None, segments: Path = DERIVED,
           body: bool = False, archetypes_k: int = 0, defence: bool = False, matchup: Path | None = None,
-          shot_types: bool = False, defence_k_scale: float = 1.0, real_matchups: Path | None = None) -> dict:
+          shot_types: bool = False, defence_k_scale: float = 1.0, real_matchups: Path | None = None,
+          causal_first: bool = False, base_pregame: Path | None = None, history_only: bool = False,
+          causal_positions: bool = False) -> dict:
     """Profiles. Options (variants; the default profiles carry none of them): body = height and weight columns;
     archetypes_k = K archetypes as the shrinkage prior (and an arch_code column); defence = on-court defence family."""
+    if causal_first and archetypes_k:
+        raise ValueError('causal first-season archetype fits are not implemented')
+    if causal_positions and not causal_first:
+        raise ValueError('prior-observed positions require causal first-season priors')
+    if causal_first and (out.resolve() == OUT.resolve() or any(
+            (out / name).exists() for name in ('pregame.parquet', 'latest.parquet', 'team_pregame.parquet',
+                                                'team_latest.parquet', 'features_report.json'))):
+        raise ValueError('causal-prior candidate requires a new isolated output folder')
+    if base_pregame is not None and matchup is None:
+        raise ValueError('base pregame profiles are only used with matchup features')
+    if causal_first and matchup is not None:
+        if base_pregame is None:
+            raise ValueError('causal matchup features require separately built causal base profiles')
+        import json as _json
+        base_report = base_pregame.parent / 'features_report.json'
+        if not base_report.exists() or not _json.loads(base_report.read_text()).get('causal_first_priors'):
+            raise ValueError('base profiles lack a causal-first-prior build report')
+        if causal_positions and not _json.loads(base_report.read_text()).get('causal_positions'):
+            raise ValueError('base profiles lack prior-observed positions')
     families = dict(families or FAMILIES)
     if defence:
         families.setdefault('defence', DEFENCE_FAMILY)
@@ -535,19 +680,37 @@ def build(out: Path = OUT, families: dict | None = None, team_style: dict | None
     mstate = None
     if matchup is not None:
         import json as _json
+        from scripts import matchups
         families.setdefault('matchup', MATCHUP_FAMILY)
-        look = pd.read_parquet(DERIVED / 'features' / 'pregame.parquet', columns=['game_id', 'player', 'pos', 'min_avg'])
+        base_path = base_pregame or DERIVED / 'features' / 'pregame.parquet'
+        theta = _json.loads(Path(matchup).read_text())
+        dated = theta.get('kind') == 'dated_implicit_schedule'
+        if causal_first and not dated:
+            raise ValueError('causal matchup construction requires a dated assignment schedule')
+        if dated:
+            if not causal_first or not causal_positions or not history_only or body or archetypes_k or real_matchups is not None:
+                raise ValueError('dated assignment is limited to isolated history-only body-free implicit features')
+            if theta.get('base_pregame_sha256') != sha256_file(base_path):
+                raise ValueError('dated assignment and feature base profiles do not match')
+            matchups.dated_masks(theta, [])
+        look = pd.read_parquet(base_path, columns=['game_id', 'player', 'pos', 'min_avg'])
         look['game_id'], look['player'] = look['game_id'].astype(str), look['player'].astype(str)
-        sizes = pd.read_parquet(DERIVED / 'athletes.parquet', columns=['player', 'height_in', 'weight_lb'])
-        sizes['player'] = sizes['player'].astype(str)
-        look = look.merge(sizes, on='player', how='left')
-        p = look['pos'].fillna('').str.upper()
-        look['grp_code'] = np.where(p.str.startswith('C'), 2, np.where(p.str.startswith('G') | p.isin(['PG', 'SG']), 0, 1)).astype(float)
+        if dated:
+            look['height_in'], look['weight_lb'] = np.nan, np.nan
+        else:
+            sizes = pd.read_parquet(DERIVED / 'athletes.parquet', columns=['player', 'height_in', 'weight_lb'])
+            sizes['player'] = sizes['player'].astype(str)
+            look = look.merge(sizes, on='player', how='left')
+        if dated:
+            look['grp_code'] = look['pos'].map(known_group).map({'G': 0, 'F': 1, 'C': 2}).astype(float)
+        else:
+            p = look['pos'].fillna('').str.upper()
+            look['grp_code'] = np.where(p.str.startswith('C'), 2, np.where(p.str.startswith('G') | p.isin(['PG', 'SG']), 0, 1)).astype(float)
         if real_matchups is not None:  # pre-game usage (stopper tendency) and shot mix (deterrence) of each attacker
-            u = pd.read_parquet(DERIVED / 'features' / 'pregame.parquet', columns=['game_id', 'player', 'usage', 'mix_rim', 'mix_corner3', 'mix_above3'])
+            u = pd.read_parquet(base_path, columns=['game_id', 'player', 'usage', 'mix_rim', 'mix_corner3', 'mix_above3'])
             u['game_id'], u['player'] = u['game_id'].astype(str), u['player'].astype(str)
             look = look.merge(u, on=['game_id', 'player'], how='left')
-        mstate = {'theta': _json.loads(Path(matchup).read_text()), 'look': look.set_index(['game_id', 'player'])}
+        mstate = {'theta': theta, 'look': look.set_index(['game_id', 'player'])}
         if real_matchups is not None:
             M = pd.read_parquet(real_matchups)
             for c in ('espn_game', 'off_player', 'def_player'):
@@ -560,29 +723,37 @@ def build(out: Path = OUT, families: dict | None = None, team_style: dict | None
     if shot_types:
         from scripts import matchups
         families.setdefault('style', STYLE_FAMILY)
-        types = matchups.shot_types(include_current=(segments / 'segments.parquet').exists())
+        types = matchups.shot_types(include_current=not history_only and (segments / 'segments.parquet').exists())
     team_style = team_style or TEAM_STYLE
     frames, team_frames, schedules = [], [], []
-    for seg_path, on_path in sources(segments):
+    source_files = sources(segments, include_current=not history_only)
+    if not source_files:
+        raise ValueError('no segment and on-court source pairs')
+    for i, (seg_path, on_path) in enumerate(source_files, 1):
         seg = pd.read_parquet(seg_path)
         if types is not None:
             from scripts import matchups
             seg['stype'] = matchups.attach_shot_types(seg, types)
         frames.append(counts_for(seg, pd.read_parquet(on_path), defence, mstate))
         team_frames.append(team_counts(seg))
-        schedules.append(schedule(seg))
+        schedules.append(schedule(seg, strict_dates=causal_first))
+        if causal_first:
+            print(f'causal feature sources {i}/{len(source_files)}: {seg_path}', flush=True)
     df = pd.concat(frames, ignore_index=True)
     if body or archetypes_k:
         df = attach_body(df)
+    latest_positions = None
+    if causal_positions:
+        df, latest_positions = prior_positions(df)
     df = df.sort_values(['player', 'date_et', 'game_id'], kind='stable').reset_index(drop=True)
     sums, latest_sums = {}, {}
     for family, (half_life, carry) in families.items():
         cols = FAMILY_COLUMNS[family]
-        arr, latest = decayed_pregame(df, cols, half_life, carry)
+        arr, latest = decayed_pregame(df, cols, half_life, carry, strict_dates=causal_first)
         sums[family] = pd.DataFrame(arr, columns=cols, index=df.index)
         latest_sums[family] = latest
-    priors = priors_by_season(df)
-    feats = profiles(df, sums, priors)
+    priors = priors_by_season(df, causal_first=causal_first)
+    feats = profiles(df, sums, priors, causal_first=causal_first)
     arch_report = None
     if archetypes_k:
         code, arch_priors, fits = archetypes(df, feats, archetypes_k)
@@ -594,7 +765,8 @@ def build(out: Path = OUT, families: dict | None = None, team_style: dict | None
     pre = pd.concat([base, feats], axis=1)
     out.mkdir(parents=True, exist_ok=True)
     pre.to_parquet(out / 'pregame.parquet', index=False)
-    teams = team_profiles(pd.concat(team_frames, ignore_index=True), team_style['half_life'], team_style['carry'])
+    teams = team_profiles(pd.concat(team_frames, ignore_index=True), team_style['half_life'], team_style['carry'],
+                          causal_first=causal_first)
     team_latest = teams.attrs.pop('latest')
     teams = teams.merge(pd.concat(schedules, ignore_index=True), on=['game_id', 'team'], how='left')
     seasons = pd.concat(schedules, ignore_index=True).merge(teams[['game_id', 'team', 'date_et', 'season']], on=['game_id', 'team'])
@@ -603,8 +775,10 @@ def build(out: Path = OUT, families: dict | None = None, team_style: dict | None
     teams.to_parquet(out / 'team_pregame.parquet', index=False)
     # Latest profile per player: the state after his last game (for projections from today).
     last = df.groupby('player').tail(1).reset_index(drop=True)
+    if latest_positions is not None:
+        last['pos'] = last['player'].map(latest_positions)
     lsums = {fam: pd.DataFrame([latest_sums[fam][p] for p in last['player']], columns=FAMILY_COLUMNS[fam]) for fam in families}
-    lprof = profiles(last, lsums, priors)
+    lprof = profiles(last, lsums, priors, causal_first=causal_first)
     if archetypes_k:  # each player's state after his last game, placed with that season's archetype fit
         lcode = np.zeros(len(last), dtype=np.int64)
         for season in last['season'].unique():
@@ -621,12 +795,21 @@ def build(out: Path = OUT, families: dict | None = None, team_style: dict | None
     game_usage = df['uses'] / df['off_segs'].where(df['off_segs'] > 0)
     big = (df['off_segs'] >= 25) & (feats['games_eff'] > 0)
     three = df['att_above3'] + df['att_corner3']
+    if causal_first:
+        def corr(a, b):
+            x, y = np.asarray(a, dtype=float), np.asarray(b, dtype=float)
+            valid = np.isfinite(x) & np.isfinite(y)
+            return round(float(np.corrcoef(x[valid], y[valid])[0, 1]), 3) if valid.sum() > 1 \
+                and np.std(x[valid]) > 0 and np.std(y[valid]) > 0 else None
+    else:
+        def corr(a, b):
+            return round(float(np.corrcoef(a, b)[0, 1]), 3)
     report = {'player_games': len(df), 'players': int(df['player'].nunique()), 'seasons': sorted(int(s) for s in df['season'].unique()),
               'with_history': round(float((feats['games_eff'] > 0).mean()), 4),
-              'usage_corr_pregame_v_game': round(float(np.corrcoef(feats.loc[big, 'usage'], game_usage[big])[0, 1]), 3),
-              'minutes_corr_pregame_v_game': round(float(np.corrcoef(feats.loc[feats['games_eff'] > 0, 'min_avg'], df.loc[feats['games_eff'] > 0, 'sec'] / 60)[0, 1]), 3),
-              'three_share_corr': round(float(np.corrcoef((feats['mix_above3'] + feats['mix_corner3'])[big & (df['shots'] >= 8)],
-                                                          (three / df['shots'])[big & (df['shots'] >= 8)])[0, 1]), 3),
+              'usage_corr_pregame_v_game': corr(feats.loc[big, 'usage'], game_usage[big]),
+              'minutes_corr_pregame_v_game': corr(feats.loc[feats['games_eff'] > 0, 'min_avg'], df.loc[feats['games_eff'] > 0, 'sec'] / 60),
+              'three_share_corr': corr((feats['mix_above3'] + feats['mix_corner3'])[big & (df['shots'] >= 8)],
+                                       (three / df['shots'])[big & (df['shots'] >= 8)]),
               'families': {k: {'half_life_games': v[0], 'season_carry': v[1]} for k, v in families.items()},
               'team_style': team_style, 'segments': str(segments), 'body': body, 'archetypes': archetypes_k, 'defence': defence,
               'defence_k': {k: v * _DEFENCE_SCALE for k, v in DEFENCE_K.items()} if defence else None, 'matchup': str(matchup) if matchup else None, 'shot_types': shot_types,
@@ -634,6 +817,32 @@ def build(out: Path = OUT, families: dict | None = None, team_style: dict | None
               'matchup_k': dict(_MATCHUP_K) if matchup else None,
               'archetype_fits': arch_report, 'team_games': len(teams), 'team_columns': [c for c in teams.columns if c not in ('game_id', 'team', 'date_et', 'season')],
               'feature_columns': list(feats.columns)}
+    if causal_first:
+        report['causal_first_priors'] = True
+        report['causal_positions'] = causal_positions
+        report['history_only'] = history_only
+        report['causal_scope'] = 'first-season player/team priors and same-day histories; assignment, body, raw revision timing and other fitted inputs require separate cutoff audits'
+        if matchup is not None and dated:
+            report['relative_missing_policy'] = 'lineup_median'
+        inputs = [Path(__file__)] + [path for pair in source_files for path in pair]
+        if matchup is not None:
+            inputs += [Path(matchup), ROOT / 'scripts' / 'matchups.py']
+            if not dated:
+                inputs.append(DERIVED / 'athletes.parquet')
+        elif body:
+            inputs.append(DERIVED / 'athletes.parquet')
+        if real_matchups is not None:
+            inputs.append(Path(real_matchups))
+        if shot_types:
+            from scripts import history
+            inputs += sorted(history.RAW_DIR.glob('play_by_play_*.parquet'))
+            if not history_only:
+                from basketball_common import RAW
+                inputs += sorted((RAW / 'final').glob('*.json.gz'))
+        report['input_sha256'] = {str(path): sha256_file(path) for path in inputs}
+        if base_pregame is not None:
+            report['base_pregame'] = str(base_pregame)
+            report['base_pregame_sha256'] = sha256_file(base_pregame)
     write_json(out / 'features_report.json', report, pretty=True)
     return report
 
@@ -653,6 +862,13 @@ def main():
     ap.add_argument('--shot-types', action='store_true', help='shot-type shares from the play text (self-created, drive, cut, putback, catch)')
     ap.add_argument('--real-matchups', type=Path, default=None,
                     help='D32: count the matchup family with real NBA matchup shares (data/derived/nbastats/matchups.parquet; needs --matchup)')
+    ap.add_argument('--causal-first-priors', action='store_true',
+                    help='candidate: strictly earlier first-season priors and same-day histories; requires a new --out')
+    ap.add_argument('--base-pregame', type=Path, default=None,
+                    help='base pregame profiles for matchup construction; required with causal matchup features')
+    ap.add_argument('--history-only', action='store_true', help='exclude the current season from feature construction')
+    ap.add_argument('--causal-positions', action='store_true',
+                    help='candidate: derive position only from strictly earlier player games')
     args = ap.parse_args()
     families = dict(FAMILIES)
     for spec in args.family:
@@ -665,7 +881,8 @@ def main():
         team = {'half_life': float(hl), 'carry': float(rest[0]) if rest else TEAM_STYLE['carry']}
     import json
     r = build(args.out, families, team, args.segments, args.body, args.archetypes, args.defence, args.matchup, args.shot_types,
-              args.defence_k_scale, args.real_matchups)
+              args.defence_k_scale, args.real_matchups, args.causal_first_priors, args.base_pregame, args.history_only,
+              args.causal_positions)
     print(json.dumps({k: v for k, v in r.items() if k != 'feature_columns'}, indent=1))
 
 

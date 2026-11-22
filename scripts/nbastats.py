@@ -162,6 +162,7 @@ def crosswalk(T: pd.DataFrame, P: pd.DataFrame, E: pd.DataFrame) -> dict:
     e['n'] = e['name'].map(norm)
     e['tc'] = e['abbr'].map(tricode)
     e['key'] = e['espn_game'] = e['game_id']
+    e['valid_player_id'] = e['player'].astype('string').str.fullmatch(r'\d+', na=False)
     stages = Counter()
     matches = []
     e_by = {k: g for k, g in e.groupby(['espn_game', 'tc'])}
@@ -173,10 +174,10 @@ def crosswalk(T: pd.DataFrame, P: pd.DataFrame, E: pd.DataFrame) -> dict:
         left = cand.copy()
         rest = []
         for r in grp.itertuples(index=False):
-            hit = left[left['n'] == r.n]
+            hit = left[left['valid_player_id'] & (left['n'] == r.n)]
             stage = 'name'
             if len(hit) != 1:
-                hit = left[left['n'].map(initial_surname) == initial_surname(r.n)]
+                hit = left[left['valid_player_id'] & (left['n'].map(initial_surname) == initial_surname(r.n))]
                 stage = 'initial_surname'
             if len(hit) != 1:
                 rest.append(r)
@@ -185,7 +186,7 @@ def crosswalk(T: pd.DataFrame, P: pd.DataFrame, E: pd.DataFrame) -> dict:
             stages[stage] += 1
             left = left.drop(hit.index)
         for r in rest:
-            hit = left[(left['pts'] == r.PTS) & (left['fga'] == r.FGA) & (left['fgm'] == r.FGM) & (left['reb'] == r.REB) &
+            hit = left[left['valid_player_id'] & (left['pts'] == r.PTS) & (left['fga'] == r.FGA) & (left['fgm'] == r.FGM) & (left['reb'] == r.REB) &
                        (left['ast'] == r.AST)]
             if len(hit) == 1:
                 matches.append((r.GAME_ID, r.PLAYER_ID, eg_, hit.iloc[0]['player'], 'stat_line'))

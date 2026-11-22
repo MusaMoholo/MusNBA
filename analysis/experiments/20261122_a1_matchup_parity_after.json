@@ -1,0 +1,71 @@
+{
+ "experiment": "a1_matchup_train_engine_parity",
+ "game_ids": [
+  "401809247",
+  "401810327",
+  "401810328"
+ ],
+ "population": "first three pinned F4 control games; matched real actor and five-defender segment states",
+ "scope": "matchup columns only; equality is not evidence that fitted parameters, priors, body measurements or underlying data were available before every historical origin",
+ "tolerance": {
+  "absolute": 1e-06,
+  "relative": 1e-06
+ },
+ "excluded_states": {
+  "actor_not_on_recorded_offensive_lineup": 10
+ },
+ "columns": {
+  "mu_fg_rim": {
+   "states": 679,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "mu_fg_paint": {
+   "states": 679,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "mu_fg_mid": {
+   "states": 679,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "mu_fg_three": {
+   "states": 679,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "mu_tov": {
+   "states": 679,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "mu_foul": {
+   "states": 679,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "mu_height_gap": {
+   "states": 679,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  }
+ },
+ "input_sha256": {
+  "analysis/experiments/20261122_a1_manifest.json": "0790a28ffadc3f09554c79661ccb80f631a4eb4b56f64030633a9a82d451e75e",
+  "data/derived/variants/matchup/features/pregame.parquet": "d4da5f071de3ddcbc72bbb4899a77f9b4f22d899a3a54bcfb76baf0097594d0e",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+  "data/derived/athletes.parquet": "3b8e24488790edca5289a2a52f30867243a69f6cab57032e1c839967bb65d5be",
+  "models/matchup_2025-12-31.json": "176ce8a25f6fd5cc0cee99abca618a72380bac4ed8cabc6f86d2f6129203206c",
+  "scripts/nodes.py": "718186b19efa9aaff9bcb2d9a905f6a6b4b4cba0038aff29c44202668c892447",
+  "scripts/engine.py": "48d09c8e5fa7f10a84fafc9ec61b38aae65d225b00f60b2775387963b75737e8",
+  "scripts/matchups.py": "15fe645e14103a82c996db406140a6c5480f17ed80c5bb5a63d9d5d43f6be24a"
+ }
+}

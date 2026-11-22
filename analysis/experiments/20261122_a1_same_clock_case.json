@@ -1,0 +1,21 @@
+{
+  "experiment": "a1_substitution_same_clock_case",
+  "source": "data/raw/hoopr/play_by_play_2026.parquet",
+  "derived_windows": "data/derived/history/2026/windows.parquet",
+  "derived_substitutions": "data/derived/history/2026/subs.parquet",
+  "input_hashes": "analysis/experiments/20261122_a1_rotation_integrity.json input_sha256; play-by-play hash is in analysis/experiments/20261122_a1_raw_inventory.json",
+  "game_id": "401810498",
+  "period": 4,
+  "clock": 33.3,
+  "source_sequence": {
+    "702": {"home_score": 106, "away_score": 110, "event": "made free throw"},
+    "703": {"home_score": 106, "away_score": 110, "event": "substitution"},
+    "707": {"home_score": 107, "away_score": 110, "event": "made free throw"},
+    "709": {"home_score": 107, "away_score": 110, "event": "home substitution"},
+    "718": {"home_score": 107, "away_score": 110, "event": "home substitution reversing 709"},
+    "725": {"home_score": 107, "away_score": 110, "event": "home substitution repeating 709"},
+    "727": {"home_score": 107, "away_score": 111, "event": "made free throw"}
+  },
+  "observed": "The clock-grouped window and all its home substitutions carry margin -4, although the source home margin before substitution 709 is -3. Scoring at sequence 727 is later than that substitution. The same incoming/outgoing pair occurs legitimately twice, separated by a reversal and other events.",
+  "limitation": "This is a demonstrated source-order case, not an estimate of all affected windows. Recorded scoreboards can contain feed revisions; a new state-before-event dataset needs explicit sequencing and validation."
+}

@@ -34,7 +34,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from basketball_common import DERIVED, write_json  # noqa: E402
+from basketball_common import DERIVED, sha256_file, write_json  # noqa: E402
 from scripts import nodes, train  # noqa: E402
 from scripts.evaluate import EXPERIMENTS, FOLDS  # noqa: E402
 
@@ -396,7 +396,8 @@ def fit_models(fold, spec_path, threads, train_segments=False, train_features=Fa
     tag = ('_cross' if cross else '') + ('_all' if node_list != SIM_NODES else '')
     folder = train.MODELS / 'folds' / f"{spec.get('version', 'default')}_{fold}{tag}"
     sig = nodes.signature(train_features, train_segments) if cross else nodes.signature(pregame, segments)
-    key = json.dumps({'spec': spec, 'signature': sig, 'nodes': node_list}, sort_keys=True, default=str)
+    key = json.dumps({'spec': spec, 'signature': sig, 'nodes': node_list,
+                      'training_code_sha256': sha256_file(Path(train.__file__))}, sort_keys=True, default=str)
     meta_path = folder / 'meta.json'
     if meta_path.exists() and json.loads(meta_path.read_text())['key'] == key:
         meta = json.loads(meta_path.read_text())

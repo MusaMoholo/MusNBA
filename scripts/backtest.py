@@ -159,7 +159,8 @@ def run_game(gid: str) -> dict:
                     {**minutes.player_state({'params': m['params'], 'latest': {}, 'team_dates': {}, 'ramp': m['ramp'], 'sd': m['sd']}, tid, pl['id'], day)}
                 pl['projected_starter'] = bool(pl['starter']) if _W.get('known_starters') else False
     game = {'game_id': gid, 'home_id': home, 'away_id': away}
-    g = engine.Game(game, players, p.drop(columns=['game_id']), t.drop(columns=['game_id']), stints, day)
+    g = engine.Game(game, players, p.drop(columns=['game_id']), t.drop(columns=['game_id']), stints, day,
+                    position_policy=eng.m.position_policy)
     g.season = season
     sim_seed = simulation_seed(eng.m.cfg['version'], day, gid, _W['stream'], _W['seed_key'])
     eng.simulate(g, worlds, sim_seed)

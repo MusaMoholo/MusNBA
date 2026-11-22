@@ -176,6 +176,23 @@ def mismatch_edges(mus: list, mix: dict) -> np.ndarray:
     return np.nan_to_num(out)
 
 
+def relative_lineup(values: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    """Within-five shares and tie-symmetric ranks, without borrowing another game's values."""
+    values = np.asarray(values, dtype=float)
+    if values.ndim != 2 or values.shape[1] != 5 or np.isinf(values).any():
+        raise ValueError('relative lineup inputs must be finite or missing, with five players per row')
+    has_value = ~np.isnan(values).all(axis=1)
+    medians = np.full((len(values), 1), np.nan)
+    medians[has_value, 0] = np.nanmedian(values[has_value], axis=1)
+    filled = np.where(np.isnan(values), medians, values)
+    totals = filled.sum(axis=1, keepdims=True)
+    shares = np.divide(filled, totals, out=np.full(filled.shape, np.nan), where=totals > 0)
+    greater = (filled[:, None, :] > filled[:, :, None]).sum(axis=2)
+    equal = (filled[:, None, :] == filled[:, :, None]).sum(axis=2)
+    ranks = np.where(np.isnan(filled), np.nan, 1 + greater + (equal - 1) / 2)
+    return shares, ranks
+
+
 class Chain:
     """Segments plus offence/defence candidate tables with profiles, relative roles and in-game counts."""
 
@@ -184,22 +201,38 @@ class Chain:
         pregame = Path(pregame or DERIVED / 'features' / 'pregame.parquet')
         seg = attach_teams(load_segments(include_current, segments), pd.read_parquet(pregame.parent / 'team_pregame.parquet'))
         pre = pd.read_parquet(pregame)
-        pre['grp'] = pre['pos'].map(group)
+        report = pregame.parent / 'features_report.json'
+        report = json.loads(report.read_text()) if report.exists() else {}
+        self._preserve_groups = bool(report.get('causal_positions'))
+        self._relative_missing_policy = report.get('relative_missing_policy', 'legacy')
+        if self._relative_missing_policy not in ('legacy', 'lineup_median'):
+            raise ValueError('unknown relative-profile missing policy')
+        if self._preserve_groups:
+            from scripts.features import known_group
+            pre['grp'] = pre['pos'].map(known_group)
+        else:
+            pre['grp'] = pre['pos'].map(group)
         present = [c for c in OPTIONAL_PROFILE if c in pre.columns]
         def_present = [c for c in DEF_SIDE if c in pre.columns]
         self.profile = PROFILE + present
         self.lineup = LINEUP + [c for c, (side, src, _) in OPTIONAL_LINEUP.items() if src in present or (side == 'def' and src in def_present)]
-        report = pregame.parent / 'features_report.json'
-        report = json.loads(report.read_text()) if report.exists() else {}
         self.seg = seg
-        self.off = self._side(seg, pre, 'off', self.profile)
-        self.dfn = self._side(seg, pre, 'def', self.profile + def_present)
+        self.off = self._side(seg, pre, 'off', self.profile, preserve_missing_group=self._preserve_groups)
+        self.dfn = self._side(seg, pre, 'def', self.profile + def_present, preserve_missing_group=self._preserve_groups)
         self.mu_cols, self.mu_shot = [], []
         theta_path = assign_path or report.get('assign') or report.get('matchup')
         if def_present and theta_path:
             self._assign_extra = pre[['game_id', 'player'] + [c for c in ASSIGN_ONLY if c in pre.columns]].copy()
             self._deterrence = bool(report.get('deterrence'))
             theta = json.loads((ROOT / theta_path).read_text()) if not Path(theta_path).is_absolute() else json.loads(Path(theta_path).read_text())
+            if theta.get('kind') == 'dated_implicit_schedule':
+                from basketball_common import sha256_file
+                path = Path(theta_path) if Path(theta_path).is_absolute() else ROOT / theta_path
+                expected = report.get('input_sha256', {}).get(str(Path(theta_path)))
+                if expected != sha256_file(path) or theta.get('base_pregame_sha256') != report.get('base_pregame_sha256'):
+                    raise ValueError('dated assignment does not match the feature-build provenance')
+                if self._deterrence or report.get('who_mismatch'):
+                    raise ValueError('dated assignment does not support deterrence or who-mismatch features')
             self._matchup(theta)
             if report.get('who_mismatch'):
                 self._who_mismatch(theta)
@@ -220,8 +253,12 @@ class Chain:
         """Per segment with an actor: his likely defenders' quality, weighted by the soft assignment (scripts/matchups.py)."""
         from scripts import matchups
         rows = self.seg[self.seg['actor'].notna()][['seg_id', 'actor']]
-        body = pd.read_parquet(DERIVED / 'athletes.parquet', columns=['player', 'height_in', 'weight_lb'])
-        body['player'] = body['player'].astype(str)
+        if theta.get('kind') == 'dated_implicit_schedule':
+            body = pd.DataFrame({'player': pd.Series(dtype=str), 'height_in': pd.Series(dtype=float),
+                                 'weight_lb': pd.Series(dtype=float)})
+        else:
+            body = pd.read_parquet(DERIVED / 'athletes.parquet', columns=['player', 'height_in', 'weight_lb'])
+            body['player'] = body['player'].astype(str)
         cols = matchups.MU_SOURCES
         dfn = self.dfn[['seg_id', 'game_id', 'player', 'grp_code', 'min_avg'] + [c for c in cols if c in self.dfn.columns]].merge(body, on='player', how='left')
         if self._deterrence:  # v1.4e: the defenders' attempt shares allowed (D32), only as mu_dx_* for the actor
@@ -243,7 +280,11 @@ class Chain:
         if theta.get('kind') == 'real':  # D32: the real-matchup assignment needs the offensive five, stopper, pair history
             A, D, O = self._real_inputs(segs, act, A, D, dfn, body, theta)
         self._mu_ctx = {'segs': segs, 'D': D, 'O': O, 'body': body, 'defp': getattr(self, '_defp', None)}
-        mu = matchups.mu_columns(theta, A, D, O)
+        if theta.get('kind') == 'dated_implicit_schedule':
+            dates = self.seg.set_index('seg_id').loc[segs, 'date_et'].astype(str).to_numpy()
+            mu = matchups.dated_mu_columns(theta, A, D, dates)
+        else:
+            mu = matchups.mu_columns(theta, A, D, O)
         frame = pd.DataFrame({k: v.astype(np.float32) for k, v in mu.items()}, index=segs)
         self.seg = self.seg.merge(frame, left_on='seg_id', right_index=True, how='left')
         self.mu_cols = list(mu)
@@ -332,14 +373,19 @@ class Chain:
         return A, D, O
 
     @staticmethod
-    def _side(seg, pre, side, profile=PROFILE):
+    def _side(seg, pre, side, profile=PROFILE, preserve_missing_group: bool = False):
         cols = [f'{side}_{i}' for i in range(1, 6)]
         long = seg[['seg_id', 'game_id', 'period'] + cols].melt(id_vars=['seg_id', 'game_id', 'period'], value_vars=cols,
                                                                value_name='player').dropna(subset=['player'])
         long = long.drop(columns='variable').merge(pre[['game_id', 'player', 'grp'] + profile], on=['game_id', 'player'], how='left')
         long[profile] = long[profile].astype(np.float32)
-        long['is_big'] = (long['grp'] == 'C').astype(np.int8)
-        long['grp_code'] = long['grp'].map({'G': 0, 'F': 1, 'C': 2}).fillna(1).astype(np.int8)
+        codes = long['grp'].map({'G': 0, 'F': 1, 'C': 2})
+        if preserve_missing_group:
+            long['is_big'] = np.where(long['grp'].notna(), (long['grp'] == 'C').astype(float), np.nan)
+            long['grp_code'] = codes.astype(np.float32)
+        else:
+            long['is_big'] = (long['grp'] == 'C').astype(np.int8)
+            long['grp_code'] = codes.fillna(1).astype(np.int8)
         q = long['period'].clip(upper=4).astype(int)
         long['usage_mult_now'] = np.select([q == k for k in (1, 2, 3, 4)], [long[f'usage_mult_q{k}'] for k in (1, 2, 3, 4)])
         return long.drop(columns='period').sort_values(['seg_id', 'player']).reset_index(drop=True)
@@ -367,13 +413,18 @@ class Chain:
 
     def _relative(self):
         for table, cols in ((self.off, ['usage', 'ast_rate', 'oreb_pct', 'shot_share']), (self.dfn, ['blk_rate', 'stl_rate', 'dreb_pct', 'pf_rate'])):
-            g = table.groupby('seg_id')
             for c in cols:
-                filled = table[c].fillna(table[c].median())
-                total = filled.groupby(table['seg_id']).transform('sum')
-                table[f'{c}_share'] = filled / total.where(total > 0)
-                table[f'{c}_rank'] = filled.groupby(table['seg_id']).rank(ascending=False, method='first')
-            del g
+                if self._relative_missing_policy == 'lineup_median':
+                    complete = table.groupby('seg_id')['player'].transform('size').eq(5)
+                    shares, ranks = relative_lineup(table.loc[complete, c].to_numpy().reshape(-1, 5))
+                    table[f'{c}_share'], table[f'{c}_rank'] = np.nan, np.nan
+                    table.loc[complete, f'{c}_share'] = shares.ravel()
+                    table.loc[complete, f'{c}_rank'] = ranks.ravel()
+                else:
+                    filled = table[c].fillna(table[c].median())
+                    total = filled.groupby(table['seg_id']).transform('sum')
+                    table[f'{c}_share'] = filled / total.where(total > 0)
+                    table[f'{c}_rank'] = filled.groupby(table['seg_id']).rank(ascending=False, method='first')
 
     def _lineups(self):
         o = self.off.assign(three=self.off['mix_corner3'] + self.off['mix_above3']).groupby('seg_id')
@@ -384,6 +435,9 @@ class Chain:
                             'def_blk_sum': d['blk_rate'].sum(), 'def_blk_max': d['blk_rate'].max(), 'def_stl_sum': d['stl_rate'].sum(),
                             'def_dreb_sum': d['dreb_pct'].sum(), 'def_pf_sum': d['pf_rate'].sum(), 'def_bigs': d['is_big'].sum(),
                             'def_min_mean': d['min_avg'].mean()})
+        if self._preserve_groups:
+            agg['off_bigs'] = o['is_big'].sum().where(o['is_big'].count().eq(o.size()))
+            agg['def_bigs'] = d['is_big'].sum().where(d['is_big'].count().eq(d.size()))
         for col, (side, src, how) in OPTIONAL_LINEUP.items():
             if col in self.lineup:
                 agg[col] = (o if side == 'off' else d)[src].agg(how)
@@ -405,6 +459,10 @@ class Chain:
 
     def dataset(self, name: str) -> dict:
         s = self.seg
+        if 'lineup_valid' in s:
+            if not pd.api.types.is_bool_dtype(s['lineup_valid']) or s['lineup_valid'].isna().any():
+                raise ValueError('candidate lineup validity is missing or not boolean')
+            s = s[s['lineup_valid']]
         if name == 'duration':
             rows = s[(s['start_clock'] > 24) & ~s['end_type'].isin(['end_period', 'unknown'])]
             y = np.digitize(rows['shot_time'].to_numpy(), DURATION_EDGES)
@@ -556,8 +614,16 @@ class Chain:
         keep = chosen == 1  # exactly one chosen candidate per segment (lineup glitches dropped)
         cand, y, groups = cand[keep], y[keep], groups[keep]
         X = cand[list(dict.fromkeys(cols))].astype(np.float32).reset_index(drop=True)
+        if self._relative_missing_policy == 'lineup_median':
+            scores = cand[profile_col]
+            grouped = scores.groupby(groups)
+            scores = scores.fillna(grouped.transform('median'))
+            # A uniform prediction is the baseline when the entire candidate group has no profile.
+            scores = scores.where(grouped.transform('count') > 0, 1.0)
+        else:
+            scores = cand[profile_col].fillna(cand[profile_col].median())
         return {'name': name, 'kind': 'candidate', 'X': X, 'y': y, 'group': groups, **self._meta(cand),
-                'profile_score': cand[profile_col].fillna(cand[profile_col].median()).to_numpy(dtype=float)}
+                'profile_score': scores.to_numpy(dtype=float)}
 
 
 # ---------------------------------------------------------------------- dataset cache

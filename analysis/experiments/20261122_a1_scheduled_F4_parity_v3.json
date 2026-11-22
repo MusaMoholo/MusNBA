@@ -1,0 +1,337 @@
+{
+ "experiment": "a1_matchup_train_engine_parity",
+ "game_ids": [
+  "401809247",
+  "401809248",
+  "401809249"
+ ],
+ "population": "first three pinned F4 games; matched real actor and five-defender segment states",
+ "scope": "matchup, lineup aggregates and candidate-relative columns; equality is not evidence that raw revisions or underlying data were available at every historical origin",
+ "tolerance": {
+  "absolute": 1e-06,
+  "relative": 1e-06
+ },
+ "excluded_states": {
+  "actor_not_on_recorded_offensive_lineup": 9
+ },
+ "columns": {
+  "mu_fg_rim": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "mu_fg_paint": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "mu_fg_mid": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "mu_fg_three": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "mu_tov": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "mu_foul": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "mu_height_gap": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 685,
+   "max_absolute_difference": 0.0
+  },
+  "off_usage_sum": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 1.1920928955078125e-07
+  },
+  "off_usage_max": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "off_ast_sum": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 1.1920928955078125e-07
+  },
+  "off_three_sum": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 2.384185791015625e-07
+  },
+  "off_oreb_sum": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 2.9802322387695312e-08
+  },
+  "off_bigs": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "off_min_mean": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 3.814697265625e-06
+  },
+  "def_blk_sum": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 7.450580596923828e-09
+  },
+  "def_blk_max": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "def_stl_sum": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 7.450580596923828e-09
+  },
+  "def_dreb_sum": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 5.960464477539063e-08
+  },
+  "def_pf_sum": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 7.450580596923828e-09
+  },
+  "def_bigs": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "def_min_mean": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 3.814697265625e-06
+  },
+  "def_d_fg_rim_mean": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 1.1920928955078125e-07
+  },
+  "def_d_fg_paint_mean": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 5.960464477539063e-08
+  },
+  "def_d_fg_mid_mean": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 5.960464477539063e-08
+  },
+  "def_d_fg_three_mean": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 5.960464477539063e-08
+  },
+  "def_d_tov_sum": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 5.960464477539063e-08
+  },
+  "def_d_rim_mean": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 2.9802322387695312e-08
+  },
+  "def_d_three_mean": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 5.960464477539063e-08
+  },
+  "def_d_fg_rim_min": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "def_m_fg_rim_mean": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 5.960464477539063e-08
+  },
+  "def_m_fg_paint_mean": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 5.960464477539063e-08
+  },
+  "def_m_fg_mid_mean": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 5.960464477539063e-08
+  },
+  "def_m_fg_three_mean": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 5.960464477539063e-08
+  },
+  "def_m_tov_mean": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 1.4901161193847656e-08
+  },
+  "def_m_foul_mean": {
+   "states": 685,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 7.450580596923828e-09
+  },
+  "off_usage_share": {
+   "states": 3425,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "off_usage_rank": {
+   "states": 3425,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "off_ast_rate_share": {
+   "states": 3425,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "off_ast_rate_rank": {
+   "states": 3425,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "off_oreb_pct_share": {
+   "states": 3425,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "off_oreb_pct_rank": {
+   "states": 3425,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "off_shot_share_share": {
+   "states": 3425,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "off_shot_share_rank": {
+   "states": 3425,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "def_blk_rate_share": {
+   "states": 3425,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "def_blk_rate_rank": {
+   "states": 3425,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "def_stl_rate_share": {
+   "states": 3425,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "def_stl_rate_rank": {
+   "states": 3425,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "def_dreb_pct_share": {
+   "states": 3425,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "def_dreb_pct_rank": {
+   "states": 3425,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "def_pf_rate_share": {
+   "states": 3425,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "def_pf_rate_rank": {
+   "states": 3425,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  }
+ },
+ "input_sha256": {
+  "analysis/experiments/20261122_a1_manifest.json": "0790a28ffadc3f09554c79661ccb80f631a4eb4b56f64030633a9a82d451e75e",
+  "data/derived/variants/a1_scheduled_F4_20261122_v2/features/pregame.parquet": "bfd9ed61727c7f288764b87a5f9d517bcb7b4581664ad23a20e2c5606edf619a",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+  "data/derived/athletes.parquet": "3b8e24488790edca5289a2a52f30867243a69f6cab57032e1c839967bb65d5be",
+  "data/derived/variants/a1_assignment_schedule_20261122_v2/F4.json": "ff3633211a145595dedf37e021ad6f2f8451fed20c69f9050cebf51cd05b99d1",
+  "scripts/nodes.py": "78749b680b889993e83ba26baab51877cd7393ee0a5a3d9f4fdaf9123d3b161f",
+  "scripts/engine.py": "d4884f638fc4eb7adf4a02273ba4d037bc9f36f4e7b38afa767709f089d203f6",
+  "scripts/matchups.py": "c849ab4854aff6b6085054573cba4344c06aabb186a77681affd186d945f2b18",
+  "scripts/a1_feature_parity.py": "b98041e3fca1ba98c6119782218c86a5e9506c2b37c3ad931d5f36a8bac2aa82",
+  "data/derived/variants/a1_scheduled_F4_20261122_v2/features/features_report.json": "fbafbd6a1baa66e3ad9d5bf82a181cc0da32e8c061e3274451c375a71eccefc6"
+ }
+}

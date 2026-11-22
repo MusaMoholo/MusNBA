@@ -1,0 +1,35 @@
+{
+ "experiment": "a1_future_injection_real_slice",
+ "population": "five retained 2022-23 games, including a later game for an injected team; no final-test data",
+ "game_ids": [
+  "401468016",
+  "401468017",
+  "401468018",
+  "401468019",
+  "401468173"
+ ],
+ "target_date": "2022-10-19",
+ "target_game": "401468018",
+ "mutated_shot_rows": 372,
+ "mutated_player_rows": 43,
+ "safe_comparisons": {
+  "pregame.parquet": {
+   "safe_rows": 65,
+   "columns": 46,
+   "identical_values": 2990
+  },
+  "team_pregame.parquet": {
+   "safe_rows": 6,
+   "columns": 18,
+   "identical_values": 108
+  }
+ },
+ "later_shot_values_changed": 42,
+ "later_player_values_changed": 47,
+ "scope": "base player/team causal feature rebuild with explicit scratch sources; not publication times or fitted nodes",
+ "source_sha256": {
+  "data/derived/history/2023/segments.parquet": "813b53edadf92f6e6c607211b1d4c64b312aa9fbe689851110e912419101a76e",
+  "data/derived/history/2023/on_court.parquet": "ba9b4b13e16e5b839e5530905497d2d00d231413ea40f39ee46855f3ebce8c3b"
+ },
+ "audit_sha256": "b66b026cd10797fcfde68c64f1aa9d97b69f981d4839e0877f1cc45cd59a6a9d"
+}

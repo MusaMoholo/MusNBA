@@ -1,0 +1,72 @@
+{
+ "experiment": "a1_matchup_train_engine_parity",
+ "game_ids": [
+  "401585083",
+  "401585084",
+  "401585087"
+ ],
+ "population": "first three pinned F1 games; matched real actor and five-defender segment states",
+ "scope": "matchup columns only; equality is not evidence that fitted parameters, priors, body measurements or underlying data were available before every historical origin",
+ "tolerance": {
+  "absolute": 1e-06,
+  "relative": 1e-06
+ },
+ "excluded_states": {
+  "actor_not_on_recorded_offensive_lineup": 9
+ },
+ "columns": {
+  "mu_fg_rim": {
+   "states": 649,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "mu_fg_paint": {
+   "states": 649,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "mu_fg_mid": {
+   "states": 649,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "mu_fg_three": {
+   "states": 649,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "mu_tov": {
+   "states": 649,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "mu_foul": {
+   "states": 649,
+   "mismatches": 0,
+   "both_missing": 0,
+   "max_absolute_difference": 0.0
+  },
+  "mu_height_gap": {
+   "states": 649,
+   "mismatches": 0,
+   "both_missing": 649,
+   "max_absolute_difference": 0.0
+  }
+ },
+ "input_sha256": {
+  "analysis/experiments/20261122_a1_manifest.json": "0790a28ffadc3f09554c79661ccb80f631a4eb4b56f64030633a9a82d451e75e",
+  "data/derived/variants/a1_scheduled_F1_20261122_v1/features/pregame.parquet": "52bf17ff7b957ae9e51d38cd3029043463a96bc899f2810ff308dcab27445d9e",
+  "data/derived/history/2024/segments.parquet": "4a7c3c2bce39580cc8e1092ffc215d11bbd49f7bf117b4551eee40337203d2c0",
+  "data/derived/athletes.parquet": "3b8e24488790edca5289a2a52f30867243a69f6cab57032e1c839967bb65d5be",
+  "data/derived/variants/a1_assignment_schedule_20261122_v1/F1.json": "ba9a126108c999dd715ec0cfbd0fc8a427fc2cfd382ced4a9e6c49e3b311fb43",
+  "scripts/nodes.py": "b7e4ab68c5b4efa525e6768d1505641216266798be458e7e4a126a1e3cbb5c39",
+  "scripts/engine.py": "48d09c8e5fa7f10a84fafc9ec61b38aae65d225b00f60b2775387963b75737e8",
+  "scripts/matchups.py": "f647266bc6890fdab20865073614f849c5677f00fe55eaba40df3dd3ffb2e513",
+  "data/derived/variants/a1_scheduled_F1_20261122_v1/features/features_report.json": "71da9406a1f25bdb24438b4d6b50e53be90b4ef6b9cf7b331ee933e2b5c2cd1a"
+ }
+}

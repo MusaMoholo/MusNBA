@@ -1,0 +1,300 @@
+{
+ "experiment": "a1_segment_lineup_integrity",
+ "as_of_et": "2026-11-21",
+ "population": "retained reconciled ESPN segment games strictly before as_of_et; lineups are snapshots at segment start, not necessarily event time",
+ "seconds_note": "segment-start credited seconds versus independent rotation reconstruction; differences are not uniquely attributable to substitutions",
+ "seasons": {
+  "2023": {
+   "games": 1298,
+   "segments": 313603,
+   "invalid_offensive_lineups": 3,
+   "invalid_defensive_lineups": 5,
+   "negative_durations": 0,
+   "missing_durations": 0,
+   "actor": {
+    "known": 289732,
+    "not_on_recorded_lineup": 3054,
+    "affected_games": 1186,
+    "by_end_type": {
+     "shot": 2387,
+     "turnover": 415,
+     "fouled": 182,
+     "foul": 70
+    }
+   },
+   "assister": {
+    "known": 65411,
+    "not_on_recorded_lineup": 788,
+    "affected_games": 595,
+    "by_end_type": {
+     "shot": 788
+    }
+   },
+   "blocker": {
+    "known": 12128,
+    "not_on_recorded_lineup": 121,
+    "affected_games": 114,
+    "by_end_type": {
+     "shot": 121
+    }
+   },
+   "stealer": {
+    "known": 18833,
+    "not_on_recorded_lineup": 153,
+    "affected_games": 144,
+    "by_end_type": {
+     "turnover": 153
+    }
+   },
+   "fouler": {
+    "known": 50853,
+    "not_on_expected_lineup": 541
+   },
+   "segment_seconds_vs_rotations": {
+    "compared_player_games": 27278,
+    "segment_only_player_games": 0,
+    "on_court_only_player_games": 10,
+    "median_abs_seconds": 12.0,
+    "p90_abs_seconds": 30.0,
+    "over_30_seconds": 2583,
+    "over_60_seconds": 60
+   }
+  },
+  "2024": {
+   "games": 1294,
+   "segments": 310683,
+   "invalid_offensive_lineups": 20,
+   "invalid_defensive_lineups": 26,
+   "negative_durations": 0,
+   "missing_durations": 0,
+   "actor": {
+    "known": 286629,
+    "not_on_recorded_lineup": 3192,
+    "affected_games": 1207,
+    "by_end_type": {
+     "shot": 2526,
+     "turnover": 428,
+     "fouled": 179,
+     "foul": 59
+    }
+   },
+   "assister": {
+    "known": 68538,
+    "not_on_recorded_lineup": 939,
+    "affected_games": 680,
+    "by_end_type": {
+     "shot": 939
+    }
+   },
+   "blocker": {
+    "known": 13215,
+    "not_on_recorded_lineup": 126,
+    "affected_games": 118,
+    "by_end_type": {
+     "shot": 126
+    }
+   },
+   "stealer": {
+    "known": 19155,
+    "not_on_recorded_lineup": 208,
+    "affected_games": 195,
+    "by_end_type": {
+     "turnover": 208
+    }
+   },
+   "fouler": {
+    "known": 47660,
+    "not_on_expected_lineup": 552
+   },
+   "segment_seconds_vs_rotations": {
+    "compared_player_games": 27681,
+    "segment_only_player_games": 0,
+    "on_court_only_player_games": 15,
+    "median_abs_seconds": 12.0,
+    "p90_abs_seconds": 31.0,
+    "over_30_seconds": 2917,
+    "over_60_seconds": 82
+   }
+  },
+  "2025": {
+   "games": 1306,
+   "segments": 317341,
+   "invalid_offensive_lineups": 4,
+   "invalid_defensive_lineups": 5,
+   "negative_durations": 0,
+   "missing_durations": 0,
+   "actor": {
+    "known": 292428,
+    "not_on_recorded_lineup": 3438,
+    "affected_games": 1225,
+    "by_end_type": {
+     "shot": 2720,
+     "turnover": 452,
+     "fouled": 194,
+     "foul": 72
+    }
+   },
+   "assister": {
+    "known": 68655,
+    "not_on_recorded_lineup": 955,
+    "affected_games": 674,
+    "by_end_type": {
+     "shot": 955
+    }
+   },
+   "blocker": {
+    "known": 12761,
+    "not_on_recorded_lineup": 139,
+    "affected_games": 132,
+    "by_end_type": {
+     "shot": 139
+    }
+   },
+   "stealer": {
+    "known": 21329,
+    "not_on_recorded_lineup": 227,
+    "affected_games": 201,
+    "by_end_type": {
+     "turnover": 227
+    }
+   },
+   "fouler": {
+    "known": 48108,
+    "not_on_expected_lineup": 553
+   },
+   "segment_seconds_vs_rotations": {
+    "compared_player_games": 27930,
+    "segment_only_player_games": 0,
+    "on_court_only_player_games": 15,
+    "median_abs_seconds": 13.0,
+    "p90_abs_seconds": 32.0,
+    "over_30_seconds": 3320,
+    "over_60_seconds": 83
+   }
+  },
+  "2026": {
+   "games": 1302,
+   "segments": 320098,
+   "invalid_offensive_lineups": 1,
+   "invalid_defensive_lineups": 2,
+   "negative_durations": 0,
+   "missing_durations": 0,
+   "actor": {
+    "known": 294626,
+    "not_on_recorded_lineup": 3611,
+    "affected_games": 1225,
+    "by_end_type": {
+     "shot": 2860,
+     "turnover": 478,
+     "fouled": 198,
+     "foul": 75
+    }
+   },
+   "assister": {
+    "known": 68889,
+    "not_on_recorded_lineup": 938,
+    "affected_games": 683,
+    "by_end_type": {
+     "shot": 938
+    }
+   },
+   "blocker": {
+    "known": 12624,
+    "not_on_recorded_lineup": 152,
+    "affected_games": 146,
+    "by_end_type": {
+     "shot": 152
+    }
+   },
+   "stealer": {
+    "known": 21815,
+    "not_on_recorded_lineup": 209,
+    "affected_games": 194,
+    "by_end_type": {
+     "turnover": 209
+    }
+   },
+   "fouler": {
+    "known": 51090,
+    "not_on_expected_lineup": 631
+   },
+   "segment_seconds_vs_rotations": {
+    "compared_player_games": 28253,
+    "segment_only_player_games": 0,
+    "on_court_only_player_games": 14,
+    "median_abs_seconds": 13.0,
+    "p90_abs_seconds": 34.0,
+    "over_30_seconds": 3803,
+    "over_60_seconds": 131
+   }
+  },
+  "2027": {
+   "games": 233,
+   "segments": 57884,
+   "invalid_offensive_lineups": 29,
+   "invalid_defensive_lineups": 30,
+   "negative_durations": 0,
+   "missing_durations": 0,
+   "actor": {
+    "known": 53022,
+    "not_on_recorded_lineup": 940,
+    "affected_games": 226,
+    "by_end_type": {
+     "shot": 712,
+     "turnover": 149,
+     "fouled": 54,
+     "foul": 25
+    }
+   },
+   "assister": {
+    "known": 12301,
+    "not_on_recorded_lineup": 262,
+    "affected_games": 159,
+    "by_end_type": {
+     "shot": 262
+    }
+   },
+   "blocker": {
+    "known": 2319,
+    "not_on_recorded_lineup": 40,
+    "affected_games": 36,
+    "by_end_type": {
+     "shot": 40
+    }
+   },
+   "stealer": {
+    "known": 3851,
+    "not_on_recorded_lineup": 62,
+    "affected_games": 56,
+    "by_end_type": {
+     "turnover": 62
+    }
+   },
+   "fouler": {
+    "known": 10002,
+    "not_on_expected_lineup": 207
+   },
+   "segment_seconds_vs_rotations": {
+    "compared_player_games": 5227,
+    "segment_only_player_games": 0,
+    "on_court_only_player_games": 3,
+    "median_abs_seconds": 15.0,
+    "p90_abs_seconds": 37.0,
+    "over_30_seconds": 894,
+    "over_60_seconds": 68
+   }
+  }
+ },
+ "input_sha256": {
+  "data/derived/history/2023/segments.parquet": "813b53edadf92f6e6c607211b1d4c64b312aa9fbe689851110e912419101a76e",
+  "data/derived/history/2023/on_court.parquet": "ba9b4b13e16e5b839e5530905497d2d00d231413ea40f39ee46855f3ebce8c3b",
+  "data/derived/history/2024/segments.parquet": "4a7c3c2bce39580cc8e1092ffc215d11bbd49f7bf117b4551eee40337203d2c0",
+  "data/derived/history/2024/on_court.parquet": "5461947edb052ef9e62b4a70ba49e57a0f98d929f4a19167f03aad3972457f95",
+  "data/derived/history/2025/segments.parquet": "d9db732172894ed8d3c6e5e99e3cd1c197006da22799413034ce3ce18cc5aee2",
+  "data/derived/history/2025/on_court.parquet": "5bbabab60114aa3f7fa096d7708be96f47177c541debcae88059da6b1adb77e9",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+  "data/derived/history/2026/on_court.parquet": "1b0ffaf53490c3fda4edd28ac427766a0af3a1bfe86f1fece240cd63ed1e8410",
+  "data/derived/segments.parquet": "dd26647aa80dc1b8568d74255e076111a9e5386d4b3607c0f789f1cc49964a8d",
+  "data/derived/rotations/on_court.parquet": "ec199ef6611752a53e95b809432dd5eca1f0fdfe4dcec46296d65a47f75ab4ce"
+ }
+}

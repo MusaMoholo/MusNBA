@@ -867,16 +867,170 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   **573/1,321** (2024–25), **1,322/1,322** (2025–26) and **0/235** (2026–27): **1,895/5,517** total.
   The 22 Nov manifest/file inventory found season-log counts **12/12/12/12/6**, matchup counts
   **1,320/1,319/1,321/1,322/235** and tracking-defence counts **636/624/642/636/90** in those same five seasons;
-  across these endpoints and PBP, no retained gzip was unindexed and no manifest referenced a missing gzip.
-  Missing timestamps cannot be reconstructed as fact. Test and fix all affected fetch paths before resuming history.
+  across these endpoints and PBP, all **10,094** retained gzip entries match their manifest bytes and SHA-256:
+  no retained gzip was unindexed, corrupt or hash-mismatched, and no manifest referenced a missing gzip.
+  Missing timestamps cannot be reconstructed as fact.
   A separate temporary-store test interrupted `fetch_logs` after one successful request: its manifest was not flushed,
   and resume reconstructed that retained file with null URL/time. The exception surfaced normally. The season-log path
-  also needs a `finally` flush; this reproduction does not establish the cause of any existing metadata gap.
+  needed a `finally` flush; this reproduction does not establish the cause of any existing metadata gap.
+- **S02 downloader fix:** all three per-season fetchers now construct one owning `Store` per season, and season logs
+  flush in `finally` while propagating request/parse exceptions. Network-free regression tests reproduced the three
+  excess-constructor failures and missing manifest before the fix; afterwards these, exception propagation and a
+  resumed game batch preserving URL/time/hash pass within **19** focused A1 tests. The authorised single PBP stream
+  was resumed from the 3,622-game pre-batch queue; running progress is recorded in HANDOFF.
+- **S02 crosswalk correction:** the retained `player_games_map.parquet` contains **five** stat-line "matches" with
+  null ESPN player IDs, all 2025–26 Lachlan Olbrich box placeholders. These are not valid identity mappings; pandas
+  can also match null join keys to one another. A synthetic regression failed before the fix. In a separate temporary
+  rebuild of all **5,518** mapped games, excluding missing/non-numeric ESPN IDs yielded **118,220/118,242**
+  matched NBA player-games and **22** unmatched, all Olbrich, versus the previous **118,225** including five null
+  matches. The 935-person global map and game mapping remain unchanged. This corrects §3t's historical match count
+  for that later snapshot; the source gap is not repaired by inventing identities. Raw/served data were not replaced.
+  Evidence: `analysis/experiments/20261122_a1_crosswalk_temporary.json`.
+- **S02 per-season reconciliation** (`analysis/experiments/20261122_a1_reconciliation.json`, NBA logged games
+  strictly before ET 21 Nov): all **118,187** mapped player-point pairs where both boxes have values agree; **13**
+  lack an ESPN value. The five invalid mapping rows are explicitly quarantined; **22** NBA appearances have no usable
+  mapping. Across 2022–23→2026–27, mapped NBA-positive appearances rounded to zero ESPN minutes number
+  **100/125/107/103/3**; a further **13** current-season NBA-positive appearances are marked ESPN DNP with no values.
+  Missing outcomes cannot be treated as zero. For NBA-logged games in the five seasons, parser-flagged game counts are
+  **22/26/15/22/2**, and **one** further 2025–26 game lacks segments; the JSON enumerates every excluded game.
+  On **10,858** usable team-games, per-season mean segment-minus-NBA possessions are **+0.870/+0.833/+0.889/+1.011/
+  +0.803**; these reflect the documented convention, not a claim of exact identity. Seconds and remaining comparison
+  denominators are retained by season in the report.
+- **S02 rotation and matchup integrity** (`analysis/experiments/20261122_a1_rotation_integrity.json`): in the
+  2022–23→2026–27 retained ESPN populations, **231,291/228,567/232,904/236,901/43,564** recorded clock-grouped windows
+  include **193,221/191,065/194,259/195,593/35,692** with no substitution and
+  **18,869/19,061/20,086/21,817/4,211** with multiple substitutions at that clock. Window counts agree with the
+  recorded substitutions in every season, with no orphan windows; **12/2/4/2/2** substitution rows repeat an entering
+  player at the same team/clock and require investigation before training. **3,102/3,183/3,473/3,708/747** windows
+  have substitutions but an unclassified stoppage; these are unknown, not proven illegal. Recorded windows are not
+  necessarily every legal opportunity. Summed matchup FGA / NBA box FGA by season is
+  **1.1163/1.1120/0.9707/0.9767/0.9800**; there are no duplicate attacker–defender *row keys*, so the early
+  over-count is not explained by identical pair rows. One 2025–26 attacker-game has zero box FGA but positive summed
+  matchup FGA. The causes of those over-counts are not established by this accounting.
+- **S02 segment-start lineups** (`analysis/experiments/20261122_a1_lineup_integrity.json`): in the five retained
+  reconciled seasons, **3,054/289,732; 3,192/286,629; 3,438/292,428; 3,611/294,626; 940/53,022** known actors
+  are absent from their segment-start offensive lineup (**14,235/1,216,437** overall). These are not necessarily
+  absent from the actual court. In `401809247`, Q2 8:55–8:39, Jalen Johnson entered at 8:54 after the segment
+  opened and attempted the shot at 8:39; the old segment still records the player he replaced. Segment-credited
+  versus independently reconstructed rotation seconds have median absolute differences **12/12/13/13/15 seconds**
+  by season; these discrepancies are not uniquely attributable to substitutions.
+- **S02 isolated lineup candidate:** split action-free segments at substitutions without adding possessions; same-clock
+  substitutions are applied in source order. Candidate-only `lineup_valid`/`lineup_issues` retain but quarantine
+  unresolved segments in player-feature and node-dataset construction. On the fixed **200 F4** games, replay of the
+  unmodified parser exactly matches retained segments and the candidate preserves all event identities, points and
+  possession IDs. Actor absence decreases **489/45,111→6/45,111**, assister absence **139→0**, blocker absence
+  **22→1**, stealer absence **32→1**, fouler absence **106→5**; median absolute segment-v-rotation seconds fall
+  **13→0** across 4,347/4,349 player-games. **70** candidate segments are quarantined, including **57** where a
+  rebounder is absent from the earlier action lineup; in `401810338` Q3 2:27 a defensive substitute enters after an
+  and-one shot and rebounds the missed free throw, so treating the shot-time lineup as the rebound lineup is unsafe.
+  Prefix segments retain time accounting but do not double-count player exposure. Synthetic tests cover simultaneous
+  subs, a pending free-throw trip, missing actor quarantine and protection against writing production segments.
+  Evidence: `analysis/experiments/20261122_a1_subsplit_quarantine_f4_200.json`. This is not a model-accuracy test;
+  no candidate has been promoted, and substitutions after an action are not reconstructed as new action lineups.
+- **S02 causal-prior candidate:** a separately hashed, history-only base build uses first-season position and team
+  priors from dates strictly before each row, earlier-season priors thereafter, and same-day-safe player/team decays
+  and rest. An empty prior remains missing until actual earlier evidence exists; when a prior is unavailable but the
+  player's/team's own earlier exposure exists, the measured unshrunk rate is used. It covers **111,075 player-games,
+  5,196 games, 10,392 team-games**, 18 Oct 2022–13 Jun 2026; no final-test games are included. On 83,797 later-season
+  player rows, **38** common player and **14** team columns have zero changes from retained base profiles; first-season
+  prior-dependent values change, and all **45** first-day player usage priors remain missing. Synthetic injected
+  same-day/future outcomes do not alter earlier profiles. Independent accounting and hashes:
+  `analysis/experiments/20261122_a1_causal_base_accounting.json`. This establishes only the stated prior/date scope:
+  assignment parameters, static body provenance, reports and all downstream model inputs still need dated-fit checks.
+- **S02 sampled feature parity and batch leakage:** in three fixed F4 games, **10/689** actor segments cannot be
+  compared as an identical engine actor/lineup state because the actor is not in the recorded starting five. On the
+  other **679** states, all **4,753** shared matchup-column values agree within 1e-6 absolute/relative tolerance
+  (`analysis/experiments/20261122_a1_matchup_parity_after.json`). This is not full model-feature parity or proof of
+  historical parameter availability. The candidate `missing_policy=retain_missing` preserves an all-missing defender
+  metric as missing and makes it invariant to unrelated batch values, including top-two features; a synthetic test
+  reproduced the previous dependence. The default v1.3 batch policy remains unchanged pending paired evaluation.
+- **S02 assignment holdout preprocessing:** `matchups.design` previously recalculated missing-value medians and
+  propensity standardisation independently on the whole held-out batch. A synthetic same-population test shows that
+  changing an unrelated held-out game's player rates could change another held-out event's design. The fit now
+  passes its training-only preprocessing to the held-out design, and the injection test passes. Fitting inputs and the
+  accepted serving assignment have not been replaced. On the same **195,228** training and **35,216** held-out F4
+  credited events, an isolated fit using the causal base yielded full weighted held-out log likelihood
+  **−1.54375→−1.54347** with training-only preprocessing; on-ball top-1 stayed **25.92%** on 2,608 credits.
+  **176,476** held-out design values changed. This measures a preprocessing/reporting correction, not an engine
+  accuracy gain. Static body timing remains unproven, and the candidate is only valid from 1 Jan 2026. Evidence:
+  `analysis/experiments/20261122_a1_assignment_f4_preprocessing.json`.
+- **S02 four dated assignment diagnostics:** on F1/F2/F3, respectively, **78,311 / 135,404 / 172,166** training
+  and **33,476 / 34,586 / 23,062** held-out usable credits give old versus training-only-preprocessed weighted log
+  likelihood **−1.538308→−1.538506 / −1.535604→−1.535767 / −1.541928→−1.541655**. Fits are dated through their
+  own training cutoffs and are not available for older rows. Each result is conditional on the retained game lineups;
+  it does not measure pre-game availability or a full engine. Reports:
+  `analysis/experiments/20261122_a1_assignment_f{1,2,3}_preprocessing.json`.
+- **S02 unverified body provenance:** `athletes.py` takes the latest retained roster or a later athlete endpoint;
+  the current registry does not establish historical publication dates, and historical hoopR player-box parquets have
+  position but no height/weight columns. An isolated F4 fit that excludes height and weight from both training and
+  inference gives weighted holdout log likelihood **−1.546114**, versus **−1.543475** including body, and on-ball
+  top-1 **24.88% versus 25.92%** on the same **2,608** on-ball credits (35,216 total). Its height-gap feature remains
+  missing, not a recorded zero; later-body injection leaves its assignment unchanged. Report:
+  `analysis/experiments/20261122_a1_assignment_f4_bodyfree.json`. This does not establish position as-of provenance,
+  solve historical fitted-parameter leakage, or justify promotion.
+- **S02 dated position and assignment candidate:** among **111,075** historical player-games there are no
+  conflicting same-player/same-day recognised position groups; 14 original rows have unknown/unrecognised position.
+  Deriving the group from strictly earlier player-game records leaves **891** rows unknown, including the first
+  observation for all **877** players. Later current-game positions cannot change the prior-date value in the
+  synthetic injection test. Historical source publication/correction times remain unverified. Thirty body-free
+  monthly assignment fits are frozen into four fold schedules, with no fit used before its `valid_from` date or
+  after a fold's training cutoff (`analysis/experiments/20261122_a1_assignment_monthly_schedule_v2.json`).
+  Candidate relative-player features use only the five-player lineup's known values and shared tie-symmetric ranks;
+  all-missing five-player inputs stay missing. On the first three pinned games in each of F1–F4, **304,175/304,175**
+  matchup, lineup and relative-input comparisons match engine calculations at combined 1e-6 absolute/relative
+  tolerance; **36** actor/lineup mismatches were excluded. Reports:
+  `analysis/experiments/20261122_a1_scheduled_F{1,2,3,4}_parity_v3.json`. This sampled audit is not full-feature
+  parity, an engine-accuracy result or proof of original publication timing. The F4 full node chain built all
+  **16** datasets in **59 s**, totalling **17,814,437** rows in a **9.1 GiB** isolated cache; accounting checks
+  labels, dates, matrix/group dimensions, one chosen player per candidate group and source hashes. An isolated F4
+  run fitted all **16** candidate nodes and simulated **3 games × 20 worlds** in **325 s**. Its independent accounting
+  reconciles **24** quarter scores, **63** player 3PM outcomes and **6** team sums with no mismatches; it fingerprints
+  the model and inputs (`analysis/experiments/20261122_a1_s02_wiring_accounting.json`). This is wiring validation,
+  not accuracy evidence; original publication timing remains unverified.
+- **S02 real-slice future injection:** on five retained 2022–23 games, a scratch rebuild changed **372** shot outcomes
+  and **43** player-minute/position records in a different same-day game and a later game. All **3,098** checked
+  earlier player/team feature values remained bit-identical; separate shot and minute/position injections changed
+  **42** and **47** later numeric values respectively. The audit explicitly supplies both scratch source files:
+  the initial trial used the real on-court source and was not a valid test of minute/position injection.
+  `analysis/experiments/20261122_a1_future_injection_real_slice.json` pins the sample and source hashes. This checks
+  base player/team profiles, not original publication times or fitted nodes.
+- **S02 diagnostic-baseline leakage:** the `what` profile baseline filled missing held-out inputs using means of all
+  held-out rows. Thus changing a different validation game's profiles could change a given missing-profile prediction.
+  It now uses training-window means and rejects invalid or entirely missing training columns; a synthetic holdout
+  injection changes another game's probability by **0.1759** before the fix and **0** after it. This baseline is
+  diagnostic, not a feature supplied to the fitted or accepted engine. Fold-model cache keys include the training-code
+  hash so previously saved
+  baseline metrics cannot be silently reused after training-code changes.
+- **S02 schedule corruption, outstanding:** a synthetic fitted assignment with `through: "NaT"` is accepted by
+  `matchups.dated_masks`, because comparisons against NumPy `NaT` are false. This must be rejected explicitly.
+  Correcting the source changes pinned hashes, so the isolated dated schedules, dependent feature snapshots,
+  sampled parity and F4 node/model artifacts need fresh builds; the existing results describe the earlier source.
+- **S02 state-before-substitution caveat:** the repeated entrant rows are not necessarily duplicates. In ESPN game
+  `401810498`, Q4 0:33.3, the same player enters for the same teammate twice with a reversal and other events between.
+  The raw scoreboard before the first of those substitutions (sequence 709) is home **107–110**, but the derived
+  clock-grouped window gives it home margin **−4**, after a later free throw at sequence 727 made it 107–111. The
+  current `rotations.walk` groups events by clock and assigns its end-of-group margin to every sub, so this is not a
+  safe pre-substitution label. Rebuild sequence-aware opportunities and validate state before using them in S06;
+  do not drop repeats merely as duplicates. Case: `analysis/experiments/20261122_a1_same_clock_case.json`.
+- **S02 tracking-defence coverage** (`analysis/experiments/20261122_a1_tracking_coverage.json`): for NBA logged
+  dates before ET 21 Nov, the three categories each cover **212/212, 208/208, 214/214, 212/212 and 30/31** dates
+  in 2022–23→2026–27; the missing current date is 20 Nov. The **113,089** Overall rows all join to a player in that
+  day's NBA log and the retained global identity map, with GP=1; response hashes, category/date parameters and
+  category-specific column schemas were verified. But **8,637/113,089 (7.64%)** `PLAYER_LAST_TEAM_ABBREVIATION`
+  values disagree with that day's NBA log (e.g. Jonathan Kuminga's 21 Oct 2025 tracking row says ATL, while his
+  game log says GSW). Never use that tracking field as the historic team: join by person and game date to the dated
+  game log, reject ambiguous day/team matches, and use only dates strictly before the prediction origin. Overall,
+  under-six-foot and three-point responses use **D_FGM/D_FGA**, **FGM_LT_06/FGA_LT_06** and **FG3M/FG3A**
+  respectively. A fetch timestamp is collection time, not proof of when that historical data or any later correction
+  was published. Global identity coverage is an audit fact, not proof that the mapping existed at a historical origin.
 - **S02 preparation, ESPN raw inventory:** all eight retained 2022–23 through 2025–26 hoopR parquet files match
   their manifest byte counts and SHA-256 values. Their play-by-play unique-game counts are **1,321 / 1,320 / 1,324 /
   1,325**; player boxes cover **1,321 / 1,320 / 1,324 / 1,326**. The sole set difference is box-only game
   `401810469` (25 box rows, Clippers–Bulls, source `game_date` 2026-01-20); the mapped NBA play-by-play file
   `0022500614` is retained. This is a raw-coverage gap, not evidence that the ESPN file existed historically.
+  The current ESPN collection has **236** retained 2026–27 final summaries and five collection-run reports; its final
+  directory has no per-file acquisition/hash manifest. Full reproducible inventory:
+  `analysis/experiments/20261122_a1_raw_inventory.json`.
 - **S02 preparation, matchup batching:** `matchups.mu_columns` fills an all-missing five-defender metric from the
   entire batch. In a synthetic two-row test, changing only an unrelated row's defensive FG value from 0.4 to 0.6
   changed the missing row's `mu_fg_rim` from 0.4 to 0.6. Dataset batches can therefore borrow held-out/future values,
