@@ -1,5 +1,5 @@
 // Today: the slate for one ET game date, each game a card that opens Game Centre.
-import {modelPill, api, esc, etToday, f1, logo, longDay, pct, record, stamp, team, tipTimes, dayLabel} from './ui.mjs';
+import {modelPill, api, esc, etToday, f1, forecastTiming, logo, longDay, pct, record, stamp, team, tipTimes, dayLabel} from './ui.mjs';
 import {slateSpotlight} from './spotlight.mjs';
 
 // Card surname with its suffix ("Michael Porter Jr." → "Porter Jr."): the last word that is not a suffix, then the suffixes.
@@ -51,7 +51,7 @@ export async function render(view, {rest, meta, current}) {
     </section>
     ${modelNote(slate)}
     ${slateStrip(games, day)}
-    ${review(slate.review)}
+    ${slate.completed_at ? review(slate.review) : ''}
     ${slate.spotlight ? `<div class="games spot-grid">${slateSpotlight(slate.spotlight, slate.watch, slate.roles)}</div>` : ''}
     <div class="games">${games.map(g => card(g, slate.watch?.closest?.game_id)).join('')}</div>`;
   view.querySelectorAll('[data-go]').forEach(b => b.onclick = () => { if (b.dataset.go) location.hash = '#/today/' + b.dataset.go; });
@@ -104,8 +104,9 @@ function review(r) {
 
 function modelNote(slate) {
   if (slate.snapshot) {
-    const kind = slate.kind === 'prospective' ? '<span class="pill good">Pre-game snapshot</span>' : '<span class="pill warn" title="Rebuilt after the fact from box scores before this date; no injury news">Retrospective</span>';
-    return `<div class="model-note">${modelPill(slate.model)}${kind}<span>${slate.model.sims.toLocaleString()} sims per game · built ${esc(stamp(slate.generated))}</span></div>`;
+    const kind = slate.kind === 'prospective' ? '<span class="pill">Prospective snapshot</span>' : '<span class="pill warn" title="Rebuilt after the fact from box scores before this date; no injury news">Retrospective</span>';
+    const timing = slate.completed_at ? `built ${esc(stamp(slate.completed_at))}` : `started ${esc(stamp(slate.generated))} · completion unverified`;
+    return `<div class="model-note">${modelPill(slate.model)}${kind}<span>${slate.model.sims.toLocaleString()} sims per game · ${timing}</span></div>`;
   }
   if (slate.games.some(g => g.team_model)) return '<div class="model-note"><span class="pill">Team-strength estimate only</span><span>Game sims run on the morning of each slate.</span></div>';
   if (slate.games.length) return '<div class="model-note"><span class="pill">No projection retained for this date</span></div>';
@@ -130,7 +131,7 @@ function card(g, closestId) {
   if (final) {
     const fav = pr ? (pr.p_home >= pr.p_away ? 'home' : 'away') : null;
     foot = `<span>Final${g.periods > 4 ? (g.periods > 5 ? `/${g.periods - 4}OT` : '/OT') : ''}</span>` +
-      (pr ? `<span>Pre-game: ${esc(team(g[fav].id).abbr)} ${pct(Math.max(pr.p_home, pr.p_away), 0)} ${fav === winner ? '<span class="up" title="Favourite won">✓</span>' : '<span class="down" title="Underdog won">✗</span>'}</span><span>Proj total ${f1(pr.total)} · actual ${g.home.score + g.away.score}</span>` : '<span>No pre-game projection retained</span>');
+      (pr ? `<span>${forecastTiming(pr.kind, pr.pre_tip, pr.completed_at)}: ${esc(team(g[fav].id).abbr)} ${pct(Math.max(pr.p_home, pr.p_away), 0)} ${fav === winner ? '<span class="up" title="Favourite won">✓</span>' : '<span class="down" title="Underdog won">✗</span>'}</span><span>Proj total ${f1(pr.total)} · actual ${g.home.score + g.away.score}</span>` : '<span>No pre-game projection retained</span>');
   } else if (pr) {
     const m = pr.margin_mean ?? pr.margin_median, fav = m >= 0 ? g.home : g.away;
     foot = `<span>Total ${f1(pr.total)}</span><span>${Math.abs(m) < 0.05 ? 'PK' : `${esc(team(fav.id).abbr)} −${Math.abs(m).toFixed(1)}`}</span><span>OT ${pct(pr.ot, 0)}</span>`;

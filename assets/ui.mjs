@@ -48,6 +48,13 @@ export function stamp(utc) {
   if (!utc) return '—';
   return new Intl.DateTimeFormat('en-GB', {timeZone: TZ_UK, weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'}).format(new Date(utc)) + ' UK';
 }
+export function forecastTiming(kind, preTip, completedAt) {
+  if (kind === 'retrospective') return 'Retrospective';
+  if (kind !== 'prospective' || !completedAt) return 'Timing unverified';
+  if (preTip === true) return 'Pre-game';
+  if (preTip === false) return 'Built after tip-off';
+  return 'Timing unverified';
+}
 
 // ------------------------------------------------------------------ numbers
 const ok = v => typeof v === 'number' && Number.isFinite(v);
@@ -93,13 +100,21 @@ export const teamLink = (id, {short = false, cls = 'sm'} = {}) => {
 };
 
 // ------------------------------------------------------------------ status
-export function statusTag(status, availability) {
-  const s = (status || '').toLowerCase();
-  if (!s || s === 'active' || s.startsWith('unknown')) return '';
+export function statusTag(status, availability, basis) {
+  const raw = (status || '').trim();
+  const s = (raw || 'Unknown').toLowerCase();
+  const uncertain = ok(availability) && availability > 0 && availability < 1;
+  if ((s === 'active' && !uncertain) || s.startsWith('unknown (retrospective)')) return '';
   const cls = s === 'out' || s.startsWith('susp') ? 'status-out' : 'status-q';
-  const label = {'day-to-day': 'DTD', questionable: 'Q', doubtful: 'D', probable: 'P', out: 'OUT'}[s] || status;
-  const extra = ok(availability) && availability > 0 && availability < 1 ? ` · plays ${Math.round(availability * 100)}%` : '';
-  return `<span class="tag ${cls}" title="${esc(status)}">${esc(label)}${extra}</span>`;
+  const label = s === 'active' && uncertain ? 'Recent inactivity' :
+    ({'day-to-day': 'DTD', questionable: 'Q', doubtful: 'D', probable: 'P', out: 'OUT'}[s] || raw || 'Unknown');
+  const known = ['active', 'probable', 'day-to-day', 'questionable', 'doubtful', 'out', 'suspension', 'suspended', 'injured reserve'];
+  const fallback = s === 'unknown' || s === 'active' || basis === 'unknown_status' || basis === 'recent_inactivity'
+    || (!basis && !known.includes(s));
+  const extra = uncertain ? ` · ${fallback ? 'fallback' : 'assumed available'} ${Math.round(availability * 100)}%` : '';
+  const title = uncertain || s === 'unknown'
+    ? `${raw || 'Unknown'} — uncalibrated ${fallback ? 'fallback' : 'status assumption'}` : raw;
+  return `<span class="tag ${cls}" title="${esc(title)}">${esc(label)}${extra}</span>`;
 }
 
 // ------------------------------------------------------------------ probability cells

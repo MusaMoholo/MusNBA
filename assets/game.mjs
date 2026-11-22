@@ -1,6 +1,6 @@
 // Game Centre. One period selector (Q1–Q4, H1, H2, FG) drives the bezel and both views:
 // Player = per-period box scores, Team = per-period team lines and distributions. Matchup is separate.
-import {api, atLeast, modelPill, barChart, dayLabel, defaultLine, esc, f1, halfLine, heat, histogram, logo, over, pct, percentileOf,
+import {api, atLeast, modelPill, barChart, dayLabel, defaultLine, esc, f1, forecastTiming, halfLine, heat, histogram, logo, over, pct, percentileOf,
         probWhere, rate, record, seg, segGroups, signed, stamp, statusTag, store, team, tipTimes} from './ui.mjs';
 import * as S from './scenario.mjs';
 import {gameSpotlight} from './spotlight.mjs';
@@ -130,8 +130,9 @@ function bezel(data, period, {matchup, scenario, mode, base}) {
   const select = sim
     ? `<label class="sr" for="period-select">Period</label><select id="period-select" class="period"${matchup || scenario ? ' disabled' : ''}>${options([['Quarters', ['q1', 'q2', 'q3', 'q4']], ['Halves', ['h1', 'h2']], ['Game', ['fg']]])}</select>`
     : '<span class="pill">Full game only until the game simulation runs</span>';
+  const timing = forecastTiming(P?.kind, P?.pre_tip, P?.completed_at);
   const chips = P ? `<div class="chips">${modelPill(P.model)}
-      <span class="pill ${P.kind === 'prospective' ? 'good' : 'warn'}">${P.kind === 'prospective' ? (P.pre_tip ? 'Pre-game' : 'Built after tip-off') : 'Retrospective'}</span>
+      <span class="pill ${P.kind === 'prospective' && P.completed_at && P.pre_tip === true ? 'good' : 'warn'}">${timing}</span>
       <span class="pill">${sim.sims.toLocaleString()} sims · ${esc(stamp(P.generated))}</span></div>`
     : tm ? '<div class="chips"><span class="pill">Team-strength estimate from the season simulation</span></div>' : '';
   return `<section class="panel bezel">
@@ -175,22 +176,36 @@ function actCell(a, key) {
 // U7: availability — who is out or a maybe on each side, how often he plays in the simulations, minutes if he plays v season
 function availPanel(data) {
   const av = data.availability;
-  if (!av || !(av.away?.length || av.home?.length)) return '';
+  if (!av) return '';
+  const legacy = av.source !== 'snapshot';
+  if (!(av.away?.length || av.home?.length) && !legacy) return '';
+  const unknown = ['away', 'home'].some(k => (av[k] || []).some(r => r.status?.toLowerCase() === 'unknown'));
   const tone = st => (/out/i.test(st) ? 'down' : /doubt|question|day/i.test(st) ? 'warn' : 'dim');
   const side = k => {
     const rows = av[k] || [];
     return `<div><h4>${logo(data.game[k].id, 'sm')} ${esc(team(data.game[k].id).name)}</h4>${rows.length ? rows.map(r => `<div class="av-row" title="${esc(r.comment || '')}">
-      <span class="av-name">${esc(r.name)}</span><span class="pill ${tone(r.status)}">${esc(r.status)}</span>
-      <span class="av-num">${r.plays > 0 ? `plays ${pct(r.plays, 0)}` : 'not simulated'}</span>
+      <span class="av-name">${esc(r.name)}</span><span class="pill ${tone(r.status)}">${esc(r.basis === 'recent_inactivity' ? 'Recent inactivity' : r.status)}</span>
+      <span class="av-num">${r.simulated === false ? 'not simulated' : r.simulated || r.plays > 0 ? `plays ${pct(r.plays, 0)}` : 'not simulated'}</span>
       <span class="av-num dim">${[r.min_if_plays ? `${f1(r.min_if_plays)} min if he plays` : '', r.season_min != null ? `season ${f1(r.season_min)} min` : '',
-        r.return ? `back ~${esc(dayLabel(r.return.slice(0, 10)))}` : ''].filter(Boolean).join(' · ')}</span></div>`).join('') : '<p class="note">Nobody on the report.</p>'}</div>`;
+        r.return ? `back ~${esc(dayLabel(r.return.slice(0, 10)))}` : '', r.assumed_availability != null ? `assumed available ${pct(r.assumed_availability, 0)}` : ''].filter(Boolean).join(' · ')}</span></div>`).join('') : '<p class="note">No recorded entries.</p>'}</div>`;
   };
+  const source = av.source === 'partial-legacy'
+    ? 'Older forecast: only saved player statuses are shown; ruled-out or omitted players may be missing.'
+    : legacy ? "Legacy bundle: report entries may reflect a later roster or status, not the forecast's origin."
+      : 'From the roster and report saved with this forecast (hover a row for the report comment).';
   return `<section class="panel"><h3 style="margin-top:0">Availability</h3><div class="av-grid">${side('away')}${side('home')}</div>
-    <p class="note">From the injury report as the simulations used it (hover a row for the report comment). "Plays" = share of the simulated games he appears in.</p></section>`;
+    <p class="note">${source} ${unknown ? 'Unknown means no reliable status. ' : ''}Availability percentages are uncalibrated assumptions. Players not listed default to available if a report exists (unless recent inactivity); this is not proof of health.
+      "Plays" = share of simulated games he appears in.</p></section>`;
 }
 
 function playerView(el, data, period) {
   const sim = sims(data), act = data.actual;
+  const fallbacks = (sim?.fallbacks || []).map(f => {
+    const side = data.game[f.side], name = side ? team(side.id).name : f.side;
+    return f.method === 'equal_share_available'
+      ? `${esc(name)}: equal minutes among available players in ${Number(f.worlds).toLocaleString()} of ${sim.sims.toLocaleString()} worlds because fewer than five players had positive minute inputs.`
+      : `${esc(name)}: ${esc(f.reason || 'unspecified')} fallback in ${Number(f.worlds).toLocaleString()} worlds.`;
+  }).join(' ');
   const modes = [];
   if (sim) modes.push(['proj', 'Projected']);
   if (act) modes.push(['act', 'Actual']);
@@ -199,7 +214,8 @@ function playerView(el, data, period) {
   el.innerHTML = (period === 'fg' && data.spotlight ? gameSpotlight(data.spotlight) : '') + (period === 'fg' ? availPanel(data) : '') +
     (modes.length > 1 ? `<div class="controls">${seg(modes, mode, 'data-mode')}</div>` : '') +
     ['away', 'home'].map(s => teamBox(data, s, mode, period)).join('') +
-    `<p class="note">${period === 'fg' ? 'Full game includes overtime.' : `${esc(periodName(period))} only; overtime counts in FG.`} Projected values are means over ${sim ? sim.sims.toLocaleString() : ''} simulated games${mode === 'proj' && period === 'fg' && data.averages ? '; small numbers: projection minus his season average (MIN, PTS, REB, AST, STL, BLK; shooting in percentage points)' : ''}. Tap a player for distributions, lines and what-ifs.</p>`;
+    (fallbacks ? `<p class="note">Placeholder fallback (uncalibrated): ${fallbacks}</p>` : '') +
+    `<p class="note">${period === 'fg' ? 'Full game includes overtime.' : `${esc(periodName(period))} only; overtime counts in FG.`} Projected values are means over ${sim ? sim.sims.toLocaleString() : ''} simulated games${mode === 'proj' && period === 'fg' && data.averages ? '; small numbers: projection minus his season average (MIN, PTS, REB, AST, STL, BLK; shooting in percentage points)' : ''}. ${mode === 'proj' ? 'Not listed on a report is not proof of health. ' : ''}Tap a player for distributions, lines and what-ifs.</p>`;
   el.querySelectorAll('[data-mode]').forEach(b => b.onclick = () => { state.mode = b.dataset.mode; playerView(el, data, period); });
   el.querySelectorAll('tr[data-pid]').forEach(tr => {
     tr.onclick = () => { location.hash = `#/game/${data.game.id}/player/${tr.dataset.pid}/${period}`; };
@@ -217,7 +233,7 @@ function teamBox(data, side, mode, period) {
   if (mode === 'proj') {
     const avg = period === 'fg' ? data.averages || {} : {};
     rows = sim.players.filter(p => p.periods).map(p => ({id: p.id, name: p.name, pos: p.pos, starter: p.starter,
-      tag: statusTag(p.status, p.availability), cells: COLS.map(([k]) => {
+      tag: statusTag(p.status, p.availability, p.availability_basis), cells: COLS.map(([k]) => {
         const cell = projCell(p.periods[period], k), a = avg[p.id]?.season;
         if (!a) return cell;
         const m = p.periods.fg.mean;
@@ -603,7 +619,7 @@ async function sheet(view, data, pid, current) {
   const paint = () => {
     view.innerHTML = `<a class="crumb" href="#/game/${data.game.id}/${period}">‹ ${esc(team(data.game.away.id).abbr)} @ ${esc(team(data.game.home.id).abbr)} · ${esc(dayLabel(data.game.date))}</a>
       <section class="panel"><div class="row">${logo(tid, 'lg')}<div class="grow"><h2 style="margin:0;font-size:20px">${esc(name)}</h2>
-        <p class="note" style="margin:0">${esc(team(tid).name)} · ${esc(p?.pos || actualRow?.pos || '')}${p?.jersey ? ' · #' + esc(p.jersey) : ''} · ${side === 'home' ? 'vs' : '@'} ${esc(team(opp).abbr)} ${p ? statusTag(p.status, p.availability) : ''}</p></div>
+        <p class="note" style="margin:0">${esc(team(tid).name)} · ${esc(p?.pos || actualRow?.pos || '')}${p?.jersey ? ' · #' + esc(p.jersey) : ''} · ${side === 'home' ? 'vs' : '@'} ${esc(team(opp).abbr)} ${p ? statusTag(p.status, p.availability, p.availability_basis) : ''}</p></div>
         ${sim ? `<label class="sr" for="sheet-period">Period</label><select id="sheet-period" class="period">${options}</select>` : ''}
         <a class="btn ghost" href="#/player/${pid}">Player page</a></div>${tiles}</section>
       ${proj ? `${segGroups(STAT_GROUPS.map(([g, ks]) => [g, ks.filter(([k]) => choices.includes(k))]), state.stat, 'data-stat')}<div id="stat-block">${statBlock()}</div>` : ''}
