@@ -1,16 +1,41 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 30%, A2 at 30%; S01–S07 remain complete**.
-Latest pushed source before this branch-enumeration checkpoint: **4588a02**; use `git log -1` for the current checkpoint.
+Latest pushed source before this dashboard/selection checkpoint: **fd00b49**; use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
-- **Current action:** start A1 rung 40% from the frozen contract below. Do not start Chunk B before Chunk A's
+- **Current action:** continue A1 rung 40% from the frozen contract below. Do not start Chunk B before Chunk A's
   delivery and checkpoint. The owner
   also requests a broader dashboard house-design pass: make supported information accessible and interactive
   without overcrowding, prioritise essential game/player signals and group secondary details into collapsible
   views. Integrate this alongside the authorised chunks; use supported data only, without presenting extremes as
   typical. No nightly yet for presentation work; the next normal nightly rebuilds these summaries.
+- **Dashboard house follow-up:** game player pages put box scores first, with a shortcut to player insights;
+  availability and each bench are expandable. Team rosters collapse bench, fringe, no-projection and out groups,
+  keeping starters visible. Player game logs also expand on demand. Expanded game sections survive mode changes;
+  roster groups survive the schedule/roster toggle. **61/61** responsive cases passed with screenshots inspected;
+  local laptop/phone import and offline **29/29 / 28/28**, installed-shell upgrade **31/31**. A fresh-import
+  race on Pages was reproduced with service-worker bypass: the API shim missed `URL` inputs and hit a 404.
+  The shim now handles URL, string and Request inputs; forced-bypass local and hosted laptop/phone checks passed
+  **31/31 / 30/30**, and the installed-shell upgrade passed **31/31**. Bypass deliberately excludes image
+  interception; the test reloads after restoring the worker before checking logos. The data-free Pages shell is
+  **1fa44ca**, cache **5da19e194a1a5b297b5d**; hosted module hash matches the built shell. Prior shell archived at
+  `~/Basketball_archive_ops/gh-pages-before-pwa-url-fix-331323d.tar`. No model, snapshot or bundle changed; a device with the existing
+  data needs an **app update**, not another data import. Manual imports from the previous data export remain
+  unconfirmed. Final normal smoke **108/108**; deliberate fault exited **1** (86/108), logs
+  `/tmp/musnba_house_pwa_url_{smoke,fault}.log`. Doc review: HANDOFF, PLAN, FINDINGS and DASHBOARD_PLAN record the
+  hierarchy and startup evidence; README maps the research helper
+  and existing update workflow; AGENTS, ENGINE_PLAN and TRAINING_PLAN retain standing rules and model gates.
+- **A1 40% partial:** isolated origin-aware selection now applies the frozen healthy-role/usage thresholds and labels
+  unknown usage or prior-only roles, preserving status source and effective probability; mismatched rosters,
+  invalid values and non-prior minutes history fail. The caller must supply cutoff-safe roster and profiles.
+  **60** branch/selection/rotation/availability tests passed;
+  on current-origin game `401910029` the retained inputs select **3** players, with **1** prior-only role and
+  **1** missing usage, producing **4** unweighted sensitivities. This is an input sanity check, not a forecast
+  or calibration. Normal smoke **108/108**; deliberate fault exited **1** (86/108), logs
+  `/tmp/musnba_a1_40_selection_{smoke,fault}.log`. No branch worlds have been simulated or saved for this rung;
+  it remains **30%** until all 10k branch persistence, provenance and independent checks pass.
 - **Dashboard house pass:** Today puts games first with a shortcut to the still-accessible slate insights. Players
   keeps its table visible and movers expandable; player pages prioritise the next forecast and collapse opponent
   history and advanced rates. Game-player sheets put conditional/joint outcomes and comparisons before collapsible
@@ -1393,7 +1418,7 @@ chunk weights are **separate within-chunk progress measures**, not replacements 
 A1 stays **58.0%**, and S13 remains deferred at 0% (the possible A1 ceiling while deferred is 95%).
 Update the original S08–S12/S14 status only when their original acceptance is met, without crediting work twice.
 Report a chunk bar and each active module at every 10% rung and each 5% overall boundary; long jobs also report
-item counts and measured rates. Current Chunk A progress is **13.5%**; Chunk B remains **0%**.
+item counts and measured rates. Current Chunk A progress is **19.5%**; Chunk B remains **0%**.
 
 **Shared gates:** use the unchanged player-first, paired fold, seed-noise, uncertainty, non-inferiority, cutoff and
 once-per-version final-test rules in PLAN §6b/TRAINING_PLAN §8. An early chunk can promote a standalone candidate
@@ -2012,9 +2037,8 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
 ## Next actions — Chunk A in progress
 
 1. **A1 40%:** implement deterministic, provenance-bearing 10,000-world persistence for each supported branch.
-   First run `.venv/bin/python -m unittest tests.test_a1_lineup_branches` and trace the origin-safe
-   `projection.player_inputs` and model/input artifact paths; implement and test the
-   frozen selection criteria and explicit missing-data labels before using actual inputs. Integrate the isolated
+   First run `.venv/bin/python -m unittest tests.test_a1_lineup_branches` and trace the remaining exact model/input
+   artifact paths; the frozen selector and missing-data labels are implemented and tested. Integrate the isolated
    multi-player branch preparer and foul-out policy without changing serving or the nightly. Persist seeds,
    assignments, exact weights, world counts and input/model hashes; independently reconcile legal lineups and
    scores, verify reproducibility and fail closed on unsupported worlds. Retain the current unconditional

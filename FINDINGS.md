@@ -2,6 +2,17 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 — PWA startup race:** forced service-worker bypass on the then-hosted shell reproduced fresh
+laptop and phone imports rendering an unreadable 404, because URL-object API calls bypassed the fetch shim.
+The corrected shell handles URL, string and Request inputs. Hosted forced-bypass import/offline checks passed
+**31/31 laptop and 30/30 phone** after deployment; logo checks run after bypass is lifted and the page reloaded.
+This tests Chrome profiles, not manual device acceptance.
+
+**22 Nov 2026 — branch-selection sanity check:** on current-origin game `401910029`, the retained roster and
+pre-origin model/minutes inputs selected **3** uncertain players, including **1** prior-only minutes role and
+**1** missing usage profile. The >2-player rule produced **4** unweighted all-play/one-out sensitivities.
+This is one input check, not a simulation, availability calibration or predictive test.
+
 **22 Nov 2026 — advanced distribution accounting:** independent reconstruction of **32** saved games and **935**
 player-game entries reconciled **6,300** player/team metric distributions, including defined-world counts, full
 histograms, means and nearest-rank quantiles. This validates presentation accounting against retained simulations,

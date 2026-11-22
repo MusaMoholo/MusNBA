@@ -1,5 +1,15 @@
 # App — shipped behaviour
 
+**Dashboard house follow-up (22 Nov):** game player pages put box scores ahead of player insights, with a shortcut
+to the latter. Availability and each bench expand on demand; team roster bench, fringe, no-projection and out
+groups are collapsible while starters remain visible. Player game logs are expandable. Game section state survives
+mode changes and roster group state survives the schedule/roster toggle. The **data-free** Pages shell is
+**1fa44ca**, cache **5da19e194a1a5b297b5d**; **61/61** responsive cases and local laptop/phone offline
+**29/29 / 28/28** plus installed-shell upgrade **31/31** passed. A startup fix handles URL-object API calls
+before service-worker control; forced-bypass hosted laptop/phone import and offline checks passed **31/31 / 30/30**.
+Existing bundles are unchanged: use **Update app**
+for the shell; importing data is separate and only needed if the device has not imported the desired bundle.
+
 **Dashboard house pass (22 Nov):** Today puts game cards first, with a shortcut to the retained slate insights.
 Players exposes its sortable table immediately and keeps heating/cooling lists in an expandable panel. Player pages
 put the next-game forecast ahead of secondary details; opponent history and advanced rates expand on demand.

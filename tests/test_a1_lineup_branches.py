@@ -45,6 +45,75 @@ class OnePlayerBranchesTests(unittest.TestCase):
         game.P['m_fg_rim'][0] = 0.9
         return game
 
+    def selection_inputs(self):
+        game = self.game()
+        game.day, game.input_before = '2026-01-02', '2026-01-01'
+        game.P['usage'] = np.full(game.n, 0.1)
+        registry, latest = {}, {}
+        for side in game.sides:
+            team_id = str(game.game[f'{side}_id'])
+            for player in game.players[side]:
+                player['status'], player['availability_basis'] = 'Questionable', 'status'
+                registry[player['id']] = {'team': team_id, 'on_roster': True,
+                                           'status': 'Questionable', 'status_source': 'report'}
+                latest[player['id']] = {'games': 1, 'last_date': '2025-12-30'}
+        return game, registry, latest
+
+    def test_selects_uncertain_role_usage_and_unknowns_before_origin(self):
+        game, registry, latest = self.selection_inputs()
+        assert game.mstate is not None
+        game.avail[:5] = 0.5
+        for player in game.players['home'][:5]:
+            player['availability'] = 0.5
+        game.mstate[1]['healthy'] = game.mstate[2]['healthy'] = game.mstate[3]['healthy'] = 10
+        game.mstate[4]['healthy'] = 10
+        game.P['usage'][1], game.P['usage'][3] = 0.3, np.nan
+        latest.pop('104')
+        selected = a1_lineup_branches.select_uncertain(game, registry, latest)
+        self.assertEqual([p.player_id for p in selected], ['100', '101', '103', '104'])
+        self.assertEqual(selected[2].missing, ('usage',))
+        self.assertEqual(selected[3].missing, ('observed_role',))
+        self.assertEqual(selected[3].role_basis, 'prior')
+        self.assertEqual(selected[0].status_source, 'report')
+        self.assertEqual(selected[0].probability, 0.5)
+
+    def test_selection_rejects_stale_rosters_and_future_or_invalid_criteria(self):
+        game, registry, latest = self.selection_inputs()
+        registry['100']['team'] = '2'
+        with self.assertRaisesRegex(ValueError, 'roster'):
+            a1_lineup_branches.select_uncertain(game, registry, latest)
+        registry['100']['team'] = '1'
+        latest['100']['last_date'] = game.input_before
+        with self.assertRaisesRegex(ValueError, 'before'):
+            a1_lineup_branches.select_uncertain(game, registry, latest)
+        latest['100']['last_date'] = '2025-12-30'
+        game.P['usage'][0] = 1.5
+        with self.assertRaisesRegex(ValueError, 'usage'):
+            a1_lineup_branches.select_uncertain(game, registry, latest)
+
+    def test_selection_includes_thresholds_and_missing_usage_without_assuming_status(self):
+        game, registry, latest = self.selection_inputs()
+        assert game.mstate is not None
+        game.avail[:3] = [0.5, 0.5, 0]
+        for i in range(3):
+            game.players['home'][i]['availability'] = float(game.avail[i])
+        game.mstate[0]['healthy'] = 15
+        game.mstate[1]['healthy'] = 10
+        game.P['usage'][:2] = [0.1, 0.25]
+        game.players['home'][0]['status'] = 'Active'
+        game.players['home'][0]['availability_basis'] = 'recent_inactivity'
+        registry['100'].update(status='Active', status_source='not_listed_assumption')
+        selected = a1_lineup_branches.select_uncertain(game, registry, latest)
+        self.assertEqual([p.player_id for p in selected], ['100', '101'])
+        self.assertEqual(selected[0].availability_basis, 'recent_inactivity')
+        self.assertEqual(selected[0].status_source, 'not_listed_assumption')
+        del game.P['usage']
+        self.assertTrue(all('usage' in p.missing for p in a1_lineup_branches.select_uncertain(game, registry, latest)))
+        latest['101'] = {'games': 0, 'last_date': None}
+        self.assertEqual(a1_lineup_branches.select_uncertain(game, registry, latest)[1].role_basis, 'prior')
+        game.avail[:] = 1
+        self.assertEqual(a1_lineup_branches.select_uncertain(game, registry, latest), ())
+
     def test_exact_joint_branches_are_order_independent_and_reallocate_together(self):
         game = self.game()
         game.avail[1:3] = [0.3, 0.4]

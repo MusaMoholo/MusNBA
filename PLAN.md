@@ -429,6 +429,14 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 · dashboard house follow-up:** player box scores now precede game insights; game availability,
+  bench, secondary team-roster groups and player game logs expand on demand. **61/61** responsive cases,
+  laptop/phone offline **29/29 / 28/28** and laptop shell upgrade **31/31** passed. Startup race fixed in
+  data-free Pages **1fa44ca**; hosted forced-bypass laptop/phone checks **31/31 / 30/30**. Existing data remains
+  valid, no nightly or model change.
+- **22 Nov 2026 · A1 40% partial:** cutoff-checked origin selection and conservative missing-data labels passed
+  **60** focused tests. One current-origin game selected **3** uncertain players and **4** unweighted sensitivities;
+  no branch simulations or mixture yet. Chunk A remains **19.5%**.
 - **22 Nov 2026 · A1 30%:** isolated one/two-player branches use exact rational uncalibrated independent weights
   and simultaneous D29 reallocation; larger selections expose only unweighted all-play/one-out sensitivities.
   **57** focused tests passed. No actual-input selection, persisted branch worlds, Expected mixture, model or

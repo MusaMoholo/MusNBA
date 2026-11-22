@@ -59,6 +59,10 @@ const CASES = [
   ['players-house', '#/players', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['player-house', '#/player/3032977', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['today-house', '#/today/2026-11-22', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['game-house', '#/game/401910029', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['game-final-house', '#/game/401910009', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['team-house', '#/team/14', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['team-no-proj-house', '#/team/20', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['sheet-whatif', '#/game/401909305/player/4701230/fg', ['desktop', 'phone'], ['dark', 'light']],
   ['today-leaders', '#/today/2026-11-21', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['tomorrow', '#/today/2026-11-22', ['desktop', 'half', 'phone'], ['dark']],
@@ -184,6 +188,10 @@ for (const [name, hash, sizes, themes] of CASES) {
         const next = [...document.querySelectorAll('#view section.panel')].find(x => x.querySelector('h3')?.textContent === 'Next game');
         const advanced = document.querySelector('details[data-advanced-panel]');
         const history = next?.querySelector('details.sub');
+        const log = document.querySelector('details[data-game-log]');
+        if (!log || log.open || !log.querySelector('tr[data-gid]')) return false;
+        log.open = true;
+        if (!log.querySelector('tr[data-gid]').getBoundingClientRect().height) return false;
         if (history) { if (history.open) return false; history.open = true; if (!history.querySelector('table')) return false; }
         return !!next && !!advanced && !advanced.open
           && !!(next.compareDocumentPosition(advanced) & Node.DOCUMENT_POSITION_FOLLOWING);
@@ -199,6 +207,45 @@ for (const [name, hash, sizes, themes] of CASES) {
         return !!games?.querySelector('.game-card') && !!insights
           && !!(games.compareDocumentPosition(insights) & Node.DOCUMENT_POSITION_FOLLOWING) && scrollY > 0;
       })()`, returnByValue: true, awaitPromise: true}, sessionId)).result.value === true;
+    }
+    if (name === 'game-house' || name === 'game-final-house') {
+      interaction = (await send('Runtime.evaluate', {expression: `(() => {
+        const availability = document.querySelector('details[data-player-availability]');
+        const benches = [...document.querySelectorAll('details[data-bench-side]')];
+        if (!benches.length || benches.some(x => x.open || !x.querySelector('tr[data-pid]'))) return false;
+        if (${JSON.stringify(name)} === 'game-house' && (!availability || availability.open)) return false;
+        const insights = document.querySelector('#game-insights'), jump = document.querySelector('[data-game-insights]');
+        if (${JSON.stringify(name)} === 'game-house' && (!insights || !jump
+            || !(benches[0].compareDocumentPosition(insights) & Node.DOCUMENT_POSITION_FOLLOWING))) return false;
+        jump?.click();
+        if (availability) availability.open = true;
+        benches.forEach(x => { x.open = true; });
+        if (benches.some(x => x.querySelector('tr[data-pid]').getBoundingClientRect().height === 0)) return false;
+        const mode = [...document.querySelectorAll('[data-mode]')].find(x => x.getAttribute('aria-pressed') !== 'true');
+        if (mode) {
+          mode.click();
+          if (availability && !document.querySelector('details[data-player-availability]')?.open) return false;
+          if ([...document.querySelectorAll('details[data-bench-side]')].some(x => !x.open)) return false;
+        }
+        document.querySelector('details[data-bench-side]').scrollIntoView();
+        return !!document.querySelector('table.box tbody .sep');
+      })()`, returnByValue: true}, sessionId)).result.value === true;
+    }
+    if (name === 'team-house' || name === 'team-no-proj-house') {
+      interaction = (await send('Runtime.evaluate', {expression: `(() => {
+        const bench = document.querySelector('[data-roster-group="Bench"]');
+        const rows = [...document.querySelectorAll('tr[data-roster-member="Bench"]')];
+        if (!bench || bench.getAttribute('aria-expanded') !== 'false' || !rows.length
+            || rows.some(x => !x.hidden || x.getBoundingClientRect().height)) return false;
+        bench.click();
+        if (bench.getAttribute('aria-expanded') !== 'true' || rows.some(x => x.hidden || !x.getBoundingClientRect().height)) return false;
+        document.querySelector('[data-tt="schedule"]').click();
+        document.querySelector('[data-tt="roster"]').click();
+        const restored = document.querySelector('[data-roster-group="Bench"]');
+        restored.scrollIntoView();
+        return restored.getAttribute('aria-expanded') === 'true'
+          && [...document.querySelectorAll('tr[data-roster-member="Bench"]')].every(x => !x.hidden);
+      })()`, returnByValue: true}, sessionId)).result.value === true;
     }
     await sleep(250);
     const {result: dims} = await send('Runtime.evaluate', {returnByValue: true, expression: `(() => {

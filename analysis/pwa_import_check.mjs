@@ -31,6 +31,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 const {targetId} = await send('Target.createTarget', {url: 'about:blank'});
 const {sessionId: s} = await send('Target.attachToTarget', {targetId, flatten: true});
 for (const d of ['Page', 'Runtime', 'DOM', 'Network']) await send(d + '.enable', {}, s);
+if (args['bypass-service-worker']) await send('Network.setBypassServiceWorker', {bypass: true}, s);
 await send('Emulation.setDeviceMetricsOverride', {width: 390, height: 844, deviceScaleFactor: 2, mobile: true}, s);
 const evaluate = async expression => (await send('Runtime.evaluate', {expression, returnByValue: true, awaitPromise: true}, s)).result.value;
 const waitFor = async (expression, ms = 20000) => { for (const end = Date.now() + ms; Date.now() < end; await sleep(200)) if (await evaluate(expression).catch(() => false)) return true; return false; };
@@ -43,7 +44,36 @@ const {root} = await send('DOM.getDocument', {}, s);
 const {nodeId} = await send('DOM.querySelector', {nodeId: root.nodeId, selector: '#pwa-file'}, s);
 const started = Date.now();
 await send('DOM.setFileInputFiles', {nodeId, files: [args.bundle]}, s);
-check('import completes and app renders slate', await waitFor(`!!document.querySelector('.game-card') && document.querySelector('#pwa-status')?.textContent.includes('Saved data through')`, 120000), `${((Date.now() - started) / 1000).toFixed(1)}s`);
+await waitFor(`document.querySelector('#pwa-status')?.textContent.includes('Saved data through')
+  && (!!document.querySelector('.game-card') || document.querySelector('#view')?.textContent.includes('Not available'))`, 120000);
+const imported = await evaluate(`!!document.querySelector('.game-card') && document.querySelector('#pwa-status')?.textContent.includes('Saved data through')`);
+const importDetail = imported ? '' : ' · ' + JSON.stringify(await evaluate(`(async () => {
+  const ui = await import('./assets/ui.mjs');
+  const response = await fetch(new URL('api/slate/' + (ui.meta()?.latest || ''), ui.BASE));
+  return {status: document.querySelector('#pwa-status')?.textContent, error: document.querySelector('#pwa-error')?.textContent,
+    view: document.querySelector('#view')?.textContent.slice(0, 300), location: location.href, base: ui.BASE.href,
+    static: window.MUSNBA_STATIC, response: response.status, url: response.url, body: (await response.text()).slice(0, 200)};
+})()`));
+check('import completes and app renders slate', imported, `${((Date.now() - started) / 1000).toFixed(1)}s${importDetail}`);
+if (!imported) {
+  ws.close(); chrome.kill();
+  try { rmSync(profile, {recursive: true, force: true}); } catch { /* best effort */ }
+  process.exit(1);
+}
+if (args['bypass-service-worker']) {
+  check('static API accepts URL, string and Request without service-worker control', await evaluate(`(async () => {
+    const url = new URL('./api/meta', location.href);
+    const results = await Promise.all([url, url.href, new Request(url)].map(input => fetch(input)));
+    const bodies = await Promise.all(results.map(response => response.json()));
+    return results.every(response => response.ok) && bodies.every(body => body.latest === bodies[0].latest);
+  })()`));
+}
+if (args['bypass-service-worker']) {
+  await send('Network.setBypassServiceWorker', {bypass: false}, s);
+  // Image requests do not pass through the fetch shim; retry them after restoring the worker.
+  await send('Page.reload', {}, s);
+  check('app renders after service-worker bypass is lifted', await waitFor(`!!document.querySelector('.game-card')`, 30000));
+}
 if (args['panel-check']) {
   await evaluate(`document.querySelector('#offline-panel').open = true; document.querySelector('#offline-panel details').open = true`);
   for (const [label, width, height, scale, mobile] of [['desktop', 1440, 1000, 1, false], ['half', 960, 1000, 1, false], ['phone', 390, 844, 2, true]]) {
@@ -164,6 +194,33 @@ const shootingTarget = await evaluate(`(async () => {
   return null;
 })()`);
 if (shootingTarget) {
+  if (args['require-house']) {
+    await send('Page.navigate', {url: args.url + '#/game/' + shootingTarget.game}, s);
+    check('offline game availability and bench remain accessible', await waitFor(`!!document.querySelector('details[data-bench-side]')`) && await evaluate(`(() => {
+      const availability = document.querySelector('details[data-player-availability]'), bench = document.querySelector('details[data-bench-side]');
+      if (!availability || availability.open || bench.open || !bench.querySelector('tr[data-pid]')) return false;
+      const insights = document.querySelector('#game-insights');
+      if (!insights || !document.querySelector('[data-game-insights]')
+          || !(bench.compareDocumentPosition(insights) & Node.DOCUMENT_POSITION_FOLLOWING)) return false;
+      availability.open = true; bench.open = true;
+      return !!availability.querySelector('.av-grid') && bench.querySelector('tr[data-pid]').getBoundingClientRect().height > 0;
+    })()`));
+    const teamId = await evaluate(`(async () => { const ui = await import('./assets/ui.mjs'); const game = await ui.api('game/' + ${JSON.stringify(shootingTarget.game)}); return game.game.home.id; })()`);
+    await send('Page.navigate', {url: args.url + '#/team/' + teamId}, s);
+    check('offline team bench expands', await waitFor(`!!document.querySelector('[data-roster-group="Bench"]')`) && await evaluate(`(() => {
+      const button = document.querySelector('[data-roster-group="Bench"]'), rows = [...document.querySelectorAll('tr[data-roster-member="Bench"]')];
+      if (button.getAttribute('aria-expanded') !== 'false' || !rows.length || rows.some(x => !x.hidden)) return false;
+      button.click();
+      return button.getAttribute('aria-expanded') === 'true' && rows.every(x => !x.hidden && x.getBoundingClientRect().height > 0);
+    })()`));
+    await send('Page.navigate', {url: args.url + '#/player/3032977'}, s);
+    check('offline player game log expands', await waitFor(`!!document.querySelector('details[data-game-log]')`) && await evaluate(`(() => {
+      const log = document.querySelector('details[data-game-log]');
+      if (log.open || !log.querySelector('tr[data-gid]')) return false;
+      log.open = true;
+      return log.querySelector('tr[data-gid]').getBoundingClientRect().height > 0;
+    })()`));
+  }
   await send('Page.navigate', {url: args.url + '#/game/' + shootingTarget.game + '/player/' + shootingTarget.player + '/q1'}, s);
   const ready = await waitFor(`!!document.querySelector('[data-stat="fgpct"]')`);
   check('offline period shooting distribution preserves no-attempt worlds', ready && await evaluate(`(async () => {
