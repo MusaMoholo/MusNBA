@@ -33,7 +33,10 @@ Partial source checkpoint **4dce4a3** was pushed before the UX-delivery nightly.
 - **Independent A2 research:** while the nightly rebuilds inputs, the first A2 rung is beginning on the fixed S01
   F4 control and fingerprinted prior-only S05 roles. The prespecified retrospective covariance screen is in
   TRAINING_PLAN; its join audit found **4,320/4,346** matched player-games, with **26** missing joins and **12**
-  unknown-role matches. No residual results or candidate changes have been examined. A1 remains 10%, A2 0%.
+  unknown-role matches. `scripts/a2_residual_dependence.py` implements the frozen analysis, and its two focused
+  tests pass; no residual results or candidate changes have been examined. Run
+  `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python scripts/a2_residual_dependence.py`, independently
+  audit the resulting report, then update the board and docs. A1 remains 10%, A2 0%.
 - **Prepared, unpublished Pages shell:** isolated worktree `/tmp/musnba-user-ux-pages`, `gh-pages` at `f2932e1`,
   has only `assets/game.mjs`, `assets/players.mjs` and `sw.js` changed from the reviewed data-free shell
   `614f3061d9dc69a41bc4`. The shell passed **18/18** checks with the previous bundle. Do not publish until the new
