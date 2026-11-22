@@ -1230,6 +1230,28 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   hashes match, and each fold covers the fixed 200 games/400 team-sides. Strict target means sum to 240 with maximum
   per-fold error below `3e-13`. Strict-minus-control conditional CRPS is **−1.27e-8 / +3.58e-7 / +2.67e-8 /
   −5.44e-8** across F1–F4; these minuscule target-only differences are not evidence of an engine improvement.
+  Corrected all-active and no-report screens now independently reconcile all four folds, with **21** input and
+  **16** output hashes; control/NBA-only values match the original **28,530** candidate rows to `1e-12`
+  (`analysis/experiments/20261122_a1_s05_minutes_screen_accounting_corrected.json`). F1–F4 score **200/200/195/200**
+  games, **5,218/5,225/5,013/5,208** known regulation outcomes and **2,205/2,164/1,387/2,109** unknown play
+  labels. F3's five missing games have no prior same-season team roster.
+
+  On known labels, no-report control minute CRPS is **4.709/5.612/4.610/5.479** and 10–90% coverage is
+  **68.8/64.5/68.9/65.6%**; NBA-only CRPS changes by **+0.0046/+0.0173/+0.0090/+0.0091** minutes. The
+  corresponding all-active control CRPS is **5.039/6.010/4.961/5.884**. Corrected strict-minus-control CRPS is
+  below `1e-6` in magnitude in each screen/fold, and target-play Brier agrees to the shown six decimals; the
+  prior apparent strict Brier improvement was an artefact. Neither screen reconstructs injuries, official rosters
+  or genuine pre-game play probabilities; incomplete-candidate and missing-label selection limit interpretation.
+
+- **S04 rim-expression wiring, first F4 run:** on guarded causal inputs, the previously audited F4 shot model
+  reproduced its held-out control log loss **0.7295266** over **135,680** shots in **766** games. The fitted
+  level-preserving rim slope is **1.1315**, with training mean **0.683197** unchanged on **19,628** known rim
+  shots. Candidate-minus-control shot log loss is **−0.0000312** (95% game-cluster bootstrap **−0.0000556 to
+  −0.0000063**) over the full fold, and **−0.0000382** (**−0.0000836 to +0.0000058**) on the fixed 200 games.
+  This is a preliminary causal-input node diagnostic, not a v1.3 engine comparison, all-fold decision or
+  promotion. **Report metadata defect:** `training_tail_from` erroneously says 1970 due to pandas datetime-unit
+  handling; an independent reconstruction verifies the actual **72,379** training rows span **2 Nov–31 Dec 2025**,
+  before F4. Retain the original report/source, fix the label and rerun under a separate name before use.
 - **Historical prior-box minute sensitivities:** the independently audited all-active and fixed no-report fallback
   screens cover F1–F4 respectively **200/200/195/200** games and **400/400/390/400** team-sides. The five F3
   season-opening games have no prior same-season team candidates; their players are not treated as zeroes. The

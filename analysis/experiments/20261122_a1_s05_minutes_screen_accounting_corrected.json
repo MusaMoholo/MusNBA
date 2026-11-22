@@ -1,0 +1,218 @@
+{
+ "experiment": "a1_s05_historical_minutes_screen_accounting",
+ "method": "Check source hashes, fixed fold keys, common labels, strictly prior inputs, unknown/zero outcomes, recorded CRPS and strict 240-minute target means independently for both screens.",
+ "folds": {
+  "F1": {
+   "unconditional": {
+    "requested_games": 200,
+    "evaluated_games": 200,
+    "games_without_a_candidate_roster": [],
+    "requested_team_games": 400,
+    "evaluated_team_games": 400,
+    "candidates": 7423,
+    "known_regulation_actual": 5218,
+    "unknown_play": 2205,
+    "maximum_team_mean_minute_error": {
+     "control": 9.688732924928445e-05,
+     "nba_only": 9.675783962848072e-05,
+     "strict": 2.5579538487363607e-13,
+     "combined": 2.2737367544323206e-13
+    },
+    "original_control_and_nba_only_reproduced": {
+     "rows": 7423,
+     "columns": 16,
+     "absolute_tolerance": 1e-12
+    }
+   },
+   "no_report": {
+    "requested_games": 200,
+    "evaluated_games": 200,
+    "games_without_a_candidate_roster": [],
+    "requested_team_games": 400,
+    "evaluated_team_games": 400,
+    "candidates": 7423,
+    "known_regulation_actual": 5218,
+    "unknown_play": 2205,
+    "maximum_team_mean_minute_error": {
+     "control": 8.237093521756833e-05,
+     "nba_only": 8.135517416008042e-05,
+     "strict": 1.9895196601282805e-13,
+     "combined": 1.9895196601282805e-13
+    },
+    "original_control_and_nba_only_reproduced": {
+     "rows": 7423,
+     "columns": 16,
+     "absolute_tolerance": 1e-12
+    },
+    "fallback_without_prior_minute_ewma": 200
+   }
+  },
+  "F2": {
+   "unconditional": {
+    "requested_games": 200,
+    "evaluated_games": 200,
+    "games_without_a_candidate_roster": [],
+    "requested_team_games": 400,
+    "evaluated_team_games": 400,
+    "candidates": 7390,
+    "known_regulation_actual": 5225,
+    "unknown_play": 2164,
+    "maximum_team_mean_minute_error": {
+     "control": 3.836729848671894e-05,
+     "nba_only": 3.800745221838042e-05,
+     "strict": 1.9895196601282805e-13,
+     "combined": 2.2737367544323206e-13
+    },
+    "original_control_and_nba_only_reproduced": {
+     "rows": 7390,
+     "columns": 16,
+     "absolute_tolerance": 1e-12
+    }
+   },
+   "no_report": {
+    "requested_games": 200,
+    "evaluated_games": 200,
+    "games_without_a_candidate_roster": [],
+    "requested_team_games": 400,
+    "evaluated_team_games": 400,
+    "candidates": 7390,
+    "known_regulation_actual": 5225,
+    "unknown_play": 2164,
+    "maximum_team_mean_minute_error": {
+     "control": 0.00011313796639456086,
+     "nba_only": 0.00011127600646432256,
+     "strict": 1.9895196601282805e-13,
+     "combined": 1.9895196601282805e-13
+    },
+    "original_control_and_nba_only_reproduced": {
+     "rows": 7390,
+     "columns": 16,
+     "absolute_tolerance": 1e-12
+    },
+    "fallback_without_prior_minute_ewma": 209
+   }
+  },
+  "F3": {
+   "unconditional": {
+    "requested_games": 200,
+    "evaluated_games": 195,
+    "games_without_a_candidate_roster": [
+     "401809244",
+     "401809933",
+     "401809937",
+     "401809939",
+     "401809941"
+    ],
+    "requested_team_games": 400,
+    "evaluated_team_games": 390,
+    "candidates": 6400,
+    "known_regulation_actual": 5013,
+    "unknown_play": 1387,
+    "maximum_team_mean_minute_error": {
+     "control": 0.0001385989846198754,
+     "nba_only": 0.00012832333950996144,
+     "strict": 2.2737367544323206e-13,
+     "combined": 1.9895196601282805e-13
+    },
+    "original_control_and_nba_only_reproduced": {
+     "rows": 6400,
+     "columns": 16,
+     "absolute_tolerance": 1e-12
+    }
+   },
+   "no_report": {
+    "requested_games": 200,
+    "evaluated_games": 195,
+    "games_without_a_candidate_roster": [
+     "401809244",
+     "401809933",
+     "401809937",
+     "401809939",
+     "401809941"
+    ],
+    "requested_team_games": 400,
+    "evaluated_team_games": 390,
+    "candidates": 6400,
+    "known_regulation_actual": 5013,
+    "unknown_play": 1387,
+    "maximum_team_mean_minute_error": {
+     "control": 0.00043978144367429195,
+     "nba_only": 0.0004546452935016987,
+     "strict": 1.9895196601282805e-13,
+     "combined": 2.2737367544323206e-13
+    },
+    "original_control_and_nba_only_reproduced": {
+     "rows": 6400,
+     "columns": 16,
+     "absolute_tolerance": 1e-12
+    },
+    "fallback_without_prior_minute_ewma": 281
+   }
+  },
+  "F4": {
+   "unconditional": {
+    "requested_games": 200,
+    "evaluated_games": 200,
+    "games_without_a_candidate_roster": [],
+    "requested_team_games": 400,
+    "evaluated_team_games": 400,
+    "candidates": 7317,
+    "known_regulation_actual": 5208,
+    "unknown_play": 2109,
+    "maximum_team_mean_minute_error": {
+     "control": 6.258065951669778e-06,
+     "nba_only": 3.880337573036741e-06,
+     "strict": 1.9895196601282805e-13,
+     "combined": 1.7053025658242404e-13
+    },
+    "original_control_and_nba_only_reproduced": {
+     "rows": 7317,
+     "columns": 16,
+     "absolute_tolerance": 1e-12
+    }
+   },
+   "no_report": {
+    "requested_games": 200,
+    "evaluated_games": 200,
+    "games_without_a_candidate_roster": [],
+    "requested_team_games": 400,
+    "evaluated_team_games": 400,
+    "candidates": 7317,
+    "known_regulation_actual": 5208,
+    "unknown_play": 2109,
+    "maximum_team_mean_minute_error": {
+     "control": 9.54710220639754e-05,
+     "nba_only": 9.118311717770666e-05,
+     "strict": 1.7053025658242404e-13,
+     "combined": 1.7053025658242404e-13
+    },
+    "original_control_and_nba_only_reproduced": {
+     "rows": 7317,
+     "columns": 16,
+     "absolute_tolerance": 1e-12
+    },
+    "fallback_without_prior_minute_ewma": 179
+   }
+  }
+ },
+ "unique_input_hashes_checked": 21,
+ "output_sha256": {
+  "analysis/experiments/20261122_a1_s05_unconditional_F1_corrected.json": "c1dddd2c729f26782932722452711e4d73d06c6d8ccbb0d3067a7e45698900f3",
+  "analysis/experiments/20261122_a1_s05_no_report_F1_corrected.json": "980e677ba7de82fce3345cf7a0c2188fdcb950541bff161440dec326587cf856",
+  "data/derived/experiments/20261122_a1_s05_unconditional_F1_corrected.parquet": "db6fb53c42c7ac0af4059c04631fcfa744c55eaa357f91b6a4ef5f477e6f6ca9",
+  "data/derived/experiments/20261122_a1_s05_no_report_F1_corrected.parquet": "19a9fd57588fd5e9a4f1fd310793375ea16146ef23a576d8d02f2bcee7da188e",
+  "analysis/experiments/20261122_a1_s05_unconditional_F2_corrected.json": "9ac65cb1f984d20fa2165b8eda3e4299950174f5eeb54ca98980d70f2794ac6f",
+  "analysis/experiments/20261122_a1_s05_no_report_F2_corrected.json": "9fc865f0f05973c9220ebf1660600ff2e288cf707a4423d93280ca207bdb8938",
+  "data/derived/experiments/20261122_a1_s05_unconditional_F2_corrected.parquet": "37a4d7e8e9b65ca2ad5db587dbd7a8dcf59b9bc9ab48e0ee93d1f03445d1c35f",
+  "data/derived/experiments/20261122_a1_s05_no_report_F2_corrected.parquet": "9d598e220b871ae86805c28bfbc1a9de0216333e156f80334a756feb1131c56f",
+  "analysis/experiments/20261122_a1_s05_unconditional_F3_corrected.json": "3e017581295db682d10d5bf85f053f362ac43069386ee493da30ec2ce635f41d",
+  "analysis/experiments/20261122_a1_s05_no_report_F3_corrected.json": "010f2ba6b629c4feadf6cb1e5ae43504febbcaca9fd223a69e9217f5cb7c1d5f",
+  "data/derived/experiments/20261122_a1_s05_unconditional_F3_corrected.parquet": "b7a2ce12c12c00d1efde160af32a143c3f049469587e47a4a1218e881ef06195",
+  "data/derived/experiments/20261122_a1_s05_no_report_F3_corrected.parquet": "1579b7b9b6273dbfadc9b6c851b1b15a7f746230494d53b5caf6e6a5a41ec457",
+  "analysis/experiments/20261122_a1_s05_unconditional_F4_corrected.json": "3b5bcdc56e1d8309bc03e249fa70728b65690089c83e6d122a5fedb2001ba38a",
+  "analysis/experiments/20261122_a1_s05_no_report_F4_corrected.json": "ddf3f48116465381722fd459059b71d2c818d52575e7aba64864b216ea76248c",
+  "data/derived/experiments/20261122_a1_s05_unconditional_F4_corrected.parquet": "d3a3e1fbf818a7d1babc77c86aecbf5a0be73d2d2f7f7cc04c5a04a9cd5c78f5",
+  "data/derived/experiments/20261122_a1_s05_no_report_F4_corrected.parquet": "60f5b11298924e2bf750803a44d3e6ef52a92cc4d7b5b1406ee19fd8430b2e24"
+ },
+ "audit_source_sha256": "43e1860119168f1e235301990a416cbdf0e2cd3c30ffd72bed41395bedaafd6d"
+}

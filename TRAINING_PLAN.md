@@ -427,6 +427,15 @@ hypotheses, so F1–F3 and the predeclared confirmation/second-stream tests are 
 tracking files' original publication/revision timing remains unproven. Neither family may use final-season
 results for selection, and a node-only gain never constitutes a model promotion.
 
+For the first family's historical node screen, refit the v1.3 shot-node recipe on each S02 guarded,
+body-free dated-assignment feature schedule; compare the exact same fitted node and rows with and without the rim
+calibration. These guarded inputs differ from v1.3's historical static assignment and causal fixes, so this is a
+matched **causal-input diagnostic**, not the unchanged v1.3 engine control. Report both the full held-out fold and
+the S01 fixed 200-game subset, with game-clustered uncertainty, rim/profile-reliability counts, and other-zone
+invariance. The original v1.3 control remains unchanged and is mandatory for any later engine gate. Fit the
+calibration only on the latest training-window tenth; its intercept preserves that slice's known-rim baseline mean,
+not the held-out outcome rate. Keep a direct dependency on SciPy for its deterministic root/optimizer routines.
+
 #### S01 population separation — 22 Nov, before availability candidates
 
 The conditional-engine panel is the fixed 200 F4 games above: the box supplies **who played**, while starters are

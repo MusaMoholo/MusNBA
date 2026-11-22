@@ -108,7 +108,7 @@ Each subtask ends with evidence, current docs and a commit/push checkpoint (AGEN
 | M11 | Availability model | ☐ **A1 S07/S08/S10**: report coverage, play/start probabilities, branches and future absences | Held-out calibration and games-missed realism where dated development data supports them; honest fallbacks otherwise | Planned |
 | M12 | Season pathway calibration | ◐ **first cut (20 Nov): team pathway v1 in the app** — walk-forward 2022-26 (480 team-starts): dispersion 1.00 (fixed probabilities 1.53), 10–90% coverage 84% (65%), CRPS −4% in every held-out season; still wide in November (0.84) and surprises fade with the date (sim 0.52 → 0.18 v real 0.40 flat) | Dispersion ≈ 1.0 **at every start date**, persistence matches | `pathway.py`, `season_backtest.py` |
 | UX | Dashboard upgrade programme U1–U22 | ✅ **22 Nov:** all 22 shipped; U15–U22 adds roster roles, playoff picture, win ranges, races/movers/leaders inside Standings and model guide; 156 full + 12 final layout browser checks, hosted PWA 15/15 | Checked at 1440/960/390, both themes, stored data only | DASHBOARD_PLAN.md |
-| A1 | Expanded accuracy/robustness programme | ◐ **24.8% — S01–S03 complete, S05 60%, 22 Nov**; 14 tasks, fixed weights, 140 rungs | Gates in §6b; final nightly + versioned history + successor chunk | HANDOFF § Progress ladders |
+| A1 | Expanded accuracy/robustness programme | ◐ **26.8% — S01–S03 complete, S04 10%, S05 70%, 22 Nov**; 14 tasks, fixed weights, 140 rungs | Gates in §6b; final nightly + versioned history + successor chunk | HANDOFF § Progress ladders |
 
 ### 6a. Next chunk — A1: player accuracy, defence and trustworthy season paths
 
@@ -626,6 +626,13 @@ face cards and unrelated presentation remain §9b backlog. NBA history moved to 
 - **22 Nov 2026 · A1 S03 complete:** matched flow and replay independently reconciled; both defence families
   have falsifiable cutoff-safe protocols. Smoke **102/102**, deliberate fault exited 1 with **80/102**, and
   **30** focused tests passed. No model or PWA promotion; S04 and the concurrent S05 minute screens follow.
+- **22 Nov 2026 · A1 S04 10%:** the rim-expression and incrementally added tracking-defence levers are fixed before
+  their candidate runs. The accepted v1.3 baseline remains unchanged; safe fold-fitted controls and exact engine
+  comparisons are required before promotion.
+- **22 Nov 2026 · A1 S04 partial wiring:** reused the audited guarded F4 shot model and reproduced its
+  **0.7295266** held-out log loss on **135,680** shots. The exploratory paired loss change was **−0.0000312**;
+  its report's tail-start label is invalid due to datetime units, while the actual fitted mask is independently
+  verified as 2 Nov–31 Dec 2025. Preserve source, repair/report under a new name, then complete other folds.
 - **22 Nov 2026 · A1 S05 10–20%:** separated membership, physical availability, rotation entry, starts, healthy role
   and conditional/unconditional minutes. The 200-game prior-box audit found **73** All-Star rows incorrectly labelled
   regular season; NBA-only reconstruction restores **12** memberships. Audited **7,317** candidates, including
@@ -643,6 +650,10 @@ face cards and unrelated presentation remain §9b backlog. NBA history moved to 
 - **22 Nov 2026 · A1 S05 60%:** exposed short-roster target underfill and >48-minute allocations; isolated strict
   runtime allocation conserves 240 to **1.43e-13 min** across 50,000 synthetic draws and all **400** fixed-panel
   absence cascades. It remains separate from the history filter and from production.
+- **22 Nov 2026 · A1 S05 70%:** the corrected conditional and two incomplete-roster screens are independently
+  reconciled across F1–F4. Their known outcomes are **5,218/5,225/5,013/5,208**, and F3 has five unscorable
+  opening games. No-report control CRPS is **4.709/5.612/4.610/5.479**; the corrected strict target differences
+  are negligible, not the spurious earlier Brier improvement. Full-engine checks remain.
 - **22 Nov 2026 · A1 S05 ongoing:** the first strict allocator distorted target-play Brier by turning a zero target
   positive; the original source is preserved in `ab32eda`. The corrected candidate passes **30** focused tests.
   Its **17,303** conditional participant rows independently reproduce original control/NBA-only values;
