@@ -1562,6 +1562,16 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   **31,551** player listings and **31,471** prior-state observations. Raw boxes and segment schedules agree on all
   **2,460** team-game sides for that season. This is a construction check, not a return/rest score, and the historical
   boxes still have no publication timestamps.
+- **S07 development sequence coverage:** independent reconstruction matched **128,321** prior-state observations and
+  **11** fields each over **9,846** team-games in 2022–23 through 2025–26. There are **6,137** left-censored recorded
+  DNP observations, **8,490** unlisted next-team-game outcomes, **344** ambiguous next listings, **1,534**
+  season-end cases and **27** observed prior/same-day team-change cases; none is silently filled as an absence.
+  The remaining known outcomes include **15,543** non-left-censored DNP-return exposures and **97,808**
+  recorded-rest exposures. The **17,261** non-left-censored return observations have **14,889** first reasons
+  explicitly coach-related, **1,798** other recorded, **494** explicitly injury/illness and **80** exact rest;
+  other reasons are not assumed healthy. Dates and source reports remain retrospective, and these counts are
+  neither physical recovery estimates nor fitted/validated hazards.
+  Reports: `20261122_a1_s07_sequences{,_accounting}.json`.
 
 ## 6b. A1 S03 matched component diagnosis (22 Nov 2026; descriptive)
 

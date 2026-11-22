@@ -1,0 +1,73 @@
+{
+ "experiment": "a1_s07_development_recorded_dnp_sequence_independent_audit",
+ "rows_checked": 128321,
+ "fields_per_row": 11,
+ "seasons": [
+  {
+   "season": 2023,
+   "team_games": 2460,
+   "box_player_listings": 31551,
+   "rows_missing_schedule_identity": 0,
+   "rows_missing_player_id": 0,
+   "schedule_source_coverage": {
+    "both": 2460,
+    "left_only": 0,
+    "right_only": 0
+   },
+   "observations": 31471
+  },
+  {
+   "season": 2024,
+   "team_games": 2462,
+   "box_player_listings": 32528,
+   "rows_missing_schedule_identity": 0,
+   "rows_missing_player_id": 0,
+   "schedule_source_coverage": {
+    "both": 2462,
+    "left_only": 0,
+    "right_only": 0
+   },
+   "observations": 32313
+  },
+  {
+   "season": 2025,
+   "team_games": 2462,
+   "box_player_listings": 32610,
+   "rows_missing_schedule_identity": 0,
+   "rows_missing_player_id": 0,
+   "schedule_source_coverage": {
+    "both": 2462,
+    "left_only": 0,
+    "right_only": 0
+   },
+   "observations": 32442
+  },
+  {
+   "season": 2026,
+   "team_games": 2462,
+   "box_player_listings": 32188,
+   "rows_missing_schedule_identity": 0,
+   "rows_missing_player_id": 33,
+   "schedule_source_coverage": {
+    "both": 2460,
+    "left_only": 2,
+    "right_only": 0
+   },
+   "observations": 32095
+  }
+ ],
+ "limitations": "Reconstruction uses retained retrospective boxes, not dated pre-tip reports or proven physical-availability labels. Censored and left-censored examples remain unscored.",
+ "input_sha256": {
+  "scripts/a1_availability_sequence_audit.py": "e7ef2a34f6dd69e03347915531008088336f6118c4ac7018c72068d6ca2f48a5",
+  "analysis/experiments/20261122_a1_s07_sequences.json": "7ac9298eae07c3d2514e6aa70b104fb2ab47424adb6a52cb6a936aca0e92badf",
+  "data/derived/experiments/20261122_a1_s07_sequences.parquet": "ecaa076133c881f983c67d707a2b7659162bc5dd864f650a35e3bc51e13fa8c3",
+  "data/raw/hoopr/player_box_2023.parquet": "968d835cd04b10533c5b5af8c0e41bf0154a73782e9446c76f765109223e8679",
+  "data/derived/history/2023/segments.parquet": "813b53edadf92f6e6c607211b1d4c64b312aa9fbe689851110e912419101a76e",
+  "data/raw/hoopr/player_box_2024.parquet": "1e500a538ec45ddbcb58d9789b5494f8db4f25658eafd01d90f2d09600921665",
+  "data/derived/history/2024/segments.parquet": "4a7c3c2bce39580cc8e1092ffc215d11bbd49f7bf117b4551eee40337203d2c0",
+  "data/raw/hoopr/player_box_2025.parquet": "e89f7fbc1124092c715b722e6d72d9dd1b9d28776ca6888b508fd2831cd705e2",
+  "data/derived/history/2025/segments.parquet": "d9db732172894ed8d3c6e5e99e3cd1c197006da22799413034ce3ce18cc5aee2",
+  "data/raw/hoopr/player_box_2026.parquet": "29a29dc9efd055a93e069a0382ac830d98a13274bee655beba69d95cff099713",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc"
+ }
+}

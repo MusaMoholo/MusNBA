@@ -29,6 +29,7 @@ The S07 archive audit and S06 trace source were pushed before world replay as **
 The audited world replay and S07 label evidence were pushed as **4260521**.
 The failed fixed screen, independently audited four-fold availability baselines and dated-cohort gate were preserved
 in pushed partial checkpoint **5fd5e00**.
+The typed accounting repair, foul-state probe and pre-run sequence builder were pushed as **8c8a50f**.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
 product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S05 are complete;
 S06 is active at 70%; S07 is 50%; A1 overall is 51.4%.** Isolated assignment candidates have event-level diagnostics and wiring only;
@@ -60,8 +61,9 @@ in former shell **2147**, log `/tmp/musnba_a1_s07_baseline_F1_F3.log`; F1/F2 sco
 **68.2/106.6 s**, F3 scored **195/200** in **91.3 s**, with five games lacking prior rosters. All four folds have
 passed independent accounting. The normal/fault checkpoint queue is active as attached shell **2160**, wrapper
 PID **12638**, with logs `/tmp/musnba_a1_s06_s07_partial_{unittest,smoke,fault}.log`; **15** focused unittest cases
-passed, while the smoke was still running when last checked. An initial pytest command failed because pytest is not
-installed; the project's existing unittest runner was used instead, with no dependency change.
+and normal smoke **102/102** passed. Deliberate-fault Python PID **14841** remains active; check shell **2160**
+for its required non-zero exit and final counts. An initial pytest command failed because pytest is not installed;
+the project's existing unittest runner was used instead, with no dependency change.
 
 **Completed S05 evidence:** the 200-game flow and its independent accounting are complete; the comparison and
 two S04 hypotheses are recorded below and in FINDINGS/TRAINING_PLAN. Both corrected S05 historical screen wrappers
@@ -466,13 +468,21 @@ TRAINING_PLAN §8.2 now freezes an exploratory, development-only recorded-DNP re
 building or scoring it. Unlisted next games, trades, ambiguous labels and season ends must censor spells; its
 conditional play proxy cannot establish physical recovery or the genuinely dated availability promotion gate.
 The isolated `scripts/a1_availability_sequences.py` builder and **3** synthetic chronology/censoring tests are
-prepared; an earliest-season input preflight checked **2,460** team-games, **31,551** player listings and
-**31,471** prior-state observations. Source coverage for those team-games is identical between boxes and segments.
-No four-season sequence fit or score has run. After preserving the source in a checkpoint, build under new paths with
+preserved in **8c8a50f**. Its four-season build completed as former shell **2214**, wrapper PID **14887**, Python
+PID **14888**, log `/tmp/musnba_a1_s07_sequences.log`: **9,846** team-games and **128,321** prior-state observations.
+An earliest-season preflight checked **2,460** team-games, **31,551** player listings and **31,471** observations;
+box/segment side coverage matched there. No sequence fit or score has run. The build used
 `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u scripts/a1_availability_sequences.py --output
 analysis/experiments/20261122_a1_s07_sequences.json --rows-output
-data/derived/experiments/20261122_a1_s07_sequences.parquet`; independently audit it before fitting the
-pre-specified earlier-fold return/rest proxies.
+data/derived/experiments/20261122_a1_s07_sequences.parquet`; independently audit it before fitting the pre-specified
+earlier-fold return/rest proxies. Independent vectorised reconstruction now matches **128,321** rows and **11**
+fields each (`analysis/experiments/20261122_a1_s07_sequences_accounting.json`, log
+`/tmp/musnba_a1_s07_sequences_audit.log`). It found **6,137** left-censored prior DNP observations and **8,490**
+unlisted next games; **15,543** return and **97,808** recorded-rest known-outcome exposures remain. Across the
+**17,261** non-left-censored return observations, prior reasons are **14,889** coach, **1,798** other recorded,
+**494** explicit injury/illness and **80** exact rest. These are counts, not physical absence or calibrated hazard.
+The first auditor source/report must be checkpointed before fixing its two Pylance `np.select(default=None)` type
+diagnostics and rerunning under a new accounting filename.
 
 **S07 30%:** the four independently audited fixed baselines cover **28,530** inferred candidates, **20,665** known
 play/DNP labels and **7,865** unknowns. Across F1–F4, supported starter team-games are **399/400/376/399**; five
@@ -1325,9 +1335,10 @@ The dashboard programme is done. Do not resume U1–U22, repeat rejected defence
    The original auditor source is in **5fd5e00**; its guarded v2 has passed Pylance/tests and four-fold accounting.
    The report archive has no development-season
    examples. Do not equate inferred membership with eligibility or score/tune status on the protected-season archive.
-   The sequence builder has a passed synthetic/preflight check; preserve its source, run the exact command above,
-   independently audit the development-only sequence population, then fit/score the frozen return/rest proxies on
-   earlier-fold inputs with explicit censoring. Continue S06–S10 in dependency order.
+   The sequence builder has a passed synthetic/preflight check and produced **128,321** independently audited
+   prior-state rows. Preserve the first auditor source/report, fix its recorded Pylance diagnostics, repeat the audit
+   under a new filename, then fit/score the frozen return/rest proxies on earlier-fold inputs with explicit censoring.
+   Continue S06–S10 in dependency order.
 3. **S11 freezes the tested combination before promotion.** Confirm on the fixed wider folds and second seed, protect
    the final test and use player outcomes first.
 4. **S12/S13 implement model visibility and versioned daily history.** Preserve original and previous-version

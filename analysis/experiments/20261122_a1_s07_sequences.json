@@ -1,0 +1,161 @@
+{
+ "experiment": "a1_s07_development_recorded_dnp_sequences",
+ "seasons": [
+  {
+   "season": 2023,
+   "team_games": 2460,
+   "box_player_listings": 31551,
+   "rows_missing_schedule_identity": 0,
+   "rows_missing_player_id": 0,
+   "schedule_source_coverage": {
+    "both": 2460,
+    "left_only": 0,
+    "right_only": 0
+   },
+   "sequence_states": {
+    "left_censored_return_dnp": 668,
+    "left_censored_return_play": 402,
+    "left_censored_return_season_end": 18,
+    "left_censored_return_unknown": 5,
+    "left_censored_return_unlisted": 303,
+    "rest_dnp": 2138,
+    "rest_play": 21991,
+    "rest_same_day_other_team": 4,
+    "rest_season_end": 303,
+    "rest_unknown": 32,
+    "rest_unlisted": 1350,
+    "return_dnp": 2119,
+    "return_play": 1718,
+    "return_same_day_other_team": 4,
+    "return_season_end": 47,
+    "return_unknown": 33,
+    "return_unlisted": 336,
+    "unknown_prior_listings": 80
+   },
+   "sequence_rows": 31471
+  },
+  {
+   "season": 2024,
+   "team_games": 2462,
+   "box_player_listings": 32528,
+   "rows_missing_schedule_identity": 0,
+   "rows_missing_player_id": 0,
+   "schedule_source_coverage": {
+    "both": 2462,
+    "left_only": 0,
+    "right_only": 0
+   },
+   "sequence_states": {
+    "left_censored_return_dnp": 785,
+    "left_censored_return_play": 472,
+    "left_censored_return_season_end": 16,
+    "left_censored_return_team_change_prior": 1,
+    "left_censored_return_unknown": 4,
+    "left_censored_return_unlisted": 447,
+    "rest_dnp": 2255,
+    "rest_play": 22286,
+    "rest_same_day_other_team": 4,
+    "rest_season_end": 344,
+    "rest_team_change_prior": 2,
+    "rest_unknown": 68,
+    "rest_unlisted": 1350,
+    "return_dnp": 2024,
+    "return_play": 1824,
+    "return_same_day_other_team": 1,
+    "return_season_end": 40,
+    "return_unknown": 36,
+    "return_unlisted": 354,
+    "unknown_prior_listings": 215
+   },
+   "sequence_rows": 32313
+  },
+  {
+   "season": 2025,
+   "team_games": 2462,
+   "box_player_listings": 32610,
+   "rows_missing_schedule_identity": 0,
+   "rows_missing_player_id": 0,
+   "schedule_source_coverage": {
+    "both": 2462,
+    "left_only": 0,
+    "right_only": 0
+   },
+   "sequence_states": {
+    "left_censored_return_dnp": 830,
+    "left_censored_return_play": 416,
+    "left_censored_return_season_end": 13,
+    "left_censored_return_unknown": 12,
+    "left_censored_return_unlisted": 375,
+    "rest_dnp": 2421,
+    "rest_play": 22046,
+    "rest_same_day_other_team": 3,
+    "rest_season_end": 298,
+    "rest_unknown": 57,
+    "rest_unlisted": 1406,
+    "return_dnp": 2144,
+    "return_play": 1952,
+    "return_same_day_other_team": 1,
+    "return_season_end": 71,
+    "return_team_change_prior": 1,
+    "return_unknown": 27,
+    "return_unlisted": 369,
+    "unknown_prior_listings": 168
+   },
+   "sequence_rows": 32442
+  },
+  {
+   "season": 2026,
+   "team_games": 2462,
+   "box_player_listings": 32188,
+   "rows_missing_schedule_identity": 0,
+   "rows_missing_player_id": 33,
+   "schedule_source_coverage": {
+    "both": 2460,
+    "left_only": 2,
+    "right_only": 0
+   },
+   "sequence_states": {
+    "left_censored_return_dnp": 622,
+    "left_censored_return_play": 380,
+    "left_censored_return_season_end": 19,
+    "left_censored_return_unknown": 6,
+    "left_censored_return_unlisted": 343,
+    "rest_dnp": 2210,
+    "rest_play": 22461,
+    "rest_same_day_other_team": 2,
+    "rest_season_end": 310,
+    "rest_team_change_prior": 1,
+    "rest_unknown": 46,
+    "rest_unlisted": 1535,
+    "return_dnp": 1950,
+    "return_play": 1812,
+    "return_same_day_other_team": 2,
+    "return_season_end": 55,
+    "return_team_change_prior": 1,
+    "return_unknown": 18,
+    "return_unlisted": 322,
+    "unknown_prior_listings": 93
+   },
+   "sequence_rows": 32095
+  }
+ ],
+ "rows": 128321,
+ "limitations": "Raw historical boxes and DNP reasons lack publication timestamps. Missing next listings, team changes, season ends, ambiguous outcomes and left-censored spells remain unknown; recorded play/rest/DNP outcomes do not establish physical availability or recovery.",
+ "input_sha256": {
+  "scripts/a1_availability_sequences.py": "e863560f7e38b1395c65db1d85d1cc9dde035eddd13169a6a5d5171441d29590",
+  "scripts/a1_availability_labels_audit.py": "39a2b9487bcaf9757e4cadb07a7ade45530cc3b50a7562659b3999460c3702df",
+  "scripts/evaluate.py": "aeb59d057cf115fb80eeb043de3c6d74cd931753574e682927663494cfee134c",
+  "basketball_common.py": "6c159e712c86496ff3ac60c4bf98ebb815b5b341333436df42de165309be0002",
+  "data/raw/hoopr/player_box_2023.parquet": "968d835cd04b10533c5b5af8c0e41bf0154a73782e9446c76f765109223e8679",
+  "data/derived/history/2023/segments.parquet": "813b53edadf92f6e6c607211b1d4c64b312aa9fbe689851110e912419101a76e",
+  "data/raw/hoopr/player_box_2024.parquet": "1e500a538ec45ddbcb58d9789b5494f8db4f25658eafd01d90f2d09600921665",
+  "data/derived/history/2024/segments.parquet": "4a7c3c2bce39580cc8e1092ffc215d11bbd49f7bf117b4551eee40337203d2c0",
+  "data/raw/hoopr/player_box_2025.parquet": "e89f7fbc1124092c715b722e6d72d9dd1b9d28776ca6888b508fd2831cd705e2",
+  "data/derived/history/2025/segments.parquet": "d9db732172894ed8d3c6e5e99e3cd1c197006da22799413034ce3ce18cc5aee2",
+  "data/raw/hoopr/player_box_2026.parquet": "29a29dc9efd055a93e069a0382ac830d98a13274bee655beba69d95cff099713",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc"
+ },
+ "output_sha256": {
+  "data/derived/experiments/20261122_a1_s07_sequences.parquet": "ecaa076133c881f983c67d707a2b7659162bc5dd864f650a35e3bc51e13fa8c3"
+ }
+}
