@@ -39,8 +39,10 @@ Read-only/docs work needs no review server; start :8767 when inspecting or chang
 - Wants rich data, but every input must earn its place by ablation on the folds.
 - Keep **PLAN.md detailed and current**; report progress in short, plain bullets with real numbers.
 - Develops on **localhost** (`.venv/bin/python scripts/serve.py`, :8766 — the owner runs it; never stop it, use
-  :8767 for your own checks). The public PWA is live at https://musamoholo.github.io/MusNBA/; the iCloud bundle is delivered/visible on the
-  phone. Real-device install/import acceptance remains an owner check. Keep necessary PWA updates with model/app work.
+  :8767 for your own checks). The laptop PWA is the primary app (D45); its full saved-world bundle is
+  `MusNBA-laptop.musnba.gz`. The phone uses the stripped `MusNBA.musnba.gz`. The public shell is live at
+  https://musamoholo.github.io/MusNBA/; each device must import its own iCloud bundle. Real-device acceptance
+  remains an owner check. Keep necessary PWA updates with model/app work.
 - UK-based; displayed times are UK with ET alongside. Slates are US Eastern dates.
 - Prefers you make engineering decisions yourself and explain them; ask only for real product choices (PLAN §9).
 - **Guiding light (owner, 20 Nov, D28): players first.** The play-by-play engine exists to show how individual players
@@ -79,7 +81,7 @@ Read-only/docs work needs no review server; start :8767 when inspecting or chang
   change includes the necessary refreshed outputs and iCloud export, dynamic model/version metadata, import/offline
   checks and a data-free `gh-pages` shell update if assets changed. Do this at the affected subtask, not only at the
   final chunk. Research-only checkpoints explicitly record that the served model/bundle remains unchanged. A new
-  bundle on iCloud is not proof the phone imported it: report that manual import is needed. Never publish models,
+  bundle on iCloud is not proof either device imported it: report that manual import is needed. Never publish models,
   raw data or simulation bundles to Pages. S14 repeats final integrated delivery after the last nightly.
 - **Dashboard taste (owner, 20 Nov):** he cares about player and team game-outcome presentation (scenarios, joint and
   conditional outcomes, deltas v averages); internal evaluation pages (the Lab) are not a priority. His examples are

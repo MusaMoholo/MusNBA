@@ -1,35 +1,47 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A execution started; A1 contract frozen at 10%; S01–S07 remain complete**.
-Partial source checkpoint **4dce4a3** was pushed before the UX-delivery nightly.
+Latest pushed source before this delivery checkpoint: **a699b3a**; use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
-- **Current action:** the owner has requested both D42 chunks in order. Chunk A has started at A1; implement and
-  verify the isolated one-player branches at rung 20% using the frozen contract below. Do not start Chunk B before
-  Chunk A's delivery and checkpoint.
-- **Owner UX requests in progress (22 Nov):** replace the Players fixed 3+/8+ game filter with a season-progress
+- **Current action:** after this D44/D45 UX checkpoint, finish the isolated A1 20% world-mask hook and fixed
+  32-world branch probe. Do not start Chunk B before Chunk A's delivery and checkpoint.
+- **Owner UX requests delivered locally (22 Nov):** replace the Players fixed 3+/8+ game filter with a season-progress
   minutes-share benchmark; group player-game FG/3P/FT makes, attempts and shooting-percentage distributions.
   Percentages condition on at least one attempt and explicitly show the no-attempt chance. Source and focused tests
-  were pushed in `4dce4a3`; the affected stored-output contract requires a live nightly, iCloud bundle, Pages shell,
-  import/offline checks and browser inspection before this UX work is delivered. Focused Python **27/27**, Node
+  were pushed in `4dce4a3`; the live nightly and iCloud export succeeded, Pages shell `707f6e9` was pushed and
+  the hosted shell passed PWA **19/19** with the new bundle. The new bundle also passed local PWA **19/19**, updated pages **18/18**
+  at three widths and two themes, with representative screenshots inspected; full smoke passed **108/108**.
+  The independent output audits cover **17** games, **340,000** player/team world totals, **4,509** full-game
+  shooting histograms and **10,521** period/player/shooting triplets. The iCloud file is delivered, but the
+  owner must manually import it on each phone. Earlier focused Python **27/27**, Node
   **2/2**, isolated view browser **19/19** plus **6/6** on a player with no-attempt worlds, and old-bundle isolated
   PWA **18/18** passed; final normal smoke **108/108** passed after schema-aware legacy replay, and deliberate fault
   exited **1** with **86/108** checks passing. Logs: `/tmp/musnba_user_ux_final_smoke.log` and
   `/tmp/musnba_user_ux_fault.log`. Review servers :8767, :8768 and :8769 belong to this session; never touch :8766.
   The guarded A1 replay sources and JSON are included in this partial checkpoint, not a completed rung.
-- **UX delivery next:** the live nightly is already running; do not start a second one. Require success before
-  accepting its export, verify the newly stored period
-  distributions and their no-attempt accounting, rebuild the data-free shell and run
-  `node analysis/pwa_import_check.mjs --url http://127.0.0.1:8768/MusNBA/ --bundle "$HOME/Library/Mobile Documents/com~apple~CloudDocs/MusNBA/MusNBA.musnba.gz" --require-shooting yes`.
-  Recheck touched pages on :8767, publish only the reviewed shell to `gh-pages`, and record iCloud delivery separately
-  from manual phone import. Then checkpoint before continuing A1's isolated foul-out work.
-- **Active nightly:** shell **2955**, wrapper PID **14660**, nightly PID **14661**, log
-  `/tmp/musnba_d44_nightly.log`. Launched at current ET origin with the default 10,000 game worlds and season
-  paths. Collection completed with **63 requests, 0 failures, 0 new finals**; NBA Stats had no new requests.
-  Input rebuilding completed in **235.2 s**. Read the full result when done. Do not start a second NBA Stats stream. If it fails,
-  preserve the previous iCloud bundle and record the precise blocker before retrying. Latest observed progress:
-  **6/17 games** completed as of **2026-11-22T17:02:33Z**, no error; the previous iCloud export remains in place.
+- **Laptop PWA correction (D45):** the actual installed app was already on the updated shell, but every export
+  used the stripped phone profile. The laptop bundle now contains the full saved-world views; the phone remains
+  stripped. Isolated laptop PWA **28/28**, phone **21/21**, old-to-new installed-shell upgrade **6/6** and
+  responsive player pages **12/12** passed. The final hosted shell passed laptop **22/22** and phone **21/21**;
+  an archived pre-profile bundle passed **20/20** on the new shell. The old shell visibly displayed its disabled-in-practice Update app
+  button because CSS overrode `hidden`; the corrected shell hides it unless an update waits. Both devices need
+  their own manual import; the owner laptop window was not manipulated after user input interrupted inspection.
+  Deliberate fault exited **1** with **86/108** passing (`/tmp/musnba_d44_delivery_fault.log`).
+  Review servers :8767, :8768 and :8769 belong to this session; never touch :8766.
+- **Completed UX audit:** `scripts/a1_snapshot_shooting_audit.py` and focused tests
+  independently reconcile new full-game shooting histograms against retained player worlds, and check all period
+  histograms, means, quantiles and conditional/no-attempt counts; period worlds themselves are not retained.
+  It passed on the newly completed snapshots; report `analysis/experiments/20261122_d44_shooting_audit.json`.
+  **Uncommitted A1 preparation:** the new `RepairedTrace` and 10 branch tests are prepared, but are not wired into production. The controlled
+  two-world `tests/test_a1_lineup_context.py` intentionally fails against the old engine: array masks currently
+  raise an ambiguous-truth error and invalid masks are not rejected. The nightly has completed; after the UX
+  checkpoint add the mask hook, and pass all those tests before the frozen 32-world probe.
+- **Nightly completed:** former shell **2955**, log `/tmp/musnba_d44_nightly.log`. Collection had **63 requests,
+  0 failures, 0 new finals**; NBA Stats had no new requests. Inputs rebuilt in **235.2 s**; **7 + 10** games and
+  **10,000** season paths over **959** games were saved. Old snapshots and bundle were archived under
+  `~/Basketball_archive_ops`; views and the iCloud export completed successfully.
 - **Independent A2 research:** rung **10%** completed on the fixed S01 F4 control and fingerprinted prior-only
   S05 roles; protocol/source were pushed before scoring (`3ce6dec`/`aac8c92`). Of **4,346** player-games, **26**
   lacked a role join, **12** had unknown roles and **704** more fell below the minutes threshold, leaving **3,604**
@@ -64,13 +76,11 @@ Partial source checkpoint **4dce4a3** was pushed before the UX-delivery nightly.
   claimed to have exact means. Component identification and registered gates remain necessary before any
   candidate is used. Next A2 rung: freeze and test shared pace/shooting factors against actual and simulated
   fold dependence, retaining explicit unsupported results. No F4 or final-test outcomes entered.
-- **Prepared, unpublished Pages shell:** isolated worktree `/tmp/musnba-user-ux-pages`, `gh-pages` at `f2932e1`,
-  has only `assets/game.mjs`, `assets/players.mjs` and `sw.js` changed from the reviewed data-free shell
-  `614f3061d9dc69a41bc4`. The shell passed **18/18** checks with the previous bundle. Do not publish until the new
-  bundle and its period-shooting import/offline check pass; never add data or bundles to Pages.
-- **Doc review:** `DASHBOARD_PLAN` and `ENGINE_PLAN` record D44 behaviour and decisions; `FINDINGS`, `PLAN` and
-  this handoff carry the A2 measurement and live state. `TRAINING_PLAN` freezes the A2 descriptive screen without
-  changing selection gates; `README` maps the research command; `AGENTS.md` standing rules are unchanged.
+- **Pages shell:** isolated worktree `/tmp/musnba-user-ux-pages` pushed reviewed data-free shell `614f3061d9dc69a41bc4`
+  as `gh-pages` **707f6e9**. The build completed and both local and hosted new-bundle PWA checks passed **19/19**.
+- **Doc review:** `DASHBOARD_PLAN`, `ENGINE_PLAN`, `FINDINGS`, `PLAN`, `README`, `AGENTS` and this handoff record
+  D44/D45 behaviour, evidence, device instructions, revised standing rule and next action. `TRAINING_PLAN`
+  needs no change: D45 alters delivery, not model training, validation or cutoff gates.
 - **Progress:** original A1 **58.0%**, S01–S07 complete; S08–S12/S14 open, S13 historical forecast backfill
   deferred. New independent chunk boards: **A 13.5%** (A1 10%, A2 30%, A3 0%) and **B 0%** (B1/B2/B3 all 0%). Keep
   the original A1 weights intact; new within-chunk weights do not reset or double-count A1.
@@ -82,10 +92,11 @@ Partial source checkpoint **4dce4a3** was pushed before the UX-delivery nightly.
   probe exposed an unupdated foul-out mask; dated development injury reports are insufficient to calibrate
   availability. Do not present status fallbacks as validated or replay estimates as live forecasts.
 - **Last delivery:** origin **22 Nov 2026 ET**, **7 Today + 10 Tomorrow** games × **10,000** worlds and **10,000**
-  season paths. iCloud bundle generated **2026-11-22T12:39:01Z** (SHA-256
-  `8f8026e7b01febbbf9416c23faaa1e794bd94a116e29d3c22b6e1513cb12579a`); published data-free `gh-pages`
-  **f2932e1**, cache `0d7693ac00bad5eb2e00`. Phone import is **not confirmed**. This is a dated delivery, not a
-  claim that the forecasts are current on a later date. New nightlies still export **one batch at the end**.
+  season paths. The current iCloud laptop bundle was generated **17:40:42Z**, SHA-256
+  `6d59a668ba91b9408b67ec1cc89b9ecc5ea61213b639a77a6ededd97fb2a48df`; the phone bundle **17:41:08Z**, SHA-256
+  `d1593bfe09dc44f35b6820fa16fa92bab3ac091146774c8984b00f69e89c622a`. Data-free `gh-pages` **c83fa1c**,
+  cache `cf2ed4489761b16812cd`. Neither device import is confirmed. This is a dated delivery, not a claim that the
+  forecasts are current on a later date. Nightlies export both bundles at the end, not per game.
 - **Chunk A:** lineup branches/Expected (A1), form/end-game research (A2), five selected worlds and a 2-D View
   Centre (A3). Chunk B: defence/foul-outs (B1), season pathway (B2), integrated confirmation/rotation map (B3).
   Each chunk ends with a fresh nightly and a useful dashboard improvement if no model passes. View Centre initially
@@ -100,8 +111,8 @@ Partial source checkpoint **4dce4a3** was pushed before the UX-delivery nightly.
   AGENTS §5 and PLAN §6c.
 - **Checkpoint orientation:** S07 delivery was **aa21515**; two-chunk planning **2a3155f**; View Centre planning
   **16893d9**. This live-handoff refresh is the subsequent docs-only checkpoint; use `git log -1` for its hash.
-  Earlier chronology below is historical evidence, not the current action list. Session-owned review servers and
-  the active nightly are listed above; no backtest or separate history download is running.
+  Earlier chronology below is historical evidence, not the current action list. Session-owned review servers are
+  listed above; no nightly, backtest or separate history download is running.
 
 ## Earlier checkpoints and supporting evidence
 
@@ -153,7 +164,7 @@ receive no progress credit, so a fully delivered remainder can reach 95%, not a 
 **Owner stop D41 (22 Nov):** “well stop after this nightly run, anything undone is future work”. The nightly,
 verification and PWA delivery are complete; checkpoint and stop without starting another nightly or S08–S14 in this
 session. S13 stays deferred. The owner also suggested future incremental, atomic per-game iCloud delivery with a
-manifest and safe PWA import (PLAN §9b); it is not implemented, so nightlies still export one batch at the end.
+manifest and safe PWA import (PLAN §9b); it is not implemented, so nightlies still export both bundles at the end.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
 product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S07 are complete;
 A1 overall is 58.0%.** Isolated assignment candidates have event-level diagnostics and wiring only;
@@ -1727,7 +1738,7 @@ reason explicitly, not “passed”. This completes a decision task, never certi
 | 40 | Rotation-map view presents probabilities and supported state slices with dynamic copy and missing states. |
 | 50 | Watch-a-sim list supports period jumps, clock, team, event and cumulative score from stored logs only. |
 | 60 | Branch/origin/version labels and existing player/game navigation work together without duplicated controls. |
-| 70 | Phone receives compact summaries/list only where size permits; world tools and branches remain localhost-only. |
+| 70 | Phone receives compact summaries/list only where size permits; world tools stay off the phone. Laptop PWA retains saved worlds (D45); branches remain planned. |
 | 80 | Touched routes pass 1440/960/390 in both themes; screenshots are actually inspected. |
 | 90 | Offline/import and old-snapshot fallbacks pass; limitations and shipped behaviour are in DASHBOARD_PLAN. |
 | 100 | App/output changes are exported and the changed shell published/PWA-checked; docs committed/pushed; owner gets the feature summary. |
@@ -1775,7 +1786,7 @@ is unfinished work, not a gate deferral. Log per-date completion at each 10% thr
 On any date D: every game before D is resulted; the **play-by-play engine** (v1.3) simulates today's and tomorrow's games
 — or the next slate if neither has games — with inputs carried over from every game before D, **10,000 worlds per game**; the
 **team engine** (team pathway v1) plays every later game in each of 10,000 worlds with that world's own ratings. Season outputs
-are counts over the worlds. The app slices the engine's stored worlds for joint and conditional outcomes (localhost only; the
+are counts over the worlds. The app slices the engine's stored worlds for joint and conditional outcomes (localhost and laptop PWA; the
 phone bundle is stripped back, D36).
 
 ## State
@@ -1919,7 +1930,10 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
 The owner has authorised both D42 chunks in order, superseding D41's earlier stop. The dashboard programme is done;
 do not resume U1–U22.
 
-1. **A1 20% (partial):** `scripts/a1_lineup_branches.py::one_player` copies a D29 game, fixes one uncertain player's
+1. **A1 20% (partial):** the immediate next command is `.venv/bin/python -m unittest tests.test_a1_lineup_context -q`;
+   the prepared world-mask tests currently fail against the unchanged engine. Implement the backward-compatible
+   world-local hook in `scripts/engine.py`, pass the focused tests, then run the repaired fixed 32-world branch
+   probe and independent accounting before crediting the rung. `scripts/a1_lineup_branches.py::one_player` copies a D29 game, fixes one uncertain player's
    availability, re-solves starters and targets, and rejects invalid regulation allocations. Synthetic tests in
    `tests/test_a1_lineup_branches.py` exercise plays/sits, scheduled legal fives and actual `_mu` defender inputs;
    the original game remains untouched. Run `.venv/bin/python -m unittest tests.test_a1_lineup_branches
@@ -1946,8 +1960,8 @@ do not resume U1–U22.
    worlds (**548/16,248** fives); team/player points and team minutes reconcile. These are one synthetic
    conditioning example, not a population-wide foul-out rate. An isolated `BranchLegalityGuard` now rejects
    invalid fives and any sixth foul before proceeding, including the reproduced engine defect; it does not
-   implement the legal five-player exception or change production. **25** focused tests pass. Next replay the
-   fixed F4 branches with this guard and log the explicit outcome, then decide the A1 fallback. A proper repair
+   implement the legal five-player exception or change production. **25** focused tests pass. The guarded
+   fixed F4 replay subsequently failed as detailed below. A proper repair
    needs the unchanged model gates before allowing production branches; do not claim A1 20% without evidence.
    Sequential normal/fault smoke finished as shell **2864**: **108/108** normal checks passed, and the deliberate
    fault exited **1** with **86/108** passing; logs `/tmp/musnba_a1_probe_{smoke,fault}.log`. No session-owned

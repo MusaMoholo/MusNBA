@@ -1,6 +1,7 @@
 // Static (GitHub Pages) runtime: data comes from an imported bundle, the shell from the service worker.
 import {cleanupInterruptedImport, importBundle, read} from './pwa-storage.mjs';
 import {staticRequest} from './static-api.mjs';
+import {stamp, tipTimes} from './ui.mjs';
 
 export async function start(boot) {
   window.MUSNBA_STATIC = true;
@@ -20,7 +21,8 @@ export async function start(boot) {
     <p id="pwa-error" class="note err" role="alert" hidden></p>
     <details><summary class="note" style="cursor:pointer">Install &amp; updates</summary>
       <p class="note">iPhone: open this address in Safari, tap Share → Add to Home Screen, open MusNBA from its icon and import your data there (Safari and the installed app keep separate storage).</p>
-      <p class="note">After the nightly run on your Mac, import the latest MusNBA.musnba.gz from Files → iCloud Drive → MusNBA. Imported data stays on this device and is never uploaded; keep the file as a backup.</p>
+      <p class="note">After the nightly, import MusNBA-laptop.musnba.gz on your laptop or MusNBA.musnba.gz on your phone from iCloud Drive → MusNBA. The laptop bundle includes saved individual worlds; the phone bundle is smaller. Data stays on this device.</p>
+      <p class="note">Updating the app changes the interface only. Import the latest data separately on each device.</p>
       <p id="pwa-offline" class="note" role="status">Preparing offline app…</p><button id="pwa-update" class="ghost" hidden>Update app</button></details>`;
   document.querySelector('.mainnav').after(panel);
   const input = panel.querySelector('#pwa-file'), button = panel.querySelector('#pwa-import'), status = panel.querySelector('#pwa-status'),
@@ -57,12 +59,15 @@ export async function start(boot) {
     const active = await read('meta', 'active');
     if (active) {
       const info = await read('meta', active);
-      status.textContent = `Saved data through ${info.latest} · ${info.snapshots.length} simulated slates · works offline`;
+      const profile = info.profile === 'laptop' ? 'Laptop bundle' : info.profile === 'phone' ? 'Phone bundle' : 'Older bundle';
+      const created = info.created && Number.isFinite(Date.parse(info.created))
+        ? ` · exported ${stamp(info.created)} · ${tipTimes(info.created, info.latest).et}` : '';
+      status.textContent = `${profile} · Saved data through ${info.latest} · ${info.snapshots.length} simulated slates${created} · works offline`;
       button.textContent = 'Import latest data';
       await boot();
     } else {
       panel.open = true; panel.querySelector('details').open = true;
-      status.textContent = 'Import your MusNBA.musnba.gz bundle from Files → iCloud Drive to open the app.';
+      status.textContent = 'Import your MusNBA data bundle from iCloud Drive to open the app.';
       document.getElementById('view').innerHTML = '<section class="panel"><h2>Welcome to MusNBA</h2><p class="note">This installed app shows simulations computed on your Mac. Import the data bundle above to begin.</p></section>';
       document.getElementById('data-line').textContent = 'No data imported yet';
     }

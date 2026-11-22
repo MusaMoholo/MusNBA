@@ -1838,6 +1838,36 @@ selection and unknown historical publication timing make its value uncertain. Mi
 incremental fold gain or failed player/team gates disconfirm promotion. Both protocols are frozen in
 TRAINING_PLAN §8; neither is an attribution of the observed error to an individual defender.
 
+## D44 shooting accounting — 22 Nov 2026
+
+The refreshed 22/23 Nov prospective slates contain **17** games, **501** player-games and **10,000** worlds per
+game. An independent audit matched **4,509** full-game make, attempt and conditional-percentage histograms to the
+retained player worlds. It also checked histogram totals, means, quantiles and no-attempt accounting for
+**10,521** player-period/shooting-type combinations; **10,430** have both attempt and no-attempt worlds and
+**12** have no attempts in any world. Period player worlds are not retained, so those period checks are internal
+accounting, not a raw-world reconstruction. Report: `analysis/experiments/20261122_d44_shooting_audit.json`.
+Independent snapshot/availability accounting also reconciled **340,000** player/team world totals and 17
+near-term season games (`analysis/experiments/20261122_d44_snapshot_accounting.json`). This is output
+verification, not an accuracy or promotion result.
+
+## D45 laptop PWA delivery — 22 Nov 2026
+
+The actual installed laptop PWA was on the updated shell and displayed the new minutes filter, but its export
+path stripped world records for every device. A separate laptop export now retains all **1,971** retained API
+records, including **32** game-world files; the phone export retains **1,939**, omitting those 32. An independent
+hash comparison matched every API body to the retained views or the phone transformation. The current bundles
+are **64,233,239 bytes** (laptop, **2,031** records) and **12,874,347 bytes** (phone, **1,999** records).
+The laptop import took **2.5 s** in an isolated local headless Chrome test, not a measured device-wide guarantee.
+
+The previous app's Update app button was visibly rendered despite its `hidden` attribute because a button CSS
+rule overrode the browser's hidden style; the control had no update handler when no worker was waiting.
+The regression reproduced on the old shell (**20/21** checks); the corrected shell hides it until an update
+is waiting. An isolated old-to-new installed-shell test passed **6/6**, retaining the imported laptop data.
+The laptop PWA passed **28/28** checks including offline Scenarios, shooting and six panel width/theme cases;
+the phone passed **21/21**. These are isolated browser checks, not confirmation of the owner's device imports.
+The final hosted shell passed laptop **22/22** and phone **21/21**; the archived pre-profile bundle passed
+**20/20** locally.
+
 ## Chunk A A2 — player residual dependence (22 Nov 2026)
 
 The preregistered F4 descriptive screen uses the S01 control's **200** pre-final-test games and 1,000 worlds,

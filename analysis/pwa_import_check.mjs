@@ -44,6 +44,22 @@ const {nodeId} = await send('DOM.querySelector', {nodeId: root.nodeId, selector:
 const started = Date.now();
 await send('DOM.setFileInputFiles', {nodeId, files: [args.bundle]}, s);
 check('import completes and app renders slate', await waitFor(`!!document.querySelector('.game-card') && document.querySelector('#pwa-status')?.textContent.includes('Saved data through')`, 120000), `${((Date.now() - started) / 1000).toFixed(1)}s`);
+if (args['panel-check']) {
+  await evaluate(`document.querySelector('#offline-panel').open = true; document.querySelector('#offline-panel details').open = true`);
+  for (const [label, width, height, scale, mobile] of [['desktop', 1440, 1000, 1, false], ['half', 960, 1000, 1, false], ['phone', 390, 844, 2, true]]) {
+    await send('Emulation.setDeviceMetricsOverride', {width, height, deviceScaleFactor: scale, mobile}, s);
+    for (const theme of ['light', 'dark']) {
+      await send('Emulation.setEmulatedMedia', {features: [{name: 'prefers-color-scheme', value: theme}]}, s);
+      check(`offline panel fits ${label} ${theme}`, await evaluate(`document.documentElement.scrollWidth <= innerWidth`));
+      if (args.out) {
+        const shot = await send('Page.captureScreenshot', {format: 'png'}, s);
+        writeFileSync(join(args.out, `pwa-panel-${label}-${theme}.png`), Buffer.from(shot.data, 'base64'));
+      }
+    }
+  }
+  await send('Emulation.setDeviceMetricsOverride', {width: 390, height: 844, deviceScaleFactor: 2, mobile: true}, s);
+  await evaluate(`document.querySelector('#offline-panel').open = false`);
+}
 check('logo served from imported data', await waitFor(`[...document.querySelectorAll('img.logo')].some(i => i.complete && i.naturalWidth > 0)`, 15000));
 await send('Page.navigate', {url: args.url + '#/game/401910009'}, s);
 check('game centre renders from storage', await waitFor(`document.querySelector('.bezel') && !!document.querySelector('[data-mode=cmp]')`));
@@ -62,6 +78,11 @@ check('forecast timing is honest for imported data', await evaluate(`(async () =
 await send('Page.navigate', {url: args.url + '#/team/14'}, s);
 check('phone team form stacks chart and fixtures', await waitFor(`(() => { const items = [...document.querySelectorAll('.form-grid > div')]; return items.length === 2 && items[1].getBoundingClientRect().top >= items[0].getBoundingClientRect().bottom - 1; })()`));
 check('service worker controls page', await waitFor(`!!navigator.serviceWorker.controller`, 15000) || (await send('Page.reload', {}, s), await waitFor(`!!navigator.serviceWorker.controller`, 15000)));
+check('app update button is visible only for a waiting update', await evaluate(`(async () => {
+  const registration = await navigator.serviceWorker.getRegistration(), button = document.querySelector('#pwa-update');
+  return registration?.waiting ? !button.hidden && getComputedStyle(button).display !== 'none'
+    : button.hidden && getComputedStyle(button).display === 'none';
+})()`));
 await send('Network.emulateNetworkConditions', {offline: true, latency: 0, downloadThroughput: -1, uploadThroughput: -1}, s);
 await send('Page.navigate', {url: args.url + '#/standings'}, s);
 check('offline reload renders standings', await waitFor(`document.body.textContent.includes('Standings & season forecast') && !!document.querySelector('td.heat')`));
@@ -91,7 +112,7 @@ const shootingTarget = await evaluate(`(async () => {
   const ui = await import('./assets/ui.mjs'), slate = await ui.api('slate/' + ui.meta().latest);
   for (const fixture of slate.games) {
     const game = await ui.api('game/' + fixture.id), sim = game.projection?.sim;
-    if (sim?.shooting_distribution_schema !== 1 || game.worlds) continue;
+    if (sim?.shooting_distribution_schema !== 1) continue;
     for (const side of ['home', 'away']) for (const p of sim[side].players) {
       const stats = p.periods?.q1?.stats, d = stats?.fgpct;
       if (d && stats.fg3pct && stats.ftpct) return {game: fixture.id, player: p.id, defined: d.defined, total: d.total};
@@ -112,6 +133,24 @@ if (shootingTarget) {
       && text.includes(${JSON.stringify(shootingTarget.defined.toLocaleString())} + ' of ' + ${JSON.stringify(shootingTarget.total.toLocaleString())});
   })()`));
 } else if (args['require-shooting']) check('offline period shooting distribution present in new bundle', false);
+if (args.profile) {
+  check('imported bundle profile and world availability', await evaluate(`(async () => {
+    const storage = await import('./assets/pwa-storage.mjs'), ui = await import('./assets/ui.mjs');
+    const info = await storage.read('meta', await storage.read('meta', 'active'));
+    const game = await ui.api('game/' + ${JSON.stringify(shootingTarget?.game || '')});
+    if (info.profile !== ${JSON.stringify(args.profile)} || !document.querySelector('#pwa-status').textContent.includes(ui.stamp(info.created))
+        || !document.querySelector('#pwa-status').textContent.includes(ui.tipTimes(info.created, info.latest).et)) return false;
+    if (${JSON.stringify(args.profile)} === 'phone') return game.worlds === false;
+    const worlds = await ui.api('game/' + ${JSON.stringify(shootingTarget?.game || '')} + '/worlds');
+    const outcomes = await import('./assets/outcomes.mjs'), loaded = await outcomes.load(${JSON.stringify(shootingTarget?.game || '')});
+    return game.worlds === true && worlds.worlds === game.projection.sim.sims && loaded.W === worlds.worlds
+      && loaded.values('t:home', 'pts').length === worlds.worlds;
+  })()`));
+  if (args.profile === 'laptop' && shootingTarget) {
+    await send('Page.navigate', {url: args.url + '#/game/' + shootingTarget.game + '/scenario'}, s);
+    check('laptop scenarios render from saved worlds offline', await waitFor(`!!document.querySelector('[data-builder="scn"]') && document.querySelector('#view').textContent.includes(${JSON.stringify('of ' + shootingTarget.total.toLocaleString() + ' worlds')})`, 30000));
+  }
+}
 await send('Page.navigate', {url: args.url + '#/about'}, s);
 check('model guide works offline', await waitFor(`document.querySelector('#view').textContent.includes('Reading the numbers')`));
 await send('Page.navigate', {url: args.url + '#/lab'}, s);

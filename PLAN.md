@@ -1,6 +1,6 @@
 # MusNBA — game plan and progress
 
-Updated **22 November 2026 (S01–S07 complete; Chunk A A1 at 10%; View Centre planned, D42–D43)**. The single record of scope, progress and decisions. Every agent updates it at
+Updated **22 November 2026 (S01–S07 complete; Chunk A A1 at 10%, A2 at 30%; View Centre planned, D42–D43)**. The single record of scope, progress and decisions. Every agent updates it at
 every checkpoint (AGENTS.md § Checkpoint protocol). New here? Read [AGENTS.md](AGENTS.md) first, then
 [HANDOFF_NEXT.md](HANDOFF_NEXT.md) — it says exactly what to do next.
 
@@ -346,8 +346,9 @@ last successful live refresh. This does not waive S14's nightly at the end of ac
    (a crosswalk by name, team and date); endpoints that change or rate-limit (a second adapter with raw retention). ESPN
    already gives shooter/assister/blocker/fouler/stealer, shot x/y, the ten on court and shot type in the play text — not
    who guarded whom or defender distance.
-**Phone app (owner, 20 Nov, D36):** stripped back — 10,000-world distributions for the expected lineup (players, teams, periods);
-   no Scenarios, Given…, joint grids, duels or lineup branches (those stay on localhost).
+**Phone app (owner, 20 Nov, D36; laptop clarification D45):** stripped back — 10,000-world distributions for the expected lineup (players, teams, periods);
+   no Scenarios, Given…, joint grids, duels or lineup branches. The laptop PWA retains saved worlds and existing world-based views;
+   lineup branches remain planned, not implemented.
 2. **Decided (owner, 22 Nov):** make `MusaMoholo/MusNBA` public and copy MusSim’s personal GitHub Pages/iCloud flow.
    Only the data-free shell is published on `gh-pages`; simulations stay local/iCloud. App name MusNBA. **Live:** https://musamoholo.github.io/MusNBA/ (22 Nov; `gh-pages` f2932e1).
 3. iPhone acceptance of the PWA.
@@ -386,7 +387,7 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
    during a nightly, with a generation manifest and validated resume. Keep partial and complete generations visibly
    distinct and retain the previous complete bundle; PWA import/offline support must understand the new contract.
    iCloud sync alone does not import data on the phone. This is future work: the delivered nightly and subsequent
-   nightlies still export one batch at the end until incremental delivery is implemented and verified.
+   nightlies still export both bundles at the end until incremental delivery is implemented and verified.
 
 ### 9c. Realism sweep — current mapping to A1 (updated 22 Nov)
 
@@ -456,7 +457,19 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
   pass; at **10,000** synthetic worlds the two tested probability means differ by **+0.001567 / −0.000420**
   from baseline. Normal smoke **107/107** (newer inputs skip one replay); deliberate fault exited **1**.
   Uniform factors and strengths are arbitrary research fixtures, not a calibrated or wired model. Chunk A
-  **13.5%**, original A1 **58%**; the D44 nightly remains in progress.
+  **13.5%**, original A1 **58%**; the D44 nightly subsequently completed as logged below.
+- **22 Nov 2026 · D44 delivery:** live nightly rebuilt inputs through 21 Nov and refreshed **7 + 10** games ×
+  **10,000** worlds and **10,000** season paths (959 games). Independent checks reconciled **340,000**
+  player/team world totals and **4,509** full-game shooting histograms; **10,521** period/player/shooting
+  triplets passed conditional/no-attempt accounting. Smoke **108/108**; local offline PWA **19/19** and
+  responsive pages **18/18**, with screenshots inspected. The iCloud bundle and data-free `gh-pages`
+  `707f6e9` were delivered; the hosted PWA passed **19/19** and phone import remains manual. Neither
+  model was promoted; Chunk A remains **13.5%**.
+- **22 Nov 2026 · D45 laptop PWA:** owner's laptop-first clarification corrected the phone-only export.
+  Laptop bundle **64.2 MB / 2,031 records**, phone **12.9 MB / 1,999**, including/excluding **32** saved-world
+  files; all **1,971** laptop API records reconciled to retained views. Fixed a visibly clickable but inactive
+  update button. Isolated offline checks: laptop **28/28**, phone **21/21**, old-to-new update **6/6**.
+  No model or forecast changed; Chunk A remains **13.5%**. Each device requires its own manual import.
 - **19 Nov 2026** — Studied MusSim. Probed sources: ESPN site API works with plain requests; NBA CDN returns 403.
   Owner: app shell first, play-by-play sim later.
 - **19 Nov 2026** — Phase 1 shipped (collection, placeholder engine, snapshots, views, server, app, PWA). Fixed: a

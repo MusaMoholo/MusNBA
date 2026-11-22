@@ -127,7 +127,7 @@ def verify(path: Path, header: dict, expected: int) -> None:
 def phone_record(key: str, text: str) -> str | None:
     """D36 (owner, 20 Nov): the phone app is stripped back — the 10,000-world distributions for the expected lineup (players
     and teams) only. No per-world files, so no Scenarios, Given…, joint grids, duels or lineup branches; no duel of the
-    night on the slate. Returns the record body to export, or None to leave it out. Localhost views keep everything."""
+    night on the slate. Returns the record body to export, or None to leave it out. Localhost and laptop keep everything."""
     parts = key.strip('/').split('/')
     if parts[:2] == ['api', 'game'] and len(parts) == 4 and parts[3] == 'worlds':
         return None
@@ -144,7 +144,14 @@ def phone_record(key: str, text: str) -> str | None:
     return text
 
 
-def export_bundle(output: Path, archive_root=None) -> dict:
+def view_inventory() -> dict:
+    return {str(p): (p.stat().st_size, p.stat().st_mtime_ns)
+            for root in (VIEWS / 'api', LOGOS) for p in root.rglob('*') if p.is_file()}
+
+
+def export_bundle(output: Path, archive_root=None, profile: str = 'phone') -> dict:
+    if profile not in ('phone', 'laptop'):
+        raise ValueError(f'Unsupported bundle profile: {profile}')
     output = Path(output).expanduser().absolute()
     if not output.name.endswith('.musnba.gz'):
         raise SystemExit('Use a .musnba.gz filename.')
@@ -156,15 +163,14 @@ def export_bundle(output: Path, archive_root=None) -> dict:
     output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='musnba-export-') as tmp:
         frozen = Path(tmp)
-        inventory = lambda: {str(p): (p.stat().st_size, p.stat().st_mtime_ns) for root in (api, LOGOS) for p in root.rglob('*') if p.is_file()}
-        before = inventory()
+        before = view_inventory()
         shutil.copytree(api, frozen / 'api')
         shutil.copytree(LOGOS, frozen / 'logos')
-        if inventory() != before:
+        if view_inventory() != before:
             raise SystemExit('Views changed during export; retry after nightly finishes. The previous export is unchanged.')
         meta = json.loads((frozen / 'api' / 'meta.json').read_text())
         header = {'format': 'musnba', 'version': 1, 'created': datetime.now(timezone.utc).isoformat(timespec='seconds'),
-                  'latest': meta['latest'], 'snapshots': [s['date'] for s in meta['snapshots']]}
+                  'latest': meta['latest'], 'snapshots': [s['date'] for s in meta['snapshots']], 'profile': profile}
         descriptor, staging = tempfile.mkstemp(prefix='MusNBA-export-', suffix='.partial', dir=output.parent)
         os.close(descriptor)
         count = 0
@@ -173,7 +179,8 @@ def export_bundle(output: Path, archive_root=None) -> dict:
                 stream.write(packed(header) + '\n')
                 for path in sorted((frozen / 'api').rglob('*.json')):
                     key = '/api/' + path.relative_to(frozen / 'api').with_suffix('').as_posix()
-                    body = phone_record(key, path.read_text(encoding='utf-8'))
+                    text = path.read_text(encoding='utf-8')
+                    body = phone_record(key, text) if profile == 'phone' else text
                     if body is None:
                         continue
                     stream.write(packed(record(key, body)) + '\n')
@@ -189,7 +196,7 @@ def export_bundle(output: Path, archive_root=None) -> dict:
             publish(Path(staging), output)
         finally:
             Path(staging).unlink(missing_ok=True)
-    print(f'bundle: {output} · {count:,} records · {output.stat().st_size / 1e6:.1f} MB · latest {header["latest"]}')
+    print(f'{profile} bundle: {output} · {count:,} records · {output.stat().st_size / 1e6:.1f} MB · latest {header["latest"]}')
     return header
 
 
@@ -198,6 +205,7 @@ def main():
     parser.add_argument('--shell', type=Path, help='Build the data-free PWA into this (new or empty) directory')
     parser.add_argument('--base-path', default='/', help='Hosting directory, e.g. /MusNBA/ for GitHub Pages')
     parser.add_argument('--output', type=Path, help='Write a .musnba.gz data bundle')
+    parser.add_argument('--profile', choices=('phone', 'laptop'), default='phone', help='Bundle content (default: phone)')
     parser.add_argument('--archive-root', type=Path)
     args = parser.parse_args()
     if not args.shell and not args.output:
@@ -205,7 +213,7 @@ def main():
     if args.shell:
         build_shell(args.shell, args.base_path, args.archive_root)
     if args.output:
-        export_bundle(args.output, args.archive_root)
+        export_bundle(args.output, args.archive_root, args.profile)
 
 
 if __name__ == '__main__':

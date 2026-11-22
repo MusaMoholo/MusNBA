@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Owner-run nightly followed by the MusNBA bundle export, only on success.
+"""Owner-run nightly followed by laptop and phone bundle exports, only on success.
 
-Default destination: iCloud Drive/MusNBA/MusNBA.musnba.gz. Other arguments pass to nightly.py.
+Default destinations: iCloud Drive/MusNBA/MusNBA-laptop.musnba.gz and MusNBA.musnba.gz.
+Other arguments pass to nightly.py.
 This wrapper installs no scheduler and never touches a running server.
 
   .venv/bin/python scripts/nightly_musnba.py
@@ -16,6 +17,9 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+from scripts.export_musnba import view_inventory  # noqa: E402
+
 ICLOUD_DRIVE = Path.home() / 'Library/Mobile Documents/com~apple~CloudDocs'
 DEFAULT_OUTPUT = ICLOUD_DRIVE / 'MusNBA/MusNBA.musnba.gz'
 
@@ -32,6 +36,10 @@ def check_output_access(output: Path) -> None:
         os.replace(probe, Path(tmp) / 'renamed')
 
 
+def laptop_output(phone_output: Path) -> Path:
+    return phone_output.with_name(phone_output.name[:-len('.musnba.gz')] + '-laptop.musnba.gz')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--output', type=Path, default=DEFAULT_OUTPUT)
@@ -44,8 +52,10 @@ def main():
         parser.error('Choose a .musnba.gz destination.')
     if output == DEFAULT_OUTPUT and not ICLOUD_DRIVE.is_dir():
         parser.error('Enable iCloud Drive on this Mac, or pass --output.')
+    laptop = laptop_output(output)
     try:
         check_output_access(output)
+        check_output_access(laptop)
     except OSError as error:
         print(f'Export destination is inaccessible: {error}\nNo data job was started. For iCloud, allow this terminal '
               'access in System Settings → Privacy & Security and make the file available locally in Finder.', file=sys.stderr)
@@ -55,11 +65,20 @@ def main():
         if status:
             print('Nightly did not succeed; the previous export is unchanged.', file=sys.stderr)
             return status
-    status = subprocess.run([sys.executable, str(ROOT / 'scripts/export_musnba.py'), '--output', str(output)], cwd=ROOT).returncode
-    if status:
-        retry = shlex.join([sys.executable, str(ROOT / 'scripts/nightly_musnba.py'), '--export-only', '--output', str(output)])
-        print('Export failed; snapshots remain on this Mac. Retry with:\n' + retry, file=sys.stderr)
-    return status
+    before = view_inventory()
+    retry = shlex.join([sys.executable, str(ROOT / 'scripts/nightly_musnba.py'), '--export-only', '--output', str(output)])
+    for profile, destination in (('laptop', laptop), ('phone', output)):
+        status = subprocess.run([sys.executable, str(ROOT / 'scripts/export_musnba.py'), '--output', str(destination),
+                                 '--profile', profile], cwd=ROOT).returncode
+        if status:
+            print(f'{profile.capitalize()} export failed; a prior export may already have been updated. '
+                  'Snapshots remain on this Mac. Retry both exports with:\n' + retry, file=sys.stderr)
+            return status
+        if view_inventory() != before:
+            print('Views changed while exporting the bundle pair; the exports may differ. '
+                  'Retry both after the data job finishes:\n' + retry, file=sys.stderr)
+            return 1
+    return 0
 
 
 if __name__ == '__main__':

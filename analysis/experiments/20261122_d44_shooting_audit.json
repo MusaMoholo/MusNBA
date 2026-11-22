@@ -1,0 +1,38 @@
+{
+ "origin": "2026-11-22",
+ "model": "engine-v1.3",
+ "worlds": 10000,
+ "days": {
+  "2026-11-22": {
+   "games": 7,
+   "players_with_periods": 201,
+   "players_without_periods": 0,
+   "period_triplets": 4221,
+   "conditional_distributions": 4219,
+   "no_attempt_period_triplets": 2,
+   "partial_no_attempt_period_triplets": 4187,
+   "full_game_world_histograms": 1809
+  },
+  "2026-11-23": {
+   "games": 10,
+   "players_with_periods": 300,
+   "players_without_periods": 0,
+   "period_triplets": 6300,
+   "conditional_distributions": 6290,
+   "no_attempt_period_triplets": 10,
+   "partial_no_attempt_period_triplets": 6243,
+   "full_game_world_histograms": 2700
+  }
+ },
+ "input_sha256": {
+  "data/snapshots/2026-11-22/meta.json": "c3a329344b0e6c1471de47cb85223fa3039a79c8b9c29588a762253e186f1002",
+  "data/snapshots/2026-11-22/games.json": "a6c5692d44bc32463f7373cd54fb537c97bd8d011a289a399fad4327d55b6d2c",
+  "data/snapshots/2026-11-22/engine_players.npz": "1ae85f0af8bf9804cfe332025bd65d1b475fed07e9de27a98c7860a4eda12d03",
+  "data/snapshots/2026-11-23/meta.json": "e6e79ef416a4285e384e0965111278fe34ece12bba924241021101faa7a0b952",
+  "data/snapshots/2026-11-23/games.json": "aecf0d26228e38b900c09bbcc76c32228407996aa2d46199a3892cd433f8d001",
+  "data/snapshots/2026-11-23/engine_players.npz": "ebc448085a82ec807c6cd5b24eb5d6b918ed2ebb7410f9658beb83b6630964e3"
+ },
+ "limitations": [
+  "period player worlds are not retained; period checks reconcile histogram and no-attempt accounting rather than raw world values"
+ ]
+}

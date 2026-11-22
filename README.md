@@ -51,11 +51,13 @@ app; the public shell contains no collected data or projections.
 On iPhone: open that address in Safari → Share → Add to Home Screen, open the installed icon, then choose
 **Offline data & installation → Import data** and select **iCloud Drive/MusNBA/MusNBA.musnba.gz**. Import inside the installed
 app; Safari and the installed app may have separate storage. Keep it open/unlocked while importing. On a laptop, open
-the same address, use the browser's install option if offered, and import the same bundle. Each device imports separately.
+the same address, use the browser's install option if offered, and import **iCloud Drive/MusNBA/MusNBA-laptop.musnba.gz**.
+Each device imports separately.
 
 Data stays on-device and browsing works offline after import. App updates arrive through Pages; data updates arrive via
-iCloud imports. Keep the source bundle as a backup. The phone bundle keeps expected-lineup distributions; per-world
-Scenarios/Given…/duels and lineup branches remain localhost-only (D36). Real-device iPhone acceptance is an owner check.
+iCloud imports. Keep the source bundle as a backup. The laptop bundle includes saved worlds and existing per-world
+Scenarios/Given…/duels. The phone bundle keeps expected-lineup distributions without those world-based features.
+Lineup branches remain planned. Real-device iPhone acceptance is an owner check.
 
 ### Nightly → iCloud → import
 
@@ -64,10 +66,14 @@ Scenarios/Given…/duels and lineup branches remain localhost-only (D36). Real-d
 .venv/bin/python scripts/nightly_musnba.py --export-only    # export completed snapshots without re-simulating
 ```
 
-The default destination is iCloud Drive/MusNBA/MusNBA.musnba.gz. The wrapper checks destination access before starting,
-keeps the previous export on failure, and installs no scheduler. Exports are currently a **single batch after the nightly
-finishes**, not streamed game by game. `--output PATH` overrides the destination; other options
-pass through to the nightly. Previous exports are archived under `~/Basketball_archive_ops`. Export staging uses visible temporary names and clears Finder’s hidden flag before/after publication so the bundle appears in iCloud file pickers.
+The default destinations are iCloud Drive/MusNBA/MusNBA-laptop.musnba.gz (full) and MusNBA.musnba.gz (phone).
+The wrapper checks access to both before starting and installs no scheduler. Exports are **after the nightly finishes**,
+not streamed game by game. Each file is verified and published atomically, but the pair is not atomic: if the phone
+export fails after the laptop export, retry both with `--export-only`. The wrapper checks that views did not change
+across the two exports and reports an error if they did. `--output PATH` overrides the phone destination;
+the laptop destination gets `-laptop` before `.musnba.gz`. Other options pass through to the nightly. Previous exports
+are archived under `~/Basketball_archive_ops`. Export staging uses visible temporary names and clears Finder’s hidden
+flag before/after publication so the bundle appears in iCloud file pickers.
 
 ### Keep the PWA current with model and app changes
 
@@ -260,9 +266,10 @@ are `models/<version>.json` (in git).
 ```sh
 .venv/bin/python scripts/smoke.py                                   # accounting + determinism
 .venv/bin/python -m unittest tests.test_lineups_timing tests.test_nightly_origin -q  # pre-tip/origin regressions
+.venv/bin/python scripts/a1_snapshot_shooting_audit.py --days <slate> [<slate> ...] --origin <ET-date> --model engine-v1.3 --worlds 10000 --output <new-report.json>
 .venv/bin/python analysis/export_visibility_check.py                  # atomic bytes + macOS Finder visibility
 node analysis/browser_check.mjs --base http://127.0.0.1:8767        # phone/desktop, both themes
-node analysis/pwa_import_check.mjs --url <shell url> --bundle <file.musnba.gz>
+node analysis/pwa_import_check.mjs --url <shell url> --bundle <file.musnba.gz> --profile laptop  # use phone for stripped bundle
 ```
 
 Data: retained ESPN/hoopR history and owner-authorised NBA Stats API. Public source/app shell; data remains local/iCloud.
