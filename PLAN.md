@@ -389,6 +389,15 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
    iCloud sync alone does not import data on the phone. This is future work: the delivered nightly and subsequent
    nightlies still export both bundles at the end until incremental delivery is implemented and verified.
 
+6. **Player usage and advanced game stats** (owner suggestions, 22 Nov): expose honestly defined player usage,
+   on-court +/−, offensive and defensive rating, Box Plus/Minus and other supported advanced stats, with
+   simulated-game distributions where meaningful. Existing model input is player uses per offensive segment while
+   on court, not necessarily conventional possession-based USG%. Reconcile scoring and the on-court possession
+   denominator against play-by-play, including substitutions, offensive-rebound continuations and free throws;
+   disclose zero-exposure/absent worlds and match historical and forecast definitions. On-court ratings describe
+   team outcomes with the player on the floor, not causal individual impact. Box Plus/Minus is a modelled estimate,
+   distinct from game +/−; validate and label its definition rather than inventing it. None is newly implemented yet.
+
 ### 9c. Realism sweep — current mapping to A1 (updated 22 Nov)
 
 1. ~~Live v history adapter skew~~ — M5b done: ESPN's 2026-27 rebound stamp; one convention (D23); v1.1 promoted.
@@ -470,6 +479,11 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
   files; all **1,971** laptop API records reconciled to retained views. Fixed a visibly clickable but inactive
   update button. Isolated offline checks: laptop **28/28**, phone **21/21**, old-to-new update **6/6**.
   No model or forecast changed; Chunk A remains **13.5%**. Each device requires its own manual import.
+- **22 Nov 2026 · A1 20% partial, source freeze:** the opt-in foul-out candidate now returns a per-world
+  change mask; the engine refreshes only those worlds' lineup columns and rejects unsupported mismatch features.
+  Legacy/no-policy tests and the combined branch, availability, substitution and world-audit suite passed
+  **73/73**. Smoke passed **108/108**; deliberate fault exited **1** (**86/108** passing). The previously frozen fixed 32-world F4 branch replay is still required; no rung or
+  model promotion is claimed.
 - **19 Nov 2026** — Studied MusSim. Probed sources: ESPN site API works with plain requests; NBA CDN returns 403.
   Owner: app shell first, play-by-play sim later.
 - **19 Nov 2026** — Phase 1 shipped (collection, placeholder engine, snapshots, views, server, app, PWA). Fixed: a

@@ -1,12 +1,12 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A execution started; A1 contract frozen at 10%; S01–S07 remain complete**.
-Latest pushed source before this delivery checkpoint: **a699b3a**; use `git log -1` for the current checkpoint.
+Latest pushed source before this A1 source-freeze checkpoint: **8efd34e**; use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
-- **Current action:** after this D44/D45 UX checkpoint, finish the isolated A1 20% world-mask hook and fixed
-  32-world branch probe. Do not start Chunk B before Chunk A's delivery and checkpoint.
+- **Current action:** run the frozen A1 20% repaired fixed 32-world branch probe below and independently audit its
+  trace; the hook and controlled tests now pass. Do not start Chunk B before Chunk A's delivery and checkpoint.
 - **Owner UX requests delivered locally (22 Nov):** replace the Players fixed 3+/8+ game filter with a season-progress
   minutes-share benchmark; group player-game FG/3P/FT makes, attempts and shooting-percentage distributions.
   Percentages condition on at least one attempt and explicitly show the no-attempt chance. Source and focused tests
@@ -34,10 +34,13 @@ Latest pushed source before this delivery checkpoint: **a699b3a**; use `git log 
   independently reconcile new full-game shooting histograms against retained player worlds, and check all period
   histograms, means, quantiles and conditional/no-attempt counts; period worlds themselves are not retained.
   It passed on the newly completed snapshots; report `analysis/experiments/20261122_d44_shooting_audit.json`.
-  **Uncommitted A1 preparation:** the new `RepairedTrace` and 10 branch tests are prepared, but are not wired into production. The controlled
-  two-world `tests/test_a1_lineup_context.py` intentionally fails against the old engine: array masks currently
-  raise an ambiguous-truth error and invalid masks are not rejected. The nightly has completed; after the UX
-  checkpoint add the mask hook, and pass all those tests before the frozen 32-world probe.
+  **A1 source freeze:** the isolated `RepairedTrace` and `BranchFoulOutPolicy` are not selected in production.
+  The engine hook now accepts a validated per-active-world boolean mask, refreshes only changed worlds and fails
+  explicitly for unsupported mismatch features; legacy boolean and no-policy paths remain unchanged.
+  Controlled tests first reproduced the prior ambiguous-array error and now pass, including rejection of an omitted
+  changed lineup. The combined branch, availability, substitution and accounting suite passed **73/73**.
+  Normal smoke passed **108/108** and deliberate fault exited **1** (**86/108** passing), logs
+  `/tmp/musnba_a1_mask_{smoke,fault}.log`. The fixed repaired replay has not yet run.
 - **Nightly completed:** former shell **2955**, log `/tmp/musnba_d44_nightly.log`. Collection had **63 requests,
   0 failures, 0 new finals**; NBA Stats had no new requests. Inputs rebuilt in **235.2 s**; **7 + 10** games and
   **10,000** season paths over **959** games were saved. Old snapshots and bundle were archived under
@@ -81,9 +84,15 @@ Latest pushed source before this delivery checkpoint: **a699b3a**; use `git log 
 - **Doc review:** `DASHBOARD_PLAN`, `ENGINE_PLAN`, `FINDINGS`, `PLAN`, `README`, `AGENTS` and this handoff record
   D44/D45 behaviour, evidence, device instructions, revised standing rule and next action. `TRAINING_PLAN`
   needs no change: D45 alters delivery, not model training, validation or cutoff gates.
+- **A1 source-freeze doc review:** HANDOFF, PLAN, ENGINE_PLAN and README record the opt-in hook, focused checks
+  and exact next probe. AGENTS, TRAINING_PLAN, FINDINGS and DASHBOARD_PLAN need no new change: the standing
+  rules, frozen evaluation gates, empirical results and served dashboard remain unchanged.
 - **Progress:** original A1 **58.0%**, S01–S07 complete; S08–S12/S14 open, S13 historical forecast backfill
   deferred. New independent chunk boards: **A 13.5%** (A1 10%, A2 30%, A3 0%) and **B 0%** (B1/B2/B3 all 0%). Keep
   the original A1 weights intact; new within-chunk weights do not reset or double-count A1.
+- **Owner UX idea:** player usage, on-court +/−, offensive/defensive ratings, Box Plus/Minus and other supported
+  advanced stats are recorded in PLAN §9b. Existing internal segment usage is not automatically conventional
+  possession usage; on-court ratings are team outcomes, and BPM is a modelled estimate. No new stat is claimed delivered.
 - **Production:** possession engine **v1.3/D29**, team pathway **v1**. S04's two defence candidates did not pass;
   S05's minute candidates did not meet the primary gate. S06's 200-game candidate improved minute CRPS
   **3.5662→3.5309** but only **66/69** non-inferiority bounds were established, so it was not promoted. Those
@@ -1386,10 +1395,10 @@ five/score/minute accounting. Before any branch claim, run the same fixed F4 gam
 plays/sits branch and frozen seeds, with independently recorded trace; the active D44 nightly must finish before
 editing `engine.py` or starting this engine replay. A passing probe is wiring evidence, not a promotion gate.
 **Partial implementation:** `scripts/a1_branch_foul_out.py` repairs only illegal fives, returns a world-local
-mask and fails closed on short rosters. **9/9** branch unit tests now cover offense, defense, simultaneous
-repairs and unavailable players; it is deliberately
-not wired to the engine because its mask hook does not yet exist. Next: finish and verify the D44 nightly and
-delivery, then add the backwards-compatible mask hook and focused world-local context tests before the probe.
+mask and fails closed on short rosters. Branch tests cover offense, defense, simultaneous repairs and unavailable
+players. The now-implemented hook is reachable only through an explicitly selected policy; it preserves legacy
+booleans and no-policy behavior, updates only changed worlds, and rejects mismatch features for mask changes.
+The fixed repair probe below is the next step; no model or rotation policy has been promoted.
 
 | Rung | A1 — lineups and Expected |
 |---:|---|
@@ -1400,7 +1409,7 @@ delivery, then add the backwards-compatible mask hook and focused world-local co
 | 50 | Expected distributions preserve exact branch weights; handle the 10k indivisibility counterexample explicitly. |
 | 60 | Season consumption preserves the documented weighted identities without duplicate near-term games. |
 | 70 | Missing status, unsupported dependence and cold rosters are visibly labelled or fail explicitly. |
-| 80 | Local branch UI and phone Expected-only compatibility pass focused tests. |
+| 80 | Local/laptop branch UI and phone Expected-only compatibility pass focused tests. |
 | 90 | Representative-game accounting, restart, cutoff, runtime and responsive checks pass. |
 | 100 | Results/limitations and any required PWA refresh are verified, committed/pushed and summarised. |
 
@@ -1930,10 +1939,11 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
 The owner has authorised both D42 chunks in order, superseding D41's earlier stop. The dashboard programme is done;
 do not resume U1–U22.
 
-1. **A1 20% (partial):** the immediate next command is `.venv/bin/python -m unittest tests.test_a1_lineup_context -q`;
-   the prepared world-mask tests currently fail against the unchanged engine. Implement the backward-compatible
-   world-local hook in `scripts/engine.py`, pass the focused tests, then run the repaired fixed 32-world branch
-   probe and independent accounting before crediting the rung. `scripts/a1_lineup_branches.py::one_player` copies a D29 game, fixes one uncertain player's
+1. **A1 20% (partial):** run the frozen repair replay below and its independent accounting before crediting the rung:
+   `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=8 .venv/bin/python -u scripts/a1_branch_world_probe.py --game 401810327
+   --worlds 32 --repair --output analysis/experiments/20261122_chunk_a_a1_branch_repair.json --worlds-dir
+   data/derived/experiments/20261122_chunk_a_a1_branch_repair`. This uses fixed seeds and actual participants;
+   it is wiring evidence only. `scripts/a1_lineup_branches.py::one_player` copies a D29 game, fixes one uncertain player's
    availability, re-solves starters and targets, and rejects invalid regulation allocations. Synthetic tests in
    `tests/test_a1_lineup_branches.py` exercise plays/sits, scheduled legal fives and actual `_mu` defender inputs;
    the original game remains untouched. Run `.venv/bin/python -m unittest tests.test_a1_lineup_branches
@@ -1975,14 +1985,14 @@ do not resume U1–U22.
    The guarded replay finished as attached shell **2882**, exit **1**; log
    `/tmp/musnba_chunk_a1_branch_guarded.log`. Both branches stopped explicitly at a sixth foul in Q3, and no
    forecast or world capture was emitted; report `analysis/experiments/20261122_chunk_a_a1_branch_guarded.json`.
-   **Next:** develop an isolated foul-out-only candidate preserving D29 schedules and normal random streams until
-   a legal substitution is required. Reject unhandled short-roster cases explicitly; do not pretend this is the NBA
+   **Subsequent source freeze:** an isolated foul-out-only candidate preserves D29 schedules and normal random streams until
+   a legal substitution is required. Reject    unhandled short-roster cases explicitly; do not pretend this is the NBA
    technical-penalty exception. Independently audit legal fives and score/minute accounting, then test against the
    frozen player-first control and applicable promotion gates. Important implementation hazard: the existing
    `engine.py` `after_fouls` hook returns one boolean and recomputes lineup context for **every** active world
-   when any substitution occurs, after in-game state has changed. A foul-out-only repair cannot claim unaffected
-   worlds are unchanged if it uses that hook unmodified. Prove world-local context refresh or fail closed; retain
-   existing policy compatibility and the no-policy baseline. The guard remains the safe fallback if it fails.
+   when any substitution occurs, after in-game state has changed. The new mask hook avoids this whole-batch
+   refresh, with controlled isolation tests. Retain existing policy compatibility and the no-policy baseline.
+   The guard remains the safe fallback if the replay fails.
    **Document review:** HANDOFF, PLAN, FINDINGS, ENGINE_PLAN and README record the experiment, guard and next
    action. AGENTS, TRAINING_PLAN and DASHBOARD_PLAN need no change: standing rules, frozen gates and shipped UI
    are unchanged.

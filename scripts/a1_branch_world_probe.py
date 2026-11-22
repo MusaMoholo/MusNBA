@@ -13,7 +13,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 from basketball_common import sha256_file, write_json  # noqa: E402
-from scripts import a1_lineup_branches, a1_substitution_world_audit, backtest, engine, projection  # noqa: E402
+from scripts import a1_branch_foul_out, a1_lineup_branches, a1_substitution_world_audit, backtest, engine, projection  # noqa: E402
 
 
 class TracePolicy:
@@ -39,7 +39,7 @@ class TracePolicy:
         return scheduled
 
     def after_fouls(self, g: engine.Game, st: engine.Worlds, active: np.ndarray,
-                    offense: np.ndarray, defense: np.ndarray) -> bool:
+                    offense: np.ndarray, defense: np.ndarray) -> bool | np.ndarray:
         return False
 
     def finish(self, g: engine.Game, st: engine.Worlds) -> None:
@@ -81,6 +81,42 @@ class GuardedTrace(TracePolicy):
         super().finish(g, st)
 
 
+class RepairedTrace(TracePolicy):
+    def __init__(self) -> None:
+        super().__init__()
+        self.repair = a1_branch_foul_out.BranchFoulOutPolicy()
+
+    def begin(self, g: engine.Game, worlds: int, available: np.ndarray, seed: int) -> None:
+        self.repair.begin(g, worlds, available, seed)
+        super().begin(g, worlds, available, seed)
+        self.counts = self.repair.counts
+
+    def before_segment(self, g: engine.Game, st: engine.Worlds, active: np.ndarray,
+                       scheduled: np.ndarray) -> np.ndarray:
+        lineups = self.repair.before_segment(g, st, active, scheduled)
+        return super().before_segment(g, st, active, lineups)
+
+    def after_fouls(self, g: engine.Game, st: engine.Worlds, active: np.ndarray,
+                    offense: np.ndarray, defense: np.ndarray) -> np.ndarray:
+        changed = self.repair.after_fouls(g, st, active, offense, defense)
+        if changed.any():
+            worlds = active[changed]
+            off = st.off[worlds]
+            fives = np.empty((len(worlds), 2, 5), dtype=int)
+            fives[np.arange(len(worlds)), off] = offense[changed]
+            fives[np.arange(len(worlds)), 1 - off] = defense[changed]
+            self.trace.append({
+                'world': worlds.copy(), 'period': st.period[worlds].copy(), 'clock': st.clock[worlds].copy(),
+                'lineups': fives.copy(), 'fouls': st.ingame['pf_so_far'][worlds[:, None, None], fives].copy(),
+                'phase': np.ones(len(worlds), dtype=np.int8),
+            })
+        return changed
+
+    def finish(self, g: engine.Game, st: engine.Worlds) -> None:
+        self.repair.finish(g, st)
+        super().finish(g, st)
+
+
 class CapturedGame(Exception):
     pass
 
@@ -91,7 +127,9 @@ def main() -> None:
     parser.add_argument('--worlds', type=int, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--worlds-dir', type=Path, required=True)
-    parser.add_argument('--guarded', action='store_true')
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument('--guarded', action='store_true')
+    modes.add_argument('--repair', action='store_true')
     args = parser.parse_args()
     if not args.game.isascii() or not args.game.isdigit() or args.worlds < 1:
         raise ValueError('game must be an ASCII-digit ID and worlds must be positive')
@@ -122,7 +160,8 @@ def main() -> None:
             branch_id = f'lineup-v1:{team}/{player}={label}'
             seed = projection.seed_for('lineup-v1', engine.ENGINE['id'], g.day, g.day, args.game, branch_id)
             branch = a1_lineup_branches.one_player(g, team, player, plays)
-            eng.rotation_policy = a1_lineup_branches.BranchLegalityGuard() if args.guarded else None
+            eng.rotation_policy = (a1_branch_foul_out.BranchFoulOutPolicy() if args.repair else
+                                   a1_lineup_branches.BranchLegalityGuard() if args.guarded else None)
             try:
                 simulate(branch, worlds, seed)
             except a1_lineup_branches.BranchLegalityError as exc:
@@ -134,7 +173,7 @@ def main() -> None:
                 'score': reference.score, 'pts': reference.pts, 'minutes': reference.minutes,
                 'period': reference.period, **{f'box_{key}': value for key, value in reference.box.items()},
             }.items()}
-            policy = GuardedTrace() if args.guarded else TracePolicy()
+            policy = RepairedTrace() if args.repair else GuardedTrace() if args.guarded else TracePolicy()
             eng.rotation_policy = policy
             simulate(branch, worlds, seed)
             state = eng.last
@@ -146,7 +185,8 @@ def main() -> None:
             path = args.worlds_dir / f'{label}.npz'
             np.savez_compressed(path, **capture)
             record = {'branch_id': branch_id, 'seed': str(seed), 'worlds': worlds,
-                      'trace_preserves_outputs': True, 'capture': str(path), 'capture_sha256': sha256_file(path)}
+                      'trace_preserves_outputs': True, 'capture': str(path), 'capture_sha256': sha256_file(path),
+                      'policy_counts': dict(policy.counts)}
             try:
                 record['audit'] = a1_substitution_world_audit.audit_worlds(capture)
             except ValueError as exc:
@@ -161,12 +201,12 @@ def main() -> None:
         pass
     if len(records) != 2:
         raise ValueError('probe did not complete both branches')
-    paths = (Path(__file__), ROOT / 'scripts/a1_lineup_branches.py', ROOT / 'scripts/engine.py',
+    paths = (Path(__file__), ROOT / 'scripts/a1_lineup_branches.py', ROOT / 'scripts/a1_branch_foul_out.py', ROOT / 'scripts/engine.py',
              ROOT / 'scripts/a1_substitution_world_audit.py', spec,
              ROOT / 'data/models/folds/v1.2d_F4_all/config.json')
     write_json(args.output, {
         'population': 'fixed F4 game with actual participants; selected availability is synthetic',
-        'game': args.game, 'model': 'folds/v1.2d_F4_all', 'guarded': args.guarded, 'records': records,
+        'game': args.game, 'model': 'folds/v1.2d_F4_all', 'guarded': args.guarded, 'repair': args.repair, 'records': records,
         'sha256': {str(path.relative_to(ROOT)): sha256_file(path) for path in paths},
     }, pretty=True)
     for record in records:

@@ -61,6 +61,11 @@ Sections below distinguish current behaviour from unimplemented design. Measured
 | D44 | Player filters and shooting distributions | **Owner (22 Nov):** replace fixed minimum-game filters with a season-adjusted minutes proportion and group shooting makes, attempts and percentages, using judgement about honest percentage presentation. This supersedes the earlier player-sheet restriction on attempts. New simulated period percentages are derived from paired makes/attempts, conditional on a positive attempt count; display the no-attempt chance separately. Delivered without a model promotion. |
 | D45 | Laptop PWA is primary | **Owner (22 Nov):** “laptop pwa is the main one bro, phone is just a stripped back version of that”. This corrects D36's localhost-only delivery assumption, not its phone restriction: the laptop bundle retains the full saved per-world data and dependent features; the phone bundle remains stripped. Both are imported explicitly, and Pages remains data-free. No model or forecast changes follow from this delivery correction. |
 
+**A1 20% partial implementation:** an opt-in foul-out policy can return a boolean mask over active worlds; only
+masked worlds' lineup-dependent features are refreshed. Boolean policies and no-policy execution keep their existing
+path. Masked substitutions with mismatch features fail explicitly until those features are supported. This is a
+wiring change, not promotion; the frozen branch replay and player-first gates remain open.
+
 ## 0. What "true to form" means
 
 The engine is right when, on held-out games, its simulated distributions match reality. Numbers below are historical

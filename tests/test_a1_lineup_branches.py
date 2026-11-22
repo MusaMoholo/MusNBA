@@ -174,6 +174,25 @@ class OnePlayerBranchesTests(unittest.TestCase):
         self.assertEqual(repaired[2, 1, 0], 12)
         self.assertEqual(policy.counts, {'scheduled_replacements': 2, 'foul_out_replacements': 2})
 
+    def test_repaired_trace_records_only_changed_post_foul_worlds(self):
+        game = self.game()
+        state = engine.Worlds(game, 2, np.random.default_rng(42))
+        state.off[:] = [0, 1]
+        lineup = np.tile(np.array([[[0, 1, 2, 3, 4], [7, 8, 9, 10, 11]]]), (2, 1, 1))
+        active = np.arange(2)
+        policy = a1_branch_world_probe.RepairedTrace()
+        policy.begin(game, 2, np.ones((2, game.n), dtype=bool), 42)
+        policy.before_segment(game, state, active, lineup)
+        state.ingame['pf_so_far'][0, 7] = 6
+        offense = lineup[active, state.off].copy()
+        defense = lineup[active, 1 - state.off].copy()
+        np.testing.assert_array_equal(policy.after_fouls(game, state, active, offense, defense), [True, False])
+        post = policy.trace[-1]
+        np.testing.assert_array_equal(post['world'], [0])
+        np.testing.assert_array_equal(post['phase'], [1])
+        self.assertEqual(post['lineups'][0, 1, 0], 12)
+        self.assertFalse((post['fouls'] >= 6).any())
+
     def test_isolated_foul_out_handles_multiple_replacements_and_fails_short(self):
         game = self.game()
         state = engine.Worlds(game, 1, np.random.default_rng(42))

@@ -391,7 +391,7 @@ class RotationPolicy(Protocol):
     def before_segment(self, g: Game, st: Worlds, active: np.ndarray, scheduled: np.ndarray) -> np.ndarray: ...
 
     def after_fouls(self, g: Game, st: Worlds, active: np.ndarray,
-                    offense: np.ndarray, defense: np.ndarray) -> bool: ...
+                    offense: np.ndarray, defense: np.ndarray) -> bool | np.bool_ | np.ndarray: ...
 
     def finish(self, g: Game, st: Worlds) -> None: ...
 
@@ -669,14 +669,36 @@ class Engine:
             dfoul = np.flatnonzero(ev == 1)
             if dfoul.size:
                 self._fouler(g, st, A, dfoul, 0.0, ctx, def_five, L_def, pidx, rng)
-            if policy is not None and policy.after_fouls(g, st, A, L_off, L_def):
-                after = self._context(g, st, A, L_off, L_def)
+            if policy is not None:
+                before_off, before_def = L_off.copy(), L_def.copy()
+                changed = policy.after_fouls(g, st, A, L_off, L_def)
                 lineup_columns = ('off_usage_sum', 'off_usage_max', 'off_ast_sum', 'off_three_sum',
                                   'off_oreb_sum', 'off_bigs', 'off_min_mean', 'def_blk_sum', 'def_blk_max',
                                   'def_stl_sum', 'def_dreb_sum', 'def_pf_sum', 'def_bigs', 'def_min_mean')
-                ctx.update({key: after[key] for key in (*lineup_columns, *self.m.optional_lineup)})
-                off_five = self._five(g, st, A, L_off, OFF_REL)
-                def_five = self._five(g, st, A, L_def, DEF_REL)
+                if isinstance(changed, (bool, np.bool_)):
+                    if changed:
+                        after = self._context(g, st, A, L_off, L_def)
+                        ctx.update({key: after[key] for key in (*lineup_columns, *self.m.optional_lineup)})
+                        off_five = self._five(g, st, A, L_off, OFF_REL)
+                        def_five = self._five(g, st, A, L_def, DEF_REL)
+                elif not isinstance(changed, np.ndarray) or changed.shape != (n,) or changed.dtype != np.bool_:
+                    raise ValueError('rotation policy change mask must be a boolean array for active worlds')
+                else:
+                    actual_change = (L_off != before_off).any(axis=1) | (L_def != before_def).any(axis=1)
+                    if (actual_change & ~changed).any():
+                        raise ValueError('rotation policy change mask omitted a changed lineup')
+                    if changed.any():
+                        if m.who_mm:
+                            raise ValueError('world-local lineup changes do not support mismatch features')
+                        after = self._context(g, st, A[changed], L_off[changed], L_def[changed])
+                        for key in (*lineup_columns, *self.m.optional_lineup):
+                            ctx[key][changed] = after[key]
+                        for existing, lineup, rel in ((off_five, L_off, OFF_REL), (def_five, L_def, DEF_REL)):
+                            refreshed = self._five(g, st, A[changed], lineup[changed], rel)
+                            if existing.keys() != refreshed.keys():
+                                raise ValueError('world-local lineup refresh changed candidate columns')
+                            for key in existing:
+                                existing[key][changed] = refreshed[key]
             # free throws: and-one 1, fouled on a 2 → 2, on a 3 → 3, penalty → 2
             trip = np.zeros(n, int)
             trip[and1] = 1
