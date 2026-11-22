@@ -2,6 +2,19 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 — shared scenario adapter, research injection only:** on the **20k / 40k** one-/two-player
+origin fixtures, the shared scenario adapter matched independently reconstructed full, fixed and empty conditional
+mass and all **90** home-point bins; the 40k fixture also matched exact **1,800 / 1,830-second** conditions.
+In one Chrome desktop run on the 40k fixture, actual rendered Given, the 30-minute scenario and all **42**
+Joint grid cells matched independent references; fixing the selected player unavailable made his positive-minute
+condition empty. The 30-minute condition had **56.6%** weighted probability and home win given it **57.2%**.
+Measured **0.68 s** parse, **0.67 s** source validation, **1.25 s** scenario render and **0.09 s** Given/grid
+render, with **614,984,760 bytes** JS heap after the sequence; other jobs ran concurrently. This is not a
+phone, full Game Centre or forecast-quality benchmark. Browser report and reference hashes:
+`analysis/experiments/20261122_chunk_a_a1_d47_shared_scenario_browser_two_v1.json`; adapter reports use
+`20261122_chunk_a_a1_d47_shared_adapter_*_v1_audit.json`. The fixture is injected only for the check; no
+lineup selection or branch forecast is exposed.
+
 **22 Nov 2026 — Expected-only serialization research:** the origin-hashed fixtures for the same two prospective
 games preserve **25 / 28** player identity/status records and model metadata, checked against their retained
 snapshots. Compact full-mixture payloads reconciled all **20k / 40k** world-derived summaries and contain no

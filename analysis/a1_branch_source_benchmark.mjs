@@ -26,6 +26,7 @@ writeFileSync(output, JSON.stringify({
   kind: 'isolated Node branch source benchmark; not a browser, phone or forecast benchmark',
   fixture: path, fixture_sha256: createHash('sha256').update(bytes).digest('hex'),
   source_sha256: createHash('sha256').update(readFileSync('analysis/a1_branch_world_source.mjs')).digest('hex'),
+  arithmetic_sha256: createHash('sha256').update(readFileSync('scripts/webapp/weighted-worlds.mjs')).digest('hex'),
   script_sha256: createHash('sha256').update(readFileSync('analysis/a1_branch_source_benchmark.mjs')).digest('hex'),
   fixture_bytes: statSync(path).size, worlds: source.worlds, player,
   seconds: {read_parse: (parsed - start) / 1000, load_validate: (loaded - parsed) / 1000,

@@ -503,6 +503,14 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
   summaries yield raw research payloads of **626,499 / 734,772 bytes**, without branch worlds. This is not
   a phone-bundle or offline/import test; UI and promotion gates remain open. No production model or bundle
   changed. A1 **70%**, Chunk A **31.5%**.
+- **22 Nov 2026 · A1 80% shared-scenario groundwork:** injected research worlds now drive shared weighted
+  scenario/Given/Joint arithmetic; independent checks matched **90** bins, exact conditional masses and all
+  **42** displayed grid cells on a 40k-world browser fixture. One desktop research run reached **615 MB**
+  JS heap; not a phone benchmark. No branch control or candidate forecast is shipped. Normal/fault smoke
+  **108/108 / 86/108**; responsive **24/24**; final shell upgrade **27/27**, laptop/phone import/offline
+  **25/25** each, hosted bypass/offline **29/29** each. `gh-pages` **b399409**, iCloud bundles re-exported from unchanged forecasts; manual phone
+  import remains required. A1 **70%**, Chunk A **31.5%**; coherent Game Centre, phone Expected payload and
+  promotion gates remain open.
 - **22 Nov 2026 · dashboard house follow-up:** player box scores now precede game insights; game availability,
   bench, secondary team-roster groups and player game logs expand on demand. **61/61** responsive cases,
   laptop/phone offline **29/29 / 28/28** and laptop shell upgrade **31/31** passed. Startup race fixed in

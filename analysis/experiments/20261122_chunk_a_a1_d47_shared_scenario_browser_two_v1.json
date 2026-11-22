@@ -1,0 +1,93 @@
+{
+  "kind": "isolated local browser scenario check; not a forecast or phone acceptance",
+  "source_sha256": {
+    "data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_identity_v1.json": "3e543e61b2eb0aee44a23a0e069a9f55cab1db086afd63612ac62db554180c03",
+    "analysis/experiments/20261122_chunk_a_a1_d47_joint_full_v2.json": "67819cbea6e1d67117db9bbab50e6337d26d4994f840710c8d58708429ca3d3e",
+    "analysis/experiments/20261122_chunk_a_a1_d47_joint_two_1800sec.json": "1ab6c368f3304052af41599af3b5c60098dd2b2a30d8dc9ab99dd837b5c2bb16",
+    "analysis/experiments/20261122_chunk_a_a1_d47_joint_empty_v2.json": "c5889515743d329317cb80229601389ed637237faedcd5cdd2cae7d05cc1a26d",
+    "analysis/experiments/20261122_chunk_a_a1_d47_dynamic_grid_two_v2.json": "744aa28e5059c0f9f6aaf87e744bd25195438d9d54922dd24b9c44bec6da96f3",
+    "analysis/experiments/20261122_chunk_a_a1_d47_dynamic_grid_two_v3_audit.json": "7337daad2f222c0bcdbaf32c156fa956c942284038670d03b5f91ef3bea417e5",
+    "analysis/a1_scenario_browser_check.mjs": "026456c16d2659893ccee96fb1025c7b68201fef696b6358ccab3cb28181a069",
+    "analysis/a1_branch_world_source.mjs": "deff0b48ee2f50fd29fe52add91f06591ba0e333c11adeece636a78cd485e4a5",
+    "scripts/webapp/weighted-worlds.mjs": "8e8fe7dcdfda9105295364531db86aa08243ad3475292fbfeb96acd298de7e5d",
+    "scripts/webapp/outcomes.mjs": "e716509d1b68758a9df1fd4ce33f92efbb0a32da84045a9e1d2dc5627e3cd6ba",
+    "scripts/webapp/scenario.mjs": "03e059ebe957f8fce66ae48a0941185272b644491b001587f7955856b1bac551"
+  },
+  "result": {
+    "worlds": 40000,
+    "scenario": "CHANCE OF THIS SCENARIO\n56.6%15,098 of 40,000 saved worlds · weighted chance",
+    "home": "Miami Heat120.1+1.657.2%52.2%",
+    "scenarioText": "Scenarios\n\nPick conditions to filter the 40,000 saved simulated games to those where every condition happens, using their branch weights. Small grey numbers: change from all selected simulations.\n\nGiannis Antetokounmpo minutes ≥ 30 ×\nClear\nGame\nOKC\nMIA\nJared McCain\nAjay Mitchell\nIsaiah Hartenstein\nA",
+    "sheetGiven": "wins: 52.2% weighted chance (20,926 saved worlds).",
+    "gridRows": [
+      [
+        "4%",
+        "–",
+        "–",
+        "<1%",
+        "1%",
+        "4%",
+        "<1%"
+      ],
+      [
+        "6%",
+        "–",
+        "<1%",
+        "<1%",
+        "3%",
+        "9%",
+        "<1%"
+      ],
+      [
+        "7%",
+        "–",
+        "<1%",
+        "<1%",
+        "5%",
+        "15%",
+        "<1%"
+      ],
+      [
+        "5%",
+        "–",
+        "<1%",
+        "<1%",
+        "5%",
+        "14%",
+        "1%"
+      ],
+      [
+        "2%",
+        "–",
+        "–",
+        "<1%",
+        "3%",
+        "9%",
+        "1%"
+      ],
+      [
+        "1%",
+        "–",
+        "<1%",
+        "<1%",
+        "1%",
+        "4%",
+        "<1%"
+      ]
+    ],
+    "weightedGrid": true,
+    "empty": true,
+    "seconds": {
+      "parse": 0.6800999999977648,
+      "decode": 0.6715,
+      "scenario": 1.2534000000022352,
+      "sheet": 0.08880000000074506
+    },
+    "heap_bytes": 614984760
+  },
+  "limitations": [
+    "Research source was injected only for this check; no branch control is shipped.",
+    "Original game metadata and player ordering were retained; this does not prove a coherent full Game Centre.",
+    "One desktop browser run is not a phone or offline benchmark."
+  ]
+}

@@ -21,6 +21,7 @@ writeFileSync(reportPath, JSON.stringify({
   kind: 'isolated game-summary performance probe; not a browser or phone benchmark',
   fixture: fixturePath, fixture_sha256: hash(bytes), choices, summary: summaryPath, summary_sha256: hash(output),
   source_sha256: hash(readFileSync('analysis/a1_branch_world_source.mjs')),
+  arithmetic_sha256: hash(readFileSync('scripts/webapp/weighted-worlds.mjs')),
   algorithm_sha256: hash(readFileSync('analysis/a1_branch_game_summary.mjs')),
   probe_sha256: hash(readFileSync('analysis/a1_branch_game_summary_probe.mjs')),
   worlds: source.worlds, selected_worlds: result.selected_worlds, selected_mass: result.selected_mass,

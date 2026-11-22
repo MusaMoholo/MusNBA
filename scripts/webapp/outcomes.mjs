@@ -2,15 +2,16 @@
 // Every world is one simulated game; a condition selects worlds, and any outcome's distribution is read from the
 // selected worlds. Nothing is simulated or fitted here: the app only slices the engine's own worlds.
 import {api, esc, pct, team} from './ui.mjs';
+import {correlation as weightedCorrelation, distribution as weightedDistribution, grid as weightedGrid,
+  gridEdges, selectedMass, weightedMean, weightedShare} from './weighted-worlds.mjs';
 
 const cache = new Map();
 const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
 
 // Owner (20 Nov): makes and the main stats (no combos or attempts); OREB/DREB where the stored worlds carry them
-export const PLAYER_VARS = [['plays', 'Plays'], ['sits', 'Sits (does not play)'], ['min', 'Minutes'], ['pts', 'Points'], ['reb', 'Rebounds'],
+export const PLAYER_VARS = [['available', 'Available'], ['unavailable', 'Unavailable'], ['plays', 'Plays'], ['sits', 'Sits (does not play)'], ['min', 'Minutes'], ['pts', 'Points'], ['reb', 'Rebounds'],
   ['oreb', 'Offensive rebounds'], ['dreb', 'Defensive rebounds'], ['ast', 'Assists'], ['fg3m', 'Threes made'], ['fgm', 'Field goals made'],
   ['ftm', 'Free throws made'], ['stl', 'Steals'], ['blk', 'Blocks'], ['tov', 'Turnovers'], ['fgpct', 'FG% (of attempts)']];
-let worldStats = new Set();  // stats in the last loaded worlds (player variables shown only when they exist)
 export const TEAM_VARS = [['win', 'Wins'], ['lose', 'Loses'], ['pts', 'Points'], ['margin', 'Margin'],
   ['q1', 'Q1 points'], ['q2', 'Q2 points'], ['q3', 'Q3 points'], ['q4', 'Q4 points'], ['h1', '1st-half points'], ['h2', '2nd-half points'],
   ['wq1', 'Wins Q1'], ['wq2', 'Wins Q2'], ['wq3', 'Wins Q3'], ['wq4', 'Wins Q4'], ['wh1', 'Wins the 1st half'], ['wh2', 'Wins the 2nd half'],
@@ -21,27 +22,54 @@ export const TEAM_VARS = [['win', 'Wins'], ['lose', 'Loses'], ['pts', 'Points'],
 export const GAME_VARS = [['total', 'Total points'], ['absm', 'Margin either way'], ['ot', 'Goes to overtime'], ['not', 'No overtime'],
   ['t1', 'Q1 total'], ['th1', '1st-half total'], ['th2', '2nd-half total'], ['t4', 'Q4 total'],
   ['changes', 'Leader changes at the breaks'], ['flip', 'Half-time leader loses'], ['close3', 'Within 5 after Q3']];
-const FLAGS = new Set(['plays', 'sits', 'win', 'lose', 'ot', 'not', 'wq1', 'wq2', 'wq3', 'wq4', 'wh1', 'wh2', 'lead1', 'leadh', 'lead3',
+const FLAGS = new Set(['plays', 'sits', 'available', 'unavailable', 'win', 'lose', 'ot', 'not', 'wq1', 'wq2', 'wq3', 'wq4', 'wh1', 'wh2', 'lead1', 'leadh', 'lead3',
   'comeback', 'blown', 'wire', 'sweep', 'flip', 'close3']);
 export const isFlag = v => FLAGS.has(v);
 
 export async function load(gid) {
   if (cache.has(gid)) return cache.get(gid);
   const raw = await api(`game/${encodeURIComponent(gid)}/worlds`);
+  const result = worldData(raw);
+  cache.set(gid, result);
+  return result;
+}
+
+/** Adapt a validated research source without changing the saved production-world path. */
+export function branchWorldData(source, choices = {}) {
+  const raw = {worlds: source.worlds, players: source.players, side: source.side, stats: source.stats};
+  return worldData(raw, {
+    weights: source.weights, baseMask: source.selection(choices),
+    player: (id, stat) => source.playerValues(id, stat),
+    team: (side, q) => source.teamPoints(side, ['q1', 'q2', 'q3', 'q4', 'ot'][q]),
+    overtime: () => source.overtimePeriods(),
+  });
+}
+
+function worldData(raw, source = null) {
   const W = raw.worlds, n = raw.players.length, k = raw.stats.length;
-  const lines = b64(raw.lines), tp = b64(raw.team_periods);
+  const lines = source ? null : b64(raw.lines), tp = source ? null : b64(raw.team_periods);
   const idx = new Map(raw.players.map((p, i) => [p, i]));
   const memo = new Map();
   const statCol = (i, s) => {
     const j = raw.stats.indexOf(s), out = new Float64Array(W);
     if (j < 0) return null;
+    if (source) return source.player(raw.players[i], s);
     for (let w = 0; w < W; w++) out[w] = lines[(w * n + i) * k + j];
     return out;
   };
   const add = (...cols) => { const out = new Float64Array(W); for (const c of cols) for (let w = 0; w < W; w++) out[w] += c[w]; return out; };
-  const teamCol = (side, q) => { const s = side === 'home' ? 0 : 1, out = new Float64Array(W); for (let w = 0; w < W; w++) out[w] = tp[(w * 2 + s) * 5 + q]; return out; };
+  const teamCol = (side, q) => {
+    if (source) {
+      const key = `team-column|${side}|${q}`;
+      if (!memo.has(key)) memo.set(key, source.team(side, q));
+      return memo.get(key);
+    }
+    const s = side === 'home' ? 0 : 1, out = new Float64Array(W);
+    for (let w = 0; w < W; w++) out[w] = tp[(w * 2 + s) * 5 + q];
+    return out;
+  };
   const W_ = {W, ids: raw.players, side: raw.side.map(s => (s === 0 ? 'home' : 'away')), stats: raw.stats};
-  worldStats = new Set([...raw.stats, 'ftm']);
+  if (source) Object.assign(W_, {weights: source.weights, baseMask: source.baseMask});
   /** Side's cumulative margin after the first k quarters (k = 1..4), every world. */
   W_.lead = (side, k) => {
     const key = 'lead|' + side + '|' + k;
@@ -60,7 +88,8 @@ export async function load(gid) {
       const i = idx.get(subj.slice(2));
       if (i == null) return null;
       const c = s => W_.values(subj, s);
-      if (v === 'plays' || v === 'sits') { const m = c('min'); out = m.map(x => (v === 'plays' ? x > 0 : x === 0) ? 1 : 0); }
+      if (source && ['plays', 'sits', 'available', 'unavailable'].includes(v)) out = source.player(subj.slice(2), v);
+      else if (v === 'plays' || v === 'sits') { const m = c('min'); out = m.map(x => (v === 'plays' ? x > 0 : x === 0) ? 1 : 0); }
       else if (v === 'pra') out = add(c('pts'), c('reb'), c('ast'));
       else if (v === 'pr') out = add(c('pts'), c('reb'));
       else if (v === 'pa') out = add(c('pts'), c('ast'));
@@ -99,7 +128,7 @@ export async function load(gid) {
       const h = W_.values('t:home', 'pts'), a = W_.values('t:away', 'pts');
       if (v === 'total') out = h.map((x, w) => x + a[w]);
       else if (v === 'absm') out = h.map((x, w) => Math.abs(x - a[w]));
-      else if (v === 'ot' || v === 'not') { const o = add(teamCol('home', 4), teamCol('away', 4)); out = o.map(x => (v === 'ot' ? x > 0 : x === 0) ? 1 : 0); }
+      else if (v === 'ot' || v === 'not') { const o = source ? source.overtime() : add(teamCol('home', 4), teamCol('away', 4)); out = o.map(x => (v === 'ot' ? x > 0 : x === 0) ? 1 : 0); }
       else if (v === 't1' || v === 't4') { const q = v === 't1' ? 0 : 3; out = add(teamCol('home', q), teamCol('away', q)); }
       else if (v === 'th1' || v === 'th2') { const qs = v === 'th1' ? [0, 1] : [2, 3]; out = add(...qs.flatMap(q => [teamCol('home', q), teamCol('away', q)])); }
       else if (v === 'changes') {  // the leader changes between consecutive breaks (Q1, half, Q3, final); ties keep the leader
@@ -111,16 +140,22 @@ export async function load(gid) {
     memo.set(key, out);
     return out;
   };
-  cache.set(gid, W_);
   return W_;
 }
 
 /** Worlds selected by every condition (AND). A condition: {subj, v, op ('ge' | 'le'), x} or a flag variable. */
 export function mask(Wd, conds) {
-  const m = new Uint8Array(Wd.W).fill(1);
+  const m = Wd.baseMask ? Wd.baseMask.slice() : new Uint8Array(Wd.W).fill(1);
   for (const c of conds) {
+    if (Wd.baseMask && (!c || typeof c.subj !== 'string' || typeof c.v !== 'string'
+        || (!isFlag(c.v) && (!['ge', 'le'].includes(c.op) || !Number.isFinite(c.x))))) {
+      throw new Error('Invalid condition for selected worlds');
+    }
     const vals = Wd.values(c.subj, c.v);
-    if (!vals) continue;
+    if (!vals) {
+      if (Wd.baseMask || ['available', 'unavailable'].includes(c.v)) throw new Error('Condition is unavailable in the selected worlds');
+      continue;
+    }
     for (let w = 0; w < Wd.W; w++) {
       if (!m[w]) continue;
       const x = vals[w];
@@ -130,6 +165,35 @@ export function mask(Wd, conds) {
   return m;
 }
 export const count = m => m.reduce((a, b) => a + b, 0);
+
+/** Arithmetic bound to one selected branch mixture; counts and probability mass remain distinct. */
+export function branchCalculations(Wd) {
+  if (!Wd.weights || !Wd.baseMask || Wd.weights.length !== Wd.W || Wd.baseMask.length !== Wd.W) {
+    throw new Error('Weighted selected worlds required');
+  }
+  const selected = mask => {
+    if (mask == null) return Wd.baseMask;
+    if (mask.length !== Wd.W || mask.some(v => v !== 0 && v !== 1)) throw new Error('Invalid world mask');
+    return Uint8Array.from(mask, (v, i) => v && Wd.baseMask[i] ? 1 : 0);
+  };
+  const distribution = (values, mask = null) => {
+    const m = selected(mask), exact = weightedDistribution(values, Wd.weights, m);
+    if (!exact.defined) return null;
+    const rounded = weightedDistribution(values.map(v => Math.round(v)), Wd.weights, m);
+    const lo = rounded.histogram[0][0], hi = rounded.histogram.at(-1)[0], hist = new Array(hi - lo + 1).fill(0);
+    for (const [value, mass] of rounded.histogram) hist[value - lo] = mass;
+    return {min: lo, hist, mean: exact.mean, q: exact.quantiles, n: exact.n, mass: exact.defined};
+  };
+  return {
+    count: mask => count(selected(mask)),
+    mass: mask => selectedMass(Wd.weights, selected(mask)),
+    dist: distribution,
+    mean: (values, mask = null) => weightedMean(values, Wd.weights, selected(mask)),
+    share: (values, mask, test) => weightedShare(values, Wd.weights, test, selected(mask)),
+    corr: (a, b, mask = null) => weightedCorrelation(a, b, Wd.weights, selected(mask)),
+    grid: (x, y, mask, names) => weightedGridView(x, y, Wd.weights, selected(mask), names),
+  };
+}
 
 /** Distribution of integer outcomes over the selected worlds, in the app's histogram format ({min, hist, mean, q}). */
 export function dist(vals, m = null) {
@@ -223,6 +287,23 @@ export function bins(vals, m = null, max = 7) {
 }
 const binLabel = ([a, b], i, all) => (a === -Infinity ? `≤${b}` : b === Infinity ? `${a}+` : a === b ? `${a}` : `${a}–${b}`);
 
+function weightedGridView(x, y, weights, m, {xName, yName}) {
+  const bx = gridEdges(x, weights, m), by = gridEdges(y, weights, m);
+  if (!bx.length || !by.length) return '<p class="note">Not enough worlds.</p>';
+  const {cells, total, columnMass, columnMean} = weightedGrid(x, y, weights, bx, by, m);
+  const label = (edges, i) => edges.length === 2 ? 'All' : edges[i] === -Infinity ? `<${edges[i + 1]}`
+    : edges[i + 1] === Infinity ? `≥${edges[i]}` : `${edges[i]}–<${edges[i + 1]}`;
+  const maxCell = Math.max(1, ...cells.flat());
+  const head = `<tr><th class="l">${esc(yName)} ↓ · ${esc(xName)} →</th>${columnMass.map((_, i) => `<th>${esc(label(bx, i))}</th>`).join('')}</tr>`;
+  const rows = cells.map((row, j) => `<tr><td class="l">${esc(label(by, j))}</td>${row.map(mass => {
+    const s = mass / (total || 1);
+    return `<td class="heat${mass / maxCell > 0.55 ? ' hi' : ''}" style="--a:${(mass / maxCell).toFixed(3)}">${mass ? (100 * s < 0.5 ? '<1' : (100 * s).toFixed(0)) + '%' : '–'}</td>`;
+  }).join('')}</tr>`).reverse().join('');
+  const means = `<tr class="sep"><td class="l">Mean ${esc(yName.toLowerCase())}</td>${columnMean.map(v => `<td>${v == null ? '—' : v.toFixed(1)}</td>`).join('')}</tr>`;
+  const shares = `<tr><td class="l dim">Share of probability</td>${columnMass.map(v => `<td class="dim">${pct(v / (total || 1), 0)}</td>`).join('')}</tr>`;
+  return `<div class="scroll"><table class="grid"><thead>${head}</thead><tbody>${rows}${means}${shares}</tbody></table></div>`;
+}
+
 /** Joint heat grid of two variables over the selected worlds: rows y (high at the top), columns x; each cell the share
  * of worlds; the last row the mean of y given each x band. */
 export function grid(x, y, m, {xName, yName}) {
@@ -258,16 +339,18 @@ export function subjectOptions(data, selected) {
 }
 // Grouped "what" options (owner: grouping in dropdowns); every variable belongs to one group
 const VAR_GROUPS = {
-  p: [['Availability', ['plays', 'sits', 'min']], ['Scoring', ['pts', 'fgm', 'fg3m', 'ftm', 'fgpct']], ['Rebounding', ['reb', 'oreb', 'dreb']],
+  p: [['Availability and participation', ['available', 'unavailable', 'plays', 'sits', 'min']], ['Scoring', ['pts', 'fgm', 'fg3m', 'ftm', 'fgpct']], ['Rebounding', ['reb', 'oreb', 'dreb']],
       ['Handling', ['ast', 'tov']], ['Defense', ['stl', 'blk']]],
   t: [['Result', ['win', 'lose', 'margin']], ['Points', ['pts', 'h1', 'h2', 'q1', 'q2', 'q3', 'q4']],
       ['Periods won', ['wq1', 'wq2', 'wq3', 'wq4', 'wh1', 'wh2', 'qwins', 'sweep']],
       ['Leads', ['q1m', 'h1m', 'q3m', 'q4m', 'lead1', 'leadh', 'lead3']], ['Flow', ['comeback', 'blown', 'wire']]],
   g: [['Totals', ['total', 'th1', 'th2', 't1', 't4']], ['Margin & flow', ['absm', 'close3', 'changes', 'flip']], ['Overtime', ['ot', 'not']]],
 };
-export function varOptions(subj, selected) {
+export function varOptions(subj, selected, Wd) {
   const kind = subj.startsWith('p:') ? 'p' : subj.startsWith('t:') ? 't' : 'g';
-  const vars = new Map((kind === 'p' ? PLAYER_VARS.filter(([k]) => !['oreb', 'dreb'].includes(k) || worldStats.has(k)) : kind === 't' ? TEAM_VARS : GAME_VARS));
+  const vars = new Map((kind === 'p' ? PLAYER_VARS.filter(([k]) =>
+    !['oreb', 'dreb', 'available', 'unavailable'].includes(k)
+      || (['available', 'unavailable'].includes(k) ? Boolean(Wd.weights) : Wd.stats.includes(k))) : kind === 't' ? TEAM_VARS : GAME_VARS));
   const opt = k => `<option value="${k}"${k === selected ? ' selected' : ''}>${esc(vars.get(k))}</option>`;
   return VAR_GROUPS[kind].map(([label, ks]) => { const o = ks.filter(k => vars.has(k)).map(opt).join(''); return o ? `<optgroup label="${esc(label)}">${o}</optgroup>` : ''; }).join('');
 }

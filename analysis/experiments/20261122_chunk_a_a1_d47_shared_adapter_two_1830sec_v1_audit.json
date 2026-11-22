@@ -1,0 +1,29 @@
+{
+  "kind": "isolated browser arithmetic against Python accounting; not a forecast or browser integration",
+  "source_sha256": {
+    "data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_identity_v1.json": "3e543e61b2eb0aee44a23a0e069a9f55cab1db086afd63612ac62db554180c03",
+    "analysis/experiments/20261122_chunk_a_a1_d47_joint_two_1830sec.json": "ab8e6d84f8d1adb25da75b1bf1dd7e916031d0e368e9cdaf7f1516e3ad0c5e8c",
+    "analysis/experiments/20261122_chunk_a_a1_d47_expected_home_pts.json": "c7010849cbf219edfb2df579cc2ec2c1573f7289fb95c70ef01323bbb9d7fb20",
+    "analysis/a1_branch_world_source.mjs": "deff0b48ee2f50fd29fe52add91f06591ba0e333c11adeece636a78cd485e4a5",
+    "scripts/webapp/weighted-worlds.mjs": "8e8fe7dcdfda9105295364531db86aa08243ad3475292fbfeb96acd298de7e5d",
+    "scripts/webapp/outcomes.mjs": "e716509d1b68758a9df1fd4ce33f92efbb0a32da84045a9e1d2dc5627e3cd6ba",
+    "analysis/a1_weighted_browser_audit.mjs": "c0735a7a5380014cf022eeffd5ef6605c414404d3436ef3fecf9acb50c7789d1"
+  },
+  "fixture_bytes": 202730376,
+  "worlds": 40000,
+  "denominator": 160000,
+  "joint_checks": [
+    {
+      "report": "analysis/experiments/20261122_chunk_a_a1_d47_joint_two_1830sec.json",
+      "worlds": 40000,
+      "status": "defined"
+    }
+  ],
+  "home_points_bins": 90,
+  "home_points_mean": 118.5330875,
+  "limitations": [
+    "The weighted adapter is not connected to a selectable dashboard forecast.",
+    "Availability assumptions and independence are uncalibrated.",
+    "No phone or UI test is implied."
+  ]
+}

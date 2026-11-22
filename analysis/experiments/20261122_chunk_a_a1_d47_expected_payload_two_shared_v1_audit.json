@@ -1,0 +1,13 @@
+{
+ "kind": "independent Expected-only payload accounting; not a phone test",
+ "probe": "analysis/experiments/20261122_chunk_a_a1_d47_expected_payload_two_shared_v1_probe.json",
+ "probe_sha256": "e7f5a6204e8776c8843860d9388aa5fd6b9b5963b90d4a628005da56245eb5ff",
+ "audit_sha256": "777360af0a8b9f2196814e16edad35178120bc9b466b26d8654c22e35943127d",
+ "payload_sha256": "a4ab3909d1a3c2d83a6d71ff3dda9009ca405a3bf6eae9e12eacdb4f56e299df",
+ "game": "401910030",
+ "origin": "2026-11-22",
+ "players": 28,
+ "selected_worlds": 40000,
+ "bytes": 734772,
+ "gzip6_bytes_python": 230821
+}

@@ -36,7 +36,7 @@ for (let row = 0; row < 2; row++) for (let col = 0; col < 2; col++) {
     throw new Error('Exact grid cell differs');
   }
 }
-const sources = [fixturePath, referencePath, 'analysis/a1_weighted_browser.mjs', 'analysis/a1_weighted_grid_audit.mjs'];
+const sources = [fixturePath, referencePath, 'scripts/webapp/weighted-worlds.mjs', 'analysis/a1_weighted_grid_audit.mjs'];
 writeFileSync(output, JSON.stringify({
   kind: 'isolated browser weighted grid/correlation accounting; not a forecast or browser integration',
   source_sha256: Object.fromEntries(sources.map(p => [p, sha(p)])),

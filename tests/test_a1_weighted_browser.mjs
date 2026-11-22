@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {branchWeights, correlation, distribution, grid, gridEdges, joint} from '../analysis/a1_weighted_browser.mjs';
+import {branchWeights, correlation, distribution, grid, gridEdges, joint, weightedMean, weightedShare} from '../analysis/a1_weighted_browser.mjs';
 
 const weight = (numerator, denominator) => ({numerator: String(numerator), denominator: String(denominator)});
 const {weights, denominator} = branchWeights([
@@ -31,6 +31,15 @@ const precise = distribution([0.1, 29.6, 30, 30.25], weights);
 assert.equal(precise.mean, (0.1 + 29.6 + 30 * 3 + 30.25 * 3) / 8);
 assert.deepEqual(precise.histogram, [[0.1, 1], [29.6, 1], [30, 3], [30.25, 3]]);
 assert.deepEqual(precise.quantiles, [0.1, 29.6, 30, 30.25, 30.25]);
+assert.equal(weightedMean([NaN, 50, 100, NaN], weights), 87.5);
+assert.equal(weightedMean([0.1, 29.6, 30, 30.25], weights, [0, 1, 1, 0]), (29.6 + 30 * 3) / 4);
+assert.equal(weightedMean([0, 1, 2, 3], weights, [0, 0, 0, 0]), null);
+assert.equal(weightedShare([0.1, 29.6, 30, 30.25], weights, x => x >= 30), 6 / 8);
+assert.equal(weightedShare([0, 1, 2, 3], weights, x => x >= 2, [0, 1, 1, 0]), 3 / 4);
+assert.equal(weightedShare([0, 1, 2, 3], weights, () => true, [0, 0, 0, 0]), null);
+assert.throws(() => weightedMean([0, 1], weights), /match/);
+assert.throws(() => weightedMean([0, 1, Infinity, 3], weights), /Infinite/);
+assert.throws(() => weightedShare([0, 1, 2, 3], weights, null), /Invalid/);
 assert.ok(Math.abs(correlation([0, 1, 2, 3], [0, 2, 4, 6], weights) - 1) < 1e-12);
 assert.equal(correlation([0, 1, 2, 3], [2, 2, 2, 2], weights), null);
 assert.equal(correlation([0, 1, 2, 3], [0, 2, 4, 6], weights, [1, 1, 0, 0]), null);

@@ -19,7 +19,7 @@ writeFileSync(output, JSON.stringify({
   kind: 'isolated adaptive weighted grid; not a forecast or browser integration',
   fixture: fixturePath, fixture_sha256: hash(file), source: fixture.source, source_sha256: fixture.source_sha256,
   source_code_sha256: hash(read('analysis/a1_branch_world_source.mjs')),
-  arithmetic_sha256: hash(read('analysis/a1_weighted_browser.mjs')),
+  arithmetic_sha256: hash(read('scripts/webapp/weighted-worlds.mjs')),
   probe_sha256: hash(read('analysis/a1_dynamic_grid_probe.mjs')),
   worlds: source.worlds, player, denominator: source.denominator,
   x_edges: xEdges.map(x => Number.isFinite(x) ? x : null),

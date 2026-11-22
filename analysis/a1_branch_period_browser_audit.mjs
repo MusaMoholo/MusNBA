@@ -70,7 +70,7 @@ writeFileSync(output, JSON.stringify({
   fixture: fixturePath, fixture_sha256: hash(fixtureBytes),
   reference: referencePath, reference_sha256: hash(read(referencePath)),
   source_sha256: hash(read('analysis/a1_branch_world_source.mjs')),
-  arithmetic_sha256: hash(read('analysis/a1_weighted_browser.mjs')),
+  arithmetic_sha256: hash(read('scripts/webapp/weighted-worlds.mjs')),
   audit_sha256: hash(read('analysis/a1_branch_period_browser_audit.mjs')),
   worlds: source.worlds, player, checks, overtime_period_categories_checked: overtimeChecks,
   opening_starter_counts_checked: openingChecks,

@@ -18,6 +18,15 @@ label that distinction if an available player receives no minutes; do not infer 
 The owner's proposed 0/25/50/75/100% lineup scale (D47) is an uncalibrated candidate, not a shipped update;
 keep uncertain reports away from misleading 0/100% endpoints and expose both the scale and its assumptions.
 
+**Scenario groundwork (22 Nov):** the existing unconditional views retain their current source; quick scenario
+grouping now calls playing/sitting **Participation**, not availability. Shared consumers can calculate weighted
+scenario, Given/Joint and driver values only when a validated research source is explicitly injected; no lineup
+control, candidate forecast or Expected-only phone payload is shipped. The data-free shell is `gh-pages`
+**b399409**, cache **b39817708fcf4bc9accb**; responsive checks **24/24**, local laptop/phone import and offline
+**25/25** each, installed-shell update **27/27**, hosted bypass/offline **29/29** each. Existing retained forecasts were re-exported to iCloud without
+re-simulation; each device must import its bundle manually. Research-only browser checks do not constitute
+phone acceptance or a coherent full Game Centre.
+
 **Dashboard house follow-up (22 Nov):** game player pages put box scores ahead of player insights, with a shortcut
 to the latter. Availability and each bench expand on demand; team roster bench, fringe, no-projection and out
 groups are collapsible while starters remain visible. Player game logs are expandable. Game section state survives

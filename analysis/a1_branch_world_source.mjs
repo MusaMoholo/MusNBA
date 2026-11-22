@@ -212,6 +212,6 @@ export function branchWorldSource(fixture) {
   };
   return {worlds: offset, weights, denominator, game: fixture.game, origin: fixture.origin,
     selected, weightAssumptions: fixture.weight_assumptions,
-    players: roster[0], side: roster[1],
+    players: roster[0], side: roster[1], stats: roster[2],
     playerValues, teamPoints, selection, overtimePeriods};
 }

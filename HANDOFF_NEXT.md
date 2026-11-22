@@ -1,7 +1,7 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 70%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **60f1645** (A1 70%, weighted game-summary research); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **f5f4767** (A1 70%, Expected-only serialization); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
@@ -9,6 +9,37 @@ The preceding pushed checkpoint was **60f1645** (A1 70%, weighted game-summary r
   without publishing an unvalidated forecast or changing the default production pathway. **Owner's latest stop:
   stop at the end of A1**, checkpoint/push and report gains and limitations; do not start A2, A3 or Chunk B in
   this run. The earlier dashboard house pass was already delivered; no nightly merely for this research checkpoint.
+- **A1 80% shared-scenario groundwork, partial:** `outcomes.mjs` now adapts an explicitly supplied validated
+  research source and binds weighted probability mass, counts, distributions, means, correlations and half-open
+  grids to one selected world set. `scenario.mjs` uses those calculations when injected, otherwise the existing
+  equal-world source; no app code supplies a branch source or exposes a lineup selector. Availability and
+  participation are separate, exact-minute conditions retain float64 precision, OTs use final periods and invalid
+  branch conditions fail closed. Shared arithmetic lives in `scripts/webapp/weighted-worlds.mjs`; the old analysis
+  module re-exports it, and current probes hash the actual arithmetic. Scenario copy now says Participation
+  rather than calling non-participation availability.
+  Independent Python-reference audits on **20k / 40k** research worlds matched full/fixed/empty conditional masses,
+  **90** home-point bins, and **1,800 / 1,830-second** conditions. A local Chrome injection on the 40k fixture matched
+  the independently audited **42** rendered Joint cells, Given, a 30-minute scenario (**56.6%**, home win given
+  **57.2%**) and a fixed-lineup empty condition; one run measured **0.68 s** JSON parse, **0.67 s** decode,
+  **1.25 s** scenario and **0.09 s** Given/grid rendering, **615 MB** JS heap after the sequence, with other
+  audit jobs running. This is one desktop research run, not device acceptance or a full coherent Game Centre.
+  Reports `analysis/experiments/20261122_chunk_a_a1_d47_shared_{adapter*,scenario_browser_two_v1}.json`.
+  Full-mixture summary and Expected-payload audits were re-run after the shared-source hash change using suffix
+  `_shared_v1`; the prior reports remain historical evidence tied to their original source.
+  **Still open:** integrate the single common either/available/unavailable control across coherent selected
+  player/team/sheet views, derive or omit unconditional-dependent cards and metadata, finish phone Expected-only
+  bundle contract and actual import/offline testing, runtime/fold/promotion checks and fallback. Never expose the
+  injection hook as a production selector until all consumers agree. A1 remains **70%**, Chunk A **31.5%**.
+  Focused JS and 4 bundle-profile tests pass; smoke **108/108**, deliberate fault **86/108** exit **1**;
+  unconditional responsive checks **24/24** and reviewed screenshots at 1440/960/390 in both themes.
+  Final data-free shell `gh-pages` **b399409**, cache **b39817708fcf4bc9accb**; local laptop/phone import/offline
+  **25/25** each, final-shell update **27/27**, hosted forced-bypass laptop/phone **29/29** each.
+  `--export-only` refreshed unchanged retained views to iCloud:
+  phone **1,999 records / 13.9 MB** SHA-256 `8bd5ec9396e60aadd4c519bccd5a66cbdf4f21a98484e480abfad54acba2d709`;
+  laptop **2,031 / 65.3 MB** SHA-256 `41eff00bcc79b51128e8d4480c174e2c23bf5f79a64ad0e3c1708db3770379c6`.
+  Manual phone import is still required; an export does not prove device acceptance. No model or forecast changed.
+  HANDOFF/PLAN/FINDINGS/DASHBOARD_PLAN/README record this change; AGENTS, ENGINE_PLAN and TRAINING_PLAN do not
+  change because standing rules, decisions and gates are unchanged.
 - **A1 80% Expected-only payload groundwork:** fixtures now include independently checked origin-snapshot player
   identity/status fields, model/engine identifiers and snapshot file hashes; branch-specific starter and minute
   targets are not copied from the unconditional snapshot. `analysis/a1_expected_payload.mjs` accepts only an
@@ -2347,6 +2378,18 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
 1. **A1 80%:** implement/test a gated branch UI only against fully audited isolated fixtures and preserve the
    existing unconditional production fallback; no unvalidated Expected data may be published. Research labels
    must carry through to any view. Check laptop/phone import and offline compatibility before claiming delivery.
+   The shared consumers now have a research-only injection path, but **no code in `game.mjs` sets it**. First
+   adapt the independently audited selected summary to the Game Centre contract, removing or rederiving every
+   branch-dependent unconditional field (especially starter/minute-basis metadata, availability panel,
+   lead fan, spotlight, shooting-defined counts and advanced distributions); implement one common selection
+   across player/team/sheet/scenario views. Do not copy unconditional data into a selected branch. Include
+   true availability separate from positive-minute participation and distinguish mass units from world counts.
+   Reproduce the current browser check with a local review server and a new output:
+   `node analysis/a1_scenario_browser_check.mjs http://127.0.0.1:8767 data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_identity_v1.json analysis/experiments/20261122_chunk_a_a1_d47_joint_full_v2.json analysis/experiments/20261122_chunk_a_a1_d47_joint_two_1800sec.json analysis/experiments/20261122_chunk_a_a1_d47_joint_empty_v2.json analysis/experiments/20261122_chunk_a_a1_d47_dynamic_grid_two_v2.json analysis/experiments/20261122_chunk_a_a1_d47_dynamic_grid_two_v3_audit.json analysis/experiments/<new-browser-check>.json`.
+   It injects only the scenario pane and retains unconditional game metadata; it is **not** full-view acceptance.
+   The current independently checked full-mixture summaries and payloads use suffix `_shared_v1`. Previous
+   `_identity_v1` probes contain earlier source/audit hashes and must be reproduced at their original commit or
+   regenerated and re-audited with new names before use in a new payload.
    The ignored opening-five/period-aware two-player fixture and compact audit are recorded above. To rebuild under a new name, run
    `.venv/bin/python analysis/a1_branch_browser_fixture.py analysis/experiments/20261122_chunk_a_a1_d47_10000_two.json --output data/derived/experiments/<new-fixture>.json`,
    then `.venv/bin/python analysis/a1_branch_browser_fixture_audit.py data/derived/experiments/<new-fixture>.json --output analysis/experiments/<new-audit>.json`;
@@ -2363,17 +2406,17 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
    actual simulation counts and preserve precise world-minute filters.
    The Expected-only research payload is produced only from the independently audited identity fixture and
    full-mixture summary, e.g.
-   `node analysis/a1_expected_payload_probe.mjs data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_identity_v1.json analysis/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_identity_v1_audit.json analysis/experiments/20261122_chunk_a_a1_d47_game_summary_two_identity_v1_probe.json analysis/experiments/20261122_chunk_a_a1_d47_game_summary_two_identity_v1_audit.json data/derived/experiments/<new-payload>.json analysis/experiments/<new-probe>.json`
+   `node analysis/a1_expected_payload_probe.mjs data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_identity_v1.json analysis/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_identity_v1_audit.json analysis/experiments/20261122_chunk_a_a1_d47_game_summary_two_shared_v1_probe.json analysis/experiments/20261122_chunk_a_a1_d47_game_summary_two_shared_v1_audit.json data/derived/experiments/<new-payload>.json analysis/experiments/<new-probe>.json`
    followed by `.venv/bin/python analysis/a1_expected_payload_audit.py analysis/experiments/<new-probe>.json --output analysis/experiments/<new-audit>.json`.
    Run `node tests/test_a1_expected_payload.mjs`; serialization is not an import/offline test or permission to
    ship. Verify labels and actual PWA compatibility only after integrating a fully coherent gated UI.
    Run `node tests/test_a1_weighted_browser.mjs` for arithmetic edge cases; the real-fixture audit takes the
    fixture, a new audit output, Expected report and one or more matching Given reports, e.g.
    `node analysis/a1_weighted_browser_audit.mjs data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_one_v3.json analysis/experiments/<new-audit>.json analysis/experiments/20261122_chunk_a_a1_d47_expected_one_home_pts.json analysis/experiments/20261122_chunk_a_a1_d47_joint_one_full.json analysis/experiments/20261122_chunk_a_a1_d47_joint_one_empty.json`.
-   The existing `outcomes.mjs` counts equally weighted worlds throughout Given/Joint, while saved branch worlds
-   have unequal weights: integrate exact weighted conditions across **all** shared consumers before exposing a
-   lineup switch. Implement a source contract with player availability separate from positive minutes, preserve
-   selected branch identity, and fail closed on missing/corrupt worlds. Continue D48 research above and the
+   The existing production path continues to use equally weighted worlds; the injected branch adapter supports
+   exact weighted conditions across scenario, Given/Joint and drivers but is not yet a full Game Centre source.
+   Integrate **all** dependent consumers before exposing a lineup switch. Preserve availability separately from
+   positive minutes, selected branch identity, and fail closed on missing/corrupt worlds. Continue D48 research above and the
    short-roster penalty comparison without masking failures.
    The completed **A1 60%** accounting task was to design and independently validate a season representation that consumes each near-term game once
    and preserves every supported exact branch-weighted world marginal and win identity, including the 1/20,000

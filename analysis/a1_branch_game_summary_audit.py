@@ -69,6 +69,7 @@ def main() -> None:
         raise FileExistsError('refusing to overwrite an existing audit')
     probe = json.loads(args.probe.read_text())
     for path, key in (('analysis/a1_branch_world_source.mjs', 'source_sha256'),
+                      ('scripts/webapp/weighted-worlds.mjs', 'arithmetic_sha256'),
                       ('analysis/a1_branch_game_summary.mjs', 'algorithm_sha256'),
                       ('analysis/a1_branch_game_summary_probe.mjs', 'probe_sha256')):
         if sha256_file(ROOT / path) != probe[key]:
