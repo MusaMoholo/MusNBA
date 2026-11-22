@@ -1,6 +1,7 @@
 // Static (GitHub Pages) runtime: data comes from an imported bundle, the shell from the service worker.
 import {cleanupInterruptedImport, importBundle, read} from './pwa-storage.mjs';
 import {staticRequest} from './static-api.mjs';
+import {stamp, tipTimes} from './ui.mjs';
 
 export async function start(boot) {
   window.MUSNBA_STATIC = true;
@@ -59,7 +60,8 @@ export async function start(boot) {
     if (active) {
       const info = await read('meta', active);
       const profile = info.profile === 'laptop' ? 'Laptop bundle' : info.profile === 'phone' ? 'Phone bundle' : 'Older bundle';
-      const created = info.created ? ` · exported ${info.created}` : '';
+      const created = info.created && Number.isFinite(Date.parse(info.created))
+        ? ` · exported ${stamp(info.created)} · ${tipTimes(info.created, info.latest).et}` : '';
       status.textContent = `${profile} · Saved data through ${info.latest} · ${info.snapshots.length} simulated slates${created} · works offline`;
       button.textContent = 'Import latest data';
       await boot();
