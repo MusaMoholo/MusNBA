@@ -818,7 +818,7 @@ def build(views_root: Path = VIEWS) -> dict:
             rows.append({**info, **team_slice(stats['teams'], tid),
                          'pct': round(t['w'] / t['gp'], 4) if t['gp'] else None,
                          'forecast': {k: f[k] for k in ('remaining', 'scheduled', 'mean_w', 'mean_l', 'seed_mean', 'seeds', 'top6',
-                                                        'playin', 'out', 'first', 'best_record', 'worst_record', 'wins')}})
+                                                        'playin', 'out', 'first', 'best_record', 'worst_record', 'wins')} | {'bottom3': f.get('bottom3')}})
         for conf in ('East', 'West'):
             group = [x for x in rows if x['conf'] == conf]
             lead = max(group, key=lambda x: (x['w'] - x['l']))

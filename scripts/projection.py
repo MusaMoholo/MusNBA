@@ -422,6 +422,7 @@ def simulate_season(T: dict, lg: dict, master: list[dict], day: str, teams: dict
         seed[:, cols] = ranks
     league_key = wins + 0.5 * tiebreak
     best, worst = np.argmax(league_key, axis=1), np.argmin(league_key, axis=1)
+    bottom3 = np.argsort(league_key, axis=1, kind='stable')[:, :3]
     out = {}
     for t in ids:
         i = index[t]
@@ -433,6 +434,7 @@ def simulate_season(T: dict, lg: dict, master: list[dict], day: str, teams: dict
                   'seeds': [round(float(x), 4) for x in seeds],
                   'top6': round(float((s <= 6).mean()), 4), 'playin': round(float(((s >= 7) & (s <= 10)).mean()), 4),
                   'out': round(float((s >= 11).mean()), 4), 'first': round(float((s == 1).mean()), 4),
+                  'bottom3': round(float((bottom3 == i).any(axis=1).mean()), 4),
                   'best_record': round(float((best == i).mean()), 4), 'worst_record': round(float((worst == i).mean()), 4)}
     params = {**pathway.PATHWAY, **(params or {})}
     return {'model': pathway.PATHWAY['id'], 'pathway': params, 'as_of': day, 'sims': W, 'teams': out, 'games': rows,

@@ -113,6 +113,14 @@
   .bracket-team{display:flex;align-items:center;gap:8px;min-height:32px}.bracket-team b{margin-left:auto;font-variant-numeric:tabular-nums}.bracket-team small{color:var(--dim)}
   @media(max-width:700px){.picture-grid{grid-template-columns:1fr}.bracket{grid-template-columns:1fr 1fr}.form-grid{grid-template-columns:1fr}}
   .mini-wins{display:block;width:180px;height:34px}.mini-wins rect{fill:var(--dim);opacity:.65}.mini-wins line{stroke:var(--accent);stroke-width:2}
+  .season-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .race-axis{display:grid;grid-template-columns:100px repeat(5,1fr);font-size:10px;color:var(--dim);margin:12px 90px 8px 0}.race-axis span:not(:first-child){text-align:right}
+  .race-row{display:grid;grid-template-columns:90px 1fr 85px;gap:10px;align-items:center;min-height:42px;border-top:1px solid var(--line)}
+  .race-row>span{text-align:right;font-variant-numeric:tabular-nums}.race-row small{color:var(--dim);margin-left:4px}
+  .race-track{height:26px;position:relative;background:repeating-linear-gradient(to right,transparent 0,transparent calc(24.39% - 1px),var(--line) 24.39%)}
+  .race-track i{position:absolute;top:50%;transform:translateY(-50%);border-radius:6px;background:var(--accent)}
+  .race-band{height:3px;opacity:.6}.race-iqr{height:9px;opacity:.55}.race-track .race-mean{width:8px;height:16px;transform:translate(-50%,-50%)}
+  @media(max-width:700px){.season-grid{grid-template-columns:1fr}.race-row{grid-template-columns:65px 1fr 70px;gap:6px;font-size:12px}.race-row small{display:block}.race-axis{grid-template-columns:65px repeat(5,1fr);margin-right:70px}}
   /* today */
   .daybar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px}
   .daynav{display:flex;align-items:center;gap:6px}
@@ -153,7 +161,7 @@
   .role-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:4px 16px}
   .role{display:grid;grid-template-columns:18px auto auto 1fr;gap:2px 6px;align-items:center;text-decoration:none;color:inherit;font-size:13px;padding:4px 0;border-top:1px solid var(--line)}
   .role em{font-style:normal;font-weight:700;font-size:12px} .role small{grid-column:2/-1;color:var(--dim);font-size:11px}
-  .review .tiles{grid-template-columns:repeat(5,minmax(0,1fr))} .review .tile b{font-size:15px}
+  .review .tiles{grid-template-columns:repeat(3,minmax(0,1fr))} .review .tile b{font-size:15px}
   .rv-cols{display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;margin-top:10px}
   .rv-p{display:grid;grid-template-columns:18px 1fr auto;gap:2px 6px;align-items:center;text-decoration:none;color:inherit;padding:4px 0;border-top:1px solid var(--line);font-size:13px}
   .rv-p b{font-size:15px;font-variant-numeric:tabular-nums} .rv-p small{grid-column:2/-1;color:var(--dim);font-size:11px}
@@ -402,7 +410,7 @@
   }
   @media (max-width:640px){
     .wrap{padding:max(12px,env(safe-area-inset-top)) max(10px,env(safe-area-inset-right)) 40px max(10px,env(safe-area-inset-left))}
-    .mainnav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
+    .mainnav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
     .mainnav a{padding:8px 4px;min-height:var(--tap);font-size:13px}
     .games{grid-template-columns:minmax(0,1fr)}
     .spot-leaders,.spot-leaders.compact{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
@@ -474,6 +482,7 @@
   <nav class="mainnav" aria-label="Main navigation">
     <a href="#/" data-nav="today">Today</a>
     <a href="#/standings" data-nav="standings">Standings</a>
+    <a href="#/season" data-nav="season">Season</a>
     <a href="#/teams" data-nav="teams">Teams</a>
     <a href="#/players" data-nav="players">Players</a>
     <a href="#/lab" data-nav="lab">Lab</a>
