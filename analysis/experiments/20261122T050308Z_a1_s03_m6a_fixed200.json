@@ -1,0 +1,847 @@
+{
+ "experiment": "m6a_aggregation",
+ "run": "20261122T050308Z",
+ "commit": "93b3e1d",
+ "config": "models/v1.2d.json",
+ "segments": null,
+ "train_segments": null,
+ "train_features": null,
+ "fold": "F4",
+ "games": 200,
+ "game_ids": [
+  "401809247",
+  "401810327",
+  "401810328",
+  "401810333",
+  "401810337",
+  "401810338",
+  "401810339",
+  "401810340",
+  "401810343",
+  "401810344",
+  "401810346",
+  "401810348",
+  "401810350",
+  "401810351",
+  "401810352",
+  "401810353",
+  "401810354",
+  "401810357",
+  "401810359",
+  "401810368",
+  "401810369",
+  "401810370",
+  "401810376",
+  "401810385",
+  "401810390",
+  "401810393",
+  "401810397",
+  "401810398",
+  "401810402",
+  "401810403",
+  "401810407",
+  "401810421",
+  "401810422",
+  "401810425",
+  "401810427",
+  "401810433",
+  "401810440",
+  "401810442",
+  "401810446",
+  "401810447",
+  "401810451",
+  "401810459",
+  "401810467",
+  "401810468",
+  "401810472",
+  "401810477",
+  "401810484",
+  "401810486",
+  "401810488",
+  "401810489",
+  "401810491",
+  "401810498",
+  "401810500",
+  "401810501",
+  "401810503",
+  "401810511",
+  "401810514",
+  "401810521",
+  "401810524",
+  "401810525",
+  "401810529",
+  "401810530",
+  "401810531",
+  "401810532",
+  "401810537",
+  "401810540",
+  "401810541",
+  "401810542",
+  "401810544",
+  "401810549",
+  "401810552",
+  "401810557",
+  "401810567",
+  "401810572",
+  "401810574",
+  "401810576",
+  "401810584",
+  "401810586",
+  "401810589",
+  "401810590",
+  "401810594",
+  "401810597",
+  "401810602",
+  "401810604",
+  "401810611",
+  "401810612",
+  "401810613",
+  "401810622",
+  "401810625",
+  "401810629",
+  "401810632",
+  "401810635",
+  "401810638",
+  "401810645",
+  "401810651",
+  "401810652",
+  "401810655",
+  "401810658",
+  "401810670",
+  "401810677",
+  "401810679",
+  "401810684",
+  "401810691",
+  "401810693",
+  "401810694",
+  "401810702",
+  "401810704",
+  "401810708",
+  "401810713",
+  "401810715",
+  "401810722",
+  "401810727",
+  "401810730",
+  "401810733",
+  "401810734",
+  "401810735",
+  "401810742",
+  "401810747",
+  "401810748",
+  "401810749",
+  "401810753",
+  "401810761",
+  "401810762",
+  "401810764",
+  "401810768",
+  "401810772",
+  "401810773",
+  "401810779",
+  "401810780",
+  "401810784",
+  "401810786",
+  "401810787",
+  "401810791",
+  "401810792",
+  "401810793",
+  "401810797",
+  "401810804",
+  "401810813",
+  "401810820",
+  "401810823",
+  "401810825",
+  "401810826",
+  "401810832",
+  "401810834",
+  "401810840",
+  "401810841",
+  "401810846",
+  "401810851",
+  "401810855",
+  "401810857",
+  "401810865",
+  "401810866",
+  "401810873",
+  "401810877",
+  "401810878",
+  "401810879",
+  "401810882",
+  "401810885",
+  "401810890",
+  "401810891",
+  "401810892",
+  "401810893",
+  "401810895",
+  "401810902",
+  "401810904",
+  "401810908",
+  "401810910",
+  "401810911",
+  "401810915",
+  "401810928",
+  "401810929",
+  "401810933",
+  "401810939",
+  "401810941",
+  "401810944",
+  "401810949",
+  "401810954",
+  "401810955",
+  "401810960",
+  "401810961",
+  "401810964",
+  "401810971",
+  "401810974",
+  "401810976",
+  "401810984",
+  "401810985",
+  "401810996",
+  "401811001",
+  "401811002",
+  "401811005",
+  "401811008",
+  "401811013",
+  "401811019",
+  "401811022",
+  "401811025",
+  "401811027",
+  "401811032",
+  "401811045",
+  "401811046",
+  "401850920"
+ ],
+ "worlds": 10000,
+ "seconds": 705,
+ "models": "/Users/moholom/Repos/Sports/Basketball/data/models/folds/v1.2d_F4_all",
+ "model_sha256": {
+  "/Users/moholom/Repos/Sports/Basketball/data/models/folds/v1.2d_F4_all/config.json": "1617769cb52f2c750e0f1276071b39fc21254ef53fc97ccc646869aaa50f5e71",
+  "/Users/moholom/Repos/Sports/Basketball/data/models/folds/v1.2d_F4_all/assisted.txt": "0a094b183b18b8d45a6e5cf047fb117f8aed62dc6941bb9b7944391c3afec690",
+  "/Users/moholom/Repos/Sports/Basketball/data/models/folds/v1.2d_F4_all/assister.txt": "f32c49ac6c7ca5774aad414c5cf500d1b5fd1bbd8fa6c0ddd50ee1934b1d3961",
+  "/Users/moholom/Repos/Sports/Basketball/data/models/folds/v1.2d_F4_all/blocked.txt": "e085efcacd0baea9568f27f7ee05dd43687e7762ba55015d7569cc1efe175c04",
+  "/Users/moholom/Repos/Sports/Basketball/data/models/folds/v1.2d_F4_all/blocker.txt": "5975f284a6c41a013db80fb669230e64dda7167137554bba9051dd04fe4004f0",
+  "/Users/moholom/Repos/Sports/Basketball/data/models/folds/v1.2d_F4_all/duration.txt": "2603f8bf64f3bbef3146285638f79262446eb9a76572c4217f45e6df77dee72c",
+  "/Users/moholom/Repos/Sports/Basketball/data/models/folds/v1.2d_F4_all/event.txt": "d62e1cac4c4fa1cbec0ba5fccc321bae6838202b17253c80a0e8f502395e7e36",
+  "/Users/moholom/Repos/Sports/Basketball/data/models/folds/v1.2d_F4_all/fouler.txt": "70ee6709fcd1fae1ca43ea925babaeb9c9355eaf7e4edeeb601d0cb11c45d266",
+  "/Users/moholom/Repos/Sports/Basketball/data/models/folds/v1.2d_F4_all/free_throw.txt": "ddd7ef48ede7de973c9967b01826f3c293ee824147ca2da772de17a1d781f612",
+  "/Users/moholom/Repos/Sports/Basketball/data/models/folds/v1.2d_F4_all/location.txt": "8f12f8c3bb168ab94dfae313f7624e1ff43074764db665b03ba9511d69c12979",
+  "/Users/moholom/Repos/Sports/Basketball/data/models/folds/v1.2d_F4_all/rebound.txt": "b94d0f957b02d633ca751dff3ef921ffb7e9f57ce6bd206cbba41893ee6f34ff",
+  "/Users/moholom/Repos/Sports/Basketball/data/models/folds/v1.2d_F4_all/rebounder.txt": "337225efb0be006b8889cb377254f6b03c39b356d73d366d3af153ab9133b094",
+  "/Users/moholom/Repos/Sports/Basketball/data/models/folds/v1.2d_F4_all/shot_result.txt": "993fce9f6450e7f317c19e93cadf562db741efa7b58c05d32a8d561ff5f1bbfc",
+  "/Users/moholom/Repos/Sports/Basketball/data/models/folds/v1.2d_F4_all/stealer.txt": "ceea8df151ace738c6181be7615f93fbbebc13cfc434cc371ff8f7566143c581",
+  "/Users/moholom/Repos/Sports/Basketball/data/models/folds/v1.2d_F4_all/turnover_type.txt": "307defe709ae1a8639407d131e28bfabc8eda32bb291a4820113cf3a5b7001d0",
+  "/Users/moholom/Repos/Sports/Basketball/data/models/folds/v1.2d_F4_all/what.txt": "d093989f161b78686804078c07a1d94a629719893085d399465a52314c0de231",
+  "/Users/moholom/Repos/Sports/Basketball/data/models/folds/v1.2d_F4_all/who.txt": "c792950c30a7e7eecec20ab1d12681b0adc574838f2327bbc948213aa574150d"
+ },
+ "pregame_sha256": "d4da5f071de3ddcbc72bbb4899a77f9b4f22d899a3a54bcfb76baf0097594d0e",
+ "scoring_sha256": {
+  "/Users/moholom/Repos/Sports/Basketball/scripts/aggregate.py": "5797c8ec28f1ee2e10524dc3993f6cc32d982089a881df10f628103076977a2d",
+  "/Users/moholom/Repos/Sports/Basketball/scripts/nodes.py": "78749b680b889993e83ba26baab51877cd7393ee0a5a3d9f4fdaf9123d3b161f",
+  "/Users/moholom/Repos/Sports/Basketball/scripts/matchups.py": "70bbb3f069e78477c83b63ab66e518c4148217b11c415ff1825856914861a153"
+ },
+ "matchup_actor_accounting": {
+  "matched_actors": 44444,
+  "unmatched_actors": 487
+ },
+ "node_fit": {
+  "duration": {
+   "model": 2.196619955369792,
+   "league": 2.4882149706198553,
+   "profile": 2.230242581709364,
+   "gain_vs_best_baseline": 0.01508,
+   "ece_model": 0.002244765223191593
+  },
+  "event": {
+   "model": 0.2457711832542549,
+   "league": 0.3083935192081216,
+   "profile": 0.3036147247727473,
+   "gain_vs_best_baseline": 0.19052,
+   "ece_model": 0.0025865840352914463
+  },
+  "who": {
+   "model": 1.5396180224370384,
+   "league": 1.6094379124341,
+   "profile": 1.5695182182935534,
+   "gain_vs_best_baseline": 0.01905,
+   "ece_model": 0.0017976443372587443
+  },
+  "what": {
+   "model": 1.6496997096276231,
+   "league": 1.8525243933165672,
+   "profile": 1.7447635144775335,
+   "gain_vs_best_baseline": 0.05449,
+   "ece_model": 0.004283676721412203
+  },
+  "location": {
+   "model": 1.3158134864591577,
+   "league": 1.375246436118501,
+   "profile": 1.375246436118476,
+   "gain_vs_best_baseline": 0.04322,
+   "ece_model": 0.0047062834174372405
+  },
+  "shot_result": {
+   "model": 0.7293342440515319,
+   "league": 0.7898228122507616,
+   "profile": 0.744843414272492,
+   "gain_vs_best_baseline": 0.02082,
+   "ece_model": 0.004772119452900897
+  },
+  "assisted": {
+   "model": 0.4573617468868745,
+   "league": 0.6552138688416096,
+   "profile": 0.6095550175747978,
+   "gain_vs_best_baseline": 0.24968,
+   "ece_model": 0.005366466016728593
+  },
+  "assister": {
+   "model": 1.254946743435707,
+   "league": 1.3886275108510755,
+   "profile": 1.2852130227842433,
+   "gain_vs_best_baseline": 0.02355,
+   "ece_model": 0.006839963706830929
+  },
+  "blocked": {
+   "model": 0.2520192406649343,
+   "league": 0.33282990294843334,
+   "profile": 0.2688145600585704,
+   "gain_vs_best_baseline": 0.06248,
+   "ece_model": 0.002655012372573554
+  },
+  "blocker": {
+   "model": 1.3870613874183872,
+   "league": 1.6094379124341,
+   "profile": 1.4042219780196412,
+   "gain_vs_best_baseline": 0.01222,
+   "ece_model": 0.006749363673978129
+  },
+  "rebound": {
+   "model": 0.878192295358061,
+   "league": 0.9657352880960202,
+   "profile": 0.9587626715843374,
+   "gain_vs_best_baseline": 0.08404,
+   "ece_model": 0.0029177137503626793
+  },
+  "rebounder": {
+   "model": 1.4952074421272408,
+   "league": 1.6094379124340998,
+   "profile": 1.5185051037592856,
+   "gain_vs_best_baseline": 0.01534,
+   "ece_model": 0.0021019426812940367
+  },
+  "turnover_type": {
+   "model": 0.8390431438000119,
+   "league": 0.8896321514868857,
+   "profile": 0.882267924683308,
+   "gain_vs_best_baseline": 0.04899,
+   "ece_model": 0.00864104122686899
+  },
+  "stealer": {
+   "model": 1.5825914547021953,
+   "league": 1.6094379124340998,
+   "profile": 1.5836512507168898,
+   "gain_vs_best_baseline": 0.00067,
+   "ece_model": 0.004020489191369362
+  },
+  "fouler": {
+   "model": 1.561827852387216,
+   "league": 1.6094379124340996,
+   "profile": 1.5865312732039687,
+   "gain_vs_best_baseline": 0.01557,
+   "ece_model": 0.00166197152353692
+  },
+  "free_throw": {
+   "model": 0.5133259172191291,
+   "league": 0.5288796987824144,
+   "profile": 0.5148351890002271,
+   "gain_vs_best_baseline": 0.00293,
+   "ece_model": 0.007834770815470068
+  }
+ },
+ "summary": {
+  "star": {
+   "player_games": 284,
+   "pts": {
+    "actual": 23.415,
+    "sim": 23.887,
+    "bias": 0.472,
+    "rel_bias": 0.0202,
+    "coverage_10_90": 0.817,
+    "crps": 3.7499,
+    "crps_baseline": 4.2087
+   },
+   "reb": {
+    "actual": 5.81,
+    "sim": 5.667,
+    "bias": -0.143,
+    "rel_bias": -0.0246,
+    "coverage_10_90": 0.729,
+    "crps": 1.4237,
+    "crps_baseline": 1.4954
+   },
+   "ast": {
+    "actual": 5.391,
+    "sim": 5.366,
+    "bias": -0.025,
+    "rel_bias": -0.0047,
+    "coverage_10_90": 0.849,
+    "crps": 1.1764,
+    "crps_baseline": 1.3171
+   },
+   "fg3m": {
+    "actual": 2.208,
+    "sim": 2.322,
+    "bias": 0.115,
+    "rel_bias": 0.052,
+    "coverage_10_90": 0.813,
+    "crps": 0.791,
+    "crps_baseline": 0.8407
+   },
+   "stl": {
+    "actual": 1.12,
+    "sim": 1.093,
+    "bias": -0.027,
+    "rel_bias": -0.024,
+    "coverage_10_90": 0.806,
+    "crps": 0.5452,
+    "crps_baseline": 0.576
+   },
+   "blk": {
+    "actual": 0.592,
+    "sim": 0.568,
+    "bias": -0.023,
+    "rel_bias": -0.0394,
+    "coverage_10_90": 0.81,
+    "crps": 0.3482,
+    "crps_baseline": 0.3684
+   },
+   "tov": {
+    "actual": 2.718,
+    "sim": 2.758,
+    "bias": 0.039,
+    "rel_bias": 0.0145,
+    "coverage_10_90": 0.785,
+    "crps": 0.9235,
+    "crps_baseline": 1.0076
+   },
+   "fga": {
+    "actual": 17.306,
+    "sim": 17.509,
+    "bias": 0.202,
+    "rel_bias": 0.0117,
+    "coverage_10_90": 0.764,
+    "crps": 2.1744,
+    "crps_baseline": 2.3744
+   },
+   "fta": {
+    "actual": 5.585,
+    "sim": 5.988,
+    "bias": 0.403,
+    "rel_bias": 0.0722,
+    "coverage_10_90": 0.803,
+    "crps": 1.8205,
+    "crps_baseline": 1.9573
+   },
+   "pf": {
+    "actual": 1.965,
+    "sim": 2.073,
+    "bias": 0.108,
+    "rel_bias": 0.0552,
+    "coverage_10_90": 0.789,
+    "crps": 0.7498,
+    "crps_baseline": 0.7534
+   }
+  },
+  "starter": {
+   "player_games": 1730,
+   "pts": {
+    "actual": 13.879,
+    "sim": 13.837,
+    "bias": -0.043,
+    "rel_bias": -0.0031,
+    "coverage_10_90": 0.789,
+    "crps": 3.079,
+    "crps_baseline": 3.3394
+   },
+   "reb": {
+    "actual": 5.295,
+    "sim": 5.374,
+    "bias": 0.079,
+    "rel_bias": 0.0149,
+    "coverage_10_90": 0.78,
+    "crps": 1.3157,
+    "crps_baseline": 1.405
+   },
+   "ast": {
+    "actual": 3.237,
+    "sim": 3.185,
+    "bias": -0.052,
+    "rel_bias": -0.0162,
+    "coverage_10_90": 0.774,
+    "crps": 0.9844,
+    "crps_baseline": 1.0765
+   },
+   "fg3m": {
+    "actual": 1.605,
+    "sim": 1.578,
+    "bias": -0.027,
+    "rel_bias": -0.0167,
+    "coverage_10_90": 0.788,
+    "crps": 0.6509,
+    "crps_baseline": 0.7102
+   },
+   "stl": {
+    "actual": 0.981,
+    "sim": 0.996,
+    "bias": 0.015,
+    "rel_bias": 0.015,
+    "coverage_10_90": 0.799,
+    "crps": 0.5181,
+    "crps_baseline": 0.5677
+   },
+   "blk": {
+    "actual": 0.568,
+    "sim": 0.589,
+    "bias": 0.022,
+    "rel_bias": 0.0383,
+    "coverage_10_90": 0.791,
+    "crps": 0.3624,
+    "crps_baseline": 0.3888
+   },
+   "tov": {
+    "actual": 1.639,
+    "sim": 1.632,
+    "bias": -0.008,
+    "rel_bias": -0.0046,
+    "coverage_10_90": 0.794,
+    "crps": 0.6689,
+    "crps_baseline": 0.7233
+   },
+   "fga": {
+    "actual": 10.586,
+    "sim": 10.624,
+    "bias": 0.039,
+    "rel_bias": 0.0037,
+    "coverage_10_90": 0.803,
+    "crps": 1.6522,
+    "crps_baseline": 1.8114
+   },
+   "fta": {
+    "actual": 2.665,
+    "sim": 2.681,
+    "bias": 0.015,
+    "rel_bias": 0.0058,
+    "coverage_10_90": 0.792,
+    "crps": 1.1594,
+    "crps_baseline": 1.2612
+   },
+   "pf": {
+    "actual": 2.1,
+    "sim": 2.27,
+    "bias": 0.17,
+    "rel_bias": 0.081,
+    "coverage_10_90": 0.789,
+    "crps": 0.7922,
+    "crps_baseline": 0.8092
+   }
+  },
+  "bench": {
+   "player_games": 2332,
+   "pts": {
+    "actual": 6.593,
+    "sim": 6.515,
+    "bias": -0.077,
+    "rel_bias": -0.0117,
+    "coverage_10_90": 0.8,
+    "crps": 2.0206,
+    "crps_baseline": 2.2204
+   },
+   "reb": {
+    "actual": 2.766,
+    "sim": 2.8,
+    "bias": 0.034,
+    "rel_bias": 0.0122,
+    "coverage_10_90": 0.788,
+    "crps": 0.8811,
+    "crps_baseline": 0.9601
+   },
+   "ast": {
+    "actual": 1.578,
+    "sim": 1.507,
+    "bias": -0.072,
+    "rel_bias": -0.0454,
+    "coverage_10_90": 0.787,
+    "crps": 0.6222,
+    "crps_baseline": 0.6892
+   },
+   "fg3m": {
+    "actual": 0.86,
+    "sim": 0.843,
+    "bias": -0.016,
+    "rel_bias": -0.0191,
+    "coverage_10_90": 0.807,
+    "crps": 0.4297,
+    "crps_baseline": 0.466
+   },
+   "stl": {
+    "actual": 0.587,
+    "sim": 0.572,
+    "bias": -0.016,
+    "rel_bias": -0.0265,
+    "coverage_10_90": 0.783,
+    "crps": 0.363,
+    "crps_baseline": 0.396
+   },
+   "blk": {
+    "actual": 0.314,
+    "sim": 0.315,
+    "bias": 0.001,
+    "rel_bias": 0.0043,
+    "coverage_10_90": 0.802,
+    "crps": 0.2163,
+    "crps_baseline": 0.2373
+   },
+   "tov": {
+    "actual": 0.827,
+    "sim": 0.814,
+    "bias": -0.013,
+    "rel_bias": -0.0156,
+    "coverage_10_90": 0.791,
+    "crps": 0.4451,
+    "crps_baseline": 0.483
+   },
+   "fga": {
+    "actual": 5.224,
+    "sim": 5.134,
+    "bias": -0.09,
+    "rel_bias": -0.0172,
+    "coverage_10_90": 0.791,
+    "crps": 1.1265,
+    "crps_baseline": 1.2415
+   },
+   "fta": {
+    "actual": 1.173,
+    "sim": 1.235,
+    "bias": 0.062,
+    "rel_bias": 0.053,
+    "coverage_10_90": 0.796,
+    "crps": 0.6879,
+    "crps_baseline": 0.7638
+   },
+   "pf": {
+    "actual": 1.413,
+    "sim": 1.408,
+    "bias": -0.005,
+    "rel_bias": -0.0032,
+    "coverage_10_90": 0.784,
+    "crps": 0.6163,
+    "crps_baseline": 0.6543
+   }
+  },
+  "all": {
+   "player_games": 4346,
+   "pts": {
+    "actual": 10.592,
+    "sim": 10.565,
+    "bias": -0.028,
+    "rel_bias": -0.0026,
+    "coverage_10_90": 0.797,
+    "crps": 2.5624,
+    "crps_baseline": 2.8039
+   },
+   "reb": {
+    "actual": 3.972,
+    "sim": 4.012,
+    "bias": 0.04,
+    "rel_bias": 0.0101,
+    "coverage_10_90": 0.781,
+    "crps": 1.0925,
+    "crps_baseline": 1.1751
+   },
+   "ast": {
+    "actual": 2.488,
+    "sim": 2.427,
+    "bias": -0.061,
+    "rel_bias": -0.0245,
+    "coverage_10_90": 0.786,
+    "crps": 0.8051,
+    "crps_baseline": 0.8872
+   },
+   "fg3m": {
+    "actual": 1.245,
+    "sim": 1.233,
+    "bias": -0.012,
+    "rel_bias": -0.0096,
+    "coverage_10_90": 0.8,
+    "crps": 0.5429,
+    "crps_baseline": 0.5894
+   },
+   "stl": {
+    "actual": 0.779,
+    "sim": 0.774,
+    "bias": -0.004,
+    "rel_bias": -0.0055,
+    "coverage_10_90": 0.791,
+    "crps": 0.4377,
+    "crps_baseline": 0.4772
+   },
+   "blk": {
+    "actual": 0.433,
+    "sim": 0.441,
+    "bias": 0.008,
+    "rel_bias": 0.0181,
+    "coverage_10_90": 0.798,
+    "crps": 0.284,
+    "crps_baseline": 0.3071
+   },
+   "tov": {
+    "actual": 1.274,
+    "sim": 1.267,
+    "bias": -0.007,
+    "rel_bias": -0.0057,
+    "coverage_10_90": 0.792,
+    "crps": 0.5672,
+    "crps_baseline": 0.6148
+   },
+   "fga": {
+    "actual": 8.148,
+    "sim": 8.128,
+    "bias": -0.02,
+    "rel_bias": -0.0024,
+    "coverage_10_90": 0.794,
+    "crps": 1.4082,
+    "crps_baseline": 1.5467
+   },
+   "fta": {
+    "actual": 2.055,
+    "sim": 2.121,
+    "bias": 0.066,
+    "rel_bias": 0.0321,
+    "coverage_10_90": 0.795,
+    "crps": 0.9534,
+    "crps_baseline": 1.0438
+   },
+   "pf": {
+    "actual": 1.722,
+    "sim": 1.795,
+    "bias": 0.072,
+    "rel_bias": 0.042,
+    "coverage_10_90": 0.786,
+    "crps": 0.6961,
+    "crps_baseline": 0.7234
+   }
+  },
+  "events": {
+   "action": {
+    "expected": 44133.2,
+    "actual": 44183.0,
+    "rel_bias": -0.0011
+   },
+   "def_foul": {
+    "expected": 2962.2,
+    "actual": 2927.0,
+    "rel_bias": 0.012
+   },
+   "violation": {
+    "expected": 260.7,
+    "actual": 255.0,
+    "rel_bias": 0.0223
+   },
+   "team_turnover": {
+    "expected": 308.0,
+    "actual": 299.0,
+    "rel_bias": 0.03
+   },
+   "penalty_trips": {
+    "expected": 773.3,
+    "actual": 746.0,
+    "rel_bias": 0.0366
+   },
+   "fga": {
+    "expected": 35326.7,
+    "actual": 35411.0,
+    "rel_bias": -0.0024
+   },
+   "fgm": {
+    "expected": 16687.4,
+    "actual": 16803.0,
+    "rel_bias": -0.0069
+   },
+   "and_one": {
+    "expected": 968.1,
+    "actual": 865.0,
+    "rel_bias": 0.1192
+   },
+   "fg3a": {
+    "expected": 14726.6,
+    "actual": 14847.0,
+    "rel_bias": -0.0081
+   },
+   "turnover": {
+    "expected": 5504.7,
+    "actual": 5537.0,
+    "rel_bias": -0.0058
+   },
+   "live_turnover": {
+    "expected": 3357.9,
+    "actual": 3384.0,
+    "rel_bias": -0.0077
+   },
+   "offensive_foul": {
+    "expected": 560.9,
+    "actual": 539.0,
+    "rel_bias": 0.0406
+   },
+   "shooting_foul_2": {
+    "expected": 3202.0,
+    "actual": 3069.0,
+    "rel_bias": 0.0433
+   },
+   "shooting_foul_3": {
+    "expected": 99.9,
+    "actual": 166.0,
+    "rel_bias": -0.3984
+   }
+  },
+  "team": {
+   "away_pts": {
+    "games": 200,
+    "actual": 115.14,
+    "sim": 114.82,
+    "bias": -0.33,
+    "sim_sd": 12.66,
+    "actual_sd_around_sim": 14.1,
+    "coverage_10_90": 0.74,
+    "crps": 8.029
+   },
+   "home_pts": {
+    "games": 200,
+    "actual": 115.03,
+    "sim": 114.76,
+    "bias": -0.27,
+    "sim_sd": 12.61,
+    "actual_sd_around_sim": 13.27,
+    "coverage_10_90": 0.795,
+    "crps": 7.556
+   },
+   "margin": {
+    "games": 200,
+    "actual": -0.12,
+    "sim": -0.06,
+    "bias": 0.05,
+    "sim_sd": 17.87,
+    "actual_sd_around_sim": 18.84,
+    "coverage_10_90": 0.78,
+    "crps": 10.583
+   },
+   "total": {
+    "games": 200,
+    "actual": 230.18,
+    "sim": 229.58,
+    "bias": -0.6,
+    "sim_sd": 17.87,
+    "actual_sd_around_sim": 19.88,
+    "coverage_10_90": 0.79,
+    "crps": 11.223
+   }
+  }
+ }
+}

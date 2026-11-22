@@ -1,0 +1,599 @@
+{
+ "experiment": "a1_s03_player_profile_spread",
+ "method": {
+  "games": 200,
+  "split": "2026-03-01",
+  "early_games": 112,
+  "late_games": 88,
+  "profile_unit": "shot exposure; five on-court defender exposures per valid shot",
+  "cross_half_cohort": "at least 15 opportunities and 3 games in each half",
+  "cross_half_weight": "minimum number of opportunities between halves",
+  "limitations": "descriptive retrospective rates; on-court defenders share outcomes and are not isolated on-ball assignments; selection and opponent effects remain"
+ },
+ "coverage": {
+  "shots": 35413,
+  "shooter_missing_or_wrong_team": 0,
+  "actor_not_in_recorded_offensive_five": 378,
+  "invalid_defensive_lineups": 1,
+  "defender_exposures_before_profile_join": 177060,
+  "defender_missing_or_wrong_team": 0,
+  "shooter_profile_missing": 0,
+  "defender_profile_missing": 0
+ },
+ "shooters": {
+  "by_zone_and_exposure": {
+   "rim": {
+    "all": {
+     "exposures": 9535,
+     "profiled_exposures": 9535,
+     "games": 200,
+     "players": 485,
+     "player_games": 3168,
+     "profile_mean": 0.6761405816199638,
+     "profile_sd": 0.050633039561564314,
+     "observed_make_rate": 0.6874672260094389
+    },
+    "<250": {
+     "exposures": 2439,
+     "profiled_exposures": 2439,
+     "games": 198,
+     "players": 233,
+     "player_games": 1004,
+     "profile_mean": 0.6787695628959242,
+     "profile_sd": 0.05955450370783427,
+     "observed_make_rate": 0.6916769167691676
+    },
+    "250–750": {
+     "exposures": 5289,
+     "profiled_exposures": 5289,
+     "games": 200,
+     "players": 255,
+     "player_games": 1733,
+     "profile_mean": 0.6723205899428127,
+     "profile_sd": 0.048528552372531106,
+     "observed_make_rate": 0.6823596142938173
+    },
+    ">750": {
+     "exposures": 1807,
+     "profiled_exposures": 1807,
+     "games": 182,
+     "players": 57,
+     "player_games": 431,
+     "profile_mean": 0.6837730390900163,
+     "profile_sd": 0.04168174250752625,
+     "observed_make_rate": 0.6967349197565025
+    },
+    "unknown": {
+     "exposures": 0,
+     "profiled_exposures": 0,
+     "games": 0,
+     "players": 0,
+     "player_games": 0,
+     "profile_mean": null,
+     "profile_sd": null,
+     "observed_make_rate": null
+    }
+   },
+   "paint": {
+    "all": {
+     "exposures": 8479,
+     "profiled_exposures": 8479,
+     "games": 200,
+     "players": 483,
+     "player_games": 2984,
+     "profile_mean": 0.4483389809616313,
+     "profile_sd": 0.0443519233501818,
+     "observed_make_rate": 0.4487557494987616
+    },
+    "<250": {
+     "exposures": 1529,
+     "profiled_exposures": 1529,
+     "games": 192,
+     "players": 226,
+     "player_games": 818,
+     "profile_mean": 0.43284496415569895,
+     "profile_sd": 0.04230460038805495,
+     "observed_make_rate": 0.40876389797253104
+    },
+    "250–750": {
+     "exposures": 4756,
+     "profiled_exposures": 4756,
+     "games": 200,
+     "players": 253,
+     "player_games": 1723,
+     "profile_mean": 0.4448544311285129,
+     "profile_sd": 0.043032101810404164,
+     "observed_make_rate": 0.44806560134566864
+    },
+    ">750": {
+     "exposures": 2194,
+     "profiled_exposures": 2194,
+     "games": 182,
+     "players": 57,
+     "player_games": 443,
+     "profile_mean": 0.4666903349737465,
+     "profile_sd": 0.042548161317889126,
+     "observed_make_rate": 0.4781221513217867
+    },
+    "unknown": {
+     "exposures": 0,
+     "profiled_exposures": 0,
+     "games": 0,
+     "players": 0,
+     "player_games": 0,
+     "profile_mean": null,
+     "profile_sd": null,
+     "observed_make_rate": null
+    }
+   },
+   "mid": {
+    "all": {
+     "exposures": 2551,
+     "profiled_exposures": 2551,
+     "games": 200,
+     "players": 351,
+     "player_games": 1461,
+     "profile_mean": 0.4200584033549194,
+     "profile_sd": 0.031568517449456254,
+     "observed_make_rate": 0.4053312426499412
+    },
+    "<250": {
+     "exposures": 300,
+     "profiled_exposures": 300,
+     "games": 129,
+     "players": 113,
+     "player_games": 234,
+     "profile_mean": 0.41086315615866587,
+     "profile_sd": 0.01964496251111894,
+     "observed_make_rate": 0.35
+    },
+    "250–750": {
+     "exposures": 1405,
+     "profiled_exposures": 1405,
+     "games": 199,
+     "players": 215,
+     "player_games": 873,
+     "profile_mean": 0.4169539539845196,
+     "profile_sd": 0.030302624140714714,
+     "observed_make_rate": 0.39786476868327403
+    },
+    ">750": {
+     "exposures": 846,
+     "profiled_exposures": 846,
+     "games": 171,
+     "players": 55,
+     "player_games": 354,
+     "profile_mean": 0.4284748637855196,
+     "profile_sd": 0.03501944027430187,
+     "observed_make_rate": 0.4373522458628842
+    },
+    "unknown": {
+     "exposures": 0,
+     "profiled_exposures": 0,
+     "games": 0,
+     "players": 0,
+     "player_games": 0,
+     "profile_mean": null,
+     "profile_sd": null,
+     "observed_make_rate": null
+    }
+   },
+   "corner3": {
+    "all": {
+     "exposures": 4578,
+     "profiled_exposures": 4578,
+     "games": 200,
+     "players": 448,
+     "player_games": 2437,
+     "profile_mean": 0.3847877622133489,
+     "profile_sd": 0.02596275678290736,
+     "observed_make_rate": 0.3931847968545216
+    },
+    "<250": {
+     "exposures": 1211,
+     "profiled_exposures": 1211,
+     "games": 194,
+     "players": 199,
+     "player_games": 700,
+     "profile_mean": 0.3784374801672992,
+     "profile_sd": 0.023542872045761453,
+     "observed_make_rate": 0.3633360858794385
+    },
+    "250–750": {
+     "exposures": 2870,
+     "profiled_exposures": 2870,
+     "games": 200,
+     "players": 239,
+     "player_games": 1444,
+     "profile_mean": 0.38702179525979985,
+     "profile_sd": 0.02684538718382864,
+     "observed_make_rate": 0.39686411149825784
+    },
+    ">750": {
+     "exposures": 497,
+     "profiled_exposures": 497,
+     "games": 156,
+     "players": 55,
+     "player_games": 293,
+     "profile_mean": 0.3873602304516834,
+     "profile_sd": 0.023729987592748535,
+     "observed_make_rate": 0.44466800804828976
+    },
+    "unknown": {
+     "exposures": 0,
+     "profiled_exposures": 0,
+     "games": 0,
+     "players": 0,
+     "player_games": 0,
+     "profile_mean": null,
+     "profile_sd": null,
+     "observed_make_rate": null
+    }
+   },
+   "above3": {
+    "all": {
+     "exposures": 10270,
+     "profiled_exposures": 10270,
+     "games": 200,
+     "players": 458,
+     "player_games": 3120,
+     "profile_mean": 0.3531296491332014,
+     "profile_sd": 0.018010805378773736,
+     "observed_make_rate": 0.3514118792599805
+    },
+    "<250": {
+     "exposures": 1908,
+     "profiled_exposures": 1908,
+     "games": 192,
+     "players": 209,
+     "player_games": 875,
+     "profile_mean": 0.3486908835569399,
+     "profile_sd": 0.013971124335595756,
+     "observed_make_rate": 0.3438155136268344
+    },
+    "250–750": {
+     "exposures": 6122,
+     "profiled_exposures": 6122,
+     "games": 200,
+     "players": 249,
+     "player_games": 1804,
+     "profile_mean": 0.3541299909501238,
+     "profile_sd": 0.018548187640639636,
+     "observed_make_rate": 0.3533159098333878
+    },
+    ">750": {
+     "exposures": 2240,
+     "profiled_exposures": 2240,
+     "games": 182,
+     "players": 57,
+     "player_games": 441,
+     "profile_mean": 0.3541765563279816,
+     "profile_sd": 0.01897709427437178,
+     "observed_make_rate": 0.35267857142857145
+    },
+    "unknown": {
+     "exposures": 0,
+     "profiled_exposures": 0,
+     "games": 0,
+     "players": 0,
+     "player_games": 0,
+     "profile_mean": null,
+     "profile_sd": null,
+     "observed_make_rate": null
+    }
+   }
+  },
+  "cross_half": {
+   "rim": {
+    "players": 60,
+    "early_exposures": 1665,
+    "late_exposures": 1496,
+    "minimum_half_opportunities_weight": 1304,
+    "profile_variance": 0.0025947737474604333,
+    "observed_cross_half_covariance": 0.0017754381557200838,
+    "early_rate": 0.6920228211563257,
+    "late_rate": 0.7090722185686872
+   },
+   "paint": {
+    "players": 53,
+    "early_exposures": 1580,
+    "late_exposures": 1292,
+    "minimum_half_opportunities_weight": 1210,
+    "profile_variance": 0.001716220595179145,
+    "observed_cross_half_covariance": 0.0013014153040000495,
+    "early_rate": 0.44945331282986245,
+    "late_rate": 0.4857102160942072
+   },
+   "mid": {
+    "players": 3,
+    "early_exposures": 68,
+    "late_exposures": 60,
+    "minimum_half_opportunities_weight": 58,
+    "profile_variance": 0.0005646969721893081,
+    "observed_cross_half_covariance": -0.0016789976659180004,
+    "early_rate": 0.39545703338806787,
+    "late_rate": 0.4813218390804597
+   },
+   "corner3": {
+    "players": 2,
+    "early_exposures": 40,
+    "late_exposures": 39,
+    "minimum_half_opportunities_weight": 32,
+    "profile_variance": 0.001834068560283619,
+    "observed_cross_half_covariance": 0.007642663043478259,
+    "early_rate": 0.35416666666666663,
+    "late_rate": 0.5516304347826086
+   },
+   "above3": {
+    "players": 69,
+    "early_exposures": 2213,
+    "late_exposures": 1862,
+    "minimum_half_opportunities_weight": 1662,
+    "profile_variance": 0.00027461185608405685,
+    "observed_cross_half_covariance": 0.0006349986058543758,
+    "early_rate": 0.3459070564907071,
+    "late_rate": 0.3605702638073835
+   }
+  }
+ },
+ "defenders": {
+  "by_zone_and_exposure": {
+   "rim": {
+    "all": {
+     "exposures": 47675,
+     "profiled_exposures": 47675,
+     "games": 200,
+     "players": 532,
+     "player_games": 4227,
+     "profile_mean": 0.6784988754566867,
+     "profile_sd": 0.02485973679979126,
+     "observed_make_rate": 0.6874672260094389
+    },
+    "<250": {
+     "exposures": 807,
+     "profiled_exposures": 807,
+     "games": 86,
+     "players": 69,
+     "player_games": 132,
+     "profile_mean": 0.6823512830188129,
+     "profile_sd": 0.02120096292964453,
+     "observed_make_rate": 0.7496902106567535
+    },
+    "250–750": {
+     "exposures": 2958,
+     "profiled_exposures": 2958,
+     "games": 170,
+     "players": 118,
+     "player_games": 403,
+     "profile_mean": 0.6827524023181089,
+     "profile_sd": 0.029013903885150613,
+     "observed_make_rate": 0.7123056118999324
+    },
+    ">750": {
+     "exposures": 43910,
+     "profiled_exposures": 43910,
+     "games": 200,
+     "players": 421,
+     "player_games": 3692,
+     "profile_mean": 0.6781415348655068,
+     "profile_sd": 0.024584714853833983,
+     "observed_make_rate": 0.6846504213163288
+    },
+    "unknown": {
+     "exposures": 0,
+     "profiled_exposures": 0,
+     "games": 0,
+     "players": 0,
+     "player_games": 0,
+     "profile_mean": null,
+     "profile_sd": null,
+     "observed_make_rate": null
+    }
+   },
+   "paint": {
+    "all": {
+     "exposures": 42395,
+     "profiled_exposures": 42395,
+     "games": 200,
+     "players": 520,
+     "player_games": 4182,
+     "profile_mean": 0.4470632957067294,
+     "profile_sd": 0.024522454540895324,
+     "observed_make_rate": 0.4487557494987616
+    },
+    "<250": {
+     "exposures": 658,
+     "profiled_exposures": 658,
+     "games": 80,
+     "players": 63,
+     "player_games": 123,
+     "profile_mean": 0.44174212734873763,
+     "profile_sd": 0.021249777402062683,
+     "observed_make_rate": 0.44984802431610943
+    },
+    "250–750": {
+     "exposures": 2326,
+     "profiled_exposures": 2326,
+     "games": 166,
+     "players": 115,
+     "player_games": 390,
+     "profile_mean": 0.4487859700989131,
+     "profile_sd": 0.029084538347850707,
+     "observed_make_rate": 0.46388650042992263
+    },
+    ">750": {
+     "exposures": 39411,
+     "profiled_exposures": 39411,
+     "games": 200,
+     "players": 421,
+     "player_games": 3669,
+     "profile_mean": 0.4470504665002475,
+     "profile_sd": 0.02426458428190838,
+     "observed_make_rate": 0.44784451041587375
+    },
+    "unknown": {
+     "exposures": 0,
+     "profiled_exposures": 0,
+     "games": 0,
+     "players": 0,
+     "player_games": 0,
+     "profile_mean": null,
+     "profile_sd": null,
+     "observed_make_rate": null
+    }
+   },
+   "mid": {
+    "all": {
+     "exposures": 12755,
+     "profiled_exposures": 12755,
+     "games": 200,
+     "players": 506,
+     "player_games": 3669,
+     "profile_mean": 0.4124831852559727,
+     "profile_sd": 0.02052082714287536,
+     "observed_make_rate": 0.4053312426499412
+    },
+    "<250": {
+     "exposures": 167,
+     "profiled_exposures": 167,
+     "games": 52,
+     "players": 51,
+     "player_games": 72,
+     "profile_mean": 0.41147516404379525,
+     "profile_sd": 0.01618331513822057,
+     "observed_make_rate": 0.3532934131736527
+    },
+    "250–750": {
+     "exposures": 695,
+     "profiled_exposures": 695,
+     "games": 143,
+     "players": 106,
+     "player_games": 276,
+     "profile_mean": 0.4112978624163033,
+     "profile_sd": 0.02521144448020397,
+     "observed_make_rate": 0.38273381294964026
+    },
+    ">750": {
+     "exposures": 11893,
+     "profiled_exposures": 11893,
+     "games": 200,
+     "players": 415,
+     "player_games": 3321,
+     "profile_mean": 0.412566607345942,
+     "profile_sd": 0.020265757241060188,
+     "observed_make_rate": 0.4073824939039771
+    },
+    "unknown": {
+     "exposures": 0,
+     "profiled_exposures": 0,
+     "games": 0,
+     "players": 0,
+     "player_games": 0,
+     "profile_mean": null,
+     "profile_sd": null,
+     "observed_make_rate": null
+    }
+   },
+   "three": {
+    "all": {
+     "exposures": 74235,
+     "profiled_exposures": 74235,
+     "games": 200,
+     "players": 533,
+     "player_games": 4299,
+     "profile_mean": 0.35946929547657486,
+     "profile_sd": 0.012245605750598017,
+     "observed_make_rate": 0.3643160234390786
+    },
+    "<250": {
+     "exposures": 1235,
+     "profiled_exposures": 1235,
+     "games": 90,
+     "players": 72,
+     "player_games": 147,
+     "profile_mean": 0.35808550796309924,
+     "profile_sd": 0.014444041292896703,
+     "observed_make_rate": 0.3708502024291498
+    },
+    "250–750": {
+     "exposures": 4340,
+     "profiled_exposures": 4340,
+     "games": 172,
+     "players": 119,
+     "player_games": 430,
+     "profile_mean": 0.35772859384350886,
+     "profile_sd": 0.01685162276202084,
+     "observed_make_rate": 0.36474654377880183
+    },
+    ">750": {
+     "exposures": 68660,
+     "profiled_exposures": 68660,
+     "games": 200,
+     "players": 421,
+     "player_games": 3722,
+     "profile_mean": 0.35960421570183926,
+     "profile_sd": 0.011839920778357344,
+     "observed_make_rate": 0.3641712787649286
+    },
+    "unknown": {
+     "exposures": 0,
+     "profiled_exposures": 0,
+     "games": 0,
+     "players": 0,
+     "player_games": 0,
+     "profile_mean": null,
+     "profile_sd": null,
+     "observed_make_rate": null
+    }
+   }
+  },
+  "cross_half": {
+   "rim": {
+    "players": 246,
+    "early_exposures": 17934,
+    "late_exposures": 16953,
+    "minimum_half_opportunities_weight": 13558,
+    "profile_variance": 0.000464657374916631,
+    "observed_cross_half_covariance": 0.000982893261935469,
+    "early_rate": 0.687142350979519,
+    "late_rate": 0.6822970219494863
+   },
+   "paint": {
+    "players": 242,
+    "early_exposures": 17098,
+    "late_exposures": 13543,
+    "minimum_half_opportunities_weight": 11838,
+    "profile_variance": 0.0004697113926804869,
+    "observed_cross_half_covariance": 0.00010041501611030079,
+    "early_rate": 0.4347988413046689,
+    "late_rate": 0.45923864023605254
+   },
+   "mid": {
+    "players": 96,
+    "early_exposures": 2933,
+    "late_exposures": 2522,
+    "minimum_half_opportunities_weight": 2279,
+    "profile_variance": 0.00023622828133455906,
+    "observed_cross_half_covariance": -0.0016974570617820646,
+    "early_rate": 0.3905468702589748,
+    "late_rate": 0.4260254455158115
+   },
+   "three": {
+    "players": 264,
+    "early_exposures": 29664,
+    "late_exposures": 25659,
+    "minimum_half_opportunities_weight": 21511,
+    "profile_variance": 9.52042784372463e-05,
+    "observed_cross_half_covariance": 4.8192218009036464e-05,
+    "early_rate": 0.3639317398910447,
+    "late_rate": 0.36691415769528535
+   }
+  }
+ },
+ "sha256": {
+  "analysis/experiments/20261122_a1_manifest.json": "0790a28ffadc3f09554c79661ccb80f631a4eb4b56f64030633a9a82d451e75e",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+  "data/derived/variants/matchup/features/pregame.parquet": "d4da5f071de3ddcbc72bbb4899a77f9b4f22d899a3a54bcfb76baf0097594d0e",
+  "scripts/a1_profile_spread.py": "d23f124709d2bef479367d96d91178052ba5837f2baf592487943c06b7dd4153"
+ }
+}

@@ -1,0 +1,78 @@
+{
+ "experiment": "a1_s05_historical_minutes_screen_accounting",
+ "method": "Check source hashes, fixed fold keys, common labels, strictly prior inputs, unknown/zero outcomes, recorded CRPS and strict 240-minute target means independently for both screens.",
+ "folds": {
+  "F1": {
+   "unconditional": {
+    "requested_games": 200,
+    "evaluated_games": 200,
+    "games_without_a_candidate_roster": [],
+    "requested_team_games": 400,
+    "evaluated_team_games": 400,
+    "candidates": 7423,
+    "known_regulation_actual": 5218,
+    "unknown_play": 2205,
+    "maximum_team_mean_minute_error": {
+     "control": 9.688732924928445e-05,
+     "nba_only": 9.675783962848072e-05,
+     "strict": 2.5579538487363607e-13,
+     "combined": 2.2737367544323206e-13
+    }
+   },
+   "no_report": {
+    "requested_games": 200,
+    "evaluated_games": 200,
+    "games_without_a_candidate_roster": [],
+    "requested_team_games": 400,
+    "evaluated_team_games": 400,
+    "candidates": 7423,
+    "known_regulation_actual": 5218,
+    "unknown_play": 2205,
+    "maximum_team_mean_minute_error": {
+     "control": 8.237093521756833e-05,
+     "nba_only": 8.135517416008042e-05,
+     "strict": 1.9895196601282805e-13,
+     "combined": 1.9895196601282805e-13
+    },
+    "fallback_without_prior_minute_ewma": 200
+   }
+  },
+  "F2": {
+   "unconditional": {
+    "requested_games": 200,
+    "evaluated_games": 200,
+    "games_without_a_candidate_roster": [],
+    "requested_team_games": 400,
+    "evaluated_team_games": 400,
+    "candidates": 7390,
+    "known_regulation_actual": 5225,
+    "unknown_play": 2164,
+    "maximum_team_mean_minute_error": {
+     "control": 3.836729848671894e-05,
+     "nba_only": 3.800745221838042e-05,
+     "strict": 1.9895196601282805e-13,
+     "combined": 2.2737367544323206e-13
+    }
+   },
+   "no_report": {
+    "requested_games": 200,
+    "evaluated_games": 200,
+    "games_without_a_candidate_roster": [],
+    "requested_team_games": 400,
+    "evaluated_team_games": 400,
+    "candidates": 7390,
+    "known_regulation_actual": 5225,
+    "unknown_play": 2164,
+    "maximum_team_mean_minute_error": {
+     "control": 0.00011313796639456086,
+     "nba_only": 0.00011127600646432256,
+     "strict": 1.9895196601282805e-13,
+     "combined": 1.9895196601282805e-13
+    },
+    "fallback_without_prior_minute_ewma": 209
+   }
+  }
+ },
+ "unique_input_hashes_checked": 20,
+ "audit_source_sha256": "3e6bc320dd3bc0a30f6600e6fce78bfdd7ebb2935a2d3d0c44236c60b95ecc00"
+}

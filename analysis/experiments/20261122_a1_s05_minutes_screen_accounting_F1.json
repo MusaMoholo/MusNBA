@@ -1,0 +1,43 @@
+{
+ "experiment": "a1_s05_historical_minutes_screen_accounting",
+ "method": "Check source hashes, fixed fold keys, common labels, strictly prior inputs, unknown/zero outcomes, recorded CRPS and strict 240-minute target means independently for both screens.",
+ "folds": {
+  "F1": {
+   "unconditional": {
+    "requested_games": 200,
+    "evaluated_games": 200,
+    "games_without_a_candidate_roster": [],
+    "requested_team_games": 400,
+    "evaluated_team_games": 400,
+    "candidates": 7423,
+    "known_regulation_actual": 5218,
+    "unknown_play": 2205,
+    "maximum_team_mean_minute_error": {
+     "control": 9.688732924928445e-05,
+     "nba_only": 9.675783962848072e-05,
+     "strict": 2.5579538487363607e-13,
+     "combined": 2.2737367544323206e-13
+    }
+   },
+   "no_report": {
+    "requested_games": 200,
+    "evaluated_games": 200,
+    "games_without_a_candidate_roster": [],
+    "requested_team_games": 400,
+    "evaluated_team_games": 400,
+    "candidates": 7423,
+    "known_regulation_actual": 5218,
+    "unknown_play": 2205,
+    "maximum_team_mean_minute_error": {
+     "control": 8.237093521756833e-05,
+     "nba_only": 8.135517416008042e-05,
+     "strict": 1.9895196601282805e-13,
+     "combined": 1.9895196601282805e-13
+    },
+    "fallback_without_prior_minute_ewma": 200
+   }
+  }
+ },
+ "unique_input_hashes_checked": 19,
+ "audit_source_sha256": "15ca4f27f756adbdbf973f7d59fdcbc46f92746bdb862ab23d0f74d340285557"
+}

@@ -725,6 +725,10 @@ exactly by `…133953Z_v1.3_components_F4`); node models fitted on the fold's tr
 2025-12-31 on real shares (§3u). Logs `…153853Z_v1.4c_F4`, `…153837Z_v1.4e_F4`, `…160608Z_v1.4f_F4`; paired comparisons
 `…_compare_v1.4{c,e,f}_F4`.
 
+**Seed clarification (22 Nov):** the same `--seed` selects the same games; the engine's simulation seed at source
+`6d156a4` also includes the model version, so the four variants did **not** share identical simulation streams.
+Same-game differences retain Monte Carlo noise and are not an event-by-event common-random-number comparison.
+
 | Same 200 games | v1.3 | **v1.4c** real-share defender quality + real-share θ | **v1.4e** + deterrence (attempt shares allowed) | **v1.4f** + top-1/top-2 defenders and confidence | Team model |
 |---|---|---|---|---|---|
 | Defence loading (real 1.69) | 0.686 | 0.652 | **0.738** | 0.629 | — |
@@ -1122,6 +1126,113 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   alone does not prove the exact records were available then. An independent latest-prior-team reconstruction matches all **200** candidate sets;
   saved rows, report and coverage totals reproduce. `analysis/experiments/20261122_a1_prior_box_coverage.json` records
   per-game counts.
+- **Correction discovered during S05:** the 2025–26 raw box file marks **73 rows in four All-Star games** as
+  `season_type=2`, with three non-NBA team IDs. The original prior-box cohort above therefore displaced some players'
+  latest NBA team. Keep that original report for audit, but use the separately rebuilt NBA-team-only cohort
+  `analysis/experiments/20261122_a1_prior_box_coverage_nba_only.json`: **7,317** candidates, **4,316** known plays,
+  **892** DNPs, **2,100** unlisted and **9** listed-unknown; **26** played outside the inferred universe in **22**
+  games. The new cohort contains all 7,305 original keys plus **12** restored keys (six played, one DNP, five
+  unlisted). The canonical 30-team filter is tested; it does not change the S01 conditional engine panel.
+- **S05 pre-origin population audit:** on those 200 games, the 7,317 candidates comprise **4,316** plays, **675**
+  explicit DNP-coach, **217** other DNP and **2,109** unknown. The last-five-appearance proxy (at least three prior
+  appearances; not D29 healthy role) identifies **1,412** fringe (<10 minutes), **2,481** core (≥25), **257**
+  players with a recorded team change within 30 days, and **29** first appearances after ≥5 team games missed in
+  **24** games. The return sample is below S01's reporting gate. **89** team-games have a recorded core DNP; **253**
+  have at least one core candidate with unknown status, so do not equate unlisted with absent. Team and appearance
+  joins have **zero** same-day/future rows, but past box publication times and true availability remain unknown.
+  `analysis/experiments/20261122_a1_s05_minutes_population.json` retains the counts and source fingerprints; the
+  outcome-based core-absence grouping is post-game diagnostic only.
+- **D29 input contamination:** the `season_type=2` on-court inputs read by `minutes.player_games` also contain
+  non-NBA teams: **23 / 24 / 45 / 63** player-game rows in **1 / 1 / 3 / 4** All-Star games in seasons 2023–26.
+  None of these games is in the fixed 200-game F4 panel, but D29's sequential states currently ingest them before
+  subsequent real games. Any effect on minutes, ramps or accuracy remains to be measured; production v1.3 has not
+  changed. A filtered candidate must be compared against the unmodified control with matched inputs and gates.
+  The input also has one contradictory coach-DNP/on-court record: player `2999409` in game `401468760` has
+  **119 seconds** and a coach-DNP label. D29 applies both updates; the diagnostic reproduces and flags that fact
+  rather than silently selecting one source.
+- **D29 rotation/share trace:** an independent chronological replay exactly reproduces the final D29 rotation
+  shares for **892** players, including the one contradictory pair; source hashes match
+  `analysis/experiments/20261122_a1_s05_minutes_diagnostic.json`. On the 200-game prior-box cohort, the **4,991**
+  known plays or explicit coach-DNPs have mean predicted share **0.8596**, actual play rate **0.8648**, Brier
+  **0.0832**. The <10 recent-minute fringe has **836** known labels in 191 games, share **0.5578** vs play
+  **0.5622**, Brier **0.2434**; other DNPs and unknowns are excluded, so these are conditional diagnostics,
+  not end-to-end availability calibration. Among ≥15-minute recent roles with rotation share <0.5 there are only
+  **34** known labels in 29 games, below the reporting gate.
+- **Richardson-like squeeze and overlapping evidence:** with the actual participants supplied as an oracle, applying
+  the live rotation-share weighting to D29's regulation allocator produced targets <5 minutes for **105** players
+  with ≥15 healthy-role minutes in **63** games. **83** were already below 5 without the weighting; **22** became
+  <5 after it (21 games; mean healthy **18.51**, known-play target **15.82**, weighted target **1.05**, real
+  regulation **8.42**). Both allocations independently sum to 240 in all **400** team-games; this counterfactual is
+  not a prospective forecast. The engine draws physical-status availability once; rotation share also weights the
+  target and priority, not a literal second identical Bernoulli draw. Of **1,672** inferred candidates with no known
+  play in at least three recent team games, **255** have a coach-DNP among the last five and could also trigger the
+  separate recent-nonappearance availability fallback if status were Active; **176** of those have at least one
+  unknown prior listing. Historical pre-tip status is unavailable, so overlapping evidence is a risk, not proof of
+  how often production double-counted. The regulation-only report is
+  `analysis/experiments/20261122_a1_s05_rotation_diagnostic_reg.json`; the earlier mixed-total-minutes report is
+  retained and explicitly marked superseded.
+- **S05 fixed-panel D29 baseline:** among the **4,346** actual participants in 200 games, total-minute CRPS /
+  bias / 10–90% coverage are **2.891 / −0.271 / 82.0%** for stars (284 player-games), **3.024 / +0.669 / 82.4%**
+  for starters (1,578), and **3.980 / −0.355 / 74.8%** for bench (2,472), using S01's strictly pre-game role
+  tiers. Recent-team-change participants (149 in 71 games) have minute CRPS **4.126** and coverage **67.1%**;
+  29 core returns in 24 games are below the 100-player/30-game gate. Membership calibration uses the separate
+  known-play/coach-DNP cohort and recent-minute role proxies above, because exact S01 profiles are not available
+  for historical nonparticipants. Three on-court player records have no fixed-engine output; they are counted, not
+  silently joined as scored participants. The baseline uses total minutes including overtime; allocator comparisons
+  use regulation minutes.
+- **NBA-only D29 history candidate, target screen only:** removing the 155 non-NBA rows increases star healthy roles
+  by **0.853** minutes and conditional target allocations by **0.764** on average. Star target absolute error changes
+  **−0.328** minutes (game-clustered 95% **−0.514 to −0.156**), while bench target absolute error changes
+  **+0.036** (**+0.006 to +0.069**); overall **−0.013** (**−0.037 to +0.011**). These are exploratory
+  target-level, actual-participant comparisons, not engine CRPS, a full availability forecast or a promotion decision.
+  Ramp and residual-spread fitting used the same pre-2026-01-01 cutoff in both builds. A candidate engine backtest
+  and the frozen player-first non-inferiority gates are still required.
+- **NBA-only candidate wiring:** `scripts/a1_minutes_candidate.py` provides an isolated D29 build that excludes
+  non-NBA teams, rejects same-day player/team duplicates and requires two canonical NBA teams per game. Its F4 audit
+  `analysis/experiments/20261122_a1_s05_nba_candidate_wiring_v3.json` exactly matches all **4,346** independently
+  built candidate player states (healthy, allocated, missed and return index; max difference **0**). A synthetic
+  clean-history test also exactly matches the original D29 states. The module is not connected to production or the
+  backtest CLI; this verifies implementation, not forecast accuracy.
+- **D29 short-roster target integrity:** on 10,000 synthetic five-player draws, **9,910** legacy target vectors
+  miss 240 minutes by >1e-6 (maximum deficit **11.33 minutes**); **1,000/1,000** sampled legacy mean allocations
+  also exceed the hard 48-minute player limit. These are target-allocation defects, not proof the engine puts fewer
+  than five players on court. The isolated strict candidate preserves the original draw before deterministic
+  headroom redistribution: across **50,000** draws for 5/6/7/10/15 players, its largest team error is
+  **1.43e-13 minutes**, no target exceeds 48, and same-seed draws reproduce. All **400** fixed-panel team targets and
+  **400** remove-top-player absence cascades reconcile to ≤1.14e-13; rosters with fewer than five are rejected
+  explicitly. Historical state learning still uses D29's original allocator; strict runtime allocation and NBA-only
+  history are isolated candidates, not production changes or demonstrated accuracy wins. Log:
+  `analysis/experiments/20261122_a1_s05_minutes_candidate_stress.json`.
+- **Four-fold conditional regulation-minute screen:** `scripts/a1_minutes_fold_eval.py` compares the original,
+  NBA-only-history, strict-runtime and combined allocations on **200 preselected games per fold**, using 1,000
+  matched draws per team. The **17,303** scored participant-game records include 74 without a pre-game role tier.
+  Original conditional CRPS is **3.393 / 3.477 / 3.503 / 3.522** minutes for F1–F4. NBA-only minus original
+  star CRPS is **−0.020 / −0.081 / −0.023 / −0.196**; bench CRPS is **−0.001 / +0.010 / +0.015 / +0.022**.
+  Game-clustered 95% intervals and all tier counts are in
+  `analysis/experiments/20261122_a1_s05_minutes_fold_screen.json`. On these actual-participant rosters, the strict
+  runtime allocation changes conditional CRPS by less than 1e-6 in every fold: fixing short-roster feasibility is
+  not by itself evidence of forecast improvement. F4 game `401811045`, team `18`, has **239.618** observed
+  regulation player-minutes; all other teams are within **0.002** minutes of 240. This is included, not silently
+  repaired. This screen uses actual participants and is not unconditional availability, simulated in-game minutes,
+  an engine backtest or promotion evidence. **Provisional strict results:** its redistribution can give a previously
+  zero-minute target a positive infinitesimal amount even when positive targets have sufficient headroom. That
+  artificially changes a `draw > 0` target-play probability and may affect coverage; strict/combined results
+  require correction and a new screen. In the retained F1 no-report screen strict target-play probability increased
+  for **4,390/7,423** candidates, including **2,715** with known play labels, and decreased for none; the largest
+  increase was **0.155**. These changes do not demonstrate better availability. The control and NBA-only
+  comparisons are unaffected.
+- **Historical prior-box minute sensitivities:** the independently audited all-active and fixed no-report fallback
+  screens cover F1–F4 respectively **200/200/195/200** games and **400/400/390/400** team-sides. The five F3
+  season-opening games have no prior same-season team candidates; their players are not treated as zeroes. The
+  candidate universes contain **7,423 / 7,390 / 6,400 / 7,317** player-games; known regulation outcomes are
+  **5,218 / 5,225 / 5,013 / 5,208**, and unknown play labels **2,205 / 2,164 / 1,387 / 2,109**. One F2 known
+  label has no usable regulation outcome. On known outcomes, the no-report control's minute CRPS is
+  **4.709 / 5.612 / 4.610 / 5.479**, and target-play Brier is **0.1212 / 0.1392 / 0.1121 / 0.1311**. No
+  fewer-than-five availability patterns required resampling; **200 / 209 / 281 / 179** fallback records lacked a
+  prior minute EWMA. Neither sensitivity reconstructs historical injury reports or official dated rosters. The
+  strict and combined results await the invariant repair. Independent audit:
+  `analysis/experiments/20261122_a1_s05_minutes_screen_accounting_uncorrected.json` (21 input and 16 output
+  fingerprints); individual JSON reports and ignored parquet distributions use the matching fold prefixes.
 - **Preregistration:** `analysis/experiments/20261122_a1_pre_candidate_manifest.json` fixes the original 200-game
   screen, **200 / 200 / 200 / 718** F1–F4 confirmation games, simulation streams and input hashes before candidates.
   An independent check finds **1,318 distinct** game IDs within their declared fold dates and **2,636 distinct**
@@ -1136,3 +1247,58 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   confirmation seeds match that checkpoint. Raw bytecode SHA-256 is
   `aa7233f20022d729a98acf25cb1b321678a83a3cfa33167ffc12f7b86db7e8c6`; a prior marshalled-tuple digest varied across
   processes and is not a valid equality test. No candidate has been scored.
+
+## 6b. A1 S03 matched component diagnosis (22 Nov 2026; descriptive)
+
+The fixed S01 pool-0 F4 control and manifest match on **200 games / 400 team-sides**. Pre-date own-offence and
+opponent-defence ratings, real/simulated component outcomes and denominators are specified in TRAINING_PLAN §8.
+The complete archived team-rating summary and every rounded component coefficient/mean reproduce. On
+`analysis/experiments/20261122_a1_s03_components.json`, **10,000 complete-game paired bootstrap** replicates give:
+
+| Sim minus real loading | Own offence (95% interval) | Opponent defence (95% interval) |
+|---|---:|---:|
+| Points/100 possessions | −0.417 (−0.837, −0.024) | −1.008 (−1.395, −0.640) |
+| FG% | −0.00140 (−0.0034, 0.0005) | −0.00387 (−0.0055, −0.0022) |
+| 3P% | −0.00170 (−0.0045, 0.0011) | −0.00181 (−0.0047, 0.0010) |
+| FTA/100 | −0.0135 (−0.2296, 0.2042) | −0.1901 (−0.4158, 0.0282) |
+| Offensive rebounds/100 | −0.0984 (−0.2364, 0.0389) | −0.1554 (−0.2839, −0.0353) |
+
+Mean simulated/real points per 100 are **114.359 / 113.664**, and FTA per 100 **23.556 / 22.325**.
+These are paired observational comparisons, not causal attributions; intervals that include zero are inconclusive,
+and component comparisons are exploratory. Team scores and player-box components have different accounting
+definitions. The model conditions on actual participants. No final-season outcome or new model was used.
+
+**Rejected-variant scoring decomposition** (`analysis/experiments/20261122_a1_s03_variant_components.json`): on
+the same 200 F4 games against the original shared-pool control, mean variant-minus-control total is **+0.996 / +0.893 /
++0.411** points for v1.4c/e/f (95% game-cluster intervals **+0.768 to +1.226 / +0.676 to +1.120 / +0.173 to
++0.656**). The exact two-point / three-point / remaining-score terms are **+0.565 / +0.698 / −0.266**,
+**+0.747 / +0.496 / −0.350**, and **−0.126 / +0.749 / −0.212** points per game, respectively. Their FTA changes are
+**−0.275 / −0.350 / −0.179**, and OREB changes **−0.029 / +0.042 / +0.024**. A symmetric algebraic
+possessions/points-per-possession split assigns **−0.044 / −0.091 / +0.073** points to the pace term and
+**+1.040 / +0.983 / +0.337** to the efficiency term. The score residual is reconstructed, not a stored FTM outcome;
+the model-version streams differ. These identities describe what moved, not which mechanism caused it.
+
+**Player-profile spread** (`analysis/experiments/20261122_a1_s03_profile_spread.json`): among **35,413** fixed-panel
+shots, **378** actors are absent from the recorded offensive five; these remain identifiable shooters for the
+descriptive player profile, but their actor inputs are missing in the cached node. One invalid defensive five is
+excluded, leaving **177,060** on-court defender-shot exposures. The pre-specified 112/88-game temporal split requires
+15 shots and 3 games per half per player/zone, weighted by the lesser half's exposure count. For **246** rim-exposed
+defenders, the pre-game profile variance is **0.000465** versus cross-half observed-rate covariance **0.000983**; for
+**69** above-break-three shooters, the corresponding values are **0.000275 / 0.000635**. These quantities are not
+causal: five defenders share each shot, lineup/teammate/opponent and shot-selection effects are unadjusted, profile
+averages change during the panel, and the same early outcomes can inform later pre-game profiles. Mid-range and corner
+shooter cohorts have only **3 / 2** qualifying players; their observed covariance is not reliable. No negative
+covariance is clamped.
+
+**Actual-shot node trace** (`analysis/experiments/20261122_a1_s03_shot_trace.json`): all **35,413** rows align on
+game, date, period, zone, shot result, margin, clock, coordinates and seven actor-profile fields; the cache signature
+equals the saved F4 model's training signature. The model was scored with training-window distance bands and its
+original fitted parameters, conditional on actual shot/zone. Across **200 games / 526 shooters**, mean predicted make
+is **47.63%** versus **47.45%** observed (binary log loss **0.6437**, Brier **0.2265**). For rim shots, the
+assignment-weighted matchup-profile Q4−Q1 observed make-rate difference is **6.66 pp**, versus **3.65 pp** in
+predictions; their **3.01 pp** gap has a post hoc, paired game-bootstrap 95% interval **0.25–5.73 pp**. This is
+unadjusted and one of many exploratory contrasts, not evidence that a specific defender caused the gap. Above the
+break, the shooter-profile Q4−Q1 gap is **0.55 pp observed / 3.06 pp predicted**; its 95% observed-minus-predicted
+interval is **−5.01 to −0.01 pp**, also exploratory. Within-zone bin cutpoints use input values only. The **378**
+unknown actor-profile rows are counted, not filled; defender effective exposure is the mean of a valid five, not an
+on-ball attribution. Original source publication/revision timing remains unproven.

@@ -30,7 +30,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from basketball_common import DERIVED, write_json  # noqa: E402
+from basketball_common import DERIVED, sha256_file, write_json  # noqa: E402
 from scripts import aggregate, nodes, projection, train  # noqa: E402
 from scripts.evaluate import EXPERIMENTS, FOLDS  # noqa: E402
 
@@ -57,7 +57,7 @@ def fold_engine_version(fold: str, spec_path: Path, threads: int) -> str:
     return str(folder.relative_to(train.MODELS))
 
 
-def load_inputs(spec: dict, fold: str):
+def load_inputs(spec: dict, fold: str, flow_diagnostics: bool = False):
     dflt = spec.get('default', {})
     features = Path(dflt['features']).parent if dflt.get('features') else DERIVED / 'features'
     segments = Path(dflt['segments']) if dflt.get('segments') else DERIVED
@@ -67,8 +67,11 @@ def load_inputs(spec: dict, fold: str):
     pre = pre[(pre['date_et'] >= val_from) & (pre['date_et'] <= val_to)]
     teams = pd.read_parquet(features / 'team_pregame.parquet')
     teams = teams[(teams['date_et'] >= val_from) & (teams['date_et'] <= val_to)]
-    seg = pd.read_parquet(segments / 'history' / str(season) / 'segments.parquet',
-                          columns=['game_id', 'date_et', 'season', 'season_type', 'game_ok', 'offense', 'defense', 'off_home', 'poss', 'points', 'period'])
+    seg_columns = ['game_id', 'date_et', 'season', 'season_type', 'game_ok', 'offense', 'defense',
+                   'off_home', 'poss', 'points', 'period']
+    if flow_diagnostics:
+        seg_columns += ['duration', 'start_clock']
+    seg = pd.read_parquet(segments / 'history' / str(season) / 'segments.parquet', columns=seg_columns)
     seg = seg[(seg['date_et'] >= val_from) & (seg['date_et'] <= val_to)]
     stints = pd.read_parquet(DERIVED / 'history' / str(season) / 'stints.parquet')
     on = pd.read_parquet(DERIVED / 'history' / str(season) / 'on_court.parquet', columns=['game_id', 'player', 'sec'])
@@ -112,19 +115,30 @@ def simulation_seed(version: str, day: str, gid: str, stream: int | None = None,
     return projection.seed_for(*parts)
 
 
-def _init(version, spec_path, fold, worlds, rotation='replay', known_starters=False, pool=None, stream=None, seed_key=None):
+def _init(version, spec_path, fold, worlds, rotation='replay', known_starters=False, pool=None, stream=None, seed_key=None,
+          flow_diagnostics=False):
     from scripts import engine
     if pool is not None:  # D36: rotation-table pool (0 = one table per world)
         engine.ROTATION['pool'] = pool
     spec = json.loads(Path(spec_path).read_text())
     _, _, val_to = FOLDS[fold]
     season = int(val_to[:4]) if val_to[5:7] <= '06' else int(val_to[:4]) + 1
-    periods = pd.read_csv(DERIVED / 'history' / str(season) / 'player_periods.csv.gz',
-                          usecols=['game_id', 'team_id', 'period', 'pts'], dtype={'game_id': str, 'team_id': str})
-    periods = periods.groupby(['game_id', 'team_id', 'period'])['pts'].sum()
-    _W.update({'engine': engine.Engine(version), 'mod': engine, 'inputs': load_inputs(spec, fold), 'worlds': worlds,
+    columns = ['game_id', 'team_id', 'period', 'pts']
+    if flow_diagnostics:
+        columns += ['player_id', 'sec', 'fga', 'fta', 'tov']
+    period_rows = pd.read_csv(DERIVED / 'history' / str(season) / 'player_periods.csv.gz', usecols=columns,
+                              dtype={'game_id': str, 'team_id': str, 'player_id': str})
+    periods = period_rows.groupby(['game_id', 'team_id', 'period'])['pts'].sum()
+    player_periods = None
+    if flow_diagnostics:
+        keys = ['game_id', 'team_id', 'player_id', 'period']
+        if period_rows.duplicated(keys).any():
+            raise ValueError('duplicate player-period source records')
+        player_periods = period_rows.set_index(keys)
+    _W.update({'engine': engine.Engine(version), 'mod': engine, 'inputs': load_inputs(spec, fold, flow_diagnostics), 'worlds': worlds,
                'teams': json.loads((DERIVED / 'teams.json').read_text()), 'rotation': rotation, 'known_starters': known_starters,
-               'periods': periods, 'stream': stream, 'seed_key': seed_key})
+               'periods': periods, 'player_periods': player_periods, 'flow_diagnostics': flow_diagnostics,
+               'stream': stream, 'seed_key': seed_key})
     if rotation == 'targets':  # D29 minutes: pre-game states for every history player-game; ramp and spread from before the window
         from scripts import minutes
         m = minutes.build(FOLDS[fold][1], include_current=False)
@@ -163,6 +177,8 @@ def run_game(gid: str) -> dict:
                     position_policy=eng.m.position_policy)
     g.season = season
     sim_seed = simulation_seed(eng.m.cfg['version'], day, gid, _W['stream'], _W['seed_key'])
+    if _W.get('flow_diagnostics'):
+        eng.diag, eng.rotation_diag = [], []
     eng.simulate(g, worlds, sim_seed)
     st = eng.last
     sim_pts = st.pts.sum(2)  # (W, 2): home, away
@@ -176,6 +192,19 @@ def run_game(gid: str) -> dict:
            'real_poss_home': real_poss['home'], 'real_poss_away': real_poss['away'], 'real_ot': int(s['period'].max() > 4),
            'sim_poss_home': float(st.poss[:, 0].mean()), 'sim_poss_away': float(st.poss[:, 1].mean()),
            'sim_ot': float((st.period > 4).mean())}
+    if _W.get('flow_diagnostics'):
+        from scripts import a1_flow_capture
+        if eng.diag is None or eng.rotation_diag is None or len(eng.rotation_diag) != 1:
+            raise ValueError('flow diagnostics were not captured for this game')
+        tables, combo = eng.rotation_diag[0]
+        for key, value in a1_flow_capture.clock_summary(eng.diag, s, worlds).items():
+            out[f'flow_clock_{key}'] = value
+        game_stints = stints[stints['game_id'] == gid]
+        for side, index, team in (('home', 0, home), ('away', 1, away)):
+            capture = a1_flow_capture.scheduled_overlap(tables, combo, g.ids, g.P, game_stints, team, index)
+            for key, value in capture.items():
+                out[f'flow_rotation_{side}_{key}'] = value
+        eng.diag, eng.rotation_diag = None, None
     measures = {'home': (sim_pts[:, 0], real_pts_box['home']), 'away': (sim_pts[:, 1], real_pts_box['away']),
                 'total': (sim_pts.sum(1), real_pts_box['home'] + real_pts_box['away']),
                 'margin': (sim_pts[:, 0] - sim_pts[:, 1], real_pts_box['home'] - real_pts_box['away'])}
@@ -234,6 +263,21 @@ def run_game(gid: str) -> dict:
             row[f'{k}_actual'], row[f'{k}_sim'] = float(real[k]), float(x.mean())
             row[f'{k}_crps'] = float(aggregate.crps_samples(x[:, None], np.array([float(real[k])]))[0])
             row[f'{k}_pit'] = float(aggregate.pit(x[:, None], np.array([float(real[k])]), threes_rng if k == 'fg3m' else rng)[0])
+        if _W.get('flow_diagnostics'):
+            for k in ('fga', 'fgm', 'fg3a', 'fta', 'tov', 'oreb'):
+                actual = getattr(r, COMPONENT_BOX[k])
+                row[f'{k}_actual'] = float(actual) if pd.notna(actual) else None
+                row[f'{k}_sim'] = float(st.box[k][:, i].sum(1).mean())
+            player_periods = _W['player_periods']
+            for q in range(1, 5):
+                key = (gid, r.team, r.player, q)
+                period = player_periods.loc[key] if key in player_periods.index else None
+                for k in ('pts', 'fga', 'fta', 'tov', 'min'):
+                    actual_key = 'sec' if k == 'min' else k
+                    actual = period[actual_key] if period is not None else None
+                    row[f'q{q}_{k}_actual'] = (float(actual) / 60 if k == 'min' else float(actual)) if pd.notna(actual) else None
+                    values = st.minutes[:, i, q - 1] if k == 'min' else st.box[k][:, i, q - 1]
+                    row[f'q{q}_{k}_sim'] = float(values.mean())
         rows.append(row)
     out['players'] = rows
     return out
@@ -323,10 +367,8 @@ def _crps_normal(mu, sd, y):
     return sd * (z * (2 * cdf - 1) + 2 * pdf - 1 / sqrt(pi))
 
 
-def rating_baseline(games: pd.DataFrame) -> dict:
-    """The team engine's game model on the same games (D26): each side's expected points from ratings before the date
-    (`season_backtest.state_before`: box possessions, shrunk K = 8 — what the pathway starts from), scores normal with
-    baseline-v1's SD 11.25 and rho 0.35. Same measures as the engine's, so the two engines compare on real outcomes."""
+def rating_baseline_inputs(games: pd.DataFrame) -> pd.DataFrame:
+    """Pre-date rating and score inputs used by the team engine's comparison."""
     from scripts import pathway, season_backtest
     p = pathway.PATHWAY
     out_rows = []
@@ -342,7 +384,16 @@ def rating_baseline(games: pd.DataFrame) -> dict:
         mu_a = pace_g * off[1] * dfn[0] / lg['ortg'] / 100 - p['home_court'] / 2
         out_rows.append({'game_id': r.game_id, 'mu_h': mu_h, 'mu_a': mu_a, 'pace': pace_g,
                          'off_h': off[0] - lg['ortg'], 'off_a': off[1] - lg['ortg'], 'def_h': dfn[0] - lg['ortg'], 'def_a': dfn[1] - lg['ortg']})
-    b = pd.DataFrame(out_rows)
+    return pd.DataFrame(out_rows)
+
+
+def rating_baseline(games: pd.DataFrame) -> dict:
+    """The team engine's game model on the same games (D26): each side's expected points from ratings before the date
+    (`season_backtest.state_before`: box possessions, shrunk K = 8 — what the pathway starts from), scores normal with
+    baseline-v1's SD 11.25 and rho 0.35. Same measures as the engine's, so the two engines compare on real outcomes."""
+    from scripts import pathway
+    p = pathway.PATHWAY
+    b = rating_baseline_inputs(games)
     g = games.merge(b, on='game_id')
     sd, rho = p['team_sd'], p['team_rho']
     sds = {'home': sd, 'away': sd, 'total': sd * np.sqrt(2 * (1 + rho)), 'margin': sd * np.sqrt(2 * (1 - rho))}
@@ -413,6 +464,7 @@ def main():
     ap.add_argument('--models', default=None, help='reuse fitted fold models (e.g. folds/v1.1_F4_all) instead of fitting')
     ap.add_argument('--known-starters', action='store_true', help='targets only: open with the real starters (a perfect lineup source)')
     ap.add_argument('--pool', type=int, default=None, help='rotation tables per side shared by the worlds (default 400; 0 = one per world, D36)')
+    ap.add_argument('--flow-diagnostics', action='store_true', help='save opt-in clock, scheduled-five and player-quarter diagnostics')
     ap.add_argument('--summarise', metavar='RUN', help='re-score a saved run (<stamp>_<name>) without simulating; updates its log')
     args = ap.parse_args()
     start = time.time()
@@ -438,7 +490,8 @@ def main():
     ctx = mp.get_context('spawn')
     results = []
     with ctx.Pool(args.jobs, initializer=_init, initargs=(version, str(args.config), args.fold, args.worlds, args.rotation,
-                                                         args.known_starters, args.pool, args.simulation_stream, args.seed_key)) as pool:
+                                                         args.known_starters, args.pool, args.simulation_stream, args.seed_key,
+                                                         args.flow_diagnostics)) as pool:
         for i, r in enumerate(pool.imap(run_game, list(games), chunksize=1), 1):
             results.append(r)
             if i % min(10, max(1, len(games) // 10)) == 0 or i == len(games):
@@ -454,13 +507,18 @@ def main():
     (DERIVED / 'experiments').mkdir(parents=True, exist_ok=True)
     frame.to_parquet(DERIVED / 'experiments' / f'{stamp}_{name}.parquet', index=False)
     players.to_parquet(DERIVED / 'experiments' / f'{stamp}_{name}_players.parquet', index=False)
-    write_json(EXPERIMENTS / f'{stamp}_{name}.json', {'experiment': 'm9_engine_backtest', 'run': stamp, 'commit': train.git_commit(),
-                                                      'config': str(args.config), 'fold': args.fold, 'models': version, 'games': len(games),
-                                                      'worlds': args.worlds, 'rotation': args.rotation, 'known_starters': args.known_starters, 'pool': args.pool,
-                                                      'game_ids': games.tolist(), 'game_selection_seed': args.seed,
-                                                      'game_ids_file': str(args.game_ids) if args.game_ids else None,
-                                                      'simulation_stream': args.simulation_stream, 'seed_key': args.seed_key,
-                                                      'seconds': round(time.time() - start), 'summary': summary}, pretty=True)
+    record = {'experiment': 'm9_engine_backtest', 'run': stamp, 'commit': train.git_commit(),
+              'config': str(args.config), 'fold': args.fold, 'models': version, 'games': len(games),
+              'worlds': args.worlds, 'rotation': args.rotation, 'known_starters': args.known_starters, 'pool': args.pool,
+              'game_ids': games.tolist(), 'game_selection_seed': args.seed,
+              'game_ids_file': str(args.game_ids) if args.game_ids else None,
+              'simulation_stream': args.simulation_stream, 'seed_key': args.seed_key,
+              'seconds': round(time.time() - start), 'summary': summary}
+    if args.flow_diagnostics:
+        paths = (Path(__file__), ROOT / 'scripts' / 'engine.py', ROOT / 'scripts' / 'a1_flow_capture.py')
+        record['flow_diagnostics'] = {'sha256': {str(p.resolve().relative_to(ROOT)): sha256_file(p) for p in paths},
+                                      'note': 'scheduled lineups precede foul-outs; actual period values may be missing'}
+    write_json(EXPERIMENTS / f'{stamp}_{name}.json', record, pretty=True)
     print(json.dumps(summary, indent=1))
     print(f'\nrun {stamp}_{name}  ({len(games)} games, {time.time() - start:.0f}s)')
 

@@ -1,0 +1,22 @@
+{
+ "experiment": "a1_s05_nba_only_candidate_wiring",
+ "status": "superseded by the v3 audit after adding the isolated legal-minute allocation helpers",
+ "method": "Run the isolated NBA-only D29 build with the same F4 fitting cutoff and compare each saved conditional player state with the independently constructed target-screen variant.",
+ "cutoff": "2026-01-01",
+ "games": 200,
+ "player_games": 4346,
+ "maximum_absolute_differences": {
+  "healthy": 0.0,
+  "alloc": 0.0,
+  "missed": 0.0,
+  "k_back": 0.0
+ },
+ "limitations": "Candidate only; these state checks do not score player or team engine predictions.",
+ "input_sha256": {
+  "analysis/experiments/20261122_a1_s05_minutes_diagnostic.json": "d3e8aa88df0ce41f42b4f38a180d4acbe309a16747d0d2a2aab99536db774d6d",
+  "data/derived/experiments/20261122_a1_s05_minutes_diagnostic.parquet": "57547315a827e9f716a2ab5275919f8607a642a817b16a1175172caa72ed0ed9",
+  "scripts/minutes.py": "94dd0ed25e536708c75cd4cf1f386bf2f9fa35f2c334d83cbdd031d4448ba2d0",
+  "scripts/a1_minutes_candidate.py": "b6f710d70afcfc3cad8ed85998b192257008f2383abe0615b7098b38d39aef83",
+  "data/derived/teams.json": "130aa5358d49b944c2b5bee7e9a163f1e53285e93dae57262f039ca1636b7ecc"
+ }
+}

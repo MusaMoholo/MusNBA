@@ -374,6 +374,7 @@ class Engine:
         version = version or ENGINE.get('models', ENGINE['version'])  # the node models' version (v1.2 serves v1.1's models)
         self.m = Models(version)
         self.diag = None  # set to [] to record (start type, seconds to action, clock) per segment
+        self.rotation_diag = None  # optional pre-foul-out scheduled rotation tables
 
     # ----------------------------------------------------------------------------- inputs
     def _context(self, g, st, A, L_off, L_def):
@@ -481,6 +482,8 @@ class Engine:
         st = Worlds(g, W, rng)
         avail_world = rng.random((W, g.n)) < g.avail[None, :]
         tables, combo = g.lineup_tables(avail_world, rng)
+        if self.rotation_diag is not None:
+            self.rotation_diag.append((tables, combo))
         fouled_out = np.zeros((W, g.n), bool)
         m = self.m
         steps = 0

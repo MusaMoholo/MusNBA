@@ -10,7 +10,7 @@ or phone.
 > from games before the origin; 10,000 worlds per game, one rotation table per world; the floor for later improvements, D22–D24); every later game from the **team pathway v1**, where
 > each simulated season carries its own team ratings and updates them after every game (D25). Past dates rebuilt after the
 > fact currently use a labelled placeholder. U1–U22 and public Pages/iCloud delivery are complete. Accuracy chunk
-> **A1 (14 tasks)** has completed S01; S02 is active and versioned, cutoff-safe engine history remains planned.
+> **A1 (14 tasks)** has completed S01–S02; S03 is active and versioned, cutoff-safe engine history remains planned.
 > See [PLAN.md](PLAN.md) and [HANDOFF_NEXT.md](HANDOFF_NEXT.md).
 
 ## Setup
@@ -117,13 +117,15 @@ Dashboard routes: `#/standings/{forecast,seeds,wins,ratings,picture,races,movers
 | `scripts/aggregate.py` | M6a: replay held-out games with real lineups and clock, sample every decision, score box scores |
 | `scripts/engine.py` | The engine (default projection, v1.3 = D30 defence inputs + D29 minutes): plays games possession by possession; rotation tables rescaled to minutes targets; profiles from the version's features variant (`features_dir`) |
 | `scripts/minutes.py` | D29 minutes: healthy-role minutes, priority, 240 per team by priority, return ramp, rotation share, per-world draws, projected starters |
+| `scripts/a1_minutes_candidate.py` | Isolated NBA-team-only D29 history and strict regulation-allocation candidates; `--audit-f4` checks fixed-panel states. Not used by production or the backtest CLI yet |
+| `scripts/a1_minutes_audit.py`, `scripts/a1_minutes_diagnose.py`, `scripts/a1_rotation_diagnose.py`, `scripts/a1_minutes_stress.py` | A1's prior-box population, D29 state/calibration, conditional target-squeeze and legal-allocation diagnostics; not pre-game availability forecasts |
 | `scripts/matchups.py` | D30 implicit matchups: soft assignment of defenders to shooters from foul/block credits; shot types from the play text |
 | `scripts/fetch_nbastats.py` | D32 NBA Stats adapter (browser fetch headers, ~1 request/s, resumable): season logs, `boxscorematchupsv3`, tracking defence, play-by-play v3 → `data/raw/nbastats/<endpoint>/<season>/` (gzip + manifest) |
 | `scripts/nbastats.py` | D32 crosswalk (games by date + teams, players by name/stat line), reconciliation v ESPN (points, minutes, possessions), real matchups in ESPN ids → `data/derived/nbastats/` |
 | `scripts/realmatch.py` | D32 real matchups: pre-game assignment fitted on real shares (ranks, stopper, pair history), per-game pair history (cutoff-safe) |
 | `scripts/lineups.py` | Projected v actual starters for every finished snapshot (nightly record, D33) |
 | `scripts/backtest.py`, `scripts/backtest_compare.py` | Engine backtest on held-out fold games (M9; `--rotation targets`, `--models` to reuse fold models), with the team-rating model on the same games; legacy paired scorecard |
-| `scripts/a1_compare.py`, `scripts/a1_manifest.py`, `scripts/a1_quarter_audit.py`, `scripts/a1_output_audit.py`, `scripts/a1_availability_cohort.py`, `scripts/a1_data_inventory.py`, `scripts/a1_reconcile.py`, `scripts/a1_rotation_audit.py`, `scripts/a1_tracking_coverage.py`, `scripts/a1_lineup_audit.py`, `scripts/a1_subsplit_audit.py`, `scripts/a1_feature_parity.py`, `scripts/a1_causal_audit.py`, `scripts/a1_assignment_audit.py`, `scripts/a1_assignment_schedule.py`, `scripts/a1_node_cache_audit.py`, `scripts/a1_future_injection.py` | A1 paired bootstrap, frozen provenance, independent accounting, data integrity, dated assignment fits, sampled train/engine parity and causal injection tests |
+| `scripts/a1_compare.py`, `scripts/a1_manifest.py`, `scripts/a1_quarter_audit.py`, `scripts/a1_output_audit.py`, `scripts/a1_availability_cohort.py`, `scripts/a1_data_inventory.py`, `scripts/a1_reconcile.py`, `scripts/a1_rotation_audit.py`, `scripts/a1_tracking_coverage.py`, `scripts/a1_lineup_audit.py`, `scripts/a1_subsplit_audit.py`, `scripts/a1_feature_parity.py`, `scripts/a1_causal_audit.py`, `scripts/a1_assignment_audit.py`, `scripts/a1_assignment_schedule.py`, `scripts/a1_node_cache_audit.py`, `scripts/a1_future_injection.py`, `scripts/a1_signal.py`, `scripts/a1_m6a_audit.py`, `scripts/a1_profile_spread.py`, `scripts/a1_shot_trace.py`, `scripts/a1_variant_components.py` | A1 paired bootstrap, frozen provenance, independent accounting, data integrity, dated assignment fits, sampled train/engine parity, causal injection tests and matched signal diagnosis |
 | `scripts/pathway.py` | Team engine (D25, D26): per-world offensive/defensive ratings, updated after every simulated game |
 | `scripts/season_backtest.py` | Team engine trust test (M12 first cut): walk-forward seasons 2022-26, `--grid` calibration |
 | `scripts/athletes.py`, `scripts/buckets.py` | Player heights/weights; paired comparisons by the player's sample size |
@@ -168,6 +170,11 @@ Rebuild in order after new data: `scripts/history.py` → `scripts/possessions.p
 .venv/bin/python -m scripts.a1_node_cache_audit --features <variant>/pregame.parquet --fold F4 --output <new-report.json> # audit a full isolated node cache
 .venv/bin/python -m scripts.a1_subsplit_audit --limit 200 --account-pregame <variant>/pregame.parquet --output <new-report.json> # isolated split feature/node accounting
 .venv/bin/python -m scripts.a1_future_injection --output <new-report.json> # real-slice same-day/future injection audit
+.venv/bin/python -m scripts.a1_signal --dataset <new-sides.parquet> --output <new-report.json> # fixed F4 component loadings, game-clustered intervals
+.venv/bin/python -m scripts.a1_variant_components --output <new-report.json> # matched shared-pool variant decomposition
+.venv/bin/python -m scripts.a1_m6a_audit <run> --game-ids <ids.json> --output <new-report.json> # teacher-forced output and model accounting
+.venv/bin/python -m scripts.a1_profile_spread --output <new-report.json> # descriptive shooter/defender profile spread
+.venv/bin/python -m scripts.a1_shot_trace --output <new-report.json> # aligned frozen F4 shot node; actual-shot diagnostic, not forecast
 .venv/bin/python -m unittest discover -s tests -p 'test_a1*.py'       # focused A1 evaluation checks
 .venv/bin/python scripts/minutes.py --evaluate [--season 2025 --from 2025-01-01 --to 2025-04-30] [--set gamma=1]   # allocator v real (no engine)
 .venv/bin/python scripts/matchups.py --fit --through 2025-12-31            # D30 assignment θ → models/matchup_<through>.json

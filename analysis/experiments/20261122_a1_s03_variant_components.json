@@ -1,0 +1,338 @@
+{
+ "experiment": "a1_s03_rejected_variant_components",
+ "control": "20261120T133953Z_v1.3_components_F4",
+ "method": {
+  "unit": "game; both teams summed",
+  "bootstrap_replicates": 10000,
+  "bootstrap_seed": 20261122,
+  "score_terms": "2*(FGM-3PM), 3*3PM, and points-2*FGM-3PM",
+  "pace_terms": "symmetric exact decomposition of mean points = mean possessions * points per possession",
+  "limitations": "shared-pool comparisons, not pool-0; random streams depend on model version; residual is reconstructed from engine scoring identity, not saved FTM; decompositions are descriptive, not causal"
+ },
+ "variants": {
+  "v1.4c": {
+   "run": "20261120T153853Z_v1.4c_F4",
+   "games": 200,
+   "changes": {
+    "poss": {
+     "mean_per_game": -0.03540999999999897,
+     "ci_95": [
+      -0.13074824999999696,
+      0.06246525000000223
+     ]
+    },
+    "fga": {
+     "mean_per_game": 0.325825000000001,
+     "ci_95": [
+      0.19555975000000153,
+      0.45791500000000046
+     ]
+    },
+    "fgm": {
+     "mean_per_game": 0.5150549999999996,
+     "ci_95": [
+      0.40898499999999977,
+      0.6206756249999986
+     ]
+    },
+    "fg3a": {
+     "mean_per_game": 0.32017500000000026,
+     "ci_95": [
+      0.15723625,
+      0.48281074999999957
+     ]
+    },
+    "fg3m": {
+     "mean_per_game": 0.23272500000000004,
+     "ci_95": [
+      0.1636084999999999,
+      0.30080624999999983
+     ]
+    },
+    "fta": {
+     "mean_per_game": -0.27531500000000036,
+     "ci_95": [
+      -0.4434821250000002,
+      -0.11414862500000048
+     ]
+    },
+    "tov": {
+     "mean_per_game": -0.11697500000000001,
+     "ci_95": [
+      -0.207691875,
+      -0.026034124999999988
+     ]
+    },
+    "oreb": {
+     "mean_per_game": -0.028825000000000038,
+     "ci_95": [
+      -0.08395712500000031,
+      0.027200375000000103
+     ]
+    },
+    "points": {
+     "mean_per_game": 0.9963349999999994,
+     "ci_95": [
+      0.7681288749999989,
+      1.2263514999999992
+     ]
+    },
+    "two_point_points": {
+     "mean_per_game": 0.5646599999999986,
+     "ci_95": [
+      0.30901149999999905,
+      0.8228894999999993
+     ]
+    },
+    "three_point_points": {
+     "mean_per_game": 0.6981750000000002,
+     "ci_95": [
+      0.49082550000000047,
+      0.9024187499999992
+     ]
+    },
+    "free_throw_residual": {
+     "mean_per_game": -0.2664999999999995,
+     "ci_95": [
+      -0.4013066249999989,
+      -0.13500474999999557
+     ]
+    },
+    "pace_term": {
+     "mean_per_game": -0.04393070264345655,
+     "ci_95": [
+      -0.15284072586657796,
+      0.06786026350343821
+     ]
+    },
+    "efficiency_term": {
+     "mean_per_game": 1.0402657026434534,
+     "ci_95": [
+      0.8119979343408008,
+      1.2656842851760097
+     ]
+    }
+   }
+  },
+  "v1.4e": {
+   "run": "20261120T153837Z_v1.4e_F4",
+   "games": 200,
+   "changes": {
+    "poss": {
+     "mean_per_game": -0.07729500000000016,
+     "ci_95": [
+      -0.16984062500000074,
+      0.013970374999997417
+     ]
+    },
+    "fga": {
+     "mean_per_game": 0.49016000000000093,
+     "ci_95": [
+      0.3709123750000003,
+      0.6113817500000025
+     ]
+    },
+    "fgm": {
+     "mean_per_game": 0.5388099999999996,
+     "ci_95": [
+      0.43930687499999954,
+      0.6411352499999988
+     ]
+    },
+    "fg3a": {
+     "mean_per_game": 0.18318500000000099,
+     "ci_95": [
+      0.012016125000001023,
+      0.35731000000000057
+     ]
+    },
+    "fg3m": {
+     "mean_per_game": 0.16518999999999998,
+     "ci_95": [
+      0.091584625,
+      0.2395725000000001
+     ]
+    },
+    "fta": {
+     "mean_per_game": -0.350265,
+     "ci_95": [
+      -0.5207073749999995,
+      -0.18247975
+     ]
+    },
+    "tov": {
+     "mean_per_game": -0.1646849999999999,
+     "ci_95": [
+      -0.2577755,
+      -0.07094850000000003
+     ]
+    },
+    "oreb": {
+     "mean_per_game": 0.04224999999999989,
+     "ci_95": [
+      -0.007480500000000168,
+      0.09139512500000009
+     ]
+    },
+    "points": {
+     "mean_per_game": 0.8927200000000005,
+     "ci_95": [
+      0.6757746250000022,
+      1.1196057500000007
+     ]
+    },
+    "two_point_points": {
+     "mean_per_game": 0.747239999999999,
+     "ci_95": [
+      0.48936175,
+      1.006562499999997
+     ]
+    },
+    "three_point_points": {
+     "mean_per_game": 0.49557000000000045,
+     "ci_95": [
+      0.27475387500000054,
+      0.7187175000000003
+     ]
+    },
+    "free_throw_residual": {
+     "mean_per_game": -0.35008999999999896,
+     "ci_95": [
+      -0.4842924999999979,
+      -0.21822499999999848
+     ]
+    },
+    "pace_term": {
+     "mean_per_game": -0.09066958451783165,
+     "ci_95": [
+      -0.1971352076909477,
+      0.01407839684559845
+     ]
+    },
+    "efficiency_term": {
+     "mean_per_game": 0.9833895845178299,
+     "ci_95": [
+      0.7613694164237134,
+      1.207597078896185
+     ]
+    }
+   }
+  },
+  "v1.4f": {
+   "run": "20261120T160608Z_v1.4f_F4",
+   "games": 200,
+   "changes": {
+    "poss": {
+     "mean_per_game": 0.0670300000000006,
+     "ci_95": [
+      -0.022771250000000246,
+      0.15915112500000134
+     ]
+    },
+    "fga": {
+     "mean_per_game": 0.20680000000000093,
+     "ci_95": [
+      0.06995325000000133,
+      0.3475445000000008
+     ]
+    },
+    "fgm": {
+     "mean_per_game": 0.1866499999999993,
+     "ci_95": [
+      0.07932912499999849,
+      0.2941306249999994
+     ]
+    },
+    "fg3a": {
+     "mean_per_game": 0.48988000000000026,
+     "ci_95": [
+      0.3360992499999994,
+      0.6535522500000005
+     ]
+    },
+    "fg3m": {
+     "mean_per_game": 0.24961000000000014,
+     "ci_95": [
+      0.17749662500000013,
+      0.3255706250000003
+     ]
+    },
+    "fta": {
+     "mean_per_game": -0.17919999999999964,
+     "ci_95": [
+      -0.3656529999999994,
+      0.005787250000000126
+     ]
+    },
+    "tov": {
+     "mean_per_game": 0.14852000000000012,
+     "ci_95": [
+      0.05642900000000002,
+      0.23854474999999994
+     ]
+    },
+    "oreb": {
+     "mean_per_game": 0.02380499999999996,
+     "ci_95": [
+      -0.034385124999999996,
+      0.08117024999999979
+     ]
+    },
+    "points": {
+     "mean_per_game": 0.4107550000000002,
+     "ci_95": [
+      0.17300375000000043,
+      0.6556268750000005
+     ]
+    },
+    "two_point_points": {
+     "mean_per_game": -0.12592000000000161,
+     "ci_95": [
+      -0.3711402500000003,
+      0.11466124999999835
+     ]
+    },
+    "three_point_points": {
+     "mean_per_game": 0.7488300000000012,
+     "ci_95": [
+      0.5324898750000016,
+      0.976711875000001
+     ]
+    },
+    "free_throw_residual": {
+     "mean_per_game": -0.2121549999999993,
+     "ci_95": [
+      -0.3597596249999984,
+      -0.06630324999999751
+     ]
+    },
+    "pace_term": {
+     "mean_per_game": 0.07340847639519386,
+     "ci_95": [
+      -0.0289351065454425,
+      0.1782370574093874
+     ]
+    },
+    "efficiency_term": {
+     "mean_per_game": 0.3373465236048036,
+     "ci_95": [
+      0.11126933985169382,
+      0.5699103890673196
+     ]
+    }
+   }
+  }
+ },
+ "sha256": {
+  "/Users/moholom/Repos/Sports/Basketball/analysis/experiments/20261122_a1_manifest.json": "0790a28ffadc3f09554c79661ccb80f631a4eb4b56f64030633a9a82d451e75e",
+  "/Users/moholom/Repos/Sports/Basketball/scripts/a1_variant_components.py": "4179c28a995cf650bbd2964c504f80f9930a45962397266136e7c57fdd4259c1",
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261120T133953Z_v1.3_components_F4.parquet": "735c2fa95ca58675bb13bd8bae3afb5954a12003af2a548684978df6a3609a5f",
+  "/Users/moholom/Repos/Sports/Basketball/analysis/experiments/20261120T133953Z_v1.3_components_F4.json": "8456bb5dddf96696e2e33d45b242ece14b135368a311ecd212d50ab00f404ee1",
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261120T153853Z_v1.4c_F4.parquet": "4ba26b70cf120ae9b8f34ffa7c415f8db4eface360b068cafa56ab666974c4c4",
+  "/Users/moholom/Repos/Sports/Basketball/analysis/experiments/20261120T153853Z_v1.4c_F4.json": "c6e2a5426d8de461c339e0543f282567be725e5fd57289cde384c7085cf8929f",
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261120T153837Z_v1.4e_F4.parquet": "7b0baea2d293d5618acc19c943f6ff280cd67bfe31a4d5c4ffb99f69f063fa0c",
+  "/Users/moholom/Repos/Sports/Basketball/analysis/experiments/20261120T153837Z_v1.4e_F4.json": "8b33681df532b60a5d339b15d6dee64feaa99032f07a4f1047978ea7a2edcd9c",
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261120T160608Z_v1.4f_F4.parquet": "9ddcc7a8491408fcae3e73be4653251d0ee16318cda5b034184471e50a260190",
+  "/Users/moholom/Repos/Sports/Basketball/analysis/experiments/20261120T160608Z_v1.4f_F4.json": "edbf0ad75363751eef5b8128b2d2f1b2adf56e3368a1cd85078200bb334c1016"
+ }
+}

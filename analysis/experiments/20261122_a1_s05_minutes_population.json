@@ -1,0 +1,67 @@
+{
+ "experiment": "a1_s05_prior_minutes_population_audit",
+ "control": "20261122T022323Z_a1_s01_control",
+ "method": "Construct roster candidates from saved strictly prior-box membership, then join historical outcomes. Pre-origin roles use each player’s last five positive-minute box appearances; recent team change uses prior recorded team changes. Returning means a 25+ minute recent role and at least five current team games since the prior appearance. No same-day event enters these features.",
+ "limitations": "Prior boxes lack historical publication timestamps and are not official dated rosters. Recent minutes are a descriptive proxy, not D29 healthy role. Other DNPs are not rotation failures, unknown/unlisted players stay unknown, and core-DNP groups use outcomes post hoc.",
+ "games": 200,
+ "non_nba_team_box_rows": 73,
+ "non_nba_team_games": 4,
+ "non_nba_team_ids": [
+  "111386",
+  "132374",
+  "132375"
+ ],
+ "counts": {
+  "all_prior_box_candidates": {
+   "player_games": 7317,
+   "games": 200,
+   "played": 4316,
+   "dnp_coach": 675,
+   "other_dnp": 217,
+   "unknown": 2109
+  },
+  "fringe_lt_10_recent_minutes": {
+   "player_games": 1412,
+   "games": 199,
+   "played": 470,
+   "dnp_coach": 366,
+   "other_dnp": 2,
+   "unknown": 574
+  },
+  "core_ge_25_recent_minutes": {
+   "player_games": 2481,
+   "games": 200,
+   "played": 1863,
+   "dnp_coach": 16,
+   "other_dnp": 113,
+   "unknown": 489
+  },
+  "recent_team_change_30_days": {
+   "player_games": 257,
+   "games": 109,
+   "played": 149,
+   "dnp_coach": 34,
+   "other_dnp": 4,
+   "unknown": 70
+  },
+  "core_first_appearance_after_5_team_games": {
+   "player_games": 29,
+   "games": 24,
+   "played": 29,
+   "dnp_coach": 0,
+   "other_dnp": 0,
+   "unknown": 0
+  },
+  "team_games_with_recorded_core_dnp": 89,
+  "team_games_with_unknown_core_status": 253,
+  "missing_prior_appearance": 179,
+  "missing_team_change_history": 6747
+ },
+ "input_sha256": {
+  "analysis/experiments/20261122_a1_manifest.json": "0790a28ffadc3f09554c79661ccb80f631a4eb4b56f64030633a9a82d451e75e",
+  "data/derived/experiments/20261122T022323Z_a1_s01_control.parquet": "d3f2956e335490cca5b77fa877faacf8494f99ce04ab79c447debb5329776d4e",
+  "data/derived/experiments/20261122_a1_prior_box_membership_nba_only.parquet": "36fa44d4027fd76ec1b9441fc946680f7e0932d8338db954fe10089e1302f5a2",
+  "data/raw/hoopr/player_box_2026.parquet": "29a29dc9efd055a93e069a0382ac830d98a13274bee655beba69d95cff099713",
+  "scripts/a1_minutes_audit.py": "38c6d530bf7bfe086688885c1c0837c8ec1a484307b59adc9d0fbca0b0cff761"
+ }
+}

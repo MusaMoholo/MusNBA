@@ -1,0 +1,1264 @@
+{
+ "experiment": "a1_s05_minutes_nba_only_diagnostic",
+ "control": "20261122T022323Z_a1_s01_control",
+ "method": "Replay unmodified D29 historical inputs and a separate candidate excluding non-NBA team IDs; both use the same fixed pre-validation cutoff, actual-participant team sets and game IDs. Rotation share is reconstructed independently from the production play/coach-DNP update.",
+ "limitations": "Targets are conditional on actual participants and are not pre-game forecasts or full-engine CRPS. Rotation is scored only on known positive-minute or DNP-coach labels; injury and unlisted statuses stay unknown. NBA-only filtering is a candidate, not a promotion.",
+ "games": 200,
+ "player_games": 4346,
+ "player_key_coverage": {
+  "both": 4346,
+  "left_only": 3,
+  "right_only": 0
+ },
+ "excluded_non_nba": {
+  "player_games": 155,
+  "games": 9,
+  "by_season": {
+   "2023": 23,
+   "2024": 24,
+   "2025": 45,
+   "2026": 63
+  }
+ },
+ "rotation_replay": {
+  "players": 892,
+  "max_absolute_difference": 0.0,
+  "prior_not_observed_candidates": 0,
+  "unseen_player_live_prior": 0.5,
+  "conflicting_play_and_coach_dnp": 1
+ },
+ "baseline_and_target_comparison": {
+  "all": {
+   "min_actual": {
+    "observations": 4346,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 22.145967172879274,
+    "ci_95": [
+     21.757866854697106,
+     22.553887497319916
+    ]
+   },
+   "min_sim": {
+    "observations": 4346,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 22.15884624827383,
+    "ci_95": [
+     21.777452232159067,
+     22.555539154179517
+    ]
+   },
+   "min_crps": {
+    "observations": 4346,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 3.566158651623312,
+    "ci_95": [
+     3.4455037110093416,
+     3.6900296469381892
+    ]
+   },
+   "minute_error": {
+    "observations": 4346,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.012879075394553368,
+    "ci_95": [
+     -0.04346125900377138,
+     0.058778587776082365
+    ]
+   },
+   "minute_coverage": {
+    "observations": 4346,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.7800276115968707,
+    "ci_95": [
+     0.763020045963251,
+     0.7966261168348153
+    ]
+   },
+   "target_actual_reg": {
+    "observations": 4346,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 22.08844431661298,
+    "ci_95": [
+     21.7089007066938,
+     22.482224361826702
+    ]
+   },
+   "target_control": {
+    "observations": 4346,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 22.08650665571187,
+    "ci_95": [
+     21.70765601646884,
+     22.480891344683165
+    ]
+   },
+   "target_clean": {
+    "observations": 4346,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 22.087268521176302,
+    "ci_95": [
+     21.70765920240439,
+     22.482435597189696
+    ]
+   },
+   "target_difference": {
+    "observations": 4346,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.0007618654644350195,
+    "ci_95": [
+     1.1850294950486982e-16,
+     0.0023039686243462505
+    ]
+   },
+   "target_mae_difference": {
+    "observations": 4346,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": -0.012525854029708466,
+    "ci_95": [
+     -0.037311400966716556,
+     0.011420912281936013
+    ]
+   },
+   "healthy_difference": {
+    "observations": 4346,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.1219014717891023,
+    "ci_95": [
+     0.09819349992200344,
+     0.14749921584294767
+    ]
+   }
+  },
+  "star": {
+   "min_actual": {
+    "observations": 284,
+    "games": 162,
+    "missing": 0,
+    "status": "ok",
+    "mean": 31.320463615023478,
+    "ci_95": [
+     30.497405610730592,
+     32.127449016194554
+    ]
+   },
+   "min_sim": {
+    "observations": 284,
+    "games": 162,
+    "missing": 0,
+    "status": "ok",
+    "mean": 31.04996360194101,
+    "ci_95": [
+     30.546261796693983,
+     31.52925028528836
+    ]
+   },
+   "min_crps": {
+    "observations": 284,
+    "games": 162,
+    "missing": 0,
+    "status": "ok",
+    "mean": 2.89104672274477,
+    "ci_95": [
+     2.597345117908866,
+     3.21401141404383
+    ]
+   },
+   "minute_error": {
+    "observations": 284,
+    "games": 162,
+    "missing": 0,
+    "status": "ok",
+    "mean": -0.27050001308246535,
+    "ci_95": [
+     -0.9424545282338065,
+     0.39719588671867007
+    ]
+   },
+   "minute_coverage": {
+    "observations": 284,
+    "games": 162,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.8204225352112676,
+    "ci_95": [
+     0.7694915254237288,
+     0.8666666666666667
+    ]
+   },
+   "target_actual_reg": {
+    "observations": 284,
+    "games": 162,
+    "missing": 0,
+    "status": "ok",
+    "mean": 31.232415492957745,
+    "ci_95": [
+     30.420858476027394,
+     32.016018023255825
+    ]
+   },
+   "target_control": {
+    "observations": 284,
+    "games": 162,
+    "missing": 0,
+    "status": "ok",
+    "mean": 31.204474825683974,
+    "ci_95": [
+     30.717824090681383,
+     31.6650010304037
+    ]
+   },
+   "target_clean": {
+    "observations": 284,
+    "games": 162,
+    "missing": 0,
+    "status": "ok",
+    "mean": 31.968773557838126,
+    "ci_95": [
+     31.513849952155415,
+     32.39130940409275
+    ]
+   },
+   "target_difference": {
+    "observations": 284,
+    "games": 162,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.7642987321541422,
+    "ci_95": [
+     0.5539499124593593,
+     0.9990127228987729
+    ]
+   },
+   "target_mae_difference": {
+    "observations": 284,
+    "games": 162,
+    "missing": 0,
+    "status": "ok",
+    "mean": -0.32811903872960135,
+    "ci_95": [
+     -0.513550149997226,
+     -0.15605609791801406
+    ]
+   },
+   "healthy_difference": {
+    "observations": 284,
+    "games": 162,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.8525701343600756,
+    "ci_95": [
+     0.6191858616428783,
+     1.1114308543287759
+    ]
+   }
+  },
+  "starter": {
+   "min_actual": {
+    "observations": 1578,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 28.303391423743133,
+    "ci_95": [
+     27.834713588004817,
+     28.797808895137035
+    ]
+   },
+   "min_sim": {
+    "observations": 1578,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 28.972084443309416,
+    "ci_95": [
+     28.72311265014381,
+     29.2281592626596
+    ]
+   },
+   "min_crps": {
+    "observations": 1578,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 3.024209861217671,
+    "ci_95": [
+     2.8715644181785582,
+     3.1888685952252023
+    ]
+   },
+   "minute_error": {
+    "observations": 1578,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.6686930195662883,
+    "ci_95": [
+     0.2984613644703442,
+     1.037081688381003
+    ]
+   },
+   "minute_coverage": {
+    "observations": 1578,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.8244613434727504,
+    "ci_95": [
+     0.7987137226428794,
+     0.8490569067267726
+    ]
+   },
+   "target_actual_reg": {
+    "observations": 1578,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 28.192756653992394,
+    "ci_95": [
+     27.746301741250353,
+     28.654980087576337
+    ]
+   },
+   "target_control": {
+    "observations": 1578,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 28.987056616103796,
+    "ci_95": [
+     28.75095915112918,
+     29.231761024806257
+    ]
+   },
+   "target_clean": {
+    "observations": 1578,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 29.05102524560277,
+    "ci_95": [
+     28.81746055573643,
+     29.29481691495438
+    ]
+   },
+   "target_difference": {
+    "observations": 1578,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.06396862949897256,
+    "ci_95": [
+     0.0377428979864844,
+     0.09531502677492498
+    ]
+   },
+   "target_mae_difference": {
+    "observations": 1578,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": -0.029094261556233084,
+    "ci_95": [
+     -0.0586325318619805,
+     -0.004079830895179428
+    ]
+   },
+   "healthy_difference": {
+    "observations": 1578,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.08776848162096716,
+    "ci_95": [
+     0.059750830240549675,
+     0.12075886894130637
+    ]
+   }
+  },
+  "bench": {
+   "min_actual": {
+    "observations": 2472,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 17.203786407766987,
+    "ci_95": [
+     16.69045899630413,
+     17.73216521486172
+    ]
+   },
+   "min_sim": {
+    "observations": 2472,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 16.848799390031253,
+    "ci_95": [
+     16.324616066791585,
+     17.403059630360385
+    ]
+   },
+   "min_crps": {
+    "observations": 2472,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 3.980083211457019,
+    "ci_95": [
+     3.8402623438279098,
+     4.121181495379106
+    ]
+   },
+   "minute_error": {
+    "observations": 2472,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": -0.35498701773573715,
+    "ci_95": [
+     -0.5949587604264587,
+     -0.09967935297501614
+    ]
+   },
+   "minute_coverage": {
+    "observations": 2472,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.7479773462783171,
+    "ci_95": [
+     0.728559141999676,
+     0.7671083671176719
+    ]
+   },
+   "target_actual_reg": {
+    "observations": 2472,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 17.183395631067963,
+    "ci_95": [
+     16.67234852131634,
+     17.710426773237643
+    ]
+   },
+   "target_control": {
+    "observations": 2472,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 16.690223767703767,
+    "ci_95": [
+     16.14050163341066,
+     17.268367598388682
+    ]
+   },
+   "target_clean": {
+    "observations": 2472,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 16.571058845940108,
+    "ci_95": [
+     16.017363825207287,
+     17.154387702656848
+    ]
+   },
+   "target_difference": {
+    "observations": 2472,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": -0.11916492176366121,
+    "ci_95": [
+     -0.1541402371847958,
+     -0.08785312532264838
+    ]
+   },
+   "target_mae_difference": {
+    "observations": 2472,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.03605436943790277,
+    "ci_95": [
+     0.005890795191747941,
+     0.06945736186169084
+    ]
+   },
+   "healthy_difference": {
+    "observations": 2472,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.06033786983790087,
+    "ci_95": [
+     0.05033111135435675,
+     0.07080609716368505
+    ]
+   }
+  },
+  "unknown": {
+   "min_actual": {
+    "observations": 12,
+    "games": 12,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": 13.404166666666667,
+    "ci_95": null
+   },
+   "min_sim": {
+    "observations": 12,
+    "games": 12,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": 9.664565695607363,
+    "ci_95": null
+   },
+   "min_crps": {
+    "observations": 12,
+    "games": 12,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": 5.541614247680393,
+    "ci_95": null
+   },
+   "minute_error": {
+    "observations": 12,
+    "games": 12,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": -3.7396009710593052,
+    "ci_95": null
+   },
+   "minute_coverage": {
+    "observations": 12,
+    "games": 12,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": 0.5833333333333334,
+    "ci_95": null
+   },
+   "target_actual_reg": {
+    "observations": 12,
+    "games": 12,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": 13.404083333333332,
+    "ci_95": null
+   },
+   "target_control": {
+    "observations": 12,
+    "games": 12,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": 10.506548437835134,
+    "ci_95": null
+   },
+   "target_clean": {
+    "observations": 12,
+    "games": 12,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": 8.830166490089299,
+    "ci_95": null
+   },
+   "target_difference": {
+    "observations": 12,
+    "games": 12,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": -1.676381947745832,
+    "ci_95": null
+   },
+   "target_mae_difference": {
+    "observations": 12,
+    "games": 12,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": -0.3722675940555052,
+    "ci_95": null
+   },
+   "healthy_difference": {
+    "observations": 12,
+    "games": 12,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": 0.0,
+    "ci_95": null
+   }
+  },
+  "fringe_recent_lt_10": {
+   "min_actual": {
+    "observations": 471,
+    "games": 152,
+    "missing": 0,
+    "status": "ok",
+    "mean": 8.85414720452937,
+    "ci_95": [
+     8.013930070874649,
+     9.778584665978684
+    ]
+   },
+   "min_sim": {
+    "observations": 471,
+    "games": 152,
+    "missing": 0,
+    "status": "ok",
+    "mean": 7.694244731995726,
+    "ci_95": [
+     6.948078022715306,
+     8.511964742404576
+    ]
+   },
+   "min_crps": {
+    "observations": 471,
+    "games": 152,
+    "missing": 0,
+    "status": "ok",
+    "mean": 4.200635176259215,
+    "ci_95": [
+     3.842107415511903,
+     4.563096392874517
+    ]
+   },
+   "minute_error": {
+    "observations": 471,
+    "games": 152,
+    "missing": 0,
+    "status": "ok",
+    "mean": -1.159902472533645,
+    "ci_95": [
+     -1.8048657011481573,
+     -0.5285856826481661
+    ]
+   },
+   "minute_coverage": {
+    "observations": 471,
+    "games": 152,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.7409766454352441,
+    "ci_95": [
+     0.6976218569181132,
+     0.7838429244157703
+    ]
+   },
+   "target_actual_reg": {
+    "observations": 471,
+    "games": 152,
+    "missing": 0,
+    "status": "ok",
+    "mean": 8.849496815286624,
+    "ci_95": [
+     8.006944340523292,
+     9.771733459345674
+    ]
+   },
+   "target_control": {
+    "observations": 471,
+    "games": 152,
+    "missing": 0,
+    "status": "ok",
+    "mean": 6.998839039046734,
+    "ci_95": [
+     6.116002311280203,
+     7.947200751460633
+    ]
+   },
+   "target_clean": {
+    "observations": 471,
+    "games": 152,
+    "missing": 0,
+    "status": "ok",
+    "mean": 6.795376149205412,
+    "ci_95": [
+     5.903337217658946,
+     7.754172341798951
+    ]
+   },
+   "target_difference": {
+    "observations": 471,
+    "games": 152,
+    "missing": 0,
+    "status": "ok",
+    "mean": -0.20346288984132244,
+    "ci_95": [
+     -0.28924777731119244,
+     -0.12694023184531433
+    ]
+   },
+   "target_mae_difference": {
+    "observations": 471,
+    "games": 152,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.008836409925890144,
+    "ci_95": [
+     -0.05772746111466299,
+     0.0719742243017489
+    ]
+   },
+   "healthy_difference": {
+    "observations": 471,
+    "games": 152,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.07863232266172485,
+    "ci_95": [
+     0.06027096411243863,
+     0.09788283734756155
+    ]
+   }
+  },
+  "core_recent_ge_25": {
+   "min_actual": {
+    "observations": 1863,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 29.41495437466452,
+    "ci_95": [
+     28.950715329053125,
+     29.882396570097093
+    ]
+   },
+   "min_sim": {
+    "observations": 1863,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 29.658401181736235,
+    "ci_95": [
+     29.3968844355011,
+     29.91830240719699
+    ]
+   },
+   "min_crps": {
+    "observations": 1863,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 3.0238097679757923,
+    "ci_95": [
+     2.877007816482914,
+     3.1774358006574155
+    ]
+   },
+   "minute_error": {
+    "observations": 1863,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.2434468070717162,
+    "ci_95": [
+     -0.09347137759168284,
+     0.5710474831359592
+    ]
+   },
+   "minute_coverage": {
+    "observations": 1863,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.812667740203972,
+    "ci_95": [
+     0.7895878233856478,
+     0.8352437425102313
+    ]
+   },
+   "target_actual_reg": {
+    "observations": 1863,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 29.313204508856682,
+    "ci_95": [
+     28.871942628529908,
+     29.766156857654202
+    ]
+   },
+   "target_control": {
+    "observations": 1863,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 29.690400160071764,
+    "ci_95": [
+     29.440859702864756,
+     29.935174961663957
+    ]
+   },
+   "target_clean": {
+    "observations": 1863,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 29.852277116312028,
+    "ci_95": [
+     29.60875496209847,
+     30.09185735756057
+    ]
+   },
+   "target_difference": {
+    "observations": 1863,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.1618769562402587,
+    "ci_95": [
+     0.12199433996479418,
+     0.20606922672102773
+    ]
+   },
+   "target_mae_difference": {
+    "observations": 1863,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": -0.07444278415935157,
+    "ci_95": [
+     -0.11372364953652832,
+     -0.03904343601396055
+    ]
+   },
+   "healthy_difference": {
+    "observations": 1863,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.19601175138195137,
+    "ci_95": [
+     0.15045488209315655,
+     0.24645259641164904
+    ]
+   }
+  },
+  "recent_team_change_30_days": {
+   "min_actual": {
+    "observations": 149,
+    "games": 71,
+    "missing": 0,
+    "status": "ok",
+    "mean": 18.549697986577183,
+    "ci_95": [
+     16.844973639132085,
+     20.203607869307305
+    ]
+   },
+   "min_sim": {
+    "observations": 149,
+    "games": 71,
+    "missing": 0,
+    "status": "ok",
+    "mean": 18.423218278183555,
+    "ci_95": [
+     17.14371640086203,
+     19.67812572899484
+    ]
+   },
+   "min_crps": {
+    "observations": 149,
+    "games": 71,
+    "missing": 0,
+    "status": "ok",
+    "mean": 4.125678217629416,
+    "ci_95": [
+     3.640613594145801,
+     4.672554951154256
+    ]
+   },
+   "minute_error": {
+    "observations": 149,
+    "games": 71,
+    "missing": 0,
+    "status": "ok",
+    "mean": -0.12647970839362246,
+    "ci_95": [
+     -1.2869060512808617,
+     1.066548439801823
+    ]
+   },
+   "minute_coverage": {
+    "observations": 149,
+    "games": 71,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.6711409395973155,
+    "ci_95": [
+     0.582606585056986,
+     0.7486638015510821
+    ]
+   },
+   "target_actual_reg": {
+    "observations": 149,
+    "games": 71,
+    "missing": 0,
+    "status": "ok",
+    "mean": 18.516140939597314,
+    "ci_95": [
+     16.826594774436096,
+     20.169921856839125
+    ]
+   },
+   "target_control": {
+    "observations": 149,
+    "games": 71,
+    "missing": 0,
+    "status": "ok",
+    "mean": 18.498515998579933,
+    "ci_95": [
+     17.18628938784522,
+     19.783181859743042
+    ]
+   },
+   "target_clean": {
+    "observations": 149,
+    "games": 71,
+    "missing": 0,
+    "status": "ok",
+    "mean": 18.356627516428922,
+    "ci_95": [
+     17.064592232798336,
+     19.616955143319082
+    ]
+   },
+   "target_difference": {
+    "observations": 149,
+    "games": 71,
+    "missing": 0,
+    "status": "ok",
+    "mean": -0.14188848215101202,
+    "ci_95": [
+     -0.38216211006726825,
+     0.05547302911479766
+    ]
+   },
+   "target_mae_difference": {
+    "observations": 149,
+    "games": 71,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.1761187389431263,
+    "ci_95": [
+     0.019235374086881394,
+     0.3995465069054603
+    ]
+   },
+   "healthy_difference": {
+    "observations": 149,
+    "games": 71,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.03867168591895601,
+    "ci_95": [
+     0.022294162090802573,
+     0.056729502927767655
+    ]
+   }
+  },
+  "core_first_return_after_5_team_games": {
+   "min_actual": {
+    "observations": 29,
+    "games": 24,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": 23.558103448275862,
+    "ci_95": null
+   },
+   "min_sim": {
+    "observations": 29,
+    "games": 24,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": 26.110860401105327,
+    "ci_95": null
+   },
+   "min_crps": {
+    "observations": 29,
+    "games": 24,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": 2.7842119197791533,
+    "ci_95": null
+   },
+   "minute_error": {
+    "observations": 29,
+    "games": 24,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": 2.5527569528294656,
+    "ci_95": null
+   },
+   "minute_coverage": {
+    "observations": 29,
+    "games": 24,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": 0.8275862068965517,
+    "ci_95": null
+   },
+   "target_actual_reg": {
+    "observations": 29,
+    "games": 24,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": 23.38565517241379,
+    "ci_95": null
+   },
+   "target_control": {
+    "observations": 29,
+    "games": 24,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": 26.133728272030858,
+    "ci_95": null
+   },
+   "target_clean": {
+    "observations": 29,
+    "games": 24,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": 26.12653894070502,
+    "ci_95": null
+   },
+   "target_difference": {
+    "observations": 29,
+    "games": 24,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": -0.007189331325833494,
+    "ci_95": null
+   },
+   "target_mae_difference": {
+    "observations": 29,
+    "games": 24,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": -0.002379311689589465,
+    "ci_95": null
+   },
+   "healthy_difference": {
+    "observations": 29,
+    "games": 24,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": 0.0040963049907245305,
+    "ci_95": null
+   }
+  }
+ },
+ "rotation_calibration": {
+  "all": {
+   "rotation_share": {
+    "observations": 4991,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.8596154743648903,
+    "ci_95": [
+     0.8534117147158503,
+     0.865806583278497
+    ]
+   },
+   "rotation_actual": {
+    "observations": 4991,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.8647565618112603,
+    "ci_95": [
+     0.8493148620641251,
+     0.8793312683148696
+    ]
+   },
+   "rotation_error": {
+    "observations": 4991,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": -0.0051410874463699244,
+    "ci_95": [
+     -0.01991677769172393,
+     0.009918672554914923
+    ]
+   },
+   "rotation_brier": {
+    "observations": 4991,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.0832443864841792,
+    "ci_95": [
+     0.07835875947172051,
+     0.08835260365771179
+    ]
+   }
+  },
+  "fringe_recent_lt_10": {
+   "rotation_share": {
+    "observations": 836,
+    "games": 191,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.557756237869881,
+    "ci_95": [
+     0.5422001299634669,
+     0.5733075936705082
+    ]
+   },
+   "rotation_actual": {
+    "observations": 836,
+    "games": 191,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.562200956937799,
+    "ci_95": [
+     0.5023308668076111,
+     0.6201743462017435
+    ]
+   },
+   "rotation_error": {
+    "observations": 836,
+    "games": 191,
+    "missing": 0,
+    "status": "ok",
+    "mean": -0.004444719067917907,
+    "ci_95": [
+     -0.06397796498170319,
+     0.05606458680073917
+    ]
+   },
+   "rotation_brier": {
+    "observations": 836,
+    "games": 191,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.2434138958226363,
+    "ci_95": [
+     0.22952725711886127,
+     0.25773654468139623
+    ]
+   }
+  },
+  "core_recent_ge_25": {
+   "rotation_share": {
+    "observations": 1879,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.9911160398191141,
+    "ci_95": [
+     0.9892256253068514,
+     0.9928495518169003
+    ]
+   },
+   "rotation_actual": {
+    "observations": 1879,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.9914848323576371,
+    "ci_95": [
+     0.9866252941020963,
+     0.9956920342717429
+    ]
+   },
+   "rotation_error": {
+    "observations": 1879,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": -0.0003687925385228881,
+    "ci_95": [
+     -0.004640396985415745,
+     0.004540507685404431
+    ]
+   },
+   "rotation_brier": {
+    "observations": 1879,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.008534859500026212,
+    "ci_95": [
+     0.004827645953407623,
+     0.013002494304636883
+    ]
+   }
+  },
+  "recent_role_ge_15_low_rotation_share": {
+   "rotation_share": {
+    "observations": 34,
+    "games": 29,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": 0.3330312669672075,
+    "ci_95": null
+   },
+   "rotation_actual": {
+    "observations": 34,
+    "games": 29,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": 0.35294117647058826,
+    "ci_95": null
+   },
+   "rotation_error": {
+    "observations": 34,
+    "games": 29,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": -0.019909909503380764,
+    "ci_95": null
+   },
+   "rotation_brier": {
+    "observations": 34,
+    "games": 29,
+    "missing": 0,
+    "status": "insufficient_sample",
+    "mean": 0.2195870645887299,
+    "ci_95": null
+   }
+  }
+ },
+ "input_sha256": {
+  "analysis/experiments/20261122_a1_manifest.json": "0790a28ffadc3f09554c79661ccb80f631a4eb4b56f64030633a9a82d451e75e",
+  "data/derived/experiments/20261122T022323Z_a1_s01_control.parquet": "d3f2956e335490cca5b77fa877faacf8494f99ce04ab79c447debb5329776d4e",
+  "data/derived/experiments/20261122T022323Z_a1_s01_control_players.parquet": "d5e4618be5e146c62372b57b54b9a6528b7c75e9b1b2dd86f86e9279835bc09e",
+  "data/derived/experiments/20261122_a1_s05_minutes_population.parquet": "321fe701f8d94a0d371f727d33112c477240d770e9d8416f451fc2d896477ad7",
+  "data/derived/teams.json": "130aa5358d49b944c2b5bee7e9a163f1e53285e93dae57262f039ca1636b7ecc",
+  "scripts/minutes.py": "94dd0ed25e536708c75cd4cf1f386bf2f9fa35f2c334d83cbdd031d4448ba2d0",
+  "scripts/a1_minutes_diagnose.py": "173458f69dc6e9f21af7cf3671a2d9fca098d8468315c52cb4b85e567425c74b",
+  "data/derived/history/2023/on_court.parquet": "ba9b4b13e16e5b839e5530905497d2d00d231413ea40f39ee46855f3ebce8c3b",
+  "data/derived/history/2024/on_court.parquet": "5461947edb052ef9e62b4a70ba49e57a0f98d929f4a19167f03aad3972457f95",
+  "data/derived/history/2025/on_court.parquet": "5bbabab60114aa3f7fa096d7708be96f47177c541debcae88059da6b1adb77e9",
+  "data/derived/history/2026/on_court.parquet": "1b0ffaf53490c3fda4edd28ac427766a0af3a1bfe86f1fece240cd63ed1e8410",
+  "data/raw/hoopr/player_box_2023.parquet": "968d835cd04b10533c5b5af8c0e41bf0154a73782e9446c76f765109223e8679",
+  "data/raw/hoopr/player_box_2024.parquet": "1e500a538ec45ddbcb58d9789b5494f8db4f25658eafd01d90f2d09600921665",
+  "data/raw/hoopr/player_box_2025.parquet": "e89f7fbc1124092c715b722e6d72d9dd1b9d28776ca6888b508fd2831cd705e2",
+  "data/raw/hoopr/player_box_2026.parquet": "29a29dc9efd055a93e069a0382ac830d98a13274bee655beba69d95cff099713"
+ }
+}

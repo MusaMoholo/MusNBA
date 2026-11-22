@@ -1,0 +1,39 @@
+{
+ "experiment": "a1_s03_teacher_forced_accounting",
+ "run": "20261122T050308Z_a1_s03_m6a_fixed200",
+ "games": 200,
+ "team_sides": 400,
+ "player_games": 4346,
+ "decision_event_rows": 2800,
+ "model_artifacts_matching_s01": 17,
+ "player_team_component_values_checked": 12000,
+ "max_player_team_difference": 1.4210854715202004e-14,
+ "score_identity_max_difference": {
+  "actual": 0.0,
+  "sim": 2.842170943040401e-14
+ },
+ "unmatched_actual_players": 0,
+ "unmatched_actual_points": 0.0,
+ "actor_lineup_accounting": {
+  "matched_actors": 44444,
+  "unmatched_actors": 487
+ },
+ "teacher_actual_minus_official": {
+  "team_sides_different": 110,
+  "mean": -0.3175,
+  "minimum": -2.0,
+  "maximum": 0.0
+ },
+ "limitations": "teacher-forced real-state replay is not a forecast; eligible-event actuals differ from official scores",
+ "sha256": {
+  "/Users/moholom/Repos/Sports/Basketball/analysis/experiments/20261122T050308Z_a1_s03_m6a_fixed200.json": "6662f8faefd3ab42989ae3ed09901ff8e8a8072d4bbd2815f1c7dca8733f5f16",
+  "data/derived/experiments/20261122_a1_s03_f4_game_ids.json": "5d1285db46b129de9da954d9a44c93e03a281d0bc76bfa82ac4a97619da7bcc7",
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261120T162930Z_v1.3_pool_per_world_F4.parquet": "c4d29755292599be2f62c7cd726742d54eec7ae0c49e0dd0d4ca4050e3b41876",
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/variants/matchup/features/pregame.parquet": "d4da5f071de3ddcbc72bbb4899a77f9b4f22d899a3a54bcfb76baf0097594d0e",
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261122T050308Z_a1_s03_m6a_fixed200.parquet": "c796182aee88f9eae3abf024d566ced1138a33d2d7bc1a4ed5173ff7ff3a48ca",
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261122T050308Z_a1_s03_m6a_fixed200_teams.parquet": "f8e671db7615216a574e9931387a6a71326ffe6df781a5dcbf64ef3afd5e8351",
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261122T050308Z_a1_s03_m6a_fixed200_components.parquet": "96f5e33a5098e5c314fd6e6ee6ad5758ca7f450f7576a7712208f735492c7aa1",
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261122T050308Z_a1_s03_m6a_fixed200_events.parquet": "bf37573efa227ab68964572129d0979483ee3de5f9c4b8d46b6941c672cf98a3",
+  "/Users/moholom/Repos/Sports/Basketball/scripts/a1_m6a_audit.py": "c3dc3a2b390e88d54e6467cfb3f6dec10c2f7811a397d00e63239be8cb6a9035"
+ }
+}

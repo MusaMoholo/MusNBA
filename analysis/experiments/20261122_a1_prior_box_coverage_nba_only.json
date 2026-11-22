@@ -1,0 +1,1237 @@
+{
+ "experiment": "a1_prior_box_availability_coverage",
+ "control_run": "20261122T022323Z_a1_s01_control",
+ "fold": "F4",
+ "season": 2026,
+ "games": 200,
+ "method": "Construct each game/team candidate universe from same-season box records strictly before its date; assign each player to their latest uniquely observed team, then join the current box for coverage only.",
+ "labels": "DNP is not played; non-DNP positive box minutes is played; zero/missing minutes and unlisted players remain unknown. No probability or predictive accuracy is evaluated.",
+ "candidate_player_games": 7317,
+ "known_play_labels": 5208,
+ "played_labels": 4316,
+ "dnp_labels": 892,
+ "unlisted_candidates": 2100,
+ "listed_unknown_play_labels": 9,
+ "observed_box_player_games": 5254,
+ "box_player_games_outside_universe": 37,
+ "unseen_positive_minute_player_games": 26,
+ "games_with_unseen_positive_minute_players": 22,
+ "outside_universe_dnp_player_games": 11,
+ "outside_universe_unknown_play_labels": 0,
+ "same_day_conflicting_team_listings": 7,
+ "raw_box_rows_without_player_id": 6,
+ "raw_box_rows_without_team_id": 0,
+ "non_nba_team_box_rows": 73,
+ "non_nba_team_games": 4,
+ "non_nba_team_ids": [
+  "111386",
+  "132374",
+  "132375"
+ ],
+ "team_games_without_prior_candidates": [],
+ "origin_dates_with_ambiguous_latest_teams": {},
+ "per_game": [
+  {
+   "game_id": "401809247",
+   "candidates": 36,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810327",
+   "candidates": 36,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810328",
+   "candidates": 33,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810333",
+   "candidates": 33,
+   "listed": 23,
+   "labelled": 23
+  },
+  {
+   "game_id": "401810337",
+   "candidates": 37,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810338",
+   "candidates": 36,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810339",
+   "candidates": 33,
+   "listed": 23,
+   "labelled": 23
+  },
+  {
+   "game_id": "401810340",
+   "candidates": 36,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810343",
+   "candidates": 34,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810344",
+   "candidates": 36,
+   "listed": 24,
+   "labelled": 24
+  },
+  {
+   "game_id": "401810346",
+   "candidates": 33,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810348",
+   "candidates": 35,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810350",
+   "candidates": 39,
+   "listed": 26,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810351",
+   "candidates": 33,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810352",
+   "candidates": 36,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810353",
+   "candidates": 33,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810354",
+   "candidates": 34,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810357",
+   "candidates": 36,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810359",
+   "candidates": 34,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810368",
+   "candidates": 32,
+   "listed": 28,
+   "labelled": 28
+  },
+  {
+   "game_id": "401810369",
+   "candidates": 36,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810370",
+   "candidates": 34,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810376",
+   "candidates": 31,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810385",
+   "candidates": 31,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810390",
+   "candidates": 35,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810393",
+   "candidates": 35,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810397",
+   "candidates": 31,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810398",
+   "candidates": 41,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810402",
+   "candidates": 36,
+   "listed": 24,
+   "labelled": 24
+  },
+  {
+   "game_id": "401810403",
+   "candidates": 34,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810407",
+   "candidates": 34,
+   "listed": 28,
+   "labelled": 28
+  },
+  {
+   "game_id": "401810421",
+   "candidates": 32,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810422",
+   "candidates": 36,
+   "listed": 24,
+   "labelled": 24
+  },
+  {
+   "game_id": "401810425",
+   "candidates": 35,
+   "listed": 30,
+   "labelled": 30
+  },
+  {
+   "game_id": "401810427",
+   "candidates": 33,
+   "listed": 28,
+   "labelled": 28
+  },
+  {
+   "game_id": "401810433",
+   "candidates": 34,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810440",
+   "candidates": 36,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810442",
+   "candidates": 34,
+   "listed": 24,
+   "labelled": 24
+  },
+  {
+   "game_id": "401810446",
+   "candidates": 32,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810447",
+   "candidates": 34,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810451",
+   "candidates": 35,
+   "listed": 27,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810459",
+   "candidates": 36,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810467",
+   "candidates": 34,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810468",
+   "candidates": 35,
+   "listed": 29,
+   "labelled": 29
+  },
+  {
+   "game_id": "401810472",
+   "candidates": 35,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810477",
+   "candidates": 34,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810484",
+   "candidates": 33,
+   "listed": 24,
+   "labelled": 24
+  },
+  {
+   "game_id": "401810486",
+   "candidates": 33,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810488",
+   "candidates": 37,
+   "listed": 28,
+   "labelled": 28
+  },
+  {
+   "game_id": "401810489",
+   "candidates": 35,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810491",
+   "candidates": 38,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810498",
+   "candidates": 34,
+   "listed": 28,
+   "labelled": 28
+  },
+  {
+   "game_id": "401810500",
+   "candidates": 35,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810501",
+   "candidates": 32,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810503",
+   "candidates": 35,
+   "listed": 28,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810511",
+   "candidates": 36,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810514",
+   "candidates": 43,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810521",
+   "candidates": 34,
+   "listed": 28,
+   "labelled": 28
+  },
+  {
+   "game_id": "401810524",
+   "candidates": 35,
+   "listed": 24,
+   "labelled": 24
+  },
+  {
+   "game_id": "401810525",
+   "candidates": 36,
+   "listed": 24,
+   "labelled": 24
+  },
+  {
+   "game_id": "401810529",
+   "candidates": 33,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810530",
+   "candidates": 35,
+   "listed": 24,
+   "labelled": 24
+  },
+  {
+   "game_id": "401810531",
+   "candidates": 37,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810532",
+   "candidates": 33,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810537",
+   "candidates": 37,
+   "listed": 24,
+   "labelled": 24
+  },
+  {
+   "game_id": "401810540",
+   "candidates": 37,
+   "listed": 28,
+   "labelled": 28
+  },
+  {
+   "game_id": "401810541",
+   "candidates": 32,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810542",
+   "candidates": 34,
+   "listed": 28,
+   "labelled": 28
+  },
+  {
+   "game_id": "401810544",
+   "candidates": 34,
+   "listed": 28,
+   "labelled": 28
+  },
+  {
+   "game_id": "401810549",
+   "candidates": 34,
+   "listed": 24,
+   "labelled": 24
+  },
+  {
+   "game_id": "401810552",
+   "candidates": 38,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810557",
+   "candidates": 33,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810567",
+   "candidates": 38,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810572",
+   "candidates": 40,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810574",
+   "candidates": 35,
+   "listed": 28,
+   "labelled": 28
+  },
+  {
+   "game_id": "401810576",
+   "candidates": 33,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810584",
+   "candidates": 36,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810586",
+   "candidates": 37,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810589",
+   "candidates": 33,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810590",
+   "candidates": 36,
+   "listed": 23,
+   "labelled": 23
+  },
+  {
+   "game_id": "401810594",
+   "candidates": 37,
+   "listed": 24,
+   "labelled": 24
+  },
+  {
+   "game_id": "401810597",
+   "candidates": 36,
+   "listed": 28,
+   "labelled": 28
+  },
+  {
+   "game_id": "401810602",
+   "candidates": 34,
+   "listed": 23,
+   "labelled": 23
+  },
+  {
+   "game_id": "401810604",
+   "candidates": 36,
+   "listed": 23,
+   "labelled": 23
+  },
+  {
+   "game_id": "401810611",
+   "candidates": 35,
+   "listed": 23,
+   "labelled": 23
+  },
+  {
+   "game_id": "401810612",
+   "candidates": 32,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810613",
+   "candidates": 33,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810622",
+   "candidates": 36,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810625",
+   "candidates": 37,
+   "listed": 28,
+   "labelled": 28
+  },
+  {
+   "game_id": "401810629",
+   "candidates": 37,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810632",
+   "candidates": 34,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810635",
+   "candidates": 37,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810638",
+   "candidates": 35,
+   "listed": 28,
+   "labelled": 28
+  },
+  {
+   "game_id": "401810645",
+   "candidates": 37,
+   "listed": 28,
+   "labelled": 28
+  },
+  {
+   "game_id": "401810651",
+   "candidates": 37,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810652",
+   "candidates": 37,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810655",
+   "candidates": 33,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810658",
+   "candidates": 39,
+   "listed": 23,
+   "labelled": 23
+  },
+  {
+   "game_id": "401810670",
+   "candidates": 35,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810677",
+   "candidates": 37,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810679",
+   "candidates": 38,
+   "listed": 28,
+   "labelled": 28
+  },
+  {
+   "game_id": "401810684",
+   "candidates": 35,
+   "listed": 22,
+   "labelled": 22
+  },
+  {
+   "game_id": "401810691",
+   "candidates": 38,
+   "listed": 24,
+   "labelled": 24
+  },
+  {
+   "game_id": "401810693",
+   "candidates": 37,
+   "listed": 24,
+   "labelled": 24
+  },
+  {
+   "game_id": "401810694",
+   "candidates": 34,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810702",
+   "candidates": 34,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810704",
+   "candidates": 39,
+   "listed": 29,
+   "labelled": 29
+  },
+  {
+   "game_id": "401810708",
+   "candidates": 37,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810713",
+   "candidates": 39,
+   "listed": 28,
+   "labelled": 28
+  },
+  {
+   "game_id": "401810715",
+   "candidates": 37,
+   "listed": 28,
+   "labelled": 28
+  },
+  {
+   "game_id": "401810722",
+   "candidates": 37,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810727",
+   "candidates": 40,
+   "listed": 24,
+   "labelled": 24
+  },
+  {
+   "game_id": "401810730",
+   "candidates": 35,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810733",
+   "candidates": 37,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810734",
+   "candidates": 36,
+   "listed": 23,
+   "labelled": 23
+  },
+  {
+   "game_id": "401810735",
+   "candidates": 34,
+   "listed": 28,
+   "labelled": 28
+  },
+  {
+   "game_id": "401810742",
+   "candidates": 36,
+   "listed": 29,
+   "labelled": 29
+  },
+  {
+   "game_id": "401810747",
+   "candidates": 37,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810748",
+   "candidates": 38,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810749",
+   "candidates": 35,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810753",
+   "candidates": 41,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810761",
+   "candidates": 36,
+   "listed": 24,
+   "labelled": 24
+  },
+  {
+   "game_id": "401810762",
+   "candidates": 37,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810764",
+   "candidates": 37,
+   "listed": 28,
+   "labelled": 28
+  },
+  {
+   "game_id": "401810768",
+   "candidates": 37,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810772",
+   "candidates": 41,
+   "listed": 28,
+   "labelled": 28
+  },
+  {
+   "game_id": "401810773",
+   "candidates": 39,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810779",
+   "candidates": 37,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810780",
+   "candidates": 39,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810784",
+   "candidates": 40,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810786",
+   "candidates": 41,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810787",
+   "candidates": 36,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810791",
+   "candidates": 39,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810792",
+   "candidates": 37,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810793",
+   "candidates": 39,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810797",
+   "candidates": 34,
+   "listed": 24,
+   "labelled": 24
+  },
+  {
+   "game_id": "401810804",
+   "candidates": 38,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810813",
+   "candidates": 38,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810820",
+   "candidates": 40,
+   "listed": 24,
+   "labelled": 24
+  },
+  {
+   "game_id": "401810823",
+   "candidates": 40,
+   "listed": 25,
+   "labelled": 24
+  },
+  {
+   "game_id": "401810825",
+   "candidates": 38,
+   "listed": 29,
+   "labelled": 29
+  },
+  {
+   "game_id": "401810826",
+   "candidates": 38,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810832",
+   "candidates": 41,
+   "listed": 23,
+   "labelled": 23
+  },
+  {
+   "game_id": "401810834",
+   "candidates": 41,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810840",
+   "candidates": 38,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810841",
+   "candidates": 36,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810846",
+   "candidates": 37,
+   "listed": 28,
+   "labelled": 28
+  },
+  {
+   "game_id": "401810851",
+   "candidates": 37,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810855",
+   "candidates": 37,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810857",
+   "candidates": 37,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810865",
+   "candidates": 36,
+   "listed": 29,
+   "labelled": 29
+  },
+  {
+   "game_id": "401810866",
+   "candidates": 42,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810873",
+   "candidates": 37,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810877",
+   "candidates": 39,
+   "listed": 24,
+   "labelled": 24
+  },
+  {
+   "game_id": "401810878",
+   "candidates": 40,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810879",
+   "candidates": 36,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810882",
+   "candidates": 35,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810885",
+   "candidates": 41,
+   "listed": 23,
+   "labelled": 23
+  },
+  {
+   "game_id": "401810890",
+   "candidates": 37,
+   "listed": 29,
+   "labelled": 29
+  },
+  {
+   "game_id": "401810891",
+   "candidates": 36,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810892",
+   "candidates": 41,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810893",
+   "candidates": 37,
+   "listed": 26,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810895",
+   "candidates": 38,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810902",
+   "candidates": 38,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810904",
+   "candidates": 40,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810908",
+   "candidates": 40,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810910",
+   "candidates": 40,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810911",
+   "candidates": 39,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810915",
+   "candidates": 38,
+   "listed": 24,
+   "labelled": 24
+  },
+  {
+   "game_id": "401810928",
+   "candidates": 40,
+   "listed": 22,
+   "labelled": 22
+  },
+  {
+   "game_id": "401810929",
+   "candidates": 41,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810933",
+   "candidates": 40,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401810939",
+   "candidates": 39,
+   "listed": 24,
+   "labelled": 24
+  },
+  {
+   "game_id": "401810941",
+   "candidates": 36,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810944",
+   "candidates": 36,
+   "listed": 30,
+   "labelled": 30
+  },
+  {
+   "game_id": "401810949",
+   "candidates": 38,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810954",
+   "candidates": 37,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810955",
+   "candidates": 38,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810960",
+   "candidates": 41,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401810961",
+   "candidates": 36,
+   "listed": 30,
+   "labelled": 28
+  },
+  {
+   "game_id": "401810964",
+   "candidates": 43,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810971",
+   "candidates": 36,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810974",
+   "candidates": 38,
+   "listed": 29,
+   "labelled": 29
+  },
+  {
+   "game_id": "401810976",
+   "candidates": 39,
+   "listed": 29,
+   "labelled": 29
+  },
+  {
+   "game_id": "401810984",
+   "candidates": 39,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401810985",
+   "candidates": 38,
+   "listed": 30,
+   "labelled": 30
+  },
+  {
+   "game_id": "401810996",
+   "candidates": 40,
+   "listed": 27,
+   "labelled": 26
+  },
+  {
+   "game_id": "401811001",
+   "candidates": 38,
+   "listed": 30,
+   "labelled": 30
+  },
+  {
+   "game_id": "401811002",
+   "candidates": 40,
+   "listed": 30,
+   "labelled": 30
+  },
+  {
+   "game_id": "401811005",
+   "candidates": 40,
+   "listed": 23,
+   "labelled": 23
+  },
+  {
+   "game_id": "401811008",
+   "candidates": 41,
+   "listed": 25,
+   "labelled": 25
+  },
+  {
+   "game_id": "401811013",
+   "candidates": 43,
+   "listed": 30,
+   "labelled": 30
+  },
+  {
+   "game_id": "401811019",
+   "candidates": 40,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401811022",
+   "candidates": 42,
+   "listed": 23,
+   "labelled": 23
+  },
+  {
+   "game_id": "401811025",
+   "candidates": 38,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401811027",
+   "candidates": 39,
+   "listed": 27,
+   "labelled": 27
+  },
+  {
+   "game_id": "401811032",
+   "candidates": 38,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401811045",
+   "candidates": 37,
+   "listed": 26,
+   "labelled": 25
+  },
+  {
+   "game_id": "401811046",
+   "candidates": 40,
+   "listed": 26,
+   "labelled": 26
+  },
+  {
+   "game_id": "401850920",
+   "candidates": 34,
+   "listed": 23,
+   "labelled": 23
+  }
+ ],
+ "limitations": "Prior boxes are retrospectively retained, without historical publication/correction timestamps; inferred membership is not an official dated roster or injury report. Unlisted players and zero/missing minutes remain unknown; later listings are diagnostic only.",
+ "rows_output": "data/derived/experiments/20261122_a1_prior_box_membership_nba_only.parquet"
+}

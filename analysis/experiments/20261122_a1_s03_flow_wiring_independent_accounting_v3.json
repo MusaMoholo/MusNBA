@@ -1,0 +1,28 @@
+{
+ "experiment": "a1_s03_flow_independent_accounting",
+ "run": "20261122T051535Z_a1_s03_flow_wiring",
+ "games": 3,
+ "player_games": 64,
+ "original_game_values_reproduced": 279,
+ "original_player_values_reproduced": 1408,
+ "recorded_player_period_values_checked": 1280,
+ "simulated_team_quarter_and_component_values_checked": 96,
+ "recorded_team_lineup_tick_sets_checked": 6,
+ "recorded_clock_values_checked": 12,
+ "max_absolute_difference": 2.842170943040401e-14,
+ "simulated_roster_players_without_box_output": [],
+ "incomplete_roster_team_games": 0,
+ "limitations": "Team/quarter sums are checked only for sides whose entire simulated roster has player-box output. Scheduled fives precede foul-outs and their overlap is not event-level validation.",
+ "input_sha256": {
+  "analysis/experiments/20261122T051535Z_a1_s03_flow_wiring.json": "203e4d450b74f5091dd1715961ff180a71d0671577d27577fa3ebcd4020fc277",
+  "data/derived/experiments/20261122T051535Z_a1_s03_flow_wiring.parquet": "37640a9de33a67549a99c96ba8ca617842ed11d01508af5c12427c099895da28",
+  "data/derived/experiments/20261122T051535Z_a1_s03_flow_wiring_players.parquet": "8fae3043fb8ed867f20fb882f23cc31041918cb22dd34910c6db27bae807f419",
+  "data/derived/experiments/20261122T022323Z_a1_s01_control.parquet": "d3f2956e335490cca5b77fa877faacf8494f99ce04ab79c447debb5329776d4e",
+  "data/derived/experiments/20261122T022323Z_a1_s01_control_players.parquet": "d5e4618be5e146c62372b57b54b9a6528b7c75e9b1b2dd86f86e9279835bc09e",
+  "data/derived/variants/matchup/features/pregame.parquet": "d4da5f071de3ddcbc72bbb4899a77f9b4f22d899a3a54bcfb76baf0097594d0e",
+  "data/derived/history/2026/player_periods.csv.gz": "ef35bb5c33c46e6a194cea30075d9974ead5d44be96c6074b60f6dac49e69c28",
+  "data/derived/history/2026/stints.parquet": "29de886d2afd2a5d9a55af2acb027fd3ee83a887584c71a9fe9951a9c2cc225f",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+  "scripts/a1_flow_audit.py": "ff36099ce44c99d0616d26fc51a35159bbe3ad10d18a57a34077763a0ea4b342"
+ }
+}

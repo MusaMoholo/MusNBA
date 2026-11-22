@@ -280,6 +280,129 @@ The second-seed result, exact confirmation IDs, 10k subset and reproducibility m
 `analysis/experiments/20261122_a1_manifest.json`, pinned to source checkpoint `c6d5db4`; the later seed-list type
 annotation preserves the compiled function and all 3,036 recorded seeds.
 
+#### S03 signal-diagnosis specification — 22 Nov, before the diagnosis
+
+The fixed unit is a team-game side: the **200 unique S01 F4 game IDs** in the manifest, exactly matching the retained
+pool-0 control, form **400 sides**. For each side retain its game ID, team/opponent, simulated and real possession
+counts, points, FGA, FGM, 3PA, 3PM, FTA, player turnovers and offensive rebounds. Both possession counts, FGA and
+3PA are positive for every side. Simulated points are engine scoreboard means; real points are official scores;
+real component totals are player-box sums, so any administrative/team discrepancy remains a labelled limitation.
+
+Use the existing pre-date team-rating yardstick: for each game, `season_backtest.state_before` uses only earlier
+same-season boxes, and `pathway.start_ratings` supplies own offence and opponent defence, each minus the league
+offensive rating. On the *same* 400 sides regress each outcome on an intercept, own offence and opponent defence.
+Outcomes are points/100 possessions, FG%, 3P%, 3PA/FGA and FGA, FTA, turnovers and offensive rebounds per 100
+possessions; sim and real each use their own matching denominators. Report unrounded coefficients and levels plus
+10,000 paired complete-game bootstrap intervals (seed 20261122), including sim-minus-real coefficients. Do not treat
+ratios with near-zero observed coefficients as identified or interpret these observational loadings causally.
+
+The like-for-like M6a diagnostic uses the same frozen game IDs and the **v1.2d** F4 fitted inputs used by the
+accepted v1.3 control, not the retained v1.1 M6a run. Its actual lineups, clock, score and prior in-game state are
+teacher forced, its selected participants are retrospective and it is **not a pre-game forecast**. Different
+accounting populations (heaves, malformed lineups or non-player scoring) must be counted before comparison.
+For rejected v1.4c/e/f only, compare the same 200 IDs against their original shared-rotation-pool v1.3 control
+`20261120T133953Z_v1.3_components_F4`; do not present that comparison as a pool-0 paired run. FTM is not retained
+in these game outputs: any score residual after field goals is a residual, not an observed free-throw-make count.
+
+For S03's descriptive player-profile spread, split the fixed panel at **1 March 2026**, before inspecting outcomes
+(112 earlier / 88 later games). Compare shooter zone-specific pre-game FG profiles with real shots, and defensive
+on-court zone profiles with opponent shots taken while each defender was on the floor; one shot belongs to five
+defensive exposures and does **not** identify the on-ball defender's causal effect. For each player/zone, retain
+only those with at least **15** opportunities and **3** distinct games in *each* half; report the number retained,
+the profile variance and covariance of the two halves' observed rates, weighted by the lesser half's opportunity
+count. Missing or duplicate defensive lineups and unmatched/incorrect team assignments are counted and excluded. Do not clamp
+negative covariance or present it as a causal individual-defence estimate. The effective-exposure bins are
+`<250`, `250–750`, `>750` and unknown (shooter `shots_eff`, defender `d_segs_eff`); report all sample sizes and
+missingness. These are exploratory diagnostics, not tuned thresholds or promotion gates.
+
+For the same panel's frozen **shot-result** node, align cached rows to retained shot events using game, date, period,
+zone, result, score state, clock, coordinates and actor-profile values; explicitly count actors missing from their
+recorded offensive five. Apply the saved F4 model, including distance bands fitted on its training window, to the
+aligned rows. Within each zone, form quartiles from the *input values alone* for the shooter zone profile, the
+assignment-weighted opponent profile (`mu_fg_shot`) and shooter usage. Report prediction, observed make rate,
+binary log loss, Brier score, game and exposure counts, plus the same metrics per shooter and for effective-exposure
+bins. Defensive effective exposure is the mean of the five recorded defenders' pre-game `d_segs_eff`, not an
+on-ball assignment; invalid fives and unknown means remain missing. Quartiles are descriptive, not thresholds fitted
+to outcomes, and the node is conditional on the actual shot/zone rather than a pre-game or full-engine forecast.
+After seeing the initial bin means, add **10,000 paired game-cluster bootstrap** intervals for every input's Q4−Q1
+observed and predicted difference and their difference; these intervals are descriptive, not a newly preregistered
+selection gate, and do not adjust for confounding or multiple comparisons.
+
+For S05, keep these quantities distinct before evaluating minutes: **roster membership** means the strictly
+prior-box inferred team membership in §8.2, not a proven historical roster; **physical availability** is not
+reconstructible from an unlisted/unknown or unspecified DNP; **rotation membership** means whether a known-available
+player enters, with positive-minute appearances and explicit DNP-coach labels as an incomplete diagnostic cohort;
+**start** is a separate outcome. A DNP for injury, rest or an unspecified reason is not automatically a coach's
+rotation rejection. **Healthy role** is the cutoff-safe D29 latent minutes level learned from appearances with its
+absence correction and ramp handling; it is not the allocated target or unconditional expectation. **Conditional
+minutes** score the known-participant S01 panel and must not be presented as an availability forecast. **Unconditional
+minutes** need a pre-game candidate universe and physical-availability plus rotation probabilities, including
+observed zeros; unknown/unlisted players stay unknown. Report total vs regulation minutes, cutoff, origin, counts,
+and S01 pre-game role tiers explicitly. Returning-player, low-history, recent-team-change and absent-core analyses
+must use pre-origin definitions where inputs are used for selection; realised absences can be shown only as labelled
+post-game diagnostics. Stale inferred rosters, unseen arrivals, and source records without publication timestamps
+remain limitations rather than silently excluded proof of forecast quality.
+
+S05's first isolated candidate removes non-NBA-team games from the D29 minutes history, while retaining its
+healthy-role, allocation, ramp, spread, node and rotation settings. Both sides of every retained game must be
+canonical NBA teams; same-date duplicate player/team games fail rather than leaking. Ramp and residual-spread fits
+use the same pre-validation cutoff as the original D29 build. Compare the candidate and unchanged v1.3 control on
+S01's exact F4 participants, games and streams; the primary engine outcome remains pooled MIN CRPS and all S01
+non-inferiority/confirmation gates remain fixed. The preliminary target-only result is exploratory and not a
+promotion. The candidate module is opt-in and not yet connected to production or the backtest CLI.
+An independent strict-runtime candidate repairs D29's underfilled short-roster draws and >48-minute targets by
+redistributing only within legal regulation headroom; fewer than five available players fail explicitly. Keep the
+NBA-only-history and strict-runtime switches separately identifiable so their effects and interaction can be tested.
+The history candidate currently learns past states with the original D29 allocator; do not describe that as a
+strict-allocation training rebuild.
+Before using the strict candidate's first historical screen for selection, a deterministic defect was found:
+redistribution can activate a zero target even when already-positive targets can absorb the deficit, changing the
+`draw > 0` target-play diagnostic. Correct this invariant without changing the registered populations, normal
+streams, availability fallback, scoring, or other candidates; retain the uncorrected reports and hashes. Rerun
+the conditional and both historical roster screens under new names, verify control/NBA-only values reproduce,
+and report strict/combined results only from the corrected version. This is a candidate implementation repair,
+not a revision of the promotion gates or evidence that the player is actually available.
+Before full-engine runs, compare conditional regulation-minute target distributions on S01's predeclared **200**
+F1, **200** F2, **200** F3 and fixed **200** F4 games. Use the same actual-participant team sets for every variant,
+1,000 draws per team with the same explicit per-game/team normal stream, each fold's own earlier ramp/spread fit,
+pre-game role tiers from the isolated causal-base features, and paired 10,000-game-cluster bootstrap intervals.
+Report the original, NBA-only-history, strict-runtime and combined variants separately; these allocator-only screens
+do not establish engine CRPS or availability accuracy. An unconditional evaluation also needs zero-minute players
+from a pre-origin membership/availability universe; missing reports and unlisted players stay unknown.
+
+For an honest partial sensitivity while historical physical-availability reports remain unavailable, construct the
+same prior-box candidate universe separately on the fixed 200 games in each fold. Before scoring the first such
+run, hold all inferred candidates physically active, carry unknown/unlisted candidates into each team allocation
+without assigning them zero outcomes, and score recorded DNP zeroes and available positive regulation minutes.
+Contradictory DNP/on-court records and positive boxes lacking on-court regulation minutes remain missing for the
+minute score. Use strictly pre-origin reconstructed D29 states, each fold's earlier ramp/spread fit, 1,000 matched
+draws per team and 10,000 paired game-cluster bootstrap replicates. Compare the same four original, NBA-only,
+strict-runtime and combined variants as the conditional screen. Use the latest strictly earlier player profile
+for role tiers, and report unlisted, unseen-arrival and source-conflict counts. A zero-target-draw frequency is an
+allocator diagnostic, not simulated rotation membership; this deliberately optimistic all-active fallback and its
+known-label subset are not a complete unconditional forecast or a replacement for date-stamped injury reports.
+The run was started 22 Nov with the outcomes still uninspected, as separate per-fold immutable reports.
+
+For the further no-report availability fallback, use the existing production rule rather than assume all candidates
+are certainly active: absent a report, the status fallback starts at 1.0; if none of the last five prior team games
+has a listed play and the window contains at least three, use 0.8 for a recent 20+ minute role and 0.5 otherwise.
+Build the role from strictly earlier same-season positive-minute appearances with the existing four-game EWMA.
+Record unknown prior box entries rather than presenting them as confirmed absences. Draw physically-available
+patterns from those probabilities with a matched deterministic stream, re-solve targets per pattern, and condition
+on at least five eligible players by resampling; record every resampled world. This is a no-report fallback
+counterfactual with incomplete inferred rosters and known-label scoring, not a reconstruction of actual pre-tip
+injury reports. Hold it fixed across the four allocator variants and all four folds; no later tuning to its results.
+
+For S03's remaining flow diagnosis, reproduce the **same 200-game, 1,000-world** free-running control with its
+original seeds and opt-in diagnostics only; audit every original output field against the retained reproduction before
+using the extras. Record player FGA/FTA/turnovers and quarter minutes/scoring, simulated segment-clock summaries,
+and scheduled-five overlap against retained real stints at 10-second midpoints in regulation. Report invalid/missing
+real fives and unknown profile values rather than filling them. Scheduled tables precede foul-out substitutions and
+do not prove which five was on court at every simulated event. Compare teacher-forced and free-running components and
+pre-game role cohorts with paired game-cluster intervals, keeping each source's actual accounting separate; quarter
+and lineup/clock measurements are supporting diagnostics, not a causal isolation of each mechanism. This
+instrumentation and comparison are specified before running the expanded control, not a model-promotion test.
+
 #### S01 population separation — 22 Nov, before availability candidates
 
 The conditional-engine panel is the fixed 200 F4 games above: the box supplies **who played**, while starters are
@@ -296,6 +419,9 @@ stale memberships, games without prior history, ambiguous labels and all exclude
 remove candidates based on their same-day box. Report play Brier/log loss and calibration with game-clustered
 intervals; evaluate starter predictions separately, conditional on the declared cohort. A probability cannot pass
 as an end-to-end availability model merely because it scores well after excluding unknown arrivals or transfers.
+Restrict historical box events to the 30 canonical NBA team IDs: the 2025–26 file includes four All-Star games
+marked `season_type=2`. The separately retained NBA-only candidate cohort corrects 12 displaced memberships; the
+original S01 report remains archived for audit. This data correction does not change the pinned engine panel.
 
 Historical F1–F4 lack the current ESPN collection's dated injury/roster reports. The only retained ESPN collection
 origins currently span **19–21 Nov 2026**, inside the protected 2026–27 final season; checking their existence is

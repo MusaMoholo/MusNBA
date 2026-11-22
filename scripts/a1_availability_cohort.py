@@ -43,12 +43,28 @@ def participation(box: pd.DataFrame) -> pd.Series:
                                [0.0, 1.0], default=np.nan), index=box.index)
 
 
+def nba_team_records(box: pd.DataFrame, teams: set[str]) -> tuple[pd.DataFrame, dict]:
+    if len(teams) != 30 or box['team'].isna().any():
+        raise ValueError('canonical NBA team IDs or box team IDs are missing')
+    rejected = box.loc[~box['team'].isin(teams)]
+    return box.loc[box['team'].isin(teams)].copy(), {
+        'non_nba_team_box_rows': len(rejected),
+        'non_nba_team_games': int(rejected['game_id'].nunique()),
+        'non_nba_team_ids': sorted(rejected['team'].unique().tolist()),
+    }
+
+
 def build(control: str) -> tuple[dict, pd.DataFrame]:
     log = json.loads((EXPERIMENTS / f'{control}.json').read_text())
-    _, val_from, val_to = FOLDS[log['fold']]
-    season = int(val_to[:4]) if val_to[5:7] <= '06' else int(val_to[:4]) + 1
     games = pd.read_parquet(DERIVED / 'experiments' / f'{control}.parquet',
                             columns=['game_id', 'date_et', 'home', 'away'])
+    return build_for_games(games, log['fold'], control)
+
+
+def build_for_games(games: pd.DataFrame, fold: str, source: str) -> tuple[dict, pd.DataFrame]:
+    """Build the same prior-box cohort for an explicitly identified fold game set."""
+    _, val_from, val_to = FOLDS[fold]
+    season = int(val_to[:4]) if val_to[5:7] <= '06' else int(val_to[:4]) + 1
     a1_compare._unique(games, ['game_id'], 'control games')
     if games.empty or not games['date_et'].between(val_from, val_to).all():
         raise ValueError('control games are empty or outside the declared fold dates')
@@ -66,6 +82,10 @@ def build(control: str) -> tuple[dict, pd.DataFrame]:
     box = box.dropna(subset=['athlete_id', 'team_id']).copy()
     box['player'] = box['athlete_id'].astype('int64').astype(str)
     box['team'] = box['team_id'].astype('int64').astype(str)
+    teams = set(json.loads((DERIVED / 'teams.json').read_text()))
+    if not set(games['home']).union(games['away']).issubset(teams):
+        raise ValueError('control contains a team outside the canonical NBA teams')
+    box, excluded_non_nba = nba_team_records(box, teams)
     a1_compare._unique(box, ['game_id', 'player'], 'regular-season box')
     box['played'] = participation(box)
     current = box.loc[box['game_id'].isin(games['game_id'])].copy()
@@ -115,7 +135,7 @@ def build(control: str) -> tuple[dict, pd.DataFrame]:
                                             labelled=('played', 'count')).reset_index()
     report = {
         'experiment': 'a1_prior_box_availability_coverage',
-        'control_run': control, 'fold': log['fold'], 'season': season, 'games': len(games),
+        'control_run': source, 'fold': fold, 'season': season, 'games': len(games),
         'method': 'Construct each game/team candidate universe from same-season box records strictly before its date; '
                   'assign each player to their latest uniquely observed team, then join the current box for coverage only.',
         'labels': 'DNP is not played; non-DNP positive box minutes is played; zero/missing minutes and unlisted '
@@ -132,6 +152,7 @@ def build(control: str) -> tuple[dict, pd.DataFrame]:
         'same_day_conflicting_team_listings': int(conflicting.sum()),
         'raw_box_rows_without_player_id': missing_ids,
         'raw_box_rows_without_team_id': missing_teams,
+        **excluded_non_nba,
         'team_games_without_prior_candidates': empty_teams,
         'origin_dates_with_ambiguous_latest_teams': {k: v for k, v in ambiguous_by_day.items() if v},
         'per_game': counts.to_dict(orient='records'),

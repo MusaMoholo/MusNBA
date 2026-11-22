@@ -1,0 +1,82 @@
+{
+ "experiment": "a1_s05_minutes_candidate_stress",
+ "method": "Repeat 10,000 same-seed draws and 1,000 mean allocations for each roster size; compare original D29 with the candidate hard-48 regulation correction. Rebuild F4 candidate states, allocate each team and remove its largest target to test redistribution.",
+ "limitations": "Synthetic stress is not a forecast or an engine-accuracy test. Historical state learning still uses the original D29 allocator; the strict correction is an isolated runtime candidate. Observed player caps remain soft when they cannot cover 240; 48 is the hard regulation limit.",
+ "synthetic": {
+  "5": {
+   "worlds": 10000,
+   "legacy_worlds_not_240_at_1e_6": 9910,
+   "legacy_max_deficit": 11.331310160713997,
+   "candidate_max_team_error": 2.842170943040401e-14,
+   "candidate_min_player_minutes": 47.99999999999997,
+   "candidate_max_player_minutes": 48.0,
+   "legacy_illegal_mean_allocations": 1000,
+   "candidate_max_mean_allocation": 48.0
+  },
+  "6": {
+   "worlds": 10000,
+   "legacy_worlds_not_240_at_1e_6": 4595,
+   "legacy_max_deficit": 1.248208674227243,
+   "candidate_max_team_error": 8.526512829121202e-14,
+   "candidate_min_player_minutes": 13.515378454119556,
+   "candidate_max_player_minutes": 48.0,
+   "legacy_illegal_mean_allocations": 825,
+   "candidate_max_mean_allocation": 48.0
+  },
+  "7": {
+   "worlds": 10000,
+   "legacy_worlds_not_240_at_1e_6": 1073,
+   "legacy_max_deficit": 0.13234359779846727,
+   "candidate_max_team_error": 1.1368683772161603e-13,
+   "candidate_min_player_minutes": 6.191539894118401,
+   "candidate_max_player_minutes": 48.0,
+   "legacy_illegal_mean_allocations": 447,
+   "candidate_max_mean_allocation": 48.0
+  },
+  "10": {
+   "worlds": 10000,
+   "legacy_worlds_not_240_at_1e_6": 31,
+   "legacy_max_deficit": 0.002200181261741818,
+   "candidate_max_team_error": 5.684341886080802e-14,
+   "candidate_min_player_minutes": 0.0,
+   "candidate_max_player_minutes": 48.0,
+   "legacy_illegal_mean_allocations": 9,
+   "candidate_max_mean_allocation": 48.0
+  },
+  "15": {
+   "worlds": 10000,
+   "legacy_worlds_not_240_at_1e_6": 3,
+   "legacy_max_deficit": 0.001851119281695901,
+   "candidate_max_team_error": 1.4210854715202004e-13,
+   "candidate_min_player_minutes": 0.0,
+   "candidate_max_player_minutes": 48.0,
+   "legacy_illegal_mean_allocations": 0,
+   "candidate_max_mean_allocation": 42.11997344884356
+  }
+ },
+ "fixed_panel": {
+  "games": 200,
+  "team_games": 400,
+  "absence_cascades": 400,
+  "infeasible_after_removal": 0,
+  "max_target_team_error": 5.684341886080802e-14,
+  "max_world_team_error": 1.1368683772161603e-13,
+  "max_cascade_error": 7.815970093361102e-14
+ },
+ "input_sha256": {
+  "analysis/experiments/20261122_a1_manifest.json": "0790a28ffadc3f09554c79661ccb80f631a4eb4b56f64030633a9a82d451e75e",
+  "data/derived/experiments/20261122T022323Z_a1_s01_control.parquet": "d3f2956e335490cca5b77fa877faacf8494f99ce04ab79c447debb5329776d4e",
+  "scripts/minutes.py": "94dd0ed25e536708c75cd4cf1f386bf2f9fa35f2c334d83cbdd031d4448ba2d0",
+  "scripts/a1_minutes_candidate.py": "3bd085968d6f1a9e08b1bf5f58aaa4af75f1d81d1261e858b291d5c069d416dc",
+  "scripts/a1_minutes_stress.py": "8d813f17ef22609703a889c7467f3cfc7a1274b1859f54e69c53e30d1d7388fe",
+  "data/derived/teams.json": "130aa5358d49b944c2b5bee7e9a163f1e53285e93dae57262f039ca1636b7ecc",
+  "data/derived/history/2023/on_court.parquet": "ba9b4b13e16e5b839e5530905497d2d00d231413ea40f39ee46855f3ebce8c3b",
+  "data/derived/history/2024/on_court.parquet": "5461947edb052ef9e62b4a70ba49e57a0f98d929f4a19167f03aad3972457f95",
+  "data/derived/history/2025/on_court.parquet": "5bbabab60114aa3f7fa096d7708be96f47177c541debcae88059da6b1adb77e9",
+  "data/derived/history/2026/on_court.parquet": "1b0ffaf53490c3fda4edd28ac427766a0af3a1bfe86f1fece240cd63ed1e8410",
+  "data/raw/hoopr/player_box_2023.parquet": "968d835cd04b10533c5b5af8c0e41bf0154a73782e9446c76f765109223e8679",
+  "data/raw/hoopr/player_box_2024.parquet": "1e500a538ec45ddbcb58d9789b5494f8db4f25658eafd01d90f2d09600921665",
+  "data/raw/hoopr/player_box_2025.parquet": "e89f7fbc1124092c715b722e6d72d9dd1b9d28776ca6888b508fd2831cd705e2",
+  "data/raw/hoopr/player_box_2026.parquet": "29a29dc9efd055a93e069a0382ac830d98a13274bee655beba69d95cff099713"
+ }
+}

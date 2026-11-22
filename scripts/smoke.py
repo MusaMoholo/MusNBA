@@ -38,6 +38,15 @@ def hist_mean(d):
     return sum((d['min'] + i) * c for i, c in enumerate(d['hist'])) / hist_total(d)
 
 
+def m6a_player_outputs(folder: Path, reports: Path) -> list[Path]:
+    outputs = []
+    for path in folder.glob('*_m6a*.parquet'):
+        report = reports / f'{path.stem}.json'
+        if report.exists() and json.loads(report.read_text()).get('experiment') == 'm6a_aggregation':
+            outputs.append(path)
+    return sorted(outputs)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--fault', action='store_true')
@@ -173,7 +182,7 @@ def main():
         d = other['loss'].astype(float)[::-1].copy()  # any second loss vector on the same rows
         mean, _, per_game = compare.paired(a['loss'], d, a['game'])
         check('compare: per-game sums add up to the node total', abs(per_game.sum() - (d - a['loss']).sum()) < 1e-6 * max(1, len(d)))
-    m6a = sorted(p for p in (DERIVED / 'experiments').glob('*_m6a*.parquet') if not p.stem.endswith('_teams'))
+    m6a = m6a_player_outputs(DERIVED / 'experiments', ROOT / 'analysis' / 'experiments')
     if m6a:
         import numpy as np
         import pandas as pd

@@ -1,0 +1,253 @@
+{
+ "experiment": "a1_s05_rotation_weight_and_fallback_diagnostic",
+ "status": "superseded: target comparisons use total actual minutes rather than regulation minutes; use the separate _reg report",
+ "method": "Trace the existing rotation probability through a counterfactual 240-minute allocator on the actual-participant panel; independently inspect the last-five-team-games rule which can reduce the separate availability value when a hypothetical status is Active.",
+ "limitations": "The allocator comparison is not a forecast: the roster is known after the game, and no historical status reports are available. The recent nonappearance fallback also uses unlisted games; it overlaps coach-DNP evidence but may represent physical absence instead. Physical availability and rotation are different concepts; a product of the two is not by itself proof of double-counting or a calibrated play probability.",
+ "recent_nonappearance": {
+  "candidate_player_games": 7317,
+  "at_least_three_games_no_known_play": 1672,
+  "overlapping_coach_dnp": 255,
+  "overlapping_coach_dnp_with_unknown_prior_listing": 176,
+  "overlap_played": 65,
+  "overlap_coach_dnp": 85,
+  "overlap_other_or_unknown": 105,
+  "scope": "Hypothetical Active status only; historical status and exact live EWMA are not reconstructed."
+ },
+ "conditional_target_accounting": {
+  "player_games": 4346,
+  "team_games": 400,
+  "healthy_15_plus_weighted_target_under_5": 105,
+  "already_under_5_with_known_play": 83,
+  "newly_under_5_after_rotation_weighting": 22
+ },
+ "target_comparison": {
+  "all": {
+   "healthy": {
+    "observations": 4346,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 22.53157293370837,
+    "ci_95": [
+     22.277724932007114,
+     22.787564170105682
+    ]
+   },
+   "min_actual": {
+    "observations": 4346,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 22.145967172879274,
+    "ci_95": [
+     21.757866854697106,
+     22.553887497319916
+    ]
+   },
+   "rotation_share": {
+    "observations": 4346,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.9056849703596783,
+    "ci_95": [
+     0.8984696448612025,
+     0.9129796749425308
+    ]
+   },
+   "target_known_play": {
+    "observations": 4346,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 22.08927749654855,
+    "ci_95": [
+     21.709633649932158,
+     22.482435597189696
+    ]
+   },
+   "target_rotation_weighted": {
+    "observations": 4346,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 22.08927749654855,
+    "ci_95": [
+     21.709633649932158,
+     22.482435597189696
+    ]
+   },
+   "target_change": {
+    "observations": 4346,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": -3.8267696522974795e-17,
+    "ci_95": [
+     -3.354055966770783e-16,
+     2.623407813670399e-16
+    ]
+   }
+  },
+  "healthy_15_plus": {
+   "healthy": {
+    "observations": 3589,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 24.910219290898507,
+    "ci_95": [
+     24.702063047167442,
+     25.12206571763718
+    ]
+   },
+   "min_actual": {
+    "observations": 3589,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 24.51801012352559,
+    "ci_95": [
+     24.16281099066553,
+     24.871037563487594
+    ]
+   },
+   "rotation_share": {
+    "observations": 3589,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.9581297110001044,
+    "ci_95": [
+     0.9541875075823439,
+     0.9620795293517594
+    ]
+   },
+   "target_known_play": {
+    "observations": 3589,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 24.898114614173238,
+    "ci_95": [
+     24.608463596837428,
+     25.184220699996384
+    ]
+   },
+   "target_rotation_weighted": {
+    "observations": 3589,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 24.91606285958602,
+    "ci_95": [
+     24.619452736376576,
+     25.211366770839966
+    ]
+   },
+   "target_change": {
+    "observations": 3589,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.017948245412780513,
+    "ci_95": [
+     -0.019079507912637548,
+     0.053878904696458556
+    ]
+   }
+  },
+  "healthy_15_plus_weighted_target_below_5": {
+   "healthy": {
+    "observations": 105,
+    "games": 63,
+    "missing": 0,
+    "status": "ok",
+    "mean": 17.48187514969648,
+    "ci_95": [
+     17.161466482692823,
+     17.788071785644735
+    ]
+   },
+   "min_actual": {
+    "observations": 105,
+    "games": 63,
+    "missing": 0,
+    "status": "ok",
+    "mean": 9.181222222222223,
+    "ci_95": [
+     8.016713541666666,
+     10.340227309863339
+    ]
+   },
+   "rotation_share": {
+    "observations": 105,
+    "games": 63,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.7375365415443306,
+    "ci_95": [
+     0.6845202463540605,
+     0.7871779317827479
+    ]
+   },
+   "target_known_play": {
+    "observations": 105,
+    "games": 63,
+    "missing": 0,
+    "status": "ok",
+    "mean": 3.7253497210942603,
+    "ci_95": [
+     2.5934361218550253,
+     4.965337134410452
+    ]
+   },
+   "target_rotation_weighted": {
+    "observations": 105,
+    "games": 63,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.7309724581225093,
+    "ci_95": [
+     0.4966957760110015,
+     0.9986471204115457
+    ]
+   },
+   "target_change": {
+    "observations": 105,
+    "games": 63,
+    "missing": 0,
+    "status": "ok",
+    "mean": -2.9943772629717516,
+    "ci_95": [
+     -4.226367623245523,
+     -1.858275092466031
+    ]
+   }
+  }
+ },
+ "non_nba_team_box_rows": 73,
+ "non_nba_team_games": 4,
+ "non_nba_team_ids": [
+  "111386",
+  "132374",
+  "132375"
+ ],
+ "input_sha256": {
+  "analysis/experiments/20261122_a1_manifest.json": "0790a28ffadc3f09554c79661ccb80f631a4eb4b56f64030633a9a82d451e75e",
+  "data/derived/experiments/20261122T022323Z_a1_s01_control.parquet": "d3f2956e335490cca5b77fa877faacf8494f99ce04ab79c447debb5329776d4e",
+  "data/derived/experiments/20261122T022323Z_a1_s01_control_players.parquet": "d5e4618be5e146c62372b57b54b9a6528b7c75e9b1b2dd86f86e9279835bc09e",
+  "data/derived/experiments/20261122_a1_s05_minutes_population.parquet": "321fe701f8d94a0d371f727d33112c477240d770e9d8416f451fc2d896477ad7",
+  "data/raw/hoopr/player_box_2026.parquet": "29a29dc9efd055a93e069a0382ac830d98a13274bee655beba69d95cff099713",
+  "data/derived/teams.json": "130aa5358d49b944c2b5bee7e9a163f1e53285e93dae57262f039ca1636b7ecc",
+  "scripts/minutes.py": "94dd0ed25e536708c75cd4cf1f386bf2f9fa35f2c334d83cbdd031d4448ba2d0",
+  "scripts/projection.py": "dbd3201017e9febd8cd52cc6ca9b838c8ebc607d934dc490129cf09123faf284",
+  "scripts/engine.py": "f600d4388383470963d1356a01afd0d1021726ac3ae2fddda5a49f89ff262516",
+  "scripts/season_stats.py": "ce683396adee2f44cdb084f87d913572e31091e3c5f3d5768912a9a102dedd77",
+  "scripts/a1_rotation_diagnose.py": "60e1bd01d29a3c1ebab44c0db13c440c2cc3b894447ae6d76c8360f709d20283",
+  "data/derived/history/2023/on_court.parquet": "ba9b4b13e16e5b839e5530905497d2d00d231413ea40f39ee46855f3ebce8c3b",
+  "data/derived/history/2024/on_court.parquet": "5461947edb052ef9e62b4a70ba49e57a0f98d929f4a19167f03aad3972457f95",
+  "data/derived/history/2025/on_court.parquet": "5bbabab60114aa3f7fa096d7708be96f47177c541debcae88059da6b1adb77e9",
+  "data/derived/history/2026/on_court.parquet": "1b0ffaf53490c3fda4edd28ac427766a0af3a1bfe86f1fece240cd63ed1e8410"
+ }
+}

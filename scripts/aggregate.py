@@ -66,6 +66,10 @@ class Branches(nodes.Chain):
         self.seg = seg
         self.off = _rekey(base.off, base._pos_off, src)
         self.dfn = _rekey(base.dfn, base._pos_def, src)
+        for name in ('profile', 'lineup', 'mu_cols', 'mu_shot', 'stype', '_relative_missing_policy',
+                     '_preserve_groups', '_deterrence', '_assign_extra'):
+            if hasattr(base, name):
+                setattr(self, name, getattr(base, name))
 
 
 def _positions(table, n):
@@ -86,14 +90,65 @@ def _rekey(table, pos, src):
 class Scorer:
     """Scores branch tables with fitted node models."""
 
-    def __init__(self, base, fitted):
+    MU_NODES = {'what', 'location', 'shot_result', 'assisted', 'blocked', 'turnover_type'}
+
+    def __init__(self, base, fitted, theta=None):
         self.base, self.fitted = base, fitted
+        self.theta = theta
+        self.actor_mu = None
+
+    def prepare_matchups(self, src, off):
+        if not self.base.mu_cols:
+            return {'matched_actors': 0, 'unmatched_actors': 0}
+        if self.theta is None or self.theta.get('kind') == 'real':
+            raise ValueError('hypothetical matchup scoring requires an implicit assignment')
+        branches = Branches(self.base, np.repeat(src, 5), actor=off.ravel())
+        branches.seg = branches.seg.drop(columns=self.base.mu_cols + self.base.mu_shot)
+        branches._matchup(self.theta)
+        if branches.mu_cols != self.base.mu_cols or branches.mu_shot != self.base.mu_shot:
+            raise ValueError('hypothetical matchup columns differ from the input chain')
+        index = pd.MultiIndex.from_arrays([np.repeat(src, 5), off.ravel()], names=['source', 'actor'])
+        if index.has_duplicates:
+            raise ValueError('a hypothetical offensive lineup contains duplicate players')
+        self.actor_mu = branches.seg[self.base.mu_cols].set_axis(index)
+        actual = self.base.seg.iloc[src]
+        known = actual['actor'].notna()
+        keys = pd.MultiIndex.from_arrays([src[known], actual.loc[known, 'actor'].astype(str)])
+        indices = self.actor_mu.index.get_indexer(keys)
+        matched = indices >= 0
+        expected = actual.loc[known, self.base.mu_cols].to_numpy(dtype=float)[matched]
+        rebuilt = self.actor_mu.iloc[indices[matched]].to_numpy(dtype=float)
+        if not np.allclose(expected, rebuilt, rtol=1e-6, atol=1e-6, equal_nan=True):
+            raise ValueError('hypothetical matchups do not reproduce the original actors')
+        return {'matched_actors': int(matched.sum()), 'unmatched_actors': int((~matched).sum())}
+
+    def _branches(self, node, src, over):
+        branch = Branches(self.base, src, **over)
+        if node in self.MU_NODES and self.base.mu_cols:
+            if self.actor_mu is None or 'actor' not in over:
+                raise ValueError('actor-specific matchups have not been prepared')
+            keys = pd.MultiIndex.from_arrays([src, branch.seg['actor'].astype(str)])
+            indices = self.actor_mu.index.get_indexer(keys)
+            if (indices < 0).any():
+                raise ValueError('hypothetical actor is absent from the offensive lineup')
+            branch.seg[self.base.mu_cols] = self.actor_mu.iloc[indices].to_numpy()
+            zone = branch.seg['zone'].replace({'corner3': 'three', 'above3': 'three'})
+            for name in self.base.mu_shot:
+                prefix = name.removesuffix('_fg_shot')
+                values = np.full(len(branch.seg), np.nan, dtype=np.float32)
+                for z in ('rim', 'paint', 'mid', 'three'):
+                    column = f'{prefix}_fg_{z}'
+                    if column in branch.seg:
+                        selected = (zone == z).to_numpy()
+                        values[selected] = branch.seg.loc[selected, column].to_numpy()
+                branch.seg[name] = values
+        return branch
 
     def _X(self, node, d):
         return d['X'][self.fitted[node]['columns']]  # branch distances are already band means (band_table)
 
     def probs(self, node, src, **over):
-        d = Branches(self.base, src, **over).dataset(node)
+        d = self._branches(node, src, over).dataset(node)
         f = self.fitted[node]
         if f.get('intercepts') is not None:  # level recalibration fitted on the latest training slice
             kind = 'binary' if f['model'].num_model_per_iteration() == 1 else 'multiclass'
@@ -107,7 +162,7 @@ class Scorer:
 
     def scores(self, node, src, size, **over):
         """Raw candidate scores ÷ temperature, shape (branches, size); candidates in player-id order."""
-        d = Branches(self.base, src, **over).dataset(node)
+        d = self._branches(node, src, over).dataset(node)
         z = self.fitted[node]['model'].predict(self._X(node, d), raw_score=True) / self.fitted[node]['temperature']
         if len(z) != len(src) * size or not np.array_equal(d['group'], np.repeat(np.arange(len(src)), size)):
             raise RuntimeError(f'{node}: candidate rows do not line up with branches')
@@ -419,6 +474,36 @@ def fit_models(fold, spec_path, threads, train_segments=False, train_features=Fa
     return fitted, metrics, spec
 
 
+def load_saved_models(fold, spec_path, folder):
+    """Load the engine's exact persisted fold models without fitting or replacing them."""
+    import lightgbm as lgb
+    if spec_path is None:
+        raise ValueError('a model settings file is required with saved models')
+    spec = json.loads(Path(spec_path).read_text())
+    folder = Path(folder)
+    config = json.loads((folder / 'config.json').read_text())
+    meta = json.loads((folder / 'meta.json').read_text())
+    default = spec.get('default', {})
+    if config.get('fold') is not True or config.get('train_through') != FOLDS[fold][0]:
+        raise ValueError('saved models do not have the requested fold training cutoff')
+    if config.get('version') != f"{spec.get('version')}_{fold}":
+        raise ValueError('saved model version differs from the requested settings')
+    for field in ('features', 'segments'):
+        if config.get(field) != default.get(field):
+            raise ValueError(f'saved model {field} differs from the requested settings')
+    saved = config.get('nodes', {})
+    if not set(SIM_NODES).issubset(saved) or not set(SIM_NODES).issubset(meta['fitted']):
+        raise ValueError('saved models do not cover every aggregation node')
+    fitted = {}
+    for name in SIM_NODES:
+        node = saved[name]
+        if any(node.get(k) != meta['fitted'][name].get(k)
+               for k in ('columns', 'categorical', 'temperature', 'intercepts')):
+            raise ValueError(f'{name} engine configuration differs from saved fit metadata')
+        fitted[name] = {**node, 'model': lgb.Booster(model_file=str(folder / node['file']))}
+    return fitted, meta['metrics'], spec
+
+
 def band_table(base, train_to):
     s = base.seg
     shots = s[(s['end_type'] == 'shot') & ~s['heave'].fillna(False).astype(bool) & s['zone'].isin(ZONES) & s['distance'].notna()
@@ -447,11 +532,20 @@ def main():
     ap.add_argument('--seed', type=int, default=20261119)
     ap.add_argument('--train-segments', type=train.data_root, default=False, help="cross-data test: segments root the models train on ('default' = data/derived)")
     ap.add_argument('--train-features', type=train.data_root, default=False, help="cross-data test: pregame.parquet the models train on ('default')")
+    ap.add_argument('--models', type=Path, help='reuse saved engine fold models under data/models instead of fitting')
+    ap.add_argument('--game-ids', type=Path, help='JSON list of unique eligible game-ID strings')
+    ap.add_argument('--components', action='store_true', help='save per-game team components and decision events')
     ap.add_argument('--name', default='m6a', help='experiment label (log file suffix)')
     args = ap.parse_args()
     start = time.time()
     train_to, val_from, val_to = FOLDS[args.fold]
-    fitted, node_metrics, spec = fit_models(args.fold, args.config, args.threads, args.train_segments, args.train_features)
+    model_folder = train.MODELS / args.models if args.models else None
+    if model_folder is not None:
+        if args.train_segments is not False or args.train_features is not False:
+            raise ValueError('saved models cannot be combined with cross-training inputs')
+        fitted, node_metrics, spec = load_saved_models(args.fold, args.config, model_folder)
+    else:
+        fitted, node_metrics, spec = fit_models(args.fold, args.config, args.threads, args.train_segments, args.train_features)
     dflt = spec.get('default', {})
     base = nodes.Chain(pregame=Path(dflt['features']) if dflt.get('features') else None,
                        segments=Path(dflt['segments']) if dflt.get('segments') else None)
@@ -459,20 +553,33 @@ def main():
     base._pos_off, base._pos_def = _positions(base.off, len(base.seg)), _positions(base.dfn, len(base.seg))
     bands = band_table(base, train_to)
     penalty_of = penalty_table(base, train_to)
-    sc = Scorer(base, fitted)
+    theta = None
+    if base.mu_cols:
+        report_path = (Path(dflt['features']).parent if dflt.get('features') else DERIVED / 'features') / 'features_report.json'
+        report = json.loads(report_path.read_text())
+        theta_path = report.get('assign') or report.get('matchup')
+        if not theta_path:
+            raise ValueError('matchup features have no assignment source')
+        theta = json.loads((ROOT / theta_path).read_text())
+    sc = Scorer(base, fitted, theta)
     seg = base.seg
     held = seg[(seg['date_et'] >= val_from) & (seg['date_et'] <= val_to)]
     games = np.array(sorted(held['game_id'].unique()))
     rng = np.random.default_rng(args.seed)
-    if args.games and args.games < len(games):
+    if args.game_ids:
+        from scripts.backtest import select_games
+        games = select_games(games, args.games, args.seed, args.game_ids)
+    elif args.games and args.games < len(games):
         games = np.sort(rng.choice(games, args.games, replace=False))
-    pre = pd.read_parquet(DERIVED / 'features' / 'pregame.parquet', columns=['game_id', 'player', 'date_et', 'usage', 'starter'])
+    pregame = Path(dflt['features']) if dflt.get('features') else DERIVED / 'features' / 'pregame.parquet'
+    pre = pd.read_parquet(pregame, columns=['game_id', 'player', 'date_et', 'usage', 'starter'])
     minutes = pd.concat([pd.read_parquet(p, columns=['game_id', 'player', 'date_et', 'sec']) for p in sorted((DERIVED / 'history').glob('*/on_court.parquet'))])
     eligible_all = seg['end_type'].isin(EVENT_TYPES) & ~seg['heave'].fillna(False).astype(bool)
     hist = actual_stats(seg[eligible_all]).merge(minutes, on=['game_id', 'player'], how='right').fillna({s: 0 for s in STATS})
     hist = hist.sort_values(['player', 'date_et']).reset_index(drop=True)
     by_player = {p: g for p, g in hist.groupby('player')}
-    rows, team_rows = [], []
+    rows, team_rows, component_rows, event_rows = [], [], [], []
+    matchup_accounting = {'matched_actors': 0, 'unmatched_actors': 0}
     events = {k: [0.0, 0.0] for k in ('action', 'def_foul', 'violation', 'team_turnover', 'penalty_trips', 'fga', 'fgm', 'and_one', 'fg3a',
                                       'turnover', 'live_turnover', 'offensive_foul', 'shooting_foul_2', 'shooting_foul_3')}
     for gi, game in enumerate(games):
@@ -483,27 +590,48 @@ def main():
         off, dfn = pick(base.off, base._pos_off), pick(base.dfn, base._pos_def)
         five = (base._pos_off[1][src] == 5) & (base._pos_def[1][src] == 5)
         src, off, dfn, gseg = src[five], off[five], dfn[five], gseg[five]
+        matchups = sc.prepare_matchups(src, off)
+        for key in matchup_accounting:
+            matchup_accounting[key] += matchups[key]
         T = tables(sc, src, off, dfn, bands)
         exp_ev, act_ev = expected_events(T, penalty_of(gseg)), actual_events(gseg)
         for k in exp_ev:
             events[k][0] += exp_ev[k]
             events[k][1] += act_ev[k]
+            if args.components:
+                event_rows.append({'game_id': game, 'event': k, 'expected': exp_ev[k], 'actual': act_ev[k]})
         players = np.unique(np.concatenate([off.ravel(), dfn.ravel()]))
         slot_player = np.searchsorted(players, np.concatenate([off, dfn], axis=1))
         game_rng = np.random.default_rng([args.seed, int(game)])
         pen = penalty_of(gseg)
         chunks = [accumulate(simulate(T, pen, n, game_rng), slot_player, len(players), n) for n in chunk_sizes(args.worlds)]
         box = {stat: np.concatenate([c[stat] for c in chunks]) for stat in STATS}
-        act = actual_stats(gseg).set_index('player').reindex(players).fillna(0)
+        all_actual = actual_stats(gseg).set_index('player')
+        unmatched = all_actual.loc[~all_actual.index.isin(players), STATS]
+        act = all_actual.reindex(players).fillna(0)
         date = gseg['date_et'].iloc[0]
         # team points: each player's team from the side he was on
         team_of = pd.Series(np.concatenate([np.repeat(gseg['offense'].to_numpy(), 5), np.repeat(gseg['defense'].to_numpy(), 5)]),
                             index=np.concatenate([off.ravel(), dfn.ravel()]))
+        if team_of.groupby(level=0).nunique().gt(1).any():
+            raise ValueError(f'{game}: a lineup player appears for both teams')
         team_of = team_of[~team_of.index.duplicated()].reindex(players).to_numpy()
         home = gseg.loc[gseg['off_home'] == 1, 'offense'].iloc[0]
         sim_team = {t: box['pts'][:, team_of == t].sum(axis=1) for t in np.unique(team_of)}
         act_team = {t: float(act['pts'].to_numpy()[team_of == t].sum()) for t in sim_team}
         away = [t for t in sim_team if t != home][0]
+        if args.components:
+            for label, team in (('home', home), ('away', away)):
+                team_mask = team_of == team
+                gs = gseg[gseg['offense'] == team]
+                row = {'game_id': game, 'team': team, 'side': label, 'eligible_segments': len(gs),
+                       'eligible_possessions': gs['poss'].nunique(), 'recorded_duration': float(gs['duration'].sum()),
+                       'unmatched_actual_players_game': len(unmatched),
+                       'unmatched_actual_points_game': float(unmatched['pts'].sum())}
+                for stat in STATS:
+                    row[f'{stat}_sim'] = float(box[stat][:, team_mask].sum(axis=1).mean())
+                    row[f'{stat}_actual'] = float(act.loc[team_mask, stat].sum())
+                component_rows.append(row)
         for label, x, y in (('home_pts', sim_team[home], act_team[home]), ('away_pts', sim_team[away], act_team[away]),
                             ('margin', sim_team[home] - sim_team[away], act_team[home] - act_team[away]),
                             ('total', sim_team[home] + sim_team[away], act_team[home] + act_team[away])):
@@ -542,11 +670,23 @@ def main():
     (DERIVED / 'experiments').mkdir(parents=True, exist_ok=True)
     res.to_parquet(DERIVED / 'experiments' / f'{stamp}_{args.name}.parquet', index=False)
     teams.to_parquet(DERIVED / 'experiments' / f'{stamp}_{args.name}_teams.parquet', index=False)
+    if args.components:
+        pd.DataFrame(component_rows).to_parquet(DERIVED / 'experiments' / f'{stamp}_{args.name}_components.parquet', index=False)
+        pd.DataFrame(event_rows).to_parquet(DERIVED / 'experiments' / f'{stamp}_{args.name}_events.parquet', index=False)
+    model_hashes = None
+    if model_folder is not None:
+        config = json.loads((model_folder / 'config.json').read_text())
+        model_paths = [model_folder / 'config.json'] + [model_folder / config['nodes'][n]['file'] for n in sorted(config['nodes'])]
+        model_hashes = {str(p): sha256_file(p) for p in model_paths}
     write_json(EXPERIMENTS / f'{stamp}_{args.name}.json', {
         'experiment': 'm6a_aggregation', 'run': stamp, 'commit': train.git_commit(), 'config': str(args.config) if args.config else None,
         'segments': dflt.get('segments'), 'train_segments': None if args.train_segments is False else str(args.train_segments or 'default'),
         'train_features': None if args.train_features is False else str(args.train_features or 'default'), 'fold': args.fold,
-        'games': len(games), 'worlds': args.worlds, 'seconds': round(time.time() - start), 'node_fit': node_metrics, 'summary': summary}, pretty=True)
+        'games': len(games), 'game_ids': games.tolist(), 'worlds': args.worlds, 'seconds': round(time.time() - start),
+        'models': str(model_folder) if model_folder else None, 'model_sha256': model_hashes,
+        'pregame_sha256': sha256_file(pregame), 'scoring_sha256': {str(p): sha256_file(p) for p in
+            (Path(__file__), ROOT / 'scripts' / 'nodes.py', ROOT / 'scripts' / 'matchups.py')},
+        'matchup_actor_accounting': matchup_accounting, 'node_fit': node_metrics, 'summary': summary}, pretty=True)
     print_summary(summary)
     print(f'\nrun {stamp}_{args.name}  ({len(games)} games, {time.time() - start:.0f}s)')
 
