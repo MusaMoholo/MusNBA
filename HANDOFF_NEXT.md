@@ -64,8 +64,10 @@ Partial source checkpoint **4dce4a3** was pushed before the UX-delivery nightly.
   cohort has only 29 player-role groups and is insufficient. A separate sparse-matrix reconstruction independently
   reconciled all **15** supported point estimates and 10,000-replicate two-way intervals. Saved report:
   `analysis/experiments/20261122_a2_shot_persistence_f1_f3.json`. This result is inconclusive, cannot identify
-  a talent component and does not justify adding a draw. Next: investigate distinct, cutoff-safe sources of
-  identifiable uncertainty or record the model-preserving fallback; no F4 or final-test outcomes entered.
+  a talent component and does not justify adding a calibrated draw. A separately frozen synthetic-only draw
+  mechanics prototype can test mean preservation and deterministic streams without asserting any fitted variance
+  or changing the engine; its specification is in TRAINING_PLAN. Component identification and the registered
+  gates remain necessary before any candidate is used. No F4 or final-test outcomes entered.
 - **Prepared, unpublished Pages shell:** isolated worktree `/tmp/musnba-user-ux-pages`, `gh-pages` at `f2932e1`,
   has only `assets/game.mjs`, `assets/players.mjs` and `sw.js` changed from the reviewed data-free shell
   `614f3061d9dc69a41bc4`. The shell passed **18/18** checks with the previous bundle. Do not publish until the new

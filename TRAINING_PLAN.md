@@ -377,6 +377,18 @@ replicate has no eligible pairs. This exploratory persistence statistic still mi
 opponents and model misspecification; an association is not a separately identified talent posterior or a
 simulated-world comparison. Do not select or promote a draw from it alone.
 
+**Synthetic-only draw-mechanics prototype, frozen before implementation:** implement an isolated bounded
+probability perturbation, not a calibrated model: for baseline `p`, factor `z` uniformly distributed on
+`[-1, 1]`, and caller-supplied strength `s` in `[0, 1]`, use `p + s*z*p*(1-p)`. Its distributional mean is
+exactly `p` and both boundaries remain valid without clipping. Draw each factor from a game/player/factor-namespaced
+random stream, once per world, and keep it fixed within that game; generate the same complete world-indexed array
+before worker partitioning. Strength zero must return an exact zero factor without drawing, and adding/reordering
+other players must not change existing players' draws. Validate analytic means, probabilities, invalid inputs,
+factor separation and reproducibility using synthetic inputs only. Uniform factor shape and strengths are arbitrary
+research mechanics, not empirical talent/form estimates; there is no fitted strength, engine wiring, model
+promotion or claim that this mechanism is realistic. A separately frozen identification, fold comparison and
+all existing gates remain necessary before using it.
+
 #### S03 signal-diagnosis specification — 22 Nov, before the diagnosis
 
 The fixed unit is a team-game side: the **200 unique S01 F4 game IDs** in the manifest, exactly matching the retained
