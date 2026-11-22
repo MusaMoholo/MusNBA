@@ -1,0 +1,54 @@
+{
+ "experiment": "a1_s06_independent_world_accounting",
+ "run": "20261122T091633Z_a1_s06_world_trace_wiring",
+ "games": 3,
+ "worlds": 3000,
+ "lineup_fives_checked": 1472554,
+ "post_foul_snapshots": 1395,
+ "overtime_worlds": 77,
+ "saved_player_means_checked": 64,
+ "max_replayed_player_minute_error": 1.7763568394002505e-15,
+ "games_detail": [
+  {
+   "game_id": "401809247",
+   "worlds": 1000,
+   "players": 19,
+   "lineup_snapshots": 245955,
+   "post_foul_snapshots": 453,
+   "lineup_fives_checked": 491910,
+   "overtime_worlds": 34,
+   "max_replayed_player_minute_error": 1.7763568394002505e-15
+  },
+  {
+   "game_id": "401810357",
+   "worlds": 1000,
+   "players": 25,
+   "lineup_snapshots": 246616,
+   "post_foul_snapshots": 509,
+   "lineup_fives_checked": 493232,
+   "overtime_worlds": 18,
+   "max_replayed_player_minute_error": 1.7763568394002505e-15
+  },
+  {
+   "game_id": "401810393",
+   "worlds": 1000,
+   "players": 20,
+   "lineup_snapshots": 243706,
+   "post_foul_snapshots": 433,
+   "lineup_fives_checked": 487412,
+   "overtime_worlds": 25,
+   "max_replayed_player_minute_error": 1.7763568394002505e-15
+  }
+ ],
+ "input_sha256": {
+  "scripts/a1_substitution_world_audit.py": "b3c2e02b494e2c2a9d50cafb37c4d63e98ebc6ea50211ba10b359d68c88e8126",
+  "analysis/experiments/20261122T091633Z_a1_s06_world_trace_wiring.json": "3a50770b564fd5ee0fd1f2c95750834e8d7a7acd7367c70068a8c93fac0bd44a",
+  "data/derived/experiments/20261122T091633Z_a1_s06_world_trace_wiring.parquet": "fdedf13d7743b44513f6dde95773e71e24d8d9a795e6d79a0d1910b4ce4e4c1c",
+  "data/derived/experiments/20261122T091633Z_a1_s06_world_trace_wiring_players.parquet": "95e4458f9ab530a3c7d9dd772d7db8a2be3268118f2f56492e67d01e57ebf725"
+ },
+ "world_sha256": {
+  "data/derived/experiments/20261122T091633Z_a1_s06_world_trace_wiring_worlds/401809247.npz": "55750d148e0308c60630ef97a58aef9356fb019cee76d40b94220a6ba984047a",
+  "data/derived/experiments/20261122T091633Z_a1_s06_world_trace_wiring_worlds/401810357.npz": "51b725aa8b2e85c0061a7fd9437d363ba51d7f1438cd2d371255d4ab8a2f0203",
+  "data/derived/experiments/20261122T091633Z_a1_s06_world_trace_wiring_worlds/401810393.npz": "8a70d8a6ed7f01018a524da9127bddff6f6fb31a88f7ebea660ceb35cef534e9"
+ }
+}

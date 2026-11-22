@@ -1506,6 +1506,20 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   Final-box listing does not establish play or DNP. Independent reconstruction matches all counts; no protected
   status/outcome calibration or model-selection score was computed. Reports:
   `20261122_a1_s07_report_coverage{,_audit}.json`.
+- **S06 independent world replay:** a trace-enabled rerun of the three pinned F4 games preserves all **104** game
+  and **20** player columns on **64** player-games to `1e-12`. Independent replay checked **3,000** worlds,
+  **1,472,554** legal distinct/available/non-disqualified fives, **1,395** post-foul replacement snapshots and
+  **77** OT worlds; reconstructed individual minutes differ by at most **1.78e-15** minutes. Player points reconcile
+  to team periods and final scores. Synthetic four-player and no-replacement cases raise explicitly. This is
+  actual-participant wiring/accounting, not a player-accuracy result. Reports:
+  `20261122_a1_s06_world_trace_{accounting,reproduction}.json`.
+- **S07 prior-box labels:** independent reconstruction of **7,317** strictly prior NBA-box memberships over **200**
+  F4 games found **4,316** known plays, **892** DNPs, **2,100** unlisted and **9** listed-unknown player-games.
+  Explicit retrospective DNP text partitions into **675** coach, **6** rest, **35** injury, **9** illness,
+  **2** injury/illness and **165** other recorded reasons. Other reasons may describe injuries without using that
+  word; none is silently made healthy. All known-play keys overlap the **4,346**-player-game oracle, which has
+  **30** additional keys outside that cohort. Prior membership is not proof of eligibility and these are post-game
+  labels, not dated pre-tip reports (`20261122_a1_s07_labels_audit.json`).
 
 ## 6b. A1 S03 matched component diagnosis (22 Nov 2026; descriptive)
 

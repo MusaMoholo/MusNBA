@@ -108,7 +108,7 @@ Each subtask ends with evidence, current docs and a commit/push checkpoint (AGEN
 | M11 | Availability model | ☐ **A1 S07/S08/S10**: report coverage, play/start probabilities, branches and future absences | Held-out calibration and games-missed realism where dated development data supports them; honest fallbacks otherwise | Planned |
 | M12 | Season pathway calibration | ◐ **first cut (20 Nov): team pathway v1 in the app** — walk-forward 2022-26 (480 team-starts): dispersion 1.00 (fixed probabilities 1.53), 10–90% coverage 84% (65%), CRPS −4% in every held-out season; still wide in November (0.84) and surprises fade with the date (sim 0.52 → 0.18 v real 0.40 flat) | Dispersion ≈ 1.0 **at every start date**, persistence matches | `pathway.py`, `season_backtest.py` |
 | UX | Dashboard upgrade programme U1–U22 | ✅ **22 Nov:** all 22 shipped; U15–U22 adds roster roles, playoff picture, win ranges, races/movers/leaders inside Standings and model guide; 156 full + 12 final layout browser checks, hosted PWA 15/15 | Checked at 1440/960/390, both themes, stored data only | DASHBOARD_PLAN.md |
-| A1 | Expanded accuracy/robustness programme | ◐ **47.8% — S01–S05 complete, S06 60%, S07 10%, 22 Nov**; 14 tasks, fixed weights, 140 rungs | Gates in §6b; final nightly + versioned history + successor chunk | HANDOFF § Progress ladders |
+| A1 | Expanded accuracy/robustness programme | ◐ **49.6% — S01–S05 complete, S06 70%, S07 20%, 22 Nov**; 14 tasks, fixed weights, 140 rungs | Gates in §6b; final nightly + versioned history + successor chunk | HANDOFF § Progress ladders |
 
 ### 6a. Next chunk — A1: player accuracy, defence and trustworthy season paths
 
@@ -719,6 +719,12 @@ face cards and unrelated presentation remain §9b backlog. NBA history moved to 
 - **22 Nov 2026 · A1 S07 10%:** independently audited **5** protected-season report collections and **18** pre-tip
   games; **634** unique roster/player-games have **331** listed, **128** unlisted and **175** missing final-box
   coverage. There are **0** development-season collections; no protected status/outcome scores were computed.
+- **22 Nov 2026 · A1 S06 70%:** independently replayed **3,000** candidate worlds and **1,472,554** fives;
+  player-minute reconstruction error ≤**1.78e-15**, including **1,395** foul replacements and **77** OT worlds.
+  Trace capture reproduces the earlier candidate; short-roster/no-replacement tests fail explicitly as intended.
+- **22 Nov 2026 · A1 S07 20%:** independently reconstructed **7,317** F4 prior-box memberships: **4,316** plays,
+  **892** DNPs and **2,109** unknowns. Retrospective reason labels and the **4,346**-player-game actual-participant
+  oracle remain separate from pre-game eligibility and status.
 - **22 Nov 2026 · A1 S05 10–20%:** separated membership, physical availability, rotation entry, starts, healthy role
   and conditional/unconditional minutes. The 200-game prior-box audit found **73** All-Star rows incorrectly labelled
   regular season; NBA-only reconstruction restores **12** memberships. Audited **7,317** candidates, including

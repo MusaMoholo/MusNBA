@@ -1,0 +1,35 @@
+{
+ "experiment": "a1_s07_development_membership_and_labels_independent_audit",
+ "fold": "F4",
+ "games": 200,
+ "candidates": 7317,
+ "membership_date_violations": 0,
+ "independently_reconstructed_memberships": 7317,
+ "played": 4316,
+ "dnp": 892,
+ "unlisted_unknown": 2100,
+ "listed_unknown": 9,
+ "dnp_reason_categories": {
+  "coach": 675,
+  "other_recorded_reason": 165,
+  "explicit_injury": 35,
+  "illness": 9,
+  "rest": 6,
+  "injury_or_illness": 2
+ },
+ "oracle_player_games": 4346,
+ "oracle_and_prior_box_played": 4316,
+ "oracle_outside_prior_box_played": 30,
+ "prior_box_played_outside_oracle": 0,
+ "limitations": "Membership is inferred from strictly earlier same-season NBA boxes, not an official roster or proof of physical eligibility. DNP reasons are retrospective outcome labels, not pre-tip injury reports; only explicit text is classified and all other reasons remain separate. Unlisted and ambiguous players are unknown; prior boxes lack publication times.",
+ "input_sha256": {
+  "scripts/a1_availability_labels_audit.py": "39a2b9487bcaf9757e4cadb07a7ade45530cc3b50a7562659b3999460c3702df",
+  "data/derived/experiments/20261122T022323Z_a1_s01_control.parquet": "d3f2956e335490cca5b77fa877faacf8494f99ce04ab79c447debb5329776d4e",
+  "data/derived/experiments/20261122T022323Z_a1_s01_control_players.parquet": "d5e4618be5e146c62372b57b54b9a6528b7c75e9b1b2dd86f86e9279835bc09e",
+  "data/derived/experiments/20261122_a1_prior_box_membership_nba_only.parquet": "36fa44d4027fd76ec1b9441fc946680f7e0932d8338db954fe10089e1302f5a2",
+  "data/derived/experiments/20261122_a1_s05_minutes_population.parquet": "321fe701f8d94a0d371f727d33112c477240d770e9d8416f451fc2d896477ad7",
+  "data/raw/hoopr/player_box_2026.parquet": "29a29dc9efd055a93e069a0382ac830d98a13274bee655beba69d95cff099713",
+  "data/derived/teams.json": "130aa5358d49b944c2b5bee7e9a163f1e53285e93dae57262f039ca1636b7ecc",
+  "analysis/experiments/20261122_a1_s05_minutes_population.json": "8f767b2a8d069bf0c8f6954fd3809b64d10a2bbc1f7865575901796392179e1b"
+ }
+}
