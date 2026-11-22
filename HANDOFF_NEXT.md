@@ -26,10 +26,18 @@ The model-artifact builder was preserved before fitting in **19b34bc**.
 The isolated policy source, model reconstruction and smoke evidence were pushed before real-game wiring in **74e3e71**.
 The three-game wiring rung and pre-audit S07 source were pushed as **9a0c178**.
 The S07 archive audit and S06 trace source were pushed before world replay as **785a034**.
+The audited world replay and S07 label evidence were pushed as **4260521**.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
 product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S05 are complete;
 S06 is active at 70%; S07 is 20%; A1 overall is 49.6%.** Isolated assignment candidates have event-level diagnostics and wiring only;
 no defence candidate has had an engine-accuracy test, and no model promotion, forecast or PWA change has been made.
+The fixed S06 200-game candidate backtest is running alone as attached shell **2114**, wrapper PID **11300**,
+Python PID **11301**, log `/tmp/musnba_a1_s06_candidate_fixed200.log`; it writes its unique timestamped run only
+after all games finish. Its exact command is in Next actions. Check the log and process before resuming; never launch
+a second engine backtest concurrently, and do not infer completion from process exit without its final `run` line.
+S07's first no-report/starter baseline protocol is frozen in TRAINING_PLAN §8.2 before scoring. A prior-position
+coverage setup initially failed on timestamp/string merge types; after converting stored dates to ISO it found
+**55/7,317** missing prior positions across **55/400** F4 team-games. This is coverage, not a starter score.
 
 **Completed S05 evidence:** the 200-game flow and its independent accounting are complete; the comparison and
 two S04 hypotheses are recorded below and in FINDINGS/TRAINING_PLAN. Both corrected S05 historical screen wrappers

@@ -513,6 +513,24 @@ injury IDs and final-box **coverage** separately. Absence of an injury entry is 
 not compare status with play/start outcomes, estimate calibration or use those outcomes for selection. Development
 coverage and the scoring gate must be reported separately from this descriptive archive inventory.
 
+For S07's first **historical no-report and starter baselines**, freeze the following before scoring. Reuse the
+independently audited corrected S05 no-report F1–F4 candidate rows and fixed game IDs; prior-box membership is
+inferred, not a dated official roster. Report missing roster games, unlisted/unknown labels and source conflicts.
+Compare the existing no-report physical-availability fallback and the already-simulated target-positive frequency
+with known play/DNP labels as two separately named **play proxies**, not proven injury-status calibration or an
+end-to-end forecast. Give Brier, unmodified log loss (including infinite loss when appropriate), fixed-bin
+calibration and 10,000 game-cluster bootstrap intervals on supported populations.
+
+For projected starters, reconstruct D29 state strictly before each origin with each fold's earlier fitted
+parameters. On its inferred candidate roster, use the existing no-report availability fallback and the production
+`>=0.9` sure-player selection (all candidates only when none qualify), then the existing
+`minutes.projected_starters` ranking and positional limits. Positions must come from a strictly earlier profile;
+if a candidate considered for selection lacks a known position, or fewer than five candidates can be selected,
+mark that team-game unsupported rather than impute a position or activate a player. Only after selecting compare
+against complete observed five-starter sets, including starters outside the prior roster; report unsupported sets,
+outside-roster starters, slot accuracy, exact-five accuracy and game-cluster uncertainty. These historical boxes lack
+publication timestamps and status reports, so even a good result cannot satisfy S07's genuinely dated promotion gate.
+
 For S03's remaining flow diagnosis, reproduce the **same 200-game, 1,000-world** free-running control with its
 original seeds and opt-in diagnostics only; audit every original output field against the retained reproduction before
 using the extras. Record player FGA/FTA/turnovers and quarter minutes/scoring, simulated segment-clock summaries,
