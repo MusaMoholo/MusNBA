@@ -175,6 +175,34 @@ async function directory(view, {meta, current}) {
 }
 
 // ------------------------------------------------------------------ team page
+// U14: form and fixtures — margin by game (W/L bars, 5-game rolling line) and the next ten games (home/away, the season
+// simulation's win chance, back-to-backs), from the team view's schedule
+function formPanel(data) {
+  const sch = data.schedule || [];
+  const done = sch.filter(g => g.status === 'final' && g.pts != null);
+  const next = sch.filter(g => g.status !== 'final').slice(0, 10);
+  let chart = '';
+  if (done.length) {
+    const m = done.map(g => g.pts - g.opp_pts), W = 640, H = 170, pl = 28, pr = 8, pt = 8, pb = 20;
+    const hi = Math.max(10, ...m.map(Math.abs)) * 1.1, x = i => pl + (i + 0.5) * (W - pl - pr) / m.length, y = v => pt + (hi - v) * (H - pt - pb) / (2 * hi);
+    const roll = m.map((_, i) => { const w = m.slice(Math.max(0, i - 4), i + 1); return w.reduce((a, b) => a + b, 0) / w.length; });
+    const bars = m.map((v, i) => `<rect class="${v > 0 ? 'w' : 'l'}" x="${(x(i) - 6).toFixed(1)}" y="${Math.min(y(v), y(0)).toFixed(1)}" width="12" height="${Math.abs(y(v) - y(0)).toFixed(1)}"><title>${done[i].date} ${done[i].home ? 'vs' : '@'} ${team(done[i].opp).abbr}: ${done[i].pts}–${done[i].opp_pts}</title></rect>`).join('');
+    const line = roll.map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
+    chart = `<div><h4>Margin by game</h4><svg class="trend" viewBox="0 0 ${W} ${H}" role="img" aria-label="Margin by game">
+      <line class="season" x1="${pl}" x2="${W - pr}" y1="${y(0).toFixed(1)}" y2="${y(0).toFixed(1)}"></line>${bars}<path class="roll" d="${line}"></path>
+      <text x="${pl - 4}" y="${(y(hi / 1.1) + 3).toFixed(1)}" text-anchor="end">+${Math.round(hi / 1.1)}</text><text x="${pl - 4}" y="${(y(-hi / 1.1) + 3).toFixed(1)}" text-anchor="end">−${Math.round(hi / 1.1)}</text></svg>
+      <p class="note">Bars = final margin (green wins, red losses) · line = 5-game rolling average.</p></div>`;
+  }
+  const dates = sch.map(g => g.date);
+  const b2b = g => { const d = new Date(g.date + 'T12:00:00Z'); const prev = new Date(d - 864e5).toISOString().slice(0, 10); return dates.includes(prev); };
+  const fx = next.length ? `<div><h4>Coming up</h4><div class="fx">${next.map(g => `<a class="fx-g" href="#/game/${g.game_id}">
+      <span class="fx-d">${esc(dayLabel(g.date))}${b2b(g) ? ' <span class="pill warn" title="Second night of a back-to-back">B2B</span>' : ''}</span>
+      <span class="fx-o">${g.home ? 'vs' : '@'} ${logo(g.opp, 'sm')} ${esc(team(g.opp).abbr)}</span>${g.p_win != null ? heatSpan(g.p_win) : '<span class="dim">—</span>'}</a>`).join('')}</div>
+      <p class="note">Win chance from the game simulation for today/tomorrow, else the season simulation's team estimate.</p></div>` : '';
+  return chart || fx ? `<section class="panel"><div class="form-grid">${chart}${fx}</div></section>` : '';
+}
+const heatSpan = p => `<span class="fx-p" style="--a:${Math.abs(p - 0.5) * 2}" data-side="${p >= 0.5 ? 'w' : 'l'}">${pct(p, 0)}</span>`;
+
 async function teamPage(view, {rest, current}) {
   const tid = rest[0];
   const data = await api('team/' + encodeURIComponent(tid));
@@ -190,6 +218,7 @@ async function teamPage(view, {rest, current}) {
         <div class="tile"><span>Top 6</span><b>${pct(f.top6, 0)}</b></div><div class="tile"><span>Play-in</span><b>${pct(f.playin, 0)}</b></div>
         <div class="tile"><span>#1 seed</span><b>${pct(f.first, 0)}</b></div></div>
       <div style="margin-top:12px"><h3>Simulated final wins (of ${f.scheduled} scheduled)</h3>${histogram(f.wins, {height: 120})}</div></section>
+      ${formPanel(data)}
       <div class="controls">${seg([['roster', 'Roster'], ['schedule', 'Schedule']], state.teamTab, 'data-tt')}</div>
       ${state.teamTab === 'roster' ? roster(data) : schedule(data)}`;
     view.querySelectorAll('[data-tt]').forEach(b => b.onclick = () => { state.teamTab = b.dataset.tt; paint(); });

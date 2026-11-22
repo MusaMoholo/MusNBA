@@ -35,7 +35,7 @@ const CASES = [
   ['standings', '#/standings/forecast', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['standings-wins', '#/standings/wins', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['teams', '#/teams', ['desktop', 'phone'], ['dark']],
-  ['team', '#/team/14', ['desktop', 'phone'], ['light']],
+  ['team', '#/team/14', ['desktop', 'half', 'phone'], ['light', 'dark']],
   ['players', '#/players', ['desktop', 'phone'], ['dark']],
   ['player', '#/player/3032977', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['lab', '#/lab', ['desktop', 'phone'], ['dark', 'light']],
