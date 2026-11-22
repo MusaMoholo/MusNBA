@@ -40,7 +40,9 @@ def main() -> None:
             or len(fixture['branches']) != len(report['branches'])):
         raise ValueError('fixture metadata differs from branch manifest')
     total_weight = Fraction()
-    worlds = line_values = availability_values = period_values = 0
+    worlds = line_values = availability_values = played_values = minute_values = period_values = 0
+    positive_rounded_to_zero = available_did_not_play = threshold_disagreements = 0
+    selected_player = report['selected'][0]['player_id']
     for branch, original in zip(fixture['branches'], report['branches'], strict=True):
         if any(branch[key] != original[key] for key in ('branch_id', 'assignments', 'weight', 'capture_sha256')):
             raise ValueError('fixture branch metadata differs')
@@ -56,12 +58,21 @@ def main() -> None:
             raise ValueError('fixture world count differs')
         lines = decode(packed['lines'], (W, P, len(STATS)))
         availability = decode(packed['availability'], (W, P))
+        played = decode(packed['played'], (W, P))
+        minutes = np.frombuffer(base64.b64decode(packed['minutes_f64_le'], validate=True), dtype='<f8').reshape(W, P)
         periods = decode(packed['team_periods'], (W, 2, 5))
         with np.load(original['capture'], allow_pickle=False) as data:
             if (packed['players'] != data['player_ids'].tolist() or packed['side'] != data['side'].tolist()
                     or not np.array_equal(availability, data['available'])
+                    or not np.array_equal(played, data['minutes'].sum(axis=2) > 0)
+                    or not np.array_equal(minutes, data['minutes'].sum(axis=2))
                     or not np.array_equal(periods, data['team_points'])):
-                raise ValueError('fixture roster, availability or team periods differ')
+                raise ValueError('fixture roster, availability, playing time or team periods differ')
+            positive_rounded_to_zero += int(((played == 1) & (lines[:, :, 0] == 0)).sum())
+            available_did_not_play += int(((availability == 1) & (played == 0)).sum())
+            player = packed['players'].index(selected_player)
+            threshold_disagreements += int(((minutes[:, player] >= 30)
+                                            != (lines[:, player, 0].astype(float) >= 30)).sum())
             for col, stat in enumerate(STATS):
                 if stat == 'min':
                     expected = np.rint(data['minutes'].sum(axis=2))
@@ -74,6 +85,8 @@ def main() -> None:
         worlds += W
         line_values += lines.size
         availability_values += availability.size
+        played_values += played.size
+        minute_values += minutes.size
         period_values += periods.size
     if total_weight != 1:
         raise ValueError('fixture branch weights do not total one')
@@ -83,7 +96,12 @@ def main() -> None:
         'fixture_bytes': args.fixture.stat().st_size, 'source': str(source),
         'source_sha256': sha256_file(source), 'audit_sha256': sha256_file(Path(__file__)),
         'branches': len(fixture['branches']), 'worlds': worlds, 'player_stat_values': line_values,
-        'availability_values': availability_values, 'team_period_values': period_values,
+        'availability_values': availability_values, 'played_values': played_values,
+        'exact_minute_values': minute_values, 'team_period_values': period_values,
+        'positive_minutes_rounded_to_zero': positive_rounded_to_zero,
+        'available_did_not_play': available_did_not_play,
+        'threshold_player': selected_player, 'threshold_minutes': 30,
+        'exact_vs_rounded_threshold_disagreements': threshold_disagreements,
         'exact_total_weight': str(total_weight),
     }, pretty=True)
     print(f'{worlds} worlds, {line_values} player-stat values, availability and scores reconciled')

@@ -1,7 +1,7 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 70%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **18dac6d** (A1 40%); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **1514575** (A1 70%, initial research fixture); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
@@ -46,17 +46,33 @@ The preceding pushed checkpoint was **18dac6d** (A1 40%); use `git log -1` for t
   different conditions. Reports `analysis/experiments/20261122_chunk_a_a1_d47_joint_{full,empty,other_sits}_v2.json`.
   The shared UI still counts equally weighted worlds and the 80% rung remains open.
 - **A1 80% isolated browser fixture:** `analysis/a1_branch_browser_fixture.py` packs independently audited branch
-  captures into existing browser column order, carrying exact branch weights, assignments, status/source labels
-  and explicit per-world availability separately from rounded minutes. It rejects unrepresentable bytes instead
-  of clipping. The saved four-branch fixture has **40,000** worlds and is ignored at
-  `data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_two.json`; the independent decoder
-  `analysis/a1_branch_browser_fixture_audit.py` reconciled **16,800,000** player-stat values, **1,120,000**
-  availability values and **400,000** team-period values, with exact weight sum **1**. The fixture is
-  **24,431,244 bytes** uncompressed; an in-memory gzip-6 size probe was **8,138,597 bytes**, not a transfer or
-  phone benchmark. This is an experimental data contract, **not** wired to the app or bundle; it does not by
-  itself satisfy 80%. **76** targeted tests pass; final normal smoke **108/108** (`/tmp/musnba_a1_fixture_smoke.log`),
-  deliberate fault **86/108** with exit **1** (`/tmp/musnba_a1_70_fault_v3.log`). Report
-  `analysis/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_audit.json`.
+  captures into existing browser column order, carrying exact branch weights, assignments, status/source labels,
+  explicit per-world availability and **exact positive-minutes participation** separately from rounded minutes.
+  It rejects unrepresentable bytes instead of clipping. The saved four-branch fixture has **40,000** worlds and
+  is ignored at `data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_v3.json`. The independent
+  decoder `analysis/a1_branch_browser_fixture_audit.py` reconciled **16,800,000** player-stat, **1,120,000**
+  availability, **1,120,000** participation and **400,000** team-period values with exact weight sum **1**.
+  Among those unweighted player-world records, **6,527** positive appearances rounded to zero displayed minutes
+  and **182,738** available players did not play. Existing `outcomes.mjs` infers plays from rounded minutes;
+  that is not interchangeable with exact participation or availability. This fixture is **25,924,636 bytes**
+  uncompressed; an in-memory gzip-6 probe was **8,238,264 bytes**, not a transfer or phone benchmark, for the
+  earlier v2. **D49:** the owner requested better time sensitivity; v3 preserves the original full-precision
+  float64 minutes (with second-level filtering) in addition to the legacy rounded column. The v3 two-player
+  fixture is **37,871,388 bytes** raw, **13,715,049** in a gzip-6 memory probe. A 30-minute threshold differs
+  from filtering rounded minutes in **963 / 40,000** worlds for the first selected player; the one-player game
+  differs in **187 / 20,000**. Python and JS agree exactly on condition masses at **30 and 30.5 minutes**.
+  `analysis/a1_weighted_browser.mjs` and its separate audit reproduce the Python full/partial/empty Given/Joint
+  masses and all **90** home-points bins for each of the **20,000 / 40,000** one-/two-player worlds using exact
+  integer masses. The one-player fixture has **3,712** additional positive appearances rounded to zero and
+  **39,675** available non-appearances across **500,000** player-world records; the v3 full-precision fixture
+  is **16,935,858 bytes** raw, **6,633,644** in a gzip-6 memory probe.
+  Reports `analysis/experiments/20261122_chunk_a_a1_d47_{browser_fixture_one_v5_audit,browser_fixture_two_v5_audit,
+  browser_weighted_one_v4_audit,browser_weighted_two_v4_audit,browser_weighted_one_1800sec_v2_audit,
+  browser_weighted_two_1800sec_v2_audit}.json`; prior fixture/audits are superseded.
+  These are experimental and **not** connected
+  to the app or bundle; 80% remains open. **76** targeted Python tests pass; normal smoke **108/108**
+  (`/tmp/musnba_a1_precision_smoke.log`), deliberate fault **86/108** with exit **1**
+  (`/tmp/musnba_a1_70_fault_v3.log`).
 - **Smoke integration:** newly retained weighted-season `.npz` files exposed that smoke previously treated every
   root experiment `.npz` as a training-loss file. Smoke now selects the timestamped filenames written by
   `train.py`; a focused regression test includes both a loss file and an unrelated season array. No accounting
@@ -91,7 +107,7 @@ The preceding pushed checkpoint was **18dac6d** (A1 40%); use `git log -1` for t
   promoted. This selected-timeout policy differs from D29 branch repair, and no matched retry-versus-penalty bias
   comparison has been run. See FINDINGS S06; do not treat the two as the same simulation policy.
 - **Research checkpoint doc review:** HANDOFF and PLAN record progress and stop point; ENGINE_PLAN and
-  TRAINING_PLAN record D48 and its gates; FINDINGS records observations and limits; README maps the research
+  TRAINING_PLAN record D48/D49 and their gates; FINDINGS records observations and limits; README maps the research
   scripts. AGENTS needs no change because standing rules are unchanged; DASHBOARD_PLAN needs no change because
   the isolated fixture is not served or shipped. The production engine, snapshot, bundle and Pages shell remain
   unchanged; the previous iCloud bundle still requires manual phone import.
@@ -2224,6 +2240,9 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
    never overwrite the existing evidence. The present browser-format fixture only has full-game player lines,
    not the period-by-period player inputs needed to recalculate every existing period view. Extend and audit the
    saved-data contract before attempting coherent period-aware UI; do not pretend the fixture already supports it.
+   Run `node tests/test_a1_weighted_browser.mjs` for arithmetic edge cases; the real-fixture audit takes the
+   fixture, a new audit output, Expected report and one or more matching Given reports, e.g.
+   `node analysis/a1_weighted_browser_audit.mjs data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_one_v3.json analysis/experiments/<new-audit>.json analysis/experiments/20261122_chunk_a_a1_d47_expected_one_home_pts.json analysis/experiments/20261122_chunk_a_a1_d47_joint_one_full.json analysis/experiments/20261122_chunk_a_a1_d47_joint_one_empty.json`.
    The existing `outcomes.mjs` counts equally weighted worlds throughout Given/Joint, while saved branch worlds
    have unequal weights: integrate exact weighted conditions across **all** shared consumers before exposing a
    lineup switch. Implement a source contract with player availability separate from positive minutes, preserve

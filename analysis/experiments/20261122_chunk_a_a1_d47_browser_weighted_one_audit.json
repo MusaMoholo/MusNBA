@@ -1,0 +1,33 @@
+{
+  "kind": "isolated browser arithmetic against Python accounting; not a forecast or browser integration",
+  "source_sha256": {
+    "data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_one_v2.json": "63691ea63a494bb08bbd381a72f0ac779d3cb4f4fdc1d0e6b7ed9cae42c47761",
+    "analysis/experiments/20261122_chunk_a_a1_d47_joint_one_full.json": "a6e718a095e75bd983b87dedb5f9c14e152114aaa3b58d554da53e10bb7fad22",
+    "analysis/experiments/20261122_chunk_a_a1_d47_joint_one_empty.json": "d5b8082c8ae86bae7d5bbed80cf8e3747b338074a2daf2e0a9d6b6a9645e5621",
+    "analysis/experiments/20261122_chunk_a_a1_d47_expected_one_home_pts.json": "c0c8bb21183d9f3c4cf537d69803a0f9fcd955da7a708f667e65332e607a8e88",
+    "analysis/a1_weighted_browser.mjs": "5039d40affea114546c94b34a1379f290d7a2a97aa9381e8e767ac3ad412aebf",
+    "analysis/a1_weighted_browser_audit.mjs": "eba7e1aa629807b80e5829d5abb9178301ed3a70fe1db9d5464f5efb4df8e1d8"
+  },
+  "fixture_bytes": 11602482,
+  "worlds": 20000,
+  "denominator": 40000,
+  "joint_checks": [
+    {
+      "report": "analysis/experiments/20261122_chunk_a_a1_d47_joint_one_full.json",
+      "worlds": 20000,
+      "status": "defined"
+    },
+    {
+      "report": "analysis/experiments/20261122_chunk_a_a1_d47_joint_one_empty.json",
+      "worlds": 10000,
+      "status": "no matching condition worlds"
+    }
+  ],
+  "home_points_bins": 90,
+  "home_points_mean": 113.48955,
+  "limitations": [
+    "Current dashboard still uses equal-weight consumers.",
+    "Availability assumptions and independence are uncalibrated.",
+    "No phone or UI test is implied."
+  ]
+}

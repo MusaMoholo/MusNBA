@@ -42,7 +42,8 @@ def pack_capture(data: dict[str, np.ndarray]) -> dict:
         if values.shape != minutes.shape or not np.isfinite(values).all() or (values < 0).any():
             raise ValueError(f'capture {stat} has invalid dimensions or values')
         box[stat] = values.sum(axis=2)
-    lines = {'min': np.rint(minutes.sum(axis=2)), **box}
+    exact_minutes = minutes.sum(axis=2)
+    lines = {'min': np.rint(exact_minutes), **box}
     lines['reb'] = lines['oreb'] + lines['dreb']
     if (not np.isfinite(minutes).all() or (minutes < 0).any()
             or (minutes[~available] != 0).any()
@@ -57,6 +58,8 @@ def pack_capture(data: dict[str, np.ndarray]) -> dict:
         'lines': packed_bytes(np.stack([lines[stat] for stat in views.WORLD_STATS], axis=2)),
         'team_periods': packed_bytes(periods),
         'availability': packed_bytes(available),
+        'played': packed_bytes(exact_minutes > 0),
+        'minutes_f64_le': base64.b64encode(np.ascontiguousarray(exact_minutes, dtype='<f8').tobytes()).decode('ascii'),
         'periods': ['q1', 'q2', 'q3', 'q4', 'ot'],
     }
 

@@ -709,6 +709,10 @@ vectorised batches and claim untouched worlds, and do not use rejection to mask 
 The isolated retry coordinator and injected-failure probe provide initial wiring evidence only. A 10,000-draw
 synthetic truncation demonstrates bias but does not measure NBA-world failure rates or satisfy the real-data gate.
 
+D49 requires preserving original simulated playing-time precision for conditions and evaluation; never score or
+filter rounded display minutes when exact world values exist. Keep availability and participation separate.
+Legacy bundles retain only rounded world minutes and cannot be upgraded losslessly without regenerating inputs.
+
 Chunk A A1 froze the prospective selection, branch identifiers and mixture contract in HANDOFF before implementation.
 D46 replaces the earlier 15-minute healthy-role/0.25 prior-usage scope rule with a top-three full-roster offensive
 contribution proxy and at most one uncertainty per team. The proxy is not a fitted total-impact measure;

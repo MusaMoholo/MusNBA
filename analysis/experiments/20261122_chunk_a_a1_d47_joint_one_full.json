@@ -1,0 +1,37 @@
+{
+ "kind": "research conditional accounting; not a forecast or availability calibration",
+ "game": "401910029",
+ "source_report": "analysis/experiments/20261122_chunk_a_a1_d47_10000_one.json",
+ "source_sha256": "b62ee8a59bde0fe331ce2d3046e2751cb8f772cf16847bcc40e11430bacfd628",
+ "algorithm_sha256": "287ad1cf4fbd6533c5b5eb9951bfda7fd03504f0fcab7688a6bdad5757773b9e",
+ "audit_sha256": "77abcdc6c84e3bf3202080540577494e124eae790d718f6d2d07ead6331bd85a",
+ "lineup_conditions": {},
+ "event": "home team wins",
+ "given": "player 4432166 has positive simulated minutes",
+ "worlds": 20000,
+ "branches": 2,
+ "result": {
+  "event": {
+   "numerator": "2073",
+   "denominator": "5000"
+  },
+  "condition": {
+   "numerator": "3",
+   "denominator": "4"
+  },
+  "joint": {
+   "numerator": "11631",
+   "denominator": "40000"
+  },
+  "given": {
+   "numerator": "3877",
+   "denominator": "10000"
+  },
+  "status": "defined"
+ },
+ "limitations": [
+  "Branch availability is not the same as positive simulated minutes.",
+  "Branch probabilities and their independence remain uncalibrated assumptions.",
+  "This isolated result is not connected to the dashboard."
+ ]
+}

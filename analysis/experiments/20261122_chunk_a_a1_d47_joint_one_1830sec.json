@@ -1,0 +1,36 @@
+{
+ "kind": "research exact-minute conditional accounting; not a forecast",
+ "game": "401910029",
+ "source_report": "analysis/experiments/20261122_chunk_a_a1_d47_10000_one.json",
+ "source_sha256": "b62ee8a59bde0fe331ce2d3046e2751cb8f772cf16847bcc40e11430bacfd628",
+ "audit_sha256": "dc1313d8910eadd45cfec929ed942e1f2a5c973970e98598a71b0caf2ee14076",
+ "algorithm_sha256": "287ad1cf4fbd6533c5b5eb9951bfda7fd03504f0fcab7688a6bdad5757773b9e",
+ "lineup_conditions": {},
+ "event": "home team wins",
+ "given": "player 4432166 has at least 1830 simulated seconds",
+ "worlds": 20000,
+ "branches": 2,
+ "result": {
+  "event": {
+   "numerator": "2073",
+   "denominator": "5000"
+  },
+  "condition": {
+   "numerator": "5001",
+   "denominator": "8000"
+  },
+  "joint": {
+   "numerator": "9531",
+   "denominator": "40000"
+  },
+  "given": {
+   "numerator": "3177",
+   "denominator": "8335"
+  },
+  "status": "defined"
+ },
+ "limitations": [
+  "Branch probabilities and their independence remain uncalibrated assumptions.",
+  "This isolated result is not connected to the dashboard."
+ ]
+}

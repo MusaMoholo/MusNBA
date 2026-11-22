@@ -464,6 +464,16 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
   claimed. Artificial five-player retry stress required **28** attempts for **10** audited worlds; caps stopped
   a separate run. This deliberately extreme setup is not an NBA rate. Smoke **108/108**, deliberate fault
   **86/108**; no production model or bundle changed. A1 remains **70%**, Chunk A **31.5%**.
+- **22 Nov 2026 · A1 80% participation correction:** **6,527 / 1,120,000** research player-world appearances
+  had positive minutes rounded to zero, while **182,738** available player-worlds did not play. Exact separate
+  flags now survive the fixture. A research JS implementation matches independent full/partial/empty weighted
+  Given/Joint references and **90** histogram bins on each of the **20k / 40k** one-/two-player captures; it is
+  not integrated into the UI. A1 and Chunk A progress remain **70% / 31.5%**; production forecasts and bundles
+  remain unchanged.
+- **22 Nov 2026 · D49 playing-time sensitivity:** retained exact float64 simulated minutes in isolated fixtures;
+  for the selected player, exact versus rounded 30-minute filters differ in **187 / 20,000** and
+  **963 / 40,000** worlds on the one-/two-player games. Cross-language weighted accounting matches.
+  This is research-only: existing dashboard imports still use rounded minutes. A1 remains **70%**.
 - **22 Nov 2026 · dashboard house follow-up:** player box scores now precede game insights; game availability,
   bench, secondary team-roster groups and player game logs expand on demand. **61/61** responsive cases,
   laptop/phone offline **29/29 / 28/28** and laptop shell upgrade **31/31** passed. Startup race fixed in

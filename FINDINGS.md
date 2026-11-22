@@ -38,6 +38,36 @@ decoder reconciled **16,800,000** player-stat, **1,120,000** availability and **
 branch weights sum exactly to one. Availability and positive minutes remain separate. This does not constitute
 browser integration or model validation. Report `20261122_chunk_a_a1_d47_browser_fixture_two_audit.json`.
 
+**22 Nov 2026 — exact participation versus rounded minutes:** an improved fixture from the same **40,000**
+branch worlds retains and independently checks **1,120,000** exact availability and participation flags.
+Of those unweighted player-world records, **6,527** positive-minute appearances round to zero minutes and
+**182,738** available players did not appear; therefore availability, positive participation and rounded minutes
+are three different signals. The existing equal-weight browser infers plays from rounded minutes; this sample
+does not quantify its error on the served unconditional worlds. The updated research fixture is **25,924,636**
+bytes raw, **8,238,264** bytes in an in-memory gzip-6 probe. Isolated browser arithmetic independently agrees
+with the Python reference on full, partial and empty conditional cases and all **90** home-points histogram bins.
+Reports `20261122_chunk_a_a1_d47_{browser_fixture_two_v3_audit,browser_weighted_audit}.json`. Neither the
+fixture nor arithmetic is connected to the app or constitutes a predictive improvement.
+
+On the other prospective game with **one** selected player, **20,000** branch worlds contained **500,000**
+player-world records: **3,712** positive appearances rounded to zero and **39,675** available non-appearances.
+Its **11,602,482-byte** raw fixture independently reconciled all **7,500,000** player-stat values, availability,
+participation and team-period values; JS and Python matched full and empty Given cases and **90** home-points
+bins. Reports `20261122_chunk_a_a1_d47_{browser_fixture_one_v3_audit,browser_weighted_one_audit}.json`;
+these intermediate v2-fixture audits are superseded by the full-precision audits below.
+
+**22 Nov 2026 — playing-time precision (D49):** the engine's captured minutes are float64, not whole minutes;
+in one sampled branch **209,664 / 280,000** player-world values contained fractional seconds (including
+floating-point representation noise). The research fixture now retains those full-precision values rather than
+reconstructing them from the rounded browser column. For the first selected player, filtering at **30 minutes**
+differs between exact and rounded data in **187 / 20,000** one-player worlds and **963 / 40,000** two-player
+worlds. These are unweighted counts from two research games, not a population-wide effect. Independent Python
+and JS exact weighted Given/Joint checks agree for 30- and 30.5-minute thresholds. The precise one-/two-player
+fixtures are **16,935,858 / 37,871,388 bytes** raw and **6,633,644 / 13,715,049 bytes** in in-memory gzip-6
+probes; these are not phone/bundle measurements. Reports `20261122_chunk_a_a1_d47_{browser_fixture_one_v5_audit,
+browser_fixture_two_v5_audit,browser_weighted_one_1800sec_v2_audit,browser_weighted_two_1800sec_v2_audit}.json`.
+Production snapshots still have rounded player-world minutes, so existing imports do not gain this precision.
+
 **22 Nov 2026 — branch-label coverage:** across the two current-origin D47 10k branch cases, **71** ranked
 player records included **4** prior-only roles and **48** unlisted-active assumptions; all **3** selected
 players had observed roles and usage. Synthetic missing-status/cold-role tests preserve the Unknown status,

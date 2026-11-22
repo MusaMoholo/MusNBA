@@ -1,0 +1,18 @@
+{
+ "kind": "independent research browser fixture accounting; not a forecast",
+ "fixture": "data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_v2.json",
+ "fixture_sha256": "78511db39fcdcfdcec1a3bb38be32ea7991f556450fab09a70da60191b2e8f9b",
+ "fixture_bytes": 25924636,
+ "source": "analysis/experiments/20261122_chunk_a_a1_d47_10000_two.json",
+ "source_sha256": "20204539755935dbd19a362d98210f9c5831077c2b657f9a8635ff72a00372ce",
+ "audit_sha256": "0b8900b838a3021063407fff74c0fb8aed06baf7080582745e3067ff50bbf382",
+ "branches": 4,
+ "worlds": 40000,
+ "player_stat_values": 16800000,
+ "availability_values": 1120000,
+ "played_values": 1120000,
+ "team_period_values": 400000,
+ "positive_minutes_rounded_to_zero": 6527,
+ "available_did_not_play": 182738,
+ "exact_total_weight": "1"
+}
