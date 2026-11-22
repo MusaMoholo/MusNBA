@@ -39,6 +39,28 @@ def main() -> None:
             or fixture['weight_assumptions'] != report['weight_assumptions']
             or len(fixture['branches']) != len(report['branches'])):
         raise ValueError('fixture metadata differs from branch manifest')
+    if any(key in fixture for key in ('engine', 'model', 'snapshot_inputs')):
+        snapshot_paths = [f"data/snapshots/{report['origin']}/{name}.json" for name in ('meta', 'games')]
+        if (fixture.get('engine') != report['engine'] or fixture.get('model') != report['model']
+                or fixture.get('snapshot_inputs') != {path: report['input_sha256'][path] for path in snapshot_paths}):
+            raise ValueError('fixture model or snapshot provenance differs')
+        for path in snapshot_paths:
+            if sha256_file(ROOT / path) != fixture['snapshot_inputs'][path]:
+                raise ValueError('snapshot file hash differs')
+        snapshot_game = json.loads((ROOT / snapshot_paths[1]).read_text())[report['game']]
+        source_players = {}
+        for side, name in enumerate(('home', 'away')):
+            for player in snapshot_game[name]['players']:
+                if player['id'] in source_players:
+                    raise ValueError('snapshot player identity is duplicated')
+                source_players[player['id']] = (side, player)
+        roster = fixture['branches'][0]['worlds']
+        fields = ('id', 'name', 'pos', 'jersey', 'status', 'injury', 'availability_basis')
+        if (set(roster['players']) != set(source_players)
+                or any(source_players[player][0] != side for player, side in zip(roster['players'], roster['side'], strict=True))
+                or fixture.get('player_metadata') != [
+                    {key: source_players[player][1].get(key) for key in fields} for player in roster['players']]):
+            raise ValueError('fixture identity metadata differs from origin snapshot')
     total_weight = Fraction()
     worlds = line_values = availability_values = played_values = minute_values = period_values = 0
     player_period_values = player_period_minute_values = 0

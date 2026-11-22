@@ -499,6 +499,10 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
   **3,453–3,488** means for each of the nine two-player selections. Node summary generation took
   **6.01–8.20 s** per selection with smoke jobs running concurrently; it is not browser/phone acceptance. Advanced/spotlight/lead-fan, weighted
   Given/Joint, UI and fallback remain open; no production model or bundle changed. A1 **70%**, Chunk A **31.5%**.
+- **22 Nov 2026 · A1 80% Expected-only serialization:** audited origin-snapshot metadata and **20k / 40k**
+  summaries yield raw research payloads of **626,499 / 734,772 bytes**, without branch worlds. This is not
+  a phone-bundle or offline/import test; UI and promotion gates remain open. No production model or bundle
+  changed. A1 **70%**, Chunk A **31.5%**.
 - **22 Nov 2026 · dashboard house follow-up:** player box scores now precede game insights; game availability,
   bench, secondary team-roster groups and player game logs expand on demand. **61/61** responsive cases,
   laptop/phone offline **29/29 / 28/28** and laptop shell upgrade **31/31** passed. Startup race fixed in

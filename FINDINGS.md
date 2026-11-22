@@ -2,6 +2,15 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 — Expected-only serialization research:** the origin-hashed fixtures for the same two prospective
+games preserve **25 / 28** player identity/status records and model metadata, checked against their retained
+snapshots. Compact full-mixture payloads reconciled all **20k / 40k** world-derived summaries and contain no
+raw branch worlds. They measured **626,499 / 734,772 bytes** raw; gzip-6 was **194,699 / 230,821 bytes**
+in Python and **190,705 / 226,047 bytes** in Node. These are neither phone-bundle nor transfer benchmarks.
+Fixed-lineup summaries are rejected. No PWA
+import, offline behaviour, device acceptance or model promotion was tested. Reports
+`20261122_chunk_a_a1_d47_expected_payload_{one,two}_v1_{probe,audit}.json`.
+
 **22 Nov 2026 — branch-selected game-summary accounting:** for the **20k** one-player full mixture, independent
 capture reconstruction matched **3,303** distributions and **3,124** means. For each of the **nine** two-player
 either/plays/sits selections (**10k / 20k / 40k** worlds), it matched **3,696** distributions and

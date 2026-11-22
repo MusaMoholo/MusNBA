@@ -1,0 +1,197 @@
+{
+ "kind": "independent research browser fixture accounting; not a forecast",
+ "fixture": "data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_one_identity_v1.json",
+ "fixture_sha256": "24ec55687f5e07d6206bcb5485cb976cb9a07f09d05a0bd76c7899be43fb1f8c",
+ "fixture_bytes": 90567052,
+ "source": "analysis/experiments/20261122_chunk_a_a1_d47_10000_one.json",
+ "source_sha256": "b62ee8a59bde0fe331ce2d3046e2751cb8f772cf16847bcc40e11430bacfd628",
+ "audit_sha256": "a94be8eca84740cf53d6eaee956adda6304bde25551e066a27093853bb7d366e",
+ "branches": 2,
+ "worlds": 20000,
+ "player_stat_values": 7500000,
+ "availability_values": 500000,
+ "played_values": 500000,
+ "exact_minute_values": 500000,
+ "team_period_values": 200000,
+ "player_period_stat_values": 35000000,
+ "player_period_exact_minute_values": 2500000,
+ "final_period_values": 20000,
+ "opening_lineup_values": 200000,
+ "opening_branch_starts_from_captures": [
+  {
+   "branch_id": "lineup-v1:8/4432166=plays",
+   "players": [
+    "4701230",
+    "4278039",
+    "4431680",
+    "4869342",
+    "4397183",
+    "4397020",
+    "4280151",
+    "5106262",
+    "4431941",
+    "2578185",
+    "4431714",
+    "4684443",
+    "5107199",
+    "4684742",
+    "4066372",
+    "3908845",
+    "4432166",
+    "4278562",
+    "2596112",
+    "4395702",
+    "4700852",
+    "4397449",
+    "4397882",
+    "5107818",
+    "5037878"
+   ],
+   "counts": [
+    10000,
+    10000,
+    10000,
+    10000,
+    10000,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    10000,
+    10000,
+    0,
+    10000,
+    10000,
+    10000,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "branch_id": "lineup-v1:8/4432166=sits",
+   "players": [
+    "4701230",
+    "4278039",
+    "4431680",
+    "4869342",
+    "4397183",
+    "4397020",
+    "4280151",
+    "5106262",
+    "4431941",
+    "2578185",
+    "4431714",
+    "4684443",
+    "5107199",
+    "4684742",
+    "4066372",
+    "3908845",
+    "4432166",
+    "4278562",
+    "2596112",
+    "4395702",
+    "4700852",
+    "4397449",
+    "4397882",
+    "5107818",
+    "5037878"
+   ],
+   "counts": [
+    10000,
+    10000,
+    10000,
+    10000,
+    10000,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    10000,
+    10000,
+    10000,
+    10000,
+    0,
+    10000,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  }
+ ],
+ "overtime_period_mass_from_captures": {
+  "0": {
+   "numerator": "969",
+   "denominator": "1000"
+  },
+  "1": {
+   "numerator": "1141",
+   "denominator": "40000"
+  },
+  "2": {
+   "numerator": "91",
+   "denominator": "40000"
+  },
+  "3": {
+   "numerator": "1",
+   "denominator": "5000"
+  }
+ },
+ "positive_minutes_rounded_to_zero": 3712,
+ "available_did_not_play": 39675,
+ "threshold_player": "4432166",
+ "threshold_minutes": 30,
+ "exact_vs_rounded_threshold_disagreements": 187,
+ "exact_total_weight": "1",
+ "selected_period_means_from_captures": {
+  "q1": {
+   "minutes": 6.5969103745418884,
+   "player_points": 4.67715,
+   "home_points": 28.771
+  },
+  "q2": {
+   "minutes": 6.249152000402258,
+   "player_points": 4.86495,
+   "home_points": 28.59685
+  },
+  "q3": {
+   "minutes": 6.993446124456003,
+   "player_points": 5.484825000000001,
+   "home_points": 28.470274999999997
+  },
+  "q4": {
+   "minutes": 6.348520749779679,
+   "player_points": 5.102475,
+   "home_points": 27.285275
+  },
+  "h1": {
+   "minutes": 12.846062374944147,
+   "player_points": 9.5421,
+   "home_points": 57.367850000000004
+  },
+  "h2": {
+   "minutes": 13.34196687423568,
+   "player_points": 10.5873,
+   "home_points": 55.75555
+  },
+  "fg": {
+   "minutes": 26.26052287418114,
+   "player_points": 20.195025,
+   "home_points": 113.48955000000001
+  }
+ }
+}

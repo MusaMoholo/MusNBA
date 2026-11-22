@@ -108,6 +108,15 @@ def main() -> None:
         raise FileExistsError('refusing to overwrite an existing browser fixture')
     report = json.loads(args.report.read_text())
     a1_branch_persist_audit.audit(report)
+    snapshot_paths = [f"data/snapshots/{report['origin']}/{name}.json" for name in ('meta', 'games')]
+    snapshot_inputs = {path: report['input_sha256'][path] for path in snapshot_paths}
+    snapshot_game = json.loads((ROOT / snapshot_paths[1]).read_text())[report['game']]
+    snapshot_players = {}
+    for side, name in enumerate(('home', 'away')):
+        for player in snapshot_game[name]['players']:
+            if player['id'] in snapshot_players:
+                raise ValueError('snapshot player identity is duplicated')
+            snapshot_players[player['id']] = (side, player)
     branches = a1_expected.selected_branches(report, {})
     records = []
     roster = None
@@ -121,10 +130,17 @@ def main() -> None:
         records.append({'branch_id': branch['branch_id'], 'assignments': branch['assignments'],
                         'weight': a1_expected.fraction_json(weight), 'capture_sha256': branch['capture_sha256'],
                         'worlds': packed})
+    ids, sides = roster
+    if set(ids) != set(snapshot_players) or any(snapshot_players[player][0] != side for player, side in zip(ids, sides, strict=True)):
+        raise ValueError('snapshot player identities or sides differ from captured worlds')
+    identity_fields = ('id', 'name', 'pos', 'jersey', 'status', 'injury', 'availability_basis')
+    player_metadata = [{key: snapshot_players[player][1].get(key) for key in identity_fields} for player in ids]
     write_json(args.output, {
         'kind': 'isolated research fixture; not a forecast or serving contract',
         'source': str(args.report), 'source_sha256': sha256_file(args.report),
         'algorithm_sha256': sha256_file(Path(__file__)), 'game': report['game'], 'origin': report['origin'],
+        'engine': report['engine'], 'model': report['model'], 'snapshot_inputs': snapshot_inputs,
+        'player_metadata': player_metadata,
         'selected_players': report['selected'], 'weight_assumptions': report['weight_assumptions'],
         'limitations': ['Availability probabilities are not calibrated.',
                         'Joint availability independence is unvalidated.',

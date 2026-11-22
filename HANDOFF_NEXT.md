@@ -1,7 +1,7 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 70%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **0468812** (A1 70%, opening-five research); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **60f1645** (A1 70%, weighted game-summary research); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
@@ -9,6 +9,28 @@ The preceding pushed checkpoint was **0468812** (A1 70%, opening-five research);
   without publishing an unvalidated forecast or changing the default production pathway. **Owner's latest stop:
   stop at the end of A1**, checkpoint/push and report gains and limitations; do not start A2, A3 or Chunk B in
   this run. The earlier dashboard house pass was already delivered; no nightly merely for this research checkpoint.
+- **A1 80% Expected-only payload groundwork:** fixtures now include independently checked origin-snapshot player
+  identity/status fields, model/engine identifiers and snapshot file hashes; branch-specific starter and minute
+  targets are not copied from the unconditional snapshot. `analysis/a1_expected_payload.mjs` accepts only an
+  unfixed Expected summary and produces a compact, explicitly research-only payload without raw branch worlds.
+  Separate Python accounting matched all summaries and **25 / 28** identities to the audited **20k / 40k**
+  inputs. Payloads were **626,499 / 734,772 bytes** raw and **194,699 / 230,821 bytes** gzip-6 in Python
+  (**190,705 / 226,047** in Node).
+  They have not been integrated into an app bundle or imported into a browser or phone; no Given/Joint capability
+  is implied by these compact files. Inputs and evidence:
+  `data/derived/experiments/20261122_chunk_a_a1_d47_{browser_fixture,game_summary}_{one,two}_identity_v1.json`,
+  `data/derived/experiments/20261122_chunk_a_a1_d47_expected_payload_{one,two}_v1.json`,
+  `analysis/experiments/20261122_chunk_a_a1_d47_browser_fixture_{one,two}_identity_v1_audit.json`,
+  `analysis/experiments/20261122_chunk_a_a1_d47_game_summary_{one,two}_identity_v1_{probe,audit}.json`, and
+  `analysis/experiments/20261122_chunk_a_a1_d47_expected_payload_{one,two}_v1_{probe,audit}.json`.
+  UI, real browser/phone/offline checks and model gates remain open; A1 **70%**, Chunk A **31.5%**. The production
+  model, forecasts, bundles and shell are unchanged. HANDOFF/PLAN/FINDINGS record evidence and README maps scripts;
+  AGENTS, ENGINE_PLAN and TRAINING_PLAN need no change (rules, decisions and gates unchanged); DASHBOARD_PLAN needs
+  no change (no UI shipped).
+  Synthetic tests reject fixed selections and inconsistent provenance; a mismatched real fixture/audit failed
+  explicitly without creating output, log `/tmp/musnba_a1_payload_reject.log`. Focused Python/JS tests pass;
+  normal smoke **108/108** and deliberate fault **86/108**, exit **1**, with four OpenMP threads per process,
+  logs `/tmp/musnba_a1_payload_{smoke,fault}.log`.
 - **A1 80% weighted game-summary groundwork:** `analysis/a1_branch_game_summary.mjs` derives team/player
   period means, distributions, shooting-attempt mass, exact mean seconds, availability, participation,
   simulated opening-five shares, multi-doubles and if-plays values from one selected weighted world set.
@@ -2339,6 +2361,12 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
    use JSON player-ID-to-boolean choices for partial and fully fixed selections. Run
    `node tests/test_a1_branch_game_summary.mjs` for summary edge cases. Keep expected weighted units separate from
    actual simulation counts and preserve precise world-minute filters.
+   The Expected-only research payload is produced only from the independently audited identity fixture and
+   full-mixture summary, e.g.
+   `node analysis/a1_expected_payload_probe.mjs data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_identity_v1.json analysis/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_identity_v1_audit.json analysis/experiments/20261122_chunk_a_a1_d47_game_summary_two_identity_v1_probe.json analysis/experiments/20261122_chunk_a_a1_d47_game_summary_two_identity_v1_audit.json data/derived/experiments/<new-payload>.json analysis/experiments/<new-probe>.json`
+   followed by `.venv/bin/python analysis/a1_expected_payload_audit.py analysis/experiments/<new-probe>.json --output analysis/experiments/<new-audit>.json`.
+   Run `node tests/test_a1_expected_payload.mjs`; serialization is not an import/offline test or permission to
+   ship. Verify labels and actual PWA compatibility only after integrating a fully coherent gated UI.
    Run `node tests/test_a1_weighted_browser.mjs` for arithmetic edge cases; the real-fixture audit takes the
    fixture, a new audit output, Expected report and one or more matching Given reports, e.g.
    `node analysis/a1_weighted_browser_audit.mjs data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_one_v3.json analysis/experiments/<new-audit>.json analysis/experiments/20261122_chunk_a_a1_d47_expected_one_home_pts.json analysis/experiments/20261122_chunk_a_a1_d47_joint_one_full.json analysis/experiments/20261122_chunk_a_a1_d47_joint_one_empty.json`.

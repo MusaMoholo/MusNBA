@@ -1,0 +1,17 @@
+{
+  "kind": "isolated Expected-only serialization probe; not a phone or browser benchmark",
+  "fixture": "data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_identity_v1.json",
+  "fixture_sha256": "3e543e61b2eb0aee44a23a0e069a9f55cab1db086afd63612ac62db554180c03",
+  "fixture_audit": "analysis/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_identity_v1_audit.json",
+  "fixture_audit_sha256": "45cd01057cea5fe0109870af334c83f20d800a9efbd4b7b17a2c6919e1fcafca",
+  "summary_probe": "analysis/experiments/20261122_chunk_a_a1_d47_game_summary_two_identity_v1_probe.json",
+  "summary_probe_sha256": "e8e766d4cfcee1774724145d30550676d1f0b11dd91a5d8edb033a6c3ffb89de",
+  "summary_audit": "analysis/experiments/20261122_chunk_a_a1_d47_game_summary_two_identity_v1_audit.json",
+  "summary_audit_sha256": "2fd93209dd7270f879450b9e7704d3629ae56c1a584f95235ef36064a3bc59ec",
+  "payload": "data/derived/experiments/20261122_chunk_a_a1_d47_expected_payload_two_v1.json",
+  "payload_sha256": "a4ab3909d1a3c2d83a6d71ff3dda9009ca405a3bf6eae9e12eacdb4f56e299df",
+  "payload_bytes": 734772,
+  "gzip6_bytes": 226047,
+  "algorithm_sha256": "12ae0c0bfb25e611515008998d6bbac5e5ea813c58dd07ae022bff3f5277b9dc",
+  "probe_sha256": "6b69c2a62605be70c0665d013063a8ea4b0cd17baddf6854acdd7b857f6dfadf"
+}
