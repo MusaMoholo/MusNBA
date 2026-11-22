@@ -585,6 +585,11 @@ Expected/season mixture must meet D31's accounting requirements rather than roun
 the retained pathway has no fitted future player-absence hazard; do not treat DNP proxy durations or actual future
 participants as future availability. New hazard work requires dated pre-origin cohorts and the unchanged gates.
 
+Chunk A A1 froze the prospective selection, branch identifiers and mixture contract in HANDOFF before implementation.
+The 15-minute healthy-role or 0.25 prior-usage selection threshold is an engineering scope rule, not fitted
+availability evidence. Missing criteria are conservatively included and labelled. The exact season representation
+and its runtime remain untested; no production or accuracy claim follows from freezing this contract.
+
 For S07's first **historical no-report and starter baselines**, freeze the following before scoring. Reuse the
 independently audited corrected S05 no-report F1–F4 candidate rows and fixed game IDs; prior-box membership is
 inferred, not a dated official roster. Report missing roster games, unlisted/unknown labels and source conflicts.

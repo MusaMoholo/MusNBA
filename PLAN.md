@@ -1,6 +1,6 @@
 # MusNBA — game plan and progress
 
-Updated **22 November 2026 (A1 S01–S07 complete; two future chunks and planned View Centre, D42–D43)**. The single record of scope, progress and decisions. Every agent updates it at
+Updated **22 November 2026 (S01–S07 complete; Chunk A A1 at 10%; View Centre planned, D42–D43)**. The single record of scope, progress and decisions. Every agent updates it at
 every checkpoint (AGENTS.md § Checkpoint protocol). New here? Read [AGENTS.md](AGENTS.md) first, then
 [HANDOFF_NEXT.md](HANDOFF_NEXT.md) — it says exactly what to do next.
 
@@ -108,13 +108,12 @@ Each subtask ends with evidence, current docs and a commit/push checkpoint (AGEN
 | M11 | Availability model | ☐ **A1 S07/S08/S10**: report coverage, play/start probabilities, branches and future absences | Held-out calibration and games-missed realism where dated development data supports them; honest fallbacks otherwise | Planned |
 | M12 | Season pathway calibration | ◐ **first cut (20 Nov): team pathway v1 in the app** — walk-forward 2022-26 (480 team-starts): dispersion 1.00 (fixed probabilities 1.53), 10–90% coverage 84% (65%), CRPS −4% in every held-out season; still wide in November (0.84) and surprises fade with the date (sim 0.52 → 0.18 v real 0.40 flat) | Dispersion ≈ 1.0 **at every start date**, persistence matches | `pathway.py`, `season_backtest.py` |
 | UX | Dashboard upgrade programme U1–U22 | ✅ **22 Nov:** all 22 shipped; U15–U22 adds roster roles, playoff picture, win ranges, races/movers/leaders inside Standings and model guide; 156 full + 12 final layout browser checks, hosted PWA 15/15 | Checked at 1440/960/390, both themes, stored data only | DASHBOARD_PLAN.md |
-| A1 | Expanded accuracy/robustness programme | ◐ **58.0% — S01–S07 complete, 22 Nov**; stopped after the requested nightly (D41), remaining tasks are future work | Gates in §6b; S13 history deferred (D40); integrated S14 remains open | HANDOFF § Progress ladders |
+| A1 | Expanded accuracy/robustness programme | ◐ **58.0% — S01–S07 complete, 22 Nov**; Chunk A A1 contract frozen, original S08 still open | Gates in §6b; S13 history deferred (D40); integrated S14 remains open | HANDOFF § Progress ladders |
 
 ### 6a. Next chunk — A1: player accuracy, defence and trustworthy season paths
 
-**Owner request, 22 Nov:** the earlier planning-only stop was lifted for overnight A1 execution. The later stop
-instruction D41 ends this session after the active nightly, verification/delivery and checkpoint; uncompleted tasks
-remain future work. U1–U22 are complete; do not restart
+**Owner request, 22 Nov:** the earlier planning-only stop was lifted for overnight A1 execution, then D41 stopped
+that session after the nightly. The owner has now authorised the two remaining chunks in order. U1–U22 are complete; do not restart
 that programme. This replaces the old four-task S1–S4 chunk with **14 modular subtasks (3.5× the task count)** and
 substantially more modelling scope: M7, M8, M11, M12, full-fold confirmation and versioned daily history and season-to-date model rebuilds.
 This is not a claim of 3.5× runtime or a promised accuracy gain. All subtasks started at **0%**; live progress is in HANDOFF.
@@ -132,9 +131,9 @@ current docs, any necessary PWA delivery and a committed/pushed checkpoint. A we
 trying an idea or leaving a run underway does not. Data-limited work must deliver its coverage audit, safe fallback,
 remaining gate and next action rather than claim a fitted model is validated.
 
-**D42 future split, planning only:** retain S01–S07 as completed and the original A1 weights/ladder below as the
+**D42 split, now authorised for execution in order:** retain S01–S07 as completed and the original A1 weights/ladder below as the
 historical ledger (**58.0%**, S13 deferred). The new separately weighted chunks and their 60 concrete rungs are in
-HANDOFF § Future execution; neither has started. Chunk A targets believable lineup-aware games, shared form and
+HANDOFF § Execution; Chunk A A1 is at 10%, and Chunk B has not started. Chunk A targets believable lineup-aware games, shared form and
 late-game behaviour, plus five saved game examples; Chunk B tests a new player/lineup-defence mechanism, legal
 foul-outs, season calibration and integrated confirmation, and adds rotation visibility. Each has a fresh final
 nightly and a useful shipped dashboard improvement if no model passes the unchanged gate. Chunk A can promote an
@@ -407,6 +406,10 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 · Chunk A A1 10%:** owner authorised both planned chunks in order; baseline clean at `e35fbe2`,
+  smoke **108/108**. Froze selection, branch IDs, seeds, uncalibrated weights, provenance and non-exhaustive
+  sensitivities in HANDOFF before implementation. Chunk A **3%**; original A1 remains **58%**. The exact weighted
+  season mixture is unresolved; v1.3/pathway v1 and the delivered bundle remain unchanged.
 - **19 Nov 2026** — Studied MusSim. Probed sources: ESPN site API works with plain requests; NBA CDN returns 403.
   Owner: app shell first, play-by-play sim later.
 - **19 Nov 2026** — Phase 1 shipped (collection, placeholder engine, snapshots, views, server, app, PWA). Fixed: a

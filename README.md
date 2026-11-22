@@ -11,9 +11,9 @@ or phone.
 > each simulated season carries its own team ratings and updates them after every game (D25). Past dates rebuilt after the
 > fact currently use a labelled placeholder. U1–U22 and public Pages/iCloud delivery are complete. Accuracy chunk
 > **A1 (14 tasks)** has completed S01–S07; S06's audited candidate did not clear its frozen gate. The 22 November
-> ET nightly is delivered, historical forecast backfill is deferred, and the owner requested a stop after that nightly.
-> Remaining work is planned as two future chunks, including a 2-D selected-world View Centre designed for later
-> resulted-game playback; neither has started.
+> ET nightly is delivered and historical forecast backfill is deferred. The owner has authorised two remaining chunks
+> in order; Chunk A has started by freezing its lineup-branch contract. The 2-D selected-world View Centre, designed
+> for later resulted-game playback, remains unimplemented.
 > See [PLAN.md](PLAN.md) and [HANDOFF_NEXT.md](HANDOFF_NEXT.md).
 
 ## Setup

@@ -383,6 +383,9 @@ still prohibits feeding team defensive ratings into possession models or forcing
 and durations, with role-specific evidence and uncertainty. This is not yet built into the long-range pathway.
 Evaluate games missed, return timing and calibration with dated information, without known future participants.
 A1 S08's Expected branch worlds, if validated, become the same near-term draws consumed by the season engine.
+Chunk A A1's first execution contract is frozen in HANDOFF: high-impact uncertain-player selection, deterministic
+branch IDs and seeds, and explicitly uncalibrated one/two-player weights. More-than-two one-out comparisons are
+non-exhaustive. No branch or exact weighted-season implementation has been delivered.
 The selected S07 fallback keeps fixed report-status probabilities and recent-inactivity heuristics as uncalibrated,
 labels unlisted injuries as assumptions, and rejects unavailable five-player worlds. There is no supported
 future physical-absence hazard; S10 must retain that limitation unless a candidate passes the frozen tests.

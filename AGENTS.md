@@ -27,7 +27,7 @@ ls analysis/experiments/                 # latest experiment logs: what was last
 Then do the first open item in HANDOFF_NEXT.md § Next actions. If smoke fails, fix or report that first.
 A planning-only request stays planning-only. **Overnight A1 execution (owner, 22 Nov):** the prior planning-only
 stop was lifted for that run, but the owner subsequently stopped execution after the nightly (D41). Remaining work
-is future work until requested; the overnight authority does not override that stop. When executing an authorised
+was future work until requested; the owner has since authorised the two D42 chunks in order. When executing an authorised
 chunk, make in-scope engineering and product decisions without waiting; document assumptions and blockers. Model
 gates, source permissions, cutoffs and data retention remain mandatory.
 Read-only/docs work needs no review server; start :8767 when inspecting or changing presentation.

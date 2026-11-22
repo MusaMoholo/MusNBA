@@ -1,15 +1,14 @@
 # Handoff — state and next actions
 
-Updated **22 November 2026 — A1 stopped after the requested nightly; S01–S07 complete, overall 58.0%;
-the remaining work is planned as two future chunks (D42), including a reusable 2-D View Centre (D43)**.
+Updated **22 November 2026 — Chunk A execution started; A1 contract frozen at 10%; S01–S07 remain complete**.
 
 ## Read this first — live handoff
 
-- **Current stop:** the owner stopped execution after the 22 Nov nightly; subsequent work so far has been planning
-  and handoff only. Do not start a nightly or development merely to refresh these docs. When future execution is
-  requested, start **Chunk A, module A1, rung 10%** below.
+- **Current action:** the owner has requested both D42 chunks in order. Chunk A has started at A1; implement and
+  verify the isolated one-player branches at rung 20% using the frozen contract below. Do not start Chunk B before
+  Chunk A's delivery and checkpoint.
 - **Progress:** original A1 **58.0%**, S01–S07 complete; S08–S12/S14 open, S13 historical forecast backfill
-  deferred. New independent chunk boards: **A 0%** (A1/A2/A3 all 0%) and **B 0%** (B1/B2/B3 all 0%). Keep
+  deferred. New independent chunk boards: **A 3%** (A1 10%, A2/A3 0%) and **B 0%** (B1/B2/B3 all 0%). Keep
   the original A1 weights intact; new within-chunk weights do not reset or double-count A1.
 - **Production:** possession engine **v1.3/D29**, team pathway **v1**. S04's two defence candidates did not pass;
   S05's minute candidates did not meet the primary gate. S06's 200-game candidate improved minute CRPS
@@ -27,11 +26,8 @@ the remaining work is planned as two future chunks (D42), including a reusable 2
   Centre (A3). Chunk B: defence/foul-outs (B1), season pathway (B2), integrated confirmation/rotation map (B3).
   Each chunk ends with a fresh nightly and a useful dashboard improvement if no model passes. View Centre initially
   replays saved simulated events; the same interface is designed for later actual-game playback. Neither exists yet.
-- **First commands in a future execution session:** `git status`, `git --no-pager log --oneline -5`,
-  `.venv/bin/python scripts/smoke.py`, and `ls analysis/experiments/`. Read AGENTS, this section, the
-  **Future execution — two chunks** ladders below, and PLAN §6a–6c; then freeze A1's branch IDs, input/origin,
-  probabilities, unsupported dependence and >2-maybe limitations before implementation. Rung 10 is earned only
-  when that contract is written, not when work starts. Start :8767 only for presentation work; never stop :8766.
+- **Baseline:** clean `main` at `e35fbe2`, smoke **108/108**. The A1 10% contract is below; no branch code,
+  model promotion or delivery has occurred. Start :8767 only for presentation work; never stop :8766.
 - **At every completed module/subtask:** update the live ledger and affected docs with results, negatives,
   limitations, tests, production/PWA impact and next action; verify, review, **commit and push before moving on**.
   Update the live log as work proceeds and checkpoint unfinished state at any stop. The detailed protocol is in
@@ -1227,16 +1223,16 @@ all 140 rungs are ordered 10→100; all A1 statuses are 0%; 19 local Markdown li
 checks pass. Only the eight root Markdown docs changed. No new model experiment, fetch, training, final-test score,
 nightly, app build, PWA export or publication was performed. Existing public shell/model/bundle remain as above.
 
-## Future execution — two chunks (D42; planning only)
+## Execution — two chunks (D42)
 
 The owner asked for the remaining work to be split into two outcome-led chunks and suggested five meaningful saved
-games per matchup. This is a plan, not authorisation to start execution in this planning session. S01–S07 and their
+games per matchup, and has now authorised execution in order. S01–S07 and their
 evidence remain complete; preserve the original A1 table/weights/ladders below as the historical accounting. The new
 chunk weights are **separate within-chunk progress measures**, not replacements for or double credits to A1: original
 A1 stays **58.0%**, and S13 remains deferred at 0% (the possible A1 ceiling while deferred is 95%).
 Update the original S08–S12/S14 status only when their original acceptance is met, without crediting work twice.
 Report a chunk bar and each active module at every 10% rung and each 5% overall boundary; long jobs also report
-item counts and measured rates. Both chunks start at **0%**.
+item counts and measured rates. Current Chunk A progress is **3%**; Chunk B remains **0%**.
 
 **Shared gates:** use the unchanged player-first, paired fold, seed-noise, uncertainty, non-inferiority, cutoff and
 once-per-version final-test rules in PLAN §6b/TRAINING_PLAN §8. An early chunk can promote a standalone candidate
@@ -1259,6 +1255,44 @@ playback portion of S12, plus a chunk-end delivery; S10/S11/S12/S14 are not ther
 | A1 Lineups and Expected | 30% | S05–S07 | S08's exact branch/season identities and origin safety, or explicit blocked limitation; no invented availability calibration |
 | A2 Form and late-game realism | 35% | S04/S06; A1 for integration | S09's paired player/game gates; retain v1.3 when unsupported or rejected |
 | A3 View Centre and delivery | 35% | A1/A2 decisions | Five labelled selections, reconciled event files and an interactive 2-D court/player in the Game Centre; responsive/offline checks and fresh nightly; no fake logs or completed claim on failure |
+
+**Live board:** Chunk A `█░░░░░░░░░░░░░░░░░░░ 3%`; A1 `██░░░░░░░░░░░░░░░░░░ 10%`;
+A2 `░░░░░░░░░░░░░░░░░░░░ 0%`; A3 `░░░░░░░░░░░░░░░░░░░░ 0%`.
+Original A1 remains 58%; do not double-count the separate board.
+
+**A1 10% frozen branch contract (22 Nov; design, not implemented):**
+
+- Use the origin's own roster, reported status, source, effective `projection.player_inputs` availability and
+  pre-origin D29 state/profile. Select every uncertain rostered player (`0 < availability < 1`) whose healthy
+  role is at least 15 minutes or whose prior usage is at least 0.25. When either role or usage is missing and the
+  other does not establish eligibility, include the player conservatively and flag the missing criterion. This
+  explicit engineering threshold is not a validated importance model. Include unknown-status and recent-inactivity
+  fallbacks when they qualify; label cold-player prior roles rather than claiming observed history. Unlisted Active
+  is an assumption, not a reported healthy status. Out players stay out. Sort selected players by `(team ID,
+  player ID)` as strings, not roster order.
+- A branch ID is `lineup-v1:` followed by sorted `team_id/player_id=plays|sits` assignments separated by commas;
+  persist the structured assignments too. Require nonempty ASCII digit team and player IDs and reject duplicates
+  or ambiguous IDs; never use an untrusted ID directly as a path. Derive a deterministic seed with
+  `projection.seed_for('lineup-v1', engine ID, origin, slate date,
+  game ID, branch ID)`; record seed, version, world count, branch assignments, source/capture provenance and hashes
+  of the exact model and pre-origin input artifacts. Same assignments and inputs must reproduce regardless of worker
+  count. A branch fixes its selected players' availability before re-solving starters, minutes and matchups;
+  other players retain the existing per-world availability policy.
+- For one or two selected players enumerate every plays/sits assignment and weight it by the product of their
+  effective fixed fallback probabilities or complements. These weights are **uncalibrated**; for two players their
+  independence, and the engine's treatment of other availability, are unvalidated assumptions. Use exact decimal
+  or rational arithmetic for branch probabilities and verify the sum; do not silently renormalise missing branches
+  or activate an ineligible player. An impossible five-player world fails explicitly.
+- With more than two selected players, store an all-play reference and each one-out-alone sensitivity with every
+  other selected player forced to play. These are **non-exhaustive conditional comparisons**, not weighted
+  forecasts or an Expected mixture. Until an exhaustive supported mixture is available, retain and label the
+  current unconditional forecast; never imply those sensitivities add to one or cover joint absences.
+- A supported Expected distribution is the weighted empirical distribution of **all 10,000 worlds in each
+  exhaustive branch**, not a third simulation or a rounded 10,000-world subset. Store weights and provenance;
+  phone export keeps Expected only. The season must consume the same near-term mixture once per game with exact
+  weighted accounting. A 10,000 equally weighted season array cannot in general represent it (FINDINGS §7);
+  weighted/expanded representations and their runtime must be validated before acceptance. Do not claim this is
+  solved, round it away, or promote a partial implementation.
 
 | Rung | A1 — lineups and Expected |
 |---:|---|
@@ -1794,15 +1828,15 @@ picker (Scoring · Rebounding ALL/OFF/DEF · Handling · Defense · Time; makes 
 STL/BLK, shooting x/y (z%) coloured per part); bezel points Δ v season (above the value; no win/total Δ); player page "Open
 simulation" for tomorrow's games; phone bundle stripped back (D36).
 
-## Next actions — stopped after S07; future work
+## Next actions — Chunk A in progress
 
-**Owner's latest stop instruction D41:** no further development or nightly in this session. The dashboard programme
-is done; do not resume U1–U22. In a future authorised session:
+The owner has authorised both D42 chunks in order, superseding D41's earlier stop. The dashboard programme is done;
+do not resume U1–U22.
 
-1. Run `git status`, `git --no-pager log --oneline -5`, `.venv/bin/python scripts/smoke.py` and
-   `ls analysis/experiments/`; read the D42 two-chunk ladders above and PLAN §6a–6c before acting. Start future
-   Chunk A module A1 at its **10%** contract rung, using S05–S07 evidence; freeze branch IDs, probabilities,
-   uncertainty selection and >2-maybe limitations before implementation. Do not award progress for a launched job.
+1. **A1 20%:** implement isolated one-player plays/sits overrides from the frozen contract above; re-solve starters
+   and minute targets for the available roster and use the actual defending five for matchups. Verify absent
+   players never appear and every lineup contains five distinct eligible players. Exercise short rosters explicitly
+   and preserve the default engine as control. Do not credit 20% until those checks pass.
 2. **S08–S10** map into Chunks A/B as above. S08 must solve the exact weighted-mixture/10,000-unweighted-world
    counterexample without rounding away discrepancies; S10 must not infer a future physical-absence hazard from
    recorded-DNP proxies. Keep actual-participant diagnostics separate from pre-game availability.
@@ -1816,12 +1850,18 @@ is done; do not resume U1–U22. In a future authorised session:
    incomplete/complete generation labels, resume and safe import/offline handling. Current exports remain batch-only;
    never claim iCloud sync is a phone import.
 
-**Live-handoff document review (22 Nov):** HANDOFF now leads with the current state, dated delivery, risks and
+**Prior live-handoff document review (22 Nov):** HANDOFF then led with the current state, dated delivery, risks and
 first future rung; AGENTS and PLAN explicitly require a live log and a verified commit/push at each completed
 module/subtask. ENGINE_PLAN and TRAINING_PLAN need no change because decisions and promotion/cutoff gates are
 unchanged; FINDINGS has no new experiment to record; DASHBOARD_PLAN and README need no change because shipped
 behaviour and commands are unchanged. Baseline smoke **108/108**. No model, dashboard, forecast, bundle or public
 shell changed; no nightly or data job was run.
+
+**Chunk A A1 contract checkpoint document review (22 Nov):** HANDOFF, PLAN, ENGINE_PLAN and TRAINING_PLAN
+record the active scope and frozen design. AGENTS and README correct the now-superseded stop wording. FINDINGS
+needs no change because no new experiment or data measurement was performed; DASHBOARD_PLAN needs no change because
+no app behaviour shipped. Baseline smoke **108/108**. No model, dashboard, forecast, bundle or public shell changed;
+no nightly or data job was run. No session-owned background job was started.
 
 **D43 planning document review:** HANDOFF and PLAN describe the future source-neutral View Centre, the simulated
 first release and later actual-game adapter; DASHBOARD_PLAN and ENGINE_PLAN record presentation and design; AGENTS
