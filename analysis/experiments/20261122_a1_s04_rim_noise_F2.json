@@ -1,0 +1,136 @@
+{
+ "experiment": "a1_s04_guarded_shot_training_seed_noise",
+ "fold": "F2",
+ "settings": {
+  "half_life": null,
+  "playoff_weight": 1.0,
+  "drop": [
+   "@schedule",
+   "@clutch",
+   "@stype"
+  ],
+  "banded": true,
+  "recalibrate": false,
+  "features": "data/derived/variants/a1_scheduled_F2_20261122_v3/features/pregame.parquet",
+  "segments": null,
+  "seed": 8,
+  "threads": 6
+ },
+ "baseline_screen_sha256": "9a5bab508dffbfcab17a4b0722b097a961ea4fa5dcf3770f92d6a6d6734d5f56",
+ "baseline_rows_sha256": "dbadf7b320c4b78800083112de58d2a11f8cf1ae4c15f5303374a1bf4e97f3b8",
+ "input_sha256": {
+  "models/v1.3.json": "f85ca77418990f702b8e6dbe3eb0be1c35b1830649517a760d000bd6b4c1d09e",
+  "analysis/experiments/20261122_a1_pre_candidate_manifest.json": "195b4ddaf748e4f3520a02f813b5763736fe4fbfbe653e896161532d6d9c7e6b",
+  "data/derived/variants/a1_scheduled_F2_20261122_v3/features/pregame.parquet": "7b66c3389b746adc72e98aea0bd73ffd8492bcf7a9475382111fce68bc1d723f",
+  "data/derived/variants/a1_scheduled_F2_20261122_v3/features/features_report.json": "52a3fd8a44bf6fe7ff06aa19e06293441717546dce254a181ab706f067a3d999",
+  "data/derived/variants/a1_assignment_schedule_20261122_v3/F2.json": "36cc687b4fdc7a3d0580eff696a7e189f240cc44f46d88c8a644b542a2b188cd",
+  "data/derived/nodes/variant_edf6d83ed7a3/signature.json": "edf6d83ed7a35ff1ae875c23cdbbe88f1c3eb3e7aec62981c1f85f41fc35ed70",
+  "data/derived/nodes/variant_edf6d83ed7a3/shot_result.npz": "48ae5accaeaf11c3c9c7bc3c1158b1246783e3f76416c3a0d67f891259e2776d",
+  "scripts/a1_rim_screen.py": "c152a713c68a75279e5e35165b345621176cbe051e7a8ad1e0f556f29eaafd50",
+  "scripts/a1_rim_calibration.py": "dec8abb49a93395f244743083ba944d9880ddefe2d55a5fbf916be3087ac10d6",
+  "scripts/train.py": "db31022469cfb3987ed4423411ebdb9557d81bfe0efc9090bc9b80fc5786bf96",
+  "scripts/nodes.py": "78749b680b889993e83ba26baab51877cd7393ee0a5a3d9f4fdaf9123d3b161f"
+ },
+ "noise_script_sha256": "0d25a45059a279aa0e241c0c3e7d21db02a37b92b3f07c42cfea9fe0bde957df",
+ "rows": 139660,
+ "games": 782,
+ "control_log_loss": 0.7299864270278034,
+ "second_log_loss": 0.7298986044653003,
+ "delta": -8.782256250298434e-05,
+ "se": 0.00015137477558835403,
+ "relative_delta": -0.00012030711702484763,
+ "z": -0.5801664257577993,
+ "training_node": {
+  "rows_train": 437485,
+  "rows_val": 139660,
+  "iterations": 49,
+  "seconds": 9.2,
+  "features": 115,
+  "top_features": [
+   "distance",
+   "lateral",
+   "shot_time",
+   "start_code",
+   "mu_fg_shot",
+   "start_clock",
+   "actor_fg_rim",
+   "actor_foul_drawn_share"
+  ],
+  "model": 0.7298986044653003,
+  "league": 0.7872157558410844,
+  "profile": 0.7451611442976952,
+  "ece_model": 0.004527778185366696,
+  "ece_profile": 0.0019250554950406389,
+  "calibration": {
+   "Q1": {
+    "n": 36036,
+    "ece": 0.00674,
+    "ece_null": 0.00295,
+    "bias": 0.0057
+   },
+   "Q2": {
+    "n": 35117,
+    "ece": 0.00539,
+    "ece_null": 0.00404,
+    "bias": 0.00166
+   },
+   "Q3": {
+    "n": 34745,
+    "ece": 0.00699,
+    "ece_null": 0.00329,
+    "bias": 0.00711
+   },
+   "Q4": {
+    "n": 33054,
+    "ece": 0.00506,
+    "ece_null": 0.00297,
+    "bias": 0.00482
+   },
+   "OT": {
+    "n": 708,
+    "ece": 0.03719,
+    "ece_null": 0.02215,
+    "bias": 0.00955
+   },
+   "m<=-15": {
+    "n": 15370,
+    "ece": 0.00762,
+    "ece_null": 0.00741,
+    "bias": 0.00775
+   },
+   "m-14..-6": {
+    "n": 27717,
+    "ece": 0.00686,
+    "ece_null": 0.00576,
+    "bias": 0.00235
+   },
+   "m-5..5": {
+    "n": 58909,
+    "ece": 0.00508,
+    "ece_null": 0.00316,
+    "bias": 0.00183
+   },
+   "m6..14": {
+    "n": 24435,
+    "ece": 0.00659,
+    "ece_null": 0.00369,
+    "bias": 0.00564
+   },
+   "m>=15": {
+    "n": 13229,
+    "ece": 0.01317,
+    "ece_null": 0.00536,
+    "bias": 0.01373
+   }
+  },
+  "class_bias": [
+   0.00281,
+   -0.00393,
+   0.00112
+  ],
+  "gain_vs_best_baseline": 0.02048
+ },
+ "model_sha256": "a0bdcc5de9c7270f32e0d87855b642538bee0b34ceb094663fb06e389fd2ca0f",
+ "rows_sha256": "6cb5ac2636404b0b449c3198c7fa4fbb5bb0574b46dfa8dfa1434a8fcbe39bdb",
+ "elapsed_seconds": 11.8
+}

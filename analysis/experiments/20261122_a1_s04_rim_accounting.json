@@ -1,0 +1,55 @@
+{
+ "experiment": "a1_s04_rim_independent_accounting",
+ "folds": {
+  "F1": {
+   "shots": 136578,
+   "games": 773,
+   "fixed_shots": 35634,
+   "training_tail_rows": 26197,
+   "known_rim_training_rows": 7437,
+   "metric_populations_audited": 20,
+   "input_hashes": 11,
+   "slope": 0.07181624202865089,
+   "all_shot_log_loss_delta": -2.22096465375754e-06,
+   "fixed_log_loss_delta": -1.3450146637151605e-06
+  },
+  "F2": {
+   "shots": 139660,
+   "games": 782,
+   "fixed_shots": 35842,
+   "training_tail_rows": 49704,
+   "known_rim_training_rows": 13330,
+   "metric_populations_audited": 20,
+   "input_hashes": 11,
+   "slope": -2.168615011197036,
+   "all_shot_log_loss_delta": 1.4811457706001764e-05,
+   "fixed_log_loss_delta": 1.1846469655646811e-05
+  },
+  "F3": {
+   "shots": 87671,
+   "games": 490,
+   "fixed_shots": 35880,
+   "training_tail_rows": 63572,
+   "known_rim_training_rows": 16151,
+   "metric_populations_audited": 20,
+   "input_hashes": 11,
+   "slope": -0.8421599555598842,
+   "all_shot_log_loss_delta": 1.112704494230523e-05,
+   "fixed_log_loss_delta": -1.005953320094047e-05
+  },
+  "F4": {
+   "shots": 135680,
+   "games": 766,
+   "fixed_shots": 35413,
+   "training_tail_rows": 72379,
+   "known_rim_training_rows": 19628,
+   "metric_populations_audited": 20,
+   "input_hashes": 15,
+   "slope": 1.131472328709864,
+   "all_shot_log_loss_delta": -3.116697429527783e-05,
+   "fixed_log_loss_delta": -3.8222289284695104e-05
+  }
+ },
+ "original_corrected_f4_rows_identical": 135680,
+ "auditor_sha256": "3c60d0d909bdad145c287ad3f4bc629483c3d13e0875ab5d99ae17c18f1a9d28"
+}

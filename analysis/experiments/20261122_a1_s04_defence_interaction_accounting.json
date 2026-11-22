@@ -1,0 +1,12 @@
+{
+ "experiment": "a1_s04_defence_interaction_independent_accounting",
+ "fold_shots": {
+  "F1": 136578,
+  "F2": 139660,
+  "F3": 87671,
+  "F4": 135680
+ },
+ "report_sha256": "eb1c04a59cb6e78f0a3339f1e0b77d7c339d7a0c11d43d8973ae61c256f28e1b",
+ "rows_sha256": "7d8572fce71be718adf47a25a78d11732188243aba0c769bfa33dae2a78adc21",
+ "auditor_sha256": "e7854902576d6305e0e7bf628cd5ac03ad647ec6bb30e4b6c2a93db910d141b3"
+}

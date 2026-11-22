@@ -4,7 +4,7 @@ from unittest.mock import patch
 import numpy as np
 import pandas as pd
 
-from scripts import a1_availability_cohort as cohort, a1_minutes_audit, a1_minutes_candidate, a1_minutes_diagnose, a1_minutes_fold_eval, a1_minutes_no_report, a1_minutes_unconditional, a1_rotation_diagnose, minutes
+from scripts import a1_availability_cohort as cohort, a1_minutes_audit, a1_minutes_candidate, a1_minutes_diagnose, a1_minutes_fold_eval, a1_minutes_no_report, a1_minutes_unconditional, a1_rotation_diagnose, engine, minutes
 
 
 class AvailabilityCohortTests(unittest.TestCase):
@@ -162,6 +162,38 @@ class AvailabilityCohortTests(unittest.TestCase):
         self.assertTrue((result[2, -2:] > 0).all())
         np.testing.assert_allclose(result.sum(axis=1), 240.0, rtol=0, atol=1e-10)
         self.assertTrue(((result >= 0) & (result <= 48)).all())
+
+    def test_strict_engine_tables_use_legal_targets_without_changing_default(self):
+        state = {'healthy': 10.0, 'cap': 10.0, 'ramp': 1.0, 'rotation': 1.0, 'priority': 10.0,
+                 'start_share': 1.0, 'sd_table': {'edges': [0, 10, 20, 30, 40, 50], 'sd': {}}}
+        game = object.__new__(engine.Game)
+        game.sides = ('home', 'away')
+        game.side = np.repeat([0, 1], 5)
+        game.mstate = [state.copy() for _ in range(10)]
+        game.players = {side: [{'pos': 'G'} for _ in range(5)] for side in game.sides}
+        game.lineup = {0: [], 1: []}
+        game.templates = {0: [], 1: []}
+        available = np.ones((2, 10), dtype=bool)
+        bins = 2880 // engine.ROTATION['bin']
+        top = np.tile(np.arange(5)[None, :, None], (2, 1, bins))
+        with patch.object(engine.Game, '_fit_offsets', return_value=top), \
+                patch.object(a1_minutes_candidate, 'redraw', wraps=a1_minutes_candidate.redraw) as strict, \
+                patch.object(minutes, 'redraw', wraps=minutes.redraw) as legacy:
+            game.strict_minute_targets = True
+            tables, combos = game._target_tables(available, np.random.default_rng(42))
+            self.assertEqual(strict.call_count, 2)
+            for call in strict.call_args_list:
+                np.testing.assert_allclose(call.args[0], np.full(5, 48.0), rtol=0, atol=1e-10)
+            self.assertEqual(tables.shape[1:], (2880, 5))
+            self.assertEqual(combos.shape, (2, 2))
+            game.strict_minute_targets = False
+            game._target_tables(available, np.random.default_rng(42))
+            self.assertEqual(strict.call_count, 2)
+            self.assertEqual(legacy.call_count, 4)
+            game.strict_minute_targets = True
+            available[0, 0] = False
+            with self.assertRaisesRegex(ValueError, 'fewer than five'):
+                game._target_tables(available, np.random.default_rng(42))
 
     def test_fold_minute_distribution_reuses_deterministic_stream(self):
         states = [{'healthy': 24.0, 'cap': 40.0, 'ramp': 1.0, 'rotation': 1.0, 'priority': 24.0}

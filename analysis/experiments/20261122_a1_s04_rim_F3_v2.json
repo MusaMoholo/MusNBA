@@ -1,0 +1,553 @@
+{
+ "experiment": "a1_s04_rim_expression_guarded_fold_screen",
+ "fold": "F3",
+ "method": "Paired existing v1.3 shot-node recipe with/without a training-tail-fitted, mean-preserving rim matchup log-odds response on guarded dated-assignment inputs.",
+ "limitations": "These corrected historical inputs differ from the accepted v1.3 static-input control; actual shots and zones are teacher-forced. This is not a forecast or promotion.",
+ "training_cutoff": "2025-09-30",
+ "validation_from": "2025-10-01",
+ "validation_to": "2025-12-31",
+ "training_tail_from": "2025-03-10",
+ "settings": {
+  "half_life": null,
+  "playoff_weight": 1.0,
+  "drop": [
+   "@schedule",
+   "@clutch",
+   "@stype"
+  ],
+  "banded": true,
+  "recalibrate": false,
+  "features": "data/derived/variants/a1_scheduled_F3_20261122_v3/features/pregame.parquet",
+  "segments": null,
+  "seed": 7,
+  "threads": 6
+ },
+ "training_node": {
+  "rows_train": 571184,
+  "rows_val": 87671,
+  "iterations": 73,
+  "seconds": 14.8,
+  "features": 115,
+  "top_features": [
+   "distance",
+   "lateral",
+   "shot_time",
+   "mu_fg_shot",
+   "start_code",
+   "start_clock",
+   "actor_fg_rim",
+   "actor_fg_paint"
+  ],
+  "model": 0.7361097525123992,
+  "league": 0.7945240297820373,
+  "profile": 0.7524136206714824,
+  "ece_model": 0.002825893774652193,
+  "ece_profile": 0.0052697053014084646,
+  "calibration": {
+   "Q1": {
+    "n": 22720,
+    "ece": 0.00753,
+    "ece_null": 0.00685,
+    "bias": 0.00324
+   },
+   "Q2": {
+    "n": 21922,
+    "ece": 0.00537,
+    "ece_null": 0.00526,
+    "bias": 0.00445
+   },
+   "Q3": {
+    "n": 21641,
+    "ece": 0.00517,
+    "ece_null": 0.00618,
+    "bias": 0.00257
+   },
+   "Q4": {
+    "n": 20779,
+    "ece": 0.00441,
+    "ece_null": 0.0041,
+    "bias": 0.00332
+   },
+   "OT": {
+    "n": 609,
+    "ece": 0.02778,
+    "ece_null": 0.0236,
+    "bias": 0.00508
+   },
+   "m<=-15": {
+    "n": 8255,
+    "ece": 0.00965,
+    "ece_null": 0.01039,
+    "bias": 0.00347
+   },
+   "m-14..-6": {
+    "n": 17511,
+    "ece": 0.00556,
+    "ece_null": 0.00551,
+    "bias": 0.00095
+   },
+   "m-5..5": {
+    "n": 39889,
+    "ece": 0.00363,
+    "ece_null": 0.00656,
+    "bias": 0.00212
+   },
+   "m6..14": {
+    "n": 14930,
+    "ece": 0.0112,
+    "ece_null": 0.006,
+    "bias": 0.00613
+   },
+   "m>=15": {
+    "n": 7086,
+    "ece": 0.01061,
+    "ece_null": 0.01321,
+    "bias": 0.00678
+   }
+  },
+  "class_bias": [
+   -0.00135,
+   0.0009,
+   0.00044
+  ],
+  "gain_vs_best_baseline": 0.02167
+ },
+ "calibration": {
+  "train_through": "2025-09-30",
+  "latest_training_date": "2025-06-22",
+  "training_rows": 63572,
+  "known_rim_rows": 16151,
+  "center": 0.6715949693594723,
+  "slope": -0.8421599555598842,
+  "intercept": -0.00021984216362257953,
+  "baseline_mean": 0.6734591240362553,
+  "calibrated_mean": 0.6734591240362554,
+  "objective": 0.6000599002783039
+ },
+ "training_rim_quartile_cutpoints": [
+  0.6645821034908295,
+  0.67315274477005,
+  0.6801848411560059
+ ],
+ "populations": {
+  "complete_validation": {
+   "all_shots": {
+    "observations": 87671,
+    "games": 490,
+    "status": "ok",
+    "control_log_loss": 0.7361097525123992,
+    "candidate_log_loss": 0.7361208795573415,
+    "log_loss_delta": 1.112704494230523e-05,
+    "game_cluster_se": 1.0963259148895995e-05,
+    "z": 1.014939516724434,
+    "game_cluster_bootstrap_ci_95": [
+     -1.0586922120852283e-05,
+     3.254089157095497e-05
+    ],
+    "actual_make": 0.47006421735807735,
+    "control_make": 0.4714120585401507,
+    "candidate_make": 0.4712749396409416,
+    "control_brier": 0.22697734131321978,
+    "candidate_brier": 0.22698078884038786
+   },
+   "rim": {
+    "observations": 23722,
+    "games": 490,
+    "status": "ok",
+    "control_log_loss": 0.7721409017543585,
+    "candidate_log_loss": 0.7721820247270058,
+    "log_loss_delta": 4.1122972647198464e-05,
+    "game_cluster_se": 4.056148057024081e-05,
+    "z": 1.0138429877081363,
+    "game_cluster_bootstrap_ci_95": [
+     -3.929785095929461e-05,
+     0.00012026449174178092
+    ],
+    "actual_make": 0.6746901610319535,
+    "control_make": 0.6802065036088372,
+    "candidate_make": 0.6796997440180536,
+    "control_brier": 0.2052643571572741,
+    "candidate_brier": 0.20527709841662647
+   },
+   "rim_matchup_training_quartiles": {
+    "Q1": {
+     "observations": 4961,
+     "games": 276,
+     "status": "ok",
+     "control_log_loss": 0.7691136963147884,
+     "candidate_log_loss": 0.7693678886894948,
+     "log_loss_delta": 0.0002541923747064362,
+     "game_cluster_se": 0.00013006584491784447,
+     "z": 1.9543360892861283,
+     "game_cluster_bootstrap_ci_95": [
+      -1.7869126799331662e-06,
+      0.0005033756470722779
+     ],
+     "actual_make": 0.6430155210643016,
+     "control_make": 0.6623452404083243,
+     "candidate_make": 0.6650607711241853,
+     "control_brier": 0.2137524974996552,
+     "candidate_brier": 0.21386775187755266
+    },
+    "Q2": {
+     "observations": 5039,
+     "games": 389,
+     "status": "ok",
+     "control_log_loss": 0.7919933673995357,
+     "candidate_log_loss": 0.7919765248436915,
+     "log_loss_delta": -1.6842555844189377e-05,
+     "game_cluster_se": 1.7945456765021675e-05,
+     "z": -0.9385414963088589,
+     "game_cluster_bootstrap_ci_95": [
+      -5.16952339001588e-05,
+      1.8610282888668446e-05
+     ],
+     "actual_make": 0.6810875173645564,
+     "control_make": 0.6789664553785709,
+     "candidate_make": 0.6793242716145773,
+     "control_brier": 0.2041536108416142,
+     "candidate_brier": 0.20414663279222006
+    },
+    "Q3": {
+     "observations": 5564,
+     "games": 415,
+     "status": "ok",
+     "control_log_loss": 0.7827627999192514,
+     "candidate_log_loss": 0.7827395855580284,
+     "log_loss_delta": -2.3214361223129762e-05,
+     "game_cluster_se": 3.5872996734388003e-05,
+     "z": -0.6471263439465145,
+     "game_cluster_bootstrap_ci_95": [
+      -9.37843700414175e-05,
+      4.607641354062827e-05
+     ],
+     "actual_make": 0.6755930984902947,
+     "control_make": 0.6818361119857693,
+     "candidate_make": 0.6809163734836414,
+     "control_brier": 0.20671538052335237,
+     "candidate_brier": 0.20670530483665006
+    },
+    "Q4": {
+     "observations": 8158,
+     "games": 400,
+     "status": "ok",
+     "control_log_loss": 0.7544749481395261,
+     "candidate_log_loss": 0.7544661843654347,
+     "log_loss_delta": -8.763774091373359e-06,
+     "game_cluster_se": 8.31252917948606e-05,
+     "z": -0.10542849116248393,
+     "game_cluster_bootstrap_ci_95": [
+      -0.0001714754200867178,
+      0.00015377067414019743
+     ],
+     "actual_make": 0.6893846531012503,
+     "control_make": 0.6907227071833415,
+     "candidate_make": 0.688004061696537,
+     "control_brier": 0.19979903384729591,
+     "candidate_brier": 0.19977717735027659
+    },
+    "unknown": {
+     "observations": 0,
+     "games": 0,
+     "status": "insufficient_sample"
+    }
+   },
+   "rim_shooter_reliability": {
+    "<250": {
+     "observations": 6675,
+     "games": 489,
+     "status": "ok",
+     "control_log_loss": 0.7556048814602483,
+     "candidate_log_loss": 0.7556505325431614,
+     "log_loss_delta": 4.5651082913131385e-05,
+     "game_cluster_se": 6.077013446577084e-05,
+     "z": 0.7512091805366112,
+     "game_cluster_bootstrap_ci_95": [
+      -7.295992561402506e-05,
+      0.0001639487313016205
+     ],
+     "actual_make": 0.6719101123595506,
+     "control_make": 0.6719714670534739,
+     "candidate_make": 0.6714200516150587,
+     "control_brier": 0.20673064808653124,
+     "candidate_brier": 0.20674051418208197
+    },
+    "250–750": {
+     "observations": 13935,
+     "games": 490,
+     "status": "ok",
+     "control_log_loss": 0.7734276497914806,
+     "candidate_log_loss": 0.7734846771734701,
+     "log_loss_delta": 5.702738198952364e-05,
+     "game_cluster_se": 5.0572158278807734e-05,
+     "z": 1.1276438247924445,
+     "game_cluster_bootstrap_ci_95": [
+      -3.9995784695670135e-05,
+      0.0001561705558438573
+     ],
+     "actual_make": 0.672838177251525,
+     "control_make": 0.6827349005407155,
+     "candidate_make": 0.6822406041102007,
+     "control_brier": 0.20511421176173278,
+     "candidate_brier": 0.20513467302452268
+    },
+    ">750": {
+     "observations": 2903,
+     "games": 391,
+     "status": "ok",
+     "control_log_loss": 0.8018878662616522,
+     "candidate_log_loss": 0.8018451805548114,
+     "log_loss_delta": -4.268570684081934e-05,
+     "game_cluster_se": 9.890254852336139e-05,
+     "z": -0.43159359873053943,
+     "game_cluster_bootstrap_ci_95": [
+      -0.00023664886816889813,
+      0.00014519114129022125
+     ],
+     "actual_make": 0.6923871856699966,
+     "control_make": 0.6873779527043606,
+     "candidate_make": 0.6869295353867511,
+     "control_brier": 0.201314775757047,
+     "candidate_brier": 0.20129851126560697
+    },
+    "unknown": {
+     "observations": 209,
+     "games": 171,
+     "status": "ok",
+     "control_log_loss": 0.801287617549657,
+     "candidate_log_loss": 0.8012878004091143,
+     "log_loss_delta": 1.8285945730352478e-07,
+     "game_cluster_se": 0.000405802943597587,
+     "z": 0.0004506114610268986,
+     "game_cluster_bootstrap_ci_95": [
+      -0.000792747244981887,
+      0.0008013070156837649
+     ],
+     "actual_make": 0.6411483253588517,
+     "control_make": 0.6750244033074995,
+     "candidate_make": 0.6743025050830915,
+     "control_brier": 0.2233046391617488,
+     "candidate_brier": 0.223297366856628
+    }
+   }
+  },
+  "fixed_200_games": {
+   "all_shots": {
+    "observations": 35880,
+    "games": 200,
+    "status": "ok",
+    "control_log_loss": 0.7357840072859319,
+    "candidate_log_loss": 0.7357739477527311,
+    "log_loss_delta": -1.005953320094047e-05,
+    "game_cluster_se": 1.5463789309702157e-05,
+    "z": -0.6505218740033535,
+    "game_cluster_bootstrap_ci_95": [
+     -3.936650207654881e-05,
+     2.0063007064692643e-05
+    ],
+    "actual_make": 0.46786510590858416,
+    "control_make": 0.4707738565255533,
+    "candidate_make": 0.4706020485735939,
+    "control_brier": 0.22744058081646193,
+    "candidate_brier": 0.2274356931398388
+   },
+   "rim": {
+    "observations": 9684,
+    "games": 200,
+    "status": "ok",
+    "control_log_loss": 0.776002133604105,
+    "candidate_log_loss": 0.775964862223348,
+    "log_loss_delta": -3.72713807568922e-05,
+    "game_cluster_se": 5.722899165486081e-05,
+    "z": -0.6512674726416661,
+    "game_cluster_bootstrap_ci_95": [
+     -0.00014542812600312034,
+     7.533338310890076e-05
+    ],
+    "actual_make": 0.6675960346964065,
+    "control_make": 0.680336643475539,
+    "candidate_make": 0.6797000811752184,
+    "control_brier": 0.20753003145665333,
+    "candidate_brier": 0.20751192222108564
+   },
+   "rim_matchup_training_quartiles": {
+    "Q1": {
+     "observations": 1815,
+     "games": 100,
+     "status": "ok",
+     "control_log_loss": 0.7683582314240357,
+     "candidate_log_loss": 0.7686659232017292,
+     "log_loss_delta": 0.00030769177769340486,
+     "game_cluster_se": 0.00015676392803898014,
+     "z": 1.9627715479092598,
+     "game_cluster_bootstrap_ci_95": [
+      -2.9475408008166346e-06,
+      0.0006082969709971499
+     ],
+     "actual_make": 0.6413223140495867,
+     "control_make": 0.6619165609134549,
+     "candidate_make": 0.6646343813121363,
+     "control_brier": 0.21358972892593123,
+     "candidate_brier": 0.21373535102070979
+    },
+    "Q2": {
+     "observations": 2000,
+     "games": 158,
+     "status": "ok",
+     "control_log_loss": 0.805999308175938,
+     "candidate_log_loss": 0.8060074408437812,
+     "log_loss_delta": 8.132667843240807e-06,
+     "game_cluster_se": 2.877205644486187e-05,
+     "z": 0.28265855305914855,
+     "game_cluster_bootstrap_ci_95": [
+      -4.873056730883229e-05,
+      6.436518625244161e-05
+     ],
+     "actual_make": 0.676,
+     "control_make": 0.6766848646407434,
+     "candidate_make": 0.677028710513509,
+     "control_brier": 0.20552835636768127,
+     "candidate_brier": 0.20553094612042952
+    },
+    "Q3": {
+     "observations": 2403,
+     "games": 174,
+     "status": "ok",
+     "control_log_loss": 0.782970179141954,
+     "candidate_log_loss": 0.7829275005294274,
+     "log_loss_delta": -4.267861252665023e-05,
+     "game_cluster_se": 5.7594049706081344e-05,
+     "z": -0.7410246847452334,
+     "game_cluster_bootstrap_ci_95": [
+      -0.00015346060905046407,
+      7.093828652014373e-05
+     ],
+     "actual_make": 0.6724927174365377,
+     "control_make": 0.6822613985413359,
+     "candidate_make": 0.6813390603312797,
+     "control_brier": 0.20713235783539363,
+     "candidate_brier": 0.20711369865511575
+    },
+    "Q4": {
+     "observations": 3466,
+     "games": 168,
+     "status": "ok",
+     "control_log_loss": 0.7578645455734379,
+     "candidate_log_loss": 0.7576241805250974,
+     "log_loss_delta": -0.0002403650483405121,
+     "game_cluster_se": 0.00012699287489013742,
+     "z": -1.8927443649768059,
+     "game_cluster_bootstrap_ci_95": [
+      -0.0004827212781173901,
+      1.4665866424188111e-05
+     ],
+     "actual_make": 0.6731102135025967,
+     "control_make": 0.690755230058535,
+     "candidate_make": 0.6879945184697648,
+     "control_brier": 0.20578756434271564,
+     "candidate_brier": 0.20567215308058365
+    },
+    "unknown": {
+     "observations": 0,
+     "games": 0,
+     "status": "insufficient_sample"
+    }
+   },
+   "rim_shooter_reliability": {
+    "<250": {
+     "observations": 2769,
+     "games": 199,
+     "status": "ok",
+     "control_log_loss": 0.7624086349285454,
+     "candidate_log_loss": 0.7623735419402856,
+     "log_loss_delta": -3.509298825977543e-05,
+     "game_cluster_se": 0.00010280731982010172,
+     "z": -0.341347175679545,
+     "game_cluster_bootstrap_ci_95": [
+      -0.00023699563059275468,
+      0.00016621564073199973
+     ],
+     "actual_make": 0.6619718309859155,
+     "control_make": 0.6729757607141992,
+     "candidate_make": 0.6722280226963856,
+     "control_brier": 0.21035077051114587,
+     "candidate_brier": 0.21032825789337348
+    },
+    "250–750": {
+     "observations": 5698,
+     "games": 200,
+     "status": "ok",
+     "control_log_loss": 0.775019236953204,
+     "candidate_log_loss": 0.7749945925514885,
+     "log_loss_delta": -2.4644401715426257e-05,
+     "game_cluster_se": 7.304669866842065e-05,
+     "z": -0.33737872025256166,
+     "game_cluster_bootstrap_ci_95": [
+      -0.00016445781817557011,
+      0.00011738495713829737
+     ],
+     "actual_make": 0.6653211653211654,
+     "control_make": 0.6821909626857421,
+     "candidate_make": 0.6815857417897161,
+     "control_brier": 0.20760989839795319,
+     "candidate_brier": 0.20759925005837257
+    },
+    ">750": {
+     "observations": 1143,
+     "games": 151,
+     "status": "ok",
+     "control_log_loss": 0.8110293512737358,
+     "candidate_log_loss": 0.8109052528975871,
+     "log_loss_delta": -0.00012409837614870485,
+     "game_cluster_se": 0.00015892110541202938,
+     "z": -0.7808803986541573,
+     "game_cluster_bootstrap_ci_95": [
+      -0.0004377675176871968,
+      0.00018056869726189718
+     ],
+     "actual_make": 0.6937882764654418,
+     "control_make": 0.6898206133186926,
+     "candidate_make": 0.6893078861649514,
+     "control_brier": 0.19922041771093085,
+     "candidate_brier": 0.19916805995485057
+    },
+    "unknown": {
+     "observations": 74,
+     "games": 65,
+     "status": "ok",
+     "control_log_loss": 0.8193106897266645,
+     "candidate_log_loss": 0.8195607529449623,
+     "log_loss_delta": 0.00025006321829787383,
+     "game_cluster_se": 0.0007198139560805271,
+     "z": 0.3473997915509973,
+     "game_cluster_bootstrap_ci_95": [
+      -0.001146804766651446,
+      0.0016054915678343586
+     ],
+     "actual_make": 0.6486486486486487,
+     "control_make": 0.6665014539578155,
+     "candidate_make": 0.6656989277051634,
+     "control_brier": 0.2241811157532004,
+     "candidate_brier": 0.22428228812488113
+    }
+   }
+  }
+ },
+ "baseline_model_reused": false,
+ "input_sha256": {
+  "models/v1.3.json": "f85ca77418990f702b8e6dbe3eb0be1c35b1830649517a760d000bd6b4c1d09e",
+  "analysis/experiments/20261122_a1_pre_candidate_manifest.json": "195b4ddaf748e4f3520a02f813b5763736fe4fbfbe653e896161532d6d9c7e6b",
+  "data/derived/variants/a1_scheduled_F3_20261122_v3/features/pregame.parquet": "46ccbd20f55400b385af4b95930abda631268100d8a973002e66f5aa9c1dad49",
+  "data/derived/variants/a1_scheduled_F3_20261122_v3/features/features_report.json": "73defca4e0d4edcd265ab8c3b7f9df345ae1940972a461bd876c1be4744efbd7",
+  "data/derived/variants/a1_assignment_schedule_20261122_v3/F3.json": "002ae0964b6a65fc87c51393f1d4050e80d5207339d7cdad0b7c59074b1f16b3",
+  "data/derived/nodes/variant_9d5aee5f8b7d/signature.json": "9d5aee5f8b7d3c1005efee294b946aabb07a880b524cb0666542af63f26ae72f",
+  "data/derived/nodes/variant_9d5aee5f8b7d/shot_result.npz": "67b1a0d4a91f2f29a5d66c8ca62fac9bb3af99789c7c20d5079a1724240e5be6",
+  "scripts/a1_rim_screen.py": "c152a713c68a75279e5e35165b345621176cbe051e7a8ad1e0f556f29eaafd50",
+  "scripts/a1_rim_calibration.py": "dec8abb49a93395f244743083ba944d9880ddefe2d55a5fbf916be3087ac10d6",
+  "scripts/train.py": "db31022469cfb3987ed4423411ebdb9557d81bfe0efc9090bc9b80fc5786bf96",
+  "scripts/nodes.py": "78749b680b889993e83ba26baab51877cd7393ee0a5a3d9f4fdaf9123d3b161f"
+ },
+ "model_sha256": "007c46d656ed1e0ce18e40a2b5ed3e117dd8690112d9251a4c1b60103bf04870",
+ "rows_sha256": "5fed150765562a1ab22bfbf3becbdec108ec6e7f3b43466f8cf999c290409f86",
+ "elapsed_seconds": 50.2
+}

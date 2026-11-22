@@ -157,7 +157,7 @@ class Game:
     """One game's players (home then away in one index space), profiles, team style and rotation tables."""
 
     def __init__(self, game, players: dict, profiles: pd.DataFrame, team_latest: pd.DataFrame, stints: pd.DataFrame,
-                 day: str, position_policy: str = 'legacy'):
+                 day: str, position_policy: str = 'legacy', strict_minute_targets: bool = False):
         self.game = game
         self.sides = ('home', 'away')
         self.players = players
@@ -197,16 +197,21 @@ class Game:
         self.season_day = float((pd.Timestamp(day) - pd.Timestamp(start)).days)
         self.templates = {i: rotations.templates_for(stints, game[f'{s}_id'], day) for i, s in enumerate(self.sides)}
         self.n = n
+        self.strict_minute_targets = strict_minute_targets
         # D29 minutes targets: present when every player carries a 'minutes' state (scripts/minutes.player_state)
         flat = [p for s in self.sides for p in players[s]]
         self.mstate = [p['minutes'] for p in flat] if flat and all(p.get('minutes') for p in flat) else None
         self.lineup = {i: [k for k, p in enumerate(players[s]) if p.get('projected_starter')] for i, s in enumerate(self.sides)}
         if self.mstate is not None:
             from scripts import minutes as _minutes
+            if self.strict_minute_targets:
+                from scripts import a1_minutes_candidate as _allocator
+            else:
+                _allocator = _minutes
             for i in range(2):
                 idx = np.flatnonzero(self.side == i)
                 if idx.size:
-                    self.expected[idx] = _minutes.game_targets([self.mstate[j] for j in idx])
+                    self.expected[idx] = _allocator.game_targets([self.mstate[j] for j in idx])
             for j, p in enumerate(flat):  # the mean target if everyone listed plays (shown in the app)
                 p['minutes']['target'] = float(self.expected[j])
 
@@ -250,6 +255,12 @@ class Game:
         smoothed) mapped to tonight's players by priority — starters to the starting slots — and a per-player offset fitted
         so his regulation minutes equal that table's own draw of his target (allocated to 240, noise by role, re-solved)."""
         from scripts import minutes as _minutes
+        if self.mstate is None:
+            raise ValueError('target rotation tables require player minute states')
+        if self.strict_minute_targets:
+            from scripts import a1_minutes_candidate as _allocator
+        else:
+            _allocator = _minutes
         W = avail_world.shape[0]
         R = ROTATION
         tables, combo_of = [], np.zeros((W, 2), dtype=np.int64)
@@ -262,14 +273,16 @@ class Game:
             for pattern, worlds in pats.items():
                 av = np.flatnonzero(np.array(pattern))
                 if av.size < 5:  # fewer than five available: everyone on court (cannot happen with real rosters)
+                    if self.strict_minute_targets:
+                        raise ValueError('fewer than five available players for strict minute targets')
                     av = np.arange(len(idx))
                 # D36: pool 0 = one table per world (every world its own substitution schedule); else a shared pool
                 E = len(worlds) if not R['pool'] else int(max(1, min(len(worlds), round(R['pool'] * len(worlds) / W))))
                 states = [self.mstate[idx[k]] for k in av]
-                mu = _minutes.game_targets(states)
+                mu = _allocator.game_targets(states)
                 cap = np.array([s['cap'] for s in states])
                 sd = _minutes.sd_for(states[0]['sd_table'], mu)
-                X = _minutes.redraw(mu, cap, sd, E, rng)
+                X = _allocator.redraw(mu, cap, sd, E, rng)
                 groups = [rotations.group(self.players[self.sides[i]][k]['pos']) for k in av]
                 given = [j for j, k in enumerate(av) if k in self.lineup[i]]
                 starters = given if len(given) == 5 else _minutes.projected_starters(states, groups)

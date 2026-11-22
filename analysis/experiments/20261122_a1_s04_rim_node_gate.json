@@ -1,0 +1,56 @@
+{
+ "experiment": "a1_s04_rim_training_noise_and_node_gate",
+ "population": "F1–F4 complete held-out shot rows, guarded causal-input diagnostics",
+ "method": "existing TRAINING_PLAN section 7 relative RMS seed-noise and pooled game-cluster z gate",
+ "folds": {
+  "F1": {
+   "noise_delta": -4.81605618581698e-05,
+   "noise_relative": -6.580870723685128e-05,
+   "candidate_delta": -2.22096465375754e-06,
+   "candidate_relative": -3.034823661587553e-06,
+   "candidate_se": 9.43824680638299e-07,
+   "candidate_z": -2.353153821168911,
+   "rows": 136578,
+   "games": 773
+  },
+  "F2": {
+   "noise_delta": -8.782256250298434e-05,
+   "noise_relative": -0.00012030711702484763,
+   "candidate_delta": 1.4811457706001764e-05,
+   "candidate_relative": 2.0290045345511106e-05,
+   "candidate_se": 2.0398165449775493e-05,
+   "candidate_z": 0.7261171472733977,
+   "rows": 139660,
+   "games": 782
+  },
+  "F3": {
+   "noise_delta": -1.0170501010546175e-05,
+   "noise_relative": -1.3816555175139948e-05,
+   "candidate_delta": 1.112704494230523e-05,
+   "candidate_relative": 1.5116013480772087e-05,
+   "candidate_se": 1.0963259148895995e-05,
+   "candidate_z": 1.014939516724434,
+   "rows": 87671,
+   "games": 490
+  },
+  "F4": {
+   "noise_delta": -0.00017305739493722803,
+   "noise_relative": -0.00023721876453246013,
+   "candidate_delta": -3.116697429527783e-05,
+   "candidate_relative": -4.27221913239969e-05,
+   "candidate_se": 1.2414074675037502e-05,
+   "candidate_z": -2.510615983158944,
+   "rows": 135680,
+   "games": 766
+  }
+ },
+ "training_seed_relative_rms": 0.00013717527820113074,
+ "candidate_mean_relative": -2.5877390398253164e-06,
+ "candidate_mean_delta": -1.8623590751820943e-06,
+ "candidate_pooled_se": 6.573042769274819e-06,
+ "candidate_pooled_z": -0.2833328704154411,
+ "candidate_bad_fold": false,
+ "node_gate_verdict": "neutral",
+ "limitations": "not the unchanged v1.3 engine control; actual shots and lineups are conditioned on",
+ "auditor_sha256": "084f523f9335f2513c67ea3c1813647f648aaa24873de6b91e3d0e18a0bc4afe"
+}

@@ -19,6 +19,22 @@ from scripts import a1_compare, a1_minutes_fold_eval, a1_rim_calibration, compar
 from scripts.evaluate import EXPERIMENTS, FOLDS, TEST_FROM  # noqa: E402
 
 
+def training_tail_masks(dates: np.ndarray, cutoff: str) -> tuple[np.ndarray, np.ndarray, np.ndarray, str]:
+    values = np.asarray(dates)
+    if values.ndim != 1:
+        raise ValueError('training dates must be a one-dimensional array')
+    parsed = pd.to_datetime(pd.Series(values), errors='raise')
+    if parsed.isna().any():
+        raise ValueError('training dates cannot be missing')
+    all_train = (values >= train.BURN_IN) & (values <= cutoff)
+    if not all_train.any():
+        raise ValueError('the training window is empty')
+    integer_dates = parsed.astype('int64').to_numpy()
+    tail_threshold = np.quantile(integer_dates[all_train], 0.9)
+    tail = all_train & (integer_dates >= tail_threshold)
+    return all_train, tail, all_train & ~tail, str(parsed[tail].min().date())
+
+
 def summary(rows: pd.DataFrame) -> dict:
     if rows.empty:
         return {'observations': 0, 'games': 0, 'status': 'insufficient_sample'}
@@ -110,14 +126,10 @@ def main() -> None:
     dates = data['date']
     if (dates >= TEST_FROM).any():
         raise ValueError('protected final-season rows entered the node cache')
-    all_train = (dates >= train.BURN_IN) & (dates <= cutoff)
+    all_train, tail, fit_rows, tail_from = training_tail_masks(dates, cutoff)
     validation = (dates >= validation_from) & (dates <= validation_to)
     if not all_train.any() or not validation.any():
         raise ValueError(f'{fold}: empty training or validation set')
-    date_ns = pd.to_datetime(pd.Series(dates)).astype('int64').to_numpy()
-    tail_from = np.quantile(date_ns[all_train], 0.9)
-    tail = all_train & (date_ns >= tail_from)
-    fit_rows = all_train & ~tail
     reuse_paths = []
     model_bytes = None
     if args.reuse_model_dir:
@@ -205,7 +217,7 @@ def main() -> None:
               'limitations': 'These corrected historical inputs differ from the accepted v1.3 static-input control; '
                              'actual shots and zones are teacher-forced. This is not a forecast or promotion.',
               'training_cutoff': cutoff, 'validation_from': validation_from, 'validation_to': validation_to,
-              'training_tail_from': str(pd.to_datetime(int(tail_from)).date()), 'settings': settings,
+              'training_tail_from': tail_from, 'settings': settings,
               'training_node': node_report, 'calibration': calibration,
               'training_rim_quartile_cutpoints': [float(v) for v in cuts], 'populations': reports,
               'baseline_model_reused': bool(args.reuse_model_dir),

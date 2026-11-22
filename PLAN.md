@@ -108,7 +108,7 @@ Each subtask ends with evidence, current docs and a commit/push checkpoint (AGEN
 | M11 | Availability model | ☐ **A1 S07/S08/S10**: report coverage, play/start probabilities, branches and future absences | Held-out calibration and games-missed realism where dated development data supports them; honest fallbacks otherwise | Planned |
 | M12 | Season pathway calibration | ◐ **first cut (20 Nov): team pathway v1 in the app** — walk-forward 2022-26 (480 team-starts): dispersion 1.00 (fixed probabilities 1.53), 10–90% coverage 84% (65%), CRPS −4% in every held-out season; still wide in November (0.84) and surprises fade with the date (sim 0.52 → 0.18 v real 0.40 flat) | Dispersion ≈ 1.0 **at every start date**, persistence matches | `pathway.py`, `season_backtest.py` |
 | UX | Dashboard upgrade programme U1–U22 | ✅ **22 Nov:** all 22 shipped; U15–U22 adds roster roles, playoff picture, win ranges, races/movers/leaders inside Standings and model guide; 156 full + 12 final layout browser checks, hosted PWA 15/15 | Checked at 1440/960/390, both themes, stored data only | DASHBOARD_PLAN.md |
-| A1 | Expanded accuracy/robustness programme | ◐ **26.8% — S01–S03 complete, S04 10%, S05 70%, 22 Nov**; 14 tasks, fixed weights, 140 rungs | Gates in §6b; final nightly + versioned history + successor chunk | HANDOFF § Progress ladders |
+| A1 | Expanded accuracy/robustness programme | ◐ **36.4% — S01–S03 complete, S04 90%, S05 70%, 22 Nov**; 14 tasks, fixed weights, 140 rungs | Gates in §6b; final nightly + versioned history + successor chunk | HANDOFF § Progress ladders |
 
 ### 6a. Next chunk — A1: player accuracy, defence and trustworthy season paths
 
@@ -633,6 +633,41 @@ face cards and unrelated presentation remain §9b backlog. NBA history moved to 
   **0.7295266** held-out log loss on **135,680** shots. The exploratory paired loss change was **−0.0000312**;
   its report's tail-start label is invalid due to datetime units, while the actual fitted mask is independently
   verified as 2 Nov–31 Dec 2025. Preserve source, repair/report under a new name, then complete other folds.
+- **22 Nov 2026 · A1 S04 20%:** isolated rim-expression calibration and guarded fold runner are implemented.
+  Corrected F4 metadata reproduces all **135,680** original predictions and population metrics exactly; four
+  focused tests pass. No production path changed. F1–F3 and independent accounting are underway.
+- **22 Nov 2026 · A1 S04 30%:** all four guarded folds and fixed-200 subsets are independently reconciled:
+  **499,589** shots, **80** supported metric groups, all recorded hashes and **135,680** original/corrected F4
+  rows. Full-fold paired loss differences are **−0.00000222/+0.00001481/+0.00001113/−0.00003117**; fitted
+  slopes change signs across folds. The independent same-input training-noise gate is being verified. This is
+  conditional shot-node evidence, not a v1.3 engine or forecast improvement.
+- **22 Nov 2026 · A1 S04 rim gate:** independently verified seed-7/8 training noise is **0.013718%** relative RMS;
+  the mean candidate change is **−0.000259%**, pooled game-cluster z **−0.283**. The pre-existing node gate is
+  neutral, so this bounded calibration is not retained for an engine test; tracking defence is a separate family.
+- **22 Nov 2026 · A1 S04 40%:** froze the tracking test before execution in **5e30f4**; isolated builder/screen
+  now use strictly earlier defended-shot counts, unique dated NBA-team/ESPN identities and all-five-or-missing
+  lineup rates. The builder checked **1,692** source files and wrote **921,103** historical shot feature rows.
+  **24** focused tests pass; independent cutoff/coverage accounting and fold tests remain.
+- **22 Nov 2026 · A1 S04 50%:** independent chronological reconstruction reconciled **146,581** distinct fives
+  and **4,605,515** values across **921,103** shot rows. All-five tracking coverage was **98.12%** for the
+  source's under-six-foot bucket and **98.19%** for its three-point bucket; **20** invalid defensive fives remain
+  missing. All four guarded fold screens ran; their metrics and noise gate await independent checks. Source revision
+  timing is unproven, so the data does not establish historical publication.
+- **22 Nov 2026 · A1 S04 60%:** independently checked **499,589** tracking-ablation predictions and **112**
+  supported groups across F1–F4. Candidate-minus-control full-fold log loss was **+0.00022107 / +0.00002580 /
+  +0.00000209 / +0.00001616**; mean relative change **+0.00906%**, pooled z **+3.76**. F1 alone worsens
+  **0.03021%** with z **+3.63**, more than twice same-input seed noise **0.01372%**. The pre-existing node gate
+  rejects this increment; no unchanged-v1.3 engine or forecast win is claimed.
+- **22 Nov 2026 · A1 S04 70%:** neither prespecified family survives the node gate, so the survivor-only fixed-game
+  engine-test set is empty. No candidate player or team improvement is claimed; S03's matched v1.3 component and
+  total-bias accounting remains the control. A labelled post-hoc frozen-adjustment interaction is being audited.
+- **22 Nov 2026 · A1 S04 80%:** no retained input requires engine confirmation. The explicitly post-hoc,
+  no-refit interaction was independently reconciled on **499,589** shots; combined full-fold loss changes were
+  **+0.00021749 / +0.00005594 / +0.00000852 / −0.00000768**. This descriptive check cannot promote a combination
+  of the rejected families.
+- **22 Nov 2026 · A1 S04 90%:** recorded both rejection decisions, all four dated fitted-artifact cutoffs and
+  falsifiable future tests of covariate-adjusted defender residuals and defender-five effects on attacker choices.
+  Final checkpoint checks and push remain; no final-season test was used.
 - **22 Nov 2026 · A1 S05 10–20%:** separated membership, physical availability, rotation entry, starts, healthy role
   and conditional/unconditional minutes. The 200-game prior-box audit found **73** All-Star rows incorrectly labelled
   regular season; NBA-only reconstruction restores **12** memberships. Audited **7,317** candidates, including

@@ -116,7 +116,7 @@ def simulation_seed(version: str, day: str, gid: str, stream: int | None = None,
 
 
 def _init(version, spec_path, fold, worlds, rotation='replay', known_starters=False, pool=None, stream=None, seed_key=None,
-          flow_diagnostics=False):
+          flow_diagnostics=False, minutes_history='control', strict_minute_targets=False):
     from scripts import engine
     if pool is not None:  # D36: rotation-table pool (0 = one table per world)
         engine.ROTATION['pool'] = pool
@@ -138,10 +138,16 @@ def _init(version, spec_path, fold, worlds, rotation='replay', known_starters=Fa
     _W.update({'engine': engine.Engine(version), 'mod': engine, 'inputs': load_inputs(spec, fold, flow_diagnostics), 'worlds': worlds,
                'teams': json.loads((DERIVED / 'teams.json').read_text()), 'rotation': rotation, 'known_starters': known_starters,
                'periods': periods, 'player_periods': player_periods, 'flow_diagnostics': flow_diagnostics,
-               'stream': stream, 'seed_key': seed_key})
+               'stream': stream, 'seed_key': seed_key, 'strict_minute_targets': strict_minute_targets})
     if rotation == 'targets':  # D29 minutes: pre-game states for every history player-game; ramp and spread from before the window
         from scripts import minutes
-        m = minutes.build(FOLDS[fold][1], include_current=False)
+        if minutes_history == 'control':
+            m = minutes.build(FOLDS[fold][1], include_current=False)
+        elif minutes_history == 'nba_only':
+            from scripts import a1_minutes_candidate
+            m = a1_minutes_candidate.build(FOLDS[fold][1], include_current=False)
+        else:
+            raise ValueError(f'unknown minute-history candidate: {minutes_history}')
         m['by_game'] = m['rows'].set_index(['game_id', 'player'])
         _W['minutes'] = m
 
@@ -174,7 +180,7 @@ def run_game(gid: str) -> dict:
                 pl['projected_starter'] = bool(pl['starter']) if _W.get('known_starters') else False
     game = {'game_id': gid, 'home_id': home, 'away_id': away}
     g = engine.Game(game, players, p.drop(columns=['game_id']), t.drop(columns=['game_id']), stints, day,
-                    position_policy=eng.m.position_policy)
+                    position_policy=eng.m.position_policy, strict_minute_targets=_W['strict_minute_targets'])
     g.season = season
     sim_seed = simulation_seed(eng.m.cfg['version'], day, gid, _W['stream'], _W['seed_key'])
     if _W.get('flow_diagnostics'):
@@ -465,8 +471,14 @@ def main():
     ap.add_argument('--known-starters', action='store_true', help='targets only: open with the real starters (a perfect lineup source)')
     ap.add_argument('--pool', type=int, default=None, help='rotation tables per side shared by the worlds (default 400; 0 = one per world, D36)')
     ap.add_argument('--flow-diagnostics', action='store_true', help='save opt-in clock, scheduled-five and player-quarter diagnostics')
+    ap.add_argument('--minutes-history', choices=('control', 'nba_only'), default='control',
+                    help='isolated A1 minute-history candidate; default preserves D29')
+    ap.add_argument('--strict-minute-targets', action='store_true',
+                    help='use the isolated 240-minute, 48-per-player allocator in targets mode')
     ap.add_argument('--summarise', metavar='RUN', help='re-score a saved run (<stamp>_<name>) without simulating; updates its log')
     args = ap.parse_args()
+    if args.rotation != 'targets' and (args.minutes_history != 'control' or args.strict_minute_targets):
+        ap.error('minute candidates require --rotation targets')
     start = time.time()
     spec = json.loads(args.config.read_text())
     if args.summarise:
@@ -491,7 +503,8 @@ def main():
     results = []
     with ctx.Pool(args.jobs, initializer=_init, initargs=(version, str(args.config), args.fold, args.worlds, args.rotation,
                                                          args.known_starters, args.pool, args.simulation_stream, args.seed_key,
-                                                         args.flow_diagnostics)) as pool:
+                                                         args.flow_diagnostics, args.minutes_history,
+                                                         args.strict_minute_targets)) as pool:
         for i, r in enumerate(pool.imap(run_game, list(games), chunksize=1), 1):
             results.append(r)
             if i % min(10, max(1, len(games) // 10)) == 0 or i == len(games):
@@ -518,6 +531,11 @@ def main():
         paths = (Path(__file__), ROOT / 'scripts' / 'engine.py', ROOT / 'scripts' / 'a1_flow_capture.py')
         record['flow_diagnostics'] = {'sha256': {str(p.resolve().relative_to(ROOT)): sha256_file(p) for p in paths},
                                       'note': 'scheduled lineups precede foul-outs; actual period values may be missing'}
+    if args.minutes_history != 'control' or args.strict_minute_targets:
+        paths = (Path(__file__), ROOT / 'scripts' / 'engine.py', ROOT / 'scripts' / 'minutes.py',
+                 ROOT / 'scripts' / 'a1_minutes_candidate.py')
+        record['minutes_candidate'] = {'history': args.minutes_history, 'strict_targets': args.strict_minute_targets,
+                                       'sha256': {str(p.resolve().relative_to(ROOT)): sha256_file(p) for p in paths}}
     write_json(EXPERIMENTS / f'{stamp}_{name}.json', record, pretty=True)
     print(json.dumps(summary, indent=1))
     print(f'\nrun {stamp}_{name}  ({len(games)} games, {time.time() - start:.0f}s)')

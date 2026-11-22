@@ -350,7 +350,7 @@ canonical NBA teams; same-date duplicate player/team games fail rather than leak
 use the same pre-validation cutoff as the original D29 build. Compare the candidate and unchanged v1.3 control on
 S01's exact F4 participants, games and streams; the primary engine outcome remains pooled MIN CRPS and all S01
 non-inferiority/confirmation gates remain fixed. The preliminary target-only result is exploratory and not a
-promotion. The candidate module is opt-in and not yet connected to production or the backtest CLI.
+promotion. The candidate module is opt-in through the isolated backtest CLI and is not connected to production.
 An independent strict-runtime candidate repairs D29's underfilled short-roster draws and >48-minute targets by
 redistributing only within legal regulation headroom; fewer than five available players fail explicitly. Keep the
 NBA-only-history and strict-runtime switches separately identifiable so their effects and interaction can be tested.
@@ -450,6 +450,12 @@ intervals; compare against the measured same-input seed-noise floor under the ex
 tracking files and the global identity crosswalk lack historical publication/revision timestamps; they do not prove
 the feature was available unchanged at the original date. A node win is not a forecast or promotion, and deployable
 use would need the same cutoff-safe feature online plus the player-first engine gates.
+
+After both isolated S04 families failed their node gates, an interaction check may compose their already-fitted
+log-odds increments on the identical held-out shots without refitting either family. Compare the combined loss and
+its non-additive interaction with the two single-family losses using game-clustered intervals. This is post hoc
+and descriptive: it cannot rescue a failed family, qualify a combination for promotion or substitute for the
+unchanged-v1.3 player-first engine gates.
 
 #### S01 population separation — 22 Nov, before availability candidates
 

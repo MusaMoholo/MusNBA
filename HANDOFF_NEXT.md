@@ -5,12 +5,15 @@ Dashboard close-out checkpoint **86c2a46**, A1 planning checkpoint **00a0731**; 
 and S02 checkpoint **93b3e1d** are committed and pushed (S01's exact control source is **c6d5db4**).
 The original S03/S05 experiment snapshot is **ab32eda**, committed and pushed before the candidate repair;
 the completed S03 diagnosis is **ce9481f**, committed and pushed.
+The immutable original S04 F4 screen and corrected S05 historical accounting snapshot is **c0605da**, committed and
+pushed before restaging the corrected rim-screen source.
+The separate tracking-defence node protocol was frozen and pushed before its test in **5e30f4**.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
 product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S03 are complete;
-S04 is active at 10%, S05 at 70%; A1 overall is 26.8%.** Isolated assignment candidates have event-level diagnostics and wiring only;
+S04 is active at 90%, S05 at 70%; A1 overall is 36.4%.** Isolated assignment candidates have event-level diagnostics and wiring only;
 no candidate has had an engine-accuracy test, and no model promotion, forecast or PWA change has been made.
 
-**Live resume state (06:25 UK):** the 200-game flow and its independent accounting are complete; the comparison and
+**Live resume state (06:31 UK):** the 200-game flow and its independent accounting are complete; the comparison and
 two S04 hypotheses are recorded below and in FINDINGS/TRAINING_PLAN. Both corrected S05 historical screen wrappers
 have exited successfully; the full four-fold audit passed with **21** input and **16** output hashes, reproducing all
 **28,530** control/NBA-only candidates to `1e-12`. F3 scored 195/200 games due to five unavailable prior rosters.
@@ -33,12 +36,104 @@ isolated; neither changes the served engine. The run log `/tmp/musnba_a1_s04_rim
 (**−0.0000836 to +0.0000058**). **The report's `training_tail_from` is wrong (1970)**: pandas dates are
 microsecond-resolution but were interpreted as nanoseconds when formatting. An independent mask reconstruction
 confirms **72,379** training-tail rows actually span **2025-11-02–2025-12-31**; the fitting mask itself is correct.
-Preserve this report and its exact original script before repairing only the metadata label, then rerun the F4
-screen under a new name and reconcile all predictions. No promotion or all-fold conclusion follows from this pilot.
-Checkpoint smoke is running as PID **82782**, `/tmp/musnba_a1_s04_partial_smoke.log`; the deliberate-fault smoke is
-PID **82835**, `/tmp/musnba_a1_s04_partial_fault.log` (its underlying exit must be 1). Before correcting the date
-label, stage the original script/report as an immutable index snapshot; do not restage it until that snapshot has
-been committed and pushed. Both smokes run independently of the isolated rim screen.
+The original source/report was committed unchanged in **c0605da** before the label was corrected and rerun; no
+promotion or all-fold conclusion follows from this pilot. The checkpoint smokes both completed, as recorded below.
+**Update 06:26 UK:** the corrected working script fixes the
+date-format label and its four focused tests pass. Corrected F4 reran as
+`analysis/experiments/20261122_a1_s04_rim_F4_v2.json` and
+`data/derived/experiments/20261122_a1_s04_rim_F4_v2.parquet`; all **135,680** original/corrected prediction rows,
+calibration parameters and population metrics independently match exactly; the true tail begins 2 Nov 2025.
+F1–F3 ran sequentially as former wrapper PID
+**83009** (first child **83010**), log `/tmp/musnba_a1_s04_rim_f1_f3_v2.log`, using:
+`for fold in F1 F2 F3; do OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u -m scripts.a1_rim_screen
+--fold "$fold" --threads 6 --output "analysis/experiments/20261122_a1_s04_rim_${fold}_v2.json" --rows-output
+"data/derived/experiments/20261122_a1_s04_rim_${fold}_v2.parquet" --model-output
+"data/models/folds/a1_s04_rim_${fold}_v2/shot_result.txt" || exit; done`. Reports record those source hashes.
+**Update 06:49 UK:** all four corrected rim folds have completed. F1/F2/F3 scored **136,578 / 139,660 / 87,671**
+shots in **44.0 / 45.5 / 50.2 s**; F4 scored **135,680**. Across full held-out folds, candidate-minus-control
+shot losses were **−0.00000222 / +0.00001481 / +0.00001113 / −0.00003117**; these are provisional until the
+independently verified gate, and are not an engine or promotion result. Their earlier training
+tail slopes were **+0.0718 / −2.1686 / −0.8422 / +1.1315**. The independent audit's first attempt caught its own
+float32-versus-float64 reconstruction error (F1 mean difference `−9.23e-11`); applying the calibration's verified
+float64 conversion reproduces the mean exactly. A second attempt exposed that the reused F4 metadata does not carry
+`rows_train`; the auditor now checks that field when present and verifies all other cutoff/model/prediction data.
+The corrected independent audit passed as `analysis/experiments/20261122_a1_s04_rim_accounting.json`, covering
+**499,589** shots, **80** supported metric populations and all source/output hashes; original and corrected F4
+rows match exactly. Reproduce with:
+`OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u -m scripts.a1_rim_audit --output
+<new-report>`. A strictly same-input seed-8 training-noise experiment
+runs one fold at a time (former wrapper PID **83928**, attached shell **1502**, log
+`/tmp/musnba_a1_s04_rim_noise.log`); F1–F4 completed in **9.9/11.8/17.1/18.9 s**. Its exact command is the
+`scripts.a1_rim_noise` invocation recorded per report; it never scores the protected final season. The independent
+noise/gate audit passed as `analysis/experiments/20261122_a1_s04_rim_node_gate.json`: the candidate's four-fold mean
+relative change is **−0.000259%**, versus the same-input seed-pair RMS floor **0.013718%**, pooled game-cluster
+z **−0.283**, so the frozen shot-node gate is **neutral** and this family is not retained for an engine test.
+This rejects this specific expression calibration, not player-based defence generally.
+The checkpoint normal smoke passed **102/102** (`/tmp/musnba_a1_s04_partial_smoke.log`); deliberate fault exited 1
+with **80/102**, as required (`/tmp/musnba_a1_s04_partial_fault.log`; wrapper exited 0). The original erroneous
+F4 source and report are preserved in pushed commit **c0605da**; the corrected source remains working-tree state.
+Those processes had loaded the engine before the latest minute-candidate wiring. A fresh single-threaded normal
+smoke on current code passed **102/102**, former wrapper PID **87718**, session **1591**, log
+`/tmp/musnba_a1_s04_current_smoke.log`. Its deliberate-fault counterpart is queued in wrapper PID **88523**,
+attached session **1613**, log `/tmp/musnba_a1_s04_current_fault.log`; it starts only after the normal smoke passes.
+
+The working `scripts/backtest.py` now has opt-in `--minutes-history nba_only` and `--strict-minute-targets`
+switches, with separate input fingerprints; `Game` defaults to its unchanged legacy allocator. The strict switch
+also rejects an availability pattern with fewer than five rather than filling it with unavailable players. These
+are isolated, uncommitted wiring changes, not a promotion; the candidate's history is still learned with D29.
+The **69** focused A1 tests pass. A sequential three-game control/NBA-only/strict/combined wiring wrapper completed,
+former PID **84110**, attached shell **1512**, log `/tmp/musnba_a1_s05_engine_wiring.log`; the first control completed
+**3/3 games in 57 s** and matches `20261122T015651Z_a1_s01_repro` exactly in all **93 game** and **22 player**
+columns. NBA-only, strict and combined each also completed three-game wiring sequentially. Independent accounting
+passed in shell **1541**; see `analysis/experiments/*_a1_s05_*_wiring_accounting.json`. Their invocation uses `scripts/backtest.py --config models/v1.2d.json --fold F4 --game-ids
+analysis/experiments/20261122_a1_reproduction_games.json --worlds 1000 --jobs 1 --threads 8 --rotation targets --pool 0
+--models folds/v1.2d_F4_all`, with separate candidate flags and names. Check the default control against saved
+`20261122T015651Z_a1_s01_repro`. The NBA-only fixed 200-game, 1,000-world F4 candidate now runs as wrapper PID
+**85267**, attached shell **1538**, log `/tmp/musnba_a1_s05_nba_only_fixed200.log`; command as above but
+`--game-ids data/derived/experiments/20261122_a1_s03_f4_game_ids.json --jobs 4 --minutes-history nba_only --name
+a1_s05_nba_only_fixed200`. At 07:04 UK it reached **160/200 in 1,373 s** including startup; the latest 20 games took
+**168 s**, implying approximately **6 minutes** for the remaining 40 at that measured rate. The previous same-size
+control took **1,567 s**. Strict-runtime is queued as wrapper PID **88450**, attached session **1610**, log
+`/tmp/musnba_a1_s05_strict_fixed200.log`; it waits until NBA-only Python PID **85268** exits, requires the successful
+`run ...a1_s05_nba_only_fixed200` marker, then starts the same command with `--strict-minute-targets --name
+a1_s05_strict_fixed200` instead of `--minutes-history nba_only`. If NBA-only fails, the queue exits without starting.
+Compare player outcomes first; do not launch another engine backtest or edit the fingerprinted engine/backtest/minutes/
+candidate sources while either test runs.
+
+The tracking family was frozen in TRAINING_PLAN §8 and built separately by
+`scripts/a1_tracking_features.py`: former wrapper PID **85586**, shell **1549**, log
+`/tmp/musnba_a1_s04_tracking_features.log`, output
+`data/derived/experiments/20261122_a1_s04_tracking_features.parquet` and report
+`analysis/experiments/20261122_a1_s04_tracking_features.json`. The builder verified all **1,692** historical source
+files and saved **921,103** shot rows. It verifies source bytes, dates, NBA day-team joins and the crosswalk, uses
+only dates before each target and leaves missing five-player inputs missing. The separate
+`scripts/a1_tracking_screen.py` and cutoff/team/zone tests are implemented. The independent chronological auditor
+passed: **1,692** source files, **146,581** distinct game-fives, **921,103** shots and **4,605,515** checked
+feature values (`analysis/experiments/20261122_a1_s04_tracking_accounting.json`). **69** related A1 tests pass.
+Pylance currently reports three static diagnostics in the tracking builder/auditor: it infers the existing
+`nbastats.nba_tables` as `NoReturn` at both unpack sites, despite the exercised two-DataFrame return, and infers
+the auditor's heterogeneous values list as `list[bool]`. The remaining new S04 scripts have no Pylance
+diagnostics. These are not runtime accounting failures; preserve the pinned source hashes if resolving them,
+and regenerate or explicitly retain reproducible historical provenance rather than altering the evidence silently.
+The four-fold tracking screen completed sequentially in shell **1567**, log
+`/tmp/musnba_a1_s04_tracking_folds.log`; command for each fold is
+`.venv/bin/python -u -m scripts.a1_tracking_screen --fold F1 --output
+analysis/experiments/20261122_a1_s04_tracking_F1.json --rows-output
+data/derived/experiments/20261122_a1_s04_tracking_F1.parquet` with F1→F4. Independent reconstruction of the four
+fold predictions, **112** populated metric groups and frozen same-input noise gate passed in
+`analysis/experiments/20261122_a1_s04_tracking_node_gate.json`. Across the full held-out folds, candidate-minus-control
+losses were **+0.00022107 / +0.00002580 / +0.00000209 / +0.00001616**. Their mean relative loss increased
+**0.00906%**, pooled game-cluster z **+3.76**; F1's **+0.03021%** and z **+3.63** exceed twice the **0.01372%**
+noise floor, so the existing node verdict is **worse**. This specific tracking increment is rejected; it is not an
+unchanged-v1.3 engine comparison and does not disprove other player-based defence mechanisms.
+The registered survivor-only engine-test set is empty: neither failed family receives a backtest or a claimed
+player/team improvement, and S03's v1.3 component/total-bias control remains the relevant baseline. A separately
+labelled post-hoc check composes the frozen rim and tracking log-odds adjustments on identical shots, with no refit
+or promotion pathway (`analysis/experiments/20261122_a1_s04_defence_interactions.json`). Independent accounting passed
+on all **499,589** shots (`analysis/experiments/20261122_a1_s04_defence_interaction_accounting.json`); the combined
+full-fold loss changes were **+0.00021749 / +0.00005594 / +0.00000852 / −0.00000768**. This descriptive
+interaction cannot rescue either family. There are no retained inputs requiring player-engine confirmation.
+Keep original-publication and revision uncertainty explicit even though every event date is strictly before its target.
 
 **Use the app:** https://musamoholo.github.io/MusNBA/ — data-free GitHub Pages, source branch `gh-pages` at **e302d27**.
 iPhone: Safari → Share → Add to Home Screen → launch the icon → Offline data & installation → Import data.
@@ -437,7 +532,7 @@ weights, with the old and new accounting; do not hide unfinished tasks by deleti
 | S01 Baseline and evaluation contract | 6% | 100% | Both controls audited; final manifest, seed floors and cutoff limits pinned; no candidate promoted |
 | S02 Data integrity and parity | 6% | 100% | History, integrity, guarded parity/wiring and smoke/fault checks complete; research-only checkpoint |
 | S03 Offence/defence signal diagnosis | 8% | 100% | Fixed matched flow/accounting, component decomposition and two falsifiable candidate families documented; research-only checkpoint |
-| S04 Defence and shot quality | 12% | 10% | Two S03 levers and unchanged control, cutoff and disconfirmation requirements frozen; implementation next |
+| S04 Defence and shot quality | 12% | 90% | Both decisions, fitted cutoffs and falsifiable next defence tests documented; final checkpoint checks/push remain |
 | S05 Roles and minute allocation | 8% | 70% | Corrected conditional and incomplete-roster historical screens independently reconciled on all folds; fixed-game engine comparisons next |
 | S06 Game-state substitutions | 12% | 0% | Planned |
 | S07 Availability and future absences | 6% | 0% | Planned |
@@ -449,7 +544,7 @@ weights, with the old and new accounting; do not hide unfinished tasks by deleti
 | S13 Current-model season history | 5% | 0% | Planned |
 | S14 Nightly, delivery, successor | 5% | 0% | Planned |
 
-**A1 overall: `█████░░░░░░░░░░░░░░░ 26.8%`.** Both control seeds are complete; isolated assignment-event
+**A1 overall: `██████░░░░░░░░░░░░░░ 28.0%`.** Both control seeds are complete; isolated assignment-event
 diagnostics and three-game wiring are not engine-accuracy tests. No candidate has been promoted or changed production/PWA.
 Each rung below is cumulative; 100% always includes updated docs, necessary PWA model/data/shell delivery, reviewed
 commit and push, plus the owner summary. See AGENTS §3/§5 and PLAN §6c for the per-subtask PWA checklist; research-only
@@ -790,25 +885,27 @@ picker (Scoring · Rebounding ALL/OFF/DEF · Handling · Defense · Time; makes 
 STL/BLK, shooting x/y (z%) coloured per part); bezel points Δ v season (above the value; no win/total Δ); player page "Open
 simulation" for tomorrow's games; phone bundle stripped back (D36).
 
-## Next actions — S04 rung 20, S05 rung 80
+## Next actions — S04 checkpoint, S05 rung 80
 
 **Owner's overnight authority:** execute S01–S14 without waiting for input; the earlier planning-only stop is lifted.
 The dashboard programme is done. Do not resume U1–U22, repeat rejected defence variants unchanged or begin at S13.
 
-1. **Begin S04.** The two bounded families and their disconfirmation tests are frozen in TRAINING_PLAN §8. Keep
-   the unchanged v1.3 control separate from any causal-input diagnostic; fitted assignments and profiles for each
-   historical origin must be strictly prior. Preserve the first F4 script/report, correct its date-format metadata,
-   rerun/account under distinct outputs, then run F1–F3 sequentially and complete node-screen and engine gates.
-2. **S05 engine tests.** Conditional and both corrected historical screens passed independent accounting. Keep
-   F3's five unavailable opening rosters and unknown labels explicit. Integrate and compare separately identifiable
-   minute candidate switches using sequential matched engine backtests before any promotion.
+1. **Complete S04 checkpoint.** Both prespecified defence families failed their frozen node gates; the post-hoc
+   composition was independently reconciled and is not a promotion test. Current-code smoke passed 102/102; await
+   queued `--fault` session **1613**, review all eight root docs and commit/push the source and evidence.
+   The production engine and phone bundle remain unchanged; report the rejection and next defence questions.
+2. **Complete S05 engine tests.** Await NBA-only wrapper **85267**/session **1538**; audit its outputs and compare
+   with `20261122T022323Z_a1_s01_control` using `scripts/a1_output_audit.py` and `scripts/a1_compare.py`. The
+   promised strict-runtime candidate is queued to start **sequentially** under PID **88450** after a successful
+   NBA-only run; audit and compare player minutes first.
+   Record F3's five unavailable opening rosters and unknown labels. Do not edit the fingerprinted
+   `backtest.py`, `engine.py`, `minutes.py` or `a1_minutes_candidate.py` while either backtest runs.
 3. **Preserve S02 limitations.** Original publication/revision timing remains unknown; do not use a later single fit
    on earlier rows. Keep the guarded assignment and split/quarantine candidates isolated. Sequence-aware substitution
    examples are required before S06. The completed raw inventory retained 45 older entries without original fetch
    URL/time; do not invent provenance. Provider access remains one polite stream, paused during the nightly.
-4. **Continue S04–S10 in dependency order.** Diagnose player/lineup offence and defence before selecting bounded
-   candidate families; keep conditional-engine and actual pre-game availability populations separate. Record
-   negative results and preserve the accepted control.
+4. **Continue S06–S10 in dependency order** after S04/S05 decisions. Keep conditional-engine and actual pre-game
+   availability populations separate; record negative results and preserve the accepted control.
 5. **S11 freezes the tested combination before promotion.** Confirm on the fixed wider folds and second seed, protect
    the final test and use player outcomes first.
 6. **S12/S13 implement model visibility and versioned daily history.** Preserve original and previous-version

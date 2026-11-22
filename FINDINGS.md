@@ -1252,6 +1252,49 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   promotion. **Report metadata defect:** `training_tail_from` erroneously says 1970 due to pandas datetime-unit
   handling; an independent reconstruction verifies the actual **72,379** training rows span **2 Nov–31 Dec 2025**,
   before F4. Retain the original report/source, fix the label and rerun under a separate name before use.
+- **S04 rim-expression decision:** corrected F1–F4 guarded-input screens scored **136,578 / 139,660 / 87,671 /
+  135,680** shots in **773 / 782 / 490 / 766** games. Their level-preserving slopes were **+0.0718 / −2.1686 /
+  −0.8422 / +1.1315**, and candidate-minus-control full-fold log losses **−0.00000222 / +0.00001481 / +0.00001113 /
+  −0.00003117**. On the fixed 200 games per fold, changes were **−0.00000135 / +0.00001185 / −0.00001006 /
+  −0.00003822**. Training tails, candidate/control predictions, original/corrected F4 rows, **80** populated
+  measurement groups and recorded hashes independently reconcile (`20261122_a1_s04_rim_accounting.json`).
+  A same-input seed-7/seed-8 model refit measures **0.013718%** relative RMS training noise; the candidate's
+  four-fold mean is **−0.000259%**, with pooled game-cluster z **−0.283**
+  (`20261122_a1_s04_rim_node_gate.json`). It therefore fails the existing node retention gate and is not retained
+  for an engine test. The result is a guarded-input, actual-shot diagnostic, not proof that player-based defence
+  cannot improve or that the serving v1.3 control was compared.
+- **S04 lagged tracking-defence test:** the frozen experiment (`TRAINING_PLAN §8`, preregistered in **5e30f4**)
+  read **1,692** under-six-foot and three-point source files, comprising **194,519** player/day/bucket rows; **15,060**
+  latest-team labels disagreed with the dated NBA log and were not used. All five defender histories were known on
+  **903,789/921,103 (98.12%)** shots for under-six-foot and **904,462/921,103 (98.19%)** for threes; **20** invalid
+  fives remained missing. A separately implemented chronological reconstruction checked **146,581** distinct fives,
+  **4,605,515** saved values and all source hashes (`20261122_a1_s04_tracking_accounting.json`). Cumulative counts
+  use only source dates strictly earlier than the shot date, but source revisions and identity-crosswalk publication
+  timing are unproven; these retrospective inputs are not proof of what was published at the original tip.
+
+  On guarded historical shot nodes, paired full-fold loss changes F1–F4 were **+0.00022107 / +0.00002580 /
+  +0.00000209 / +0.00001616**; fixed-200 changes were **+0.00018838 / +0.00002967 / −0.00000808 / −0.00000906**.
+  Rim fitted slopes were **−1.5372 / −0.8092 / +0.6969 / +0.6302**, and three-point slopes **+2.9823 / −0.5322 /
+  +0.6364 / −1.3056**. Independent reconstruction checked **499,589** predictions and **112** supported measurement
+  groups (`20261122_a1_s04_tracking_node_gate.json`). Mean relative loss worsened **0.00906%**, pooled z **+3.76**;
+  F1 worsened **0.03021%**, z **+3.63**, exceeding twice the same-input **0.01372%** seed-noise floor. The frozen
+  node gate is **worse**, so this increment is not retained for an engine test. These are source buckets, not
+  on-ball matchups; this result does not settle whether a different player/lineup defence mechanism could improve.
+- **Post-hoc S04 interaction:** composing both frozen log-odds adjustments, without refitting, gives full-fold
+  combined-minus-control losses **+0.00021749 / +0.00005594 / +0.00000852 / −0.00000768**. The non-additive
+  interaction terms are **−0.00000137 / +0.00001533 / −0.00000470 / +0.00000733** on F1–F4. All **499,589**
+  predictions and their paired game-cluster summaries independently reconcile
+  (`20261122_a1_s04_defence_interaction_accounting.json`). This is descriptive and post hoc; neither rejected
+  family nor the combination is retained, and no engine forecast or player gain was tested.
+- **S04 cutoff and next tests:** fitted tails began **12 Dec 2023 / 18 Nov 2024 / 10 Mar 2025 / 2 Nov 2025**,
+  with fold cutoffs **31 Dec 2023 / 31 Dec 2024 / 30 Sep 2025 / 31 Dec 2025**. No 2026–27 final-test rows were
+  scored. The next falsifiable defence question is whether a defender's prior defended-shot residual **after**
+  accounting for shot location, shooter and the other four defenders predicts held-out outcomes beyond D30,
+  separately at the rim and three; reject if cross-fold loss does not beat same-input training noise or the
+  player-first engine gates. A second question is whether observed defender-five strength changes the
+  attacker's shot/turnover choice in `who`/`what` before shot quality; test as a separate pre-origin increment
+  rather than adding arbitrary points. These are future hypotheses, not results or approved promotions, and
+  historical source revision timing remains an explicit limitation.
 - **Historical prior-box minute sensitivities:** the independently audited all-active and fixed no-report fallback
   screens cover F1–F4 respectively **200/200/195/200** games and **400/400/390/400** team-sides. The five F3
   season-opening games have no prior same-season team candidates; their players are not treated as zeroes. The
@@ -1261,9 +1304,14 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   **4.709 / 5.612 / 4.610 / 5.479**, and target-play Brier is **0.1212 / 0.1392 / 0.1121 / 0.1311**. No
   fewer-than-five availability patterns required resampling; **200 / 209 / 281 / 179** fallback records lacked a
   prior minute EWMA. Neither sensitivity reconstructs historical injury reports or official dated rosters. The
-  strict and combined results await the invariant repair. Independent audit:
+  strict and combined results in that first run are superseded by the corrected screen above. Original audit:
   `analysis/experiments/20261122_a1_s05_minutes_screen_accounting_uncorrected.json` (21 input and 16 output
   fingerprints); individual JSON reports and ignored parquet distributions use the matching fold prefixes.
+- **S05 isolated engine wiring:** the default three-game, 1,000-world replay matches the original S01 saved control
+  exactly across **93 game** and **22 player** columns, **3 games / 64 player-games**. Separate NBA-only-history,
+  strict-runtime and combined wiring runs each independently reconcile **24** quarter scores, **64** player
+  three-point actuals and **6** team sums with zero mismatches; these are wiring checks, not accuracy tests. The
+  NBA-only full **200-game** candidate is running; actual participants remain supplied by the box.
 - **Preregistration:** `analysis/experiments/20261122_a1_pre_candidate_manifest.json` fixes the original 200-game
   screen, **200 / 200 / 200 / 718** F1–F4 confirmation games, simulation streams and input hashes before candidates.
   An independent check finds **1,318 distinct** game IDs within their declared fold dates and **2,636 distinct**

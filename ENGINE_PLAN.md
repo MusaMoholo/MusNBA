@@ -1,6 +1,6 @@
 # Engine plan — possession-level simulator (phase 2)
 
-**Updated 22 November 2026 — serving v1.3, A1 S01–S03 complete; S04/S05 next.** Sixteen LightGBM nodes, D29 target minutes,
+**Updated 22 November 2026 — serving v1.3, A1 S01–S03 complete; S04 checkpoint and S05 tests underway.** Sixteen LightGBM nodes, D29 target minutes,
 D30 player/lineup defence, 10,000 worlds per game and one rotation table per world. Team pathway v1 handles later games.
 M7 responsive substitutions, M8 shared form and M11 availability remain planned. U1–U22 and public Pages/iCloud delivery
 are complete. PLAN §6a–6c defines the expanded next chunk; HANDOFF owns progress; TRAINING_PLAN §8 owns acceptance.
