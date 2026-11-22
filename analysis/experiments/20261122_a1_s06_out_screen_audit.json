@@ -1,0 +1,20 @@
+{
+ "experiment": "a1_s06_outgoing_screen_independent_audit",
+ "scored_rows": 70480,
+ "games": 736,
+ "fold_and_tier_cells": 20,
+ "bootstrap_replicates_per_supported_cell": 10000,
+ "maximum_probability_error": 0.0,
+ "maximum_metric_error": 2.0816681711721685e-16,
+ "diagnostic_screen_pass": true,
+ "input_sha256": {
+  "scripts/a1_substitution_screen_audit.py": "24ed9063defe726205501011eaa46167e1c0dc6b3177738eb4483ebbbc7a4aef",
+  "analysis/experiments/20261122_a1_s06_out_screen.json": "2ba049eee7461f19ef9048fae8137104733fd9ebfd610b4cbd79ec7cfceb197b",
+  "data/derived/experiments/20261122_a1_s06_out_screen.parquet": "0909d67989f156cf4a87349b09ddb4c61b5edaf7c28a8cb69700f636a428a0df",
+  "data/derived/experiments/20261122_a1_s06_fold_seed_v3.parquet": "d4b244f2de845a3d8bdadd3e7770e4db01f84c657c787f3957c62839af58ca4b",
+  "data/derived/experiments/20261122_a1_s06_fold_F1_v3.parquet": "02f201d2f8c47a39fe6fc5acbb7775991f086eb7dbd3a576bc5442b4f27d5425",
+  "data/derived/experiments/20261122_a1_s06_fold_F2_v3.parquet": "b4dae0a55cc57e13c1db711949e0619da91eaeaecdf38595e1fc630d9fa85931",
+  "data/derived/experiments/20261122_a1_s06_fold_F3_v3.parquet": "449636afdf119f9b82a0f9b2013174a194439fff68cca5b4a5d476c7c342e2e8",
+  "data/derived/experiments/20261122_a1_s06_fold_F4_v3.parquet": "7f84384b9922121dc5f3360f741d3dc15ddd9d4455854c898bc1af59d97ca913"
+ }
+}

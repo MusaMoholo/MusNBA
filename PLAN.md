@@ -108,7 +108,7 @@ Each subtask ends with evidence, current docs and a commit/push checkpoint (AGEN
 | M11 | Availability model | ☐ **A1 S07/S08/S10**: report coverage, play/start probabilities, branches and future absences | Held-out calibration and games-missed realism where dated development data supports them; honest fallbacks otherwise | Planned |
 | M12 | Season pathway calibration | ◐ **first cut (20 Nov): team pathway v1 in the app** — walk-forward 2022-26 (480 team-starts): dispersion 1.00 (fixed probabilities 1.53), 10–90% coverage 84% (65%), CRPS −4% in every held-out season; still wide in November (0.84) and surprises fade with the date (sim 0.52 → 0.18 v real 0.40 flat) | Dispersion ≈ 1.0 **at every start date**, persistence matches | `pathway.py`, `season_backtest.py` |
 | UX | Dashboard upgrade programme U1–U22 | ✅ **22 Nov:** all 22 shipped; U15–U22 adds roster roles, playoff picture, win ranges, races/movers/leaders inside Standings and model guide; 156 full + 12 final layout browser checks, hosted PWA 15/15 | Checked at 1440/960/390, both themes, stored data only | DASHBOARD_PLAN.md |
-| A1 | Expanded accuracy/robustness programme | ◐ **43.6% — S01–S05 complete, S06 30%, 22 Nov**; 14 tasks, fixed weights, 140 rungs | Gates in §6b; final nightly + versioned history + successor chunk | HANDOFF § Progress ladders |
+| A1 | Expanded accuracy/robustness programme | ◐ **44.8% — S01–S05 complete, S06 40%, 22 Nov**; 14 tasks, fixed weights, 140 rungs | Gates in §6b; final nightly + versioned history + successor chunk | HANDOFF § Progress ladders |
 
 ### 6a. Next chunk — A1: player accuracy, defence and trustworthy season paths
 
@@ -698,6 +698,14 @@ face cards and unrelated presentation remain §9b backlog. NBA history moved to 
   prior S05 target proxies and current state. **45,604** unconfirmed incoming non-entries remain unknown; **9**
   entries fall outside the pre-window candidate set. All **66,545** rows independently reconciled; there is no
   claim that the inferred prior-box roster proves physical availability.
+- **22 Nov 2026 · A1 S06 40%:** a frozen selected-timeout outgoing screen improved pooled Brier **0.127265→0.105985**
+  over **70,480** decisions / **736** games, with **4/4** fold improvements and game-cluster 95% paired difference
+  **−0.022412 to −0.020141**. Independent re-fitting reproduces all probabilities and 10,000-draw interval
+  accounting. This does not establish an unbiased substitution hazard or an engine gain; incoming availability,
+  joint selection and the pooled-minute engine gate remain open. Production and PWA remain unchanged.
+- **22 Nov 2026 · S06 foul-out probe:** in a controlled world, an available substitute does not replace a player
+  with six fouls because the current engine's foul-out mask is never updated. The finding is not a forecast gain
+  or a population frequency; isolate and gate a repair alongside substitution research.
 - **22 Nov 2026 · A1 S05 10–20%:** separated membership, physical availability, rotation entry, starts, healthy role
   and conditional/unconditional minutes. The 200-game prior-box audit found **73** All-Star rows incorrectly labelled
   regular season; NBA-only reconstruction restores **12** memberships. Audited **7,317** candidates, including

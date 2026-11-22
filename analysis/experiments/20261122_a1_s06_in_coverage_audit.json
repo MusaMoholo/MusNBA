@@ -1,0 +1,15 @@
+{
+ "experiment": "a1_s06_incoming_coverage_independent_audit",
+ "rows_checked": {
+  "seed": 45070,
+  "F1": 48184,
+  "F2": 46847,
+  "F3": 39568,
+  "F4": 48385
+ },
+ "input_sha256": {
+  "scripts/a1_substitution_in_coverage_audit.py": "e9cc75131da1c2cccfd73b21f8e7b49f0d62831741b0be3965d3b2b56cc80b66",
+  "analysis/experiments/20261122_a1_s06_in_coverage.json": "abe52c77c85f70f4bfc59be30a0709f2e6b0c281899e3a1459afeb23c9e5ab10",
+  "data/derived/variants/a1_causal_base_20261122_v2/features/pregame.parquet": "1bd657a66ef42e6f624b860f3ed235896a6a93baa94bb9b6c058ce8ebf74fd28"
+ }
+}

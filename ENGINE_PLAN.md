@@ -124,6 +124,10 @@ Rules are rules, not models: shot clock (24/14, off when the game clock is short
 bonus free throws (per-period team-foul limits, last-two-minutes and overtime variants), foul-outs,
 period lengths, overtime, five players on court.
 
+**Implementation gap found in A1 S06:** the serving engine's foul-out mask is initialised but not updated. A
+controlled six-foul state remains on court despite an available substitute (FINDINGS § A1 S06). This is a defect
+against the rule above; the repair must be isolated and pass the same paired engine gates before replacing v1.3.
+
 ## 3. Time and possessions — the owner's clock idea, refined
 
 Owner proposal: simulate each quarter from 0 to 12 minutes with possessions sprinkled along the

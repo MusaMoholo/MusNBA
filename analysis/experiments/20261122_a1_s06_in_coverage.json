@@ -1,0 +1,136 @@
+{
+ "experiment": "a1_s06_incoming_eligibility_position_coverage",
+ "populations": {
+  "seed": {
+   "games": 184,
+   "incoming_rows": 45070,
+   "observed_entries": 2595,
+   "unknown_nonentries": 42475,
+   "known_ineligible": 66,
+   "previously_observed_current_unknown": 14517,
+   "previously_observed_entries": 1988,
+   "unknown_nonentries_eventually_participating": 16850,
+   "entries_outside_prior_candidates": 5,
+   "known_prior_position_rows": 43907,
+   "known_prior_position_entries": 2581,
+   "prior_position_counts": {
+    "G": 18906,
+    "F": 18450,
+    "C": 6551,
+    "unknown": 1163
+   },
+   "team_windows": 3664,
+   "team_windows_with_entries_in_pool": 1645,
+   "team_windows_with_multiple_entries_in_pool": 706
+  },
+  "F1": {
+   "games": 186,
+   "incoming_rows": 48184,
+   "observed_entries": 2668,
+   "unknown_nonentries": 45516,
+   "known_ineligible": 55,
+   "previously_observed_current_unknown": 13757,
+   "previously_observed_entries": 2005,
+   "unknown_nonentries_eventually_participating": 18128,
+   "entries_outside_prior_candidates": 5,
+   "known_prior_position_rows": 47155,
+   "known_prior_position_entries": 2662,
+   "prior_position_counts": {
+    "G": 20995,
+    "F": 19582,
+    "C": 6578,
+    "unknown": 1029
+   },
+   "team_windows": 3536,
+   "team_windows_with_entries_in_pool": 1607,
+   "team_windows_with_multiple_entries_in_pool": 690
+  },
+  "F2": {
+   "games": 181,
+   "incoming_rows": 46847,
+   "observed_entries": 2616,
+   "unknown_nonentries": 44231,
+   "known_ineligible": 39,
+   "previously_observed_current_unknown": 13674,
+   "previously_observed_entries": 1964,
+   "unknown_nonentries_eventually_participating": 16615,
+   "entries_outside_prior_candidates": 5,
+   "known_prior_position_rows": 45745,
+   "known_prior_position_entries": 2610,
+   "prior_position_counts": {
+    "G": 21217,
+    "F": 18037,
+    "C": 6491,
+    "unknown": 1102
+   },
+   "team_windows": 3474,
+   "team_windows_with_entries_in_pool": 1582,
+   "team_windows_with_multiple_entries_in_pool": 690
+  },
+  "F3": {
+   "games": 178,
+   "incoming_rows": 39568,
+   "observed_entries": 2646,
+   "unknown_nonentries": 36922,
+   "known_ineligible": 66,
+   "previously_observed_current_unknown": 14607,
+   "previously_observed_entries": 2039,
+   "unknown_nonentries_eventually_participating": 17257,
+   "entries_outside_prior_candidates": 3,
+   "known_prior_position_rows": 38762,
+   "known_prior_position_entries": 2632,
+   "prior_position_counts": {
+    "G": 18143,
+    "F": 14721,
+    "C": 5898,
+    "unknown": 806
+   },
+   "team_windows": 3454,
+   "team_windows_with_entries_in_pool": 1630,
+   "team_windows_with_multiple_entries_in_pool": 706
+  },
+  "F4": {
+   "games": 191,
+   "incoming_rows": 48385,
+   "observed_entries": 2781,
+   "unknown_nonentries": 45604,
+   "known_ineligible": 82,
+   "previously_observed_current_unknown": 14943,
+   "previously_observed_entries": 2108,
+   "unknown_nonentries_eventually_participating": 18337,
+   "entries_outside_prior_candidates": 9,
+   "known_prior_position_rows": 47816,
+   "known_prior_position_entries": 2768,
+   "prior_position_counts": {
+    "G": 22248,
+    "F": 18289,
+    "C": 7279,
+    "unknown": 569
+   },
+   "team_windows": 3632,
+   "team_windows_with_entries_in_pool": 1688,
+   "team_windows_with_multiple_entries_in_pool": 759
+  }
+ },
+ "limitations": "Non-entry labels and current physical eligibility remain unknown. Eventual participation uses future information and is reported only as retrospective coverage, not as a feature or proof of current eligibility. Positions come from a strictly earlier profile date.",
+ "input_sha256": {
+  "scripts/a1_substitution_in_coverage.py": "5cefed7037d452ea88630c33425887e9a7c0e712e1476b4df732f9c07b35558a",
+  "data/derived/variants/a1_causal_base_20261122_v2/features/pregame.parquet": "1bd657a66ef42e6f624b860f3ed235896a6a93baa94bb9b6c058ce8ebf74fd28",
+  "scripts/features.py": "16d57e2cf0440d2cbeeaa224ada40f1ea7b68fba3f25a37f8114e8640dada9ff",
+  "analysis/experiments/20261122_a1_s06_fold_seed_v3.json": "53dc5ec7ed6387b6fb319468da6cd1e75328ee2a8594a98fbb2c86ec9b15aa02",
+  "data/derived/experiments/20261122_a1_s06_fold_seed_v3.parquet": "d4b244f2de845a3d8bdadd3e7770e4db01f84c657c787f3957c62839af58ca4b",
+  "data/derived/experiments/20261122_a1_s06_fold_seed_v3_windows.parquet": "ace05f6b4bf5d7688be5b644e69757a1ca675aa48b7f93b45a143f43861c9d9f",
+  "analysis/experiments/20261122_a1_s06_fold_F1_v3.json": "4930d1c1bcf7f7ff0e37f90ea531c2d5ff27881114b460ecf0110ff4c56dadda",
+  "data/derived/experiments/20261122_a1_s06_fold_F1_v3.parquet": "02f201d2f8c47a39fe6fc5acbb7775991f086eb7dbd3a576bc5442b4f27d5425",
+  "data/derived/experiments/20261122_a1_s06_fold_F1_v3_windows.parquet": "193c648d96706a8bb964e25ae010e4895b21526d195ff8a22488af6415dc4a60",
+  "analysis/experiments/20261122_a1_s06_fold_F2_v3.json": "b74d16ba2b78a36e43494dce04997f67d29bd55921db7af3bb4b31390a624694",
+  "data/derived/experiments/20261122_a1_s06_fold_F2_v3.parquet": "b4dae0a55cc57e13c1db711949e0619da91eaeaecdf38595e1fc630d9fa85931",
+  "data/derived/experiments/20261122_a1_s06_fold_F2_v3_windows.parquet": "58c1f5ae37de600798de8da9194b53d5ad2859ce96d6b1f0f7597146e0a3bb4c",
+  "analysis/experiments/20261122_a1_s06_fold_F3_v3.json": "439dd65586144a62402bdf890d82ec6f222e69a94d178982e5af7bf84bd4a908",
+  "data/derived/experiments/20261122_a1_s06_fold_F3_v3.parquet": "449636afdf119f9b82a0f9b2013174a194439fff68cca5b4a5d476c7c342e2e8",
+  "data/derived/experiments/20261122_a1_s06_fold_F3_v3_windows.parquet": "9a0c78835059b1f300bd051d502e021370b1cab51041f5c7ffaad4e1d8d6f41d",
+  "analysis/experiments/20261122_a1_s06_fold_F4_v3.json": "2281144fbb71524c69ce5a3918d8863c24471199d891a88c0c40c415ced31493",
+  "data/derived/experiments/20261122_a1_s06_fold_F4_v3.parquet": "7f84384b9922121dc5f3360f741d3dc15ddd9d4455854c898bc1af59d97ca913",
+  "data/derived/experiments/20261122_a1_s06_fold_F4_v3_windows.parquet": "088be9f9f5a985d17305a683e1a1c058852202e7bec605b78ca950eeaf0399ee"
+ }
+}

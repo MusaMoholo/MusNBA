@@ -1,6 +1,6 @@
 # Handoff — state and next actions
 
-Updated **22 November 2026 — A1 overnight execution, S01–S05 complete; S06 active at 30%**. Dashboard U1–U22 complete and published.
+Updated **22 November 2026 — A1 overnight execution, S01–S05 complete; S06 active at 40%**. Dashboard U1–U22 complete and published.
 Dashboard close-out checkpoint **86c2a46**, A1 planning checkpoint **00a0731**; S01 checkpoint **c9d8008**
 and S02 checkpoint **93b3e1d** are committed and pushed (S01's exact control source is **c6d5db4**).
 The original S03/S05 experiment snapshot is **ab32eda**, committed and pushed before the candidate repair;
@@ -14,11 +14,11 @@ The byte-identical typed tracking rebuild and original v2 minute-gate source/rep
 partial checkpoint **890bee3** before correcting the gate's seed-noise definition.
 The completed S04 defence checkpoint and corrected minute-gate report are committed and pushed as **38155fc**.
 The completed S05 minutes checkpoint and original S06 pilot sources are committed and pushed as **417f3f5**.
-S06 partial checkpoints **637a025**, **70709ab** and **bdedeed** are pushed and preserve the initial corrected
-replay, frozen fold protocol, exact v2 sources/reports and audited v3 inputs.
+S06 partial checkpoints **637a025**, **70709ab**, **bdedeed** and **d77ac5e** are pushed and preserve the initial
+corrected replay, frozen fold protocol, exact v2 sources/reports, audited v3 inputs and native screen implementation.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
 product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S05 are complete;
-S06 is active at 30%; A1 overall is 43.6%.** Isolated assignment candidates have event-level diagnostics and wiring only;
+S06 is active at 40%; A1 overall is 44.8%.** Isolated assignment candidates have event-level diagnostics and wiring only;
 no defence candidate has had an engine-accuracy test, and no model promotion, forecast or PWA change has been made.
 
 **Completed S05 evidence:** the 200-game flow and its independent accounting are complete; the comparison and
@@ -283,6 +283,35 @@ The independent seed-target and cutoff-fit audit passes
 The first out-screen attempt failed before any fit because scikit-learn is absent; the retry uses the existing native
 LightGBM API with the same frozen objective and settings. The error and source fingerprint are in
 `analysis/experiments/20261122_a1_s06_out_screen_wrapper_failed.json`.
+
+**S06 40%:** the frozen outgoing screen scored **70,480** decisions in **736** games. Pooled Brier improved from
+**0.127265** to **0.105985** (paired difference **−0.021280**, game-cluster 95% **−0.022412 to −0.020141**);
+all four fold point differences favour the candidate. F1/F2/F3/F4 contain **17,680 / 17,370 / 17,270 / 18,160**
+decisions and improved by **−0.022331 / −0.021422 / −0.020079 / −0.021262** respectively. F3 used the baseline's
+overall fallback for four rows; other folds had none. The first fitting run took **2.4 s** for four folds,
+`/tmp/musnba_a1_s06_out_screen_v2.log`. Independent re-fitting reproduced every prediction exactly and the direct
+game bootstrap across **20** fold/tier cells and pooled results to **2.1e-16**; see
+`analysis/experiments/20261122_a1_s06_out_screen{,_audit}.json` and
+`data/derived/experiments/20261122_a1_s06_out_screen.parquet`. This is a promising selected-timeout node diagnostic,
+not an all-opportunity hazard, known-availability forecast, engine test or promotion. Next design and freeze an
+incoming/joint-selection evaluation that does not convert unconfirmed non-entries to known eligible negatives.
+An independent controlled engine probe then found a tightly coupled pre-existing defect: the six-foul mask is
+initialised but never updated, so a player injected with six personal fouls stays in the next segment even with an
+available bench replacement (`analysis/experiments/20261122_a1_s06_foul_out_probe.json`). This is one controlled
+world, not a population frequency. Its first source has type diagnostics; a type-correct v2 produces the same result
+(`analysis/experiments/20261122_a1_s06_foul_out_probe_v2.json`), with the original indexed for preservation.
+S06 must correct it in an isolated candidate and test foul-outs, insufficient rosters and default-path reproduction;
+do not silently change the served model.
+
+Incoming coverage and independent accounting are complete: **182,984** F1–F4 candidates, **10,711** observed in-pool
+entries, **172,273** unknown non-entries, **242** known disqualifications and **22** entries outside the pool.
+Prior positions are known for **179,478** candidates and **10,672** entries; **2,845** of **6,507** entry-bearing
+team-timeouts have multiple entries. `analysis/experiments/20261122_a1_s06_in_coverage{,_audit}.json` records
+all five populations and hashes. TRAINING_PLAN §8.2 now freezes a positive-versus-unlabelled-mixture incoming
+ranking screen and its eligibility/positional limits before fitting; build and run that exact screen next.
+The checkpoint normal smoke passed **102/102** (`/tmp/musnba_a1_s06_40_smoke_default.log`); deliberate fault
+exited **1**, **80/102** passing (`/tmp/musnba_a1_s06_40_fault_default.log`). Two earlier one-thread smoke
+attempts were stopped without results after about four minutes; the completed runs use normal engine threading.
 
 The tracking family was frozen in TRAINING_PLAN §8 and built separately by
 `scripts/a1_tracking_features.py`: former wrapper PID **85586**, shell **1549**, log
@@ -733,7 +762,7 @@ weights, with the old and new accounting; do not hide unfinished tasks by deleti
 | S03 Offence/defence signal diagnosis | 8% | 100% | Fixed matched flow/accounting, component decomposition and two falsifiable candidate families documented; research-only checkpoint |
 | S04 Defence and shot quality | 12% | 100% | Both families rejected at their frozen node gates; tracking rebuild and independent accounting verified; served model and bundle unchanged |
 | S05 Roles and minute allocation | 8% | 100% | Both matched screens and independent accounting complete; neither passes pooled MIN gate, retain D29 control; smoke/fault passed |
-| S06 Game-state substitutions | 12% | 30% | Prior-target/current-state candidate rows independently audited; unknown availability and missing targets remain explicit |
+| S06 Game-state substitutions | 12% | 40% | Four-fold outgoing screen and independent score/bootstrap reproduction pass; unknown incoming eligibility remains explicit |
 | S07 Availability and future absences | 6% | 0% | Planned |
 | S08 Lineup branches and Expected | 6% | 0% | Planned |
 | S09 Shared form and end-game behaviour | 10% | 0% | Planned |
@@ -743,7 +772,7 @@ weights, with the old and new accounting; do not hide unfinished tasks by deleti
 | S13 Current-model season history | 5% | 0% | Planned |
 | S14 Nightly, delivery, successor | 5% | 0% | Planned |
 
-**A1 overall: `█████████░░░░░░░░░░░ 43.6%`.** Both control seeds are complete; isolated assignment-event
+**A1 overall: `█████████░░░░░░░░░░░ 44.8%`.** Both control seeds are complete; isolated assignment-event
 diagnostics and three-game wiring are not engine-accuracy tests. No candidate has been promoted or changed production/PWA.
 Each rung below is cumulative; 100% always includes updated docs, necessary PWA model/data/shell delivery, reviewed
 commit and push, plus the owner summary. See AGENTS §3/§5 and PLAN §6c for the per-subtask PWA checklist; research-only
@@ -1089,13 +1118,13 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
 **Owner's overnight authority:** execute S01–S14 without waiting for input; the earlier planning-only stop is lifted.
 The dashboard programme is done. Do not resume U1–U22, repeat rejected defence variants unchanged or begin at S13.
 
-1. **Continue S06 substitution research.** Checkpoint the corrected replay/audit/opportunity, state-response and
-   prior-target dataset sources/reports; smoke queue **1899** passed. Preserve actual-participant and
-   availability limitations. TRAINING_PLAN §8.2 freezes the earlier-year seed, all-fold outgoing Brier screen,
-   simple conditional baseline and model settings before results. All five v3 datasets and the seed audit are
-   complete; run `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u -m
-   scripts.a1_substitution_out_screen` and independently account for its scores before awarding S06 40%.
-   The F4 pilot alone is not model validation. Keep incoming unknowns unlabelled. The original
+1. **Continue S06 substitution research at 40%.** The four-fold outgoing screen and independent audit are complete;
+   preserve their source/report hashes before further changes. Incoming eligibility, position and retained-window
+   coverage are independently audited; implement and run the frozen incoming/joint-selection screen in TRAINING_PLAN.
+   Do not relabel unconfirmed non-entries as known eligible negatives; separate any actual-participant conditional
+   diagnostic from a pre-game forecast. The selected-timeout outgoing result is not an engine validation. Fix the
+   independently reproduced unupdated foul-out mask in an isolated S06 candidate, not the serving path, and test it
+   against six fouls with and without eligible replacements. The original
    replay/audit/opportunity sources are retained in **417f3f5**. The known
    `401810498` sequence-709 margin is verified, but a recognised stoppage is
    not proof of an exhaustive legal opportunity. Do not treat clock-grouped windows as one simultaneous decision.
@@ -1140,7 +1169,7 @@ needs no change because the scoped overnight authority and checkpoint protocol a
 PWA bundle remain unchanged; phone import is still unconfirmed.
 
 **S06 partial document review:** HANDOFF carries the live ledger, data limitations and exact resume commands; PLAN
-records the 30% rung; FINDINGS records the populations and failed preflights; TRAINING_PLAN freezes the out screen;
+records the 40% rung; FINDINGS records the populations, screen and failed preflights; TRAINING_PLAN freezes the out screen;
 README maps the research scripts. ENGINE_PLAN and DASHBOARD_PLAN update status only because no engine, app, forecast,
 bundle or shell changed. AGENTS needs no change because the scoped overnight authority already applies. The served
 v1.3/pathway-v1 model and bundle remain unchanged; phone import is unconfirmed.

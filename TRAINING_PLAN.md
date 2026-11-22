@@ -449,6 +449,32 @@ not the S06 pooled-minute promotion gate. It cannot establish an all-stoppage ha
 opportunity subset is outcome-selected, incoming availability is unknown, and the engine currently has no timeout
 events. No parameter or threshold may be retuned on the F4 or protected final-season results.
 
+For S06's first **incoming-selection feasibility screen**, freeze the following before fitting. Use the same seed
+and F1–F4 candidate windows and chronology as the outgoing screen. Join a position group only from the candidate's
+recorded strictly earlier profile date; unknown positions remain unknown. Condition on a team having at least one
+observed outgoing player and on its observed outgoing set: this is an oracle transition diagnostic, not a forecast
+of who will leave or how many will change. Describe the remaining on-court players by their prior G/F/C/unknown
+counts. The case sample consists solely of observed entrants in the prior candidate pool. The reference sample is
+the entire potentially selectable off-court pool at those same team-windows, excluding only recorded six-foul or
+earlier-ejection ineligibility; it includes the cases as well as unknown non-entries. Compare cases against this
+unlabelled mixture, **not** against supposedly eligible negative labels. Weight each case by the reciprocal of its
+team-window's observed in-pool entry count and each reference row by the reciprocal of its pool size. Fit one native
+LightGBM binary case-versus-mixture discriminator (120 trees, 15 leaves, learning rate 0.05, minimum leaf 80, L2 1,
+seed 20261122, one thread) on earlier populations only. Its output is a relative density-ratio ranking score, not a
+calibrated probability of entry or physical eligibility. Inputs are period, clock, margin, fouls, elapsed seconds,
+rest, target mean and deficit, prior-tier/position indicators and the four remaining-lineup position counts; retain
+native numeric missingness.
+
+On each validation team-window with an in-pool entrant, rank all potentially selectable candidates and take the
+observed number of in-pool entrants **for scoring only**. Compare observed entrant recall at that `k` with a fixed
+target-deficit ranking (overtime/missing-deficit fallback to target mean, then missing last; deterministic player-ID
+ties). Report excluded/out-of-pool entrants, missingness and 10,000 complete-game paired bootstrap intervals.
+Further investigation requires pooled recall's paired 95% lower bound above zero and at least three favourable
+fold points. The ranker and its unknown candidate pool do not establish active-roster eligibility or an engine gain.
+Any joint selector must receive an explicit per-world active roster and disqualification state; it must choose
+distinct players and preserve five on court, use positional context without inventing legal position limits, and
+surface insufficient eligible replacements rather than quietly activating an unavailable player.
+
 For S03's remaining flow diagnosis, reproduce the **same 200-game, 1,000-world** free-running control with its
 original seeds and opt-in diagnostics only; audit every original output field against the retained reproduction before
 using the extras. Record player FGA/FTA/turnovers and quarter minutes/scoring, simulated segment-clock summaries,

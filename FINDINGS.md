@@ -1447,6 +1447,30 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   its optional scikit-learn wrapper. The retry uses the repository's native LightGBM API with the same frozen
   binary objective and hyperparameters; the failed source and error are preserved in
   `20261122_a1_s06_out_screen_wrapper_failed.json`. No fold result informed this implementation repair.
+- **S06 outgoing screen:** on **70,480** selected full-timeout player decisions from **736** F1–F4 games, the fixed
+  conditional period/tier baseline has Brier **0.127265** and the fixed state model **0.105985**; paired difference
+  **−0.021280** (10,000 complete-game bootstrap 95% **−0.022412 to −0.020141**). All four folds improve
+  (**−0.022331 / −0.021422 / −0.020079 / −0.021262**); pooled log loss falls **0.419834→0.341200**.
+  Independent refits match **70,480/70,480** probabilities exactly and direct game-resampling reproduces
+  20 fold/tier cells plus pooled metrics to **2.1e-16**. F3 has four baseline-fallback rows; no other fold has any.
+  The selected timeout population is outcome-conditioned and prior-box membership does not establish current
+  physical availability. This result is an event-level feasibility screen, not an engine or forecast improvement.
+  Reports: `20261122_a1_s06_out_screen.json` and `20261122_a1_s06_out_screen_audit.json`.
+- **S06 foul-out defect:** the current engine initialises its `fouled_out` mask to false but never updates it.
+  In a one-world controlled state probe with five scheduled players, a sixth available teammate and both
+  personal-foul counters set to six, the six-foul player remains in the next segment and the substitute is not used.
+  The five-foul control also remains on court as expected. This proves the mechanism, not its frequency or forecast
+  impact. Both the original probe and its type-correct v2 reproduce the same state
+  (`20261122_a1_s06_foul_out_probe{,_v2}.json`); keep any correction isolated and subject to the existing paired
+  engine gates.
+- **S06 incoming coverage:** across the four fixed folds there are **182,984** potential off-court candidate rows,
+  **10,711** observed in-pool entries and **172,273** non-entries with unknown eligibility; **242** rows are
+  explicitly disqualified, and **22** observed entrants are outside the prospective pool. A strictly prior position
+  is known for **179,478/182,984** candidate rows and **10,672/10,711** entries. The **14,096** team-timeouts include
+  **6,507** with an in-pool entry, of which **2,845** have multiple entrants. **70,337** unknown non-entries later
+  appear somewhere in the game's retrospective participant list; that future information is coverage only, not a
+  predictor or proof of their current physical eligibility. Independent raw-window aggregation reproduces all
+  five seed/fold coverage reports (`20261122_a1_s06_in_coverage{,_audit}.json`).
 
 ## 6b. A1 S03 matched component diagnosis (22 Nov 2026; descriptive)
 

@@ -1,14 +1,16 @@
 import contextlib
 import io
 import json
+import math
 import unittest
 
 import pandas as pd
 
 from basketball_common import NBA_TEAM_IDS
 from scripts import (a1_substitution_audit, a1_substitution_dataset, a1_substitution_dataset_audit,
-                     a1_substitution_fold_data, a1_substitution_opportunities, a1_substitution_out_screen,
-                     a1_substitution_seed_audit, a1_substitution_states, a1_substitutions)
+                     a1_substitution_fold_data, a1_substitution_in_coverage, a1_substitution_opportunities,
+                     a1_substitution_out_screen,
+                     a1_substitution_screen_audit, a1_substitution_seed_audit, a1_substitution_states, a1_substitutions)
 
 
 def player(pid, team, starter):
@@ -304,6 +306,31 @@ class SequentialSubstitutionTests(unittest.TestCase):
         pd.testing.assert_frame_equal(first, second)
         self.assertEqual(first_details, second_details)
         self.assertTrue(first['candidate_probability'].between(0, 1).all())
+
+    def test_out_screen_independent_metric_audit_rejects_tampering(self):
+        rows = pd.DataFrame({'game_id': ['a', 'b'], 'player': ['1', '2'], 'label': [1, 0],
+                             'baseline_probability': [0.5, 0.5], 'candidate_probability': [0.7, 0.4]})
+        baseline_log = math.log(2)
+        candidate_log = -0.5 * (math.log(0.7) + math.log(0.6))
+        recorded = {'observations': 2, 'games': 2, 'player_games': 2, 'outgoing_count': 1,
+                    'status': 'insufficient_sample',
+                    'brier': {'baseline': 0.25, 'candidate': 0.125, 'change': -0.125, 'ci_95': None},
+                    'log_loss': {'baseline': baseline_log, 'candidate': candidate_log,
+                                 'change': candidate_log - baseline_log, 'ci_95': None}}
+        self.assertLess(a1_substitution_screen_audit.audit_metrics(rows, recorded), 1e-12)
+        rows.loc[0, 'candidate_probability'] = 0.9
+        with self.assertRaisesRegex(ValueError, 'estimate or direct-resampling bootstrap differs'):
+            a1_substitution_screen_audit.audit_metrics(rows, recorded)
+
+    def test_incoming_positions_use_only_recorded_prior_profile(self):
+        rows = pd.DataFrame([{'player': '1', 'date_et': '2024-01-03', 'prior_profile_date': '2024-01-01'}])
+        profiles = pd.DataFrame([{'player': '1', 'date_et': '2024-01-01', 'pos': 'PG'},
+                                 {'player': '1', 'date_et': '2024-01-04', 'pos': 'C'}])
+        result = a1_substitution_in_coverage.attach_positions(rows, profiles)
+        self.assertEqual(result.loc[0, 'prior_position'], 'G')
+        rows.loc[0, 'prior_profile_date'] = '2024-01-04'
+        with self.assertRaisesRegex(ValueError, 'strictly earlier date'):
+            a1_substitution_in_coverage.attach_positions(rows, profiles)
 
 
 if __name__ == '__main__':
