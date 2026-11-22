@@ -1,5 +1,5 @@
 // Players: sortable league table (per game / totals / per 36) and player pages with game logs.
-import {api, barChart, dayLabel, esc, f1, logo, normalise, pct, seg, signed, statusTag, store, team, teamLink, tipTimes} from './ui.mjs';
+import {advancedPanel, api, barChart, dayLabel, esc, f1, logo, normalise, pct, seg, signed, statusTag, store, team, teamLink, tipTimes, usageProfilePanel} from './ui.mjs';
 
 const COLS = [['gp', 'GP'], ['min', 'MIN'], ['pts', 'PTS'], ['trend', 'L10 trend'], ['reb', 'REB'], ['ast', 'AST'], ['stl', 'STL'], ['blk', 'BLK'], ['tov', 'TOV'],
               ['fg3m', '3PM'], ['fg_pct', 'FG%'], ['fg3_pct', '3P%'], ['ft_pct', 'FT%'], ['ts_pct', 'TS%'], ['pm', '+/−']];
@@ -123,6 +123,8 @@ async function playerPage(view, {rest, current}) {
       <p class="note" style="margin:0">${p.team ? `<a href="#/team/${p.team}">${esc(team(p.team).name)}</a> · ` : ''}${esc(p.pos || '')}${p.jersey ? ' · #' + esc(p.jersey) : ''}${p.age ? ' · age ' + p.age : ''}${p.height ? ' · ' + esc(p.height) : ''}${p.on_roster === false ? ' · not on a current roster' : ''} ${statusTag(p.status)}</p>
       ${p.injury?.comment ? `<p class="note status-q" style="margin:4px 0 0">${esc(p.injury.comment)}</p>` : ''}</div></div>
       ${s ? `<div class="tiles" style="margin-top:12px">${tiles}</div><p class="note">${s.gp} games (${s.gs} starts) · ${shoot} · per-game season averages; L10 = last 10 games played, with the change v the season</p>` : '<p class="note">No games played this season.</p>'}</section>
+    ${advancedPanel(s?.tot, null, 'Season')}
+    ${usageProfilePanel(data.usage_profile)}
     ${nextHtml}
     ${shotPanel(data.shots)}
     ${defencePanel(data.defence)}

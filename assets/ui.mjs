@@ -66,6 +66,84 @@ export const signed = (v, d = 1) => {
   return (Number(value) === 0 ? '±' : v > 0 ? '+' : '−') + value;
 };
 export const rate = (v, d = 1) => ok(v) ? (100 * v).toFixed(d) + '%' : '—';
+export function advancedRates(line) {
+  const calc = (keys, numerator, denominator) => {
+    if (!line || keys.some(k => !Number.isFinite(line[k]))) return null;
+    const den = denominator(line);
+    return den > 0 ? numerator(line) / den : null;
+  };
+  return {
+    efg: calc(['fgm', 'fg3m', 'fga'], x => x.fgm + 0.5 * x.fg3m, x => x.fga),
+    ts: calc(['pts', 'fga', 'fta'], x => x.pts, x => 2 * (x.fga + 0.44 * x.fta)),
+    two: calc(['fgm', 'fg3m', 'fga', 'fg3a'], x => x.fgm - x.fg3m, x => x.fga - x.fg3a),
+    threeShare: calc(['fg3a', 'fga'], x => x.fg3a, x => x.fga),
+    ftRate: calc(['fta', 'fga'], x => x.fta, x => x.fga),
+    astTov: calc(['ast', 'tov'], x => x.ast, x => x.tov),
+  };
+}
+export function teamAdvancedRates(line, opponent) {
+  const poss = x => x && ['fga', 'oreb', 'tov', 'fta'].every(k => Number.isFinite(x[k]))
+    ? x.fga - x.oreb + x.tov + 0.44 * x.fta : null;
+  const ratio = (a, b) => Number.isFinite(a) && Number.isFinite(b) && b > 0 ? a / b : null;
+  const sum = (a, b) => Number.isFinite(a) && Number.isFinite(b) ? a + b : null;
+  const ownPoss = poss(line), oppPoss = poss(opponent);
+  const offense = ratio(line?.pts, ownPoss), defense = ratio(opponent?.pts, oppPoss);
+  return {
+    poss: ownPoss,
+    ortg: offense == null ? null : 100 * offense,
+    drtg: defense == null ? null : 100 * defense,
+    net: offense == null || defense == null ? null : 100 * (offense - defense),
+    oreb: ratio(line?.oreb, sum(line?.oreb, opponent?.dreb)),
+    dreb: ratio(line?.dreb, sum(line?.dreb, opponent?.oreb)),
+    assist: ratio(line?.ast, line?.fgm),
+    turnover: ratio(line?.tov, ownPoss),
+    steals: ratio(line?.stl, oppPoss),
+  };
+}
+export function advancedPanel(line, actual, label, options = {}) {
+  if (!line && !actual) return '';
+  const values = advancedRates(line), observed = advancedRates(actual);
+  const metrics = [['efg', 'Effective FG%', '(FGM + 0.5 × 3PM) / FGA', true],
+                   ['ts', 'True shooting%', 'PTS / (2 × (FGA + 0.44 × FTA))', true],
+                   ['two', '2-point FG%', '(FGM − 3PM) / (FGA − 3PA)', true],
+                   ['threeShare', '3-point attempt rate', '3PA / FGA', true],
+                   ['ftRate', 'Free-throw attempt rate', 'FTA / FGA', true],
+                   ['astTov', 'Assists per turnover', 'AST / TOV', false]];
+  if (options.team) {
+    Object.assign(values, teamAdvancedRates(line, options.opponent));
+    Object.assign(observed, teamAdvancedRates(actual, options.actualOpponent));
+    metrics.push(['poss', 'Estimated possessions', 'FGA − OREB + TOV + 0.44 × FTA', false],
+                 ['ortg', 'Offensive rating · estimate', 'PTS / estimated possessions × 100', false],
+                 ['drtg', 'Defensive rating · estimate', 'Opponent PTS / their estimated possessions × 100', false],
+                 ['net', 'Net rating · estimate', 'Offensive rating − defensive rating', false],
+                 ['oreb', 'Offensive rebound share', 'OREB / (OREB + opponent DREB)', true],
+                 ['dreb', 'Defensive rebound share', 'DREB / (DREB + opponent OREB)', true],
+                 ['assist', 'Assisted field goals', 'AST / FGM', true],
+                 ['turnover', 'Turnover rate · estimate', 'TOV / estimated possessions', true],
+                 ['steals', 'Steal rate · estimate', 'STL / opponent estimated possessions', true]);
+  }
+  const format = (v, percent) => percent ? rate(v) : f1(v);
+  const element = options.collapsible ? 'details' : 'section';
+  const title = esc(options.title || 'Advanced box-score rates');
+  return `<${element} class="panel">${options.collapsible ? `<summary><b>${title}</b> · ${metrics.length} metrics</summary>` : `<h3>${title}</h3>`}<div class="advanced-grid">
+    ${metrics.map(([key, title, formula, percent]) => `<div class="tile"><span>${esc(title)}</span>
+      <div class="lines">${line ? `<em>${esc(label)}</em><b>${format(values[key], percent)}</b>` : ''}
+      ${actual ? `<em>Actual</em><b>${format(observed[key], percent)}</b>` : ''}</div><small>${esc(formula)}</small></div>`).join('')}</div>
+    <p class="note">${line && actual ? 'Projected values are ratios of simulated mean totals, not means of the individual-game rates. '
+      : line && label === 'Projected' ? 'Ratios of simulated mean totals, not means of the individual-game rates. ' : ''}
+      True shooting uses the conventional 0.44 free-throw approximation.
+      ${options.team ? 'Possessions and ratings are box-score estimates, not counted possessions; player totals can exclude team rebounds and turnovers. ' : ''}
+      — means missing data or a zero denominator.</p></${element}>`;
+}
+export function usageProfilePanel(profile) {
+  if (!profile) return '';
+  return `<section class="panel"><h3>Offensive action share · latest model profile</h3>
+    <p><b>${rate(profile.rate)}</b> · through ${esc(dayLabel(profile.through))}</p>
+    <p class="note">Estimated share of offensive segments on court ending with this player's non-heave shot, turnover,
+    shooting foul or free-throw foul. The model combines decayed history with a prior
+    (${f1(profile.off_segments_eff)} effective offensive segments). This latest profile is not conventional
+    possession-based USG% or a game forecast; it may differ from the forecast's saved inputs.</p></section>`;
+}
 export function pct(p, d = 1) {
   if (!ok(p)) return '—';
   if (p <= 0) return '0%';
