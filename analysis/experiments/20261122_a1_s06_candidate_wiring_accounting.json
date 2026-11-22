@@ -1,0 +1,18 @@
+{
+ "experiment": "a1_output_accounting",
+ "run": "20261122T090745Z_a1_s06_candidate_wiring",
+ "games": 3,
+ "player_games": 64,
+ "expected_simulated_player_games": 64,
+ "player_games_without_output": 0,
+ "missing_player_outputs": [],
+ "quarter_scoreboard_comparisons": 24,
+ "quarter_mismatches": 0,
+ "player_3pm_box_comparisons": 64,
+ "player_3pm_missing_actuals": 0,
+ "player_3pm_mismatches": 0,
+ "team_3pm_mean_comparisons": 6,
+ "team_3pm_incomplete": 0,
+ "team_3pm_incomplete_rosters": 0,
+ "team_3pm_mean_mismatches": 0
+}

@@ -1489,6 +1489,13 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   period templates, including periods without a selected timeout. This verifies reconstruction and cutoff, not the
   realism of those selected/opportunity-biased clocks or an engine gain. Manifest:
   `20261122_a1_s06_engine_models_F4.json`.
+- **S06 engine wiring:** on the three fixed F4 reproduction games, the opt-in policy completed **3,000** simulated
+  worlds in **63 s**; the unchanged default reproduced the earlier control to `1e-12` in **51 s**. The policy recorded
+  **28,158** timeout-world events, **35,389** sampled exits, **1,395** forced foul-out replacements, **364**
+  coalesced and **582** expired selected clocks, plus **88** overtime-timeout events. Counts describe only this
+  candidate wiring sample; they are not historical rates. Independent saved-output checks reconcile **24** actual
+  quarter scores, **64** player 3PM actuals and **6** complete team 3PM sums. Every-world team-minute and points
+  assertions ran inside the candidate, but independent per-world saved accounting and the paired accuracy gate remain.
 
 ## 6b. A1 S03 matched component diagnosis (22 Nov 2026; descriptive)
 

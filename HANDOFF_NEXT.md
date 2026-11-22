@@ -1,6 +1,6 @@
 # Handoff — state and next actions
 
-Updated **22 November 2026 — A1 overnight execution, S01–S05 complete; S06 active at 50%**. Dashboard U1–U22 complete and published.
+Updated **22 November 2026 — A1 overnight execution, S01–S05 complete; S06 active at 60%**. Dashboard U1–U22 complete and published.
 Dashboard close-out checkpoint **86c2a46**, A1 planning checkpoint **00a0731**; S01 checkpoint **c9d8008**
 and S02 checkpoint **93b3e1d** are committed and pushed (S01's exact control source is **c6d5db4**).
 The original S03/S05 experiment snapshot is **ab32eda**, committed and pushed before the candidate repair;
@@ -23,9 +23,10 @@ before any incoming fit.
 The audited incoming screen and S06 50% ledger were pushed as **1ecc78a**.
 The first selected-timeout engine protocol was frozen before an engine result in **b88840b**.
 The model-artifact builder was preserved before fitting in **19b34bc**.
+The isolated policy source, model reconstruction and smoke evidence were pushed before real-game wiring in **74e3e71**.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
 product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S05 are complete;
-S06 is active at 50%; A1 overall is 46.0%.** Isolated assignment candidates have event-level diagnostics and wiring only;
+S06 is active at 60%; S07 is 0%; A1 overall is 47.2%.** Isolated assignment candidates have event-level diagnostics and wiring only;
 no defence candidate has had an engine-accuracy test, and no model promotion, forecast or PWA change has been made.
 
 **Completed S05 evidence:** the 200-game flow and its independent accounting are complete; the comparison and
@@ -336,7 +337,7 @@ all **84,344** ranking scores and all game-bootstrap metrics; **26** focused tes
 (**6,507** windows ranked in **24.7 s**, including fits). The audit's first syntax preflight failed before
 execution; corrected audit log `/tmp/musnba_a1_s06_in_screen_audit_v2.log` passes.
 
-**S06 60% in progress:** TRAINING_PLAN freezes an isolated simulation protocol, not a promotion.
+**S06 60%:** TRAINING_PLAN freezes an isolated simulation protocol, not a promotion.
 `scripts/a1_substitution_engine_models.py` independently refitted the frozen F4 nodes on **729** earlier games
 through **2025-12-31**, reproducing both saved validation screens exactly (maximum error **0**). It saved **7,064**
 selected timeouts, **729** regulation and **30** observed-overtime templates, including empty overtime periods;
@@ -351,9 +352,18 @@ raises explicitly. The first hook test lacked a fake model's band table and fail
 was corrected. **36** focused tests now pass, including the controlled free-throw rebound, feature parity, repeatability
 and accounting tests, and the new policy's Pylance diagnostics are clear. The F4 input loader verifies **7,317** strictly
 prior player targets across all **200** fixed games. Existing production engine/backtest files retain unrelated prior
-diagnostics; no new candidate-path diagnostic is reported. Next, preserve this pre-run source, reproduce the saved
-three-game default control, then run the same three-game candidate as a **wiring** test before considering the fixed
-200-game paired screen. Do not award the 60% rung until real-engine wiring and required identities pass.
+diagnostics; no new candidate-path diagnostic is reported. The unchanged default reproduced **3/3** pinned games in **51 s** (17 s/game) as
+`20261122T090614Z_a1_s06_default_wiring`; independent
+`analysis/experiments/20261122_a1_s06_default_wiring_accounting.json` matches all **92** non-key game columns and
+**20** non-key player columns over **64** player-games to `1e-12`, plus **24** quarter and **6** team checks.
+The same three-game candidate completed in **63 s** (21 s/game) as
+`20261122T090745Z_a1_s06_candidate_wiring`, log `/tmp/musnba_a1_s06_candidate_wiring.log`. Independent
+`analysis/experiments/20261122_a1_s06_candidate_wiring_accounting.json` checks **24** actual quarter scores,
+**64** player 3PM actuals and **6** complete team 3PM sums with no mismatches. Across **3,000** worlds the policy
+recorded **28,158** selected-timeout world events, **35,389** sampled exits, **1,395** foul-out replacements,
+**364** coalesced and **582** expired clocks, and **88** overtime-timeout events; these are wiring counts, not
+population rates or an accuracy comparison. The policy asserts team minutes and player/team points for every world;
+save independent per-world accounting before awarding 70% or starting the fixed 200-game paired screen.
 On this code, default smoke passed **102/102** (`/tmp/musnba_a1_s06_wiring_smoke.log`) and the deliberate fault
 exited **1** with **80/102** checks passing (`/tmp/musnba_a1_s06_wiring_fault.log`). Neither run changed the served
 model or PWA bundle; phone import remains unconfirmed.
@@ -361,7 +371,8 @@ model or PWA bundle; phone import remains unconfirmed.
 **S07 0% started independently** (S02/S05 dependencies are complete) while the S06 smoke runs. The retained ESPN
 archive has **5** collection folders dated 19–21 Nov 2026; all are in the protected final season. TRAINING_PLAN freezes
 an inventory-only audit using collection-finish-before-tip, status and box-presence coverage, with no status/outcome
-comparison or tuning on protected outcomes. The accepted availability fallback remains unchanged.
+comparison or tuning on protected outcomes. `scripts/a1_availability_report_audit.py` and **4** focused tests are
+prepared but the archive audit has not run. The accepted availability fallback remains unchanged.
 
 The tracking family was frozen in TRAINING_PLAN §8 and built separately by
 `scripts/a1_tracking_features.py`: former wrapper PID **85586**, shell **1549**, log
@@ -812,8 +823,8 @@ weights, with the old and new accounting; do not hide unfinished tasks by deleti
 | S03 Offence/defence signal diagnosis | 8% | 100% | Fixed matched flow/accounting, component decomposition and two falsifiable candidate families documented; research-only checkpoint |
 | S04 Defence and shot quality | 12% | 100% | Both families rejected at their frozen node gates; tracking rebuild and independent accounting verified; served model and bundle unchanged |
 | S05 Roles and minute allocation | 8% | 100% | Both matched screens and independent accounting complete; neither passes pooled MIN gate, retain D29 control; smoke/fault passed |
-| S06 Game-state substitutions | 12% | 50% | Incoming/outgoing fold screens and joint-selector accounting pass; unknown physical availability remains explicit |
-| S07 Availability and future absences | 6% | 0% | Planned |
+| S06 Game-state substitutions | 12% | 60% | Isolated selected-timeout/foul-out integration passes three-game wiring; per-world independent accounting remains |
+| S07 Availability and future absences | 6% | 0% | Protected-season-safe archive inventory prepared |
 | S08 Lineup branches and Expected | 6% | 0% | Planned |
 | S09 Shared form and end-game behaviour | 10% | 0% | Planned |
 | S10 Season pathway calibration | 8% | 0% | Planned |
@@ -822,7 +833,7 @@ weights, with the old and new accounting; do not hide unfinished tasks by deleti
 | S13 Current-model season history | 5% | 0% | Planned |
 | S14 Nightly, delivery, successor | 5% | 0% | Planned |
 
-**A1 overall: `█████████░░░░░░░░░░░ 46.0%`.** Both control seeds are complete; isolated assignment-event
+**A1 overall: `█████████░░░░░░░░░░░ 47.2%`.** Both control seeds are complete; isolated assignment-event
 diagnostics and three-game wiring are not engine-accuracy tests. No candidate has been promoted or changed production/PWA.
 Each rung below is cumulative; 100% always includes updated docs, necessary PWA model/data/shell delivery, reviewed
 commit and push, plus the owner summary. See AGENTS §3/§5 and PLAN §6c for the per-subtask PWA checklist; research-only
@@ -1168,21 +1179,15 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
 **Owner's overnight authority:** execute S01–S14 without waiting for input; the earlier planning-only stop is lifted.
 The dashboard programme is done. Do not resume U1–U22, repeat rejected defence variants unchanged or begin at S13.
 
-1. **Continue S06 substitution research at 50%.** Both four-fold node screens and their independent audits pass,
-   but their selected-timeout populations cannot be applied as all-dead-ball hazards. Build an isolated, cutoff-safe
-   engine integration with recognised opportunities matched to training, explicit per-world rosters and the
-   reproduced foul-out correction; test simultaneous changes, periods, overtime and insufficient replacements.
-   Preserve both existing screens and their hashes. The feasibility candidate's sampled selected-timeout templates,
-   conditional outgoing draw, incoming rank sampling, schedule handoff and strict foul-out behaviour are now frozen
-   in TRAINING_PLAN §8 before an engine result. Start with
-   `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m unittest tests.test_a1_substitutions -q`, inspect
-   `scripts/engine.py`'s current segment/lineup transitions. The F4 artifact and pre-run wiring are recorded under S06
-   60% above. Reproduce the default using
-   `.venv/bin/python -u scripts/backtest.py --config models/v1.2d.json --fold F4 --game-ids
+1. **Continue S06 substitution research at 60%.** Both node screens, earlier-fold model reproduction and three-game
+   engine wiring are complete, but selected-timeout results are not all-dead-ball hazards or a pre-game availability
+   forecast. Save independent per-world team-minute and points identities for the candidate, validate legal
+   five-player lineups and short/no-replacement stress cases, and rerun the three-game candidate before awarding 70%.
+   Then run the fixed 200-game F4 paired screen sequentially against S01's retained control, using the frozen gates.
+   The command is `.venv/bin/python -u scripts/backtest.py --config models/v1.2d.json --fold F4 --game-ids
    analysis/experiments/20261122_a1_reproduction_games.json --worlds 1000 --jobs 1 --threads 8 --rotation targets
-   --pool 0 --models folds/v1.2d_F4_all --name a1_s06_default_wiring`, then rerun the same command with
-   `--substitution-candidate analysis/experiments/20261122_a1_s06_engine_models_F4.json --name a1_s06_candidate_wiring`.
-   Compare the default to `20261122T015651Z_a1_s01_repro` and independently account the candidate.
+   --pool 0 --models folds/v1.2d_F4_all --substitution-candidate
+   analysis/experiments/20261122_a1_s06_engine_models_F4.json --name <new-unique-name>`.
    Do not relabel unconfirmed non-entries as known eligible negatives; separate any actual-participant conditional
    diagnostic from a pre-game forecast. The selected-timeout outgoing result is not an engine validation. Fix the
    independently reproduced unupdated foul-out mask in an isolated S06 candidate, not the serving path, and test it
@@ -1193,8 +1198,11 @@ The dashboard programme is done. Do not resume U1–U22, repeat rejected defence
    Original tracking publication/revision timing remains unknown; preserve S02's cutoff and provenance limits. The
    raw inventory retained 45 older entries without original fetch URL/time. Provider access remains one polite stream,
    paused during the nightly.
-2. **Continue S06–S10 in dependency order** after the S05 decision. Keep conditional-engine and actual pre-game
-   availability populations separate; record negative results and preserve the accepted control.
+2. **Continue S07 independently:** after preserving its audit source, run
+   `.venv/bin/python -u scripts/a1_availability_report_audit.py --output
+   analysis/experiments/20261122_a1_s07_report_coverage.json`. Audit its origin/status/box-presence counts and
+   missing coverage without scoring protected-season status outcomes. Then continue S06–S10 in dependency order;
+   keep conditional-engine and actual pre-game availability populations separate.
 3. **S11 freezes the tested combination before promotion.** Confirm on the fixed wider folds and second seed, protect
    the final test and use player outcomes first.
 4. **S12/S13 implement model visibility and versioned daily history.** Preserve original and previous-version
@@ -1231,9 +1239,9 @@ needs no change because the scoped overnight authority and checkpoint protocol a
 PWA bundle remain unchanged; phone import is still unconfirmed.
 
 **S06 partial document review:** HANDOFF carries the live ledger, data limitations and exact resume commands; PLAN
-records the 50% rung; FINDINGS records the populations, screens and failed preflights; TRAINING_PLAN freezes both screens;
-README maps the research scripts. ENGINE_PLAN and DASHBOARD_PLAN update status only because no engine, app, forecast,
-bundle or shell changed. AGENTS needs no change because the scoped overnight authority already applies. The served
+records the 60% rung; FINDINGS records the populations, screens and wiring; TRAINING_PLAN freezes the protocols;
+README maps the research scripts. ENGINE_PLAN and DASHBOARD_PLAN need no design/behaviour change because no accepted
+model, app, forecast, bundle or shell changed. AGENTS needs no change because the scoped overnight authority already applies. The served
 v1.3/pathway-v1 model and bundle remain unchanged; phone import is unconfirmed.
 
 ## Completed S01 audit and reproduction

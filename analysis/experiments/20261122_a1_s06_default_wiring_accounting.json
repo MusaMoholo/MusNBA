@@ -1,0 +1,31 @@
+{
+ "experiment": "a1_output_accounting",
+ "run": "20261122T090614Z_a1_s06_default_wiring",
+ "games": 3,
+ "player_games": 64,
+ "expected_simulated_player_games": 64,
+ "player_games_without_output": 0,
+ "missing_player_outputs": [],
+ "quarter_scoreboard_comparisons": 24,
+ "quarter_mismatches": 0,
+ "player_3pm_box_comparisons": 64,
+ "player_3pm_missing_actuals": 0,
+ "player_3pm_mismatches": 0,
+ "team_3pm_mean_comparisons": 6,
+ "team_3pm_incomplete": 0,
+ "team_3pm_incomplete_rosters": 0,
+ "team_3pm_mean_mismatches": 0,
+ "legacy_reproduction": {
+  "reference": "20261122T015651Z_a1_s01_repro",
+  "games": {
+   "rows": 3,
+   "columns": 92,
+   "absolute_tolerance": 1e-12
+  },
+  "players": {
+   "rows": 64,
+   "columns": 20,
+   "absolute_tolerance": 1e-12
+  }
+ }
+}
