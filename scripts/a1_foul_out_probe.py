@@ -27,17 +27,20 @@ class ProbeEngine(engine.Engine):
         self.m = SimpleNamespace(dated_candidate=False)
         self.diag = self.rotation_diag = None
 
-    def _context(self, game, state, active, offense, defense):
-        raise CapturedLineup(np.concatenate([offense[0], defense[0]]).astype(int).tolist())
+    def _context(self, g, st, A, L_off, L_def):
+        _ = g, st, A
+        raise CapturedLineup(np.concatenate([L_off[0], L_def[0]]).astype(int).tolist())
 
 
-class ProbeGame:
-    n = 12
-    avail = np.ones(12)
-    side = np.array([0] * 6 + [1] * 6)
-    expected = np.arange(12, dtype=float)
+class ProbeGame(engine.Game):
+    def __init__(self) -> None:
+        self.n = 12
+        self.avail = np.ones(12)
+        self.side = np.array([0] * 6 + [1] * 6)
+        self.expected = np.arange(12, dtype=float)
 
-    def lineup_tables(self, available, rng):
+    def lineup_tables(self, avail_world: np.ndarray, rng):
+        _ = avail_world, rng
         tables = np.stack([np.tile(np.arange(5), (2880, 1)), np.tile(np.arange(6, 11), (2880, 1))])
         return tables, np.array([[0, 1]])
 

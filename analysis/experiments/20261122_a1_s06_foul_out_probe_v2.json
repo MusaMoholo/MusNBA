@@ -1,0 +1,28 @@
+{
+ "experiment": "a1_s06_foul_out_state_probe",
+ "worlds": 1,
+ "home_roster": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5
+ ],
+ "scheduled_home_five": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "available_bench_player": 5,
+ "five_fouls_player_on_court": true,
+ "six_fouls_player_on_court": true,
+ "six_fouls_bench_player_on_court": false,
+ "interpretation": "Controlled state injection before a segment, not a frequency estimate. The currently served source initializes its foul-out mask but does not update it.",
+ "input_sha256": {
+  "scripts/a1_foul_out_probe.py": "f5838a6224e004c01b754f7aa4c45d7e5434c8dc430b30e54b090a82930a6726",
+  "scripts/engine.py": "85348127fcb4767e7678c1ff8892567b1a0bf90402c2cf4be75255e631b9d3fe"
+ }
+}

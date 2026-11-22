@@ -16,6 +16,8 @@ The completed S04 defence checkpoint and corrected minute-gate report are commit
 The completed S05 minutes checkpoint and original S06 pilot sources are committed and pushed as **417f3f5**.
 S06 partial checkpoints **637a025**, **70709ab**, **bdedeed** and **d77ac5e** are pushed and preserve the initial
 corrected replay, frozen fold protocol, exact v2 sources/reports, audited v3 inputs and native screen implementation.
+Partial checkpoint **2f05d47** preserves the independently audited outgoing result, incoming coverage and original
+foul-out probe.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
 product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S05 are complete;
 S06 is active at 40%; A1 overall is 44.8%.** Isolated assignment candidates have event-level diagnostics and wiring only;
@@ -299,7 +301,7 @@ An independent controlled engine probe then found a tightly coupled pre-existing
 initialised but never updated, so a player injected with six personal fouls stays in the next segment even with an
 available bench replacement (`analysis/experiments/20261122_a1_s06_foul_out_probe.json`). This is one controlled
 world, not a population frequency. Its first source has type diagnostics; a type-correct v2 produces the same result
-(`analysis/experiments/20261122_a1_s06_foul_out_probe_v2.json`), with the original indexed for preservation.
+(`analysis/experiments/20261122_a1_s06_foul_out_probe_v2.json`), with the original preserved in **2f05d47**.
 S06 must correct it in an isolated candidate and test foul-outs, insufficient rosters and default-path reproduction;
 do not silently change the served model.
 
