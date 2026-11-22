@@ -1337,6 +1337,21 @@ Original A1 remains 58%; do not double-count the separate board.
   weighted/expanded representations and their runtime must be validated before acceptance. Do not claim this is
   solved, round it away, or promote a partial implementation.
 
+**A1 20% foul-out repair protocol (22 Nov, before the candidate):** in an opt-in branch-only policy, repair each
+scheduled five by replacing any unavailable or six-foul player with the available, not-disqualified teammate
+outside that five with the largest existing D29 expected minutes, breaking ties by the engine's existing player
+order. A team with fewer than five legal available players fails explicitly; no NBA short-roster technical exception
+is claimed. After a sixth foul, update that world's affected five before free throws and later segments. Extend
+the existing policy hook with a per-active-world changed mask, preserving the existing boolean-policy and
+no-policy paths; recompute lineup-dependent context and player columns only for masked worlds. An unsupported
+mismatch-feature combination must fail explicitly rather than use stale columns. Shared vectorised random streams
+can still diverge after changed event counts; do not claim independent unaffected whole-game worlds or paired
+common-random-number semantics. Test exact no-policy/legacy-policy behaviour, both offense/defense sides, repeated
+scheduled disqualifications, multiple worlds, unavailable/short rosters, context isolation and independent legal
+five/score/minute accounting. Before any branch claim, run the same fixed F4 game **401810327**, **32** worlds per
+plays/sits branch and frozen seeds, with independently recorded trace; the active D44 nightly must finish before
+editing `engine.py` or starting this engine replay. A passing probe is wiring evidence, not a promotion gate.
+
 | Rung | A1 — lineups and Expected |
 |---:|---|
 | 10 | Freeze branch IDs, uncertain-player selection, provenance and independence caveats. |
