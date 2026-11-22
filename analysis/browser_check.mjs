@@ -37,7 +37,7 @@ const CASES = [
   ['teams', '#/teams', ['desktop', 'phone'], ['dark']],
   ['team', '#/team/14', ['desktop', 'phone'], ['light']],
   ['players', '#/players', ['desktop', 'phone'], ['dark']],
-  ['player', '#/player/3032977', ['desktop', 'phone'], ['dark']],
+  ['player', '#/player/3032977', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['lab', '#/lab', ['desktop', 'phone'], ['dark', 'light']],
   ['scenario', '#/game/401909305/scenario', ['desktop', 'phone'], ['dark', 'light']],
   ['scenario-set', '#/game/401909305/scenario/' + encodeURIComponent(JSON.stringify([{subj: 'p:4701230', v: 'pts', op: 'ge', x: 30}, {subj: 't:home', v: 'win'}])), ['desktop', 'phone'], ['dark']],

@@ -75,7 +75,10 @@ async function playerPage(view, {rest, current}) {
   const played = log.filter(r => !r.dnp);
   const avg = (rows, k) => rows.length ? rows.reduce((a, r) => a + (r[k] || 0), 0) / rows.length : null;
   const tiles = s ? [['PTS', 'pts'], ['REB', 'reb'], ['AST', 'ast'], ['3PM', 'fg3m'], ['STL', 'stl'], ['BLK', 'blk'], ['MIN', 'min']]
-    .map(([l, k]) => `<div class="tile"><span>${l}</span><b>${f1(s.tot[k] / s.gp)}</b><small>L5 ${f1(avg(played.slice(-5), k))}</small></div>`).join('') : '';
+    .map(([l, k]) => {  // U9: last 10 v season, coloured
+      const sv = s.tot[k] / s.gp, l10 = avg(played.slice(-10), k), d = l10 == null ? null : l10 - sv;
+      return `<div class="tile"><span>${l}</span><b>${f1(sv)}</b><small>L10 ${f1(l10)}${d == null ? '' : ` <em class="${d > 0.25 ? 'up' : d < -0.25 ? 'down' : 'dim'}">${d > 0 ? '+' : ''}${d.toFixed(1)}</em>`}</small></div>`;
+    }).join('') : '';
   const shoot = s ? `FG ${pctOf(s.tot.fgm, s.tot.fga)} · 3P ${pctOf(s.tot.fg3m, s.tot.fg3a)} · FT ${pctOf(s.tot.ftm, s.tot.fta)} · TS ${s.tot.fga + 0.44 * s.tot.fta ? (100 * s.tot.pts / (2 * (s.tot.fga + 0.44 * s.tot.fta))).toFixed(1) + '%' : '—'}` : '';
   const next = data.next;
   let nextHtml = '';
@@ -92,15 +95,43 @@ async function playerPage(view, {rest, current}) {
   view.innerHTML = `<section class="panel"><div class="row">${p.team ? logo(p.team, 'lg') : ''}<div class="grow"><h2 style="margin:0;font-size:20px">${esc(p.name)}</h2>
       <p class="note" style="margin:0">${p.team ? `<a href="#/team/${p.team}">${esc(team(p.team).name)}</a> · ` : ''}${esc(p.pos || '')}${p.jersey ? ' · #' + esc(p.jersey) : ''}${p.age ? ' · age ' + p.age : ''}${p.height ? ' · ' + esc(p.height) : ''}${p.on_roster === false ? ' · not on a current roster' : ''} ${statusTag(p.status)}</p>
       ${p.injury?.comment ? `<p class="note status-q" style="margin:4px 0 0">${esc(p.injury.comment)}</p>` : ''}</div></div>
-      ${s ? `<div class="tiles" style="margin-top:12px">${tiles}</div><p class="note">${s.gp} games (${s.gs} starts) · ${shoot} · per-game season averages with last-5 alongside</p>` : '<p class="note">No games played this season.</p>'}</section>
+      ${s ? `<div class="tiles" style="margin-top:12px">${tiles}</div><p class="note">${s.gp} games (${s.gs} starts) · ${shoot} · per-game season averages; L10 = last 10 games played, with the change v the season</p>` : '<p class="note">No games played this season.</p>'}</section>
     ${nextHtml}
     ${quartersPanel(data.quarters)}
-    ${log.length ? `<section class="panel"><h3>Points by game</h3>${barChart(items)}<p class="note">Last ${items.length} team games; grey marks are games he did not play.</p></section>
+    ${log.length ? `<section class="panel" id="trend">${trendPanel(log, s)}</section>
     <section class="panel"><h3>Game log</h3><div class="scroll"><table><thead><tr><th class="l">Date</th><th class="l">Opp</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th><th>3PM</th><th>STL</th><th>BLK</th><th>TOV</th><th>FG</th><th>3P</th><th>FT</th><th>+/−</th></tr></thead><tbody>
       ${log.slice().reverse().map(r => `<tr class="link" data-gid="${r.game_id}"><td class="l">${esc(dayLabel(r.date))}</td><td class="l">${r.home ? 'vs' : '@'} ${esc(team(r.opp).abbr)}</td>
         ${r.dnp ? `<td class="l dim" colspan="12">${esc(r.reason || 'Did not play')}</td>` : `<td>${r.min}</td><td><b>${r.pts}</b></td><td>${r.reb}</td><td>${r.ast}</td><td>${r.fg3m}</td><td>${r.stl}</td><td>${r.blk}</td><td>${r.tov}</td><td>${r.fgm}-${r.fga}</td><td>${r.fg3m}-${r.fg3a}</td><td>${r.ftm}-${r.fta}</td><td>${signed(r.pm, 0)}</td>`}</tr>`).join('')}
       </tbody></table></div></section>` : ''}`;
   view.querySelectorAll('tr[data-gid]').forEach(tr => tr.onclick = () => { location.hash = '#/game/' + tr.dataset.gid; });
+  const wire = () => view.querySelectorAll('[data-trend]').forEach(b => b.onclick = () => {
+    trendStat = b.dataset.trend; store.set('trend-stat', trendStat); view.querySelector('#trend').innerHTML = trendPanel(log, s); wire(); });
+  wire();
+}
+
+// U9: trend chart — game-by-game values (DNP = gap), 5-game rolling average and the season average, for a chosen stat
+let trendStat = store.get('trend-stat', 'pts');
+function trendPanel(log, s) {
+  const stats = [['pts', 'PTS'], ['reb', 'REB'], ['ast', 'AST'], ['fg3m', '3PM'], ['min', 'MIN']];
+  const k = stats.some(([x]) => x === trendStat) ? trendStat : 'pts';
+  const rows = log.slice(-30);
+  const vals = rows.map(r => (r.dnp ? null : Number(r[k]) || 0));
+  const got = vals.filter(v => v != null);
+  if (!got.length) return '<h3>Trend</h3><p class="note">No games played.</p>';
+  const W = 640, H = 200, pl = 28, pr = 8, pt = 10, pb = 22, hi = Math.max(...got) * 1.1 || 1;
+  const x = i => pl + (i + 0.5) * (W - pl - pr) / rows.length, y = v => pt + (hi - v) * (H - pt - pb) / hi;
+  const roll = vals.map((_, i) => { const w = vals.slice(Math.max(0, i - 4), i + 1).filter(v => v != null); return w.length ? w.reduce((a, b) => a + b, 0) / w.length : null; });
+  const path = (arr) => arr.map((v, i) => (v == null ? null : `${x(i).toFixed(1)},${y(v).toFixed(1)}`)).filter(Boolean).map((p, i) => (i ? 'L' : 'M') + p).join(' ');
+  const season = s ? s.tot[k] / s.gp : null;
+  const bars = vals.map((v, i) => v == null ? `<rect class="dnp" x="${(x(i) - 3).toFixed(1)}" y="${H - pb - 4}" width="6" height="4"><title>${rows[i].date}: ${esc(rows[i].reason || 'DNP')}</title></rect>`
+    : `<rect class="bar" x="${(x(i) - 5).toFixed(1)}" y="${y(v).toFixed(1)}" width="10" height="${(H - pb - y(v)).toFixed(1)}"><title>${rows[i].date} ${rows[i].home ? 'vs' : '@'} ${team(rows[i].opp).abbr}: ${v}</title></rect>`).join('');
+  const dates = rows.map((r, i) => (i % Math.ceil(rows.length / 8) === 0 ? `<text x="${x(i).toFixed(1)}" y="${H - 6}" text-anchor="middle">${r.date.slice(5)}</text>` : '')).join('');
+  return `<div class="row" style="justify-content:space-between;align-items:center"><h3 style="margin:0">Trend · last ${rows.length} team games</h3>
+    ${seg(stats, k, 'data-trend')}</div>
+    <svg class="trend" viewBox="0 0 ${W} ${H}" role="img" aria-label="Trend">${bars}
+      ${season != null ? `<line class="season" x1="${pl}" x2="${W - pr}" y1="${y(season).toFixed(1)}" y2="${y(season).toFixed(1)}"></line><text x="${pl + 4}" y="${(y(season) - 4).toFixed(1)}" text-anchor="start" class="lab">season ${f1(season)}</text>` : ''}
+      <path class="roll" d="${path(roll)}"></path>${dates}<text x="${pl - 4}" y="${(y(hi / 1.1) + 3).toFixed(1)}" text-anchor="end">${Math.round(hi / 1.1)}</text></svg>
+    <p class="note">Bars = each game · line = 5-game rolling average · dashed = season average · grey ticks = did not play.</p>`;
 }
 const pctOf = (m, a) => a ? (100 * m / a).toFixed(1) + '%' : '—';
 const mmss = sec => { const t = Math.round(sec); return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`; };
