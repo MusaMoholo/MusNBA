@@ -1,0 +1,25 @@
+{
+ "experiment": "a1_s06_sequence_window_independent_accounting",
+ "games": 191,
+ "counts": {
+  "windows": 23160,
+  "scoreboards": 46320,
+  "scoreboards_missing": 0,
+  "lineups": 46320,
+  "minute_vectors": 46320,
+  "foul_values": 502773,
+  "substitutions": 11277,
+  "no_substitution_windows": 17367,
+  "timeout_no_substitution_windows": 729
+ },
+ "raw_substitutions": 11277,
+ "method": "Join every trigger and substitution directly to retained raw events; independently replay each window’s lineup changes and count prior personal fouls. Verify five-player seconds against elapsed game time and compare pre-substitution scores to the feed scoreboard.",
+ "limitations": "Reconciliation does not prove that every legal substitution opportunity was observed or that the retrospectively inferred participant roster was known before tip.",
+ "input_sha256": {
+  "analysis/experiments/20261122_a1_s06_sequence_pilot_v2.json": "bedd3e03fffbc148c936ff670c2ce472049be69bd233099e4a200db39afea1ea",
+  "data/derived/experiments/20261122_a1_s06_sequence_pilot_v2.parquet": "37c1854f91c71dcd07d59deb2a24969241b5d29cd8597763cc97f897a0344cac",
+  "data/raw/hoopr/play_by_play_2026.parquet": "f7051c5c0c5b605419fcc0e0c13dd90df7803f96dab290554c1ef737433a98b2",
+  "scripts/a1_substitution_audit.py": "55eca6f6ffb73a9782424b26313a8e373c9bc07b2b1fdd08032dfd35bdc5fd9d",
+  "scripts/pbp.py": "2c85ed02adebf34fce9696f37c030e246a868a93cdde3a70237176cd4ead8106"
+ }
+}

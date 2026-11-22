@@ -1,0 +1,1550 @@
+{
+ "experiment": "a1_s06_timeout_state_response_diagnostic",
+ "games": 191,
+ "player_decisions": 39380,
+ "missing_role_decisions": 0,
+ "cells": {
+  "out/all/margin/ahead_15_plus": {
+   "observations": 2335,
+   "player_games": 1091,
+   "games": 126,
+   "changed": 350,
+   "rate": 0.14989293361884368,
+   "supported": true,
+   "ci_95": [
+    0.1302320633349827,
+    0.1699758403754363
+   ]
+  },
+  "out/all/margin/behind_15_plus": {
+   "observations": 2335,
+   "player_games": 1075,
+   "games": 126,
+   "changed": 449,
+   "rate": 0.1922912205567452,
+   "supported": true,
+   "ci_95": [
+    0.1730084815475469,
+    0.21210762331838565
+   ]
+  },
+  "out/all/margin/close_5_or_less": {
+   "observations": 6530,
+   "player_games": 2609,
+   "games": 165,
+   "changed": 1000,
+   "rate": 0.15313935681470137,
+   "supported": true,
+   "ci_95": [
+    0.14129728971008576,
+    0.16532747840083645
+   ]
+  },
+  "out/all/margin/intermediate": {
+   "observations": 6960,
+   "player_games": 3007,
+   "games": 187,
+   "changed": 991,
+   "rate": 0.14238505747126437,
+   "supported": true,
+   "ci_95": [
+    0.13090640048154092,
+    0.1541851652618981
+   ]
+  },
+  "out/all/period/1": {
+   "observations": 3860,
+   "player_games": 2887,
+   "games": 191,
+   "changed": 630,
+   "rate": 0.16321243523316062,
+   "supported": true,
+   "ci_95": [
+    0.1493606138107417,
+    0.17720240047222405
+   ]
+  },
+  "out/all/period/2": {
+   "observations": 4020,
+   "player_games": 2856,
+   "games": 190,
+   "changed": 714,
+   "rate": 0.17761194029850746,
+   "supported": true,
+   "ci_95": [
+    0.16340852130325814,
+    0.19204819277108434
+   ]
+  },
+  "out/all/period/3": {
+   "observations": 4310,
+   "player_games": 2812,
+   "games": 190,
+   "changed": 542,
+   "rate": 0.12575406032482597,
+   "supported": true,
+   "ci_95": [
+    0.11258665421336654,
+    0.1385718487394958
+   ]
+  },
+  "out/all/period/4": {
+   "observations": 5860,
+   "player_games": 2784,
+   "games": 190,
+   "changed": 895,
+   "rate": 0.15273037542662116,
+   "supported": true,
+   "ci_95": [
+    0.1390803576897164,
+    0.16728813559322034
+   ]
+  },
+  "out/all/period/OT": {
+   "observations": 110,
+   "player_games": 44,
+   "games": 4,
+   "changed": 9,
+   "rate": 0.08181818181818182,
+   "supported": false,
+   "ci_95": null
+  },
+  "out/all/foul_trouble/no": {
+   "observations": 17819,
+   "player_games": 3839,
+   "games": 191,
+   "changed": 2698,
+   "rate": 0.15141141478197429,
+   "supported": true,
+   "ci_95": [
+    0.14423996689971552,
+    0.15855163562516972
+   ]
+  },
+  "out/all/foul_trouble/yes": {
+   "observations": 341,
+   "player_games": 215,
+   "games": 122,
+   "changed": 92,
+   "rate": 0.2697947214076246,
+   "supported": true,
+   "ci_95": [
+    0.21944941776612598,
+    0.3250709831161588
+   ]
+  },
+  "out/all/duration/4_to_under_8": {
+   "observations": 6485,
+   "player_games": 3005,
+   "games": 191,
+   "changed": 1303,
+   "rate": 0.20092521202775637,
+   "supported": true,
+   "ci_95": [
+    0.1880910918608557,
+    0.21385876085244496
+   ]
+  },
+  "out/all/duration/8_plus": {
+   "observations": 4107,
+   "player_games": 2009,
+   "games": 191,
+   "changed": 1022,
+   "rate": 0.24884343803262723,
+   "supported": true,
+   "ci_95": [
+    0.23053733272320123,
+    0.26746878955981185
+   ]
+  },
+  "out/all/duration/under_4": {
+   "observations": 7568,
+   "player_games": 3491,
+   "games": 191,
+   "changed": 465,
+   "rate": 0.06144291754756871,
+   "supported": true,
+   "ci_95": [
+    0.0551411731437569,
+    0.06786707614428691
+   ]
+  },
+  "out/star/margin/ahead_15_plus": {
+   "observations": 230,
+   "player_games": 99,
+   "games": 77,
+   "changed": 32,
+   "rate": 0.1391304347826087,
+   "supported": false,
+   "ci_95": null
+  },
+  "out/star/margin/behind_15_plus": {
+   "observations": 138,
+   "player_games": 62,
+   "games": 53,
+   "changed": 34,
+   "rate": 0.2463768115942029,
+   "supported": false,
+   "ci_95": null
+  },
+  "out/star/margin/close_5_or_less": {
+   "observations": 677,
+   "player_games": 217,
+   "games": 128,
+   "changed": 76,
+   "rate": 0.11225997045790251,
+   "supported": true,
+   "ci_95": [
+    0.08981149926680788,
+    0.13541666666666666
+   ]
+  },
+  "out/star/margin/intermediate": {
+   "observations": 705,
+   "player_games": 252,
+   "games": 148,
+   "changed": 76,
+   "rate": 0.10780141843971631,
+   "supported": true,
+   "ci_95": [
+    0.08368200836820083,
+    0.13410774163802494
+   ]
+  },
+  "out/star/period/1": {
+   "observations": 428,
+   "player_games": 259,
+   "games": 151,
+   "changed": 67,
+   "rate": 0.15654205607476634,
+   "supported": true,
+   "ci_95": [
+    0.125,
+    0.18969555035128804
+   ]
+  },
+  "out/star/period/2": {
+   "observations": 334,
+   "player_games": 228,
+   "games": 139,
+   "changed": 39,
+   "rate": 0.11676646706586827,
+   "supported": true,
+   "ci_95": [
+    0.08571428571428572,
+    0.15013404825737264
+   ]
+  },
+  "out/star/period/3": {
+   "observations": 475,
+   "player_games": 259,
+   "games": 150,
+   "changed": 39,
+   "rate": 0.08210526315789474,
+   "supported": true,
+   "ci_95": [
+    0.05858564726765564,
+    0.10762331838565023
+   ]
+  },
+  "out/star/period/4": {
+   "observations": 505,
+   "player_games": 198,
+   "games": 123,
+   "changed": 73,
+   "rate": 0.14455445544554454,
+   "supported": true,
+   "ci_95": [
+    0.11110694652673662,
+    0.18271220696861015
+   ]
+  },
+  "out/star/period/OT": {
+   "observations": 8,
+   "player_games": 4,
+   "games": 2,
+   "changed": 0,
+   "rate": 0.0,
+   "supported": false,
+   "ci_95": null
+  },
+  "out/star/foul_trouble/no": {
+   "observations": 1719,
+   "player_games": 269,
+   "games": 153,
+   "changed": 208,
+   "rate": 0.12100058173356602,
+   "supported": true,
+   "ci_95": [
+    0.10483363652330203,
+    0.13785460638866254
+   ]
+  },
+  "out/star/foul_trouble/yes": {
+   "observations": 31,
+   "player_games": 16,
+   "games": 14,
+   "changed": 10,
+   "rate": 0.3225806451612903,
+   "supported": false,
+   "ci_95": null
+  },
+  "out/star/duration/4_to_under_8": {
+   "observations": 650,
+   "player_games": 257,
+   "games": 145,
+   "changed": 110,
+   "rate": 0.16923076923076924,
+   "supported": true,
+   "ci_95": [
+    0.1402332727118387,
+    0.1996727341807129
+   ]
+  },
+  "out/star/duration/8_plus": {
+   "observations": 552,
+   "player_games": 215,
+   "games": 139,
+   "changed": 81,
+   "rate": 0.14673913043478262,
+   "supported": true,
+   "ci_95": [
+    0.11743101890464276,
+    0.1781609195402299
+   ]
+  },
+  "out/star/duration/under_4": {
+   "observations": 548,
+   "player_games": 247,
+   "games": 147,
+   "changed": 27,
+   "rate": 0.04927007299270073,
+   "supported": true,
+   "ci_95": [
+    0.03272727272727273,
+    0.066914675840696
+   ]
+  },
+  "out/starter/margin/ahead_15_plus": {
+   "observations": 961,
+   "player_games": 417,
+   "games": 122,
+   "changed": 169,
+   "rate": 0.17585848074921956,
+   "supported": true,
+   "ci_95": [
+    0.14566015763074178,
+    0.20768451953031392
+   ]
+  },
+  "out/starter/margin/behind_15_plus": {
+   "observations": 949,
+   "player_games": 430,
+   "games": 123,
+   "changed": 225,
+   "rate": 0.23709167544783982,
+   "supported": true,
+   "ci_95": [
+    0.2039468303392068,
+    0.27227869315456843
+   ]
+  },
+  "out/starter/margin/close_5_or_less": {
+   "observations": 3408,
+   "player_games": 1205,
+   "games": 165,
+   "changed": 530,
+   "rate": 0.15551643192488263,
+   "supported": true,
+   "ci_95": [
+    0.13976260147623173,
+    0.17221755188812823
+   ]
+  },
+  "out/starter/margin/intermediate": {
+   "observations": 3535,
+   "player_games": 1355,
+   "games": 187,
+   "changed": 465,
+   "rate": 0.13154172560113153,
+   "supported": true,
+   "ci_95": [
+    0.11702441307606688,
+    0.14705904023855343
+   ]
+  },
+  "out/starter/period/1": {
+   "observations": 1968,
+   "player_games": 1386,
+   "games": 191,
+   "changed": 421,
+   "rate": 0.21392276422764228,
+   "supported": true,
+   "ci_95": [
+    0.19270019185168416,
+    0.23585424205103725
+   ]
+  },
+  "out/starter/period/2": {
+   "observations": 1847,
+   "player_games": 1269,
+   "games": 190,
+   "changed": 230,
+   "rate": 0.12452625879805089,
+   "supported": true,
+   "ci_95": [
+    0.10978134265292332,
+    0.13963516893469788
+   ]
+  },
+  "out/starter/period/3": {
+   "observations": 2260,
+   "player_games": 1363,
+   "games": 190,
+   "changed": 365,
+   "rate": 0.16150442477876106,
+   "supported": true,
+   "ci_95": [
+    0.14266064278718052,
+    0.17990232401575523
+   ]
+  },
+  "out/starter/period/4": {
+   "observations": 2697,
+   "player_games": 1102,
+   "games": 185,
+   "changed": 367,
+   "rate": 0.1360771227289581,
+   "supported": true,
+   "ci_95": [
+    0.11673736124220822,
+    0.15728489940281903
+   ]
+  },
+  "out/starter/period/OT": {
+   "observations": 81,
+   "player_games": 29,
+   "games": 4,
+   "changed": 6,
+   "rate": 0.07407407407407407,
+   "supported": false,
+   "ci_95": null
+  },
+  "out/starter/foul_trouble/no": {
+   "observations": 8651,
+   "player_games": 1505,
+   "games": 191,
+   "changed": 1334,
+   "rate": 0.15420182637845337,
+   "supported": true,
+   "ci_95": [
+    0.1442006089927401,
+    0.164403971384414
+   ]
+  },
+  "out/starter/foul_trouble/yes": {
+   "observations": 202,
+   "player_games": 119,
+   "games": 87,
+   "changed": 55,
+   "rate": 0.2722772277227723,
+   "supported": true,
+   "ci_95": [
+    0.21296296296296297,
+    0.3406113537117904
+   ]
+  },
+  "out/starter/duration/4_to_under_8": {
+   "observations": 3530,
+   "player_games": 1393,
+   "games": 191,
+   "changed": 668,
+   "rate": 0.18923512747875354,
+   "supported": true,
+   "ci_95": [
+    0.1742737642729503,
+    0.20452648790714936
+   ]
+  },
+  "out/starter/duration/8_plus": {
+   "observations": 2127,
+   "player_games": 1002,
+   "games": 189,
+   "changed": 552,
+   "rate": 0.25952045133991536,
+   "supported": true,
+   "ci_95": [
+    0.23392317652136382,
+    0.28520443594104306
+   ]
+  },
+  "out/starter/duration/under_4": {
+   "observations": 3196,
+   "player_games": 1394,
+   "games": 191,
+   "changed": 169,
+   "rate": 0.052878598247809765,
+   "supported": true,
+   "ci_95": [
+    0.044339557250490755,
+    0.062199499204769575
+   ]
+  },
+  "out/bench/margin/ahead_15_plus": {
+   "observations": 1140,
+   "player_games": 571,
+   "games": 120,
+   "changed": 149,
+   "rate": 0.1307017543859649,
+   "supported": true,
+   "ci_95": [
+    0.10752688172043011,
+    0.1547628902554399
+   ]
+  },
+  "out/bench/margin/behind_15_plus": {
+   "observations": 1241,
+   "player_games": 580,
+   "games": 125,
+   "changed": 190,
+   "rate": 0.15310233682514102,
+   "supported": true,
+   "ci_95": [
+    0.13351971279467859,
+    0.1738769052113998
+   ]
+  },
+  "out/bench/margin/close_5_or_less": {
+   "observations": 2439,
+   "player_games": 1184,
+   "games": 164,
+   "changed": 393,
+   "rate": 0.16113161131611317,
+   "supported": true,
+   "ci_95": [
+    0.14176762304644716,
+    0.1808880505363722
+   ]
+  },
+  "out/bench/margin/intermediate": {
+   "observations": 2710,
+   "player_games": 1395,
+   "games": 184,
+   "changed": 448,
+   "rate": 0.16531365313653137,
+   "supported": true,
+   "ci_95": [
+    0.14902961992260685,
+    0.1825685522222043
+   ]
+  },
+  "out/bench/period/1": {
+   "observations": 1458,
+   "player_games": 1238,
+   "games": 188,
+   "changed": 142,
+   "rate": 0.09739368998628258,
+   "supported": true,
+   "ci_95": [
+    0.08086632868527835,
+    0.11450964342760873
+   ]
+  },
+  "out/bench/period/2": {
+   "observations": 1833,
+   "player_games": 1354,
+   "games": 190,
+   "changed": 443,
+   "rate": 0.24168030551009276,
+   "supported": true,
+   "ci_95": [
+    0.22039273577759896,
+    0.26436205693874404
+   ]
+  },
+  "out/bench/period/3": {
+   "observations": 1570,
+   "player_games": 1186,
+   "games": 189,
+   "changed": 137,
+   "rate": 0.08726114649681528,
+   "supported": true,
+   "ci_95": [
+    0.07253868611614708,
+    0.10279819564772494
+   ]
+  },
+  "out/bench/period/4": {
+   "observations": 2648,
+   "player_games": 1478,
+   "games": 190,
+   "changed": 455,
+   "rate": 0.17182779456193353,
+   "supported": true,
+   "ci_95": [
+    0.15366882139260166,
+    0.19166500029427178
+   ]
+  },
+  "out/bench/period/OT": {
+   "observations": 21,
+   "player_games": 11,
+   "games": 4,
+   "changed": 3,
+   "rate": 0.14285714285714285,
+   "supported": false,
+   "ci_95": null
+  },
+  "out/bench/foul_trouble/no": {
+   "observations": 7425,
+   "player_games": 2058,
+   "games": 191,
+   "changed": 1154,
+   "rate": 0.15542087542087543,
+   "supported": true,
+   "ci_95": [
+    0.1455029411603216,
+    0.16563103432527088
+   ]
+  },
+  "out/bench/foul_trouble/yes": {
+   "observations": 105,
+   "player_games": 78,
+   "games": 62,
+   "changed": 26,
+   "rate": 0.24761904761904763,
+   "supported": false,
+   "ci_95": null
+  },
+  "out/bench/duration/4_to_under_8": {
+   "observations": 2297,
+   "player_games": 1351,
+   "games": 191,
+   "changed": 524,
+   "rate": 0.2281236395298215,
+   "supported": true,
+   "ci_95": [
+    0.20784230119336786,
+    0.24894326471374975
+   ]
+  },
+  "out/bench/duration/8_plus": {
+   "observations": 1421,
+   "player_games": 789,
+   "games": 189,
+   "changed": 388,
+   "rate": 0.2730471498944405,
+   "supported": true,
+   "ci_95": [
+    0.24300900644959814,
+    0.3060324044153257
+   ]
+  },
+  "out/bench/duration/under_4": {
+   "observations": 3812,
+   "player_games": 1843,
+   "games": 191,
+   "changed": 268,
+   "rate": 0.07030430220356768,
+   "supported": true,
+   "ci_95": [
+    0.06127320954907162,
+    0.0794735901648374
+   ]
+  },
+  "out/unknown/margin/ahead_15_plus": {
+   "observations": 4,
+   "player_games": 4,
+   "games": 4,
+   "changed": 0,
+   "rate": 0.0,
+   "supported": false,
+   "ci_95": null
+  },
+  "out/unknown/margin/behind_15_plus": {
+   "observations": 7,
+   "player_games": 3,
+   "games": 3,
+   "changed": 0,
+   "rate": 0.0,
+   "supported": false,
+   "ci_95": null
+  },
+  "out/unknown/margin/close_5_or_less": {
+   "observations": 6,
+   "player_games": 3,
+   "games": 3,
+   "changed": 1,
+   "rate": 0.16666666666666666,
+   "supported": false,
+   "ci_95": null
+  },
+  "out/unknown/margin/intermediate": {
+   "observations": 10,
+   "player_games": 5,
+   "games": 5,
+   "changed": 2,
+   "rate": 0.2,
+   "supported": false,
+   "ci_95": null
+  },
+  "out/unknown/period/1": {
+   "observations": 6,
+   "player_games": 4,
+   "games": 4,
+   "changed": 0,
+   "rate": 0.0,
+   "supported": false,
+   "ci_95": null
+  },
+  "out/unknown/period/2": {
+   "observations": 6,
+   "player_games": 5,
+   "games": 5,
+   "changed": 2,
+   "rate": 0.3333333333333333,
+   "supported": false,
+   "ci_95": null
+  },
+  "out/unknown/period/3": {
+   "observations": 5,
+   "player_games": 4,
+   "games": 4,
+   "changed": 1,
+   "rate": 0.2,
+   "supported": false,
+   "ci_95": null
+  },
+  "out/unknown/period/4": {
+   "observations": 10,
+   "player_games": 6,
+   "games": 6,
+   "changed": 0,
+   "rate": 0.0,
+   "supported": false,
+   "ci_95": null
+  },
+  "out/unknown/foul_trouble/no": {
+   "observations": 24,
+   "player_games": 7,
+   "games": 7,
+   "changed": 2,
+   "rate": 0.08333333333333333,
+   "supported": false,
+   "ci_95": null
+  },
+  "out/unknown/foul_trouble/yes": {
+   "observations": 3,
+   "player_games": 2,
+   "games": 2,
+   "changed": 1,
+   "rate": 0.3333333333333333,
+   "supported": false,
+   "ci_95": null
+  },
+  "out/unknown/duration/4_to_under_8": {
+   "observations": 8,
+   "player_games": 4,
+   "games": 4,
+   "changed": 1,
+   "rate": 0.125,
+   "supported": false,
+   "ci_95": null
+  },
+  "out/unknown/duration/8_plus": {
+   "observations": 7,
+   "player_games": 3,
+   "games": 3,
+   "changed": 1,
+   "rate": 0.14285714285714285,
+   "supported": false,
+   "ci_95": null
+  },
+  "out/unknown/duration/under_4": {
+   "observations": 12,
+   "player_games": 7,
+   "games": 7,
+   "changed": 1,
+   "rate": 0.08333333333333333,
+   "supported": false,
+   "ci_95": null
+  },
+  "in/all/margin/ahead_15_plus": {
+   "observations": 3392,
+   "player_games": 1246,
+   "games": 126,
+   "changed": 350,
+   "rate": 0.10318396226415094,
+   "supported": true,
+   "ci_95": [
+    0.08973931010550669,
+    0.11718124211258174
+   ]
+  },
+  "in/all/margin/behind_15_plus": {
+   "observations": 2877,
+   "player_games": 1148,
+   "games": 126,
+   "changed": 449,
+   "rate": 0.15606534584636775,
+   "supported": true,
+   "ci_95": [
+    0.14158612679630497,
+    0.17148444705169222
+   ]
+  },
+  "in/all/margin/close_5_or_less": {
+   "observations": 7024,
+   "player_games": 2895,
+   "games": 165,
+   "changed": 1000,
+   "rate": 0.14236902050113895,
+   "supported": true,
+   "ci_95": [
+    0.13141341612064578,
+    0.15351158390064235
+   ]
+  },
+  "in/all/margin/intermediate": {
+   "observations": 7927,
+   "player_games": 3399,
+   "games": 187,
+   "changed": 991,
+   "rate": 0.12501576889113158,
+   "supported": true,
+   "ci_95": [
+    0.11408012367197863,
+    0.1366137205651628
+   ]
+  },
+  "in/all/period/1": {
+   "observations": 4558,
+   "player_games": 3239,
+   "games": 191,
+   "changed": 630,
+   "rate": 0.13821851689337428,
+   "supported": true,
+   "ci_95": [
+    0.1254701132211983,
+    0.15106975916592927
+   ]
+  },
+  "in/all/period/2": {
+   "observations": 4760,
+   "player_games": 3207,
+   "games": 190,
+   "changed": 714,
+   "rate": 0.15,
+   "supported": true,
+   "ci_95": [
+    0.1370375074029285,
+    0.16350718380487336
+   ]
+  },
+  "in/all/period/3": {
+   "observations": 5151,
+   "player_games": 3172,
+   "games": 190,
+   "changed": 542,
+   "rate": 0.1052222869345758,
+   "supported": true,
+   "ci_95": [
+    0.09355026147588612,
+    0.11701681096852645
+   ]
+  },
+  "in/all/period/4": {
+   "observations": 6643,
+   "player_games": 3170,
+   "games": 190,
+   "changed": 895,
+   "rate": 0.1347282854132169,
+   "supported": true,
+   "ci_95": [
+    0.12392071420314427,
+    0.14570330968082068
+   ]
+  },
+  "in/all/period/OT": {
+   "observations": 108,
+   "player_games": 42,
+   "games": 4,
+   "changed": 9,
+   "rate": 0.08333333333333333,
+   "supported": false,
+   "ci_95": null
+  },
+  "in/all/foul_trouble/no": {
+   "observations": 20645,
+   "player_games": 4088,
+   "games": 191,
+   "changed": 2753,
+   "rate": 0.13334947929280697,
+   "supported": true,
+   "ci_95": [
+    0.12686526164098888,
+    0.14006518192920034
+   ]
+  },
+  "in/all/foul_trouble/yes": {
+   "observations": 575,
+   "player_games": 296,
+   "games": 145,
+   "changed": 37,
+   "rate": 0.06434782608695652,
+   "supported": true,
+   "ci_95": [
+    0.04591836734693878,
+    0.08419243986254296
+   ]
+  },
+  "in/all/duration/4_to_under_8": {
+   "observations": 6177,
+   "player_games": 3224,
+   "games": 191,
+   "changed": 1196,
+   "rate": 0.19362149910960014,
+   "supported": true,
+   "ci_95": [
+    0.18061815840309078,
+    0.20686916504538955
+   ]
+  },
+  "in/all/duration/8_plus": {
+   "observations": 7633,
+   "player_games": 2305,
+   "games": 191,
+   "changed": 934,
+   "rate": 0.12236342198349273,
+   "supported": true,
+   "ci_95": [
+    0.11289888654407149,
+    0.1322913170679969
+   ]
+  },
+  "in/all/duration/under_4": {
+   "observations": 7410,
+   "player_games": 3455,
+   "games": 191,
+   "changed": 660,
+   "rate": 0.08906882591093117,
+   "supported": true,
+   "ci_95": [
+    0.08139993545059213,
+    0.0969170576073346
+   ]
+  },
+  "in/star/margin/ahead_15_plus": {
+   "observations": 211,
+   "player_games": 97,
+   "games": 75,
+   "changed": 26,
+   "rate": 0.12322274881516587,
+   "supported": false,
+   "ci_95": null
+  },
+  "in/star/margin/behind_15_plus": {
+   "observations": 120,
+   "player_games": 48,
+   "games": 42,
+   "changed": 14,
+   "rate": 0.11666666666666667,
+   "supported": false,
+   "ci_95": null
+  },
+  "in/star/margin/close_5_or_less": {
+   "observations": 229,
+   "player_games": 140,
+   "games": 98,
+   "changed": 56,
+   "rate": 0.2445414847161572,
+   "supported": true,
+   "ci_95": [
+    0.18592567580987945,
+    0.3056768558951965
+   ]
+  },
+  "in/star/margin/intermediate": {
+   "observations": 284,
+   "player_games": 172,
+   "games": 116,
+   "changed": 62,
+   "rate": 0.21830985915492956,
+   "supported": true,
+   "ci_95": [
+    0.1692296072507553,
+    0.2708333333333333
+   ]
+  },
+  "in/star/period/1": {
+   "observations": 112,
+   "player_games": 105,
+   "games": 83,
+   "changed": 18,
+   "rate": 0.16071428571428573,
+   "supported": true,
+   "ci_95": [
+    0.0967741935483871,
+    0.226900305576776
+   ]
+  },
+  "in/star/period/2": {
+   "observations": 231,
+   "player_games": 184,
+   "games": 127,
+   "changed": 65,
+   "rate": 0.2813852813852814,
+   "supported": true,
+   "ci_95": [
+    0.226600023091133,
+    0.3411214953271028
+   ]
+  },
+  "in/star/period/3": {
+   "observations": 145,
+   "player_games": 113,
+   "games": 91,
+   "changed": 13,
+   "rate": 0.0896551724137931,
+   "supported": true,
+   "ci_95": [
+    0.04666666666666667,
+    0.1388888888888889
+   ]
+  },
+  "in/star/period/4": {
+   "observations": 353,
+   "player_games": 199,
+   "games": 129,
+   "changed": 62,
+   "rate": 0.17563739376770537,
+   "supported": true,
+   "ci_95": [
+    0.1342089216944801,
+    0.2208955223880597
+   ]
+  },
+  "in/star/period/OT": {
+   "observations": 3,
+   "player_games": 1,
+   "games": 1,
+   "changed": 0,
+   "rate": 0.0,
+   "supported": false,
+   "ci_95": null
+  },
+  "in/star/foul_trouble/no": {
+   "observations": 808,
+   "player_games": 261,
+   "games": 151,
+   "changed": 154,
+   "rate": 0.1905940594059406,
+   "supported": true,
+   "ci_95": [
+    0.1638949897146234,
+    0.21827457595641944
+   ]
+  },
+  "in/star/foul_trouble/yes": {
+   "observations": 36,
+   "player_games": 17,
+   "games": 17,
+   "changed": 4,
+   "rate": 0.1111111111111111,
+   "supported": false,
+   "ci_95": null
+  },
+  "in/star/duration/4_to_under_8": {
+   "observations": 240,
+   "player_games": 168,
+   "games": 124,
+   "changed": 93,
+   "rate": 0.3875,
+   "supported": true,
+   "ci_95": [
+    0.3252032520325203,
+    0.45161290322580644
+   ]
+  },
+  "in/star/duration/8_plus": {
+   "observations": 128,
+   "player_games": 67,
+   "games": 52,
+   "changed": 15,
+   "rate": 0.1171875,
+   "supported": false,
+   "ci_95": null
+  },
+  "in/star/duration/under_4": {
+   "observations": 476,
+   "player_games": 236,
+   "games": 144,
+   "changed": 50,
+   "rate": 0.10504201680672269,
+   "supported": true,
+   "ci_95": [
+    0.07610993657505286,
+    0.13601700438440573
+   ]
+  },
+  "in/starter/margin/ahead_15_plus": {
+   "observations": 850,
+   "player_games": 365,
+   "games": 116,
+   "changed": 99,
+   "rate": 0.11647058823529412,
+   "supported": true,
+   "ci_95": [
+    0.09112129821389149,
+    0.14210593107133315
+   ]
+  },
+  "in/starter/margin/behind_15_plus": {
+   "observations": 834,
+   "player_games": 360,
+   "games": 120,
+   "changed": 110,
+   "rate": 0.13189448441247004,
+   "supported": true,
+   "ci_95": [
+    0.10635764981341919,
+    0.15895000156239977
+   ]
+  },
+  "in/starter/margin/close_5_or_less": {
+   "observations": 1850,
+   "player_games": 952,
+   "games": 162,
+   "changed": 361,
+   "rate": 0.19513513513513514,
+   "supported": true,
+   "ci_95": [
+    0.17359632426114016,
+    0.2174361128759378
+   ]
+  },
+  "in/starter/margin/intermediate": {
+   "observations": 2066,
+   "player_games": 1105,
+   "games": 180,
+   "changed": 376,
+   "rate": 0.1819941916747338,
+   "supported": true,
+   "ci_95": [
+    0.1617442983881114,
+    0.20311777065855655
+   ]
+  },
+  "in/starter/period/1": {
+   "observations": 1101,
+   "player_games": 967,
+   "games": 182,
+   "changed": 155,
+   "rate": 0.1407811080835604,
+   "supported": true,
+   "ci_95": [
+    0.11928231865950091,
+    0.16279069767441862
+   ]
+  },
+  "in/starter/period/2": {
+   "observations": 1349,
+   "player_games": 1053,
+   "games": 190,
+   "changed": 361,
+   "rate": 0.2676056338028169,
+   "supported": true,
+   "ci_95": [
+    0.2419121765430716,
+    0.2951444931469781
+   ]
+  },
+  "in/starter/period/3": {
+   "observations": 1172,
+   "player_games": 920,
+   "games": 185,
+   "changed": 136,
+   "rate": 0.11604095563139932,
+   "supported": true,
+   "ci_95": [
+    0.09638503294666409,
+    0.13562299208014283
+   ]
+  },
+  "in/starter/period/4": {
+   "observations": 1964,
+   "player_games": 1077,
+   "games": 190,
+   "changed": 292,
+   "rate": 0.14867617107942974,
+   "supported": true,
+   "ci_95": [
+    0.12826808031455114,
+    0.17043165158467094
+   ]
+  },
+  "in/starter/period/OT": {
+   "observations": 14,
+   "player_games": 8,
+   "games": 4,
+   "changed": 2,
+   "rate": 0.14285714285714285,
+   "supported": false,
+   "ci_95": null
+  },
+  "in/starter/foul_trouble/no": {
+   "observations": 5261,
+   "player_games": 1466,
+   "games": 191,
+   "changed": 920,
+   "rate": 0.17487169739593234,
+   "supported": true,
+   "ci_95": [
+    0.1623805208739612,
+    0.18815134336627592
+   ]
+  },
+  "in/starter/foul_trouble/yes": {
+   "observations": 339,
+   "player_games": 171,
+   "games": 115,
+   "changed": 26,
+   "rate": 0.07669616519174041,
+   "supported": true,
+   "ci_95": [
+    0.052307692307692305,
+    0.10263157894736842
+   ]
+  },
+  "in/starter/duration/4_to_under_8": {
+   "observations": 1508,
+   "player_games": 946,
+   "games": 190,
+   "changed": 380,
+   "rate": 0.2519893899204244,
+   "supported": true,
+   "ci_95": [
+    0.2267696640325641,
+    0.27823161091421716
+   ]
+  },
+  "in/starter/duration/8_plus": {
+   "observations": 1089,
+   "player_games": 543,
+   "games": 172,
+   "changed": 228,
+   "rate": 0.209366391184573,
+   "supported": true,
+   "ci_95": [
+    0.17919936210131332,
+    0.24274744429470213
+   ]
+  },
+  "in/starter/duration/under_4": {
+   "observations": 3003,
+   "player_games": 1361,
+   "games": 191,
+   "changed": 338,
+   "rate": 0.11255411255411256,
+   "supported": true,
+   "ci_95": [
+    0.09983993495934959,
+    0.1260283666346079
+   ]
+  },
+  "in/bench/margin/ahead_15_plus": {
+   "observations": 2307,
+   "player_games": 777,
+   "games": 124,
+   "changed": 224,
+   "rate": 0.09709579540528826,
+   "supported": true,
+   "ci_95": [
+    0.08192734004198612,
+    0.11299160838374209
+   ]
+  },
+  "in/bench/margin/behind_15_plus": {
+   "observations": 1917,
+   "player_games": 737,
+   "games": 126,
+   "changed": 324,
+   "rate": 0.16901408450704225,
+   "supported": true,
+   "ci_95": [
+    0.15188005058246865,
+    0.1875
+   ]
+  },
+  "in/bench/margin/close_5_or_less": {
+   "observations": 4930,
+   "player_games": 1797,
+   "games": 165,
+   "changed": 583,
+   "rate": 0.1182555780933063,
+   "supported": true,
+   "ci_95": [
+    0.10637012792089459,
+    0.13041595598850753
+   ]
+  },
+  "in/bench/margin/intermediate": {
+   "observations": 5546,
+   "player_games": 2110,
+   "games": 187,
+   "changed": 550,
+   "rate": 0.0991705733862243,
+   "supported": true,
+   "ci_95": [
+    0.08746102288973222,
+    0.11135293637458527
+   ]
+  },
+  "in/bench/period/1": {
+   "observations": 3326,
+   "player_games": 2157,
+   "games": 191,
+   "changed": 456,
+   "rate": 0.1371016235718581,
+   "supported": true,
+   "ci_95": [
+    0.12228082152813335,
+    0.15268711572529442
+   ]
+  },
+  "in/bench/period/2": {
+   "observations": 3162,
+   "player_games": 1959,
+   "games": 190,
+   "changed": 287,
+   "rate": 0.09076533839342188,
+   "supported": true,
+   "ci_95": [
+    0.07906819596613546,
+    0.10271322584080761
+   ]
+  },
+  "in/bench/period/3": {
+   "observations": 3812,
+   "player_games": 2128,
+   "games": 190,
+   "changed": 392,
+   "rate": 0.10283315844700944,
+   "supported": true,
+   "ci_95": [
+    0.09047990273867619,
+    0.11580624048131506
+   ]
+  },
+  "in/bench/period/4": {
+   "observations": 4309,
+   "player_games": 1885,
+   "games": 190,
+   "changed": 539,
+   "rate": 0.12508702715247158,
+   "supported": true,
+   "ci_95": [
+    0.11144248336755595,
+    0.13972876614566693
+   ]
+  },
+  "in/bench/period/OT": {
+   "observations": 91,
+   "player_games": 33,
+   "games": 4,
+   "changed": 7,
+   "rate": 0.07692307692307693,
+   "supported": false,
+   "ci_95": null
+  },
+  "in/bench/foul_trouble/no": {
+   "observations": 14502,
+   "player_games": 2350,
+   "games": 191,
+   "changed": 1674,
+   "rate": 0.11543235415804716,
+   "supported": true,
+   "ci_95": [
+    0.10853542789078384,
+    0.12261522886522885
+   ]
+  },
+  "in/bench/foul_trouble/yes": {
+   "observations": 198,
+   "player_games": 107,
+   "games": 79,
+   "changed": 7,
+   "rate": 0.03535353535353535,
+   "supported": true,
+   "ci_95": [
+    0.012195121951219513,
+    0.06132147818034494
+   ]
+  },
+  "in/bench/duration/4_to_under_8": {
+   "observations": 4416,
+   "player_games": 2099,
+   "games": 191,
+   "changed": 723,
+   "rate": 0.1637228260869565,
+   "supported": true,
+   "ci_95": [
+    0.14968269104985255,
+    0.17879141896256603
+   ]
+  },
+  "in/bench/duration/8_plus": {
+   "observations": 6363,
+   "player_games": 1685,
+   "games": 191,
+   "changed": 687,
+   "rate": 0.10796793965110797,
+   "supported": true,
+   "ci_95": [
+    0.09883610579146258,
+    0.11743064967025989
+   ]
+  },
+  "in/bench/duration/under_4": {
+   "observations": 3921,
+   "player_games": 1852,
+   "games": 191,
+   "changed": 271,
+   "rate": 0.06911502167814333,
+   "supported": true,
+   "ci_95": [
+    0.060271092732322847,
+    0.07853274576036783
+   ]
+  },
+  "in/unknown/margin/ahead_15_plus": {
+   "observations": 24,
+   "player_games": 7,
+   "games": 7,
+   "changed": 1,
+   "rate": 0.041666666666666664,
+   "supported": false,
+   "ci_95": null
+  },
+  "in/unknown/margin/behind_15_plus": {
+   "observations": 6,
+   "player_games": 3,
+   "games": 3,
+   "changed": 1,
+   "rate": 0.16666666666666666,
+   "supported": false,
+   "ci_95": null
+  },
+  "in/unknown/margin/close_5_or_less": {
+   "observations": 15,
+   "player_games": 6,
+   "games": 6,
+   "changed": 0,
+   "rate": 0.0,
+   "supported": false,
+   "ci_95": null
+  },
+  "in/unknown/margin/intermediate": {
+   "observations": 31,
+   "player_games": 12,
+   "games": 12,
+   "changed": 3,
+   "rate": 0.0967741935483871,
+   "supported": false,
+   "ci_95": null
+  },
+  "in/unknown/period/1": {
+   "observations": 19,
+   "player_games": 10,
+   "games": 10,
+   "changed": 1,
+   "rate": 0.05263157894736842,
+   "supported": false,
+   "ci_95": null
+  },
+  "in/unknown/period/2": {
+   "observations": 18,
+   "player_games": 11,
+   "games": 11,
+   "changed": 1,
+   "rate": 0.05555555555555555,
+   "supported": false,
+   "ci_95": null
+  },
+  "in/unknown/period/3": {
+   "observations": 22,
+   "player_games": 11,
+   "games": 11,
+   "changed": 1,
+   "rate": 0.045454545454545456,
+   "supported": false,
+   "ci_95": null
+  },
+  "in/unknown/period/4": {
+   "observations": 17,
+   "player_games": 9,
+   "games": 9,
+   "changed": 2,
+   "rate": 0.11764705882352941,
+   "supported": false,
+   "ci_95": null
+  },
+  "in/unknown/foul_trouble/no": {
+   "observations": 74,
+   "player_games": 11,
+   "games": 11,
+   "changed": 5,
+   "rate": 0.06756756756756757,
+   "supported": false,
+   "ci_95": null
+  },
+  "in/unknown/foul_trouble/yes": {
+   "observations": 2,
+   "player_games": 1,
+   "games": 1,
+   "changed": 0,
+   "rate": 0.0,
+   "supported": false,
+   "ci_95": null
+  },
+  "in/unknown/duration/4_to_under_8": {
+   "observations": 13,
+   "player_games": 11,
+   "games": 11,
+   "changed": 0,
+   "rate": 0.0,
+   "supported": false,
+   "ci_95": null
+  },
+  "in/unknown/duration/8_plus": {
+   "observations": 53,
+   "player_games": 10,
+   "games": 10,
+   "changed": 4,
+   "rate": 0.07547169811320754,
+   "supported": false,
+   "ci_95": null
+  },
+  "in/unknown/duration/under_4": {
+   "observations": 10,
+   "player_games": 6,
+   "games": 6,
+   "changed": 1,
+   "rate": 0.1,
+   "supported": false,
+   "ci_95": null
+  }
+ },
+ "method": "Describe outgoing and incoming frequencies at independently reconciled full-timeout windows by S01 pre-game role and current score, fouls, period and stint/rest. Supported intervals resample complete games 10,000 times with the S01 seed.",
+ "limitations": "Actual-participant rosters, inferred period lineups and outcome-dependent exclusion of ambiguous same-clock decisions make these descriptive selected-window rates, not pre-game forecasts, causal effects or calibrated substitution hazards.",
+ "input_sha256": {
+  "analysis/experiments/20261122_a1_s06_timeout_opportunities_v2.json": "38926816449a4a88f3d00aacdbca541ace244084583624514ba46bf322502afc",
+  "data/derived/experiments/20261122_a1_s06_timeout_opportunities_v2.parquet": "088be9f9f5a985d17305a683e1a1c058852202e7bec605b78ca950eeaf0399ee",
+  "data/derived/variants/matchup/features/pregame.parquet": "d4da5f071de3ddcbc72bbb4899a77f9b4f22d899a3a54bcfb76baf0097594d0e",
+  "scripts/a1_substitution_states.py": "973901a16f32d84cbe469ded9b6facf6507f4ee65876efd48aa46cc8a2396150",
+  "scripts/a1_compare.py": "435c1e0761f51ee9d218dfc462db8d219c0bc6f54dc8acd6bcae79968ddfcf68"
+ },
+ "output_sha256": {
+  "data/derived/experiments/20261122_a1_s06_timeout_states.parquet": "2fcb8270b1ec7a4093be711a622da783486560b039c2992f3ebcef56df8ff39f"
+ }
+}

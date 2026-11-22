@@ -2,7 +2,7 @@
 
 **Phone v localhost (owner, 20 Nov, D36):** the phone bundle is stripped back — the 10,000-world distributions for the expected lineup only; everything built on the per-world files (Scenarios, Given…, joint grids, team drivers, duels, duel of the night, lineup branches) is localhost-only (`export_musnba.phone_record`).
 
-**U1–U22 complete as of 22 November 2026.** Historical implementation notes: Scenarios, Given…, joint grids, drivers, averages deltas, Lab view, minutes basis and engine v1.3 added in the D29–D30 chunk; game flow, duels, duel of the night and who-guards-whom added in the D32 chunk. A1 S01–S05 are research-only and complete; S06 is next. No A1 dashboard changes have shipped. Scope/progress live in [PLAN.md](PLAN.md) and HANDOFF.
+**U1–U22 complete as of 22 November 2026.** Historical implementation notes: Scenarios, Given…, joint grids, drivers, averages deltas, Lab view, minutes basis and engine v1.3 added in the D29–D30 chunk; game flow, duels, duel of the night and who-guards-whom added in the D32 chunk. A1 S01–S05 are research-only and complete; S06 research is underway. No A1 dashboard changes have shipped. Scope/progress live in [PLAN.md](PLAN.md) and HANDOFF.
 
 ## Navigation
 

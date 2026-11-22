@@ -1,6 +1,14 @@
+import contextlib
+import io
+import json
 import unittest
 
-from scripts import a1_substitutions
+import pandas as pd
+
+from basketball_common import NBA_TEAM_IDS
+from scripts import (a1_substitution_audit, a1_substitution_dataset, a1_substitution_dataset_audit,
+                     a1_substitution_fold_data, a1_substitution_opportunities, a1_substitution_states,
+                     a1_substitutions)
 
 
 def player(pid, team, starter):
@@ -18,6 +26,41 @@ def game(events):
     return {'id': '1', 'date_et': '2025-01-01', 'season': 2025, 'season_type': 2, 'home': 'h', 'away': 'a',
             'players': [player(f'h{i}', 'h', i < 5) for i in range(6)]
             + [player(f'a{i}', 'a', i < 5) for i in range(6)], 'plays': events}
+
+
+def audit_fixture():
+    row = {'game_id': '1', 'date_et': '2025-01-01', 'period': 1, 'clock': 600., 't': 120., 'trigger_seq': 1,
+           'window_id': '1:0', 'kind': 'timeout', 'home': '10', 'away': '20',
+           'home_score': 0, 'away_score': 0, 'margin_home': 0, 'home_subs': 1, 'away_subs': 0,
+           'home_players': ['1', '2', '3', '4', '5', '6'], 'away_players': ['7', '8', '9', '10', '11'],
+           'home_five_before': ['1', '2', '3', '4', '5'], 'away_five_before': ['7', '8', '9', '10', '11'],
+           'home_five_after': ['2', '3', '4', '5', '6'], 'away_five_after': ['7', '8', '9', '10', '11'],
+           'home_seconds_before': [120., 120., 120., 120., 120., 0.],
+           'away_seconds_before': [120., 120., 120., 120., 120.],
+           'home_fouls_before': [0] * 6, 'away_fouls_before': [0] * 5,
+           'home_stint_before': [120., 120., 120., 120., 120., None],
+           'away_stint_before': [120.] * 5,
+           'home_rest_before': [None, None, None, None, None, 120.],
+           'away_rest_before': [None] * 5,
+           'changes_json': json.dumps([{'seq': 2, 'team': '10', 'player_in': '6', 'player_out': '1'}])}
+    raw = pd.DataFrame([
+        {'game_id': 1, 'period_number': 1, 'clock_display_value': '10:00', 'sequence_number': 1,
+         'type_id': 1, 'type_text': 'Full Timeout', 'home_score': 0, 'away_score': 0,
+         'team_id': 10, 'athlete_id_1': None, 'athlete_id_2': None},
+        {'game_id': 1, 'period_number': 1, 'clock_display_value': '10:00', 'sequence_number': 2,
+         'type_id': 584, 'type_text': 'Substitution', 'home_score': 0, 'away_score': 0,
+         'team_id': 10, 'athlete_id_1': 6, 'athlete_id_2': 1},
+    ])
+    report = {'requested_games': 1, 'rejected_games': [], 'counts': {'windows': 1, 'events': 2, 'substitutions': 1},
+              'no_substitution_windows': 0}
+    return pd.DataFrame([row]), raw, report
+
+
+def target_fixture():
+    return pd.DataFrame([{'game_id': '1', 'team': '10' if player <= 6 else '20', 'player': str(player),
+                          'date_et': '2025-01-01', 'prior_day': '2024-12-31',
+                          'prior_profile_date': pd.Timestamp('2024-12-30'), 'tier': 'bench', 'control_mean': 20.}
+                         for player in range(1, 12)])
 
 
 class SequentialSubstitutionTests(unittest.TestCase):
@@ -57,6 +100,12 @@ class SequentialSubstitutionTests(unittest.TestCase):
         windows, _ = a1_substitutions.windows_for_game(game(events))
         self.assertEqual([(row['trigger_seq'], row['home_score']) for row in windows], [(2, 0), (1, 1)])
 
+    def test_jump_shots_do_not_create_no_substitution_opportunities(self):
+        events = [event(1, 'Jump Shot', '8:00'), event(2, 'Pullup Jump Shot', '7:50'),
+                  event(3, 'Jumpball', '7:40')]
+        windows, _ = a1_substitutions.windows_for_game(game(events))
+        self.assertEqual([(row['trigger_seq'], row['kind']) for row in windows], [(3, 'jump_ball')])
+
     def test_later_or_inconsistent_score_cannot_be_used(self):
         bad = [event(1, 'Full Timeout', '8:00', home_score=1)]
         with self.assertRaisesRegex(a1_substitutions.InvalidGame, 'reported scoreboard'):
@@ -64,6 +113,126 @@ class SequentialSubstitutionTests(unittest.TestCase):
         missing_fouler = [event(1, 'Personal Foul', '8:00')]
         with self.assertRaisesRegex(a1_substitutions.InvalidGame, 'no identified player'):
             a1_substitutions.windows_for_game(game(missing_fouler))
+
+    def test_independent_audit_detects_changed_score_and_lineup(self):
+        rows, raw, report = audit_fixture()
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output):
+            result = a1_substitution_audit.audit(rows, raw, report)
+        self.assertIn('windows 1/1', output.getvalue())
+        self.assertEqual(result['counts']['substitutions'], 1)
+        changed = rows.copy()
+        changed.at[0, 'home_score'] = 1
+        with self.assertRaisesRegex(ValueError, 'score differs'):
+            a1_substitution_audit.audit(changed, raw, report)
+        changed = pd.DataFrame([{**rows.to_dict('records')[0], 'home_five_after': ['1', '2', '3', '4', '5']}])
+        with self.assertRaisesRegex(ValueError, 'final lineup'):
+            a1_substitution_audit.audit(changed, raw, report)
+
+    def test_timeout_opportunities_reject_other_same_clock_substitutions(self):
+        rows, raw, _ = audit_fixture()
+        retained, counts = a1_substitution_opportunities.timeout_opportunities(rows, raw)
+        self.assertEqual(len(retained), 1)
+        self.assertEqual(counts['window_counts']['with_substitution'], 1)
+        no_change = pd.DataFrame([{**rows.to_dict('records')[0], 'home_subs': 0, 'changes_json': '[]'}])
+        retained, counts = a1_substitution_opportunities.timeout_opportunities(no_change, raw.iloc[:1])
+        self.assertEqual(counts['window_counts']['without_substitution'], 1)
+        self.assertEqual(len(retained), 1)
+        with self.assertRaisesRegex(ValueError, 'empty or incomplete'):
+            a1_substitution_opportunities.timeout_opportunities(no_change, raw)
+
+    def test_state_response_uses_before_lineup_and_pre_game_role(self):
+        rows, _, _ = audit_fixture()
+        roles = pd.DataFrame([{'game_id': '1', 'player': '1', 'tier': 'star', 'team_control': '10',
+                               'date_et_control': '2025-01-01', 'role_missing': False}])
+        states = a1_substitution_states.player_states(rows, roles).set_index('player')
+        self.assertEqual(states.loc['1', 'decision'], 'out')
+        self.assertTrue(states.loc['1', 'changed'])
+        self.assertEqual(states.loc['1', 'tier'], 'star')
+        self.assertEqual(states.loc['6', 'decision'], 'in')
+        self.assertTrue(states.loc['6', 'changed'])
+        self.assertTrue(states.loc['6', 'role_missing'])
+        self.assertEqual(states.loc['1', 'margin'], 'close_5_or_less')
+
+    def test_target_deficit_uses_pre_window_seconds_and_unknown_incoming_labels(self):
+        windows, raw, _ = audit_fixture()
+        targets = target_fixture()
+        states, counts = a1_substitution_dataset.build(windows, targets, raw)
+        out = states[(states['decision'] == 'out') & (states['player'] == '1')].iloc[0]
+        incoming = states[(states['decision'] == 'in') & (states['player'] == '6')].iloc[0]
+        self.assertAlmostEqual(out['target_deficit'], 20 * 120 / 2880 - 2)
+        self.assertTrue(out['label'])
+        self.assertTrue(incoming['label'])
+        self.assertEqual(incoming['eligibility'], 'current_unknown')
+        self.assertEqual(counts['incoming_outside_pre_window_candidates'], 0)
+        altered = targets.copy()
+        altered.loc[altered['player'] == '1', 'prior_day'] = '2025-01-01'
+        with self.assertRaisesRegex(ValueError, 'prior roster dates'):
+            a1_substitution_dataset.build(windows, altered, raw)
+
+    def test_future_participant_does_not_change_pre_window_candidate_features(self):
+        windows, raw, _ = audit_fixture()
+        row = {**windows.to_dict('records')[0], 'home_subs': 0, 'changes_json': '[]',
+               'home_five_after': ['1', '2', '3', '4', '5']}
+        without_future = dict(row)
+        for field in ('players', 'seconds_before', 'fouls_before', 'stint_before', 'rest_before'):
+            without_future[f'home_{field}'] = row[f'home_{field}'][:5]
+        first, _ = a1_substitution_dataset.build(pd.DataFrame([without_future]), target_fixture(), raw.iloc[:1])
+        second, _ = a1_substitution_dataset.build(pd.DataFrame([row]), target_fixture(), raw.iloc[:1])
+        first_player = first[(first['decision'] == 'in') & (first['player'] == '6')].reset_index(drop=True)
+        second_player = second[(second['decision'] == 'in') & (second['player'] == '6')].reset_index(drop=True)
+        pd.testing.assert_frame_equal(first_player, second_player)
+        self.assertTrue(pd.isna(first_player.loc[0, 'label']))
+        self.assertTrue(pd.isna(first_player.loc[0, 'rest_before']))
+
+    def test_earlier_ejection_marks_incoming_candidate_ineligible(self):
+        windows, raw, _ = audit_fixture()
+        row = {**windows.to_dict('records')[0], 'home_subs': 0, 'changes_json': '[]',
+               'home_five_after': ['1', '2', '3', '4', '5']}
+        ejection = {'game_id': 1, 'period_number': 1, 'clock_display_value': '11:00', 'sequence_number': 3,
+                    'type_id': 1, 'type_text': 'Ejection', 'home_score': 0, 'away_score': 0,
+                    'team_id': 10, 'athlete_id_1': 6, 'athlete_id_2': None}
+        prior = pd.concat([raw.iloc[:1], pd.DataFrame([ejection])], ignore_index=True)
+        states, _ = a1_substitution_dataset.build(pd.DataFrame([row]), target_fixture(), prior)
+        incoming = states[(states['decision'] == 'in') & (states['player'] == '6')].iloc[0]
+        self.assertEqual(incoming['eligibility'], 'known_ineligible')
+        self.assertTrue(pd.isna(incoming['label']))
+
+    def test_independent_dataset_audit_rejects_tampered_target(self):
+        windows, raw, _ = audit_fixture()
+        targets = target_fixture()
+        states, _ = a1_substitution_dataset.build(windows, targets, raw)
+        accounting = a1_substitution_dataset_audit.audit(states, windows, targets, raw)
+        self.assertEqual(accounting['raw_substitutions'], 1)
+        changed = states.copy()
+        changed.loc[0, 'target_deficit'] = 999.
+        with self.assertRaisesRegex(ValueError, 'target deficit differs'):
+            a1_substitution_dataset_audit.audit(changed, windows, targets, raw)
+
+    def test_seed_selection_ignores_future_games_and_rejects_ambiguous_sides(self):
+        teams = sorted(NBA_TEAM_IDS)
+        games = pd.DataFrame([{'game_id': str(index), 'date_et': '2023-02-01', 'game_ok': True,
+                               'season_type': 2, 'offense': teams[0], 'defense': teams[1], 'off_home': True}
+                              for index in range(210)])
+        expected = a1_substitution_fold_data.seed_games(games)
+        future = pd.DataFrame([{**games.iloc[0].to_dict(), 'game_id': '999999', 'date_et': '2026-07-01'}])
+        pd.testing.assert_frame_equal(expected, a1_substitution_fold_data.seed_games(pd.concat([games, future])))
+        changed_side = pd.DataFrame([{**games.iloc[0].to_dict(), 'defense': teams[2]}])
+        with self.assertRaisesRegex(ValueError, 'ambiguous sides'):
+            a1_substitution_fold_data.seed_games(pd.concat([games, changed_side]))
+
+    def test_unidentified_ejection_quarantines_only_its_game(self):
+        windows, raw, _ = audit_fixture()
+        ejection = {'game_id': 1, 'period_number': 1, 'clock_display_value': '11:00', 'sequence_number': 3,
+                    'type_id': 1, 'type_text': 'Ejection', 'athlete_id_1': None}
+        mixed = pd.concat([raw, pd.DataFrame([ejection])], ignore_index=True)
+        retained, excluded = a1_substitution_fold_data.exclude_unidentified_ejections(windows, mixed)
+        self.assertTrue(retained.empty)
+        self.assertEqual(excluded[0]['game_id'], '1')
+        mixed.loc[mixed['type_text'].eq('Ejection'), 'athlete_id_1'] = 6
+        retained, excluded = a1_substitution_fold_data.exclude_unidentified_ejections(windows, mixed)
+        self.assertEqual(len(retained), 1)
+        self.assertEqual(excluded, [])
 
 
 if __name__ == '__main__':

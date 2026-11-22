@@ -1,0 +1,76 @@
+{
+ "experiment": "a1_s06_sequence_substitution_windows",
+ "season": 2026,
+ "requested_games": 200,
+ "retained_games": 191,
+ "rejected_games": [
+  {
+   "game_id": "401810350",
+   "reason": "substitution does not replace an on-court player with an eligible participant"
+  },
+  {
+   "game_id": "401810376",
+   "reason": "period starters require a filled or over-five lineup"
+  },
+  {
+   "game_id": "401810451",
+   "reason": "substitution does not replace an on-court player with an eligible participant"
+  },
+  {
+   "game_id": "401810486",
+   "reason": "scoring event has no valid team or points"
+  },
+  {
+   "game_id": "401810691",
+   "reason": "substitution players lack a common team"
+  },
+  {
+   "game_id": "401810823",
+   "reason": "substitution does not replace an on-court player with an eligible participant"
+  },
+  {
+   "game_id": "401810893",
+   "reason": "substitution does not replace an on-court player with an eligible participant"
+  },
+  {
+   "game_id": "401810961",
+   "reason": "substitution does not replace an on-court player with an eligible participant"
+  },
+  {
+   "game_id": "401811045",
+   "reason": "period starters are not five observed teammates"
+  }
+ ],
+ "counts": {
+  "events": 90947,
+  "windows": 23160,
+  "scoreboard_checks": 181894,
+  "periods": 768,
+  "substitutions": 11277
+ },
+ "window_kinds": {
+  "jump_ball": 354,
+  "dead_turnover": 1830,
+  "foul": 7810,
+  "free_throw": 8711,
+  "timeout": 1972,
+  "observed_sub_only": 1604,
+  "violation": 361,
+  "review": 512,
+  "sequential_sub_only": 6
+ },
+ "no_substitution_windows": 17367,
+ "multiple_substitution_windows": 2943,
+ "method": "Replay canonical events by period and descending clock, using sequence numbers within each clock; take score, fouls, elapsed minutes and five-player lineups immediately before each observed substitution group. Split same-clock reversals.",
+ "limitations": "Only recorded stoppages are represented; their labels do not establish that all were legal substitution opportunities or that every legal opportunity was recorded. Rosters contain actual participants and later period starters are inferred retrospectively. They are not pre-game availability forecasts. Period-break transitions are not represented as windows.",
+ "input_sha256": {
+  "data/derived/experiments/20261122_a1_s03_f4_game_ids.json": "5d1285db46b129de9da954d9a44c93e03a281d0bc76bfa82ac4a97619da7bcc7",
+  "data/raw/hoopr/play_by_play_2026.parquet": "f7051c5c0c5b605419fcc0e0c13dd90df7803f96dab290554c1ef737433a98b2",
+  "data/raw/hoopr/player_box_2026.parquet": "29a29dc9efd055a93e069a0382ac830d98a13274bee655beba69d95cff099713",
+  "scripts/history.py": "361edbbdab301745824ec33bbd8661e5c10552152d1771b4903c19eb93162f15",
+  "scripts/plays.py": "37271dee2fcc45ccc1f9f9d35369a330e4fd3adcc8df5f84bd12a673464e34f2",
+  "scripts/pbp.py": "2c85ed02adebf34fce9696f37c030e246a868a93cdde3a70237176cd4ead8106",
+  "scripts/rotations.py": "1abf8fd173f4ca96d608813f315df8b034436a4bb26060e55410e3710c7e9c3a",
+  "scripts/a1_substitutions.py": "72d290ce8d7702654aedbad763ada8c34d2ed41b5eece675600694dbe83e05e2"
+ }
+}

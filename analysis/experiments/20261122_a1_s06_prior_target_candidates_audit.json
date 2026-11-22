@@ -1,0 +1,19 @@
+{
+ "experiment": "a1_s06_substitution_dataset_independent_accounting",
+ "checks": {
+  "windows": 1816,
+  "team_sides": 3632,
+  "player_rows": 66545,
+  "raw_substitutions": 2790,
+  "incoming_outside_candidates": 9,
+  "unknown_incoming_labels": 45604
+ },
+ "input_sha256": {
+  "analysis/experiments/20261122_a1_s06_prior_target_candidates.json": "0d79575d9b2f5037f45333108ec20e1390b886d85000a0ff58774c9889c414e2",
+  "data/derived/experiments/20261122_a1_s06_prior_target_candidates.parquet": "7f84384b9922121dc5f3360f741d3dc15ddd9d4455854c898bc1af59d97ca913",
+  "data/derived/experiments/20261122_a1_s06_timeout_opportunities_v2.parquet": "088be9f9f5a985d17305a683e1a1c058852202e7bec605b78ca950eeaf0399ee",
+  "data/derived/experiments/20261122_a1_s05_unconditional_F4_corrected.parquet": "d3a3e1fbf818a7d1babc77c86aecbf5a0be73d2d2f7f7cc04c5a04a9cd5c78f5",
+  "data/raw/hoopr/play_by_play_2026.parquet": "f7051c5c0c5b605419fcc0e0c13dd90df7803f96dab290554c1ef737433a98b2",
+  "scripts/a1_substitution_dataset_audit.py": "788187aa278c2988f6b1fc81caff2e0325f668a5d803eab33e7196fbf545e44d"
+ }
+}

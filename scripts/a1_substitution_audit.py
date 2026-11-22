@@ -89,14 +89,14 @@ def audit(rows: pd.DataFrame, raw: pd.DataFrame, report: dict) -> dict:
             if (not np.isfinite(seconds).all() or (seconds < 0).any()
                     or (seconds > t + 1e-8).any() or abs(seconds.sum() - 5 * t) > 1e-6):
                 raise ValueError(f"{row['window_id']}: elapsed player seconds do not reconcile")
-            for index, player in enumerate(players):
+            for player_index, player in enumerate(players):
                 on = player in five
-                if (on and (not np.isfinite(stints[index]) or not np.isnan(rests[index]))) or (
-                        not on and (not np.isfinite(rests[index]) or not np.isnan(stints[index]))):
+                if (on and (not np.isfinite(stints[player_index]) or not np.isnan(rests[player_index]))) or (
+                        not on and (not np.isfinite(rests[player_index]) or not np.isnan(stints[player_index]))):
                     raise ValueError(f"{row['window_id']}: stint or rest status differs from the lineup")
                 positions = foul_positions.get((row['game_id'], player), np.empty(0, dtype=int))
                 expected = int(np.searchsorted(positions, int(trigger['position']), side='right'))
-                if fouls[index] != expected:
+                if fouls[player_index] != expected:
                     raise ValueError(f"{row['window_id']}: personal fouls differ from earlier raw events")
                 counts['foul_values'] += 1
             lineups[row[side]] = set(five)

@@ -86,8 +86,8 @@ def main() -> None:
     pilot = json.loads(args.pilot.read_text())
     audit = json.loads(args.audit.read_text())
     inputs = [args.pilot.resolve(), args.audit.resolve(), args.rows.resolve(), Path(__file__), Path(pbp.__file__)]
-    if any(not path.is_relative_to(ROOT) for path in inputs):
-        raise ValueError('opportunity inputs must be inside the repository')
+    if any(not path.is_relative_to(ROOT) for path in inputs + [args.rows_output.resolve()]):
+        raise ValueError('opportunity inputs and output must be inside the repository')
     for report in (pilot, audit):
         for path, digest in report['input_sha256'].items():
             if sha256_file(ROOT / path) != digest:
@@ -117,6 +117,7 @@ def main() -> None:
         'input_sha256': {str(path.relative_to(ROOT)): sha256_file(path) for path in inputs},
     }
     atomic_bytes(args.rows_output, kept.to_parquet(index=False))
+    result['output_sha256'] = {str(args.rows_output.resolve().relative_to(ROOT)): sha256_file(args.rows_output)}
     write_json(args.output, result, pretty=True)
     print(f"retained {accounting['retained_windows']}/{accounting['timeout_windows']} timeout windows "
           f"across {accounting['retained_games']} games", flush=True)

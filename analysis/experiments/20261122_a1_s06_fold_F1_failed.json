@@ -1,0 +1,38 @@
+{
+ "experiment": "a1_s06_fold_f1_preflight_failed",
+ "status": "failed_before_candidate_output",
+ "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u -m scripts.a1_substitution_fold_data --population F1",
+ "log": "/tmp/musnba_a1_s06_fold_F1.log",
+ "failure": "Candidate event-history construction rejected an ejection with no athlete ID. No candidate or report output was written.",
+ "replay_requested_games": 200,
+ "replayed_windows_independently_reconciled": 21036,
+ "identified_source_cases": [
+  {
+   "game_id": "401585742",
+   "period": 4,
+   "clock": "7:54",
+   "sequence": 557,
+   "type": "Ejection",
+   "text": "Michael Malone ejected",
+   "athlete_id_1": null,
+   "replay_status": "retained_before_candidate_failure"
+  },
+  {
+   "game_id": "401585415",
+   "period": 3,
+   "clock": "11:02",
+   "sequence": 436,
+   "type": "No Foul",
+   "athlete_id_1": null,
+   "replay_status": "quarantined_for_unidentified_personal_foul"
+  }
+ ],
+ "resolution": "Rerun the same fixed panel while explicitly excluding each replay-retained game with an unidentified ejection. Do not infer that the ejected person is a player or silently disregard the event.",
+ "failed_source_sha256": "b9050eec90df3628460e4dc7c746b808d9d6dbc5700b9eb98c3644031961b4a5",
+ "input_sha256": {
+  "analysis/experiments/20261122_a1_pre_candidate_manifest.json": "195b4ddaf748e4f3520a02f813b5763736fe4fbfbe653e896161532d6d9c7e6b",
+  "data/raw/hoopr/play_by_play_2024.parquet": "bda57bcb4f8aae57428979ac4a0f766f67c52c770d85b0e7fcf7237a333704b0",
+  "data/raw/hoopr/player_box_2024.parquet": "1e500a538ec45ddbcb58d9789b5494f8db4f25658eafd01d90f2d09600921665",
+  "scripts/a1_substitution_dataset.py": "fbed1d26f3896a04b91257a1a9a114caa92cc0ea73930f020864ee01319941f4"
+ }
+}

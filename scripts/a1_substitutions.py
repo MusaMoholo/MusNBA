@@ -23,6 +23,15 @@ class InvalidGame(ValueError):
     """The retained events cannot support a reliable sequential replay."""
 
 
+def stoppage_kind(event: dict) -> str | None:
+    kind = rotations.window_kind(event)
+    if kind == 'jump_ball':
+        name = event['type_text'].lower()
+        if event['type_id'] != '615' and 'jumpball' not in name and 'jump ball' not in name:
+            return None
+    return kind
+
+
 def windows_for_game(game: dict) -> tuple[list[dict], dict]:
     """Return observed stoppages and ordered substitutions, conditional on the game's participants."""
     ordered = []
@@ -178,7 +187,7 @@ def windows_for_game(game: dict) -> tuple[list[dict], dict]:
             elif event['score_value'] != 0:
                 raise InvalidGame('non-scoring event carries points')
             verify_score(event)
-            kind = rotations.window_kind(event)
+            kind = stoppage_kind(event)
             if kind:
                 pending = snapshot(period, clock, event['seq'], kind)
         flush()

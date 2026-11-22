@@ -412,6 +412,42 @@ are not causal estimates, unbiased substitution hazards, pre-game availability f
 same-clock exclusions depend on observed substitutions, and the participant universe is retrospective. Later model
 selection must use appropriate fold-safe data and the frozen S06 pooled-minute engine gate.
 
+For S06's first prospective-input feasibility dataset, use the saved F4 prior-box all-active sensitivity from S05:
+its `control_mean` is the mean of 1,000 target draws, a **proxy** for a per-world D29 target, not the realised
+game's minutes. Keep only the pre-origin roster, target, prior dates and prior-profile tier columns; require all
+membership/profile dates strictly before the game. At each regulation timeout, target deficit is proxy target
+times elapsed regulation fraction minus the player's seconds already played, in minutes; leave it missing for
+overtime and unknown prior targets. Current five, score, fouls and stint/rest are observed in-game state, not final
+game totals. Build off-court candidates from the prior-box roster plus players already observed on court earlier;
+do not add a candidate merely because the player enters later. Exclude known six-foul or earlier recorded ejection
+cases from normal incoming eligibility; a prior appearance is evidence of prior participation, not proof of current
+physical availability. Never label an unconfirmed-availability non-entry as a known eligible negative: retain it
+as unknown. Count entrants not in the prospective candidate set and all missing targets/availability. Prior boxes
+are not official dated rosters and their historical publication times are unknown; this diagnostic dataset alone
+cannot establish a deployable substitution model. F1–F4 fitting and the existing promotion/engine gates remain
+unchanged.
+
+For S06's first **outgoing-decision fold screen**, freeze the following before fitting or inspecting its results.
+The evaluation populations are the previously fixed S05 200-game panels in F1–F4, less explicitly recorded replay
+quarantines and games lacking a prior roster. Seed the first training set by sampling 200 NBA regular-season games
+without replacement (NumPy seed 20261122, sorted game IDs) from the 2022–23 retained, `game_ok` games dated
+2023-01-01–2023-04-14; this selection uses no game outcomes. For these seed games reconstruct prior-box rosters
+and 1,000-draw all-active D29 target means using ramp/spread fitted strictly before **2022-12-01**, with all player
+states and profile dates strictly earlier than each origin. Each fold may train only on those seed games and
+previous fixed-fold games dated strictly before that fold's validation start; no game may train and validate the
+same fold. The simple baseline is the earlier-training outgoing rate by period (OT pooled) and prior role tier,
+shrunk with 20 pseudo-observations toward the earlier-training overall rate; an unseen group uses that overall rate
+and its row count is reported. Compare it with one deterministic
+LightGBM binary model (120 trees, 15 leaves, learning rate 0.05, minimum leaf 80, L2 1, seed 20261122, one thread):
+period, clock, team-relative margin, fouls, elapsed seconds, stint, prior tier indicators, target mean and the
+regulation target deficit. Native missing values remain missing. The primary diagnostic is paired outgoing Brier
+loss; also report binary log loss, per-fold populations, missingness and 10,000 complete-game clustered bootstrap
+intervals with seed 20261122. A selected-timeout model is worth further investigation only if its pooled Brier
+interval favours the candidate and at least three of four fold point differences favour it. This is a node screen,
+not the S06 pooled-minute promotion gate. It cannot establish an all-stoppage hazard or production gain: the
+opportunity subset is outcome-selected, incoming availability is unknown, and the engine currently has no timeout
+events. No parameter or threshold may be retuned on the F4 or protected final-season results.
+
 For S03's remaining flow diagnosis, reproduce the **same 200-game, 1,000-world** free-running control with its
 original seeds and opt-in diagnostics only; audit every original output field against the retained reproduction before
 using the extras. Record player FGA/FTA/turnovers and quarter minutes/scoring, simulated segment-clock summaries,

@@ -1,0 +1,29 @@
+{
+ "experiment": "a1_s06_conservative_full_timeout_opportunities",
+ "timeout_windows": 1972,
+ "retained_windows": 1816,
+ "retained_games": 191,
+ "window_counts": {
+  "with_substitution": 1216,
+  "without_substitution": 600,
+  "other_substitutions_at_clock": 148,
+  "multiple_timeouts_at_clock": 8
+ },
+ "team_decisions": {
+  "changed": 1691,
+  "unchanged": 1941
+ },
+ "method": "Use recorded full timeouts with one timeout at the clock; require the reconstructed immediate changes to equal all raw substitutions at that clock. Verify both positive and no-substitution labels against the retained feed and the independent sequence audit.",
+ "limitations": "This conservative subset excludes ambiguous same-clock events and all other stoppage types; it is not an exhaustive or unbiased sample of legal opportunities. Rosters are retrospective actual participants, not pre-game availability. It does not establish a deployable substitution hazard or causal game-state effects.",
+ "input_sha256": {
+  "analysis/experiments/20261122_a1_s06_sequence_pilot_v2.json": "bedd3e03fffbc148c936ff670c2ce472049be69bd233099e4a200db39afea1ea",
+  "analysis/experiments/20261122_a1_s06_sequence_audit_v3.json": "d4cefa6a642dbcae95827c26f824ddd45de05abc5b4a5d840549fd3bbb7811ff",
+  "data/derived/experiments/20261122_a1_s06_sequence_pilot_v2.parquet": "37c1854f91c71dcd07d59deb2a24969241b5d29cd8597763cc97f897a0344cac",
+  "scripts/a1_substitution_opportunities.py": "e684d23024bc9abc1a748bfdb021e34d529bb72fa137d870dd5f6876a7719bb3",
+  "scripts/pbp.py": "2c85ed02adebf34fce9696f37c030e246a868a93cdde3a70237176cd4ead8106",
+  "data/raw/hoopr/play_by_play_2026.parquet": "f7051c5c0c5b605419fcc0e0c13dd90df7803f96dab290554c1ef737433a98b2"
+ },
+ "output_sha256": {
+  "data/derived/experiments/20261122_a1_s06_timeout_opportunities_v2.parquet": "088be9f9f5a985d17305a683e1a1c058852202e7bec605b78ca950eeaf0399ee"
+ }
+}

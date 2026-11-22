@@ -1381,6 +1381,69 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   `aa7233f20022d729a98acf25cb1b321678a83a3cfa33167ffc12f7b86db7e8c6`; a prior marshalled-tuple digest varied across
   processes and is not a valid equality test. No candidate has been scored.
 
+### A1 S06 ordered substitution pilot (22 Nov 2026; descriptive)
+
+- On the fixed **200** F4 games, sequential replay retained **191** and quarantined **9** for unsupported lineups,
+  missing eligible entrants/team membership, or an end-game event incorrectly marked scoring with zero points.
+  Ordering by period, descending clock and then within-clock sequence separates reversals and preserves the actual
+  pre-substitution scoreboard; in game `401810498` sequence 709 the home margin is **−3**, not the grouped
+  window's later **−4**.
+- The original candidate inherited a substring match that labelled **22,224/22,577** non-jump-ball events, mostly
+  jump shots, as jump balls. Its source/report remain archived; the corrected isolated pilot reconciles **23,160**
+  windows, **11,277** raw substitutions, **46,320** scoreboards and lineups, and **502,773** personal-foul values.
+  The independent accounting is `20261122_a1_s06_sequence_audit_v3.json`.
+- For a conservative legal/no-sub sample, retain full timeouts with one timeout and no substitutions at that clock
+  outside the immediately reconstructed group. This leaves **1,216** substitution and **600** no-sub windows among
+  **1,972**, excluding **148** other-same-clock-substitution and **8** multiple-timeout windows. Independent
+  group-by and every-field accounting passed on **1,816** windows and **3,632** team decisions. Outcome-dependent
+  exclusions, inferred period lineups and actual-participant rosters prevent interpreting these as an unbiased,
+  exhaustive substitution hazard or pre-game availability forecast.
+- **Selected timeout state response:** `20261122_a1_s06_timeout_states.json` describes **39,380** player decisions
+  across those 191 games using S01 pre-game role tiers. With 10,000 complete-game bootstrap replicates, starters
+  leave in **55/202 = 27.2%** of defined foul-trouble decisions (95% **21.3–34.1%**), versus **1,334/8,651 = 15.4%**
+  otherwise (**14.4–16.4%**). Starter exits occur at **5.3%** of 3,196 under-four-minute stints (**4.4–6.2%**)
+  versus **26.0%** of 2,127 stints at least eight minutes (**23.4–28.5%**); all four cells meet the frozen
+  100-player-game/30-game support floor. Margin, quarter, rest, role and sparse OT cells are in the report. These
+  are descriptive, confounded and outcome-selected, not causal effects, calibrated hazards or forecast gains.
+  An independent check reconciled **2,790** outgoing/incoming labels and **4,160** matching S05 role records.
+- **Pre-window candidate feasibility:** using the audited prior-box cohort and S05 all-active mean target proxy,
+  the 1,816 timeouts yield **18,160** observed-five out rows and **48,385** incoming candidates. Incoming
+  non-entries are **45,604 unknown labels**, not assumed physically eligible negatives; **82** incoming rows
+  are known ineligible after six fouls or an earlier ejection. **9** observed entrants were not in the prior roster
+  or already observed on court. Missing prior targets affect **70** out and **63** in rows; **415** overtime rows
+  have no regulation-target deficit. An independent raw-event and every-row audit reconciled all **66,545** rows,
+  prior dates, player pools and **2,790** substitutions. Future-participant injection, same-day targets, earlier
+  ejection and tampered-deficit tests guard the cutoff. The retrospective source lacks official pre-tip availability
+  and publication timestamps; no model has yet been fitted or validated from this selected dataset.
+- **Earlier-fold source edge case:** the first 200-game F1 replay reconciled **21,036** windows but could not
+  construct candidates: game `401585742` contains an ejection with no athlete ID (its text names a coach), while
+  `401585415` was already quarantined because a `No Foul` event had no player. No candidate output was written.
+  The retry must explicitly exclude replay-retained games with an unidentifiable ejection; the feed does not
+  establish a general actor-type rule. See `20261122_a1_s06_fold_F1_failed.json`.
+- **F1 retry accounting:** of the fixed 200 games, **13** fail replay and **1** further game has an unidentified
+  ejection. The remaining **186 games**, **1,768** selected timeouts and **65,864** candidate rows independently
+  reconcile, including **2,673** substitutions, **5** unseen incoming players and **45,516** unknown incoming
+  non-entries. This is coverage evidence, not a fold-model score or a pre-game availability estimate.
+- **F2/F3 fold preflights:** both fixed 200-game panels replayed, independently accounting for **21,311** and
+  **23,779** windows, but wrote no candidate data. In F2 game `401705329`, a recorded ejection at **11:26 Q4** left
+  that player in the reconstructed five at the **11:13** timeout until the later feed substitution. In F3 game
+  `401810097`, `Excess Timeout Technical` was incorrectly classified as an actual timeout by substring matching.
+  Correct the latter at the sequence source and quarantine games with ejected-on-court conflicts; see
+  `20261122_a1_s06_fold_F2_F3_failed.json`. Neither case establishes a deployable substitution model.
+- **F2/F3 retries:** independent sequence and candidate accounting retain **181** and **178** games respectively,
+  yielding **17,370** and **17,270** outgoing rows. F2 has **2** ejected-on-court conflicts; F3 has **5** missing
+  prior rosters and **1** unidentified ejection. Incoming non-entry labels remain unknown (**44,231** and
+  **36,922**); the populations are still selected full-timeout diagnostics.
+- **V2 reproducibility and seed preflight:** corrected F1/F4 replays reproduce every one of **65,864/66,545** earlier
+  candidate rows across all **23** columns. The 2022–23 seed replay reconciled **21,896** windows but its target
+  builder stopped before output because the loader omitted a column required by the NBA-team helper. This is a
+  software failure, not a measured model result; see `20261122_a1_s06_fold_seed_v2_failed.json`.
+- **Dated seed v3:** the fixed 200-game sample yields **184** replay-reconciled games and **6,354** prior-roster
+  targets. An independent audit verified all roster/profile dates, a maximum **0.0000931-minute** team target-sum
+  error, and exact 1,000-draw reproduction of **71** targets in two games. Replacing **98,484** player-game minute
+  outcomes from the 2022-12-01 fit cutoff onward left the earlier fitted ramp and spread unchanged. This establishes
+  the sampled input mechanism, not the historical publication timing or a forecast gain.
+
 ## 6b. A1 S03 matched component diagnosis (22 Nov 2026; descriptive)
 
 The fixed S01 pool-0 F4 control and manifest match on **200 games / 400 team-sides**. Pre-date own-offence and
