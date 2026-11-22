@@ -100,6 +100,13 @@
   .wins-pick{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center}
   .wins-pick input{width:72px}
 
+  /* Roster: minutes share on a common 48-minute scale. */
+  .minbar{display:block;position:relative;width:150px;height:9px;background:var(--panel2);border-radius:5px;margin:8px 0}
+  .minbar .s{display:block;height:100%;background:var(--dim);opacity:.55;border-radius:5px}
+  .minbar .t{position:absolute;top:-3px;height:15px;width:3px;background:var(--accent)}
+  .roster .inj{display:block;white-space:normal;max-width:220px;font-size:11px;color:var(--dim)}
+  .roster .grp td{background:var(--panel2);text-align:left;font-size:11px;font-weight:600;letter-spacing:.04em}
+  .acc{color:var(--accent)}
   /* today */
   .daybar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px}
   .daynav{display:flex;align-items:center;gap:6px}

@@ -18,25 +18,19 @@ a ladder of ten 10% steps with done-when criteria** and weights for the chunk %,
 while answering his questions too. **Give time estimates from measured job rates** (he says agents overestimate). He sends
 many UX requests mid-chunk; do them, check every touched page at 1440 / 960 / 390 in both themes and look at the screenshots.
 
-## Progress ladders — next chunk: "Express team strength, make minutes react" (agreed with the owner, 21 Nov)
+## Progress ladders — dashboard completion (22 Nov 2026)
 
-**Running first (owner, 21 Nov): the dashboard upgrade programme** in DASHBOARD_PLAN.md § Upgrade programme — 22 items of
-similar size, each closed with browser checks, a DASHBOARD_PLAN status update and a commit; continue from the first item not
-marked ✅, then start this chunk.
+Owner: finish DASHBOARD_PLAN U15–U22; give a high-level summary at completion of each U item.
+Headliners: team/season insights; model explanation and responsive polish. No engine promotion or tuning.
+Chunk % = 0.80 × Delivery + 0.20 × Close-out. Each entry below is a concrete 10% step.
 
-Headliners: **(1) team-difference compression** (next actions 1) and **(2) M7 game-state substitutions** (next actions 2); the
-chunk closes with major and minor dashboard work tied to both. Chunk % = 0.35 · S1 + 0.30 · S2 + 0.25 · S3 + 0.10 · S4; each step
-is 10% of its subchunk — post the board when a step or a 5% chunk mark is crossed.
-
-| Subchunk | Steps (10% each, in order; done when …) |
+| Subtask (weight) | Ten steps in order; done when … |
 |---|---|
-| **S1 Team-difference compression (35%)** | M6a v engine component loadings on the same 200 games (where the signal is lost) · node expression audit (slope real-on-predicted by shooter/defender/team-style deciles) · 2–3 levers chosen with expected effects · candidate A built · A fold runs paired v v1.3 · candidate B built · B fold runs paired · backtests A and B (one at a time) · decision (promote v1.4, final test once, or D38 negative) · total-bias (+1 pt in v1.4 variants) traced + FINDINGS/ENGINE_PLAN |
-| **S2 M7 game-state substitutions (30%)** | substitution windows with game state + FINDINGS facts (blowout minutes by tier, foul-trouble benching) · out/in datasets per dead ball · baseline: replayed schedules v real sub rates · models on the folds · engine integration as a soft pull to D29 targets (five on court, 240 minutes — smoke) · minutes by game state by tier v history (F4) · backtest (minutes by tier first) · pull strength tuned on F4 · decision · docs + smoke identities |
-| **S3 Dashboard (25%)** | **major**: rotation-map data (P on court per player per minute; Σ = 5 smoke) · rotation-map view (players × 48-min heat strip; blowout/close toggle if M7 promotes) · watch-a-sim data (5 saved worlds' event logs, D9/M10) · watch-a-sim list (nba.com-style play-by-play, quarter jumps, filters) · **minor**: player face cards fetched once + retained · face cards in spotlight, sheets, box scores, player pages · tracking-defence insight on player pages (contest FG% allowed v normal) · win % Δ back if S1 makes engine and ratings consistent (else deferred + alternative) · "role change tonight" badges on Today (±4 min and why) · full sweep 1440/960/390 both themes + DASHBOARD_PLAN |
-| **S4 Close-out (10%)** | resume NBA pbp history early (background, ~75 min) · pbp complete · nightly 10k started · nightly done (~30 min) · browser checks · browser fixes · smoke + new checks · `--fault` fails · docs · commit + push |
+| Delivery (80%) | 10 baseline 99/99 + source audit; 20 U15 roster roles styled, six browser cases inspected, documented/committed/pushed; 30 U16 playoff picture checked/documented/committed/pushed; 40 U17 win distributions checked/documented/committed/pushed; 50 U18 season races checked/documented/committed/pushed; 60 U19 movers checked/documented/committed/pushed; 70 U20 leaders checked/documented/committed/pushed; 80 U21 guide checked/documented/committed/pushed; 90 U22 polish checked/documented/committed/pushed; 100 integration, all U statuses and commands consistent |
+| Close-out (20%) | 10 refresh configuration/cutoffs verified; 20 offline/no-rebuild nightly launched (10k, archives); 30 quarter of game logs complete; 40 half complete; 50 three quarters complete; 60 all games and fresh 10k season/views complete; 70 full browser sweep/screenshots reviewed; 80 smoke passes with new accounting checks; 90 fault run fails + PWA import/offline checks pass; 100 handoff/findings/plan current and final commit pushed |
 
-Sequencing: S2's data steps run while S1's fold models train; never two backtests at once; pause the pbp download during the
-nightly; if S1 and S2 both promote, one production retrain (`train.py --final`) covers both.
+Current: Delivery 20%, Close-out 0%, overall 16%. U15 complete: Roster grouped into projected starters, bench, rotation fringe and reported out; season minute bars against next-game projections, minute deltas and injury details. Six size/theme cases passed; desktop/phone screenshots inspected.
+Review server :8767; owner :8766 untouched. Continue with the first unchecked U item.
 
 ## The product in one paragraph (ENGINE_PLAN D26)
 

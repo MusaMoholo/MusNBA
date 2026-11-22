@@ -879,12 +879,25 @@ def build(views_root: Path = VIEWS) -> dict:
                            'gp': p['gp'] if p else 0, 'gs': p['gs'] if p else 0,
                            'tot': {k: p['totals'].get(k, 0) for k in BOX_TOTALS} if p else {}})
         f = season_latest['teams'][tid]
+        # U15: tonight's projected minutes and starters from the team's next projected game (stored worlds, nothing simulated)
+        tonight = None
+        nxt = upcoming.get(tid, [None])[0]
+        pj = projections.get(nxt['game_id']) if nxt else None
+        if pj:
+            side = 'home' if pj['sim']['home']['team_id'] == tid else 'away'
+            home = nxt['home_id'] == tid
+            tonight = {'game_id': nxt['game_id'], 'date': nxt['date_et'], 'tip_utc': nxt['tip_utc'], 'home': home,
+                       'opp': nxt['away_id'] if home else nxt['home_id'], 'sims': pj['sim'].get('sims'),
+                       'players': {str(x['id']): {'min': round(x['periods']['fg']['stats']['min']['mean'], 1) if x.get('periods') else 0.0,
+                                                  'q': x['periods']['fg']['stats']['min']['q'] if x.get('periods') else None,
+                                                  'starter': bool(x.get('starter')), 'played': x.get('played'), 'status': x.get('status')}
+                                   for x in pj['sim'][side]['players']}}
         write_json(api / 'team' / f'{tid}.json', {
             'date': latest_day, 'team': info, 'record': current[tid], 'stats': team_slice(L['teams'], tid),
             'league': rounded({k: L['league'].get(k) for k in ('ortg', 'pace', 'efg', 'tov_pct', 'oreb_pct', 'ftr', 'fg3a_rate', 'pts')}),
             'forecast': {k: f[k] for k in ('remaining', 'scheduled', 'mean_w', 'mean_l', 'seed_mean', 'seeds', 'top6', 'playin',
                                            'out', 'first', 'best_record', 'wins')},
-            'roster': roster, 'schedule': sched, 'model': season_latest['model']})
+            'roster': roster, 'schedule': sched, 'tonight': tonight, 'model': season_latest['model']})
 
     latest_games = read_json(latest['path'] / 'games.json')
     shot_profiles = shot_profile_table()

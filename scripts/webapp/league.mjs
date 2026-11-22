@@ -228,14 +228,43 @@ async function teamPage(view, {rest, current}) {
   paint();
 }
 
+// U15: roster by role — tonight's projected starters and bench (stored worlds of the next projected game) or, with no
+// projection, regular starters (≥ half their games started) and bench; out players last with their injury. Each row shows
+// season minutes as a share of 48 against tonight's projection.
 function roster(data) {
   const pg = (p, k) => p.gp ? (p.tot[k] / p.gp).toFixed(1) : '—';
   const pctOf = (m, a) => a ? (100 * m / a).toFixed(1) : '—';
-  return `<section class="panel"><div class="scroll"><table><thead><tr><th class="name">Player</th><th>Pos</th><th>GP</th><th>GS</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th><th>3PM</th><th>STL</th><th>BLK</th><th>TOV</th><th>FG%</th><th>3P%</th><th>FT%</th></tr></thead><tbody>
-    ${data.roster.map(p => `<tr class="link" data-pid="${p.id}"><td class="name">${esc(p.name)}${p.jersey ? ` <span class="tag">#${esc(p.jersey)}</span>` : ''}${statusTag(p.status)}</td><td class="c dim">${esc(p.pos || '')}</td>
-      <td>${p.gp}</td><td>${p.gs}</td><td>${pg(p, 'min')}</td><td><b>${pg(p, 'pts')}</b></td><td>${pg(p, 'reb')}</td><td>${pg(p, 'ast')}</td><td>${pg(p, 'fg3m')}</td><td>${pg(p, 'stl')}</td><td>${pg(p, 'blk')}</td><td>${pg(p, 'tov')}</td>
-      <td>${pctOf(p.tot.fgm, p.tot.fga)}</td><td>${pctOf(p.tot.fg3m, p.tot.fg3a)}</td><td>${pctOf(p.tot.ftm, p.tot.fta)}</td></tr>`).join('')}
-    </tbody></table></div><p class="note">Current roster with season per-game averages (all teams this season). Injury status from the latest report.</p></section>`;
+  const T = data.tonight?.players || null;
+  const season = p => p.gp ? p.tot.min / p.gp : 0;
+  const isOut = p => /^(out|susp)/i.test(p.status || '');
+  const proj = p => T?.[p.id]?.min ?? null;
+  const groups = T
+    ? [['Projected starters', data.roster.filter(p => !isOut(p) && T[p.id]?.starter)],
+       ['Bench', data.roster.filter(p => !isOut(p) && !T[p.id]?.starter && (proj(p) || 0) >= 0.5)],
+       ['Out of the rotation', data.roster.filter(p => !isOut(p) && !T[p.id]?.starter && (proj(p) ?? 0) < 0.5)]]
+    : [['Regular starters', data.roster.filter(p => !isOut(p) && p.gp && p.gs / p.gp >= 0.5)],
+       ['Bench', data.roster.filter(p => !isOut(p) && !(p.gp && p.gs / p.gp >= 0.5))]];
+  groups.push(['Out', data.roster.filter(isOut)]);
+  for (const g of groups) g[1].sort((a, b) => (proj(b) ?? season(b)) - (proj(a) ?? season(a)) || season(b) - season(a));
+  const ret = d => { if (!d) return ''; const x = new Date(d + 'T12:00:00Z'); return isNaN(x) ? '' : ' · back ~' + x.toLocaleDateString('en-GB', {day: 'numeric', month: 'short', timeZone: 'UTC'}); };
+  const inj = p => p.injury && isOut(p) ? `<span class="inj" title="${esc(p.injury.comment || '')}">${esc([p.injury.type, p.injury.detail].filter(Boolean).join(' · ') || p.injury.status || '')}${ret(p.injury.return)}</span>` : '';
+  const bar = p => {  // season minutes (grey) and tonight's projection (accent) on a 0–48 track
+    const s = season(p), t = proj(p);
+    return `<span class="minbar" title="Season ${s.toFixed(1)} min${t != null ? ` · tonight ${t.toFixed(1)}` : ''}"><i class="s" style="width:${(100 * s / 48).toFixed(1)}%"></i>${t != null ? `<i class="t" style="left:${(100 * Math.min(t, 48) / 48).toFixed(1)}%"></i>` : ''}</span>`;
+  };
+  const tn = p => { const t = proj(p); if (t == null) return '<td class="dim">—</td>'; const d = t - season(p);
+    return `<td><b>${t.toFixed(1)}</b>${p.gp && Math.abs(d) >= 2 ? ` <small class="${d > 0 ? 'up' : 'down'}">${d > 0 ? '+' : '−'}${Math.abs(d).toFixed(0)}</small>` : ''}</td>`; };
+  const lost = data.roster.filter(isOut).reduce((a, p) => a + season(p), 0);
+  const nx = data.tonight;
+  const head = `<tr><th class="name">Player</th><th class="l">Minutes (season · <span class="acc">next game</span>)</th>${T ? '<th>Next</th>' : ''}<th>GP</th><th>GS</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th><th>3PM</th><th>STL</th><th>BLK</th><th>TOV</th><th>FG%</th><th>3P%</th><th>FT%</th></tr>`;
+  const cols = 15 + (T ? 1 : 0);
+  const body = groups.filter(g => g[1].length).map(([label, ps]) => `<tr class="grp"><td colspan="${cols}">${label} <span class="dim">· ${ps.length}</span></td></tr>` + ps.map(p =>
+    `<tr class="link" data-pid="${p.id}"><td class="name">${esc(p.name)}${p.jersey ? ` <span class="tag">#${esc(p.jersey)}</span>` : ''} <span class="dim">${esc(p.pos || '')}</span>${statusTag(p.status)}${inj(p)}</td>
+      <td class="l">${bar(p)}</td>${T ? tn(p) : ''}<td>${p.gp}</td><td>${p.gs}</td><td>${pg(p, 'min')}</td><td><b>${pg(p, 'pts')}</b></td><td>${pg(p, 'reb')}</td><td>${pg(p, 'ast')}</td><td>${pg(p, 'fg3m')}</td><td>${pg(p, 'stl')}</td><td>${pg(p, 'blk')}</td><td>${pg(p, 'tov')}</td>
+      <td>${pctOf(p.tot.fgm, p.tot.fga)}</td><td>${pctOf(p.tot.fg3m, p.tot.fg3a)}</td><td>${pctOf(p.tot.ftm, p.tot.fta)}</td></tr>`).join('')).join('');
+  const sub = nx ? `<p class="note" style="margin-top:0">Grouped by the projection for ${esc(dayLabel(nx.date))} ${nx.home ? 'vs' : '@'} ${esc(team(nx.opp).abbr)} (${nx.sims?.toLocaleString() || '—'} simulated games).` : '<p class="note" style="margin-top:0">No projected game yet: grouped by games started this season.';
+  return `<section class="panel">${sub}${lost >= 1 ? ` Out: <b>${lost.toFixed(0)}</b> season minutes a game.` : ''}</p><div class="scroll"><table class="roster"><thead>${head}</thead><tbody>${body}</tbody></table></div>
+    <p class="note">Bar: season minutes per game out of 48 (grey) and next-game projected minutes (accent tick). Tonight's small number is the change from his season average (≥ 2 min). Injury details from the latest report; hover for the full note.</p></section>`;
 }
 
 function schedule(data) {

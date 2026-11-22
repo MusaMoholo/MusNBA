@@ -321,3 +321,5 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
   chances, breakout dumbbell with the why, chance to lead the night/game, games to watch), fixed layouts at 1440/960/390.
   Docs made model- and environment-agnostic (AGENTS §6 long jobs, preferences moved out of private notes). Smoke 99/99
   (`--fault` fails 19), browser 81/81.
+
+- **22 Nov 2026 · U15**: Roster grouped into projected starters, bench, rotation fringe and reported out; season minute bars against next-game projections, minute deltas and injury details. Six size/theme cases passed; desktop/phone screenshots inspected.
