@@ -14,6 +14,8 @@ The byte-identical typed tracking rebuild and original v2 minute-gate source/rep
 partial checkpoint **890bee3** before correcting the gate's seed-noise definition.
 The completed S04 defence checkpoint and corrected minute-gate report are committed and pushed as **38155fc**.
 The completed S05 minutes checkpoint and original S06 pilot sources are committed and pushed as **417f3f5**.
+The first S06 partial checkpoint **637a025** preserves the corrected initial replay, F1 dataset and frozen fold
+protocol; subsequent source revisions and reports still need their own commits and push.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
 product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S05 are complete;
 S06 is active at 30%; A1 overall is 43.6%.** Isolated assignment candidates have event-level diagnostics and wiring only;
@@ -161,7 +163,7 @@ wiring games. A new full 200-game default replay has not been run.
 
 **S06 30%:** the S05 control decision is recorded, so sequence reconstruction started
 while its checkpoint smoke ran. The S05 checkpoint preserves the original `scripts/a1_substitutions.py` and
-`tests/test_a1_substitutions.py`; corrected working versions remain uncommitted. On game `401810498` the replay checks
+`tests/test_a1_substitutions.py`; the initial corrected versions are in **637a025**. On game `401810498` the replay checks
 **1,008** event-side scoreboards and gives margin **−3** immediately before substitution sequence 709, separating
 the same-clock later reversal. Feed sequence numbers are not globally chronological in that game; replay orders
 by period, descending clock, then sequence *within* a clock. In a separate raw 2025–26 preflight, two duplicate

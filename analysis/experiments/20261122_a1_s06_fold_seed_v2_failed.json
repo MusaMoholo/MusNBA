@@ -1,0 +1,16 @@
+{
+ "experiment": "a1_s06_seed_preflight_failed",
+ "status": "failed_before_target_or_candidate_output",
+ "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u -m scripts.a1_substitution_fold_data --population seed",
+ "log": "/tmp/musnba_a1_s06_fold_seed_v2.log",
+ "requested_games": 200,
+ "reconciled_windows": 21896,
+ "failure": "The seed roster loader omitted game_id, which the existing NBA-team accounting helper requires.",
+ "resolution": "Include the retained box game_id column, test the dated target generator on a small real sample, then rebuild all folds with one consistently fingerprinted source.",
+ "failed_source_sha256": "5a8c724c2eff65d29de295a23baf3e7070d98fdf25856a9ba2fb815d28152654",
+ "input_sha256": {
+  "data/raw/hoopr/play_by_play_2023.parquet": "f3fac3a58cf1be8813f1f4332edb7fc8d83936df703892a700095d62f71da886",
+  "data/raw/hoopr/player_box_2023.parquet": "968d835cd04b10533c5b5af8c0e41bf0154a73782e9446c76f765109223e8679",
+  "data/derived/history/2023/segments.parquet": "813b53edadf92f6e6c607211b1d4c64b312aa9fbe689851110e912419101a76e"
+ }
+}

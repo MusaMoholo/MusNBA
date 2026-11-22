@@ -25,6 +25,8 @@ class InvalidGame(ValueError):
 
 def stoppage_kind(event: dict) -> str | None:
     kind = rotations.window_kind(event)
+    if kind == 'timeout' and event['type_text'].lower() == 'excess timeout technical':
+        return None
     if kind == 'jump_ball':
         name = event['type_text'].lower()
         if event['type_id'] != '615' and 'jumpball' not in name and 'jump ball' not in name:

@@ -6,6 +6,7 @@ import argparse
 import json
 import sys
 import time
+from bisect import bisect_left
 from collections import Counter
 from pathlib import Path
 
@@ -147,8 +148,22 @@ def exclude_unidentified_ejections(windows: pd.DataFrame, raw: pd.DataFrame) -> 
     return windows.loc[~windows['game_id'].isin(excluded)].copy(), unknown.to_dict('records')
 
 
+def exclude_ejected_on_court(windows: pd.DataFrame, raw: pd.DataFrame) -> tuple[pd.DataFrame, list[dict]]:
+    positions, _, ejections = a1_substitution_dataset.event_history(raw, set(windows['game_id'].unique()))
+    conflicts = []
+    for window in windows.to_dict('records'):
+        gid = window['game_id']
+        position = positions[(gid, window['period'], window['clock'], window['trigger_seq'])]
+        for side in ('home', 'away'):
+            for player in window[f'{side}_five_before']:
+                if bisect_left(ejections.get((gid, player), []), position):
+                    conflicts.append({'game_id': gid, 'window_id': window['window_id'], 'player': player})
+    excluded = {item['game_id'] for item in conflicts}
+    return windows.loc[~windows['game_id'].isin(excluded)].copy(), conflicts
+
+
 def paths_for(population: str) -> tuple[Path, Path, Path, Path | None]:
-    stem = f'20261122_a1_s06_fold_{population}'
+    stem = f'20261122_a1_s06_fold_{population}_v2'
     report = EXPERIMENTS / f'{stem}.json'
     rows = DERIVED / 'experiments' / f'{stem}.parquet'
     windows = DERIVED / 'experiments' / f'{stem}_windows.parquet'
@@ -158,7 +173,7 @@ def paths_for(population: str) -> tuple[Path, Path, Path, Path | None]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--population', choices=['seed', 'F1', 'F2', 'F3'], required=True)
+    parser.add_argument('--population', choices=['seed', 'F1', 'F2', 'F3', 'F4'], required=True)
     args = parser.parse_args()
     report_path, rows_path, windows_path, target_output = paths_for(args.population)
     outputs = [report_path, rows_path, windows_path] + ([target_output] if target_output else [])
@@ -166,7 +181,7 @@ def main() -> None:
         raise FileExistsError('refusing to overwrite an existing fold dataset')
     manifest_path = a1_minutes_fold_eval.PREREG
     manifest = json.loads(manifest_path.read_text())
-    season = {'seed': 2023, 'F1': 2024, 'F2': 2025, 'F3': 2026}[args.population]
+    season = {'seed': 2023, 'F1': 2024, 'F2': 2025, 'F3': 2026, 'F4': 2026}[args.population]
     segments_path = DERIVED / f'history/{season}/segments.parquet'
     if args.population == 'seed':
         columns = ['game_id', 'date_et', 'game_ok', 'season_type', 'offense', 'defense', 'off_home']
@@ -178,6 +193,7 @@ def main() -> None:
     windows, accounting = replay(games, season, raw)
     opportunities, selection = a1_substitution_opportunities.timeout_opportunities(windows, raw)
     opportunities, unknown_ejections = exclude_unidentified_ejections(opportunities, raw)
+    opportunities, stale_ejections = exclude_ejected_on_court(opportunities, raw)
     target_audit = EXPERIMENTS / '20261122_a1_s05_minutes_screen_accounting_corrected.json'
     if args.population == 'seed':
         targets = seed_targets(games)
@@ -219,6 +235,7 @@ def main() -> None:
         'fold_validation_start': FOLDS[args.population][1] if args.population != 'seed' else None,
         'games_without_prior_target_roster': missing_roster,
         'unidentified_ejections_excluded': unknown_ejections,
+        'ejected_on_court_conflicts_excluded': stale_ejections,
         **accounting, 'timeout_selection': selection, 'candidate_counts': counts,
         'independent_candidate_accounting': independent,
         'method': 'Replay fixed games, independently reconcile every raw substitution, select conservative full '
