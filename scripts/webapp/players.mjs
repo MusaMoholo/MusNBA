@@ -89,7 +89,8 @@ async function playerPage(view, {rest, current}) {
       <p style="margin:4px 0 0">${esc(dayLabel(next.date))} · ${next.home ? 'vs' : '@'} ${teamLink(next.opp)} · ${esc(t.label)}</p></div>
       <a class="btn${pr ? '' : ' ghost'}" href="#/game/${next.game_id}${pr ? '/player/' + pid : ''}">${pr ? 'Open simulation' : 'Game page'}</a></div>
       ${pr ? `<div class="tiles" style="margin-top:10px">${[['PTS', 'pts'], ['REB', 'reb'], ['AST', 'ast'], ['3PM', 'fg3m'], ['PRA', 'pra'], ['MIN', 'min']].map(([l, k]) => `<div class="tile"><span>${l}</span><b>${f1(pr[k].mean)}</b><small>${pr[k].q[0]}–${pr[k].q[4]}</small></div>`).join('')}</div>
-        <p class="note">Projected means with 10th–90th percentile ranges${pr.played < 0.999 ? ` · plays in ${pct(pr.played, 0)} of simulations` : ''}.</p>` : '<p class="note">Player projections appear on the morning of the game.</p>'}</section>`;
+        <p class="note">Projected means with 10th–90th percentile ranges${pr.played < 0.999 ? ` · plays in ${pct(pr.played, 0)} of simulations` : ''}.</p>` : '<p class="note">Player projections appear on the morning of the game.</p>'}
+      ${vsOpp(next)}</section>`;
   }
   const items = log.slice(-20).map(r => ({v: r.dnp ? null : r.pts, label: r.date.slice(8), title: `${r.date} ${r.home ? 'vs' : '@'} ${team(r.opp).abbr}: ${r.dnp ? (r.reason || 'DNP') : r.pts + ' pts'}`}));
   view.innerHTML = `<section class="panel"><div class="row">${p.team ? logo(p.team, 'lg') : ''}<div class="grow"><h2 style="margin:0;font-size:20px">${esc(p.name)}</h2>
@@ -158,6 +159,18 @@ function shotPanel(sh) {
     <p class="note">Assisted on ${Math.round(100 * sh.assisted)}% of his makes · FT ${(100 * sh.ft_pct).toFixed(1)}%.
     The pre-game profile the engine uses (decayed and shrunk toward his position group), through his last game (${esc(dayLabel(sh.as_of))}) — green zones beat the league's FG% there, red trail it.</p></div></div></section>`;
 }
+// U12: his history against the next opponent — averages v his overall, recent meetings, and their current players who
+// guarded him most (real matchups)
+function vsOpp(next) {
+  const h = next?.history;
+  if (!h) return '';
+  const cell = (k, l) => { const d = h.avg[k] - h.overall[k]; return `<div class="tile"><span>${l}</span><b>${f1(h.avg[k])}</b><small>overall ${f1(h.overall[k])} <em class="${d > 0.5 ? 'up' : d < -0.5 ? 'down' : 'dim'}">${d > 0 ? '+' : ''}${d.toFixed(1)}</em></small></div>`; };
+  const games = h.games.map(g => `<tr><td class="l">${esc(dayLabel(g.date))}</td><td>${g.min}</td><td><b>${g.pts}</b></td><td>${g.reb}</td><td>${g.ast}</td></tr>`).join('');
+  const guards = h.guards.length ? `<p class="note" style="margin-top:6px">Guarded most by: ${h.guards.map(gd => `<a href="#/player/${gd.id}">${esc(gd.name)}</a> (${gd.pposs} poss, ${gd.pts} pts, ${gd.fgm}/${gd.fga})`).join(' · ')}</p>` : '';
+  return `<h4 class="sub-h">v ${esc(team(next.opp).name)} · ${h.n} game${h.n > 1 ? 's' : ''} since 2022-23</h4><div class="tiles">${cell('pts', 'PTS')}${cell('reb', 'REB')}${cell('ast', 'AST')}${cell('min', 'MIN')}</div>
+    <div class="scroll" style="margin-top:6px"><table><thead><tr><th class="l">Recent meetings</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th></tr></thead><tbody>${games}</tbody></table></div>${guards}`;
+}
+
 // U11: defensive profile from real NBA matchups — what his man does against him v what the same attackers do elsewhere
 function defencePanel(d) {
   if (!d) return '';

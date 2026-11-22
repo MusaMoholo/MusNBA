@@ -505,6 +505,41 @@ def defence_profiles(M, day: str, registry: dict) -> dict:
     return out
 
 
+def opponent_history(registry: dict, teams: dict, M, day: str) -> dict:
+    """U12: per player, his past games against each team (ESPN boxes 2022-23 → before `day`) and, from real matchups, which of
+    that team's current players guarded him most. Returns {pid: {opp_team_id: {...}}} lazily filled for next opponents."""
+    from scripts import nbastats
+    E = nbastats.espn_tables()
+    abbr_to_id = {v['abbr']: k for k, v in teams.items()}
+    E = E[(E['date'] < day) & ~E['did_not_play'].fillna(False).astype(bool) & (E['min'].fillna(0) > 0)].copy()
+    E['opp_id'] = E['opp_abbr'].map(abbr_to_id)
+    by_player = {pid: g.sort_values('date') for pid, g in E.groupby('player')}
+    on_team = {}
+    for pid, reg in registry.items():
+        if reg.get('on_roster'):
+            on_team.setdefault(str(reg.get('team')), set()).add(str(pid))
+    def lookup(pid: str, opp: str):
+        g = by_player.get(str(pid))
+        if g is None:
+            return None
+        v = g[g['opp_id'] == str(opp)]
+        if v.empty:
+            return None
+        cols = ['pts', 'reb', 'ast', 'min']
+        games = [{'date': r.date, 'min': int(r.min or 0), 'pts': int(r.pts or 0), 'reb': int(r.reb or 0), 'ast': int(r.ast or 0)}
+                 for r in v.tail(8).itertuples(index=False)][::-1]
+        out = {'n': int(len(v)), 'avg': {c: round(float(v[c].mean()), 1) for c in cols}, 'overall': {c: round(float(g[c].mean()), 1) for c in cols},
+               'games': games, 'guards': []}
+        if M is not None:
+            mm = M[(M['off_player'] == str(pid)) & M['def_player'].isin(on_team.get(str(opp), set())) & (M['date'] < day)]
+            if not mm.empty:
+                gg = mm.groupby('def_player')[['pposs', 'pts', 'fgm', 'fga']].sum().sort_values('pposs', ascending=False).head(3)
+                out['guards'] = [{'id': d, 'name': (registry.get(d) or {}).get('name', d), 'pposs': round(float(r.pposs)), 'pts': int(r.pts),
+                                  'fgm': int(r.fgm), 'fga': int(r.fga)} for d, r in gg.iterrows()]
+        return out
+    return lookup
+
+
 def lead_fan(path: Path, gid: str) -> dict | None:
     """U5: the home lead after Q1, at half-time, after Q3 and at the final whistle (overtime included) in every stored world:
     10/25/50/75/90th percentiles per break, and the chance the home side leads at each."""
@@ -841,6 +876,7 @@ def build(views_root: Path = VIEWS) -> dict:
     latest_games = read_json(latest['path'] / 'games.json')
     shot_profiles = shot_profile_table()
     dprof = defence_profiles(M_real, latest_day, registry)
+    vs_opp = opponent_history(registry, teams, M_real, latest_day)
     for pid, reg in registry.items():
         p = P.get(pid)
         if not p and not reg.get('on_roster'):
@@ -861,6 +897,7 @@ def build(views_root: Path = VIEWS) -> dict:
             home = nxt['home_id'] == tid
             nxt_out = {'game_id': nxt['game_id'], 'date': nxt['date_et'], 'tip_utc': nxt['tip_utc'], 'home': home,
                        'opp': nxt['away_id'] if home else nxt['home_id'], 'projection': stats}
+            nxt_out['history'] = vs_opp(str(pid), str(nxt_out['opp']))
         write_json(api / 'player' / f'{pid}.json', {
             'date': latest_day, 'player': {k: reg.get(k) for k in ('id', 'name', 'short', 'pos', 'jersey', 'team', 'age', 'height',
                                                                     'weight', 'experience', 'status', 'injury', 'on_roster')},
