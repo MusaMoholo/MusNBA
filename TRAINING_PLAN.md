@@ -694,6 +694,13 @@ Expected/season mixture must meet D31's accounting requirements rather than roun
 the retained pathway has no fitted future player-absence hazard; do not treat DNP proxy durations or actual future
 participants as future availability. New hazard work requires dated pre-origin cohorts and the unchanged gates.
 
+D47 requests an isolated five-level prospective availability candidate: nearest quarter with halfway ties up,
+uncertain inputs bounded to 25–75%, original assumption and source retained, and fixed 0/1 unchanged. This
+includes the unknown and recent-inactivity fallback labels; it is not evidence that these weights are calibrated.
+All selected branch weights and unselected per-world draws must use the same candidate scale. Compare it with the
+unchanged fallback under applicable player-first gates; pre-D47 captures are wiring evidence only. Until accepted,
+the served fallback remains unchanged and the final test stays protected.
+
 Chunk A A1 froze the prospective selection, branch identifiers and mixture contract in HANDOFF before implementation.
 D46 replaces the earlier 15-minute healthy-role/0.25 prior-usage scope rule with a top-three full-roster offensive
 contribution proxy and at most one uncertainty per team. The proxy is not a fitted total-impact measure;

@@ -6,18 +6,21 @@ import argparse
 import json
 import sys
 import time
+from copy import deepcopy
 from dataclasses import asdict
 from datetime import date
+from fractions import Fraction
 from pathlib import Path
 
 import lightgbm
 import numpy as np
+import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 from basketball_common import DERIVED, MASTER_CSV, SNAPSHOTS, read_json, sha256_file, write_json  # noqa: E402
 from scripts import (a1_branch_world_probe, a1_lineup_branches, a1_substitution_world_audit,  # noqa: E402
-                     box_scores, engine, master_fixtures, nightly, projection)
+                     box_scores, engine, master_fixtures, minutes, nightly, projection)
 from scripts.season_stats import period_profiles, player_table, team_table  # noqa: E402
 
 
@@ -49,6 +52,46 @@ def fingerprint(paths: list[Path]) -> dict[str, str]:
     if not paths or any(not path.is_file() for path in paths):
         raise FileNotFoundError('a required branch input or model artifact is missing')
     return {str(path.relative_to(ROOT)): sha256_file(path) for path in paths}
+
+
+def check_median_cutoff(path: Path, origin: str) -> None:
+    dates = pd.read_parquet(path, columns=['date_et'])['date_et']
+    if dates.empty or dates.isna().any():
+        raise ValueError('model median input has missing dates')
+    parsed = pd.to_datetime(dates, format='%Y-%m-%d', errors='raise')
+    if (parsed >= pd.Timestamp(origin)).any():
+        raise ValueError('model median input contains games on or after the origin')
+
+
+def quarter_availability(value: float) -> float:
+    if not np.isfinite(value) or not 0 <= value <= 1:
+        raise ValueError('availability must be finite and between zero and one')
+    if value in (0, 1):
+        return float(value)
+    scaled = Fraction(str(value)) * 4 + Fraction(1, 2)
+    return min(3, max(1, scaled.numerator // scaled.denominator)) / 4
+
+
+def quarter_candidate(game: engine.Game, roster_inputs: dict) -> tuple[engine.Game, dict]:
+    """Keep the original game untouched; apply D47 to every prospective roster probability."""
+    candidate, inputs = deepcopy(game), deepcopy(roster_inputs)
+    for row in inputs.values():
+        original = row['availability']
+        row['original_availability'] = original
+        row['availability'] = quarter_availability(original)
+    for index, player_id in enumerate(candidate.ids):
+        player_id = str(player_id)
+        side_index = int(candidate.side[index])
+        side = candidate.sides[side_index]
+        local_index = index - int(np.flatnonzero(candidate.side == side_index)[0])
+        player = candidate.players[side][local_index]
+        if (str(player['id']) != player_id
+                or float(candidate.avail[index]) != float(inputs[player_id]['original_availability'])
+                or float(player['availability']) != float(inputs[player_id]['original_availability'])):
+            raise ValueError(f'player {player_id} availability differs from the original roster')
+        player['availability'] = inputs[player_id]['availability']
+        candidate.avail[index] = player['availability']
+    return candidate, inputs
 
 
 def checked_snapshot(day: str, game_id: str) -> tuple[dict, dict, dict]:
@@ -107,6 +150,7 @@ def run(day: str, game_id: str, worlds: int, output: Path, worlds_dir: Path) -> 
     paths = source_paths(model)
     paths.extend([SNAPSHOTS / day / 'meta.json', SNAPSHOTS / day / 'games.json'])
     before = fingerprint(paths)
+    check_median_cutoff(engine.features_dir(model) / 'pregame.parquet', origin)
     team_rows, player_rows = box_scores.load_csv('team_games.csv'), box_scores.load_csv('player_games.csv')
     period_rows = box_scores.load_csv('player_periods.csv')
     teams = read_json(DERIVED / 'teams.json')
@@ -114,14 +158,27 @@ def run(day: str, game_id: str, worlds: int, output: Path, worlds_dir: Path) -> 
     P = player_table(player_rows, origin)
     Q, priors = period_profiles(period_rows, player_rows, origin, team_rows, blowout=15)
     g = engine.inputs_for(fixture, day, T, lg, P, registry, Q, priors, origin=origin)
-    selected = a1_lineup_branches.select_uncertain(g, registry, engine._MINUTES[origin]['latest'])
-    if not selected:
-        raise ValueError('no eligible uncertain players; no conditional branches to capture')
-    branches = a1_lineup_branches.enumerate_branches(g, [(p.team_id, p.player_id) for p in selected])
-    eng = engine.Engine(model)
-    worlds_dir.mkdir(parents=True)
+    minute_inputs = engine._MINUTES[origin]
+    roster_inputs = {}
+    for side in g.sides:
+        team_id = str(fixture[f'{side}_id'])
+        for player in projection.player_inputs(team_id, P, registry, lg, T, True, Q, priors):
+            pid = str(player['id'])
+            if pid in roster_inputs:
+                raise ValueError('duplicate player in origin rosters')
+            role = minutes.player_state(minute_inputs, team_id, pid, day)['healthy']
+            roster_inputs[pid] = {**player, 'healthy_role': role}
+    a1_lineup_branches.select_uncertain(g, registry, minute_inputs['latest'], roster_inputs)
+    g, roster_inputs = quarter_candidate(g, roster_inputs)
+    selected, rankings = a1_lineup_branches.select_uncertain(g, registry, minute_inputs['latest'], roster_inputs)
+    branches = (a1_lineup_branches.enumerate_branches(g, [(p.team_id, p.player_id) for p in selected])
+                if selected else ())
+    eng = engine.Engine(model) if branches else None
+    if branches:
+        worlds_dir.mkdir(parents=True)
     records = []
     for number, branch in enumerate(branches):
+        assert eng is not None
         start = time.monotonic()
         prepared = a1_lineup_branches.prepare_branch(g, branch.assignments)
         seed = projection.seed_for('lineup-v1', engine.ENGINE['id'], origin, day, game_id, branch.branch_id)
@@ -148,8 +205,10 @@ def run(day: str, game_id: str, worlds: int, output: Path, worlds_dir: Path) -> 
         'schema': 1, 'kind': 'research conditional branches; not a forecast or promotion',
         'game': game_id, 'slate_date': day, 'origin': origin, 'engine': engine.ENGINE['id'], 'model': model,
         'worlds_per_branch': worlds, 'selected': [asdict(player) for player in selected],
-        'weight_assumptions': ('uncalibrated independent availability probabilities' if len(selected) <= 2
-                               else 'non-exhaustive unweighted all-play/one-out sensitivities'),
+        'selection_policy': 'top3-offensive-proxy-one-per-team-v1', 'impact_ranking': rankings,
+        'availability_policy': 'D47-nearest-quarter-preserve-uncertain-v1',
+        'no_branch_reason': None if selected else "no uncertain player in either team's top three; retain unconditional forecast",
+        'weight_assumptions': 'uncalibrated independent availability probabilities',
         'rotation_policy': 'isolated branch-only foul-out repair; short rosters fail',
         'numpy': np.__version__, 'lightgbm': lightgbm.__version__,
         'input_sha256': before, 'branches': records,

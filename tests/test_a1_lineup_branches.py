@@ -49,7 +49,7 @@ class OnePlayerBranchesTests(unittest.TestCase):
         game = self.game()
         game.day, game.input_before = '2026-01-02', '2026-01-01'
         game.P['usage'] = np.full(game.n, 0.1)
-        registry, latest = {}, {}
+        registry, latest, inputs = {}, {}, {}
         for side in game.sides:
             team_id = str(game.game[f'{side}_id'])
             for player in game.players[side]:
@@ -57,62 +57,70 @@ class OnePlayerBranchesTests(unittest.TestCase):
                 registry[player['id']] = {'team': team_id, 'on_roster': True,
                                            'status': 'Questionable', 'status_source': 'report'}
                 latest[player['id']] = {'games': 1, 'last_date': '2025-12-30'}
-        return game, registry, latest
+                inputs[player['id']] = {'healthy_role': game.mstate[game.ids.index(player['id'])]['healthy'],
+                                        'value': 1.0, 'availability': player['availability'], 'status': player['status'],
+                                        'availability_basis': player['availability_basis']}
+        return game, registry, latest, inputs
 
-    def test_selects_uncertain_role_usage_and_unknowns_before_origin(self):
-        game, registry, latest = self.selection_inputs()
-        assert game.mstate is not None
-        game.avail[:5] = 0.5
-        for player in game.players['home'][:5]:
-            player['availability'] = 0.5
-        game.mstate[1]['healthy'] = game.mstate[2]['healthy'] = game.mstate[3]['healthy'] = 10
-        game.mstate[4]['healthy'] = 10
-        game.P['usage'][1], game.P['usage'][3] = 0.3, np.nan
-        latest.pop('104')
-        selected = a1_lineup_branches.select_uncertain(game, registry, latest)
-        self.assertEqual([p.player_id for p in selected], ['100', '101', '103', '104'])
-        self.assertEqual(selected[2].missing, ('usage',))
-        self.assertEqual(selected[3].missing, ('observed_role',))
-        self.assertEqual(selected[3].role_basis, 'prior')
+    def test_selects_only_highest_ranked_uncertainty_per_team(self):
+        game, registry, latest, inputs = self.selection_inputs()
+        for index in (1, 3, 7, 8):
+            game.avail[index] = 0.5
+            side = 'home' if index < 7 else 'away'
+            player = game.players[side][index % 7]
+            player['availability'] = inputs[player['id']]['availability'] = 0.5
+        selected, ranking = a1_lineup_branches.select_uncertain(game, registry, latest, inputs)
+        self.assertEqual([p.player_id for p in selected], ['100', '200'])
+        self.assertEqual([p.impact_rank for p in selected], [1, 1])
+        self.assertEqual(len(ranking), 14)
         self.assertEqual(selected[0].status_source, 'report')
         self.assertEqual(selected[0].probability, 0.5)
 
     def test_selection_rejects_stale_rosters_and_future_or_invalid_criteria(self):
-        game, registry, latest = self.selection_inputs()
+        game, registry, latest, inputs = self.selection_inputs()
         registry['100']['team'] = '2'
         with self.assertRaisesRegex(ValueError, 'roster'):
-            a1_lineup_branches.select_uncertain(game, registry, latest)
+            a1_lineup_branches.select_uncertain(game, registry, latest, inputs)
         registry['100']['team'] = '1'
         latest['100']['last_date'] = game.input_before
         with self.assertRaisesRegex(ValueError, 'before'):
-            a1_lineup_branches.select_uncertain(game, registry, latest)
+            a1_lineup_branches.select_uncertain(game, registry, latest, inputs)
         latest['100']['last_date'] = '2025-12-30'
         game.P['usage'][0] = 1.5
         with self.assertRaisesRegex(ValueError, 'usage'):
-            a1_lineup_branches.select_uncertain(game, registry, latest)
+            a1_lineup_branches.select_uncertain(game, registry, latest, inputs)
+        game.P['usage'][0] = 0.1
+        inputs['100']['value'] = 1e308
+        with self.assertRaisesRegex(ValueError, 'impact score'):
+            a1_lineup_branches.select_uncertain(game, registry, latest, inputs)
 
-    def test_selection_includes_thresholds_and_missing_usage_without_assuming_status(self):
-        game, registry, latest = self.selection_inputs()
-        assert game.mstate is not None
-        game.avail[:3] = [0.5, 0.5, 0]
-        for i in range(3):
-            game.players['home'][i]['availability'] = float(game.avail[i])
-        game.mstate[0]['healthy'] = 15
-        game.mstate[1]['healthy'] = 10
-        game.P['usage'][:2] = [0.1, 0.25]
-        game.players['home'][0]['status'] = 'Active'
-        game.players['home'][0]['availability_basis'] = 'recent_inactivity'
-        registry['100'].update(status='Active', status_source='not_listed_assumption')
-        selected = a1_lineup_branches.select_uncertain(game, registry, latest)
-        self.assertEqual([p.player_id for p in selected], ['100', '101'])
-        self.assertEqual(selected[0].availability_basis, 'recent_inactivity')
-        self.assertEqual(selected[0].status_source, 'not_listed_assumption')
-        del game.P['usage']
-        self.assertTrue(all('usage' in p.missing for p in a1_lineup_branches.select_uncertain(game, registry, latest)))
-        latest['101'] = {'games': 0, 'last_date': None}
-        self.assertEqual(a1_lineup_branches.select_uncertain(game, registry, latest)[1].role_basis, 'prior')
-        game.avail[:] = 1
-        self.assertEqual(a1_lineup_branches.select_uncertain(game, registry, latest), ())
+    def test_out_players_rank_and_uncertainty_outside_top_three_is_excluded(self):
+        game, registry, latest, inputs = self.selection_inputs()
+        registry['999'] = {'team': '1', 'on_roster': True, 'status': 'Out'}
+        inputs['999'] = {'healthy_role': 40, 'value': 2, 'availability': 0, 'status': 'Out'}
+        latest['999'] = {'games': 1, 'last_date': '2025-12-30'}
+        game.avail[0] = game.players['home'][0]['availability'] = inputs['100']['availability'] = 1
+        game.avail[2] = game.players['home'][2]['availability'] = inputs['102']['availability'] = 0.5
+        selected, ranking = a1_lineup_branches.select_uncertain(game, registry, latest, inputs)
+        self.assertEqual(selected, ())
+        self.assertEqual(next(r['rank'] for r in ranking if r['player_id'] == '102'), 4)
+        game.avail[1] = game.players['home'][1]['availability'] = inputs['101']['availability'] = 0.5
+        latest.pop('101')
+        game.P['usage'][1] = np.nan
+        selected, _ = a1_lineup_branches.select_uncertain(game, registry, latest, inputs)
+        self.assertEqual([p.player_id for p in selected], ['101'])
+        self.assertEqual(selected[0].missing, ('observed_role', 'usage'))
+        self.assertEqual(selected[0].impact_rank, 3)
+
+    def test_tied_impact_uses_player_id_and_requires_full_roster(self):
+        game, registry, latest, inputs = self.selection_inputs()
+        game.avail[1] = game.players['home'][1]['availability'] = inputs['101']['availability'] = 0.5
+        inputs['101']['value'] = inputs['100']['healthy_role'] / inputs['101']['healthy_role']
+        selected, _ = a1_lineup_branches.select_uncertain(game, registry, latest, inputs)
+        self.assertEqual(selected[0].player_id, '100')
+        del inputs['106']
+        with self.assertRaisesRegex(ValueError, 'entire origin roster'):
+            a1_lineup_branches.select_uncertain(game, registry, latest, inputs)
 
     def test_exact_joint_branches_are_order_independent_and_reallocate_together(self):
         game = self.game()

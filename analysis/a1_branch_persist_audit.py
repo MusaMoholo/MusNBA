@@ -19,12 +19,48 @@ from basketball_common import sha256_file  # noqa: E402
 
 def audit(report: dict) -> dict:
     selected, records = report['selected'], report['branches']
-    if not selected or len({p['player_id'] for p in selected}) != len(selected):
-        raise ValueError('selected players must be nonempty and unique')
+    if len({p['player_id'] for p in selected}) != len(selected):
+        raise ValueError('selected players must be unique')
+    if not selected and not report.get('no_branch_reason'):
+        raise ValueError('an empty branch selection must state its reason')
     if selected != sorted(selected, key=lambda p: (p['team_id'], p['player_id'])):
         raise ValueError('selected players are not in canonical order')
-    choices = (list(product((True, False), repeat=len(selected))) if len(selected) <= 2 else
-               [tuple(i != missing for i in range(len(selected))) for missing in range(-1, len(selected))])
+    if report.get('selection_policy') == 'top3-offensive-proxy-one-per-team-v1':
+        ranking = report['impact_ranking']
+        if len({r['player_id'] for r in ranking}) != len(ranking):
+            raise ValueError('impact ranking contains duplicate players')
+        expected = []
+        for team in sorted({r['team_id'] for r in ranking}):
+            rows = [r for r in ranking if r['team_id'] == team]
+            if rows != sorted(rows, key=lambda r: (-r['impact_proxy'], r['player_id'])):
+                raise ValueError('impact ranking is not sorted')
+            for rank, row in enumerate(rows, 1):
+                if (row['rank'] != rank or not np.isfinite(row['impact_proxy'])
+                        or not np.isclose(row['impact_proxy'], row['healthy_role'] * row['value'], rtol=0, atol=1e-10)):
+                    raise ValueError('impact rank or score does not match the recorded inputs')
+                if report.get('availability_policy') == 'D47-nearest-quarter-preserve-uncertain-v1':
+                    original = Fraction(str(row['original_availability']))
+                    if not 0 <= original <= 1:
+                        raise ValueError('original availability is outside zero and one')
+                    scaled = original * 4 + Fraction(1, 2)
+                    rounded = (original if original in (0, 1)
+                               else Fraction(min(3, max(1, scaled.numerator // scaled.denominator)), 4))
+                    if Fraction(str(row['availability'])) != rounded:
+                        raise ValueError('availability does not match the D47 scale')
+            candidates = [r for r in rows[:3] if 0 < r['availability'] < 1]
+            if candidates:
+                expected.append(candidates[0])
+        if (len(expected) != len(selected)
+                or any((p['team_id'], p['player_id'], p['probability'], p['impact_rank'], p['impact_proxy'])
+                       != (r['team_id'], r['player_id'], r['availability'], r['rank'], r['impact_proxy'])
+                       for p, r in zip(selected, expected))):
+            raise ValueError('selected players do not match the top-three, one-per-team rule')
+    if not selected:
+        choices = []
+    elif len(selected) <= 2:
+        choices = list(product((True, False), repeat=len(selected)))
+    else:
+        choices = [tuple(i != missing for i in range(len(selected))) for missing in range(-1, len(selected))]
     if len(records) != len(choices):
         raise ValueError('branch coverage does not match the selection')
     weights = []

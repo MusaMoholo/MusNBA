@@ -1,16 +1,47 @@
 # Handoff — state and next actions
 
-Updated **22 November 2026 — Chunk A A1 at 30%, A2 at 30%; S01–S07 remain complete**.
-Latest pushed source before the A1 persistence work: **98a33ba**; use `git log -1` for the current checkpoint.
+Updated **22 November 2026 — Chunk A A1 at 40%, A2 at 30%; S01–S07 remain complete**.
+Latest pushed source before D46 implementation: **368a1de**; use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
-- **Current action:** revise A1 selection for owner decision D46, then continue rung 40%. Do not start Chunk B before Chunk A's
+- **Current action:** checkpoint A1 40% evidence, then start exact weighted Expected distributions at rung 50%.
+  Do not start Chunk B before Chunk A's
   delivery and checkpoint. The owner
   also requests a broader dashboard house-design pass: make supported information accessible and interactive
   without overcrowding, prioritise essential game/player signals and group secondary details into collapsible
   views. Integrate this alongside the authorised chunks; use supported data only, without presenting extremes as
   typical. No nightly yet for presentation work; the next normal nightly rebuilds these summaries.
+- **D47 owner clarification:** candidate prospective lineup certainty uses 0/25/50/75/100%, mapping to nearest
+  quarter with halfway ties up and preserving uncertain values inside 25–75%. This applies consistently to
+  selected weights and other per-world availability draws; original inputs/sources remain recorded. Probable's
+  current 90% becomes 75%, not 100%. These are uncalibrated assumptions. The interrupted pre-D47 capture remains
+  wiring evidence. D47 is implemented in the isolated branch path: **27** focused tests pass and two 32-world
+  pilots passed independent auditing, with **128 / 64** branch worlds and exact unit weights for two / one
+  selected players. Reports: `analysis/experiments/20261122_chunk_a_a1_d47_32_{two,one}.json`.
+  The one-player 10k run passed independent auditing: **20,000** worlds, **4,997,124** lineup snapshots, exact
+  weight sum **1**, branch times **157.5 / 155.6 s**. Report
+  `analysis/experiments/20261122_chunk_a_a1_d47_10000_one.json`, log `/tmp/musnba_a1_d47_10000_one.log`,
+  captures `data/derived/experiments/20261122_chunk_a_a1_d47_10000_one/`.
+  The four-thread production-scale replay also passed independent auditing; all **31** saved arrays per branch,
+  both capture hashes, assignments, weights, seeds, rankings and input hashes match the eight-thread run.
+  Its branch times were **236.5 / 232.3 s**, log `/tmp/musnba_a1_d47_10000_one_threads4.log`, with
+  corresponding `_threads4` report/capture paths. The two-player 10k run for the previously failed game completed
+  under D47: **40,000** worlds, **9,999,905** lineup snapshots, exact weight sum **1**, branch times
+  **162.4 / 158.4 / 160.7 / 157.6 s**; independent saved-box/weight audit passed. A separate replay of saved
+  traces checked **19,999,810** team fives (not distinct lineups), minutes and points (maximum minute error
+  **1.78e-15**). Report
+  `analysis/experiments/20261122_chunk_a_a1_d47_10000_two.json`. This success does not resolve the earlier
+  unsupported short-roster failure. The four-thread replay matched all **31** arrays and capture hashes in all
+  four branches, as well as input hashes, selection, assignments, weights and seeds; independent box/weight
+  audit passed. Branch times **246.1 / 244.8 / 245.6 / 237.1 s**, report/capture suffix `_threads4`, log
+  `/tmp/musnba_a1_d47_10000_two_threads4.log`. **77** branch/availability/rotation tests passed; smoke **108/108**,
+  deliberate fault exited **1** (86/108), logs `/tmp/musnba_a1_d47_{smoke,fault}.log`. No branch job is running.
+  Keep production unchanged until its gates pass.
+  Doc review: HANDOFF and PLAN record the live progress and next actions; ENGINE_PLAN and TRAINING_PLAN record
+  D47 and its gates; FINDINGS records measured evidence and the failed pre-D47 case; DASHBOARD_PLAN records the
+  planned weighted Given/Joint design; README maps the research scripts. AGENTS needs no change because standing
+  rules are unchanged. No nightly, bundle, shell or served model changed.
 - **Dashboard house follow-up:** game player pages put box scores first, with a shortcut to player insights;
   availability and each bench are expandable. Team rosters collapse bench, fringe, no-projection and out groups,
   keeping starters visible. Player game logs also expand on demand. Expanded game sections survive mode changes;
@@ -34,8 +65,8 @@ Latest pushed source before the A1 persistence work: **98a33ba**; use `git log -
   on current-origin game `401910029` the retained inputs select **3** players, with **1** prior-only role and
   **1** missing usage, producing **4** unweighted sensitivities. This is an input sanity check, not a forecast
   or calibration. Normal smoke **108/108**; deliberate fault exited **1** (86/108), logs
-  `/tmp/musnba_a1_40_selection_{smoke,fault}.log`. No branch worlds have been simulated or saved for this rung;
-  it remains **30%** until D46 selection, all 10k branch persistence, provenance and independent checks pass.
+  `/tmp/musnba_a1_40_selection_{smoke,fault}.log`. This initial selection check did not simulate worlds;
+  the later persistence probes and D47 40% completion are recorded above.
 - **A1 persistence in progress:** `scripts/a1_branch_persist.py` is an isolated research path, not wired to
   serving/nightly. It requires a matching prospective snapshot and current retained origin inputs, records exact
   branch seeds/weights, selection and source/model hashes, audits lineups and retains complete player boxes.
@@ -56,11 +87,24 @@ Latest pushed source before the A1 persistence work: **98a33ba**; use `git log -
   `data/derived/experiments/20261122_chunk_a_a1_persist10000/`. **D46 supersedes that selection**; it remains
   wiring evidence, not the new design. The old 10k two-player run was stopped at **2/4** when D46 arrived:
   log `/tmp/musnba_a1_persist10000_two.log`, partial captures
-  `data/derived/experiments/20261122_chunk_a_a1_persist10000_two/`; no completed report. No branch job is running.
-  **Open cutoff guard:** the model's fill medians also read its full `pregame.parquet`;
-  this probe's maximum date was **2026-11-21**, before its **2026-11-22** origin, but the new capture CLI
-  must explicitly reject a file with dates on/after its origin before general use. Preserve this captured
-  source version in a checkpoint before changing it, then test the guard and rerun affected checks.
+  `data/derived/experiments/20261122_chunk_a_a1_persist10000_two/`; no completed report. The prior source was
+  preserved in **368a1de**. The D46 revision now ranks the full origin roster by the documented offensive proxy,
+  selects at most one top-three uncertainty per team, records all ranks, and treats no qualifying players as a
+  valid no-branch result. The median-input cutoff guard rejects missing dates and any games on/after origin; this
+  origin's maximum was **2026-11-21**. Across **17** current two-slate games, **4** have two selections,
+  **6** have one and **7** have none. New 32-world one-/two-player and no-branch captures passed independent
+  checks, exact branch-weight totals **1**, and **32** focused tests. Reports
+  `analysis/experiments/20261122_chunk_a_a1_d46_32_{none,one_v2,two_v2}.json`. Earlier `_one`/`_two`
+  are preliminary pre-hardening probes. A 10k run was stopped before the first branch to add an overflow guard;
+  its empty capture directory is `data/derived/experiments/20261122_chunk_a_a1_d46_10000_two/`.
+  The hardened pre-D47 10k two-player test stopped in branch 2/4: game `401910030`, world **1430**, side **1**,
+  period 4 at 11.7 seconds remaining had fewer than five eligible players after fouls. Branch 1/4 finished in
+  **163.1 s** and its 10,000-world capture is retained at
+  `data/derived/experiments/20261122_chunk_a_a1_d46_10000_two_v2/branch-000.npz`; the error is in
+  `data/derived/experiments/20261122_chunk_a_a1_d46_10000_two_v2/failure.log` (also in
+  `/tmp/musnba_a1_d46_10000_two_v2.log`). No complete manifest was written. This is the explicitly unsupported
+  NBA short-roster exception, not a successful capture. Preserve both artifacts and do not silently activate
+  an illegal player; the later D47 representative case passed, but the general limitation remains.
 - **Dashboard house pass:** Today puts games first with a shortcut to the still-accessible slate insights. Players
   keeps its table visible and movers expandable; player pages prioritise the next forecast and collapse opponent
   history and advanced rates. Game-player sheets put conditional/joint outcomes and comparisons before collapsible
@@ -1443,7 +1487,7 @@ chunk weights are **separate within-chunk progress measures**, not replacements 
 A1 stays **58.0%**, and S13 remains deferred at 0% (the possible A1 ceiling while deferred is 95%).
 Update the original S08–S12/S14 status only when their original acceptance is met, without crediting work twice.
 Report a chunk bar and each active module at every 10% rung and each 5% overall boundary; long jobs also report
-item counts and measured rates. Current Chunk A progress is **19.5%**; Chunk B remains **0%**.
+item counts and measured rates. Current Chunk A progress is **22.5%**; Chunk B remains **0%**.
 
 **Shared gates:** use the unchanged player-first, paired fold, seed-noise, uncertainty, non-inferiority, cutoff and
 once-per-version final-test rules in PLAN §6b/TRAINING_PLAN §8. An early chunk can promote a standalone candidate
@@ -1467,7 +1511,7 @@ playback portion of S12, plus a chunk-end delivery; S10/S11/S12/S14 are not ther
 | A2 Form and late-game realism | 35% | S04/S06; A1 for integration | S09's paired player/game gates; retain v1.3 when unsupported or rejected |
 | A3 View Centre and delivery | 35% | A1/A2 decisions | Five labelled selections, reconciled event files and an interactive 2-D court/player in the Game Centre; responsive/offline checks and fresh nightly; no fake logs or completed claim on failure |
 
-**Live board:** Chunk A `████░░░░░░░░░░░░░░░░ 19.5%`; A1 `██████░░░░░░░░░░░░░░ 30%`;
+**Live board:** Chunk A `█████░░░░░░░░░░░░░░░ 22.5%`; A1 `████████░░░░░░░░░░░░ 40%`;
 A2 `██████░░░░░░░░░░░░░░ 30%`; A3 `░░░░░░░░░░░░░░░░░░░░ 0%`.
 Original A1 remains 58%; do not double-count the separate board.
 
@@ -2067,13 +2111,17 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
 
 ## Next actions — Chunk A in progress
 
-1. **A1 40%:** checkpoint the captured pre-D46 source and evidence; then implement and test the revised D46
-   full-roster top-three proxy and the pregame-median cutoff guard noted above. Re-inventory current origin
-   selections, run representative one-/two-player **10,000-world** captures with new unique paths, independently
-   audit weights, legal lineups and boxes, and verify deterministic replay/worker invariance at production scale before crediting
-   the rung. Retain partial captures on failure, surface unsupported short rosters and keep the unconditional
-   forecast; no Expected or production promotion until later gates. Review and checkpoint code/evidence, then
-   follow A1 rungs 50–100 and A2/A3 ladders, completing Chunk A before Chunk B.
+1. **A1 50%:** build and independently test exact weighted empirical Expected distributions from the retained
+   D47 branch worlds, including conditional on either player, undefined denominators and the 10k indivisibility
+   counterexample (FINDINGS §7). Do not sample or round to 10,000 equally weighted worlds. Carry original
+   source assumptions, scenario weights and every world; benchmark runtime/storage and use new experiment paths.
+   The season identity is still open at rung 60%, and the unsupported foul exception remains explicit: keep the
+   unconditional forecast and do not promote or publish a partial mixture. Then follow A1 rungs 60–100 and
+   A2/A3 ladders, completing Chunk A before Chunk B.
+   The planned Game Centre presentation is recorded in DASHBOARD_PLAN: one shared either/plays/sits control,
+   coherent team/player views and compact comparison, not separate uncertainty tabs; ship Expected only after
+   its gates, including exact marginalisation when only one player's status is fixed. Given and Joint must slice
+   those same selected worlds with the correct weights and an explicit empty-condition state.
 2. The owner requests dashboard reorganisation with important signals first and secondary information in clearly
    labelled collapsible sections. Integrate with the chunk and checkpoint delivery. No nightly for presentation
    work; the next normal nightly builds the per-world views automatically.

@@ -2,6 +2,47 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 — D47 quarter-scale pilot:** isolated 32-world branches for current-origin games `401910030`
+(two selected players, four branches) and `401910029` (one selected player, two branches) passed independent
+selection, exact-weight and saved-box checks: **128 / 64** total worlds, **31,989 / 15,949** recorded lineup
+snapshots and weight totals of **1** in each game. These are small-sample wiring checks, not availability
+calibration or model accuracy. Projected starters are re-solved per branch using the current 0.9 near-certain
+threshold, so scaling a 90% probable to 75% can change eligibility for that priority pool; test before promotion.
+The served model and bundle are unchanged.
+
+**22 Nov 2026 — D47 one-player scale check:** current-origin game `401910029` completed both conditional
+branches at **10,000 worlds each**, taking **157.5 / 155.6 s**. Independent selection, exact-weight and saved-box
+accounting passed for **20,000** worlds and **4,997,124** lineup snapshots, with branch weights summing exactly
+to **1**; the branch runner also replayed legal fives, minutes and points. This is wiring, not calibration or
+an accuracy result. Four-thread replay reproduced all **31** arrays and both capture hashes exactly against the
+eight-thread captures; input hashes, selection, assignments, weights and seeds also matched. Four-thread branch
+times were **236.5 / 232.3 s**. The two-player case remains open. Reports
+`analysis/experiments/20261122_chunk_a_a1_d47_10000_one{,_threads4}.json`.
+
+**22 Nov 2026 — D47 two-player scale check:** current-origin game `401910030` completed all four conditional
+branches at **10,000 worlds each**, taking **162.4 / 158.4 / 160.7 / 157.6 s**. Independent selection,
+exact-weight and saved-box accounting passed for **40,000** worlds and **9,999,905** lineup snapshots, with
+branch weights summing exactly to **1**. A separate read of the saved captures independently replayed
+**19,999,810** team-five checks (two per recorded moment, not unique lineups) and all minutes/points, maximum
+minute error **1.78e-15**. This
+is wiring, not calibration or an accuracy result, and does not resolve the pre-D47 unsupported short-roster
+failure below. Four-thread replay reproduced all **31** arrays and capture hashes in all four branches against
+eight threads, with matching input hashes, selection, assignments, weights and seeds; replay times were
+**246.1 / 244.8 / 245.6 / 237.1 s**. Reports
+`analysis/experiments/20261122_chunk_a_a1_d47_10000_two{,_threads4}.json`.
+Its four research capture files occupy **157 MiB** including detailed lineup traces; this is not a measured
+PWA bundle size or a production storage forecast. The 17-game D46 inventory (7 no branch, 6 one player,
+4 two players) corresponds to **35** 10,000-world game-sized runs rather than 17 if all branches are accepted,
+without an extra unconditional run for branched games. This is that inventory only, not a typical slate rate.
+
+**22 Nov 2026 — D46 10,000-world short-roster failure:** prospective game `401910030`, second of four
+conditional branches, reached world 1430 with fewer than five eligible players on side 1 after fouls in the
+fourth period (11.7 seconds remaining). The isolated policy failed explicitly, as designed; the NBA short-roster
+exception remains unsupported. The first 10,000-world branch completed in 163.1 seconds and is preserved at
+`data/derived/experiments/20261122_chunk_a_a1_d46_10000_two_v2/branch-000.npz`, with the complete error in
+`data/derived/experiments/20261122_chunk_a_a1_d46_10000_two_v2/failure.log`; no four-branch manifest exists. This pre-D47 run is wiring evidence,
+not a forecast, promotion or completed A1 40% rung.
+
 **22 Nov 2026 — isolated lineup persistence:** for current-origin game `401910029`, three qualifying uncertain
 players produced four non-exhaustive unweighted sensitivities, **10,000** worlds each. Independent auditing
 checked **20,020,614** five-player lineups and **40,000** world boxes; maximum lineup-replayed minutes error was
@@ -9,6 +50,12 @@ checked **20,020,614** five-player lineups and **40,000** world boxes; maximum l
 threads. One- and two-player examples also passed 32 worlds per branch with exact weights summing to one.
 These are wiring/accounting checks, not calibration, Expected forecasts, predictive scores or promotions. The
 owner's subsequent D46 supersedes the earlier player-selection rule and its more-than-two sensitivities.
+
+**22 Nov 2026 — D46 selection inventory:** using the current 22 Nov origin for today and tomorrow, **4/17** games
+have one qualifying uncertainty on each side, **6/17** have one in total, and **7/17** have none under the
+full-roster top-three offensive-contribution proxy. This scope proxy ignores defensive impact, is not a calibrated
+importance measure and does not change current forecasts. Independent checks of representative 32-world zero-,
+one- and two-selection cases passed, with exact weight totals of one where branches exist.
 
 **22 Nov 2026 — PWA startup race:** forced service-worker bypass on the then-hosted shell reproduced fresh
 laptop and phone imports rendering an unreadable 404, because URL-object API calls bypassed the fetch shim.

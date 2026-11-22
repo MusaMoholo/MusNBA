@@ -1,6 +1,6 @@
 # MusNBA — game plan and progress
 
-Updated **22 November 2026 (S01–S07 complete; Chunk A A1 at 30%, A2 at 30%; View Centre planned, D42–D43)**. The single record of scope, progress and decisions. Every agent updates it at
+Updated **22 November 2026 (S01–S07 complete; Chunk A A1 at 40%, A2 at 30%; View Centre planned, D42–D43)**. The single record of scope, progress and decisions. Every agent updates it at
 every checkpoint (AGENTS.md § Checkpoint protocol). New here? Read [AGENTS.md](AGENTS.md) first, then
 [HANDOFF_NEXT.md](HANDOFF_NEXT.md) — it says exactly what to do next.
 
@@ -133,7 +133,7 @@ remaining gate and next action rather than claim a fitted model is validated.
 
 **D42 split, now authorised for execution in order:** retain S01–S07 as completed and the original A1 weights/ladder below as the
 historical ledger (**58.0%**, S13 deferred). The new separately weighted chunks and their 60 concrete rungs are in
-HANDOFF § Execution; Chunk A A1 is at 30%, and Chunk B has not started. Chunk A targets believable lineup-aware games, shared form and
+HANDOFF § Execution; Chunk A A1 is at 40%, and Chunk B has not started. Chunk A targets believable lineup-aware games, shared form and
 late-game behaviour, plus five saved game examples; Chunk B tests a new player/lineup-defence mechanism, legal
 foul-outs, season calibration and integrated confirmation, and adds rotation visibility. Each has a fresh final
 nightly and a useful shipped dashboard improvement if no model passes the unchanged gate. Chunk A can promote an
@@ -432,6 +432,16 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 - **22 Nov 2026 · D46:** owner narrowed lineup branching to the highest-impact uncertain player per team, only
   within its top three; at most four exhaustive combinations. Freeze and label the pre-origin offensive proxy in
   ENGINE_PLAN; earlier >2 sensitivities remain historical research, not the new design. Current production unchanged.
+  Planned presentation: one shared lineup control across game/team/player views, compact comparisons and gated
+  Expected default; details in DASHBOARD_PLAN.
+- **22 Nov 2026 · D47:** owner requested a five-level 0/25/50/75/100% lineup-certainty signal. Test the
+  prospective candidate consistently across selected and other uncertain players; retain the unrounded
+  assumptions and sources, preserve uncertain endpoints, and do not claim calibration or change serving before
+  its gates. The interrupted pre-D47 capture is wiring evidence.
+- **22 Nov 2026 · Chunk A A1 40%:** isolated D47 one-/two-player cases completed **20,000 / 40,000** worlds,
+  exact weights and independent saved-world accounting; four/eight-thread replays matched every array and
+  capture hash. **77** focused tests, smoke **108/108**, deliberate fault **86/108**. A prior 10k short-roster
+  failure remains explicit; no candidate or bundle promoted. Chunk A **22.5%**; next is exact Expected mixtures.
 - **22 Nov 2026 · dashboard house follow-up:** player box scores now precede game insights; game availability,
   bench, secondary team-roster groups and player game logs expand on demand. **61/61** responsive cases,
   laptop/phone offline **29/29 / 28/28** and laptop shell upgrade **31/31** passed. Startup race fixed in

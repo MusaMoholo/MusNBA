@@ -100,11 +100,14 @@ class SelectedPlayer:
     role_basis: str
     usage: float | None
     missing: tuple[str, ...]
+    impact_rank: int
+    impact_proxy: float
 
 
 def select_uncertain(game: engine.Game, registry: Mapping[str, dict],
-                     minutes_latest: Mapping[str, dict]) -> tuple[SelectedPlayer, ...]:
-    """Select uncertain players; callers must supply the cutoff-safe origin inputs."""
+                     minutes_latest: Mapping[str, dict],
+                     roster_inputs: Mapping[str, dict]) -> tuple[tuple[SelectedPlayer, ...], tuple[dict, ...]]:
+    """Rank the full roster by a labelled offensive proxy and select at most one top-three uncertainty per side."""
     origin = date.fromisoformat(game.input_before)
     if origin > date.fromisoformat(game.day):
         raise ValueError('forecast origin must not follow the slate')
@@ -118,25 +121,22 @@ def select_uncertain(game: engine.Game, registry: Mapping[str, dict],
     usage_values = game.P.get('usage')
     if usage_values is not None and len(usage_values) != len(ids):
         raise ValueError('usage profile does not match the game roster')
-    chosen = []
-    for index, player_id in enumerate(ids):
-        probability = float(game.avail[index])
-        if not 0 < probability < 1:
-            continue
-        side_index = int(game.side[index])
-        if side_index not in (0, 1):
-            raise ValueError('player has an invalid game side')
-        side = game.sides[side_index]
-        team_id = str(game.game[f'{side}_id'])
-        local_index = index - int(np.flatnonzero(game.side == side_index)[0])
-        player = game.players[side][local_index]
-        record = registry.get(player_id)
-        if (str(player.get('id')) != player_id or record is None or not record.get('on_roster')
-                or str(record.get('team')) != team_id):
-            raise ValueError(f'player {player_id} does not match the origin roster')
-        status = (record.get('status') or '').strip() or 'Unknown'
-        if player.get('status') != status or float(player['availability']) != probability:
-            raise ValueError(f'player {player_id} availability inputs differ from the origin roster')
+    team_ids = [str(game.game[f'{side}_id']) for side in game.sides]
+    if len(set(team_ids)) != 2:
+        raise ValueError('game must have two distinct teams')
+    roster = {str(pid): record for pid, record in registry.items()
+              if record.get('on_roster') and str(record.get('team')) in team_ids}
+    if set(roster_inputs) != set(roster):
+        raise ValueError('impact inputs must cover the entire origin roster including out players')
+    rankings = []
+    for player_id, record in roster.items():
+        if not player_id.isascii() or not player_id.isdigit():
+            raise ValueError('player IDs must be ASCII digits')
+        source = roster_inputs[player_id]
+        role, value, probability = (float(source[key]) for key in ('healthy_role', 'value', 'availability'))
+        if (not np.isfinite(role) or not 0 <= role <= 48 or not np.isfinite(value) or value < 0
+                or not np.isfinite(probability) or not 0 <= probability <= 1):
+            raise ValueError(f'player {player_id} has invalid impact or availability inputs')
         state = minutes_latest.get(player_id)
         games = state.get('games') if state is not None else 0
         if not isinstance(games, int) or isinstance(games, bool) or games < 0:
@@ -145,26 +145,67 @@ def select_uncertain(game: engine.Game, registry: Mapping[str, dict],
             last_date = state.get('last_date') if state is not None else None
             if not last_date or date.fromisoformat(str(last_date)) >= origin:
                 raise ValueError(f'player {player_id} minutes history is not before the origin')
-        raw_role = game.mstate[index].get('healthy')
-        role = None if raw_role is None or np.isnan(raw_role) else float(raw_role)
-        if role is not None and (not np.isfinite(role) or role < 0):
-            raise ValueError(f'player {player_id} has invalid healthy role')
+        status = (record.get('status') or '').strip() or 'Unknown'
+        if source.get('status') != status:
+            raise ValueError(f'player {player_id} status differs from the origin roster')
+        impact = role * value
+        if not np.isfinite(impact):
+            raise ValueError(f'player {player_id} has invalid impact score')
+        rankings.append({'team_id': str(record['team']), 'player_id': player_id, 'healthy_role': role,
+                         'role_basis': 'history_based' if games else 'prior', 'value': value,
+                         'impact_proxy': impact, 'availability': probability,
+                         'original_availability': source.get('original_availability', probability),
+                         'availability_basis': source.get('availability_basis'), 'status': status,
+                         'status_source': record.get('status_source')})
+    rankings.sort(key=lambda r: (r['team_id'], -r['impact_proxy'], r['player_id']))
+    for team_id in team_ids:
+        for rank, row in enumerate((r for r in rankings if r['team_id'] == team_id), 1):
+            row['rank'] = rank
+    by_id = {row['player_id']: row for row in rankings}
+    if set(ids) != {row['player_id'] for row in rankings if row['availability'] > 0}:
+        raise ValueError('game roster does not match eligible origin roster')
+    for index, player_id in enumerate(ids):
+        side_index = int(game.side[index])
+        if side_index not in (0, 1):
+            raise ValueError('player has an invalid game side')
+        side = game.sides[side_index]
+        local_index = index - int(np.flatnonzero(game.side == side_index)[0])
+        player, row = game.players[side][local_index], by_id[player_id]
+        role = game.mstate[index].get('healthy')
+        if (str(player.get('id')) != player_id or row['team_id'] != team_ids[side_index]
+                or player.get('status') != roster_inputs[player_id]['status']
+                or player.get('availability_basis') != roster_inputs[player_id].get('availability_basis')
+                or float(player['availability']) != row['availability']
+                or float(game.avail[index]) != row['availability']
+                or role is None or not np.isclose(float(role), row['healthy_role'], rtol=0, atol=1e-10)):
+            raise ValueError(f'player {player_id} inputs differ from the origin roster')
+    chosen = []
+    for team_id in team_ids:
+        candidates = [row for row in rankings if row['team_id'] == team_id and row['rank'] <= 3
+                      and 0 < row['availability'] < 1]
+        if not candidates:
+            continue
+        row = candidates[0]
+        player_id, probability = row['player_id'], row['availability']
+        index = ids.index(player_id)
+        side_index = int(game.side[index])
+        local_index = index - int(np.flatnonzero(game.side == side_index)[0])
+        player, record = game.players[game.sides[side_index]][local_index], registry[player_id]
         raw_usage = None if usage_values is None else usage_values[index]
         usage = None if raw_usage is None or np.isnan(raw_usage) else float(raw_usage)
         if usage is not None and (not np.isfinite(usage) or not 0 <= usage <= 1):
             raise ValueError(f'player {player_id} has invalid prior usage')
         missing = tuple(name for name, unknown in (
-            ('observed_role', not games or role is None), ('usage', usage is None),
+            ('observed_role', row['role_basis'] == 'prior'), ('usage', usage is None),
         ) if unknown)
-        if ((role is not None and role >= 15) or (usage is not None and usage >= 0.25) or missing):
-            chosen.append(SelectedPlayer(
-                team_id, player_id, probability, status, player['availability_basis'],
-                record.get('status_source'), record.get('reported_status'), role,
-                'history_based' if games else 'prior', usage, missing,
-            ))
+        chosen.append(SelectedPlayer(
+            team_id, player_id, probability, player['status'], player['availability_basis'],
+            record.get('status_source'), record.get('reported_status'), row['healthy_role'],
+            row['role_basis'], usage, missing, row['rank'], row['impact_proxy'],
+        ))
     if chosen:
         _selected_indices(game, [(p.team_id, p.player_id) for p in chosen])
-    return tuple(sorted(chosen, key=lambda p: (p.team_id, p.player_id)))
+    return tuple(sorted(chosen, key=lambda p: (p.team_id, p.player_id))), tuple(rankings)
 
 
 def _selected_indices(game: engine.Game, selected: Sequence[tuple[str, str]]) -> list[tuple[str, str, int]]:

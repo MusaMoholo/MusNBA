@@ -1,5 +1,23 @@
 # App — shipped behaviour
 
+**Planned lineup presentation (22 Nov, not yet shipped):** keep one Game Centre, not separate player tabs.
+After the exact mixture and season gates pass, Expected is the default and a compact team-grouped control
+chooses either status, plays or sits for each qualifying uncertainty; team and player views share that selection.
+An "either status" choice marginalises the other player's exact weighted branches rather than running extra
+simulations or silently forcing him to play. Offer a concise
+comparison of minutes, player points and team win chance, with distributions expandable rather than crowding the
+box score. State that availability weights are assumptions, that the top-three rank is an offensive proxy, and
+that unselected uncertain players still vary. Show no lineup control where there are no qualifying branches.
+Until the mixture gates pass, retain and label the current unconditional forecast; never label illustrative
+branch extremes as typical. Persist the selection across related game views and keep the laptop PWA primary.
+Given and Joint must use the same selected weighted worlds: Given conditions on the selected events and Joint
+calculates their intersection, preserving world weights in both numerator and denominator. Zero-weight or empty
+conditions are explicitly unavailable. These views only slice saved worlds; they do not simulate or infer tracking.
+Branch "plays" fixes availability; the existing Given "Plays" means positive simulated minutes. Preserve and
+label that distinction if an available player receives no minutes; do not infer availability from his box score.
+The owner's proposed 0/25/50/75/100% lineup scale (D47) is an uncalibrated candidate, not a shipped update;
+keep uncertain reports away from misleading 0/100% endpoints and expose both the scale and its assumptions.
+
 **Dashboard house follow-up (22 Nov):** game player pages put box scores ahead of player insights, with a shortcut
 to the latter. Availability and each bench expand on demand; team roster bench, fringe, no-projection and out
 groups are collapsible while starters remain visible. Player game logs are expandable. Game section state survives
