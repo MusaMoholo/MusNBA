@@ -443,6 +443,31 @@ def availability(r: dict, sim: dict, registry: dict, season_of) -> dict:
     return out
 
 
+SHOT_ZONES = ('rim', 'paint', 'mid', 'corner3', 'above3')
+
+
+def shot_profile_table() -> dict:
+    """U10: each player's pre-game shot profile from the latest profiles (data/derived/features/latest.parquet): share of his
+    shots and FG% by zone, the league's shot-weighted averages beside them, assisted share, free-throw rate, sample size."""
+    path = DERIVED / 'features' / 'latest.parquet'
+    if not path.exists():
+        return {}
+    import pandas as pd
+    L = pd.read_parquet(path)
+    w = L['shots_eff'].fillna(0)
+    lg = {z: {'mix': float((L[f'mix_{z}'] * w).sum() / w.sum()), 'fg': float((L[f'fg_{z}'] * L[f'mix_{z}'] * w).sum() / (L[f'mix_{z}'] * w).sum())}
+          for z in SHOT_ZONES}
+    out = {}
+    for r in L.itertuples(index=False):
+        if not (r.shots_eff or 0) > 5:
+            continue
+        out[str(r.player)] = {'zones': [{'zone': z, 'mix': round(float(getattr(r, f'mix_{z}')), 4), 'fg': round(float(getattr(r, f'fg_{z}')), 4),
+                                         'lg_mix': round(lg[z]['mix'], 4), 'lg_fg': round(lg[z]['fg'], 4)} for z in SHOT_ZONES],
+                              'assisted': round(float(r.assisted_share), 3), 'ft_pct': round(float(r.ft_pct), 3),
+                              'fta_per_use': round(float(r.fta_per_use or 0), 3), 'shots_eff': round(float(r.shots_eff), 1), 'as_of': str(r.date_et)}
+    return out
+
+
 def lead_fan(path: Path, gid: str) -> dict | None:
     """U5: the home lead after Q1, at half-time, after Q3 and at the final whistle (overtime included) in every stored world:
     10/25/50/75/90th percentiles per break, and the chance the home side leads at each."""
@@ -777,6 +802,7 @@ def build(views_root: Path = VIEWS) -> dict:
             'roster': roster, 'schedule': sched, 'model': season_latest['model']})
 
     latest_games = read_json(latest['path'] / 'games.json')
+    shot_profiles = shot_profile_table()
     for pid, reg in registry.items():
         p = P.get(pid)
         if not p and not reg.get('on_roster'):
@@ -802,7 +828,7 @@ def build(views_root: Path = VIEWS) -> dict:
                                                                     'weight', 'experience', 'status', 'injury', 'on_roster')},
             'season': ({'gp': p['gp'], 'gs': p['gs'], 'dnp': p['dnp'], 'teams': p['teams'], 'tot': p['totals'],
                         'min_ewma': p['min_ewma']} if p else None),
-            'log': p['log'] if p else [], 'next': nxt_out,
+            'log': p['log'] if p else [], 'next': nxt_out, 'shots': shot_profiles.get(str(pid)),
             'quarters': ([{k: round(Qall[pid][k][q], 1) for k in PERIOD_BOX} | {'games': Qall[pid]['games']} for q in range(4)]
                          if pid in Qall else None)})
 

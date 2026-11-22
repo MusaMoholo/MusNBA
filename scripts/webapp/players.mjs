@@ -97,6 +97,7 @@ async function playerPage(view, {rest, current}) {
       ${p.injury?.comment ? `<p class="note status-q" style="margin:4px 0 0">${esc(p.injury.comment)}</p>` : ''}</div></div>
       ${s ? `<div class="tiles" style="margin-top:12px">${tiles}</div><p class="note">${s.gp} games (${s.gs} starts) · ${shoot} · per-game season averages; L10 = last 10 games played, with the change v the season</p>` : '<p class="note">No games played this season.</p>'}</section>
     ${nextHtml}
+    ${shotPanel(data.shots)}
     ${quartersPanel(data.quarters)}
     ${log.length ? `<section class="panel" id="trend">${trendPanel(log, s)}</section>
     <section class="panel"><h3>Game log</h3><div class="scroll"><table><thead><tr><th class="l">Date</th><th class="l">Opp</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th><th>3PM</th><th>STL</th><th>BLK</th><th>TOV</th><th>FG</th><th>3P</th><th>FT</th><th>+/−</th></tr></thead><tbody>
@@ -132,6 +133,29 @@ function trendPanel(log, s) {
       ${season != null ? `<line class="season" x1="${pl}" x2="${W - pr}" y1="${y(season).toFixed(1)}" y2="${y(season).toFixed(1)}"></line><text x="${pl + 4}" y="${(y(season) - 4).toFixed(1)}" text-anchor="start" class="lab">season ${f1(season)}</text>` : ''}
       <path class="roll" d="${path(roll)}"></path>${dates}<text x="${pl - 4}" y="${(y(hi / 1.1) + 3).toFixed(1)}" text-anchor="end">${Math.round(hi / 1.1)}</text></svg>
     <p class="note">Bars = each game · line = 5-game rolling average · dashed = season average · grey ticks = did not play.</p>`;
+}
+// U10: shot profile on a half court — zones as in the engine (rim ≤ 4 ft, paint, mid-range, corner 3, above-the-break 3),
+// shaded by FG% v the league (green above, red below; ±8 points = full colour), labelled share of shots · FG%
+function shotPanel(sh) {
+  if (!sh) return '';
+  const Z = Object.fromEntries(sh.zones.map(z => [z.zone, z]));
+  const shade = z => { const d = Math.max(-1, Math.min(1, (z.fg - z.lg_fg) / 0.08)); return d >= 0 ? `rgba(80,170,110,${(0.15 + 0.55 * d).toFixed(2)})` : `rgba(210,90,80,${(0.15 + 0.55 * -d).toFixed(2)})`; };
+  const lab = (z, x, y, a = 'middle') => `<text x="${x}" y="${y}" text-anchor="${a}"><tspan class="m">${Math.round(100 * Z[z].mix)}%</tspan><tspan x="${x}" dy="14">${(100 * Z[z].fg).toFixed(0)}% FG</tspan></text>`;
+  const court = `<svg class="court" viewBox="0 0 500 360" role="img" aria-label="Shot profile by zone">
+    <rect x="0" y="0" width="500" height="350" fill="${shade(Z.above3)}"></rect>
+    <rect x="0" y="210" width="30" height="140" fill="${shade(Z.corner3)}"></rect><rect x="470" y="210" width="30" height="140" fill="${shade(Z.corner3)}"></rect>
+    <path d="M30,350 L30,210 A237.5,237.5 0 0 1 470,210 L470,350 Z" fill="${shade(Z.mid)}"></path>
+    <rect x="170" y="160" width="160" height="190" fill="${shade(Z.paint)}"></rect>
+    <circle cx="250" cy="297.5" r="40" fill="${shade(Z.rim)}"></circle>
+    <path class="lines" d="M30,350 L30,210 A237.5,237.5 0 0 1 470,210 L470,350 M170,350 L170,160 L330,160 L330,350 M0,350 L500,350"></path>
+    <circle class="lines" cx="250" cy="297.5" r="7.5"></circle>
+    ${lab('above3', 250, 50)}${lab('mid', 250, 125)}${lab('paint', 250, 205)}${lab('rim', 250, 292)}${lab('corner3', 4, 255, 'start')}${lab('corner3', 496, 255, 'end')}</svg>`;
+  const rows = sh.zones.map(z => `<tr><td class="l">${{rim: 'Rim', paint: 'Paint', mid: 'Mid-range', corner3: 'Corner 3', above3: 'Above-break 3'}[z.zone]}</td><td>${Math.round(100 * z.mix)}%</td><td class="dim">${Math.round(100 * z.lg_mix)}%</td>
+    <td><b>${(100 * z.fg).toFixed(1)}%</b></td><td class="dim">${(100 * z.lg_fg).toFixed(1)}%</td></tr>`).join('');
+  return `<section class="panel"><h3 style="margin-top:0">Shot profile</h3><div class="shot-grid">${court}
+    <div><div class="scroll"><table><thead><tr><th class="l">Zone</th><th>His shots</th><th>League</th><th>His FG%</th><th>League</th></tr></thead><tbody>${rows}</tbody></table></div>
+    <p class="note">Assisted on ${Math.round(100 * sh.assisted)}% of his makes · FT ${(100 * sh.ft_pct).toFixed(1)}%.
+    The pre-game profile the engine uses (decayed and shrunk toward his position group), through his last game (${esc(dayLabel(sh.as_of))}) — green zones beat the league's FG% there, red trail it.</p></div></div></section>`;
 }
 const pctOf = (m, a) => a ? (100 * m / a).toFixed(1) + '%' : '—';
 const mmss = sec => { const t = Math.round(sec); return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`; };
