@@ -1,8 +1,7 @@
 # Training plan — models for the possession engine
 
 **Updated 22 November 2026.** Serving engine **v1.3**, 16 decision models, D29 minutes and D30 defence inputs;
-real-matchup candidates v1.4c/e/f were rejected (D37). A1 S01–S03 are complete; S04 defence experiments and S05
-minute screening follow. Historical
+real-matchup candidates v1.4c/e/f were rejected (D37). A1 S01–S05 are complete; S06 substitution research follows. Historical
 M5 results remain in FINDINGS §3g–§3h; current contracts and promotion/replay gates are in §8 below. Progress and scope
 live in [PLAN.md](PLAN.md) and [HANDOFF_NEXT.md](HANDOFF_NEXT.md).
 
@@ -361,13 +360,15 @@ non-inferiority bounds to a paired report, reusing the manifest's maximum-absolu
 and v2 reports used the interval's half-width instead and are preserved only as invalid preliminary evidence;
 v3 corrects this without changing the NBA-only rejection. Its uncorrected 95% result is an early screen only:
 Holm-adjusted family confirmation, wider folds, mechanics and the other promotion gates still apply.
+`scripts/a1_pooled_audit.py` independently reconstructs pooled player intervals by direct complete-game resampling
+and checks the 10 pooled bias/coverage bounds; it does not turn the preliminary screen into confirmation.
 Before using the strict candidate's first historical screen for selection, a deterministic defect was found:
-redistribution can activate a zero target even when already-positive targets can absorb the deficit, changing the
-`draw > 0` target-play diagnostic. Correct this invariant without changing the registered populations, normal
-streams, availability fallback, scoring, or other candidates; retain the uncorrected reports and hashes. Rerun
-the conditional and both historical roster screens under new names, verify control/NBA-only values reproduce,
-and report strict/combined results only from the corrected version. This is a candidate implementation repair,
-not a revision of the promotion gates or evidence that the player is actually available.
+redistribution could activate a zero target even when already-positive targets could absorb the deficit, changing
+the `draw > 0` target-play diagnostic. The invariant was corrected without changing the registered populations,
+normal streams, availability fallback, scoring or other candidates; uncorrected reports and hashes remain retained.
+The conditional and both historical roster screens were rerun under new names and independently reconciled against
+the original control/NBA-only values. Report strict/combined results only from the corrected version. This is a
+candidate implementation repair, not a revision of the promotion gates or evidence of actual availability.
 Before full-engine runs, compare conditional regulation-minute target distributions on S01's predeclared **200**
 F1, **200** F2, **200** F3 and fixed **200** F4 games. Use the same actual-participant team sets for every variant,
 1,000 draws per team with the same explicit per-game/team normal stream, each fold's own earlier ramp/spread fit,
@@ -398,6 +399,18 @@ patterns from those probabilities with a matched deterministic stream, re-solve 
 on at least five eligible players by resampling; record every resampled world. This is a no-report fallback
 counterfactual with incomplete inferred rosters and known-label scoring, not a reconstruction of actual pre-tip
 injury reports. Hold it fixed across the four allocator variants and all four folds; no later tuning to its results.
+
+For S06's initial **descriptive** state-response audit, use only independently reconciled full-timeout windows in the
+fixed F4 panel, with actual participants and S01's pre-game role tiers. Before inspecting rates, divide team-relative
+margin into behind by at least 15, close within five, ahead by at least 15, and the remaining intermediate states;
+group periods 1–4 and overtime separately; define foul trouble as at least two/three/four/five fouls in periods
+1/2/3/4-or-later; and divide elapsed stint or rest into under four, four-to-under-eight, and at least eight minutes.
+For each tier and state, separately report outgoing rates among on-court players and incoming rates among off-court
+participants. Count distinct player-games and games, use the existing 100-player-game/30-game support floor, and
+compute 10,000 complete-game bootstrap intervals with S01's seed for supported cells. These observed-window rates
+are not causal estimates, unbiased substitution hazards, pre-game availability forecasts, or promotion gates:
+same-clock exclusions depend on observed substitutions, and the participant universe is retrospective. Later model
+selection must use appropriate fold-safe data and the frozen S06 pooled-minute engine gate.
 
 For S03's remaining flow diagnosis, reproduce the **same 200-game, 1,000-world** free-running control with its
 original seeds and opt-in diagnostics only; audit every original output field against the retained reproduction before

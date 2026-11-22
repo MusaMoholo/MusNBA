@@ -1,0 +1,33 @@
+{
+ "experiment": "a1_minutes_preliminary_gate",
+ "runs": {
+  "control": "20261122T022323Z_a1_s01_control",
+  "candidate": "20261122T073749Z_a1_s05_strict_fixed200"
+ },
+ "population": {
+  "fold": "F4",
+  "games": 200,
+  "player_games": 4346
+ },
+ "pooled_minute_crps": {
+  "change": 0.0002683271776682261,
+  "ci_95": [
+   -0.00011120106649460393,
+   0.0006525157791468114
+  ],
+  "seed_noise_floor": 0.0263410379260233,
+  "passes_uncorrected_screen": false
+ },
+ "non_inferiority": {
+  "checks": 69,
+  "established": 69,
+  "not_established": []
+ },
+ "limitations": "Preliminary uncorrected 95% screen, not Holm-adjusted confirmation or a promotion decision; actual-participant diagnostics are not availability forecasts.",
+ "input_sha256": {
+  "analysis/experiments/20261122_a1_s05_strict_fixed200_comparison.json": "b2311257a2af1ffb1c3561dd8bb38b0b0d403dcc7bc9c3409f1b988d69e36e5e",
+  "analysis/experiments/20261122_a1_seed_noise.json": "407b7e0f05905f2fca26e9837ae2f49a06089310f56fbd0c54883b3d1bbd1d3f",
+  "scripts/a1_minutes_gate.py": "f5bf1130023ef8c57e90dd66562bcb21775f35581019e25b265dedcdcbed1d4b",
+  "scripts/a1_manifest.py": "7c9a8d40c9017e3d9b3ef8afaf2a1708fc44cbd3fa809b5664336f60388c295b"
+ }
+}

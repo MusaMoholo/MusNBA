@@ -1,0 +1,322 @@
+{
+ "experiment": "a1_output_accounting",
+ "run": "20261122T073749Z_a1_s05_strict_fixed200",
+ "games": 200,
+ "player_games": 4346,
+ "expected_simulated_player_games": 4347,
+ "player_games_without_output": 1,
+ "missing_player_outputs": [
+  {
+   "game_id": "401810691",
+   "player": "5107156",
+   "team": "4"
+  }
+ ],
+ "quarter_scoreboard_comparisons": 1600,
+ "quarter_mismatches": 0,
+ "player_3pm_box_comparisons": 4346,
+ "player_3pm_missing_actuals": 0,
+ "player_3pm_mismatches": 0,
+ "team_3pm_mean_comparisons": 399,
+ "team_3pm_incomplete": 1,
+ "team_3pm_incomplete_rosters": 1,
+ "team_3pm_mean_mismatches": 0,
+ "input_fingerprints": [
+  {
+   "path": "basketball_common.py",
+   "bytes": 5100,
+   "sha256": "6c159e712c86496ff3ac60c4bf98ebb815b5b341333436df42de165309be0002"
+  },
+  {
+   "path": "models/v1.2d.json",
+   "bytes": 1375,
+   "sha256": "d0fded7eb9871494e0bc4a82a3627b0a3dc37c3c243d8c9378f151dec2789927"
+  },
+  {
+   "path": "data/derived/variants/matchup/features/pregame.parquet",
+   "bytes": 65960717,
+   "sha256": "d4da5f071de3ddcbc72bbb4899a77f9b4f22d899a3a54bcfb76baf0097594d0e"
+  },
+  {
+   "path": "data/derived/variants/matchup/features/team_pregame.parquet",
+   "bytes": 1350634,
+   "sha256": "852e1995e3a6dc64283085a1ae2e2f4b9dffcd433787f0142d9203ebbba0f336"
+  },
+  {
+   "path": "data/derived/variants/matchup/features/features_report.json",
+   "bytes": 2398,
+   "sha256": "e748d521899caef65cb135852a8a20f96ac8397d09339dccc89e9926813f90d3"
+  },
+  {
+   "path": "data/derived/experiments/20261122T073749Z_a1_s05_strict_fixed200.parquet",
+   "bytes": 163562,
+   "sha256": "ee8c9e4de68de33ad5a3dc416ce92a83f6a1ffd43a65aa42c18f535d33fb27e8"
+  },
+  {
+   "path": "data/derived/experiments/20261122T073749Z_a1_s05_strict_fixed200_players.parquet",
+   "bytes": 565814,
+   "sha256": "d4225ecfe90d0741a7d788add046ad138be44e7f7fed210746b585207ead1d9e"
+  },
+  {
+   "path": "analysis/experiments/20261122T073749Z_a1_s05_strict_fixed200.json",
+   "bytes": 10632,
+   "sha256": "8eee66e9025b08b38cbd34c89d050b4f8a9d7905103698f2a0b67ac96e5454f9"
+  },
+  {
+   "path": "data/derived/teams.json",
+   "bytes": 5362,
+   "sha256": "130aa5358d49b944c2b5bee7e9a163f1e53285e93dae57262f039ca1636b7ecc"
+  },
+  {
+   "path": "data/derived/athletes.parquet",
+   "bytes": 17062,
+   "sha256": "3b8e24488790edca5289a2a52f30867243a69f6cab57032e1c839967bb65d5be"
+  },
+  {
+   "path": "data/derived/history/2026/stints.parquet",
+   "bytes": 929341,
+   "sha256": "29de886d2afd2a5d9a55af2acb027fd3ee83a887584c71a9fe9951a9c2cc225f"
+  },
+  {
+   "path": "data/derived/history/2026/player_periods.csv.gz",
+   "bytes": 1303401,
+   "sha256": "ef35bb5c33c46e6a194cea30075d9974ead5d44be96c6074b60f6dac49e69c28"
+  },
+  {
+   "path": "data/raw/hoopr/play_by_play_2026.parquet",
+   "bytes": 22274408,
+   "sha256": "f7051c5c0c5b605419fcc0e0c13dd90df7803f96dab290554c1ef737433a98b2"
+  },
+  {
+   "path": "scripts/a1_manifest.py",
+   "bytes": 17643,
+   "sha256": "7c9a8d40c9017e3d9b3ef8afaf2a1708fc44cbd3fa809b5664336f60388c295b"
+  },
+  {
+   "path": "scripts/a1_output_audit.py",
+   "bytes": 11782,
+   "sha256": "af7357b898098c734d7700e937a383674b0bbd0e4c45b49c43528e958ba9bc43"
+  },
+  {
+   "path": "scripts/aggregate.py",
+   "bytes": 45444,
+   "sha256": "5797c8ec28f1ee2e10524dc3993f6cc32d982089a881df10f628103076977a2d"
+  },
+  {
+   "path": "scripts/backtest.py",
+   "bytes": 36756,
+   "sha256": "e6e2b12a2935728756234f1102ae23a8a9ab98b5489cd0f1819b92f498be0e00"
+  },
+  {
+   "path": "scripts/engine.py",
+   "bytes": 55933,
+   "sha256": "85348127fcb4767e7678c1ff8892567b1a0bf90402c2cf4be75255e631b9d3fe"
+  },
+  {
+   "path": "scripts/evaluate.py",
+   "bytes": 8362,
+   "sha256": "aeb59d057cf115fb80eeb043de3c6d74cd931753574e682927663494cfee134c"
+  },
+  {
+   "path": "scripts/features.py",
+   "bytes": 56402,
+   "sha256": "16d57e2cf0440d2cbeeaa224ada40f1ea7b68fba3f25a37f8114e8640dada9ff"
+  },
+  {
+   "path": "scripts/matchups.py",
+   "bytes": 24646,
+   "sha256": "70bbb3f069e78477c83b63ab66e518c4148217b11c415ff1825856914861a153"
+  },
+  {
+   "path": "scripts/minutes.py",
+   "bytes": 22969,
+   "sha256": "94dd0ed25e536708c75cd4cf1f386bf2f9fa35f2c334d83cbdd031d4448ba2d0"
+  },
+  {
+   "path": "scripts/nodes.py",
+   "bytes": 50059,
+   "sha256": "78749b680b889993e83ba26baab51877cd7393ee0a5a3d9f4fdaf9123d3b161f"
+  },
+  {
+   "path": "scripts/pbp.py",
+   "bytes": 12695,
+   "sha256": "2c85ed02adebf34fce9696f37c030e246a868a93cdde3a70237176cd4ead8106"
+  },
+  {
+   "path": "scripts/plays.py",
+   "bytes": 8772,
+   "sha256": "37271dee2fcc45ccc1f9f9d35369a330e4fd3adcc8df5f84bd12a673464e34f2"
+  },
+  {
+   "path": "scripts/projection.py",
+   "bytes": 27458,
+   "sha256": "dbd3201017e9febd8cd52cc6ca9b838c8ebc607d934dc490129cf09123faf284"
+  },
+  {
+   "path": "scripts/rotations.py",
+   "bytes": 16787,
+   "sha256": "1abf8fd173f4ca96d608813f315df8b034436a4bb26060e55410e3710c7e9c3a"
+  },
+  {
+   "path": "scripts/train.py",
+   "bytes": 28929,
+   "sha256": "db31022469cfb3987ed4423411ebdb9557d81bfe0efc9090bc9b80fc5786bf96"
+  },
+  {
+   "path": "data/models/folds/v1.2d_F4_all/config.json",
+   "bytes": 33070,
+   "sha256": "1617769cb52f2c750e0f1276071b39fc21254ef53fc97ccc646869aaa50f5e71"
+  },
+  {
+   "path": "data/models/folds/v1.2d_F4_all/assisted.txt",
+   "bytes": 3626534,
+   "sha256": "0a094b183b18b8d45a6e5cf047fb117f8aed62dc6941bb9b7944391c3afec690"
+  },
+  {
+   "path": "data/models/folds/v1.2d_F4_all/assister.txt",
+   "bytes": 2449725,
+   "sha256": "f32c49ac6c7ca5774aad414c5cf500d1b5fd1bbd8fa6c0ddd50ee1934b1d3961"
+  },
+  {
+   "path": "data/models/folds/v1.2d_F4_all/blocked.txt",
+   "bytes": 1106386,
+   "sha256": "e085efcacd0baea9568f27f7ee05dd43687e7762ba55015d7569cc1efe175c04"
+  },
+  {
+   "path": "data/models/folds/v1.2d_F4_all/blocker.txt",
+   "bytes": 998442,
+   "sha256": "5975f284a6c41a013db80fb669230e64dda7167137554bba9051dd04fe4004f0"
+  },
+  {
+   "path": "data/models/folds/v1.2d_F4_all/duration.txt",
+   "bytes": 4818053,
+   "sha256": "2603f8bf64f3bbef3146285638f79262446eb9a76572c4217f45e6df77dee72c"
+  },
+  {
+   "path": "data/models/folds/v1.2d_F4_all/event.txt",
+   "bytes": 1845359,
+   "sha256": "d62e1cac4c4fa1cbec0ba5fccc321bae6838202b17253c80a0e8f502395e7e36"
+  },
+  {
+   "path": "data/models/folds/v1.2d_F4_all/fouler.txt",
+   "bytes": 3165178,
+   "sha256": "70ee6709fcd1fae1ca43ea925babaeb9c9355eaf7e4edeeb601d0cb11c45d266"
+  },
+  {
+   "path": "data/models/folds/v1.2d_F4_all/free_throw.txt",
+   "bytes": 369568,
+   "sha256": "ddd7ef48ede7de973c9967b01826f3c293ee824147ca2da772de17a1d781f612"
+  },
+  {
+   "path": "data/models/folds/v1.2d_F4_all/location.txt",
+   "bytes": 9953891,
+   "sha256": "8f12f8c3bb168ab94dfae313f7624e1ff43074764db665b03ba9511d69c12979"
+  },
+  {
+   "path": "data/models/folds/v1.2d_F4_all/rebound.txt",
+   "bytes": 1011747,
+   "sha256": "b94d0f957b02d633ca751dff3ef921ffb7e9f57ce6bd206cbba41893ee6f34ff"
+  },
+  {
+   "path": "data/models/folds/v1.2d_F4_all/rebounder.txt",
+   "bytes": 2249824,
+   "sha256": "337225efb0be006b8889cb377254f6b03c39b356d73d366d3af153ab9133b094"
+  },
+  {
+   "path": "data/models/folds/v1.2d_F4_all/shot_result.txt",
+   "bytes": 1532944,
+   "sha256": "993fce9f6450e7f317c19e93cadf562db741efa7b58c05d32a8d561ff5f1bbfc"
+  },
+  {
+   "path": "data/models/folds/v1.2d_F4_all/stealer.txt",
+   "bytes": 499247,
+   "sha256": "ceea8df151ace738c6181be7615f93fbbebc13cfc434cc371ff8f7566143c581"
+  },
+  {
+   "path": "data/models/folds/v1.2d_F4_all/turnover_type.txt",
+   "bytes": 1163116,
+   "sha256": "307defe709ae1a8639407d131e28bfabc8eda32bb291a4820113cf3a5b7001d0"
+  },
+  {
+   "path": "data/models/folds/v1.2d_F4_all/what.txt",
+   "bytes": 5699231,
+   "sha256": "d093989f161b78686804078c07a1d94a629719893085d399465a52314c0de231"
+  },
+  {
+   "path": "data/models/folds/v1.2d_F4_all/who.txt",
+   "bytes": 1731184,
+   "sha256": "c792950c30a7e7eecec20ab1d12681b0adc574838f2327bbc948213aa574150d"
+  },
+  {
+   "path": "data/models/folds/v1.2d_F4_all/meta.json",
+   "bytes": 30186,
+   "sha256": "4a3dfcdff94a856f718fe7f30ea14a44255364cdc2977b62b524c081909139a7"
+  },
+  {
+   "path": "data/derived/history/2023/segments.parquet",
+   "bytes": 8756670,
+   "sha256": "813b53edadf92f6e6c607211b1d4c64b312aa9fbe689851110e912419101a76e"
+  },
+  {
+   "path": "data/derived/history/2023/on_court.parquet",
+   "bytes": 801399,
+   "sha256": "ba9b4b13e16e5b839e5530905497d2d00d231413ea40f39ee46855f3ebce8c3b"
+  },
+  {
+   "path": "data/derived/history/2024/segments.parquet",
+   "bytes": 8511872,
+   "sha256": "4a7c3c2bce39580cc8e1092ffc215d11bbd49f7bf117b4551eee40337203d2c0"
+  },
+  {
+   "path": "data/derived/history/2024/on_court.parquet",
+   "bytes": 800285,
+   "sha256": "5461947edb052ef9e62b4a70ba49e57a0f98d929f4a19167f03aad3972457f95"
+  },
+  {
+   "path": "data/derived/history/2025/segments.parquet",
+   "bytes": 8668449,
+   "sha256": "d9db732172894ed8d3c6e5e99e3cd1c197006da22799413034ce3ce18cc5aee2"
+  },
+  {
+   "path": "data/derived/history/2025/on_court.parquet",
+   "bytes": 813678,
+   "sha256": "5bbabab60114aa3f7fa096d7708be96f47177c541debcae88059da6b1adb77e9"
+  },
+  {
+   "path": "data/derived/history/2026/segments.parquet",
+   "bytes": 9156332,
+   "sha256": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc"
+  },
+  {
+   "path": "data/derived/history/2026/on_court.parquet",
+   "bytes": 868634,
+   "sha256": "1b0ffaf53490c3fda4edd28ac427766a0af3a1bfe86f1fece240cd63ed1e8410"
+  },
+  {
+   "path": "data/raw/hoopr/player_box_2023.parquet",
+   "bytes": 595949,
+   "sha256": "968d835cd04b10533c5b5af8c0e41bf0154a73782e9446c76f765109223e8679"
+  },
+  {
+   "path": "data/raw/hoopr/player_box_2024.parquet",
+   "bytes": 610610,
+   "sha256": "1e500a538ec45ddbcb58d9789b5494f8db4f25658eafd01d90f2d09600921665"
+  },
+  {
+   "path": "data/raw/hoopr/player_box_2025.parquet",
+   "bytes": 610289,
+   "sha256": "e89f7fbc1124092c715b722e6d72d9dd1b9d28776ca6888b508fd2831cd705e2"
+  },
+  {
+   "path": "data/raw/hoopr/player_box_2026.parquet",
+   "bytes": 606444,
+   "sha256": "29a29dc9efd055a93e069a0382ac830d98a13274bee655beba69d95cff099713"
+  },
+  {
+   "path": "models/matchup_2025-12-31.json",
+   "bytes": 734,
+   "sha256": "176ce8a25f6fd5cc0cee99abca618a72380bac4ed8cabc6f86d2f6129203206c"
+  }
+ ],
+ "fingerprint_scope": "Files hashed at audit time; verify they did not change since the run. The log commit is only Git HEAD when the worktree is dirty."
+}

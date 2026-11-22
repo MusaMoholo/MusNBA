@@ -6,7 +6,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from scripts import a1_compare, a1_manifest, a1_output_audit, backtest, projection
+from scripts import a1_compare, a1_manifest, a1_output_audit, a1_pooled_audit, backtest, projection
 
 
 class A1ComparisonTests(unittest.TestCase):
@@ -62,6 +62,33 @@ class A1ComparisonTests(unittest.TestCase):
         rows.loc[0, 'pts_actual_candidate'] = 2.0
         with self.assertRaisesRegex(ValueError, 'actuals differs'):
             a1_compare.distribution(rows, 'pts', ids, weights, True)
+
+    def test_pooled_audit_detects_changed_outcomes_and_intervals(self):
+        control = pd.DataFrame({'game_id': ['a', 'b'], 'player': ['1', '2']})
+        candidate = control.copy()
+        summaries = {}
+        for stat in a1_compare.STATS:
+            control[f'{stat}_actual'] = candidate[f'{stat}_actual'] = 1.0
+            control[f'{stat}_sim'], candidate[f'{stat}_sim'] = 1.5, 1.25
+            control[f'{stat}_crps'], candidate[f'{stat}_crps'] = 1.0, 0.75
+            control[f'{stat}_pit'] = candidate[f'{stat}_pit'] = 0.5
+            summaries[stat] = {
+                'status': 'ok', 'observations': 2,
+                'crps': {'control': 1.0, 'candidate': 0.75, 'change': -0.25, 'ci_95': [-0.25, -0.25]},
+                'bias': {'control': 0.5, 'candidate': 0.25, 'change': -0.25, 'ci_95': [-0.25, -0.25]},
+                'coverage': {'control': 1.0, 'candidate': 1.0, 'change': 0.0, 'ci_95': [0.0, 0.0]}}
+        report = {'runs': {'control': 'c', 'candidate': 'v'},
+                  'population': {'game_ids': ['a', 'b'], 'player_games': 2},
+                  'method': {'replicates': 10000, 'seed': 20261122}, 'players': {'all': summaries}}
+        result = a1_pooled_audit.audit_players(control, candidate, report)
+        self.assertEqual((result['metrics_checked'], result['pooled_bias_coverage']['established']), (15, 10))
+        candidate.loc[0, 'pts_actual'] = 2.0
+        with self.assertRaisesRegex(ValueError, 'actual outcomes do not match'):
+            a1_pooled_audit.audit_players(control, candidate, report)
+        candidate.loc[0, 'pts_actual'] = 1.0
+        summaries['pts']['crps']['ci_95'] = [0.0, 0.0]
+        with self.assertRaisesRegex(ValueError, 'independent bootstrap differs'):
+            a1_pooled_audit.audit_players(control, candidate, report)
 
     def test_missing_metric_and_sparse_tier_cannot_pass_as_success(self):
         rows = pd.DataFrame({'game_id': ['1'], 'pts_actual_control': [1.0]})

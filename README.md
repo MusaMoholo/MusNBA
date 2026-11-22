@@ -10,7 +10,7 @@ or phone.
 > from games before the origin; 10,000 worlds per game, one rotation table per world; the floor for later improvements, D22–D24); every later game from the **team pathway v1**, where
 > each simulated season carries its own team ratings and updates them after every game (D25). Past dates rebuilt after the
 > fact currently use a labelled placeholder. U1–U22 and public Pages/iCloud delivery are complete. Accuracy chunk
-> **A1 (14 tasks)** has completed S01–S03; S04/S05 follow and versioned, cutoff-safe engine history remains planned.
+> **A1 (14 tasks)** has completed S01–S05; S06 follows and versioned, cutoff-safe engine history remains planned.
 > See [PLAN.md](PLAN.md) and [HANDOFF_NEXT.md](HANDOFF_NEXT.md).
 
 ## Setup
@@ -121,6 +121,8 @@ Dashboard routes: `#/standings/{forecast,seeds,wins,ratings,picture,races,movers
 | `scripts/a1_minutes_audit.py`, `scripts/a1_minutes_diagnose.py`, `scripts/a1_rotation_diagnose.py`, `scripts/a1_minutes_stress.py` | A1's prior-box population, D29 state/calibration, conditional target-squeeze and legal-allocation diagnostics; not pre-game availability forecasts |
 | `scripts/a1_minutes_fold_eval.py`, `scripts/a1_minutes_unconditional.py`, `scripts/a1_minutes_no_report.py`, `scripts/a1_minutes_screen_audit.py` | Isolated fixed-fold minute screens and independent accounting; prior-box and no-report screens are incomplete-roster sensitivities, not injury forecasts |
 | `scripts/a1_minutes_gate.py` | Preliminary A1 paired-report checker using the registered seed-noise floor and player/game bounds; not a promotion decision. Original/v2 reports used the wrong floor; use v3 or later |
+| `scripts/a1_pooled_audit.py` | Independently reconstructs pooled player bootstrap intervals and checks pooled bias/coverage bounds from paired backtest reports |
+| `scripts/a1_substitutions.py` | Experimental clock-and-sequence replay of observed stoppages and pre-substitution state; conditional on actual participants, with unreconciled games quarantined |
 | `scripts/matchups.py` | D30 implicit matchups: soft assignment of defenders to shooters from foul/block credits; shot types from the play text |
 | `scripts/fetch_nbastats.py` | D32 NBA Stats adapter (browser fetch headers, ~1 request/s, resumable): season logs, `boxscorematchupsv3`, tracking defence, play-by-play v3 → `data/raw/nbastats/<endpoint>/<season>/` (gzip + manifest) |
 | `scripts/nbastats.py` | D32 crosswalk (games by date + teams, players by name/stat line), reconciliation v ESPN (points, minutes, possessions), real matchups in ESPN ids → `data/derived/nbastats/` |

@@ -1,0 +1,137 @@
+{
+ "experiment": "a1_pooled_player_bootstrap_accounting",
+ "runs": {
+  "control": "20261122T022323Z_a1_s01_control",
+  "candidate": "20261122T073749Z_a1_s05_strict_fixed200"
+ },
+ "games": 200,
+ "player_games": 4346,
+ "metrics_checked": 15,
+ "max_absolute_difference": 2.5979652457097657e-15,
+ "pooled_bias_coverage": {
+  "checks": 10,
+  "established": 10,
+  "bounds": [
+   {
+    "stat": "min",
+    "metric": "bias",
+    "bound": 0.3,
+    "change": -0.0009433003528148392,
+    "ci_95": [
+     -0.0028564778678842654,
+     0.002234456850530968
+    ],
+    "established": true
+   },
+   {
+    "stat": "min",
+    "metric": "coverage",
+    "bound": 0.03,
+    "change": 0.0009203865623562679,
+    "ci_95": [
+     -0.0006914075337803776,
+     0.0027347310847766204
+    ],
+    "established": true
+   },
+   {
+    "stat": "pts",
+    "metric": "bias",
+    "bound": 0.3,
+    "change": -0.0015225494707777343,
+    "ci_95": [
+     -0.004043570812030937,
+     0.002393121746982919
+    ],
+    "established": true
+   },
+   {
+    "stat": "pts",
+    "metric": "coverage",
+    "bound": 0.03,
+    "change": -0.0013805798435343464,
+    "ci_95": [
+     -0.003948002490110572,
+     0.0011579434923575382
+    ],
+    "established": true
+   },
+   {
+    "stat": "reb",
+    "metric": "bias",
+    "bound": 0.1,
+    "change": -0.00027197422917626946,
+    "ci_95": [
+     -0.0015257226037419139,
+     0.0009648751999799983
+    ],
+    "established": true
+   },
+   {
+    "stat": "reb",
+    "metric": "coverage",
+    "bound": 0.03,
+    "change": -0.00023009664058903923,
+    "ci_95": [
+     -0.002754836750766221,
+     0.002252976144080504
+    ],
+    "established": true
+   },
+   {
+    "stat": "ast",
+    "metric": "bias",
+    "bound": 0.1,
+    "change": 0.0012167510354348862,
+    "ci_95": [
+     -0.0009684779175012174,
+     0.0022453462616409707
+    ],
+    "established": true
+   },
+   {
+    "stat": "ast",
+    "metric": "coverage",
+    "bound": 0.03,
+    "change": 0.0009203865623561569,
+    "ci_95": [
+     -0.0016325103302364862,
+     0.003691761032485749
+    ],
+    "established": true
+   },
+   {
+    "stat": "fg3m",
+    "metric": "bias",
+    "bound": 0.05,
+    "change": 0.00026645190980211257,
+    "ci_95": [
+     -0.0008859724115862277,
+     0.0009567958099856319
+    ],
+    "established": true
+   },
+   {
+    "stat": "fg3m",
+    "metric": "coverage",
+    "bound": 0.03,
+    "change": 0.0006902899217672287,
+    "ci_95": [
+     -0.0018235696375655808,
+     0.003016941285681085
+    ],
+    "established": true
+   }
+  ]
+ },
+ "method": "Directly sample game indices with replacement, independently of the paired report’s game-weight multiplication; retain all player rows and weight player-games equally.",
+ "limitations": "Uncorrected 95% accounting and non-inferiority screens; not a promotion decision.",
+ "input_sha256": {
+  "analysis/experiments/20261122_a1_s05_strict_fixed200_comparison.json": "b2311257a2af1ffb1c3561dd8bb38b0b0d403dcc7bc9c3409f1b988d69e36e5e",
+  "data/derived/experiments/20261122T022323Z_a1_s01_control_players.parquet": "d5e4618be5e146c62372b57b54b9a6528b7c75e9b1b2dd86f86e9279835bc09e",
+  "data/derived/experiments/20261122T073749Z_a1_s05_strict_fixed200_players.parquet": "d4225ecfe90d0741a7d788add046ad138be44e7f7fed210746b585207ead1d9e",
+  "scripts/a1_pooled_audit.py": "5c5b02f545daa67b93ee4c9994470e188d870d4509261c409ceb137a53d28ad4",
+  "scripts/a1_compare.py": "435c1e0761f51ee9d218dfc462db8d219c0bc6f54dc8acd6bcae79968ddfcf68",
+  "scripts/a1_minutes_gate.py": "f5bf1130023ef8c57e90dd66562bcb21775f35581019e25b265dedcdcbed1d4b"
+ }
+}

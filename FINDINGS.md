@@ -1191,8 +1191,8 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   non-NBA teams, rejects same-day player/team duplicates and requires two canonical NBA teams per game. Its F4 audit
   `analysis/experiments/20261122_a1_s05_nba_candidate_wiring_v3.json` exactly matches all **4,346** independently
   built candidate player states (healthy, allocated, missed and return index; max difference **0**). A synthetic
-  clean-history test also exactly matches the original D29 states. The module is not connected to production or the
-  backtest CLI; this verifies implementation, not forecast accuracy.
+  clean-history test also exactly matches the original D29 states. The module is connected to the backtest CLI
+  only by an opt-in switch, not to production; this verifies implementation, not forecast accuracy.
 - **D29 short-roster target integrity:** on 10,000 synthetic five-player draws, **9,910** legacy target vectors
   miss 240 minutes by >1e-6 (maximum deficit **11.33 minutes**); **1,000/1,000** sampled legacy mean allocations
   also exceed the hard 48-minute player limit. These are target-allocation defects, not proof the engine puts fewer
@@ -1314,9 +1314,33 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   are inside their frozen bounds; **10** are not established (six star bias/coverage and four game/quarter
   coverage intervals). An additional **10/10** pooled-player bias/coverage intervals are inside the same bounds.
   Direct sampling of game indices independently reproduced all **15** pooled player-statistic point estimates and
-  bootstrap intervals to maximum absolute error **1.5e-15**; it confirmed those 10 pooled bounds. An interval crossing
-  a bound is inconclusive, not proof of harm. Full paired comparisons and accounting:
+  bootstrap intervals to maximum absolute error **1.5e-15**; it confirmed those 10 pooled bounds. The reusable audit
+  and source fingerprints are `20261122_a1_s05_nba_only_fixed200_bootstrap_accounting_v2.json`; its initial
+  uncommitted test invocation had the same numbers but a source-level Pylance call-arity diagnostic, so the transient
+  output was discarded and the corrected source rerun. An interval crossing a bound is inconclusive, not proof of harm.
+  Full paired comparisons and accounting:
   `20261122_a1_s05_nba_only_fixed200_{comparison,accounting}.json`.
+- **S05 control provenance:** the NBA-only audit matches the S01 manifest on all **38** shared data/model/config
+  fingerprints (**17** fitted model files, **14** derived inputs, **5** raw inputs and **2** configurations).
+  Six shared source files changed for opt-in A1 work; the tested feature and matchup metadata select the original
+  legacy policies, and the backtest's `crps_samples` and `pit` function ASTs are unchanged. The old and new legacy
+  matchup functions also produced bit-identical values in **9** columns on **1,000** synthetic lineups, including
+  missing individuals and entirely missing defender rows. The new default engine reproduces all saved output
+  columns on the three fixed wiring games, not a second full 200-game default rerun.
+- **S05 strict-allocation engine screen:** on the same **200** F4 games and **4,346** scored actual-participant
+  player-games, strict minus control pooled MIN CRPS is **+0.000268 minutes** (95% **−0.000111 to +0.000653**),
+  below the **0.02634-minute** seed-noise floor and not an established improvement. Star/starter/bench changes are
+  **+0.000768 / +0.000205 / +0.000220** minutes; pooled PTS/REB/AST/3PM changes are **−0.000731 / +0.000668 /
+  +0.000395 / −0.000130**, respectively, with all four 95% intervals crossing zero. All **69/69** tier/game and
+  **10/10** additional pooled bias/coverage bounds are established. Independent direct game-index resampling
+  reproduces **15** pooled metrics and intervals to **2.6e-15**; raw accounting matches **1,600** quarter scores
+  and **4,346** 3PM actuals, with the same one incomplete player/team output as the control. The run took **1,731 s**;
+  its four candidate source hashes and all **38** shared data/model/config hashes match. Reports are
+  `20261122_a1_s05_strict_fixed200_{accounting,comparison,gate,bootstrap_accounting}.json`.
+  This is an actual-participant screen, not an availability forecast. **Decision for S06:** retain the existing
+  D29 allocator/history as the engine control; keep both candidates isolated because neither passed the pooled
+  primary win gate. The strict target solver's short-roster accounting fix remains useful for further research,
+  but target conservation alone is not evidence that it improves real player forecasts.
 - **Preliminary minute-gate defect:** the first and v2 gate reports used the seed interval's **0.01653** half-width
   instead of the preregistered maximum absolute endpoint **0.02634** (interval **−0.00671 to +0.02634**).
   They must not be used for selection. Their exact sources were preserved in **00a51cc** and **890bee3**;
@@ -1340,7 +1364,8 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   exactly across **93 game** and **22 player** columns, **3 games / 64 player-games**. Separate NBA-only-history,
   strict-runtime and combined wiring runs each independently reconcile **24** quarter scores, **64** player
   three-point actuals and **6** team sums with zero mismatches; these are wiring checks, not accuracy tests. The
-  NBA-only full **200-game** candidate is running; actual participants remain supplied by the box.
+  NBA-only and strict full **200-game** candidates subsequently completed as described above; actual participants
+  remain supplied by the box.
 - **Preregistration:** `analysis/experiments/20261122_a1_pre_candidate_manifest.json` fixes the original 200-game
   screen, **200 / 200 / 200 / 718** F1–F4 confirmation games, simulation streams and input hashes before candidates.
   An independent check finds **1,318 distinct** game IDs within their declared fold dates and **2,636 distinct**

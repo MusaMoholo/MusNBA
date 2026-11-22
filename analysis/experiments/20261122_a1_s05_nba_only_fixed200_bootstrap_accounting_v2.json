@@ -1,0 +1,137 @@
+{
+ "experiment": "a1_pooled_player_bootstrap_accounting",
+ "runs": {
+  "control": "20261122T022323Z_a1_s01_control",
+  "candidate": "20261122T070852Z_a1_s05_nba_only_fixed200"
+ },
+ "games": 200,
+ "player_games": 4346,
+ "metrics_checked": 15,
+ "max_absolute_difference": 1.4988010832439613e-15,
+ "pooled_bias_coverage": {
+  "checks": 10,
+  "established": 10,
+  "bounds": [
+   {
+    "stat": "min",
+    "metric": "bias",
+    "bound": 0.3,
+    "change": -0.0013597434422595138,
+    "ci_95": [
+     -0.003604447307684157,
+     0.0030124827217109292
+    ],
+    "established": true
+   },
+   {
+    "stat": "min",
+    "metric": "coverage",
+    "bound": 0.03,
+    "change": 0.0036815462494248496,
+    "ci_95": [
+     -0.003646308113035568,
+     0.011518149739330378
+    ],
+    "established": true
+   },
+   {
+    "stat": "pts",
+    "metric": "bias",
+    "bound": 0.3,
+    "change": 0.0068467556373676824,
+    "ci_95": [
+     -0.008047808938310337,
+     0.011524655807360614
+    ],
+    "established": true
+   },
+   {
+    "stat": "pts",
+    "metric": "coverage",
+    "bound": 0.03,
+    "change": -0.002070869765301464,
+    "ci_95": [
+     -0.007358182680779768,
+     0.003174045700255224
+    ],
+    "established": true
+   },
+   {
+    "stat": "reb",
+    "metric": "bias",
+    "bound": 0.1,
+    "change": -0.0021638288080994064,
+    "ci_95": [
+     -0.004113573379635462,
+     6.657246415011228e-05
+    ],
+    "established": true
+   },
+   {
+    "stat": "reb",
+    "metric": "coverage",
+    "bound": 0.03,
+    "change": -0.0025310630464794315,
+    "ci_95": [
+     -0.0069773547529239695,
+     0.0020656652121887327
+    ],
+    "established": true
+   },
+   {
+    "stat": "ast",
+    "metric": "bias",
+    "bound": 0.1,
+    "change": 0.0009670961803957684,
+    "ci_95": [
+     -0.0010830909073521649,
+     0.00264781568239978
+    ],
+    "established": true
+   },
+   {
+    "stat": "ast",
+    "metric": "coverage",
+    "bound": 0.03,
+    "change": -0.0018407731247124248,
+    "ci_95": [
+     -0.005933397619341118,
+     0.002284682917477476
+    ],
+    "established": true
+   },
+   {
+    "stat": "fg3m",
+    "metric": "bias",
+    "bound": 0.05,
+    "change": 0.0008228255867464354,
+    "ci_95": [
+     -0.0019989003229862598,
+     0.002042526858104944
+    ],
+    "established": true
+   },
+   {
+    "stat": "fg3m",
+    "metric": "coverage",
+    "bound": 0.03,
+    "change": 0.0006902899217672287,
+    "ci_95": [
+     -0.0034427753536478865,
+     0.004820964313840914
+    ],
+    "established": true
+   }
+  ]
+ },
+ "method": "Directly sample game indices with replacement, independently of the paired report’s game-weight multiplication; retain all player rows and weight player-games equally.",
+ "limitations": "Uncorrected 95% accounting and non-inferiority screens; not a promotion decision.",
+ "input_sha256": {
+  "analysis/experiments/20261122_a1_s05_nba_only_fixed200_comparison.json": "bb96fb2d98d4f9ffb8588064bb6dac7c448485083e9c03a79e09b29ae569c593",
+  "data/derived/experiments/20261122T022323Z_a1_s01_control_players.parquet": "d5e4618be5e146c62372b57b54b9a6528b7c75e9b1b2dd86f86e9279835bc09e",
+  "data/derived/experiments/20261122T070852Z_a1_s05_nba_only_fixed200_players.parquet": "e964d7c101202fdf80bbd64bac98cc17f2eebdcb7ddaf2bcd78ca2fe1214f9c8",
+  "scripts/a1_pooled_audit.py": "5c5b02f545daa67b93ee4c9994470e188d870d4509261c409ceb137a53d28ad4",
+  "scripts/a1_compare.py": "435c1e0761f51ee9d218dfc462db8d219c0bc6f54dc8acd6bcae79968ddfcf68",
+  "scripts/a1_minutes_gate.py": "f5bf1130023ef8c57e90dd66562bcb21775f35581019e25b265dedcdcbed1d4b"
+ }
+}

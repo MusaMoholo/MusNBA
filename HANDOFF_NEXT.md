@@ -1,6 +1,6 @@
 # Handoff — state and next actions
 
-Updated **22 November 2026 — A1 overnight execution, S01–S04 complete; S05 active**. Dashboard U1–U22 complete and published.
+Updated **22 November 2026 — A1 overnight execution, S01–S05 complete; S06 next**. Dashboard U1–U22 complete and published.
 Dashboard close-out checkpoint **86c2a46**, A1 planning checkpoint **00a0731**; S01 checkpoint **c9d8008**
 and S02 checkpoint **93b3e1d** are committed and pushed (S01's exact control source is **c6d5db4**).
 The original S03/S05 experiment snapshot is **ab32eda**, committed and pushed before the candidate repair;
@@ -12,12 +12,13 @@ The original S04 defence evidence and first S05 engine screen, including their e
 pushed in **00a51cc** before the typed tracking-source repair.
 The byte-identical typed tracking rebuild and original v2 minute-gate source/report were preserved in pushed
 partial checkpoint **890bee3** before correcting the gate's seed-noise definition.
+The completed S04 defence checkpoint and corrected minute-gate report are committed and pushed as **38155fc**.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
-product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S04 are complete;
-S05 is active at 80%; A1 overall is 38.4%.** Isolated assignment candidates have event-level diagnostics and wiring only;
+product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S05 are complete;
+S06 is next; A1 overall is 40.0%.** Isolated assignment candidates have event-level diagnostics and wiring only;
 no defence candidate has had an engine-accuracy test, and no model promotion, forecast or PWA change has been made.
 
-**Live resume state (07:24 UK):** the 200-game flow and its independent accounting are complete; the comparison and
+**Live resume state (08:00 UK):** the 200-game flow and its independent accounting are complete; the comparison and
 two S04 hypotheses are recorded below and in FINDINGS/TRAINING_PLAN. Both corrected S05 historical screen wrappers
 have exited successfully; the full four-fold audit passed with **21** input and **16** output hashes, reproducing all
 **28,530** control/NBA-only candidates to `1e-12`. F3 scored 195/200 games due to five unavailable prior rosters.
@@ -75,16 +76,16 @@ z **−0.283**, so the frozen shot-node gate is **neutral** and this family is n
 This rejects this specific expression calibration, not player-based defence generally.
 The checkpoint normal smoke passed **102/102** (`/tmp/musnba_a1_s04_partial_smoke.log`); deliberate fault exited 1
 with **80/102**, as required (`/tmp/musnba_a1_s04_partial_fault.log`; wrapper exited 0). The original erroneous
-F4 source and report are preserved in pushed commit **c0605da**; the corrected source remains working-tree state.
+F4 source and report are preserved in pushed commit **c0605da**; the corrected source is committed in **38155fc**.
 Those processes had loaded the engine before the latest minute-candidate wiring. A fresh single-threaded normal
 smoke on current code passed **102/102**, former wrapper PID **87718**, session **1591**, log
 `/tmp/musnba_a1_s04_current_smoke.log`. Its deliberate-fault counterpart exited 1 with **80/102** checks
 passing, as required (former wrapper PID **88523**, session **1613**, log `/tmp/musnba_a1_s04_current_fault.log`).
 
-The working `scripts/backtest.py` now has opt-in `--minutes-history nba_only` and `--strict-minute-targets`
+The committed `scripts/backtest.py` has opt-in `--minutes-history nba_only` and `--strict-minute-targets`
 switches, with separate input fingerprints; `Game` defaults to its unchanged legacy allocator. The strict switch
 also rejects an availability pattern with fewer than five rather than filling it with unavailable players. These
-are isolated, uncommitted wiring changes, not a promotion; the candidate's history is still learned with D29.
+are isolated wiring changes, not a promotion; the candidate's history is still learned with D29.
 The **69** focused A1 tests pass. A sequential three-game control/NBA-only/strict/combined wiring wrapper completed,
 former PID **84110**, attached shell **1512**, log `/tmp/musnba_a1_s05_engine_wiring.log`; the first control completed
 **3/3 games in 57 s** and matches `20261122T015651Z_a1_s01_repro` exactly in all **93 game** and **22 player**
@@ -96,21 +97,31 @@ analysis/experiments/20261122_a1_reproduction_games.json --worlds 1000 --jobs 1 
 **85267**, attached shell **1538**, log `/tmp/musnba_a1_s05_nba_only_fixed200.log`; command as above but
 `--game-ids data/derived/experiments/20261122_a1_s03_f4_game_ids.json --jobs 4 --minutes-history nba_only --name
 a1_s05_nba_only_fixed200`. It completed **200/200 in 1,729 s** as
-`20261122T070852Z_a1_s05_nba_only_fixed200`; independent accounting and paired comparison remain. The previous
-same-size control took **1,567 s**. Strict-runtime is running as wrapper PID **88450**, child **90891**, attached
+`20261122T070852Z_a1_s05_nba_only_fixed200`; accounting and comparison completed below. The previous
+same-size control took **1,567 s**. Strict-runtime ran as former wrapper PID **88450**, child **90891**, attached
 session **1610**, log `/tmp/musnba_a1_s05_strict_fixed200.log`; its queue waited for NBA-only Python PID **85268**
 to exit and verified the successful marker, then started the same command with `--strict-minute-targets --name
 a1_s05_strict_fixed200` instead of `--minutes-history nba_only`.
-At 07:24 UK it reached **100/200 in 903 s** including startup; games 81–100 took **176 s**
-(about **6.8 games/minute**, implying roughly **15 minutes** for the remaining 100 at that measured rate).
-An independent audit queue is waiting for the backtest wrapper to exit: PID **93361**, attached session **1707**,
-log `/tmp/musnba_a1_s05_strict_audit_queue.log`. After verifying the success marker it runs
+It finished **200/200 in 1,731 s** including startup, as
+`20261122T073749Z_a1_s05_strict_fixed200`; games 181–200 took **164 s** (about **7.3 games/minute**).
+The independent audit queue completed as former PID **93361**, attached session **1707**,
+log `/tmp/musnba_a1_s05_strict_audit_queue.log`. After verifying the success marker it ran
 `scripts.a1_output_audit --pin-current-inputs`, `scripts.a1_compare` against
 `20261122T022323Z_a1_s01_control` on the fixed game IDs, and the corrected `scripts.a1_minutes_gate` sequentially;
 outputs are `analysis/experiments/20261122_a1_s05_strict_fixed200_{accounting,comparison,gate}.json`.
-If any command fails, the queue exits nonzero; inspect its log rather than assuming success.
-Compare player outcomes first; do not launch another engine backtest or edit the fingerprinted engine/backtest/minutes/
-candidate sources while either test runs.
+A second queue completed as former PID **94380**, session **1728**, log
+`/tmp/musnba_a1_s05_strict_pooled_queue.log`; `scripts.a1_pooled_audit` wrote
+`analysis/experiments/20261122_a1_s05_strict_fixed200_bootstrap_accounting.json`.
+S05's normal smoke passed **102/102**, and its deliberate-fault smoke exited **1** with **80/102** passing as
+required. The sequential queue completed successfully as former PID **94558**, session **1732**, queue log
+`/tmp/musnba_a1_s05_checkpoint_queue.log`, outputs `/tmp/musnba_a1_s05_checkpoint_{smoke,fault}.log`.
+Strict minus control pooled MIN CRPS is **+0.000268 minutes** (95% **−0.000111 to +0.000653**) against the
+**0.02634** seed-noise floor; **69/69** tier/game and **10/10** pooled bias/coverage bounds are established.
+The independent pooled reconstruction checked **15** metrics to **2.6e-15**; raw accounting found no quarter/3PM
+mismatches, with one explicitly incomplete player/team output. All **38** shared data/model/config and four candidate
+source hashes match. The known-participant panel is not an availability forecast. Neither candidate establishes the
+required pooled primary win, so **retain D29 control for S06**; strict target legality remains an isolated research
+candidate, not a promoted model.
 The NBA-only comparison and independent accounting are
 `analysis/experiments/20261122_a1_s05_nba_only_fixed200_{comparison,accounting}.json`. They cover **200** games,
 **4,346** player-games, **1,600** raw quarter-score checks and **4,346** 3PM actuals, with zero mismatches;
@@ -122,7 +133,7 @@ changed **−0.14916** (95% **−0.27174 to −0.03359**), starters (**1,578**) 
 This is actual-participant diagnosis, not an availability forecast; a subgroup gain cannot override the frozen
 pooled primary gate. **59/69** listed player-tier/game non-inferiority intervals sit inside their frozen bounds;
 six star bias/coverage and four game/quarter coverage intervals are not established; **10/10** additional pooled
-player bias/coverage intervals are inside bounds. The reusable
+player bias/coverage intervals are inside bounds.
 The original and v2 `scripts/a1_minutes_gate.py` reports used the interval half-width **0.01653**, not the registered
 maximum absolute endpoint **0.02634** from the seed interval **[−0.00671, +0.02634]**. Their NBA-only primary
 rejection is unchanged because its interval also crosses zero and its improvement is smaller than either floor.
@@ -131,8 +142,72 @@ The working checker now reuses the preregistered manifest's endpoint calculation
 regression test and writes the corrected `analysis/experiments/20261122_a1_s05_nba_only_fixed200_gate_v3.json`:
 the pooled screen is false, with **59/69** non-inferiority bounds established, unchanged from v2. An independent
 direct-resampling reconstruction also matched all **15** pooled player-stat point/interval results to within
-`1.5e-15` and confirmed the separate **10/10** pooled bias/coverage bounds. It remains an uncorrected preliminary
-screen, not a promotion decision. All four candidate source hashes match the backtest log.
+`1.5e-15` and confirmed the separate **10/10** pooled bias/coverage bounds. The reproducible independent auditor is
+`scripts/a1_pooled_audit.py`, with NBA-only evidence
+`analysis/experiments/20261122_a1_s05_nba_only_fixed200_bootstrap_accounting_v2.json`. Its first uncommitted
+test run produced the same accounting but its source had a Pylance call-arity diagnostic; that transient output
+was discarded, the source corrected and v2 rerun. These are uncorrected preliminary screens, not promotion
+decisions. All four candidate source hashes match the backtest log.
+The NBA-only audit also matches S01 on all **38** shared data/model/config hashes (17 model files); six shared
+source files changed for isolated A1 work. The tested metadata uses the legacy feature/matchup policies, the
+backtest's CRPS and PIT function ASTs are unchanged, and the old/new legacy matchup outputs match bit-for-bit on
+1,000 synthetic lineups, including missing profiles. The new default engine reproduces all saved columns on three
+wiring games. A new full 200-game default replay has not been run.
+
+**S06 preparation, no rung awarded:** the S05 control decision is recorded, so sequence reconstruction started
+while its checkpoint smoke ran. The S05 checkpoint preserves the original `scripts/a1_substitutions.py` and
+`tests/test_a1_substitutions.py`; corrected working versions remain uncommitted. On game `401810498` the replay checks
+**1,008** event-side scoreboards and gives margin **−3** immediately before substitution sequence 709, separating
+the same-clock later reversal. Feed sequence numbers are not globally chronological in that game; replay orders
+by period, descending clock, then sequence *within* a clock. In a separate raw 2025–26 preflight, two duplicate
+game/sequence numbers occur at different clocks and are not by themselves ambiguous. A fixed F4 **200-game** pilot
+completed as former attached session **1820**, wrapper PID **96928**, child **96929**, log
+`/tmp/musnba_a1_s06_sequence_pilot.log`; it wrote
+`analysis/experiments/20261122_a1_s06_sequence_pilot.json` and ignored
+`data/derived/experiments/20261122_a1_s06_sequence_pilot.parquet`: **191** games retained, **9** quarantined.
+An independent raw-event join found **22,224/22,577** supposed jump balls were not type 615, mainly jump shots:
+`rotations.window_kind` matches the substring `jump`. The original pilot source, test and report are preserved in the S05 checkpoint;
+the source SHA-256 `6605c0b7f737adc0a8a0b0fe8514d32ffb11cb46943efeb967acfa0381dc00d9` matches its report.
+The working candidate now restricts jump-ball labels to actual jump-ball events and adds a regression test. The v2
+pilot completed in **13.6 s** as former attached session **1834**, wrapper PID **97249**, child **97250**, log
+`/tmp/musnba_a1_s06_sequence_pilot_v2.log`; it wrote `analysis/experiments/20261122_a1_s06_sequence_pilot_v2.json`
+and the corresponding ignored derived parquet. It retains **191/200** games, **23,160** windows and **11,277**
+substitutions, quarantining the same nine games. The independent audit completed with **46,320** scoreboard and
+lineup checks, **502,773** foul values and all **11,277** raw substitutions reconciled. The first audit source
+(SHA-256 `95acd7bcf9920794310a779bed62533af6150bdf9dd74881250af7bd43e6ee0b`) had a shadowed progress
+counter, not an accounting failure; its original source is preserved in the S05 checkpoint and its v2 report remains
+uncommitted. The corrected audit v3 completed with
+identical counts in **1.4 s** of window processing (session **1855**, log
+`/tmp/musnba_a1_s06_sequence_audit_v3.log`, report `analysis/experiments/20261122_a1_s06_sequence_audit_v3.json`,
+working-source SHA-256 `55eca6f6ffb73a9782424b26313a8e373c9bc07b2b1fdd08032dfd35bdc5fd9d`). Keep the original
+replay/audit sources accessible in Git history. Of **729** no-sub timeout-labelled windows, **129**
+share a clock with a substitution and need conservative exclusion or separate sequencing; **600** unique full-timeout
+clocks have no substitution at that clock; the larger count is not proof of no substitution during the timeout.
+Of nine quarantines, five are late-clock substitutions whose entrants are not eligible in the observed
+participant set, one substitution lacks a shared roster team, two have unsupported period starters, and one is an
+end-game event incorrectly marked scoring with zero points. Keep them quarantined pending defensible source repair.
+The pilot does not claim that every observed stoppage is a legal opportunity; roster membership uses actual
+participants and period starters are inferred. The conservative full-timeout extractor
+`scripts/a1_substitution_opportunities.py` retains **1,816/1,972** timeout windows across all 191 games:
+**1,216** with and **600** without any substitution; **148** other-same-clock-substitution and **8** multiple-timeout
+windows are excluded. There are **1,691** changed and **1,941** unchanged team decisions. Its original source is
+preserved in the S05 checkpoint (the report remains uncommitted), SHA-256
+`71d1fa3f3492b8c0803ae82a7e3e34b764f092287c55594527e0109b457051d9`; working v2 adds an output
+fingerprint. The v1/v2 parquet bytes and population counts match exactly. An independent raw-event group-by and
+every-field comparison passed (`/tmp/musnba_a1_s06_timeout_independent.log`). These are selected timeout decisions,
+not an exhaustive or unbiased set of legal opportunities.
+
+The preregistered exploratory state audit `scripts/a1_substitution_states.py` completed as
+`analysis/experiments/20261122_a1_s06_timeout_states.json`, with **39,380** player decisions across 191 games; the
+independent check reconciles **2,790** outgoing/incoming substitutions, **18,160** on-court decisions and **4,160**
+overlapping S05 pre-game-tier records, and reproduces a direct-resampling confidence interval
+(`/tmp/musnba_a1_s06_states_independent.log`). Among selected timeouts, starters with defined foul trouble left
+**27.2%** of 202 observed decisions (95% game-cluster interval **21.3–34.1%**), versus **15.4%** of 8,651 decisions
+without it (**14.4–16.4%**). These are descriptive, confounded and outcome-selected, not calibrated hazards or
+causal effects. The fixed bins and 100-player-game/30-game support floor are in TRAINING_PLAN §8.2. The S06 10% and
+20% evidence is prepared; after this S05 checkpoint is pushed, record/report those rungs in order and checkpoint the
+corrected S06 sources and reports. The state dataset still uses actual participants and is not suitable as a
+prospective eligible pool.
 
 The tracking family was frozen in TRAINING_PLAN §8 and built separately by
 `scripts/a1_tracking_features.py`: former wrapper PID **85586**, shell **1549**, log
@@ -145,11 +220,11 @@ only dates before each target and leaves missing five-player inputs missing. The
 passed: **1,692** source files, **146,581** distinct game-fives, **921,103** shots and **4,605,515** checked
 feature values (`analysis/experiments/20261122_a1_s04_tracking_accounting.json`). **69** related A1 tests pass.
 Pylance had inferred the existing `nbastats.nba_tables` as `NoReturn` at both tracking unpack sites and the
-auditor's heterogeneous list as `list[bool]`. A type annotation plus explicit NumPy integer extraction now clear
-those diagnostics in the working tree; the **112,952**-row four-season player/day/team mapping matches exactly.
-Explicit missing/non-finite player-ID rejection prevents NumPy from silently converting invalid IDs; **85** focused
+auditor's heterogeneous list as `list[bool]`. A type annotation plus explicit NumPy integer extraction clear
+those diagnostics in checkpoint **38155fc**; the **112,952**-row four-season player/day/team mapping matches exactly.
+Explicit missing/non-finite player-ID rejection prevents NumPy from silently converting invalid IDs; **86** focused
 A1 tests pass across the five test modules. The original source that produced the tracking reports is preserved in pushed commit **00a51cc**;
-validate and commit the typed source separately. Do not silently rewrite old report hashes.
+do not silently rewrite old report hashes.
 A full typed-source feature rebuild completed as former wrapper PID **90455**, session **1646**, log
 `/tmp/musnba_a1_s04_tracking_typed.log`. Its **921,103** rows are byte-identical to the original parquet
 (SHA-256 `d88e47e20f6d22226047f78f62f41f0e9802eae6b984a404ce45df7ab952866e`), with equal source/coverage counts.
@@ -188,7 +263,7 @@ Keep original-publication and revision uncertainty explicit even though every ev
 iPhone: Safari → Share → Add to Home Screen → launch the icon → Offline data & installation → Import data.
 Bundle: **iCloud Drive/MusNBA/MusNBA.musnba.gz**, also `exports/MusNBA.musnba.gz` and `~/Downloads/MusNBA.musnba.gz`.
 All three copies match (10,620,944 bytes, SHA-256
-`3055d277fc5e3c1b392d0b06466ec1b6a8c34de3313144b4fc856e1e5abd9ecf`, rechecked at 07:23 UK). Owner confirmed on 22 Nov
+`3055d277fc5e3c1b392d0b06466ec1b6a8c34de3313144b4fc856e1e5abd9ecf`, rechecked at 07:35 UK). Owner confirmed on 22 Nov
 that the file now appears on the phone; visibility is not confirmation of import.
 
 **Refresh complete:** 21 Nov (6 games) and 22 Nov (7 games), engine v1.3, **10,000 worlds per game**, one rotation table
@@ -287,7 +362,7 @@ The baseline minute CRPS for pre-game stars/starters/bench is **2.891/3.024/3.98
 **82.0/82.4/74.8%**; returners are below the gate. The NBA-only candidate changed star/bench target MAE by
 **−0.328/+0.036 minutes**, not yet an engine test. The opt-in `scripts/a1_minutes_candidate.py` matches all **4,346**
 independently built candidate states exactly (`analysis/experiments/20261122_a1_s05_nba_candidate_wiring_v3.json`),
-rejects same-day duplicates and incomplete two-NBA-team games, and leaves production/backtest unchanged. **23**
+rejects same-day duplicates and incomplete two-NBA-team games, and leaves production and default backtests unchanged. **23**
 focused tests passed before the strict-allocation addition; now **24** pass. A separate candidate correction
 `analysis/experiments/20261122_a1_s05_minutes_candidate_stress.json` preserves 240 regulation minutes to 1.43e-13,
 limits players to 48 and passes **400** fixed-panel absence cascades. It does not repair the historical state-pass
@@ -582,8 +657,8 @@ weights, with the old and new accounting; do not hide unfinished tasks by deleti
 | S02 Data integrity and parity | 6% | 100% | History, integrity, guarded parity/wiring and smoke/fault checks complete; research-only checkpoint |
 | S03 Offence/defence signal diagnosis | 8% | 100% | Fixed matched flow/accounting, component decomposition and two falsifiable candidate families documented; research-only checkpoint |
 | S04 Defence and shot quality | 12% | 100% | Both families rejected at their frozen node gates; tracking rebuild and independent accounting verified; served model and bundle unchanged |
-| S05 Roles and minute allocation | 8% | 80% | NBA-only matched engine comparison and accounting complete; pooled MIN gate not met, strict-runtime test running |
-| S06 Game-state substitutions | 12% | 0% | Planned |
+| S05 Roles and minute allocation | 8% | 100% | Both matched screens and independent accounting complete; neither passes pooled MIN gate, retain D29 control; smoke/fault passed |
+| S06 Game-state substitutions | 12% | 0% | Ordered-event extraction in preliminary fixed-panel pilot; legal/no-sub reconciliation not complete |
 | S07 Availability and future absences | 6% | 0% | Planned |
 | S08 Lineup branches and Expected | 6% | 0% | Planned |
 | S09 Shared form and end-game behaviour | 10% | 0% | Planned |
@@ -593,7 +668,7 @@ weights, with the old and new accounting; do not hide unfinished tasks by deleti
 | S13 Current-model season history | 5% | 0% | Planned |
 | S14 Nightly, delivery, successor | 5% | 0% | Planned |
 
-**A1 overall: `████████░░░░░░░░░░░░ 38.4%`.** Both control seeds are complete; isolated assignment-event
+**A1 overall: `████████░░░░░░░░░░░░ 40.0%`.** Both control seeds are complete; isolated assignment-event
 diagnostics and three-game wiring are not engine-accuracy tests. No candidate has been promoted or changed production/PWA.
 Each rung below is cumulative; 100% always includes updated docs, necessary PWA model/data/shell delivery, reviewed
 commit and push, plus the owner summary. See AGENTS §3/§5 and PLAN §6c for the per-subtask PWA checklist; research-only
@@ -934,28 +1009,27 @@ picker (Scoring · Rebounding ALL/OFF/DEF · Handling · Defense · Time; makes 
 STL/BLK, shooting x/y (z%) coloured per part); bezel points Δ v season (above the value; no win/total Δ); player page "Open
 simulation" for tomorrow's games; phone bundle stripped back (D36).
 
-## Next actions — S05 rung 90, then S06
+## Next actions — S06, then remaining A1
 
 **Owner's overnight authority:** execute S01–S14 without waiting for input; the earlier planning-only stop is lifted.
 The dashboard programme is done. Do not resume U1–U22, repeat rejected defence variants unchanged or begin at S13.
 
-1. **Complete S05 engine tests.** NBA-only completed and was independently compared to
-   `20261122T022323Z_a1_s01_control`; pooled minutes did not pass the frozen primary screen. The strict-runtime
-   candidate started **sequentially** under wrapper PID **88450**/session **1610**; audit queue **1707** will
-   independently account and compare it, then apply the corrected preliminary gate, judging player minutes first.
-   Record F3's five unavailable opening rosters and unknown labels. Do not edit the fingerprinted
-   `backtest.py`, `engine.py`, `minutes.py` or `a1_minutes_candidate.py` while either backtest runs.
-2. **Preserve S02 limitations.** Original publication/revision timing remains unknown; do not use a later single fit
-   on earlier rows. Keep the guarded assignment and split/quarantine candidates isolated. Sequence-aware substitution
-   examples are required before S06. The completed raw inventory retained 45 older entries without original fetch
-   URL/time; do not invent provenance. Provider access remains one polite stream, paused during the nightly.
-3. **Continue S06–S10 in dependency order** after the S05 decision. Keep conditional-engine and actual pre-game
+1. **Continue S06 ordered-event pilot.** Once this S05 checkpoint is pushed, record/report the independently reconciled conservative
+   legal/no-sub population as S06 10%, then the preregistered state-response audit as S06 20%, preserving their
+   actual-participant and selection limitations. Commit the corrected replay/audit/opportunity sources and their
+   reports in a later checkpoint; their original sources are retained in this S05 checkpoint. The known
+   `401810498` sequence-709 margin is verified, but a recognised stoppage is
+   not proof of an exhaustive legal opportunity. Do not treat clock-grouped windows as one simultaneous decision.
+   Original tracking publication/revision timing remains unknown; preserve S02's cutoff and provenance limits. The
+   raw inventory retained 45 older entries without original fetch URL/time. Provider access remains one polite stream,
+   paused during the nightly.
+2. **Continue S06–S10 in dependency order** after the S05 decision. Keep conditional-engine and actual pre-game
    availability populations separate; record negative results and preserve the accepted control.
-4. **S11 freezes the tested combination before promotion.** Confirm on the fixed wider folds and second seed, protect
+3. **S11 freezes the tested combination before promotion.** Confirm on the fixed wider folds and second seed, protect
    the final test and use player outcomes first.
-5. **S12/S13 implement model visibility and versioned daily history.** Preserve original and previous-version
+4. **S12/S13 implement model visibility and versioned daily history.** Preserve original and previous-version
    forecasts, reject future-trained inputs/fits and label retrospective histories; record any failed trust gate.
-6. **Finish S14** with a fresh live nightly, 10k games/branches and season, iCloud/PWA delivery and all checks. Build
+5. **Finish S14** with a fresh live nightly, 10k games/branches and season, iCloud/PWA delivery and all checks. Build
    the successor chunk in the same weighted, ten-rung format before the final commit/push.
 
 **S02 checkpoint document review:** HANDOFF records state, evidence, limitations and S03's next action; PLAN records
@@ -978,6 +1052,13 @@ and independent checks; TRAINING_PLAN records the frozen protocols and corrected
 describes the research tools. ENGINE_PLAN and DASHBOARD_PLAN update status only because no model, app, forecast,
 bundle or shell changed. AGENTS needs no change because the scoped overnight authority and checkpoint protocol
 already apply. The v1.3 bundle's three copies still match; phone import remains unconfirmed.
+
+**S05 checkpoint document review:** HANDOFF records both candidate decisions, the smoke/fault checks and S06 resume
+state; PLAN records weighted completion and the negative results; FINDINGS holds population-specific evidence and
+limitations; TRAINING_PLAN records the frozen gates and S06 descriptive protocol; README maps the research scripts.
+ENGINE_PLAN and DASHBOARD_PLAN update status only because no model, app, forecast, bundle or shell changed. AGENTS
+needs no change because the scoped overnight authority and checkpoint protocol already apply. The served engine and
+PWA bundle remain unchanged; phone import is still unconfirmed.
 
 ## Completed S01 audit and reproduction
 
@@ -1121,6 +1202,7 @@ old dot-prefixed staging name. `nightly_musnba.py --export-only` retries export 
 | `scripts/pbp.py`, `scripts/possessions.py` | Per-period box scores and on-court seconds; segments (M2, D23 convention) |
 | `scripts/rotations.py` | Stints, windows, substitutions, on-court shares; replay templates (shapes for the engine's tables) |
 | `scripts/minutes.py` | **D29**: healthy roles, priority, 240 allocation, ramp, rotation share, per-world draws, projected starters, `--evaluate` |
+| `scripts/a1_minutes_gate.py`, `scripts/a1_pooled_audit.py` | Preliminary minute bounds and independent pooled bootstrap accounting; neither is promotion confirmation |
 | `scripts/matchups.py` | **D30**: soft assignment (`--fit`); `mu_columns` (soft or real θ; top-2 and deterrence outputs) shared by datasets and engine; shot types |
 | `scripts/lineups.py` | Projected v actual starters per finished snapshot (nightly; D33) |
 | `scripts/athletes.py`, `scripts/features.py` | Heights/weights; profiles and variants (`--defence`, `--matchup`, `--real-matchups` (REAL_MATCHUP_K, stopper, deterrence), `--shot-types`, `--body`, `--archetypes`) |
