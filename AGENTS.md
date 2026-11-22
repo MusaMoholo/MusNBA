@@ -172,6 +172,20 @@ next. Do not defer those updates to the end of the chunk or report an unfinished
 
 ## 6. Running long jobs (any environment)
 
+**Interactive compute budget (owner, 22 Nov):** on the owner's 14-core Mac (10 performance + 4 efficiency
+cores, 48 GiB RAM), use at most **10 compute workers/threads in total** across concurrent heavy jobs, leaving
+approximately four cores' worth of capacity for ordinary use. This is a conservative budget, not CPU affinity:
+macOS decides scheduling and responsiveness is not guaranteed. Reduce the budget if the machine is busy,
+memory pressure or swapping rises, or the owner needs more headroom. Apply it to simulation, research,
+training and other CPU-heavy work; choose fewer workers when benchmarks favour them. Count process workers
+times their inner compute threads, plus concurrent jobs; prevent nested OpenMP/BLAS oversubscription. Verify
+each tool's actual controls rather than assuming environment variables win: `train.py --threads` controls
+LightGBM, and `backtest.py --jobs` sets `OMP_NUM_THREADS` internally from CPU count. On this 14-core Mac,
+`--jobs 5` (two OpenMP threads per worker) or `--jobs 10` (one each) stays within the 10-thread budget;
+the default `--jobs 4` implies 12 OpenMP threads. Also cap fitting with `--threads 10` or less and BLAS
+threads separately. Document any explicitly authorised brief above-budget comparison and do not run it
+alongside other heavy jobs. Respect existing model gates and deterministic-input requirements.
+
 Long jobs run detached with a log, e.g. `nohup .venv/bin/python -u scripts/backtest.py … > /tmp/bt.log 2>&1 &`, and you read
 the log's progress lines (`game N/200 Ts`, `engine <id>: …`) to report measured pace. Measured on the owner's laptop
 (14 cores, 48 GB): a 200-game backtest alone ≈ 22–27 min (two at once oversubscribe the CPU — each worker predicts on every

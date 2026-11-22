@@ -429,6 +429,18 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 · A1 parallel scaling:** the same 120 audited F4 worlds matched across 8/10/12 processes and
+  the first 20 matched the serial pilot. Startup-inclusive times were **13.938 / 12.841 / 13.263 s**;
+  per-worker maximum peak RSS was **1,041 / 1,045 / 1,046 MB**. This short comparison supports testing
+  10 processes here, not a 10k or interactive-responsiveness guarantee; no model or forecast changed.
+- **22 Nov 2026 · compute budget:** the owner requested efficient use of available cores while keeping the Mac
+  usable. Set a shared ceiling of **10 compute threads/workers** across concurrent heavy work on its 14-core
+  machine (10 performance, 4 efficiency); reduce it under contention or memory pressure. This reserves capacity
+  in aggregate, not affinity or a guaranteed responsiveness level. See AGENTS §6 for actual script controls.
+- **22 Nov 2026 · A1 90% partial:** a fixed-F4 20-control/20-retry world pilot gave identical audited results
+  and rejection records with one and four processes, including survivor isolation after an injected rejection.
+  Startup-inclusive times were **24.681 / 11.174 s**; this is not a measured 10k runtime or real failure rate.
+  The process coordinator remains research-only; A1 **80%**, Chunk A **34.5%**.
 - **22 Nov 2026 · A1 90% partial:** the two retained research game contexts matched their snapshot-pinned
   master, valid pre-tip completion and team records calculated strictly before the origin. Synthetic
   same-day record contamination and post-tip/mutated contexts failed. This checks only the retained views;

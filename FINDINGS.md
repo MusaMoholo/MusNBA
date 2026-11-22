@@ -2,6 +2,21 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 — process scaling:** on one fixed F4 game, the same **120** independently seeded and audited
+worlds ran with 8, 10 and 12 processes sequentially, one OpenMP/BLAS thread each. Startup- and shutdown-inclusive
+times were **13.938 / 12.841 / 13.263 s**, respectively; all capture hashes, audit summaries and seeds matched
+across counts, and the first 20 also matched the earlier single-process pilot. Maximum individual worker peak
+RSS was **1,041 / 1,045 / 1,046 MB**, not simultaneous total memory. This is one short, shared-machine
+measurement, not an interactive-responsiveness guarantee, a full-run benchmark or real failure-rate estimate.
+Report `20261122_chunk_a_a1_d48_parallel_scaling120_v1.json`.
+
+**22 Nov 2026 — process-parallel restart pilot:** on fixed F4 game `401810327`, one and four processes produced
+identical independently audited captures, accepted seeds and rejection records for 20 control and 20 retry worlds.
+An injected rejection changed only its own world. Startup-inclusive elapsed times were **24.681 s** and
+**11.174 s**, respectively; the sample is too small to establish 10k throughput, real failure rates or selection
+bias. The prototype is not wired into the nightly, and these seeds differ from production's vectorized stream.
+Report `20261122_chunk_a_a1_d48_parallel_pilot20_v1.json`.
+
 **22 Nov 2026 — selected research context cutoff:** the two retained game views `401910029` and `401910030`
 match all copied game-context fields to the master whose hash is pinned by their **22 Nov** prospective snapshot;
 their four team records match a separate reconstruction using only completed games before the origin, and the

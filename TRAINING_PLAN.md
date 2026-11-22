@@ -6,6 +6,11 @@ availability/timing safeguards are delivered. Historical
 M5 results remain in FINDINGS §3g–§3h; current contracts and promotion/replay gates are in §8 below. Progress and scope
 live in [PLAN.md](PLAN.md) and [HANDOFF_NEXT.md](HANDOFF_NEXT.md).
 
+**Compute budget:** on the owner's 14-core Mac, cap all simultaneous heavy workloads at 10 compute
+threads/workers combined, with lower limits under load or memory pressure; see AGENTS.md §6 for the actual
+training/backtest controls and scheduling caveat. This is an execution limit, not a change to model settings,
+validation gates, seeds or training populations.
+
 ## 1. What we are training (ENGINE_PLAN D20)
 
 One LightGBM model per decision, trained on every quarter and game type with period, clock, game state and

@@ -1,10 +1,15 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 80%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **2b53d57** (A1 80%, gated research views); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **3bb3787** (A1 snapshot-context audit); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
+- **Compute budget (owner, 22 Nov):** on this 14-core Mac, cap simultaneous heavy work at **10 total compute
+  threads/workers**, including nested threads; leave at least four cores' worth of aggregate capacity for normal
+  use, and reduce when busy or memory pressure rises. This is not a guaranteed affinity/responsiveness reservation.
+  Follow the script-specific controls in AGENTS §6, including the backtest's internal OpenMP override. The
+  owner-requested 8/10/12 short comparison is a specific exception; run it without other heavy jobs.
 - **Current action:** continue A1 90%: finish representative accounting, restart, cutoff and runtime gates;
   the isolated single-world retry is not integrated or validated at 10k scale, and dated development injury
   reports are absent. Do not equate wiring tests with predictive promotion. **Owner's latest stop:
@@ -53,6 +58,33 @@ The preceding pushed checkpoint was **2b53d57** (A1 80%, gated research views); 
   and deliberate fault **86/108**, exit 1 (`/tmp/musnba_a1_context_{smoke,fault}.log`).
   HANDOFF, PLAN, FINDINGS and README record the audit; AGENTS, ENGINE_PLAN and TRAINING_PLAN need no changes
   (standing rules, design and gates unchanged); DASHBOARD_PLAN needs no change (no shipped behaviour changed).
+- **A1 90% parallel experiment, frozen before implementation:** test a research-only process-parallel isolated-world
+  coordinator using the existing D48 per-world/attempt seeds and typed recovery. Process results in world order,
+  bound in-flight jobs, enforce the same per-world/global rejection caps, and propagate every unclassified error;
+  speculative work must never count as accepted or hide errors. Preserve existing sequential behavior and prove
+  parallel/sequential equality of accepted results, seeds and rejection records across worker counts and injected
+  failures before any engine run. First measure a small fixed F4 engine pilot with independent per-world audits and
+  explicit process count/threads, source/input fingerprints and throughput; do not infer 10k or promote from it.
+  Then decide whether a persisted, audited 10k run and actual-rejection/bias tests fit the measured budget.
+  Different seeds remain different from the vectorised production stream. This is not a change to the nightly.
+- **A1 90% scaling experiment, frozen before implementation:** after the 20-world 1/4-process pilot, compare
+  8, 10 and 12 processes sequentially on the same 120 independently seeded, audited F4 worlds, one numerical
+  thread per process. Report each 12 completed worlds, startup-inclusive elapsed time and per-worker peak RSS.
+  Check every result across worker counts and the first 20 against the prior single-process control. This is a
+  fixed-game throughput/identity probe, not a 10k runtime, retry-bias, memory-capacity or promotion gate; avoid
+  overlapping other heavy work, and do not alter its fingerprinted sources while it is running.
+- **A1 90% parallel results:** the fixed F4 20-control/20-retry world pilot matched across one and four processes,
+  including all 19 unaffected worlds after one injected rejection; times were **24.681 / 11.174 s**. The
+  subsequent 120-control-world scaling test matched every hash, audit and seed across **8 / 10 / 12** processes
+  and matched its first 20 to the single-process pilot. Times were **13.938 / 12.841 / 13.263 s**; maximum
+  individual worker peak RSS was **1,041 / 1,045 / 1,046 MB**, not total memory. Reports
+  `analysis/experiments/20261122_chunk_a_a1_d48_parallel_{pilot20,scaling120}_v1.json`. The 12-process test was
+  an explicitly requested brief above-budget comparison, run after both smoke jobs finished; future heavy work
+  stays within the 10-thread shared budget. These isolated prototypes do not persist captures, measure actual
+  rejection/selection bias, prove a 10k runtime, or change the nightly. Ten focused retry/context tests passed;
+  smoke **108/108** and deliberate fault **86/108** (`/tmp/musnba_a1_parallel_{smoke,fault}.log`).
+  AGENTS, HANDOFF, PLAN, TRAINING_PLAN, FINDINGS and README record the budget, work and evidence; ENGINE_PLAN
+  needs no change (model decisions and gates unchanged); DASHBOARD_PLAN needs no change (no UI shipped).
 - **A1 80% shared-scenario groundwork, partial:** `outcomes.mjs` now adapts an explicitly supplied validated
   research source and binds weighted probability mass, counts, distributions, means, correlations and half-open
   grids to one selected world set. `scenario.mjs` uses those calculations when injected, otherwise the existing
@@ -2419,8 +2451,16 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
 
 ## Next actions — Chunk A in progress
 
-1. **A1 90%:** independently verify representative branch accounting, source cutoff provenance and restart
-   behavior at useful scale; quantify runtime and rejection/selection bias on earlier folds. The retained
+1. **A1 90%:** continue from the tested parallel isolated-retry prototypes in State. Independently
+   verify representative branch accounting, source cutoff provenance and restart
+   behavior at useful scale; quantify runtime and rejection/selection bias on earlier folds. Before a 10k
+   experiment, design bounded persistent world capture and an independent replay/audit, record all attempts,
+   verify inputs/outputs before and after the run, use no more than 10 single-thread workers and compare actual
+   runtime with the 60-minute nightly budget. Do not equate this synthetic fixed-game benchmark with a
+   representative development-fold failure-rate or a successful production gate. The completed scaling probe
+   can be reproduced under a new filename with
+   `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -u analysis/a1_parallel_world_scaling.py --pilot analysis/experiments/20261122_chunk_a_a1_d48_parallel_pilot20_v1.json --output analysis/experiments/<new-scaling-report>.json`.
+   The retained
    20-world synthetic-rejection pilot is reproducible with
    `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -u analysis/a1_world_retry_probe.py --game 401810327 --worlds 20 --seed 20261122 --output analysis/experiments/<new-retry-report>.json`.
    It does not persist the full captures and does not prove a 10k runtime or real failure rate. The branch

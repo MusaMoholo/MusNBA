@@ -1,0 +1,1882 @@
+{
+ "kind": "fixed-game independent-world process-scaling probe; not a forecast or promotion",
+ "game": "401810327",
+ "model": "folds/v1.2d_F4_all",
+ "worlds_per_worker_count": 120,
+ "base_seed": "20261122",
+ "threads": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1",
+ "source_and_input_sha256": {
+  "data/derived/experiments/20261122_a1_s03_f4_game_ids.json": "5d1285db46b129de9da954d9a44c93e03a281d0bc76bfa82ac4a97619da7bcc7",
+  "models/v1.2d.json": "d0fded7eb9871494e0bc4a82a3627b0a3dc37c3c243d8c9378f151dec2789927",
+  "data/derived/variants/matchup/features/pregame.parquet": "499c6151c493152ef6483ac7f4b282ac775b4e30ce1879fec202a0f0f7ceac11",
+  "data/derived/variants/matchup/features/team_pregame.parquet": "3298c6b2ae6d5a6dab44290b9de3629056e88c7404d9ce7be966bd54442dcaac",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+  "data/derived/history/2026/stints.parquet": "29de886d2afd2a5d9a55af2acb027fd3ee83a887584c71a9fe9951a9c2cc225f",
+  "data/derived/history/2026/player_periods.csv.gz": "ef35bb5c33c46e6a194cea30075d9974ead5d44be96c6074b60f6dac49e69c28",
+  "data/derived/teams.json": "130aa5358d49b944c2b5bee7e9a163f1e53285e93dae57262f039ca1636b7ecc",
+  "data/models/folds/v1.2d_F4_all/config.json": "1617769cb52f2c750e0f1276071b39fc21254ef53fc97ccc646869aaa50f5e71",
+  "data/derived/history/2023/on_court.parquet": "ba9b4b13e16e5b839e5530905497d2d00d231413ea40f39ee46855f3ebce8c3b",
+  "data/derived/history/2024/on_court.parquet": "5461947edb052ef9e62b4a70ba49e57a0f98d929f4a19167f03aad3972457f95",
+  "data/derived/history/2025/on_court.parquet": "5bbabab60114aa3f7fa096d7708be96f47177c541debcae88059da6b1adb77e9",
+  "data/derived/history/2026/on_court.parquet": "1b0ffaf53490c3fda4edd28ac427766a0af3a1bfe86f1fece240cd63ed1e8410",
+  "data/raw/hoopr/player_box_2023.parquet": "968d835cd04b10533c5b5af8c0e41bf0154a73782e9446c76f765109223e8679",
+  "data/raw/hoopr/player_box_2024.parquet": "1e500a538ec45ddbcb58d9789b5494f8db4f25658eafd01d90f2d09600921665",
+  "data/raw/hoopr/player_box_2025.parquet": "e89f7fbc1124092c715b722e6d72d9dd1b9d28776ca6888b508fd2831cd705e2",
+  "data/raw/hoopr/player_box_2026.parquet": "29a29dc9efd055a93e069a0382ac830d98a13274bee655beba69d95cff099713",
+  "data/models/folds/v1.2d_F4_all/assisted.txt": "0a094b183b18b8d45a6e5cf047fb117f8aed62dc6941bb9b7944391c3afec690",
+  "data/models/folds/v1.2d_F4_all/assister.txt": "f32c49ac6c7ca5774aad414c5cf500d1b5fd1bbd8fa6c0ddd50ee1934b1d3961",
+  "data/models/folds/v1.2d_F4_all/blocked.txt": "e085efcacd0baea9568f27f7ee05dd43687e7762ba55015d7569cc1efe175c04",
+  "data/models/folds/v1.2d_F4_all/blocker.txt": "5975f284a6c41a013db80fb669230e64dda7167137554bba9051dd04fe4004f0",
+  "data/models/folds/v1.2d_F4_all/duration.txt": "2603f8bf64f3bbef3146285638f79262446eb9a76572c4217f45e6df77dee72c",
+  "data/models/folds/v1.2d_F4_all/event.txt": "d62e1cac4c4fa1cbec0ba5fccc321bae6838202b17253c80a0e8f502395e7e36",
+  "data/models/folds/v1.2d_F4_all/fouler.txt": "70ee6709fcd1fae1ca43ea925babaeb9c9355eaf7e4edeeb601d0cb11c45d266",
+  "data/models/folds/v1.2d_F4_all/free_throw.txt": "ddd7ef48ede7de973c9967b01826f3c293ee824147ca2da772de17a1d781f612",
+  "data/models/folds/v1.2d_F4_all/location.txt": "8f12f8c3bb168ab94dfae313f7624e1ff43074764db665b03ba9511d69c12979",
+  "data/models/folds/v1.2d_F4_all/rebound.txt": "b94d0f957b02d633ca751dff3ef921ffb7e9f57ce6bd206cbba41893ee6f34ff",
+  "data/models/folds/v1.2d_F4_all/rebounder.txt": "337225efb0be006b8889cb377254f6b03c39b356d73d366d3af153ab9133b094",
+  "data/models/folds/v1.2d_F4_all/shot_result.txt": "993fce9f6450e7f317c19e93cadf562db741efa7b58c05d32a8d561ff5f1bbfc",
+  "data/models/folds/v1.2d_F4_all/stealer.txt": "ceea8df151ace738c6181be7615f93fbbebc13cfc434cc371ff8f7566143c581",
+  "data/models/folds/v1.2d_F4_all/turnover_type.txt": "307defe709ae1a8639407d131e28bfabc8eda32bb291a4820113cf3a5b7001d0",
+  "data/models/folds/v1.2d_F4_all/what.txt": "d093989f161b78686804078c07a1d94a629719893085d399465a52314c0de231",
+  "data/models/folds/v1.2d_F4_all/who.txt": "c792950c30a7e7eecec20ab1d12681b0adc574838f2327bbc948213aa574150d",
+  "analysis/a1_world_retry_probe.py": "f23477ae2242bc28c547ccc5a954a5017f4ab3d79aa36967a3365fac36a0f2c5",
+  "scripts/a1_world_retry.py": "7e19b90fa63a5f67168d43f5834c97d486b490ff2bc5c2093ff44c1d366604ba",
+  "scripts/a1_branch_world_probe.py": "25c7820498beaafa7f71c4b349955f2c4cf4e41441ffd47e44ae361aca187b31",
+  "scripts/a1_branch_foul_out.py": "ee501eab70755921771a0888e7ee5820ce64c821f4283c87f33618a0b400eca5",
+  "scripts/a1_lineup_branches.py": "1b2c3ea7ff3172566d664c7fcc6b7fd5cb0f421c4d5453ff84a609311c23c76c",
+  "scripts/engine.py": "5431df17caac031eb051fc80968496366cb8d4d6915fc123db35f94ee9d9f339",
+  "scripts/backtest.py": "2ff491455b5c1cac40b5c3502db97bcb4cdbc159e4f0fa494c09e7c5eb24533d",
+  "scripts/minutes.py": "94dd0ed25e536708c75cd4cf1f386bf2f9fa35f2c334d83cbdd031d4448ba2d0",
+  "scripts/projection.py": "d93dce7ebd84f5d433897ad83177673c8bd122816ea3e14b5a67618bd6dc6406",
+  "scripts/a1_substitution_world_audit.py": "d1f1b34834ffe6c9d82b246cbbaed453c6a4eea224e47da020c6e0f02d3cdf4e",
+  "analysis/a1_parallel_world_probe.py": "27493bdc2b52a538d20c43f12f84ba06789b0824371525ff4b3b47d7c231eabd",
+  "analysis/a1_parallel_world_retry.py": "6a2c8e51b0dbf25f75cead2bc30fc36694f6a9ed2787856e583a2ae92fae7d80",
+  "analysis/experiments/20261122_chunk_a_a1_d48_parallel_pilot20_v1.json": "666ab9650e92ab45b2596472eca6d2065ce523e5826acb3422ad3b12521a598b",
+  "analysis/a1_parallel_world_scaling.py": "ef0acc0eda713d902ec0d1b9e482edaa33c769ab0a89562e8cf3e779709c59f8"
+ },
+ "measurements": {
+  "8": {
+   "seconds": 13.938,
+   "max_individual_worker_peak_rss_bytes": 1041154048
+  },
+  "10": {
+   "seconds": 12.841,
+   "max_individual_worker_peak_rss_bytes": 1044922368
+  },
+  "12": {
+   "seconds": 13.263,
+   "max_individual_worker_peak_rss_bytes": 1046183936
+  }
+ },
+ "seeds": [
+  "7670511118652952252",
+  "1415220768911242514",
+  "1768439139339038499",
+  "8596897865820436704",
+  "17252999677758840925",
+  "110143542403202897",
+  "14943930705197505584",
+  "15608515153573409744",
+  "15948931454537728537",
+  "2986025332036386856",
+  "2189796715871894290",
+  "13602621816047172306",
+  "3113881159571102014",
+  "10588452130947232648",
+  "9055324000010147748",
+  "12756495180027527450",
+  "17910556394549140858",
+  "2080960750769812299",
+  "17996423204662689139",
+  "3772832647534147461",
+  "14790353140754219056",
+  "7635436513515169602",
+  "1279342065899564492",
+  "6630764717052885323",
+  "15008466811044382077",
+  "3881944303756713549",
+  "1160883415655487531",
+  "11485654068030274635",
+  "2434897591824934393",
+  "1679954730061510734",
+  "8854801124859918098",
+  "13826796386656872435",
+  "12228478591921325000",
+  "16722392752251519",
+  "2985171532792125635",
+  "4489803772882253368",
+  "7645113265066114898",
+  "17888694950883240511",
+  "2337205585415957741",
+  "12880986089931717715",
+  "10674322053664177158",
+  "86053388166125486",
+  "7908026178171770475",
+  "15057964535811896078",
+  "8832431635434850610",
+  "11290134570225548241",
+  "10467799275539108516",
+  "18010601149413286408",
+  "8557083123662020391",
+  "3471668665973846228",
+  "13636592055484329909",
+  "9527707779562051471",
+  "15550712099453938015",
+  "18193757974584784374",
+  "1623876158730517186",
+  "8686700019029789016",
+  "11866717368404164805",
+  "4935604618953232471",
+  "2467408590237929422",
+  "5474261978593263495",
+  "11428868460444549449",
+  "1888984920547638517",
+  "11168812466422552709",
+  "17590162483995619673",
+  "6125913071464116450",
+  "9164430581466582776",
+  "1528842060356693438",
+  "13929912300983113935",
+  "10792433824344117575",
+  "3731399649864128935",
+  "11738228151772603782",
+  "13052527495395909183",
+  "17705378119698130051",
+  "10304015546022929490",
+  "10432643562289399340",
+  "11208079123298602330",
+  "13472218385894156403",
+  "8625477442042049425",
+  "10945765597955337881",
+  "6412409276439721939",
+  "1159454967283802095",
+  "11357165108376717311",
+  "6163219509155352473",
+  "2416801209823441557",
+  "7828362398173514003",
+  "2535005719654979331",
+  "4765347284615456657",
+  "208832695950702523",
+  "12930063411705505791",
+  "5873960944146105977",
+  "4322463963924665532",
+  "3018092090212456428",
+  "2269821204363914410",
+  "7964579599713316348",
+  "890662461022371911",
+  "13539361073742847970",
+  "14583805308933836065",
+  "15231132842097172764",
+  "9014360451649175443",
+  "6785280334783215733",
+  "7656643098638077184",
+  "1685866710373318497",
+  "14730787879078904734",
+  "3475881728458371957",
+  "603049168808220960",
+  "16593600606703059581",
+  "8362818409339545178",
+  "3816816971520824958",
+  "11399055637868813782",
+  "13383226555949255745",
+  "8884028619338339035",
+  "3340374230345718647",
+  "15549830509909565919",
+  "3886030969010490627",
+  "5278790921863606698",
+  "14523131205539468627",
+  "1095314300441699482",
+  "12775562535325044434",
+  "9270093047625891466",
+  "15351894293622911156"
+ ],
+ "worlds": [
+  {
+   "world": 0,
+   "capture_sha256": "3a15cd724a4f4c801f70d3afd971c7342688afcee3556d5a80db5efad4ebdb33",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 274,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 548,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 1,
+   "capture_sha256": "14fe07fc76eb07d96c5c52c249e56cbe9f8f5c7fb890cc4950f30da255b9e0e6",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 247,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 494,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 2,
+   "capture_sha256": "091ad2d4e43250c0add4dc4fb55f880126d09913cce2dd4d77d1687a6c54ba00",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 251,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 502,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 3,
+   "capture_sha256": "c1f7cc980b5ce18fa419afc4b752973a94e3e9904aefb8550ec2e79b6468e417",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 255,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 510,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 1.7763568394002505e-15
+   }
+  },
+  {
+   "world": 4,
+   "capture_sha256": "9211e515f4ce118ffc8fc64025a8c4ab5d8221a4630ca476685c6d56dad3a6b1",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 237,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 474,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 5,
+   "capture_sha256": "b6215add94ce2025ab673b28c1682c08391c39d522454e745bebe6071c396772",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 277,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 554,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 6,
+   "capture_sha256": "020e663c67476354d0a43d0dd0aedab3e627edbc933543c5801d403b703eaa56",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 255,
+    "post_foul_snapshots": 3,
+    "lineup_fives_checked": 510,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 7,
+   "capture_sha256": "cd60f6a5ebb42269cf853bcfae51adc665f46b4c501e9c895333bbc5eabfefb1",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 257,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 514,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 8,
+   "capture_sha256": "19f9d48ed7750000fe62ece3b2980c2ade8b73171b7df5d81803e5983b0d23be",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 249,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 498,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 1.7763568394002505e-15
+   }
+  },
+  {
+   "world": 9,
+   "capture_sha256": "28eb31511a1908c8bc29fd66f29fc6d17f0a34d819a7ffe23a31d1fbfdf7134f",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 254,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 508,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 10,
+   "capture_sha256": "c82918a90f3aef242753d18ad1ecf3f00a500b2b775a9802472c723833da2150",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 254,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 508,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 11,
+   "capture_sha256": "27c1b8adc6b0f9e143e07ffe27b075732dbc9ea40f33e1abc16d0684155dd1b0",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 258,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 516,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 12,
+   "capture_sha256": "99603b1d36becce1c361b94b4ee1e903a3cbe69bbbcfb59c6fc620870c19741a",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 262,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 524,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 13,
+   "capture_sha256": "b95a941c58144a04f1e149a6b530a87a54b75e70a533e2d29af9ecb9b104e710",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 255,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 510,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 14,
+   "capture_sha256": "c908eb94fabb3a0ff5d0cd0a6f7461d45bdc5cc0bf5d68578137354c034a06b1",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 257,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 514,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 15,
+   "capture_sha256": "51ad7325ef6f5ec8ac1e776937387ebdb98b59157db5c3e8eb4a177c98e24dee",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 248,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 496,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 8.881784197001252e-16
+   }
+  },
+  {
+   "world": 16,
+   "capture_sha256": "84b41aabf81c901e121128aec5030249fadfe76c0c60ffe8dbc29d2d1c1909e2",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 243,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 486,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 17,
+   "capture_sha256": "9b17bfdd7d65f513bd0743e48785282bae493f9f04bc88bee2adbfd3002f2520",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 257,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 514,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 18,
+   "capture_sha256": "a56a5094db0d1a8065da940b85664fbb1453bba6cc414b55dba5c4f3b896400c",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 259,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 518,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 19,
+   "capture_sha256": "33cd9374d44ce8bea4894eef6e0b6d6f854458c923814f5004f83b095d6162ba",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 254,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 508,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 20,
+   "capture_sha256": "4432531082f2dc649a6f9ded07452826544fdff0285d63c598f0ed4550321b25",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 259,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 518,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 21,
+   "capture_sha256": "ea1268c58b29115bb6f38cf13a6d11df65dcc343c35287d9c4d2f865ed92db07",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 253,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 506,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 22,
+   "capture_sha256": "62c09864936693e72950e8f980a3f3e4bc3ad21b3f9981aa6744439bf0e417a8",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 259,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 518,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 23,
+   "capture_sha256": "a8048db83dc53dfb09fbefc5ed5046b9ab75c69e1e70cdf489be63142a485303",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 253,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 506,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 24,
+   "capture_sha256": "ff26165a4f57c5f018708428066a1bbaa8ebfd09a95443998bc7e20231e26365",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 257,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 514,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 25,
+   "capture_sha256": "35a32bd34bcb1792b9c48b04e8a1ab6b08b05f84c96bc31912cb8feb7c5dc4b7",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 247,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 494,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 26,
+   "capture_sha256": "d960998cc0dfc9f8ea6f4fe0ec8535334b46ca221fdecfd99a1b0509f786ece1",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 240,
+    "post_foul_snapshots": 2,
+    "lineup_fives_checked": 480,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 27,
+   "capture_sha256": "d76c18872b38c8cf2fe8e7820a8106a033da95d59295706a4c373a566ddf00f2",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 242,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 484,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 28,
+   "capture_sha256": "628a4abcf7b6862862993842fd91245c31a0f37bd438a0e8b8288d2b43e2b27e",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 249,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 498,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 29,
+   "capture_sha256": "217d09aedff03ad4308707d0c2369f54248ed21424d661407491414a3c1659c3",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 255,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 510,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 30,
+   "capture_sha256": "fc7f89f08a5ee460e1ac3cf69ef09e755015f9f79d0da445c144fa995486b274",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 260,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 520,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 31,
+   "capture_sha256": "8abfd359b4dc9141d54736183dc10e0f3170fb9ac3c01e3b8b9b05dd3e4a03cc",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 280,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 560,
+    "overtime_worlds": 1,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 32,
+   "capture_sha256": "6c38ef48122a07e65816097f6fccd08b4e97aa3ffc87598465dc99eee2c9757e",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 258,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 516,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 33,
+   "capture_sha256": "53d37a62c170c7d72c97b6140259bb20ced633e3b4638ca3b98cd9eca863f24f",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 256,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 512,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 34,
+   "capture_sha256": "2963c9a9833e6dd91def61308b90db89a7a5eea4971d51463314f386e7397055",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 244,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 488,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 35,
+   "capture_sha256": "cccd125dda2a1883cc776c7e8d21b8607ff4e5babbe31cbf0f0ae9d22f4cd7db",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 262,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 524,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 36,
+   "capture_sha256": "eb57b0b2f209fbe572f224109ecf2d08641bd0ce2bf861faa46ef2ee5e26a5ce",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 278,
+    "post_foul_snapshots": 2,
+    "lineup_fives_checked": 556,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 37,
+   "capture_sha256": "dae14b490a6273b077cf3a7ef61930385caed95d06639926c0d1c19867260233",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 245,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 490,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 38,
+   "capture_sha256": "ba453a6f3d67aa2cf8275059bdf4adb599770efd445ac0cdc1a49bc1c07af051",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 262,
+    "post_foul_snapshots": 2,
+    "lineup_fives_checked": 524,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 39,
+   "capture_sha256": "410973e6653721a79f011fa21cbf749930a3543e12e95584a09690b0f0350015",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 244,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 488,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 40,
+   "capture_sha256": "946e8038a3039bfee60d21913c58c20b36ac0115e28a52ad1ac56c82f83e943e",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 247,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 494,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 1.7763568394002505e-15
+   }
+  },
+  {
+   "world": 41,
+   "capture_sha256": "00404c1ff2677779ccec9436c6856865e37e5b823ed33f81ca6f8d5d50f67a50",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 266,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 532,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 42,
+   "capture_sha256": "f47b298edc1218f70faa7c9d787876a7b81ae6feab59ddac3fd04094292daed9",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 245,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 490,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 43,
+   "capture_sha256": "0d6c00c9eb942337fe8318089acec29b004398a1be86f25cb06db46e1303cfec",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 250,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 500,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 44,
+   "capture_sha256": "a78af513f82de7d970bba3e22147eec0aeb9b9f2580a57a2f52e33429e9c4871",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 256,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 512,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 45,
+   "capture_sha256": "2e52387b873e34aac9a764ebc8291a6ac1921f397d80a2fe38d2001b09b6510c",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 263,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 526,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 46,
+   "capture_sha256": "d35a01d2800f56daea104b4a6402ac4beafb78c31351c24e0a03632f76087aa9",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 258,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 516,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 47,
+   "capture_sha256": "deee8f1809e4bbeffa9fc30c5eca8dad848c7d65448995478835b127e0cdab70",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 250,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 500,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 48,
+   "capture_sha256": "14d84f1f68f20e1ed9c71e1b5a3f9c1406cdc53aebd74dab03e4c75f031151cd",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 236,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 472,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 49,
+   "capture_sha256": "f8f3e08ca74025848494b81cce95e0713b94dc564b71a1e6f0b1e4696d80bdb2",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 248,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 496,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 50,
+   "capture_sha256": "7c49054079ec157ec50973cde032a958842fdc75b9e3677ac61c0254ed393c2d",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 264,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 528,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 51,
+   "capture_sha256": "cab254fa2febd29b6017e8e80c147781d79899b9dd56b1fe6cddb05283db51fc",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 266,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 532,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 52,
+   "capture_sha256": "98413fa26cb81623ac35f1c2fc039a2986798d1040cf6e544407297d4fab7630",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 256,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 512,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 53,
+   "capture_sha256": "547a4f992f614e871b311e126c92960381a988c9a71e148d94ce61b656dee58f",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 251,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 502,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 54,
+   "capture_sha256": "3df3cbaa19b41b207941d4f00ee5b29a29164a7d735fbe41ab1dc94b8cd11867",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 256,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 512,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 55,
+   "capture_sha256": "79cd3b78fb2d96f15a2482a052b1ddbcefe8c386ef28191808eaa6ad8afe08da",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 262,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 524,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 56,
+   "capture_sha256": "8732677147329247a45a144bd14caf34c765ec94f758199c2834a39fdcee94a2",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 242,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 484,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 57,
+   "capture_sha256": "7fbab7322e5da086d85010ee0b6bf93514c26fd7e064d20c82ae5dcca285eb3f",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 245,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 490,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 58,
+   "capture_sha256": "6bfe2876f6abe0fbe06e3c6575506630a88a81bf57a6f4ab8ae52e07a22dd9d5",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 256,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 512,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 59,
+   "capture_sha256": "21211e0a6e7459e8c836a4b1f481dbffcbdbf9e202282cc01691adb10161ec43",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 269,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 538,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 60,
+   "capture_sha256": "f14a52f1d9c713c1b73704fc56a1a26df32a218b39597771661d4f004e45d0cf",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 258,
+    "post_foul_snapshots": 2,
+    "lineup_fives_checked": 516,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 61,
+   "capture_sha256": "69cf3eac1283685df7849ebec215f2ecc5f4fb82731f17b36a623a93071c5865",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 259,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 518,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 62,
+   "capture_sha256": "c4c7fe7173650e7929beb04cc7e65da9845daebdd83ddebabd6e69a8966a68a7",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 243,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 486,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 63,
+   "capture_sha256": "3709397425e56ddcd55f79b9c1d54eac72071c3cbba6b7ecd1dcbf9f2ae58ead",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 249,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 498,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 64,
+   "capture_sha256": "d427b08173a62bdb5bce9843afdbacd5459f52659f8ae0ad6531cafc6c688d6e",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 260,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 520,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 65,
+   "capture_sha256": "4acb0793137d870a275bca18cd029cef5b6ef814ee43ccd14ef5ea042877902c",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 257,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 514,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 66,
+   "capture_sha256": "9ab35c8fd094ec6472c9fcad5ad22f9e4790a4c2d4747c2496013eb60a3178d7",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 277,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 554,
+    "overtime_worlds": 1,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 67,
+   "capture_sha256": "aae387371a48e64536f03ddeab5b54b1239904dbf759d7133b7e5808996c3ba9",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 260,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 520,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 68,
+   "capture_sha256": "a9943fe85f753f99ede64199618c768efb2a82c74ca3b31f0b6c1508ec242cf4",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 257,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 514,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 69,
+   "capture_sha256": "3be0b77299bc6c321b6bcb32494e0d4feda78d3c1a768f31924fe4d3b2abeb6f",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 250,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 500,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 70,
+   "capture_sha256": "7087d1687110b93837fa92a310d45349f6941d9e703e8a7876d3d5b2a7dde9e2",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 248,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 496,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 71,
+   "capture_sha256": "2794497ec683bc68cf96adaabbd5795d1e26e96e0940f156e42643da66e15f26",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 254,
+    "post_foul_snapshots": 2,
+    "lineup_fives_checked": 508,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 72,
+   "capture_sha256": "88f3601360794f9cbe6856181ba72e4df6aa90850ffc510550866d93eefcde2e",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 249,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 498,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 73,
+   "capture_sha256": "8be71f60dd4419d78a9b1fe06d24f573d4eb6b40d607dbc8fd81bbf3e9c43ad6",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 282,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 564,
+    "overtime_worlds": 1,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 74,
+   "capture_sha256": "c63f30085482d4cb110f9a0790f5f8bfb5b0195cb377b29a12193529f3f49499",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 259,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 518,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 75,
+   "capture_sha256": "b39f02db74315676c55f8aae6f38db24f5aad6677118fe6da8254d5c7932f15d",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 246,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 492,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 76,
+   "capture_sha256": "a8538b3de1dc401495e06db5e7c67ee42ae03f6171c9a8446bce7cf93154d819",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 252,
+    "post_foul_snapshots": 2,
+    "lineup_fives_checked": 504,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 77,
+   "capture_sha256": "8f1f8a031f6b87acddccca021e264ced62915fb39041f5a8c76d83ba7e2a53d9",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 244,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 488,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 78,
+   "capture_sha256": "5979ea930773d442d665da97e97621a4026e6efde1c001a7894a319cbc243ad1",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 251,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 502,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 79,
+   "capture_sha256": "81489a08a05aadc763f13983be288eeee4f916388dd17966f064213c52c89ebe",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 255,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 510,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 80,
+   "capture_sha256": "5ee827014af8a61a45bc45d5237312245d6bb9c4fd4147d7c87ec1acd43180d5",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 253,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 506,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 81,
+   "capture_sha256": "b4a1169d75e6f94bba4967bce9802ca5d21aabc8db29c519bed95a98ee08beb0",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 256,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 512,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 82,
+   "capture_sha256": "c57fe879b5585718c120e612e29ccef70464d6833d5ef9b03670c7f88690dad6",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 264,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 528,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 83,
+   "capture_sha256": "5217d3517d08643f195bc9b60071a84e71182663e98414276d5973480e0b0fe8",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 247,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 494,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 84,
+   "capture_sha256": "f878f752e96b1bb0bf4f8ba710b0bff70b43dfded2436f01ea65e5b24f325b55",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 265,
+    "post_foul_snapshots": 3,
+    "lineup_fives_checked": 530,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 85,
+   "capture_sha256": "2d2fcc0e53a8f08f12e34b691c634b1a38be3e9849b813b8e53eb8e62b9e58e8",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 244,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 488,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 86,
+   "capture_sha256": "7cf28930067f87a7a73a4b880bc2d42e0672c8f9bfd643cffde8fe8181b4e654",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 268,
+    "post_foul_snapshots": 2,
+    "lineup_fives_checked": 536,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 87,
+   "capture_sha256": "2f528fdf0dc4b56d155c4b4a61db2f6e01f7f6ef4b38792f0a62b0a153b3c6a9",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 262,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 524,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 88,
+   "capture_sha256": "1616a0c068530c7f09660a91cd7c6c89fb247f9b315c9bd1c145809708fcca5b",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 244,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 488,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 89,
+   "capture_sha256": "07d8007045a3760023babaf9507ab64b495130136a6ecff2af5a8fca40de82c4",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 264,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 528,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 90,
+   "capture_sha256": "90cce3acde9092729d4f3583872618bf7904b45cd9f682140213d2c9089b9d1d",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 248,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 496,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 91,
+   "capture_sha256": "a1a4409311aea471f2b0a98815374029bbd85ecd3cd13624a017b4ac78c0df1d",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 254,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 508,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 92,
+   "capture_sha256": "4b54b1a67bf6e3ed53a902c11cbe18b8796c36f0879314f4b31efba149bd62b2",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 254,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 508,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 93,
+   "capture_sha256": "5ddf5ec1c10d45cc9892fbb26a4b70ab4a48ade4fb2286728603897fae3f7c87",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 246,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 492,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 94,
+   "capture_sha256": "f273584bb64f498fc51ba7f366a8c85c6ec51c453e9d75316448017675e285da",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 252,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 504,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 95,
+   "capture_sha256": "aa1859f78d8d077baf39faabd5861841ce57fbab92da698361c60fdbb198f05e",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 251,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 502,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 96,
+   "capture_sha256": "cead5dd85d985bb2735557d2840331b3c5c46b636f8acedb6e8eaa1be7765852",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 250,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 500,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 97,
+   "capture_sha256": "3fddcffd912e70bf04949747476abde61ab16f07b6e91051924dd144ac357081",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 263,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 526,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 98,
+   "capture_sha256": "a088a2ae3bf7fc7f1c4b839d5ccfb8c96c451b8126bc8c6cd06ff8c7ddf64f28",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 253,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 506,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 99,
+   "capture_sha256": "3d174355d04cc48e26d1c4e970100335b28d684174a570a9f25f19bb959011f5",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 254,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 508,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 100,
+   "capture_sha256": "fe35b894af702c31d57c0f6336b5b14eac84efe5167b9e6b8191b417a4e4b059",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 264,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 528,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 101,
+   "capture_sha256": "12b1efc7031b4a1bc9cabfcb8bfa8e48d57cb7541cca8d52af5cf6477ccd38c3",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 263,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 526,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 102,
+   "capture_sha256": "6d9843f32ea0c944093a5d04ea82e41e360910bb34cb96d78e1e073d03e5750e",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 255,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 510,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 103,
+   "capture_sha256": "f46d6705b11a7badb8766a8cc9e3540656cb26754edaa45842e599f27389d04b",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 247,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 494,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 104,
+   "capture_sha256": "6f9df9f9b43fa95539c64d01760db1cebf1ad435304e2b8485ef4c59eba126f1",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 245,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 490,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 105,
+   "capture_sha256": "f0c0a36d7742af6dfcd2eea13927a26ce107faeabb04700278f0159283a45b65",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 248,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 496,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 106,
+   "capture_sha256": "3c395e417db0d55f2c5fb654f9a3c8954114b1ffa53788e833ea80fc8debc4d4",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 254,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 508,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 107,
+   "capture_sha256": "c5e330e33d1c655c302286e3f65fc97563346e9c1ee368d8c8591970376f184f",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 257,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 514,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 108,
+   "capture_sha256": "58efa10e20766d03b3a300b414d56c455008fb6eaf6e654d1c211990972e0498",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 255,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 510,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 109,
+   "capture_sha256": "90423e4872c60b4babf52b884fb4842876dc7fa9d08448d6ea3ad5c31c412b51",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 254,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 508,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 110,
+   "capture_sha256": "136852360a56a35475ec2975ede10995e299f283cf056c73baa11b7f658ea25c",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 238,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 476,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 111,
+   "capture_sha256": "e5c98d66434dd16297c07c2401391bd12007f236b1a09d49af3ce5bc74495d70",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 258,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 516,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 112,
+   "capture_sha256": "cb2a300d67b3321d02a8dd770caf747483b45913b33eb70c4d19a96d50c810dd",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 258,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 516,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 113,
+   "capture_sha256": "2c19c57d80f07fb29505b56718e49c698f5d0d8f815e3765c2bcd55a34ecdc85",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 260,
+    "post_foul_snapshots": 2,
+    "lineup_fives_checked": 520,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 114,
+   "capture_sha256": "53dc8c22be7ab77cbe753aff8cb49860344e557166ac10df96c6976030d37919",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 254,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 508,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 115,
+   "capture_sha256": "a9c758defc1996b7b1394e822d843b01960d80b6cbd5b26cafa7cb9af8725888",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 261,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 522,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 116,
+   "capture_sha256": "ce3a0508df5ec0c6cc8e67e2e3d8a517d9665d61f070a477dc022d545842fbd7",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 258,
+    "post_foul_snapshots": 2,
+    "lineup_fives_checked": 516,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 117,
+   "capture_sha256": "32bbf04849a8840bf46403fa859beecfe62c13801437e686187c076b87e20432",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 300,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 600,
+    "overtime_worlds": 1,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 118,
+   "capture_sha256": "9a649501ea3faceca77bcfaad5a4c6b7aad65b0a312b4590ef0c8d147e374768",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 250,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 500,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  },
+  {
+   "world": 119,
+   "capture_sha256": "252e0369c923a40c4290ce1d28107ac510e20c92086d1665472316234a054b87",
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 250,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 500,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  }
+ ],
+ "limitations": [
+  "No rejection is injected or measured in this scaling probe.",
+  "120 worlds from one fixed game are not a measured 10,000-world runtime.",
+  "Per-worker peak RSS is not simultaneous total memory usage.",
+  "Audited capture hashes are retained, but captures are not independently replayable.",
+  "Independent seeds do not reproduce production vectorized streams."
+ ]
+}
