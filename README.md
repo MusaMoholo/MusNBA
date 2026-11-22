@@ -10,7 +10,7 @@ or phone.
 > from games before the origin; 10,000 worlds per game, one rotation table per world; the floor for later improvements, D22–D24); every later game from the **team pathway v1**, where
 > each simulated season carries its own team ratings and updates them after every game (D25). Past dates rebuilt after the
 > fact currently use a labelled placeholder. U1–U22 and public Pages/iCloud delivery are complete. Accuracy chunk
-> **A1 (14 tasks)** is underway at S01; versioned, cutoff-safe engine history remains planned.
+> **A1 (14 tasks)** has completed S01; S02 is next and versioned, cutoff-safe engine history remains planned.
 > See [PLAN.md](PLAN.md) and [HANDOFF_NEXT.md](HANDOFF_NEXT.md).
 
 ## Setup
@@ -151,6 +151,7 @@ Rebuild in order after new data: `scripts/history.py` → `scripts/possessions.p
 .venv/bin/python scripts/backtest_compare.py <run A> <run B> [--log NAME]   # paired: player tiers, loading, margins, CRPS
 .venv/bin/python scripts/a1_compare.py <control-run> <candidate-run> --output <new-report.json>  # strict A1 paired intervals
 .venv/bin/python scripts/a1_manifest.py --output <new-manifest.json>    # freeze selected games, seeds and hashes
+.venv/bin/python scripts/a1_manifest.py --output <new-manifest.json> --control-run <run> --seed-run <run>  # final seed floors and provenance
 .venv/bin/python scripts/a1_quarter_audit.py --output <new-report.json> # validate quarter actuals against raw scoreboard
 .venv/bin/python scripts/a1_output_audit.py <run> [--reference <legacy-run>] --output <new-report.json> # output accounting
 .venv/bin/python scripts/a1_availability_cohort.py <control-run> --output <new-report.json> --rows-output <new-cohort.parquet>
@@ -177,6 +178,9 @@ comparison uses the preregistered pre-game tiers and fails on unmatched games/pl
 participants without player-box outputs separately rather than treating missing outcomes as zero. It reports intervals,
 not a Holm-adjusted promotion decision. Its win scores use unmodified empirical probabilities; a realised winner
 assigned zero probability is reported as infinite log loss rather than given the legacy scorecard's boundary safeguard.
+The final S01 manifest fingerprints the exact control source at commit `c6d5db4`. To reproduce that byte-level
+check after later source changes, use an isolated worktree at the pinned commit with the retained `data/`, `.venv/`
+and `exports/` available; the current seed-list type annotation is bytewise different but behaviorally identical.
 The separate prior-box cohort is inferred membership, not official rosters
 or a validated availability forecast; unlisted and zero/missing-minute cases remain unknown. Historical availability
 and first-season/assignment cutoff limitations still apply.

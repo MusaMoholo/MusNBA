@@ -268,8 +268,9 @@ licence to discard an inconclusive interval or to lower the registered harm marg
 Win Brier and log loss use the empirical simulated probability without modification. A zero probability assigned to
 the observed winner has genuinely infinite log loss: the report marks it explicitly instead of inventing a finite
 value or an interval. This differs from the legacy backtest summary's numerical boundary safeguard.
-The second-seed result, exact confirmation IDs and 10k subset are recorded; the final reproducibility manifest remains
-S01 work in progress.
+The second-seed result, exact confirmation IDs, 10k subset and reproducibility manifest are recorded in
+`analysis/experiments/20261122_a1_manifest.json`, pinned to source checkpoint `c6d5db4`; the later seed-list type
+annotation preserves the compiled function and all 3,036 recorded seeds.
 
 #### S01 population separation — 22 Nov, before availability candidates
 

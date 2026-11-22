@@ -106,7 +106,7 @@ def select_games(eligible: np.ndarray, count: int, seed: int, ids_path: Path | N
 
 
 def simulation_seed(version: str, day: str, gid: str, stream: int | None = None, seed_key: str | None = None) -> int:
-    parts = ['backtest', seed_key if seed_key is not None else version, day, gid]
+    parts: list[str | int] = ['backtest', seed_key if seed_key is not None else version, day, gid]
     if stream is not None:
         parts.extend(['stream', stream])
     return projection.seed_for(*parts)

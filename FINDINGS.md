@@ -851,7 +851,7 @@ Repository/code audit only; no new model experiment or final-test scoring. Basel
 - At the planning checkpoint dashboard U1–U22 remained complete and A1 was **0% implemented**. D37 rejects specific
   defence variants; it does not establish that defence gains are impossible. No new gain is claimed here.
 
-## 7. A1 S01 baseline audit — execution underway (22 Nov 2026)
+## 7. A1 S01 baseline audit — complete (22 Nov 2026)
 
 No candidate has been fitted or selected, no final-test outcome scored, and serving v1.3/pathway v1 and the PWA
 bundle are unchanged. The fixed pool-0 panel uses actual participants and projected, not actual, starters.
@@ -865,10 +865,18 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   (**23** in 2024–25 and **22** in 2025–26); no files are unindexed or referenced files missing in those folders.
   At ET 21 Nov, retained/eligible counts were **0/1,320** (2022–23), **0/1,319** (2023–24),
   **573/1,321** (2024–25), **1,322/1,322** (2025–26) and **0/235** (2026–27): **1,895/5,517** total.
+  The 22 Nov manifest/file inventory found season-log counts **12/12/12/12/6**, matchup counts
+  **1,320/1,319/1,321/1,322/235** and tracking-defence counts **636/624/642/636/90** in those same five seasons;
+  across these endpoints and PBP, no retained gzip was unindexed and no manifest referenced a missing gzip.
   Missing timestamps cannot be reconstructed as fact. Test and fix all affected fetch paths before resuming history.
   A separate temporary-store test interrupted `fetch_logs` after one successful request: its manifest was not flushed,
   and resume reconstructed that retained file with null URL/time. The exception surfaced normally. The season-log path
   also needs a `finally` flush; this reproduction does not establish the cause of any existing metadata gap.
+- **S02 preparation, ESPN raw inventory:** all eight retained 2022–23 through 2025–26 hoopR parquet files match
+  their manifest byte counts and SHA-256 values. Their play-by-play unique-game counts are **1,321 / 1,320 / 1,324 /
+  1,325**; player boxes cover **1,321 / 1,320 / 1,324 / 1,326**. The sole set difference is box-only game
+  `401810469` (25 box rows, Clippers–Bulls, source `game_date` 2026-01-20); the mapped NBA play-by-play file
+  `0022500614` is retained. This is a raw-coverage gap, not evidence that the ESPN file existed historically.
 - **S02 preparation, matchup batching:** `matchups.mu_columns` fills an all-missing five-defender metric from the
   entire batch. In a synthetic two-row test, changing only an unrelated row's defensive FG value from 0.4 to 0.6
   changed the missing row's `mu_fg_rim` from 0.4 to 0.6. Dataset batches can therefore borrow held-out/future values,
@@ -949,4 +957,8 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   upstream-build inputs and the local bundle. All **67** original input fingerprints were independently unchanged.
   The separate 20-game 10k stress set deliberately spans five OT, five short-roster, five close and five blowout
   games; its **26 star player-games** do not meet the 100-player-game tier gate. It is not a representative sample.
-  The full same-input independent-stream noise estimate is now complete; its reproducibility manifest remains to be pinned.
+  The full same-input independent-stream noise estimate and final manifest are complete, pinned to source checkpoint
+  `c6d5db4`. After a type-only seed-list annotation, all 13 inspected semantic code fields and **3,036** recorded control/
+  confirmation seeds match that checkpoint. Raw bytecode SHA-256 is
+  `aa7233f20022d729a98acf25cb1b321678a83a3cfa33167ffc12f7b86db7e8c6`; a prior marshalled-tuple digest varied across
+  processes and is not a valid equality test. No candidate has been scored.

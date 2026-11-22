@@ -1,11 +1,11 @@
 # Handoff — state and next actions
 
-Updated **22 November 2026 — A1 overnight execution, S01 active**. Dashboard U1–U22 complete and published.
-Base checkpoint **86c2a46** (dashboard close-out); the planning checkpoint is the latest `git log --oneline -1` entry
-named `Plan A1: 14 accuracy tasks, versioned season history and durable checkpoints` (**00a0731**).
+Updated **22 November 2026 — A1 overnight execution, S01 complete; S02 next**. Dashboard U1–U22 complete and published.
+Dashboard close-out checkpoint **86c2a46**, A1 planning checkpoint **00a0731**; S01 partial source checkpoint
+**c6d5db4** is committed and pushed.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
-product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01 is active at
-80%; A1 overall is 4.8%.** No candidate, model promotion, forecast or PWA change has been made.
+product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01 is complete;
+S02 starts at 0%; A1 overall is 6.0%.** No candidate, model promotion, forecast or PWA change has been made.
 
 **Use the app:** https://musamoholo.github.io/MusNBA/ — data-free GitHub Pages, source branch `gh-pages` at **e302d27**.
 iPhone: Safari → Share → Add to Home Screen → launch the icon → Offline data & installation → Import data.
@@ -24,11 +24,15 @@ Earlier snapshots/shells/bundles archived in `~/Basketball_archive_ops`. No fetc
 **1,566 s**, with log `/tmp/musnba_a1_s01_seed2.log`. Their independent accounting and paired-noise reports are
 `analysis/experiments/20261122_a1_{control_accounting,seed_accounting,seed_noise}.json`. Existing serving artifacts are not touched. Review/test
 servers are closed; owner's :8766 remains untouched.
-Before the partial source checkpoint, smoke passed **102/102**, `--fault` deliberately failed **22** checks (exit 1),
-all **15** focused A1 tests passed and the local bundle hash remained `3055d277...e5abd9ecf`.
+At the S01 checkpoint after the type-only annotation, smoke passed **102/102**, `--fault` deliberately failed **22**
+checks (exit 1), all **15** focused A1 tests passed and the local bundle hash remained `3055d277...e5abd9ecf`.
+All eight root docs were reviewed: AGENTS needs no further change because its scoped overnight authority is already
+in `c6d5db4`; ENGINE and DASHBOARD only need status updates because no model design or app behaviour changed.
 NBA Stats pbp history remains paused: **1,895/5,517** logged games dated before ET 21 Nov are retained; **3,622**
 remain, including 235 current-season games. **45** retained manifest entries lack their original URL/fetch time.
-Do not invent those fields. Start your own :8767 server for checks.
+Do not invent those fields. All eight 2022–26 hoopR parquets match their manifest hashes/bytes; ESPN game
+`401810469` has 25 player-box rows but no retained hoopR play-by-play, while mapped NBA play-by-play `0022500614`
+is retained. Investigate rather than inventing the missing ESPN events. Start your own :8767 server for checks.
 
 **Last dashboard-delivery checks:** smoke **102/102**; deliberate `--fault` fails **22** checks (exit 1); full browser sweep **156/156**, then
 **12/12** targeted cases for the final phone stacking correction; hosted PWA **15/15** (import, phone stacking, offline
@@ -80,7 +84,7 @@ weights, with the old and new accounting; do not hide unfinished tasks by deleti
 
 | Task | Weight | Progress | State / latest checkpoint |
 |---|---:|---:|---|
-| S01 Baseline and evaluation contract | 6% | 80% | Small/full original-stream reproductions and both seed audits pass, with one labelled missing box outcome |
+| S01 Baseline and evaluation contract | 6% | 100% | Both controls audited; final manifest, seed floors and cutoff limits pinned; no candidate promoted |
 | S02 Data integrity and parity | 6% | 0% | Planned |
 | S03 Offence/defence signal diagnosis | 8% | 0% | Planned |
 | S04 Defence and shot quality | 12% | 0% | Planned |
@@ -95,7 +99,7 @@ weights, with the old and new accounting; do not hide unfinished tasks by deleti
 | S13 Current-model season history | 5% | 0% | Planned |
 | S14 Nightly, delivery, successor | 5% | 0% | Planned |
 
-**A1 overall: `░░░░░░░░░░░░░░░░░░░░ 4.8%`.** Both control seeds are complete; no candidate fit, model promotion or
+**A1 overall: `█░░░░░░░░░░░░░░░░░░░ 6.0%`.** Both control seeds are complete; no candidate fit, model promotion or
 production/PWA change has started.
 Each rung below is cumulative; 100% always includes updated docs, necessary PWA model/data/shell delivery, reviewed
 commit and push, plus the owner summary. See AGENTS §3/§5 and PLAN §6c for the per-subtask PWA checklist; research-only
@@ -392,7 +396,8 @@ current endpoint coverage before resuming history; do not treat the old 5,508 de
 - `scripts/fetch_nbastats.py`: stdlib urllib with Chrome fetch headers (`Sec-Fetch-*`, `sec-ch-ua` — without them stats.nba.com
   connects and never answers), ~1 request/s with jitter, retries with backoff, stops after 5 failures in a row, resumable
   (present files skipped; un-flushed files recorded in the manifest on resume). Raw: `data/raw/nbastats/<endpoint>/<season>/`
-  (gzip + `manifest.json` with sha256). Retained: season logs (51), `boxscorematchupsv3` all 5,508 games (2022-23 → 19 Nov 2026),
+  (gzip + `manifest.json` with sha256). A 22 Nov inventory finds 54 season-log files and `boxscorematchupsv3`
+  files for 5,517 logged games (2022-23 → ET 21 Nov);
   `leaguedashptdefend` per date (Overall, <6 ft, threes; 2,628), `playbyplayv3` 1,895 games (paused). Hustle (`--hustle`, per
   date) coded, not fetched. The nightly fetches new finals (`fetch_nba_stats`: ~10–15 requests; failures never stop it).
 - `scripts/nbastats.py`: crosswalk 5,508/5,508 games (ET date + team pair), 118,024/118,041 player-games (17 unmatched: Lachlan
@@ -435,14 +440,38 @@ picker (Scoring · Rebounding ALL/OFF/DEF · Handling · Defense · Time; makes 
 STL/BLK, shooting x/y (z%) coloured per part); bezel points Δ v season (above the value; no win/total Δ); player page "Open
 simulation" for tomorrow's games; phone bundle stripped back (D36).
 
-## Next actions — continue A1, starting at S01 rung 90
+## Next actions — start S02
 
 **Owner's overnight authority:** execute S01–S14 without waiting for input; the earlier planning-only stop is lifted.
 The dashboard programme is done. Do not resume U1–U22, repeat rejected defence variants unchanged or begin at S13.
 
-1. **Finish S01's control contract.** Startup, controls, population, seeds, cutoff audit and frozen metrics through
-   S01 80% are above. Run smoke and deliberate fault, then partial-commit/push the exact source used in both controls;
-   generate the final manifest before the type-only `simulation_seed` annotation. Existing
+1. **Inventory S02 data by season.** Extend the measured NBA/ESPN counts in FINDINGS §7 with a reproducible manifest,
+   hash/file-coverage report and explicit missing game/metadata counts. In particular investigate ESPN box-only game
+   `401810469` without inventing play-by-play. The current PBP queue is **3,622**, subject to a fresh dated inventory.
+2. **Fix and test ingestion before resuming the single polite history stream.** `fetch_games`, `fetch_ptdefend` and
+   `fetch_hustle` eagerly construct a `Store` on every `setdefault`; `fetch_logs` also fails to flush on an exception.
+   Reproduce both in isolated temporary storage, fix all affected paths, test resume and metadata retention, then use
+   `.venv/bin/python -u scripts/fetch_nbastats.py --pbp --max 363` in sequential logged batches. Recalculate each
+   10% item threshold from the actual queue, report measured throughput, and pause the stream during the final nightly.
+   Preserve the 45 entries with unknown original URL/time rather than inventing provenance.
+3. **Complete S02 reconciliation and train/serve parity.** Audit NBA/ESPN points, seconds, possession conventions,
+   unmatched/excluded games and historical publication limits; test cutoff-safe training/serving feature equality,
+   including first-season priors, dated assignment fits, missing-profile medians and the all-missing batch-fill risk.
+   Isolate corrections from v1.3 and do not claim a promotion gate until supported dated inputs exist.
+4. **Continue S03–S10 in dependency order.** Diagnose player/lineup offence and defence before selecting bounded
+   candidate families; keep conditional-engine and actual pre-game availability populations separate. Record
+   negative results and preserve the accepted control.
+5. **S11 freezes the tested combination before promotion.** Confirm on the fixed wider folds and second seed, protect
+   the final test and use player outcomes first.
+6. **S12/S13 implement model visibility and versioned daily history.** Preserve original and previous-version
+   forecasts, reject future-trained inputs/fits and label retrospective histories; record any failed trust gate.
+7. **Finish S14** with a fresh live nightly, 10k games/branches and season, iCloud/PWA delivery and all checks. Build
+   the successor chunk in the same weighted, ten-rung format before the final commit/push.
+
+## Completed S01 audit and reproduction
+
+The exact source used in both controls was partial-committed/pushed as `c6d5db4`; the final manifest
+`analysis/experiments/20261122_a1_manifest.json` was generated before the type-only annotation. Existing
    `backtest.py`/`backtest_compare.py` use actual starter labels for their legacy
    scorecard: on the retained 4,346 player-games, 485 change tier under a pre-game start-share definition (including
    12 unknowns). Preserve the historical scorecard and use pre-game tiers for selection. Despite the F4 control's
@@ -496,55 +525,26 @@ The dashboard programme is done. Do not resume U1–U22, repeat rejected defence
      `analysis/experiments/20261122_a1_pre_candidate_manifest.json`, together with 67 input/model fingerprints
      (including static athlete measurements and the retained M6a diagnostic). F1–F3 remain blocked on dated θ and
      rebuilt features. An independent check confirms 1,318 unique selected IDs within their fold dates and 2,636
-     unique confirmation-stream seeds. After both control runs finish, generate a result manifest with their run IDs
-     and compare all input fingerprints against this pre-candidate manifest. The final manifest also fingerprints
+     unique confirmation-stream seeds. The final result manifest includes both run IDs and checks all input
+     fingerprints against this pre-candidate manifest. It also fingerprints
      upstream feature/history/ingestion code, dependency and data-build reports; the upstream source files were
      verified unchanged from the planning checkpoint. The original manifest omitted production-model hashes, so
      `analysis/experiments/20261122_a1_production_baseline.json` separately pins 17 model artifacts, 11 upstream
      inputs and the unchanged local bundle before any candidate; the final manifest now rejects changes in any of
      these or the 67 original inputs. All 67 original input
-     fingerprints were unchanged during seed 2. Both controls used
-     `scripts/backtest.py` SHA-256 is `480d3c8f92a3f1e61ed610254ef36a82a6a7ec8b87812f796652e7f7a024405a`;
-     do not alter its simulation code between the two runs. F1–F4 confirmation seed keys are fixed in the manifest;
-     a shared initial seed does not prove event-by-event RNG alignment. Pylance reports a new `reportArgumentType`
-     on the mixed string/integer seed-parts list; after both runs, preserve their exact source in a partial checkpoint,
-     then add its local type annotation and verify the function's compiled behavior is unchanged. Before that
-     annotation, SHA-256 of `marshal.dumps((co_code, co_consts, co_names, co_varnames, co_freevars, co_cellvars,
-     co_flags, co_stacksize))` for `simulation_seed.__code__` is
-     `90ab93144bbbdf2d1c343c64434b93c4193a3d0bb1cc7dd4c0be1fcdbec6bb3d`.
+     fingerprints were unchanged during seed 2. Both controls used `scripts/backtest.py` SHA-256
+     `480d3c8f92a3f1e61ed610254ef36a82a6a7ec8b87812f796652e7f7a024405a`, pinned in commit `c6d5db4`; the final
+     manifest identifies that source commit. A later local type annotation resolves the new seed-list Pylance error
+     without changing any of 13 compared semantic code fields or any of **3,036** frozen seeds; raw `co_code` SHA-256
+     is `aa7233f20022d729a98acf25cb1b321678a83a3cfa33167ffc12f7b86db7e8c6`. The earlier marshalled-tuple digest
+     `90ab9314...b1cc7dd4` was not stable across processes and is not used as proof. F1–F4 confirmation seed keys
+     are fixed; a shared initial seed does not prove event-by-event RNG alignment.
      S02 must also quantify a newly reproduced batch-leakage risk: an all-missing defender metric in
      `matchups.mu_columns` is filled from the whole batch. A synthetic unrelated row changing from 0.4 to 0.6 changes
      the missing row's `mu_fg_rim` from 0.4 to 0.6. None of 45,110 actor segments with five recorded defenders in the
      fixed 200-game F4 panel had all five `m_fg_*`, `m_tov_rate` or `m_foul_rate` values missing; audit other
      populations/body and simulation lineups too. Training can borrow held-out/future values and differ from serving;
      isolate and validate any correction rather than silently changing v1.3.
-2. **Pin the existing serving-setting control before any candidate.** Use
-   `analysis/experiments/20261120T162930Z_v1.3_pool_per_world_F4.json` and its retained per-game outputs. The config is
-   `models/v1.2d.json` with `folds/v1.2d_F4_all`, targets, pool 0 (the v1.3 serving recipe); do not quietly compare a
-   candidate against the old shared-pool run. Audit known actual participants versus projected starters and record
-   the full-population and subgroup scorecards, uncertainty, practical margins and F1–F4 confirmation plan.
-3. **Complete S01, then proceed through the dependency table.** S02 audits/reconciles data; S03 identifies why the
-   engine loses player/defence differences; S04 tests supported mechanisms. In a network-free preliminary check,
-   `fetch_games` constructed `Store` three times for three cached games in one season: its `setdefault` argument is
-   eagerly evaluated, repeatedly scanning/flushing manifests. A read-only inventory found 45 already-retained entries
-   without URL/fetch time; the exact cause is unproven. Before resuming the history, test and correct all affected
-   fetch paths; an interruption between flushes could otherwise leave reconstructed, undated provenance. A separate
-   temporary-store test interrupted `fetch_logs` after one successful response: it failed to flush that season's
-   manifest and resume recovered the file with null URL/time, so the log path also needs a `finally` flush. No S02
-   progress has been awarded yet. S05/S06 improve minutes and reactive
-   substitutions; S07/S08 handle uncertainty/branches; S09 shared form/end-game; S10 season pathways. Keep each
-   experiment and rejected idea reproducible. A negative task result retains the control and feeds the next task.
-4. **S11 freezes the tested combination before promotion.** Extend beyond the repeatedly inspected 200-game F4
-   panel; fit all auxiliary models inside each fold. Respect the final test and D35's player/lineup defence rule.
-   A recent-report availability model may remain data-limited; do not call oracle-availability scores end-to-end.
-5. **S12/S13 deliver model visibility and versioned history.** Each day stores Today; Tomorrow is a preview. Each
-   accepted model can rebuild season start→now with that recipe and only information available at each date, then
-   becomes the consistent default history. Preserve original/old-version records, label reconstructed runs, reject
-   future-trained fits. Current `--backfill-days` is placeholder-only: do not use it as an engine replay command.
-6. **Finish S14:** final live nightly with input refresh, 10k games/branches + 10k seasons, visible iCloud export,
-   smoke/fault/browser/PWA checks, source/shell publication where changed, docs and final commit/push. **Construct
-   the successor chunk in this exact format before closing**. Never leave the next agent only a vague wish list.
-
 **First commands (existing interfaces, no candidates or replay flags invented):**
 
 ```sh
