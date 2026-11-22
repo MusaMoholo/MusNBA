@@ -1,14 +1,45 @@
 # Handoff — state and next actions
 
-Updated **22 November 2026 — Chunk A A1 at 70%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **f5f4767** (A1 70%, Expected-only serialization); use `git log -1` for the current checkpoint.
+Updated **22 November 2026 — Chunk A A1 at 80%, A2 at 30%; S01–S07 remain complete**.
+The preceding pushed checkpoint was **90daa62** (weighted scenarios); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
-- **Current action:** continue A1 80%: evaluate gated local/laptop branch UI and phone Expected-only compatibility
-  without publishing an unvalidated forecast or changing the default production pathway. **Owner's latest stop:
+- **Current action:** continue A1 90%: finish representative accounting, restart, cutoff and runtime gates;
+  the isolated single-world retry is not integrated or validated at 10k scale, and dated development injury
+  reports are absent. Do not equate wiring tests with predictive promotion. **Owner's latest stop:
   stop at the end of A1**, checkpoint/push and report gains and limitations; do not start A2, A3 or Chunk B in
   this run. The earlier dashboard house pass was already delivered; no nightly merely for this research checkpoint.
+- **A1 80% complete, injection-only:** a single shared research lineup control now drives selected player, team,
+  sheet, scenario/Given/Joint and driver views; branch-unavailable metadata/cards are omitted. Available and
+  positive-minute participation are distinct; shooting-defined mass is weighted. No normal route registers the
+  research provider and the production forecast, v1.3, pathway v1 and iCloud bundle remain unchanged. Independent
+  adaptation accounting reconciled **25 / 28** players and **3,275 / 3,667** distributions for the full mixtures,
+  and **28 / 3,645** for a 20k-world fixed-player selection. Injected Chrome matched every player row and selected
+  team/sheet/empty scenario; six 1440/960/390 theme screenshots were inspected. Normal responsive suite **234/234**;
+  private research laptop and Expected-only phone bundle offline checks **34/34 / 32/32**; actual retained bundle
+  offline checks **31/31 laptop / 30/30 phone**; installed-shell upgrade **30/30**. The private laptop and phone
+  research bundles are **113,538,014 / 14,154,406 bytes**, respectively, in `/tmp`; test injection is required,
+  not a production bundle contract or a real-device acceptance. An old test expected “worlds” while the UI now
+  says “saved worlds”; corrected the assertion. Normal smoke **108/108** and deliberate fault **86/108**, exit 1,
+  logs `/tmp/musnba_a1_view_{smoke,fault}.log`. Data-free `gh-pages` **0c0447a**, cache
+  **6324344ab602b7c6502c**; hosted source hash matches and hosted laptop/phone import/offline checks passed
+  **31/31 / 30/30**. Previous shell archived as
+  `~/Basketball_archive_ops/gh-pages-before-a1-game-view-b399409.tar`. Device import remains manual. Game identity
+  context comes from the existing game view and is not independently certified origin-safe. Browser/source evidence
+  `analysis/experiments/20261122_chunk_a_a1_d47_game_view_browser_two_v4.json` and
+  `20261122_chunk_a_a1_d47_game_view_{one_full,two_full,two_home_sits}_v2_{probe,audit}.json`.
+- **A1 90% partial:** a fixed F4 game with actual participants and synthetic selected availability ran **20**
+  control and **20** retry worlds, with one deliberately injected rejection: **41** audited attempts in **21.449 s**,
+  all 19 unaffected worlds and seeds identical. This is not a real rejection rate, predictive bias or 10k runtime
+  test; the coordinator remains unwired. Report
+  `analysis/experiments/20261122_chunk_a_a1_d48_isolated_world_probe_20_v1.json`; **46** retry/selection/availability
+  tests pass. No 90% credit until the rung's remaining checks pass or the limitation is explicitly resolved.
+  The owner flagged Luka's **10/10,000** worlds at 65+ points as a concern that tails may be too narrow; that is a
+  hypothesis, not a calibrated target. Existing F4 control team-total 10–90% coverage was **69%** over **200** games.
+  Investigate player and team variance later under A2's pre-existing fold gates, without fitting to market lines.
+  HANDOFF, PLAN, FINDINGS, DASHBOARD_PLAN and README document this checkpoint. AGENTS, ENGINE_PLAN and
+  TRAINING_PLAN need no edit: standing rules, decisions, promotion and cutoff gates are unchanged.
 - **A1 80% shared-scenario groundwork, partial:** `outcomes.mjs` now adapts an explicitly supplied validated
   research source and binds weighted probability mass, counts, distributions, means, correlations and half-open
   grids to one selected world set. `scenario.mjs` uses those calculations when injected, otherwise the existing
@@ -1751,7 +1782,7 @@ chunk weights are **separate within-chunk progress measures**, not replacements 
 A1 stays **58.0%**, and S13 remains deferred at 0% (the possible A1 ceiling while deferred is 95%).
 Update the original S08–S12/S14 status only when their original acceptance is met, without crediting work twice.
 Report a chunk bar and each active module at every 10% rung and each 5% overall boundary; long jobs also report
-item counts and measured rates. Current Chunk A progress is **31.5%**; Chunk B remains **0%**.
+item counts and measured rates. Current Chunk A progress is **34.5%**; Chunk B remains **0%**.
 
 **Shared gates:** use the unchanged player-first, paired fold, seed-noise, uncertainty, non-inferiority, cutoff and
 once-per-version final-test rules in PLAN §6b/TRAINING_PLAN §8. An early chunk can promote a standalone candidate
@@ -1775,7 +1806,7 @@ playback portion of S12, plus a chunk-end delivery; S10/S11/S12/S14 are not ther
 | A2 Form and late-game realism | 35% | S04/S06; A1 for integration | S09's paired player/game gates; retain v1.3 when unsupported or rejected |
 | A3 View Centre and delivery | 35% | A1/A2 decisions | Five labelled selections, reconciled event files and an interactive 2-D court/player in the Game Centre; responsive/offline checks and fresh nightly; no fake logs or completed claim on failure |
 
-**Live board:** Chunk A `██████░░░░░░░░░░░░░░ 31.5%`; A1 `██████████████░░░░░░ 70%`;
+**Live board:** Chunk A `███████░░░░░░░░░░░░░ 34.5%`; A1 `████████████████░░░░ 80%`;
 A2 `██████░░░░░░░░░░░░░░ 30%`; A3 `░░░░░░░░░░░░░░░░░░░░ 0%`.
 Original A1 remains 58%; do not double-count the separate board.
 
@@ -2374,6 +2405,24 @@ STL/BLK, shooting x/y (z%) coloured per part); bezel points Δ v season (above t
 simulation" for tomorrow's games; phone bundle stripped back (D36).
 
 ## Next actions — Chunk A in progress
+
+1. **A1 90%:** independently verify representative branch accounting, source cutoff provenance and restart
+   behavior at useful scale; quantify runtime and rejection/selection bias on earlier folds. The retained
+   20-world synthetic-rejection pilot is reproducible with
+   `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -u analysis/a1_world_retry_probe.py --game 401810327 --worlds 20 --seed 20261122 --output analysis/experiments/<new-retry-report>.json`.
+   It does not persist the full captures and does not prove a 10k runtime or real failure rate. The branch
+   10k deterministic captures and independent audits are listed in State. Source evidence and missing dated
+   injury-report cohorts are documented there and in FINDINGS; do not score protected-season outcomes.
+   The retry coordinator is deliberately unwired: prove world-local classification and survivor isolation,
+   audit persisted outputs, cap and record retries, compare predictive effects to the distinct S06 penalty
+   policy on development folds, and do not retry input/cutoff/accounting/unknown errors. Keep the existing
+   forecast if those gates cannot be met. Review origin safety of every selected-view context field; the
+   current research view borrows game identity/context from the existing view and is not certified safe.
+2. Finish A1 only after the actual rung requirements or the explicitly documented blocked fallback are resolved,
+   review all root docs, smoke/fault, commit and push. Stop at the owner's A1 boundary; leave A2/A3 and Chunk B
+   unchanged. A new full nightly belongs at the end of Chunk A, not this isolated research checkpoint.
+
+## Previous A1 80% commands — historical context
 
 1. **A1 80%:** implement/test a gated branch UI only against fully audited isolated fixtures and preserve the
    existing unconditional production fallback; no unvalidated Expected data may be published. Research labels

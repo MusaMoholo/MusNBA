@@ -1,0 +1,17 @@
+{
+  "kind": "isolated selected game view contract; not a forecast or browser test",
+  "game": "data/views/api/game/401910030.json",
+  "payload": "data/derived/experiments/20261122_chunk_a_a1_d47_expected_payload_two_shared_v1.json",
+  "summary": "data/derived/experiments/20261122_chunk_a_a1_d47_game_summary_two_home_sits_identity_v1.json",
+  "view": "data/derived/experiments/20261122_chunk_a_a1_d47_game_view_two_home_sits_v2.json",
+  "view_sha256": "a365cec0ed75bb9538be190027ed474b0966f615b7c0fdc2ec93cc408ce0846e",
+  "source_sha256": {
+    "data/views/api/game/401910030.json": "927af7632a00625b63d112101033076f20bc71e15f8edc5e0094342a1246b9ff",
+    "data/derived/experiments/20261122_chunk_a_a1_d47_expected_payload_two_shared_v1.json": "a4ab3909d1a3c2d83a6d71ff3dda9009ca405a3bf6eae9e12eacdb4f56e299df",
+    "data/derived/experiments/20261122_chunk_a_a1_d47_game_summary_two_home_sits_identity_v1.json": "b6c6fb3138bfb0a331b608448493479884544b624c6e900270097c5e61f27e60",
+    "analysis/a1_game_view_contract.mjs": "7645b3e26beb877e5d82c7a3e84640c705a704cdfb5a69613caf4661622cebe8",
+    "analysis/a1_game_view_contract_probe.mjs": "3b33d666e02e37256b773f32aafb66b0887fcf3d907d4e2449cba8ff64c3a65a"
+  },
+  "selected_worlds": 20000,
+  "selected_mass": 40000
+}

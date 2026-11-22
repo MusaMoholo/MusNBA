@@ -7,6 +7,7 @@ const memory = new Map();  // game id → conditions (also kept in the route)
 const BOX = [['min', 'MIN'], ['pts', 'PTS'], ['reb', 'REB'], ['ast', 'AST'], ['fg3m', '3PM'], ['stl', 'STL'], ['blk', 'BLK'], ['tov', 'TOV'], ['fgpct', 'FG%']];
 const calculations = Wd => Wd.weights ? O.branchCalculations(Wd) : O;
 const worldData = data => data._branchWorldData || O.load(data.game.id);
+const memoryKey = data => (data._branchWorldData ? 'research|' : '') + data.game.id;
 
 const names = data => new Map(['home', 'away'].flatMap(s => data.projection.sim[s].players.map(p => [p.id, p.name])));
 const abbrs = data => ({home: team(data.game.home.id).abbr, away: team(data.game.away.id).abbr});
@@ -99,11 +100,11 @@ function presetRows(pres) {
 // ------------------------------------------------------------------ Scenarios tab
 export async function scenarioView(el, data, encoded) {
   const Wd = await worldData(data), C = calculations(Wd);
-  let conds = encoded ? decode(encoded) : (memory.get(data.game.id) || []);
+  let conds = encoded ? decode(encoded) : (memory.get(memoryKey(data)) || []);
   const N = names(data), A = abbrs(data), base = O.mask(Wd, []);
   const setConds = next => {
     conds = next;
-    memory.set(data.game.id, conds);
+    memory.set(memoryKey(data), conds);
     location.replace(`#/game/${data.game.id}/scenario${conds.length ? '/' + encode(conds) : ''}`);
   };
   const paint = () => {

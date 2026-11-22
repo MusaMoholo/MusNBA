@@ -1,0 +1,14 @@
+{
+ "kind": "independent selected view adaptation accounting; not a browser or forecast test",
+ "probe": "analysis/experiments/20261122_chunk_a_a1_d47_game_view_two_home_sits_v2_probe.json",
+ "probe_sha256": "958c59aec2b65240a3ae610d2ca54ff4486a50d1482a2969d22376e5ec52bad6",
+ "summary_audit": "analysis/experiments/20261122_chunk_a_a1_d47_game_summary_two_home_sits_identity_v1_audit.json",
+ "summary_audit_sha256": "5ae0ad60966a073ec722e154d54d85c43c85acef36176aa4d9816c45289b8632",
+ "payload_audit": "analysis/experiments/20261122_chunk_a_a1_d47_expected_payload_two_shared_v1_audit.json",
+ "payload_audit_sha256": "e1c839034286476a64ba2cb225ea6ac12b7800d32e9c358903f6a9027c67a690",
+ "audit_sha256": "964814411befd5f92163dff5b04177ea2ac7007ab321758f91a18929b7e2b094",
+ "players_checked": 28,
+ "player_distributions_checked": 3645,
+ "selected_worlds": 20000,
+ "selected_mass": 40000
+}

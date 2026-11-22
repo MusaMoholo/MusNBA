@@ -2,6 +2,29 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 — selected Game Centre research compatibility:** for the same **20k / 40k** one-/two-player
+origin fixtures, independent adapter accounting checked **25 / 28** players and **3,275 / 3,667** distributions
+in the full mixtures; a fixed-player **20k** selection checked **28** players and **3,645** distributions.
+An explicitly injected browser check compared every player's minutes and points with audited full/fixed summaries,
+selected team/sheet and an empty scenario; six 1440/960/390 theme cases were inspected. Private Expected-only
+phone and branch laptop research bundles passed offline/import **32/32 / 34/34**; they were **14,154,406 /
+113,538,014 bytes**, respectively. Explicit injection was required; these are neither production bundle contracts
+nor physical-device tests. Browser emulation and a single research fixture do not establish model accuracy or
+origin safety for all borrowed game context. Reports `20261122_chunk_a_a1_d47_game_view_browser_two_v4.json`
+and `20261122_chunk_a_a1_d47_game_view_{one_full,two_full,two_home_sits}_v2_{probe,audit}.json`.
+
+**22 Nov 2026 — 20-world restart pilot:** for fixed F4 game `401810327` with actual participants and synthetic
+availability, **20** control and **20** retry worlds used **41** independently checked single-world attempts
+in **21.449 s**; one deliberately injected rejection replaced one world and left all **19** other seeds and
+captured arrays unchanged. This demonstrates isolation in the pilot only: the coordinator remains unwired, the
+failure is artificial, and real failure rates, predictive bias, persisted 10k output and 10k runtime are unmeasured.
+Report `20261122_chunk_a_a1_d48_isolated_world_probe_20_v1.json`.
+
+**Owner hypothesis, 22 Nov:** the observed **10/10,000** Luka 65+ simulation count may indicate insufficient
+tail variance; it does not establish a correct event probability. Separately, the frozen **200-game F4** control
+had **69%** coverage for its nominal team-total 10–90% interval. Investigate player and team dispersion using
+earlier folds in A2, without fitting to bookmaker lines or touching the protected final test.
+
 **22 Nov 2026 — shared scenario adapter, research injection only:** on the **20k / 40k** one-/two-player
 origin fixtures, the shared scenario adapter matched independently reconstructed full, fixed and empty conditional
 mass and all **90** home-point bins; the 40k fixture also matched exact **1,800 / 1,830-second** conditions.

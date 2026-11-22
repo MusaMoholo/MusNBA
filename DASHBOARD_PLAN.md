@@ -1,5 +1,16 @@
 # App — shipped behaviour
 
+**Isolated lineup view research (22 Nov):** the updated shell contains an explicit test-only provider hook; no
+normal app route registers one, and no branch selector or Expected forecast is shipped. When injected privately,
+one selection follows player/team/sheet/scenario views, with weighted Given/Joint, separately labelled availability
+and participation, simulated opening shares and no incompatible unconditional cards or minute targets. The
+Expected-only phone research bundle hides world-dependent controls. Research offline laptop/phone checks passed
+**34/34 / 32/32**, and six research sheet viewport/theme screenshots were inspected; the normal responsive suite
+passed **234/234**. Actual retained laptop/phone bundle checks passed **31/31 / 30/30** and an installed-shell
+update passed **30/30** locally. Data-free `gh-pages` **0c0447a**, cache **6324344ab602b7c6502c**; hosted
+laptop/phone import/offline checks passed **31/31 / 30/30**, and the hosted asset hash matches source. No forecast
+or iCloud bundle changed, and physical-device import is unconfirmed.
+
 **Planned lineup presentation (22 Nov, not yet shipped):** keep one Game Centre, not separate player tabs.
 After the exact mixture and season gates pass, Expected is the default and a compact team-grouped control
 chooses either status, plays or sits for each qualifying uncertainty; team and player views share that selection.

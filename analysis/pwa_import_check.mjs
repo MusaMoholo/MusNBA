@@ -279,8 +279,77 @@ if (args.profile) {
   })()`));
   if (args.profile === 'laptop' && shootingTarget) {
     await send('Page.navigate', {url: args.url + '#/game/' + shootingTarget.game + '/scenario'}, s);
-    check('laptop scenarios render from saved worlds offline', await waitFor(`!!document.querySelector('[data-builder="scn"]') && document.querySelector('#view').textContent.includes(${JSON.stringify('of ' + shootingTarget.total.toLocaleString() + ' worlds')})`, 30000));
+    check('laptop scenarios render from saved worlds offline', await waitFor(`!!document.querySelector('[data-builder="scn"]') && document.querySelector('#view').textContent.includes(${JSON.stringify('of ' + shootingTarget.total.toLocaleString() + ' saved worlds')})`, 30000));
   }
+}
+if (args['research-game']) {
+  const gid = args['research-game'];
+  await send('Page.navigate', {url: args.url + '#/game/' + gid}, s);
+  const inject = `(async () => {
+    const ui = await import('./assets/ui.mjs'), game = await import('./assets/game.mjs');
+    const view = await ui.api('research/a1/' + ${JSON.stringify(gid)});
+    game.setResearchGame(${JSON.stringify(gid)}, async () => ({view, worlds: null}));
+    await game.render(document.querySelector('#view'), {rest: [${JSON.stringify(gid)}], current: () => true});
+    const home = document.querySelector('.bz-team.home .bz-stats b')?.textContent;
+    const missingWorlds = await fetch(new URL('./api/game/' + ${JSON.stringify(gid)} + '/worlds', location.href));
+    const gameOk = home === view.sim.periods.fg.home.pts.mean.toFixed(1)
+      && document.querySelector('[data-research-lineups]')?.textContent.includes('Expected only')
+      && !document.querySelector('[data-lineup], [data-view="scenario"]')
+      && !missingWorlds.ok;
+    const player = view.sim.home.players.find(p => p.periods.fg.stats.fgpct);
+    if (!player) return false;
+    await game.render(document.querySelector('#view'), {rest: [${JSON.stringify(gid)}, 'player', player.id, 'fg'], current: () => true});
+    const button = document.querySelector('[data-stat="fgpct"]');
+    if (!button) return false;
+    button.click();
+    const d = player.periods.fg.stats.fgpct;
+    return gameOk && document.querySelector('#stat-block').textContent.includes(ui.pct(d.defined_mass / d.total_mass, 1) + ' weighted chance of an attempt')
+      && !document.querySelector('#what-if, [data-lineup]');
+  })()`;
+  check('research Expected-only data imports and renders offline without worlds', await waitFor(`!!document.querySelector('#game-body')`)
+    && await evaluate(inject));
+  await send('Page.reload', {}, s);
+  check('research Expected-only data survives offline reload', await waitFor(`!!document.querySelector('#game-body')`)
+    && await evaluate(inject));
+}
+if (args['research-laptop']) {
+  const gid = args['research-laptop'];
+  await send('Page.navigate', {url: args.url + '#/game/' + gid}, s);
+  const setup = `(async () => {
+    const ui = await import('./assets/ui.mjs'), G = await import('./assets/game.mjs'), O = await import('./assets/outcomes.mjs');
+    const item = await ui.api('research/a1/' + ${JSON.stringify(gid)});
+    const load = text => import(URL.createObjectURL(new Blob([text], {type: 'text/javascript'})));
+    const weighted = new URL('./assets/weighted-worlds.mjs', location.href).href;
+    const sourceModule = await load(item.modules.source.replace('./a1_weighted_browser.mjs', weighted));
+    const {branchGameSummary} = await load(item.modules.summary);
+    const {selectedGameView} = await load(item.modules.contract);
+    const source = sourceModule.branchWorldSource(item.fixture), cache = new Map();
+    G.setResearchGame(${JSON.stringify(gid)}, async choices => {
+      const key = JSON.stringify(choices);
+      if (!cache.has(key)) {
+        const result = branchGameSummary(source, choices);
+        cache.set(key, {view: selectedGameView(item.view.game, item.payload,
+          {fixture_sha256: item.payload.fixture_sha256, result}), worlds: O.branchWorldData(source, choices)});
+      }
+      return cache.get(key);
+    });
+    await G.render(document.querySelector('#view'), {rest: [${JSON.stringify(gid)}], current: () => true});
+    return document.querySelector('.bz-team.home .bz-stats b')?.textContent === item.view.sim.periods.fg.home.pts.mean.toFixed(1)
+      && document.querySelectorAll('[data-lineup]').length === item.payload.selected_players.length;
+  })()`;
+  const start = Date.now();
+  check('research laptop branches import and render offline', await waitFor(`!!document.querySelector('#game-body')`)
+    && await evaluate(setup), `${((Date.now() - start) / 1000).toFixed(1)}s`);
+  const chosen = args['research-player'];
+  const expected = args['research-home-points'];
+  if (!chosen || expected == null) throw new Error('Research laptop check requires player and independently audited home points');
+  await evaluate(`(() => {const e=document.querySelector('[data-lineup="${chosen}"]'); if (!e) return false; e.value='unavailable'; e.dispatchEvent(new Event('change')); return true;})()`);
+  check('research laptop branch selection updates offline', await waitFor(`document.querySelector('[data-lineup="${chosen}"]')?.value === 'unavailable'
+    && !document.querySelector('[data-lineup="${chosen}"]')?.disabled
+    && document.querySelector('.bz-team.home .bz-stats b')?.textContent === ${JSON.stringify(expected)}`, 120000));
+  await send('Page.reload', {}, s);
+  check('research laptop branch inputs survive offline reload', await waitFor(`!!document.querySelector('#game-body')`)
+    && await evaluate(setup));
 }
 await send('Page.navigate', {url: args.url + '#/about'}, s);
 check('model guide works offline', await waitFor(`document.querySelector('#view').textContent.includes('Reading the numbers')`));

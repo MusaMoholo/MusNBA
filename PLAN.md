@@ -1,6 +1,6 @@
 # MusNBA — game plan and progress
 
-Updated **22 November 2026 (S01–S07 complete; Chunk A A1 at 70%, A2 at 30%; View Centre planned, D42–D43)**. The single record of scope, progress and decisions. Every agent updates it at
+Updated **22 November 2026 (S01–S07 complete; Chunk A A1 at 80%, A2 at 30%; View Centre planned, D42–D43)**. The single record of scope, progress and decisions. Every agent updates it at
 every checkpoint (AGENTS.md § Checkpoint protocol). New here? Read [AGENTS.md](AGENTS.md) first, then
 [HANDOFF_NEXT.md](HANDOFF_NEXT.md) — it says exactly what to do next.
 
@@ -133,7 +133,7 @@ remaining gate and next action rather than claim a fitted model is validated.
 
 **D42 split, now authorised for execution in order:** retain S01–S07 as completed and the original A1 weights/ladder below as the
 historical ledger (**58.0%**, S13 deferred). The new separately weighted chunks and their 60 concrete rungs are in
-HANDOFF § Execution; Chunk A A1 is at 70%, and Chunk B has not started. Chunk A targets believable lineup-aware games, shared form and
+HANDOFF § Execution; Chunk A A1 is at 80%, and Chunk B has not started. Chunk A targets believable lineup-aware games, shared form and
 late-game behaviour, plus five saved game examples; Chunk B tests a new player/lineup-defence mechanism, legal
 foul-outs, season calibration and integrated confirmation, and adds rotation visibility. Each has a fresh final
 nightly and a useful shipped dashboard improvement if no model passes the unchanged gate. Chunk A can promote an
@@ -429,6 +429,18 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 · Chunk A A1 80%:** a single explicitly injected research selector now keeps player, team, sheet,
+  scenarios and Given/Joint on the same weighted worlds; an Expected-only research phone bundle needs no worlds.
+  Independent adapter checks reconciled **25/28 players** and **3,275/3,667 distributions** in the two full
+  samples, plus **28 players / 3,645 distributions** for the fixed-player selection. Research laptop/phone
+  import and offline checks passed **34/34 / 32/32**; normal responsive **234/234**, six research screenshots
+  inspected, installed shell upgrade **30/30**, smoke **108/108** and deliberate fault **86/108**. The data-free
+  shell is `gh-pages` **0c0447a**, hosted laptop/phone offline **31/31 / 30/30**; no production branch selection,
+  model or forecast bundle changed. Manual phone
+  import remains required. A1 **80%**, Chunk A **34.5%**; 90% restart/runtime/cutoff and promotion gates remain open.
+  A 20-world F4 injected-retry pilot used **41 attempts in 21.449 s**, preserving 19 unaffected worlds; it is
+  neither a 10k runtime nor a real-world rejection/bias estimate. The owner's Luka 65+ tail concern is a hypothesis
+  for later A2, not a target fitted to lines; the F4 200-game team-total 10–90% coverage was **69%**.
 - **22 Nov 2026 · D46:** owner narrowed lineup branching to the highest-impact uncertain player per team, only
   within its top three; at most four exhaustive combinations. Freeze and label the pre-origin offensive proxy in
   ENGINE_PLAN; earlier >2 sensitivities remain historical research, not the new design. Current production unchanged.
