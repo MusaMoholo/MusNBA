@@ -108,7 +108,7 @@ Each subtask ends with evidence, current docs and a commit/push checkpoint (AGEN
 | M11 | Availability model | ☐ **A1 S07/S08/S10**: report coverage, play/start probabilities, branches and future absences | Held-out calibration and games-missed realism where dated development data supports them; honest fallbacks otherwise | Planned |
 | M12 | Season pathway calibration | ◐ **first cut (20 Nov): team pathway v1 in the app** — walk-forward 2022-26 (480 team-starts): dispersion 1.00 (fixed probabilities 1.53), 10–90% coverage 84% (65%), CRPS −4% in every held-out season; still wide in November (0.84) and surprises fade with the date (sim 0.52 → 0.18 v real 0.40 flat) | Dispersion ≈ 1.0 **at every start date**, persistence matches | `pathway.py`, `season_backtest.py` |
 | UX | Dashboard upgrade programme U1–U22 | ✅ **22 Nov:** all 22 shipped; U15–U22 adds roster roles, playoff picture, win ranges, races/movers/leaders inside Standings and model guide; 156 full + 12 final layout browser checks, hosted PWA 15/15 | Checked at 1440/960/390, both themes, stored data only | DASHBOARD_PLAN.md |
-| A1 | Expanded accuracy/robustness programme | ◐ **49.6% — S01–S05 complete, S06 70%, S07 20%, 22 Nov**; 14 tasks, fixed weights, 140 rungs | Gates in §6b; final nightly + versioned history + successor chunk | HANDOFF § Progress ladders |
+| A1 | Expanded accuracy/robustness programme | ◐ **51.4% — S01–S05 complete, S06 70%, S07 50%, 22 Nov**; 14 tasks, fixed weights, 140 rungs | Gates in §6b; final nightly + versioned history + successor chunk | HANDOFF § Progress ladders |
 
 ### 6a. Next chunk — A1: player accuracy, defence and trustworthy season paths
 
@@ -703,6 +703,23 @@ face cards and unrelated presentation remain §9b backlog. NBA history moved to 
   **−0.022412 to −0.020141**. Independent re-fitting reproduces all probabilities and 10,000-draw interval
   accounting. This does not establish an unbiased substitution hazard or an engine gain; incoming availability,
   joint selection and the pooled-minute engine gate remain open. Production and PWA remain unchanged.
+- **22 Nov 2026 · A1 S06/S07 partial:** the 200-game S06 candidate screen failed explicitly after at least **40**
+  games on a no-eligible-five foul-out; same-stream replay identified game **401810472**. No accuracy comparison
+  or promotion is claimed. S07 F4's independent audit
+  reconciled **5,208** known-label play proxies and **399** supported starter team-games: no-report Brier **0.15450**,
+  infinite log loss; starter slots **78.05%**, exact five **30.83%**. F1–F3 and failure isolation continue;
+  At that point A1 was **49.6%**, and the served model/PWA were unchanged.
+- **22 Nov 2026 · A1 S07 30%:** the independently audited four-fold baselines cover **28,530** inferred candidates,
+  **20,665** known play labels and **1,574** supported starter team-games. Starter-slot accuracy ranges
+  **78.05–83.91%**; all no-report play-proxy log losses are infinite. Five F3 games have no prior roster; unknowns
+  remain excluded. These are retrospective proxies, not dated status forecasts. A1 is **50.2%**; the served model,
+  forecasts and PWA bundle remain unchanged.
+- **22 Nov 2026 · A1 S07 40%:** all **5** retained timestamped report collections belong to the protected season;
+  there are **0** dated report origins in the training or validation portion of every development fold. The
+  status-to-play/start split is unsupported, so retain the fallback and dated-collection gate; A1 is **50.8%**.
+- **22 Nov 2026 · A1 S07 50%:** report-status candidate calibration is unsupported, so the existing fallback remains.
+  The future dated pre-tip collection gate requires at least **100 known player-games / 30 games** per assessed group,
+  chronological splits and the unchanged paired promotion gates. Censored return/rest research remains; A1 is **51.4%**.
 - **22 Nov 2026 · S06 foul-out probe:** in a controlled world, an available substitute does not replace a player
   with six fouls because the current engine's foul-out mask is never updated. The finding is not a forecast gain
   or a population frequency; isolate and gate a repair alongside substitution research.

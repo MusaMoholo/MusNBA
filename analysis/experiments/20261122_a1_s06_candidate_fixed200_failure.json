@@ -1,0 +1,29 @@
+{
+  "experiment": "a1_s06_selected_timeout_fixed200",
+  "status": "failed_explicitly",
+  "fold": "F4",
+  "games_requested": 200,
+  "worlds_per_game": 1000,
+  "jobs": 4,
+  "population": "actual-participant diagnostic, not a pre-game availability forecast",
+  "completed_at_least": 40,
+  "last_progress": "game 40/200 at 378 seconds",
+  "failed_game": "401810472",
+  "failed_game_bounds": "ordered game indices 41 through 50, inclusive",
+  "reproduction": "The ordered ten-game replay completed its first four games and failed with the identical world/side error on its fifth, identifying ordered fixed-panel game 45.",
+  "reproduction_log": "/tmp/musnba_a1_s06_failure_probe.log",
+  "reproduction_log_sha256": "7f9e727763e63ca21cf6ba16a5e804af906de5056863f501000bc05f3a6c9aa0",
+  "failed_game_date_et": "2026-01-20",
+  "failed_side": "home team 7; eight actual-participant inputs",
+  "error": "world 563 side 0: fewer than five eligible players after foul-out",
+  "outcome": "The run aborted without writing aggregate outputs. No paired accuracy or state-response comparison is available and the candidate cannot be promoted.",
+  "log": "/tmp/musnba_a1_s06_candidate_fixed200.log",
+  "log_sha256": "b016362c1511d5ef4b5964bc94fc30ed95243f64556c71ba0dd70ca05142ff0f",
+  "input_sha256": {
+    "scripts/backtest.py": "98881a91c14fe180fdfa6ffb1212b75280f297cf161d4f59e9138bdd08b2e183",
+    "scripts/engine.py": "3c62f518a27ff006f572dadf74351301e8f6acdda6b8889037eac269ce81414e",
+    "scripts/a1_substitution_engine.py": "55a8b6c4e74206344c3022e565e56a02a20e3c1ab85d760691c9fd82870dcaff",
+    "analysis/experiments/20261122_a1_s06_engine_models_F4.json": "794e1e06a193b097021e496a4d21d57ba61cf026b038bfb15d119991c6cde6d0",
+    "data/derived/experiments/20261122_a1_s03_f4_game_ids.json": "5d1285db46b129de9da954d9a44c93e03a281d0bc76bfa82ac4a97619da7bcc7"
+  }
+}

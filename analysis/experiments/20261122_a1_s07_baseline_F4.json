@@ -1,0 +1,192 @@
+{
+ "experiment": "a1_s07_no_report_and_projected_starter_baselines",
+ "fold": "F4",
+ "games": 200,
+ "fitted_before": "2026-01-01",
+ "candidate_player_games": 7317,
+ "known_play_labels_scored": 5208,
+ "unknown_play_labels": 2109,
+ "source_conflicts_excluded": 0,
+ "play_proxies": {
+  "no_report_availability_fallback": {
+   "brier": {
+    "observations": 5208,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.15450268817204302,
+    "ci_95": [
+     0.141622311120681,
+     0.1677299620840763
+    ]
+   },
+   "log_loss": {
+    "status": "infinite",
+    "value": null,
+    "impossible_outcomes": 718
+   },
+   "calibration": [
+    {
+     "lower": 0.0,
+     "upper": 0.2,
+     "players": 0,
+     "games": 0,
+     "mean_prediction": null,
+     "observed_play_rate": null
+    },
+    {
+     "lower": 0.2,
+     "upper": 0.4,
+     "players": 0,
+     "games": 0,
+     "mean_prediction": null,
+     "observed_play_rate": null
+    },
+    {
+     "lower": 0.4,
+     "upper": 0.6,
+     "players": 233,
+     "games": 122,
+     "mean_prediction": 0.5,
+     "observed_play_rate": 0.4334763948497854
+    },
+    {
+     "lower": 0.6,
+     "upper": 0.8,
+     "players": 0,
+     "games": 0,
+     "mean_prediction": null,
+     "observed_play_rate": null
+    },
+    {
+     "lower": 0.8,
+     "upper": 1.0,
+     "players": 4975,
+     "games": 200,
+     "mean_prediction": 0.99678391959799,
+     "observed_play_rate": 0.8472361809045226
+    }
+   ]
+  },
+  "target_positive_frequency": {
+   "brier": {
+    "observations": 5208,
+    "games": 200,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.13110275038402458,
+    "ci_95": [
+     0.12445348728746852,
+     0.13816900969711343
+    ]
+   },
+   "log_loss": {
+    "status": "infinite",
+    "value": null,
+    "impossible_outcomes": 109
+   },
+   "calibration": [
+    {
+     "lower": 0.0,
+     "upper": 0.2,
+     "players": 0,
+     "games": 0,
+     "mean_prediction": null,
+     "observed_play_rate": null
+    },
+    {
+     "lower": 0.2,
+     "upper": 0.4,
+     "players": 222,
+     "games": 120,
+     "mean_prediction": 0.255027027027027,
+     "observed_play_rate": 0.4189189189189189
+    },
+    {
+     "lower": 0.4,
+     "upper": 0.6,
+     "players": 1657,
+     "games": 200,
+     "mean_prediction": 0.5096397103198551,
+     "observed_play_rate": 0.6741098370549186
+    },
+    {
+     "lower": 0.6,
+     "upper": 0.8,
+     "players": 264,
+     "games": 157,
+     "mean_prediction": 0.707875,
+     "observed_play_rate": 0.8712121212121212
+    },
+    {
+     "lower": 0.8,
+     "upper": 1.0,
+     "players": 3065,
+     "games": 200,
+     "mean_prediction": 0.9909957585644372,
+     "observed_play_rate": 0.9383360522022839
+    }
+   ]
+  }
+ },
+ "starter_team_status": {
+  "ok": 399,
+  "incomplete_observed_starters": 1,
+  "no_prior_roster": 0
+ },
+ "starter_label_coverage": {
+  "raw_rows_missing_player_id": 6,
+  "team_games_without_complete_valid_starters": 1
+ },
+ "starter_team_results": {
+  "slot_accuracy": {
+   "observations": 399,
+   "games": 200,
+   "missing": 1,
+   "status": "ok",
+   "mean": 0.780451127819549,
+   "ci_95": [
+    0.759,
+    0.8010025062656643
+   ]
+  },
+  "exact_five": {
+   "observations": 399,
+   "games": 200,
+   "missing": 1,
+   "status": "ok",
+   "mean": 0.3082706766917293,
+   "ci_95": [
+    0.2625,
+    0.3533834586466165
+   ]
+  }
+ },
+ "observed_starters_outside_inferred_rosters": 4,
+ "seconds": 164.6,
+ "limitations": "No historical dated injury reports or official rosters are retained. The physical-availability fallback and target-positive frequencies are not calibrated physical status; both are scored against play/DNP labels only as proxies. Unknown labels remain excluded. Starter predictions use prior-box membership and strictly prior positions; unsupported teams are reported, not imputed. Raw boxes lack historical publication/correction timestamps.",
+ "input_sha256": {
+  "scripts/a1_availability_baseline.py": "213b6d320cacc5e974dc6380716471906a279e3d51326890cf110998744307af",
+  "analysis/experiments/20261122_a1_s05_minutes_screen_accounting_corrected.json": "d6adfa66577f694504fbde510ca00d92110412404a85da0c1855e9521e520415",
+  "data/derived/experiments/20261122_a1_s05_no_report_F4_corrected.parquet": "60f5b11298924e2bf750803a44d3e6ef52a92cc4d7b5b1406ee19fd8430b2e24",
+  "analysis/experiments/20261122_a1_pre_candidate_manifest.json": "195b4ddaf748e4f3520a02f813b5763736fe4fbfbe653e896161532d6d9c7e6b",
+  "data/derived/variants/a1_causal_base_20261122_v2/features/pregame.parquet": "1bd657a66ef42e6f624b860f3ed235896a6a93baa94bb9b6c058ce8ebf74fd28",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+  "data/raw/hoopr/player_box_2026.parquet": "29a29dc9efd055a93e069a0382ac830d98a13274bee655beba69d95cff099713",
+  "data/derived/teams.json": "130aa5358d49b944c2b5bee7e9a163f1e53285e93dae57262f039ca1636b7ecc",
+  "scripts/minutes.py": "94dd0ed25e536708c75cd4cf1f386bf2f9fa35f2c334d83cbdd031d4448ba2d0",
+  "scripts/a1_minutes_unconditional.py": "110682da20f17dff0bce9ef9a5587a03d6b7a88515cf55d1d14ebcd26aa8be35",
+  "scripts/a1_substitution_in_coverage.py": "5cefed7037d452ea88630c33425887e9a7c0e712e1476b4df732f9c07b35558a",
+  "data/derived/history/2023/on_court.parquet": "ba9b4b13e16e5b839e5530905497d2d00d231413ea40f39ee46855f3ebce8c3b",
+  "data/derived/history/2024/on_court.parquet": "5461947edb052ef9e62b4a70ba49e57a0f98d929f4a19167f03aad3972457f95",
+  "data/derived/history/2025/on_court.parquet": "5bbabab60114aa3f7fa096d7708be96f47177c541debcae88059da6b1adb77e9",
+  "data/derived/history/2026/on_court.parquet": "1b0ffaf53490c3fda4edd28ac427766a0af3a1bfe86f1fece240cd63ed1e8410",
+  "data/raw/hoopr/player_box_2023.parquet": "968d835cd04b10533c5b5af8c0e41bf0154a73782e9446c76f765109223e8679",
+  "data/raw/hoopr/player_box_2024.parquet": "1e500a538ec45ddbcb58d9789b5494f8db4f25658eafd01d90f2d09600921665",
+  "data/raw/hoopr/player_box_2025.parquet": "e89f7fbc1124092c715b722e6d72d9dd1b9d28776ca6888b508fd2831cd705e2"
+ },
+ "output_sha256": {
+  "data/derived/experiments/20261122_a1_s07_baseline_F4.parquet": "85ddf63fbfa239db2fd5086431102ea4731476bdb7617f230ba43112b4036381",
+  "data/derived/experiments/20261122_a1_s07_baseline_F4_teams.parquet": "49f8a5338341d52fe6773d13629b1be20c53f019c790169a5038c6e7b361ecbd"
+ }
+}

@@ -532,6 +532,43 @@ mark that team-game unsupported rather than impute a position or activate a play
 against complete observed five-starter sets, including starters outside the prior roster; report unsupported sets,
 outside-roster starters, slot accuracy, exact-five accuracy and game-cluster uncertainty. These historical boxes lack
 publication timestamps and status reports, so even a good result cannot satisfy S07's genuinely dated promotion gate.
+The retained report archive contains no development-origin training or validation examples. Therefore no
+report-status play/start candidate can be calibrated under this gate; retain the current fixed status and
+no-report fallback without treating its retrospective play-proxy scores as physical-availability calibration.
+Continue timestamped pre-tip collection, preserving both rosters and injury files and their capture bounds.
+For each status or starter subgroup evaluated, require at least the existing **100 known player-games across
+30 games**, explicit unknown/coach-DNP handling, a strictly chronological train/validation split and paired
+game-cluster uncertainty; unsupported cells remain inconclusive. These minima are necessary, not sufficient for
+promotion, which still requires the full S01 player-first and genuinely dated availability gates.
+
+For S07's exploratory **recorded DNP return/rest sequences**, freeze the following before building the sequence
+population or examining its scores. Use only retained regular-season NBA boxes from 2022–23 through 2025–26;
+the protected season is excluded. Reconstruct each team's ordered games, player/team listings and strictly prior
+outcomes. A known positive-minute appearance is play; a recorded DNP is not-play. A player unlisted in the next
+team game, ambiguous minutes/DNP, a team change, season boundary or missing next game censors the sequence rather
+than proving continued physical absence. Do not bridge a missing team-game or infer a player's prior injury from
+a later label. Report left-censored starts, unlisted gaps and reason categories separately. Explicitly identify
+coach DNP, exact `REST`, explicit injury/illness text and other/missing reasons; the last categories are not
+classified as injury or health.
+
+At each next-team-game origin immediately following an observed DNP, use the earlier observed DNP spell length
+(1, 2–3, or 4+ consecutive listed games), its first recorded reason category and the prior positive-minute role
+as retrospective play-proxy features. A spell is left-censored unless its immediately preceding team game listed
+the player as playing; exclude these spells from both paired return models. Define prior role from the mean of up to
+five earlier positive-minute appearances on the same team in that season: at least 30 minutes is a star proxy,
+18 to under 30 a starter proxy, under 18 a bench proxy, and no earlier positive minutes unknown. Compare a
+Beta(1,1)-smoothed earlier-training return-to-play rate by reason
+with the same rate additionally grouped by the fixed duration bins. For each F1–F4 fold, fit only examples whose
+outcome date is before that fold's validation start; validate on its already-fixed 200 game IDs. Report counts,
+right-censoring, unmodified probability log loss, Brier and 10,000 complete-game bootstrap intervals with S01's
+seed, including the paired Brier difference; use the existing 100-player-game/30-game support floor. Separately,
+on a prior listed play, fit a smoothed earlier-training chance that the next known listed outcome is an explicit
+rest DNP, comparing an overall rate to the same fixed prior-role groups. A rest or injury subgroup without that support is
+inconclusive, not a zero-risk estimate. These models condition on being listed with a known outcome in the next
+game and use retrospective DNP reasons with unknown publication times: they do not prove physical recovery,
+future roster membership, pre-tip report availability or a deployable season-absence hazard. Because the F4
+label-coverage audit has already been seen, this is exploratory rather than a new untouched confirmation. A genuinely
+dated cohort and the frozen availability promotion gate remain mandatory.
 
 For S03's remaining flow diagnosis, reproduce the **same 200-game, 1,000-world** free-running control with its
 original seeds and opt-in diagnostics only; audit every original output field against the retained reproduction before

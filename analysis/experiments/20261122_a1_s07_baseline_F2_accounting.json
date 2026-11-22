@@ -1,0 +1,25 @@
+{
+ "fold": "F2",
+ "games": 200,
+ "candidate_player_games": 7390,
+ "known_play_labels": 5226,
+ "team_games": 400,
+ "starter_status": {
+  "ok": 400,
+  "no_prior_roster": 0
+ },
+ "observed_starters_outside_roster": 2,
+ "bootstrap_replicates": 10000,
+ "fingerprints_checked": 20,
+ "input_sha256": {
+  "analysis/experiments/20261122_a1_s07_baseline_F2.json": "75057381ea0b925fe2e15a2b70eb0b478c90be5822f6325bd93687271baa19d6",
+  "data/derived/experiments/20261122_a1_s07_baseline_F2.parquet": "dff46ef4eb25ab76b306346e18a8815f4042afb8dd9a31d132518e86fbf005f7",
+  "data/derived/experiments/20261122_a1_s07_baseline_F2_teams.parquet": "499ff0d2b60d09c9471490336f6e8cf1018f6c75c5e08aacb090e970a5daa84c",
+  "data/derived/experiments/20261122_a1_s05_no_report_F2_corrected.parquet": "9d598e220b871ae86805c28bfbc1a9de0216333e156f80334a756feb1131c56f",
+  "analysis/experiments/20261122_a1_pre_candidate_manifest.json": "195b4ddaf748e4f3520a02f813b5763736fe4fbfbe653e896161532d6d9c7e6b",
+  "data/derived/history/2025/segments.parquet": "d9db732172894ed8d3c6e5e99e3cd1c197006da22799413034ce3ce18cc5aee2",
+  "data/raw/hoopr/player_box_2025.parquet": "e89f7fbc1124092c715b722e6d72d9dd1b9d28776ca6888b508fd2831cd705e2"
+ },
+ "experiment": "a1_s07_baseline_independent_accounting",
+ "audit_source_sha256": "4b95c09012c791dfe5543aae73c807f3c58c1b41d672ff0ee1ea9fa619520891"
+}

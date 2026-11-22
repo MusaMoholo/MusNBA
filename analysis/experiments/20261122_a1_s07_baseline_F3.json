@@ -1,0 +1,192 @@
+{
+ "experiment": "a1_s07_no_report_and_projected_starter_baselines",
+ "fold": "F3",
+ "games": 200,
+ "fitted_before": "2025-10-01",
+ "candidate_player_games": 6400,
+ "known_play_labels_scored": 5013,
+ "unknown_play_labels": 1387,
+ "source_conflicts_excluded": 0,
+ "play_proxies": {
+  "no_report_availability_fallback": {
+   "brier": {
+    "observations": 5013,
+    "games": 195,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.14566128067025735,
+    "ci_95": [
+     0.13280569358552352,
+     0.15802644906388025
+    ]
+   },
+   "log_loss": {
+    "status": "infinite",
+    "value": null,
+    "impossible_outcomes": 664
+   },
+   "calibration": [
+    {
+     "lower": 0.0,
+     "upper": 0.2,
+     "players": 0,
+     "games": 0,
+     "mean_prediction": null,
+     "observed_play_rate": null
+    },
+    {
+     "lower": 0.2,
+     "upper": 0.4,
+     "players": 0,
+     "games": 0,
+     "mean_prediction": null,
+     "observed_play_rate": null
+    },
+    {
+     "lower": 0.4,
+     "upper": 0.6,
+     "players": 228,
+     "games": 119,
+     "mean_prediction": 0.5,
+     "observed_play_rate": 0.30701754385964913
+    },
+    {
+     "lower": 0.6,
+     "upper": 0.8,
+     "players": 0,
+     "games": 0,
+     "mean_prediction": null,
+     "observed_play_rate": null
+    },
+    {
+     "lower": 0.8,
+     "upper": 1.0,
+     "players": 4785,
+     "games": 195,
+     "mean_prediction": 0.9985370950888193,
+     "observed_play_rate": 0.858516196447231
+    }
+   ]
+  },
+  "target_positive_frequency": {
+   "brier": {
+    "observations": 5013,
+    "games": 195,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.11205340434869339,
+    "ci_95": [
+     0.10700180644639407,
+     0.11729905261346724
+    ]
+   },
+   "log_loss": {
+    "status": "infinite",
+    "value": null,
+    "impossible_outcomes": 52
+   },
+   "calibration": [
+    {
+     "lower": 0.0,
+     "upper": 0.2,
+     "players": 0,
+     "games": 0,
+     "mean_prediction": null,
+     "observed_play_rate": null
+    },
+    {
+     "lower": 0.2,
+     "upper": 0.4,
+     "players": 195,
+     "games": 107,
+     "mean_prediction": 0.25345128205128203,
+     "observed_play_rate": 0.31794871794871793
+    },
+    {
+     "lower": 0.4,
+     "upper": 0.6,
+     "players": 1424,
+     "games": 194,
+     "mean_prediction": 0.5067064606741573,
+     "observed_play_rate": 0.6334269662921348
+    },
+    {
+     "lower": 0.6,
+     "upper": 0.8,
+     "players": 232,
+     "games": 144,
+     "mean_prediction": 0.7016982758620689,
+     "observed_play_rate": 0.8017241379310345
+    },
+    {
+     "lower": 0.8,
+     "upper": 1.0,
+     "players": 3162,
+     "games": 195,
+     "mean_prediction": 0.9892735610373182,
+     "observed_play_rate": 0.9576217583807717
+    }
+   ]
+  }
+ },
+ "starter_team_status": {
+  "ok": 376,
+  "unknown_prior_position": 14,
+  "no_prior_roster": 10
+ },
+ "starter_label_coverage": {
+  "raw_rows_missing_player_id": 3,
+  "team_games_without_complete_valid_starters": 0
+ },
+ "starter_team_results": {
+  "slot_accuracy": {
+   "observations": 376,
+   "games": 192,
+   "missing": 14,
+   "status": "ok",
+   "mean": 0.798404255319149,
+   "ci_95": [
+    0.7809511178476698,
+    0.8155506428550842
+   ]
+  },
+  "exact_five": {
+   "observations": 376,
+   "games": 192,
+   "missing": 14,
+   "status": "ok",
+   "mean": 0.2978723404255319,
+   "ci_95": [
+    0.2493368700265252,
+    0.3472584856396867
+   ]
+  }
+ },
+ "observed_starters_outside_inferred_rosters": 4,
+ "seconds": 91.3,
+ "limitations": "No historical dated injury reports or official rosters are retained. The physical-availability fallback and target-positive frequencies are not calibrated physical status; both are scored against play/DNP labels only as proxies. Unknown labels remain excluded. Starter predictions use prior-box membership and strictly prior positions; unsupported teams are reported, not imputed. Raw boxes lack historical publication/correction timestamps.",
+ "input_sha256": {
+  "scripts/a1_availability_baseline.py": "213b6d320cacc5e974dc6380716471906a279e3d51326890cf110998744307af",
+  "analysis/experiments/20261122_a1_s05_minutes_screen_accounting_corrected.json": "d6adfa66577f694504fbde510ca00d92110412404a85da0c1855e9521e520415",
+  "data/derived/experiments/20261122_a1_s05_no_report_F3_corrected.parquet": "1579b7b9b6273dbfadc9b6c851b1b15a7f746230494d53b5caf6e6a5a41ec457",
+  "analysis/experiments/20261122_a1_pre_candidate_manifest.json": "195b4ddaf748e4f3520a02f813b5763736fe4fbfbe653e896161532d6d9c7e6b",
+  "data/derived/variants/a1_causal_base_20261122_v2/features/pregame.parquet": "1bd657a66ef42e6f624b860f3ed235896a6a93baa94bb9b6c058ce8ebf74fd28",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+  "data/raw/hoopr/player_box_2026.parquet": "29a29dc9efd055a93e069a0382ac830d98a13274bee655beba69d95cff099713",
+  "data/derived/teams.json": "130aa5358d49b944c2b5bee7e9a163f1e53285e93dae57262f039ca1636b7ecc",
+  "scripts/minutes.py": "94dd0ed25e536708c75cd4cf1f386bf2f9fa35f2c334d83cbdd031d4448ba2d0",
+  "scripts/a1_minutes_unconditional.py": "110682da20f17dff0bce9ef9a5587a03d6b7a88515cf55d1d14ebcd26aa8be35",
+  "scripts/a1_substitution_in_coverage.py": "5cefed7037d452ea88630c33425887e9a7c0e712e1476b4df732f9c07b35558a",
+  "data/derived/history/2023/on_court.parquet": "ba9b4b13e16e5b839e5530905497d2d00d231413ea40f39ee46855f3ebce8c3b",
+  "data/derived/history/2024/on_court.parquet": "5461947edb052ef9e62b4a70ba49e57a0f98d929f4a19167f03aad3972457f95",
+  "data/derived/history/2025/on_court.parquet": "5bbabab60114aa3f7fa096d7708be96f47177c541debcae88059da6b1adb77e9",
+  "data/derived/history/2026/on_court.parquet": "1b0ffaf53490c3fda4edd28ac427766a0af3a1bfe86f1fece240cd63ed1e8410",
+  "data/raw/hoopr/player_box_2023.parquet": "968d835cd04b10533c5b5af8c0e41bf0154a73782e9446c76f765109223e8679",
+  "data/raw/hoopr/player_box_2024.parquet": "1e500a538ec45ddbcb58d9789b5494f8db4f25658eafd01d90f2d09600921665",
+  "data/raw/hoopr/player_box_2025.parquet": "e89f7fbc1124092c715b722e6d72d9dd1b9d28776ca6888b508fd2831cd705e2"
+ },
+ "output_sha256": {
+  "data/derived/experiments/20261122_a1_s07_baseline_F3.parquet": "042e372ebb8a885aa06d4e8facb0ef6b4238c1f5408764cb711e2e28255c2e7e",
+  "data/derived/experiments/20261122_a1_s07_baseline_F3_teams.parquet": "7bc882fe84df3ded81f9e32f2ed0d98e93e01a031426bf0e36c76d743bf45b0a"
+ }
+}

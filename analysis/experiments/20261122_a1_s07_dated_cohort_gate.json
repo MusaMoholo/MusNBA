@@ -1,0 +1,20 @@
+{
+  "experiment": "a1_s07_development_dated_report_coverage_gate",
+  "retained_collections": 5,
+  "development_collections": 0,
+  "protected_final_season_collections": 5,
+  "folds": {
+    "F1": {"training_through": "2023-12-31", "validation_from": "2024-01-01", "validation_through": "2024-04-30", "training_report_origins": 0, "validation_report_origins": 0},
+    "F2": {"training_through": "2024-12-31", "validation_from": "2025-01-01", "validation_through": "2025-04-30", "training_report_origins": 0, "validation_report_origins": 0},
+    "F3": {"training_through": "2025-09-30", "validation_from": "2025-10-01", "validation_through": "2025-12-31", "training_report_origins": 0, "validation_report_origins": 0},
+    "F4": {"training_through": "2025-12-31", "validation_from": "2026-01-01", "validation_through": "2026-04-30", "training_report_origins": 0, "validation_report_origins": 0}
+  },
+  "decision": "No genuinely dated development report cohort exists for status-to-play/start training or validation. Retain the existing fallback and collect dated pre-tip reports; do not score or tune against the protected-season outcomes.",
+  "limitations": "Prior-box play/start proxies remain available but have neither official dated rosters nor historical report publication timestamps. Absence of retained snapshots does not prove that no reports existed elsewhere.",
+  "protected_season_outcomes_scored": false,
+  "input_sha256": {
+    "analysis/experiments/20261122_a1_s07_report_coverage.json": "d26667eb3aa2410cc1d6f2aba3059436d4efa114b3d643ae0c46ea31753b97a1",
+    "analysis/experiments/20261122_a1_s07_report_coverage_audit.json": "9ab0d806488cba35f7318567507360535e7bb8071843e003eb5f01ce5c7397f3",
+    "analysis/experiments/20261122_a1_pre_candidate_manifest.json": "195b4ddaf748e4f3520a02f813b5763736fe4fbfbe653e896161532d6d9c7e6b"
+  }
+}

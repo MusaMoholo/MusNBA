@@ -1520,6 +1520,42 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   word; none is silently made healthy. All known-play keys overlap the **4,346**-player-game oracle, which has
   **30** additional keys outside that cohort. Prior membership is not proof of eligibility and these are post-game
   labels, not dated pre-tip reports (`20261122_a1_s07_labels_audit.json`).
+- **S06 fixed-screen failure:** the selected-timeout actual-participant F4 200-game/1,000-world screen completed at
+  least **40** games (last progress **378 s**) before a world had fewer than five non-disqualified available players
+  after a foul-out. It stopped explicitly and saved no aggregate outputs. Thus there is no 200-game minute-CRPS or
+  state-response estimate and no promotion; the D29 control remains. The failed run and source/log fingerprints are
+  preserved in `20261122_a1_s06_candidate_fixed200_failure.json`. A same-stream replay identified game
+  **401810472** (20 Jan 2026), home team **7**, with **8** actual-participant inputs; world **563** reached the
+  explicit no-eligible-five condition. This is a simulated failure, not a claim that the real team had four players.
+- **S07 F4 fixed baselines:** on **5,208** known play/DNP labels from **7,317** strictly prior-box candidates,
+  the no-report physical-availability fallback has play-proxy Brier **0.15450** (game-cluster 95%
+  **0.14162–0.16773**) and infinite log loss due to **718** impossible predictions. The target-positive frequency
+  proxy has Brier **0.13110** (95% **0.12445–0.13817**) and infinite log loss from **109** impossible predictions.
+  Of **400** team-games, **399** have valid scores: starter-slot accuracy **78.05%** (95% **75.90–80.10%**) and
+  exact-five accuracy **30.83%** (95% **26.25–35.34%**); **4** observed starters are outside inferred candidates.
+  Independent reconstruction checks every score, cell and interval. The **2,109** unknown labels are excluded;
+  inferred prior-box membership is not a dated roster, and physical-availability and play proxies are not the same
+  outcome. Four-fold results follow. Reports: `20261122_a1_s07_baseline_F4{,_accounting}.json`.
+- **S07 four-fold baseline completion:** independent accounting of the pre-registered F1–F4 fixed panels confirms
+  **28,530** inferred candidates, **20,665** known play/DNP labels and **7,865** unknowns. F3 has **5** games without
+  any prior roster. The **1,574** supported team-games have F1/F2/F3/F4 starter-slot accuracy
+  **83.91/78.35/79.84/78.05%** and exact-five **42.36/31.25/29.79/30.83%**; **15** team-games lack required
+  prior positions, **1** lacks complete observed starter truth and **10** lack prior rosters. The fixed no-report
+  play-proxy Brier is **0.14565/0.17460/0.14566/0.15450**; corresponding log losses are infinite, with
+  **673/815/664/718** impossible predictions. The target-positive play proxy has Brier
+  **0.12116/0.13919/0.11205/0.13110** and infinite losses from **61/132/52/109** impossible outcomes.
+  Each fold's **10,000** game-cluster bootstrap intervals and coverage are in
+  `20261122_a1_s07_baseline_F{1,2,3,4}{,_accounting}.json`. Physical status, unlisted player outcomes and
+  historical publication times remain unknown; these estimates cannot satisfy the dated availability gate.
+- **S07 dated split gate:** all **5** independently inventoried retained report collections are from 19–21 Nov 2026
+  in the protected season. F1, F2, F3 and F4 each have **0** retained report origins through their training cutoff
+  and **0** within validation dates; see `20261122_a1_s07_dated_cohort_gate.json`. A report-status play/start model
+  cannot be trained or calibrated on a genuinely dated development cohort. This is a statement about retained data,
+  not about whether historical reports existed elsewhere; no protected outcomes were scored.
+- **S07 status/start decision:** because the genuinely dated development cohort contains **0** origins, no
+  report-status play/start candidate is calibrated or promoted. The existing fixed fallback is retained; the
+  prospective collection/support gate is documented in TRAINING_PLAN §8.2. The retrospective baseline's Brier and
+  starter accuracy do not establish status calibration or physical health.
 
 ## 6b. A1 S03 matched component diagnosis (22 Nov 2026; descriptive)
 
