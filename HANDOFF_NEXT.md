@@ -5,11 +5,47 @@ The preceding pushed checkpoint was **3bb3787** (A1 snapshot-context audit); use
 
 ## Read this first — live handoff
 
+- **Owner's latest horizon change (22 Nov; implementation pending):** stop possession-engine forecasts for
+  tomorrow and later: simulate today's ET games only; tomorrow onward belongs to the season team engine.
+  Exclude tomorrow's old possession forecasts and future player/possession sensitivities from the active dashboard
+  while preserving original forecasts/archives; expose future team-level score distributions from season worlds,
+  labelled regulation because pathway ties are resolved separately without overtime points. Still produce a
+  fresh season on days with no games. Existing pre-tip-only "How we did"
+  retrospective summaries should remain available where forecasts were actually retained; do not invent older
+  forecasts or backfill. Update affected app copy and dynamic labels, tests, docs, nightly output and
+  iCloud/PWA delivery after this contract change. This owner's request supersedes D24/D26's two-day horizon.
+- **A1 dashboard acceptance clarification (owner, 22 Nov):** complete and deliver the uncertainty/lineup
+  experience in the actual dashboard as A1 closes, not merely in injection-only research. Do not pass off
+  fixed research fixtures as today's live data; enforce origin provenance, keep assumptions explicitly
+  uncalibrated and all affected views coherent, validate fresh outputs, bundles and normal routes, and keep
+  the accepted model unless its promotion gates pass. Existing current availability panels and
+  participation-based Given/Joint are not the full plays/sits control.
+- **D50 delivery ladder (supplemental, no change to Chunk A weights):** 10% freeze today's-only and archive
+  contract; 20% trace stale previews and existing pre-tip reviews; 30% implement today's/no-game nightly;
+  40% exclude future possession sensitivities and expose honest team distributions; 50% update app copy and preserve past reviews;
+  60% pass focused cutoff, archive and no-game tests; 70% pass responsive/browser tests and inspect screenshots;
+  80% run fresh nightly and verify team-pathway boundary; 90% verify iCloud export and PWA/offline shell;
+  100% review all docs, smoke/fault, commit and push. Phone import remains a separate manual owner check.
 - **Compute budget (owner, 22 Nov):** on this 14-core Mac, cap simultaneous heavy work at **10 total compute
   threads/workers**, including nested threads; leave at least four cores' worth of aggregate capacity for normal
   use, and reduce when busy or memory pressure rises. This is not a guaranteed affinity/responsiveness reservation.
   Follow the script-specific controls in AGENTS §6, including the backtest's internal OpenMP override. The
   owner-requested 8/10/12 short comparison is a specific exception; run it without other heavy jobs.
+- **Slate parallelism (owner, 22 Nov):** investigate scheduling multiple independent game computations concurrently
+  under the same 10-thread total budget instead of assuming serial slate time is game count × standalone time.
+  `nightly.project_slate` currently runs games serially and its engine has mutable `last` state: isolate engines
+  per process, retain per-game seeds and exact outputs, join safely before the existing season coupling, and
+  benchmark throughput/memory at different game/thread splits before shipping. Computational independence
+  given fixed inputs does not establish real-world cross-game injury/form independence. This is future work,
+  not implemented or a reason to bypass A1 promotion or cutoff gates.
+- **Forecast reuse question (owner, 22 Nov):** consider carrying yesterday's tomorrow forecast into today and
+  selectively rerunning games when new roster, availability, role, minute or other material inputs are not covered
+  by stored branches. Research only: freeze a cutoff-safe stale-versus-fresh fold comparison and explicit
+  invalidation rules before adopting; compare player-first accuracy, availability coverage, runtime and season
+  consistency. One selected uncertain per team cannot cover a newly injured/traded player or all multiple
+  uncertainties, and the branch weights remain uncalibrated. The rest-days node ablation was neutral/worse for
+  possession decisions, not proof back-to-backs have no effect on minutes, injuries or whole-game performance.
+  Keep today's current fresh forecast until a candidate passes gates. No historical forecast backfill authorised.
 - **Current action:** continue A1 90%: finish representative accounting, restart, cutoff and runtime gates;
   the isolated single-world retry is not integrated or validated at 10k scale, and dated development injury
   reports are absent. Do not equate wiring tests with predictive promotion. **Owner's latest stop:
@@ -85,6 +121,31 @@ The preceding pushed checkpoint was **3bb3787** (A1 snapshot-context audit); use
   smoke **108/108** and deliberate fault **86/108** (`/tmp/musnba_a1_parallel_{smoke,fault}.log`).
   AGENTS, HANDOFF, PLAN, TRAINING_PLAN, FINDINGS and README record the budget, work and evidence; ENGINE_PLAN
   needs no change (model decisions and gates unchanged); DASHBOARD_PLAN needs no change (no UI shipped).
+- **A1 90% persisted-scale design, frozen before implementation:** run a research-only fixed F4, one-player
+  plays-branch test using the pinned parallel pilot inputs and ten single-thread workers. Generate 10,000
+  accepted independently seeded worlds in 100 batches of 100; batch 0 uses the pilot's base seed, later
+  batch seeds are deterministically derived from the base seed and batch index. Inject one explicitly labelled
+  rejection at batch 0/world 1 and record every rejection and accepted seed with finite per-world/global caps.
+  Persist each batch of captured traces, scores and minutes under a fresh ignored directory, fingerprint every
+  file, then independently read and audit every batch and verify the first 20 against the serial pilot except
+  for the replaced world. Report at each 1,000 accepted worlds, record generation and separate audit times,
+  source/input hashes, storage and limitations. Refuse existing outputs and fail explicitly on any unclassified
+  or accounting error. Do not treat this synthetic single-game experiment as a representative failure rate,
+  unbiased retry, predictive gain, calibrated availability, full-slate runtime or production promotion.
+  If interrupted, retain completed batch files and logs; start a fresh run rather than overwrite them unless a
+  verified resume mechanism is added. A successful test does not clear the remaining A1 cutoff and fold gates.
+- **A1 persisted-scale result:** 10,000 worlds, synthetic selected availability, ten single-thread workers,
+  generated in **676.162 s**, with one intentionally injected rejection and no others on this one F4 game.
+  Independent saved-file replay passed **10,000** per-world hashes/seeds and **2,546,803** lineup snapshots,
+  including minutes/points and the first 20 serial-pilot identities, in **18.013 s**. Compressed `.npz` batches
+  total **18,348,870 bytes** in ignored `data/derived/experiments/20261122_chunk_a_a1_parallel_capture10000_v1/`;
+  report/audit `analysis/experiments/20261122_chunk_a_a1_parallel_capture10000_v1{,_audit}.json`. First 100-world
+  rehearsal found trace dtype promotion; corrected v2 and regression test preserve the original dtype. The v1
+  rehearsal's intermediate source was not committed. This is not full player-box accounting, a full-slate
+  benchmark, a representative rejection rate, cross-fold bias comparison or calibrated availability. Research
+  remains unwired and production is unchanged. Focused capture/retry/context checks **12/12**, smoke **108/108**,
+  deliberate fault **86/108** (nonzero exit), logs `/tmp/musnba_a1_capture_{smoke,fault}.log`. Before the newly requested D50 implementation, preserve this
+  checkpoint; after D50, return to A1's explicit gate/fallback decision and the owner's stop-at-A1 boundary.
 - **A1 80% shared-scenario groundwork, partial:** `outcomes.mjs` now adapts an explicitly supplied validated
   research source and binds weighted probability mass, counts, distributions, means, correlations and half-open
   grids to one selected world set. `scenario.mjs` uses those calculations when injected, otherwise the existing

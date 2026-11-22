@@ -2,6 +2,18 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 — persisted isolated-world scale:** on fixed F4 game `401810327`, synthetic selected-player
+availability and ten single-thread workers, **10,000** accepted plays-branch worlds took **676.162 s**
+including startup and compressed capture writing. There was one deliberately injected rejection and no
+other observed rejection in this one-game sample; this is not a representative failure rate. The saved
+100 batch files total **18,348,870 bytes**. Separate replay took **18.013 s**, checked every world and seed,
+**2,546,803** lineup snapshots, all minute/score identities and the first 20 against the serial pilot
+(the injected replacement against its retry). The first 100-world rehearsal uncovered integer dtype promotion
+when merging traces; the corrected run preserves per-world dtypes and losslessly restores them for hash checks.
+The failed v1 rehearsal report is historical and its intermediate source was not committed. These captures
+do not provide all box-score statistics, demonstrate predictive non-inferiority or validate availability.
+Reports `20261122_chunk_a_a1_parallel_capture{100_v1,100_v2,100_v2_audit,10000_v1,10000_v1_audit}.json`.
+
 **22 Nov 2026 — process scaling:** on one fixed F4 game, the same **120** independently seeded and audited
 worlds ran with 8, 10 and 12 processes sequentially, one OpenMP/BLAS thread each. Startup- and shutdown-inclusive
 times were **13.938 / 12.841 / 13.263 s**, respectively; all capture hashes, audit summaries and seeds matched

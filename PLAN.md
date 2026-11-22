@@ -429,6 +429,26 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 · A1 persisted-world research:** **10,000** isolated F4 worlds on ten single-thread workers
+  generated in **676.162 s**; independent replay in **18.013 s** verified **2,546,803** lineup snapshots,
+  each seed and hash, minutes/points, and 20 serial-pilot identities. One rejection was injected; no others
+  occurred in this single synthetic game. Files total **18.35 MB** compressed. A dtype-promotion defect found
+  in rehearsal was fixed and regression-tested. This is not a full-slate runtime, representative failure rate,
+  accuracy/availability validation or promotion; retained models and production output are unchanged.
+- **22 Nov 2026 · D50, implementation pending:** owner changed the daily flow to possession-engine forecasts
+  for today only, with the team engine starting tomorrow. Preserve retained pre-game forecasts and existing
+  result comparisons, without historical backfill; handle no-game days and stale future snapshots, then deliver
+  the changed output/PWA contract. This supersedes the two-day horizon in D24/D26.
+- **22 Nov 2026 · forecast reuse question:** owner proposed using yesterday's tomorrow projections as today's
+  forecast to reduce nightly work. Investigate a selective-refresh hybrid only after defining material input
+  invalidation, availability/roster coverage, cutoff safety, player-first stale-versus-fresh fold tests,
+  runtime and season consistency. Existing branches are research-only and uncalibrated; rest-day node evidence
+  does not establish no back-to-back impact on minutes or whole-game outcomes. Current fresh forecasts retained.
+- **22 Nov 2026 · slate throughput direction:** the owner noted that independent game computations can be
+  scheduled in parallel rather than assuming slate time equals serial game count × standalone time. Current
+  `nightly.project_slate` is serial; evaluate process-isolated games and thread splits within the shared
+  10-thread budget, verify deterministic outputs and season coupling, and benchmark speed/memory before
+  changing the nightly. Conditional computational independence does not prove real-world cross-game independence.
 - **22 Nov 2026 · A1 parallel scaling:** the same 120 audited F4 worlds matched across 8/10/12 processes and
   the first 20 matched the serial pilot. Startup-inclusive times were **13.938 / 12.841 / 13.263 s**;
   per-worker maximum peak RSS was **1,041 / 1,045 / 1,046 MB**. This short comparison supports testing

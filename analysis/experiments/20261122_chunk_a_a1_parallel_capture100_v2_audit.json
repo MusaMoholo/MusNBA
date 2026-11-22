@@ -1,0 +1,17 @@
+{
+ "kind": "independent saved-trace accounting and identity audit",
+ "report": "analysis/experiments/20261122_chunk_a_a1_parallel_capture100_v2.json",
+ "report_sha256": "fb39c10407f60ee6be8d3543c599c0335e6f9fc9d2b1e4f6f23a17f5dde96d32",
+ "worlds": 100,
+ "batches": 1,
+ "lineup_snapshots": 25491,
+ "rejections": 1,
+ "serial_pilot_worlds_checked": 20,
+ "elapsed_seconds": 0.226,
+ "limitations": [
+  "One rejection is injected; remaining rejections are not representative of NBA games.",
+  "This is one synthetic-availability F4 game, not a fold comparison or calibrated forecast.",
+  "Per-world seeds differ from production vectorized streams.",
+  "This is not a full-slate or nightly runtime."
+ ]
+}
