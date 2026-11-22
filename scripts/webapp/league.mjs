@@ -17,8 +17,8 @@ export async function render(view, ctx) {
 // ------------------------------------------------------------------ standings
 function seasonPill(m) {  // which model made the season forecast (D25/D26: the team pathway; else the placeholder's)
   return m && m.kind === 'team-pathway'
-    ? `<span class="pill good" title="${esc(m.label)}">Team pathway ${esc((m.id || '').replace('team-pathway-', ''))}</span>`
-    : `<span class="pill accent" title="${esc(m ? m.label : '')}">Placeholder model</span>`;
+    ? `<a href="#/about" class="pill good" title="${esc(m.label)} · About the model">Team pathway ${esc((m.id || '').replace('team-pathway-', ''))}</a>`
+    : `<a href="#/about" class="pill accent" title="${esc(m ? m.label : '')} · About the model">Placeholder model</a>`;
 }
 
 async function standings(view, {meta, current, rest}) {

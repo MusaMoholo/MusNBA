@@ -5,8 +5,9 @@ import * as game from './game.mjs';
 import * as league from './league.mjs';
 import * as players from './players.mjs';
 import * as lab from './lab.mjs';
+import * as about from './about.mjs';
 
-const VIEWS = {today, game, standings: league, teams: league, team: league, players, player: players, lab, season: league};
+const VIEWS = {today, game, standings: league, teams: league, team: league, players, player: players, lab, about, season: league};
 const NAV = {today: 'today', game: 'today', standings: 'standings', teams: 'teams', team: 'teams', players: 'players', player: 'players', lab: 'lab', season: 'standings'};
 let token = 0;
 const scrolls = new Map();
@@ -80,7 +81,7 @@ function renderDataPanel(info) {
   const rows = info.snapshots.slice().reverse().map(s =>
     `<tr><td class="l"><a href="#/today/${s.date}">${dayLabel(s.date)}</a></td><td class="l">${s.kind}</td><td>${s.games}</td><td class="l">${esc(stamp(s.generated))}</td><td class="l">${esc(s.model)}</td></tr>`).join('');
   document.getElementById('data-body').innerHTML = `
-    <p class="note"><b>${esc(info.model.label)}</b>. Each game is simulated ${info.model.sims.toLocaleString()} times; the season sims every unplayed fixture ${(info.model.season_sims || info.model.sims).toLocaleString()} times. ${['engine', 'preview'].includes(info.model.kind) ? 'The possession engine plays every possession of today\'s games; it is the floor — a new model replaces it only if the backtest says it is better (PLAN.md). Past dates rebuilt after the fact use the placeholder.' : 'Placeholder model — the possession engine is the default for today\'s slate (PLAN.md).'}</p>
+    <p class="note"><a href="#/about">About the model →</a></p><p class="note"><b>${esc(info.model.label)}</b>. Each game is simulated ${info.model.sims.toLocaleString()} times; the season sims every unplayed fixture ${(info.model.season_sims || info.model.sims).toLocaleString()} times. ${['engine', 'preview'].includes(info.model.kind) ? 'The possession engine plays every possession of today\'s games; it is the floor — a new model replaces it only if the backtest says it is better (PLAN.md). Past dates rebuilt after the fact use the placeholder.' : 'Placeholder model — the possession engine is the default for today\'s slate (PLAN.md).'}</p>
     <p class="note">Season ${esc(info.season)} · ${info.data.finals} of ${info.data.games} scheduled games final · collection run ${esc(info.data.collected_run)} · views built ${esc(stamp(info.built))}. Source: ESPN public site API. Times in UK with ET.</p>
     <div class="scroll" style="margin-top:10px"><table><thead><tr><th class="l">Slate</th><th class="l">Kind</th><th>Games</th><th class="l">Generated</th><th class="l">Model</th></tr></thead><tbody>${rows}</tbody></table></div>
     <p class="note">Pre-game snapshots are built before tip-off with that day's injury report. Retrospective snapshots are rebuilt later from box scores before that date, without injury news.</p>`;

@@ -184,8 +184,8 @@ export function errorPanel(error) {
 // Model chip: the possession engine (default, D22) or the placeholder (backfills); full label in the tooltip.
 export function modelPill(model) {
   return model && (model.kind === 'engine' || model.kind === 'preview')
-    ? `<span class="pill good" title="${esc(model.label)}">Engine ${esc(model.version || 'v1')}</span>`
-    : `<span class="pill accent" title="${esc(model ? model.label : '')}">Placeholder model</span>`;
+    ? `<a href="#/about" class="pill good" title="${esc(model.label)} · About the model">Engine ${esc(model.version || 'v1')}</a>`
+    : `<a href="#/about" class="pill accent" title="${esc(model ? model.label : '')} · About the model">Placeholder model</a>`;
 }
 
 // Shared Standings sections: all season insights stay within one destination.

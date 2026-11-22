@@ -333,3 +333,5 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 - **22 Nov 2026 · U19**: Movers compares distinct season cutoffs (30 teams; 20→21 Nov, nine results), projected-win and Top 6/play-in/#1 changes, risers/fallers and linked interval results. Races/Movers/Leaders merged under Standings per owner; /season redirects. Six Movers cases and twelve merged-navigation cases passed; screenshots inspected.
 
 - **22 Nov 2026 · U20**: Standings Leaders: seven player leaderboards (PTS/REB/AST/3PM/STL/BLK/FG%) and four team rating/pace leaderboards. Explicit minimum-games and shooting-attempt filters; current data qualifies at 12 GP. Distinct from forecast Races; six size/theme checks passed and screenshots reviewed.
+
+- **22 Nov 2026 · U21**: About the model guide: two engines, 10k worlds, ranges and probability changes, cutoff safety, decision highlights, known limitations, sources and live retained-data freshness. Linked from engine/season chips and Model & data; PWA included. Six size/theme checks passed and screenshots reviewed.
