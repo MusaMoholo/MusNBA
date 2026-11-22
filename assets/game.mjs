@@ -10,17 +10,26 @@ export const PERIODS = [['q1', 'Q1', '1st quarter'], ['q2', 'Q2', '2nd quarter']
 const PERIOD_IDS = PERIODS.map(p => p[0]);
 const periodName = id => PERIODS.find(p => p[0] === id)?.[2] || 'Full game';
 const LABEL = {pts: 'PTS', reb: 'REB', oreb: 'OREB', dreb: 'DREB', ast: 'AST', fg3m: '3PM', fgm: 'FGM', ftm: 'FTM', pra: 'PRA', pr: 'P+R',
-               pa: 'P+A', ra: 'R+A', stl: 'STL', blk: 'BLK', stocks: 'STL+BLK', tov: 'TOV', min: 'MIN', fga: 'FGA', fta: 'FTA', fg3a: '3PA'};
+               pa: 'P+A', ra: 'R+A', stl: 'STL', blk: 'BLK', stocks: 'STL+BLK', tov: 'TOV', min: 'MIN', fga: 'FGA', fta: 'FTA', fg3a: '3PA',
+               fgpct: 'FG%', fg3pct: '3P%', ftpct: 'FT%'};
 const NAME = {pts: 'Points', reb: 'Rebounds', oreb: 'Offensive rebounds', dreb: 'Defensive rebounds', ast: 'Assists', fg3m: 'Threes made',
               fgm: 'Field goals made', ftm: 'Free throws made', pra: 'Points + rebounds + assists',
               pr: 'Points + rebounds', pa: 'Points + assists', ra: 'Rebounds + assists', stl: 'Steals', blk: 'Blocks',
               stocks: 'Steals + blocks', tov: 'Turnovers', min: 'Minutes', fga: 'Field-goal attempts',
-              fta: 'Free-throw attempts', fg3a: 'Three-point attempts'};
-// Owner (20 Nov): makes and the main stats only — no combos or attempts; a stat shows once its distribution is stored
-const SHEET_FG = ['pts', 'reb', 'oreb', 'dreb', 'ast', 'fg3m', 'fgm', 'ftm', 'stl', 'blk', 'tov', 'min'];
-const SHEET_PERIOD = ['pts', 'reb', 'oreb', 'dreb', 'ast', 'fg3m', 'fgm', 'ftm', 'stl', 'blk', 'min'];
-// Owner (20 Nov): Scoring · Rebounding (ALL / OFF / DEF) · Handling · Defense · Time; button text per group, LABEL elsewhere
-const STAT_GROUPS = [['Scoring', [['pts', 'PTS'], ['fgm', 'FGM'], ['fg3m', '3PM'], ['ftm', 'FTM']]],
+              fta: 'Free-throw attempts', fg3a: 'Three-point attempts', fgpct: 'Field-goal percentage',
+              fg3pct: 'Three-point percentage', ftpct: 'Free-throw percentage'};
+const SHEET_FG = ['pts', 'reb', 'oreb', 'dreb', 'ast', 'fg3m', 'fgm', 'ftm', 'fga', 'fg3a', 'fta', 'fgpct', 'fg3pct', 'ftpct', 'stl', 'blk', 'tov', 'min'];
+const SHEET_PERIOD = SHEET_FG.filter(k => k !== 'tov');
+const PERCENT_STATS = new Set(['fgpct', 'fg3pct', 'ftpct']);
+const SHOOTING_CONTEXT = {
+  fgm: ['field-goal', 'fga'], fga: ['field-goal', 'fga'], fgpct: ['field-goal', 'fga'],
+  fg3m: ['3-point', 'fg3a'], fg3a: ['3-point', 'fg3a'], fg3pct: ['3-point', 'fg3a'],
+  ftm: ['free-throw', 'fta'], fta: ['free-throw', 'fta'], ftpct: ['free-throw', 'fta'],
+};
+const STAT_GROUPS = [['Scoring', [['pts', 'PTS']]],
+                     ['Field goals', [['fgm', 'FGM'], ['fga', 'FGA'], ['fgpct', 'FG%']]],
+                     ['Threes', [['fg3m', '3PM'], ['fg3a', '3PA'], ['fg3pct', '3P%']]],
+                     ['Free throws', [['ftm', 'FTM'], ['fta', 'FTA'], ['ftpct', 'FT%']]],
                      ['Rebounding', [['reb', 'ALL'], ['oreb', 'OFF'], ['dreb', 'DEF']]],
                      ['Handling', [['ast', 'AST'], ['tov', 'TOV']]], ['Defense', [['stl', 'STL'], ['blk', 'BLK']]], ['Time', [['min', 'MIN']]]];
 const state = {mode: null, stat: store.get('stat', 'pts'), period: 'fg', lines: new Map()};
@@ -555,13 +564,17 @@ function multiRows(p, m) {
           row('Quintuple-double', v.quintuple), row('5×5', v.five_by_five, true)].filter(Boolean);
 }
 // A tile holding several aligned lines (owner: stack related numbers rather than spreading them over many tiles)
-const stackTile = (title, rows) => `<div class="tile stack"><span>${esc(title)}</span><div class="lines">${rows.map(([k, v]) => `<em>${esc(k)}</em><b>${v}</b>`).join('')}</div></div>`;
+const stackTile = (title, rows, note = '') => `<div class="tile stack"><span>${esc(title)}</span><div class="lines">${rows.map(([k, v]) => `<em>${esc(k)}</em><b>${v}</b>`).join('')}</div>${note ? `<small>${esc(note)}</small>` : ''}</div>`;
 
 function actualValue(r, period, key) {
   const a = actualLine(r, period);
   if (!a) return null;
   const reb = a.reb ?? ((a.oreb || 0) + (a.dreb || 0));
   if (key === 'min') return Math.round(a.sec / 60);
+  if (PERCENT_STATS.has(key)) {
+    const [made, attempts] = {fgpct: ['fgm', 'fga'], fg3pct: ['fg3m', 'fg3a'], ftpct: ['ftm', 'fta']}[key];
+    return a[attempts] > 0 && a[made] != null ? Math.round(100 * a[made] / a[attempts]) : null;
+  }
   if (key === 'reb') return reb;
   if (key === 'pra') return a.pts + reb + a.ast;
   if (key === 'pr') return a.pts + reb;
@@ -595,23 +608,29 @@ async function sheet(view, data, pid, current) {
   const statBlock = () => {
     const d = proj.stats[state.stat];
     const act = actualValue(actualRow, period, state.stat);
+    const isPercent = PERCENT_STATS.has(state.stat), unit = isPercent ? '%' : '';
+    const shooting = SHOOTING_CONTEXT[state.stat], attempts = shooting && proj.stats[shooting[1]];
+    const actualShooting = isPercent ? actualLine(actualRow, period) : null;
+    const noAttempt = attempts ? probWhere(attempts, v => v === 0) : null;
     const line = state.lines.has(key()) ? halfLine(state.lines.get(key())) : defaultLine(d);
     const pOver = over(d, line);  // x.5 lines: no push
     return `<section class="panel"><div class="row" style="justify-content:space-between"><h2 style="margin:0">${esc(NAME[state.stat] || LABEL[state.stat])} · ${esc(periodName(period))}</h2>
-      <span class="note" style="margin:0">mean ${f1(d.mean)} · median ${d.q[2]} · 10–90%: ${d.q[0]} to ${d.q[4]}</span></div>
-      <div class="dist" style="margin-top:8px"><div>${histogram(d, {line, actual: act})}
+      <span class="note" style="margin:0">mean ${f1(d.mean)}${unit} · median ${d.q[2]}${unit} · 10–90%: ${d.q[0]}${unit} to ${d.q[4]}${unit}</span></div>
+      ${shooting ? `<p class="note">${noAttempt == null ? `The ${shooting[0]} attempts distribution is not stored for this snapshot.` : `No ${shooting[0]} attempts in ${pct(noAttempt, 1)} of simulations; at least one in ${pct(1 - noAttempt, 1)}.`}
+        ${isPercent ? `Below: only the ${d.defined.toLocaleString()} of ${d.total.toLocaleString()} simulations with an attempt. The distribution and all chances are conditional on an attempt; no attempts means no percentage, not 0%. Percentages are rounded to whole percentage points.` : 'Counting-stat distributions include all simulations.'}</p>` : ''}
+      <div class="dist" style="margin-top:8px"><div>${histogram(d, {line, actual: act, label: v => v + unit})}
         <div class="lineinput"><label for="line-stat">Over</label><input id="line-stat" type="number" step="1" min="0.5" value="${line}" data-line="stat">
-          <output>Over: ${pct(pOver)}</output><span class="dim">Under: ${pct(1 - pOver)}</span></div>
-        ${act != null ? `<p class="note">Actual: <b>${act}</b> · ${ordinal(Math.round(100 * percentileOf(d, act)))} percentile of the simulations</p>` : ''}</div>
+          <output>Over${isPercent ? ' if attempted' : ''}: ${pct(pOver)}</output><span class="dim">Under${isPercent ? ' if attempted' : ''}: ${pct(1 - pOver)}</span></div>
+        ${act != null ? `<p class="note">Actual: <b>${act}${unit}</b> · ${ordinal(Math.round(100 * percentileOf(d, act)))} percentile of the ${isPercent ? 'simulations with an attempt' : 'simulations'}</p>` : actualShooting ? `<p class="note">${actualShooting[shooting[1]] === 0 ? 'Actual: no attempts; shooting percentage is undefined.' : 'Actual shooting percentage is unavailable.'}</p>` : ''}</div>
         <div class="scroll"><table><thead><tr><th class="l">${esc(LABEL[state.stat])}</th><th>Chance</th></tr></thead><tbody>
-        ${stepLadder(d).map(([label, pr]) => `<tr><td class="l">${esc(label)}</td>${heat(pr, {digits: 1})}</tr>`).join('')}</tbody></table></div></div></section>`;
+        ${stepLadder(d, {suffix: unit + '+'}).map(([label, pr]) => `<tr><td class="l">${esc(label)}</td>${heat(pr, {digits: 1})}</tr>`).join('')}</tbody></table></div></div></section>`;
   };
   const tiles = proj ? `<div class="tiles" style="margin-top:12px">
       <div class="tile"><span>Minutes</span><b>${mmss(proj.sec)}</b></div>
       <div class="tile"><span>Points</span><b>${f1(proj.mean.pts)}</b></div>
       <div class="tile"><span>Rebounds</span><b>${f1(proj.mean.reb)}</b></div>
       <div class="tile"><span>Assists</span><b>${f1(proj.mean.ast)}</b></div>
-      ${stackTile('Shooting', [['FG', shoot(proj.mean.fgm, proj.mean.fga, true)], ['3P', shoot(proj.mean.fg3m, proj.mean.fg3a, true)], ['FT', shoot(proj.mean.ftm, proj.mean.fta, true)]])}
+      ${stackTile('Shooting', [['FG', shoot(proj.mean.fgm, proj.mean.fga, true)], ['3P', shoot(proj.mean.fg3m, proj.mean.fg3a, true)], ['FT', shoot(proj.mean.ftm, proj.mean.fta, true)]], 'Tile % = mean makes ÷ mean attempts')}
       ${stackTile('Chances', [['Plays', pct(p.played, 0)], ...(period === 'fg' ? multiRows(p, data.multi?.[pid]) : [])])}</div>
       ${p.minutes_basis ? `<p class="note">Minutes basis: healthy role ${f1(p.minutes_basis.healthy)} min${p.minutes_basis.rotation < 0.95 ? ` · plays ${pct(p.minutes_basis.rotation, 0)} of the games he is available for` : ''} · target ${f1(p.minutes_basis.target)} if the listed roster plays${p.minutes_basis.k_back > 0 && p.minutes_basis.ramp < 0.995 ? ` · game ${p.minutes_basis.k_back} back after ${p.minutes_basis.missed} missed (ramp ×${p.minutes_basis.ramp.toFixed(2)})` : ''}${p.starter ? ' · projected starter' : ''}. Team minutes are shared to exactly 240 by priority, so an absent teammate's minutes pass down the rotation.</p>` : ''}
       ${p.if_plays ? `<p class="note">If he plays (full game): ${f1(p.if_plays.min)} min · ${f1(p.if_plays.pts)} pts · ${f1(p.if_plays.reb)} reb · ${f1(p.if_plays.ast)} ast. ${esc(p.status)}${p.injury?.comment ? ' — ' + esc(p.injury.comment) : ''}</p>` : ''}`
@@ -623,11 +642,11 @@ async function sheet(view, data, pid, current) {
         ${sim ? `<label class="sr" for="sheet-period">Period</label><select id="sheet-period" class="period">${options}</select>` : ''}
         <a class="btn ghost" href="#/player/${pid}">Player page</a></div>${tiles}</section>
       ${proj ? `${segGroups(STAT_GROUPS.map(([g, ks]) => [g, ks.filter(([k]) => choices.includes(k))]), state.stat, 'data-stat')}<div id="stat-block">${statBlock()}</div>` : ''}
-      ${proj && period === 'fg' && data.worlds ? '<div id="what-if"></div>' : ''}
+      ${proj && period === 'fg' && data.worlds && !PERCENT_STATS.has(state.stat) ? '<div id="what-if"></div>' : ''}
       ${proj && period === 'fg' ? S.averagesPanel(data, pid, proj) : ''}
       ${period === 'fg' ? guardedPanel(data, pid) : ''}
       ${context ? contextPanel(context, period) : ''}
-      <p class="note">${sim ? `${sim.sims.toLocaleString()} simulated games from the ${esc(data.projection.kind)} snapshot of ${esc(dayLabel(data.projection.snapshot))}. Distributions include simulations where he does not play${period === 'fg' ? '' : '; overtime counts in FG only'}.` : ''}</p>`;
+      <p class="note">${sim ? `${sim.sims.toLocaleString()} simulated games from the ${esc(data.projection.kind)} snapshot of ${esc(dayLabel(data.projection.snapshot))}. Counting-stat distributions include simulations where he does not play${period === 'fg' ? '' : '; overtime counts in FG only'}. Shooting percentages exclude no-attempt simulations and appear only when at least one simulation has an attempt. Some older snapshots do not contain all shooting distributions.` : ''}</p>`;
     view.querySelector('#sheet-period')?.addEventListener('change', e => location.replace(`#/game/${data.game.id}/player/${pid}/${e.target.value}`));
     view.querySelectorAll('[data-stat]').forEach(b => b.onclick = () => { state.stat = b.dataset.stat; store.set('stat', state.stat); paint(); });
     const block = view.querySelector('#stat-block');

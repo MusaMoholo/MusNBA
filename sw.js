@@ -1,7 +1,7 @@
 import {recordResponse, stored} from './assets/pwa-storage.mjs';
 const BASE = new URL('./', self.location.href).pathname;
 const PREFIX = 'musnba-shell-' + encodeURIComponent(BASE) + '-';
-const CACHE = PREFIX + '0d7693ac00bad5eb2e00';
+const CACHE = PREFIX + '614f3061d9dc69a41bc4';
 const MODULES = ['app', 'ui', 'today', 'game', 'league', 'players', 'lab', 'season', 'about', 'spotlight', 'outcomes', 'scenario', 'pwa', 'pwa-storage', 'static-api'];
 const FILES = ['', 'index.html', 'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png',
                ...MODULES.map(n => 'assets/' + n + '.mjs')].map(path => BASE + path);

@@ -3,7 +3,17 @@ import {api, barChart, dayLabel, esc, f1, logo, normalise, pct, seg, signed, sta
 
 const COLS = [['gp', 'GP'], ['min', 'MIN'], ['pts', 'PTS'], ['trend', 'L10 trend'], ['reb', 'REB'], ['ast', 'AST'], ['stl', 'STL'], ['blk', 'BLK'], ['tov', 'TOV'],
               ['fg3m', '3PM'], ['fg_pct', 'FG%'], ['fg3_pct', '3P%'], ['ft_pct', 'FT%'], ['ts_pct', 'TS%'], ['pm', '+/−']];
-const state = {mode: store.get('players-mode', 'pg'), sort: {key: 'pts', dir: -1}, q: '', team: '', minGp: 3, limit: 60};
+const state = {mode: store.get('players-mode', 'pg'), sort: {key: 'pts', dir: -1}, q: '', team: '', minMinutesShare: 0.1, limit: 60};
+
+export function minutesBenchmark(standings) {
+  if (!standings.teams.length || standings.teams.some(t => !Number.isInteger(t.gp) || t.gp < 0))
+    throw new Error('Season team games are unavailable for the minutes filter.');
+  return 48 * Math.max(...standings.teams.map(t => t.gp));
+}
+
+export function qualifiesMinutes(player, share, benchmark) {
+  return player.gp > 0 && (!share || (benchmark > 0 && Number.isFinite(player.tot.min) && player.tot.min >= share * benchmark));
+}
 
 export async function render(view, ctx) {
   if (ctx.name === 'player') return playerPage(view, ctx);
@@ -35,19 +45,22 @@ const sparkCell = p => {
 const fmt = (key, v, mode) => v == null ? '—' : /_pct$/.test(key) ? (100 * v).toFixed(1) : key === 'gp' ? v : key === 'pm' ? signed(v, mode === 'tot' ? 0 : 1) : mode === 'tot' ? Math.round(v) : v.toFixed(1);
 
 async function table(view, {meta, current}) {
-  const data = await api('players');
+  const [data, standings] = await Promise.all([api('players'), api('standings/' + encodeURIComponent(meta.latest))]);
   if (!current()) return;
+  if (data.date !== standings.date) throw new Error('Player and team season cutoffs do not match.');
+  const benchmark = minutesBenchmark(standings);
   const teams = Object.values(meta.teams).sort((a, b) => a.name.localeCompare(b.name));
   view.innerHTML = `<section class="panel"><div class="row" style="justify-content:space-between;margin-bottom:10px"><div><h2 style="margin:0">Players</h2>
       <p class="note" style="margin:0">Season to date through ${esc(dayLabel(data.date))} (exclusive)</p></div></div>
     <div class="controls"><input type="search" id="pq" placeholder="Filter players" aria-label="Filter players" value="${esc(state.q)}">
       <select id="pt" aria-label="Team"><option value="">All teams</option>${teams.map(t => `<option value="${t.id}"${t.id === state.team ? ' selected' : ''}>${esc(t.name)}</option>`).join('')}</select>
-      <select id="pg" aria-label="Minimum games"><option value="1">All players</option><option value="3"${state.minGp === 3 ? ' selected' : ''}>3+ games</option><option value="8"${state.minGp === 8 ? ' selected' : ''}>8+ games</option></select>
+      <select id="pg" aria-label="Minimum share of season minutes"><option value="0"${state.minMinutesShare === 0 ? ' selected' : ''}>All players with a game</option>${[10, 25, 50].map(n => `<option value="${n / 100}"${state.minMinutesShare === n / 100 ? ' selected' : ''}>${n}%+ minutes</option>`).join('')}</select>
       ${seg([['pg', 'Per game'], ['tot', 'Totals'], ['p36', 'Per 36']], state.mode, 'data-mode')}</div>
+    <p class="note">${benchmark ? `Minutes share = season minutes ÷ ${benchmark.toLocaleString()} regulation minutes (48 × ${benchmark / 48} games, the most played by any team). League-wide benchmark, not roster eligibility; overtime and trades can put a player above 100%.` : 'Minutes-share filters are unavailable until a team has played a game.'}</p>
     <div id="ptable"></div></section>`;
   const paint = () => {
     const q = normalise(state.q);
-    let rows = data.players.filter(p => p.gp >= state.minGp && (!state.team || p.team === state.team) && (!q || normalise(p.name).includes(q)));
+    let rows = data.players.filter(p => qualifiesMinutes(p, state.minMinutesShare, benchmark) && (!state.team || p.team === state.team) && (!q || normalise(p.name).includes(q)));
     const {key, dir} = state.sort;
     rows = rows.map(p => ({p, v: value(p, key, state.mode)})).sort((a, b) => (a.v == null) - (b.v == null) || dir * ((a.v ?? 0) - (b.v ?? 0)) || a.p.name.localeCompare(b.p.name)).map(x => x.p);
     const shown = rows.slice(0, state.limit);
@@ -71,7 +84,7 @@ async function table(view, {meta, current}) {
   };
   view.querySelector('#pq').oninput = e => { state.q = e.target.value; state.limit = 60; paint(); };
   view.querySelector('#pt').onchange = e => { state.team = e.target.value; paint(); };
-  view.querySelector('#pg').onchange = e => { state.minGp = Number(e.target.value); paint(); };
+  view.querySelector('#pg').onchange = e => { state.minMinutesShare = Number(e.target.value); state.limit = 60; paint(); };
   view.querySelectorAll('[data-mode]').forEach(b => b.onclick = () => {
     state.mode = b.dataset.mode; store.set('players-mode', state.mode);
     view.querySelectorAll('[data-mode]').forEach(x => x.setAttribute('aria-pressed', x === b));
