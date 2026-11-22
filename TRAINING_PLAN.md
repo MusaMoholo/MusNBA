@@ -475,6 +475,29 @@ Any joint selector must receive an explicit per-world active roster and disquali
 distinct players and preserve five on court, use positional context without inventing legal position limits, and
 surface insufficient eligible replacements rather than quietly activating an unavailable player.
 
+For S06's first **isolated engine feasibility candidate**, freeze the following before any engine result. Fit the
+outgoing and incoming node models exactly as above on each fold's earlier seed/fold populations and verify their
+validation scores reproduce the stored screen predictions. Sample each simulated world's regulation timeout clocks
+from one complete earlier-training game's *selected* timeout template; sample overtime clocks independently from
+earlier-training observed overtime periods. Defer a sampled clock to the next recognised simulated dead ball in the
+same period; count expired/coalesced clocks. These templates intentionally cover only the selected timeout subset,
+not every timeout or legal stoppage, and their outcome-selection bias remains a limitation. At a sampled timeout,
+draw the five outgoing Bernoulli decisions jointly conditional on there being enough explicitly active,
+non-disqualified bench players; do not activate an unavailable player or silently clamp a proposed lineup. Rank
+eligible incoming players with the fitted relative score and sample without replacement using independent Gumbel
+noise (temperature 1). The models receive the same strictly prior per-game target proxy, tier and position as their
+fold datasets; missing stays missing. The existing per-world D29 schedule is the plan: keep a timeout override until
+the plan next changes at a recognised dead ball, and reset at period starts; overtime starts from the closing plan.
+Six-foul players must be replaced before a subsequent free-throw rebound, or the simulation must explicitly report
+the no-eligible-replacement condition rather than pretending to obey the rule. Use a separate deterministic policy
+random stream, preserve the unmodified default path, and report missing inputs, opportunity timing and runtime.
+
+The fixed F4 paired 200-game, 1,000-world actual-participant screen remains the first engine gate, not a pre-game
+availability test. Before it, reproduce the saved default on the pinned small-game subset and test simultaneous
+substitutions, foul-outs, period changes, overtime, five-player/seconds/points identities and short rosters. A
+failure or a negative player-minute result retains the D29 control; no selected-timeout node score is itself a
+promotion or a reason to weaken S01's confirmation gates.
+
 For S03's remaining flow diagnosis, reproduce the **same 200-game, 1,000-world** free-running control with its
 original seeds and opt-in diagnostics only; audit every original output field against the retained reproduction before
 using the extras. Record player FGA/FTA/turnovers and quarter minutes/scoring, simulated segment-clock summaries,

@@ -20,6 +20,7 @@ Partial checkpoint **2f05d47** preserves the independently audited outgoing resu
 foul-out probe; **08cd659** preserves the type-correct probe. Both are pushed.
 The first incoming-screen implementation and protocol were pushed as **89f6dc4**, and progress logging as **2229066**,
 before any incoming fit.
+The audited incoming screen and S06 50% ledger were pushed as **1ecc78a**.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
 product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S05 are complete;
 S06 is active at 50%; A1 overall is 46.0%.** Isolated assignment candidates have event-level diagnostics and wiring only;
@@ -1142,10 +1143,12 @@ The dashboard programme is done. Do not resume U1–U22, repeat rejected defence
    but their selected-timeout populations cannot be applied as all-dead-ball hazards. Build an isolated, cutoff-safe
    engine integration with recognised opportunities matched to training, explicit per-world rosters and the
    reproduced foul-out correction; test simultaneous changes, periods, overtime and insufficient replacements.
-   Preserve both existing screens and their hashes. Start with
+   Preserve both existing screens and their hashes. The feasibility candidate's sampled selected-timeout templates,
+   conditional outgoing draw, incoming rank sampling, schedule handoff and strict foul-out behaviour are now frozen
+   in TRAINING_PLAN §8 before an engine result. Start with
    `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m unittest tests.test_a1_substitutions -q`, inspect
-   `scripts/engine.py`'s current segment/lineup transitions, and freeze the opportunity/engine protocol before
-   comparing results.
+   `scripts/engine.py`'s current segment/lineup transitions. Fit only earlier-fold substitution models, independently
+   reproduce the stored node predictions, and leave the default engine path unchanged before comparing results.
    Do not relabel unconfirmed non-entries as known eligible negatives; separate any actual-participant conditional
    diagnostic from a pre-game forecast. The selected-timeout outgoing result is not an engine validation. Fix the
    independently reproduced unupdated foul-out mask in an isolated S06 candidate, not the serving path, and test it
