@@ -28,8 +28,9 @@ Partial source checkpoint **4dce4a3** was pushed before the UX-delivery nightly.
 - **Active nightly:** shell **2955**, wrapper PID **14660**, nightly PID **14661**, log
   `/tmp/musnba_d44_nightly.log`. Launched at current ET origin with the default 10,000 game worlds and season
   paths. Collection completed with **63 requests, 0 failures, 0 new finals**; NBA Stats had no new requests.
-  Input rebuilding is underway. Read the full result when done. Do not start a second NBA Stats stream. If it fails,
-  preserve the previous iCloud bundle and record the precise blocker before retrying.
+  Input rebuilding completed in **235.2 s**. Read the full result when done. Do not start a second NBA Stats stream. If it fails,
+  preserve the previous iCloud bundle and record the precise blocker before retrying. Latest observed progress:
+  **4/17 games** completed as of **2026-11-22T16:57:05Z**, no error; the previous iCloud export remains in place.
 - **Independent A2 research:** rung **10%** completed on the fixed S01 F4 control and fingerprinted prior-only
   S05 roles; protocol/source were pushed before scoring (`3ce6dec`/`aac8c92`). Of **4,346** player-games, **26**
   lacked a role join, **12** had unknown roles and **704** more fell below the minutes threshold, leaving **3,604**
@@ -1369,7 +1370,8 @@ five/score/minute accounting. Before any branch claim, run the same fixed F4 gam
 plays/sits branch and frozen seeds, with independently recorded trace; the active D44 nightly must finish before
 editing `engine.py` or starting this engine replay. A passing probe is wiring evidence, not a promotion gate.
 **Partial implementation:** `scripts/a1_branch_foul_out.py` repairs only illegal fives, returns a world-local
-mask and fails closed on short rosters. **10/10** combined branch/covariance unit tests pass; it is deliberately
+mask and fails closed on short rosters. **9/9** branch unit tests now cover offense, defense, simultaneous
+repairs and unavailable players; it is deliberately
 not wired to the engine because its mask hook does not yet exist. Next: finish and verify the D44 nightly and
 delivery, then add the backwards-compatible mask hook and focused world-local context tests before the probe.
 

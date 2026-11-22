@@ -152,7 +152,7 @@ class OnePlayerBranchesTests(unittest.TestCase):
     def test_isolated_foul_out_repairs_only_affected_worlds_and_sides(self):
         game = self.game()
         state = engine.Worlds(game, 3, np.random.default_rng(42))
-        state.off[:] = [0, 1, 1]
+        state.off[:] = [0, 1, 0]
         state.ingame['pf_so_far'][0, 0] = 6
         state.ingame['pf_so_far'][2, 7] = 6
         lineup = np.tile(np.array([[[0, 1, 2, 3, 4], [7, 8, 9, 10, 11]]]), (3, 1, 1))
@@ -167,7 +167,7 @@ class OnePlayerBranchesTests(unittest.TestCase):
         np.testing.assert_array_equal(offense[1], original[1, 1])
         np.testing.assert_array_equal(defense[1], original[1, 0])
         self.assertEqual(offense[0, 0], 5)
-        self.assertEqual(offense[2, 0], 12)
+        self.assertEqual(defense[2, 0], 12)
         np.testing.assert_array_equal(lineup, original)
         repaired = policy.before_segment(game, state, active, lineup)
         self.assertEqual(repaired[0, 0, 0], 5)
@@ -191,6 +191,22 @@ class OnePlayerBranchesTests(unittest.TestCase):
         lineup[0, 0, 1] = 0
         with self.assertRaisesRegex(a1_lineup_branches.BranchLegalityError, 'invalid scheduled five'):
             policy.before_segment(game, state, np.array([0]), lineup)
+
+    def test_isolated_replacement_respects_availability_and_active_world_indices(self):
+        game = self.game()
+        state = engine.Worlds(game, 3, np.random.default_rng(42))
+        lineup = np.tile(np.array([[[0, 1, 2, 3, 4], [7, 8, 9, 10, 11]]]), (2, 1, 1))
+        available = np.ones((3, game.n), dtype=bool)
+        available[2, 0] = False
+        available[2, 5] = False
+        state.ingame['pf_so_far'][2, 7] = 6
+        policy = a1_branch_foul_out.BranchFoulOutPolicy()
+        policy.begin(game, 3, available, 42)
+        result = policy.before_segment(game, state, np.array([0, 2]), lineup)
+        np.testing.assert_array_equal(result[0], lineup[0])
+        self.assertEqual(result[1, 0, 0], 6)
+        self.assertEqual(result[1, 1, 0], 12)
+        self.assertEqual(policy.counts['scheduled_replacements'], 2)
 
 
 if __name__ == '__main__':
