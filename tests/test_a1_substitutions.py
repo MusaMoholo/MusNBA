@@ -7,8 +7,8 @@ import pandas as pd
 
 from basketball_common import NBA_TEAM_IDS
 from scripts import (a1_substitution_audit, a1_substitution_dataset, a1_substitution_dataset_audit,
-                     a1_substitution_fold_data, a1_substitution_opportunities, a1_substitution_states,
-                     a1_substitutions)
+                     a1_substitution_fold_data, a1_substitution_opportunities, a1_substitution_out_screen,
+                     a1_substitution_seed_audit, a1_substitution_states, a1_substitutions)
 
 
 def player(pid, team, starter):
@@ -105,6 +105,11 @@ class SequentialSubstitutionTests(unittest.TestCase):
                   event(3, 'Jumpball', '7:40')]
         windows, _ = a1_substitutions.windows_for_game(game(events))
         self.assertEqual([(row['trigger_seq'], row['kind']) for row in windows], [(3, 'jump_ball')])
+
+    def test_excess_timeout_technical_is_not_a_timeout_opportunity(self):
+        events = [event(1, 'Excess Timeout Technical', '8:00'), event(2, 'Full Timeout', '7:50')]
+        windows, _ = a1_substitutions.windows_for_game(game(events))
+        self.assertEqual([(row['trigger_seq'], row['kind']) for row in windows], [(2, 'timeout')])
 
     def test_later_or_inconsistent_score_cannot_be_used(self):
         bad = [event(1, 'Full Timeout', '8:00', home_score=1)]
@@ -233,6 +238,59 @@ class SequentialSubstitutionTests(unittest.TestCase):
         retained, excluded = a1_substitution_fold_data.exclude_unidentified_ejections(windows, mixed)
         self.assertEqual(len(retained), 1)
         self.assertEqual(excluded, [])
+
+    def test_prior_ejection_with_player_still_on_court_quarantines_game(self):
+        windows, raw, _ = audit_fixture()
+        ejection = {'game_id': 1, 'period_number': 1, 'clock_display_value': '11:00', 'sequence_number': 3,
+                    'type_id': 1, 'type_text': 'Ejection', 'athlete_id_1': 1}
+        mixed = pd.concat([raw, pd.DataFrame([ejection])], ignore_index=True)
+        retained, excluded = a1_substitution_fold_data.exclude_ejected_on_court(windows, mixed)
+        self.assertTrue(retained.empty)
+        self.assertEqual(excluded, [{'game_id': '1', 'window_id': '1:0', 'player': '1'}])
+        mixed.loc[mixed['type_text'].eq('Ejection'), 'athlete_id_1'] = 6
+        retained, excluded = a1_substitution_fold_data.exclude_ejected_on_court(windows, mixed)
+        self.assertEqual(len(retained), 1)
+        self.assertEqual(excluded, [])
+
+    def test_out_screen_rejects_future_training_and_uses_reported_baseline_fallback(self):
+        seed = pd.DataFrame({'game_id': ['a', 'b', 'c', 'd'], 'date_et': ['2023-02-01'] * 4,
+                             'period': [1, 1, 2, 2], 'prior_tier': ['bench'] * 4,
+                             'label': [True, False, False, False]})
+        validation = pd.DataFrame({'game_id': ['e', 'e'], 'date_et': ['2024-01-01'] * 2,
+                                   'period': [1, 3], 'prior_tier': ['bench', 'unknown']})
+        train = a1_substitution_out_screen.training_rows({'seed': seed, 'F1': validation}, 'F1')
+        probabilities, fallback = a1_substitution_out_screen.conditional_baseline(train, validation)
+        self.assertAlmostEqual(probabilities[0], (1 + 20 * .25) / 22)
+        self.assertAlmostEqual(probabilities[1], .25)
+        self.assertEqual(fallback, 1)
+        leaked = seed.copy()
+        leaked.loc[0, 'date_et'] = '2024-01-01'
+        with self.assertRaisesRegex(ValueError, 'validation-date or future'):
+            a1_substitution_out_screen.training_rows({'seed': leaked, 'F1': validation}, 'F1')
+
+    def test_out_features_ignore_postgame_columns(self):
+        windows, raw, _ = audit_fixture()
+        rows, _ = a1_substitution_dataset.build(windows, target_fixture(), raw)
+        outgoing = rows[rows['decision'].eq('out')].copy()
+        expected = a1_substitution_out_screen.feature_matrix(outgoing)
+        outgoing['final_margin'] = 999
+        pd.testing.assert_frame_equal(expected, a1_substitution_out_screen.feature_matrix(outgoing))
+        outgoing.loc[outgoing.index[0], 'margin'] = float('nan')
+        with self.assertRaisesRegex(ValueError, 'missing observed game state'):
+            a1_substitution_out_screen.feature_matrix(outgoing)
+
+    def test_seed_roster_audit_ignores_future_and_rejects_tampered_prior_dates(self):
+        boxes = pd.DataFrame([{'day': '2023-01-01', 'player': '1', 'team': '10'},
+                              {'day': '2023-01-02', 'player': '2', 'team': '10'},
+                              {'day': '2023-01-06', 'player': '1', 'team': '20'}])
+        targets = pd.DataFrame([{'game_id': 'a', 'date_et': '2023-01-05', 'team': '10',
+                                 'player': '1', 'prior_day': '2023-01-01'},
+                                {'game_id': 'a', 'date_et': '2023-01-05', 'team': '10',
+                                 'player': '2', 'prior_day': '2023-01-02'}])
+        self.assertEqual(a1_substitution_seed_audit.audit_membership(targets, boxes)['candidate_rows'], 2)
+        targets.loc[0, 'prior_day'] = '2023-01-03'
+        with self.assertRaisesRegex(ValueError, 'roster or prior box date differs'):
+            a1_substitution_seed_audit.audit_membership(targets, boxes)
 
 
 if __name__ == '__main__':

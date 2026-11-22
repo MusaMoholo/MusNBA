@@ -49,7 +49,7 @@ def seed_targets(games: pd.DataFrame) -> pd.DataFrame:
     if games.empty or not games['date_et'].between(SEED_START, SEED_END).all():
         raise ValueError('seed origins lie outside the frozen training window')
     box = pd.read_parquet(ROOT / 'data/raw/hoopr/player_box_2023.parquet',
-                          columns=['game_date', 'athlete_id', 'team_id', 'season_type'])
+                          columns=['game_id', 'game_date', 'athlete_id', 'team_id', 'season_type'])
     box = box.loc[box['season_type'].eq(2)].dropna(subset=['game_date', 'athlete_id', 'team_id']).copy()
     box['day'] = pd.to_datetime(box['game_date'], errors='raise').dt.strftime('%Y-%m-%d')
     box['player'] = box['athlete_id'].astype('int64').astype(str)
@@ -163,7 +163,7 @@ def exclude_ejected_on_court(windows: pd.DataFrame, raw: pd.DataFrame) -> tuple[
 
 
 def paths_for(population: str) -> tuple[Path, Path, Path, Path | None]:
-    stem = f'20261122_a1_s06_fold_{population}_v2'
+    stem = f'20261122_a1_s06_fold_{population}_v3'
     report = EXPERIMENTS / f'{stem}.json'
     rows = DERIVED / 'experiments' / f'{stem}.parquet'
     windows = DERIVED / 'experiments' / f'{stem}_windows.parquet'

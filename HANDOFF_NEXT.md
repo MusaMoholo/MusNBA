@@ -14,8 +14,8 @@ The byte-identical typed tracking rebuild and original v2 minute-gate source/rep
 partial checkpoint **890bee3** before correcting the gate's seed-noise definition.
 The completed S04 defence checkpoint and corrected minute-gate report are committed and pushed as **38155fc**.
 The completed S05 minutes checkpoint and original S06 pilot sources are committed and pushed as **417f3f5**.
-The first S06 partial checkpoint **637a025** preserves the corrected initial replay, F1 dataset and frozen fold
-protocol; subsequent source revisions and reports still need their own commits and push.
+S06 partial checkpoints **637a025** and **70709ab** preserve the initial corrected replay, F1 dataset, frozen fold
+protocol and exact v2 sources/reports; the v3 checkpoint follows.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
 product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S05 are complete;
 S06 is active at 30%; A1 overall is 43.6%.** Isolated assignment candidates have event-level diagnostics and wiring only;
@@ -182,8 +182,8 @@ and the corresponding ignored derived parquet. It retains **191/200** games, **2
 substitutions, quarantining the same nine games. The independent audit completed with **46,320** scoreboard and
 lineup checks, **502,773** foul values and all **11,277** raw substitutions reconciled. The first audit source
 (SHA-256 `95acd7bcf9920794310a779bed62533af6150bdf9dd74881250af7bd43e6ee0b`) had a shadowed progress
-counter, not an accounting failure; its original source is preserved in the S05 checkpoint and its v2 report remains
-uncommitted. The corrected audit v3 completed with
+counter, not an accounting failure; its original source is preserved in the S05 checkpoint and its v2 report in
+**637a025**. The corrected audit v3 completed with
 identical counts in **1.4 s** of window processing (session **1855**, log
 `/tmp/musnba_a1_s06_sequence_audit_v3.log`, report `analysis/experiments/20261122_a1_s06_sequence_audit_v3.json`,
 working-source SHA-256 `55eca6f6ffb73a9782424b26313a8e373c9bc07b2b1fdd08032dfd35bdc5fd9d`). Keep the original
@@ -198,7 +198,7 @@ participants and period starters are inferred. The conservative full-timeout ext
 `scripts/a1_substitution_opportunities.py` retains **1,816/1,972** timeout windows across all 191 games:
 **1,216** with and **600** without any substitution; **148** other-same-clock-substitution and **8** multiple-timeout
 windows are excluded. There are **1,691** changed and **1,941** unchanged team decisions. Its original source is
-preserved in the S05 checkpoint (the report remains uncommitted), SHA-256
+preserved in the S05 checkpoint (the report in **637a025**), SHA-256
 `71d1fa3f3492b8c0803ae82a7e3e34b764f092287c55594527e0109b457051d9`; working v2 adds an output
 fingerprint. The v1/v2 parquet bytes and population counts match exactly. An independent raw-event group-by and
 every-field comparison passed (`/tmp/musnba_a1_s06_timeout_independent.log`). These are selected timeout decisions,
@@ -245,27 +245,26 @@ timeouts and **65,864** player rows independently reconcile, including **2,673**
 **45,516** incoming non-entries remain unknown and **5** entrants were outside the pre-window pool. Report
 `analysis/experiments/20261122_a1_s06_fold_F1.json`; candidate/window rows are under `data/derived/experiments/`
 with that stem. Its builder source SHA-256 is
-`9017997d8c744eb77c0dff9dfbace3b775fe025375556b79d90666a239fb9aa8`; preserve that source before altering it.
+`9017997d8c744eb77c0dff9dfbace3b775fe025375556b79d90666a239fb9aa8`, preserved in **637a025**.
 F2 and F3 then failed safely before candidate outputs: the F2 feed leaves an ejected player in the observed five
 at a later timeout, and the F3 feed calls an `Excess Timeout Technical` a timeout under substring matching.
-`analysis/experiments/20261122_a1_s06_fold_F2_F3_failed.json` records both; uncommitted v2 source changes
+`analysis/experiments/20261122_a1_s06_fold_F2_F3_failed.json` records both; v2 source changes in **70709ab**
 quarantine the former and correct the latter at replay. Focused tests and Pylance diagnostics pass. The F2/F3 v2
 retries independently reconcile **181/200** and **178/200** games with **17,370** and **17,270** outgoing rows,
 respectively. F2 excludes **2** ejected-on-court conflicts; F3 has **5** games without prior rosters and **1**
 unidentified ejection. Reports and ignored rows use the stems `20261122_a1_s06_fold_F2_v2` and
 `20261122_a1_s06_fold_F3_v2`; the working builder SHA-256 is
-`5a8c724c2eff65d29de295a23baf3e7070d98fdf25856a9ba2fb815d28152654`. The earlier builder/source are staged for the
-pending partial checkpoint, not overwritten. F1/F4 v2 independently reconcile **186/200** and **191/200** games;
+`5a8c724c2eff65d29de295a23baf3e7070d98fdf25856a9ba2fb815d28152654`, preserved in **70709ab**.
+F1/F4 v2 independently reconcile **186/200** and **191/200** games;
 their **65,864** and **66,545** candidate rows match every field of the earlier datasets exactly.
 
 The seed v2 attempt stopped before writing targets because its loader omitted `game_id` required by the existing NBA
 team-accounting helper; replay had independently reconciled **21,896** windows. Failure and hashes are in
 `analysis/experiments/20261122_a1_s06_fold_seed_v2_failed.json`, log `/tmp/musnba_a1_s06_fold_seed_v2.log`. Its
-exact builder and replay Git blobs were retained as **24bcc4b957be13cad6e9f4d2e91ca19e3311198e** and
-**2353747d70f5eab63fa8305666b3619678b20c98** (not yet committed); they must be included in an intermediate Git
-checkpoint with the four v2 reports before those source versions are replaced. Next add the missing column, verify a
-small real seed target sample, rebuild all five datasets with a single new source fingerprint, then run the frozen
-out screen. No out model has been fitted yet.
+exact builder and replay Git blobs are **24bcc4b957be13cad6e9f4d2e91ca19e3311198e** and
+**2353747d70f5eab63fa8305666b3619678b20c98**, reachable in **70709ab** with the four v2 reports. The v3 retry
+added the missing column and passed a real-data target pilot, full seed build and independent cutoff audit. No out
+model has been fitted yet.
 
 The seed loader repair passed a real two-game pilot (**68** targets; maximum team-mean error **0.0000014**
 minutes; all profile/roster dates earlier). All four v3 validation datasets have since completed with a shared
@@ -275,9 +274,8 @@ wrapper PID **2637**, child **2638**, command
 `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u -m scripts.a1_substitution_fold_data --population seed
 > /tmp/musnba_a1_s06_fold_seed_v3.log 2>&1`. Its target stage processed **200/200** games in **25.8 s** after replay;
 **16** games failed replay, leaving **184** games and **18,320** outgoing rows, independently reconciled against
-**2,600** raw substitutions. The v3 builder's uncommitted Git blob is
-**6c74f2500d6dad93fa758e0964712eb0c8493818**. Independently audit the seed targets and cutoff-fitted parameters
-before fitting the out screen. That independent audit now passes
+**2,600** raw substitutions. The v3 builder's Git blob is **6c74f2500d6dad93fa758e0964712eb0c8493818**.
+The independent seed-target and cutoff-fit audit passes
 (`analysis/experiments/20261122_a1_s06_seed_v3_audit.json`, log `/tmp/musnba_a1_s06_seed_v3_audit.log`):
 **6,354** prior-box targets and profiles reconcile across **184** games; the maximum team target-sum error is
 **0.0000931 minutes**. Perturbing **98,484** post-fit-cutoff player-games does not alter the dated ramp/spread;

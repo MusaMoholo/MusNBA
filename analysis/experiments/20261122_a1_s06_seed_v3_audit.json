@@ -1,0 +1,27 @@
+{
+ "experiment": "a1_s06_seed_target_independent_audit",
+ "membership": {
+  "candidate_rows": 6354,
+  "games": 184,
+  "team_games": 368
+ },
+ "profile_rows_checked": 6354,
+ "maximum_team_mean_minute_error": 9.301354958779484e-05,
+ "dated_draws_and_future_injection": {
+  "fit_before": "2022-12-01",
+  "post_cutoff_player_games_perturbed": 98484,
+  "sample_game_ids": [
+   "401468703",
+   "401469383"
+  ],
+  "sample_target_rows": 71,
+  "maximum_reproduction_error": 0.0
+ },
+ "fixed_selected_games": 200,
+ "input_sha256": {
+  "analysis/experiments/20261122_a1_s06_fold_seed_v3.json": "53dc5ec7ed6387b6fb319468da6cd1e75328ee2a8594a98fbb2c86ec9b15aa02",
+  "data/derived/experiments/20261122_a1_s06_fold_seed_v3.parquet": "d4b244f2de845a3d8bdadd3e7770e4db01f84c657c787f3957c62839af58ca4b",
+  "data/derived/experiments/20261122_a1_s06_fold_seed_v3_targets.parquet": "28b6d0e29054027e8678cdcb28b741de2df21473752354e726f034f12cc052e9",
+  "scripts/a1_substitution_seed_audit.py": "4385189f3a30a69161856d28f1f6b71d375af4e8cc833ab6258142c8f8b2e1f7"
+ }
+}
