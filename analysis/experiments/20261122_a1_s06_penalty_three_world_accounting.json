@@ -1,0 +1,63 @@
+{
+ "experiment": "a1_s06_independent_world_accounting",
+ "run": "20261122T095342Z_a1_s06_penalty_three",
+ "games": 3,
+ "worlds": 3000,
+ "lineup_fives_checked": 1472554,
+ "post_foul_snapshots": 1395,
+ "overtime_worlds": 77,
+ "saved_player_means_checked": 64,
+ "max_replayed_player_minute_error": 1.7763568394002505e-15,
+ "games_detail": [
+  {
+   "game_id": "401809247",
+   "worlds": 1000,
+   "players": 19,
+   "lineup_snapshots": 245955,
+   "post_foul_snapshots": 453,
+   "lineup_fives_checked": 491910,
+   "overtime_worlds": 34,
+   "max_replayed_player_minute_error": 1.7763568394002505e-15,
+   "foul_penalty_events": 0,
+   "foul_penalty_makes": 0,
+   "foul_penalty_lineups": 0
+  },
+  {
+   "game_id": "401810357",
+   "worlds": 1000,
+   "players": 25,
+   "lineup_snapshots": 246616,
+   "post_foul_snapshots": 509,
+   "lineup_fives_checked": 493232,
+   "overtime_worlds": 18,
+   "max_replayed_player_minute_error": 1.7763568394002505e-15,
+   "foul_penalty_events": 0,
+   "foul_penalty_makes": 0,
+   "foul_penalty_lineups": 0
+  },
+  {
+   "game_id": "401810393",
+   "worlds": 1000,
+   "players": 20,
+   "lineup_snapshots": 243706,
+   "post_foul_snapshots": 433,
+   "lineup_fives_checked": 487412,
+   "overtime_worlds": 25,
+   "max_replayed_player_minute_error": 1.7763568394002505e-15,
+   "foul_penalty_events": 0,
+   "foul_penalty_makes": 0,
+   "foul_penalty_lineups": 0
+  }
+ ],
+ "input_sha256": {
+  "scripts/a1_substitution_world_audit.py": "d1f1b34834ffe6c9d82b246cbbaed453c6a4eea224e47da020c6e0f02d3cdf4e",
+  "analysis/experiments/20261122T095342Z_a1_s06_penalty_three.json": "ee749cc33b60fe3cd51501a4e47063d0b1a251279305b07f23b58f1c19beb39e",
+  "data/derived/experiments/20261122T095342Z_a1_s06_penalty_three.parquet": "156d4f707bdc638a45e8098d7c199dccc1598c2b2aacbe42426c5b31b6f28153",
+  "data/derived/experiments/20261122T095342Z_a1_s06_penalty_three_players.parquet": "95e4458f9ab530a3c7d9dd772d7db8a2be3268118f2f56492e67d01e57ebf725"
+ },
+ "world_sha256": {
+  "data/derived/experiments/20261122T095342Z_a1_s06_penalty_three_worlds/401809247.npz": "3ce0fafed043d7c6ffbc2e3764985336dab135f251765caba39baa2825a4c40a",
+  "data/derived/experiments/20261122T095342Z_a1_s06_penalty_three_worlds/401810357.npz": "d3538c40d1f10d09e402c3ec75db008a44d61bc9b4ae1b02ac167e8dbb52ccb7",
+  "data/derived/experiments/20261122T095342Z_a1_s06_penalty_three_worlds/401810393.npz": "408974f9a403591f3e17bb1c0660e076a1801d596595a90550b36c1006b24b05"
+ }
+}

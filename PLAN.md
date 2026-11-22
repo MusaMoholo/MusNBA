@@ -724,6 +724,10 @@ face cards and unrelated presentation remain §9b backlog. NBA history moved to 
   their game-bootstrap intervals. Duration reduces return Brier by **0.00540–0.01380** across folds, with F1's
   interval crossing zero; role-based rest differences are tiny. These are retrospective known-listing play proxies,
   not physical injury recovery. No model or bundle changed; A1 is **52.0%**.
+- **22 Nov 2026 · S06 isolated robustness repair:** **3,000** worlds reproduce the earlier candidate and reconcile;
+  another **1,000** saved worlds from the original failure game reconcile with the required technical. The
+  single-game process exited 1 when its unsupported summary could not be serialized; no complete 200-game accuracy
+  result exists. The repair is research-only; S06 remains **70%** and the served model/PWA are unchanged.
 - **22 Nov 2026 · S06 foul-out probe:** in a controlled world, an available substitute does not replace a player
   with six fouls because the current engine's foul-out mask is never updated. The finding is not a forecast gain
   or a population frequency; isolate and gate a repair alongside substitution research.

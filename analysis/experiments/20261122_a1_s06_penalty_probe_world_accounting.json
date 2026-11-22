@@ -1,0 +1,38 @@
+{
+ "experiment": "a1_s06_foul_penalty_single_game_probe_independent_audit",
+ "run": "20261122T095448Z_a1_s06_penalty_probe",
+ "simulation_process_status": "failed_on_single_game_nonfinite_summary_serialization",
+ "world_accounting": {
+  "game_id": "401810472",
+  "worlds": 1000,
+  "players": 18,
+  "lineup_snapshots": 236772,
+  "post_foul_snapshots": 499,
+  "lineup_fives_checked": 473544,
+  "overtime_worlds": 38,
+  "max_replayed_player_minute_error": 1.7763568394002505e-15,
+  "foul_penalty_events": 1,
+  "foul_penalty_makes": 1,
+  "foul_penalty_lineups": 5
+ },
+ "saved_player_means_checked": 18,
+ "prior_failure_event": {
+  "world": 563,
+  "period": 4,
+  "clock_seconds_remaining": 4.40000057220459,
+  "fouler": "4398390",
+  "shooter": "3137259",
+  "made": 1
+ },
+ "limitations": "The 1/1 simulation and saved worlds are audited; the one-game backtest process exited 1 while serializing unsupported summary statistics, so this is not a successful complete backtest or a paired accuracy result.",
+ "input_sha256": {
+  "scripts/a1_foul_penalty_probe_audit.py": "c49df5ec5e1449578f7ae12ebebccaad2e9804635b9c070eb0b7a365d0ebe8b6",
+  "scripts/a1_substitution_world_audit.py": "d1f1b34834ffe6c9d82b246cbbaed453c6a4eea224e47da020c6e0f02d3cdf4e",
+  "analysis/experiments/20261122_a1_s06_recovery_probe_games.json": "1f74144c5516681affe2c0ccc608f57efbdb7448a57152c123c5945e5fc7945e",
+  "data/derived/experiments/20261122T095448Z_a1_s06_penalty_probe.parquet": "2bb45fd0fd930ee8d5906ed77af3a1d1515c59825333f9605b00f8a485b4cdfa",
+  "data/derived/experiments/20261122T095448Z_a1_s06_penalty_probe_players.parquet": "e0bc66dfe995def78f9ad4d6d0b524f35ff26415c17d80aa7f18375da9cfcba7",
+  "data/derived/experiments/20261122T095448Z_a1_s06_penalty_probe_worlds/401810472.npz": "9f3722c335104f64b6f9c36a6278f59c2fb0ef43d835172af5f64b8decb2ec7d"
+ },
+ "log": "/tmp/musnba_a1_s06_penalty_probe.log",
+ "log_sha256": "ad0a44474ee05a6d3ff99097216fcec4ddf23f868ec2b0452bc297a0c697b69c"
+}

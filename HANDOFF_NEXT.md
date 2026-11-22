@@ -33,6 +33,8 @@ The typed accounting repair, foul-state probe and pre-run sequence builder were 
 The first independent sequence reconstruction and its exact auditor source were pushed as **1dcfd6b**.
 The frozen fold-screen source and corrected independent reconstruction were pushed as **4c6ba5f** before scoring.
 The independently audited S07 60% screen was pushed as **76f7cf5**.
+The isolated S06 foul-penalty source was pushed as **bf9cd21** before the probe; S07's spell/starter follow-up
+protocol was frozen as **857cc78**.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
 product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S05 are complete;
 S06 is active at 70%; S07 is 60%; A1 overall is 52.0%.** Isolated assignment candidates have event-level diagnostics and wiring only;
@@ -47,7 +49,14 @@ A same-stream ten-game replay of ordered indices 41–50 exited 1 after four com
 revision (no lineup/draw change) reproduced the failure in former shell **2198**, log
 `/tmp/musnba_a1_s06_foulout_state_probe.log`: **4.4 seconds left in Q4**, with **four of eight** actual-participant
 inputs at six fouls. The state and source fingerprints are in
-`analysis/experiments/20261122_a1_s06_foulout_state_probe.json`. No backtest remains active.
+`analysis/experiments/20261122_a1_s06_foulout_state_probe.json`. The separate opt-in foul-penalty candidate
+reproduced the previous three games to `1e-12` and independently reconciled **3,000** worlds / **1,472,554**
+fives. The formerly failing game then simulated **1,000** worlds and its capture independently reconciled
+**473,544** fives, including one made technical at **4.4 s** in world 563. However, the one-game backtest exited
+**1** on non-finite single-game summary serialization; the saved-world probe is not a successful complete
+backtest. Reports `analysis/experiments/20261122_a1_s06_penalty_three_{output,world}_accounting.json` and
+`analysis/experiments/20261122_a1_s06_penalty_probe_world_accounting.json`, logs
+`/tmp/musnba_a1_s06_penalty_{three,probe}.log`. No backtest remains active.
 S07's first no-report/starter baseline protocol is frozen in TRAINING_PLAN §8.2 before scoring. A prior-position
 coverage setup initially failed on timestamp/string merge types; after converting stored dates to ISO it found
 **55/7,317** missing prior positions across **55/400** F4 team-games. This is coverage, not a starter score.
@@ -1340,11 +1349,11 @@ The dashboard programme is done. Do not resume U1–U22, repeat rejected defence
    an opt-in player-foul-penalty exception: retain a necessary on-court six-foul player, assess the technical free
    throw and independently audit all roster/foul states. The official rule page returned HTTP 403; a secondary
    basketball rule reference is cited. The opt-in `scripts/a1_foul_penalty_engine.py` and its expanded trace
-   accounting are implemented; **26** policy/world/sequence tests pass. Before any real-game run, commit their source.
-   Then run the three original trace-wiring games and the single-game manifest
-   `analysis/experiments/20261122_a1_s06_recovery_probe_games.json` sequentially with
-   `--substitution-foul-penalty --audit-substitution-worlds`; compare the three no-exception outputs to the original
-   candidate and independently audit both captures. Keep the original failed policy and default engine unchanged. Never
+   accounting are implemented and precommitted; **26** policy/world/sequence tests pass. The three original games and
+   the single-game probe are independently audited as above; the latter's process exited 1 on summary serialization.
+   Verify `--flow-diagnostics` on the same three games against the candidate, then run the unchanged 200-game
+   1,000-world screen with flow diagnostics for player-quarter/state-response analysis. Keep the original failed
+   policy and default engine unchanged. Never
    hide or exclude the failure when applying promotion gates. The 80% rung still requires a genuine measured
    minute-CRPS/state-response comparison; don't present the aborted screen as complete. Run no second engine
    backtest concurrently. No promotion follows from the trace check.

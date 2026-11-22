@@ -1529,6 +1529,17 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   explicit no-eligible-five condition. This is a simulated failure, not a claim that the real team had four players.
   The single-game same-stream state replay found **four** six-foul players and **four** below six with **4.4 s**
   left in Q4 (`20261122_a1_s06_foulout_state_probe.json`); the error-context change does not change policy draws.
+- **S06 isolated player-foul-penalty repair:** the opt-in rule candidate reproduces all **104** original
+  game columns and **20** player columns on the same **3 games / 64 player-games**; its **3,000** worlds and
+  **1,472,554** traced fives independently reconcile, with no exception event in those games. In the prior failure
+  game, the saved **1,000** worlds, **473,544** fives, **38** overtime worlds and all saved player means independently
+  reconcile; the former failure world records one made technical with **4.4 s** left. Maximum reconstructed
+  player-minute error is **1.78e-15** in each audit. The one-game backtest process nevertheless exited **1**
+  after simulation: its existing one-game summary contains non-finite statistics and cannot be serialized. The
+  independent probe report records this failure rather than calling it a completed backtest. The repair uses an
+  earlier FT percentage for the technical and does not model injury/ejection re-entry. No fixed-200 accuracy
+  comparison or promotion is implied. Reports: `20261122_a1_s06_penalty_three_{output,world}_accounting.json`
+  and `20261122_a1_s06_penalty_probe_world_accounting.json`.
 - **S07 F4 fixed baselines:** on **5,208** known play/DNP labels from **7,317** strictly prior-box candidates,
   the no-report physical-availability fallback has play-proxy Brier **0.15450** (game-cluster 95%
   **0.14162–0.16773**) and infinite log loss due to **718** impossible predictions. The target-positive frequency
