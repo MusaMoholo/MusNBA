@@ -312,6 +312,40 @@ def spotlight(entries: list, season_of, path: Path | None = None) -> dict | None
     return {'headliner': card(head, head_extra), 'breakout': brk, 'leaders': leaders}
 
 
+def role_changes(entries: list, season_of, limit: int = 10) -> list:
+    """U3: players projected ≥ 4 minutes above or below their season average tonight, with the reason from the minutes
+    model's own basis (D29: return ramp, availability, a short-handed roster's extra minutes, healthy role)."""
+    out = []
+    for e in entries:
+        x = e['x']
+        fg = (x.get('periods') or {}).get('fg')
+        sa = season_of(e['id'])
+        if not fg or not sa or sa.get('gp', 0) < 5:
+            continue
+        proj, avg = fg['sec'] / 60, (sa['season'].get('min') or 0)
+        d = proj - avg
+        if abs(d) < 4:
+            continue
+        mb = x.get('minutes_basis') or {}
+        if d < 0 and (x.get('availability') or 1) < 0.999:
+            why = f"{(x.get('status') or 'questionable').lower()} — plays in {round(100 * (x.get('played') or 0))}% of sims"
+        elif d < 0 and mb.get('rotation', 1) < 0.9:
+            why = f"in and out of the rotation: plays {round(100 * mb['rotation'])}% of the games he is available for"
+        elif d < 0 and mb.get('k_back', 0) > 0 and mb.get('ramp', 1) < 0.995:
+            why = f"returning: game {mb['k_back']} back after {mb.get('missed', 0)} missed (×{mb['ramp']:.2f})"
+        elif d > 0 and mb.get('target', 0) > mb.get('healthy', 0) + 1.5:
+            why = f"extra minutes: short-handed roster (target {mb['target']:.0f} v healthy role {mb['healthy']:.0f})"
+        elif mb.get('healthy'):
+            why = f"healthy role {mb['healthy']:.0f} min v season {avg:.0f} (recent games weigh more)"
+        else:
+            why = 'role change'
+        out.append({'id': e['id'], 'name': e['name'], 'team': e['team'], 'game_id': e['game_id'], 'proj': round(proj, 1),
+                    'season': round(avg, 1), 'delta': round(d, 1), 'why': why})
+    up = sorted([r for r in out if r['delta'] > 0], key=lambda r: -r['delta'])[:limit // 2]
+    down = sorted([r for r in out if r['delta'] < 0], key=lambda r: r['delta'])[:limit // 2]
+    return up + down  # risers first, then fallers
+
+
 def games_to_watch(day_games: list) -> dict | None:
     """Today strip: the closest finish (chance the final margin is within 5), the highest projected total and the likeliest
     overtime, over a slate's projected games (stored distributions only)."""
@@ -512,7 +546,8 @@ def build(views_root: Path = VIEWS) -> dict:
             'model': snap['meta']['model'] if snap else None, 'games': games,
             'spotlight': (spotlight(entries, season_lookup(projections[entries[0]['game_id']]['day']),
                                     snaps[projections[entries[0]['game_id']]['day']]['path']) if entries else None),
-            'watch': games_to_watch(watch) if len(watch) > 1 else None})
+            'watch': games_to_watch(watch) if len(watch) > 1 else None,
+            'roles': role_changes(entries, season_lookup(projections[entries[0]['game_id']]['day'])) if entries else []})
 
     stats_cache = {latest_day: L}
     M_real = load_matchups()

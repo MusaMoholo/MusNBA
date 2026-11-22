@@ -51,7 +51,7 @@ export async function render(view, {rest, meta, current}) {
     </section>
     ${modelNote(slate)}
     ${slateStrip(games, day)}
-    ${slate.spotlight ? `<div class="games spot-grid">${slateSpotlight(slate.spotlight, slate.watch)}</div>` : ''}
+    ${slate.spotlight ? `<div class="games spot-grid">${slateSpotlight(slate.spotlight, slate.watch, slate.roles)}</div>` : ''}
     <div class="games">${games.map(g => card(g, slate.watch?.closest?.game_id)).join('')}</div>`;
   view.querySelectorAll('[data-go]').forEach(b => b.onclick = () => { if (b.dataset.go) location.hash = '#/today/' + b.dataset.go; });
   view.querySelector('input[type=date]').onchange = e => { if (e.target.value) location.hash = '#/today/' + e.target.value; };

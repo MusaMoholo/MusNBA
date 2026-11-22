@@ -136,6 +136,10 @@
   .db-key i{display:inline-block;width:9px;height:9px;border-radius:50%} .db-key .db-s{background:var(--dim);transform:none} .db-key .db-t{background:var(--accent);transform:none}
   .ld-lead{font-size:10.5px;color:var(--dim)} .ld-p{font-size:10px;color:var(--dim);margin-right:4px}
   .ld-row{grid-template-columns:14px 18px 1fr auto auto !important}
+  .spot.roles{grid-column:1/-1;flex-direction:column;gap:6px}
+  .role-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:4px 16px}
+  .role{display:grid;grid-template-columns:18px auto auto 1fr;gap:2px 6px;align-items:center;text-decoration:none;color:inherit;font-size:13px;padding:4px 0;border-top:1px solid var(--line)}
+  .role em{font-style:normal;font-weight:700;font-size:12px} .role small{grid-column:2/-1;color:var(--dim);font-size:11px}
   .slate-strip .tiles{grid-template-columns:repeat(4,minmax(0,1fr))}
   .slate-strip .tile b{font-size:15px}
   .timeline{position:relative;margin-top:12px}

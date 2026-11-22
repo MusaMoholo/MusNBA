@@ -70,10 +70,18 @@ function watchStrip(w) {
   return `<div class="watch-strip">${g('Closest finish', w.closest, `${pct(w.closest.close, 0)} within 5`)}${g('Highest-scoring', w.shootout, `${f1(w.shootout.total)} total`)}${g('Likeliest overtime', w.overtime, `${pct(w.overtime.ot, 1)} OT`)}</div>`;
 }
 
+/** U3: role changes tonight — players ≥ 4 projected minutes off their season average, with the minutes model's reason. */
+function roleStrip(roles) {
+  if (!roles?.length) return '';
+  return `<section class="spot roles"><span class="spot-kicker">Role changes tonight</span><div class="role-list">${roles.map(r =>
+    `<a class="role" href="${sheet(r)}">${logo(r.team, 'sm')}<b>${esc(short(r.name))}</b><em class="${r.delta > 0 ? 'up' : 'down'}">${r.delta > 0 ? '▲' : '▼'} ${signed(r.delta)} min</em>
+      <small>${f1(r.season)} → ${f1(r.proj)} · ${esc(r.why)}</small></a>`).join('')}</div></section>`;
+}
+
 /** The slate's spotlight for Today. */
-export function slateSpotlight(s, watch) {
+export function slateSpotlight(s, watch, roles) {
   if (!s) return '';
-  return `<div class="spot-pair">${headliner(s.headliner, true)}${breakout(s.breakout, true)}</div>${watchStrip(watch)}<div class="spot-leaders compact">${leaderCards(s.leaders, 'night')}</div>`;
+  return `<div class="spot-pair">${headliner(s.headliner, true)}${breakout(s.breakout, true)}</div>${watchStrip(watch)}<div class="spot-leaders compact">${leaderCards(s.leaders, 'night')}</div>${roleStrip(roles)}`;
 }
 
 /** One game's spotlight for the Game Centre (projected games). */

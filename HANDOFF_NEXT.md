@@ -100,7 +100,8 @@ per game (13 games ≈ 30 min).
    "expression" of profile differences (e.g. shot-result prediction spread v real spread across shooters/defences); profile
    shrinkage (accuracy family K, defence ×0.2) and node temperatures as levers. Judge only on the backtest (players first).
    Also trace why every real-matchup variant raised the total bias by ~+1 point.
-2. **M7 game-state substitutions** (owner, 20 Nov: minutes should react to blowouts and foul trouble; Dončić's minutes are 35.4
+2. **M7 game-state substitutions** (also check the rotation-share squeeze: the U3 role strip shows e.g. Jase Richardson 21.6 min
+   season → 2.3 projected on 22 Nov because his rotation share is 53% — real DNP-CD pattern or an allocator artefact?) (owner, 20 Nov: minutes should react to blowouts and foul trouble; Dončić's minutes are 35.4
    / 35.6 / 35.7 in close / mid / blowout games, FINDINGS §3v): a substitution model at dead balls from score, clock, fouls,
    stint length, learned from `subs.parquet` windows; done when blowout and foul-trouble minutes match history by tier and the
    backtest's minutes CRPS improves.
