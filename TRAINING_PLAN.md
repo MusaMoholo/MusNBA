@@ -436,6 +436,21 @@ invariance. The original v1.3 control remains unchanged and is mandatory for any
 calibration only on the latest training-window tenth; its intercept preserves that slice's known-rim baseline mean,
 not the held-out outcome rate. Keep a direct dependency on SciPy for its deterministic root/optimizer routines.
 
+For the second family's first isolated node test, freeze the following before fitting: accumulate each defender's
+retained `Less Than 6Ft` and `3 Pointers` made/attempted counts over dates **strictly before** the shot's origin,
+with no tuned decay or attempt threshold. An unknown player or zero prior attempts remains unknown. Match every
+source row to its unique NBA player/day team log and the ESPN identity crosswalk, and validate each defender against
+the target game's dated team; never use the source's latest-team label. For a valid defensive five, use the equal
+mean of all five known defended-shot rates; if any are unknown, leave the candidate input missing and retain the
+baseline. The source categories are tracking buckets, not necessarily actual shot zones or on-ball assignments.
+Fit separate level-preserving additive log-odds slopes on the earlier training tail for actual rim shots and for
+corner/above-the-break threes; hold each fold's previously saved guarded shot node fixed and retain its make/and-one
+ratio. Report data/identity/lineup coverage, complete folds and the fixed-200 subsets with paired game-cluster
+intervals; compare against the measured same-input seed-noise floor under the existing node gate. These retrospective
+tracking files and the global identity crosswalk lack historical publication/revision timestamps; they do not prove
+the feature was available unchanged at the original date. A node win is not a forecast or promotion, and deployable
+use would need the same cutoff-safe feature online plus the player-first engine gates.
+
 #### S01 population separation — 22 Nov, before availability candidates
 
 The conditional-engine panel is the fixed 200 F4 games above: the box supplies **who played**, while starters are
