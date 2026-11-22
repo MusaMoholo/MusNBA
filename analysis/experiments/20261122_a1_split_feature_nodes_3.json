@@ -1,0 +1,158 @@
+{
+ "experiment": "a1_substitution_split_pilot",
+ "game_ids": [
+  "401809247",
+  "401810327",
+  "401810328"
+ ],
+ "population": "fixed F4 control games; retrospective data-quality comparison, not model evaluation",
+ "source_reparse_matches_retained_segments": true,
+ "event_identity_points_and_possessions_match": true,
+ "new_action_free_prefix_segments": 21,
+ "quarantined_segments": 0,
+ "quarantined_prefix_segments": 0,
+ "quarantine_reasons": {},
+ "quarantine_examples": [],
+ "before": {
+  "games": 3,
+  "segments": 743,
+  "invalid_offensive_lineups": 0,
+  "invalid_defensive_lineups": 0,
+  "negative_durations": 0,
+  "missing_durations": 0,
+  "actor": {
+   "known": 689,
+   "not_on_recorded_lineup": 10,
+   "affected_games": 3,
+   "by_end_type": {
+    "shot": 9,
+    "turnover": 1
+   }
+  },
+  "assister": {
+   "known": 152,
+   "not_on_recorded_lineup": 1,
+   "affected_games": 1,
+   "by_end_type": {
+    "shot": 1
+   }
+  },
+  "blocker": {
+   "known": 35,
+   "not_on_recorded_lineup": 1,
+   "affected_games": 1,
+   "by_end_type": {
+    "shot": 1
+   }
+  },
+  "stealer": {
+   "known": 60,
+   "not_on_recorded_lineup": 1,
+   "affected_games": 1,
+   "by_end_type": {
+    "turnover": 1
+   }
+  },
+  "fouler": {
+   "known": 107,
+   "not_on_expected_lineup": 2
+  },
+  "segment_seconds_vs_rotations": {
+   "compared_player_games": 60,
+   "segment_only_player_games": 0,
+   "on_court_only_player_games": 0,
+   "median_abs_seconds": 10.0,
+   "p90_abs_seconds": 21.1,
+   "over_30_seconds": 0,
+   "over_60_seconds": 0
+  }
+ },
+ "candidate": {
+  "games": 3,
+  "segments": 764,
+  "invalid_offensive_lineups": 0,
+  "invalid_defensive_lineups": 0,
+  "negative_durations": 0,
+  "missing_durations": 0,
+  "actor": {
+   "known": 689,
+   "not_on_recorded_lineup": 0,
+   "affected_games": 0,
+   "by_end_type": {}
+  },
+  "assister": {
+   "known": 152,
+   "not_on_recorded_lineup": 0,
+   "affected_games": 0,
+   "by_end_type": {}
+  },
+  "blocker": {
+   "known": 35,
+   "not_on_recorded_lineup": 0,
+   "affected_games": 0,
+   "by_end_type": {}
+  },
+  "stealer": {
+   "known": 60,
+   "not_on_recorded_lineup": 0,
+   "affected_games": 0,
+   "by_end_type": {}
+  },
+  "fouler": {
+   "known": 107,
+   "not_on_expected_lineup": 0
+  },
+  "segment_seconds_vs_rotations": {
+   "compared_player_games": 60,
+   "segment_only_player_games": 0,
+   "on_court_only_player_games": 0,
+   "median_abs_seconds": 0.0,
+   "p90_abs_seconds": 0.0,
+   "over_30_seconds": 0,
+   "over_60_seconds": 0
+  }
+ },
+ "old_parser_issues": {
+  "implicit_change_free_throw": 1,
+  "implicit_change_turnover": 1
+ },
+ "candidate_parser_issues": {
+  "implicit_change_free_throw": 1,
+  "implicit_change_turnover": 1
+ },
+ "limitations": "candidate remains isolated; substitutions after an action or within a free-throw/rebound sequence are not split, and future-fitted feature safety is not established",
+ "input_sha256": {
+  "analysis/experiments/20261122_a1_manifest.json": "0790a28ffadc3f09554c79661ccb80f631a4eb4b56f64030633a9a82d451e75e",
+  "data/raw/hoopr/play_by_play_2026.parquet": "f7051c5c0c5b605419fcc0e0c13dd90df7803f96dab290554c1ef737433a98b2",
+  "data/raw/hoopr/player_box_2026.parquet": "29a29dc9efd055a93e069a0382ac830d98a13274bee655beba69d95cff099713",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+  "data/derived/history/2026/on_court.parquet": "1b0ffaf53490c3fda4edd28ac427766a0af3a1bfe86f1fece240cd63ed1e8410",
+  "scripts/possessions.py": "1a8f9226166b779175f67c926b79948057f2f1aad030b23b432a507b8ccc9178",
+  "scripts/features.py": "16d57e2cf0440d2cbeeaa224ada40f1ea7b68fba3f25a37f8114e8640dada9ff"
+ },
+ "feature_node_accounting": {
+  "feature_player_games": 60,
+  "feature_columns_checked": [
+   "off_segs",
+   "def_segs",
+   "uses",
+   "shots",
+   "d_shots"
+  ],
+  "valid_nonprefix_segments": 743,
+  "event_rows": 728,
+  "who_groups": 687,
+  "who_candidate_rows": 3435,
+  "shot_result_rows": 538,
+  "quarantined_segments": 0,
+  "feature_mismatches": 0,
+  "node_mismatches": 0,
+  "scope": "independent count/label accounting on an isolated split slice; not a trained model or accuracy test"
+ },
+ "accounting_sha256": {
+  "scripts/a1_subsplit_audit.py": "c8beabe1578b0409f190dc1af0cb3e08cb16d74d5447993352a5df6d0f020e44",
+  "scripts/nodes.py": "78749b680b889993e83ba26baab51877cd7393ee0a5a3d9f4fdaf9123d3b161f",
+  "data/derived/variants/a1_scheduled_F4_20261122_v3/features/pregame.parquet": "bfd9ed61727c7f288764b87a5f9d517bcb7b4581664ad23a20e2c5606edf619a",
+  "data/derived/variants/a1_scheduled_F4_20261122_v3/features/features_report.json": "efb949a36c96a708c8613ffaac90723d24e0a180b9a8dd111e8e06d838175e8a"
+ }
+}

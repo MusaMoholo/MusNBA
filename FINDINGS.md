@@ -925,8 +925,12 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   and-one shot and rebounds the missed free throw, so treating the shot-time lineup as the rebound lineup is unsafe.
   Prefix segments retain time accounting but do not double-count player exposure. Synthetic tests cover simultaneous
   subs, a pending free-throw trip, missing actor quarantine and protection against writing production segments.
-  Evidence: `analysis/experiments/20261122_a1_subsplit_quarantine_f4_200.json`. This is not a model-accuracy test;
-  no candidate has been promoted, and substitutions after an action are not reconstructed as new action lineups.
+  Independent feature/node accounting on the same 200 games (`analysis/experiments/20261122_a1_split_feature_nodes_200.json`)
+  checks five per-player count columns across **4,349 player-games**, plus **47,775** event labels, **44,863**
+  five-player shooter-choice groups and **35,397** shot-result labels; all agree, with the **70** bad segments
+  quarantined. Earlier parser evidence: `analysis/experiments/20261122_a1_subsplit_quarantine_f4_200.json`.
+  This is not a model-accuracy test; no candidate has been promoted, and substitutions after an action are not
+  reconstructed as new action lineups.
 - **S02 causal-prior candidate:** a separately hashed, history-only base build uses first-season position and team
   priors from dates strictly before each row, earlier-season priors thereafter, and same-day-safe player/team decays
   and rest. An empty prior remains missing until actual earlier evidence exists; when a prior is unavailable but the
@@ -1001,10 +1005,26 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   diagnostic, not a feature supplied to the fitted or accepted engine. Fold-model cache keys include the training-code
   hash so previously saved
   baseline metrics cannot be silently reused after training-code changes.
-- **S02 schedule corruption, outstanding:** a synthetic fitted assignment with `through: "NaT"` is accepted by
-  `matchups.dated_masks`, because comparisons against NumPy `NaT` are false. This must be rejected explicitly.
-  Correcting the source changes pinned hashes, so the isolated dated schedules, dependent feature snapshots,
-  sampled parity and F4 node/model artifacts need fresh builds; the existing results describe the earlier source.
+- **S02 schedule corruption:** the old `matchups.dated_masks` accepted five synthetic corruptions: a fitted
+  `through: "NaT"`, non-finite match/propensity/fill values, and a missing fitted fill. The candidate-only guard now
+  rejects all five, requires valid ISO dates and complete finite fitted parameters, and its three focused
+  schedule/serving tests pass. The 30 monthly fits, four schedules and four dependent feature snapshots were rebuilt
+  against the guarded source; sampled F1–F4 parity again matched **304,175/304,175** comparisons, and independently
+  accounted F4 nodes contain **17,814,437** rows across all 16 datasets. The independent real-slice injection
+  (`analysis/experiments/20261122_a1_future_injection_guarded.json`) still preserves **3,098** earlier values and
+  changes **42 / 47** later shot/player values. Matched-seed F4 wiring completed in **324 s** on three games × 20
+  worlds; independent accounting reconciled **24** quarter scores, **63** player 3PM outcomes and **6** team sums.
+  All **3 × 92** game fields and **63 × 20** player fields reproduced the pre-guard run to `1e-12`
+  (`analysis/experiments/20261122_a1_s02_wiring_accounting_guarded.json`). Neither run is an accuracy test.
+  Earlier reports describe the old source retained at checkpoint `6ec31d6`, not the guarded build.
+- **S02 guarded-build equivalence:** the F4 guarded and pre-guard candidate `pregame.parquet` tables are exactly equal
+  for all **111,075** player-games; `team_pregame.parquet` is exactly equal for all **10,392** team-games
+  (`pandas.DataFrame.equals` on the two isolated outputs). This verifies valid feature values, not model accuracy.
+- **S02 completed history retrieval** (`analysis/experiments/20261122_a1_raw_inventory_completed.json`): all
+  **3,622** originally queued PBP responses were retained with no empty responses. Independent inventory matches
+  **1,320 / 1,319 / 1,321 / 1,322 / 235** of the eligible logged games in 2022–23 through 2026–27 respectively,
+  with **zero** missing, unindexed, corrupt or hash/size-mismatched NBA endpoint files. **45** older entries lack
+  original fetch URL/time; absence of those timestamps remains unknown provenance, not a reconstruction.
 - **S02 state-before-substitution caveat:** the repeated entrant rows are not necessarily duplicates. In ESPN game
   `401810498`, Q4 0:33.3, the same player enters for the same teammate twice with a reversal and other events between.
   The raw scoreboard before the first of those substitutions (sequence 709) is home **107–110**, but the derived

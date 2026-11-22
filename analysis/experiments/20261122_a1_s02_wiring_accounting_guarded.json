@@ -1,0 +1,329 @@
+{
+ "experiment": "a1_output_accounting",
+ "run": "20261122T043405Z_a1_s02_causal_wiring_guarded",
+ "games": 3,
+ "player_games": 63,
+ "expected_simulated_player_games": 63,
+ "player_games_without_output": 0,
+ "missing_player_outputs": [],
+ "quarter_scoreboard_comparisons": 24,
+ "quarter_mismatches": 0,
+ "player_3pm_box_comparisons": 63,
+ "player_3pm_missing_actuals": 0,
+ "player_3pm_mismatches": 0,
+ "team_3pm_mean_comparisons": 6,
+ "team_3pm_incomplete": 0,
+ "team_3pm_incomplete_rosters": 0,
+ "team_3pm_mean_mismatches": 0,
+ "legacy_reproduction": {
+  "reference": "20261122T041531Z_a1_s02_causal_wiring",
+  "games": {
+   "rows": 3,
+   "columns": 92,
+   "absolute_tolerance": 1e-12
+  },
+  "players": {
+   "rows": 63,
+   "columns": 20,
+   "absolute_tolerance": 1e-12
+  }
+ },
+ "input_fingerprints": [
+  {
+   "path": "basketball_common.py",
+   "bytes": 5100,
+   "sha256": "6c159e712c86496ff3ac60c4bf98ebb815b5b341333436df42de165309be0002"
+  },
+  {
+   "path": "models/a1_s02_f4_causal_guarded.json",
+   "bytes": 890,
+   "sha256": "c6a67b5b08f3dd5fa375265463cb087f83f2876e0058c4c14f26e837124cdfa9"
+  },
+  {
+   "path": "data/derived/variants/a1_scheduled_F4_20261122_v3/features/pregame.parquet",
+   "bytes": 63186786,
+   "sha256": "bfd9ed61727c7f288764b87a5f9d517bcb7b4581664ad23a20e2c5606edf619a"
+  },
+  {
+   "path": "data/derived/variants/a1_scheduled_F4_20261122_v3/features/team_pregame.parquet",
+   "bytes": 1294200,
+   "sha256": "ebb3f3205e75d68a868a2a98c7ea804865143ca3d623147d92b4b2156b358bb9"
+  },
+  {
+   "path": "data/derived/variants/a1_scheduled_F4_20261122_v3/features/features_report.json",
+   "bytes": 5142,
+   "sha256": "efb949a36c96a708c8613ffaac90723d24e0a180b9a8dd111e8e06d838175e8a"
+  },
+  {
+   "path": "data/derived/experiments/20261122T043405Z_a1_s02_causal_wiring_guarded.parquet",
+   "bytes": 57281,
+   "sha256": "1003d6da37c535dad90a880a7c74dad49c71a42b707260dc38b0ba394cbaa884"
+  },
+  {
+   "path": "data/derived/experiments/20261122T043405Z_a1_s02_causal_wiring_guarded_players.parquet",
+   "bytes": 20295,
+   "sha256": "2e305343c5cb7887d339e8659203f15de6775cb938f7ab3e7bae7228b36b3e46"
+  },
+  {
+   "path": "analysis/experiments/20261122T043405Z_a1_s02_causal_wiring_guarded.json",
+   "bytes": 7010,
+   "sha256": "9cbb3db692198eadd7c8ecb25888a02586b3d6aaa956d30c4dc6202d2d47afe1"
+  },
+  {
+   "path": "data/derived/teams.json",
+   "bytes": 5362,
+   "sha256": "130aa5358d49b944c2b5bee7e9a163f1e53285e93dae57262f039ca1636b7ecc"
+  },
+  {
+   "path": "data/derived/athletes.parquet",
+   "bytes": 17062,
+   "sha256": "3b8e24488790edca5289a2a52f30867243a69f6cab57032e1c839967bb65d5be"
+  },
+  {
+   "path": "data/derived/history/2026/stints.parquet",
+   "bytes": 929341,
+   "sha256": "29de886d2afd2a5d9a55af2acb027fd3ee83a887584c71a9fe9951a9c2cc225f"
+  },
+  {
+   "path": "data/derived/history/2026/player_periods.csv.gz",
+   "bytes": 1303401,
+   "sha256": "ef35bb5c33c46e6a194cea30075d9974ead5d44be96c6074b60f6dac49e69c28"
+  },
+  {
+   "path": "data/raw/hoopr/play_by_play_2026.parquet",
+   "bytes": 22274408,
+   "sha256": "f7051c5c0c5b605419fcc0e0c13dd90df7803f96dab290554c1ef737433a98b2"
+  },
+  {
+   "path": "scripts/a1_manifest.py",
+   "bytes": 17643,
+   "sha256": "7c9a8d40c9017e3d9b3ef8afaf2a1708fc44cbd3fa809b5664336f60388c295b"
+  },
+  {
+   "path": "scripts/a1_output_audit.py",
+   "bytes": 11782,
+   "sha256": "af7357b898098c734d7700e937a383674b0bbd0e4c45b49c43528e958ba9bc43"
+  },
+  {
+   "path": "scripts/aggregate.py",
+   "bytes": 36587,
+   "sha256": "74589b2776d70be249b2d193572287df21092bb87a8d9f8557b9a7bd84947ba3"
+  },
+  {
+   "path": "scripts/backtest.py",
+   "bytes": 31943,
+   "sha256": "5e235b5755a877e1cc51b891f329ad11387c53b61039a377f002975930c22322"
+  },
+  {
+   "path": "scripts/engine.py",
+   "bytes": 55053,
+   "sha256": "d4884f638fc4eb7adf4a02273ba4d037bc9f36f4e7b38afa767709f089d203f6"
+  },
+  {
+   "path": "scripts/evaluate.py",
+   "bytes": 8362,
+   "sha256": "aeb59d057cf115fb80eeb043de3c6d74cd931753574e682927663494cfee134c"
+  },
+  {
+   "path": "scripts/features.py",
+   "bytes": 56402,
+   "sha256": "16d57e2cf0440d2cbeeaa224ada40f1ea7b68fba3f25a37f8114e8640dada9ff"
+  },
+  {
+   "path": "scripts/matchups.py",
+   "bytes": 24646,
+   "sha256": "70bbb3f069e78477c83b63ab66e518c4148217b11c415ff1825856914861a153"
+  },
+  {
+   "path": "scripts/minutes.py",
+   "bytes": 22969,
+   "sha256": "94dd0ed25e536708c75cd4cf1f386bf2f9fa35f2c334d83cbdd031d4448ba2d0"
+  },
+  {
+   "path": "scripts/nodes.py",
+   "bytes": 50059,
+   "sha256": "78749b680b889993e83ba26baab51877cd7393ee0a5a3d9f4fdaf9123d3b161f"
+  },
+  {
+   "path": "scripts/pbp.py",
+   "bytes": 12695,
+   "sha256": "2c85ed02adebf34fce9696f37c030e246a868a93cdde3a70237176cd4ead8106"
+  },
+  {
+   "path": "scripts/plays.py",
+   "bytes": 8772,
+   "sha256": "37271dee2fcc45ccc1f9f9d35369a330e4fd3adcc8df5f84bd12a673464e34f2"
+  },
+  {
+   "path": "scripts/projection.py",
+   "bytes": 27458,
+   "sha256": "dbd3201017e9febd8cd52cc6ca9b838c8ebc607d934dc490129cf09123faf284"
+  },
+  {
+   "path": "scripts/rotations.py",
+   "bytes": 16787,
+   "sha256": "1abf8fd173f4ca96d608813f315df8b034436a4bb26060e55410e3710c7e9c3a"
+  },
+  {
+   "path": "scripts/train.py",
+   "bytes": 28929,
+   "sha256": "db31022469cfb3987ed4423411ebdb9557d81bfe0efc9090bc9b80fc5786bf96"
+  },
+  {
+   "path": "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/config.json",
+   "bytes": 33154,
+   "sha256": "c3d26beba4f24ab9d3e637e2482214df47e3133466cb8b67856a50216258e0bd"
+  },
+  {
+   "path": "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/assisted.txt",
+   "bytes": 2479172,
+   "sha256": "91af823c41d62b099aaa7a6cedb3f1e56248bcd54f956f74280779df03c6e377"
+  },
+  {
+   "path": "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/assister.txt",
+   "bytes": 3032356,
+   "sha256": "d0c41d84ac695583f6b1ba12326308ea7b0acf7aad9f8c2537e31413c0884ed6"
+  },
+  {
+   "path": "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/blocked.txt",
+   "bytes": 669501,
+   "sha256": "832b0da778160550a2f6da60032e9922616017de50863e4e1d9a37979221920d"
+  },
+  {
+   "path": "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/blocker.txt",
+   "bytes": 1232564,
+   "sha256": "6cd76d419c94b2803a98ea4ba8bcb66ef6aac1a9f90f68da040dc2ef9891ea51"
+  },
+  {
+   "path": "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/duration.txt",
+   "bytes": 4910558,
+   "sha256": "d3a1363eb29f0c75f86cebcf6178e338f0d380688cb695c8ee955890669876c2"
+  },
+  {
+   "path": "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/event.txt",
+   "bytes": 1845287,
+   "sha256": "0b1895493702ff8b561b33a6ef26d0c2c009297ae82412f5f14128954bb69dc3"
+  },
+  {
+   "path": "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/fouler.txt",
+   "bytes": 2555102,
+   "sha256": "f411d1f33ced5b43c3c4cc261bde1a11fedc4a4610c5b6bed093b12d7f8888f5"
+  },
+  {
+   "path": "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/free_throw.txt",
+   "bytes": 680174,
+   "sha256": "59734a99151a9e0ad9057b8e5298fe16f622ce9a3a239019c4550b72a0a7da29"
+  },
+  {
+   "path": "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/location.txt",
+   "bytes": 10546977,
+   "sha256": "24b1ace1ab4d842cd124fc985fd6ba659c59a37b4e9f40fdb2aaf0392c3f6673"
+  },
+  {
+   "path": "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/rebound.txt",
+   "bytes": 1012002,
+   "sha256": "1f84a5b8462832f69a89f4ca0b884f6bdf2c80ef2eb23208b1980b812ba91731"
+  },
+  {
+   "path": "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/rebounder.txt",
+   "bytes": 1728462,
+   "sha256": "9caf8d7237b364f3cb0d47320b574fe7548300d7eb20830cad48ab5b6c4256ac"
+  },
+  {
+   "path": "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/shot_result.txt",
+   "bytes": 1722068,
+   "sha256": "24acefef42d983016314e4e174b4b53a7c43295400dc32b3a246734e020b24fc"
+  },
+  {
+   "path": "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/stealer.txt",
+   "bytes": 690324,
+   "sha256": "cb9758b10a7a8e47e92451fe92654889026a3a599bdf7f7ef99848d51c0dccb0"
+  },
+  {
+   "path": "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/turnover_type.txt",
+   "bytes": 1394894,
+   "sha256": "83f26e38a86faae5282b46235f214e01a34a311d748e301d83d467c9870c7899"
+  },
+  {
+   "path": "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/what.txt",
+   "bytes": 6148190,
+   "sha256": "8150f048c7f539ca2730c07baa8bfc1bcc4bb25a2efd91c8735ba7dbd571a028"
+  },
+  {
+   "path": "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/who.txt",
+   "bytes": 2087548,
+   "sha256": "7c6429bb6b63632fb5218d6b89ed0e9412458efee5273e508c64cf254e81d06c"
+  },
+  {
+   "path": "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/meta.json",
+   "bytes": 30248,
+   "sha256": "ed59edbb03a0babd36462d12823084e88fdb41cbad34eea87f4298dadd493459"
+  },
+  {
+   "path": "data/derived/history/2023/segments.parquet",
+   "bytes": 8756670,
+   "sha256": "813b53edadf92f6e6c607211b1d4c64b312aa9fbe689851110e912419101a76e"
+  },
+  {
+   "path": "data/derived/history/2023/on_court.parquet",
+   "bytes": 801399,
+   "sha256": "ba9b4b13e16e5b839e5530905497d2d00d231413ea40f39ee46855f3ebce8c3b"
+  },
+  {
+   "path": "data/derived/history/2024/segments.parquet",
+   "bytes": 8511872,
+   "sha256": "4a7c3c2bce39580cc8e1092ffc215d11bbd49f7bf117b4551eee40337203d2c0"
+  },
+  {
+   "path": "data/derived/history/2024/on_court.parquet",
+   "bytes": 800285,
+   "sha256": "5461947edb052ef9e62b4a70ba49e57a0f98d929f4a19167f03aad3972457f95"
+  },
+  {
+   "path": "data/derived/history/2025/segments.parquet",
+   "bytes": 8668449,
+   "sha256": "d9db732172894ed8d3c6e5e99e3cd1c197006da22799413034ce3ce18cc5aee2"
+  },
+  {
+   "path": "data/derived/history/2025/on_court.parquet",
+   "bytes": 813678,
+   "sha256": "5bbabab60114aa3f7fa096d7708be96f47177c541debcae88059da6b1adb77e9"
+  },
+  {
+   "path": "data/derived/history/2026/segments.parquet",
+   "bytes": 9156332,
+   "sha256": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc"
+  },
+  {
+   "path": "data/derived/history/2026/on_court.parquet",
+   "bytes": 868634,
+   "sha256": "1b0ffaf53490c3fda4edd28ac427766a0af3a1bfe86f1fece240cd63ed1e8410"
+  },
+  {
+   "path": "data/raw/hoopr/player_box_2023.parquet",
+   "bytes": 595949,
+   "sha256": "968d835cd04b10533c5b5af8c0e41bf0154a73782e9446c76f765109223e8679"
+  },
+  {
+   "path": "data/raw/hoopr/player_box_2024.parquet",
+   "bytes": 610610,
+   "sha256": "1e500a538ec45ddbcb58d9789b5494f8db4f25658eafd01d90f2d09600921665"
+  },
+  {
+   "path": "data/raw/hoopr/player_box_2025.parquet",
+   "bytes": 610289,
+   "sha256": "e89f7fbc1124092c715b722e6d72d9dd1b9d28776ca6888b508fd2831cd705e2"
+  },
+  {
+   "path": "data/raw/hoopr/player_box_2026.parquet",
+   "bytes": 606444,
+   "sha256": "29a29dc9efd055a93e069a0382ac830d98a13274bee655beba69d95cff099713"
+  },
+  {
+   "path": "data/derived/variants/a1_assignment_schedule_20261122_v3/F4.json",
+   "bytes": 51348,
+   "sha256": "57a2870e6e9e0f633c7b37d2a6d470676d16011fac3cb35405c9a0f295b0235a"
+  }
+ ],
+ "fingerprint_scope": "Files hashed at audit time; verify they did not change since the run. The log commit is only Git HEAD when the worktree is dirty."
+}

@@ -1,0 +1,221 @@
+{
+ "experiment": "a1_scheduled_node_cache_accounting",
+ "fold": "F4",
+ "population": "all retained historical node rows; training and validation counted separately",
+ "limits": "shape, date, labels, group accounting and hashes only; not a model-accuracy test",
+ "features": "data/derived/variants/a1_scheduled_F4_20261122_v3/features/pregame.parquet",
+ "cache": "data/derived/nodes/variant_c756fe9e92bb",
+ "cutoff": "2025-12-31",
+ "validation_from": "2026-01-01",
+ "validation_to": "2026-04-30",
+ "nodes": {
+  "duration": {
+   "rows": 1200351,
+   "columns": 54,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "multiclass",
+   "train_rows": 1012138,
+   "validation_rows": 178233,
+   "sha256": "e55114db89b10d691ddb54f02a5b15bff5f2c815d70d171508df5a517954fe7e"
+  },
+  "event": {
+   "rows": 1234437,
+   "columns": 55,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "multiclass",
+   "train_rows": 1040939,
+   "validation_rows": 183244,
+   "sha256": "cca7b569f0c0432a4b168d64ae7f746ca0adf5cf282581c55364944ca805bef0"
+  },
+  "who": {
+   "rows": 5742110,
+   "columns": 115,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "candidate",
+   "train_rows": 4846740,
+   "validation_rows": 848680,
+   "sha256": "48d31b19142d683e7802b17b5ee333cb4ff9df3ca3217a1f22ce5c6f592a8fc7",
+   "groups": 1148422,
+   "candidate_group_sizes": {
+    "5": 1148422
+   },
+   "zero_profile_groups": 0
+  },
+  "what": {
+   "rows": 1141111,
+   "columns": 115,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "multiclass",
+   "train_rows": 963171,
+   "validation_rows": 168737,
+   "sha256": "2c4f1f2e9e84a60cd261adcf328d98ef884ec41d3cde51737b929a589d9d7d46"
+  },
+  "location": {
+   "rows": 921103,
+   "columns": 117,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "multiclass",
+   "train_rows": 778085,
+   "validation_rows": 135680,
+   "sha256": "b62bbab15298d0ddfbe91ab5132ec714c12bfd7a27e64d49439fd729a921165c"
+  },
+  "shot_result": {
+   "rows": 921103,
+   "columns": 120,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "multiclass",
+   "train_rows": 778085,
+   "validation_rows": 135680,
+   "sha256": "4562b08d144ebd9e09a41684c51a0c5d62cee6702d8373d7c4f5db3fd70d64b9"
+  },
+  "assisted": {
+   "rows": 433884,
+   "columns": 120,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "binary",
+   "train_rows": 366686,
+   "validation_rows": 63884,
+   "sha256": "926ec2d8e04d3399dc422b89cba097497da65dae1b7aec49077b62f9743119a0"
+  },
+  "assister": {
+   "rows": 1073403,
+   "columns": 111,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "candidate",
+   "train_rows": 904307,
+   "validation_rows": 161096,
+   "sha256": "0cef77da3a09ab52f6406c3120512f553fca89153f36ddaa1f59a00e56357b0f",
+   "groups": 267718,
+   "candidate_group_sizes": {
+    "4": 265187,
+    "5": 2531
+   },
+   "zero_profile_groups": 0
+  },
+  "blocked": {
+   "rows": 487219,
+   "columns": 120,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "binary",
+   "train_rows": 411399,
+   "validation_rows": 71796,
+   "sha256": "9097ca831efa34ae9951ee9a588cf4fc5ada85f36309e7ad6182203ebe5a53f1"
+  },
+  "blocker": {
+   "rows": 250540,
+   "columns": 108,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5192,
+   "kind": "candidate",
+   "train_rows": 211695,
+   "validation_rows": 36720,
+   "sha256": "05322319154d600e6fa1ba826eb98d2dc0201f82ee8063420e2305f33e331843",
+   "groups": 50108,
+   "candidate_group_sizes": {
+    "5": 50108
+   },
+   "zero_profile_groups": 0
+  },
+  "rebound": {
+   "rows": 515094,
+   "columns": 62,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "multiclass",
+   "train_rows": 434387,
+   "validation_rows": 76411,
+   "sha256": "1199fc83e20296687f2140137033dc5084b9bfda66160fafbdd9ce2bdbec0166"
+  },
+  "rebounder": {
+   "rows": 2229995,
+   "columns": 111,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "candidate",
+   "train_rows": 1885005,
+   "validation_rows": 327085,
+   "sha256": "d28ed6eec2731b379b6006ed73d1891fbf223413a29528c7e7d18056d1735626",
+   "groups": 445999,
+   "candidate_group_sizes": {
+    "5": 445999
+   },
+   "zero_profile_groups": 0
+  },
+  "turnover_type": {
+   "rows": 138586,
+   "columns": 115,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "multiclass",
+   "train_rows": 116603,
+   "validation_rows": 20823,
+   "sha256": "1d2913c1bbff72f9fa67846329cff8bbbf66d0759213015ce8f9986462cda340"
+  },
+  "stealer": {
+   "rows": 401505,
+   "columns": 107,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "candidate",
+   "train_rows": 334430,
+   "validation_rows": 63625,
+   "sha256": "dc351ba20243f51485305fecf5527201771a90fd8cbd335b37d96511490c9fb1",
+   "groups": 80301,
+   "candidate_group_sizes": {
+    "5": 80301
+   },
+   "zero_profile_groups": 0
+  },
+  "fouler": {
+   "rows": 894450,
+   "columns": 108,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "candidate",
+   "train_rows": 752675,
+   "validation_rows": 133315,
+   "sha256": "d4fab23708a56e7d1b9b9067e6f9a290846489b507a201826f3c39f51ffe22f3",
+   "groups": 178890,
+   "candidate_group_sizes": {
+    "5": 178890
+   },
+   "zero_profile_groups": 0
+  },
+  "free_throw": {
+   "rows": 229546,
+   "columns": 111,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "binary",
+   "train_rows": 193135,
+   "validation_rows": 34302,
+   "sha256": "014da07d5d6d255fb31bd829cae6eb4b97619bf3068356748c855124dd54a2e0"
+  }
+ },
+ "audit_sha256": "8bd244d40aae93dd33273264349c6efb3fd3d1e7d8552dd48b98714c7bdb2077"
+}

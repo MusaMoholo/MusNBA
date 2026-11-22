@@ -133,26 +133,51 @@ def dated_masks(schedule: dict, dates) -> list:
     """Choose the most recent pre-date assignment, frozen at this fold's training cutoff."""
     if schedule.get('kind') != 'dated_implicit_schedule' or not schedule.get('models'):
         raise ValueError('expected a nonempty dated implicit-assignment schedule')
-    cutoff = np.datetime64(schedule['training_through'], 'D')
+
+    def day(value, label):
+        if not isinstance(value, str) or len(value) != 10:
+            raise ValueError(f'{label} must be a valid ISO date')
+        try:
+            parsed = np.datetime64(value, 'D')
+        except ValueError as exc:
+            raise ValueError(f'{label} must be a valid ISO date') from exc
+        if np.isnat(parsed) or str(parsed) != value:
+            raise ValueError(f'{label} must be a valid ISO date')
+        return parsed
+
+    cutoff = day(schedule.get('training_through'), 'schedule training cutoff')
     starts = []
     for i, model in enumerate(schedule['models']):
-        start = np.datetime64(model['valid_from'], 'D')
-        through = model.get('through')
+        start = day(model.get('valid_from'), 'assignment valid-from')
+        if 'through' not in model:
+            raise ValueError('assignment training cutoff is missing')
+        through = model['through']
         if model.get('body_policy') != 'omit' or model.get('missing_policy') != 'retain_missing':
             raise ValueError('dated candidate requires body-free assignment and retained missing values')
+        required_fill = ('height_in', 'weight_lb', 'grp_code', 'min_avg', 'pf_rate', 'blk_rate', 'stl_rate')
+        for field, names in (('match', MATCH), ('prop', PROP if through is not None else ()),
+                             ('fill', required_fill if through is not None else ())):
+            values = model.get(field, {})
+            if not isinstance(values, dict) or not set(names).issubset(values):
+                raise ValueError(f'assignment {field} is missing required values')
+            if any(isinstance(v, (bool, np.bool_)) or not isinstance(v, (int, float, np.integer, np.floating))
+                   or not np.isfinite(v) for v in values.values()):
+                raise ValueError(f'assignment {field} contains a non-finite or non-numeric value')
         if through is None:
             if i != 0:
                 raise ValueError('only the first assignment may have no training cutoff')
             if any(model['match'].get(k) != 0.0 for k in MATCH):
                 raise ValueError('cold-start assignment must have fixed uniform weights')
-        elif np.datetime64(through, 'D') >= start or np.datetime64(through, 'D') > cutoff:
-            raise ValueError('assignment is not dated safely within its fold')
+        else:
+            fitted_through = day(through, 'assignment training cutoff')
+            if fitted_through >= start or fitted_through > cutoff:
+                raise ValueError('assignment is not dated safely within its fold')
         if model.get('kind') == 'real' or model.get('top2'):
             raise ValueError('dated candidate supports implicit blended matchups only')
-        if np.isnat(start) or (starts and start <= starts[-1]):
+        if starts and start <= starts[-1]:
             raise ValueError('assignment valid-from dates must be strictly increasing')
         starts.append(start)
-    if schedule['models'][0].get('through') is not None or np.isnat(cutoff):
+    if schedule['models'][0]['through'] is not None:
         raise ValueError('dated assignment needs an unfitted cold-start model and a valid training cutoff')
     game_dates = np.asarray(dates, dtype='datetime64[D]')
     indices = np.searchsorted(np.asarray(starts), game_dates, side='right') - 1

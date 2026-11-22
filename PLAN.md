@@ -108,7 +108,7 @@ Each subtask ends with evidence, current docs and a commit/push checkpoint (AGEN
 | M11 | Availability model | ☐ **A1 S07/S08/S10**: report coverage, play/start probabilities, branches and future absences | Held-out calibration and games-missed realism where dated development data supports them; honest fallbacks otherwise | Planned |
 | M12 | Season pathway calibration | ◐ **first cut (20 Nov): team pathway v1 in the app** — walk-forward 2022-26 (480 team-starts): dispersion 1.00 (fixed probabilities 1.53), 10–90% coverage 84% (65%), CRPS −4% in every held-out season; still wide in November (0.84) and surprises fade with the date (sim 0.52 → 0.18 v real 0.40 flat) | Dispersion ≈ 1.0 **at every start date**, persistence matches | `pathway.py`, `season_backtest.py` |
 | UX | Dashboard upgrade programme U1–U22 | ✅ **22 Nov:** all 22 shipped; U15–U22 adds roster roles, playoff picture, win ranges, races/movers/leaders inside Standings and model guide; 156 full + 12 final layout browser checks, hosted PWA 15/15 | Checked at 1440/960/390, both themes, stored data only | DASHBOARD_PLAN.md |
-| A1 | Expanded accuracy/robustness programme | ◐ **7.8% — S01 complete, S02 30%, 22 Nov**; 14 tasks, fixed weights, 140 rungs | Gates in §6b; final nightly + versioned history + successor chunk | HANDOFF § Progress ladders |
+| A1 | Expanded accuracy/robustness programme | ◐ **12.0% — S01–S02 complete, S03 next, 22 Nov**; 14 tasks, fixed weights, 140 rungs | Gates in §6b; final nightly + versioned history + successor chunk | HANDOFF § Progress ladders |
 
 ### 6a. Next chunk — A1: player accuracy, defence and trustworthy season paths
 
@@ -556,3 +556,30 @@ face cards and unrelated presentation remain §9b backlog. NBA history moved to 
   uses training data.
   Accepted-system smoke **102/102**, including bit-for-bit v1.3 replay; deliberate `--fault` exited 1 as intended
   (**80/102** checks passed after injected corruption). No model, forecast or PWA bundle changed.
+- **22 Nov 2026 · A1 S02 partial checkpoint `6ec31d6`:** candidate dated schedules now reject five reproduced corrupt
+  cutoff/parameter cases; **46** focused tests pass. Thirty monthly fits and four schedules were rebuilt with the guarded
+  source; four dependent feature builds and sampled parity completed. All **3,622/3,622** originally queued PBP items
+  have been retained with zero empty responses; independent inventory and F4 node rebuilding are running. This is
+  data-integrity work, not a promotion.
+- **22 Nov 2026 · A1 S02 40%:** independent inventory confirms **5,517/5,517** eligible NBA PBP games and all
+  **3,622** originally queued downloads; zero missing/corrupt/hash-mismatched files. Forty-five older entries retain
+  unknown fetch metadata. Guarded node-cache accounting and model wiring remain.
+- **22 Nov 2026 · A1 S02 50%:** per-season NBA/ESPN reconciliation covers **118,187** known points rows with
+  zero differences, on-court seconds and possession conventions; parser-flagged games are listed, not silently included.
+- **22 Nov 2026 · A1 S02 60%:** audited **973,227** clock-grouped windows, including **809,830** no-substitution and
+  **84,044** multi-substitution windows; **438** NBA-positive appearances rounded to zero ESPN minutes and **13** were
+  marked ESPN DNP. Early matchup FGA sums exceed official totals by **11.6% / 11.2%**; causes remain unresolved.
+- **22 Nov 2026 · A1 S02 70%:** tracking defence/report/roster coverage and cutoff-safe joins are mapped. Tracking's
+  last-team field disagrees with dated game logs in **8,637/113,089** Overall rows; use person/date and the dated team,
+  retaining unknowns. Historical report publication and roster completeness remain unproven.
+- **22 Nov 2026 · A1 S02 80%:** guarded fold/serving parity matched **304,175/304,175** sampled values; independent
+  F4 cache accounting passed **16 datasets / 17,814,437 rows**. Guarded matched-seed model wiring is running.
+- **22 Nov 2026 · A1 S02 90%:** **46** focused tests pass, including five corrupt schedule cases; a real-slice future
+  injection preserves **3,098** earlier values while changing **42** shot and **47** minute/position later values.
+  The split candidate's 200-game independent feature/node accounting passes (**44,863** five-player choice groups;
+  **70** quarantined segments). Matched-seed guarded wiring reproduces the old three-game run to `1e-12` and passes
+  independent accounting; final smoke/fault and checkpoint remain.
+- **22 Nov 2026 · A1 S02 100%:** final guarded-source smoke passed **102/102**; deliberate fault exited 1 with
+  **80/102** passing. **5,517/5,517** eligible games were inventoried, and all **304,175** sampled train/serve
+  comparisons matched. S02 is research/data-integrity only: v1.3 and the served PWA/bundle remain unchanged. S03
+  begins with the fixed matched-game signal diagnosis; publication-time and historical availability limits remain.

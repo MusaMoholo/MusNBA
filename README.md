@@ -166,6 +166,7 @@ Rebuild in order after new data: `scripts/history.py` → `scripts/possessions.p
 .venv/bin/python -m scripts.a1_causal_audit --output <new-report.json>  # account for the pinned causal base build
 .venv/bin/python -m scripts.a1_assignment_audit --through 2025-12-31 --holdout-to 2026-04-30 --output <new-report.json> --model-output data/derived/variants/<new-model.json>  # isolated dated assignment, not a promotion
 .venv/bin/python -m scripts.a1_node_cache_audit --features <variant>/pregame.parquet --fold F4 --output <new-report.json> # audit a full isolated node cache
+.venv/bin/python -m scripts.a1_subsplit_audit --limit 200 --account-pregame <variant>/pregame.parquet --output <new-report.json> # isolated split feature/node accounting
 .venv/bin/python -m scripts.a1_future_injection --output <new-report.json> # real-slice same-day/future injection audit
 .venv/bin/python -m unittest discover -s tests -p 'test_a1*.py'       # focused A1 evaluation checks
 .venv/bin/python scripts/minutes.py --evaluate [--season 2025 --from 2025-01-01 --to 2025-04-30] [--set gamma=1]   # allocator v real (no engine)

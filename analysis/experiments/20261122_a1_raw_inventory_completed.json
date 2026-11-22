@@ -1,0 +1,456 @@
+{
+ "experiment": "a1_raw_source_inventory",
+ "as_of_et": "2026-11-21",
+ "cutoff": "logged game date strictly before as_of_et; retained files are not proof of historical publication",
+ "nba": {
+  "2022-23": {
+   "team_advanced_log_types_present": {
+    "Regular Season": true,
+    "Playoffs": true,
+    "PlayIn": true,
+    "IST": true
+   },
+   "eligible_logged_games": 1320,
+   "retained_pbp_for_logged_games": 1320,
+   "missing_pbp_games": [],
+   "retained_pbp_not_in_eligible_logs": [],
+   "endpoints": {
+    "gamelogs": {
+     "manifest_present": true,
+     "manifest_entries": 12,
+     "files": 12,
+     "unindexed": [],
+     "missing_files": [],
+     "missing_url_or_fetch_time": [],
+     "hash_or_size_mismatch": [],
+     "corrupt_gzip": []
+    },
+    "boxscorematchupsv3": {
+     "manifest_present": true,
+     "manifest_entries": 1320,
+     "files": 1320,
+     "unindexed": [],
+     "missing_files": [],
+     "missing_url_or_fetch_time": [],
+     "hash_or_size_mismatch": [],
+     "corrupt_gzip": []
+    },
+    "playbyplayv3": {
+     "manifest_present": true,
+     "manifest_entries": 1320,
+     "files": 1320,
+     "unindexed": [],
+     "missing_files": [],
+     "missing_url_or_fetch_time": [],
+     "hash_or_size_mismatch": [],
+     "corrupt_gzip": []
+    },
+    "leaguedashptdefend": {
+     "manifest_present": true,
+     "manifest_entries": 636,
+     "files": 636,
+     "unindexed": [],
+     "missing_files": [],
+     "missing_url_or_fetch_time": [],
+     "hash_or_size_mismatch": [],
+     "corrupt_gzip": []
+    }
+   }
+  },
+  "2023-24": {
+   "team_advanced_log_types_present": {
+    "Regular Season": true,
+    "Playoffs": true,
+    "PlayIn": true,
+    "IST": true
+   },
+   "eligible_logged_games": 1319,
+   "retained_pbp_for_logged_games": 1319,
+   "missing_pbp_games": [],
+   "retained_pbp_not_in_eligible_logs": [],
+   "endpoints": {
+    "gamelogs": {
+     "manifest_present": true,
+     "manifest_entries": 12,
+     "files": 12,
+     "unindexed": [],
+     "missing_files": [],
+     "missing_url_or_fetch_time": [],
+     "hash_or_size_mismatch": [],
+     "corrupt_gzip": []
+    },
+    "boxscorematchupsv3": {
+     "manifest_present": true,
+     "manifest_entries": 1319,
+     "files": 1319,
+     "unindexed": [],
+     "missing_files": [],
+     "missing_url_or_fetch_time": [],
+     "hash_or_size_mismatch": [],
+     "corrupt_gzip": []
+    },
+    "playbyplayv3": {
+     "manifest_present": true,
+     "manifest_entries": 1319,
+     "files": 1319,
+     "unindexed": [],
+     "missing_files": [],
+     "missing_url_or_fetch_time": [],
+     "hash_or_size_mismatch": [],
+     "corrupt_gzip": []
+    },
+    "leaguedashptdefend": {
+     "manifest_present": true,
+     "manifest_entries": 624,
+     "files": 624,
+     "unindexed": [],
+     "missing_files": [],
+     "missing_url_or_fetch_time": [],
+     "hash_or_size_mismatch": [],
+     "corrupt_gzip": []
+    }
+   }
+  },
+  "2024-25": {
+   "team_advanced_log_types_present": {
+    "Regular Season": true,
+    "Playoffs": true,
+    "PlayIn": true,
+    "IST": true
+   },
+   "eligible_logged_games": 1321,
+   "retained_pbp_for_logged_games": 1321,
+   "missing_pbp_games": [],
+   "retained_pbp_not_in_eligible_logs": [],
+   "endpoints": {
+    "gamelogs": {
+     "manifest_present": true,
+     "manifest_entries": 12,
+     "files": 12,
+     "unindexed": [],
+     "missing_files": [],
+     "missing_url_or_fetch_time": [],
+     "hash_or_size_mismatch": [],
+     "corrupt_gzip": []
+    },
+    "boxscorematchupsv3": {
+     "manifest_present": true,
+     "manifest_entries": 1321,
+     "files": 1321,
+     "unindexed": [],
+     "missing_files": [],
+     "missing_url_or_fetch_time": [],
+     "hash_or_size_mismatch": [],
+     "corrupt_gzip": []
+    },
+    "playbyplayv3": {
+     "manifest_present": true,
+     "manifest_entries": 1321,
+     "files": 1321,
+     "unindexed": [],
+     "missing_files": [],
+     "missing_url_or_fetch_time": [
+      "0022400520",
+      "0022400521",
+      "0022400522",
+      "0022400523",
+      "0022400525",
+      "0022400526",
+      "0022400527",
+      "0022400528",
+      "0022400529",
+      "0022400530",
+      "0022400531",
+      "0022400533",
+      "0022400534",
+      "0022400535",
+      "0022400536",
+      "0022400539",
+      "0022400540",
+      "0022400541",
+      "0022400542",
+      "0022400543",
+      "0022400544",
+      "0022400545",
+      "0022400546"
+     ],
+     "hash_or_size_mismatch": [],
+     "corrupt_gzip": []
+    },
+    "leaguedashptdefend": {
+     "manifest_present": true,
+     "manifest_entries": 642,
+     "files": 642,
+     "unindexed": [],
+     "missing_files": [],
+     "missing_url_or_fetch_time": [],
+     "hash_or_size_mismatch": [],
+     "corrupt_gzip": []
+    }
+   }
+  },
+  "2025-26": {
+   "team_advanced_log_types_present": {
+    "Regular Season": true,
+    "Playoffs": true,
+    "PlayIn": true,
+    "IST": true
+   },
+   "eligible_logged_games": 1322,
+   "retained_pbp_for_logged_games": 1322,
+   "missing_pbp_games": [],
+   "retained_pbp_not_in_eligible_logs": [],
+   "endpoints": {
+    "gamelogs": {
+     "manifest_present": true,
+     "manifest_entries": 12,
+     "files": 12,
+     "unindexed": [],
+     "missing_files": [],
+     "missing_url_or_fetch_time": [],
+     "hash_or_size_mismatch": [],
+     "corrupt_gzip": []
+    },
+    "boxscorematchupsv3": {
+     "manifest_present": true,
+     "manifest_entries": 1322,
+     "files": 1322,
+     "unindexed": [],
+     "missing_files": [],
+     "missing_url_or_fetch_time": [],
+     "hash_or_size_mismatch": [],
+     "corrupt_gzip": []
+    },
+    "playbyplayv3": {
+     "manifest_present": true,
+     "manifest_entries": 1322,
+     "files": 1322,
+     "unindexed": [],
+     "missing_files": [],
+     "missing_url_or_fetch_time": [
+      "0042500205",
+      "0042500206",
+      "0042500207",
+      "0042500224",
+      "0042500235",
+      "0042500236",
+      "0042500301",
+      "0042500302",
+      "0042500303",
+      "0042500304",
+      "0042500311",
+      "0042500312",
+      "0042500313",
+      "0042500314",
+      "0042500315",
+      "0042500316",
+      "0042500317",
+      "0042500401",
+      "0042500402",
+      "0042500403",
+      "0042500404",
+      "0042500405"
+     ],
+     "hash_or_size_mismatch": [],
+     "corrupt_gzip": []
+    },
+    "leaguedashptdefend": {
+     "manifest_present": true,
+     "manifest_entries": 636,
+     "files": 636,
+     "unindexed": [],
+     "missing_files": [],
+     "missing_url_or_fetch_time": [],
+     "hash_or_size_mismatch": [],
+     "corrupt_gzip": []
+    }
+   }
+  },
+  "2026-27": {
+   "team_advanced_log_types_present": {
+    "Regular Season": true,
+    "Playoffs": false,
+    "PlayIn": false,
+    "IST": false
+   },
+   "eligible_logged_games": 235,
+   "retained_pbp_for_logged_games": 235,
+   "missing_pbp_games": [],
+   "retained_pbp_not_in_eligible_logs": [],
+   "endpoints": {
+    "gamelogs": {
+     "manifest_present": true,
+     "manifest_entries": 6,
+     "files": 6,
+     "unindexed": [],
+     "missing_files": [],
+     "missing_url_or_fetch_time": [],
+     "hash_or_size_mismatch": [],
+     "corrupt_gzip": []
+    },
+    "boxscorematchupsv3": {
+     "manifest_present": true,
+     "manifest_entries": 235,
+     "files": 235,
+     "unindexed": [],
+     "missing_files": [],
+     "missing_url_or_fetch_time": [],
+     "hash_or_size_mismatch": [],
+     "corrupt_gzip": []
+    },
+    "playbyplayv3": {
+     "manifest_present": true,
+     "manifest_entries": 235,
+     "files": 235,
+     "unindexed": [],
+     "missing_files": [],
+     "missing_url_or_fetch_time": [],
+     "hash_or_size_mismatch": [],
+     "corrupt_gzip": []
+    },
+    "leaguedashptdefend": {
+     "manifest_present": true,
+     "manifest_entries": 90,
+     "files": 90,
+     "unindexed": [],
+     "missing_files": [],
+     "missing_url_or_fetch_time": [],
+     "hash_or_size_mismatch": [],
+     "corrupt_gzip": []
+    }
+   }
+  }
+ },
+ "hoopr": {
+  "manifest": "data/raw/hoopr/manifest.json",
+  "season_end_year": {
+   "2023": {
+    "play_by_play": {
+     "rows": 620855,
+     "missing_game_ids": 0,
+     "unique_games": 1321,
+     "bytes": 20987371,
+     "sha256": "f3fac3a58cf1be8813f1f4332edb7fc8d83936df703892a700095d62f71da886",
+     "retrieved": "2026-11-19T17:17:51Z"
+    },
+    "player_box": {
+     "rows": 34057,
+     "missing_game_ids": 0,
+     "unique_games": 1321,
+     "bytes": 595949,
+     "sha256": "968d835cd04b10533c5b5af8c0e41bf0154a73782e9446c76f765109223e8679",
+     "retrieved": "2026-11-19T17:17:51Z"
+    },
+    "box_only_games": [],
+    "pbp_only_games": []
+   },
+   "2024": {
+    "play_by_play": {
+     "rows": 614447,
+     "missing_game_ids": 0,
+     "unique_games": 1320,
+     "bytes": 20598361,
+     "sha256": "bda57bcb4f8aae57428979ac4a0f766f67c52c770d85b0e7fcf7237a333704b0",
+     "retrieved": "2026-11-19T17:17:52Z"
+    },
+    "player_box": {
+     "rows": 35028,
+     "missing_game_ids": 0,
+     "unique_games": 1320,
+     "bytes": 610610,
+     "sha256": "1e500a538ec45ddbcb58d9789b5494f8db4f25658eafd01d90f2d09600921665",
+     "retrieved": "2026-11-19T17:17:52Z"
+    },
+    "box_only_games": [],
+    "pbp_only_games": []
+   },
+   "2025": {
+    "play_by_play": {
+     "rows": 624997,
+     "missing_game_ids": 0,
+     "unique_games": 1324,
+     "bytes": 21409425,
+     "sha256": "71d7d02671268f793f13a13d1a8a271cba1241cd9ba28c3a363a3f16ad56acc7",
+     "retrieved": "2026-11-19T17:17:54Z"
+    },
+    "player_box": {
+     "rows": 35250,
+     "missing_game_ids": 0,
+     "unique_games": 1324,
+     "bytes": 610289,
+     "sha256": "e89f7fbc1124092c715b722e6d72d9dd1b9d28776ca6888b508fd2831cd705e2",
+     "retrieved": "2026-11-19T17:17:54Z"
+    },
+    "box_only_games": [],
+    "pbp_only_games": []
+   },
+   "2026": {
+    "play_by_play": {
+     "rows": 642472,
+     "missing_game_ids": 0,
+     "unique_games": 1325,
+     "bytes": 22274408,
+     "sha256": "f7051c5c0c5b605419fcc0e0c13dd90df7803f96dab290554c1ef737433a98b2",
+     "retrieved": "2026-11-19T17:17:55Z"
+    },
+    "player_box": {
+     "rows": 34883,
+     "missing_game_ids": 0,
+     "unique_games": 1326,
+     "bytes": 606444,
+     "sha256": "29a29dc9efd055a93e069a0382ac830d98a13274bee655beba69d95cff099713",
+     "retrieved": "2026-11-19T17:17:55Z"
+    },
+    "box_only_games": [
+     "401810469"
+    ],
+    "pbp_only_games": []
+   }
+  }
+ },
+ "espn_current": {
+  "final_summaries_by_season_end_year": {
+   "2027": 236
+  },
+  "final_summaries": 236,
+  "final_manifest_present": false,
+  "collection_runs": [
+   {
+    "run": "20261119T145907Z",
+    "slate_date": "2026-11-19",
+    "started": "20261119T145907Z",
+    "finished": "20261119T150147Z",
+    "failures": 0
+   },
+   {
+    "run": "20261119T235714Z",
+    "slate_date": "2026-11-19",
+    "started": "20261119T235714Z",
+    "finished": "20261119T235737Z",
+    "failures": 0
+   },
+   {
+    "run": "20261120T092255Z",
+    "slate_date": "2026-11-20",
+    "started": "20261120T092255Z",
+    "finished": "20261120T092320Z",
+    "failures": 0
+   },
+   {
+    "run": "20261120T163017Z",
+    "slate_date": "2026-11-20",
+    "started": "20261120T163017Z",
+    "finished": "20261120T163039Z",
+    "failures": 0
+   },
+   {
+    "run": "20261121T225637Z",
+    "slate_date": "2026-11-21",
+    "started": "20261121T225637Z",
+    "finished": "20261121T225704Z",
+    "failures": 0
+   }
+  ],
+  "limitation": "Final summaries have no per-file acquisition/hash manifest; file presence does not prove the original publication time or historical availability."
+ }
+}

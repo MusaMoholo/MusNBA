@@ -413,8 +413,12 @@ class CausalFeatureTests(unittest.TestCase):
 
     def test_engine_loads_only_fold_safe_scheduled_assignment(self):
         def model(through, valid_from):
+            fitted = through is not None
             return {'through': through, 'valid_from': valid_from, 'match': {k: 0. for k in matchups.MATCH},
-                    'fill': {}, 'body_policy': 'omit', 'missing_policy': 'retain_missing'}
+                    'prop': {k: 0. for k in matchups.PROP} if fitted else {},
+                    'fill': {k: 0. for k in ('height_in', 'weight_lb', 'grp_code', 'min_avg',
+                                             'pf_rate', 'blk_rate', 'stl_rate')} if fitted else {},
+                    'body_policy': 'omit', 'missing_policy': 'retain_missing'}
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -560,7 +564,11 @@ class CausalFeatureTests(unittest.TestCase):
         def model(through, valid_from, role_weight):
             weights = {name: 0. for name in matchups.MATCH}
             weights['abs_role'] = role_weight
-            return {'through': through, 'valid_from': valid_from, 'match': weights, 'fill': {},
+            fitted = through is not None
+            return {'through': through, 'valid_from': valid_from, 'match': weights,
+                    'prop': {k: 0. for k in matchups.PROP} if fitted else {},
+                    'fill': {k: 0. for k in ('height_in', 'weight_lb', 'grp_code', 'min_avg',
+                                             'pf_rate', 'blk_rate', 'stl_rate')} if fitted else {},
                     'body_policy': 'omit', 'missing_policy': 'retain_missing'}
 
         cold = model(None, '1900-01-01', 0.)
@@ -590,6 +598,26 @@ class CausalFeatureTests(unittest.TestCase):
         future = model('2024-02-01', '2024-02-01', 1.)
         with self.assertRaisesRegex(ValueError, 'within its fold'):
             matchups.dated_assignment({**schedule, 'models': [cold, future]}, actor, defense, dates)
+
+    def test_dated_assignments_reject_corrupt_cutoffs_and_parameters(self):
+        cold = {'through': None, 'valid_from': '1900-01-01', 'match': {k: 0. for k in matchups.MATCH},
+                'fill': {}, 'body_policy': 'omit', 'missing_policy': 'retain_missing'}
+        fitted = {'through': '2024-01-31', 'valid_from': '2024-02-01',
+                  'match': {k: 0. for k in matchups.MATCH}, 'prop': {k: 0. for k in matchups.PROP},
+                  'fill': {k: 0. for k in ('height_in', 'weight_lb', 'grp_code', 'min_avg',
+                                           'pf_rate', 'blk_rate', 'stl_rate')},
+                  'body_policy': 'omit', 'missing_policy': 'retain_missing'}
+        broken = [
+            {**fitted, 'through': 'NaT'},
+            {**fitted, 'match': {**fitted['match'], 'abs_role': np.nan}},
+            {**fitted, 'prop': {**fitted['prop'], 'foul_pf': np.inf}},
+            {**fitted, 'fill': {**fitted['fill'], 'min_avg': np.inf}},
+            {**fitted, 'fill': {k: v for k, v in fitted['fill'].items() if k != 'min_avg'}},
+        ]
+        schedule = {'kind': 'dated_implicit_schedule', 'training_through': '2024-01-31'}
+        for model in broken:
+            with self.subTest(model=model), self.assertRaises(ValueError):
+                matchups.dated_masks({**schedule, 'models': [cold, model]}, ['2024-02-01'])
 
     def test_assignment_holdout_uses_training_fills_and_scales(self):
         segments, profiles, events = [], [], []
