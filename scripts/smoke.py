@@ -436,6 +436,9 @@ def main():
                         worlds.update({k: z[k] for k in z.files})
             again = json.loads(json.dumps(projection.simulate_season(st['teams'], st['league'], master, snap.name, teams,
                                                                      worlds or None, season['sims'], season['pathway'])))
+            for tid, t in season['teams'].items():
+                if 'bottom3' not in t:
+                    again['teams'][tid].pop('bottom3', None)
             if args.fault:
                 season['games'][0]['p_home'] += 1e-4
             check(f'{snap.name}: season re-simulates bit-for-bit ({season["model"]}, {len(worlds)} engine games)',
@@ -563,6 +566,46 @@ def main():
         if args.fault:
             tot[0] += 1
         check(f'standings: every team\'s final-wins distribution sums to the {sims:,} simulated seasons (Wins tab)', all(x == sims for x in tot))
+
+    # Dashboard U15/U18/U19: presentation outputs reconcile to their retained sources.
+    role_views = [read_json(p) for p in (VIEWS / 'api' / 'team').glob('*.json')]
+    projected_roles = [t for t in role_views if t.get('tonight')]
+    role_ok = True
+    for t in projected_roles:
+        nxt = t['tonight']
+        game = read_json(VIEWS / 'api' / 'game' / (nxt['game_id'] + '.json'))['projection']['sim']
+        side = 'home' if game['home']['team_id'] == t['team']['id'] else 'away'
+        expected = {str(p['id']): p for p in game[side]['players']}
+        role_ok &= set(nxt['players']) == set(expected) and nxt['sims'] == game['sims']
+        for pid, role in nxt['players'].items():
+            source = expected[pid]
+            mean = source['periods']['fg']['stats']['min']['mean'] if source.get('periods') else None
+            role_ok &= ((mean is None and role['min'] is None) or
+                        (mean is not None and role['min'] is not None and abs(role['min'] - mean) <= .050001))
+            role_ok &= role['starter'] == bool(source.get('starter'))
+    if args.fault:
+        role_ok = False
+    check(f'roster roles: next-game minutes/starters and simulation counts equal stored games ({len(projected_roles)} teams)',
+          bool(projected_roles) and role_ok)
+
+    bottom = [t['forecast'].get('bottom3') for t in st['teams']]
+    if all(v is not None for v in bottom):
+        total = sum(bottom) + (.01 if args.fault else 0)
+        check('season races: bottom-three probabilities sum to 3; worst-record chance is nested',
+              abs(total - 3) < .002 and all(0 <= t['forecast']['worst_record'] <= t['forecast']['bottom3'] <= 1
+                                           for t in st['teams']))
+    movers = read_json(VIEWS / 'api' / 'season_movers.json')
+    if movers.get('from'):
+        keys = ('mean_w', 'top6', 'playin', 'first')
+        delta_ok = all(abs(t['now'][k] - t['before'][k] - t['delta'][k]) < .000051
+                       for t in movers['teams'] for k in keys)
+        source_results = {r['game_id'] for r in master if r['status'] == 'final' and movers['from'] <= r['date_et'] < movers['to']}
+        listed_results = {r['id'] for r in movers['results']}
+        if args.fault:
+            delta_ok = False
+        check('season movers: 30 teams, deltas = now minus before; results exactly cover distinct-cutoff interval',
+              len(movers['teams']) == len({t['id'] for t in movers['teams']}) == 30 and delta_ok
+              and movers['from'] < movers['to'] and source_results == listed_results)
 
     failed = results.count(False)
     print(f'\n{len(results) - failed}/{len(results)} checks passed')

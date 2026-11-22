@@ -436,3 +436,11 @@ Settled 19 Nov: D1–D16 above. Nothing blocking; to confirm when convenient:
 | Runtime | Engine limited to the 7-day horizon; quarter-synchronised vectorisation; parallel games |
 | Long-range model drifting from the engine | Nightly calibration against the near-term engine sims |
 | Data-source change (ESPN unofficial) | Adapter boundary; raw retention; NBA Stats as an alternative |
+
+## 16. Additive season presentation outputs (22 Nov 2026)
+
+The season summariser records the chance of a bottom-three league record, using the same wins and random tiebreak
+already drawn for best/worst record. Exactly three teams qualify per world. This adds no RNG calls and changes no
+forecasts: parity verified on 10,000 retained worlds, 965 remaining games, 13 engine games (FINDINGS §5). Playoff diagrams
+are explicitly illustrations of marginal regular-season seeds; no postseason engine or joint pairing odds were added.
+Engine v1.3 and team pathway v1 remain promoted; no training changes or final-test use.

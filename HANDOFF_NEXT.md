@@ -1,16 +1,15 @@
 # Handoff — state and next actions
 
-Updated **20 November 2026, evening UK** (checkpoint: **D32 chunk** — NBA Stats ingested and cross-walked; defence on real
-matchups built and measured (**negative: v1.3 stays, D37**); 10,000 worlds per game and one rotation table per world (D36);
-a large dashboard round). Read [AGENTS.md](AGENTS.md) first. Rewrite this file at every checkpoint, then commit and push;
-whoever reads it next may be a new agent.
+Updated **22 November 2026, UK** — dashboard U15–U22 completion in progress. Latest checkpoint **91ad4c2** (U21);
+U15–U21 each committed and pushed; U22 ready to checkpoint. Public source approved by owner; Pages deployment in progress. U22 completes grouped Standings controls, dynamic copy, 9 player / 6 team leader cards,
+loading states, content assertions and PWA packaging fixes. The owner asked to merge season insights into Standings;
+there is no separate main-nav Season tab. Comparable card grids use multiples of three; changing copy reads data/config.
 
-**Git:** private repo `MusaMoholo/MusNBA` (`main`). Previous checkpoint `6d156a4`; this chunk's commit ("D32 chunk: …") is the
-latest (`git log --oneline -3`). Snapshots **2026-11-21 (6 games) and 2026-11-22 (7 games) were built by the close-out nightly
-on 21 Nov, 23:01 UK, at 10,000 worlds per game with per-world rotation tables** (engine v1.3, team pathway v1, season 965 games);
-earlier copies archived in `~/Basketball_archive_ops/`. **Nothing runs in the background**: the NBA Stats history download is
-paused at play-by-play v3 1,895 / 5,508 games (resumable — next actions 4). The owner keeps `scripts/serve.py` on :8766 open —
-leave it; use :8767 for your own checks.
+**Running:** review server :8767; temporary PWA server :8768. Owner :8766 untouched. Required nightly is running in
+persistent session, PID 32485, log `/tmp/musnba-dashboard-nightly.log` (`--offline --no-rebuild`, engine v1.3, 10k worlds).
+Do not start another simulation or refresh while it runs. The NBA history download remains paused. Earlier snapshots
+will be archived automatically in `~/Basketball_archive_ops` before replacement. Browser checks: 130/130 full + 30/30 targeted, PWA 14/14; new
+accounting checks in smoke will run after the nightly (avoid concurrent engine simulations).
 
 **How the owner wants a chunk run (AGENTS §3):** state your understanding and **one or two headliners**; **plan every subtask as
 a ladder of ten 10% steps with done-when criteria** and weights for the chunk %, keep the ladders below, and print the board
@@ -29,8 +28,9 @@ Chunk % = 0.80 × Delivery + 0.20 × Close-out. Each entry below is a concrete 1
 | Delivery (80%) | 10 baseline 99/99 + source audit; 20 U15 roster roles styled, six browser cases inspected, documented/committed/pushed; 30 U16 playoff picture checked/documented/committed/pushed; 40 U17 win distributions checked/documented/committed/pushed; 50 U18 season races checked/documented/committed/pushed; 60 U19 movers checked/documented/committed/pushed; 70 U20 leaders checked/documented/committed/pushed; 80 U21 guide checked/documented/committed/pushed; 90 U22 polish checked/documented/committed/pushed; 100 integration, all U statuses and commands consistent |
 | Close-out (20%) | 10 refresh configuration/cutoffs verified; 20 offline/no-rebuild nightly launched (10k, archives); 30 quarter of game logs complete; 40 half complete; 50 three quarters complete; 60 all games and fresh 10k season/views complete; 70 full browser sweep/screenshots reviewed; 80 smoke passes with new accounting checks; 90 fault run fails + PWA import/offline checks pass; 100 handoff/findings/plan current and final commit pushed |
 
-Current: Delivery 80%, Close-out 0%, overall 64%. U21 complete: About the model guide: two engines, 10k worlds, ranges and probability changes, cutoff safety, decision highlights, known limitations, sources and live retained-data freshness. Linked from engine/season chips and Model & data; PWA included. Six size/theme checks passed and screenshots reviewed.
-Review server :8767; owner :8766 untouched. Continue with the first unchecked U item.
+Current: Delivery 90%, Close-out 40%, overall 80%. U22 complete; nightly 8/13 engine games complete.
+Review server :8767; owner :8766 untouched. Full sweep log is in the tool session; screenshots `/tmp/musnba-u22-audited`.
+Initial baseline 99/99. Latest targeted rerun 18/18 after a transient metadata publication gap in the first sweep.
 
 ## The product in one paragraph (ENGINE_PLAN D26)
 

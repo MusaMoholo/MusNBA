@@ -46,11 +46,34 @@ await send('DOM.setFileInputFiles', {nodeId, files: [args.bundle]}, s);
 check('import completes and app renders slate', await waitFor(`!!document.querySelector('.game-card') && document.querySelector('#pwa-status')?.textContent.includes('Saved data through')`, 120000), `${((Date.now() - started) / 1000).toFixed(1)}s`);
 check('logo served from imported data', await waitFor(`[...document.querySelectorAll('img.logo')].some(i => i.complete && i.naturalWidth > 0)`, 15000));
 await send('Page.navigate', {url: args.url + '#/game/401910009'}, s);
-check('game centre renders from storage', await waitFor(`document.querySelector('.odds') && document.body.textContent.includes('Actual vs projected')`));
+check('game centre renders from storage', await waitFor(`document.querySelector('.bezel') && !!document.querySelector('[data-mode=cmp]')`));
 check('service worker controls page', await waitFor(`!!navigator.serviceWorker.controller`, 15000) || (await send('Page.reload', {}, s), await waitFor(`!!navigator.serviceWorker.controller`, 15000)));
 await send('Network.emulateNetworkConditions', {offline: true, latency: 0, downloadThroughput: -1, uploadThroughput: -1}, s);
 await send('Page.navigate', {url: args.url + '#/standings'}, s);
 check('offline reload renders standings', await waitFor(`document.body.textContent.includes('Standings & season forecast') && !!document.querySelector('td.heat')`));
+await send('Page.navigate', {url: args.url + '#/standings/races'}, s);
+check('offline races render their own forecast content', await waitFor(`!!document.querySelector('.race-row') && document.body.textContent.includes('Season races')`));
+await send('Page.navigate', {url: args.url + '#/standings/leaders'}, s);
+check('offline leaders have nine player and six team cards', await waitFor(`document.querySelectorAll('.leaders-grid')[0]?.children.length === 9 && document.querySelectorAll('.leaders-grid')[1]?.children.length === 6 && !document.querySelector('.race-row')`));
+check('leader qualification copy follows loaded games played', await evaluate(`(async () => {
+  const ui = await import('./assets/ui.mjs'), page = await import('./assets/season.mjs');
+  const data = await ui.api('standings/' + ui.meta().latest);
+  data.teams.forEach(t => t.gp = 40);
+  await page.render(document.querySelector('#view'), {meta: ui.meta(), current: () => true, rest: ['leaders']});
+  return document.querySelector('#view').textContent.includes('minimum 28 games') && document.querySelector('#view').textContent.includes('No qualifying players yet');
+})()`));
+await send('Page.navigate', {url: args.url + '#/standings/movers'}, s);
+check('offline movers read imported comparisons', await waitFor(`document.querySelector('#view').textContent.includes('Since the previous forecast')`));
+await send('Page.navigate', {url: args.url + '#/about'}, s);
+check('model guide works offline', await waitFor(`document.querySelector('#view').textContent.includes('Reading the numbers')`));
+check('model guide numbers follow loaded simulation counts', await evaluate(`(async () => {
+  const ui = await import('./assets/ui.mjs'), page = await import('./assets/about.mjs');
+  ui.meta().model.sims = 1234;
+  (await ui.api('standings/' + ui.meta().latest)).sims = 4321;
+  await page.render(document.querySelector('#view'), {meta: ui.meta(), current: () => true});
+  const text = document.querySelector('#view').textContent;
+  return text.includes('1,234 possible outcomes') && text.includes('740 of 1,234') && text.includes('4,321 possible seasons');
+})()`));
 const repeat = await evaluate(`(async () => { const {importBundle} = await import('./assets/pwa-storage.mjs'); return 'ok'; })()`).catch(e => String(e));
 check('storage module loads offline', repeat === 'ok', repeat === 'ok' ? '' : repeat);
 if (args.out) { const shot = await send('Page.captureScreenshot', {format: 'png'}, s); writeFileSync(join(args.out, 'pwa-offline-standings.png'), Buffer.from(shot.data, 'base64')); }

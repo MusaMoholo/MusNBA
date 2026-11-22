@@ -38,17 +38,46 @@ python3 -m venv .venv
   immediately; no restart needed. `serve.py --host 0.0.0.0` lets a phone on the same Wi-Fi in.
 - Slates are US Eastern game dates; tip-offs show UK time with ET.
 
-## Phone app (static PWA)
+## Install on laptop or phone (MusSim pattern)
+
+The public app shell is served from personal GitHub Pages at **https://musamoholo.github.io/MusNBA/** once its deployment
+finishes (publication status: HANDOFF_NEXT.md). Source: https://github.com/MusaMoholo/MusNBA. No account is needed in the
+app; the public shell contains no collected data or projections.
+
+On iPhone: open that address in Safari → Share → Add to Home Screen, open the installed icon, then choose
+**Offline data & installation → Import data** and select **iCloud Drive/MusNBA/MusNBA.musnba.gz**. Import inside the installed
+app; Safari and the installed app may have separate storage. Keep it open/unlocked while importing. On a laptop, open
+the same address, use the browser's install option if offered, and import the same bundle. Each device imports separately.
+
+Data stays on-device and browsing works offline after import. App updates arrive through Pages; data updates arrive via
+iCloud imports. Keep the source bundle as a backup. The phone bundle keeps expected-lineup distributions; per-world
+Scenarios/Given…/duels and lineup branches remain localhost-only (D36). Real-device iPhone acceptance is an owner check.
+
+### Nightly → iCloud → import
 
 ```sh
-.venv/bin/python scripts/export_musnba.py --shell _site --base-path /MusNBA/   # data-free shell
-.venv/bin/python scripts/nightly_musnba.py                                     # nightly (engine) + iCloud export
+.venv/bin/python scripts/nightly_musnba.py                  # nightly; exports only after success
+.venv/bin/python scripts/nightly_musnba.py --export-only    # export completed snapshots without re-simulating
 ```
 
-Host `_site` (e.g. GitHub Pages, `gh-pages` branch with `.nojekyll`). The shell never contains
-data. `nightly_musnba.py` writes **iCloud Drive/MusNBA/MusNBA.musnba.gz** after a successful
-nightly; in the installed app choose **Offline data & installation → Import data**. Imports are
-checksum-verified and atomic; the previous data stays available if an import fails.
+The default destination is iCloud Drive/MusNBA/MusNBA.musnba.gz. The wrapper checks destination access before starting,
+keeps the previous export on failure, and installs no scheduler. `--output PATH` overrides the destination; other options
+pass through to the nightly. Previous exports are archived under `~/Basketball_archive_ops`.
+
+### Build/publish the data-free shell
+
+```sh
+.venv/bin/python scripts/export_musnba.py --shell exports/MusNBA-web --base-path /MusNBA/
+.venv/bin/python scripts/export_musnba.py --output exports/MusNBA.musnba.gz
+```
+
+Publish only the contents of `exports/MusNBA-web` on the `gh-pages` branch with `.nojekyll` (Pages branch source `/`).
+Never put datasets or `.musnba.gz` files on that branch. Source remains on `main`; local identity and credentials stay
+unchanged. `.github/workflows/pages.yml` is the same optional manually dispatched alternative as MusSim; it requires
+selecting GitHub Actions as the Pages source. The active branch deployment does not run simulations or require Actions.
+
+Dashboard routes: `#/standings/{forecast,seeds,wins,ratings,picture,races,movers,leaders}`, `#/team/<id>`, `#/about`.
+`#/season` redirects to Standings Races. Counts/dates/model labels and qualifiers come from the loaded data/settings.
 
 ## Code map
 
@@ -82,7 +111,7 @@ checksum-verified and atomic; the previous data stays available if an import fai
 | `scripts/nightly.py`, `scripts/views.py` | Orchestration, immutable snapshots, API-ready views |
 | `scripts/serve.py` | Read-only local server for the app and `/api/*` |
 | `scripts/export_musnba.py`, `scripts/nightly_musnba.py` | Static shell, data bundle, iCloud export |
-| `scripts/webapp/` | The app: native ES modules, no build step |
+| `scripts/webapp/` | Native ES modules: `league.mjs` (Standings/teams), `season.mjs` (Races/Movers/Leaders), `about.mjs` (model guide); no build step |
 | `scripts/smoke.py`, `analysis/*.mjs` | Accounting checks; optional browser/PWA acceptance (Node, no packages) |
 
 ## Engine data and models (phase 2)

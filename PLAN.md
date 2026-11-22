@@ -77,7 +77,7 @@ Slates are US Eastern game dates; tip-offs show UK time with ET alongside.
 | 2 | Possession engine (data → models → engine → backtest) | `████████░░` **M1–M5b, M6a done · engine v1.3 is the app's default (D34), 10,000 worlds per game (D36) · backtest (M9) is the gate · NBA Stats matchups ingested; real-matchup defence not promoted (D37): team differences are compressed generally (offence 0.73, defence 0.69 of real) — next: that compression, M7 substitutions** |
 | 3 | Evaluation and nightly feedback (Forecast Lab view, refit cadence) | `███░░░░░░░` **Forecast Lab page (`#/lab`), nightly projected-v-actual starters record (D33); refit cadence not started** |
 | 4 | Season on the engine: pathway calibration, availability, tiebreakers, play-in, Cup, what-ifs | `██░░░░░░░░` **team pathway v1 in the app (D25): per-world ratings, engine worlds for today + tomorrow; walk-forward calibration first cut (M12)** |
-| 5 | Polish: hosting, iPhone acceptance, watch-a-sim, more views | not started |
+| 5 | Polish: hosting, iPhone acceptance, watch-a-sim, more views | `█████░░░░░` **Dashboard U1–U22 complete (22 Nov); personal GitHub Pages + iCloud flow follows MusSim; real iPhone acceptance and watch-a-sim remain** |
 
 ## 6. Phase 2 milestones — the current work
 
@@ -103,6 +103,8 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
 | M10 | Watch-a-sim view (owner, 20 Nov: nba.com-style play-by-play list first, then visual play-through) | ☐ | A saved world's events list and replay in the Game Centre, phone and desktop | `engine.py` event log, views, `game.mjs` |
 | M11 | Availability model | ☐ | Simulated games missed match history | (to build) |
 | M12 | Season pathway calibration | ◐ **first cut (20 Nov): team pathway v1 in the app** — walk-forward 2022-26 (480 team-starts): dispersion 1.00 (fixed probabilities 1.53), 10–90% coverage 84% (65%), CRPS −4% in every held-out season; still wide in November (0.84) and surprises fade with the date (sim 0.52 → 0.18 v real 0.40 flat) | Dispersion ≈ 1.0 **at every start date**, persistence matches | `pathway.py`, `season_backtest.py` |
+
+| UX | Dashboard upgrade programme U1–U22 | ✅ **22 Nov:** all 22 shipped; U15–U22 adds roster roles, playoff picture, win ranges, races/movers/leaders inside Standings and model guide; 130 full + 30 targeted browser checks, PWA 14/14 | Checked at 1440/960/390, both themes, stored data only | DASHBOARD_PLAN.md |
 
 ### Next major chunk (agreed with the owner, 21 Nov): "Express team strength, make minutes react"
 
@@ -335,3 +337,25 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 - **22 Nov 2026 · U20**: Standings Leaders: seven player leaderboards (PTS/REB/AST/3PM/STL/BLK/FG%) and four team rating/pace leaderboards. Explicit minimum-games and shooting-attempt filters; current data qualifies at 12 GP. Distinct from forecast Races; six size/theme checks passed and screenshots reviewed.
 
 - **22 Nov 2026 · U21**: About the model guide: two engines, 10k worlds, ranges and probability changes, cutoff safety, decision highlights, known limitations, sources and live retained-data freshness. Linked from engine/season chips and Model & data; PWA included. Six size/theme checks passed and screenshots reviewed.
+
+### Preserved engine chunk ladders (resume after dashboard completion)
+
+Headliners: **(1) team-difference compression** (next actions 1) and **(2) M7 game-state substitutions** (next actions 2); the
+chunk closes with major and minor dashboard work tied to both. Chunk % = 0.35 · S1 + 0.30 · S2 + 0.25 · S3 + 0.10 · S4; each step
+is 10% of its subchunk — post the board when a step or a 5% chunk mark is crossed.
+
+| Subchunk | Steps (10% each, in order; done when …) |
+|---|---|
+| **S1 Team-difference compression (35%)** | M6a v engine component loadings on the same 200 games (where the signal is lost) · node expression audit (slope real-on-predicted by shooter/defender/team-style deciles) · 2–3 levers chosen with expected effects · candidate A built · A fold runs paired v v1.3 · candidate B built · B fold runs paired · backtests A and B (one at a time) · decision (promote v1.4, final test once, or D38 negative) · total-bias (+1 pt in v1.4 variants) traced + FINDINGS/ENGINE_PLAN |
+| **S2 M7 game-state substitutions (30%)** | substitution windows with game state + FINDINGS facts (blowout minutes by tier, foul-trouble benching) · out/in datasets per dead ball · baseline: replayed schedules v real sub rates · models on the folds · engine integration as a soft pull to D29 targets (five on court, 240 minutes — smoke) · minutes by game state by tier v history (F4) · backtest (minutes by tier first) · pull strength tuned on F4 · decision · docs + smoke identities |
+| **S3 Dashboard (25%)** | **major**: rotation-map data (P on court per player per minute; Σ = 5 smoke) · rotation-map view (players × 48-min heat strip; blowout/close toggle if M7 promotes) · watch-a-sim data (5 saved worlds' event logs, D9/M10) · watch-a-sim list (nba.com-style play-by-play, quarter jumps, filters) · **minor**: player face cards fetched once + retained · face cards in spotlight, sheets, box scores, player pages · tracking-defence insight on player pages (contest FG% allowed v normal) · win % Δ back if S1 makes engine and ratings consistent (else deferred + alternative) · "role change tonight" badges on Today (±4 min and why) · full sweep 1440/960/390 both themes + DASHBOARD_PLAN |
+| **S4 Close-out (10%)** | resume NBA pbp history early (background, ~75 min) · pbp complete · nightly 10k started · nightly done (~30 min) · browser checks · browser fixes · smoke + new checks · `--fault` fails · docs · commit + push |
+
+Sequencing: S2's data steps run while S1's fold models train; never two backtests at once; pause the pbp download during the
+nightly; if S1 and S2 both promote, one production retrain (`train.py --final`) covers both.
+
+
+- **22 Nov 2026 · U22:** grouped Standings controls; 9 player/6 team cards; counts/dates/thresholds and win scales from loaded
+  data/configuration; loading/empty states; all 130 browser cases pass plus 30 targeted cases, PWA 14/14 including dynamic
+  count/qualification changes. Owner: keep season insights in Standings, comparable card groups in multiples of three,
+  copy MusSim's personal GitHub Pages + iCloud setup; explicitly approved making MusNBA source public.

@@ -53,7 +53,11 @@ export function stamp(utc) {
 const ok = v => typeof v === 'number' && Number.isFinite(v);
 export const f1 = v => ok(v) ? v.toFixed(1) : '—';
 export const f0 = v => ok(v) ? Math.round(v).toString() : '—';
-export const signed = (v, d = 1) => ok(v) ? (v > 0 ? '+' : v < 0 ? '−' : '±') + Math.abs(v).toFixed(d) : '—';
+export const signed = (v, d = 1) => {
+  if (!ok(v)) return '—';
+  const value = Math.abs(v).toFixed(d);
+  return (Number(value) === 0 ? '±' : v > 0 ? '+' : '−') + value;
+};
 export const rate = (v, d = 1) => ok(v) ? (100 * v).toFixed(d) + '%' : '—';
 export function pct(p, d = 1) {
   if (!ok(p)) return '—';
@@ -190,3 +194,5 @@ export function modelPill(model) {
 
 // Shared Standings sections: all season insights stay within one destination.
 export const standingsTabs = [['forecast', 'Forecast'], ['seeds', 'Seeds'], ['wins', 'Wins'], ['ratings', 'Ratings'], ['picture', 'Playoff picture'], ['races', 'Races'], ['movers', 'Movers'], ['leaders', 'Leaders']];
+
+export const standingsNav = active => segGroups([['Standings', standingsTabs.slice(0, 5)], ['Season insights', standingsTabs.slice(5)]], active, 'data-view');

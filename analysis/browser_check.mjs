@@ -14,6 +14,7 @@ const BASE = args.base || 'http://127.0.0.1:8767';
 const OUT = args.out || join(tmpdir(), 'musnba-shots');
 const CHROME = args.chrome || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const SIZES = {desktop: [1440, 1000, 1, false], half: [960, 1000, 1, false], phone: [390, 844, 2, true]};
+const EXPECT = {'legacy-season': 'Season races', season: 'Season races', 'season-leaders': 'Season leaders · to date', 'season-movers': 'Since the previous forecast', about: 'About the model', 'standings-picture': 'playoff picture'};
 const only = args.only ? String(args.only).split(',') : null;
 
 // name, hash, sizes, themes
@@ -33,6 +34,8 @@ const CASES = [
   ['sheet-q1', '#/game/401910019/player/5041935/q1', ['phone'], ['dark']],
   ['future-game', '#/game/' + (args.future || ''), ['phone'], ['dark']],
   ['standings', '#/standings/forecast', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['standings-seeds', '#/standings/seeds', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['standings-ratings', '#/standings/ratings', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['standings-wins', '#/standings/wins', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['standings-picture', '#/standings/picture', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['season', '#/standings/races', ['desktop', 'half', 'phone'], ['dark', 'light']],
@@ -41,9 +44,11 @@ const CASES = [
   ['about', '#/about', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['teams', '#/teams', ['desktop', 'phone'], ['dark']],
   ['team', '#/team/14', ['desktop', 'half', 'phone'], ['light', 'dark']],
+  ['team-no-proj', '#/team/20', ['desktop', 'half', 'phone'], ['light', 'dark']],
+  ['legacy-season', '#/season', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['players', '#/players', ['desktop', 'phone'], ['dark']],
   ['player', '#/player/3032977', ['desktop', 'half', 'phone'], ['dark', 'light']],
-  ['lab', '#/lab', ['desktop', 'phone'], ['dark', 'light']],
+  ['lab', '#/lab', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['scenario', '#/game/401909305/scenario', ['desktop', 'phone'], ['dark', 'light']],
   ['scenario-set', '#/game/401909305/scenario/' + encodeURIComponent(JSON.stringify([{subj: 'p:4701230', v: 'pts', op: 'ge', x: 30}, {subj: 't:home', v: 'win'}])), ['desktop', 'phone'], ['dark']],
   ['team-drivers', '#/game/401909305/fg/team', ['desktop', 'phone'], ['light']],
@@ -116,10 +121,12 @@ for (const [name, hash, sizes, themes] of CASES) {
       clip: {x: 0, y: args.from ? Math.max(0, d.height - Number(args.from)) : 0, width, height: Math.min(args.from ? Number(args.from) : d.height, mobile ? 3200 : 2600), scale: 1}}, sessionId);
     const file = join(OUT, `${name}-${size}-${theme}.png`);
     writeFileSync(file, Buffer.from(shot.data, 'base64'));
-    const ok = ready && !overflow && errors.length === 0;
+    const expected = EXPECT[name];
+    const content = !expected || (await send('Runtime.evaluate', {expression: `document.querySelector('#view').textContent.includes(${JSON.stringify(expected)})`, returnByValue: true}, sessionId)).result.value === true;
+    const ok = ready && content && !overflow && errors.length === 0;
     if (!ok) failures++;
-    report.push({name, size, theme, ok, ready, overflow, scrollWidth: d.scrollWidth, wide: d.wide, errors});
-    console.log(`${ok ? 'PASS' : 'FAIL'}  ${name.padEnd(14)} ${size.padEnd(7)} ${theme.padEnd(5)} ${ready ? '' : 'not-ready '}${overflow ? `overflow ${d.scrollWidth}>${d.innerWidth} ${d.wide.join(',')} ` : ''}${errors.length ? 'errors: ' + errors.slice(0, 2).join(' | ') : ''}`);
+    report.push({name, size, theme, ok, ready, content, overflow, scrollWidth: d.scrollWidth, wide: d.wide, errors});
+    console.log(`${ok ? 'PASS' : 'FAIL'}  ${name.padEnd(14)} ${size.padEnd(7)} ${theme.padEnd(5)} ${ready ? '' : 'not-ready '}${content ? '' : 'wrong-content '}${overflow ? `overflow ${d.scrollWidth}>${d.innerWidth} ${d.wide.join(',')} ` : ''}${errors.length ? 'errors: ' + errors.slice(0, 2).join(' | ') : ''}`);
     listeners.splice(listeners.indexOf(onMsg), 1);
     await send('Target.closeTarget', {targetId});
   }

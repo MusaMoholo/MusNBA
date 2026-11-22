@@ -916,7 +916,7 @@ def build(views_root: Path = VIEWS) -> dict:
             home = nxt['home_id'] == tid
             tonight = {'game_id': nxt['game_id'], 'date': nxt['date_et'], 'tip_utc': nxt['tip_utc'], 'home': home,
                        'opp': nxt['away_id'] if home else nxt['home_id'], 'sims': pj['sim'].get('sims'),
-                       'players': {str(x['id']): {'min': round(x['periods']['fg']['stats']['min']['mean'], 1) if x.get('periods') else 0.0,
+                       'players': {str(x['id']): {'min': round(x['periods']['fg']['stats']['min']['mean'], 1) if x.get('periods') else None,
                                                   'q': x['periods']['fg']['stats']['min']['q'] if x.get('periods') else None,
                                                   'starter': bool(x.get('starter')), 'played': x.get('played'), 'status': x.get('status')}
                                    for x in pj['sim'][side]['players']}}

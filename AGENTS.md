@@ -57,6 +57,8 @@ Then do the first open item in HANDOFF_NEXT.md § Next actions. If smoke fails, 
   (1440), half width (960) and phone (390)**, both themes, with grouped and stacked controls; he often sends UX requests
   mid-chunk — do them alongside the headliners, run `node analysis/browser_check.mjs --base http://127.0.0.1:8767` on every
   touched page and look at the screenshots (a pass only means no errors or overflow). Record every change in DASHBOARD_PLAN.
+- **Card-grid preference (owner, 22 Nov):** comparable insight cards should come in multiples of three for full three-across desktop rows; adapt to two across at half width and one on phones.
+- **Dynamic dashboard copy (owner, 22 Nov):** dates, sample sizes, simulation counts, model versions, results so far and qualification thresholds must come from the loaded data/configuration; fixed teaching examples must be labelled and never imply current measured values.
 - Likes short status bullets with real numbers. For multi-step work he wants a **visual progress board** — an overall
   bar for the chunk plus a bar per subtask (text bars, e.g. `██████░░░░░░░░░░░░░░ 30%`) — **printed in the reply whenever a subtask reaches a new 10% mark or the chunk a new 5% mark**
   (owner, 20 Nov; finished jobs dropped from per-job bars). He is **critically dependent on these updates** (owner, 20 Nov,
@@ -96,7 +98,7 @@ Then do the first open item in HANDOFF_NEXT.md § Next actions. If smoke fails, 
   fetches. No other new source without his sign-off. Never scrape a site whose terms forbid automated access (D33). ESPN
   requests stay polite.
 - **Git (owner's standing instruction, 19 Nov 2026): commit and push at every checkpoint** — see §5 step 8. The repo is
-  private, `MusaMoholo/MusNBA`, branch `main`. Its local git config carries the owner's personal identity (MusaMoholo,
+  **public** (`MusaMoholo/MusNBA`, owner approved 22 Nov, matching MusSim), branch `main`; `gh-pages` publishes only the data-free shell. Its local git config carries the owner's personal identity (MusaMoholo,
   GitHub no-reply email) and a personal credential helper: never use the global identity, never change these
   settings, never force-push or rewrite history. Data, the virtualenv and exports stay out of git (`.gitignore`);
   check `git status` before committing and never add secrets or `data/`.

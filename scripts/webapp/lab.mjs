@@ -69,7 +69,7 @@ function lineupPanel(l) {
       <div class="tile"><div class="note" style="margin:0">Team-games</div><b>${l.overall.team_games}</b></div></div>
     <div class="scroll" style="margin-top:8px"><table><thead><tr><th class="l">Slate</th><th class="l opt">Model</th><th>Team-games</th><th>Slots right</th><th>All five</th></tr></thead>
     <tbody>${rows}</tbody></table></div>
-    <p class="note">Each saved slate's projected starters against the real ones once its games are final. Our own projection (start share, then priority) gets 89.4% of slots right on Jan–Apr 2026 with known availability — the bar for any lineup source (D33).</p>`;
+    <p class="note">Each saved slate's projected starters against the real ones once its games are final.</p>`;
 }
 
 function allocatorPanel(a) {
@@ -78,7 +78,7 @@ function allocatorPanel(a) {
     ${bias(a[t].rel_bias)}<td>${f1(a[t].mae)}</td><td class="dim opt">${f1(a[t].ewma_min_avg_mae)}</td>${cover(a[t].coverage_10_90)}</tr>`).join('');
   return `<section class="panel"><h2>Minutes allocator (D29) — no engine</h2><div class="scroll"><table><thead><tr><th class="l">Tier (tonight's starter flag)</th>
     <th>Real min</th><th>Allocated</th><th>Bias</th><th>MAE</th><th class="opt">MAE recent avg</th><th>10–90%</th></tr></thead><tbody>${rows}</tbody></table></div>
-    <p class="note">Healthy-role minutes allocated to exactly 240 per team by priority, with the return ramp and per-world draws, against real regulation minutes in Jan–Apr 2026 (the players who played). Run ${esc(a.run)}.</p></section>`;
+    <p class="note">Healthy-role minutes allocated to exactly 240 per team by priority, with the return ramp and per-world draws, against real regulation minutes for the player-games in the selected evaluation run. Run ${esc(a.run)}.</p></section>`;
 }
 
 export async function render(view, {current}) {

@@ -2,7 +2,7 @@
 
 **Phone v localhost (owner, 20 Nov, D36):** the phone bundle is stripped back — the 10,000-world distributions for the expected lineup only; everything built on the per-world files (Scenarios, Given…, joint grids, team drivers, duels, duel of the night, lineup branches) is localhost-only (`export_musnba.phone_record`).
 
-As of **20 November 2026** (Scenarios, Given…, joint grids, drivers, averages deltas, Lab view, minutes basis and engine v1.3 added in the D29–D30 chunk; game flow, duels, duel of the night and who-guards-whom added in the D32 chunk). Proposals and progress live in [PLAN.md](PLAN.md).
+As of **22 November 2026** (Scenarios, Given…, joint grids, drivers, averages deltas, Lab view, minutes basis and engine v1.3 added in the D29–D30 chunk; game flow, duels, duel of the night and who-guards-whom added in the D32 chunk). Proposals and progress live in [PLAN.md](PLAN.md).
 
 ## Navigation
 
@@ -24,6 +24,10 @@ As of **20 November 2026** (Scenarios, Given…, joint grids, drivers, averages 
 | Model & data | Closed panel: model label, sims, data coverage, snapshot list (pre-game v retrospective) |
 
 ## Conventions
+
+- **Owner, 22 Nov:** changing facts in dashboard copy (dates, games played, simulation counts, model versions, sample thresholds) are derived from loaded data/configuration. Stable definitions can be fixed text; model assumptions come from retained season notes.
+
+- **Owner, 22 Nov:** comparable card groups come in multiples of three, filling three-across desktop rows; adapt to two at half width and one on phones. Season insights live inside Standings (no separate main-nav Season tab).
 
 - Slates are US Eastern dates; tip-offs show UK time (weekday when it differs) with ET.
 - Periods: quarters and halves are regulation only; FG includes overtime. Spread = projected mean margin
@@ -81,9 +85,35 @@ everything is read from stored snapshots, worlds, finals and derived tables (ser
 | U14 | **Team page: ratings trend and schedule strip** | net rating (rolling 10) chart from team games · upcoming schedule with projected win % (season sim's team estimate) · rest/back-to-back markers | ✅ Team page form panel: margin by game (W/L bars, 5-game rolling line) and the next ten games with win chance heat and back-to-back markers |
 | U15 | **Team page: roster minutes and roles** | minutes share bars (season) · projected minutes tonight · starters v bench · injury status chips | ✅ Roster grouped into projected starters, bench, rotation fringe and reported out; season minute bars against next-game projections, minute deltas and injury details. Six size/theme cases passed; desktop/phone screenshots inspected. |
 | U16 | **Standings: playoff picture** | most likely seeds 1–10 per conference with probabilities · projected first-round pairings (modal seeds) · play-in bracket view | ✅ Playoff picture tab: seed 1–10 favourites and alternatives, a unique-team illustrative first-round field and play-in paths; marginal probabilities explicitly distinguished from pairing odds. Six responsive/theme checks passed and screenshots inspected. |
-| U17 | **Standings: wins distributions per team** | mini histogram per row in the Wins tab (10k seasons) · median and 10–90 · sort by spread | ✅ Wins tab adds per-team mini histograms on a shared 0–82 axis, median and 10–90% ranges, and widest-range sorting. Six responsive/theme checks passed; screenshots reviewed. |
+| U17 | **Standings: wins distributions per team** | mini histogram per row in the Wins tab (10k seasons) · median and 10–90 · sort by spread | ✅ Wins tab adds per-team mini histograms on a shared axis derived from scheduled games, median and 10–90% ranges, and widest-range sorting. Six responsive/theme checks passed; screenshots reviewed. |
 | U18 | **Season tab (new): races** | conference race chart (projected wins with 10–90 bands, sorted) · tank race (worst-record and bottom-3 chances) · #1 seed race | ✅ Standings Races (merged at owner request, 22 Nov): conference/league win-range race, #1 seed races and worst-record race. Bottom-three record counts added to the season simulation (no changes to draws); populated by close-out nightly. Six browser cases passed, screenshots reviewed; Season included in PWA caches/export. |
 | U19 | **Season tab: movers since the last snapshot** | change in projected wins and playoff odds v the previous snapshot's season · biggest risers/fallers with the results that moved them | ✅ Movers compares distinct season cutoffs (30 teams; 20→21 Nov, nine results), projected-win and Top 6/play-in/#1 changes, risers/fallers and linked interval results. Races/Movers/Leaders merged under Standings per owner; /season redirects. Six Movers cases and twelve merged-navigation cases passed; screenshots inspected. |
-| U20 | **Season tab: season leaders to date** | per-game leaders (PTS, REB, AST, 3PM, STL, BLK, FG%) with minimum games · team leaders | ✅ Standings Leaders: seven player leaderboards (PTS/REB/AST/3PM/STL/BLK/FG%) and four team rating/pace leaderboards. Explicit minimum-games and shooting-attempt filters; current data qualifies at 12 GP. Distinct from forecast Races; six size/theme checks passed and screenshots reviewed. |
+| U20 | **Season tab: season leaders to date** | per-game leaders (PTS, REB, AST, 3PM, STL, BLK, FG%) with minimum games · team leaders | ✅ Standings Leaders: nine player leaderboards (PTS/REB/AST/3PM/STL/BLK/FG%/3P%/FT%) and six team leaderboards (offence/defence/net/pace/scoring/rebounding). Explicit minimum-games and shooting-attempt filters; current data qualifies at 12 GP. Distinct from forecast Races; six size/theme checks passed and screenshots reviewed. |
 | U21 | **About the model page (new)** | plain-language explainer of the two engines (play-by-play, team pathway), what 10,000 worlds means, how to read ranges, decision log highlights, data sources and freshness · linked from the model chip | ✅ About the model guide: two engines, 10k worlds, ranges and probability changes, cutoff safety, decision highlights, known limitations, sources and live retained-data freshness. Linked from engine/season chips and Model & data; PWA included. Six size/theme checks passed and screenshots reviewed. |
-| U22 | **Global polish** | nav adds Season · consistent section headers and spacing · empty and loading states · number formatting audit · tooltips · full 81+-case sweep | ☐ |
+| U22 | **Global polish** | season insights merged under Standings · grouped controls · loading/empty states · dynamic copy · responsive card grids · full sweep | ✅ grouped Standings/Season insights controls; 9 player + 6 team leader cards; data-driven counts, thresholds and chart scales; explicit loading/missing-projection states; rounded-zero formatting; PWA module inventory fixed (including Spotlight). Full sweep 130/130 + 30 additional targeted checks; PWA import/offline/dynamic-data checks 14/14. Personal Pages/iCloud setup follows MusSim (owner, 22 Nov). |
+
+## Completion details — U15–U22 (22 Nov 2026)
+
+- **Team roster:** next projected game date/opponent and simulation count, season → projected minute values/bars,
+  projected starters, bench, rotation fringe, reported out and explicit missing-projection groups. No projection falls
+  back to season start share; injury descriptions and expected return dates remain sourced from the report.
+- **Standings:** Forecast · Seeds · Wins · Ratings · Playoff picture, grouped beside Season insights: Races · Movers · Leaders.
+  Legacy `#/season` links redirect to `#/standings/races`; main navigation remains five destinations.
+- **Playoff picture:** seeds 1–10 marginal favourites/alternatives, plus a unique-team illustrative field (assignment
+  maximises the sum of marginal seed chances). Regular-season seeds 7/8 are provisional playoff opponents pending the
+  play-in; no joint pairing probability or postseason simulation is claimed.
+- **Wins/Races:** row histograms with median and 10–90% range, widest-range sorting; race chart with mean, middle 50%
+  and 80% bands, conference/league filters, #1 races, worst-record/bottom-three chances. The common win scale comes
+  from scheduled games. Bottom-three counts are additive season summaries and preserve all existing simulation draws.
+- **Movers:** compare earlier distinct season cutoffs using the same season model (tomorrow's duplicate is skipped).
+  Every team's wins/Top 6/play-in/#1 changes, risers/fallers and linked results in the interval. Changes are not labelled
+  as the causal contribution of individual games; missing comparisons have a clear empty state.
+- **Leaders:** nine player cards (PTS, REB, AST, 3PM, STL, BLK, FG%, 3P%, FT%) and six team cards (offence, defence, net,
+  pace, scoring, rebounding). Dashboard qualifiers: 70% of maximum team games played, rounded up; shooting attempts
+  per game 5/3/2 respectively. Values and explanatory text use the same settings. These are not official NBA qualifiers.
+- **About:** `#/about`, linked from model chips and Model & data. Two engines, interpreting probabilities/ranges,
+  promotion principles, data freshness and sources. Changing numbers come from metadata; forecast assumptions from
+  retained season notes. Layout uses existing theme tokens, 1440/960/390 checks and offline module caching.
+- **PWA:** data-free static shell, retained-data import with checksum validation and previous-generation preservation;
+  successful nightly exports via `nightly_musnba.py` to iCloud Drive/MusNBA. Owner approved public source + personal
+  GitHub Pages on 22 Nov, following MusSim. No simulation data enters the public repo or shell.

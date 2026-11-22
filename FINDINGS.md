@@ -787,3 +787,23 @@ and `…093809Z_season_calibration.json` (36-setting grid with leave-one-season-
   dynamics belong to the play-by-play engine.
 - Retrospective 18 Nov slate: favourite won 8 of 12. This is one retrospective day, not an evaluation.
 - Runtime: one game × 10,000 sims ≈ 0.2 s; season (978 games × 10,000) ≈ 0.06 s.
+
+## 5. Dashboard completion and portability (22 Nov 2026)
+
+- `analysis/experiments/20261122_dashboard_summary_parity.json`: 10,000 retained season worlds, 965 remaining fixtures,
+  13 near-term engine games (21/22 Nov snapshots). Adding bottom-three record counts changes **none** of the existing
+  season fields (exact JSON equality after removing the additive field). Bottom-three probabilities sum to **3.0000**.
+  No model tuning, RNG changes or final-test scoring. Next-game roster minutes/starters/counts reconcile for **21 teams**.
+- The 21 and 22 Nov snapshots carry the **same season forecast as of 21 Nov**. Movers must skip a later-slate copy and
+  compare distinct season cutoffs; current comparison is 20 → 21 Nov, **30 teams, nine finals** in the interval. Projection
+  changes include inputs and simulation variation; per-game causal attribution is not available from these snapshots.
+- UI acceptance: **130/130** full browser cases, then **30/30** additional targeted cases (seed/rating tabs, no-projection
+  roster, legacy Season redirect, Lab at all widths/themes). The first sweep's two transient metadata 404s coincided with
+  `views.build` replacing the output folder; stable-data reruns passed. Avoid running a screenshot sweep across publication.
+- PWA **14/14**: fresh import, logos, Game Centre, service worker, offline Standings/Races/Movers/Leaders/About, nine/six
+  leader-card grouping, offline modules, no uncaught exceptions. Mutating only the browser's loaded data to **40 team GP**
+  changes the leader qualifier to **28 GP** with honest empty states; **1,234 game worlds / 4,321 seasons** change the guide
+  counts/example. No retained files changed. The old PWA test used removed `.odds`; updated to the current bezel + comparison.
+- Static export initially failed its module-boundary assertion because earlier Spotlight work omitted `spotlight` from
+  both export/SW inventories. Fixed with `season` and `about` also listed. Verified data-free shell at `/MusNBA/`; test bundle
+  **1,998 records, 10.6 MB** before the close-out refresh (size/counts are this measured export, not a fixed UI assumption).

@@ -1,5 +1,5 @@
 // Standings (season simulation), Teams directory and team pages.
-import {api, dayLabel, esc, f1, heat, histogram, logo, pct, rate, record, seg, signed, statusTag, store, standingsTabs, team, teamLink, tipTimes} from './ui.mjs';
+import {api, dayLabel, esc, f1, heat, histogram, logo, pct, rate, record, seg, signed, statusTag, store, standingsNav, team, teamLink, tipTimes} from './ui.mjs';
 
 import * as season from './season.mjs';
 
@@ -27,19 +27,18 @@ async function standings(view, {meta, current, rest}) {
   if (!current()) return;
   const paint = () => {
     const confs = [['East', 'East'], ['West', 'West'], ['League', 'League']];
-    const views = standingsTabs;
     let rows = data.teams.filter(t => state.conf === 'League' || t.conf === state.conf);
     rows.sort((a, b) => (b.pct ?? 0) - (a.pct ?? 0) || (b.w - a.w) || (b.forecast.mean_w - a.forecast.mean_w) || a.abbr.localeCompare(b.abbr));
     let body;
     if (state.view === 'forecast') body = forecastTable(rows, state.conf === 'League');
     else if (state.view === 'picture') body = playoffPicture(rows);
-    else if (state.view === 'wins') body = winsTable(rows);
+    else if (state.view === 'wins') body = winsTable(rows, data.sims);
     else if (state.view === 'seeds') body = state.conf === 'League' ? '<p class="note">Seeds are within a conference: choose East or West.</p>' : seedsTable(rows);
     else body = ratingsTable(rows);
     view.innerHTML = `<section class="panel"><div class="row" style="justify-content:space-between;margin-bottom:10px">
         <div><h2 style="margin:0">Standings &amp; season forecast</h2><p class="note" style="margin:0">Through ${esc(dayLabel(data.date))} · ${data.sims.toLocaleString()} simulated seasons of every unplayed fixture</p></div>
         ${seasonPill(data.season_model)}</div>
-      <div class="controls">${seg(confs, state.conf, 'data-conf')}${seg(views, state.view, 'data-view')}
+      <div class="controls">${seg(confs, state.conf, 'data-conf')}${standingsNav(state.view)}
         ${state.view === 'seeds' && state.conf !== 'League' ? seg([['exact', 'Exactly'], ['atleast', 'At least']], state.seedMode, 'data-seed') : ''}
         ${state.view === 'wins' ? seg([['exact', 'Exactly'], ['atleast', 'At least']], state.winsMode, 'data-wmode') : ''}</div>
       ${state.view === 'forecast' ? `<div class="seg-groups">
@@ -86,7 +85,8 @@ function winsShare(w, lo, hi) {
 
 // Wins tab (owner, 20 Nov): the Seeds format for final wins — columns in steps of 5 from high to low; Exactly = that
 // 5-win band (top band open-ended, bottom band everything below), At least = that many wins or more.
-function winsTable(rows) {
+function winsTable(rows, sims) {
+  const maxWins = Math.max(1, ...rows.map(t => t.forecast.scheduled));
   const width = t => t.forecast.wins.q[4] - t.forecast.wins.q[0];
   const ordered = rows.slice().sort((a, b) => (state.winsSort === 'spread' ? width(b) - width(a) : 0) || b.forecast.mean_w - a.forecast.mean_w || a.abbr.localeCompare(b.abbr));
   const qs = ordered.map(t => t.forecast.wins?.q || [0, 0, 0, 0, 0]);
@@ -96,22 +96,22 @@ function winsTable(rows) {
   for (let k = top; k >= bottom; k -= 5) cuts.push(k);
   const exact = state.winsMode !== 'atleast';
   const label = (k, i) => (exact ? (i === 0 ? `${k}+` : i === cuts.length - 1 ? `≤${k + 4}` : `${k}–${k + 4}`) : `${k}+`);
-  const head = `<tr><th class="name">Team</th><th>Avg</th><th class="l">Final wins · 0–82</th><th>Median</th><th>10–90%</th>${cuts.map((k, i) => `<th class="c">${label(k, i)}</th>`).join('')}</tr>`;
+  const head = `<tr><th class="name">Team</th><th>Avg</th><th class="l">Final wins · 0–${maxWins}</th><th>Median</th><th>10–90%</th>${cuts.map((k, i) => `<th class="c">${label(k, i)}</th>`).join('')}</tr>`;
   const body = ordered.map(t => {
     const w = t.forecast.wins;
     const cells = cuts.map((k, i) => {
       const p = exact ? (i === 0 ? winsShare(w, k, 999) : i === cuts.length - 1 ? winsShare(w, -1, k + 4) : winsShare(w, k, k + 4)) : winsShare(w, k, 999);
       return heat(p);
     }).join('');
-    return `<tr class="link" data-team="${t.id}"><td class="name">${teamLink(t.id)}</td><td class="dim">${f1(t.forecast.mean_w)}</td><td>${miniWins(w)}</td><td>${w.q[2]}</td><td class="dim">${w.q[0]}–${w.q[4]}</td>${cells}</tr>`;
+    return `<tr class="link" data-team="${t.id}"><td class="name">${teamLink(t.id)}</td><td class="dim">${f1(t.forecast.mean_w)}</td><td>${miniWins(w, maxWins)}</td><td>${w.q[2]}</td><td class="dim">${w.q[0]}–${w.q[4]}</td>${cells}</tr>`;
   }).join('');
   return `<div class="scroll"><table><thead>${head}</thead><tbody>${body}</tbody></table></div>
-    <p class="note">${exact ? 'Chance the final win total lands in each 5-win band.' : 'Chance of at least that many wins.'} Final wins over the ${ordered[0]?.forecast.scheduled ?? '—'} scheduled games, from the ${'10,000'} simulated seasons; ordered by ${state.winsSort === 'spread' ? 'width of the 10–90% range' : 'average wins'}. Mini charts share a 0–82 win axis; accent marks the median.</p>`;
+    <p class="note">${exact ? 'Chance the final win total lands in each 5-win band.' : 'Chance of at least that many wins.'} Final wins over the ${ordered[0]?.forecast.scheduled ?? '—'} scheduled games, from the ${sims.toLocaleString()} simulated seasons; ordered by ${state.winsSort === 'spread' ? 'width of the 10–90% range' : 'average wins'}. Mini charts share a 0–${maxWins} win axis; accent marks the median.</p>`;
 }
 
-function miniWins(w) {
+function miniWins(w, maxWins) {
   if (!w?.hist?.length) return '<span class="dim">—</span>';
-  const max = Math.max(...w.hist, 1), bw = 180 / 83;
+  const max = Math.max(...w.hist, 1), bw = 180 / (maxWins + 1);
   return `<svg class="mini-wins" viewBox="0 0 180 34" role="img" aria-label="Final wins: median ${w.q[2]}, 10–90 percent ${w.q[0]} to ${w.q[4]}">${w.hist.map((c, i) => {
     const x = w.min + i, h = c / max * 30;
     return `<rect x="${(x * bw).toFixed(2)}" y="${(32 - h).toFixed(2)}" width="${(bw - .3).toFixed(2)}" height="${h.toFixed(2)}"><title>${x} wins: ${pct(c / w.hist.reduce((a, b) => a + b, 0))}</title></rect>`;
@@ -152,7 +152,7 @@ function forecastTable(rows, league) {
       cell ? `<td class="${cls}">${cell(t)}</td>` : heat(v(t), {digits: v === winsCol && wEx ? 1 : 0})).join('')}</tr>`;
   }).join('');
   return `<div class="scroll"><table class="forecast"><thead>${head}</thead><tbody>${body}</tbody></table></div>
-    <p class="note">Current record left of the dotted line, the simulated season right of it. Proj W and Proj L cover ${rows[0]?.forecast.scheduled ?? '—'} scheduled games per team; the two NBA Cup-determined games join once scheduled. Tap a header to sort (again to reverse); # is the standing${sort ? '' : '; lines mark seeds 6 and 10'}.</p>`;
+    <p class="note">Current record left of the dotted line, the simulated season right of it. Proj W and Proj L cover ${rows[0]?.forecast.scheduled ?? '—'} scheduled games per team; additional NBA Cup fixtures join when scheduled. Tap a header to sort (again to reverse); # is the standing${sort ? '' : '; lines mark seeds 6 and 10'}.</p>`;
 }
 
 function seedsTable(rows) {
@@ -166,7 +166,7 @@ function seedsTable(rows) {
     return `<tr class="link" data-team="${t.id}"><td class="name">${teamLink(t.id)}</td><td class="dim">${f1(t.forecast.seed_mean)}</td>${cells}</tr>`;
   }).join('');
   return `<div class="scroll"><table><thead>${head}</thead><tbody>${body}</tbody></table></div>
-    <p class="note">${state.seedMode === 'atleast' ? 'Chance of finishing that seed or better.' : 'Chance of finishing exactly that seed.'} Ordered by average seed. Ties are broken at random until NBA tiebreakers are implemented.</p>`;
+    <p class="note">${state.seedMode === 'atleast' ? 'Chance of finishing that seed or better.' : 'Chance of finishing exactly that seed.'} Ordered by average seed. <a href="#/about">Read the current forecast assumptions</a>.</p>`;
 }
 
 // Assign ten different teams to seeds, maximising the sum of their stored marginal seed probabilities.
@@ -203,7 +203,7 @@ function playoffPicture(rows) {
       <div><h3>Illustrative first round</h3><div class="bracket">${[[1, 8], [2, 7], [3, 6], [4, 5]].map(([a, b]) => `<div class="bracket-pair">${slot(a)}${slot(b)}</div>`).join('')}</div>
       <h3 style="margin-top:14px">Play-in path</h3><div class="bracket-pair">${slot(7)}${slot(8)}<p class="note">Winner → playoff #7 · loser gets one more chance</p></div>
       <div class="bracket-pair">${slot(9)}${slot(10)}<p class="note">Winner faces the 7/8 loser for playoff #8 · loser is out</p></div></div></div>
-      <p class="note">Table: each seed's marginal favourite, so a team can appear more than once. Illustration: ten distinct teams assigned to maximise their combined seed probabilities; percentages are chances of that regular-season seed. Seeds 7/8 in the first round are provisional until the play-in. No joint pairing odds or postseason simulation. Ties use the season model's random tiebreak.</p></div>`;
+      <p class="note">Table: each seed's marginal favourite, so a team can appear more than once. Illustration: ten distinct teams assigned to maximise their combined seed probabilities; percentages are chances of that regular-season seed. Seeds 7/8 in the first round are provisional until the play-in. No joint pairing odds or postseason simulation. <a href="#/about">Read the current forecast assumptions</a>.</p></div>`;
   }).join('');
 }
 
@@ -295,7 +295,8 @@ function roster(data) {
   const groups = T
     ? [['Projected starters', data.roster.filter(p => !isOut(p) && T[p.id]?.starter)],
        ['Bench', data.roster.filter(p => !isOut(p) && !T[p.id]?.starter && (proj(p) || 0) >= 0.5)],
-       ['Out of the rotation', data.roster.filter(p => !isOut(p) && !T[p.id]?.starter && (proj(p) ?? 0) < 0.5)]]
+       ['Rotation fringe', data.roster.filter(p => !isOut(p) && !T[p.id]?.starter && proj(p) != null && proj(p) < 0.5)],
+       ['No stored projection', data.roster.filter(p => !isOut(p) && proj(p) == null)]]
     : [['Regular starters', data.roster.filter(p => !isOut(p) && p.gp && p.gs / p.gp >= 0.5)],
        ['Bench', data.roster.filter(p => !isOut(p) && !(p.gp && p.gs / p.gp >= 0.5))]];
   groups.push(['Out', data.roster.filter(isOut)]);
@@ -304,13 +305,13 @@ function roster(data) {
   const inj = p => p.injury && isOut(p) ? `<span class="inj" title="${esc(p.injury.comment || '')}">${esc([p.injury.type, p.injury.detail].filter(Boolean).join(' · ') || p.injury.status || '')}${ret(p.injury.return)}</span>` : '';
   const bar = p => {  // season minutes (grey) and tonight's projection (accent) on a 0–48 track
     const s = season(p), t = proj(p);
-    return `<span class="minbar" title="Season ${s.toFixed(1)} min${t != null ? ` · tonight ${t.toFixed(1)}` : ''}"><i class="s" style="width:${(100 * s / 48).toFixed(1)}%"></i>${t != null ? `<i class="t" style="left:${(100 * Math.min(t, 48) / 48).toFixed(1)}%"></i>` : ''}</span>`;
+    return `<span class="min-values">${p.gp ? s.toFixed(1) : '—'}${t != null ? ` → <b>${t.toFixed(1)}</b>` : ''}</span><span class="minbar" title="Season ${s.toFixed(1)} min${t != null ? ` · tonight ${t.toFixed(1)}` : ''}"><i class="s" style="width:${(100 * s / 48).toFixed(1)}%"></i>${t != null ? `<i class="t" style="left:${(100 * Math.min(t, 48) / 48).toFixed(1)}%"></i>` : ''}</span>`;
   };
   const tn = p => { const t = proj(p); if (t == null) return '<td class="dim">—</td>'; const d = t - season(p);
     return `<td><b>${t.toFixed(1)}</b>${p.gp && Math.abs(d) >= 2 ? ` <small class="${d > 0 ? 'up' : 'down'}">${d > 0 ? '+' : '−'}${Math.abs(d).toFixed(0)}</small>` : ''}</td>`; };
   const lost = data.roster.filter(isOut).reduce((a, p) => a + season(p), 0);
   const nx = data.tonight;
-  const head = `<tr><th class="name">Player</th><th class="l">Minutes (season · <span class="acc">next game</span>)</th>${T ? '<th>Next</th>' : ''}<th>GP</th><th>GS</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th><th>3PM</th><th>STL</th><th>BLK</th><th>TOV</th><th>FG%</th><th>3P%</th><th>FT%</th></tr>`;
+  const head = `<tr><th class="name">Player</th><th class="l">Minutes (season${T ? ' → next' : ''})</th>${T ? '<th>Next</th>' : ''}<th>GP</th><th>GS</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th><th>3PM</th><th>STL</th><th>BLK</th><th>TOV</th><th>FG%</th><th>3P%</th><th>FT%</th></tr>`;
   const cols = 15 + (T ? 1 : 0);
   const body = groups.filter(g => g[1].length).map(([label, ps]) => `<tr class="grp"><td colspan="${cols}">${label} <span class="dim">· ${ps.length}</span></td></tr>` + ps.map(p =>
     `<tr class="link" data-pid="${p.id}"><td class="name">${esc(p.name)}${p.jersey ? ` <span class="tag">#${esc(p.jersey)}</span>` : ''} <span class="dim">${esc(p.pos || '')}</span>${statusTag(p.status)}${inj(p)}</td>
@@ -318,7 +319,7 @@ function roster(data) {
       <td>${pctOf(p.tot.fgm, p.tot.fga)}</td><td>${pctOf(p.tot.fg3m, p.tot.fg3a)}</td><td>${pctOf(p.tot.ftm, p.tot.fta)}</td></tr>`).join('')).join('');
   const sub = nx ? `<p class="note" style="margin-top:0">Grouped by the projection for ${esc(dayLabel(nx.date))} ${nx.home ? 'vs' : '@'} ${esc(team(nx.opp).abbr)} (${nx.sims?.toLocaleString() || '—'} simulated games).` : '<p class="note" style="margin-top:0">No projected game yet: grouped by games started this season.';
   return `<section class="panel">${sub}${lost >= 1 ? ` Out: <b>${lost.toFixed(0)}</b> season minutes a game.` : ''}</p><div class="scroll"><table class="roster"><thead>${head}</thead><tbody>${body}</tbody></table></div>
-    <p class="note">Bar: season minutes per game out of 48 (grey) and next-game projected minutes (accent tick). Tonight's small number is the change from his season average (≥ 2 min). Injury details from the latest report; hover for the full note.</p></section>`;
+    <p class="note">Bar: season minutes per game out of 48 (grey) and next-game projected minutes (accent tick). The small number beside Next is the change from his season average (≥ 2 min). Injury details from the latest report; hover for the full note.</p></section>`;
 }
 
 function schedule(data) {
