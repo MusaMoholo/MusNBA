@@ -17,7 +17,7 @@ The completed S05 minutes checkpoint and original S06 pilot sources are committe
 S06 partial checkpoints **637a025**, **70709ab**, **bdedeed** and **d77ac5e** are pushed and preserve the initial
 corrected replay, frozen fold protocol, exact v2 sources/reports, audited v3 inputs and native screen implementation.
 Partial checkpoint **2f05d47** preserves the independently audited outgoing result, incoming coverage and original
-foul-out probe.
+foul-out probe; **08cd659** preserves the type-correct probe. Both are pushed.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
 product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S05 are complete;
 S06 is active at 40%; A1 overall is 44.8%.** Isolated assignment candidates have event-level diagnostics and wiring only;
@@ -310,7 +310,10 @@ entries, **172,273** unknown non-entries, **242** known disqualifications and **
 Prior positions are known for **179,478** candidates and **10,672** entries; **2,845** of **6,507** entry-bearing
 team-timeouts have multiple entries. `analysis/experiments/20261122_a1_s06_in_coverage{,_audit}.json` records
 all five populations and hashes. TRAINING_PLAN §8.2 now freezes a positive-versus-unlabelled-mixture incoming
-ranking screen and its eligibility/positional limits before fitting; build and run that exact screen next.
+ranking screen and its eligibility/positional limits before fitting. The implementation and **25** focused tests now
+pass; its pre-fit source SHA-256 is `32265f58fc46622909eabea38903a872b2f5c2802b5bd78c0475e45d8691b459`.
+Run `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u -m scripts.a1_substitution_in_screen`, then
+independently reproduce its fitted ranks and game bootstrap before awarding S06 50%.
 The checkpoint normal smoke passed **102/102** (`/tmp/musnba_a1_s06_40_smoke_default.log`); deliberate fault
 exited **1**, **80/102** passing (`/tmp/musnba_a1_s06_40_fault_default.log`). Two earlier one-thread smoke
 attempts were stopped without results after about four minutes; the completed runs use normal engine threading.
@@ -1122,7 +1125,8 @@ The dashboard programme is done. Do not resume U1–U22, repeat rejected defence
 
 1. **Continue S06 substitution research at 40%.** The four-fold outgoing screen and independent audit are complete;
    preserve their source/report hashes before further changes. Incoming eligibility, position and retained-window
-   coverage are independently audited; implement and run the frozen incoming/joint-selection screen in TRAINING_PLAN.
+   coverage are independently audited; run the frozen incoming/joint-selection screen above and independently
+   reproduce the results before considering the 50% rung.
    Do not relabel unconfirmed non-entries as known eligible negatives; separate any actual-participant conditional
    diagnostic from a pre-game forecast. The selected-timeout outgoing result is not an engine validation. Fix the
    independently reproduced unupdated foul-out mask in an isolated S06 candidate, not the serving path, and test it

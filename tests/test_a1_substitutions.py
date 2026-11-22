@@ -8,7 +8,8 @@ import pandas as pd
 
 from basketball_common import NBA_TEAM_IDS
 from scripts import (a1_substitution_audit, a1_substitution_dataset, a1_substitution_dataset_audit,
-                     a1_substitution_fold_data, a1_substitution_in_coverage, a1_substitution_opportunities,
+                     a1_substitution_fold_data, a1_substitution_in_coverage, a1_substitution_in_screen,
+                     a1_substitution_opportunities,
                      a1_substitution_out_screen,
                      a1_substitution_screen_audit, a1_substitution_seed_audit, a1_substitution_states, a1_substitutions)
 
@@ -331,6 +332,52 @@ class SequentialSubstitutionTests(unittest.TestCase):
         rows.loc[0, 'prior_profile_date'] = '2024-01-04'
         with self.assertRaisesRegex(ValueError, 'strictly earlier date'):
             a1_substitution_in_coverage.attach_positions(rows, profiles)
+
+    def test_incoming_context_keeps_unknown_nonentries_and_remaining_positions(self):
+        rows = []
+        for index, position in enumerate(('G', 'G', 'F', 'F', 'C')):
+            rows.append({'window_id': 'w', 'team': '10', 'player': str(index), 'decision': 'out',
+                         'label': index == 0, 'prior_position': position})
+        rows.extend([{'window_id': 'w', 'team': '10', 'player': '5', 'decision': 'in', 'label': True,
+                      'prior_position': 'G', 'eligibility': 'current_unknown', 'prior_tier': 'bench'},
+                     {'window_id': 'w', 'team': '10', 'player': '6', 'decision': 'in', 'label': None,
+                      'prior_position': None, 'eligibility': 'current_unknown', 'prior_tier': 'unknown'},
+                     {'window_id': 'w', 'team': '10', 'player': '7', 'decision': 'in', 'label': None,
+                      'prior_position': 'C', 'eligibility': 'known_ineligible', 'prior_tier': 'bench'}])
+        population = a1_substitution_in_screen.conditional_population(pd.DataFrame(rows))
+        self.assertEqual(set(population['player']), {'5', '6'})
+        self.assertTrue(pd.isna(population.loc[population['player'].eq('6'), 'label'].iloc[0]))
+        self.assertEqual(population.iloc[0][['remaining_G', 'remaining_F', 'remaining_C']].tolist(), [1, 2, 1])
+        self.assertTrue(population['entry_count'].eq(1).all())
+        self.assertTrue(population['pool_count'].eq(2).all())
+
+    def test_joint_selection_honours_active_disqualified_and_distinct_players(self):
+        five = ['1', '2', '3', '4', '5']
+        active = set(five + ['6', '7', '8', '9'])
+        scores = {'6': 0.5, '7': 0.9, '8': 0.4, '9': 0.6}
+        lineup, entrants = a1_substitution_in_screen.select_lineup(five, ['1', '2'], active, {'7'}, scores)
+        self.assertEqual(entrants, ['9', '6'])
+        self.assertEqual(set(lineup), {'3', '4', '5', '6', '9'})
+        with self.assertRaisesRegex(ValueError, 'insufficient scoreable active replacements'):
+            a1_substitution_in_screen.select_lineup(five, ['1', '2'], set(five + ['6']), set(), scores)
+        with self.assertRaisesRegex(ValueError, 'five distinct players'):
+            a1_substitution_in_screen.select_lineup(['1', '1', '3', '4', '5'], ['1'], active, set(), scores)
+
+    def test_incoming_case_mixture_fit_keeps_unknown_labels_and_is_deterministic(self):
+        rows = pd.DataFrame([{'window_id': str(index // 60), 'team': '10', 'player': str(index),
+                              'label': True if index % 60 < 2 else None,
+                              'period': 1, 'clock': 600., 'margin': 0, 'fouls_before': 0,
+                              'seconds_before': 120., 'rest_before': 60., 'target_mean_proxy': 20.,
+                              'target_deficit': -1., 'prior_tier': 'bench', 'prior_position': 'G',
+                              'remaining_G': 1, 'remaining_F': 1, 'remaining_C': 1, 'remaining_unknown': 0,
+                              'entry_count': 2, 'pool_count': 60}
+                             for index in range(240)])
+        first, details = a1_substitution_in_screen.fit_score(rows, rows.iloc[:10])
+        second, _ = a1_substitution_in_screen.fit_score(rows, rows.iloc[:10])
+        pd.testing.assert_series_equal(pd.Series(first), pd.Series(second))
+        self.assertEqual(details['case_rows'], 8)
+        self.assertEqual(details['reference_rows'], 240)
+        self.assertEqual(int(rows['label'].isna().sum()), 232)
 
 
 if __name__ == '__main__':
