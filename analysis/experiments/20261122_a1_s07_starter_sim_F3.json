@@ -1,0 +1,232 @@
+{
+ "experiment": "a1_s07_inferred_roster_starter_frequency_simulation",
+ "fold": "F3",
+ "games": 200,
+ "worlds_per_team_game": 10000,
+ "bootstrap_replicates": 10000,
+ "bootstrap_seed": 20261122,
+ "expected_team_games": 400,
+ "no_prior_roster": 10,
+ "team_status": {
+  "ok": 376,
+  "no_supported_worlds": 14
+ },
+ "observed_starter_label_coverage": {
+  "raw_rows_missing_player_id": 3,
+  "team_games_without_complete_valid_starters": 0
+ },
+ "observed_starters_outside_inferred_rosters": 4,
+ "worlds": 3900000,
+ "supported_worlds": 3464781,
+ "fewer_than_five_active_worlds": 0,
+ "unknown_active_position_worlds": 435219,
+ "player_summaries": {
+  "all": {
+   "starter_probability": {
+    "observations": 6199,
+    "games": 192,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.3032747217293112,
+    "ci_95": [
+     0.30014047182819453,
+     0.30640674275071245
+    ]
+   },
+   "actual_starter": {
+    "observations": 6199,
+    "games": 192,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.3026294563639297,
+    "ci_95": [
+     0.29947618995836334,
+     0.3058084364799045
+    ]
+   },
+   "starter_brier": {
+    "observations": 6199,
+    "games": 192,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.1365196178581109,
+    "ci_95": [
+     0.12623897923553734,
+     0.14682383439090146
+    ]
+   }
+  },
+  "star": {
+   "starter_probability": {
+    "observations": 301,
+    "games": 176,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.918698338870432,
+    "ci_95": [
+     0.892164711920734,
+     0.9427380472465441
+    ]
+   },
+   "actual_starter": {
+    "observations": 301,
+    "games": 176,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.6777408637873754,
+    "ci_95": [
+     0.6245844341387639,
+     0.7304103224361845
+    ]
+   },
+   "starter_brier": {
+    "observations": 301,
+    "games": 176,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.2927393649169435,
+    "ci_95": [
+     0.24380657136655115,
+     0.3421636690388557
+    ]
+   }
+  },
+  "starter": {
+   "starter_probability": {
+    "observations": 1979,
+    "games": 192,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.7953494125929255,
+    "ci_95": [
+     0.7807944460929676,
+     0.8105309013912411
+    ]
+   },
+   "actual_starter": {
+    "observations": 1979,
+    "games": 192,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.6927741283476503,
+    "ci_95": [
+     0.675323334383737,
+     0.710657901010372
+    ]
+   },
+   "starter_brier": {
+    "observations": 1979,
+    "games": 192,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.22761017568770006,
+    "ci_95": [
+     0.2100381672658638,
+     0.24585479512405836
+    ]
+   }
+  },
+  "bench": {
+   "starter_probability": {
+    "observations": 3777,
+    "games": 192,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.006744853714217736,
+    "ci_95": [
+     0.004033059397098843,
+     0.009901365593856203
+    ]
+   },
+   "actual_starter": {
+    "observations": 3777,
+    "games": 192,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.07942811755361398,
+    "ci_95": [
+     0.07088111120299163,
+     0.08818222634893678
+    ]
+   },
+   "starter_brier": {
+    "observations": 3777,
+    "games": 192,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.08068044071391872,
+    "ci_95": [
+     0.07212429717712454,
+     0.08950414267114881
+    ]
+   }
+  },
+  "unknown": {
+   "starter_probability": {
+    "observations": 142,
+    "games": 87,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.028169014084507043,
+    "ci_95": [
+     0.006802721088435374,
+     0.05442176870748299
+    ]
+   },
+   "actual_starter": {
+    "observations": 142,
+    "games": 87,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.007042253521126761,
+    "ci_95": [
+     0.0,
+     0.022058823529411766
+    ]
+   },
+   "starter_brier": {
+    "observations": 142,
+    "games": 87,
+    "missing": 0,
+    "status": "ok",
+    "mean": 0.02112676056338028,
+    "ci_95": [
+     0.0,
+     0.045454545454545456
+    ]
+   }
+  }
+ },
+ "seconds": 100.5,
+ "limitations": "Independent fallback states and inferred prior-box membership are not a dated pre-tip physical-availability forecast. Probabilities condition on supported worlds; active unknown positions and fewer than five active players are excluded, not repaired. Complete raw starter labels are retrospective and missing roster starters remain outside the player score.",
+ "input_sha256": {
+  "scripts/a1_availability_starter_sim.py": "7073dc791f9f30d78615b5dc7a8c81f83ae02e647e6744a2cb067b8a558eaea9",
+  "analysis/experiments/20261122_a1_s07_baseline_F3.json": "27b1536b8be8fe1b97ef2cff4873dc2668c4455cdbbd1ef04f55a9512e18ccfa",
+  "analysis/experiments/20261122_a1_s07_baseline_F3_accounting_v2.json": "3ccd91047526e734957888a19e5776bf19039c7c144f3c962a695b3f42964632",
+  "data/derived/experiments/20261122_a1_s07_baseline_F3.parquet": "042e372ebb8a885aa06d4e8facb0ef6b4238c1f5408764cb711e2e28255c2e7e",
+  "data/derived/experiments/20261122_a1_s07_baseline_F3_teams.parquet": "7bc882fe84df3ded81f9e32f2ed0d98e93e01a031426bf0e36c76d743bf45b0a",
+  "analysis/experiments/20261122_a1_pre_candidate_manifest.json": "195b4ddaf748e4f3520a02f813b5763736fe4fbfbe653e896161532d6d9c7e6b",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+  "data/raw/hoopr/player_box_2026.parquet": "29a29dc9efd055a93e069a0382ac830d98a13274bee655beba69d95cff099713",
+  "data/derived/teams.json": "130aa5358d49b944c2b5bee7e9a163f1e53285e93dae57262f039ca1636b7ecc",
+  "scripts/minutes.py": "94dd0ed25e536708c75cd4cf1f386bf2f9fa35f2c334d83cbdd031d4448ba2d0",
+  "scripts/a1_minutes_unconditional.py": "110682da20f17dff0bce9ef9a5587a03d6b7a88515cf55d1d14ebcd26aa8be35",
+  "scripts/a1_availability_baseline.py": "213b6d320cacc5e974dc6380716471906a279e3d51326890cf110998744307af",
+  "scripts/projection.py": "dbd3201017e9febd8cd52cc6ca9b838c8ebc607d934dc490129cf09123faf284",
+  "scripts/a1_flow_compare.py": "1cb71e63c72410d79d03bcccdd489dc7ee5dd42279858aa034e4a14b3aace5b3",
+  "scripts/a1_compare.py": "435c1e0761f51ee9d218dfc462db8d219c0bc6f54dc8acd6bcae79968ddfcf68",
+  "basketball_common.py": "6c159e712c86496ff3ac60c4bf98ebb815b5b341333436df42de165309be0002",
+  "data/derived/history/2023/on_court.parquet": "ba9b4b13e16e5b839e5530905497d2d00d231413ea40f39ee46855f3ebce8c3b",
+  "data/derived/history/2024/on_court.parquet": "5461947edb052ef9e62b4a70ba49e57a0f98d929f4a19167f03aad3972457f95",
+  "data/derived/history/2025/on_court.parquet": "5bbabab60114aa3f7fa096d7708be96f47177c541debcae88059da6b1adb77e9",
+  "data/derived/history/2026/on_court.parquet": "1b0ffaf53490c3fda4edd28ac427766a0af3a1bfe86f1fece240cd63ed1e8410",
+  "data/raw/hoopr/player_box_2023.parquet": "968d835cd04b10533c5b5af8c0e41bf0154a73782e9446c76f765109223e8679",
+  "data/raw/hoopr/player_box_2024.parquet": "1e500a538ec45ddbcb58d9789b5494f8db4f25658eafd01d90f2d09600921665",
+  "data/raw/hoopr/player_box_2025.parquet": "e89f7fbc1124092c715b722e6d72d9dd1b9d28776ca6888b508fd2831cd705e2"
+ },
+ "output_sha256": {
+  "data/derived/experiments/20261122_a1_s07_starter_sim_F3.parquet": "44fdeb3830516ca8617e6d4d1b3f8db8e0d8476ccd69abdd8e69b62167d1a400",
+  "data/derived/experiments/20261122_a1_s07_starter_sim_F3_teams.parquet": "31370a97ebfe294e1c39206b1ffb00d2742eae8f07e4cf2e7fdc78fafaf58e06",
+  "data/derived/experiments/20261122_a1_s07_starter_sim_F3_lineups.parquet": "f7634ce6f41c1617f56b59b97d39db56d7f2d2690045f37d81b962816b0c3995"
+ }
+}

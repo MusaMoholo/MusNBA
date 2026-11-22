@@ -534,6 +534,28 @@ freeze source fingerprints before rerunning, and report a second failure honestl
 player-first/minute CRPS, state-response, paired uncertainty, seed-noise and confirmation gates are unchanged;
 neither an exception repair nor the node results alone justifies promotion.
 
+For the in-flight fixed S06 screen, before inspecting any candidate score, additionally compare matched control
+and candidate fourth-quarter player-minute errors by **realised** start-of-Q4 score margin (ahead or behind by
+at least 15, within five, otherwise intermediate) and by recognised personal fouls through Q3 (four or more versus
+fewer), as well as by S01 pre-game role. Derive Q4 score state from independently reconciled recorded quarter
+scores and foul counts from retained raw play-by-play using the existing personal-foul parser; missing or
+inconsistent game/player foul data remain unknown. Report differences in Q4 mean-minute bias, Q4 absolute error
+and full-game minute CRPS with 10,000 paired complete-game bootstrap draws and the 100-player-game/30-game support
+floor. These bins use outcomes unavailable pregame solely for retrospective analysis. The saved per-player
+quarter means are unconditional over simulated states, so this is a **historical-state subgroup diagnostic**, not
+a direct measurement of how the policy reacts within a simulated close game, blowout or foul-trouble world. Direct
+state-conditioned policy behaviour requires a separate event/state capture; do not claim it from these aggregates.
+For that separate check, replay the unchanged fixed candidate with an opt-in capture around its selected-timeout
+decisions, using the same game IDs, per-game simulation seeds and 1,000 worlds; first reproduce all shared outputs
+on the three preflight games, then on the complete fixed panel. Compare simulated outgoing decisions with the
+independently audited historical selected-timeout player decisions on their common games. Classify both using the
+same S01 pre-game role and pre-decision period, score margin, foul-trouble and stint bins from the earlier
+descriptive protocol; report counts, rates and paired complete-game bootstrap intervals with its existing
+100-player-game/30-game support floor. This measures state-conditioned behaviour within simulated selected
+timeouts, but the simulated template selection, actual-participant conditioning, unequal opportunity counts and
+historical outcome-selected windows prevent causal or pre-game availability claims. No changed draw or promotion
+is implied by capture alone.
+
 For S07's initial report-coverage audit, inventory every retained ESPN collection run without fetching a new source.
 Treat each collection's `finished` UTC timestamp as the conservative latest capture time; a dated tip is usable only
 when the entire run finished strictly before that tip. Audit missing rosters, injury files, status counts, unmatched

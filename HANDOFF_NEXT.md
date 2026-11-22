@@ -1,6 +1,6 @@
 # Handoff — state and next actions
 
-Updated **22 November 2026 — A1 overnight execution, S01–S05 complete; S06 at 70%, S07 at 60%**. Dashboard U1–U22 complete and published.
+Updated **22 November 2026 — A1 overnight execution, S01–S05 complete; S06 and S07 at 70%**. Dashboard U1–U22 complete and published.
 Dashboard close-out checkpoint **86c2a46**, A1 planning checkpoint **00a0731**; S01 checkpoint **c9d8008**
 and S02 checkpoint **93b3e1d** are committed and pushed (S01's exact control source is **c6d5db4**).
 The original S03/S05 experiment snapshot is **ab32eda**, committed and pushed before the candidate repair;
@@ -37,7 +37,7 @@ The isolated S06 foul-penalty source was pushed as **bf9cd21** before the probe;
 protocol was frozen as **857cc78**.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
 product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S05 are complete;
-S06 is active at 70%; S07 is 60%; A1 overall is 52.0%.** Isolated assignment candidates have event-level diagnostics and wiring only;
+S06 and S07 are active at 70%; A1 overall is 52.6%.** Isolated assignment candidates have event-level diagnostics and wiring only;
 no defence candidate has had an engine-accuracy test, and no model promotion, forecast or PWA change has been made.
 The fixed S06 200-game candidate backtest failed after at least **40/200** games (last progress **378 s**) because
 world **563**, side **0**, had fewer than five non-disqualified available players after a foul-out; no aggregate
@@ -67,9 +67,23 @@ fixed **200-game/1,000-world** flow-instrumented screen is now running as attach
 --fold F4 --game-ids data/derived/experiments/20261122_a1_s03_f4_game_ids.json --worlds 1000 --jobs 4 --threads 8
 --rotation targets --pool 0 --models folds/v1.2d_F4_all --substitution-candidate
 analysis/experiments/20261122_a1_s06_engine_models_F4.json --substitution-foul-penalty --flow-diagnostics --name
-a1_s06_penalty_flow_fixed200`. No other engine backtest may run concurrently. Progress is job item count only,
+a1_s06_penalty_flow_fixed200`. Last logged progress: **120/200** in **1,247 s**. No other engine backtest may run
+concurrently. Progress is job item count only,
 not the S06 80% rung; after completion independently audit, compare against the pinned controls and assess the
 pre-registered player-first and state-response gates.
+Before candidate scoring, TRAINING_PLAN freezes a retrospective Q4-start margin/foul subgroup comparison;
+`scripts/a1_substitution_response_compare.py` and focused missing/inconsistent-foul tests are prepared but unrun.
+Saved Q4 player means average over simulated states, so they cannot prove the policy reacts correctly within a
+simulated game. Direct event/state-conditioned behaviour still requires a separate capture; don't award the
+state-response rung based only on unconditional subgroup means.
+The separate `scripts/a1_substitution_response_capture.py` now prepares direct selected-timeout state capture
+without changing the serving policy. Its source and boundary tests must be committed before running; after the
+current screen ends, first replay the three-game candidate
+`20261122T095342Z_a1_s06_penalty_three` with `--jobs 1` and require exact output reproduction, then replay the full
+200-game candidate sequentially and compare captured state cells with the independently audited historical
+selected-timeout rows using `scripts/a1_substitution_response_audit.py`. Capture and accounting have passed focused
+synthetic tests and Pylance diagnostics but remain unrun on the real games; do not start either while the current
+engine backtest runs.
 S07's first no-report/starter baseline protocol is frozen in TRAINING_PLAN §8.2 before scoring. A prior-position
 coverage setup initially failed on timestamp/string merge types; after converting stored dates to ISO it found
 **55/7,317** missing prior positions across **55/400** F4 team-games. This is coverage, not a starter score.
@@ -550,14 +564,13 @@ retrospective, selected listed-player proxies, dominated by coach DNP; neither a
 deployable future-absence model follows. Continue with explicitly censored duration/role comparisons; fixed report
 fallback, engine v1.3, forecasts and bundle remain unchanged.
 
-**S07 follow-ups, not yet scored:** `scripts/a1_availability_spell_sim.py` now constructs the pre-registered
+**S07 follow-ups:** `scripts/a1_availability_spell_sim.py` constructs the pre-registered
 five-next-game trajectories and deterministic 10,000-draw earlier-fold proxy simulations. Focused tests cover
 returns, unlisted/fold-end censoring, seeded survival and unsupported subgroups with empty bootstrap samples; these
 cells remain inconclusive without aborting the experiment. `scripts/a1_availability_starter_sim.py` draws independent
 no-report active states, applies the as-of D29 selector to each valid active set, records five-player identities and
 leaves unknown-position or short-roster worlds unsupported; a separate world-by-world audit is prepared.
-**26/26** starter/spell/sequence/flow tests pass. Before using any
-result, commit the source, then run
+**31/31** focused state-capture, rate-accounting and availability tests pass. The completed spell commands were
 `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u scripts/a1_availability_spell_sim.py --output
 analysis/experiments/20261122_a1_s07_spell_sim.json --rows-output
 data/derived/experiments/20261122_a1_s07_spell_sim.parquet`; then run the separately implemented
@@ -569,13 +582,32 @@ data/derived/experiments/20261122_a1_s07_starter_sim_F1.parquet --teams-output
 data/derived/experiments/20261122_a1_s07_starter_sim_F1_teams.parquet --lineups-output
 data/derived/experiments/20261122_a1_s07_starter_sim_F1_lineups.parquet`, then repeat F2–F4 and run
 `scripts/a1_availability_starter_audit.py --fold F1 --output
-analysis/experiments/20261122_a1_s07_starter_sim_F1_accounting.json` for each fold. The scripts are unscored and
-may still need corrections. Do not advance
-the 70% rung until the complete follow-up and required accounting pass.
-The partial-source checkpoint's normal/fault smoke queue is still running as attached shell **2291**, normal-smoke
-PID **18036**, with logs `/tmp/musnba_a1_s06_flow_partial_smoke.log` and
-`/tmp/musnba_a1_s06_flow_partial_fault.log`; do not claim either result until it exits. The 26 focused tests and
-independent replay unit checks have passed. This is a source-freeze checkpoint, not a completed S06 or S07 task.
+analysis/experiments/20261122_a1_s07_starter_sim_F1_accounting.json` for each fold.
+The source was committed and pushed as **eb63126** before scoring. The spell simulation has since completed
+**1,493** anchors across F1–F4 (371/439/308/375) and its independent audit reconciled **29,860** survival values
+and **80** role/horizon cells, with 10,000 bootstrap replicates; reports
+`analysis/experiments/20261122_a1_s07_spell_sim{,_accounting}.json`, retained rows
+`data/derived/experiments/20261122_a1_s07_spell_sim.parquet`, logs `/tmp/musnba_a1_s07_spell_{sim,audit}.log`.
+All star/starter role horizons are below the 100-at-risk/30-game support floor. Unlisted right censoring is common
+and may be informative; these results do not validate physical absence. The precommitted F1–F4 starter simulations
+and independent replays all finished: **200/200, 200/200, 195/200 and 200/200** rostered games;
+**7,398/7,390/6,199/7,299** player-games; and **769/805/569/904** distinct fives. The audits reconciled
+**14,106,556** supported worlds; **1,783,444** active-unknown-position worlds were excluded, and no inferred-roster
+world had fewer than five active players. F3 lacks prior rosters for five games; one F4 team lacks complete actual
+starter labels. Role frequencies, bootstrap intervals and limitations are in FINDINGS. Former sequential audit
+shell **2349** exited 0; logs `/tmp/musnba_a1_s07_starter_{sim,audit}_F{1,2,3,4}.log`. S07's 70% rung is complete.
+For 80%, a new synthetic stress test confirmed an existing serving bug: in a five-player pool with only four
+available, `Game._target_tables` silently reinstates the unavailable fifth player for all **2,880** regulation
+seconds. None of the **15,890,000** historical proxy worlds triggered it, which does not establish safety for a
+short or uncertain prospective roster. Preserve this failure, implement an explicitly failing or otherwise honest
+fallback without conditioning on actual lineups, and check deterministic valid-world parity. Do not edit the
+running S06 engine or its capture sources until their frozen simulations/reproduction are finished; the bug
+remains unresolved in production.
+The partial-source checkpoint's normal smoke passed **102/102**; the deliberate-fault run is still active as
+attached shell **2291**, Python PID **20642**, with logs `/tmp/musnba_a1_s06_flow_partial_smoke.log` and
+`/tmp/musnba_a1_s06_flow_partial_fault.log`; retrieve the wrapper exit and verify nonzero fault exit. The
+**31** current focused tests and direct-state-auditor Pylance check passed. This is a source-freeze checkpoint,
+not a completed S06 or S07 task.
 
 The tracking family was frozen in TRAINING_PLAN §8 and built separately by
 `scripts/a1_tracking_features.py`: former wrapper PID **85586**, shell **1549**, log
@@ -1026,8 +1058,8 @@ weights, with the old and new accounting; do not hide unfinished tasks by deleti
 | S03 Offence/defence signal diagnosis | 8% | 100% | Fixed matched flow/accounting, component decomposition and two falsifiable candidate families documented; research-only checkpoint |
 | S04 Defence and shot quality | 12% | 100% | Both families rejected at their frozen node gates; tracking rebuild and independent accounting verified; served model and bundle unchanged |
 | S05 Roles and minute allocation | 8% | 100% | Both matched screens and independent accounting complete; neither passes pooled MIN gate, retain D29 control; smoke/fault passed |
-| S06 Game-state substitutions | 12% | 70% | 3,000 worlds replayed; 200-game screen failed explicitly in game 401810472; player-first comparison unfinished |
-| S07 Availability and future absences | 6% | 60% | Earlier-fold recorded-DNP duration and rest proxies audited; no dated report calibration, fixed fallback retained |
+| S06 Game-state substitutions | 12% | 70% | Foul-penalty retry running on fixed 200 games; player-first comparison and direct state replay unfinished |
+| S07 Availability and future absences | 6% | 70% | Spell and four-fold starter simulations independently audited; short-roster serving fallback is unsafe and unresolved |
 | S08 Lineup branches and Expected | 6% | 0% | Planned |
 | S09 Shared form and end-game behaviour | 10% | 0% | Planned |
 | S10 Season pathway calibration | 8% | 0% | Planned |
@@ -1036,7 +1068,7 @@ weights, with the old and new accounting; do not hide unfinished tasks by deleti
 | S13 Current-model season history | 5% | 0% | Planned |
 | S14 Nightly, delivery, successor | 5% | 0% | Planned |
 
-**A1 overall: `██████████░░░░░░░░░░ 52.0%`.** Both control seeds are complete; isolated assignment-event
+**A1 overall: `██████████░░░░░░░░░░ 52.6%`.** Both control seeds are complete; isolated assignment-event
 diagnostics and three-game wiring are not engine-accuracy tests. No candidate has been promoted or changed production/PWA.
 Each rung below is cumulative; 100% always includes updated docs, necessary PWA model/data/shell delivery, reviewed
 commit and push, plus the owner summary. See AGENTS §3/§5 and PLAN §6c for the per-subtask PWA checklist; research-only
@@ -1407,15 +1439,17 @@ The dashboard programme is done. Do not resume U1–U22, repeat rejected defence
    Original tracking publication/revision timing remains unknown; preserve S02's cutoff and provenance limits. The
    raw inventory retained 45 older entries without original fetch URL/time. Provider access remains one polite stream,
    paused during the nightly.
-2. **Continue S07 independently at 60%:** all four baseline folds and their independent accounting are complete.
+2. **Continue S07 independently at 70%:** all four baseline folds and their independent accounting are complete.
    The original auditor source is in **5fd5e00**; its guarded v2 has passed Pylance/tests and four-fold accounting.
    The report archive has no development-season
    examples. Do not equate inferred membership with eligibility or score/tune status on the protected-season archive.
    The sequence builder has a passed synthetic/preflight check and produced **128,321** independently audited
    prior-state rows. The independently audited frozen fold screen scored **18,612** conditional return/rest
-   observations; its exact source was committed before scoring. Specify and evaluate censored recorded-DNP spell
-   duration/return timing and starter-frequency comparisons by role, with uncertainty and honest unsupported cells.
-   Do not present selected listed-player outcomes as physical recovery. Continue S06–S10 in dependency order.
+   observations; its exact source was committed before scoring. The censored-spell and role-specific starter-frequency
+   comparisons and independent audits are complete. Address the reproduced short-roster serving fallback honestly
+   after frozen S06 replays finish, without changing valid-world draws or leaking actual lineups; document cold starts,
+   missing reports, prior-position gaps, trades and missing rosters, and test the S08/S10 fallback contracts. Do not
+   present selected listed-player outcomes as physical recovery. Continue S06–S10 in dependency order.
 3. **S11 freezes the tested combination before promotion.** Confirm on the fixed wider folds and second seed, protect
    the final test and use player outcomes first.
 4. **S12/S13 implement model visibility and versioned daily history.** Preserve original and previous-version
@@ -1474,6 +1508,13 @@ accuracy result. README maps the prepared research script. TRAINING_PLAN's froze
 are unchanged; ENGINE_PLAN and DASHBOARD_PLAN need no change because no production design or presentation changed;
 AGENTS already records this overnight authority. The v1.3/pathway-v1 forecasts and PWA bundle remain unchanged;
 phone import is unconfirmed.
+
+**S06 state-protocol/S07 70% partial review:** HANDOFF records both active rungs, exact running jobs and the
+unresolved short-roster bug; PLAN records weighted progress and the negative proxy result; FINDINGS records the
+audited populations and stress reproduction; TRAINING_PLAN freezes the state-conditioned comparison before
+scoring; README maps the new research tools. ENGINE_PLAN and DASHBOARD_PLAN need no change because neither an
+accepted design nor app, forecast, shell or bundle has changed. AGENTS already contains the scoped overnight
+authority. The v1.3/pathway-v1 model and existing PWA generation remain served; phone import is unconfirmed.
 
 ## Completed S01 audit and reproduction
 

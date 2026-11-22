@@ -1,0 +1,15 @@
+{
+ "experiment": "a1_s07_recorded_spell_independent_accounting",
+ "anchors": 1493,
+ "predicted_survival_values": 29860,
+ "role_horizons": 80,
+ "bootstrap_replicates": 10000,
+ "limitations": "Reconciles recorded-listing trajectories and frozen earlier-fold probabilities; right-censoring can be informative, and historical status reports are not established.",
+ "input_sha256": {
+  "scripts/a1_availability_spell_audit.py": "66bd71416792fc96ad5e23f34bf5dd398443391107203e9bbb0888218cd9dfb1",
+  "analysis/experiments/20261122_a1_s07_spell_sim.json": "50307145cca2bc4a1dbb85eec4efd7063165a6aa9fb28e528061ff7b6c0df48f",
+  "data/derived/experiments/20261122_a1_s07_spell_sim.parquet": "9dd1a2fb6d3858fc097fcf5dcc8b5bc32e5431e26e2d44e5092514c481352970",
+  "data/derived/experiments/20261122_a1_s07_sequences.parquet": "ecaa076133c881f983c67d707a2b7659162bc5dd864f650a35e3bc51e13fa8c3",
+  "analysis/experiments/20261122_a1_pre_candidate_manifest.json": "195b4ddaf748e4f3520a02f813b5763736fe4fbfbe653e896161532d6d9c7e6b"
+ }
+}

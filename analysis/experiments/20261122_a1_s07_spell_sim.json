@@ -1,0 +1,2510 @@
+{
+ "experiment": "a1_s07_censored_recorded_spell_simulation",
+ "horizon_next_games": 5,
+ "worlds_per_anchor": 10000,
+ "bootstrap_replicates": 10000,
+ "bootstrap_seed": 20261122,
+ "folds": [
+  {
+   "fold": "F1",
+   "training_through": "2023-12-31",
+   "groups": {
+    "all": {
+     "anchors": 371,
+     "games": 152,
+     "status": "ok",
+     "observed_returns": 284,
+     "censor_reasons": {
+      "unlisted": 62,
+      "horizon": 15,
+      "unknown": 6,
+      "fold_end_or_season_end": 3,
+      "same_day_other_team": 1
+     },
+     "horizons": [
+      {
+       "step": 1,
+       "recorded_games_missed_at_least": 2,
+       "at_risk": 323,
+       "games_at_risk": 146,
+       "returns": 196,
+       "censored_before_step": 48,
+       "status": "ok",
+       "observed_survival": 0.3931888544891641,
+       "observed_survival_ci_95": [
+        0.3138461538461539,
+        0.47017653852499586
+       ],
+       "baseline": {
+        "analytic_survival": 0.5377525442437509,
+        "simulated_survival": 0.5377654986522912,
+        "survival_ci_95": [
+         0.5302025792085646,
+         0.5444960328099406
+        ],
+        "minus_observed": 0.14456368975458678,
+        "minus_observed_ci_95": [
+         0.06796636913687648,
+         0.22399677533241685
+        ]
+       },
+       "candidate": {
+        "analytic_survival": 0.47133978081879474,
+        "simulated_survival": 0.4712587601078167,
+        "survival_ci_95": [
+         0.4612814759500927,
+         0.48063728198108774
+        ],
+        "minus_observed": 0.07815092632963067,
+        "minus_observed_ci_95": [
+         0.001531947451936451,
+         0.15726534330131872
+        ]
+       }
+      },
+      {
+       "step": 2,
+       "recorded_games_missed_at_least": 3,
+       "at_risk": 117,
+       "games_at_risk": 64,
+       "returns": 60,
+       "censored_before_step": 10,
+       "status": "ok",
+       "observed_survival": 0.19155354449472098,
+       "observed_survival_ci_95": [
+        0.1345545046677314,
+        0.2492084496339743
+       ],
+       "baseline": {
+        "analytic_survival": 0.2926634856845942,
+        "simulated_survival": 0.29234743935309976,
+        "survival_ci_95": [
+         0.2858922047891577,
+         0.2987791329697549
+        ],
+        "minus_observed": 0.10110994118987324,
+        "minus_observed_ci_95": [
+         0.042648348398001995,
+         0.1579228054937661
+        ]
+       },
+       "candidate": {
+        "analytic_survival": 0.2727406791186404,
+        "simulated_survival": 0.27240485175202156,
+        "survival_ci_95": [
+         0.2671956968601069,
+         0.2778266557300665
+        ],
+        "minus_observed": 0.08118713462391944,
+        "minus_observed_ci_95": [
+         0.023214809294100146,
+         0.13805979867707244
+        ]
+       }
+      },
+      {
+       "step": 3,
+       "recorded_games_missed_at_least": 4,
+       "at_risk": 47,
+       "games_at_risk": 34,
+       "returns": 16,
+       "censored_before_step": 10,
+       "status": "insufficient_sample",
+       "observed_survival": 0.12634382721992235,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.16045447282444544,
+        "simulated_survival": 0.16028894878706199,
+        "survival_ci_95": null,
+        "minus_observed": 0.03411064560452309,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.1578861241937482,
+        "simulated_survival": 0.157833153638814,
+        "survival_ci_95": null,
+        "minus_observed": 0.03154229697382585,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 4,
+       "recorded_games_missed_at_least": 5,
+       "at_risk": 29,
+       "games_at_risk": 23,
+       "returns": 7,
+       "censored_before_step": 2,
+       "status": "insufficient_sample",
+       "observed_survival": 0.09584704133925143,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.08838437870546456,
+        "simulated_survival": 0.08824609164420485,
+        "survival_ci_95": null,
+        "minus_observed": -0.007462662633786865,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.10858793936101654,
+        "simulated_survival": 0.10847547169811321,
+        "survival_ci_95": null,
+        "minus_observed": 0.012740898021765118,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 5,
+       "recorded_games_missed_at_least": 6,
+       "at_risk": 20,
+       "games_at_risk": 17,
+       "returns": 5,
+       "censored_before_step": 2,
+       "status": "insufficient_sample",
+       "observed_survival": 0.07188528100443857,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.04883827897740304,
+        "simulated_survival": 0.04872749326145553,
+        "survival_ci_95": null,
+        "minus_observed": -0.02304700202703553,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.07502900786923568,
+        "simulated_survival": 0.07492210242587602,
+        "survival_ci_95": null,
+        "minus_observed": 0.0031437268647971084,
+        "minus_observed_ci_95": null
+       }
+      }
+     ]
+    },
+    "star": {
+     "anchors": 21,
+     "games": 19,
+     "status": "insufficient_sample",
+     "observed_returns": 17,
+     "censor_reasons": {
+      "unlisted": 2,
+      "fold_end_or_season_end": 1,
+      "horizon": 1
+     },
+     "horizons": [
+      {
+       "step": 1,
+       "recorded_games_missed_at_least": 2,
+       "at_risk": 19,
+       "games_at_risk": 18,
+       "returns": 15,
+       "censored_before_step": 2,
+       "status": "insufficient_sample",
+       "observed_survival": 0.21052631578947367,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.4137590293211463,
+        "simulated_survival": 0.41269523809523806,
+        "survival_ci_95": null,
+        "minus_observed": 0.2032327135316726,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.3003026394687121,
+        "simulated_survival": 0.2988476190476191,
+        "survival_ci_95": null,
+        "minus_observed": 0.08977632367923843,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 2,
+       "recorded_games_missed_at_least": 3,
+       "at_risk": 3,
+       "games_at_risk": 3,
+       "returns": 2,
+       "censored_before_step": 1,
+       "status": "insufficient_sample",
+       "observed_survival": 0.07017543859649124,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.17916848159707485,
+        "simulated_survival": 0.17877142857142858,
+        "survival_ci_95": null,
+        "minus_observed": 0.10899304300058361,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.1786683468617409,
+        "simulated_survival": 0.17751428571428568,
+        "survival_ci_95": null,
+        "minus_observed": 0.10849290826524967,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 3,
+       "recorded_games_missed_at_least": 4,
+       "at_risk": 1,
+       "games_at_risk": 1,
+       "returns": 0,
+       "censored_before_step": 0,
+       "status": "insufficient_sample",
+       "observed_survival": 0.07017543859649124,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.08060289594079077,
+        "simulated_survival": 0.08071904761904761,
+        "survival_ci_95": null,
+        "minus_observed": 0.010427457344299534,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.1065667921666099,
+        "simulated_survival": 0.10733809523809525,
+        "survival_ci_95": null,
+        "minus_observed": 0.03639135357011866,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 4,
+       "recorded_games_missed_at_least": 5,
+       "at_risk": 1,
+       "games_at_risk": 1,
+       "returns": 0,
+       "censored_before_step": 0,
+       "status": "insufficient_sample",
+       "observed_survival": 0.07017543859649124,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.037386528863566484,
+        "simulated_survival": 0.03735714285714286,
+        "survival_ci_95": null,
+        "minus_observed": -0.032788909732924754,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.07316645030801092,
+        "simulated_survival": 0.07326190476190478,
+        "survival_ci_95": null,
+        "minus_observed": 0.0029910117115196783,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 5,
+       "recorded_games_missed_at_least": 6,
+       "at_risk": 1,
+       "games_at_risk": 1,
+       "returns": 0,
+       "censored_before_step": 0,
+       "status": "insufficient_sample",
+       "observed_survival": 0.07017543859649124,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.01776228413181729,
+        "simulated_survival": 0.017923809523809522,
+        "survival_ci_95": null,
+        "minus_observed": -0.05241315446467395,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.0527979244756446,
+        "simulated_survival": 0.05250952380952382,
+        "survival_ci_95": null,
+        "minus_observed": -0.017377514120846635,
+        "minus_observed_ci_95": null
+       }
+      }
+     ]
+    },
+    "starter": {
+     "anchors": 34,
+     "games": 28,
+     "status": "insufficient_sample",
+     "observed_returns": 23,
+     "censor_reasons": {
+      "unlisted": 9,
+      "fold_end_or_season_end": 1,
+      "horizon": 1
+     },
+     "horizons": [
+      {
+       "step": 1,
+       "recorded_games_missed_at_least": 2,
+       "at_risk": 26,
+       "games_at_risk": 24,
+       "returns": 21,
+       "censored_before_step": 8,
+       "status": "insufficient_sample",
+       "observed_survival": 0.1923076923076923,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.4826655243394035,
+        "simulated_survival": 0.4819794117647059,
+        "survival_ci_95": null,
+        "minus_observed": 0.2903578320317112,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.3763402652579207,
+        "simulated_survival": 0.37597058823529417,
+        "survival_ci_95": null,
+        "minus_observed": 0.1840325729502284,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 2,
+       "recorded_games_missed_at_least": 3,
+       "at_risk": 3,
+       "games_at_risk": 3,
+       "returns": 2,
+       "censored_before_step": 2,
+       "status": "insufficient_sample",
+       "observed_survival": 0.06410256410256411,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.23899937843995142,
+        "simulated_survival": 0.23856470588235296,
+        "survival_ci_95": null,
+        "minus_observed": 0.1748968143373873,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.22341151950906898,
+        "simulated_survival": 0.22284117647058824,
+        "survival_ci_95": null,
+        "minus_observed": 0.15930895540650486,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 3,
+       "recorded_games_missed_at_least": 4,
+       "at_risk": 1,
+       "games_at_risk": 1,
+       "returns": 0,
+       "censored_before_step": 0,
+       "status": "insufficient_sample",
+       "observed_survival": 0.06410256410256411,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.12068315993422492,
+        "simulated_survival": 0.12004705882352944,
+        "survival_ci_95": null,
+        "minus_observed": 0.05658059583166081,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.13284288448733628,
+        "simulated_survival": 0.13263235294117645,
+        "survival_ci_95": null,
+        "minus_observed": 0.06874032038477217,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 4,
+       "recorded_games_missed_at_least": 5,
+       "at_risk": 1,
+       "games_at_risk": 1,
+       "returns": 0,
+       "censored_before_step": 0,
+       "status": "insufficient_sample",
+       "observed_survival": 0.06410256410256411,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.06187557791947606,
+        "simulated_survival": 0.06143529411764706,
+        "survival_ci_95": null,
+        "minus_observed": -0.002226986183088052,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.09561498515458108,
+        "simulated_survival": 0.09533529411764706,
+        "survival_ci_95": null,
+        "minus_observed": 0.03151242105201697,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 5,
+       "recorded_games_missed_at_least": 6,
+       "at_risk": 1,
+       "games_at_risk": 1,
+       "returns": 0,
+       "censored_before_step": 0,
+       "status": "insufficient_sample",
+       "observed_survival": 0.06410256410256411,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.032114253884389564,
+        "simulated_survival": 0.031767647058823525,
+        "survival_ci_95": null,
+        "minus_observed": -0.03198831021817455,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.06996070632869653,
+        "simulated_survival": 0.0696735294117647,
+        "survival_ci_95": null,
+        "minus_observed": 0.005858142226132415,
+        "minus_observed_ci_95": null
+       }
+      }
+     ]
+    },
+    "bench": {
+     "anchors": 316,
+     "games": 137,
+     "status": "ok",
+     "observed_returns": 244,
+     "censor_reasons": {
+      "unlisted": 51,
+      "horizon": 13,
+      "unknown": 6,
+      "fold_end_or_season_end": 1,
+      "same_day_other_team": 1
+     },
+     "horizons": [
+      {
+       "step": 1,
+       "recorded_games_missed_at_least": 2,
+       "at_risk": 278,
+       "games_at_risk": 132,
+       "returns": 160,
+       "censored_before_step": 38,
+       "status": "ok",
+       "observed_survival": 0.4244604316546763,
+       "observed_survival_ci_95": [
+        0.33788056867753097,
+        0.5064935064935066
+       ],
+       "baseline": {
+        "analytic_survival": 0.5519197040226194,
+        "simulated_survival": 0.5520794303797468,
+        "survival_ci_95": [
+         0.5472632863066849,
+         0.5556489770906436
+        ],
+        "minus_observed": 0.12745927236794308,
+        "minus_observed_ci_95": [
+         0.045331153360203186,
+         0.21409138993321128
+        ]
+       },
+       "candidate": {
+        "analytic_survival": 0.49292763998784994,
+        "simulated_survival": 0.49296898734177214,
+        "survival_ci_95": [
+         0.48757257960979794,
+         0.497412268358511
+        ],
+        "minus_observed": 0.06846720833317366,
+        "minus_observed_ci_95": [
+         -0.013776000182047006,
+         0.15549991972041094
+        ]
+       }
+      },
+      {
+       "step": 2,
+       "recorded_games_missed_at_least": 3,
+       "at_risk": 111,
+       "games_at_risk": 61,
+       "returns": 56,
+       "censored_before_step": 7,
+       "status": "ok",
+       "observed_survival": 0.21031823190096574,
+       "observed_survival_ci_95": [
+        0.14784690172240372,
+        0.274211100026901
+       ],
+       "baseline": {
+        "analytic_survival": 0.30597986141926437,
+        "simulated_survival": 0.30568196202531644,
+        "survival_ci_95": [
+         0.30205125600645494,
+         0.309209705516174
+        ],
+        "minus_observed": 0.09566162951829862,
+        "minus_observed_ci_95": [
+         0.0312679623851158,
+         0.15870005099209983
+        ]
+       },
+       "candidate": {
+        "analytic_survival": 0.2842998892582617,
+        "simulated_survival": 0.28404367088607596,
+        "survival_ci_95": [
+         0.2812669185806897,
+         0.2868229129587921
+        ],
+        "minus_observed": 0.07398165735729598,
+        "minus_observed_ci_95": [
+         0.009650384092775575,
+         0.13704047990887244
+        ]
+       }
+      },
+      {
+       "step": 3,
+       "recorded_games_missed_at_least": 4,
+       "at_risk": 45,
+       "games_at_risk": 32,
+       "returns": 16,
+       "censored_before_step": 10,
+       "status": "insufficient_sample",
+       "observed_survival": 0.13553841611395567,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.17004025685237023,
+        "simulated_survival": 0.16990664556962026,
+        "survival_ci_95": null,
+        "minus_observed": 0.03450184073841456,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.1639911119234568,
+        "simulated_survival": 0.1639003164556962,
+        "survival_ci_95": null,
+        "minus_observed": 0.028452695809501133,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 4,
+       "recorded_games_missed_at_least": 5,
+       "at_risk": 27,
+       "games_at_risk": 21,
+       "returns": 7,
+       "censored_before_step": 2,
+       "status": "insufficient_sample",
+       "observed_survival": 0.10039882675107827,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.09462568906433631,
+        "simulated_survival": 0.0945126582278481,
+        "survival_ci_95": null,
+        "minus_observed": -0.005773137686741953,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.11233772326333276,
+        "simulated_survival": 0.11222943037974684,
+        "survival_ci_95": null,
+        "minus_observed": 0.011938896512254493,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 5,
+       "recorded_games_missed_at_least": 6,
+       "at_risk": 18,
+       "games_at_risk": 15,
+       "returns": 5,
+       "censored_before_step": 2,
+       "status": "insufficient_sample",
+       "observed_survival": 0.07251026376466764,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.052702876271452904,
+        "simulated_survival": 0.05259936708860759,
+        "survival_ci_95": null,
+        "minus_observed": -0.019807387493214736,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.07705171357696905,
+        "simulated_survival": 0.07697626582278481,
+        "survival_ci_95": null,
+        "minus_observed": 0.00454144981230141,
+        "minus_observed_ci_95": null
+       }
+      }
+     ]
+    },
+    "unknown": {
+     "anchors": 0,
+     "games": 0,
+     "status": "insufficient_sample",
+     "horizons": []
+    }
+   }
+  },
+  {
+   "fold": "F2",
+   "training_through": "2024-12-31",
+   "groups": {
+    "all": {
+     "anchors": 439,
+     "games": 158,
+     "status": "ok",
+     "observed_returns": 354,
+     "censor_reasons": {
+      "unlisted": 62,
+      "horizon": 16,
+      "fold_end_or_season_end": 4,
+      "unknown": 3
+     },
+     "horizons": [
+      {
+       "step": 1,
+       "recorded_games_missed_at_least": 2,
+       "at_risk": 406,
+       "games_at_risk": 153,
+       "returns": 240,
+       "censored_before_step": 33,
+       "status": "ok",
+       "observed_survival": 0.40886699507389157,
+       "observed_survival_ci_95": [
+        0.34562031027577383,
+        0.4731956974323386
+       ],
+       "baseline": {
+        "analytic_survival": 0.5171355654589668,
+        "simulated_survival": 0.516851708428246,
+        "survival_ci_95": [
+         0.509135965557195,
+         0.5244064113910225
+        ],
+        "minus_observed": 0.1082685703850752,
+        "minus_observed_ci_95": [
+         0.04445290020752154,
+         0.17105603365610125
+        ]
+       },
+       "candidate": {
+        "analytic_survival": 0.4474268698687167,
+        "simulated_survival": 0.44714464692482925,
+        "survival_ci_95": [
+         0.4374618340613971,
+         0.4568527143277626
+        ],
+        "minus_observed": 0.038559874794825144,
+        "minus_observed_ci_95": [
+         -0.025532577583248707,
+         0.1015011478471544
+        ]
+       }
+      },
+      {
+       "step": 2,
+       "recorded_games_missed_at_least": 3,
+       "at_risk": 146,
+       "games_at_risk": 83,
+       "returns": 78,
+       "censored_before_step": 20,
+       "status": "ok",
+       "observed_survival": 0.19043120318510018,
+       "observed_survival_ci_95": [
+        0.14671312315593213,
+        0.2365624348400181
+       ],
+       "baseline": {
+        "analytic_survival": 0.2721758621503795,
+        "simulated_survival": 0.27204555808656034,
+        "survival_ci_95": [
+         0.2654509004789795,
+         0.27833427926728127
+        ],
+        "minus_observed": 0.0817446589652793,
+        "minus_observed_ci_95": [
+         0.03605056482226943,
+         0.12560606332899552
+        ]
+       },
+       "candidate": {
+        "analytic_survival": 0.2519162773969102,
+        "simulated_survival": 0.25183006833712984,
+        "survival_ci_95": [
+         0.24604932495290213,
+         0.2573507512635005
+        ],
+        "minus_observed": 0.061485074211810015,
+        "minus_observed_ci_95": [
+         0.015616528371797316,
+         0.10541184437238324
+        ]
+       }
+      },
+      {
+       "step": 3,
+       "recorded_games_missed_at_least": 4,
+       "at_risk": 59,
+       "games_at_risk": 48,
+       "returns": 24,
+       "censored_before_step": 9,
+       "status": "insufficient_sample",
+       "observed_survival": 0.11296766290641536,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.14466859709348284,
+        "simulated_survival": 0.14476514806378132,
+        "survival_ci_95": null,
+        "minus_observed": 0.03170093418706749,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.14243479468759684,
+        "simulated_survival": 0.14252710706150343,
+        "survival_ci_95": null,
+        "minus_observed": 0.029467131781181488,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 4,
+       "recorded_games_missed_at_least": 5,
+       "at_risk": 32,
+       "games_at_risk": 30,
+       "returns": 7,
+       "censored_before_step": 3,
+       "status": "insufficient_sample",
+       "observed_survival": 0.088255986645637,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.07737720916964302,
+        "simulated_survival": 0.07741913439635535,
+        "survival_ci_95": null,
+        "minus_observed": -0.010878777475993973,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.10026042194127904,
+        "simulated_survival": 0.10036833712984056,
+        "survival_ci_95": null,
+        "minus_observed": 0.012004435295642046,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 5,
+       "recorded_games_missed_at_least": 6,
+       "at_risk": 21,
+       "games_at_risk": 20,
+       "returns": 5,
+       "censored_before_step": 4,
+       "status": "insufficient_sample",
+       "observed_survival": 0.0672426564919139,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.041566807253451216,
+        "simulated_survival": 0.041515034168564925,
+        "survival_ci_95": null,
+        "minus_observed": -0.02567584923846268,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.07100596586577083,
+        "simulated_survival": 0.07102756264236902,
+        "survival_ci_95": null,
+        "minus_observed": 0.003763309373856938,
+        "minus_observed_ci_95": null
+       }
+      }
+     ]
+    },
+    "star": {
+     "anchors": 42,
+     "games": 35,
+     "status": "insufficient_sample",
+     "observed_returns": 34,
+     "censor_reasons": {
+      "unlisted": 7,
+      "horizon": 1
+     },
+     "horizons": [
+      {
+       "step": 1,
+       "recorded_games_missed_at_least": 2,
+       "at_risk": 39,
+       "games_at_risk": 33,
+       "returns": 29,
+       "censored_before_step": 3,
+       "status": "insufficient_sample",
+       "observed_survival": 0.2564102564102564,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.4227765191173353,
+        "simulated_survival": 0.42216904761904767,
+        "survival_ci_95": null,
+        "minus_observed": 0.16636626270707894,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.306465056441624,
+        "simulated_survival": 0.3059,
+        "survival_ci_95": null,
+        "minus_observed": 0.050054800031367586,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 2,
+       "recorded_games_missed_at_least": 3,
+       "at_risk": 8,
+       "games_at_risk": 7,
+       "returns": 5,
+       "censored_before_step": 2,
+       "status": "insufficient_sample",
+       "observed_survival": 0.09615384615384615,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.18611920484661004,
+        "simulated_survival": 0.18600476190476187,
+        "survival_ci_95": null,
+        "minus_observed": 0.0899653586927639,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.17301130087729252,
+        "simulated_survival": 0.17317857142857143,
+        "survival_ci_95": null,
+        "minus_observed": 0.07685745472344638,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 3,
+       "recorded_games_missed_at_least": 4,
+       "at_risk": 1,
+       "games_at_risk": 1,
+       "returns": 0,
+       "censored_before_step": 2,
+       "status": "insufficient_sample",
+       "observed_survival": 0.09615384615384615,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.08400637027320908,
+        "simulated_survival": 0.08412142857142857,
+        "survival_ci_95": null,
+        "minus_observed": -0.012147475880637068,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.10004920756591758,
+        "simulated_survival": 0.10021904761904762,
+        "survival_ci_95": null,
+        "minus_observed": 0.0038953614120714325,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 4,
+       "recorded_games_missed_at_least": 5,
+       "at_risk": 1,
+       "games_at_risk": 1,
+       "returns": 0,
+       "censored_before_step": 0,
+       "status": "insufficient_sample",
+       "observed_survival": 0.09615384615384615,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.038561596661992936,
+        "simulated_survival": 0.03856190476190476,
+        "survival_ci_95": null,
+        "minus_observed": -0.05759224949185321,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.08098183299801845,
+        "simulated_survival": 0.08095238095238096,
+        "survival_ci_95": null,
+        "minus_observed": -0.015172013155827696,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 5,
+       "recorded_games_missed_at_least": 6,
+       "at_risk": 1,
+       "games_at_risk": 1,
+       "returns": 0,
+       "censored_before_step": 0,
+       "status": "insufficient_sample",
+       "observed_survival": 0.09615384615384615,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.017921875059076067,
+        "simulated_survival": 0.017859523809523808,
+        "survival_ci_95": null,
+        "minus_observed": -0.07823197109477008,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.06584284231400346,
+        "simulated_survival": 0.06585952380952381,
+        "survival_ci_95": null,
+        "minus_observed": -0.030311003839842685,
+        "minus_observed_ci_95": null
+       }
+      }
+     ]
+    },
+    "starter": {
+     "anchors": 73,
+     "games": 60,
+     "status": "insufficient_sample",
+     "observed_returns": 59,
+     "censor_reasons": {
+      "unlisted": 10,
+      "fold_end_or_season_end": 3,
+      "horizon": 1
+     },
+     "horizons": [
+      {
+       "step": 1,
+       "recorded_games_missed_at_least": 2,
+       "at_risk": 66,
+       "games_at_risk": 55,
+       "returns": 46,
+       "censored_before_step": 7,
+       "status": "insufficient_sample",
+       "observed_survival": 0.303030303030303,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.46650298657750705,
+        "simulated_survival": 0.46586849315068496,
+        "survival_ci_95": null,
+        "minus_observed": 0.16347268354720407,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.37029725040111167,
+        "simulated_survival": 0.369886301369863,
+        "survival_ci_95": null,
+        "minus_observed": 0.06726694737080868,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 2,
+       "recorded_games_missed_at_least": 3,
+       "at_risk": 18,
+       "games_at_risk": 16,
+       "returns": 7,
+       "censored_before_step": 2,
+       "status": "insufficient_sample",
+       "observed_survival": 0.18518518518518517,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.22700484146637173,
+        "simulated_survival": 0.22649726027397263,
+        "survival_ci_95": null,
+        "minus_observed": 0.04181965628118656,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.21037057408798604,
+        "simulated_survival": 0.21022602739726026,
+        "survival_ci_95": null,
+        "minus_observed": 0.025185388902800865,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 3,
+       "recorded_games_missed_at_least": 4,
+       "at_risk": 8,
+       "games_at_risk": 8,
+       "returns": 3,
+       "censored_before_step": 3,
+       "status": "insufficient_sample",
+       "observed_survival": 0.11574074074074073,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.11310905753623447,
+        "simulated_survival": 0.11303698630136985,
+        "survival_ci_95": null,
+        "minus_observed": -0.002631683204506255,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.1211778927545038,
+        "simulated_survival": 0.12110136986301369,
+        "survival_ci_95": null,
+        "minus_observed": 0.005437152013763075,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 4,
+       "recorded_games_missed_at_least": 5,
+       "at_risk": 5,
+       "games_at_risk": 5,
+       "returns": 2,
+       "censored_before_step": 0,
+       "status": "insufficient_sample",
+       "observed_survival": 0.06944444444444443,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.057213630944497836,
+        "simulated_survival": 0.05716027397260274,
+        "survival_ci_95": null,
+        "minus_observed": -0.012230813499946598,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.0914406383480418,
+        "simulated_survival": 0.09160684931506849,
+        "survival_ci_95": null,
+        "minus_observed": 0.02199619390359736,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 5,
+       "recorded_games_missed_at_least": 6,
+       "at_risk": 2,
+       "games_at_risk": 2,
+       "returns": 1,
+       "censored_before_step": 1,
+       "status": "insufficient_sample",
+       "observed_survival": 0.03472222222222222,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.029255555447266886,
+        "simulated_survival": 0.029224657534246575,
+        "survival_ci_95": null,
+        "minus_observed": -0.005466666774955331,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.06974920891750337,
+        "simulated_survival": 0.06986027397260273,
+        "survival_ci_95": null,
+        "minus_observed": 0.035026986695281155,
+        "minus_observed_ci_95": null
+       }
+      }
+     ]
+    },
+    "bench": {
+     "anchors": 324,
+     "games": 129,
+     "status": "ok",
+     "observed_returns": 261,
+     "censor_reasons": {
+      "unlisted": 45,
+      "horizon": 14,
+      "unknown": 3,
+      "fold_end_or_season_end": 1
+     },
+     "horizons": [
+      {
+       "step": 1,
+       "recorded_games_missed_at_least": 2,
+       "at_risk": 301,
+       "games_at_risk": 124,
+       "returns": 165,
+       "censored_before_step": 23,
+       "status": "ok",
+       "observed_survival": 0.4518272425249169,
+       "observed_survival_ci_95": [
+        0.3733755411255411,
+        0.5335727904831974
+       ],
+       "baseline": {
+        "analytic_survival": 0.5407752512759268,
+        "simulated_survival": 0.5406123456790124,
+        "survival_ci_95": [
+         0.5367430442020139,
+         0.54402719914112
+        ],
+        "minus_observed": 0.08894800875100994,
+        "minus_observed_ci_95": [
+         0.0074138947020651975,
+         0.1677379913088668
+        ]
+       },
+       "candidate": {
+        "analytic_survival": 0.48307766735351004,
+        "simulated_survival": 0.48286111111111113,
+        "survival_ci_95": [
+         0.47779435243327084,
+         0.487645364649025
+        ],
+        "minus_observed": 0.03125042482859314,
+        "minus_observed_ci_95": [
+         -0.05035981272855432,
+         0.11064007443915491
+        ]
+       }
+      },
+      {
+       "step": 2,
+       "recorded_games_missed_at_least": 3,
+       "at_risk": 120,
+       "games_at_risk": 69,
+       "returns": 66,
+       "censored_before_step": 16,
+       "status": "ok",
+       "observed_survival": 0.20332225913621257,
+       "observed_survival_ci_95": [
+        0.1481360769701928,
+        0.2597661959419653
+       ],
+       "baseline": {
+        "analytic_survival": 0.2935087760907835,
+        "simulated_survival": 0.2934614197530864,
+        "survival_ci_95": [
+         0.29004421160831045,
+         0.29637992472486435
+        ],
+        "minus_observed": 0.09018651695457094,
+        "minus_observed_ci_95": [
+         0.03345452749575339,
+         0.14592298420735342
+        ]
+       },
+       "candidate": {
+        "analytic_survival": 0.27150530627152564,
+        "simulated_survival": 0.2713993827160494,
+        "survival_ci_95": [
+         0.26840903020745793,
+         0.27407174177486704
+        ],
+        "minus_observed": 0.06818304713531306,
+        "minus_observed_ci_95": [
+         0.011357406471897534,
+         0.1238085893633101
+        ]
+       }
+      },
+      {
+       "step": 3,
+       "recorded_games_missed_at_least": 4,
+       "at_risk": 50,
+       "games_at_risk": 39,
+       "returns": 21,
+       "censored_before_step": 4,
+       "status": "insufficient_sample",
+       "observed_survival": 0.1179269102990033,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.15964285608771317,
+        "simulated_survival": 0.159775,
+        "survival_ci_95": null,
+        "minus_observed": 0.041715945788709866,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.15271858635496202,
+        "simulated_survival": 0.1528388888888889,
+        "survival_ci_95": null,
+        "minus_observed": 0.03479167605595872,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 4,
+       "recorded_games_missed_at_least": 5,
+       "at_risk": 26,
+       "games_at_risk": 24,
+       "returns": 5,
+       "censored_before_step": 3,
+       "status": "insufficient_sample",
+       "observed_survival": 0.09524865831842574,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.08695189107012731,
+        "simulated_survival": 0.08702067901234568,
+        "survival_ci_95": null,
+        "minus_observed": -0.008296767248298434,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.10474667174968419,
+        "simulated_survival": 0.10485925925925926,
+        "survival_ci_95": null,
+        "minus_observed": 0.009498013431258445,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 5,
+       "recorded_games_missed_at_least": 6,
+       "at_risk": 18,
+       "games_at_risk": 17,
+       "returns": 4,
+       "censored_before_step": 3,
+       "status": "insufficient_sample",
+       "observed_survival": 0.07408228980322003,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.047405722481893224,
+        "simulated_survival": 0.04735061728395062,
+        "survival_ci_95": null,
+        "minus_observed": -0.026676567321326804,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.07195841786082564,
+        "simulated_survival": 0.07196049382716048,
+        "survival_ci_95": null,
+        "minus_observed": -0.002123871942394384,
+        "minus_observed_ci_95": null
+       }
+      }
+     ]
+    },
+    "unknown": {
+     "anchors": 0,
+     "games": 0,
+     "status": "insufficient_sample",
+     "horizons": []
+    }
+   }
+  },
+  {
+   "fold": "F3",
+   "training_through": "2025-09-30",
+   "groups": {
+    "all": {
+     "anchors": 308,
+     "games": 140,
+     "status": "ok",
+     "observed_returns": 242,
+     "censor_reasons": {
+      "unlisted": 39,
+      "fold_end_or_season_end": 12,
+      "horizon": 11,
+      "unknown": 4
+     },
+     "horizons": [
+      {
+       "step": 1,
+       "recorded_games_missed_at_least": 2,
+       "at_risk": 275,
+       "games_at_risk": 136,
+       "returns": 137,
+       "censored_before_step": 33,
+       "status": "ok",
+       "observed_survival": 0.5018181818181818,
+       "observed_survival_ci_95": [
+        0.42700627409169195,
+        0.5770612860725063
+       ],
+       "baseline": {
+        "analytic_survival": 0.5235174941482639,
+        "simulated_survival": 0.5238993506493507,
+        "survival_ci_95": [
+         0.5154854928163428,
+         0.5304421587519712
+        ],
+        "minus_observed": 0.021699312330082043,
+        "minus_observed_ci_95": [
+         -0.051066001844667294,
+         0.0949869335847261
+        ]
+       },
+       "candidate": {
+        "analytic_survival": 0.4573636164338867,
+        "simulated_survival": 0.4576740259740259,
+        "survival_ci_95": [
+         0.4466530238586002,
+         0.4670730315581328
+        ],
+        "minus_observed": -0.04445456538429515,
+        "minus_observed_ci_95": [
+         -0.11694788076897616,
+         0.029038252523501815
+        ]
+       }
+      },
+      {
+       "step": 2,
+       "recorded_games_missed_at_least": 3,
+       "at_risk": 125,
+       "games_at_risk": 79,
+       "returns": 69,
+       "censored_before_step": 13,
+       "status": "ok",
+       "observed_survival": 0.22481454545454543,
+       "observed_survival_ci_95": [
+        0.1662878872923215,
+        0.2871146244799799
+       ],
+       "baseline": {
+        "analytic_survival": 0.27772276020628583,
+        "simulated_survival": 0.27796850649350646,
+        "survival_ci_95": [
+         0.27107260018237317,
+         0.2835691668404816
+        ],
+        "minus_observed": 0.0529082147517404,
+        "minus_observed_ci_95": [
+         -0.009100212040508373,
+         0.1110187965138659
+        ]
+       },
+       "candidate": {
+        "analytic_survival": 0.2546217674833023,
+        "simulated_survival": 0.254762012987013,
+        "survival_ci_95": [
+         0.24887951128267405,
+         0.25972348832963393
+        ],
+        "minus_observed": 0.029807222028756852,
+        "minus_observed_ci_95": [
+         -0.03232040730652594,
+         0.08795188263721973
+        ]
+       }
+      },
+      {
+       "step": 3,
+       "recorded_games_missed_at_least": 4,
+       "at_risk": 50,
+       "games_at_risk": 38,
+       "returns": 20,
+       "censored_before_step": 6,
+       "status": "insufficient_sample",
+       "observed_survival": 0.13488872727272724,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.14838832430364282,
+        "simulated_survival": 0.14850259740259739,
+        "survival_ci_95": null,
+        "minus_observed": 0.013499597030915578,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.14213620517481984,
+        "simulated_survival": 0.14207824675324673,
+        "survival_ci_95": null,
+        "minus_observed": 0.007247477902092597,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 4,
+       "recorded_games_missed_at_least": 5,
+       "at_risk": 27,
+       "games_at_risk": 22,
+       "returns": 10,
+       "censored_before_step": 3,
+       "status": "insufficient_sample",
+       "observed_survival": 0.08492993939393938,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.07963294402819235,
+        "simulated_survival": 0.07953149350649351,
+        "survival_ci_95": null,
+        "minus_observed": -0.005296995365747029,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.09990862740221915,
+        "simulated_survival": 0.09986720779220778,
+        "survival_ci_95": null,
+        "minus_observed": 0.01497868800827977,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 5,
+       "recorded_games_missed_at_least": 6,
+       "at_risk": 17,
+       "games_at_risk": 15,
+       "returns": 6,
+       "censored_before_step": 0,
+       "status": "insufficient_sample",
+       "observed_survival": 0.05495466666666665,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.04285719504520136,
+        "simulated_survival": 0.04291266233766234,
+        "survival_ci_95": null,
+        "minus_observed": -0.012097471621465294,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.0705627292502733,
+        "simulated_survival": 0.07062694805194807,
+        "survival_ci_95": null,
+        "minus_observed": 0.015608062583606655,
+        "minus_observed_ci_95": null
+       }
+      }
+     ]
+    },
+    "star": {
+     "anchors": 14,
+     "games": 12,
+     "status": "insufficient_sample",
+     "observed_returns": 11,
+     "censor_reasons": {
+      "unlisted": 2,
+      "horizon": 1
+     },
+     "horizons": [
+      {
+       "step": 1,
+       "recorded_games_missed_at_least": 2,
+       "at_risk": 12,
+       "games_at_risk": 10,
+       "returns": 9,
+       "censored_before_step": 2,
+       "status": "insufficient_sample",
+       "observed_survival": 0.25,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.4313688885609179,
+        "simulated_survival": 0.4339142857142857,
+        "survival_ci_95": null,
+        "minus_observed": 0.18136888856091787,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.2903548324199103,
+        "simulated_survival": 0.2921714285714286,
+        "survival_ci_95": null,
+        "minus_observed": 0.04035483241991028,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 2,
+       "recorded_games_missed_at_least": 3,
+       "at_risk": 3,
+       "games_at_risk": 3,
+       "returns": 1,
+       "censored_before_step": 0,
+       "status": "insufficient_sample",
+       "observed_survival": 0.16666666666666669,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.19884556548547722,
+        "simulated_survival": 0.1991642857142857,
+        "survival_ci_95": null,
+        "minus_observed": 0.03217889881881053,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.17907391198433448,
+        "simulated_survival": 0.1788,
+        "survival_ci_95": null,
+        "minus_observed": 0.012407245317667792,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 3,
+       "recorded_games_missed_at_least": 4,
+       "at_risk": 2,
+       "games_at_risk": 2,
+       "returns": 0,
+       "censored_before_step": 0,
+       "status": "insufficient_sample",
+       "observed_survival": 0.16666666666666669,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.09467581226880564,
+        "simulated_survival": 0.09494285714285715,
+        "survival_ci_95": null,
+        "minus_observed": -0.07199085439786104,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.11219381475947778,
+        "simulated_survival": 0.11224999999999999,
+        "survival_ci_95": null,
+        "minus_observed": -0.05447285190718891,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 4,
+       "recorded_games_missed_at_least": 5,
+       "at_risk": 2,
+       "games_at_risk": 2,
+       "returns": 1,
+       "censored_before_step": 0,
+       "status": "insufficient_sample",
+       "observed_survival": 0.08333333333333334,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.04594805871638432,
+        "simulated_survival": 0.046035714285714284,
+        "survival_ci_95": null,
+        "minus_observed": -0.03738527461694902,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.09360929061989257,
+        "simulated_survival": 0.09387857142857144,
+        "survival_ci_95": null,
+        "minus_observed": 0.010275957286559223,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 5,
+       "recorded_games_missed_at_least": 6,
+       "at_risk": 1,
+       "games_at_risk": 1,
+       "returns": 0,
+       "censored_before_step": 0,
+       "status": "insufficient_sample",
+       "observed_survival": 0.08333333333333334,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.02258398100933833,
+        "simulated_survival": 0.02254285714285714,
+        "survival_ci_95": null,
+        "minus_observed": -0.06074935232399501,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.07825403109541872,
+        "simulated_survival": 0.07847142857142855,
+        "survival_ci_95": null,
+        "minus_observed": -0.005079302237914626,
+        "minus_observed_ci_95": null
+       }
+      }
+     ]
+    },
+    "starter": {
+     "anchors": 37,
+     "games": 33,
+     "status": "insufficient_sample",
+     "observed_returns": 31,
+     "censor_reasons": {
+      "unlisted": 4,
+      "horizon": 1,
+      "fold_end_or_season_end": 1
+     },
+     "horizons": [
+      {
+       "step": 1,
+       "recorded_games_missed_at_least": 2,
+       "at_risk": 35,
+       "games_at_risk": 31,
+       "returns": 22,
+       "censored_before_step": 2,
+       "status": "insufficient_sample",
+       "observed_survival": 0.37142857142857144,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.4697178078752065,
+        "simulated_survival": 0.4706432432432432,
+        "survival_ci_95": null,
+        "minus_observed": 0.09828923644663506,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.36343913961602403,
+        "simulated_survival": 0.3636243243243243,
+        "survival_ci_95": null,
+        "minus_observed": -0.00798943181254741,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 2,
+       "recorded_games_missed_at_least": 3,
+       "at_risk": 11,
+       "games_at_risk": 11,
+       "returns": 8,
+       "censored_before_step": 2,
+       "status": "insufficient_sample",
+       "observed_survival": 0.10129870129870129,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.23039594882952563,
+        "simulated_survival": 0.23079459459459462,
+        "survival_ci_95": null,
+        "minus_observed": 0.12909724753082435,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.2103879625657814,
+        "simulated_survival": 0.21061351351351354,
+        "survival_ci_95": null,
+        "minus_observed": 0.10908926126708011,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 3,
+       "recorded_games_missed_at_least": 4,
+       "at_risk": 3,
+       "games_at_risk": 3,
+       "returns": 1,
+       "censored_before_step": 0,
+       "status": "insufficient_sample",
+       "observed_survival": 0.06753246753246754,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.11589110181673265,
+        "simulated_survival": 0.11613243243243243,
+        "survival_ci_95": null,
+        "minus_observed": 0.04835863428426511,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.12310406725474533,
+        "simulated_survival": 0.12347297297297295,
+        "survival_ci_95": null,
+        "minus_observed": 0.05557159972227779,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 4,
+       "recorded_games_missed_at_least": 5,
+       "at_risk": 1,
+       "games_at_risk": 1,
+       "returns": 0,
+       "censored_before_step": 1,
+       "status": "insufficient_sample",
+       "observed_survival": 0.06753246753246754,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.059267541772381443,
+        "simulated_survival": 0.059127027027027004,
+        "survival_ci_95": null,
+        "minus_observed": -0.008264925760086098,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.09412955632583662,
+        "simulated_survival": 0.09430270270270269,
+        "survival_ci_95": null,
+        "minus_observed": 0.026597088793369084,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 5,
+       "recorded_games_missed_at_least": 6,
+       "at_risk": 1,
+       "games_at_risk": 1,
+       "returns": 0,
+       "censored_before_step": 0,
+       "status": "insufficient_sample",
+       "observed_survival": 0.06753246753246754,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.030658831975974927,
+        "simulated_survival": 0.030597297297297293,
+        "survival_ci_95": null,
+        "minus_observed": -0.03687363555649262,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.07270249424467454,
+        "simulated_survival": 0.07305405405405406,
+        "survival_ci_95": null,
+        "minus_observed": 0.005170026712206996,
+        "minus_observed_ci_95": null
+       }
+      }
+     ]
+    },
+    "bench": {
+     "anchors": 257,
+     "games": 119,
+     "status": "ok",
+     "observed_returns": 200,
+     "censor_reasons": {
+      "unlisted": 33,
+      "fold_end_or_season_end": 11,
+      "horizon": 9,
+      "unknown": 4
+     },
+     "horizons": [
+      {
+       "step": 1,
+       "recorded_games_missed_at_least": 2,
+       "at_risk": 228,
+       "games_at_risk": 115,
+       "returns": 106,
+       "censored_before_step": 29,
+       "status": "ok",
+       "observed_survival": 0.5350877192982456,
+       "observed_survival_ci_95": [
+        0.45021601904072023,
+        0.6186056365786362
+       ],
+       "baseline": {
+        "analytic_survival": 0.536282742670933,
+        "simulated_survival": 0.5364684824902723,
+        "survival_ci_95": [
+         0.5316445100829963,
+         0.5401893715078987
+        ],
+        "minus_observed": 0.0011950233726873982,
+        "minus_observed_ci_95": [
+         -0.08145623252107408,
+         0.08583712733955266
+        ]
+       },
+       "candidate": {
+        "analytic_survival": 0.4799835721477255,
+        "simulated_survival": 0.4802299610894942,
+        "survival_ci_95": [
+         0.4734962309164513,
+         0.48556813065587684
+        ],
+        "minus_observed": -0.05510414715052009,
+        "minus_observed_ci_95": [
+         -0.13766100020099234,
+         0.029838948841322932
+        ]
+       }
+      },
+      {
+       "step": 2,
+       "recorded_games_missed_at_least": 3,
+       "at_risk": 111,
+       "games_at_risk": 69,
+       "returns": 60,
+       "censored_before_step": 11,
+       "status": "ok",
+       "observed_survival": 0.24585111427216688,
+       "observed_survival_ci_95": [
+        0.17883358777137878,
+        0.31763126714230605
+       ],
+       "baseline": {
+        "analytic_survival": 0.28883316000018255,
+        "simulated_survival": 0.2890529182879377,
+        "survival_ci_95": [
+         0.2847086550310502,
+         0.2923268502689898
+        ],
+        "minus_observed": 0.04298204572801567,
+        "minus_observed_ci_95": [
+         -0.028545096503248848,
+         0.10974834607041124
+        ]
+       },
+       "candidate": {
+        "analytic_survival": 0.2651055058449125,
+        "simulated_survival": 0.2652560311284047,
+        "survival_ci_95": [
+         0.26158008278025857,
+         0.2681104923644641
+        ],
+        "minus_observed": 0.01925439157274561,
+        "minus_observed_ci_95": [
+         -0.052267649323686584,
+         0.08615358091736543
+        ]
+       }
+      },
+      {
+       "step": 3,
+       "recorded_games_missed_at_least": 4,
+       "at_risk": 45,
+       "games_at_risk": 34,
+       "returns": 19,
+       "censored_before_step": 6,
+       "status": "insufficient_sample",
+       "observed_survival": 0.14204731046836308,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.15599288617330584,
+        "simulated_survival": 0.15608054474708172,
+        "survival_ci_95": null,
+        "minus_observed": 0.013945575704942759,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.14650734357504372,
+        "simulated_survival": 0.14638171206225684,
+        "survival_ci_95": null,
+        "minus_observed": 0.004460033106680639,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 4,
+       "recorded_games_missed_at_least": 5,
+       "at_risk": 24,
+       "games_at_risk": 19,
+       "returns": 9,
+       "censored_before_step": 2,
+       "status": "insufficient_sample",
+       "observed_survival": 0.08877956904272692,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.08439990230768774,
+        "simulated_survival": 0.08429377431906616,
+        "survival_ci_95": null,
+        "minus_observed": -0.004379666735039187,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.10108378827684453,
+        "simulated_survival": 0.10099455252918287,
+        "survival_ci_95": null,
+        "minus_observed": 0.012304219234117605,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 5,
+       "recorded_games_missed_at_least": 6,
+       "at_risk": 15,
+       "games_at_risk": 13,
+       "returns": 6,
+       "censored_before_step": 0,
+       "status": "insufficient_sample",
+       "observed_survival": 0.05326774142563615,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.04571775702988408,
+        "simulated_survival": 0.04579533073929962,
+        "survival_ci_95": null,
+        "minus_observed": -0.007549984395752073,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.0698356882750792,
+        "simulated_survival": 0.06985019455252918,
+        "survival_ci_95": null,
+        "minus_observed": 0.01656794684944305,
+        "minus_observed_ci_95": null
+       }
+      }
+     ]
+    },
+    "unknown": {
+     "anchors": 0,
+     "games": 0,
+     "status": "insufficient_sample",
+     "horizons": []
+    }
+   }
+  },
+  {
+   "fold": "F4",
+   "training_through": "2025-12-31",
+   "groups": {
+    "all": {
+     "anchors": 375,
+     "games": 156,
+     "status": "ok",
+     "observed_returns": 308,
+     "censor_reasons": {
+      "unlisted": 53,
+      "horizon": 11,
+      "fold_end_or_season_end": 2,
+      "unknown": 1
+     },
+     "horizons": [
+      {
+       "step": 1,
+       "recorded_games_missed_at_least": 2,
+       "at_risk": 336,
+       "games_at_risk": 147,
+       "returns": 210,
+       "censored_before_step": 39,
+       "status": "ok",
+       "observed_survival": 0.375,
+       "observed_survival_ci_95": [
+        0.3050321362987145,
+        0.4491017964071856
+       ],
+       "baseline": {
+        "analytic_survival": 0.5251005342130615,
+        "simulated_survival": 0.5249826666666666,
+        "survival_ci_95": [
+         0.5185776547378735,
+         0.530787876377453
+        ],
+        "minus_observed": 0.15010053421306147,
+        "minus_observed_ci_95": [
+         0.07610162776852114,
+         0.2200324696672522
+        ]
+       },
+       "candidate": {
+        "analytic_survival": 0.44834605070831324,
+        "simulated_survival": 0.44827013333333326,
+        "survival_ci_95": [
+         0.4373184518956028,
+         0.45828578609039033
+        ],
+        "minus_observed": 0.07334605070831324,
+        "minus_observed_ci_95": [
+         -0.0012361150727400797,
+         0.1435744779212238
+        ]
+       }
+      },
+      {
+       "step": 2,
+       "recorded_games_missed_at_least": 3,
+       "at_risk": 120,
+       "games_at_risk": 74,
+       "returns": 64,
+       "censored_before_step": 6,
+       "status": "ok",
+       "observed_survival": 0.175,
+       "observed_survival_ci_95": [
+        0.13209063171472374,
+        0.22176277209111606
+       ],
+       "baseline": {
+        "analytic_survival": 0.2785043295748741,
+        "simulated_survival": 0.2785088,
+        "survival_ci_95": [
+         0.2728935370962095,
+         0.2834105443760581
+        ],
+        "minus_observed": 0.1035043295748741,
+        "minus_observed_ci_95": [
+         0.055802253937541825,
+         0.14712214967152484
+        ]
+       },
+       "candidate": {
+        "analytic_survival": 0.25201759131676377,
+        "simulated_survival": 0.2518648,
+        "survival_ci_95": [
+         0.2470287225087702,
+         0.25644146778240084
+        ],
+        "minus_observed": 0.07701759131676378,
+        "minus_observed_ci_95": [
+         0.029430392688694743,
+         0.12028224137162664
+        ]
+       }
+      },
+      {
+       "step": 3,
+       "recorded_games_missed_at_least": 4,
+       "at_risk": 49,
+       "games_at_risk": 39,
+       "returns": 20,
+       "censored_before_step": 7,
+       "status": "insufficient_sample",
+       "observed_survival": 0.10357142857142856,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.14852186954245455,
+        "simulated_survival": 0.148552,
+        "survival_ci_95": null,
+        "minus_observed": 0.04495044097102599,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.1424187034556234,
+        "simulated_survival": 0.14247733333333334,
+        "survival_ci_95": null,
+        "minus_observed": 0.03884727488419484,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 4,
+       "recorded_games_missed_at_least": 5,
+       "at_risk": 26,
+       "games_at_risk": 19,
+       "returns": 12,
+       "censored_before_step": 3,
+       "status": "insufficient_sample",
+       "observed_survival": 0.055769230769230765,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.07947389733897892,
+        "simulated_survival": 0.07943386666666667,
+        "survival_ci_95": null,
+        "minus_observed": 0.02370466656974815,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.10322993397991945,
+        "simulated_survival": 0.10337893333333333,
+        "survival_ci_95": null,
+        "minus_observed": 0.04746070321068868,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 5,
+       "recorded_games_missed_at_least": 6,
+       "at_risk": 13,
+       "games_at_risk": 12,
+       "returns": 2,
+       "censored_before_step": 1,
+       "status": "insufficient_sample",
+       "observed_survival": 0.04718934911242603,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.04262352465231564,
+        "simulated_survival": 0.04260453333333333,
+        "survival_ci_95": null,
+        "minus_observed": -0.00456582446011039,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.07539111870129621,
+        "simulated_survival": 0.07533999999999999,
+        "survival_ci_95": null,
+        "minus_observed": 0.028201769588870176,
+        "minus_observed_ci_95": null
+       }
+      }
+     ]
+    },
+    "star": {
+     "anchors": 17,
+     "games": 17,
+     "status": "insufficient_sample",
+     "observed_returns": 10,
+     "censor_reasons": {
+      "unlisted": 7
+     },
+     "horizons": [
+      {
+       "step": 1,
+       "recorded_games_missed_at_least": 2,
+       "at_risk": 12,
+       "games_at_risk": 12,
+       "returns": 7,
+       "censored_before_step": 5,
+       "status": "insufficient_sample",
+       "observed_survival": 0.41666666666666663,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.5018616150427939,
+        "simulated_survival": 0.5041705882352941,
+        "survival_ci_95": null,
+        "minus_observed": 0.08519494837612729,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.34079995587308837,
+        "simulated_survival": 0.3439529411764706,
+        "survival_ci_95": null,
+        "minus_observed": -0.07586671079357826,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 2,
+       "recorded_games_missed_at_least": 3,
+       "at_risk": 5,
+       "games_at_risk": 5,
+       "returns": 2,
+       "censored_before_step": 0,
+       "status": "insufficient_sample",
+       "observed_survival": 0.24999999999999997,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.2535576683766916,
+        "simulated_survival": 0.25582941176470586,
+        "survival_ci_95": null,
+        "minus_observed": 0.0035576683766916084,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.21991107266598237,
+        "simulated_survival": 0.22130588235294119,
+        "survival_ci_95": null,
+        "minus_observed": -0.030088927334017607,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 3,
+       "recorded_games_missed_at_least": 4,
+       "at_risk": 1,
+       "games_at_risk": 1,
+       "returns": 1,
+       "censored_before_step": 2,
+       "status": "insufficient_sample",
+       "observed_survival": 0.0,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.12870628349177984,
+        "simulated_survival": 0.12948823529411765,
+        "survival_ci_95": null,
+        "minus_observed": 0.12870628349177984,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.14252150333392816,
+        "simulated_survival": 0.14338823529411765,
+        "survival_ci_95": null,
+        "minus_observed": 0.14252150333392816,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 4,
+       "recorded_games_missed_at_least": 5,
+       "at_risk": 0,
+       "games_at_risk": 0,
+       "returns": 0,
+       "censored_before_step": 0,
+       "status": "insufficient_sample",
+       "observed_survival": null,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.06554534859957328,
+        "simulated_survival": 0.06636470588235295,
+        "survival_ci_95": null,
+        "minus_observed": null,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.11979815597263808,
+        "simulated_survival": 0.12048235294117647,
+        "survival_ci_95": null,
+        "minus_observed": null,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 5,
+       "recorded_games_missed_at_least": 6,
+       "at_risk": 0,
+       "games_at_risk": 0,
+       "returns": 0,
+       "censored_before_step": 0,
+       "status": "insufficient_sample",
+       "observed_survival": null,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.033456891685752554,
+        "simulated_survival": 0.03345882352941176,
+        "survival_ci_95": null,
+        "minus_observed": null,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.10092020278903692,
+        "simulated_survival": 0.10135882352941177,
+        "survival_ci_95": null,
+        "minus_observed": null,
+        "minus_observed_ci_95": null
+       }
+      }
+     ]
+    },
+    "starter": {
+     "anchors": 96,
+     "games": 70,
+     "status": "insufficient_sample",
+     "observed_returns": 76,
+     "censor_reasons": {
+      "unlisted": 17,
+      "horizon": 3
+     },
+     "horizons": [
+      {
+       "step": 1,
+       "recorded_games_missed_at_least": 2,
+       "at_risk": 85,
+       "games_at_risk": 65,
+       "returns": 61,
+       "censored_before_step": 11,
+       "status": "insufficient_sample",
+       "observed_survival": 0.2823529411764706,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.4886333529276435,
+        "simulated_survival": 0.4889041666666667,
+        "survival_ci_95": null,
+        "minus_observed": 0.2062804117511729,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.3714055844643563,
+        "simulated_survival": 0.37137812499999995,
+        "survival_ci_95": null,
+        "minus_observed": 0.0890526432878857,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 2,
+       "recorded_games_missed_at_least": 3,
+       "at_risk": 21,
+       "games_at_risk": 19,
+       "returns": 13,
+       "censored_before_step": 3,
+       "status": "insufficient_sample",
+       "observed_survival": 0.10756302521008403,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.24592984255233197,
+        "simulated_survival": 0.24601145833333335,
+        "survival_ci_95": null,
+        "minus_observed": 0.13836681734224793,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.22020338511377466,
+        "simulated_survival": 0.2203135416666667,
+        "survival_ci_95": null,
+        "minus_observed": 0.11264035990369063,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 3,
+       "recorded_games_missed_at_least": 4,
+       "at_risk": 6,
+       "games_at_risk": 6,
+       "returns": 1,
+       "censored_before_step": 2,
+       "status": "insufficient_sample",
+       "observed_survival": 0.0896358543417367,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.12577848334214184,
+        "simulated_survival": 0.12605208333333334,
+        "survival_ci_95": null,
+        "minus_observed": 0.036142629000405144,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.13211048197227618,
+        "simulated_survival": 0.13241458333333334,
+        "survival_ci_95": null,
+        "minus_observed": 0.04247462763053948,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 4,
+       "recorded_games_missed_at_least": 5,
+       "at_risk": 4,
+       "games_at_risk": 4,
+       "returns": 1,
+       "censored_before_step": 1,
+       "status": "insufficient_sample",
+       "observed_survival": 0.06722689075630252,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.0649753649328923,
+        "simulated_survival": 0.06498645833333333,
+        "survival_ci_95": null,
+        "minus_observed": -0.0022515258234102192,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.10372121359187043,
+        "simulated_survival": 0.1040875,
+        "survival_ci_95": null,
+        "minus_observed": 0.036494322835567916,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 5,
+       "recorded_games_missed_at_least": 6,
+       "at_risk": 3,
+       "games_at_risk": 3,
+       "returns": 0,
+       "censored_before_step": 0,
+       "status": "insufficient_sample",
+       "observed_survival": 0.06722689075630252,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.03379239258104489,
+        "simulated_survival": 0.03375625,
+        "survival_ci_95": null,
+        "minus_observed": -0.03343449817525763,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.08221405336944743,
+        "simulated_survival": 0.08239791666666667,
+        "survival_ci_95": null,
+        "minus_observed": 0.014987162613144908,
+        "minus_observed_ci_95": null
+       }
+      }
+     ]
+    },
+    "bench": {
+     "anchors": 262,
+     "games": 120,
+     "status": "ok",
+     "observed_returns": 222,
+     "censor_reasons": {
+      "unlisted": 29,
+      "horizon": 8,
+      "fold_end_or_season_end": 2,
+      "unknown": 1
+     },
+     "horizons": [
+      {
+       "step": 1,
+       "recorded_games_missed_at_least": 2,
+       "at_risk": 239,
+       "games_at_risk": 112,
+       "returns": 142,
+       "censored_before_step": 23,
+       "status": "ok",
+       "observed_survival": 0.40585774058577406,
+       "observed_survival_ci_95": [
+        0.31949931369610146,
+        0.49576447740112994
+       ],
+       "baseline": {
+        "analytic_survival": 0.5399704236378504,
+        "simulated_survival": 0.5395526717557252,
+        "survival_ci_95": [
+         0.5368045870070582,
+         0.5424235538468575
+        ],
+        "minus_observed": 0.13411268305207635,
+        "minus_observed_ci_95": [
+         0.044048593484306384,
+         0.2208016714635214
+        ]
+       },
+       "candidate": {
+        "analytic_survival": 0.48351615899693406,
+        "simulated_survival": 0.48321297709923666,
+        "survival_ci_95": [
+         0.4781602790207768,
+         0.48783407974451004
+        ],
+        "minus_observed": 0.07765841841116,
+        "minus_observed_ci_95": [
+         -0.013253414572733713,
+         0.16409783251182533
+        ]
+       }
+      },
+      {
+       "step": 2,
+       "recorded_games_missed_at_least": 3,
+       "at_risk": 94,
+       "games_at_risk": 56,
+       "returns": 49,
+       "censored_before_step": 3,
+       "status": "insufficient_sample",
+       "observed_survival": 0.19429359921659395,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.2920586959662221,
+        "simulated_survival": 0.2918877862595419,
+        "survival_ci_95": null,
+        "minus_observed": 0.09776509674962813,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.2657579524333678,
+        "simulated_survival": 0.2654083969465649,
+        "survival_ci_95": null,
+        "minus_observed": 0.07146435321677386,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 3,
+       "recorded_games_missed_at_least": 4,
+       "at_risk": 42,
+       "games_at_risk": 34,
+       "returns": 18,
+       "censored_before_step": 3,
+       "status": "insufficient_sample",
+       "observed_survival": 0.11102491383805368,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.15814106816112433,
+        "simulated_survival": 0.15803320610687022,
+        "survival_ci_95": null,
+        "minus_observed": 0.04711615432307065,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.14618909148795223,
+        "simulated_survival": 0.14610534351145038,
+        "survival_ci_95": null,
+        "minus_observed": 0.03516417764989854,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 4,
+       "recorded_games_missed_at_least": 5,
+       "at_risk": 22,
+       "games_at_risk": 17,
+       "returns": 11,
+       "censored_before_step": 2,
+       "status": "insufficient_sample",
+       "observed_survival": 0.05551245691902684,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.08569009748994917,
+        "simulated_survival": 0.08557557251908397,
+        "survival_ci_95": null,
+        "minus_observed": 0.03017764057092233,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.10197488582486787,
+        "simulated_survival": 0.10200954198473283,
+        "survival_ci_95": null,
+        "minus_observed": 0.04646242890584103,
+        "minus_observed_ci_95": null
+       }
+      },
+      {
+       "step": 5,
+       "recorded_games_missed_at_least": 6,
+       "at_risk": 10,
+       "games_at_risk": 10,
+       "returns": 2,
+       "censored_before_step": 1,
+       "status": "insufficient_sample",
+       "observed_survival": 0.044409965535221474,
+       "observed_survival_ci_95": null,
+       "baseline": {
+        "analytic_survival": 0.04645414083274908,
+        "simulated_survival": 0.046440076335877864,
+        "survival_ci_95": null,
+        "minus_observed": 0.002044175297527609,
+        "minus_observed_ci_95": null
+       },
+       "candidate": {
+        "analytic_survival": 0.07123464481719656,
+        "simulated_survival": 0.07106564885496183,
+        "survival_ci_95": null,
+        "minus_observed": 0.026824679281975086,
+        "minus_observed_ci_95": null
+       }
+      }
+     ]
+    },
+    "unknown": {
+     "anchors": 0,
+     "games": 0,
+     "status": "insufficient_sample",
+     "horizons": []
+    }
+   }
+  }
+ ],
+ "anchors": 1493,
+ "limitations": "Selected known prior DNPs, retrospective reason text and potentially informative right censoring describe recorded listings, not physical absence or a pre-tip injury forecast. Observed survival assumes non-informative censoring. Estimates after five next games remain censored; unsupported role/horizon cells have no interval.",
+ "input_sha256": {
+  "scripts/a1_availability_spell_sim.py": "281120497e9b378b65707df058a92b93e55e548fea8fa0facefaafd5d6baa76b",
+  "data/derived/experiments/20261122_a1_s07_sequences.parquet": "ecaa076133c881f983c67d707a2b7659162bc5dd864f650a35e3bc51e13fa8c3",
+  "analysis/experiments/20261122_a1_s07_sequence_screen.json": "2f954777f9e20bd0e30159ee6297ba722ff6e87e4446ccf92326fe1e1d36574f",
+  "analysis/experiments/20261122_a1_s07_sequence_screen_accounting.json": "0c1daac40bc6be471f104a3f513ad96163725f6dc25aa6d1e49f4c476bfe4bef",
+  "analysis/experiments/20261122_a1_pre_candidate_manifest.json": "195b4ddaf748e4f3520a02f813b5763736fe4fbfbe653e896161532d6d9c7e6b",
+  "scripts/a1_availability_sequence_screen.py": "db043dcad52f6863db0ee1981b9f8470418204fbb9f2587b0475714d210b2bc6",
+  "scripts/projection.py": "dbd3201017e9febd8cd52cc6ca9b838c8ebc607d934dc490129cf09123faf284",
+  "scripts/evaluate.py": "aeb59d057cf115fb80eeb043de3c6d74cd931753574e682927663494cfee134c"
+ },
+ "output_sha256": {
+  "data/derived/experiments/20261122_a1_s07_spell_sim.parquet": "9dd1a2fb6d3858fc097fcf5dcc8b5bc32e5431e26e2d44e5092514c481352970"
+ }
+}

@@ -1,0 +1,19 @@
+{
+ "experiment": "a1_s07_starter_frequency_independent_accounting",
+ "fold": "F3",
+ "games": 200,
+ "player_games": 6199,
+ "distinct_fives": 569,
+ "supported_worlds": 3464781,
+ "bootstrap_replicates": 10000,
+ "seconds": 102.2,
+ "limitations": "Replays independent fallback draws and as-of selection on inferred rosters; this does not validate physical availability, independence or pre-tip report coverage.",
+ "input_sha256": {
+  "scripts/a1_availability_starter_audit.py": "dc374f9c72ba12f66a82681e94ffb3284766f3daab2f507b5cda87a49503c022",
+  "analysis/experiments/20261122_a1_s07_starter_sim_F3.json": "218d58c6e4748f5fc4d6b0d24fb74637f49ac8be2fec9c27be4594443fb8c405",
+  "data/derived/experiments/20261122_a1_s07_baseline_F3.parquet": "042e372ebb8a885aa06d4e8facb0ef6b4238c1f5408764cb711e2e28255c2e7e",
+  "data/derived/experiments/20261122_a1_s07_starter_sim_F3.parquet": "44fdeb3830516ca8617e6d4d1b3f8db8e0d8476ccd69abdd8e69b62167d1a400",
+  "data/derived/experiments/20261122_a1_s07_starter_sim_F3_teams.parquet": "31370a97ebfe294e1c39206b1ffb00d2742eae8f07e4cf2e7fdc78fafaf58e06",
+  "data/derived/experiments/20261122_a1_s07_starter_sim_F3_lineups.parquet": "f7634ce6f41c1617f56b59b97d39db56d7f2d2690045f37d81b962816b0c3995"
+ }
+}

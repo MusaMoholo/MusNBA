@@ -108,7 +108,7 @@ Each subtask ends with evidence, current docs and a commit/push checkpoint (AGEN
 | M11 | Availability model | ☐ **A1 S07/S08/S10**: report coverage, play/start probabilities, branches and future absences | Held-out calibration and games-missed realism where dated development data supports them; honest fallbacks otherwise | Planned |
 | M12 | Season pathway calibration | ◐ **first cut (20 Nov): team pathway v1 in the app** — walk-forward 2022-26 (480 team-starts): dispersion 1.00 (fixed probabilities 1.53), 10–90% coverage 84% (65%), CRPS −4% in every held-out season; still wide in November (0.84) and surprises fade with the date (sim 0.52 → 0.18 v real 0.40 flat) | Dispersion ≈ 1.0 **at every start date**, persistence matches | `pathway.py`, `season_backtest.py` |
 | UX | Dashboard upgrade programme U1–U22 | ✅ **22 Nov:** all 22 shipped; U15–U22 adds roster roles, playoff picture, win ranges, races/movers/leaders inside Standings and model guide; 156 full + 12 final layout browser checks, hosted PWA 15/15 | Checked at 1440/960/390, both themes, stored data only | DASHBOARD_PLAN.md |
-| A1 | Expanded accuracy/robustness programme | ◐ **52.0% — S01–S05 complete, S06 70%, S07 60%, 22 Nov**; 14 tasks, fixed weights, 140 rungs | Gates in §6b; final nightly + versioned history + successor chunk | HANDOFF § Progress ladders |
+| A1 | Expanded accuracy/robustness programme | ◐ **52.6% — S01–S05 complete, S06 and S07 70%, 22 Nov**; 14 tasks, fixed weights, 140 rungs | Gates in §6b; final nightly + versioned history + successor chunk | HANDOFF § Progress ladders |
 
 ### 6a. Next chunk — A1: player accuracy, defence and trustworthy season paths
 
@@ -724,6 +724,14 @@ face cards and unrelated presentation remain §9b backlog. NBA history moved to 
   their game-bootstrap intervals. Duration reduces return Brier by **0.00540–0.01380** across folds, with F1's
   interval crossing zero; role-based rest differences are tiny. These are retrospective known-listing play proxies,
   not physical injury recovery. No model or bundle changed; A1 is **52.0%**.
+- **22 Nov 2026 · S07 spell follow-up, partial:** **1,493** recorded-DNP anchors and **29,860** simulated/analytic
+  survival values independently reconcile. Star/starter horizons and longer tails lack the predeclared support;
+  censoring may be informative. At the time, starter-frequency simulations and audits had not finished.
+- **22 Nov 2026 · A1 S07 70%:** all four starter-frequency simulations and independent replays finished, checking
+  **14,106,556** supported and **1,783,444** unknown-position worlds. Star starter frequencies were **88–93%**
+  versus **65–76%** observed on inferred-roster proxies, not dated pre-tip forecasts. A synthetic short-roster
+  stress test reproduced an existing silent activation of an unavailable player; that serving bug is unresolved.
+  Engine, forecasts and PWA remain unchanged; A1 is **52.6%**.
 - **22 Nov 2026 · S06 isolated robustness repair:** **3,000** worlds reproduce the earlier candidate and reconcile;
   another **1,000** saved worlds from the original failure game reconcile with the required technical. The
   single-game process exited 1 when its unsupported summary could not be serialized; no complete 200-game accuracy

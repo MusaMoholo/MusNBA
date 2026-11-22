@@ -1600,6 +1600,34 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   Selection on known next box listings and retrospective reason text limits these to conditional play proxies; they
   neither establish physical recovery nor validate a season-absence hazard or pre-tip status. Reports:
   `20261122_a1_s07_sequence_screen{,_accounting}.json`.
+- **S07 recorded-spell follow-up:** **1,493** non-left-censored first-DNP anchors (F1–F4: **371/439/308/375**)
+  yielded **1,188** observed returns and **305** censored trajectories, including **216** unlisted gaps. The
+  independent audit reproduced **29,860** analytic/simulated survival values and **80** role-horizon cells with
+  **10,000** game-bootstrap draws. On the supported pooled first next-game horizon, censor-aware observed
+  continued-DNP survival is **0.393/0.409/0.502/0.375**, versus duration-candidate
+  **0.471/0.447/0.457/0.448**; the paired candidate-minus-observed 95% intervals are **[0.002, 0.157]**,
+  **[−0.026, 0.102]**, **[−0.117, 0.029]** and **[−0.001, 0.144]**. The first recorded DNP is already one
+  missed listing. All star/starter role horizons and all pooled horizons beyond the second next game are
+  unsupported (<100 at risk or <30 games); reporting estimates there does not establish a reliable tail.
+  Informative censoring and retrospective selected listings preclude a physical recovery or pre-tip forecast
+  conclusion. Reports: `20261122_a1_s07_spell_sim{,_accounting}.json`.
+- **S07 simulated starters and fallback stress:** the pre-registered independent-availability simulations and
+  world-by-world replays cover **200/200, 200/200, 195/200 and 200/200** fixed development games. They reconcile
+  **7,398/7,390/6,199/7,299** player-games and **769/805/569/904** distinct fives. Across **15,890,000**
+  rostered team-worlds, **14,106,556** have supported positions and **1,783,444** have an active player whose prior
+  position is unknown; none has fewer than five active players. On supported inferred-roster player-games, star
+  projected starter frequencies are **0.924/0.927/0.919/0.881** versus recorded **0.762/0.665/0.678/0.645**,
+  with Brier **0.177/0.263/0.293/0.274**; corresponding 10,000-game-bootstrap 95% Brier intervals are
+  **[0.143, 0.212]/[0.225, 0.302]/[0.244, 0.342]/[0.235, 0.315]**. Starter-tier simulated frequencies are
+  **0.803/0.780/0.795/0.743** versus **0.700/0.662/0.693/0.639**. These condition on supported worlds, use
+  inferred prior-box membership and retrospective starter labels, and exclude **1/2/4/4** recorded starters
+  outside the inferred pools; they do not establish pre-tip availability or independence calibration. F3 has five
+  games without prior rosters and one F4 team lacks complete starter labels. Reports:
+  `20261122_a1_s07_starter_sim_F{1,2,3,4}{,_accounting}.json`.
+  Separately, a synthetic serving-path stress test with five roster players but only four available showed that
+  the legacy target-table fallback reinstates the unavailable player for **2,880/2,880** seconds. This is a
+  reproduced correctness bug, not an observed historical rate; the zero short-roster proxy-world count above
+  cannot validate rare or uncertain prospective rosters. The serving path has not yet been changed.
 
 ## 6b. A1 S03 matched component diagnosis (22 Nov 2026; descriptive)
 
