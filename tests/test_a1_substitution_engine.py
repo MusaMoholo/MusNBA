@@ -154,7 +154,7 @@ class RotationPolicyTests(unittest.TestCase):
         after = policy.before_segment(game, state, np.array([0]), schedule(1))
         np.testing.assert_array_equal(after[0, 0], initial[0, 0])
         state.ingame['pf_so_far'][0, 0] = 6
-        with self.assertRaisesRegex(ValueError, 'fewer than five eligible'):
+        with self.assertRaisesRegex(ValueError, 'game 1 world 0 side 0: fewer than five eligible'):
             policy.after_fouls(game, state, np.array([0]), after[:, 0].copy(), after[:, 1].copy())
 
     def test_foul_out_uses_only_available_bench_and_short_roster_fails(self):

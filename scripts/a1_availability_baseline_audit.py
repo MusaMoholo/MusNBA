@@ -22,12 +22,16 @@ SEED = 20261122
 REPLICATES = 10_000
 
 
-def check_number(actual: SupportsFloat | None, expected: SupportsFloat | None, label: str) -> None:
+def check_number(actual: object, expected: object, label: str) -> None:
     if actual is None or expected is None:
         if actual is not None or expected is not None:
             raise ValueError(f'{label}: one value is missing')
-    elif not np.isclose(float(actual), float(expected), rtol=0, atol=1e-12):
-        raise ValueError(f'{label}: {actual} differs from {expected}')
+    else:
+        if not isinstance(actual, SupportsFloat) or not isinstance(expected, SupportsFloat):
+            raise TypeError(f'{label}: values must be numeric')
+        left, right = float(actual), float(expected)
+        if not np.isfinite(left) or not np.isfinite(right) or not np.isclose(left, right, rtol=0, atol=1e-12):
+            raise ValueError(f'{label}: {actual} differs from {expected}')
 
 
 def check_mean(summary: dict, rows: pd.DataFrame, column: str, ids: list[str],

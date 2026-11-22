@@ -1,0 +1,29 @@
+{
+  "experiment": "a1_s06_foulout_state_probe",
+  "status": "reproduced_explicit_failure",
+  "game_id": "401810472",
+  "date_et": "2026-01-20",
+  "team_id": "7",
+  "side": "home",
+  "world": 563,
+  "period": 4,
+  "clock_seconds_remaining": 4.4,
+  "available_player_fouls": {
+    "2528210": 1,
+    "3064290": 1,
+    "3936299": 2,
+    "4065670": 3,
+    "4398390": 6,
+    "4431690": 6,
+    "4576087": 6,
+    "4592427": 6
+  },
+  "eligible_players": 4,
+  "available_players": 8,
+  "worlds_requested": 1000,
+  "jobs": 1,
+  "log": "/tmp/musnba_a1_s06_foulout_state_probe.log",
+  "log_sha256": "88d45b66cbc15aae553ad9a80b02335f8818fe74658180c4596c40d99836d7f3",
+  "policy_source_sha256": "51b5c4187fc9443e1842c646d635c94b5f1d9ead9b5519cb8793b3a216b69013",
+  "limitations": "This is a simulated actual-participant world, not a real-game foul-out count. The diagnostic-only revision changes the exception text, not policy draws or eligibility. The failure precludes a complete paired fixed-200 screen and does not authorize promotion."
+}

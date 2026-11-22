@@ -1527,6 +1527,8 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   preserved in `20261122_a1_s06_candidate_fixed200_failure.json`. A same-stream replay identified game
   **401810472** (20 Jan 2026), home team **7**, with **8** actual-participant inputs; world **563** reached the
   explicit no-eligible-five condition. This is a simulated failure, not a claim that the real team had four players.
+  The single-game same-stream state replay found **four** six-foul players and **four** below six with **4.4 s**
+  left in Q4 (`20261122_a1_s06_foulout_state_probe.json`); the error-context change does not change policy draws.
 - **S07 F4 fixed baselines:** on **5,208** known play/DNP labels from **7,317** strictly prior-box candidates,
   the no-report physical-availability fallback has play-proxy Brier **0.15450** (game-cluster 95%
   **0.14162–0.16773**) and infinite log loss due to **718** impossible predictions. The target-positive frequency
@@ -1556,6 +1558,10 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   report-status play/start candidate is calibrated or promoted. The existing fixed fallback is retained; the
   prospective collection/support gate is documented in TRAINING_PLAN §8.2. The retrospective baseline's Brier and
   starter accuracy do not establish status calibration or physical health.
+- **S07 sequence-builder input preflight:** the 2022–23 development source yields **2,460** distinct NBA team-games,
+  **31,551** player listings and **31,471** prior-state observations. Raw boxes and segment schedules agree on all
+  **2,460** team-game sides for that season. This is a construction check, not a return/rest score, and the historical
+  boxes still have no publication timestamps.
 
 ## 6b. A1 S03 matched component diagnosis (22 Nov 2026; descriptive)
 

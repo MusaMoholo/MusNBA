@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from scripts import a1_availability_baseline as baseline
+from scripts import a1_availability_baseline as baseline, a1_availability_baseline_audit as audit
 
 
 class AvailabilityBaselineTests(unittest.TestCase):
@@ -30,6 +30,16 @@ class AvailabilityBaselineTests(unittest.TestCase):
         self.assertEqual(result['impossible_outcomes'], 1)
         result = baseline.log_loss(np.array([1., .5]), np.array([1., 1.]))
         self.assertAlmostEqual(result['value'], np.log(2) / 2)
+
+    def test_accounting_numeric_guard_rejects_missing_nonnumeric_and_infinite_values(self):
+        audit.check_number(np.float64(1.0), 1.0, 'metric')
+        audit.check_number(None, None, 'metric')
+        with self.assertRaisesRegex(ValueError, 'missing'):
+            audit.check_number(None, 1.0, 'metric')
+        with self.assertRaisesRegex(TypeError, 'numeric'):
+            audit.check_number('1', 1.0, 'metric')
+        with self.assertRaises(ValueError):
+            audit.check_number(float('inf'), float('inf'), 'metric')
 
 
 if __name__ == '__main__':

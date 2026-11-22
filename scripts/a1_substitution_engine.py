@@ -168,7 +168,11 @@ class SelectedTimeoutPolicy:
             raise ValueError(f'world {w} side {side}: scheduled lineup is not a distinct five')
         legal = (g.side == side) & self.available[w] & (st.ingame['pf_so_far'][w] < 6)
         if legal.sum() < 5:
-            raise ValueError(f'world {w} side {side}: fewer than five eligible players after foul-out')
+            available = np.flatnonzero((g.side == side) & self.available[w])
+            fouls = {g.ids[i]: int(st.ingame['pf_so_far'][w, i]) for i in available}
+            raise ValueError(f"game {g.game.get('game_id', '')} world {w} side {side}: "
+                             f"fewer than five eligible players after foul-out; period {int(st.period[w])}, "
+                             f"clock {float(st.clock[w]):.1f}, available-player fouls {fouls}")
         bad = np.flatnonzero(~legal[desired])
         for slot in bad:
             bench = np.flatnonzero(legal & ~np.isin(np.arange(g.n), desired))

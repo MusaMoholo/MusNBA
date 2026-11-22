@@ -27,6 +27,8 @@ The isolated policy source, model reconstruction and smoke evidence were pushed 
 The three-game wiring rung and pre-audit S07 source were pushed as **9a0c178**.
 The S07 archive audit and S06 trace source were pushed before world replay as **785a034**.
 The audited world replay and S07 label evidence were pushed as **4260521**.
+The failed fixed screen, independently audited four-fold availability baselines and dated-cohort gate were preserved
+in pushed partial checkpoint **5fd5e00**.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
 product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S05 are complete;
 S06 is active at 70%; S07 is 50%; A1 overall is 51.4%.** Isolated assignment candidates have event-level diagnostics and wiring only;
@@ -37,7 +39,11 @@ outputs were written. The explicit error is a robustness failure, not a paired a
 Frozen source/log fingerprints are in `analysis/experiments/20261122_a1_s06_candidate_fixed200_failure.json`.
 A same-stream ten-game replay of ordered indices 41–50 exited 1 after four completions, identifying game
 **401810472** (20 Jan 2026), home team **7**, with **8** actual-participant inputs. Former shell **2150**, log
-`/tmp/musnba_a1_s06_failure_probe.log`. The prior 200-game process also exited 1; neither backtest remains active.
+`/tmp/musnba_a1_s06_failure_probe.log`. The prior 200-game process also exited 1. An error-context-only policy
+revision (no lineup/draw change) reproduced the failure in former shell **2198**, log
+`/tmp/musnba_a1_s06_foulout_state_probe.log`: **4.4 seconds left in Q4**, with **four of eight** actual-participant
+inputs at six fouls. The state and source fingerprints are in
+`analysis/experiments/20261122_a1_s06_foulout_state_probe.json`. No backtest remains active.
 S07's first no-report/starter baseline protocol is frozen in TRAINING_PLAN §8.2 before scoring. A prior-position
 coverage setup initially failed on timestamp/string merge types; after converting stored dates to ISO it found
 **55/7,317** missing prior positions across **55/400** F4 team-games. This is coverage, not a starter score.
@@ -453,10 +459,20 @@ accuracy **30.83%** (95% **26.25–35.34%**); **4** observed starters lie outsid
 retrospective inferred-roster play/start proxies, not validated historical injury-report forecasts. The F4 report
 and accounting are `analysis/experiments/20261122_a1_s07_baseline_F4{,_accounting}.json`. The independent auditor
 ran successfully, but Pylance reports three pandas `Scalar` argument-type diagnostics in its current typed numeric
-helper; preserve its source with this report, then fix the type guard and rerun under a new accounting filename.
+helper; that original source and its reports are preserved in **5fd5e00**. A guarded numeric check now removes
+the diagnostics and rejects infinite values; focused tests and Pylance pass, and the independent accounting was
+repeated for all four folds as `analysis/experiments/20261122_a1_s07_baseline_F{1,2,3,4}_accounting_v2.json`.
 TRAINING_PLAN §8.2 now freezes an exploratory, development-only recorded-DNP return/rest sequence protocol before
 building or scoring it. Unlisted next games, trades, ambiguous labels and season ends must censor spells; its
 conditional play proxy cannot establish physical recovery or the genuinely dated availability promotion gate.
+The isolated `scripts/a1_availability_sequences.py` builder and **3** synthetic chronology/censoring tests are
+prepared; an earliest-season input preflight checked **2,460** team-games, **31,551** player listings and
+**31,471** prior-state observations. Source coverage for those team-games is identical between boxes and segments.
+No four-season sequence fit or score has run. After preserving the source in a checkpoint, build under new paths with
+`OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u scripts/a1_availability_sequences.py --output
+analysis/experiments/20261122_a1_s07_sequences.json --rows-output
+data/derived/experiments/20261122_a1_s07_sequences.parquet`; independently audit it before fitting the
+pre-specified earlier-fold return/rest proxies.
 
 **S07 30%:** the four independently audited fixed baselines cover **28,530** inferred candidates, **20,665** known
 play/DNP labels and **7,865** unknowns. Across F1–F4, supported starter team-games are **399/400/376/399**; five
@@ -1289,8 +1305,9 @@ The dashboard programme is done. Do not resume U1–U22, repeat rejected defence
 
 1. **Continue S06 substitution research at 70%.** Both node screens, earlier-fold model reproduction, three-game
    wiring and independent world replay are complete, but the fixed 200-game screen aborted on a no-eligible-player
-   world. The same-stream probe identified fixed-panel game **401810472**, home team **7** with **8** actual players.
-   Diagnose the failed world's foul/clock state and choose a rule-correct, explicitly documented recovery or retain D29; never
+   world. The same-stream probe identified fixed-panel game **401810472**, home team **7** with **8** actual players:
+   four simulated foul-outs leave four eligible players with **4.4 s** left in Q4. Choose a rule-correct, explicitly
+   documented recovery or retain D29; never
    hide or exclude the failure when applying promotion gates. The 80% rung still requires a genuine measured
    minute-CRPS/state-response comparison; don't present the aborted screen as complete. Run no second engine
    backtest concurrently. No promotion follows from the trace check.
@@ -1305,11 +1322,12 @@ The dashboard programme is done. Do not resume U1–U22, repeat rejected defence
    raw inventory retained 45 older entries without original fetch URL/time. Provider access remains one polite stream,
    paused during the nightly.
 2. **Continue S07 independently at 50%:** all four baseline folds and their independent accounting are complete.
-   Preserve the auditor source/report provenance at the imminent partial checkpoint, fix its documented Pylance
-   numeric-guard diagnostics, and rerun under new accounting filenames. The report archive has no development-season
+   The original auditor source is in **5fd5e00**; its guarded v2 has passed Pylance/tests and four-fold accounting.
+   The report archive has no development-season
    examples. Do not equate inferred membership with eligibility or score/tune status on the protected-season archive.
-   Build and independently audit TRAINING_PLAN's frozen development-only recorded-DNP sequence/return/rest population
-   with earlier-fold fits and explicit censoring; continue S06–S10 in dependency order.
+   The sequence builder has a passed synthetic/preflight check; preserve its source, run the exact command above,
+   independently audit the development-only sequence population, then fit/score the frozen return/rest proxies on
+   earlier-fold inputs with explicit censoring. Continue S06–S10 in dependency order.
 3. **S11 freezes the tested combination before promotion.** Confirm on the fixed wider folds and second seed, protect
    the final test and use player outcomes first.
 4. **S12/S13 implement model visibility and versioned daily history.** Preserve original and previous-version
