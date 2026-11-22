@@ -185,7 +185,7 @@ function actCell(a, key) {
 }
 
 // U7: availability — who is out or a maybe on each side, how often he plays in the simulations, minutes if he plays v season
-function availPanel(data) {
+function availPanel(data, open = false) {
   const av = data.availability;
   if (!av) return '';
   const legacy = av.source !== 'snapshot';
@@ -204,12 +204,16 @@ function availPanel(data) {
     ? 'Older forecast: only saved player statuses are shown; ruled-out or omitted players may be missing.'
     : legacy ? "Legacy bundle: report entries may reflect a later roster or status, not the forecast's origin."
       : 'From the roster and report saved with this forecast (hover a row for the report comment).';
-  return `<section class="panel"><h3 style="margin-top:0">Availability</h3><div class="av-grid">${side('away')}${side('home')}</div>
+  const count = (av.away?.length || 0) + (av.home?.length || 0);
+  return `<details class="panel" data-player-availability${open ? ' open' : ''}><summary><b>Availability</b> · ${count} recorded ${count === 1 ? 'entry' : 'entries'}</summary><div class="av-grid">${side('away')}${side('home')}</div>
     <p class="note">${source} ${unknown ? 'Unknown means no reliable status. ' : ''}Availability percentages are uncalibrated assumptions. Players not listed default to available if a report exists (unless recent inactivity); this is not proof of health.
-      "Plays" = share of simulated games he appears in.</p></section>`;
+      "Plays" = share of simulated games he appears in.</p></details>`;
 }
 
 function playerView(el, data, period) {
+  const availabilityOpen = el.querySelector('details[data-player-availability]')?.open || false;
+  const benchOpen = Object.fromEntries([...el.querySelectorAll('details[data-bench-side]')]
+    .map(panel => [panel.dataset.benchSide, panel.open]));
   const sim = sims(data), act = data.actual;
   const fallbacks = (sim?.fallbacks || []).map(f => {
     const side = data.game[f.side], name = side ? team(side.id).name : f.side;
@@ -222,19 +226,22 @@ function playerView(el, data, period) {
   if (act) modes.push(['act', 'Actual']);
   if (sim && act) modes.push(['cmp', 'Actual vs projected']);
   const mode = modes.some(m => m[0] === state.mode) ? state.mode : (sim && act ? 'cmp' : modes[0][0]);
-  el.innerHTML = (period === 'fg' && data.spotlight ? gameSpotlight(data.spotlight) : '') + (period === 'fg' ? availPanel(data) : '') +
+  el.innerHTML = `<div class="row section-heading"><h2 class="section-title">Player box scores</h2>${period === 'fg' && data.spotlight ? '<button class="ghost" data-game-insights>Player insights ↓</button>' : ''}</div>` +
+    (period === 'fg' ? availPanel(data, availabilityOpen) : '') +
     (modes.length > 1 ? `<div class="controls">${seg(modes, mode, 'data-mode')}</div>` : '') +
-    ['away', 'home'].map(s => teamBox(data, s, mode, period)).join('') +
+    ['away', 'home'].map(s => teamBox(data, s, mode, period, benchOpen[s])).join('') +
     (fallbacks ? `<p class="note">Placeholder fallback (uncalibrated): ${fallbacks}</p>` : '') +
-    `<p class="note">${period === 'fg' ? 'Full game includes overtime.' : `${esc(periodName(period))} only; overtime counts in FG.`} Projected values are means over ${sim ? sim.sims.toLocaleString() : ''} simulated games${mode === 'proj' && period === 'fg' && data.averages ? '; small numbers: projection minus his season average (MIN, PTS, REB, AST, STL, BLK; shooting in percentage points)' : ''}. ${mode === 'proj' ? 'Not listed on a report is not proof of health. ' : ''}Tap a player for distributions, lines and what-ifs.</p>`;
+    `<p class="note">${period === 'fg' ? 'Full game includes overtime.' : `${esc(periodName(period))} only; overtime counts in FG.`} Projected values are means over ${sim ? sim.sims.toLocaleString() : ''} simulated games${mode === 'proj' && period === 'fg' && data.averages ? '; small numbers: projection minus his season average (MIN, PTS, REB, AST, STL, BLK; shooting in percentage points)' : ''}. ${mode === 'proj' ? 'Not listed on a report is not proof of health. ' : ''}Tap a player for distributions, lines and what-ifs.</p>` +
+    (period === 'fg' && data.spotlight ? `<div id="game-insights">${gameSpotlight(data.spotlight)}</div>` : '');
   el.querySelectorAll('[data-mode]').forEach(b => b.onclick = () => { state.mode = b.dataset.mode; playerView(el, data, period); });
+  el.querySelector('[data-game-insights]')?.addEventListener('click', () => el.querySelector('#game-insights').scrollIntoView({behavior: 'smooth'}));
   el.querySelectorAll('tr[data-pid]').forEach(tr => {
     tr.onclick = () => { location.hash = `#/game/${data.game.id}/player/${tr.dataset.pid}/${period}`; };
     tr.onkeydown = e => { if (e.key === 'Enter') tr.onclick(); };
   });
 }
 
-function teamBox(data, side, mode, period) {
+function teamBox(data, side, mode, period, benchOpen = false) {
   const tid = data.game[side].id, info = team(tid);
   const sim = sims(data)?.[side], act = data.actual?.[side];
   const head = `<tr><th class="name">Player</th>${COLS.map(([, l]) => `<th>${l}</th>`).join('')}</tr>`;
@@ -319,7 +326,9 @@ function teamBox(data, side, mode, period) {
   const title = mode === 'act' ? `${actualPoints(data, side, period) ?? '—'} pts` : per ? `Projected ${f1(per.pts.mean)} pts · win ${pct(per.win)}${mode === 'cmp' ? ` · actual ${actualPoints(data, side, period) ?? '—'}` : ''}` : '';
   void pts;
   return `<section class="panel"><div class="row" style="margin-bottom:8px">${logo(tid)}<h2 style="margin:0">${esc(info.name)}</h2><span class="note" style="margin:0">${title}</span></div>
-    <div class="scroll"><table class="box"><thead>${head}</thead><tbody>${sep('Starters')}${starters.map(tr).join('')}${bench.length ? sep('Bench') : ''}${bench.map(tr).join('')}${totals}</tbody></table></div>
+    <div class="scroll"><table class="box"><thead>${head}</thead><tbody>${sep('Starters')}${starters.map(tr).join('')}${totals}</tbody></table></div>
+    ${bench.length ? `<details class="box-bench" data-bench-side="${side}"${benchOpen ? ' open' : ''}><summary>Bench · ${bench.length} ${bench.length === 1 ? 'player' : 'players'}</summary>
+      <div class="scroll"><table class="box"><thead>${head}</thead><tbody>${bench.map(tr).join('')}</tbody></table></div></details>` : ''}
     ${ruledOut.length ? `<p class="note"><b>Out:</b> ${ruledOut.map(p => `<a href="#/game/${data.game.id}/player/${esc(p.id)}">${esc(p.name)}</a>${p.injury?.type ? ` <span class="dim">(${esc(p.injury.type)})</span>` : ''}`).join(', ')}</p>` : ''}</section>`;
 }
 

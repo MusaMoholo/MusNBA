@@ -262,6 +262,7 @@ async function teamPage(view, {rest, current}) {
   const data = await api('team/' + encodeURIComponent(tid));
   if (!current()) return;
   const t = data.team, s = data.stats, f = data.forecast;
+  const openRosterGroups = new Set();
   const paint = () => {
     const tiles = [['ORtg', f1(s.ortg), s.ranks?.ortg], ['DRtg', f1(s.drtg), s.ranks?.drtg], ['Net', signed(s.net), s.ranks?.net], ['Pace', f1(s.pace), s.ranks?.pace]]
       .map(([l, v, r]) => `<div class="tile"><span>${l}</span><b>${v}</b>${r ? `<small>${ordinal(r)}</small>` : ''}</div>`).join('');
@@ -274,8 +275,17 @@ async function teamPage(view, {rest, current}) {
       <div style="margin-top:12px"><h3>Simulated final wins (of ${f.scheduled} scheduled)</h3>${histogram(f.wins, {height: 120})}</div></section>
       ${formPanel(data)}
       <div class="controls">${seg([['roster', 'Roster'], ['schedule', 'Schedule']], state.teamTab, 'data-tt')}</div>
-      ${state.teamTab === 'roster' ? roster(data) : schedule(data)}`;
+      ${state.teamTab === 'roster' ? roster(data, openRosterGroups) : schedule(data)}`;
     view.querySelectorAll('[data-tt]').forEach(b => b.onclick = () => { state.teamTab = b.dataset.tt; paint(); });
+    view.querySelectorAll('[data-roster-group]').forEach(button => button.onclick = () => {
+      const group = button.dataset.rosterGroup, open = !openRosterGroups.has(group);
+      if (open) openRosterGroups.add(group); else openRosterGroups.delete(group);
+      button.setAttribute('aria-expanded', String(open));
+      button.querySelector('span').textContent = open ? 'Hide' : 'Show';
+      view.querySelectorAll('tr[data-roster-member]').forEach(row => {
+        if (row.dataset.rosterMember === group) row.hidden = !open;
+      });
+    });
     view.querySelectorAll('tr[data-pid]').forEach(tr => tr.onclick = () => { location.hash = '#/player/' + tr.dataset.pid; });
     view.querySelectorAll('tr[data-gid]').forEach(tr => tr.onclick = () => { location.hash = '#/game/' + tr.dataset.gid; });
   };
@@ -285,7 +295,7 @@ async function teamPage(view, {rest, current}) {
 // U15: roster by role — tonight's projected starters and bench (stored worlds of the next projected game) or, with no
 // projection, regular starters (≥ half their games started) and bench; out players last with their injury. Each row shows
 // season minutes as a share of 48 against tonight's projection.
-function roster(data) {
+function roster(data, openGroups) {
   const pg = (p, k) => p.gp ? (p.tot[k] / p.gp).toFixed(1) : '—';
   const pctOf = (m, a) => a ? (100 * m / a).toFixed(1) : '—';
   const T = data.tonight?.players || null;
@@ -313,10 +323,15 @@ function roster(data) {
   const nx = data.tonight;
   const head = `<tr><th class="name">Player</th><th class="l">Minutes (season${T ? ' → next' : ''})</th>${T ? '<th>Next</th>' : ''}<th>GP</th><th>GS</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th><th>3PM</th><th>STL</th><th>BLK</th><th>TOV</th><th>FG%</th><th>3P%</th><th>FT%</th></tr>`;
   const cols = 15 + (T ? 1 : 0);
-  const body = groups.filter(g => g[1].length).map(([label, ps]) => `<tr class="grp"><td colspan="${cols}">${label} <span class="dim">· ${ps.length}</span></td></tr>` + ps.map(p =>
-    `<tr class="link" data-pid="${p.id}"><td class="name">${esc(p.name)}${p.jersey ? ` <span class="tag">#${esc(p.jersey)}</span>` : ''} <span class="dim">${esc(p.pos || '')}</span>${statusTag(p.status)}${inj(p)}</td>
+  const body = groups.filter(g => g[1].length).map(([label, ps]) => {
+    const collapsible = !label.includes('starters'), open = openGroups.has(label);
+    const heading = collapsible ? `<button class="roster-toggle" data-roster-group="${esc(label)}" aria-expanded="${open}">${esc(label)} · ${ps.length}<span>${open ? 'Hide' : 'Show'}</span></button>`
+      : `${esc(label)} <span class="dim">· ${ps.length}</span>`;
+    return `<tr class="grp"><td colspan="${cols}">${heading}</td></tr>` + ps.map(p =>
+    `<tr class="link"${collapsible ? ` data-roster-member="${esc(label)}"${open ? '' : ' hidden'}` : ''} data-pid="${p.id}"><td class="name">${esc(p.name)}${p.jersey ? ` <span class="tag">#${esc(p.jersey)}</span>` : ''} <span class="dim">${esc(p.pos || '')}</span>${statusTag(p.status)}${inj(p)}</td>
       <td class="l">${bar(p)}</td>${T ? tn(p) : ''}<td>${p.gp}</td><td>${p.gs}</td><td>${pg(p, 'min')}</td><td><b>${pg(p, 'pts')}</b></td><td>${pg(p, 'reb')}</td><td>${pg(p, 'ast')}</td><td>${pg(p, 'fg3m')}</td><td>${pg(p, 'stl')}</td><td>${pg(p, 'blk')}</td><td>${pg(p, 'tov')}</td>
-      <td>${pctOf(p.tot.fgm, p.tot.fga)}</td><td>${pctOf(p.tot.fg3m, p.tot.fg3a)}</td><td>${pctOf(p.tot.ftm, p.tot.fta)}</td></tr>`).join('')).join('');
+      <td>${pctOf(p.tot.fgm, p.tot.fga)}</td><td>${pctOf(p.tot.fg3m, p.tot.fg3a)}</td><td>${pctOf(p.tot.ftm, p.tot.fta)}</td></tr>`).join('');
+  }).join('');
   const sub = nx ? `<p class="note" style="margin-top:0">Grouped by the projection for ${esc(dayLabel(nx.date))} ${nx.home ? 'vs' : '@'} ${esc(team(nx.opp).abbr)} (${nx.sims?.toLocaleString() || '—'} simulated games).` : '<p class="note" style="margin-top:0">No projected game yet: grouped by games started this season.';
   return `<section class="panel">${sub}${lost >= 1 ? ` Out: <b>${lost.toFixed(0)}</b> season minutes a game.` : ''}</p><div class="scroll"><table class="roster"><thead>${head}</thead><tbody>${body}</tbody></table></div>
     <p class="note">Bar: season minutes per game out of 48 (grey) and next-game projected minutes (accent tick). The small number beside Next is the change from his season average (≥ 2 min). Injury details from the latest report; hover for the full note.</p></section>`;

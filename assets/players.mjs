@@ -132,10 +132,10 @@ async function playerPage(view, {rest, current}) {
     ${defencePanel(data.defence)}
     ${quartersPanel(data.quarters)}
     ${log.length ? `<section class="panel" id="trend">${trendPanel(log, s)}</section>
-    <section class="panel"><h3>Game log</h3><div class="scroll"><table><thead><tr><th class="l">Date</th><th class="l">Opp</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th><th>3PM</th><th>STL</th><th>BLK</th><th>TOV</th><th>FG</th><th>3P</th><th>FT</th><th>+/−</th></tr></thead><tbody>
+    <details class="panel" data-game-log><summary><b>Game log</b> · ${log.length} ${log.length === 1 ? 'entry' : 'entries'}</summary><div class="scroll"><table><thead><tr><th class="l">Date</th><th class="l">Opp</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th><th>3PM</th><th>STL</th><th>BLK</th><th>TOV</th><th>FG</th><th>3P</th><th>FT</th><th>+/−</th></tr></thead><tbody>
       ${log.slice().reverse().map(r => `<tr class="link" data-gid="${r.game_id}"><td class="l">${esc(dayLabel(r.date))}</td><td class="l">${r.home ? 'vs' : '@'} ${esc(team(r.opp).abbr)}</td>
         ${r.dnp ? `<td class="l dim" colspan="12">${esc(r.reason || 'Did not play')}</td>` : `<td>${r.min}</td><td><b>${r.pts}</b></td><td>${r.reb}</td><td>${r.ast}</td><td>${r.fg3m}</td><td>${r.stl}</td><td>${r.blk}</td><td>${r.tov}</td><td>${r.fgm}-${r.fga}</td><td>${r.fg3m}-${r.fg3a}</td><td>${r.ftm}-${r.fta}</td><td>${signed(r.pm, 0)}</td>`}</tr>`).join('')}
-      </tbody></table></div></section>` : ''}`;
+      </tbody></table></div></details>` : ''}`;
   view.querySelectorAll('tr[data-gid]').forEach(tr => tr.onclick = () => { location.hash = '#/game/' + tr.dataset.gid; });
   const wire = () => view.querySelectorAll('[data-trend]').forEach(b => b.onclick = () => {
     trendStat = b.dataset.trend; store.set('trend-stat', trendStat); view.querySelector('#trend').innerHTML = trendPanel(log, s); wire(); });
