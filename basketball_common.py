@@ -49,6 +49,7 @@ EAST_DIVISIONS = {'Atlantic', 'Central', 'Southeast'}
 NBA_TEAM_IDS = frozenset(str(i) for i in range(1, 31))
 DIVISION_OF = {abbr: div for div, teams in DIVISIONS.items() for abbr in teams}
 CONFERENCE_OF = {abbr: ('East' if div in EAST_DIVISIONS else 'West') for abbr, div in DIVISION_OF.items()}
+LINEUP_TIMING_POLICY = 'completed_before_tip-v1'
 
 
 def parse_utc(value: str) -> datetime:
@@ -73,6 +74,20 @@ def day_shift(day: str, days: int) -> str:
 
 def utc_now() -> str:
     return datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+
+
+def verified_pre_tip(meta: dict, game_id: str) -> bool | None:
+    flags = meta.get('pre_tip')
+    if not meta.get('completed_at') or not isinstance(flags, dict):
+        return None
+    try:
+        completed = datetime.fromisoformat(meta['completed_at'].replace('Z', '+00:00'))
+    except (AttributeError, TypeError, ValueError) as exc:
+        raise ValueError('invalid snapshot completion timestamp') from exc
+    if completed.utcoffset() is None:
+        raise ValueError('snapshot completion timestamp needs a timezone')
+    value = flags.get(game_id)
+    return value if isinstance(value, bool) else None
 
 
 def packed(value) -> str:

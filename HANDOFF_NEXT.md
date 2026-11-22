@@ -1,6 +1,6 @@
 # Handoff — state and next actions
 
-Updated **22 November 2026 — A1 overnight execution, S01–S05 complete; S06 and S07 at 70%**. Dashboard U1–U22 complete and published.
+Updated **22 November 2026 — A1 overnight execution, S01–S06 complete; S07 90%**. Dashboard U1–U22 complete and published.
 Dashboard close-out checkpoint **86c2a46**, A1 planning checkpoint **00a0731**; S01 checkpoint **c9d8008**
 and S02 checkpoint **93b3e1d** are committed and pushed (S01's exact control source is **c6d5db4**).
 The original S03/S05 experiment snapshot is **ab32eda**, committed and pushed before the candidate repair;
@@ -35,10 +35,14 @@ The frozen fold-screen source and corrected independent reconstruction were push
 The independently audited S07 60% screen was pushed as **76f7cf5**.
 The isolated S06 foul-penalty source was pushed as **bf9cd21** before the probe; S07's spell/starter follow-up
 protocol was frozen as **857cc78**.
+The audited spell/starter follow-up and unrun S06 direct-state source were pushed as **d7e00aa**.
+This checkpoint completes S06 and preserves the tested but undelivered S07 source changes.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
-product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S05 are complete;
-S06 and S07 are active at 70%; A1 overall is 52.6%.** Isolated assignment candidates have event-level diagnostics and wiring only;
+product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S06 are complete;
+S07 is 90%; A1 overall is 57.4%.** Isolated assignment candidates have event-level diagnostics and wiring only;
 no defence candidate has had an engine-accuracy test, and no model promotion, forecast or PWA change has been made.
+The local web assets are modified in the working tree and may already be visible through either local server; the
+hosted Pages shell and iCloud bundle remain unchanged until S07 delivery.
 The fixed S06 200-game candidate backtest failed after at least **40/200** games (last progress **378 s**) because
 world **563**, side **0**, had fewer than five non-disqualified available players after a foul-out; no aggregate
 outputs were written. The explicit error is a robustness failure, not a paired accuracy result or promotion.
@@ -61,29 +65,56 @@ game values and **1,408** player values on those three games, independently chec
 player-period values and **96** simulated team/component sums, and completed in **63 s**; reports
 `analysis/experiments/20261122_a1_s06_penalty_flow_wiring_{output,flow}_accounting.json`. The flow auditor's new
 optional `--reference` defaults to the prior control; existing callers remain compatible. The sequential
-fixed **200-game/1,000-world** flow-instrumented screen is now running as attached shell **2284**, wrapper PID
-**17651**, Python PID **17652**, log `/tmp/musnba_a1_s06_penalty_flow_fixed200.log`; command:
+fixed **200-game/1,000-world** flow-instrumented screen completed in **2,004 s**, former shell **2284**, log
+`/tmp/musnba_a1_s06_penalty_flow_fixed200.log`; command:
 `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u scripts/backtest.py --config models/v1.2d.json
 --fold F4 --game-ids data/derived/experiments/20261122_a1_s03_f4_game_ids.json --worlds 1000 --jobs 4 --threads 8
 --rotation targets --pool 0 --models folds/v1.2d_F4_all --substitution-candidate
 analysis/experiments/20261122_a1_s06_engine_models_F4.json --substitution-foul-penalty --flow-diagnostics --name
-a1_s06_penalty_flow_fixed200`. Last logged progress: **120/200** in **1,247 s**. No other engine backtest may run
-concurrently. Progress is job item count only,
-not the S06 80% rung; after completion independently audit, compare against the pinned controls and assess the
-pre-registered player-first and state-response gates.
-Before candidate scoring, TRAINING_PLAN freezes a retrospective Q4-start margin/foul subgroup comparison;
-`scripts/a1_substitution_response_compare.py` and focused missing/inconsistent-foul tests are prepared but unrun.
-Saved Q4 player means average over simulated states, so they cannot prove the policy reacts correctly within a
-simulated game. Direct event/state-conditioned behaviour still requires a separate capture; don't award the
-state-response rung based only on unconditional subgroup means.
-The separate `scripts/a1_substitution_response_capture.py` now prepares direct selected-timeout state capture
-without changing the serving policy. Its source and boundary tests must be committed before running; after the
-current screen ends, first replay the three-game candidate
-`20261122T095342Z_a1_s06_penalty_three` with `--jobs 1` and require exact output reproduction, then replay the full
-200-game candidate sequentially and compare captured state cells with the independently audited historical
-selected-timeout rows using `scripts/a1_substitution_response_audit.py`. Capture and accounting have passed focused
-synthetic tests and Pylance diagnostics but remain unrun on the real games; do not start either while the current
-engine backtest runs.
+a1_s06_penalty_flow_fixed200`. Its independent no-reference flow accounting passed on **200 games / 4,346**
+player-games, **86,920** recorded player-period values, **6,384** team/quarter/component sums, **400** lineup
+tick sets and **800** clock values, maximum difference **2.84e-14**; one team lacked a full scored-player roster.
+Report `analysis/experiments/20261122_a1_s06_penalty_flow_fixed200_accounting.json`, former shell **2426**.
+The fixed score, independent pooled accounting, preliminary gate and retrospective Q4 subgroup comparison finished
+in former shell **2429**: pooled minute CRPS **3.5662→3.5309** (change **−0.03529**, 95% **[−0.04462,
+−0.02609]**, seed-noise floor **0.02634**) passes the uncorrected primary screen, while only **66/69**
+non-inferiority bounds are established. Margin, Q2-margin and Q3-total coverage remain inconclusive or worse
+against their registered bounds. **15** pooled metrics and **10/10** pooled bias/coverage bounds independently
+reconcile. Reports `analysis/experiments/20261122_a1_s06_penalty_fixed200_{compare,pooled_accounting,gate,retrospective}.json`.
+Retrospective Q4 groups use actual historical states but unconditional simulated player-quarter means; they do not
+establish within-world response. The three-game direct-state preflight completed in **210 s** and exactly
+reproduced **321** game and **1,408** player values, former shell **2425**, log
+`/tmp/musnba_a1_s06_state_capture_three.log`, report `analysis/experiments/20261122_a1_s06_state_capture_three.json`.
+The fixed full replay completed successfully in former shell **2450**, log
+`/tmp/musnba_a1_s06_state_capture_fixed200.log`; command:
+`OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u scripts/a1_substitution_response_capture.py
+20261122T103244Z_a1_s06_penalty_flow_fixed200 --jobs 4 --output
+analysis/experiments/20261122_a1_s06_state_capture_fixed200.json --rows-output
+data/derived/experiments/20261122_a1_s06_state_capture_fixed200.parquet`. Do not run another engine backtest
+concurrently. It finished **200/200 games in 3,507 s**, capturing **60,659** player-state cells and reproducing
+**21,400** game and **95,612** player values. The independent audit completed in former shell **2522**, log
+`/tmp/musnba_a1_s06_state_capture_fixed200_audit.log`; it reconciled **800** game/state totals and compared
+**191** common historical games. Its completed command was
+`OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python scripts/a1_substitution_response_audit.py
+analysis/experiments/20261122_a1_s06_state_capture_fixed200.json
+data/derived/experiments/20261122_a1_s06_state_capture_fixed200.parquet --output
+analysis/experiments/20261122_a1_s06_state_capture_fixed200_accounting.json`. The paired minute screen and
+audited descriptive state comparison earn S06 80%. **S06 90% decision:** retain v1.3/D29, because only **66/69**
+frozen non-inferiority bounds were established despite the uncorrected pooled-minute improvement. Selected-timeout
+state comparisons remain descriptive with actual participants; wider-fold/adjusted confirmation and a final-test
+score were not run. See FINDINGS for the rates, limitations and runtimes. The 100% rung includes the completed
+smoke/fault checks and this evidence/docs checkpoint.
+TRAINING_PLAN froze a retrospective Q4-start margin/foul subgroup comparison before candidate scoring; the
+comparison and focused missing/inconsistent-foul tests are complete. Saved Q4 player means average over simulated
+states, so they cannot prove the policy reacts correctly within a simulated game. The separately precommitted
+`scripts/a1_substitution_response_capture.py` measures selected-timeout state response without changing the serving
+policy; focused synthetic tests, Pylance diagnostics, the three-game preflight, full replay and independent audit
+passed. Do not claim a direct same-opportunity target-table control or a causal effect.
+The working `scripts/a1_flow_audit.py --no-reference` can independently check the full candidate's flow accounting
+without pretending a second full same-policy backtest exists. On the existing three-game wiring capture it matched
+all **1,280** recorded-player-period checks and **96** team/component checks, with reproduction fields explicitly
+null; its existing reference mode and caller signature remain compatible. The future direct-state replay separately
+must establish exact same-policy reproduction. This audit change is not yet committed.
 S07's first no-report/starter baseline protocol is frozen in TRAINING_PLAN §8.2 before scoring. A prior-position
 coverage setup initially failed on timestamp/string merge types; after converting stored dates to ISO it found
 **55/7,317** missing prior positions across **55/400** F4 team-games. This is coverage, not a starter score.
@@ -489,8 +520,8 @@ fingerprints and exact counts are in `analysis/experiments/20261122_a1_s07_label
 and Pylance diagnostics pass.
 
 **S06 and S07 partial evidence:** the frozen S06 200-game screen failed explicitly as described above; its
-player-minute CRPS and state-response comparison are unavailable, so S06 remains at **70%** and the D29 control
-is retained pending a valid investigation. For the F4 S07 baseline, the independent
+player-minute CRPS and state-response comparison were unavailable at that checkpoint; the later fixed screen and
+state replay above are complete and retain the D29 control. For the F4 S07 baseline, the independent
 `scripts/a1_availability_baseline_audit.py` reconciled the raw five-starter labels, all proxy Brier and calibration
 cells, and 10,000 game-bootstrap intervals. No-report play-proxy Brier is **0.15450** (95% **0.14162–0.16773**)
 on **5,208** known labels; its log loss is genuinely infinite from **718** impossible predictions. The separate
@@ -596,18 +627,125 @@ and independent replays all finished: **200/200, 200/200, 195/200 and 200/200** 
 world had fewer than five active players. F3 lacks prior rosters for five games; one F4 team lacks complete actual
 starter labels. Role frequencies, bootstrap intervals and limitations are in FINDINGS. Former sequential audit
 shell **2349** exited 0; logs `/tmp/musnba_a1_s07_starter_{sim,audit}_F{1,2,3,4}.log`. S07's 70% rung is complete.
-For 80%, a new synthetic stress test confirmed an existing serving bug: in a five-player pool with only four
+Before 80%, a synthetic stress test confirmed an existing serving bug: in a five-player pool with only four
 available, `Game._target_tables` silently reinstates the unavailable fifth player for all **2,880** regulation
 seconds. None of the **15,890,000** historical proxy worlds triggered it, which does not establish safety for a
-short or uncertain prospective roster. Preserve this failure, implement an explicitly failing or otherwise honest
-fallback without conditioning on actual lineups, and check deterministic valid-world parity. Do not edit the
-running S06 engine or its capture sources until their frozen simulations/reproduction are finished; the bug
-remains unresolved in production.
-The partial-source checkpoint's normal smoke passed **102/102**; the deliberate-fault run is still active as
-attached shell **2291**, Python PID **20642**, with logs `/tmp/musnba_a1_s06_flow_partial_smoke.log` and
-`/tmp/musnba_a1_s06_flow_partial_fault.log`; retrieve the wrapper exit and verify nonzero fault exit. The
+short or uncertain prospective roster. The working engine now fails explicitly instead and preserves the pinned
+valid-world RNG fingerprints; S07's delivery is still pending.
+The partial-source checkpoint's normal smoke passed **102/102** and deliberate-fault smoke passed its expected
+failure check: **80/102**, nonzero fault exit, former shell **2291**. Logs
+`/tmp/musnba_a1_s06_flow_partial_smoke.log` and `/tmp/musnba_a1_s06_flow_partial_fault.log`. The
 **31** current focused tests and direct-state-auditor Pylance check passed. This is a source-freeze checkpoint,
 not a completed S06 or S07 task.
+
+**S07 fallback repair, pending delivery:** missing injury files or statuses previously became
+`Active`, and an injury entry for an old team could overwrite a traded player's current roster status. The
+working `scripts/box_scores.py` now reports missing/conflicting statuses as `Unknown`, uses the existing
+uncalibrated unknown-status probability, warns on report/roster mismatches, omits ambiguous multi-team roster
+entries and rejects malformed/unidentifiable injury reports. Its rebuilt status counts exactly match all **five**
+previously audited valid collections; **20** focused ingest/availability tests pass. The working dashboard
+shows `Unknown` and labels its fallback as uncalibrated; other status percentages are labelled availability,
+not actual simulated participation. A synthetic browser response confirmed the snapshot-source, unknown-status,
+recent-inactivity, assumed-availability and actual-simulated-participation wording; at phone width, both fallback
+tags have no horizontal clipping. Availability tags in game tables now wrap below the player name. The earlier
+**36/36** width/theme checks passed in former shell **2414**, log `/tmp/musnba_a1_s07_browser_final.log`; desktop,
+half and phone screenshots were inspected under `/tmp/musnba-a1-s07-final-shots`. The final focused Game Centre
+width/theme rerun passed **6/6**, former shell **2498**, log `/tmp/musnba_a1_s07_layout_final.log`; all six
+screenshots under `/tmp/musnba-a1-s07-layout-final` were inspected.
+An isolated data-free preview shell built at
+`/Users/moholom/.copilot/session-state/cd6afd9f-2b4e-4039-8e12-170c203c5b67/files/MusNBA`, cache version
+**5902923a710631db4ca0**, imported the existing iCloud bundle and passed **15/15** local import/offline checks,
+log `/tmp/musnba_a1_s07_pwa_preview.log`; its temporary :8768 server is stopped. This is not a Pages publication
+or a new bundle, and does not prove phone import.
+Review server shell **2404** serves `127.0.0.1:8767` (PID **22620**); never touch the owner's :8766 server.
+The ingest/UI source's normal smoke passed **102/102** and its deliberate-fault run failed as expected with
+**80/102**, former shell **2440**, logs `/tmp/musnba_a1_s07_ingest_{smoke,fault}.log`. The applied engine/projection
+changes required a new smoke/fault check, completed in former shell **2605**; after the additional starter-score
+repair, final smoke passed **102/102** and deliberate-fault smoke failed as expected **80/102**, former shell **2626**.
+Before repair, `projection.availability(None)` assumed `Active` and the short-roster engine fallback activated
+unavailable players; the corresponding missing/blank-status and legal-five tests now pass. On retained registry
+20261121T225637Z, after the recent-DNP heuristic, all **30** teams
+have at least **10** certain players; an under-five fail-fast guard would not affect that population, but this
+does not establish safety for future missing reports. A new
+`tests.test_a1_availability.AvailabilityCohortTests.test_short_rosters_fail_in_both_engine_rotation_paths`
+now passes in both target and legacy paths. Before editing, a seeded
+two-world/six-player-per-side valid-roster parity fixture hashed its tables, combinations and next 64 RNG bytes:
+legacy `4f23f0626b73e64fd1821e7174475de523261cee46765c917bf5097219e4f55d`; targets
+`9d1427395faedf996a9636a0169bf22f98ddcc14ce22420216dd54f39a8373eb`. The exact executable fixture and
+fingerprints live in `tests.test_a1_availability.AvailabilityCohortTests.test_valid_rotation_worlds_and_random_stream_match_pre_guard`;
+repeat it after the fix. An isolated copy at
+`/Users/moholom/.copilot/session-state/cd6afd9f-2b4e-4039-8e12-170c203c5b67/files/a1-s07-isolated`
+now has candidate fail-fast guards in both rotation paths, unknown-status handling, and a projected-starter fix
+when fewer than five players are certain. A prospective placeholder fixture also returned success for **51/100**
+worlds with only four available players; the isolated candidate now rejects such worlds while preserving the
+retrospective path. **44** combined focused tests pass there, including both rotation fingerprints and a complete seeded valid placeholder
+forecast fingerprint. These changes have since been applied and retested in the live sources. The isolated copy
+symlinks the existing data and virtualenv; do not run jobs that write through its data link. No new forecasts, iCloud
+bundle or Pages shell has been published; the app changes require
+the documented browser, bundle/import/offline and data-free shell checks before S07's checkpoint.
+An additional report-provenance repair is pending delivery: new prospective game outputs freeze their own roster/status
+snapshot, including ruled-out players; views no longer substitute a later registry, and old snapshots explicitly
+show only the statuses they retained. The UI distinguishes fixed/unknown/recent-inactivity assumptions from
+simulated participation. The revised ingest/report also preserves a nullable reported status and its source: a
+present report with no injury entry retains the existing assumed-available probability but is explicitly marked
+`not_listed_assumption`, not a confirmed health status. The Game Centre discloses that distinction.
+The previously served nightly metadata uses slate-start time rather than output completion, so a run crossing tip
+can incorrectly claim a pre-game result. The pending repair below addresses new snapshots; S13 must carry its
+legacy-unverified distinction through versioned archives.
+A separate preview-origin defect was reproduced: retained 22 Nov's preview has season origin 21 Nov but reports
+cutoff 21 Nov instead of 20 Nov, and its league inputs include **236** games versus the origin snapshot's **235**.
+The working `project_slate` now selects team/player/period inputs by the shared origin, writes origin/cutoff and
+requires the season origin to match; a date-injection test and independent audit pass. After the S06 audit finished,
+the engine guard was changed to reject post-origin profiles and use pre-origin minute fits, stints and matchup
+history while retaining the target date for game context. Old previews must not be relabelled safe.
+**S07 80–90%:** the isolated roster/report, unknown-status, legal-five and cold-placeholder repairs have been
+transferred to the live sources after the S06 audit. **82** focused Python tests and **3** JS tests pass, including
+valid-world RNG fingerprints and origin-date injection. Retain the uncalibrated fixed status/recent-inactivity
+assumptions and D29 projected-starter fallback; no future physical-absence hazard is justified by the censored
+coach-DNP proxies. S08's two-maybe product weights are unvalidated independence assumptions and >2 one-out cases
+are non-exhaustive. S10 retains no fitted future player-absence hazard. Production snapshots and PWA have not yet
+been refreshed. The pre-repair S06 `engine.py` SHA-256 `3c62f518...681414e` remains reproducible from pushed
+checkpoint `d7e00aa`; rerun the hash-locked S06 audit with that source, not the modified working engine.
+The pending snapshot writer now records completion after the atomic snapshot rename and computes pre-tip from
+that time; legacy/incomplete outputs have unverified timing and are excluded from pre-game accuracy summaries.
+Focused before/after-tip, legacy-timing and audit tests pass. Isolated shell `f79ce8eab3ebe9182d59` passed **16/16**
+import/offline checks against the old bundle, including legacy timing (log
+`/tmp/musnba_a1_s07_pwa_timing_old_bundle_v2.log`); its :8768 server is stopped. The changes have not been shipped.
+An additional starter-score audit found that the existing **10-slate, 132-team-game** accuracy record includes
+**7** retrospective slates / **104** team-games and **3** prospective slates / **28** team-games without verified
+completion timestamps. The working scorer preserves its per-slate and overall legacy figures separately,
+scores only explicitly pre-tip prospective games, and the Lab hides old-bundle scores lacking that timing policy.
+**78** combined focused Python and **4** JS tests passed, including legacy migration and incomplete/after-tip
+cases. Lab passed **6/6** width/theme checks with all six screenshots inspected in
+`/tmp/musnba-a1-s07-lab-legacy`; shell `0d7693ac00bad5eb2e00` passed **17/17** old-bundle import/offline checks,
+including Lab, log `/tmp/musnba_a1_s07_pwa_preview_latest_v2.log`; :8768 is stopped. The live score file, newly
+generated bundle and hosted shell still need the nightly/delivery checks. Post-repair normal smoke passed
+**102/102** and deliberate-fault smoke failed as expected **80/102**, logs
+`/tmp/musnba_a1_s06_checkpoint_{smoke,fault}.log`.
+The existing local `data/views` was copied and byte-verified before the planned rebuild at
+`~/Basketball_archive_ops/archive_20261122T113442Z_34262/data/views`.
+S08 must address the exact-mixture counterexample in FINDINGS: 10,000 equally weighted season outcomes cannot
+represent every exact blend of 10,000-world branch distributions, even for one game's win probability.
+`tests.test_views_availability` and `tests/test_status_tag.mjs` pass their focused checks;
+the prepared `scripts/a1_snapshot_availability_audit.py` requires `--origin YYYY-MM-DD` and independently checks
+pre-origin team/player inputs, completion/tip labels, matching origin registry, view provenance, every saved
+player/team point total and season/game world identities. Its
+synthetic regression tests pass; run it on the newly generated live days after nightly, not on legacy snapshots.
+the new report/basis fields change the forecast contract and therefore require refreshed outputs and PWA delivery.
+Further synthetic cold-roster stress found the placeholder returned **101.9/102.1** mean team points with no
+player minutes or displayed player lines when six players were available but all had zero minute inputs. The
+isolated candidate now warns and records an uncalibrated equal-share fallback in such prospective worlds, fills
+five projected starter labels, and independently reconciles quarter minutes, overtime, points and an unavailable
+player across **300 worlds per side**. **45** focused Python tests now pass in the isolated copy, including the
+unchanged valid-world fingerprints. The live Game Centre has an unshipped disclosure for this fallback. This
+targeted repair does not validate or repair all other placeholder allocations. A synthetic phone response showed
+the fallback's exact team and world counts without clipping; its screenshot is
+`/tmp/musnba-a1-s07-fallback-synthetic-full.png`. The subsequent game-route sweep passed **12/12**, former shell
+**2512**, log `/tmp/musnba_a1_s07_fallback_layout.log`; representative desktop, half and phone screenshots were
+inspected under `/tmp/musnba-a1-s07-fallback-layout`. A freshly built isolated data-free shell, cache version
+**39992ead9ae553927563**, imported the existing iCloud bundle and passed **15/15** import/offline checks, former
+shell **2519**, log `/tmp/musnba_a1_s07_pwa_preview2.log`; its :8768 server is stopped. This preview is not a
+Pages publication, a new bundle or proof of phone import.
 
 The tracking family was frozen in TRAINING_PLAN §8 and built separately by
 `scripts/a1_tracking_features.py`: former wrapper PID **85586**, shell **1549**, log
@@ -1058,8 +1196,8 @@ weights, with the old and new accounting; do not hide unfinished tasks by deleti
 | S03 Offence/defence signal diagnosis | 8% | 100% | Fixed matched flow/accounting, component decomposition and two falsifiable candidate families documented; research-only checkpoint |
 | S04 Defence and shot quality | 12% | 100% | Both families rejected at their frozen node gates; tracking rebuild and independent accounting verified; served model and bundle unchanged |
 | S05 Roles and minute allocation | 8% | 100% | Both matched screens and independent accounting complete; neither passes pooled MIN gate, retain D29 control; smoke/fault passed |
-| S06 Game-state substitutions | 12% | 70% | Foul-penalty retry running on fixed 200 games; player-first comparison and direct state replay unfinished |
-| S07 Availability and future absences | 6% | 70% | Spell and four-fold starter simulations independently audited; short-roster serving fallback is unsafe and unresolved |
+| S06 Game-state substitutions | 12% | 100% | Fixed 200-game screen and state replay audited; D29 retained because 3 non-inferiority bounds remain unestablished; smoke/fault passed |
+| S07 Availability and future absences | 6% | 90% | Fixed uncalibrated status/starter fallbacks selected; no future absence hazard; tested source and shared-origin safeguards await delivery |
 | S08 Lineup branches and Expected | 6% | 0% | Planned |
 | S09 Shared form and end-game behaviour | 10% | 0% | Planned |
 | S10 Season pathway calibration | 8% | 0% | Planned |
@@ -1068,7 +1206,7 @@ weights, with the old and new accounting; do not hide unfinished tasks by deleti
 | S13 Current-model season history | 5% | 0% | Planned |
 | S14 Nightly, delivery, successor | 5% | 0% | Planned |
 
-**A1 overall: `██████████░░░░░░░░░░ 52.6%`.** Both control seeds are complete; isolated assignment-event
+**A1 overall: `███████████░░░░░░░░░ 57.4%`.** Both control seeds are complete; isolated assignment-event
 diagnostics and three-game wiring are not engine-accuracy tests. No candidate has been promoted or changed production/PWA.
 Each rung below is cumulative; 100% always includes updated docs, necessary PWA model/data/shell delivery, reviewed
 commit and push, plus the owner summary. See AGENTS §3/§5 and PLAN §6c for the per-subtask PWA checklist; research-only
@@ -1409,47 +1547,23 @@ picker (Scoring · Rebounding ALL/OFF/DEF · Handling · Defense · Time; makes 
 STL/BLK, shooting x/y (z%) coloured per part); bezel points Δ v season (above the value; no win/total Δ); player page "Open
 simulation" for tomorrow's games; phone bundle stripped back (D36).
 
-## Next actions — S06, then remaining A1
+## Next actions — S07, then remaining A1
 
 **Owner's overnight authority:** execute S01–S14 without waiting for input; the earlier planning-only stop is lifted.
 The dashboard programme is done. Do not resume U1–U22, repeat rejected defence variants unchanged or begin at S13.
 
-1. **Continue S06 substitution research at 70%.** Both node screens, earlier-fold model reproduction, three-game
-   wiring and independent world replay are complete, but the fixed 200-game screen aborted on a no-eligible-player
-   world. The same-stream probe identified fixed-panel game **401810472**, home team **7** with **8** actual players:
-   four simulated foul-outs leave four eligible players with **4.4 s** left in Q4. TRAINING_PLAN §8.2 now freezes
-   an opt-in player-foul-penalty exception: retain a necessary on-court six-foul player, assess the technical free
-   throw and independently audit all roster/foul states. The official rule page returned HTTP 403; a secondary
-   basketball rule reference is cited. The opt-in `scripts/a1_foul_penalty_engine.py` and its expanded trace
-   accounting are implemented and precommitted; **26** policy/world/sequence tests pass. The three original games and
-   the single-game probe are independently audited as above; the latter's process exited 1 on summary serialization.
-   The same three-game flow audit passed; the unchanged 200-game 1,000-world screen with flow diagnostics is running
-   as shell 2284 above. After completion, independently audit outputs and assess player-quarter/state response
-   against the pinned control, then apply the unchanged gates. Keep the original failed policy and default engine unchanged. Never
-   hide or exclude the failure when applying promotion gates. The 80% rung still requires a genuine measured
-   minute-CRPS/state-response comparison; don't present the aborted screen as complete. Run no second engine
-   backtest concurrently. No promotion follows from the trace check.
-   Do not relabel unconfirmed non-entries as known eligible negatives; separate any actual-participant conditional
-   diagnostic from a pre-game forecast. The selected-timeout outgoing result is not an engine validation. Fix the
-   independently reproduced unupdated foul-out mask in an isolated S06 candidate, not the serving path, and test it
-   against six fouls with and without eligible replacements. The original
-   replay/audit/opportunity sources are retained in **417f3f5**. The known
-   `401810498` sequence-709 margin is verified, but a recognised stoppage is
-   not proof of an exhaustive legal opportunity. Do not treat clock-grouped windows as one simultaneous decision.
-   Original tracking publication/revision timing remains unknown; preserve S02's cutoff and provenance limits. The
-   raw inventory retained 45 older entries without original fetch URL/time. Provider access remains one polite stream,
-   paused during the nightly.
-2. **Continue S07 independently at 70%:** all four baseline folds and their independent accounting are complete.
-   The original auditor source is in **5fd5e00**; its guarded v2 has passed Pylance/tests and four-fold accounting.
-   The report archive has no development-season
-   examples. Do not equate inferred membership with eligibility or score/tune status on the protected-season archive.
-   The sequence builder has a passed synthetic/preflight check and produced **128,321** independently audited
-   prior-state rows. The independently audited frozen fold screen scored **18,612** conditional return/rest
-   observations; its exact source was committed before scoring. The censored-spell and role-specific starter-frequency
-   comparisons and independent audits are complete. Address the reproduced short-roster serving fallback honestly
-   after frozen S06 replays finish, without changing valid-world draws or leaking actual lineups; document cold starts,
-   missing reports, prior-position gaps, trades and missing rosters, and test the S08/S10 fallback contracts. Do not
-   present selected listed-player outcomes as physical recovery. Continue S06–S10 in dependency order.
+1. **Finish S07 at 90%.** The fixed fallback and origin/timing safeguards are tested but not delivered. Pause any NBA Stats history
+   stream, then run `.venv/bin/python -u scripts/nightly_musnba.py` with a retained log and normal input rebuild.
+   The retained schedule has **7** games on 22 Nov and **10** on 23 Nov; report per-game progress/rates. Do not
+   use `--no-rebuild` for changed inputs. Check the new reports, origin/cutoff and per-world identities with
+   `.venv/bin/python scripts/a1_snapshot_availability_audit.py --days 2026-11-22 2026-11-23 --origin 2026-11-22
+   --expected-model engine-v1.3 --expected-sims 10000 --output <new-report.json>`. Then run smoke/fault, inspect
+   touched-route 1440/960/390 screenshots in both themes, verify the new iCloud bundle and its import/offline
+   behaviour, publish the reviewed data-free Pages shell and check the hosted service worker. Record the bundle
+   hash, run ID and manual phone-import requirement, then commit/push the S07 checkpoint.
+2. **Continue S08–S10** in dependency order. S08 must solve the exact weighted-mixture/10,000-unweighted-world
+   counterexample without rounding away discrepancies; S10 must not infer a future physical-absence hazard from
+   recorded-DNP proxies. Keep actual-participant diagnostics separate from pre-game availability.
 3. **S11 freezes the tested combination before promotion.** Confirm on the fixed wider folds and second seed, protect
    the final test and use player outcomes first.
 4. **S12/S13 implement model visibility and versioned daily history.** Preserve original and previous-version
@@ -1470,6 +1584,14 @@ states the two cutoff-safe tests; README documents the diagnostic commands. ENGI
 their status only: no serving design, app, forecast, bundle or shell changed. AGENTS needs no change because the
 scoped overnight authority and checkpoint protocol are already recorded. v1.3 and the existing PWA generation remain
 served; phone import is unconfirmed.
+
+**S06 checkpoint document review:** HANDOFF records the completed decision, evidence, checks and S07 resume;
+PLAN updates the phase, milestone and log; FINDINGS holds the paired and state-specific results and the starter
+timing audit; TRAINING_PLAN freezes the gate and timing exclusion; ENGINE_PLAN records the unpromoted policy and
+remaining foul-out limitation; DASHBOARD_PLAN and README document the tested but undelivered S07 changes and commands.
+AGENTS needs no change because the scoped overnight authority and checkpoint protocol are already recorded. The
+hosted model, Pages shell and iCloud bundle remain unchanged; local source assets may be visible, and phone import
+is unconfirmed.
 
 **S04 checkpoint document review:** HANDOFF records both defence decisions, source checkpoints and the active S05
 queue; PLAN records weighted completion and measured results; FINDINGS holds the fold populations, negative findings

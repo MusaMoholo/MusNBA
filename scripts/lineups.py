@@ -19,12 +19,13 @@ import argparse
 import json
 import sys
 from pathlib import Path
+from typing import Any
 
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from basketball_common import DERIVED, write_json  # noqa: E402
+from basketball_common import DERIVED, LINEUP_TIMING_POLICY, verified_pre_tip, write_json  # noqa: E402
 
 SNAPSHOTS = ROOT / 'data' / 'snapshots'
 OUT = DERIVED / 'lineups' / 'accuracy.json'
@@ -36,9 +37,13 @@ def score_day(day: str, box: pd.DataFrame) -> dict | None:
         return None
     games = json.loads(path.read_text())
     meta = json.loads((SNAPSHOTS / day / 'meta.json').read_text()) if (SNAPSHOTS / day / 'meta.json').exists() else {}
+    if meta.get('kind') != 'prospective':
+        return None
     slots = right = teams = all_five = 0
     misses = []
     for gid, g in games.items():
+        if verified_pre_tip(meta, gid) is not True:
+            continue
         real = box[box['game_id'] == str(gid)]
         if real.empty:
             continue
@@ -53,13 +58,21 @@ def score_day(day: str, box: pd.DataFrame) -> dict | None:
             misses += [{'game_id': gid, 'side': side, 'projected_not_started': sorted(proj - actual), 'started_not_projected': sorted(actual - proj)}] if k < 5 else []
     if not teams:
         return None
-    return {'slate': day, 'model': (meta.get('model') or {}).get('id'), 'team_games': teams, 'slot_accuracy': round(right / slots, 4),
+    return {'slate': day, 'model': (meta.get('model') or {}).get('id'), 'completed_at': meta['completed_at'],
+            'team_games': teams, 'slot_accuracy': round(right / slots, 4),
             'all_five': round(all_five / teams, 4), 'misses': misses}
 
 
 def score(days=None) -> dict:
     box = pd.read_csv(DERIVED / 'player_games.csv', dtype=str, usecols=['game_id', 'player_id', 'starter'])
-    record = json.loads(OUT.read_text()) if OUT.exists() else {'slates': {}}
+    record: dict[str, Any] = json.loads(OUT.read_text()) if OUT.exists() else {'slates': {}}
+    if record.get('timing_policy') != LINEUP_TIMING_POLICY:
+        record['legacy_unverified_slates'] = record.get('slates', {})
+        if record.get('overall') is not None:
+            record['legacy_unverified_overall'] = record['overall']
+        record['slates'] = {}
+        record.pop('overall', None)
+    record['timing_policy'] = LINEUP_TIMING_POLICY
     for day in days or sorted(p.name for p in SNAPSHOTS.glob('20*') if p.is_dir()):
         r = score_day(day, box)
         if r is not None:
@@ -70,6 +83,8 @@ def score(days=None) -> dict:
         record['overall'] = {'slates': len(sl), 'team_games': n,
                              'slot_accuracy': round(sum(r['slot_accuracy'] * r['team_games'] for r in sl) / n, 4),
                              'all_five': round(sum(r['all_five'] * r['team_games'] for r in sl) / n, 4)}
+    else:
+        record.pop('overall', None)
     write_json(OUT, record, pretty=True)
     return record
 

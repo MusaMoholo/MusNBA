@@ -1,3 +1,4 @@
+import hashlib
 import unittest
 from unittest.mock import patch
 
@@ -250,6 +251,54 @@ class AvailabilityCohortTests(unittest.TestCase):
             available[0, 0] = False
             with self.assertRaisesRegex(ValueError, 'fewer than five'):
                 game._target_tables(available, np.random.default_rng(42))
+
+    def test_short_rosters_fail_in_both_engine_rotation_paths(self):
+        state = {'healthy': 10.0, 'cap': 10.0, 'ramp': 1.0, 'rotation': 1.0, 'priority': 10.0,
+                 'start_share': 1.0, 'sd_table': {'edges': [0, 10, 20, 30, 40, 50], 'sd': {}}}
+        game = object.__new__(engine.Game)
+        game.sides = ('home', 'away')
+        game.side = np.repeat([0, 1], 5)
+        game.expected = np.full(10, 10.0)
+        game.players = {side: [{'pos': 'G'} for _ in range(5)] for side in game.sides}
+        game.lineup = {0: [], 1: []}
+        game.templates = {0: [], 1: []}
+        game.strict_minute_targets = False
+        available = np.ones((2, 10), dtype=bool)
+        available[1, 0] = False
+        for targets in (False, True):
+            with self.subTest(targets=targets):
+                game.mstate = [state.copy() for _ in range(10)] if targets else None
+                with self.assertRaisesRegex(ValueError, 'fewer than five'):
+                    game.lineup_tables(available, np.random.default_rng(42))
+
+    def test_valid_rotation_worlds_and_random_stream_match_pre_guard(self):
+        state = {'healthy': 20.0, 'cap': 40.0, 'ramp': 1.0, 'rotation': 1.0, 'priority': 20.0,
+                 'start_share': 0.5, 'sd_table': {'edges': [0, 10, 20, 30, 40, 50], 'sd': {}}}
+        game = object.__new__(engine.Game)
+        game.sides = ('home', 'away')
+        game.side = np.repeat([0, 1], 6)
+        game.expected = np.full(12, 20.0)
+        game.players = {side: [{'pos': 'G'} for _ in range(6)] for side in game.sides}
+        game.lineup = {0: [], 1: []}
+        game.templates = {0: [], 1: []}
+        game.strict_minute_targets = False
+        available = np.ones((2, 12), dtype=bool)
+        available[0, 5] = False
+        available[1, 10] = False
+        fingerprints = {
+            False: '4f23f0626b73e64fd1821e7174475de523261cee46765c917bf5097219e4f55d',
+            True: '9d1427395faedf996a9636a0169bf22f98ddcc14ce22420216dd54f39a8373eb',
+        }
+        for targets, expected in fingerprints.items():
+            with self.subTest(targets=targets):
+                game.mstate = [state.copy() for _ in range(12)] if targets else None
+                rng = np.random.default_rng(42)
+                tables, combos = game.lineup_tables(available, rng)
+                digest = hashlib.sha256(tables.tobytes() + combos.tobytes() + rng.bytes(64)).hexdigest()
+                self.assertEqual(digest, expected)
+                for world in range(2):
+                    for side in range(2):
+                        self.assertTrue(available[world, tables[combos[world, side]]].all())
 
     def test_fold_minute_distribution_reuses_deterministic_stream(self):
         states = [{'healthy': 24.0, 'cap': 40.0, 'ramp': 1.0, 'rotation': 1.0, 'priority': 24.0}

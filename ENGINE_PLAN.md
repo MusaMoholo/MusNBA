@@ -158,7 +158,9 @@ expectations, and game state (fouls, blowouts, overtime) still bends them.
 
 **Planned M7 (A1 S06): a target-aware substitution model.** Currently v1.3 rescales replayed rotation tables
 to D29 per-world targets; these do not respond to simulated score or ordinary foul trouble. The design below is not
-yet serving. S05 first audits rotation membership and minute allocation; S06 then integrates state-responsive changes.
+serving. S05 tested role/minute candidates; S06's isolated state-responsive candidate improved pooled minute CRPS but
+did not establish all frozen non-inferiority bounds, so v1.3/D29 remains selected. Its foul-out repair is not
+silently promoted; the production mask defect remains an explicitly documented limitation.
 
 Before tip, per player and world:
 - availability (injury report, as today) and **target minutes** m\* for a competitive game, sampled
@@ -347,6 +349,16 @@ pre-date inputs, or the next slate if neither has games. It does not carry simul
 Tomorrow. Every later scheduled game uses the per-world team pathway, with no player/period forecast claimed there.
 The earlier seven-day design in D13/D18 is superseded, not an open choice.
 
+An unshipped S07 correction makes that origin explicit in snapshot metadata and team/player/period inputs; the
+engine now guards profiles and uses pre-origin minutes, stints and pair history. Older previews without explicit
+origin are not certified cutoff-safe. Forecast completion,
+not simulation start, is needed for a pre-tip label. Older outputs without completion metadata remain timing-unverified;
+their original fields are preserved, not reinterpreted as proof of publication.
+
+S06's selected-timeout substitution candidate is not promoted: its fixed player-first screen improved pooled minute
+CRPS but did not establish all registered non-inferiority bounds. v1.3's existing D29 path remains the control and
+served policy; the state-response replay is descriptive and uses actual participants (FINDINGS §6a).
+
 Universe k takes world k of each near-term engine game (modulo available worlds only where counts differ); those
 results update its own offensive/defensive ratings before later games. Later games draw scores using that world's
 ratings, then update against that world's own expected points. The ratings are never frozen at today's values.
@@ -364,6 +376,9 @@ still prohibits feeding team defensive ratings into possession models or forcing
 and durations, with role-specific evidence and uncertainty. This is not yet built into the long-range pathway.
 Evaluate games missed, return timing and calibration with dated information, without known future participants.
 A1 S08's Expected branch worlds, if validated, become the same near-term draws consumed by the season engine.
+The selected S07 fallback keeps fixed report-status probabilities and recent-inactivity heuristics as uncalibrated,
+labels unlisted injuries as assumptions, and rejects unavailable five-player worlds. There is no supported
+future physical-absence hazard; S10 must retain that limitation unless a candidate passes the frozen tests.
 
 Official postseason/tiebreak/Cup completeness remains later work. Current playoff pictures show marginal regular-
 season seeds and illustrative paths, not simulated playoff winners. Historical schedule definitions must reconcile

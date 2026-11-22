@@ -11,6 +11,7 @@ from __future__ import annotations
 import csv
 import re
 import sys
+import warnings
 from io import StringIO
 from pathlib import Path
 
@@ -128,30 +129,79 @@ INJURY_ID = re.compile(r'/id/(\d+)/')
 
 def roster_registry(run: Path) -> dict:
     """Current team, bio and availability per athlete from the latest rosters and injury report."""
-    out = {}
+    out, ambiguous = {}, set()
+    report = run / 'injuries.json.gz'
+    has_report = report.is_file()
+    if not has_report:
+        warnings.warn(f'{report}: injury report missing; unreported roster statuses are unknown', RuntimeWarning)
     for path in sorted((run / 'roster').glob('*.json.gz')):
         doc = read_json(path)
-        tid = doc['team']['id']
+        team_id = doc['team']['id']
+        if team_id is None:
+            raise ValueError(f'{path}: roster team ID is missing')
+        tid = str(team_id)
         for a in doc.get('athletes', []):
+            player_id = a['id']
+            if player_id is None:
+                raise ValueError(f'{path}: roster player ID is missing')
+            pid = str(player_id)
+            if pid in ambiguous:
+                continue
+            if pid in out:
+                if out[pid]['team'] == tid:
+                    raise ValueError(f'{path}: duplicate player {pid} on the same roster')
+                out.pop(pid)
+                ambiguous.add(pid)
+                continue
             injuries = a.get('injuries') or []
-            out[a['id']] = {'name': a.get('displayName', ''), 'short': a.get('shortName', ''),
-                            'pos': (a.get('position') or {}).get('abbreviation', ''), 'jersey': a.get('jersey', ''),
-                            'team': tid, 'age': a.get('age'), 'height': a.get('displayHeight', ''),
-                            'weight': a.get('displayWeight', ''), 'experience': (a.get('experience') or {}).get('years'),
-                            'status': injuries[0].get('status') if injuries else 'Active',
-                            'injury': None}
-    report = run / 'injuries.json.gz'
-    if report.exists():
-        for team in read_json(report).get('injuries', []):
+            reported_status = ((injuries[0].get('status') or '').strip() or None) if injuries else None
+            status = reported_status or ('Unknown' if injuries or not has_report else 'Active')
+            status_source = 'roster_injury' if injuries else ('not_listed_assumption' if has_report else 'missing_report')
+            out[pid] = {'name': a.get('displayName', ''), 'short': a.get('shortName', ''),
+                        'pos': (a.get('position') or {}).get('abbreviation', ''), 'jersey': a.get('jersey', ''),
+                        'team': tid, 'age': a.get('age'), 'height': a.get('displayHeight', ''),
+                        'weight': a.get('displayWeight', ''), 'experience': (a.get('experience') or {}).get('years'),
+                        'status': status, 'reported_status': reported_status, 'status_source': status_source, 'injury': None}
+    if ambiguous:
+        warnings.warn(f'{run}: {len(ambiguous)} players appear on multiple team rosters; omitted', RuntimeWarning)
+    if has_report:
+        document = read_json(report)
+        if not isinstance(document.get('injuries'), list):
+            raise ValueError(f'{report}: missing injury-report team list')
+        conflicts, matched, unmatched = set(), set(), 0
+        for team in document['injuries']:
+            if not isinstance(team.get('injuries'), list):
+                raise ValueError(f"{report}: missing injury list for team {team.get('id')}")
             for item in team.get('injuries', []):
                 links = (item.get('athlete') or {}).get('links') or []
                 pid = next((m.group(1) for l in links if (m := INJURY_ID.search(l.get('href', '')))), None)
-                if pid and pid in out:
+                if not pid:
+                    raise ValueError(f"{report}: injury entry lacks a player ID for team {team.get('id')}")
+                if pid in out:
+                    if str(team.get('id', '')) != str(out[pid]['team']):
+                        conflicts.add(pid)
+                        continue
+                    if pid in matched:
+                        raise ValueError(f'{report}: duplicate injury status for player {pid}')
+                    matched.add(pid)
                     details = item.get('details') or {}
-                    out[pid]['status'] = item.get('status') or out[pid]['status']
+                    reported_status = (item.get('status') or '').strip() or None
+                    out[pid]['status'] = reported_status or 'Unknown'
+                    out[pid]['reported_status'], out[pid]['status_source'] = reported_status, 'injury_report'
                     out[pid]['injury'] = {'status': item.get('status'), 'date': item.get('date'),
                                           'comment': item.get('shortComment') or '', 'type': details.get('type'),
                                           'detail': details.get('detail'), 'return': details.get('returnDate')}
+                else:
+                    unmatched += 1
+        if conflicts:
+            warnings.warn(f'{report}: {len(conflicts)} players have an injury entry for a different roster team',
+                          RuntimeWarning)
+        for pid in conflicts - matched:
+            out[pid]['status'], out[pid]['reported_status'] = 'Unknown', None
+            out[pid]['status_source'], out[pid]['injury'] = 'team_conflict', None
+        if unmatched:
+            warnings.warn(f'{report}: {unmatched} injury entries have no unambiguous current roster player',
+                          RuntimeWarning)
     return out
 
 
@@ -173,7 +223,7 @@ def build(run: Path | None = None):
         base = {'id': pid, **seen.get(pid, {})}
         current = roster.get(pid)
         if current:
-            base.update({k: v for k, v in current.items() if v not in (None, '') or k in ('injury',)})
+            base.update({k: v for k, v in current.items() if v not in (None, '') or k in ('injury', 'reported_status')})
             base['on_roster'] = True
         else:
             base.update({'team': base.get('last_team'), 'status': 'Not on current roster', 'injury': None,

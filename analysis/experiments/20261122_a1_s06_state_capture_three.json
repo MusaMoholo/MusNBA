@@ -1,0 +1,26 @@
+{
+ "experiment": "a1_s06_state_conditioned_capture",
+ "reference": "20261122T095342Z_a1_s06_penalty_three",
+ "games": 3,
+ "worlds_per_game": 1000,
+ "game_values_reproduced": 321,
+ "player_values_reproduced": 1408,
+ "captured_cells": 894,
+ "seconds": 210.4,
+ "limitations": "Selected simulated timeout opportunities and actual-participant rosters are not an exhaustive stoppage process or a pre-game availability forecast.",
+ "input_sha256": {
+  "scripts/a1_substitution_response_capture.py": "67ae0ca65853e9572373ac70c4d0b68872f9de39859c9efc699e7ef2771f464b",
+  "scripts/a1_substitution_engine.py": "51b5c4187fc9443e1842c646d635c94b5f1d9ead9b5519cb8793b3a216b69013",
+  "scripts/a1_foul_penalty_engine.py": "4c846fd479d67328e76626d343067a9c0ebf60aeb420af79d10bfcb5085b18d8",
+  "scripts/backtest.py": "2ff491455b5c1cac40b5c3502db97bcb4cdbc159e4f0fa494c09e7c5eb24533d",
+  "scripts/engine.py": "3c62f518a27ff006f572dadf74351301e8f6acdda6b8889037eac269ce81414e",
+  "models/v1.2d.json": "d0fded7eb9871494e0bc4a82a3627b0a3dc37c3c243d8c9378f151dec2789927",
+  "analysis/experiments/20261122_a1_s06_engine_models_F4.json": "794e1e06a193b097021e496a4d21d57ba61cf026b038bfb15d119991c6cde6d0",
+  "analysis/experiments/20261122T095342Z_a1_s06_penalty_three.json": "ee749cc33b60fe3cd51501a4e47063d0b1a251279305b07f23b58f1c19beb39e",
+  "data/derived/experiments/20261122T095342Z_a1_s06_penalty_three.parquet": "156d4f707bdc638a45e8098d7c199dccc1598c2b2aacbe42426c5b31b6f28153",
+  "data/derived/experiments/20261122T095342Z_a1_s06_penalty_three_players.parquet": "95e4458f9ab530a3c7d9dd772d7db8a2be3268118f2f56492e67d01e57ebf725"
+ },
+ "output_sha256": {
+  "data/derived/experiments/20261122_a1_s06_state_capture_three.parquet": "9e7bc0f10be3d12a0b73d0d914ad65d4dc73bc3c401cc92c65471ee10ec0bb6a"
+ }
+}

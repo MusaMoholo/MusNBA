@@ -1,0 +1,33 @@
+{
+ "experiment": "a1_s03_flow_independent_accounting",
+ "run": "20261122T103244Z_a1_s06_penalty_flow_fixed200",
+ "reference": null,
+ "games": 200,
+ "player_games": 4346,
+ "original_game_values_reproduced": null,
+ "original_player_values_reproduced": null,
+ "recorded_player_period_values_checked": 86920,
+ "simulated_team_quarter_and_component_values_checked": 6384,
+ "recorded_team_lineup_tick_sets_checked": 400,
+ "recorded_clock_values_checked": 800,
+ "max_absolute_difference": 2.842170943040401e-14,
+ "simulated_roster_players_without_box_output": [
+  {
+   "game_id": "401810691",
+   "team": "4",
+   "player": "5107156"
+  }
+ ],
+ "incomplete_roster_team_games": 1,
+ "limitations": "Team/quarter sums are checked only for sides whose entire simulated roster has player-box output. Scheduled fives precede foul-outs and their overlap is not event-level validation. No independent same-policy output reproduction was requested.",
+ "input_sha256": {
+  "analysis/experiments/20261122T103244Z_a1_s06_penalty_flow_fixed200.json": "a56fde23725862dff01f7c892e43b62d9f95f6e85a6a20de4fa0e3c30dd646fc",
+  "data/derived/experiments/20261122T103244Z_a1_s06_penalty_flow_fixed200.parquet": "2323e616d4f441a5d1777109f5e429f8b19ad05c17dcd00cbccec5ad684ebe3e",
+  "data/derived/experiments/20261122T103244Z_a1_s06_penalty_flow_fixed200_players.parquet": "3ecc576c581083c7694b935cd6a3f6a4bdc6e1fa5222ecc6613c79ebd2a9d833",
+  "data/derived/variants/matchup/features/pregame.parquet": "d4da5f071de3ddcbc72bbb4899a77f9b4f22d899a3a54bcfb76baf0097594d0e",
+  "data/derived/history/2026/player_periods.csv.gz": "ef35bb5c33c46e6a194cea30075d9974ead5d44be96c6074b60f6dac49e69c28",
+  "data/derived/history/2026/stints.parquet": "29de886d2afd2a5d9a55af2acb027fd3ee83a887584c71a9fe9951a9c2cc225f",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+  "scripts/a1_flow_audit.py": "248dbc23e835f903cd0cb89af8455f4b175508a0458d4dc85b18c98baff7a8a9"
+ }
+}

@@ -44,7 +44,7 @@ def real_tick_counts(stints: pd.DataFrame, roster: set[str]) -> tuple[int, int, 
     return int(valid.sum()), int((~valid).sum()), int((~known).sum())
 
 
-def audit(run: str, reference: str = a1_flow_compare.REFERENCE) -> tuple[dict, list[Path]]:
+def audit(run: str, reference: str | None = a1_flow_compare.REFERENCE) -> tuple[dict, list[Path]]:
     data = DERIVED / 'experiments'
     log_path = EXPERIMENTS / f'{run}.json'
     log = json.loads(log_path.read_text())
@@ -57,14 +57,18 @@ def audit(run: str, reference: str = a1_flow_compare.REFERENCE) -> tuple[dict, l
     ids = set(games['game_id'])
     if len(ids) != log['games'] or set(players['game_id']) != ids:
         raise ValueError('flow games and player outputs do not match the run log')
-    reference_games_path = data / f'{reference}.parquet'
-    reference_players_path = data / f'{reference}_players.parquet'
-    original_games = pd.read_parquet(reference_games_path)
-    original_players = pd.read_parquet(reference_players_path)
-    original_games = original_games.loc[original_games['game_id'].isin(ids)]
-    original_players = original_players.loc[original_players['game_id'].isin(ids)]
-    reproduced_games = a1_flow_compare.exact_reproduction(original_games, games, ['game_id'])
-    reproduced_players = a1_flow_compare.exact_reproduction(original_players, players, ['game_id', 'player'])
+    reference_paths = []
+    reproduced_games, reproduced_players = None, None
+    if reference is not None:
+        reference_games_path = data / f'{reference}.parquet'
+        reference_players_path = data / f'{reference}_players.parquet'
+        original_games = pd.read_parquet(reference_games_path)
+        original_players = pd.read_parquet(reference_players_path)
+        original_games = original_games.loc[original_games['game_id'].isin(ids)]
+        original_players = original_players.loc[original_players['game_id'].isin(ids)]
+        reproduced_games = a1_flow_compare.exact_reproduction(original_games, games, ['game_id'])
+        reproduced_players = a1_flow_compare.exact_reproduction(original_players, players, ['game_id', 'player'])
+        reference_paths.extend((reference_games_path, reference_players_path))
 
     profile_path = DERIVED / 'variants/matchup/features/pregame.parquet'
     profile = pd.read_parquet(profile_path, columns=['game_id', 'player', 'team'])
@@ -165,8 +169,8 @@ def audit(run: str, reference: str = a1_flow_compare.REFERENCE) -> tuple[dict, l
                 if pd.notna(value) and not 0 <= value <= upper:
                     raise ValueError(f'{game.game_id} {team}: invalid lineup overlap')
             tick_checks += 1
-    paths = [log_path, games_path, players_path, reference_games_path, reference_players_path,
-             profile_path, periods_path, stints_path, segments_path, Path(__file__)]
+    paths = [log_path, games_path, players_path, *reference_paths, profile_path, periods_path,
+             stints_path, segments_path, Path(__file__)]
     report = {
         'experiment': 'a1_s03_flow_independent_accounting', 'run': run, 'reference': reference, 'games': len(games),
         'player_games': len(players), 'original_game_values_reproduced': reproduced_games,
@@ -177,7 +181,8 @@ def audit(run: str, reference: str = a1_flow_compare.REFERENCE) -> tuple[dict, l
         'simulated_roster_players_without_box_output': missing.to_dict(orient='records'),
         'incomplete_roster_team_games': int((~complete).sum()),
         'limitations': 'Team/quarter sums are checked only for sides whose entire simulated roster has player-box '
-                       'output. Scheduled fives precede foul-outs and their overlap is not event-level validation.',
+                       'output. Scheduled fives precede foul-outs and their overlap is not event-level validation. '
+                       + ('No independent same-policy output reproduction was requested.' if reference is None else ''),
     }
     return report, paths
 
@@ -185,13 +190,16 @@ def audit(run: str, reference: str = a1_flow_compare.REFERENCE) -> tuple[dict, l
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('run')
-    parser.add_argument('--reference', default=a1_flow_compare.REFERENCE,
-                        help='same-policy run to reproduce; defaults to the original S01 control')
+    references = parser.add_mutually_exclusive_group()
+    references.add_argument('--reference', default=a1_flow_compare.REFERENCE,
+                            help='same-policy run to reproduce; defaults to the original S01 control')
+    references.add_argument('--no-reference', action='store_true',
+                            help='audit accounting without claiming same-policy output reproduction')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     if args.output.exists():
         raise FileExistsError(f'refusing to overwrite {args.output}')
-    report, paths = audit(args.run, args.reference)
+    report, paths = audit(args.run, None if args.no_reference else args.reference)
     report['input_sha256'] = {str(path.relative_to(ROOT)): sha256_file(path) for path in paths}
     write_json(args.output, report, pretty=True)
     print(json.dumps({key: value for key, value in report.items() if key != 'input_sha256'}, indent=2))

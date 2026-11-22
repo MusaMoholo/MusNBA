@@ -1574,6 +1574,31 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   report-status play/start candidate is calibrated or promoted. The existing fixed fallback is retained; the
   prospective collection/support gate is documented in TRAINING_PLAN §8.2. The retrospective baseline's Brier and
   starter accuracy do not establish status calibration or physical health.
+ - **S07 report-source distinction:** in the retained 21 Nov `20261121T225637Z` roster of **528** players, **110**
+  have a matched injury-report status and **418** have no listed injury. The latter remain subject to the existing
+  available assumption, not a reported health status. Pending ingest/report changes preserve the nullable reported
+  value and source separately, and the Game Centre explicitly discloses the assumption; this does not calibrate it.
+ - **Pre-tip provenance risk:** the previously served nightly computes each game's `pre_tip` from the slate
+  simulation's start timestamp, before its games are simulated and before the snapshot is written. A run crossing a
+  scheduled tip can therefore label an output pre-game even though it was not ready before that tip. This is a
+  code-path finding, not an estimate of occurrence. An unshipped repair records completion after the atomic snapshot
+  rename, tests a run crossing tip, labels older outputs without completion timestamps timing-unverified, and excludes
+  those from pre-game accuracy summaries. S13 must retain this distinction in its archive and activation work.
+ - **Prospective preview origin defect:** the retained **22 Nov** preview shares the **21 Nov** season origin with
+  the 21 Nov snapshot but records cutoff **21 Nov**, not **20 Nov**. Its saved league input includes **236** completed
+  games versus **235** for the origin-day snapshot: game **401910023** on 21 Nov entered the preview's target-date
+  box inputs.
+  The production engine profile rebuild uses the origin date, so these sources are also inconsistent. This observed
+  example violates the common pre-origin input contract. The unshipped S07 repair routes box/period data through a
+  shared origin and independently rejects non-pre-origin saved team/player logs; after the S06 audit, the engine
+  also gained origin-aware profile, minute, stint and pair-history guards. Previously saved previews must not be
+  relabelled safe.
+ - **S08 exact-mixture constraint:** in a synthetic boundary example, two equally weighted 10,000-world branches
+  with 1 and 0 home wins have an exact blended win probability of **1/20,000**. No unweighted 10,000-world season
+  can have that win frequency: its nearest counts are **0/10,000** and **1/10,000**. Simple fixed-size branch
+  subsampling therefore cannot satisfy exact branch-weighted and game/season win-count identities in general.
+  This is arithmetic, not an observed NBA frequency; S08 must reconcile the full contract explicitly rather than
+  rounding away the discrepancy or claiming a sampled subset reproduces full-branch outcomes.
 - **S07 sequence-builder input preflight:** the 2022–23 development source yields **2,460** distinct NBA team-games,
   **31,551** player listings and **31,471** prior-state observations. Raw boxes and segment schedules agree on all
   **2,460** team-game sides for that season. This is a construction check, not a return/rest score, and the historical
@@ -1628,6 +1653,64 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   the legacy target-table fallback reinstates the unavailable player for **2,880/2,880** seconds. This is a
   reproduced correctness bug, not an observed historical rate; the zero short-roster proxy-world count above
   cannot validate rare or uncertain prospective rosters. The serving path has not yet been changed.
+- **S07 report fallback reproduction:** synthetic roster fixtures exposed two existing issues: a missing injury
+  report/status was labelled `Active`, and an injury entry from a previous team could overwrite a traded player's
+  current roster status. An uncommitted ingest repair marks these cases `Unknown`, warns on conflicting/missing
+  inputs, omits players listed on multiple teams and rejects malformed or unidentifiable report entries.
+  Rebuilding the five retained valid report inventories reproduced all **528** roster-status counts per run
+  exactly; this is parity on those inputs, not evidence that the fallback probability is calibrated. Additional
+  focused tests reproduce `availability(None)` and `availability('')` returning **1.0**, while whitespace
+  retains an unlabelled status; cold-start prior, traded-player team selection and missing-roster handling pass.
+  In the retained 20261121T225637Z registry with strictly prior player history and the current recent-DNP
+  heuristic, all **30** teams have at least **10** players assigned availability 1.0, so no under-five pattern
+  can occur there. This is not a forecast of the risk under a future missing report. A separate prospective
+  placeholder fixture returned a result despite **51/100** worlds having only four available players, and the
+  projected-starter selector returned **four** starters for a seven-player pool with four certain players.
+  Candidate fail-fast and five-starter repairs are isolated and unshipped.
+- **S07 cold-roster placeholder stress:** with six available players, no positive historical minute inputs and one
+  unavailable player, the prospective placeholder returned team averages of **101.9/102.1 points** but **zero**
+  players with displayed lines or minutes. Similar synthetic tests with **1 or 4** positive-minute players also
+  returned without flagging the unfillable allocation. An isolated, unshipped repair warns and records an
+  explicitly uncalibrated equal-share fallback among available players only for these worlds, fills five projected
+  starter labels, and independently reconciles every quarter's player minutes and team/player points in
+  **300 worlds per side**; the unavailable player receives no minutes or points. This is a conservative placeholder
+  for missing roles, not an accuracy result or a substitute for the engine's D29 cold-player prior. Valid-world
+  seeded fingerprints remain unchanged. Other existing placeholder allocation limitations are not resolved by
+  this targeted stress test.
+- **S06 fixed candidate preliminary result:** on the **200** fixed F4 games / **4,346** scored player-games with
+  actual participants supplied, the isolated foul-penalty substitution candidate's pooled minute CRPS is
+  **3.5662→3.5309** (paired change **−0.03529**, 95% **[−0.04462, −0.02609]**), larger than the frozen
+  **0.02634** seed-noise floor. An independent bootstrap reconstructed **15** pooled metrics and established
+  **10/10** pooled bias/coverage bounds. The uncorrected primary screen passes, but only **66/69** tier/game
+  non-inferiority bounds are established: margin coverage, Q2-margin coverage and Q3-total coverage do not clear
+  their registered **0.03** absolute-deviation bound. The Q3-total coverage change is **+0.030**, 95%
+  **[+0.010, +0.055]**. Pooled points CRPS is **3.1614→3.1468**; team margin CRPS change is **−0.0309**,
+  95% **[−0.0934, +0.0313]**. The 200-game flow independently reconciled **86,920** player-period values and
+  **6,384** complete-team component/quarter sums; one team lacked a full scored-player roster. This is not a
+  forecast with predicted availability or a promotion. Reports:
+  `20261122_a1_s06_penalty_fixed200_{compare,pooled_accounting,gate,retrospective}.json` and
+  `20261122_a1_s06_penalty_flow_fixed200_accounting.json`.
+- **S06 direct state response and decision:** the same-policy replay completed **200** games / **1,000** worlds per
+  game in **3,506.9 s**, exactly reproducing **21,400** game and **95,612** player values. Its independent audit
+  reconciled **800** game/state totals and compared **191** games with valid recorded selected-timeout states;
+  **48/70** role/state cells meet the frozen support floor. In pooled close states, exits were **15.31% recorded**
+  versus **11.91% simulated** (simulation-minus-recorded 95% **−4.66 to −2.17 percentage points**); in pooled
+  foul trouble they were **26.98%** versus **20.15%** (95% **−12.34 to −1.81 pp**). First-quarter rates were
+  **16.32%** versus **11.33%** (95% **−6.45 to −3.56 pp**); the pooled OT and some star cells are unsupported.
+  The selected opportunities and player composition differ and actual participants were supplied, so none of these
+  comparisons is a causal, matched-opportunity or pre-game availability result. In combination with S05's
+  negative primary screens, the S06 candidate's **66/69** established non-inferiority bounds do not clear the
+  frozen gate. **Retain v1.3/D29 unchanged; do not promote or score the protected season.** Wider-fold and
+  multiplicity-adjusted confirmation were not run because the candidate did not pass this screen. The candidate
+  screen took **2,004 s**, the diagnostic replay **3,506.9 s**; both remain isolated. Reports:
+  `20261122_a1_s06_state_capture_fixed200{,_accounting}.json`.
+- **Starter-score timing audit:** the retained `data/derived/lineups/accuracy.json` contains **10** saved slates,
+  **132** team-games, **82.73%** starter-slot and **31.06%** all-five accuracy. The corresponding retained
+  snapshots comprise **7** retrospective slates / **104** team-games and **3** prospective slates / **28**
+  team-games; none records a completion timestamp. These are legacy scores, not verified pre-tip
+  accuracy. The working scorer retains the old per-slate and overall record separately and scores only prospective
+  games whose completed snapshot is explicitly pre-tip; this fix has not yet been delivered or applied to the
+  retained score file. Unverified timing is not evidence that these forecasts were actually late.
 
 ## 6b. A1 S03 matched component diagnosis (22 Nov 2026; descriptive)
 

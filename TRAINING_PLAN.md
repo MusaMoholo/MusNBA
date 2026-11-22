@@ -556,6 +556,11 @@ timeouts, but the simulated template selection, actual-participant conditioning,
 historical outcome-selected windows prevent causal or pre-game availability claims. No changed draw or promotion
 is implied by capture alone.
 
+The completed fixed S06 screen did not establish **3/69** registered non-inferiority bounds despite its uncorrected
+pooled-minute improvement. Its full same-policy replay and independent state accounting completed; see FINDINGS for
+population-specific rates and uncertainty. Retain the S05/D29 control. Wider-fold and multiplicity-adjusted
+confirmation and the protected final test were not run for this non-passing candidate.
+
 For S07's initial report-coverage audit, inventory every retained ESPN collection run without fetching a new source.
 Treat each collection's `finished` UTC timestamp as the conservative latest capture time; a dated tip is usable only
 when the entire run finished strictly before that tip. Audit missing rosters, injury files, status counts, unmatched
@@ -563,6 +568,21 @@ injury IDs and final-box **coverage** separately. Absence of an injury entry is 
 2026-27 snapshots belong to the protected final season, count whether a final box contains a rostered player but do
 not compare status with play/start outcomes, estimate calibration or use those outcomes for selection. Development
 coverage and the scoring gate must be reported separately from this descriptive archive inventory.
+
+**S07 fallback selection:** no retained development-origin injury reports support a status-to-play/start fit.
+Keep the fixed status probabilities as explicitly uncalibrated assumptions; a genuinely missing/unknown status
+uses the existing 0.6 unknown fallback rather than silently becoming Active. An unlisted injury is an Active
+availability assumption, not a reported healthy status; the existing recent-inactivity fallback remains labelled.
+Use D29's pre-origin projected-starter rule, filling from eligible uncertain players when fewer than five are
+near-certain. Missing rosters and any sampled world with fewer than five available players fail explicitly. A cold
+placeholder roster may use a disclosed equal-share fallback; it is not an accuracy result. No future physical-absence
+hazard is promoted from censored, coach-DNP-dominated proxies.
+
+For S08, these fixed probabilities are scenario weights, not calibrated injury probabilities; multiplying two of
+them is an unvalidated independence assumption, and more-than-two one-out branches are non-exhaustive. The exact
+Expected/season mixture must meet D31's accounting requirements rather than round away a discrepancy. For S10,
+the retained pathway has no fitted future player-absence hazard; do not treat DNP proxy durations or actual future
+participants as future availability. New hazard work requires dated pre-origin cohorts and the unchanged gates.
 
 For S07's first **historical no-report and starter baselines**, freeze the following before scoring. Reuse the
 independently audited corrected S05 no-report F1–F4 candidate rows and fixed game IDs; prior-box membership is
@@ -644,6 +664,26 @@ starters outside inferred rosters. These are exploratory independent-fallback sc
 validated as physical availability, independence is untested, and conditioning on complete known rosters/starter
 labels is not a dated pre-tip forecast. No candidate is promoted, and no fold, support threshold, horizon or
 setting is selected using these follow-up results.
+
+**S07 hand-off contract for S08/S10:** the retained dated development-report cohort has zero origins, so the fixed
+status-to-availability values remain uncalibrated fallbacks, not fitted play probabilities; an unknown or missing
+status must remain visibly unknown. A same-team current roster/report match may supply a status, but an ambiguous
+multi-team roster or stale other-team report cannot establish eligibility. Cold players retain explicitly labelled
+prior-based roles, missing rosters must not be repaired from actual game participants or starters, and an
+impossible five-player availability pattern must not silently activate a player. S08 may multiply up to two
+reported-maybe fallback probabilities only as an explicit, unvalidated independence assumption; more-than-two
+one-out branches are non-exhaustive under D31. S10 may consume an accepted near-term Expected mixture, but the
+recorded-listing survival proxies do not justify adding physical injury, return-date or rest hazards to the
+long-range pathway. Until dated evidence passes the frozen chronological support and calibration gates, retain
+pathway v1's no-future-absence model and disclose that limitation.
+
+The unshipped S07 placeholder repair explicitly flags worlds with fewer than five positive minute inputs and uses
+equal regulation-minute shares among their sampled available players; it is an uncalibrated emergency assumption,
+not inferred health or a replacement for the engine's separate D29 cold-player prior. Fewer than five available
+players still fails explicitly. Do not treat this synthetic fallback as a measured accuracy improvement.
+Daily starter accuracy uses only prospective games whose saved snapshot completion is verified before tip.
+Retrospective and completion-unverified legacy records remain separate and do not enter that pre-game aggregate;
+current-season monitoring is not a feature-selection or promotion dataset.
 
 For S03's remaining flow diagnosis, reproduce the **same 200-game, 1,000-world** free-running control with its
 original seeds and opt-in diagnostics only; audit every original output field against the retained reproduction before

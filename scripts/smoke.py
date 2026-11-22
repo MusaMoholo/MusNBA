@@ -18,7 +18,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from basketball_common import DATA, DERIVED, MASTER_CSV, NBA_TEAM_IDS, SNAPSHOTS, VIEWS, read_json  # noqa: E402
+from basketball_common import DATA, DERIVED, MASTER_CSV, NBA_TEAM_IDS, SNAPSHOTS, VIEWS, day_shift, read_json  # noqa: E402
 from scripts import box_scores, master_fixtures, pbp, projection  # noqa: E402
 from scripts.season_stats import period_profiles, player_table, team_table  # noqa: E402
 
@@ -332,10 +332,14 @@ def main():
             first = next(iter(games.values()))
             first['periods']['fg']['home']['win'] = round(first['periods']['fg']['home']['win'] + 0.02, 4)
         W = meta['sims']
-        before = [r for r in finals if r['date_et'] < day]
+        origin = meta.get('origin', day)
+        before = [r for r in finals if r['date_et'] < origin]
         T = stats['teams']
         check(f'{day}: W total = L total = finals before cutoff', sum(t['w'] for t in T.values()) == sum(t['l'] for t in T.values()) == len(before),
               (sum(t['w'] for t in T.values()), len(before)))
+        if 'origin' in meta:
+            check(f'{day}: snapshot and season share the forecast origin',
+                  origin <= day and meta['cutoff'] == day_shift(origin, -1) and season['as_of'] == origin)
         problems = []
         for gid, g in games.items():
             for period, x in g['periods'].items():
@@ -397,9 +401,10 @@ def main():
     meta = read_json(latest / 'meta.json')
     games = read_json(latest / 'games.json')
     if games and meta['inputs']['player_games_sha256'] == __import__('basketball_common').sha256_file(DERIVED / 'player_games.csv') and meta['kind'] == 'prospective' and meta['inputs'].get('registry_run') == read_json(DERIVED / 'players.json')['run']:
-        T, lg = team_table(team_rows, day, teams)
-        P = player_table(player_rows, day)
-        Q, priors = period_profiles(period_rows, player_rows, day, team_rows, blowout=15)
+        origin = meta.get('origin', day)
+        T, lg = team_table(team_rows, origin, teams)
+        P = player_table(player_rows, origin)
+        Q, priors = period_profiles(period_rows, player_rows, origin, team_rows, blowout=15)
         gid = sorted(games)[0]
         stored = games[gid]
         if args.fault:
@@ -415,7 +420,8 @@ def main():
                 ('stints', DERIVED / 'rotations' / 'stints.parquet'), ('on_court', DERIVED / 'rotations' / 'on_court.parquet'),
                 ('models', DERIVED.parent / 'models' / node_models / 'config.json')) if k in hashed)
             if same:
-                g = engine_mod.inputs_for(by_id[gid], day, T, lg, P, registry, Q, priors, rotation=meta['model'].get('rotation', 'replay'), models=node_models)
+                g = engine_mod.inputs_for(by_id[gid], day, T, lg, P, registry, Q, priors,
+                                          rotation=meta['model'].get('rotation', 'replay'), models=node_models, origin=origin)
                 again = engine_mod.Engine(node_models).simulate(g, meta['sims'], projection.seed_for(meta['model']['id'], day, gid))
                 again = json.loads(json.dumps(again))
             else:
@@ -424,6 +430,14 @@ def main():
         else:
             again = projection.simulate_game(by_id[gid], T, lg, P, registry, day, True, meta['sims'], Q, priors)
         if again is not None:
+            if 'availability_report' in stored:
+                from scripts.nightly import forecast_availability_report
+                again['availability_report'] = forecast_availability_report(by_id[gid], registry)
+            else:
+                for side in ('home', 'away'):
+                    for player in again[side]['players']:
+                        player.pop('availability_basis', None)
+                print(f'NOTE  legacy {day} replay checks reproducibility, not origin or report provenance')
             check(f'{day}: stored game {gid} re-simulates bit-for-bit ({meta["model"]["id"]})',
                   json.dumps(again, sort_keys=True) == json.dumps(stored, sort_keys=True))
     else:

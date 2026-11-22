@@ -61,7 +61,10 @@ function strengthTable(runs) {
 }
 
 function lineupPanel(l) {
-  if (!l || !l.overall) return '<p class="note">No finished slates scored yet.</p>';
+  const verified = l?.timing_policy === 'completed_before_tip-v1';
+  const excluded = verified ? (l.legacy_unverified_slates || 0) : (l?.legacy_unverified_slates || l?.slates?.length || 0);
+  const note = excluded ? ` ${excluded} older ${excluded === 1 ? 'slate is' : 'slates are'} excluded: retrospective or completion timing unverified.` : '';
+  if (!verified || !l.overall) return `<p class="note">No verified pre-tip starter forecasts scored yet.${note}</p>`;
   const rows = l.slates.slice().reverse().map(s => `<tr><td class="l">${esc(dayLabel(s.slate))}</td><td class="l dim opt">${esc(s.model || '')}</td><td>${s.team_games}</td>
     <td>${rate(s.slot_accuracy, 1)}</td><td>${rate(s.all_five, 0)}</td></tr>`).join('');
   return `<div class="tiles"><div class="tile"><div class="note" style="margin:0">Starter slots right</div><b>${rate(l.overall.slot_accuracy, 1)}</b></div>
@@ -69,7 +72,7 @@ function lineupPanel(l) {
       <div class="tile"><div class="note" style="margin:0">Team-games</div><b>${l.overall.team_games}</b></div></div>
     <div class="scroll" style="margin-top:8px"><table><thead><tr><th class="l">Slate</th><th class="l opt">Model</th><th>Team-games</th><th>Slots right</th><th>All five</th></tr></thead>
     <tbody>${rows}</tbody></table></div>
-    <p class="note">Each saved slate's projected starters against the real ones once its games are final.</p>`;
+    <p class="note">Verified pre-tip projected starters against the real ones once games are final.${note}</p>`;
 }
 
 function allocatorPanel(a) {

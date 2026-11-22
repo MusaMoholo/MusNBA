@@ -47,6 +47,18 @@ check('import completes and app renders slate', await waitFor(`!!document.queryS
 check('logo served from imported data', await waitFor(`[...document.querySelectorAll('img.logo')].some(i => i.complete && i.naturalWidth > 0)`, 15000));
 await send('Page.navigate', {url: args.url + '#/game/401910009'}, s);
 check('game centre renders from storage', await waitFor(`document.querySelector('.bezel') && !!document.querySelector('[data-mode=cmp]')`));
+check('forecast timing is honest for imported data', await evaluate(`(async () => {
+  const ui = await import('./assets/ui.mjs'), game = await ui.api('game/401910009'), p = game.projection;
+  if (!p) return false;
+  let label = 'Timing unverified';
+  if (p.kind === 'retrospective') label = 'Retrospective';
+  else if (p.kind === 'prospective' && p.completed_at) {
+    const before = new Date(p.completed_at) < new Date(game.game.tip_utc);
+    if (p.pre_tip !== before) return false;
+    label = before ? 'Pre-game' : 'Built after tip-off';
+  }
+  return document.querySelector('.bezel').textContent.includes(label);
+})()`));
 await send('Page.navigate', {url: args.url + '#/team/14'}, s);
 check('phone team form stacks chart and fixtures', await waitFor(`(() => { const items = [...document.querySelectorAll('.form-grid > div')]; return items.length === 2 && items[1].getBoundingClientRect().top >= items[0].getBoundingClientRect().bottom - 1; })()`));
 check('service worker controls page', await waitFor(`!!navigator.serviceWorker.controller`, 15000) || (await send('Page.reload', {}, s), await waitFor(`!!navigator.serviceWorker.controller`, 15000)));
@@ -68,6 +80,15 @@ await send('Page.navigate', {url: args.url + '#/standings/movers'}, s);
 check('offline movers read imported comparisons', await waitFor(`document.querySelector('#view').textContent.includes('Since the previous forecast')`));
 await send('Page.navigate', {url: args.url + '#/about'}, s);
 check('model guide works offline', await waitFor(`document.querySelector('#view').textContent.includes('Reading the numbers')`));
+await send('Page.navigate', {url: args.url + '#/lab'}, s);
+check('starter-score timing stays honest offline', await waitFor(`document.querySelector('#view').textContent.includes('Projected starters — nightly record')`)
+  && await evaluate(`(async () => {
+    const ui = await import('./assets/ui.mjs'), lab = await ui.api('lab'), lineups = lab.lineups;
+    const text = [...document.querySelectorAll('#view section')].find(x => x.querySelector('h2')?.textContent.includes('Projected starters'))?.textContent || '';
+    const verified = lineups?.timing_policy === 'completed_before_tip-v1' && !!lineups?.overall;
+    return verified ? text.includes('Verified pre-tip projected starters') : text.includes('No verified pre-tip starter forecasts scored yet.');
+  })()`));
+await send('Page.navigate', {url: args.url + '#/about'}, s);
 check('model guide numbers follow loaded simulation counts', await evaluate(`(async () => {
   const ui = await import('./assets/ui.mjs'), page = await import('./assets/about.mjs');
   ui.meta().model.sims = 1234;

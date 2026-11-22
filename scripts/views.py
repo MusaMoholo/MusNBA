@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build API-ready presentation views in data/views/api from retained snapshots and data.
 
-Views never fetch, fit or simulate. They join the immutable snapshots (pre-game projections)
+Views never fetch, fit or simulate. They join immutable dated snapshots
 with the latest master fixtures and box scores (results). serve.py and the PWA bundle serve
 exactly these files, so laptop and phone always show the same responses.
 """
@@ -14,8 +14,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from basketball_common import (APP_NAME, DERIVED, SEASON_LABEL, SNAPSHOTS, VIEWS, read_json, utc_now,  # noqa: E402
-                               write_json)
+from basketball_common import (APP_NAME, DERIVED, LINEUP_TIMING_POLICY, SEASON_LABEL, SNAPSHOTS, VIEWS, read_json,  # noqa: E402
+                               utc_now, verified_pre_tip, write_json)
 from scripts import box_scores, master_fixtures, pbp  # noqa: E402
 from scripts.season_stats import period_profiles  # noqa: E402
 
@@ -420,22 +420,30 @@ def spotlight_entries(gid: str, r: dict, sim: dict) -> list:
     return out
 
 
-def availability(r: dict, sim: dict, registry: dict, season_of) -> dict:
-    """U7: per side, everyone on the injury report — status and comment, the chance he plays in the simulations, minutes if he
-    plays and his season average; ruled-out players come from the registry (they never enter the simulations)."""
-    out = {}
+def availability(sim: dict, season_of) -> dict:
+    """U7: the saved report as used by the forecast, never the latest registry as a substitute for its origin."""
+    report = sim.get('availability_report')
+    if report is not None and (not isinstance(report, dict) or
+                               any(not isinstance(report.get(side), list) for side in ('away', 'home'))):
+        raise ValueError('invalid saved availability report')
+    out: dict[str, str | list[dict]] = {'source': 'snapshot' if report is not None else 'partial-legacy'}
     for side in ('away', 'home'):
-        tid = str(r[f'{side}_id'])
         simp = {str(x['id']): x for x in sim[side]['players']}
         rows = []
-        for pid, reg in registry.items():
-            st = reg.get('status') or 'Active'
-            if str(reg.get('team')) != tid or st == 'Active' or not reg.get('on_roster', True):
+        entries = report[side] if report is not None else sim[side]['players']
+        for entry in entries:
+            pid = str(entry['id'])
+            x = simp.get(pid)
+            st = (entry.get('status') or '').strip() or 'Unknown'
+            assumed = x.get('availability') if x else entry.get('availability')
+            if st.lower() == 'active' and (assumed is None or assumed >= 1):
                 continue
-            x = simp.get(str(pid))
-            sa = season_of(str(pid))
-            inj = reg.get('injury') or {}
-            rows.append({'id': str(pid), 'name': reg.get('name'), 'status': st, 'comment': inj.get('comment'), 'return': inj.get('return'),
+            sa = season_of(pid)
+            inj = entry.get('injury') or {}
+            rows.append({'id': pid, 'name': entry.get('name'), 'status': st, 'status_source': entry.get('status_source'),
+                         'comment': inj.get('comment'), 'return': inj.get('return'),
+                         'assumed_availability': assumed, 'basis': x.get('availability_basis') if x else None,
+                         'simulated': x is not None,
                          'plays': round(float(x.get('played') or 0), 3) if x else 0.0,
                          'min_if_plays': round((x.get('if_plays') or {}).get('min') or (((x.get('periods') or {}).get('fg') or {}).get('sec', 0) / 60), 1) if x else None,
                          'season_min': round(sa['season'].get('min') or 0, 1) if sa else None, 'gp': sa['gp'] if sa else 0})
@@ -646,7 +654,13 @@ def lab(serving: dict) -> dict:
     lin = read_json(lineups) if lineups.exists() else None
     return {'serving': {k: serving.get(k) for k in ('id', 'version', 'label')}, 'backtests': runs,
             'minutes_allocator': (lambda a: {'run': alloc[-1].stem, **{t: a[t] for t in ('star', 'starter', 'bench') if t in a}})(read_json(alloc[-1])) if alloc else None,
-            'lineups': ({'overall': lin.get('overall'), 'slates': [{k: v for k, v in x.items() if k != 'misses'} for x in lin['slates'].values()]} if lin else None)}
+            'lineups': ({'timing_policy': lin.get('timing_policy'),
+                         'overall': lin.get('overall') if lin.get('timing_policy') == LINEUP_TIMING_POLICY else None,
+                         'slates': ([{k: v for k, v in x.items() if k != 'misses'} for x in lin['slates'].values()]
+                                    if lin.get('timing_policy') == LINEUP_TIMING_POLICY else []),
+                         'legacy_unverified_slates': len(lin.get('legacy_unverified_slates', {}))
+                         + (len(lin['slates']) if lin.get('timing_policy') != LINEUP_TIMING_POLICY else 0)}
+                        if lin else None)}
 
 
 def build(views_root: Path = VIEWS) -> dict:
@@ -714,7 +728,8 @@ def build(views_root: Path = VIEWS) -> dict:
         if not p:
             return None
         fg = p['sim']['periods']['fg']
-        return {'snapshot': p['day'], 'kind': p['meta']['kind'], 'pre_tip': p['meta']['pre_tip'].get(gid),
+        return {'snapshot': p['day'], 'kind': p['meta']['kind'], 'completed_at': p['meta'].get('completed_at'),
+                'pre_tip': verified_pre_tip(p['meta'], gid),
                 'p_home': fg['home']['win'], 'p_away': fg['away']['win'],
                 'mu_home': fg['home']['pts']['mean'], 'mu_away': fg['away']['pts']['mean'],
                 'total': fg['total']['mean'], 'margin_mean': fg['margin']['mean'], 'margin_median': fg['margin']['q'][2],
@@ -753,7 +768,8 @@ def build(views_root: Path = VIEWS) -> dict:
         entries, watch, done = [], [], []
         for r in sorted(by_date.get(day, []), key=lambda r: (r['tip_utc'], r['game_id'])):
             pj = projections.get(r['game_id'])
-            if pj and r['status'] == 'final' and pj['meta'].get('kind') == 'prospective':  # pre-game projections only
+            if (pj and r['status'] == 'final' and pj['meta'].get('kind') == 'prospective'
+                    and verified_pre_tip(pj['meta'], r['game_id']) is True):
                 done.append((r['game_id'], r, pj['sim']))
             if pj and r['status'] != 'final':  # spotlight: projected, not yet played
                 entries += spotlight_entries(r['game_id'], r, pj['sim'])
@@ -768,6 +784,7 @@ def build(views_root: Path = VIEWS) -> dict:
             'date': day, 'snapshot': day if snap else None,
             'kind': snap['meta']['kind'] if snap else None,
             'generated': snap['meta']['generated'] if snap else None,
+            'completed_at': snap['meta'].get('completed_at') if snap else None,
             'model': snap['meta']['model'] if snap else None, 'games': games,
             'spotlight': (spotlight(entries, season_lookup(projections[entries[0]['game_id']]['day']),
                                     snaps[projections[entries[0]['game_id']]['day']]['path']) if entries else None),
@@ -781,10 +798,11 @@ def build(views_root: Path = VIEWS) -> dict:
         gid = r['game_id']
         core = game_core(r)
         p = projections.get(gid)
-        as_of = p['day'] if p else latest_day
-        if as_of not in stats_cache:
-            stats_cache[as_of] = read_json(snaps[as_of]['path'] / 'stats.json')
-        stats_source = stats_cache[as_of]
+        stats_day = p['day'] if p else latest_day
+        if stats_day not in stats_cache:
+            stats_cache[stats_day] = read_json(snaps[stats_day]['path'] / 'stats.json')
+        stats_source = stats_cache[stats_day]
+        as_of = p['meta'].get('origin', stats_day) if p else latest_day
         comparison = {s: {**team_slice(stats_source['teams'], r[s + '_id']),
                           'league': rounded({k: stats_source['league'].get(k) for k in ('ortg', 'pace', 'efg', 'tov_pct', 'oreb_pct', 'ftr', 'fg3a_rate', 'pts')})}
                       for s in ('away', 'home')}
@@ -823,14 +841,16 @@ def build(views_root: Path = VIEWS) -> dict:
                                         for x in p['sim'][s_]['players'] if x.get('availability', 1) > 0), key=lambda t: -(t[2] or 0))
                 else:
                     sides[s_] = sorted(((x['id'], x['name'], x.get('pts', 0)) for x in actual[s_]['players'] if not x['dnp']), key=lambda t: -(t[2] or 0))
-            duel = duels(M_real, gid, r['date_et'], sides, final=bool(actual))
+            duel_day = p['meta'].get('origin', r['date_et']) if p else r['date_et']
+            duel = duels(M_real, gid, duel_day, sides, final=bool(actual))
         write_json(api / 'game' / f'{gid}.json', {
             'game': core, 'duels': duel, 'multi': multi if p else None, 'lead_fan': lead_fan(snaps[p['day']]['path'], gid) if p else None,
-            'availability': availability(r, p['sim'], registry, season_lookup(p['day'])) if p and r['status'] != 'final' else None,
+            'availability': availability(p['sim'], season_lookup(p['day'])) if p and r['status'] != 'final' else None,
             'spotlight': (spotlight(spotlight_entries(gid, r, p['sim']), season_lookup(p['day']), snaps[p['day']]['path'])
                           if p and r['status'] != 'final' else None),
-            'projection': ({'snapshot': p['day'], 'kind': p['meta']['kind'], 'generated': p['meta']['generated'],
-                            'pre_tip': p['meta']['pre_tip'].get(gid), 'model': p['meta']['model'], 'notes': p['meta']['notes'],
+            'projection': ({'snapshot': p['day'], 'origin': p['meta'].get('origin'), 'kind': p['meta']['kind'], 'generated': p['meta']['generated'],
+                            'completed_at': p['meta'].get('completed_at'), 'pre_tip': verified_pre_tip(p['meta'], gid),
+                            'model': p['meta']['model'], 'notes': p['meta']['notes'],
                             'cutoff': p['meta']['cutoff'], 'sim': p['sim']} if p else None),
             'team_model': ({'snapshot': latest_day, **tm} if tm and not p else None),
             'actual': actual, 'comparison': comparison, 'comparison_as_of': as_of, 'averages': avg,

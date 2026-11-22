@@ -170,7 +170,7 @@ class Game:
         for c in nodes.OPTIONAL_PROFILE + nodes.DEF_SIDE + nodes.ASSIGN_ONLY:  # D30/D32 columns when the profiles carry them
             if c in prof.columns:
                 self.P[c] = prof[c].to_numpy(np.float32)
-        self.day, self.pair_hist, self.pair_met = day, None, None  # D32 pair history: built on first use (Engine._mu)
+        self.day, self.input_before, self.pair_hist, self.pair_met = day, day, None, None
         body = pd.read_parquet(DERIVED / 'athletes.parquet', columns=['player', 'height_in', 'weight_lb'])
         body = body.assign(player=body['player'].astype(str)).drop_duplicates('player').set_index('player').reindex([str(x) for x in self.ids])
         self.P['height_in'], self.P['weight_lb'] = body['height_in'].to_numpy(np.float32), body['weight_lb'].to_numpy(np.float32)
@@ -237,6 +237,8 @@ class Game:
 
     def _table(self, i, template, avail):
         idx = np.flatnonzero(self.side == i)
+        if np.count_nonzero(avail) < 5:
+            raise ValueError(f'{self.sides[i]} has fewer than five available players; check the roster and availability report')
         exp = np.where(avail, self.expected[idx], -1e9)
         on = np.zeros((len(idx), 2880), dtype=bool)
         if template is not None:
@@ -273,10 +275,8 @@ class Game:
                 pats.setdefault(tuple(avail_world[w, idx]), []).append(w)
             for pattern, worlds in pats.items():
                 av = np.flatnonzero(np.array(pattern))
-                if av.size < 5:  # fewer than five available: everyone on court (cannot happen with real rosters)
-                    if self.strict_minute_targets:
-                        raise ValueError('fewer than five available players for strict minute targets')
-                    av = np.arange(len(idx))
+                if av.size < 5:
+                    raise ValueError(f'{self.sides[i]} has fewer than five available players; check the roster and availability report')
                 # D36: pool 0 = one table per world (every world its own substitution schedule); else a shared pool
                 E = len(worlds) if not R['pool'] else int(max(1, min(len(worlds), round(R['pool'] * len(worlds) / W))))
                 states = [self.mstate[idx[k]] for k in av]
@@ -455,7 +455,7 @@ class Engine:
             if g.pair_hist is None:  # the pair history before the game (cutoff-safe; zeros without retained matchups)
                 from scripts import realmatch
                 gid = g.game.get('game_id', g.game.get('id', '')) if isinstance(g.game, dict) else g.game
-                g.pair_hist, g.pair_met = realmatch.pair_matrix(str(gid), g.day, g.ids)
+                g.pair_hist, g.pair_met = realmatch.pair_matrix(str(gid), g.input_before, g.ids)
             D['pair_hist'] = g.pair_hist[a[:, None], Ld].astype(float)
             D['pair_met'] = g.pair_met[a[:, None], Ld].astype(float)
         return {k: v.astype(np.float32) for k, v in matchups.mu_columns(self.m.theta, A, D, O).items()}
@@ -837,40 +837,47 @@ def features_dir(models: str | None = None) -> Path:
     return (ROOT / feat).parent if feat and not Path(feat).is_absolute() else Path(feat).parent if feat else DERIVED / 'features'
 
 
-def inputs_for(game: dict, day: str, T, lg, P, registry, Q=None, priors=None, rotation: str | None = None, models: str | None = None):
+def inputs_for(game: dict, day: str, T, lg, P, registry, Q=None, priors=None, rotation: str | None = None,
+               models: str | None = None, origin: str | None = None):
     """Players (with injury availability and expected minutes) from the placeholder's inputs, profiles as of today."""
+    origin = day if origin is None else origin
+    if origin > day:
+        raise ValueError(f'forecast origin {origin} is after slate {day}')
     players = {s: [p for p in projection.player_inputs(game[f'{s}_id'], P, registry, lg, T, True, Q, priors) if p['availability'] > 0]
                for s in ('home', 'away')}
     feats = features_dir(models)  # v1.3+: the defence variant's latest profiles (rebuilt nightly)
     profiles = pd.read_parquet(feats / 'latest.parquet')
     team_latest = pd.read_parquet(feats / 'team_latest.parquet')
-    if profiles['date_et'].max() >= day or team_latest['last_game'].max() >= day:  # cutoff safety: today's slate only
-        raise ValueError(f'profiles include games on or after {day}: the engine projects only slates after the latest game')
+    if profiles['date_et'].max() >= origin or team_latest['last_game'].max() >= origin:
+        raise ValueError(f'profiles include games on or after forecast origin {origin}')
     stints = pd.read_parquet(DERIVED / 'rotations' / 'stints.parquet')
+    stints = stints[stints['date_et'] < origin]
     if (rotation or ENGINE.get('rotation')) == 'targets':  # D29: minutes targets from healthy roles (state through yesterday)
         from scripts import minutes
-        m = _MINUTES.get(day)
+        m = _MINUTES.get(origin)
         if m is None:
-            m = _MINUTES[day] = minutes.build(day, include_current=True, upto=day)
+            m = _MINUTES[origin] = minutes.build(origin, include_current=True, upto=origin)
         for s in ('home', 'away'):
             for p in players[s]:
                 p['minutes'] = minutes.player_state(m, game[f'{s}_id'], p['id'], day)
             # projected starters (no lineup source passes yet — FINDINGS §1): start share, then priority; they open the
             # game in the engine and are the starters the app shows
-            sure = [p for p in players[s] if p['availability'] >= 0.9] or players[s]
-            pick = minutes.projected_starters([p['minutes'] for p in sure], [rotations.group(p['pos']) for p in sure])
-            chosen = {sure[i]['id'] for i in pick}
+            sure = [p for p in players[s] if p['availability'] >= 0.9]
+            pool = sure if len(sure) >= 5 else players[s]
+            pick = minutes.projected_starters([p['minutes'] for p in pool], [rotations.group(p['pos']) for p in pool])
+            chosen = {pool[i]['id'] for i in pick}
             for p in players[s]:
                 p['starter'] = p['projected_starter'] = p['id'] in chosen
     report_path = feats / 'features_report.json'
     report = json.loads(report_path.read_text()) if report_path.exists() else {}
     position_policy = 'prior_observed' if report.get('causal_positions') else 'legacy'
     g = Game(game, players, profiles, team_latest, stints, day, position_policy=position_policy)
+    g.input_before = origin
     g.season = int(profiles['season'].max())
     return g
 
 
-_MINUTES: dict = {}  # one minutes build per slate date
+_MINUTES: dict = {}  # one minutes build per forecast origin
 
 
 def main():

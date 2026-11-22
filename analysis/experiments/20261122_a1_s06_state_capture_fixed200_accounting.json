@@ -1,0 +1,1009 @@
+{
+ "experiment": "a1_s06_simulated_state_response_independent_accounting",
+ "reference": "20261122T103244Z_a1_s06_penalty_flow_fixed200",
+ "candidate_games": 200,
+ "common_historical_games": 191,
+ "captured_game_dimension_checks": 800,
+ "role_coverage": {
+  "both": 3846,
+  "right_only": 314,
+  "left_only": 0
+ },
+ "bootstrap_replicates": 10000,
+ "bootstrap_seed": 20261122,
+ "groups": {
+  "all/margin/behind_15_plus": {
+   "status": "ok",
+   "recorded_decisions": 2335,
+   "recorded_player_games": 1075,
+   "recorded_games": 126,
+   "simulated_decisions": 1996805,
+   "simulated_player_games": 4160,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.1922912205567452,
+   "simulated_exit_rate": 0.1976582590688625,
+   "simulated_minus_recorded_ci_95": [
+    -0.014935683037604085,
+    0.025062075412468448
+   ]
+  },
+  "all/margin/ahead_15_plus": {
+   "status": "ok",
+   "recorded_decisions": 2335,
+   "recorded_player_games": 1091,
+   "recorded_games": 126,
+   "simulated_decisions": 1996805,
+   "simulated_player_games": 4160,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.14989293361884368,
+   "simulated_exit_rate": 0.15651252876470162,
+   "simulated_minus_recorded_ci_95": [
+    -0.013762925372297619,
+    0.026631172723541707
+   ]
+  },
+  "all/margin/close_5_or_less": {
+   "status": "ok",
+   "recorded_decisions": 6530,
+   "recorded_player_games": 2609,
+   "recorded_games": 165,
+   "simulated_decisions": 6939900,
+   "simulated_player_games": 4160,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.15313935681470137,
+   "simulated_exit_rate": 0.119145809017421,
+   "simulated_minus_recorded_ci_95": [
+    -0.046567908810584084,
+    -0.021722979354560617
+   ]
+  },
+  "all/margin/intermediate": {
+   "status": "ok",
+   "recorded_decisions": 6960,
+   "recorded_player_games": 3007,
+   "recorded_games": 187,
+   "simulated_decisions": 6975780,
+   "simulated_player_games": 4160,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.14238505747126437,
+   "simulated_exit_rate": 0.12153737646542752,
+   "simulated_minus_recorded_ci_95": [
+    -0.03282200446741282,
+    -0.009430303806102363
+   ]
+  },
+  "all/period/1": {
+   "status": "ok",
+   "recorded_decisions": 3860,
+   "recorded_player_games": 2887,
+   "recorded_games": 191,
+   "simulated_decisions": 3819440,
+   "simulated_player_games": 4158,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.16321243523316062,
+   "simulated_exit_rate": 0.11326896089479085,
+   "simulated_minus_recorded_ci_95": [
+    -0.06449436080896476,
+    -0.035631815369164016
+   ]
+  },
+  "all/period/2": {
+   "status": "ok",
+   "recorded_decisions": 4020,
+   "recorded_player_games": 2856,
+   "recorded_games": 190,
+   "simulated_decisions": 4072550,
+   "simulated_player_games": 4160,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.17761194029850746,
+   "simulated_exit_rate": 0.13652208076021166,
+   "simulated_minus_recorded_ci_95": [
+    -0.05595143653501564,
+    -0.02673687445778955
+   ]
+  },
+  "all/period/3": {
+   "status": "ok",
+   "recorded_decisions": 4310,
+   "recorded_player_games": 2812,
+   "recorded_games": 190,
+   "simulated_decisions": 4143740,
+   "simulated_player_games": 4160,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.12575406032482597,
+   "simulated_exit_rate": 0.10861323345576701,
+   "simulated_minus_recorded_ci_95": [
+    -0.03018029636814736,
+    -0.0038502962818136475
+   ]
+  },
+  "all/period/4": {
+   "status": "ok",
+   "recorded_decisions": 5860,
+   "recorded_player_games": 2784,
+   "recorded_games": 190,
+   "simulated_decisions": 5811600,
+   "simulated_player_games": 4160,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.15273037542662116,
+   "simulated_exit_rate": 0.1610633904604584,
+   "simulated_minus_recorded_ci_95": [
+    -0.006545562280128771,
+    0.022315966395286758
+   ]
+  },
+  "all/period/OT": {
+   "status": "insufficient_sample",
+   "recorded_decisions": 110,
+   "recorded_player_games": 44,
+   "recorded_games": 4,
+   "simulated_decisions": 61960,
+   "simulated_player_games": 4143,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.08181818181818182,
+   "simulated_exit_rate": 0.11571981923821821,
+   "simulated_minus_recorded_ci_95": null
+  },
+  "all/foul_trouble/no": {
+   "status": "ok",
+   "recorded_decisions": 17819,
+   "recorded_player_games": 3839,
+   "recorded_games": 191,
+   "simulated_decisions": 17229128,
+   "simulated_player_games": 4160,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.15141141478197429,
+   "simulated_exit_rate": 0.1302927228818545,
+   "simulated_minus_recorded_ci_95": [
+    -0.028775557792754935,
+    -0.01331025230970652
+   ]
+  },
+  "all/foul_trouble/yes": {
+   "status": "ok",
+   "recorded_decisions": 341,
+   "recorded_player_games": 215,
+   "recorded_games": 122,
+   "simulated_decisions": 680162,
+   "simulated_player_games": 4054,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.2697947214076246,
+   "simulated_exit_rate": 0.20150787606481985,
+   "simulated_minus_recorded_ci_95": [
+    -0.12341590047996023,
+    -0.018067484337718775
+   ]
+  },
+  "all/duration/under_4": {
+   "status": "ok",
+   "recorded_decisions": 7568,
+   "recorded_player_games": 3491,
+   "recorded_games": 191,
+   "simulated_decisions": 9793845,
+   "simulated_player_games": 4160,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.06144291754756871,
+   "simulated_exit_rate": 0.06774857065840842,
+   "simulated_minus_recorded_ci_95": [
+    -0.00014847630925956737,
+    0.012699147610732575
+   ]
+  },
+  "all/duration/4_to_under_8": {
+   "status": "ok",
+   "recorded_decisions": 6485,
+   "recorded_player_games": 3005,
+   "recorded_games": 191,
+   "simulated_decisions": 5266325,
+   "simulated_player_games": 4159,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.20092521202775637,
+   "simulated_exit_rate": 0.1891157495976796,
+   "simulated_minus_recorded_ci_95": [
+    -0.025022836418298177,
+    0.0013716442841794896
+   ]
+  },
+  "all/duration/8_plus": {
+   "status": "ok",
+   "recorded_decisions": 4107,
+   "recorded_player_games": 2009,
+   "recorded_games": 191,
+   "simulated_decisions": 2849120,
+   "simulated_player_games": 4092,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.24884343803262723,
+   "simulated_exit_rate": 0.2535603975964508,
+   "simulated_minus_recorded_ci_95": [
+    -0.014663668194394058,
+    0.023758526389849256
+   ]
+  },
+  "star/margin/behind_15_plus": {
+   "status": "insufficient_sample",
+   "recorded_decisions": 138,
+   "recorded_player_games": 62,
+   "recorded_games": 53,
+   "simulated_decisions": 149179,
+   "simulated_player_games": 271,
+   "simulated_games": 153,
+   "recorded_exit_rate": 0.2463768115942029,
+   "simulated_exit_rate": 0.20510929822562157,
+   "simulated_minus_recorded_ci_95": null
+  },
+  "star/margin/ahead_15_plus": {
+   "status": "insufficient_sample",
+   "recorded_decisions": 230,
+   "recorded_player_games": 99,
+   "recorded_games": 77,
+   "simulated_decisions": 200208,
+   "simulated_player_games": 271,
+   "simulated_games": 153,
+   "recorded_exit_rate": 0.1391304347826087,
+   "simulated_exit_rate": 0.16022836250299688,
+   "simulated_minus_recorded_ci_95": null
+  },
+  "star/margin/close_5_or_less": {
+   "status": "ok",
+   "recorded_decisions": 677,
+   "recorded_player_games": 217,
+   "recorded_games": 128,
+   "simulated_decisions": 642733,
+   "simulated_player_games": 271,
+   "simulated_games": 153,
+   "recorded_exit_rate": 0.11225997045790251,
+   "simulated_exit_rate": 0.10382227145642126,
+   "simulated_minus_recorded_ci_95": [
+    -0.031949945135445953,
+    0.014314911731735132
+   ]
+  },
+  "star/margin/intermediate": {
+   "status": "ok",
+   "recorded_decisions": 705,
+   "recorded_player_games": 252,
+   "recorded_games": 148,
+   "simulated_decisions": 627520,
+   "simulated_player_games": 271,
+   "simulated_games": 153,
+   "recorded_exit_rate": 0.10780141843971631,
+   "simulated_exit_rate": 0.10436639469658338,
+   "simulated_minus_recorded_ci_95": [
+    -0.029987988214305816,
+    0.021163043851554108
+   ]
+  },
+  "star/period/1": {
+   "status": "ok",
+   "recorded_decisions": 428,
+   "recorded_player_games": 259,
+   "recorded_games": 151,
+   "simulated_decisions": 351642,
+   "simulated_player_games": 271,
+   "simulated_games": 153,
+   "recorded_exit_rate": 0.15654205607476634,
+   "simulated_exit_rate": 0.14139664772694957,
+   "simulated_minus_recorded_ci_95": [
+    -0.04933968269179416,
+    0.016875676261135755
+   ]
+  },
+  "star/period/2": {
+   "status": "ok",
+   "recorded_decisions": 334,
+   "recorded_player_games": 228,
+   "recorded_games": 139,
+   "simulated_decisions": 357760,
+   "simulated_player_games": 271,
+   "simulated_games": 153,
+   "recorded_exit_rate": 0.11676646706586827,
+   "simulated_exit_rate": 0.09289747316636851,
+   "simulated_minus_recorded_ci_95": [
+    -0.056786157552986855,
+    0.007333591930679407
+   ]
+  },
+  "star/period/3": {
+   "status": "ok",
+   "recorded_decisions": 475,
+   "recorded_player_games": 259,
+   "recorded_games": 150,
+   "simulated_decisions": 408939,
+   "simulated_player_games": 271,
+   "simulated_games": 153,
+   "recorded_exit_rate": 0.08210526315789474,
+   "simulated_exit_rate": 0.11400722357124167,
+   "simulated_minus_recorded_ci_95": [
+    0.006062289684560493,
+    0.05540068044712774
+   ]
+  },
+  "star/period/4": {
+   "status": "ok",
+   "recorded_decisions": 505,
+   "recorded_player_games": 198,
+   "recorded_games": 123,
+   "simulated_decisions": 496816,
+   "simulated_player_games": 271,
+   "simulated_games": 153,
+   "recorded_exit_rate": 0.14455445544554454,
+   "simulated_exit_rate": 0.1309076197223922,
+   "simulated_minus_recorded_ci_95": [
+    -0.051298584420707186,
+    0.019361801865377604
+   ]
+  },
+  "star/period/OT": {
+   "status": "insufficient_sample",
+   "recorded_decisions": 8,
+   "recorded_player_games": 4,
+   "recorded_games": 2,
+   "simulated_decisions": 4483,
+   "simulated_player_games": 271,
+   "simulated_games": 153,
+   "recorded_exit_rate": 0.0,
+   "simulated_exit_rate": 0.06335043497657819,
+   "simulated_minus_recorded_ci_95": null
+  },
+  "star/foul_trouble/no": {
+   "status": "ok",
+   "recorded_decisions": 1719,
+   "recorded_player_games": 269,
+   "recorded_games": 153,
+   "simulated_decisions": 1570033,
+   "simulated_player_games": 271,
+   "simulated_games": 153,
+   "recorded_exit_rate": 0.12100058173356602,
+   "simulated_exit_rate": 0.11852553417667017,
+   "simulated_minus_recorded_ci_95": [
+    -0.019211222814562588,
+    0.013742562722390165
+   ]
+  },
+  "star/foul_trouble/yes": {
+   "status": "insufficient_sample",
+   "recorded_decisions": 31,
+   "recorded_player_games": 16,
+   "recorded_games": 14,
+   "simulated_decisions": 49607,
+   "simulated_player_games": 271,
+   "simulated_games": 153,
+   "recorded_exit_rate": 0.3225806451612903,
+   "simulated_exit_rate": 0.17759590380389864,
+   "simulated_minus_recorded_ci_95": null
+  },
+  "star/duration/under_4": {
+   "status": "ok",
+   "recorded_decisions": 548,
+   "recorded_player_games": 247,
+   "recorded_games": 147,
+   "simulated_decisions": 715500,
+   "simulated_player_games": 271,
+   "simulated_games": 153,
+   "recorded_exit_rate": 0.04927007299270073,
+   "simulated_exit_rate": 0.0559958071278826,
+   "simulated_minus_recorded_ci_95": [
+    -0.010494183244718715,
+    0.023246150367916465
+   ]
+  },
+  "star/duration/4_to_under_8": {
+   "status": "ok",
+   "recorded_decisions": 650,
+   "recorded_player_games": 257,
+   "recorded_games": 145,
+   "simulated_decisions": 552669,
+   "simulated_player_games": 271,
+   "simulated_games": 153,
+   "recorded_exit_rate": 0.16923076923076924,
+   "simulated_exit_rate": 0.1520421807628074,
+   "simulated_minus_recorded_ci_95": [
+    -0.047620738139125186,
+    0.011579040046829372
+   ]
+  },
+  "star/duration/8_plus": {
+   "status": "ok",
+   "recorded_decisions": 552,
+   "recorded_player_games": 215,
+   "recorded_games": 139,
+   "simulated_decisions": 351471,
+   "simulated_player_games": 271,
+   "simulated_games": 153,
+   "recorded_exit_rate": 0.14673913043478262,
+   "simulated_exit_rate": 0.20145332047309736,
+   "simulated_minus_recorded_ci_95": [
+    0.02198075628262486,
+    0.08561690771762143
+   ]
+  },
+  "starter/margin/behind_15_plus": {
+   "status": "ok",
+   "recorded_decisions": 949,
+   "recorded_player_games": 430,
+   "recorded_games": 123,
+   "simulated_decisions": 889800,
+   "simulated_player_games": 1513,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.23709167544783982,
+   "simulated_exit_rate": 0.22354911216003595,
+   "simulated_minus_recorded_ci_95": [
+    -0.04888240266649542,
+    0.01969145643244421
+   ]
+  },
+  "starter/margin/ahead_15_plus": {
+   "status": "ok",
+   "recorded_decisions": 961,
+   "recorded_player_games": 417,
+   "recorded_games": 122,
+   "simulated_decisions": 908627,
+   "simulated_player_games": 1513,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.17585848074921956,
+   "simulated_exit_rate": 0.17298627489607946,
+   "simulated_minus_recorded_ci_95": [
+    -0.034947605250910264,
+    0.02749868427332335
+   ]
+  },
+  "starter/margin/close_5_or_less": {
+   "status": "ok",
+   "recorded_decisions": 3408,
+   "recorded_player_games": 1205,
+   "recorded_games": 165,
+   "simulated_decisions": 3298455,
+   "simulated_player_games": 1513,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.15551643192488263,
+   "simulated_exit_rate": 0.1170308523232847,
+   "simulated_minus_recorded_ci_95": [
+    -0.05516693380142467,
+    -0.02284606174787624
+   ]
+  },
+  "starter/margin/intermediate": {
+   "status": "ok",
+   "recorded_decisions": 3535,
+   "recorded_player_games": 1355,
+   "recorded_games": 187,
+   "simulated_decisions": 3218042,
+   "simulated_player_games": 1513,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.13154172560113153,
+   "simulated_exit_rate": 0.11787229625965105,
+   "simulated_minus_recorded_ci_95": [
+    -0.02915250756794004,
+    0.0011521882225131444
+   ]
+  },
+  "starter/period/1": {
+   "status": "ok",
+   "recorded_decisions": 1968,
+   "recorded_player_games": 1386,
+   "recorded_games": 191,
+   "simulated_decisions": 1774930,
+   "simulated_player_games": 1513,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.21392276422764228,
+   "simulated_exit_rate": 0.15248883054542997,
+   "simulated_minus_recorded_ci_95": [
+    -0.08354196361164856,
+    -0.03993254915612119
+   ]
+  },
+  "starter/period/2": {
+   "status": "ok",
+   "recorded_decisions": 1847,
+   "recorded_player_games": 1269,
+   "recorded_games": 190,
+   "simulated_decisions": 1946824,
+   "simulated_player_games": 1513,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.12452625879805089,
+   "simulated_exit_rate": 0.10534542413695332,
+   "simulated_minus_recorded_ci_95": [
+    -0.034406087879284064,
+    -0.004516010029052721
+   ]
+  },
+  "starter/period/3": {
+   "status": "ok",
+   "recorded_decisions": 2260,
+   "recorded_player_games": 1363,
+   "recorded_games": 190,
+   "simulated_decisions": 2045465,
+   "simulated_player_games": 1513,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.16150442477876106,
+   "simulated_exit_rate": 0.1283634772533385,
+   "simulated_minus_recorded_ci_95": [
+    -0.05199796928523939,
+    -0.014042171558274714
+   ]
+  },
+  "starter/period/4": {
+   "status": "ok",
+   "recorded_decisions": 2697,
+   "recorded_player_games": 1102,
+   "recorded_games": 185,
+   "simulated_decisions": 2524064,
+   "simulated_player_games": 1513,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.1360771227289581,
+   "simulated_exit_rate": 0.15098507803288663,
+   "simulated_minus_recorded_ci_95": [
+    -0.006240732087111743,
+    0.03414595213279
+   ]
+  },
+  "starter/period/OT": {
+   "status": "insufficient_sample",
+   "recorded_decisions": 81,
+   "recorded_player_games": 29,
+   "recorded_games": 4,
+   "simulated_decisions": 23641,
+   "simulated_player_games": 1509,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.07407407407407407,
+   "simulated_exit_rate": 0.0857831733006218,
+   "simulated_minus_recorded_ci_95": null
+  },
+  "starter/foul_trouble/no": {
+   "status": "ok",
+   "recorded_decisions": 8651,
+   "recorded_player_games": 1505,
+   "recorded_games": 191,
+   "simulated_decisions": 7944672,
+   "simulated_player_games": 1513,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.15420182637845337,
+   "simulated_exit_rate": 0.1317738479322998,
+   "simulated_minus_recorded_ci_95": [
+    -0.03275907445355246,
+    -0.01221089035487664
+   ]
+  },
+  "starter/foul_trouble/yes": {
+   "status": "ok",
+   "recorded_decisions": 202,
+   "recorded_player_games": 119,
+   "recorded_games": 87,
+   "simulated_decisions": 370252,
+   "simulated_player_games": 1513,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.2722772277227723,
+   "simulated_exit_rate": 0.20130343657833044,
+   "simulated_minus_recorded_ci_95": [
+    -0.13900524252773758,
+    -0.01194159885268158
+   ]
+  },
+  "starter/duration/under_4": {
+   "status": "ok",
+   "recorded_decisions": 3196,
+   "recorded_player_games": 1394,
+   "recorded_games": 191,
+   "simulated_decisions": 3945779,
+   "simulated_player_games": 1513,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.052878598247809765,
+   "simulated_exit_rate": 0.06558375418390133,
+   "simulated_minus_recorded_ci_95": [
+    0.0033663127857296448,
+    0.02142047182774845
+   ]
+  },
+  "starter/duration/4_to_under_8": {
+   "status": "ok",
+   "recorded_decisions": 3530,
+   "recorded_player_games": 1393,
+   "recorded_games": 191,
+   "simulated_decisions": 2879002,
+   "simulated_player_games": 1513,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.18923512747875354,
+   "simulated_exit_rate": 0.1788921994496704,
+   "simulated_minus_recorded_ci_95": [
+    -0.025901469382883492,
+    0.004456714463732839
+   ]
+  },
+  "starter/duration/8_plus": {
+   "status": "ok",
+   "recorded_decisions": 2127,
+   "recorded_player_games": 1002,
+   "recorded_games": 189,
+   "simulated_decisions": 1490143,
+   "simulated_player_games": 1513,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.25952045133991536,
+   "simulated_exit_rate": 0.23328163807097707,
+   "simulated_minus_recorded_ci_95": [
+    -0.05240162636310269,
+    -0.00033219680324773774
+   ]
+  },
+  "bench/margin/behind_15_plus": {
+   "status": "ok",
+   "recorded_decisions": 1241,
+   "recorded_player_games": 580,
+   "recorded_games": 125,
+   "simulated_decisions": 954541,
+   "simulated_player_games": 2364,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.15310233682514102,
+   "simulated_exit_rate": 0.17253004323543986,
+   "simulated_minus_recorded_ci_95": [
+    -0.0016175557746604856,
+    0.039609660302720485
+   ]
+  },
+  "bench/margin/ahead_15_plus": {
+   "status": "ok",
+   "recorded_decisions": 1140,
+   "recorded_player_games": 571,
+   "recorded_games": 120,
+   "simulated_decisions": 885271,
+   "simulated_player_games": 2364,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.1307017543859649,
+   "simulated_exit_rate": 0.13890435810051385,
+   "simulated_minus_recorded_ci_95": [
+    -0.01635271331825575,
+    0.03203115719116306
+   ]
+  },
+  "bench/margin/close_5_or_less": {
+   "status": "ok",
+   "recorded_decisions": 2439,
+   "recorded_player_games": 1184,
+   "recorded_games": 164,
+   "simulated_decisions": 2990096,
+   "simulated_player_games": 2364,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.16113161131611317,
+   "simulated_exit_rate": 0.12482141041625419,
+   "simulated_minus_recorded_ci_95": [
+    -0.056739104578364195,
+    -0.01636686749600861
+   ]
+  },
+  "bench/margin/intermediate": {
+   "status": "ok",
+   "recorded_decisions": 2710,
+   "recorded_player_games": 1395,
+   "recorded_games": 184,
+   "simulated_decisions": 3120986,
+   "simulated_player_games": 2364,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.16531365313653137,
+   "simulated_exit_rate": 0.1288198665421761,
+   "simulated_minus_recorded_ci_95": [
+    -0.053994612205811206,
+    -0.019713162622063178
+   ]
+  },
+  "bench/period/1": {
+   "status": "ok",
+   "recorded_decisions": 1458,
+   "recorded_player_games": 1238,
+   "recorded_games": 188,
+   "simulated_decisions": 1687918,
+   "simulated_player_games": 2362,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.09739368998628258,
+   "simulated_exit_rate": 0.06641140150173172,
+   "simulated_minus_recorded_ci_95": [
+    -0.048280716308299554,
+    -0.014242126656459951
+   ]
+  },
+  "bench/period/2": {
+   "status": "ok",
+   "recorded_decisions": 1833,
+   "recorded_player_games": 1354,
+   "recorded_games": 190,
+   "simulated_decisions": 1763651,
+   "simulated_player_games": 2364,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.24168030551009276,
+   "simulated_exit_rate": 0.1797492814621487,
+   "simulated_minus_recorded_ci_95": [
+    -0.08482705608123715,
+    -0.03989566738621925
+   ]
+  },
+  "bench/period/3": {
+   "status": "ok",
+   "recorded_decisions": 1570,
+   "recorded_player_games": 1186,
+   "recorded_games": 189,
+   "simulated_decisions": 1684685,
+   "simulated_player_games": 2364,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.08726114649681528,
+   "simulated_exit_rate": 0.0834648613835821,
+   "simulated_minus_recorded_ci_95": [
+    -0.01953918313406061,
+    0.0109093759211326
+   ]
+  },
+  "bench/period/4": {
+   "status": "ok",
+   "recorded_decisions": 2648,
+   "recorded_player_games": 1478,
+   "recorded_games": 190,
+   "simulated_decisions": 2780980,
+   "simulated_player_games": 2364,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.17182779456193353,
+   "simulated_exit_rate": 0.1756103963351049,
+   "simulated_minus_recorded_ci_95": [
+    -0.016325005848424546,
+    0.022189790188009564
+   ]
+  },
+  "bench/period/OT": {
+   "status": "insufficient_sample",
+   "recorded_decisions": 21,
+   "recorded_player_games": 11,
+   "recorded_games": 4,
+   "simulated_decisions": 33660,
+   "simulated_player_games": 2351,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.14285714285714285,
+   "simulated_exit_rate": 0.14364230540701128,
+   "simulated_minus_recorded_ci_95": null
+  },
+  "bench/foul_trouble/no": {
+   "status": "ok",
+   "recorded_decisions": 7425,
+   "recorded_player_games": 2058,
+   "recorded_games": 191,
+   "simulated_decisions": 7691173,
+   "simulated_player_games": 2364,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.15542087542087543,
+   "simulated_exit_rate": 0.13123225807038796,
+   "simulated_minus_recorded_ci_95": [
+    -0.03517898793474039,
+    -0.013388583208466245
+   ]
+  },
+  "bench/foul_trouble/yes": {
+   "status": "insufficient_sample",
+   "recorded_decisions": 105,
+   "recorded_player_games": 78,
+   "recorded_games": 62,
+   "simulated_decisions": 259721,
+   "simulated_player_games": 2258,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.24761904761904763,
+   "simulated_exit_rate": 0.2063676021577,
+   "simulated_minus_recorded_ci_95": null
+  },
+  "bench/duration/under_4": {
+   "status": "ok",
+   "recorded_decisions": 3812,
+   "recorded_player_games": 1843,
+   "recorded_games": 191,
+   "simulated_decisions": 5114187,
+   "simulated_player_games": 2364,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.07030430220356768,
+   "simulated_exit_rate": 0.07105625977305875,
+   "simulated_minus_recorded_ci_95": [
+    -0.00849989017637117,
+    0.00989751128389052
+   ]
+  },
+  "bench/duration/4_to_under_8": {
+   "status": "ok",
+   "recorded_decisions": 2297,
+   "recorded_player_games": 1351,
+   "recorded_games": 191,
+   "simulated_decisions": 1830482,
+   "simulated_player_games": 2363,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.2281236395298215,
+   "simulated_exit_rate": 0.2163211656820444,
+   "simulated_minus_recorded_ci_95": [
+    -0.03308017027730719,
+    0.009002720755951123
+   ]
+  },
+  "bench/duration/8_plus": {
+   "status": "ok",
+   "recorded_decisions": 1421,
+   "recorded_player_games": 789,
+   "recorded_games": 189,
+   "simulated_decisions": 1006225,
+   "simulated_player_games": 2297,
+   "simulated_games": 191,
+   "recorded_exit_rate": 0.2730471498944405,
+   "simulated_exit_rate": 0.3016830231807001,
+   "simulated_minus_recorded_ci_95": [
+    -0.003931125664618215,
+    0.05864614184429293
+   ]
+  },
+  "unknown/margin/behind_15_plus": {
+   "status": "insufficient_sample",
+   "recorded_decisions": 7,
+   "recorded_player_games": 3,
+   "recorded_games": 3,
+   "simulated_decisions": 3285,
+   "simulated_player_games": 12,
+   "simulated_games": 12,
+   "recorded_exit_rate": 0.0,
+   "simulated_exit_rate": 0.14794520547945206,
+   "simulated_minus_recorded_ci_95": null
+  },
+  "unknown/margin/ahead_15_plus": {
+   "status": "insufficient_sample",
+   "recorded_decisions": 4,
+   "recorded_player_games": 4,
+   "recorded_games": 4,
+   "simulated_decisions": 2699,
+   "simulated_player_games": 12,
+   "simulated_games": 12,
+   "recorded_exit_rate": 0.0,
+   "simulated_exit_rate": 0.11041126343090034,
+   "simulated_minus_recorded_ci_95": null
+  },
+  "unknown/margin/close_5_or_less": {
+   "status": "insufficient_sample",
+   "recorded_decisions": 6,
+   "recorded_player_games": 3,
+   "recorded_games": 3,
+   "simulated_decisions": 8616,
+   "simulated_player_games": 12,
+   "simulated_games": 12,
+   "recorded_exit_rate": 0.16666666666666666,
+   "simulated_exit_rate": 0.10225162488393687,
+   "simulated_minus_recorded_ci_95": null
+  },
+  "unknown/margin/intermediate": {
+   "status": "insufficient_sample",
+   "recorded_decisions": 10,
+   "recorded_player_games": 5,
+   "recorded_games": 5,
+   "simulated_decisions": 9232,
+   "simulated_player_games": 12,
+   "simulated_games": 12,
+   "recorded_exit_rate": 0.2,
+   "simulated_exit_rate": 0.1043110918544194,
+   "simulated_minus_recorded_ci_95": null
+  },
+  "unknown/period/1": {
+   "status": "insufficient_sample",
+   "recorded_decisions": 6,
+   "recorded_player_games": 4,
+   "recorded_games": 4,
+   "simulated_decisions": 4950,
+   "simulated_player_games": 12,
+   "simulated_games": 12,
+   "recorded_exit_rate": 0.0,
+   "simulated_exit_rate": 0.0301010101010101,
+   "simulated_minus_recorded_ci_95": null
+  },
+  "unknown/period/2": {
+   "status": "insufficient_sample",
+   "recorded_decisions": 6,
+   "recorded_player_games": 5,
+   "recorded_games": 5,
+   "simulated_decisions": 4315,
+   "simulated_player_games": 12,
+   "simulated_games": 12,
+   "recorded_exit_rate": 0.3333333333333333,
+   "simulated_exit_rate": 0.1515643105446118,
+   "simulated_minus_recorded_ci_95": null
+  },
+  "unknown/period/3": {
+   "status": "insufficient_sample",
+   "recorded_decisions": 5,
+   "recorded_player_games": 4,
+   "recorded_games": 4,
+   "simulated_decisions": 4651,
+   "simulated_player_games": 12,
+   "simulated_games": 12,
+   "recorded_exit_rate": 0.2,
+   "simulated_exit_rate": 0.05762201677058697,
+   "simulated_minus_recorded_ci_95": null
+  },
+  "unknown/period/4": {
+   "status": "insufficient_sample",
+   "recorded_decisions": 10,
+   "recorded_player_games": 6,
+   "recorded_games": 6,
+   "simulated_decisions": 9740,
+   "simulated_player_games": 12,
+   "simulated_games": 12,
+   "recorded_exit_rate": 0.0,
+   "simulated_exit_rate": 0.15749486652977412,
+   "simulated_minus_recorded_ci_95": null
+  },
+  "unknown/period/OT": {
+   "status": "insufficient_sample",
+   "recorded_decisions": 0,
+   "recorded_player_games": 0,
+   "recorded_games": 0,
+   "simulated_decisions": 176,
+   "simulated_player_games": 12,
+   "simulated_games": 12,
+   "recorded_exit_rate": null,
+   "simulated_exit_rate": 0.13068181818181818,
+   "simulated_minus_recorded_ci_95": null
+  },
+  "unknown/foul_trouble/no": {
+   "status": "insufficient_sample",
+   "recorded_decisions": 24,
+   "recorded_player_games": 7,
+   "recorded_games": 7,
+   "simulated_decisions": 23250,
+   "simulated_player_games": 12,
+   "simulated_games": 12,
+   "recorded_exit_rate": 0.08333333333333333,
+   "simulated_exit_rate": 0.108,
+   "simulated_minus_recorded_ci_95": null
+  },
+  "unknown/foul_trouble/yes": {
+   "status": "insufficient_sample",
+   "recorded_decisions": 3,
+   "recorded_player_games": 2,
+   "recorded_games": 2,
+   "simulated_decisions": 582,
+   "simulated_player_games": 12,
+   "simulated_games": 12,
+   "recorded_exit_rate": 0.3333333333333333,
+   "simulated_exit_rate": 0.20103092783505155,
+   "simulated_minus_recorded_ci_95": null
+  },
+  "unknown/duration/under_4": {
+   "status": "insufficient_sample",
+   "recorded_decisions": 12,
+   "recorded_player_games": 7,
+   "recorded_games": 7,
+   "simulated_decisions": 18379,
+   "simulated_player_games": 12,
+   "simulated_games": 12,
+   "recorded_exit_rate": 0.08333333333333333,
+   "simulated_exit_rate": 0.06964470319386257,
+   "simulated_minus_recorded_ci_95": null
+  },
+  "unknown/duration/4_to_under_8": {
+   "status": "insufficient_sample",
+   "recorded_decisions": 8,
+   "recorded_player_games": 4,
+   "recorded_games": 4,
+   "simulated_decisions": 4172,
+   "simulated_player_games": 12,
+   "simulated_games": 12,
+   "recorded_exit_rate": 0.125,
+   "simulated_exit_rate": 0.2188398849472675,
+   "simulated_minus_recorded_ci_95": null
+  },
+  "unknown/duration/8_plus": {
+   "status": "insufficient_sample",
+   "recorded_decisions": 7,
+   "recorded_player_games": 3,
+   "recorded_games": 3,
+   "simulated_decisions": 1281,
+   "simulated_player_games": 11,
+   "simulated_games": 11,
+   "recorded_exit_rate": 0.14285714285714285,
+   "simulated_exit_rate": 0.3395784543325527,
+   "simulated_minus_recorded_ci_95": null
+  }
+ },
+ "limitations": "Simulated and historical timeout opportunities have different, selected timing; rates are descriptive and actual participants are supplied. Score/foul state and player composition differ by world, so this is not a causal or pre-game availability test.",
+ "input_sha256": {
+  "scripts/a1_substitution_response_audit.py": "93f518a548b4e763aaeae3be111fe73b684e2017cdf31cee60558cb53518f77e",
+  "analysis/experiments/20261122_a1_s06_state_capture_fixed200.json": "541726c74ee34c98846e8989d892bda6b534dd75b73935573bad3342c4241264",
+  "data/derived/experiments/20261122_a1_s06_state_capture_fixed200.parquet": "3973cbe20c6adf77be43d8f00b1456e5c6dc550d4be2da18d7c88bc0bbb8c2e7",
+  "analysis/experiments/20261122_a1_s06_timeout_states.json": "134779c7fd5a26fefdd8c02f5dbc944777062e23acc8fe1bafdb9cbc0e074159",
+  "data/derived/experiments/20261122_a1_s06_timeout_states.parquet": "2fcb8270b1ec7a4093be711a622da783486560b039c2992f3ebcef56df8ff39f",
+  "data/derived/experiments/20261122T103244Z_a1_s06_penalty_flow_fixed200.parquet": "2323e616d4f441a5d1777109f5e429f8b19ad05c17dcd00cbccec5ad684ebe3e"
+ }
+}

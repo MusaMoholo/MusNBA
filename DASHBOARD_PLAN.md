@@ -2,7 +2,34 @@
 
 **Phone v localhost (owner, 20 Nov, D36):** the phone bundle is stripped back — the 10,000-world distributions for the expected lineup only; everything built on the per-world files (Scenarios, Given…, joint grids, team drivers, duels, duel of the night, lineup branches) is localhost-only (`export_musnba.phone_record`).
 
-**U1–U22 complete as of 22 November 2026.** Historical implementation notes: Scenarios, Given…, joint grids, drivers, averages deltas, Lab view, minutes basis and engine v1.3 added in the D29–D30 chunk; game flow, duels, duel of the night and who-guards-whom added in the D32 chunk. A1 S01–S05 are research-only and complete; S06 research is underway. No A1 dashboard changes have shipped. Scope/progress live in [PLAN.md](PLAN.md) and HANDOFF.
+**U1–U22 complete as of 22 November 2026.** Historical implementation notes: Scenarios, Given…, joint grids, drivers, averages deltas, Lab view, minutes basis and engine v1.3 added in the D29–D30 chunk; game flow, duels, duel of the night and who-guards-whom added in the D32 chunk. A1 S01–S06 are research-only and complete; S07 delivery is pending. No A1 dashboard changes have shipped. Scope/progress live in [PLAN.md](PLAN.md) and HANDOFF.
+
+**A1 S07, in review and not yet shipped:** prospective unknown statuses are visible rather than hidden, with the
+uncalibrated fallback labelled in the Game Centre. Status-tag percentages are explicitly uncalibrated availability
+assumptions, including unknown statuses and the active-but-recently-inactive fallback; the Availability panel
+separately shows the observed share of simulated games played. New prospective outputs retain their own roster and
+report, including ruled-out players; older outputs show only saved player statuses and disclose missing coverage
+rather than silently borrowing today's report. New reports distinguish reported health status from the existing
+available assumption when no injury is listed; the Game Centre says an unlisted injury is not proof of availability.
+The updated shared availability display passed 36/36 projection/flow, player sheet, player list/detail and team
+checks at desktop/half/phone and both themes; all six projection screenshots and representative other pages were
+inspected after wrapping availability tags below player names.
+An uncalibrated equal-share cold-roster fallback, when present in a placeholder forecast, is disclosed with its
+team and simulated-world count; the production engine's separate cold-player prior is unchanged. The final isolated
+shell (`c6977df6e7c00067d19b`) passed 15/15 import/offline checks with the old bundle.
+The data-free Pages shell and
+iCloud bundle remain unchanged until the S07 delivery checkpoint.
+The same unshipped work corrects Tomorrow's shared-origin cutoff. New snapshots record completion after their atomic
+write; Game Centre and final-game cards distinguish pre-game, after-tip, retrospective and timing-unverified forecasts,
+including old phone bundles without completion metadata. Unverified/after-tip forecasts are excluded from the
+pre-game accuracy summary. Today describes a prospective slate without claiming every game was pre-tip.
+The isolated timing-aware shell `f79ce8eab3ebe9182d59` imported the existing bundle and passed **16/16** checks,
+including honest legacy timing and offline use; this is not a Pages publication or a new phone import.
+The unshipped Lab also excludes starter scores without verified pre-tip snapshot completion, including legacy
+imported bundles; it discloses the number of unverified slates instead of presenting their accuracy as pre-game.
+The prior per-slate and overall scores are retained separately in the next scorer run. Lab passed **6/6**
+width/theme checks and all six screenshots were inspected; isolated shell `0d7693ac00bad5eb2e00` imported the
+legacy bundle and passed **17/17** import/offline checks, including Lab timing. A new-bundle check remains.
 
 ## Navigation
 

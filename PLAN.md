@@ -77,7 +77,7 @@ Slates are US Eastern game dates; tip-offs show UK time with ET alongside.
 | 0 | Discovery, data probe, plan | `██████████` done |
 | 1 | App shell, season stats, placeholder projections | `██████████` done — public Pages/iCloud live; real iPhone install/import acceptance pending |
 | 1b | Per-period Game Centre (owner spec), play-by-play parser, quarter-aware placeholder | `██████████` done |
-| 2 | Possession engine (data → models → engine → backtest) | `████████░░` **M1–M5b, M6a done · engine v1.3 is the app's default (D34), 10,000 worlds per game (D36) · backtest (M9) is the gate · NBA Stats matchups ingested; real-matchup defence not promoted (D37): team differences remain compressed (pool-0 offence ~64%, defence ~40% of observed effect) — A1 S01–S05 complete; S06 substitutions research active** |
+| 2 | Possession engine (data → models → engine → backtest) | `████████░░` **M1–M5b, M6a done · engine v1.3 is the app's default (D34), 10,000 worlds per game (D36) · backtest (M9) is the gate · NBA Stats matchups ingested; real-matchup defence not promoted (D37): team differences remain compressed (pool-0 offence ~64%, defence ~40% of observed effect) — A1 S01–S06 complete; S07 delivery pending** |
 | 3 | Evaluation and nightly feedback (Forecast Lab view, refit cadence) | `███░░░░░░░` **Forecast Lab page (`#/lab`), nightly projected-v-actual starters record (D33); refit cadence not started; A1 S11/S13 adds confirmation and versioned historical replay** |
 | 4 | Season on the engine: pathway calibration, availability, tiebreakers, play-in, Cup, what-ifs | `██░░░░░░░░` **team pathway v1 in the app (D25): per-world ratings, engine worlds for today + tomorrow; walk-forward calibration first cut (M12); A1 S07/S10 extends availability and calibration** |
 | 5 | Polish: hosting, iPhone acceptance, watch-a-sim, more views | `█████░░░░░` **Dashboard U1–U22 complete (22 Nov); personal GitHub Pages + iCloud flow follows MusSim; real iPhone acceptance and watch-a-sim remain** |
@@ -108,7 +108,7 @@ Each subtask ends with evidence, current docs and a commit/push checkpoint (AGEN
 | M11 | Availability model | ☐ **A1 S07/S08/S10**: report coverage, play/start probabilities, branches and future absences | Held-out calibration and games-missed realism where dated development data supports them; honest fallbacks otherwise | Planned |
 | M12 | Season pathway calibration | ◐ **first cut (20 Nov): team pathway v1 in the app** — walk-forward 2022-26 (480 team-starts): dispersion 1.00 (fixed probabilities 1.53), 10–90% coverage 84% (65%), CRPS −4% in every held-out season; still wide in November (0.84) and surprises fade with the date (sim 0.52 → 0.18 v real 0.40 flat) | Dispersion ≈ 1.0 **at every start date**, persistence matches | `pathway.py`, `season_backtest.py` |
 | UX | Dashboard upgrade programme U1–U22 | ✅ **22 Nov:** all 22 shipped; U15–U22 adds roster roles, playoff picture, win ranges, races/movers/leaders inside Standings and model guide; 156 full + 12 final layout browser checks, hosted PWA 15/15 | Checked at 1440/960/390, both themes, stored data only | DASHBOARD_PLAN.md |
-| A1 | Expanded accuracy/robustness programme | ◐ **52.6% — S01–S05 complete, S06 and S07 70%, 22 Nov**; 14 tasks, fixed weights, 140 rungs | Gates in §6b; final nightly + versioned history + successor chunk | HANDOFF § Progress ladders |
+| A1 | Expanded accuracy/robustness programme | ◐ **57.4% — S01–S06 complete, S07 90%, 22 Nov**; 14 tasks, fixed weights, 140 rungs | Gates in §6b; final nightly + versioned history + successor chunk | HANDOFF § Progress ladders |
 
 ### 6a. Next chunk — A1: player accuracy, defence and trustworthy season paths
 
@@ -732,6 +732,10 @@ face cards and unrelated presentation remain §9b backlog. NBA history moved to 
   versus **65–76%** observed on inferred-roster proxies, not dated pre-tip forecasts. A synthetic short-roster
   stress test reproduced an existing silent activation of an unavailable player; that serving bug is unresolved.
   Engine, forecasts and PWA remain unchanged; A1 is **52.6%**.
+- **22 Nov 2026 · S07 fallback work, partial:** an ingest/UI repair for missing and cross-team reports is under
+  validation; all **five** retained valid roster-status inventories reproduce, **20** focused ingest tests pass,
+  and initial dashboard checks passed **36/36**. It is not yet committed or delivered; short-roster and missing
+  status safeguards remain. S07 remains **70%**.
 - **22 Nov 2026 · S06 isolated robustness repair:** **3,000** worlds reproduce the earlier candidate and reconcile;
   another **1,000** saved worlds from the original failure game reconcile with the required technical. The
   single-game process exited 1 when its unsupported summary could not be serialized; no complete 200-game accuracy
@@ -741,6 +745,22 @@ face cards and unrelated presentation remain §9b backlog. NBA history moved to 
   there is no measured candidate gain yet. S07's censored-spell and starter-simulation sources are prepared and
   unit-tested, not scored.
   Production and PWA remain unchanged; A1 remains **52.0%**.
+- **22 Nov 2026 · S06 fixed candidate, partial:** **200/200** games completed and independent flow/player
+  accounting passed. Pooled minute CRPS improved **3.5662→3.5309**, clearing the preliminary seed-noise screen,
+  but **3/69** non-inferiority bounds remain unestablished; direct state replay and confirmation remain. No
+  candidate was promoted; S06 remains **70%**.
+- **22 Nov 2026 · S06 90%:** the **200-game** same-policy replay reproduced **21,400** game and **95,612** player
+  values; independent accounting checked **800** state totals and **191** common historical games. Selected
+  close-state exits were **15.31% recorded / 11.91% simulated**. Because **3/69** frozen non-inferiority bounds
+  remain unestablished, retain v1.3/D29 without a protected-season score. S06 evidence/checkpoint checks remain;
+  A1 is **55.0%**.
+- **22 Nov 2026 · S07 90%:** roster/report, unknown, cold-start and legal-five safeguards plus shared-origin preview
+  handling passed **82** focused tests. Retain uncalibrated status/starter fallbacks; no future physical-absence
+  hazard is supported. Old preview inputs contained one origin-day game and its timing is unverified. Fresh live
+  forecasts, PWA delivery, smoke and checkpoint remain; A1 is **56.2%**.
+- **22 Nov 2026 · S06 complete:** independent state accounting and fixed-screen decision retain v1.3/D29; **66/69**
+  bounds established, so no promotion or protected-season score. Final smoke **102/102**, deliberate fault
+  **80/102** as expected. S07's tested source is preserved but its live nightly and PWA delivery remain; A1 **57.4%**.
 - **22 Nov 2026 · S06 foul-out probe:** in a controlled world, an available substitute does not replace a player
   with six fouls because the current engine's foul-out mask is never updated. The finding is not a forecast gain
   or a population frequency; isolate and gate a repair alongside substitution research.

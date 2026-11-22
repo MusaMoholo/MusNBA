@@ -10,7 +10,8 @@ or phone.
 > from games before the origin; 10,000 worlds per game, one rotation table per world; the floor for later improvements, D22–D24); every later game from the **team pathway v1**, where
 > each simulated season carries its own team ratings and updates them after every game (D25). Past dates rebuilt after the
 > fact currently use a labelled placeholder. U1–U22 and public Pages/iCloud delivery are complete. Accuracy chunk
-> **A1 (14 tasks)** has completed S01–S05; S06 research is underway and versioned, cutoff-safe engine history remains planned.
+> **A1 (14 tasks)** has completed S01–S06; S06's audited candidate did not clear its frozen gate and versioned,
+> cutoff-safe engine history remains planned.
 > See [PLAN.md](PLAN.md) and [HANDOFF_NEXT.md](HANDOFF_NEXT.md).
 
 ## Setup
@@ -126,6 +127,8 @@ Dashboard routes: `#/standings/{forecast,seeds,wins,ratings,picture,races,movers
 | `scripts/a1_substitution_audit.py`, `scripts/a1_substitution_opportunities.py`, `scripts/a1_substitution_states.py` | Independent sequence accounting, conservative full-timeout labels and descriptive state/role rates; not calibrated or pre-game availability forecasts |
 | `scripts/a1_substitution_response_compare.py` | Matched Q4-minute and full-game minute-CRPS subgroup comparison by realised Q4 score and prior fouls; simulated quarter means are not state-conditioned |
 | `scripts/a1_substitution_response_capture.py`, `scripts/a1_substitution_response_audit.py` | Opt-in same-policy replay capturing simulated selected-timeout exits by pre-decision state, with exact output reproduction and historical-state accounting |
+| `scripts/a1_flow_audit.py` | Independent flow accounting; `--no-reference` explicitly omits same-policy reproduction when no separate reference exists |
+| `scripts/a1_snapshot_availability_audit.py` | Check new live snapshot pre-origin inputs and completion/tip labels, reports against their origin registry, saved views, player/team points and season game worlds (`--days … --origin YYYY-MM-DD --expected-model … --expected-sims … --output …`) |
 | `scripts/a1_substitution_dataset.py`, `scripts/a1_substitution_dataset_audit.py` | Prior-target and current-state candidate construction and independent accounting; unknown incoming eligibility stays unknown |
 | `scripts/a1_substitution_fold_data.py`, `scripts/a1_substitution_seed_audit.py`, `scripts/a1_substitution_out_screen.py`, `scripts/a1_substitution_screen_audit.py` | Historical-fold candidates, seed-cutoff accounting, preregistered outgoing screen and independent score/bootstrap audit; research only, not a deployed substitution hazard |
 | `scripts/a1_foul_out_probe.py` | Controlled reproduction of the existing engine's unupdated foul-out mask; research only |
@@ -246,6 +249,7 @@ are `models/<version>.json` (in git).
 
 ```sh
 .venv/bin/python scripts/smoke.py                                   # accounting + determinism
+.venv/bin/python -m unittest tests.test_lineups_timing tests.test_nightly_origin -q  # pre-tip/origin regressions
 .venv/bin/python analysis/export_visibility_check.py                  # atomic bytes + macOS Finder visibility
 node analysis/browser_check.mjs --base http://127.0.0.1:8767        # phone/desktop, both themes
 node analysis/pwa_import_check.mjs --url <shell url> --bundle <file.musnba.gz>

@@ -21,6 +21,7 @@ from __future__ import annotations
 import hashlib
 import math
 import sys
+import warnings
 from pathlib import Path
 
 import numpy as np
@@ -114,7 +115,7 @@ def team_rates(T: dict, lg: dict, tid: str) -> dict:
 # ---------------------------------------------------------------------------- players
 
 def availability(status: str | None) -> float:
-    return AVAILABILITY.get((status or 'active').strip().lower(), 0.6)
+    return AVAILABILITY.get((status or '').strip().lower(), 0.6)
 
 
 def player_inputs(tid: str, P: dict, registry: dict, lg: dict, T: dict, prospective: bool,
@@ -132,10 +133,15 @@ def player_inputs(tid: str, P: dict, registry: dict, lg: dict, T: dict, prospect
         t = p['totals'] if p else {}
         gp, mins = (p['gp'], t.get('min', 0)) if p else (0, 0)
         if prospective:
-            a = availability(reg.get('status'))
+            status = (reg.get('status') or '').strip() or 'Unknown'
+            basis = ('not_listed_assumption' if status.lower() == 'active' and reg.get('status_source') == 'not_listed_assumption'
+                     else 'status' if status.lower() in AVAILABILITY else 'unknown_status')
+            a = availability(status)
             if p and a == 1.0 and p['recent_window'] >= 3 and p['recent_played'] == 0:
                 a = 0.8 if (p['min_ewma'] or 0) >= 20 else 0.5
+                basis = 'recent_inactivity'
         else:
+            status, basis = 'Unknown (retrospective)', None
             a = 1.0 if p and p['recent_played'] >= 1 else 0.2
         m0 = (0.6 * p['min_ewma'] + 0.4 * mins / gp) if p and gp else 0.0
         def rate(key, prior_key=None):
@@ -149,7 +155,8 @@ def player_inputs(tid: str, P: dict, registry: dict, lg: dict, T: dict, prospect
         rft = rate('ftm')
         out.append({
             'id': pid, 'name': reg.get('name') or (p['name'] if p else pid), 'pos': reg.get('pos') or (p['pos'] if p else ''),
-            'jersey': reg.get('jersey', ''), 'status': reg.get('status', 'Active') if prospective else 'Unknown (retrospective)',
+            'jersey': reg.get('jersey', ''),
+            'status': status, 'availability_basis': basis,
             'injury': reg.get('injury') if prospective else None, 'availability': a, 'base_min': m0,
             'recent_started': p['recent_started'] if p else 0, 'gp': gp,
             'r3': r3, 'r2': r2, 'rft': rft, 'p3': p3, 'p2': p2, 'pft': pft,
@@ -212,16 +219,34 @@ def simulate_game(game: dict, T: dict, lg: dict, P: dict, registry: dict, day: s
     exp = team_expectation(T, lg, h, a, bool(int(game.get('neutral') or 0)))
     sides = {'home': h, 'away': a}
     other = {'home': 'away', 'away': 'home'}
-    teams = {}
+    teams, fallbacks = {}, []
     for side, tid in sides.items():
         players = player_inputs(tid, P, registry, lg, T, prospective, Q, priors)
+        if prospective and sum(bool(p['starter']) for p in players) < 5:
+            eligible = sorted((p for p in players if p['availability'] > 0),
+                              key=lambda p: (-p.get('recent_started', 0), -p['base_min'], p['id']))
+            starters = {p['id'] for p in eligible[:5]}
+            for player in players:
+                player['starter'] = player['id'] in starters
         n = len(players)
         arr = lambda key, players=players: np.array([x[key] for x in players], dtype=float)
         avail = rng.random((W, n)) < arr('availability')
+        short = int((avail.sum(axis=1) < 5).sum()) if prospective else 0
+        if short:
+            raise ValueError(f"{side} in game {game['game_id']}: {short} worlds have fewer than five available players; "
+                             'check the roster and availability report')
         raw = arr('base_min') * avail * np.exp(rng.normal(0, 0.10, (W, n)))
         tot = raw.sum(axis=1, keepdims=True)
         mins = np.minimum(raw * (240 / np.where(tot > 0, tot, 1)), 44.0)
         mins *= 240 / np.maximum(mins.sum(axis=1, keepdims=True), 1e-9)
+        cold = (np.count_nonzero(raw > 0, axis=1) < 5) if prospective else np.zeros(W, dtype=bool)
+        if cold.any():
+            mins[cold] = avail[cold] * (240 / avail[cold].sum(axis=1))[:, None]
+            count = int(cold.sum())
+            fallbacks.append({'side': side, 'worlds': count, 'method': 'equal_share_available',
+                              'reason': 'fewer_than_five_positive_minute_inputs'})
+            warnings.warn(f"{side} in game {game['game_id']}: {count} worlds lack five positive minute inputs; "
+                          'placeholder uses equal shares for available players', RuntimeWarning)
         value = arr('value')
         base = max(1e-9, float((value * arr('usual_min')).sum()))
         strength = np.clip((mins * value).sum(axis=1) / base, 0.8, 1.2) ** 0.35
@@ -229,7 +254,7 @@ def simulate_game(game: dict, T: dict, lg: dict, P: dict, registry: dict, day: s
                        'rates': team_rates(T, lg, tid), 'starters': np.array([x['starter'] for x in players], dtype=bool),
                        'qshare': np.array([x['qshare'] for x in players]).reshape(n, 4),
                        'u_pts': np.array([x['u_pts'] for x in players]).reshape(n, 4),
-                       'u_ast': np.array([x['u_ast'] for x in players]).reshape(n, 4)}
+                       'u_ast': np.array([x['u_ast'] for x in players]).reshape(n, 4), 'cold': cold}
     sd, rho = MODEL['team_sd'], MODEL['team_rho']
     z1, z2 = rng.standard_normal(W), rng.standard_normal(W)
     zh, za = z1, rho * z1 + math.sqrt(1 - rho * rho) * z2
@@ -258,6 +283,8 @@ def simulate_game(game: dict, T: dict, lg: dict, P: dict, registry: dict, day: s
 
     for side, team in teams.items():
         X = quarter_minutes(team['mins'], team['qshare'], team['starters'], blowout, rng)
+        if team['cold'].any():
+            X[team['cold']] = team['mins'][team['cold'], :, None] / 4
         closers = X[:, :, 3] + 1e-9 * (team['mins'] > 0)
         otm = (25 * n_ot)[:, None] * closers / np.maximum(closers.sum(axis=1, keepdims=True), 1e-12)
         team['minutes'] = np.concatenate([X, np.minimum(otm, 5 * n_ot[:, None])[:, :, None]], axis=2)  # (W,P,5)
@@ -308,7 +335,10 @@ def simulate_game(game: dict, T: dict, lg: dict, P: dict, registry: dict, day: s
             box['stl'][:, :, k] = multinomial_rows(rng, rng.binomial(opp['tov_k'], np.clip(r['stl_share'], 0.3, 0.8)), arr('stl') * m * noise())
             box['blk'][:, :, k] = multinomial_rows(rng, rng.binomial(opp['missed'][:, k], np.clip(r['blk_per_miss'], 0.03, 0.2)), arr('blk') * m * noise())
 
-    return package(game, teams, pts_by_period, n_ot, W, exp, MODEL['id'])
+    result = package(game, teams, pts_by_period, n_ot, W, exp, MODEL['id'])
+    if fallbacks:
+        result['fallbacks'] = fallbacks
+    return result
 
 
 def package(game: dict, teams: dict, pts_by_period: dict, n_ot: np.ndarray, W: int, exp: dict, model_id: str) -> dict:
@@ -334,6 +364,8 @@ def package(game: dict, teams: dict, pts_by_period: dict, n_ot: np.ndarray, W: i
         played_any = minutes.sum(axis=2) > 0
         for i, x in enumerate(team['players']):
             entry = {k: x[k] for k in ('id', 'name', 'pos', 'jersey', 'starter', 'status', 'injury')}
+            if x.get('availability_basis'):
+                entry['availability_basis'] = x['availability_basis']
             if x.get('minutes'):  # D29: what the engine's minutes rest on (engine v1.2+)
                 mm = x['minutes']
                 entry['minutes_basis'] = {'healthy': round(mm['healthy'], 1), 'target': round(mm.get('target', 0.0), 1),
