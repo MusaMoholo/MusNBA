@@ -860,6 +860,13 @@ Repository/code audit only; no new model experiment or final-test scoring. Basel
 No candidate has been fitted or selected, no final-test outcome scored, and serving v1.3/pathway v1 and the PWA
 bundle are unchanged. The fixed pool-0 panel uses actual participants and projected, not actual, starters.
 
+- **Chunk A A1 isolated one-player fixture:** two synthetic seven-player-per-side branches fix one defender to
+  plays/sits. Their **4** scheduled side-world rotation tables each contain **2,880** checked seconds of distinct
+  available fives; the sitting defender's target is zero, the remaining home targets sum to 240 minutes, and
+  the engine's actual matchup input changes when the defender is removed. Impossible short rosters and invalid
+  240-minute targets fail explicitly. This is a unit fixture, not a complete simulated game, an availability
+  calibration or an accuracy result; foul-out legality and production wiring are untested. The **36** focused
+  tests include existing availability checks. The served engine and forecasts remain unchanged.
 - **S02 preparation, downloader integrity:** a network-free mock of three cached games in one season constructed the
   NBA `Store` three times, not once (`fetch_games` evaluates `Store(...)` before `setdefault`). Each construction
   scans and may flush the manifest. In isolated temporary storage, a second store constructed before the owning

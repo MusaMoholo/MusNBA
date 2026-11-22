@@ -410,6 +410,10 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
   smoke **108/108**. Froze selection, branch IDs, seeds, uncalibrated weights, provenance and non-exhaustive
   sensitivities in HANDOFF before implementation. Chunk A **3%**; original A1 remains **58%**. The exact weighted
   season mixture is unresolved; v1.3/pathway v1 and the delivered bundle remain unchanged.
+- **22 Nov 2026 · Chunk A A1 20% partial:** isolated one-player D29 game copy and synthetic plays/sits tests;
+  **36/36** focused tests pass. Scheduled fives and defender inputs are checked, but full-engine branch and
+  post-foul-out legality remain unverified, so no additional rung is credited and no production output changes.
+  Smoke **108/108**, deliberate fault exited **1** (86/108 passed); Pylance diagnostics clean on both new files.
 - **19 Nov 2026** — Studied MusSim. Probed sources: ESPN site API works with plain requests; NBA CDN returns 403.
   Owner: app shell first, play-by-play sim later.
 - **19 Nov 2026** — Phase 1 shipped (collection, placeholder engine, snapshots, views, server, app, PWA). Fixed: a

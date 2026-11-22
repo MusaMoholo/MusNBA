@@ -26,8 +26,10 @@ Updated **22 November 2026 — Chunk A execution started; A1 contract frozen at 
   Centre (A3). Chunk B: defence/foul-outs (B1), season pathway (B2), integrated confirmation/rotation map (B3).
   Each chunk ends with a fresh nightly and a useful dashboard improvement if no model passes. View Centre initially
   replays saved simulated events; the same interface is designed for later actual-game playback. Neither exists yet.
-- **Baseline:** clean `main` at `e35fbe2`, smoke **108/108**. The A1 10% contract is below; no branch code,
-  model promotion or delivery has occurred. Start :8767 only for presentation work; never stop :8766.
+- **Baseline:** clean `main` at `e35fbe2`, smoke **108/108**. The A1 10% contract is below, pushed in
+  `3f0d67c`. An isolated one-player branch helper and synthetic tests are in progress at rung 20%; they are not
+  wired into the nightly, and no model promotion or delivery has occurred. Start :8767 only for presentation work;
+  never stop :8766.
 - **At every completed module/subtask:** update the live ledger and affected docs with results, negatives,
   limitations, tests, production/PWA impact and next action; verify, review, **commit and push before moving on**.
   Update the live log as work proceeds and checkpoint unfinished state at any stop. The detailed protocol is in
@@ -1833,10 +1835,16 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
 The owner has authorised both D42 chunks in order, superseding D41's earlier stop. The dashboard programme is done;
 do not resume U1–U22.
 
-1. **A1 20%:** implement isolated one-player plays/sits overrides from the frozen contract above; re-solve starters
-   and minute targets for the available roster and use the actual defending five for matchups. Verify absent
-   players never appear and every lineup contains five distinct eligible players. Exercise short rosters explicitly
-   and preserve the default engine as control. Do not credit 20% until those checks pass.
+1. **A1 20% (partial):** `scripts/a1_lineup_branches.py::one_player` copies a D29 game, fixes one uncertain player's
+   availability, re-solves starters and targets, and rejects invalid regulation allocations. Synthetic tests in
+   `tests/test_a1_lineup_branches.py` exercise plays/sits, scheduled legal fives and actual `_mu` defender inputs;
+   the original game remains untouched. Run `.venv/bin/python -m unittest tests.test_a1_lineup_branches
+   tests.test_projection_availability tests.test_a1_availability -q` (36 passed). This does **not** establish
+   legality after foul-outs or test a complete branch engine run. Next, exercise the isolated branch path on
+   development-fold game inputs with independently audited full-world/lineup accounting; fail explicitly if the
+   known v1.3 foul-out-mask defect yields a disqualified lineup, without silently changing the serving policy.
+   Record the exact reproducible commands, seeds, populations and results. Do not credit 20% until complete-branch
+   validity is established or its limitation resolved; do not score protected-season outcomes.
 2. **S08–S10** map into Chunks A/B as above. S08 must solve the exact weighted-mixture/10,000-unweighted-world
    counterexample without rounding away discrepancies; S10 must not infer a future physical-absence hazard from
    recorded-DNP proxies. Keep actual-participant diagnostics separate from pre-game availability.
@@ -1862,6 +1870,15 @@ record the active scope and frozen design. AGENTS and README correct the now-sup
 needs no change because no new experiment or data measurement was performed; DASHBOARD_PLAN needs no change because
 no app behaviour shipped. Baseline smoke **108/108**. No model, dashboard, forecast, bundle or public shell changed;
 no nightly or data job was run. No session-owned background job was started.
+
+**Chunk A A1 partial implementation:** isolated helper and synthetic tests only; see FINDINGS for the exact
+population and limitations. HANDOFF, PLAN, FINDINGS and README describe this partial work. AGENTS, ENGINE_PLAN,
+TRAINING_PLAN and DASHBOARD_PLAN need no change: standing rules, accepted design, promotion gates and shipped UI
+are unchanged. Normal smoke **108/108** (`/tmp/musnba_chunk_a1_partial_smoke.log`); deliberate fault exited **1**
+with **86/108** passing (`/tmp/musnba_chunk_a1_partial_fault_retry.log`). The first concurrent fault check was
+stopped to avoid competing with normal smoke and was repeated sequentially. Both new Python files have zero
+Pylance diagnostics. No session-owned background job remains. No model, dashboard, forecast, bundle or public shell
+changed. This is a partial checkpoint, not A1 20% or module completion.
 
 **D43 planning document review:** HANDOFF and PLAN describe the future source-neutral View Centre, the simulated
 first release and later actual-game adapter; DASHBOARD_PLAN and ENGINE_PLAN record presentation and design; AGENTS
