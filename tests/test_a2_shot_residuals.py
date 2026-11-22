@@ -36,7 +36,9 @@ class ShotResidualTests(unittest.TestCase):
         rows, counts = screen.attach_roles(shots, roles)
         self.assertEqual(rows['player'].tolist(), ['1'])
         self.assertTrue(np.allclose(rows['residual'], [.6]))
-        self.assertEqual(counts, {'shots': 4, 'actor_outside_recorded_five': 1,
+        self.assertEqual(counts, {'shots': 4, 'actor_outside_recorded_five': 1, 'validation_games': 1,
+                                  'role_panel_games': 1, 'outside_role_panel_shots': 0,
+                                  'in_panel_missing_wrong_team_or_unknown_role': 2,
                                   'missing_wrong_team_or_unknown_role': 2, 'eligible_shots': 1})
 
 

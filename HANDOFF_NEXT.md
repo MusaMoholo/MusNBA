@@ -51,7 +51,11 @@ Partial source checkpoint **4dce4a3** was pushed before the UX-delivery nightly.
   distinguish persistent talent from nightly or shared form. `scripts/a2_shot_residuals.py` and focused tests
   implement the frozen checks; after source checkpoint, run
   `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python scripts/a2_shot_residuals.py`, independently audit
-  its report and record any failure. No F4 or final-test outcomes will enter it.
+  its report and record any failure. The first run saved `analysis/experiments/20261122_a2_shot_residuals_f1_f3.json`;
+  an independent ordered-pair audit reproduced all **16** estimates and bootstrap intervals. Its role table covers
+  only **200/773 F1**, **200/782 F2** and **195/490 F3** validation games, which needs explicit reporting. Source
+  now adds panel/exclusion counts and labels this selection, without changing the estimator; preserve the first
+  report and rerun to the `_v2.json` output before recording the result. No F4 or final-test outcomes enter it.
 - **Prepared, unpublished Pages shell:** isolated worktree `/tmp/musnba-user-ux-pages`, `gh-pages` at `f2932e1`,
   has only `assets/game.mjs`, `assets/players.mjs` and `sw.js` changed from the reviewed data-free shell
   `614f3061d9dc69a41bc4`. The shell passed **18/18** checks with the previous bundle. Do not publish until the new

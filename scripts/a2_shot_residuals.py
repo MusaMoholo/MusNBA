@@ -17,7 +17,7 @@ from scripts.evaluate import EXPERIMENTS, FOLDS, TEST_FROM  # noqa: E402
 
 FOLD_SEASONS = {'F1': '2024', 'F2': '2025', 'F3': '2026'}
 ROLES = ('star', 'starter', 'bench')
-REPORT = EXPERIMENTS / '20261122_a2_shot_residuals_f1_f3.json'
+REPORT = EXPERIMENTS / '20261122_a2_shot_residuals_f1_f3_v2.json'
 
 
 def aligned_source(fold: str) -> tuple[pd.DataFrame, dict[str, str]]:
@@ -86,7 +86,11 @@ def attach_roles(shots: pd.DataFrame, roles: pd.DataFrame) -> tuple[pd.DataFrame
     source = source.merge(roles[['game_id', 'player', 'team', 'tier']], on=['game_id', 'player'],
                           how='left', validate='many_to_one')
     valid = source['team'].notna() & source['team'].eq(source['offense']) & source['tier'].isin(ROLES)
+    in_role_panel = source['game_id'].isin(roles['game_id'])
     counts = {'shots': len(shots), 'actor_outside_recorded_five': int((~on_five).sum()),
+              'validation_games': int(shots['game_id'].nunique()), 'role_panel_games': int(roles['game_id'].nunique()),
+              'outside_role_panel_shots': int((~in_role_panel).sum()),
+              'in_panel_missing_wrong_team_or_unknown_role': int((in_role_panel & ~valid).sum()),
               'missing_wrong_team_or_unknown_role': int((~valid).sum()), 'eligible_shots': int(valid.sum())}
     rows = source.loc[valid, ['fold', 'game_id', 'player', 'tier', 'made', 'probability']].copy()
     rows['residual'] = rows['made'] - rows['probability']
@@ -147,7 +151,8 @@ def main() -> None:
         'bootstrap': {'unit': 'complete game', 'replicates': a1_compare.BOOTSTRAP_REPLICATES,
                       'seed': a1_compare.BOOTSTRAP_SEED, 'confidence': .95},
         'counts': counts, 'cohorts': cohorts, 'input_sha256': inputs,
-        'limitations': ['actual shot selection and observed lineups',
+        'limitations': ['role profiles cover only the fixed earlier-fold panels, not all validation games',
+                        'actual shot selection and observed lineups',
                         'within-game covariance combines talent, form, shared factors and model misspecification',
                         'no simulated-world comparison; not an identified latent component or promotion result'],
     }, pretty=True)

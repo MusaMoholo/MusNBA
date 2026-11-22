@@ -1,0 +1,258 @@
+{
+ "experiment": "a2_earlier_fold_shot_residual_feasibility",
+ "protocol": "TRAINING_PLAN.md: earlier-fold event feasibility screen",
+ "population": "teacher-forced observed shots, F1-F3 validation dates only",
+ "bootstrap": {
+  "unit": "complete game",
+  "replicates": 10000,
+  "seed": 20261122,
+  "confidence": 0.95
+ },
+ "counts": {
+  "F1": {
+   "shots": 136578,
+   "actor_outside_recorded_five": 1548,
+   "missing_wrong_team_or_unknown_role": 99926,
+   "eligible_shots": 35104,
+   "usable_player_games_with_fewer_than_two_shots": 282
+  },
+  "F2": {
+   "shots": 139660,
+   "actor_outside_recorded_five": 1614,
+   "missing_wrong_team_or_unknown_role": 102761,
+   "eligible_shots": 35285,
+   "usable_player_games_with_fewer_than_two_shots": 244
+  },
+  "F3": {
+   "shots": 87671,
+   "actor_outside_recorded_five": 1106,
+   "missing_wrong_team_or_unknown_role": 52279,
+   "eligible_shots": 34286,
+   "usable_player_games_with_fewer_than_two_shots": 257
+  }
+ },
+ "cohorts": {
+  "F1": {
+   "all": {
+    "games": 200,
+    "player_games": 3812,
+    "shots": 34822,
+    "ordered_pairs": 408680,
+    "status": "supported",
+    "estimate": 0.003185709640850346,
+    "ci_95": [
+     0.00043349931299856826,
+     0.006013721536698367
+    ]
+   },
+   "star": {
+    "games": 177,
+    "player_games": 310,
+    "shots": 5629,
+    "ordered_pairs": 105470,
+    "status": "supported",
+    "estimate": -0.00030129971007541057,
+    "ci_95": [
+     -0.0029860441198426907,
+     0.0027056994874390533
+    ]
+   },
+   "starter": {
+    "games": 200,
+    "player_games": 1534,
+    "shots": 16752,
+    "ordered_pairs": 207038,
+    "status": "supported",
+    "estimate": 0.003957663012672096,
+    "ci_95": [
+     0.0007075260519054819,
+     0.007266431636756406
+    ]
+   },
+   "bench": {
+    "games": 200,
+    "player_games": 1968,
+    "shots": 12441,
+    "ordered_pairs": 96172,
+    "status": "supported",
+    "estimate": 0.004470326390676905,
+    "ci_95": [
+     -0.0005385800034972247,
+     0.009585039934267585
+    ]
+   }
+  },
+  "F2": {
+   "all": {
+    "games": 200,
+    "player_games": 3716,
+    "shots": 35041,
+    "ordered_pairs": 415900,
+    "status": "supported",
+    "estimate": -0.0004147853026859567,
+    "ci_95": [
+     -0.002848689413863324,
+     0.002049559832934183
+    ]
+   },
+   "star": {
+    "games": 167,
+    "player_games": 289,
+    "shots": 5470,
+    "ordered_pairs": 106352,
+    "status": "supported",
+    "estimate": 0.001894458666024445,
+    "ci_95": [
+     -0.0008935283509788556,
+     0.004958326074781047
+    ]
+   },
+   "starter": {
+    "games": 200,
+    "player_games": 1489,
+    "shots": 16471,
+    "ordered_pairs": 204522,
+    "status": "supported",
+    "estimate": -0.0002856142220507647,
+    "ci_95": [
+     -0.003096158621305398,
+     0.002547559510589233
+    ]
+   },
+   "bench": {
+    "games": 200,
+    "player_games": 1938,
+    "shots": 13100,
+    "ordered_pairs": 105026,
+    "status": "supported",
+    "estimate": -0.00155575713233511,
+    "ci_95": [
+     -0.005991003507013101,
+     0.002941835939244605
+    ]
+   }
+  },
+  "F3": {
+   "all": {
+    "games": 195,
+    "player_games": 3689,
+    "shots": 34029,
+    "ordered_pairs": 389840,
+    "status": "supported",
+    "estimate": 0.0013335391933815652,
+    "ci_95": [
+     -0.0011248842514335268,
+     0.003760963059216594
+    ]
+   },
+   "star": {
+    "games": 153,
+    "player_games": 225,
+    "shots": 4097,
+    "ordered_pairs": 77320,
+    "status": "supported",
+    "estimate": 0.001334275425797911,
+    "ci_95": [
+     -0.001601705216085243,
+     0.0045523502336319455
+    ]
+   },
+   "starter": {
+    "games": 195,
+    "player_games": 1598,
+    "shots": 17649,
+    "ordered_pairs": 218104,
+    "status": "supported",
+    "estimate": 0.0008118620635187897,
+    "ci_95": [
+     -0.0019253645426425498,
+     0.0035900468288069865
+    ]
+   },
+   "bench": {
+    "games": 195,
+    "player_games": 1866,
+    "shots": 12283,
+    "ordered_pairs": 94416,
+    "status": "supported",
+    "estimate": 0.0006845076106895494,
+    "ci_95": [
+     -0.003803173960360306,
+     0.005204526580908949
+    ]
+   }
+  },
+  "pooled_F1_F3": {
+   "all": {
+    "games": 595,
+    "player_games": 11217,
+    "shots": 103892,
+    "ordered_pairs": 1214420,
+    "status": "supported",
+    "estimate": 0.0013684453955332485,
+    "ci_95": [
+     -0.00010380971736009489,
+     0.00287371618038144
+    ]
+   },
+   "star": {
+    "games": 497,
+    "player_games": 824,
+    "shots": 15196,
+    "ordered_pairs": 289142,
+    "status": "supported",
+    "estimate": 0.0009400174822732696,
+    "ci_95": [
+     -0.0007250836379791728,
+     0.0026412159681908987
+    ]
+   },
+   "starter": {
+    "games": 595,
+    "player_games": 4621,
+    "shots": 50872,
+    "ordered_pairs": 629664,
+    "status": "supported",
+    "estimate": 0.0015003745554797148,
+    "ci_95": [
+     -0.00022805604296652847,
+     0.003286582706675771
+    ]
+   },
+   "bench": {
+    "games": 595,
+    "player_games": 5772,
+    "shots": 37824,
+    "ordered_pairs": 295614,
+    "status": "supported",
+    "estimate": 0.0012040215726938168,
+    "ci_95": [
+     -0.0014662788794235328,
+     0.003977874561871638
+    ]
+   }
+  }
+ },
+ "input_sha256": {
+  "analysis/experiments/20261122_a1_s04_rim_F1_v2.json": "496f3073358c25c1efc27fe9b075e1695b8863bc94e06efc41b6d0a9ce6c8f75",
+  "data/derived/experiments/20261122_a1_s04_rim_F1_v2.parquet": "d7e9e58cb5b82e0a66aae1268cbc89dad42753bb0f270a07250716050dbca2ba",
+  "data/derived/history/2024/segments.parquet": "4a7c3c2bce39580cc8e1092ffc215d11bbd49f7bf117b4551eee40337203d2c0",
+  "data/derived/nodes/variant_80a4e8dce535/shot_result.npz": "b7c83441ff6f1e9b6f00cc65de5905c9db0065224e19dd42c71fcb8082c236ea",
+  "data/derived/experiments/20261122_a1_s05_unconditional_F1_corrected.parquet": "db6fb53c42c7ac0af4059c04631fcfa744c55eaa357f91b6a4ef5f477e6f6ca9",
+  "analysis/experiments/20261122_a1_s04_rim_F2_v2.json": "9a5bab508dffbfcab17a4b0722b097a961ea4fa5dcf3770f92d6a6d6734d5f56",
+  "data/derived/experiments/20261122_a1_s04_rim_F2_v2.parquet": "dbadf7b320c4b78800083112de58d2a11f8cf1ae4c15f5303374a1bf4e97f3b8",
+  "data/derived/history/2025/segments.parquet": "d9db732172894ed8d3c6e5e99e3cd1c197006da22799413034ce3ce18cc5aee2",
+  "data/derived/nodes/variant_edf6d83ed7a3/shot_result.npz": "48ae5accaeaf11c3c9c7bc3c1158b1246783e3f76416c3a0d67f891259e2776d",
+  "data/derived/experiments/20261122_a1_s05_unconditional_F2_corrected.parquet": "37a4d7e8e9b65ca2ad5db587dbd7a8dcf59b9bc9ab48e0ee93d1f03445d1c35f",
+  "analysis/experiments/20261122_a1_s04_rim_F3_v2.json": "15f3921f7853381c4db09e2ff8e1bd5869b74c42f130d525eb2217c20bd79271",
+  "data/derived/experiments/20261122_a1_s04_rim_F3_v2.parquet": "5fed150765562a1ab22bfbf3becbdec108ec6e7f3b43466f8cf999c290409f86",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+  "data/derived/nodes/variant_9d5aee5f8b7d/shot_result.npz": "67b1a0d4a91f2f29a5d66c8ca62fac9bb3af99789c7c20d5079a1724240e5be6",
+  "data/derived/experiments/20261122_a1_s05_unconditional_F3_corrected.parquet": "b7a2ce12c12c00d1efde160af32a143c3f049469587e47a4a1218e881ef06195"
+ },
+ "limitations": [
+  "actual shot selection and observed lineups",
+  "within-game covariance combines talent, form, shared factors and model misspecification",
+  "no simulated-world comparison; not an identified latent component or promotion result"
+ ]
+}
