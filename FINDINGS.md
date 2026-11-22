@@ -1540,6 +1540,11 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   earlier FT percentage for the technical and does not model injury/ejection re-entry. No fixed-200 accuracy
   comparison or promotion is implied. Reports: `20261122_a1_s06_penalty_three_{output,world}_accounting.json`
   and `20261122_a1_s06_penalty_probe_world_accounting.json`.
+- **S06 flow-instrumentation preflight:** on the same **3 games / 64 player-games**, opt-in flow capture
+  reproduced **321** candidate game values and **1,408** player values, and independently reconciled **1,280**
+  recorded player-period values and **96** simulated team-quarter/component sums (maximum floating difference
+  **1.42e-14**). This validates wiring, not accuracy; the fixed **200-game** screen is still running.
+  Reports: `20261122_a1_s06_penalty_flow_wiring_{output,flow}_accounting.json`.
 - **S07 F4 fixed baselines:** on **5,208** known play/DNP labels from **7,317** strictly prior-box candidates,
   the no-report physical-availability fallback has play-proxy Brier **0.15450** (game-cluster 95%
   **0.14162–0.16773**) and infinite log loss due to **718** impossible predictions. The target-positive frequency

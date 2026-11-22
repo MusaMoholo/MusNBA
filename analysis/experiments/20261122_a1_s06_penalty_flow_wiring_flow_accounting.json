@@ -1,0 +1,29 @@
+{
+ "experiment": "a1_s03_flow_independent_accounting",
+ "run": "20261122T095814Z_a1_s06_penalty_flow_wiring",
+ "reference": "20261122T095342Z_a1_s06_penalty_three",
+ "games": 3,
+ "player_games": 64,
+ "original_game_values_reproduced": 321,
+ "original_player_values_reproduced": 1408,
+ "recorded_player_period_values_checked": 1280,
+ "simulated_team_quarter_and_component_values_checked": 96,
+ "recorded_team_lineup_tick_sets_checked": 6,
+ "recorded_clock_values_checked": 12,
+ "max_absolute_difference": 1.4210854715202004e-14,
+ "simulated_roster_players_without_box_output": [],
+ "incomplete_roster_team_games": 0,
+ "limitations": "Team/quarter sums are checked only for sides whose entire simulated roster has player-box output. Scheduled fives precede foul-outs and their overlap is not event-level validation.",
+ "input_sha256": {
+  "analysis/experiments/20261122T095814Z_a1_s06_penalty_flow_wiring.json": "e7eb10f117e471419f4d4f0acd9fa0592cbaabfae4a2122fe8803afc5a0a5ef5",
+  "data/derived/experiments/20261122T095814Z_a1_s06_penalty_flow_wiring.parquet": "49b330e386e40fdfec0bc7a4be59aaa9524946f5ff9c9b2deca493714b9483f7",
+  "data/derived/experiments/20261122T095814Z_a1_s06_penalty_flow_wiring_players.parquet": "acd80fca49b84863d359930388dfc979f8c819989cd006788c20627b841ea120",
+  "data/derived/experiments/20261122T095342Z_a1_s06_penalty_three.parquet": "156d4f707bdc638a45e8098d7c199dccc1598c2b2aacbe42426c5b31b6f28153",
+  "data/derived/experiments/20261122T095342Z_a1_s06_penalty_three_players.parquet": "95e4458f9ab530a3c7d9dd772d7db8a2be3268118f2f56492e67d01e57ebf725",
+  "data/derived/variants/matchup/features/pregame.parquet": "d4da5f071de3ddcbc72bbb4899a77f9b4f22d899a3a54bcfb76baf0097594d0e",
+  "data/derived/history/2026/player_periods.csv.gz": "ef35bb5c33c46e6a194cea30075d9974ead5d44be96c6074b60f6dac49e69c28",
+  "data/derived/history/2026/stints.parquet": "29de886d2afd2a5d9a55af2acb027fd3ee83a887584c71a9fe9951a9c2cc225f",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+  "scripts/a1_flow_audit.py": "9e9ea2864012ff94d38340087d829a2a04fc64d83336ea1bf8fe23b28eb31ea5"
+ }
+}

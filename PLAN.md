@@ -728,6 +728,11 @@ face cards and unrelated presentation remain §9b backlog. NBA history moved to 
   another **1,000** saved worlds from the original failure game reconcile with the required technical. The
   single-game process exited 1 when its unsupported summary could not be serialized; no complete 200-game accuracy
   result exists. The repair is research-only; S06 remains **70%** and the served model/PWA are unchanged.
+- **22 Nov 2026 · S06 flow preflight:** **3** same-policy games reproduced **321** game and **1,408** player
+  values; independent quarter/component accounting passed. The fixed **200-game** flow screen is running, so
+  there is no measured candidate gain yet. S07's censored-spell and starter-simulation sources are prepared and
+  unit-tested, not scored.
+  Production and PWA remain unchanged; A1 remains **52.0%**.
 - **22 Nov 2026 · S06 foul-out probe:** in a controlled world, an available substitute does not replace a player
   with six fouls because the current engine's foul-out mask is never updated. The finding is not a forecast gain
   or a population frequency; isolate and gate a repair alongside substitution research.

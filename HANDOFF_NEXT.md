@@ -56,7 +56,20 @@ fives. The formerly failing game then simulated **1,000** worlds and its capture
 **1** on non-finite single-game summary serialization; the saved-world probe is not a successful complete
 backtest. Reports `analysis/experiments/20261122_a1_s06_penalty_three_{output,world}_accounting.json` and
 `analysis/experiments/20261122_a1_s06_penalty_probe_world_accounting.json`, logs
-`/tmp/musnba_a1_s06_penalty_{three,probe}.log`. No backtest remains active.
+`/tmp/musnba_a1_s06_penalty_{three,probe}.log`. The opt-in flow capture then reproduced all **321** original
+game values and **1,408** player values on those three games, independently checked **1,280** recorded
+player-period values and **96** simulated team/component sums, and completed in **63 s**; reports
+`analysis/experiments/20261122_a1_s06_penalty_flow_wiring_{output,flow}_accounting.json`. The flow auditor's new
+optional `--reference` defaults to the prior control; existing callers remain compatible. The sequential
+fixed **200-game/1,000-world** flow-instrumented screen is now running as attached shell **2284**, wrapper PID
+**17651**, Python PID **17652**, log `/tmp/musnba_a1_s06_penalty_flow_fixed200.log`; command:
+`OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u scripts/backtest.py --config models/v1.2d.json
+--fold F4 --game-ids data/derived/experiments/20261122_a1_s03_f4_game_ids.json --worlds 1000 --jobs 4 --threads 8
+--rotation targets --pool 0 --models folds/v1.2d_F4_all --substitution-candidate
+analysis/experiments/20261122_a1_s06_engine_models_F4.json --substitution-foul-penalty --flow-diagnostics --name
+a1_s06_penalty_flow_fixed200`. No other engine backtest may run concurrently. Progress is job item count only,
+not the S06 80% rung; after completion independently audit, compare against the pinned controls and assess the
+pre-registered player-first and state-response gates.
 S07's first no-report/starter baseline protocol is frozen in TRAINING_PLAN §8.2 before scoring. A prior-position
 coverage setup initially failed on timestamp/string merge types; after converting stored dates to ISO it found
 **55/7,317** missing prior positions across **55/400** F4 team-games. This is coverage, not a starter score.
@@ -536,6 +549,33 @@ negative. Rest-role Brier changes are approximately **+0.00000008/−0.00000012/
 retrospective, selected listed-player proxies, dominated by coach DNP; neither a physical recovery estimate nor a
 deployable future-absence model follows. Continue with explicitly censored duration/role comparisons; fixed report
 fallback, engine v1.3, forecasts and bundle remain unchanged.
+
+**S07 follow-ups, not yet scored:** `scripts/a1_availability_spell_sim.py` now constructs the pre-registered
+five-next-game trajectories and deterministic 10,000-draw earlier-fold proxy simulations. Focused tests cover
+returns, unlisted/fold-end censoring, seeded survival and unsupported subgroups with empty bootstrap samples; these
+cells remain inconclusive without aborting the experiment. `scripts/a1_availability_starter_sim.py` draws independent
+no-report active states, applies the as-of D29 selector to each valid active set, records five-player identities and
+leaves unknown-position or short-roster worlds unsupported; a separate world-by-world audit is prepared.
+**26/26** starter/spell/sequence/flow tests pass. Before using any
+result, commit the source, then run
+`OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u scripts/a1_availability_spell_sim.py --output
+analysis/experiments/20261122_a1_s07_spell_sim.json --rows-output
+data/derived/experiments/20261122_a1_s07_spell_sim.parquet`; then run the separately implemented
+`scripts/a1_availability_spell_audit.py --output analysis/experiments/20261122_a1_s07_spell_sim_accounting.json`
+to check trajectories, hazards and intervals. Run
+`OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u scripts/a1_availability_starter_sim.py
+--fold F1 --output analysis/experiments/20261122_a1_s07_starter_sim_F1.json --rows-output
+data/derived/experiments/20261122_a1_s07_starter_sim_F1.parquet --teams-output
+data/derived/experiments/20261122_a1_s07_starter_sim_F1_teams.parquet --lineups-output
+data/derived/experiments/20261122_a1_s07_starter_sim_F1_lineups.parquet`, then repeat F2–F4 and run
+`scripts/a1_availability_starter_audit.py --fold F1 --output
+analysis/experiments/20261122_a1_s07_starter_sim_F1_accounting.json` for each fold. The scripts are unscored and
+may still need corrections. Do not advance
+the 70% rung until the complete follow-up and required accounting pass.
+The partial-source checkpoint's normal/fault smoke queue is still running as attached shell **2291**, normal-smoke
+PID **18036**, with logs `/tmp/musnba_a1_s06_flow_partial_smoke.log` and
+`/tmp/musnba_a1_s06_flow_partial_fault.log`; do not claim either result until it exits. The 26 focused tests and
+independent replay unit checks have passed. This is a source-freeze checkpoint, not a completed S06 or S07 task.
 
 The tracking family was frozen in TRAINING_PLAN §8 and built separately by
 `scripts/a1_tracking_features.py`: former wrapper PID **85586**, shell **1549**, log
@@ -1351,9 +1391,9 @@ The dashboard programme is done. Do not resume U1–U22, repeat rejected defence
    basketball rule reference is cited. The opt-in `scripts/a1_foul_penalty_engine.py` and its expanded trace
    accounting are implemented and precommitted; **26** policy/world/sequence tests pass. The three original games and
    the single-game probe are independently audited as above; the latter's process exited 1 on summary serialization.
-   Verify `--flow-diagnostics` on the same three games against the candidate, then run the unchanged 200-game
-   1,000-world screen with flow diagnostics for player-quarter/state-response analysis. Keep the original failed
-   policy and default engine unchanged. Never
+   The same three-game flow audit passed; the unchanged 200-game 1,000-world screen with flow diagnostics is running
+   as shell 2284 above. After completion, independently audit outputs and assess player-quarter/state response
+   against the pinned control, then apply the unchanged gates. Keep the original failed policy and default engine unchanged. Never
    hide or exclude the failure when applying promotion gates. The 80% rung still requires a genuine measured
    minute-CRPS/state-response comparison; don't present the aborted screen as complete. Run no second engine
    backtest concurrently. No promotion follows from the trace check.
@@ -1427,6 +1467,13 @@ and FINDINGS record the measured F4 proxies and unsuccessful engine screen; TRAI
 censored sequence protocol; README maps the independent scorer/auditor. ENGINE_PLAN and DASHBOARD_PLAN need no
 change because no accepted design, app, forecast, shell or bundle changed. AGENTS already contains the scoped overnight
 authority. The v1.3/pathway-v1 model and PWA generation remain unchanged; phone import is unconfirmed.
+
+**S06 flow/S07 spell-source partial review:** HANDOFF records the running fixed screen, its log and the unscored
+spell follow-up; PLAN and FINDINGS record the independently reconciled three-game preflight without claiming an
+accuracy result. README maps the prepared research script. TRAINING_PLAN's frozen follow-up and acceptance rules
+are unchanged; ENGINE_PLAN and DASHBOARD_PLAN need no change because no production design or presentation changed;
+AGENTS already records this overnight authority. The v1.3/pathway-v1 forecasts and PWA bundle remain unchanged;
+phone import is unconfirmed.
 
 ## Completed S01 audit and reproduction
 

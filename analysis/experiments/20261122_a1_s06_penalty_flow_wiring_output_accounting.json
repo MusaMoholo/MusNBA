@@ -1,0 +1,31 @@
+{
+ "experiment": "a1_output_accounting",
+ "run": "20261122T095814Z_a1_s06_penalty_flow_wiring",
+ "games": 3,
+ "player_games": 64,
+ "expected_simulated_player_games": 64,
+ "player_games_without_output": 0,
+ "missing_player_outputs": [],
+ "quarter_scoreboard_comparisons": 24,
+ "quarter_mismatches": 0,
+ "player_3pm_box_comparisons": 64,
+ "player_3pm_missing_actuals": 0,
+ "player_3pm_mismatches": 0,
+ "team_3pm_mean_comparisons": 6,
+ "team_3pm_incomplete": 0,
+ "team_3pm_incomplete_rosters": 0,
+ "team_3pm_mean_mismatches": 0,
+ "legacy_reproduction": {
+  "reference": "20261122T095342Z_a1_s06_penalty_three",
+  "games": {
+   "rows": 3,
+   "columns": 106,
+   "absolute_tolerance": 1e-12
+  },
+  "players": {
+   "rows": 64,
+   "columns": 20,
+   "absolute_tolerance": 1e-12
+  }
+ }
+}
