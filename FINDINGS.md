@@ -1860,3 +1860,16 @@ observed errors, not causal player effects, evidence of model-world dependence o
 point estimates were independently reconstructed from raw pairs; the saved report reproduced byte-for-byte.
 Protocol, exact counts, input hashes and intervals are in TRAINING_PLAN and
 `analysis/experiments/20261122_a2_residual_dependence_f4.json`. No final-test outcomes were scored.
+
+**Earlier-fold shooting feasibility:** predeclared F1–F3 teacher-forced shot residuals use the S04 control
+probabilities and prior-role S05 tables, which cover **200/773 F1**, **200/782 F2** and **195/490 F3**
+validation games. Outside-panel shots are excluded, not missing-at-random replacements. Among **595** panel
+games / **11,217** known-role player-games with two or more eligible shots, pooled within-player-game
+ordered-shot residual covariance is **0.001368** (95% **−0.000104 to +0.002874**). F1 is **0.003186**
+[+0.000433, +0.006014], F2 **−0.000415** [−0.002849, +0.002050], F3 **0.001334** [−0.001125, +0.003761];
+these fold/subgroup intervals are exploratory and not adjusted for multiple comparisons. Source/cache rows were
+reconciled; a separate raw-pair reconstruction verified all **16** role/fold point
+estimates and complete-game bootstrap intervals. These actual-shot, actual-lineup residuals combine talent,
+nightly form, shared game effects and model misspecification, so the pooled inconclusive result does **not**
+identify or calibrate a player latent factor. V2 explicitly separates panel exclusions and reproduces v1:
+`analysis/experiments/20261122_a2_shot_residuals_f1_f3{,_v2}.json`. No F4 or final-test outcomes were used.

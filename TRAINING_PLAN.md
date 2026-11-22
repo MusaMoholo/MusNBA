@@ -355,6 +355,11 @@ persistent talent, form, shared game effects and model misspecification, so it c
 variance or justify a draw by itself. A valid component still needs a separately frozen identification and
 simulated-world comparison, with the original player-first gates.
 
+**Coverage discovered after the first run:** the fingerprinted S05 prior-role tables cover only fixed panels of
+200 F1, 200 F2 and 195 F3 games, not every validation game. The v2 report explicitly distinguishes outside-panel
+shots from in-panel missing/wrong-team/unknown roles; it reproduces all first-run estimates and intervals exactly.
+This is a fixed-panel screen, not an all-validation-games estimate.
+
 #### S03 signal-diagnosis specification — 22 Nov, before the diagnosis
 
 The fixed unit is a team-game side: the **200 unique S01 F4 game IDs** in the manifest, exactly matching the retained

@@ -443,6 +443,10 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 - **22 Nov 2026 · Chunk A A2 20%:** froze cutoff-safe talent, nightly form and shared-factor hypotheses and
   explicit no-double-count controls in TRAINING_PLAN; no candidate was fitted or promoted. The inspected F4
   descriptive screen is not untouched confirmation. Chunk A **10%**; A1 **10%**, A2 **20%**, A3 **0%**.
+- **22 Nov 2026 · A2 earlier-fold feasibility:** **595** fixed-panel F1–F3 games / **11,217** player-games;
+  pooled teacher-forced within-game shot-residual covariance **0.001368** (95% **−0.000104 to +0.002874**).
+  Individual components are not identified. All **16** estimates and clustered intervals independently
+  reconciled; v2 clarifies limited role-panel coverage and reproduces v1. A2 remains **20%**, no model changes.
 - **19 Nov 2026** — Studied MusSim. Probed sources: ESPN site API works with plain requests; NBA CDN returns 403.
   Owner: app shell first, play-by-play sim later.
 - **19 Nov 2026** — Phase 1 shipped (collection, placeholder engine, snapshots, views, server, app, PWA). Fixed: a
