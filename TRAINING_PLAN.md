@@ -524,7 +524,9 @@ calibration and 10,000 game-cluster bootstrap intervals on supported populations
 For projected starters, reconstruct D29 state strictly before each origin with each fold's earlier fitted
 parameters. On its inferred candidate roster, use the existing no-report availability fallback and the production
 `>=0.9` sure-player selection (all candidates only when none qualify), then the existing
-`minutes.projected_starters` ranking and positional limits. Positions must come from a strictly earlier profile;
+`minutes.projected_starters` ranking and positional limits, with player ID as its input-order tie-break because
+the original live roster ordering is unavailable. This is a D29-selector proxy, not an exact replay of that order.
+Positions must come from a strictly earlier profile;
 if a candidate considered for selection lacks a known position, or fewer than five candidates can be selected,
 mark that team-game unsupported rather than impute a position or activate a player. Only after selecting compare
 against complete observed five-starter sets, including starters outside the prior roster; report unsupported sets,

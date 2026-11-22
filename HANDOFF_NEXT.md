@@ -38,6 +38,8 @@ a second engine backtest concurrently, and do not infer completion from process 
 S07's first no-report/starter baseline protocol is frozen in TRAINING_PLAN §8.2 before scoring. A prior-position
 coverage setup initially failed on timestamp/string merge types; after converting stored dates to ISO it found
 **55/7,317** missing prior positions across **55/400** F4 team-games. This is coverage, not a starter score.
+`scripts/a1_availability_baseline.py` and focused tests are prepared; no baseline has run yet. Its D29 selector
+uses stable player-ID tie order because the original live roster ordering is unavailable; results are a proxy.
 
 **Completed S05 evidence:** the 200-game flow and its independent accounting are complete; the comparison and
 two S04 hypotheses are recorded below and in FINDINGS/TRAINING_PLAN. Both corrected S05 historical screen wrappers

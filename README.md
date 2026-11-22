@@ -133,6 +133,7 @@ Dashboard routes: `#/standings/{forecast,seeds,wins,ratings,picture,races,movers
 | `scripts/a1_substitution_engine.py` | Opt-in selected-timeout lineup policy and foul-out handling for matched backtests; candidate only, not the served engine |
 | `scripts/a1_availability_report_audit.py`, `scripts/a1_availability_report_audit_check.py` | Conservative pre-tip archive, injury-status and final-box coverage inventory and independent accounting; protected-season outcomes are not scored |
 | `scripts/a1_availability_labels_audit.py` | Independently reconstruct F4 prior-box membership and separate retrospective play/DNP reasons from the actual-participant oracle |
+| `scripts/a1_availability_baseline.py` | Frozen F1–F4 no-report play proxies and prior-roster D29 starter-selector baseline; missing status/position coverage stays explicit |
 | `scripts/a1_substitution_world_capture.py`, `scripts/a1_substitution_world_audit.py` | Research-only raw world/lineup capture and independent player-minute, legal-five and score replay; enable with backtest `--audit-substitution-worlds` |
 | `scripts/matchups.py` | D30 implicit matchups: soft assignment of defenders to shooters from foul/block credits; shot types from the play text |
 | `scripts/fetch_nbastats.py` | D32 NBA Stats adapter (browser fetch headers, ~1 request/s, resumable): season logs, `boxscorematchupsv3`, tracking defence, play-by-play v3 → `data/raw/nbastats/<endpoint>/<season>/` (gzip + manifest) |
