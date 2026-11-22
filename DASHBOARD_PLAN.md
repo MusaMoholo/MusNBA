@@ -56,3 +56,34 @@ gaps — is the chip's tooltip and appears in the Model & data panel. `modelPill
 single place this is decided.
 
 **Season model (20 Nov, D25/D26).** Standings show which model made the season forecast: **Team pathway v1** (green chip; tooltip = its label) when the season was played by the per-world team pathway — today's and tomorrow's games from the engine's worlds, every later game from each simulated season's own ratings, updated after every game — or **Placeholder model** for older snapshots. The "How the forecast works" note follows the same switch (`seasonPill` in `league.mjs`; `season_model` in `standings/<date>.json`). A long-range game's win % is the share of simulated seasons in which that team won it (D16).
+
+## Upgrade programme (owner, 21 Nov — "one top shop for NBA insights")
+
+Run item by item; each item ends with browser checks at 1440/960/390 (both themes) on the touched pages, its status here
+(✅ + one line), and a commit + push — so the docs and repo are never more than one item behind. Items are of similar size;
+everything is read from stored snapshots, worlds, finals and derived tables (serving never computes; `views.py` aggregates).
+
+| # | Item | Low-level parts | Status |
+|---|---|---|---|
+| U1 | **Today: slate header strip** | slate tiles (games, projected points per game, closest margin, first/last tip) · tip-time timeline (each game placed on a UK clock axis) · phone stacking | ☐ |
+| U2 | **Today: game card upgrades** | favourite margin pill · injury/maybe count per side (from projection statuses) · "closest game" badge · quick links (Scenarios, Matchup) · layout check | ☐ |
+| U3 | **Today: role change badges** | players gaining/losing ≥ 4 projected minutes v season (views) · why (teammate out / return ramp from minutes basis) · strip of badges per slate · link to sheet | ☐ |
+| U4 | **Results review for finished slates ("How we did")** | per finished slate: favourites' record, Brier and log loss of win %, total/margin errors · biggest player surprises (actual v projection, percentile) · card on Today for past dates | ☐ |
+| U5 | **Game Centre: lead-by-quarter fan chart** | from team-period worlds: median home lead after Q1/H/Q3/final with 25–75 and 10–90 bands (views) · SVG fan · in Team view | ☐ |
+| U6 | **Game Centre: quarter score chart** | each side's projected points per quarter with 10–90 whiskers · actual overlay for finals · in Team view above distributions | ☐ |
+| U7 | **Game Centre: availability panel** | who is out / questionable / probable per side with projected minutes and the minutes shift to teammates · "if X sits" summary · in Player view | ☐ |
+| U8 | **Matchup view: four-factor bars** | paired bars per factor (offence v the other side's defence) with league-average markers · ranks · replaces the plain table's top half on wide screens | ☐ |
+| U9 | **Player page: header and trend chart** | season tiles · game-log chart (points with 5-game rolling line, rebounds/assists toggles) · last 10 v season deltas | ☐ |
+| U10 | **Player page: shot profile** | zone mix and FG% by zone v league (from the latest profile) on a half-court diagram · three-point rate and FT rate · labelled as pre-game profile | ☐ |
+| U11 | **Player page: defensive profile (real matchups)** | whom he guards most (attackers, partial possessions) · points allowed per partial possession v those attackers' own rate · three-point attempt share allowed (deterrence) · labelled with seasons | ☐ |
+| U12 | **Player page: v tonight's opponent** | his past games v the next opponent (box lines, averages) · real matchups v that team's players · next-game projection card | ☐ |
+| U13 | **Players tab: trending and leaders** | last-10 v season deltas column · per-36 toggle check · top risers/fallers strip · sparkline of last 10 points | ☐ |
+| U14 | **Team page: ratings trend and schedule strip** | net rating (rolling 10) chart from team games · upcoming schedule with projected win % (season sim's team estimate) · rest/back-to-back markers | ☐ |
+| U15 | **Team page: roster minutes and roles** | minutes share bars (season) · projected minutes tonight · starters v bench · injury status chips | ☐ |
+| U16 | **Standings: playoff picture** | most likely seeds 1–10 per conference with probabilities · projected first-round pairings (modal seeds) · play-in bracket view | ☐ |
+| U17 | **Standings: wins distributions per team** | mini histogram per row in the Wins tab (10k seasons) · median and 10–90 · sort by spread | ☐ |
+| U18 | **Season tab (new): races** | conference race chart (projected wins with 10–90 bands, sorted) · tank race (worst-record and bottom-3 chances) · #1 seed race | ☐ |
+| U19 | **Season tab: movers since the last snapshot** | change in projected wins and playoff odds v the previous snapshot's season · biggest risers/fallers with the results that moved them | ☐ |
+| U20 | **Season tab: season leaders to date** | per-game leaders (PTS, REB, AST, 3PM, STL, BLK, FG%) with minimum games · team leaders | ☐ |
+| U21 | **About the model page (new)** | plain-language explainer of the two engines (play-by-play, team pathway), what 10,000 worlds means, how to read ranges, decision log highlights, data sources and freshness · linked from the model chip | ☐ |
+| U22 | **Global polish** | nav adds Season · consistent section headers and spacing · empty and loading states · number formatting audit · tooltips · full 81+-case sweep | ☐ |

@@ -18,7 +18,11 @@ a ladder of ten 10% steps with done-when criteria** and weights for the chunk %,
 while answering his questions too. **Give time estimates from measured job rates** (he says agents overestimate). He sends
 many UX requests mid-chunk; do them, check every touched page at 1440 / 960 / 390 in both themes and look at the screenshots.
 
-## Progress ladders — next chunk: "Express team strength, make minutes react" (proposed to the owner, 21 Nov)
+## Progress ladders — next chunk: "Express team strength, make minutes react" (agreed with the owner, 21 Nov)
+
+**Running first (owner, 21 Nov): the dashboard upgrade programme** in DASHBOARD_PLAN.md § Upgrade programme — 22 items of
+similar size, each closed with browser checks, a DASHBOARD_PLAN status update and a commit; continue from the first item not
+marked ✅, then start this chunk.
 
 Headliners: **(1) team-difference compression** (next actions 1) and **(2) M7 game-state substitutions** (next actions 2); the
 chunk closes with major and minor dashboard work tied to both. Chunk % = 0.35 · S1 + 0.30 · S2 + 0.25 · S3 + 0.10 · S4; each step

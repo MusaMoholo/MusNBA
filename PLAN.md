@@ -104,6 +104,13 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
 | M11 | Availability model | ☐ | Simulated games missed match history | (to build) |
 | M12 | Season pathway calibration | ◐ **first cut (20 Nov): team pathway v1 in the app** — walk-forward 2022-26 (480 team-starts): dispersion 1.00 (fixed probabilities 1.53), 10–90% coverage 84% (65%), CRPS −4% in every held-out season; still wide in November (0.84) and surprises fade with the date (sim 0.52 → 0.18 v real 0.40 flat) | Dispersion ≈ 1.0 **at every start date**, persistence matches | `pathway.py`, `season_backtest.py` |
 
+### Next major chunk (agreed with the owner, 21 Nov): "Express team strength, make minutes react"
+
+S1 team-difference compression (35%) · S2 M7 game-state substitutions (30%) · S3 dashboard: rotation map, watch-a-sim, face
+cards, tracking-defence insight, role-change badges (25%) · S4 close-out (10%). Ladders with done-when criteria:
+HANDOFF_NEXT.md § Progress ladders. Before it, the owner asked for a dashboard upgrade programme (DASHBOARD_PLAN.md
+§ Upgrade programme) run item by item with docs updated after each.
+
 ## 7. Phase 1 record (done)
 
 - [x] Collection, master fixtures, box scores, cutoff-safe stats, placeholder engine (`baseline-v1`), snapshots, views
