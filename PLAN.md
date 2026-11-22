@@ -429,6 +429,11 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 · A1 90% partial:** the two retained research game contexts matched their snapshot-pinned
+  master, valid pre-tip completion and team records calculated strictly before the origin. Synthetic
+  same-day record contamination and post-tip/mutated contexts failed. This checks only the retained views;
+  the adapter does not enforce that provenance for future views. Retry production-scale runtime and bias,
+  dated availability calibration and promotion remain unresolved. A1 **80%**, Chunk A **34.5%**.
 - **22 Nov 2026 · Chunk A A1 80%:** a single explicitly injected research selector now keeps player, team, sheet,
   scenarios and Given/Joint on the same weighted worlds; an Expected-only research phone bundle needs no worlds.
   Independent adapter checks reconciled **25/28 players** and **3,275/3,667 distributions** in the two full
@@ -438,8 +443,9 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
   shell is `gh-pages` **0c0447a**, hosted laptop/phone offline **31/31 / 30/30**; no production branch selection,
   model or forecast bundle changed. Manual phone
   import remains required. A1 **80%**, Chunk A **34.5%**; 90% restart/runtime/cutoff and promotion gates remain open.
-  A 20-world F4 injected-retry pilot used **41 attempts in 21.449 s**, preserving 19 unaffected worlds; it is
-  neither a 10k runtime nor a real-world rejection/bias estimate. The owner's Luka 65+ tail concern is a hypothesis
+  A 20-world F4 injected-retry pilot used **41 attempts in 21.449 s**, preserving 19 unaffected worlds; its
+  **0.521 s/attempt** mean projects **86.8 minutes / 10k attempts** sequentially, not a measured full run or
+  real-world rejection/bias estimate. The owner's Luka 65+ tail concern is a hypothesis
   for later A2, not a target fitted to lines; the F4 200-game team-total 10–90% coverage was **69%**.
 - **22 Nov 2026 · D46:** owner narrowed lineup branching to the highest-impact uncertain player per team, only
   within its top three; at most four exhaustive combinations. Freeze and label the pre-origin offensive proxy in

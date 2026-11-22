@@ -1,7 +1,7 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 80%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **90daa62** (weighted scenarios); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **2b53d57** (A1 80%, gated research views); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
@@ -26,7 +26,7 @@ The preceding pushed checkpoint was **90daa62** (weighted scenarios); use `git l
   **6324344ab602b7c6502c**; hosted source hash matches and hosted laptop/phone import/offline checks passed
   **31/31 / 30/30**. Previous shell archived as
   `~/Basketball_archive_ops/gh-pages-before-a1-game-view-b399409.tar`. Device import remains manual. Game identity
-  context comes from the existing game view and is not independently certified origin-safe. Browser/source evidence
+  context comes from the existing game view; the later audit below checks only these retained fixtures. Browser/source evidence
   `analysis/experiments/20261122_chunk_a_a1_d47_game_view_browser_two_v4.json` and
   `20261122_chunk_a_a1_d47_game_view_{one_full,two_full,two_home_sits}_v2_{probe,audit}.json`.
 - **A1 90% partial:** a fixed F4 game with actual participants and synthetic selected availability ran **20**
@@ -34,12 +34,25 @@ The preceding pushed checkpoint was **90daa62** (weighted scenarios); use `git l
   all 19 unaffected worlds and seeds identical. This is not a real rejection rate, predictive bias or 10k runtime
   test; the coordinator remains unwired. Report
   `analysis/experiments/20261122_chunk_a_a1_d48_isolated_world_probe_20_v1.json`; **46** retry/selection/availability
-  tests pass. No 90% credit until the rung's remaining checks pass or the limitation is explicitly resolved.
+  tests pass. The 41 logged attempts averaged **0.521 s** with concurrent validation; extrapolating linearly gives
+  **86.8 minutes / 10k attempts** on one core, not a measured 10k or parallel runtime. Do not assume the sequential
+  prototype fits the **60-minute** nightly budget. No 90% credit until the rung's remaining checks pass or the
+  limitation is explicitly resolved.
   The owner flagged Luka's **10/10,000** worlds at 65+ points as a concern that tails may be too narrow; that is a
   hypothesis, not a calibrated target. Existing F4 control team-total 10–90% coverage was **69%** over **200** games.
   Investigate player and team variance later under A2's pre-existing fold gates, without fitting to market lines.
   HANDOFF, PLAN, FINDINGS, DASHBOARD_PLAN and README document this checkpoint. AGENTS, ENGINE_PLAN and
   TRAINING_PLAN need no edit: standing rules, decisions, promotion and cutoff gates are unchanged.
+- **A1 90% context audit:** the two captured research views (`401910029` and `401910030`) match the retained
+  snapshot-pinned master and team records reconstructed strictly before the **22 Nov** origin; snapshot completion
+  preceded both valid tips. Synthetic same-day-result contamination, post-tip and changed-score cases fail.
+  Report `analysis/experiments/20261122_chunk_a_a1_context_cutoff_v1.json`. This checks only these retained views;
+  the research adapter does **not** enforce snapshot provenance for future views. Do not treat it as a general
+  cutoff-safety or promotion pass. `analysis/a1_game_context_audit.py` documents the reproducible check.
+  The two payload hashes match their earlier independent audits; **3** focused tests pass, normal smoke **108/108**
+  and deliberate fault **86/108**, exit 1 (`/tmp/musnba_a1_context_{smoke,fault}.log`).
+  HANDOFF, PLAN, FINDINGS and README record the audit; AGENTS, ENGINE_PLAN and TRAINING_PLAN need no changes
+  (standing rules, design and gates unchanged); DASHBOARD_PLAN needs no change (no shipped behaviour changed).
 - **A1 80% shared-scenario groundwork, partial:** `outcomes.mjs` now adapts an explicitly supplied validated
   research source and binds weighted probability mass, counts, distributions, means, correlations and half-open
   grids to one selected world set. `scenario.mjs` uses those calculations when injected, otherwise the existing
@@ -2416,8 +2429,9 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
    The retry coordinator is deliberately unwired: prove world-local classification and survivor isolation,
    audit persisted outputs, cap and record retries, compare predictive effects to the distinct S06 penalty
    policy on development folds, and do not retry input/cutoff/accounting/unknown errors. Keep the existing
-   forecast if those gates cannot be met. Review origin safety of every selected-view context field; the
-   current research view borrows game identity/context from the existing view and is not certified safe.
+   forecast if those gates cannot be met. The two retained research contexts now pass the independent snapshot
+   check above; enforce equivalent origin-safe provenance for any future view before enabling the research path.
+   Reproduce with `.venv/bin/python analysis/a1_game_context_audit.py data/snapshots/2026-11-22/meta.json data/master_fixtures.csv data/derived/experiments/20261122_chunk_a_a1_d47_game_view_one_full_v2.json data/derived/experiments/20261122_chunk_a_a1_d47_game_view_two_full_v2.json --payloads data/derived/experiments/20261122_chunk_a_a1_d47_expected_payload_one_shared_v1.json data/derived/experiments/20261122_chunk_a_a1_d47_expected_payload_two_shared_v1.json --output analysis/experiments/<new-context-audit>.json`.
 2. Finish A1 only after the actual rung requirements or the explicitly documented blocked fallback are resolved,
    review all root docs, smoke/fault, commit and push. Stop at the owner's A1 boundary; leave A2/A3 and Chunk B
    unchanged. A new full nightly belongs at the end of Chunk A, not this isolated research checkpoint.

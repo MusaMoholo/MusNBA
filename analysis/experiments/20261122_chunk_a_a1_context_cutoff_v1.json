@@ -1,0 +1,42 @@
+{
+ "kind": "research game-context cutoff audit; not a predictive or promotion test",
+ "source_sha256": {
+  "data/snapshots/2026-11-22/meta.json": "c3a329344b0e6c1471de47cb85223fa3039a79c8b9c29588a762253e186f1002",
+  "data/master_fixtures.csv": "0e34e44e1e1edcf1089d2e844796940b5bf879be50d16fba2c9c0929554035c8",
+  "data/derived/experiments/20261122_chunk_a_a1_d47_game_view_one_full_v2.json": "40304843c278d9cee100f0354906d28fd30ee4f32d20c4199f5e824823cf1f71",
+  "data/derived/experiments/20261122_chunk_a_a1_d47_game_view_two_full_v2.json": "a9670289f4905f67b573f8665d72da503d2e3a6ec3f7968e7c7cb538d4aa9d58",
+  "data/derived/experiments/20261122_chunk_a_a1_d47_expected_payload_one_shared_v1.json": "bb5ca0fbf09194effbc61c4461d49936aff97d1e7d90af83202cb320eca32e97",
+  "data/derived/experiments/20261122_chunk_a_a1_d47_expected_payload_two_shared_v1.json": "a4ab3909d1a3c2d83a6d71ff3dda9009ca405a3bf6eae9e12eacdb4f56e299df",
+  "analysis/a1_game_context_audit.py": "f54f0283cc2da17e7e40c52e15c0a3fa0959bbae31d7094f066d012e4f1c18e7"
+ },
+ "results": [
+  {
+   "game": "401910029",
+   "origin": "2026-11-22",
+   "home_record": [
+    10,
+    6
+   ],
+   "away_record": [
+    10,
+    5
+   ]
+  },
+  {
+   "game": "401910030",
+   "origin": "2026-11-22",
+   "home_record": [
+    9,
+    6
+   ],
+   "away_record": [
+    10,
+    6
+   ]
+  }
+ ],
+ "limitations": [
+  "Applies only to these views and this snapshot-pinned master.",
+  "The research adapter does not enforce this audit at runtime."
+ ]
+}

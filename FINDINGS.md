@@ -2,6 +2,13 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 — selected research context cutoff:** the two retained game views `401910029` and `401910030`
+match all copied game-context fields to the master whose hash is pinned by their **22 Nov** prospective snapshot;
+their four team records match a separate reconstruction using only completed games before the origin, and the
+snapshot completed before both valid tips. Synthetic same-day record contamination, a late snapshot and mutated
+scores fail the check. Report `20261122_chunk_a_a1_context_cutoff_v1.json`. This is evidence for these two views
+only; the adapter does not enforce snapshot-pinned context at runtime and future contexts remain unverified.
+
 **22 Nov 2026 — selected Game Centre research compatibility:** for the same **20k / 40k** one-/two-player
 origin fixtures, independent adapter accounting checked **25 / 28** players and **3,275 / 3,667** distributions
 in the full mixtures; a fixed-player **20k** selection checked **28** players and **3,645** distributions.
@@ -18,7 +25,11 @@ availability, **20** control and **20** retry worlds used **41** independently c
 in **21.449 s**; one deliberately injected rejection replaced one world and left all **19** other seeds and
 captured arrays unchanged. This demonstrates isolation in the pilot only: the coordinator remains unwired, the
 failure is artificial, and real failure rates, predictive bias, persisted 10k output and 10k runtime are unmeasured.
-Report `20261122_chunk_a_a1_d48_isolated_world_probe_20_v1.json`.
+The 41 logged single-world attempt durations averaged **0.521 s** (median **0.52 s**, range **0.48–0.59 s**),
+with other validation jobs running. A simple linear estimate is **86.8 minutes per 10,000 attempts**, before
+rejections and pipeline overhead, on this one-core sample; it is not a measured 10k runtime or a parallel benchmark.
+That makes the present sequential prototype unsuitable to assume within the 60-minute nightly budget.
+Report `20261122_chunk_a_a1_d48_isolated_world_probe_20_v1.json`, log `/tmp/musnba_a1_retry_probe20.log`.
 
 **Owner hypothesis, 22 Nov:** the observed **10/10,000** Luka 65+ simulation count may indicate insufficient
 tail variance; it does not establish a correct event probability. Separately, the frozen **200-game F4** control
