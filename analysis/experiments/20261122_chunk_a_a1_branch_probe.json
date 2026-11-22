@@ -1,0 +1,33 @@
+{
+ "population": "fixed F4 game with actual participants; selected availability is synthetic",
+ "game": "401810327",
+ "model": "folds/v1.2d_F4_all",
+ "records": [
+  {
+   "branch_id": "lineup-v1:8/4432166=plays",
+   "seed": "9058102881389687176",
+   "worlds": 32,
+   "trace_preserves_outputs": true,
+   "capture": "data/derived/experiments/20261122_chunk_a_a1_branch_probe/plays.npz",
+   "capture_sha256": "dacb6c8bb2dbd17a0fe4dfcfe59c811e5587389d76cd8d16ef8b86909bd274db",
+   "audit_error": "a player accumulated more than six personal fouls"
+  },
+  {
+   "branch_id": "lineup-v1:8/4432166=sits",
+   "seed": "14153229437098904587",
+   "worlds": 32,
+   "trace_preserves_outputs": true,
+   "capture": "data/derived/experiments/20261122_chunk_a_a1_branch_probe/sits.npz",
+   "capture_sha256": "1804b92c3e0c6f090840d27724830cf37eb3bbb1d41b844932cd63b58a04c4a4",
+   "audit_error": "a player accumulated more than six personal fouls"
+  }
+ ],
+ "sha256": {
+  "scripts/a1_branch_world_probe.py": "03edd9eeaceb32d61deafd9a8c9359be612f021fd763b01f7741ef55712481a9",
+  "scripts/a1_lineup_branches.py": "d7aef2c2aeed9098bbac6fba84252911ae1bbc6bbeb7f580d83f5bc102e3f481",
+  "scripts/engine.py": "b8182363ef11100089ecb1f332daf15efaf19be573586a9a3af5c6a9cbe8a3c7",
+  "scripts/a1_substitution_world_audit.py": "d1f1b34834ffe6c9d82b246cbbaed453c6a4eea224e47da020c6e0f02d3cdf4e",
+  "models/v1.2d.json": "d0fded7eb9871494e0bc4a82a3627b0a3dc37c3c243d8c9378f151dec2789927",
+  "data/models/folds/v1.2d_F4_all/config.json": "1617769cb52f2c750e0f1276071b39fc21254ef53fc97ccc646869aaa50f5e71"
+ }
+}

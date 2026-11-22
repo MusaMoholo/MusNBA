@@ -27,9 +27,9 @@ Updated **22 November 2026 — Chunk A execution started; A1 contract frozen at 
   Each chunk ends with a fresh nightly and a useful dashboard improvement if no model passes. View Centre initially
   replays saved simulated events; the same interface is designed for later actual-game playback. Neither exists yet.
 - **Baseline:** clean `main` at `e35fbe2`, smoke **108/108**. The A1 10% contract is below, pushed in
-  `3f0d67c`. An isolated one-player branch helper and synthetic tests are in progress at rung 20%; they are not
-  wired into the nightly, and no model promotion or delivery has occurred. Start :8767 only for presentation work;
-  never stop :8766.
+  `3f0d67c`; the initial helper is `633fe47`. The first full-game F4 branch probe failed its independent foul-out
+  audit in both 32-world branches; these branches are not safe to serve. A1 remains at 10%; no model or delivery
+  changed. Start :8767 only for presentation work; never stop :8766.
 - **At every completed module/subtask:** update the live ledger and affected docs with results, negatives,
   limitations, tests, production/PWA impact and next action; verify, review, **commit and push before moving on**.
   Update the live log as work proceeds and checkpoint unfinished state at any stop. The detailed protocol is in
@@ -1845,6 +1845,32 @@ do not resume U1–U22.
    known v1.3 foul-out-mask defect yields a disqualified lineup, without silently changing the serving policy.
    Record the exact reproducible commands, seeds, populations and results. Do not credit 20% until complete-branch
    validity is established or its limitation resolved; do not score protected-season outcomes.
+   **Frozen development probe, completed with failure:** fixed F4 game `401810327`, 32 worlds per branch, home player
+   with the largest D29 mean target (string-ID tie break), with synthetic 0.5 pre-branch availability and all
+   actual participants supplied. For each plays/sits branch, run once without capture and once with a no-op
+   observational trace using the same D31 branch seed. Compare all saved player box arrays, minutes, scores
+   and periods exactly, then use `a1_substitution_world_audit.audit_worlds` on the captured worlds. Treat a
+   disqualified five, unequal outputs or failed accounting as a failure, not a model score. Command:
+   `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=8 .venv/bin/python -u scripts/a1_branch_world_probe.py --game 401810327
+   --worlds 32 --output analysis/experiments/20261122_chunk_a_a1_branch_probe.json --worlds-dir
+   data/derived/experiments/20261122_chunk_a_a1_branch_probe`. The report fingerprints source, model config
+   and captures; this is a single known-participant wiring probe, not evidence of availability calibration or
+   accuracy. The audit never repairs a foul-out or rewrites a result. Attached shell **2860** exited **1**;
+   log `/tmp/musnba_chunk_a1_branch_probe.log` and the report/captures above are retained. Both replay traces
+   preserve every checked output exactly; both fail on players accumulating more than six fouls. Independent
+   accounting found disqualified lineups in **14/32 plays** worlds (**298/16,080** fives) and **16/32 sits**
+   worlds (**548/16,248** fives); team/player points and team minutes reconcile. These are one synthetic
+   conditioning example, not a population-wide foul-out rate. An isolated `BranchLegalityGuard` now rejects
+   invalid fives and any sixth foul before proceeding, including the reproduced engine defect; it does not
+   implement the legal five-player exception or change production. **24** focused tests pass. Next replay the
+   fixed F4 branches with this guard and log the explicit outcome, then decide the A1 fallback. A proper repair
+   needs the unchanged model gates before allowing production branches; do not claim A1 20% without evidence.
+   Sequential normal/fault smoke finished as shell **2864**: **108/108** normal checks passed, and the deliberate
+   fault exited **1** with **86/108** passing; logs `/tmp/musnba_a1_probe_{smoke,fault}.log`. No session-owned
+   process remains running.
+   **Document review:** HANDOFF, PLAN, FINDINGS, ENGINE_PLAN and README record the experiment, guard and next
+   action. AGENTS, TRAINING_PLAN and DASHBOARD_PLAN need no change: standing rules, frozen gates and shipped UI
+   are unchanged.
 2. **S08–S10** map into Chunks A/B as above. S08 must solve the exact weighted-mixture/10,000-unweighted-world
    counterexample without rounding away discrepancies; S10 must not infer a future physical-absence hazard from
    recorded-DNP proxies. Keep actual-participant diagnostics separate from pre-game availability.

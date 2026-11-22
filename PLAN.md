@@ -414,6 +414,14 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
   **36/36** focused tests pass. Scheduled fives and defender inputs are checked, but full-engine branch and
   post-foul-out legality remain unverified, so no additional rung is credited and no production output changes.
   Smoke **108/108**, deliberate fault exited **1** (86/108 passed); Pylance diagnostics clean on both new files.
+- **22 Nov 2026 · A1 20% probe protocol:** predeclared the F4 known-participant single-game, 32-world-per-branch
+  observational replay and independent accounting in HANDOFF before running it; no prediction or model choice is
+  inferred from the probe. The user instructed continuation unless he asks to stop.
+- **22 Nov 2026 · A1 20% probe result:** both branches of fixed F4 game 401810327 preserved traced outputs exactly
+  but failed independent foul-out accounting. Disqualified lineups occurred in **14/32** plays worlds and
+  **16/32** sits worlds; no production branch or rung is claimed. An isolated fail-closed guard rejects a sixth
+  foul and invalid fives; **24** focused checks pass. Preserve v1.3; any legal-play repair remains isolated until
+  the registered gates pass. Normal smoke **108/108**; deliberate fault exited **1** with **86/108** passing.
 - **19 Nov 2026** — Studied MusSim. Probed sources: ESPN site API works with plain requests; NBA CDN returns 403.
   Owner: app shell first, play-by-play sim later.
 - **19 Nov 2026** — Phase 1 shipped (collection, placeholder engine, snapshots, views, server, app, PWA). Fixed: a

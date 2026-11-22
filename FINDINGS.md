@@ -867,6 +867,19 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   240-minute targets fail explicitly. This is a unit fixture, not a complete simulated game, an availability
   calibration or an accuracy result; foul-out legality and production wiring are untested. The **36** focused
   tests include existing availability checks. The served engine and forecasts remain unchanged.
+- **Chunk A A1 F4 full-game branch probe:** game **401810327**, 32 worlds per branch, actual participants and a
+  synthetic uncertain status on home player **4432166**, followed the frozen branch seeds. The observational
+  replay reproduced scores, periods, player boxes and minutes exactly in both branches. The independent world
+  auditor rejected both because players accumulated more than six fouls. An additional reconstruction found
+  **14/32** plays worlds with **298/16,080** disqualified fives and **16/32** sits worlds with **548/16,248**
+  disqualified fives; **3/32** and **8/32** worlds respectively had a player above six fouls (max **9/8**).
+  Every traced five was distinct, on the proper side and available; player points equalled team-period points,
+  and team minutes matched regulation plus overtime to **8.53e-14** minutes. This is one conditional,
+  actual-participant game, not a league-wide frequency or pre-game availability/accuracy result. Report:
+  `analysis/experiments/20261122_chunk_a_a1_branch_probe.json`; raw captures stay under `data/derived/experiments/`.
+  The helper used in that probe is preserved at source commit **633fe47**; its SHA-256 agrees with the report.
+  A subsequent isolated guard fails explicitly at a sixth foul, including the controlled injected-state
+  reproduction, rather than altering the simulated game; it is not a legal foul-penalty implementation.
 - **S02 preparation, downloader integrity:** a network-free mock of three cached games in one season constructed the
   NBA `Store` three times, not once (`fetch_games` evaluates `Store(...)` before `setdefault`). Each construction
   scans and may flush the manifest. In isolated temporary storage, a second store constructed before the owning

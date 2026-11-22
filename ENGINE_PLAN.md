@@ -386,6 +386,9 @@ A1 S08's Expected branch worlds, if validated, become the same near-term draws c
 Chunk A A1's first execution contract is frozen in HANDOFF: high-impact uncertain-player selection, deterministic
 branch IDs and seeds, and explicitly uncalibrated one/two-player weights. More-than-two one-out comparisons are
 non-exhaustive. No branch or exact weighted-season implementation has been delivered.
+The first fixed F4 full-game branch probe failed foul-out accounting in both branches. An isolated guard now rejects
+any sixth foul or invalid five rather than silently using an illegal lineup; it is not the NBA foul-penalty rule and
+is not wired into the serving engine. A proper repair remains subject to the player-first promotion gates.
 The selected S07 fallback keeps fixed report-status probabilities and recent-inactivity heuristics as uncalibrated,
 labels unlisted injuries as assumptions, and rejects unavailable five-player worlds. There is no supported
 future physical-absence hazard; S10 must retain that limitation unless a candidate passes the frozen tests.

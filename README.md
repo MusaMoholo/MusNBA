@@ -147,7 +147,8 @@ Dashboard routes: `#/standings/{forecast,seeds,wins,ratings,picture,races,movers
 | `scripts/a1_availability_sequence_screen.py`, `scripts/a1_availability_sequence_screen_audit.py` | Frozen earlier-fold return/rest play-proxy screen, independent probability/interval accounting; not physical recovery or a deployable season-absence hazard |
 | `scripts/a1_availability_spell_sim.py`, `scripts/a1_availability_spell_audit.py` | Research-only, five-game censored recorded-DNP trajectories and independent accounting using earlier-fold play proxies; evaluated, not a physical-absence model |
 | `scripts/a1_availability_starter_sim.py`, `scripts/a1_availability_starter_audit.py` | Research-only per-world starter frequencies for inferred rosters, with independent no-report draws and independent replay/accounting across F1–F4 |
-| `scripts/a1_lineup_branches.py` | Isolated one-player plays/sits game preparation; synthetic scheduled-lineup tests only, not wired into the nightly or certified for complete games |
+| `scripts/a1_lineup_branches.py` | Isolated one-player plays/sits game preparation and fail-closed lineup/foul guard; not wired into the nightly or certified for complete games |
+| `scripts/a1_branch_world_probe.py` | Isolated fixed-F4 branch replay, no-op event-lineup capture and independent world accounting; diagnostic only |
 | `scripts/a1_substitution_world_capture.py`, `scripts/a1_substitution_world_audit.py` | Research-only raw world/lineup capture and independent player-minute, legal-five and score replay; enable with backtest `--audit-substitution-worlds` |
 | `scripts/matchups.py` | D30 implicit matchups: soft assignment of defenders to shooters from foul/block credits; shot types from the play text |
 | `scripts/fetch_nbastats.py` | D32 NBA Stats adapter (browser fetch headers, ~1 request/s, resumable): season logs, `boxscorematchupsv3`, tracking defence, play-by-play v3 → `data/raw/nbastats/<endpoint>/<season>/` (gzip + manifest) |

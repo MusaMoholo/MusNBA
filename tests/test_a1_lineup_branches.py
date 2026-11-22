@@ -2,15 +2,16 @@ import json
 import unittest
 from pathlib import Path
 from unittest.mock import patch
+
 import numpy as np
 
-from scripts import a1_lineup_branches, engine, minutes
+from scripts import a1_branch_world_probe, a1_foul_out_probe, a1_lineup_branches, engine, minutes
 
 
 class OnePlayerBranchesTests(unittest.TestCase):
     def game(self, size=7):
         game = object.__new__(engine.Game)
-        game.game = {'home_id': '1', 'away_id': '2'}
+        game.game = {'game_id': '123', 'home_id': '1', 'away_id': '2'}
         game.sides = ('home', 'away')
         game.side = np.repeat([0, 1], size)
         game.ids = [str(100 + i) for i in range(size)] + [str(200 + i) for i in range(size)]
@@ -36,6 +37,7 @@ class OnePlayerBranchesTests(unittest.TestCase):
         game.templates = {0: [], 1: []}
         game.strict_minute_targets = False
         n = len(game.ids)
+        game.n = n
         game.P = {'grp_code': np.zeros(n), 'min_avg': np.full(n, 25.0),
                   'height_in': np.full(n, 78.0), 'weight_lb': np.full(n, 210.0),
                   'm_fg_rim': np.full(n, 0.2)}
@@ -81,6 +83,59 @@ class OnePlayerBranchesTests(unittest.TestCase):
         with patch.object(minutes, 'game_targets', return_value=np.zeros(6)):
             with self.assertRaisesRegex(ValueError, 'legal 240-minute allocation'):
                 a1_lineup_branches.one_player(self.game(), '1', '100', False)
+
+    def test_trace_observes_without_changing_the_scheduled_lineup(self):
+        game = self.game()
+        state = engine.Worlds(game, 1, np.random.default_rng(42))
+        lineup = np.array([[[0, 1, 2, 3, 4], [7, 8, 9, 10, 11]]])
+        available = np.ones((1, game.n), dtype=bool)
+        policy = a1_branch_world_probe.TracePolicy()
+        policy.begin(game, 1, available, 42)
+        before = lineup.copy()
+        self.assertIs(policy.before_segment(game, state, np.array([0]), lineup), lineup)
+        np.testing.assert_array_equal(lineup, before)
+        self.assertFalse(policy.after_fouls(game, state, np.array([0]), lineup[:, 0], lineup[:, 1]))
+        state.done[:] = True
+        policy.finish(game, state)
+        saved = policy.capture(game, state)
+        lineup[0, 0, 0] = 5
+        self.assertEqual(saved['trace_lineups'][0, 0, 0], 0)
+
+    def test_branch_guard_rejects_sixth_foul_without_changing_legal_lineups(self):
+        game = self.game()
+        state = engine.Worlds(game, 1, np.random.default_rng(42))
+        lineup = np.array([[[0, 1, 2, 3, 4], [7, 8, 9, 10, 11]]])
+        available = np.ones((1, game.n), dtype=bool)
+        guard = a1_lineup_branches.BranchLegalityGuard()
+        guard.begin(game, 1, available, 42)
+        self.assertIs(guard.before_segment(game, state, np.array([0]), lineup), lineup)
+        for off in (0, 1):
+            state.off[0] = off
+            state.ingame['pf_so_far'][0, 0] = 0
+            self.assertFalse(guard.after_fouls(game, state, np.array([0]), lineup[:, off], lineup[:, 1 - off]))
+            state.ingame['pf_so_far'][0, 0] = 6
+            with self.assertRaisesRegex(ValueError, 'world 0 side 0.*unsupported sixth foul for player 100'):
+                guard.after_fouls(game, state, np.array([0]), lineup[:, off], lineup[:, 1 - off])
+        available[0, 0] = False
+        guard.begin(game, 1, available, 42)
+        with self.assertRaisesRegex(ValueError, 'invalid five'):
+            guard.before_segment(game, state, np.array([0]), lineup)
+
+    def test_guard_stops_the_known_engine_foul_out_defect(self):
+        game = a1_foul_out_probe.ProbeGame()
+        game.game = {'game_id': '123'}
+        game.ids = [str(i) for i in range(game.n)]
+        eng = a1_foul_out_probe.ProbeEngine()
+        eng.rotation_policy = a1_lineup_branches.BranchLegalityGuard()
+
+        class FouledWorlds(engine.Worlds):
+            def __init__(self, g, worlds, rng):
+                super().__init__(g, worlds, rng)
+                self.ingame['pf_so_far'][0, 0] = 6
+
+        with patch.object(engine, 'Worlds', FouledWorlds):
+            with self.assertRaisesRegex(ValueError, 'unsupported sixth foul for player 0'):
+                eng.simulate(game, 1, 20261122)
 
 
 if __name__ == '__main__':
