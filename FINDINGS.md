@@ -2,6 +2,17 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 — branch-selected game-summary accounting:** for the **20k** one-player full mixture, independent
+capture reconstruction matched **3,303** distributions and **3,124** means. For each of the **nine** two-player
+either/plays/sits selections (**10k / 20k / 40k** worlds), it matched **3,696** distributions and
+**3,453–3,488** means, including team/player periods, exact mean seconds, shooting-attempt mass, opening-five
+shares, multi-doubles and if-plays values. Counts in weighted histograms are probability-mass units rather than
+world counts. The existing display-style minute histograms are rounded; world-minute filters remain unrounded.
+Individual Node runs took **6.01–8.20 s** for the summaries, produced **614,544–728,558 bytes** and peaked
+at up to **722,144 KiB** RSS with a **202.7 MB** raw input while other smoke jobs ran; this is not a browser,
+phone or transfer benchmark. Reports `20261122_chunk_a_a1_d47_game_summary_two_*_v{3_probe,4_audit}.json`
+and `20261122_chunk_a_a1_d47_game_summary_one_full_v{3_probe,5_audit}.json`. No UI or model acceptance is implied.
+
 **22 Nov 2026 — branch opening fives:** for the **20,000 / 40,000** saved branch worlds of the same two
 prospective games, independent replay matched **200,000 / 400,000** first-trace lineup entries at Q1 12:00,
 and JS recovered **50 / 112** per-branch player opening-five counts. In the four-branch sample, **4** players

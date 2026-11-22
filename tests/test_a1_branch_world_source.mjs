@@ -9,7 +9,9 @@ const minutes = values => {
   return encode(bytes);
 };
 const fixture = {
+  game: '123', origin: '2026-11-22',
   selected_players: [{team_id: '1', player_id: '10', probability: 0.75}],
+  weight_assumptions: 'Uncalibrated availability; independence unvalidated.',
   branches: [
     {assignments: [['1', '10', true]], weight: {numerator: '3', denominator: '4'}, worlds: {
       worlds: 2, players: ['10', '20'], side: [0, 1], stats: ['min', 'pts'],
@@ -57,6 +59,8 @@ assert.throws(() => source.playerValues('99', 'min'), /Unknown/);
 assert.throws(() => source.playerValues('10', 'plays', 'q1'), /unavailable/);
 assert.throws(() => source.playerValues('10', 'starts'), /unavailable/);
 assert.throws(() => source.playerValues('10', 'min', 'constructor'), /period/);
+assert.equal(source.weightAssumptions, fixture.weight_assumptions);
+assert.equal(source.game, fixture.game);
 for (const corrupt of [
   f => { f.branches[1].assignments[0][2] = true; },
   f => { f.branches[0].weight.numerator = '1'; },
@@ -71,6 +75,9 @@ for (const corrupt of [
   f => { f.branches[0].worlds.final_period = encode([3, 4]); },
   f => { delete f.branches[1].worlds.final_period; },
   f => { f.branches[0].worlds.periods.reverse(); },
+  f => { delete f.weight_assumptions; },
+  f => { f.origin = 'unknown'; },
+  f => { f.origin = '2026-02-30'; },
 ]) {
   const bad = structuredClone(fixture);
   corrupt(bad);

@@ -20,6 +20,11 @@ const SLICES = {fg: [0, 1, 2, 3, 4], q1: [0], q2: [1], q3: [2], q4: [3], h1: [0,
 export function branchWorldSource(fixture) {
   const selected = fixture.selected_players, records = fixture.branches;
   if (!Array.isArray(selected) || selected.length < 1 || selected.length > 2
+      || typeof fixture.game !== 'string' || !/^[0-9]+$/.test(fixture.game)
+      || typeof fixture.origin !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(fixture.origin)
+      || !Number.isFinite(Date.parse(fixture.origin + 'T00:00:00Z'))
+      || new Date(fixture.origin + 'T00:00:00Z').toISOString().slice(0, 10) !== fixture.origin
+      || typeof fixture.weight_assumptions !== 'string' || !fixture.weight_assumptions.trim()
       || selected.some(p => !p || typeof p !== 'object')
       || new Set(selected.map(p => p.player_id)).size !== selected.length
       || new Set(selected.map(p => p.team_id)).size !== selected.length
@@ -205,5 +210,8 @@ export function branchWorldSource(fixture) {
     }
     return result;
   };
-  return {worlds: offset, weights, denominator, selected, playerValues, teamPoints, selection, overtimePeriods};
+  return {worlds: offset, weights, denominator, game: fixture.game, origin: fixture.origin,
+    selected, weightAssumptions: fixture.weight_assumptions,
+    players: roster[0], side: roster[1],
+    playerValues, teamPoints, selection, overtimePeriods};
 }

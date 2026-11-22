@@ -1,7 +1,7 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 70%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **80726c7** (A1 70%, overtime and grids); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **0468812** (A1 70%, opening-five research); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
@@ -9,6 +9,28 @@ The preceding pushed checkpoint was **80726c7** (A1 70%, overtime and grids); us
   without publishing an unvalidated forecast or changing the default production pathway. **Owner's latest stop:
   stop at the end of A1**, checkpoint/push and report gains and limitations; do not start A2, A3 or Chunk B in
   this run. The earlier dashboard house pass was already delivered; no nightly merely for this research checkpoint.
+- **A1 80% weighted game-summary groundwork:** `analysis/a1_branch_game_summary.mjs` derives team/player
+  period means, distributions, shooting-attempt mass, exact mean seconds, availability, participation,
+  simulated opening-five shares, multi-doubles and if-plays values from one selected weighted world set.
+  It carries selected-player status/source, impact metadata and the uncalibrated weight assumptions. A separate
+  original-capture reconstruction checked **3,303** distributions and **3,124** means for the 20k full
+  sample, and **3,696** distributions plus **3,453–3,488** means for **each** of the nine two-player
+  either/plays/sits selections (10k, 20k or 40k saved worlds). All matched. Integer histograms use rounded
+  minutes, while mean seconds and the underlying world values retain original precision; filters must continue
+  using the latter. Selected/defined histogram masses are integer weight units, **not simulation counts**.
+  On one Node process per two-player selection, the **202.7 MB** raw fixture took **6.01–8.20 s** to summarize;
+  outputs were **614,544–728,558 bytes**, with peak RSS up to **722,144 KiB**. Other smoke jobs ran concurrently.
+  These are Node measurements,
+  not browser/phone benchmarks. Reports use
+  `analysis/experiments/20261122_chunk_a_a1_d47_game_summary_two_*_v{3_probe,4_audit}.json` and
+  `game_summary_one_full_v{3_probe,5_audit}.json`; full summaries are ignored in `data/derived/experiments/`.
+  This is **not** a complete Game Centre contract: wire weighted Given/Joint, grids, lead-fan, advanced/spotlight
+  and other dependent cards or explicitly omit them, handle branch-specific minute-basis metadata, and verify
+  laptop/phone UI and offline behavior. No app, production model or bundle changed; A1 **70%**, Chunk A **31.5%**.
+  HANDOFF/PLAN/FINDINGS record evidence and README maps scripts. AGENTS, ENGINE_PLAN and TRAINING_PLAN need no
+  change (rules, decisions and gates unchanged); DASHBOARD_PLAN needs no change (no UI shipped).
+  Focused Python/JS tests pass; normal smoke **108/108** and deliberate fault **86/108**, exit **1**, with four
+  OpenMP threads per process; logs `/tmp/musnba_a1_summary_{smoke,fault}_v2.log`.
 - **A1 80% opening-five groundwork:** the research fixtures now retain each world's first captured Q1 12:00
   lineup, with five distinct available teammates per side. These are simulated opening fives, not official
   starters. Independent original-trace replay reconciled **200,000 / 400,000** lineup entries on **20k / 40k**
@@ -2311,6 +2333,12 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
    and phone fallback without exposing an unvalidated switch. To compare period summaries with original captures,
    run    `node analysis/a1_branch_period_browser_audit.mjs data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_opening_v1.json analysis/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_opening_v2_audit.json analysis/experiments/<new-period-crosscheck>.json`.
    Run `node tests/test_a1_branch_world_source.mjs` for all nine synthetic lineup selections and corruption cases.
+   The derived team/player summaries above can be reproduced with
+   `node analysis/a1_branch_game_summary_probe.mjs data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_opening_v1.json '{}' data/derived/experiments/<new-summary>.json analysis/experiments/<new-probe>.json`
+   and `.venv/bin/python analysis/a1_branch_game_summary_audit.py analysis/experiments/<new-probe>.json --output analysis/experiments/<new-audit>.json`;
+   use JSON player-ID-to-boolean choices for partial and fully fixed selections. Run
+   `node tests/test_a1_branch_game_summary.mjs` for summary edge cases. Keep expected weighted units separate from
+   actual simulation counts and preserve precise world-minute filters.
    Run `node tests/test_a1_weighted_browser.mjs` for arithmetic edge cases; the real-fixture audit takes the
    fixture, a new audit output, Expected report and one or more matching Given reports, e.g.
    `node analysis/a1_weighted_browser_audit.mjs data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_one_v3.json analysis/experiments/<new-audit>.json analysis/experiments/20261122_chunk_a_a1_d47_expected_one_home_pts.json analysis/experiments/20261122_chunk_a_a1_d47_joint_one_full.json analysis/experiments/20261122_chunk_a_a1_d47_joint_one_empty.json`.

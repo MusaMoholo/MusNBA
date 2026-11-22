@@ -1,0 +1,15 @@
+{
+ "kind": "independent research summary accounting; not a forecast or browser test",
+ "probe": "analysis/experiments/20261122_chunk_a_a1_d47_game_summary_two_home_sits_away_play_v3_probe.json",
+ "probe_sha256": "ff9c28871fc4752d98e24bab49daac048e1fd157e2b546cf5ca94bd33ea3db74",
+ "summary_sha256": "ad8a49f28214e31beed9a6146dff5598256deba7044f330a2ec5c6d96cac6fc5",
+ "audit_sha256": "3ff19ffebd0e3c85fdd059ed8dd5ebcbee66052e9a2630b83df9a8359b25a6b5",
+ "choices": {
+  "3032977": false,
+  "4278073": true
+ },
+ "selected_worlds": 10000,
+ "selected_mass": 30000,
+ "distributions_checked": 3696,
+ "means_checked": 3473
+}

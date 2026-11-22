@@ -1,0 +1,12 @@
+{
+ "kind": "independent research summary accounting; not a forecast or browser test",
+ "probe": "analysis/experiments/20261122_chunk_a_a1_d47_game_summary_two_full_v3_probe.json",
+ "probe_sha256": "bb3fc4d5b336f0c93532923e8951195a01c3212d58bafd57177f19a22f33823b",
+ "summary_sha256": "795b94bce741eeb0372cfb184fb210ebbe1430464dd80ffc6d8ef45b7128bdea",
+ "audit_sha256": "3ff19ffebd0e3c85fdd059ed8dd5ebcbee66052e9a2630b83df9a8359b25a6b5",
+ "choices": {},
+ "selected_worlds": 40000,
+ "selected_mass": 160000,
+ "distributions_checked": 3696,
+ "means_checked": 3488
+}

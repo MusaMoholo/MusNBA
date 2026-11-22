@@ -1,0 +1,19 @@
+{
+  "kind": "isolated game-summary performance probe; not a browser or phone benchmark",
+  "fixture": "data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_one_opening_v1.json",
+  "fixture_sha256": "fb0845af8b08187555fc37c648819cca92764c324fdd3d2bc11d7cf9589179ea",
+  "choices": {},
+  "summary": "data/derived/experiments/20261122_chunk_a_a1_d47_game_summary_one_full_v3.json",
+  "summary_sha256": "7f234d7fc2982aea233b528d685ece47bb34805a0527431ce289700109080a50",
+  "source_sha256": "6ea53acfd59e9207b5548446db730c8c5ed3398ba78a4020e5fdefbc84e113ba",
+  "algorithm_sha256": "b5049cfe3b3bd373b089166cee1291928f57d9c50b58f99494491f981fe10bc7",
+  "probe_sha256": "dcfd473b1e0e8e9110951aa191db8f906ad9956c79779748d79f8fef3aa1443c",
+  "worlds": 20000,
+  "selected_worlds": 20000,
+  "selected_mass": 40000,
+  "total_mass": 40000,
+  "summary_bytes": 621374,
+  "decode_seconds": 0.332494666,
+  "summary_seconds": 3.758456375,
+  "max_rss_kib": 395376
+}
