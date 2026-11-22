@@ -2,6 +2,47 @@
 
 Updated **22 November 2026 — A1 stopped after the requested nightly; S01–S07 complete, overall 58.0%;
 the remaining work is planned as two future chunks (D42), including a reusable 2-D View Centre (D43)**.
+
+## Read this first — live handoff
+
+- **Current stop:** the owner stopped execution after the 22 Nov nightly; subsequent work so far has been planning
+  and handoff only. Do not start a nightly or development merely to refresh these docs. When future execution is
+  requested, start **Chunk A, module A1, rung 10%** below.
+- **Progress:** original A1 **58.0%**, S01–S07 complete; S08–S12/S14 open, S13 historical forecast backfill
+  deferred. New independent chunk boards: **A 0%** (A1/A2/A3 all 0%) and **B 0%** (B1/B2/B3 all 0%). Keep
+  the original A1 weights intact; new within-chunk weights do not reset or double-count A1.
+- **Production:** possession engine **v1.3/D29**, team pathway **v1**. S04's two defence candidates did not pass;
+  S05's minute candidates did not meet the primary gate. S06's 200-game candidate improved minute CRPS
+  **3.5662→3.5309** but only **66/69** non-inferiority bounds were established, so it was not promoted. Those
+  engine diagnostics supplied actual participants, not forecast availability. No new model has been promoted.
+- **Remaining model risks:** defensive differences are under-expressed on the fixed 200-game control; a controlled
+  probe exposed an unupdated foul-out mask; dated development injury reports are insufficient to calibrate
+  availability. Do not present status fallbacks as validated or replay estimates as live forecasts.
+- **Last delivery:** origin **22 Nov 2026 ET**, **7 Today + 10 Tomorrow** games × **10,000** worlds and **10,000**
+  season paths. iCloud bundle generated **2026-11-22T12:39:01Z** (SHA-256
+  `8f8026e7b01febbbf9416c23faaa1e794bd94a116e29d3c22b6e1513cb12579a`); published data-free `gh-pages`
+  **f2932e1**, cache `0d7693ac00bad5eb2e00`. Phone import is **not confirmed**. This is a dated delivery, not a
+  claim that the forecasts are current on a later date. New nightlies still export **one batch at the end**.
+- **Chunk A:** lineup branches/Expected (A1), form/end-game research (A2), five selected worlds and a 2-D View
+  Centre (A3). Chunk B: defence/foul-outs (B1), season pathway (B2), integrated confirmation/rotation map (B3).
+  Each chunk ends with a fresh nightly and a useful dashboard improvement if no model passes. View Centre initially
+  replays saved simulated events; the same interface is designed for later actual-game playback. Neither exists yet.
+- **First commands in a future execution session:** `git status`, `git --no-pager log --oneline -5`,
+  `.venv/bin/python scripts/smoke.py`, and `ls analysis/experiments/`. Read AGENTS, this section, the
+  **Future execution — two chunks** ladders below, and PLAN §6a–6c; then freeze A1's branch IDs, input/origin,
+  probabilities, unsupported dependence and >2-maybe limitations before implementation. Rung 10 is earned only
+  when that contract is written, not when work starts. Start :8767 only for presentation work; never stop :8766.
+- **At every completed module/subtask:** update the live ledger and affected docs with results, negatives,
+  limitations, tests, production/PWA impact and next action; verify, review, **commit and push before moving on**.
+  Update the live log as work proceeds and checkpoint unfinished state at any stop. The detailed protocol is in
+  AGENTS §5 and PLAN §6c.
+- **Checkpoint orientation:** S07 delivery was **aa21515**; two-chunk planning **2a3155f**; View Centre planning
+  **16893d9**. This live-handoff refresh is the subsequent docs-only checkpoint; use `git log -1` for its hash.
+  Earlier chronology below is historical evidence, not the current action list. At this checkpoint no
+  session-owned nightly, backtest, history download or review server is left running.
+
+## Earlier checkpoints and supporting evidence
+
 Dashboard U1–U22 complete and published.
 Dashboard close-out checkpoint **86c2a46**, A1 planning checkpoint **00a0731**; S01 checkpoint **c9d8008**
 and S02 checkpoint **93b3e1d** are committed and pushed (S01's exact control source is **c6d5db4**).
@@ -38,8 +79,8 @@ The independently audited S07 60% screen was pushed as **76f7cf5**.
 The isolated S06 foul-penalty source was pushed as **bf9cd21** before the probe; S07's spell/starter follow-up
 protocol was frozen as **857cc78**.
 The audited spell/starter follow-up and unrun S06 direct-state source were pushed as **d7e00aa**.
-S06 completion and the then-undelivered S07 source changes were pushed as **45a6df4**; this file is part of the
-subsequent S07 delivery checkpoint (use `git log -1` for its commit). Historical source-freeze/progress notes below
+S06 completion and the then-undelivered S07 source changes were pushed as **45a6df4**; S07 delivery was
+subsequently committed and pushed as **aa21515**. Historical source-freeze/progress notes below
 describe their state at the time and are superseded by the current delivery summary in § State.
 **Owner scope change D40 (22 Nov):** “forget nightly backfill. lets just get nightly for next slate (today and
 tomorrow relative to this date). since were probably not at a perfect model yet”. Defer S13 and do not implement or
@@ -1774,6 +1815,13 @@ is done; do not resume U1–U22. In a future authorised session:
 6. **Incremental iCloud delivery is a separate future item** (PLAN §9b): design atomic per-game publication,
    incomplete/complete generation labels, resume and safe import/offline handling. Current exports remain batch-only;
    never claim iCloud sync is a phone import.
+
+**Live-handoff document review (22 Nov):** HANDOFF now leads with the current state, dated delivery, risks and
+first future rung; AGENTS and PLAN explicitly require a live log and a verified commit/push at each completed
+module/subtask. ENGINE_PLAN and TRAINING_PLAN need no change because decisions and promotion/cutoff gates are
+unchanged; FINDINGS has no new experiment to record; DASHBOARD_PLAN and README need no change because shipped
+behaviour and commands are unchanged. Baseline smoke **108/108**. No model, dashboard, forecast, bundle or public
+shell changed; no nightly or data job was run.
 
 **D43 planning document review:** HANDOFF and PLAN describe the future source-neutral View Centre, the simulated
 first release and later actual-game adapter; DASHBOARD_PLAN and ENGINE_PLAN record presentation and design; AGENTS

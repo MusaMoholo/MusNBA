@@ -268,8 +268,9 @@ static shell is published to `gh-pages` only, data remains local/iCloud. Check i
 
 ### 6c. Checkpoints, handover and the successor chunk
 
-At every S completion, **update docs before committing**, then commit and push the reviewed source/docs/experiment
-logs (no data). Record the checkpoint and remote status in HANDOFF's ledger at the next checkpoint, or use a named
+At every completed S subtask **and every D42 A/B module**, update the live handoff and affected docs before
+committing, then review, **commit and push before starting the next module** (no data). Keep the live log current
+as evidence arrives, not only at chunk end. Record the checkpoint and remote status in HANDOFF's ledger at the next checkpoint, or use a named
 checkpoint marker resolved by `git log` to avoid self-referential hashes. The completion summary includes the
 measured outcome and whether the production model changed. Every partial-session stop also checkpoints resumable
 state: exact command, log/output paths, PID if running, work completed, next rung, blockers and candidate status.
@@ -813,6 +814,8 @@ face cards and unrelated presentation remain §9b backlog. NBA history moved to 
 - **22 Nov 2026 · D43 planning:** the owner requested an overhead animated court View Centre, first for saved simulated
   worlds and later for resulted games. The source-neutral player, event provenance and spatial limitations are
   specified; actual-game playback remains future work. Planning only; no simulations or app changes.
+- **22 Nov 2026 · live handoff:** added a first-screen state/next-action summary and explicitly tied every completed
+  D42 module to a refreshed log, verification and its own commit/push. No development or nightly was started.
 - **22 Nov 2026 · S06 foul-out probe:** in a controlled world, an available substitute does not replace a player
   with six fouls because the current engine's foul-out mask is never updated. The finding is not a forecast gain
   or a population frequency; isolate and gate a repair alongside substitution research.

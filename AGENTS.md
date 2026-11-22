@@ -19,17 +19,17 @@ for the next session, it goes in these files.
 ## 2. First actions in a new session
 
 ```sh
-git status && git log --oneline -5      # clean tree expected; the last commit is the last checkpoint
-.venv/bin/python scripts/smoke.py        # must pass (102 at 22 Nov; count grows) before changing code/data
+git status && git --no-pager log --oneline -5  # clean tree expected; the last commit is the last checkpoint
+.venv/bin/python scripts/smoke.py        # must pass (108 at latest 22 Nov checkpoint; count grows) before changes
 ls analysis/experiments/                 # latest experiment logs: what was last measured
-.venv/bin/python scripts/serve.py --port 8767 &   # your own review server (the owner's is :8766 — never stop it)
 ```
 
 Then do the first open item in HANDOFF_NEXT.md § Next actions. If smoke fails, fix or report that first.
 A planning-only request stays planning-only. **Overnight A1 execution (owner, 22 Nov):** the prior planning-only
-stop is lifted for this run, covering S01–S14. Make the necessary in-scope engineering and product decisions without
-waiting for the owner; document assumptions and blockers. Model gates, source permissions, cutoffs and data retention
-remain mandatory. This authority is scoped to this A1 run, not future unrelated work.
+stop was lifted for that run, but the owner subsequently stopped execution after the nightly (D41). Remaining work
+is future work until requested; the overnight authority does not override that stop. When executing an authorised
+chunk, make in-scope engineering and product decisions without waiting; document assumptions and blockers. Model
+gates, source permissions, cutoffs and data retention remain mandatory.
 Read-only/docs work needs no review server; start :8767 when inspecting or changing presentation.
 
 ## 3. The owner and how to work with them
@@ -139,6 +139,10 @@ Write as if you will not be the one to continue. Update documentation **before**
 an uncommitted afterthought. Review all eight root docs; edit affected ones and record why the others need no change.
 HANDOFF owns the live ledger/next action; PLAN scope/status/log; ENGINE design/decisions; TRAINING tests/cutoffs;
 FINDINGS measured evidence; DASHBOARD shipped behaviour; README runnable commands; this file standing rules.
+Keep HANDOFF's first-screen summary and the active progress ladder current as evidence arrives; record exact
+commands, logs, running jobs and blockers before a context/session stop. **Every completed subtask or D42 module
+is its own checkpoint:** refresh affected docs and run its checks, then review, commit and push before starting the
+next. Do not defer those updates to the end of the chunk or report an unfinished job as complete.
 
 1. **HANDOFF_NEXT.md**: rewrite *State* (what exists, what is running, what changed) and *Next actions* (numbered,
    concrete, with commands and done-when criteria). Remove anything stale.
