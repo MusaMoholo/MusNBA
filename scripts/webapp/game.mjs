@@ -450,11 +450,37 @@ function matchupView(el, data) {
     <thead><tr><th class="l">Season to date</th><th>${logo(data.game.away.id, 'sm')} ${esc(A.abbr)}</th><th>${logo(data.game.home.id, 'sm')} ${esc(H.abbr)}</th><th>League</th></tr></thead>
     <tbody>${rows.map(r => `<tr><td class="l">${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td class="dim">${r[3]}</td></tr>`).join('')}</tbody></table></div>
     <p class="note">Games through ${esc(dayLabel(data.comparison_as_of))} (exclusive) · ratings per 100 possessions · small numbers are league ranks.</p></section>
-    ${duelsPanel(data)}`;
+    ${factorsPanel(data)}${duelsPanel(data)}`;
 }
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const sinceLabel = iso => { const [y, m, d] = String(iso).split('-').map(Number); return `${d} ${MONTHS[m - 1]} ${y}`; };
+
+// U8: four factors as a matchup — each side's attack against the other side's defence (what it allows), league line marked.
+// Dot plot per factor on a shared track; "better for the attack" is right for eFG/OREB/FT rate and left for turnovers.
+function factorsPanel(data) {
+  const c = data.comparison;
+  if (!c?.away || !c?.home) return '';
+  const lg = c.away.league;
+  const F = [['eFG%', 'efg', 'opp_efg', 'efg', 1], ['Turnover rate', 'tov_pct', 'opp_tov_pct', 'tov_pct', -1],
+             ['Offensive rebound %', 'oreb_pct', null, 'oreb_pct', 1], ['Free-throw rate', 'ftr', 'opp_ftr', 'ftr', 1]];
+  const block = (att, def) => {
+    const A = c[att], D = c[def];
+    const rows = F.map(([label, ok, dk, lk, dir]) => {
+      const o = A[ok], d = dk ? D[dk] : (D.dreb_pct != null ? 1 - D.dreb_pct : null), l = lg[lk];
+      if (o == null || d == null || l == null) return '';
+      const vals = [o, d, l], lo = Math.min(...vals), hi = Math.max(...vals), pad = Math.max((hi - lo) * 0.35, 0.01);
+      const x = v => (100 * (v - (lo - pad)) / ((hi + pad) - (lo - pad))).toFixed(1);
+      const edge = dir * ((o - l) + (d - l));
+      return `<div class="ff-row"><span class="ff-l">${label}</span><span class="ff-track"><i class="ff-lg" style="left:${x(l)}%" title="League ${rate(l)}"></i>
+        <i class="ff-o" style="left:${x(o)}%" title="${esc(team(data.game[att].id).abbr)} attack ${rate(o)}"></i><i class="ff-d" style="left:${x(d)}%" title="${esc(team(data.game[def].id).abbr)} defence allows ${rate(d)}"></i></span>
+        <span class="ff-v">${rate(o)} v ${rate(d)} <em class="${edge > 0.002 ? 'up' : edge < -0.002 ? 'down' : ''}">${edge > 0.002 ? 'attack edge' : edge < -0.002 ? 'defence edge' : 'even'}</em></span></div>`;
+    }).join('');
+    return `<div><h4>${logo(data.game[att].id, 'sm')} ${esc(team(data.game[att].id).abbr)} attack v ${esc(team(data.game[def].id).abbr)} defence</h4>${rows}</div>`;
+  };
+  return `<section class="panel"><h3 style="margin-top:0">Four factors · matchup</h3><div class="ff-grid">${block('away', 'home')}${block('home', 'away')}</div>
+    <p class="note"><i class="ff-key o"></i> attack's season rate · <i class="ff-key d"></i> what the defence allows · <i class="ff-key l"></i> league average. Edge = both sides' gaps to the league, signed for the attack (lower turnovers are better for it).</p></section>`;
+}
 
 // One player's own head-to-head (player sheet): who guarded him in earlier meetings with tonight's opponents and, once
 // final, in this game; and whom he guarded (he as the defender) — from the same real-matchup rows as the Matchup view.

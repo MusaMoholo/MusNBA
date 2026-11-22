@@ -26,7 +26,7 @@ const CASES = [
   ['game-final', '#/game/401910009', ['desktop', 'phone'], ['dark']],
   ['game-final-q4', '#/game/401910009/q4', ['phone'], ['light']],
   ['game-final-team', '#/game/401910009/fg/team', ['desktop'], ['dark']],
-  ['game-matchup', '#/game/401910019/matchup', ['phone'], ['light']],
+  ['game-matchup', '#/game/401910029/matchup', ['desktop', 'half', 'phone'], ['light', 'dark']],
   ['game-duels', '#/game/401910009/matchup', ['desktop', 'phone'], ['dark', 'light']],
   ['game-proj', '#/game/401910029', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['sheet', '#/game/401910009/player/3032977', ['desktop', 'phone'], ['dark', 'light']],
