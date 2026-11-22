@@ -1,7 +1,7 @@
 # Training plan — models for the possession engine
 
 **Updated 22 November 2026.** Serving engine **v1.3**, 16 decision models, D29 minutes and D30 defence inputs;
-real-matchup candidates v1.4c/e/f were rejected (D37). The next accuracy chunk A1 is planned, not started. Historical
+real-matchup candidates v1.4c/e/f were rejected (D37). A1 is in its S01 baseline audit. Historical
 M5 results remain in FINDINGS §3g–§3h; current contracts and promotion/replay gates are in §8 below. Progress and scope
 live in [PLAN.md](PLAN.md) and [HANDOFF_NEXT.md](HANDOFF_NEXT.md).
 
@@ -172,10 +172,10 @@ NBA Stats API access is authorised and in use (D32). Retained tracking-defence i
 and ablation (A1 S02/S04); untested richer inputs are candidates, not assumed improvements. A new provider still
 requires owner sign-off. Learned availability from short report history must respect §8 and the untouched final test.
 
-## 8. A1 acceptance and reproducibility contract (22 Nov 2026; planned)
+## 8. A1 acceptance and reproducibility contract (22 Nov 2026)
 
 A1's scopes are PLAN §6a, progress is HANDOFF § Progress ladders. **Nothing below is a new measured gain.**
-Keep v1.3 and pathway v1 until evidence supports a change. The 22 Nov planning pass runs no training/final scoring.
+Keep v1.3 and pathway v1 until evidence supports a change. The preceding 22 Nov planning pass ran no training/final scoring.
 
 ### 8.1 Three populations, never interchangeable
 
@@ -211,6 +211,102 @@ training/simulation noise floor with a 95% paired interval favouring the candida
 For required non-inferiority outcomes, the upper uncertainty bound must sit inside the declared harm margin;
 non-significance alone does not establish equivalence. Name comparison families to limit selection by repeated tries;
 all exploratory attempts stay in the log. Existing §7 node gates continue to apply, including the seed-noise floor.
+
+#### S01 preregistration — 22 Nov, before A1 candidates
+
+The fixed development screen is the 200 retained F4 games in `20261120T162930Z_v1.3_pool_per_world_F4`, 1,000 worlds,
+known actual participants and projected starters, pool 0. The independent pre-game-availability track is separate.
+For player selection tiers, **star** means pre-game usage ≥0.25; otherwise **starter** means pre-game start share
+≥0.5 and **bench** is below 0.5. Missing usage or start share is **unknown**, never silently bench. The older logged
+scorecard uses actual game starters and remains a historical reference, not a selection gate. The screen has 284 star,
+1,578 starter, 2,472 bench and 12 unknown player-games. A reportable tier/subgroup needs **at least 100 player-games
+in 30 distinct games**; rarer cases are inconclusive, and required sparse tiers block a promotion claim rather than
+being dropped. Game/season populations and exclusions must match exactly.
+
+Player non-inferiority margins below are increases in CRPS in the statistic's own units. They are **2% of the
+pre-game-tier pool-0 control**, rounded to four decimals; 3PM is fixed in advance at **0.0200 made threes** because the
+old saved player output omitted 3PM. Its matched control must be regenerated before any 3PM decision.
+
+| Pre-game tier | MIN CRPS (minutes) | PTS CRPS (points) | REB CRPS (rebounds) | AST CRPS (assists) | 3PM CRPS (makes) |
+|---|---:|---:|---:|---:|---:|
+| Star | 0.0578 | 0.0898 | 0.0304 | 0.0261 | 0.0200 |
+| Starter | 0.0605 | 0.0711 | 0.0290 | 0.0207 | 0.0200 |
+| Bench | 0.0796 | 0.0553 | 0.0237 | 0.0155 | 0.0200 |
+
+The 2% bound is a small, meaningful loss relative to prediction error; a paired pool-400 versus pool-0 check on all
+4,346 matched player-games had 95% game-clustered CRPS difference intervals narrower than these margins for these
+four retained statistics. This is **not** a pure seed-noise experiment; S01 still measures an independent simulation
+seed. If noise or the confidence interval is too large to demonstrate non-inferiority, increase worlds/games or report
+inconclusive; **do not widen margins**.
+
+Additional maximum harms: margin and total CRPS **0.20 points**, each quarter CRPS **0.10 points**, win log loss
+**0.010 nats/game**, Brier **0.005**, and 10–90% coverage's absolute deviation from 0.80 **0.03**. For absolute signed
+bias, the allowable increase in its magnitude is **0.30 minutes**, **0.30 points**, **0.10 rebounds**, **0.10 assists**
+or **0.05 made threes** per player-game; team total/margin biases may grow by **1.0/0.5 points**. Season final-win CRPS
+may worsen by at most **0.10 wins** on each supported start date; absolute dispersion, coverage and persistence error
+may grow by at most **0.10, 0.05 and 0.05**, respectively. These are maximum harms, not desired target values.
+
+Families and primary outcomes, frozen before candidate results: S04 defence/shot quality → pooled PTS CRPS;
+S05/S06 membership/minutes/substitutions → pooled MIN CRPS; S07 availability → pre-game play Brier on a genuinely
+dated cohort; S09 form/end-game → pooled PTS CRPS plus the prespecified joint-dependence checks; S10 pathway → pooled
+final-win CRPS across the 16 matched season/start origins with each date separately reported. S08 is an accounting and
+coherence change, not by itself an accuracy win. Pooled player CRPS weights eligible player-games equally; all three
+supported tiers and the other core stats must pass their non-inferiority gates. Claims across multiple tested primary
+families use Holm's 0.05 correction; exploratory within-family variants and all rejected runs are recorded.
+
+Use **10,000 paired game-cluster bootstrap replicates**, NumPy seed **20261122**, sampling complete game IDs with
+replacement and retaining all player rows from each sampled game; report the 2.5/97.5 percentiles. Required
+non-inferiority passes only if the upper 97.5% bound of candidate-minus-control harm is strictly inside its frozen
+margin. A primary win requires its corrected 95% upper bound below zero **and** its observed improvement larger than
+the independently measured simulation-noise floor. For coverage/bias use the paired change in the absolute deviation,
+not the signed change. Report sample sizes, point differences and intervals. Different model names alter the current
+simulation seed; common streams may be used only when their semantics are explicitly fixed and valid, never assumed.
+For each primary CRPS, define the 1,000-world simulation-noise floor conservatively as the larger absolute endpoint
+of the 95% paired game-cluster bootstrap interval comparing the same control and inputs under its original stream and
+an independent stream on the entire pinned 200-game panel. This rule is frozen before that comparison; it is not a
+licence to discard an inconclusive interval or to lower the registered harm margins.
+Win Brier and log loss use the empirical simulated probability without modification. A zero probability assigned to
+the observed winner has genuinely infinite log loss: the report marks it explicitly instead of inventing a finite
+value or an interval. This differs from the legacy backtest summary's numerical boundary safeguard.
+The second-seed result, exact confirmation IDs and 10k subset are recorded; the final reproducibility manifest remains
+S01 work in progress.
+
+#### S01 population separation — 22 Nov, before availability candidates
+
+The conditional-engine panel is the fixed 200 F4 games above: the box supplies **who played**, while starters are
+projected from pre-game features. Player outcomes therefore condition on actual participation and cannot measure
+missed players, false availability or real pre-tip roster coverage. State that assumption, the exact game/player
+counts, unknown tiers and missing outcomes beside every score.
+
+The separate historical availability diagnostic must construct its candidate `(game, team, player)` universe
+**before joining that game's box**. For origin D, use players observed in retained same-season team box records
+(including listed DNPs) strictly before D, assigning a player to their most recently observed team before D; ties or
+unresolved team identity are unknown and reported. This is an inferred historical membership universe, **not an
+official dated roster**: separately count players who actually appeared but were absent from the pre-game universe,
+stale memberships, games without prior history, ambiguous labels and all excluded/unmatched rows. Do not select or
+remove candidates based on their same-day box. Report play Brier/log loss and calibration with game-clustered
+intervals; evaluate starter predictions separately, conditional on the declared cohort. A probability cannot pass
+as an end-to-end availability model merely because it scores well after excluding unknown arrivals or transfers.
+
+Historical F1–F4 lack the current ESPN collection's dated injury/roster reports. The only retained ESPN collection
+origins currently span **19–21 Nov 2026**, inside the protected 2026–27 final season; checking their existence is
+not permission to tune or repeatedly score against those outcomes. Conservatively requiring collection completion
+before the scheduled tip, an injury file and both roster files gives file coverage of **4/4, 9/9 and 5/6 games**
+on those dates, respectively. This verifies file presence only, not player-level completeness or predictive quality.
+Missing historical reports stay unknown, not silently active or retrospectively reconstructed from the final box.
+Any claim requiring report-dated injury status remains unsupported until an admissible dated cohort has enough games
+and provenance. S07 must document cohort coverage and retain the existing fallback if that evidence is insufficient.
+
+The prior-box cohort is now built by `scripts/a1_availability_cohort.py` on the pinned 200 F4 games, before any
+availability candidate. It contains **7,305** inferred player-games; **5,201** have known positive-minute or DNP box
+labels, **2,095** are unlisted and **9** have zero/missing-minute ambiguous labels. **32** positive-minute player-games
+in **24** games are absent from the inferred universe; another **12** newly listed DNP player-games are outside it.
+Seven candidate records conflict with a same-day listing for another team, checked only after constructing the cohort.
+The row artifact includes each strictly earlier source date; its `listed_in_box`, `played`, `minutes` and `starter`
+columns are retrospective labels/audit facts, never pre-game features. This is coverage evidence only, not a scored
+forecast; retained prior boxes have no historical publication/correction timestamps and do not prove an original report
+was available. The additional play-by-play participant missing from the raw box remains unscored. Exact counts and limitations:
+`analysis/experiments/20261122_a1_prior_box_coverage.json`.
 
 ### 8.3 Candidate sequence and promotion
 

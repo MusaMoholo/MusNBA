@@ -34,7 +34,7 @@ from basketball_common import DERIVED, write_json  # noqa: E402
 from scripts import aggregate, nodes, projection, train  # noqa: E402
 from scripts.evaluate import EXPERIMENTS, FOLDS  # noqa: E402
 
-PLAYER_STATS = ('pts', 'reb', 'ast', 'min')
+PLAYER_STATS = ('pts', 'reb', 'ast', 'min', 'fg3m')
 _W = {}  # per-worker state
 
 
@@ -87,13 +87,44 @@ def eligible_games(seg: pd.DataFrame) -> np.ndarray:
     return np.array(sorted(ok[ok].index))
 
 
-def _init(version, spec_path, fold, worlds, rotation='replay', known_starters=False, pool=None):
+def select_games(eligible: np.ndarray, count: int, seed: int, ids_path: Path | None = None) -> np.ndarray:
+    if ids_path is not None:
+        ids = json.loads(ids_path.read_text())
+        if not isinstance(ids, list) or not ids or any(not isinstance(x, str) or not x.isdigit() for x in ids):
+            raise ValueError('game IDs must be a non-empty JSON list of digit strings')
+        if len(set(ids)) != len(ids):
+            raise ValueError('game IDs must be unique')
+        missing = sorted(set(ids) - set(eligible))
+        if missing:
+            raise ValueError(f'game IDs outside the eligible fold population: {missing}')
+        return np.array(sorted(ids))
+    if count < 0:
+        raise ValueError('game count must be non-negative')
+    if count and count < len(eligible):
+        return np.sort(np.random.default_rng(seed).choice(eligible, count, replace=False))
+    return eligible
+
+
+def simulation_seed(version: str, day: str, gid: str, stream: int | None = None, seed_key: str | None = None) -> int:
+    parts = ['backtest', seed_key if seed_key is not None else version, day, gid]
+    if stream is not None:
+        parts.extend(['stream', stream])
+    return projection.seed_for(*parts)
+
+
+def _init(version, spec_path, fold, worlds, rotation='replay', known_starters=False, pool=None, stream=None, seed_key=None):
     from scripts import engine
     if pool is not None:  # D36: rotation-table pool (0 = one table per world)
         engine.ROTATION['pool'] = pool
     spec = json.loads(Path(spec_path).read_text())
+    _, _, val_to = FOLDS[fold]
+    season = int(val_to[:4]) if val_to[5:7] <= '06' else int(val_to[:4]) + 1
+    periods = pd.read_csv(DERIVED / 'history' / str(season) / 'player_periods.csv.gz',
+                          usecols=['game_id', 'team_id', 'period', 'pts'], dtype={'game_id': str, 'team_id': str})
+    periods = periods.groupby(['game_id', 'team_id', 'period'])['pts'].sum()
     _W.update({'engine': engine.Engine(version), 'mod': engine, 'inputs': load_inputs(spec, fold), 'worlds': worlds,
-               'teams': json.loads((DERIVED / 'teams.json').read_text()), 'rotation': rotation, 'known_starters': known_starters})
+               'teams': json.loads((DERIVED / 'teams.json').read_text()), 'rotation': rotation, 'known_starters': known_starters,
+               'periods': periods, 'stream': stream, 'seed_key': seed_key})
     if rotation == 'targets':  # D29 minutes: pre-game states for every history player-game; ramp and spread from before the window
         from scripts import minutes
         m = minutes.build(FOLDS[fold][1], include_current=False)
@@ -130,7 +161,8 @@ def run_game(gid: str) -> dict:
     game = {'game_id': gid, 'home_id': home, 'away_id': away}
     g = engine.Game(game, players, p.drop(columns=['game_id']), t.drop(columns=['game_id']), stints, day)
     g.season = season
-    eng.simulate(g, worlds, projection.seed_for('backtest', eng.m.cfg['version'], day, gid))
+    sim_seed = simulation_seed(eng.m.cfg['version'], day, gid, _W['stream'], _W['seed_key'])
+    eng.simulate(g, worlds, sim_seed)
     st = eng.last
     sim_pts = st.pts.sum(2)  # (W, 2): home, away
     real_pts = {side: int(s.loc[s['offense'] == tid, 'points'].sum()) for side, tid in (('home', home), ('away', away))}
@@ -138,7 +170,7 @@ def run_game(gid: str) -> dict:
     real_pts_box = {side: int(gb.loc[gb['team'] == tid, 'points'].sum()) for side, tid in (('home', home), ('away', away))}
     real_poss = {side: int(s.loc[s['offense'] == tid, 'poss'].nunique()) for side, tid in (('home', home), ('away', away))}
     rng = np.random.default_rng(projection.seed_for('pit', gid))
-    out = {'game_id': gid, 'date_et': day, 'home': home, 'away': away, 'worlds': worlds,
+    out = {'game_id': gid, 'date_et': day, 'home': home, 'away': away, 'worlds': worlds, 'simulation_seed': str(sim_seed),
            'real_home': real_pts_box['home'], 'real_away': real_pts_box['away'], 'real_home_seg': real_pts['home'], 'real_away_seg': real_pts['away'],
            'real_poss_home': real_poss['home'], 'real_poss_away': real_poss['away'], 'real_ot': int(s['period'].max() > 4),
            'sim_poss_home': float(st.poss[:, 0].mean()), 'sim_poss_away': float(st.poss[:, 1].mean()),
@@ -153,6 +185,26 @@ def run_game(gid: str) -> dict:
         out[f'{m}_crps'] = float(aggregate.crps_samples(x[:, None], np.array([float(y)]))[0])
         out[f'{m}_pit'] = float(aggregate.pit(x[:, None], np.array([float(y)]), rng)[0])
     out['p_home'] = float((sim_pts[:, 0] > sim_pts[:, 1]).mean())
+    periods = _W['periods']
+    actual_quarters = {}
+    for side, tid in (('home', home), ('away', away)):
+        if (gid, tid) not in periods.index.droplevel('period'):
+            raise ValueError(f'{gid}: missing player-period scores for {side} team {tid}')
+        score = periods.loc[(gid, tid)]
+        if int(score.sum()) != real_pts_box[side] or any(q not in score.index for q in range(1, 5)):
+            raise ValueError(f'{gid}: player-period scores do not reconcile for {side} team {tid}')
+        actual_quarters[side] = score
+    quarter_rng = np.random.default_rng(projection.seed_for('pit', gid, 'quarters'))
+    for q in range(4):
+        h, a = st.pts[:, 0, q], st.pts[:, 1, q]
+        yh, ya = int(actual_quarters['home'][q + 1]), int(actual_quarters['away'][q + 1])
+        for label, x, y in (('total', h + a, yh + ya), ('margin', h - a, yh - ya)):
+            x = x.astype(float)
+            key = f'q{q + 1}_{label}'
+            out[f'{key}_actual'] = y
+            out[f'{key}_sim'] = float(x.mean())
+            out[f'{key}_crps'] = float(aggregate.crps_samples(x[:, None], np.array([float(y)]))[0])
+            out[f'{key}_pit'] = float(aggregate.pit(x[:, None], np.array([float(y)]), quarter_rng)[0])
     # components per side (where the points come from): simulated means v the real box (player sums, team turnovers excluded
     # on both sides) — for the component loadings in summarise()
     for side, i, tid in (('home', 0, home), ('away', 1, away)):
@@ -164,13 +216,15 @@ def run_game(gid: str) -> dict:
     rows = []
     idx = {pid: i for i, pid in enumerate(g.ids)}
     on_g = on[on['game_id'] == gid].set_index('player')['sec']
+    threes_rng = np.random.default_rng(projection.seed_for('pit', gid, 'fg3m'))
     for r in gb.itertuples():
         if r.player not in idx:
             continue
         i = idx[r.player]
         sim = {'pts': st.box['pts'][:, i].sum(1), 'reb': (st.box['oreb'][:, i] + st.box['dreb'][:, i]).sum(1),
-               'ast': st.box['ast'][:, i].sum(1), 'min': st.minutes[:, i].sum(1)}
-        real = {'pts': r.points, 'reb': r.rebounds, 'ast': r.assists, 'min': float(on_g.get(r.player, np.nan)) / 60}
+               'ast': st.box['ast'][:, i].sum(1), 'min': st.minutes[:, i].sum(1), 'fg3m': st.box['fg3m'][:, i].sum(1)}
+        real = {'pts': r.points, 'reb': r.rebounds, 'ast': r.assists, 'min': float(on_g.get(r.player, np.nan)) / 60,
+                'fg3m': r.three_point_field_goals_made}
         row = {'game_id': gid, 'player': r.player}
         for k in PLAYER_STATS:
             if real[k] is None or pd.isna(real[k]):
@@ -178,7 +232,7 @@ def run_game(gid: str) -> dict:
             x = sim[k].astype(float)
             row[f'{k}_actual'], row[f'{k}_sim'] = float(real[k]), float(x.mean())
             row[f'{k}_crps'] = float(aggregate.crps_samples(x[:, None], np.array([float(real[k])]))[0])
-            row[f'{k}_pit'] = float(aggregate.pit(x[:, None], np.array([float(real[k])]), rng)[0])
+            row[f'{k}_pit'] = float(aggregate.pit(x[:, None], np.array([float(real[k])]), threes_rng if k == 'fg3m' else rng)[0])
         rows.append(row)
     out['players'] = rows
     return out
@@ -343,11 +397,15 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--config', type=Path, required=True, help='model version settings (models/<version>.json)')
     ap.add_argument('--fold', default='F4')
-    ap.add_argument('--games', type=int, default=200, help='random sample of held-out regular-season games (0 = all)')
+    selection = ap.add_mutually_exclusive_group()
+    selection.add_argument('--games', type=int, default=200, help='random sample of held-out regular-season games (0 = all)')
+    selection.add_argument('--game-ids', type=Path, help='JSON list of unique eligible game ID strings, instead of random selection')
     ap.add_argument('--worlds', type=int, default=1000)
     ap.add_argument('--jobs', type=int, default=4)
     ap.add_argument('--threads', type=int, default=8, help='LightGBM threads for fitting fold models')
     ap.add_argument('--seed', type=int, default=20261119)
+    ap.add_argument('--simulation-stream', type=int, default=None, help='independent simulation stream; default preserves historical seeds')
+    ap.add_argument('--seed-key', default=None, help='explicit common seed key instead of the fitted model version')
     ap.add_argument('--name', default=None)
     ap.add_argument('--rotation', choices=('replay', 'targets'), default='replay',
                     help='replay = M3 v0 templates (v1.1); targets = D29 minutes (healthy roles, 240 by priority, ramp)')
@@ -373,18 +431,16 @@ def main():
         return
     version = args.models or fold_engine_version(args.fold, args.config, args.threads)
     _, _, seg, _, _, _ = load_inputs(spec, args.fold)
-    games = eligible_games(seg)
-    rng = np.random.default_rng(args.seed)
-    if args.games and args.games < len(games):
-        games = np.sort(rng.choice(games, args.games, replace=False))
+    games = select_games(eligible_games(seg), args.games, args.seed, args.game_ids)
     print(f'backtest {spec.get("version")} {args.fold}: {len(games)} games × {args.worlds} worlds, {args.jobs} jobs, models {version}', flush=True)
     os.environ['OMP_NUM_THREADS'] = str(max(1, (os.cpu_count() or 4) // max(1, args.jobs)))
     ctx = mp.get_context('spawn')
     results = []
-    with ctx.Pool(args.jobs, initializer=_init, initargs=(version, str(args.config), args.fold, args.worlds, args.rotation, args.known_starters, args.pool)) as pool:
+    with ctx.Pool(args.jobs, initializer=_init, initargs=(version, str(args.config), args.fold, args.worlds, args.rotation,
+                                                         args.known_starters, args.pool, args.simulation_stream, args.seed_key)) as pool:
         for i, r in enumerate(pool.imap(run_game, list(games), chunksize=1), 1):
             results.append(r)
-            if i % 10 == 0 or i == len(games):
+            if i % min(10, max(1, len(games) // 10)) == 0 or i == len(games):
                 print(f'game {i}/{len(games)}  {time.time() - start:.0f}s', flush=True)
     players = pd.DataFrame([p for r in results for p in r.pop('players')])
     frame = pd.DataFrame(results)
@@ -400,6 +456,9 @@ def main():
     write_json(EXPERIMENTS / f'{stamp}_{name}.json', {'experiment': 'm9_engine_backtest', 'run': stamp, 'commit': train.git_commit(),
                                                       'config': str(args.config), 'fold': args.fold, 'models': version, 'games': len(games),
                                                       'worlds': args.worlds, 'rotation': args.rotation, 'known_starters': args.known_starters, 'pool': args.pool,
+                                                      'game_ids': games.tolist(), 'game_selection_seed': args.seed,
+                                                      'game_ids_file': str(args.game_ids) if args.game_ids else None,
+                                                      'simulation_stream': args.simulation_stream, 'seed_key': args.seed_key,
                                                       'seconds': round(time.time() - start), 'summary': summary}, pretty=True)
     print(json.dumps(summary, indent=1))
     print(f'\nrun {stamp}_{name}  ({len(games)} games, {time.time() - start:.0f}s)')

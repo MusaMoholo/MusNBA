@@ -26,7 +26,10 @@ ls analysis/experiments/                 # latest experiment logs: what was last
 ```
 
 Then do the first open item in HANDOFF_NEXT.md § Next actions. If smoke fails, fix or report that first.
-A planning-only request stays planning-only: the 22 Nov owner explicitly left A1 execution to the next agent.
+A planning-only request stays planning-only. **Overnight A1 execution (owner, 22 Nov):** the prior planning-only
+stop is lifted for this run, covering S01–S14. Make the necessary in-scope engineering and product decisions without
+waiting for the owner; document assumptions and blockers. Model gates, source permissions, cutoffs and data retention
+remain mandatory. This authority is scoped to this A1 run, not future unrelated work.
 Read-only/docs work needs no review server; start :8767 when inspecting or changing presentation.
 
 ## 3. The owner and how to work with them

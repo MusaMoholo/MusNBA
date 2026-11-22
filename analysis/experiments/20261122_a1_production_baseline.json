@@ -1,0 +1,159 @@
+{
+ "experiment": "a1_pre_candidate_production_baseline",
+ "generated_utc": "2026-11-22T02:30:28.274757+00:00",
+ "source_head": "00a0731db855a31b83dbdeffa303c7fd4b06969d",
+ "input_manifest": {
+  "path": "analysis/experiments/20261122_a1_pre_candidate_manifest.json",
+  "bytes": 294437,
+  "sha256": "195b4ddaf748e4f3520a02f813b5763736fe4fbfbe653e896161532d6d9c7e6b"
+ },
+ "production_model_fingerprints": [
+  {
+   "path": "data/models/v1.3/config.json",
+   "bytes": 43431,
+   "sha256": "a2e1dbf7b5fffba8f01a3a5aed687f38e53187567fd492dc38d38d5535b03cdf"
+  },
+  {
+   "path": "data/models/v1.3/assisted.txt",
+   "bytes": 2523971,
+   "sha256": "7807bfcea784db13fa8721be6dbe89eb7be7e4cacc80c189dc17dbdfc72ebf52"
+  },
+  {
+   "path": "data/models/v1.3/assister.txt",
+   "bytes": 3145466,
+   "sha256": "08b9f56f6d85d40becaa32b8f391ad84916d4fe56049f32723d4017ce106f523"
+  },
+  {
+   "path": "data/models/v1.3/blocked.txt",
+   "bytes": 840028,
+   "sha256": "7ae538b2b010bfd403ab4016532653abe78f04323be26ecc6c1cfdf64ac2dee4"
+  },
+  {
+   "path": "data/models/v1.3/blocker.txt",
+   "bytes": 866347,
+   "sha256": "5cfe5d864b21b124f2b9ef2edce5c8befa0297d886d9caa9431ab3bd54a402df"
+  },
+  {
+   "path": "data/models/v1.3/duration.txt",
+   "bytes": 5370503,
+   "sha256": "6fb1a6516676be5fd7c7ec5aed535c7b74fa8055ebde38dbcc2a8e0cb6dbec47"
+  },
+  {
+   "path": "data/models/v1.3/event.txt",
+   "bytes": 1621298,
+   "sha256": "a61fee5559e4826a93049a3351db44f66f73fbe3cd929ee03b5260ad5bdcd24d"
+  },
+  {
+   "path": "data/models/v1.3/fouler.txt",
+   "bytes": 2515784,
+   "sha256": "78731bdce8c52863178fb0bbaeb99c2054f12f3ea3329c1f118ac5fa34270beb"
+  },
+  {
+   "path": "data/models/v1.3/free_throw.txt",
+   "bytes": 433501,
+   "sha256": "2adccf506079538f089367b26b6182126d4f41beea0bb93c1f0e5a4787cae2b1"
+  },
+  {
+   "path": "data/models/v1.3/location.txt",
+   "bytes": 10845343,
+   "sha256": "53ba8ce184551a711b58b534b83460398cba2277eb3a5e1aec0833c2765d5ec6"
+  },
+  {
+   "path": "data/models/v1.3/rebound.txt",
+   "bytes": 1741296,
+   "sha256": "0d9282006fd4f91ab8c86479750b1fdac2525cbd176f24f6eb335a019d343ad5"
+  },
+  {
+   "path": "data/models/v1.3/rebounder.txt",
+   "bytes": 1746069,
+   "sha256": "390ebdae17b648793b40a74eca261cdee9b88149614252b5e369da6abf5ef496"
+  },
+  {
+   "path": "data/models/v1.3/shot_result.txt",
+   "bytes": 1429252,
+   "sha256": "eccddebea7ea8e57448ae715844832042112d67dffc224d6cd33abf05124f34a"
+  },
+  {
+   "path": "data/models/v1.3/stealer.txt",
+   "bytes": 990488,
+   "sha256": "d8865288ec2d201e1053280ca4574876d55c0ce1c1c618a19357e1043137285a"
+  },
+  {
+   "path": "data/models/v1.3/turnover_type.txt",
+   "bytes": 1879677,
+   "sha256": "23e240f5007e4da4a43a936630695482b2a46c1f06921ceeeaf08fc7316ed263"
+  },
+  {
+   "path": "data/models/v1.3/what.txt",
+   "bytes": 6830690,
+   "sha256": "df8393d489c0b8b6751c999e6e260f98972bcf917c7eedc05ee19f39f8af94f7"
+  },
+  {
+   "path": "data/models/v1.3/who.txt",
+   "bytes": 2394996,
+   "sha256": "4db61bdc85be4ad1ae5fb82e1a303ac112d1c89cf659ee7bc8306c12476a3200"
+  }
+ ],
+ "upstream_build_fingerprints": [
+  {
+   "path": "requirements.txt",
+   "bytes": 59,
+   "sha256": "2c53665658f7785f14f677e111d7b2cc1c2ab15a20f7fd756c6485a86a006e62"
+  },
+  {
+   "path": "scripts/features.py",
+   "bytes": 43978,
+   "sha256": "bd66cf2d2792c5c0b8e2f85a441486701734297a337c8780c6ea45f10bdb5f7e"
+  },
+  {
+   "path": "scripts/history.py",
+   "bytes": 5323,
+   "sha256": "361edbbdab301745824ec33bbd8661e5c10552152d1771b4903c19eb93162f15"
+  },
+  {
+   "path": "scripts/possessions.py",
+   "bytes": 20758,
+   "sha256": "f2faaae7dd4c14ea685a64f37b2ac268d6e7dd444631cc4c3d4368246f5a0ada"
+  },
+  {
+   "path": "scripts/nbastats.py",
+   "bytes": 23923,
+   "sha256": "e2359558f9b43c3793719eabfdcfc432933be3c3a3fb83c0f90cd2991b1b542a"
+  },
+  {
+   "path": "scripts/athletes.py",
+   "bytes": 4050,
+   "sha256": "a10090c70a539625f5ed18180eba30f0c93e7d1e8a52513cdf1d425e4f5c6dd0"
+  },
+  {
+   "path": "scripts/fetch_nbastats.py",
+   "bytes": 18986,
+   "sha256": "6ccaa664af99c8f5d3565e72d3ef262f64d4e0b6d4757a752226c596f68ca0f6"
+  },
+  {
+   "path": "scripts/fetch_espn.py",
+   "bytes": 8730,
+   "sha256": "b05dbc3341cf2d8261b994e772c1a884466d17ae543ea5bac1948d40b9fe9310"
+  },
+  {
+   "path": "data/raw/hoopr/manifest.json",
+   "bytes": 2430,
+   "sha256": "ffceda96f2731746dad72259e517ddf2c5afc30aca840d9156feef01396a9fb3"
+  },
+  {
+   "path": "data/derived/features/features_report.json",
+   "bytes": 1705,
+   "sha256": "f33ca5763e31bf532173f18ca47d8bc1ec4edb748289eac32fd8ec2534c98251"
+  },
+  {
+   "path": "data/derived/variants/matchup/features/features_report.json",
+   "bytes": 2398,
+   "sha256": "e748d521899caef65cb135852a8a20f96ac8397d09339dccc89e9926813f90d3"
+  }
+ ],
+ "local_bundle_fingerprint": {
+  "path": "exports/MusNBA.musnba.gz",
+  "bytes": 10620944,
+  "sha256": "3055d277fc5e3c1b392d0b06466ec1b6a8c34de3313144b4fc856e1e5abd9ecf"
+ }
+}

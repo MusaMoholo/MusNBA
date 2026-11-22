@@ -9,8 +9,8 @@ or phone.
 > from the **possession engine v1.3** (every possession simulated from 16 LightGBM decision models, inputs rebuilt nightly
 > from games before the origin; 10,000 worlds per game, one rotation table per world; the floor for later improvements, D22–D24); every later game from the **team pathway v1**, where
 > each simulated season carries its own team ratings and updates them after every game (D25). Past dates rebuilt after the
-> fact currently use a labelled placeholder. U1–U22 and public Pages/iCloud delivery are complete. The next accuracy
-> chunk **A1 (14 tasks)** is documented and **not started**; it adds versioned, cutoff-safe engine history.
+> fact currently use a labelled placeholder. U1–U22 and public Pages/iCloud delivery are complete. Accuracy chunk
+> **A1 (14 tasks)** is underway at S01; versioned, cutoff-safe engine history remains planned.
 > See [PLAN.md](PLAN.md) and [HANDOFF_NEXT.md](HANDOFF_NEXT.md).
 
 ## Setup
@@ -122,7 +122,8 @@ Dashboard routes: `#/standings/{forecast,seeds,wins,ratings,picture,races,movers
 | `scripts/nbastats.py` | D32 crosswalk (games by date + teams, players by name/stat line), reconciliation v ESPN (points, minutes, possessions), real matchups in ESPN ids → `data/derived/nbastats/` |
 | `scripts/realmatch.py` | D32 real matchups: pre-game assignment fitted on real shares (ranks, stopper, pair history), per-game pair history (cutoff-safe) |
 | `scripts/lineups.py` | Projected v actual starters for every finished snapshot (nightly record, D33) |
-| `scripts/backtest.py`, `scripts/backtest_compare.py` | Engine backtest on held-out fold games (M9; `--rotation targets`, `--models` to reuse fold models), with the team-rating model on the same games; paired comparison of runs (players first) |
+| `scripts/backtest.py`, `scripts/backtest_compare.py` | Engine backtest on held-out fold games (M9; `--rotation targets`, `--models` to reuse fold models), with the team-rating model on the same games; legacy paired scorecard |
+| `scripts/a1_compare.py`, `scripts/a1_manifest.py`, `scripts/a1_quarter_audit.py`, `scripts/a1_output_audit.py`, `scripts/a1_availability_cohort.py` | A1 paired bootstrap and frozen provenance; independent accounting and prior-box membership coverage |
 | `scripts/pathway.py` | Team engine (D25, D26): per-world offensive/defensive ratings, updated after every simulated game |
 | `scripts/season_backtest.py` | Team engine trust test (M12 first cut): walk-forward seasons 2022-26, `--grid` calibration |
 | `scripts/athletes.py`, `scripts/buckets.py` | Player heights/weights; paired comparisons by the player's sample size |
@@ -148,6 +149,12 @@ Rebuild in order after new data: `scripts/history.py` → `scripts/possessions.p
 .venv/bin/python scripts/parity.py [--fetch]                            # adapter and feed parity (M5b)
 .venv/bin/python scripts/backtest.py --config models/v1.3.json --games 200 --worlds 1000 --jobs 7 --rotation targets --pool 0 [--models folds/v1.3_F4_all]   # engine v1.3 backtest (M9)
 .venv/bin/python scripts/backtest_compare.py <run A> <run B> [--log NAME]   # paired: player tiers, loading, margins, CRPS
+.venv/bin/python scripts/a1_compare.py <control-run> <candidate-run> --output <new-report.json>  # strict A1 paired intervals
+.venv/bin/python scripts/a1_manifest.py --output <new-manifest.json>    # freeze selected games, seeds and hashes
+.venv/bin/python scripts/a1_quarter_audit.py --output <new-report.json> # validate quarter actuals against raw scoreboard
+.venv/bin/python scripts/a1_output_audit.py <run> [--reference <legacy-run>] --output <new-report.json> # output accounting
+.venv/bin/python scripts/a1_availability_cohort.py <control-run> --output <new-report.json> --rows-output <new-cohort.parquet>
+.venv/bin/python -m unittest discover -s tests -p 'test_a1*.py'       # focused A1 evaluation checks
 .venv/bin/python scripts/minutes.py --evaluate [--season 2025 --from 2025-01-01 --to 2025-04-30] [--set gamma=1]   # allocator v real (no engine)
 .venv/bin/python scripts/matchups.py --fit --through 2025-12-31            # D30 assignment θ → models/matchup_<through>.json
 .venv/bin/python scripts/fetch_nbastats.py --logs --matchups [--ptdefend] [--pbp]   # D32 NBA Stats history (polite, resumable)
@@ -161,6 +168,18 @@ Rebuild in order after new data: `scripts/history.py` → `scripts/possessions.p
 .venv/bin/python scripts/lineups.py --score                                 # projected v actual starters (also in the nightly)
 .venv/bin/python scripts/season_backtest.py [--grid]                    # team engine walk-forward (M12; ~1–4 min)
 ```
+
+For exact A1 populations, `backtest.py --game-ids <file.json>` accepts a non-empty list of unique eligible game-ID
+strings; `--simulation-stream 1` changes simulation draws without changing game selection. `--seed-key` explicitly
+sets a shared starting seed namespace across model labels, not guaranteed event-by-event random alignment. Without
+these flags the historical seed stream is unchanged. The legacy comparison uses actual-starter tiers; only the A1
+comparison uses the preregistered pre-game tiers and fails on unmatched games/players. It identifies simulated
+participants without player-box outputs separately rather than treating missing outcomes as zero. It reports intervals,
+not a Holm-adjusted promotion decision. Its win scores use unmodified empirical probabilities; a realised winner
+assigned zero probability is reported as infinite log loss rather than given the legacy scorecard's boundary safeguard.
+The separate prior-box cohort is inferred membership, not official rosters
+or a validated availability forecast; unlisted and zero/missing-minute cases remain unknown. Historical availability
+and first-season/assignment cutoff limitations still apply.
 
 Data variants live under `data/derived/variants/<name>/` (segments root + `features/`): `possessions.py --rebound-clock miss
 --out DIR` and `features.py --segments DIR --out DIR/features` build one; `nodes.py`/`train.py --segments DIR --features …`
@@ -186,4 +205,4 @@ Data: retained ESPN/hoopR history and owner-authorised NBA Stats API. Public sou
 Read [AGENTS.md](AGENTS.md), then [HANDOFF_NEXT.md](HANDOFF_NEXT.md). A1's 14 subtasks, weights and 140 concrete
 progress rungs live in HANDOFF; detailed scope/gates are PLAN §6a–6c. Each task ends with updated docs, evidence and
 a commit/push. Every development chunk ends with a fresh nightly/PWA delivery and a successor chunk in the same
-format. The 22 Nov documentation session is planning only; the next agent starts S01.
+format. The earlier planning-only stop was lifted for the overnight A1 execution; resume the active rung in HANDOFF.

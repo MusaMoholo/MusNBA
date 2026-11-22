@@ -1,6 +1,6 @@
 # MusNBA — game plan and progress
 
-Updated **22 November 2026 (dashboard complete/public; A1 accuracy chunk planned, 0% started)**. The single record of scope, progress and decisions. Every agent updates it at
+Updated **22 November 2026 (dashboard complete/public; A1 S01 underway)**. The single record of scope, progress and decisions. Every agent updates it at
 every checkpoint (AGENTS.md § Checkpoint protocol). New here? Read [AGENTS.md](AGENTS.md) first, then
 [HANDOFF_NEXT.md](HANDOFF_NEXT.md) — it says exactly what to do next.
 
@@ -77,7 +77,7 @@ Slates are US Eastern game dates; tip-offs show UK time with ET alongside.
 | 0 | Discovery, data probe, plan | `██████████` done |
 | 1 | App shell, season stats, placeholder projections | `██████████` done — public Pages/iCloud live; real iPhone install/import acceptance pending |
 | 1b | Per-period Game Centre (owner spec), play-by-play parser, quarter-aware placeholder | `██████████` done |
-| 2 | Possession engine (data → models → engine → backtest) | `████████░░` **M1–M5b, M6a done · engine v1.3 is the app's default (D34), 10,000 worlds per game (D36) · backtest (M9) is the gate · NBA Stats matchups ingested; real-matchup defence not promoted (D37): team differences remain compressed (pool-0 offence ~64%, defence ~40% of observed effect) — A1 S01–S09 planned at 0%** |
+| 2 | Possession engine (data → models → engine → backtest) | `████████░░` **M1–M5b, M6a done · engine v1.3 is the app's default (D34), 10,000 worlds per game (D36) · backtest (M9) is the gate · NBA Stats matchups ingested; real-matchup defence not promoted (D37): team differences remain compressed (pool-0 offence ~64%, defence ~40% of observed effect) — A1 S01 underway; S02–S09 planned** |
 | 3 | Evaluation and nightly feedback (Forecast Lab view, refit cadence) | `███░░░░░░░` **Forecast Lab page (`#/lab`), nightly projected-v-actual starters record (D33); refit cadence not started; A1 S11/S13 adds confirmation and versioned historical replay** |
 | 4 | Season on the engine: pathway calibration, availability, tiebreakers, play-in, Cup, what-ifs | `██░░░░░░░░` **team pathway v1 in the app (D25): per-world ratings, engine worlds for today + tomorrow; walk-forward calibration first cut (M12); A1 S07/S10 extends availability and calibration** |
 | 5 | Polish: hosting, iPhone acceptance, watch-a-sim, more views | `█████░░░░░` **Dashboard U1–U22 complete (22 Nov); personal GitHub Pages + iCloud flow follows MusSim; real iPhone acceptance and watch-a-sim remain** |
@@ -108,14 +108,14 @@ Each subtask ends with evidence, current docs and a commit/push checkpoint (AGEN
 | M11 | Availability model | ☐ **A1 S07/S08/S10**: report coverage, play/start probabilities, branches and future absences | Held-out calibration and games-missed realism where dated development data supports them; honest fallbacks otherwise | Planned |
 | M12 | Season pathway calibration | ◐ **first cut (20 Nov): team pathway v1 in the app** — walk-forward 2022-26 (480 team-starts): dispersion 1.00 (fixed probabilities 1.53), 10–90% coverage 84% (65%), CRPS −4% in every held-out season; still wide in November (0.84) and surprises fade with the date (sim 0.52 → 0.18 v real 0.40 flat) | Dispersion ≈ 1.0 **at every start date**, persistence matches | `pathway.py`, `season_backtest.py` |
 | UX | Dashboard upgrade programme U1–U22 | ✅ **22 Nov:** all 22 shipped; U15–U22 adds roster roles, playoff picture, win ranges, races/movers/leaders inside Standings and model guide; 156 full + 12 final layout browser checks, hosted PWA 15/15 | Checked at 1440/960/390, both themes, stored data only | DASHBOARD_PLAN.md |
-| A1 | Expanded accuracy/robustness programme | ☐ **0% — planned only, 22 Nov**; 14 tasks, fixed weights, 140 rungs | Gates in §6b; final nightly + versioned history + successor chunk | HANDOFF § Progress ladders |
+| A1 | Expanded accuracy/robustness programme | ◐ **4.8% — S01 80%, 22 Nov**; 14 tasks, fixed weights, 140 rungs | Gates in §6b; final nightly + versioned history + successor chunk | HANDOFF § Progress ladders |
 
 ### 6a. Next chunk — A1: player accuracy, defence and trustworthy season paths
 
-**Owner request, 22 Nov: plan only in this session; the next agent executes.** U1–U22 are complete; do not restart
+**Owner request, 22 Nov:** the earlier planning-only stop is lifted for overnight A1 execution. U1–U22 are complete; do not restart
 that programme. This replaces the old four-task S1–S4 chunk with **14 modular subtasks (3.5× the task count)** and
 substantially more modelling scope: M7, M8, M11, M12, full-fold confirmation and versioned daily history and season-to-date model rebuilds.
-This is not a claim of 3.5× runtime or a promised accuracy gain. All subtasks start at **0%**.
+This is not a claim of 3.5× runtime or a promised accuracy gain. All subtasks started at **0%**; live progress is in HANDOFF.
 
 **Two headliners:** (1) player outcomes that respond correctly to role, availability, game state and the defenders
 actually faced; (2) calibrated joint game/season outcomes, with daily archives and a consistent season history under the current model. **Defence is central, not abandoned.** D37 rejected three particular variants; it did not show that
@@ -514,3 +514,10 @@ face cards and unrelated presentation remain §9b backlog. NBA history moved to 
   under each accepted current model with dated inputs/fits and archived previous versions. Every task commits/pushes
   with current docs and necessary PWA model/data/shell delivery; every development chunk ends in a fresh nightly and a constructed successor chunk. Baseline smoke
   **102/102**; no model/data/shell change, training, fetch, final-test scoring or nightly in this planning session.
+
+- **22 Nov 2026 · A1 execution underway:** owner lifted the planning-only stop. S01 is **80%** (A1 **4.8%**); both
+  200-game controls completed, legacy fields reproduce to 1e-12 and quarter scores reconcile across **2,677** fold
+  games. Independent-seed pooled MIN/PTS CRPS noise floors are **0.02634/0.00919**; one raw-box player outcome is
+  missing. The prior-box cohort is separately labelled inferred availability, not actual-participant engine evaluation.
+  Smoke **102/102**, deliberate fault **22 detected** and **15 focused tests** passed. Final manifest remains; no
+  candidate, production model or PWA bundle changed.

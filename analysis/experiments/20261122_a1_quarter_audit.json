@@ -1,0 +1,62 @@
+{
+ "experiment": "a1_quarter_actuals_audit",
+ "population": "all eligible regular-season F1-F4 games",
+ "method": "sum player-period points; compare final totals with boxes and each period with cumulative end-period/end-game scoreboard differences, including overtime",
+ "ordering_warning": "later sequence numbers can be backfilled earlier-clock events; use explicit period-end events",
+ "folds": {
+  "F1": {
+   "games": 731,
+   "periods_with_end_score": 2967,
+   "missing_regulation_ends": 0,
+   "missing_period_ends": 0,
+   "team_game_box_mismatches": 0,
+   "team_period_mismatches": {
+    "home": 0,
+    "away": 0
+   }
+  },
+  "F2": {
+   "games": 738,
+   "periods_with_end_score": 2990,
+   "missing_regulation_ends": 0,
+   "missing_period_ends": 0,
+   "team_game_box_mismatches": 0,
+   "team_period_mismatches": {
+    "home": 0,
+    "away": 0
+   }
+  },
+  "F3": {
+   "games": 490,
+   "periods_with_end_score": 1995,
+   "missing_regulation_ends": 0,
+   "missing_period_ends": 0,
+   "team_game_box_mismatches": 0,
+   "team_period_mismatches": {
+    "home": 0,
+    "away": 0
+   }
+  },
+  "F4": {
+   "games": 718,
+   "periods_with_end_score": 2899,
+   "missing_regulation_ends": 0,
+   "missing_period_ends": 0,
+   "team_game_box_mismatches": 0,
+   "team_period_mismatches": {
+    "home": 0,
+    "away": 0
+   }
+  }
+ },
+ "retained_200_game_segment_vs_box": {
+  "home": {
+   "games_with_difference": 56,
+   "maximum_absolute_difference": 2.0
+  },
+  "away": {
+   "games_with_difference": 54,
+   "maximum_absolute_difference": 2.0
+  }
+ }
+}

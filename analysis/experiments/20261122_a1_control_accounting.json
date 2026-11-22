@@ -1,0 +1,37 @@
+{
+ "experiment": "a1_output_accounting",
+ "run": "20261122T022323Z_a1_s01_control",
+ "games": 200,
+ "player_games": 4346,
+ "expected_simulated_player_games": 4347,
+ "player_games_without_output": 1,
+ "missing_player_outputs": [
+  {
+   "game_id": "401810691",
+   "player": "5107156",
+   "team": "4"
+  }
+ ],
+ "quarter_scoreboard_comparisons": 1600,
+ "quarter_mismatches": 0,
+ "player_3pm_box_comparisons": 4346,
+ "player_3pm_missing_actuals": 0,
+ "player_3pm_mismatches": 0,
+ "team_3pm_mean_comparisons": 399,
+ "team_3pm_incomplete": 1,
+ "team_3pm_incomplete_rosters": 1,
+ "team_3pm_mean_mismatches": 0,
+ "legacy_reproduction": {
+  "reference": "20261120T162930Z_v1.3_pool_per_world_F4",
+  "games": {
+   "rows": 200,
+   "columns": 59,
+   "absolute_tolerance": 1e-12
+  },
+  "players": {
+   "rows": 4346,
+   "columns": 16,
+   "absolute_tolerance": 1e-12
+  }
+ }
+}

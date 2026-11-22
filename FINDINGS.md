@@ -848,5 +848,105 @@ Repository/code audit only; no new model experiment or final-test scoring. Basel
   validates their ordering and builds a plan without publication; its handoff distinguishes reconstruction from
   actual prospective publication. MusNBA must retain that distinction and use its own strict **games before ET D**
   convention, rather than copy football's inclusive date convention. No Football files or jobs were changed.
-- Dashboard U1–U22 remain complete; the next accuracy chunk is a plan, **0% implemented**. D37 rejects specific
+- At the planning checkpoint dashboard U1–U22 remained complete and A1 was **0% implemented**. D37 rejects specific
   defence variants; it does not establish that defence gains are impossible. No new gain is claimed here.
+
+## 7. A1 S01 baseline audit — execution underway (22 Nov 2026)
+
+No candidate has been fitted or selected, no final-test outcome scored, and serving v1.3/pathway v1 and the PWA
+bundle are unchanged. The fixed pool-0 panel uses actual participants and projected, not actual, starters.
+
+- **S02 preparation, downloader integrity:** a network-free mock of three cached games in one season constructed the
+  NBA `Store` three times, not once (`fetch_games` evaluates `Store(...)` before `setdefault`). Each construction
+  scans and may flush the manifest. In isolated temporary storage, a second store constructed before the owning
+  store flushes actually writes a reconstructed entry with null URL/time; the owning store restores them on flush.
+  An interruption can therefore preserve the missing provenance, but the cause of the existing gaps is unproven.
+  A read-only inventory finds **45** retained play-by-play manifest entries without URL/fetch time
+  (**23** in 2024–25 and **22** in 2025–26); no files are unindexed or referenced files missing in those folders.
+  At ET 21 Nov, retained/eligible counts were **0/1,320** (2022–23), **0/1,319** (2023–24),
+  **573/1,321** (2024–25), **1,322/1,322** (2025–26) and **0/235** (2026–27): **1,895/5,517** total.
+  Missing timestamps cannot be reconstructed as fact. Test and fix all affected fetch paths before resuming history.
+  A separate temporary-store test interrupted `fetch_logs` after one successful request: its manifest was not flushed,
+  and resume reconstructed that retained file with null URL/time. The exception surfaced normally. The season-log path
+  also needs a `finally` flush; this reproduction does not establish the cause of any existing metadata gap.
+- **S02 preparation, matchup batching:** `matchups.mu_columns` fills an all-missing five-defender metric from the
+  entire batch. In a synthetic two-row test, changing only an unrelated row's defensive FG value from 0.4 to 0.6
+  changed the missing row's `mu_fg_rim` from 0.4 to 0.6. Dataset batches can therefore borrow held-out/future values,
+  while simulation batching can yield different fills. In the fixed 200 F4 games, none of **45,110** actor segments
+  with five recorded defenders had all five `m_fg_*`, `m_tov_rate` or `m_foul_rate` values missing; other populations,
+  body measurements and simulation lineups remain to be audited. Preserve accepted production behaviour until a
+  cutoff-safe, training/serving-consistent candidate is isolated and tested.
+- **Reproduction:** `20261122T015651Z_a1_s01_repro` repeats three outcome-blind selected F4 panel games with 1,000
+  worlds, targets and pool 0. All shared game/player output columns match the retained 200-game control to
+  absolute tolerance 1e-12 on **3 games / 64 player-games**, including randomized PITs; one worker took **46 s**.
+  The full original-stream regeneration `20261122T022323Z_a1_s01_control` then reproduced all **59 game columns and
+  16 player columns** on **200 games / 4,346 scored player-games** to 1e-12, taking **1,567 s** with four workers.
+  Its output adds 3PM and quarter scores; independent seed `20261122T025114Z_a1_s01_seed2` completed in **1,566 s**.
+  The same-game team-rating benchmark and M6a diagnostic summaries also reproduce exactly: team margin/total CRPS
+  **9.322 / 11.353**, win log loss **0.5584**; M6a's **−1.0** total bias is teacher-forced diagnostic evidence,
+  not a pre-game forecast.
+- **Full-control accounting:** against raw period-end scores and boxes, all **1,600** quarter total/margin actuals
+  and **4,346** available player 3PM actuals match; **399/400** team 3PM means reconcile to their player outputs.
+  In game `401810691`, a player logged in the play-by-play for **179 seconds** is absent from the raw player box:
+  the engine simulated **4,347** player-games, but only **4,346** have player output/box truth. The remaining team
+  sum is explicitly incomplete, not a model/accounting pass or an invented zero. Exact IDs and independent checks:
+  `analysis/experiments/20261122_a1_control_accounting.json`. S02 must audit this crosswalk/coverage class.
+- **Independent simulation noise:** the same 200 games / 4,346 scored player-games, 1,000 worlds and unchanged
+  fitted control were rerun with stream 1. Its accounting independently matched **1,600** quarter scores, **4,346**
+  3PM actuals and **399** complete team 3PM sums, with the same one missing box outcome. For pooled
+  MIN / PTS / REB / AST / 3PM CRPS, the preregistered larger-absolute-endpoint noise floors are
+  **0.02634 / 0.00919 / 0.00384 / 0.00213 / 0.00158**, respectively. Total/margin CRPS floors are
+  **0.09372 / 0.08323**. These are simulation-noise thresholds, not improvements or promotion decisions; paired
+  intervals and subgroup counts are in `analysis/experiments/20261122_a1_seed_noise.json`.
+- **Quarter truth:** on all **2,677** eligible reconciled F1–F4 regular-season games (731/738/490/718), summed
+  player-period points match the final team boxes and each of **21,702** team-period end-score snapshots including OT.
+  No period end was missing. The explicit `End Period`/`End Game` scoreboard event is needed: backfilled plays can
+  have later sequence numbers despite an earlier clock. In the retained 200-game panel, raw segment-point sums differ
+  from final boxes in **56 home and 54 away games**, by at most **2 points**; do not treat segment sums as quarter truth.
+  Reproducible report: `analysis/experiments/20261122_a1_quarter_audit.json`.
+- **Pre-game tiers:** on the **4,346** actual-participant player-games in that panel, using pre-game usage ≥0.25
+  for stars and otherwise pre-game start share ≥0.5 for starters yields **284 star / 1,578 starter / 2,472 bench /
+  12 unknown**. It changes **485** legacy labels, including 12 unknowns, because the legacy scorecard uses the
+  game's actual starter flag. Exact-match, game-clustered comparisons now preserve the unknowns and reject mismatched
+  game/player keys; the control-v-itself 200-game bootstrap gives exactly zero paired intervals on retained metrics.
+  An independent recomputation from saved rows agrees with all **75** tier/stat CRPS, bias and coverage values; every
+  supported self-comparison interval is exactly zero.
+  The regenerated pooled **MIN / PTS / REB / AST / 3PM CRPS** are **3.5662 / 3.1614 / 1.3033 / 0.9006 / 0.5889**;
+  randomized 10–90% coverage is **78.00 / 75.70 / 76.12 / 76.92 / 77.66%**. The previously unavailable 3PM CRPS is
+  **0.8324 / 0.6790 / 0.5045** for star / starter / bench. Unknown has only 12 observations and is inconclusive.
+- **Cutoff limits:** the F4 assignment θ fitted through 2025-12-31 is safe for its F4 validation window, but not for
+  F1–F3; those folds need dated assignment fits **and** rebuilt matchup features. First-retained-season fallback
+  priors use the whole season, affecting **27,278** first-season feature rows across **1,298** games (2022-10-18 to
+  2023-06-12), so early training rows need correction; non-fold profile medians read the entire
+  feature file; static body measurements have no demonstrated historical as-of provenance. No promotion or historical
+  reconstruction can rely on these as already cutoff-safe.
+  The retained matchup feature file has **0** player/date keys with multiple games among **116,302** player rows and
+  **0** team/date keys with multiple games among **10,858** team rows. This describes the current data, not a general
+  guarantee that the sequential feature builders reject same-day multi-game inputs.
+- **Availability scope:** the five retained ESPN roster/injury collection origins are dated 19–21 Nov 2026, inside
+  the protected final season. Requiring collection completion before scheduled tip plus the injury file and both
+  roster files covers **4/4, 9/9 and 5/6** games on those dates; file presence does not establish player-level
+  completeness (`analysis/experiments/20261122_a1_report_coverage.json`). No results were scored. Their existence is
+  not permission to tune on those outcomes. TRAINING_PLAN
+  §8.2 defines a separate, strictly prior-game inferred-membership diagnostic and requires coverage of unseen
+  arrivals and stale memberships; it is not an official historical roster or a validated pre-game injury report.
+- **Prior-box availability cohort, F4 screen:** on the 200 fixed games, constructing membership before the date from
+  same-season prior boxes yields **7,305** candidate player-games: **4,310** positive-minute and **891** DNP labels,
+  **2,095** unlisted candidates and **9** listed with zero/missing minutes (unknown). **32** positive-minute
+  player-games in **24** games, plus **12** listed DNPs, are outside that inferred universe. Seven candidates have a
+  conflicting later same-day team listing; no origin has an ambiguous latest prior team. All 7,305 source dates are
+  strictly earlier. This is coverage, not a scored availability model, and the play-by-play-only player above is not
+  counted as a known outcome. Retained prior boxes lack historical publication/correction timestamps, so date order
+  alone does not prove the exact records were available then. An independent latest-prior-team reconstruction matches all **200** candidate sets;
+  saved rows, report and coverage totals reproduce. `analysis/experiments/20261122_a1_prior_box_coverage.json` records
+  per-game counts.
+- **Preregistration:** `analysis/experiments/20261122_a1_pre_candidate_manifest.json` fixes the original 200-game
+  screen, **200 / 200 / 200 / 718** F1–F4 confirmation games, simulation streams and input hashes before candidates.
+  An independent check finds **1,318 distinct** game IDs within their declared fold dates and **2,636 distinct**
+  stream seeds across the two predeclared confirmation streams.
+  The earlier manifest did not include production-model hashes; still before any candidate, the separate
+  `analysis/experiments/20261122_a1_production_baseline.json` pins **17** production model artifacts, **11**
+  upstream-build inputs and the local bundle. All **67** original input fingerprints were independently unchanged.
+  The separate 20-game 10k stress set deliberately spans five OT, five short-roster, five close and five blowout
+  games; its **26 star player-games** do not meet the 100-player-game tier gate. It is not a representative sample.
+  The full same-input independent-stream noise estimate is now complete; its reproducibility manifest remains to be pinned.

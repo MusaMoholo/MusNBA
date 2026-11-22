@@ -1,0 +1,18 @@
+{
+  "experiment": "a1_dated_report_file_coverage",
+  "population": "scheduled 2026-11-19 through 2026-11-21 slates, protected final season",
+  "method": "Count games with a same-slate ESPN run completed before scheduled tip containing injuries.json.gz and both team roster files. No outcome or player-level report contents were scored.",
+  "limitations": "File presence is not player-level completeness, and these final-season games are not a development tuning cohort.",
+  "collection_origins_utc": [
+    "20261119T145907Z",
+    "20261119T235714Z",
+    "20261120T092255Z",
+    "20261120T163017Z",
+    "20261121T225637Z"
+  ],
+  "slates": {
+    "2026-11-19": {"games": 4, "covered_games": 4, "invalid_tip_times": 0},
+    "2026-11-20": {"games": 9, "covered_games": 9, "invalid_tip_times": 0},
+    "2026-11-21": {"games": 6, "covered_games": 5, "invalid_tip_times": 0}
+  }
+}
