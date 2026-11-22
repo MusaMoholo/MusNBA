@@ -78,6 +78,40 @@ check('leader qualification copy follows loaded games played', await evaluate(`(
 })()`));
 await send('Page.navigate', {url: args.url + '#/standings/movers'}, s);
 check('offline movers read imported comparisons', await waitFor(`document.querySelector('#view').textContent.includes('Since the previous forecast')`));
+await send('Page.navigate', {url: args.url + '#/players'}, s);
+check('offline player minutes filter follows the loaded season', await waitFor(`!!document.querySelector('#pg')`) && await evaluate(`(async () => {
+  const ui = await import('./assets/ui.mjs'), players = await ui.api('players'), standings = await ui.api('standings/' + ui.meta().latest);
+  const benchmark = 48 * Math.max(...standings.teams.map(t => t.gp));
+  const expected = players.players.filter(p => p.gp > 0 && benchmark > 0 && Number.isFinite(p.tot.min) && p.tot.min >= 0.25 * benchmark).length;
+  const select = document.querySelector('#pg'); select.value = '0.25'; select.dispatchEvent(new Event('change', {bubbles: true}));
+  return document.querySelector('#ptable .row .note')?.textContent.includes('of ' + expected + ' players')
+    && document.querySelector('#view').textContent.includes(benchmark.toLocaleString() + ' regulation minutes');
+})()`));
+const shootingTarget = await evaluate(`(async () => {
+  const ui = await import('./assets/ui.mjs'), slate = await ui.api('slate/' + ui.meta().latest);
+  for (const fixture of slate.games) {
+    const game = await ui.api('game/' + fixture.id), sim = game.projection?.sim;
+    if (sim?.shooting_distribution_schema !== 1 || game.worlds) continue;
+    for (const side of ['home', 'away']) for (const p of sim[side].players) {
+      const stats = p.periods?.q1?.stats, d = stats?.fgpct;
+      if (d && stats.fg3pct && stats.ftpct) return {game: fixture.id, player: p.id, defined: d.defined, total: d.total};
+    }
+  }
+  return null;
+})()`);
+if (shootingTarget) {
+  await send('Page.navigate', {url: args.url + '#/game/' + shootingTarget.game + '/player/' + shootingTarget.player + '/q1'}, s);
+  const ready = await waitFor(`!!document.querySelector('[data-stat="fgpct"]')`);
+  check('offline period shooting distribution preserves no-attempt worlds', ready && await evaluate(`(async () => {
+    document.querySelector('[data-stat="fgpct"]').click();
+    const ui = await import('./assets/ui.mjs'), text = document.querySelector('#stat-block').textContent;
+    return ['fgm', 'fga', 'fgpct', 'fg3m', 'fg3a', 'fg3pct', 'ftm', 'fta', 'ftpct']
+      .every(stat => !!document.querySelector('[data-stat="' + stat + '"]'))
+      && text.includes('conditional on an attempt')
+      && text.includes('No field-goal attempts in ' + ui.pct((${shootingTarget.total} - ${shootingTarget.defined}) / ${shootingTarget.total}, 1))
+      && text.includes(${JSON.stringify(shootingTarget.defined.toLocaleString())} + ' of ' + ${JSON.stringify(shootingTarget.total.toLocaleString())});
+  })()`));
+} else if (args['require-shooting']) check('offline period shooting distribution present in new bundle', false);
 await send('Page.navigate', {url: args.url + '#/about'}, s);
 check('model guide works offline', await waitFor(`document.querySelector('#view').textContent.includes('Reading the numbers')`));
 await send('Page.navigate', {url: args.url + '#/lab'}, s);

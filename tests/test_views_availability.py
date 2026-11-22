@@ -1,10 +1,31 @@
 import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
 from unittest.mock import patch
+
+import numpy as np
 
 from scripts import nightly, views
 
 
 class AvailabilityViewTests(unittest.TestCase):
+    def test_existing_worlds_supply_shooting_distributions_without_inventing_periods(self):
+        lines = np.zeros((3, 1, len(views.WORLD_STATS)), dtype=np.uint8)
+        cols = {key: views.WORLD_STATS.index(key) for key in ('fgm', 'fga', 'fg3m', 'fg3a', 'ftm', 'fta')}
+        lines[1, 0, cols['fgm']], lines[1, 0, cols['fga']] = 1, 2
+        lines[2, 0, cols['fgm']], lines[2, 0, cols['fga']] = 2, 2
+        sim = {'home': {'players': [{'id': '10', 'periods': {'fg': {'stats': {}}, 'q1': {'stats': {}}}}]},
+               'away': {'players': []}}
+        with TemporaryDirectory() as temp:
+            path = Path(temp)
+            np.savez(path / 'engine_players.npz', g__lines=lines, g__ids=np.array(['10']))
+            views.from_worlds(path, 'g', sim)
+        periods = sim['home']['players'][0]['periods']
+        self.assertEqual(periods['fg']['stats']['fga']['hist'], [1, 0, 2])
+        self.assertEqual((periods['fg']['stats']['fgpct']['defined'], periods['fg']['stats']['fgpct']['total']), (2, 3))
+        self.assertEqual(periods['q1']['stats'], {})
+        self.assertNotIn('ftpct', periods['fg']['stats'])
+
     def setUp(self):
         self.game = {'game_id': 'g', 'home_id': '1', 'away_id': '2'}
         self.registry = {

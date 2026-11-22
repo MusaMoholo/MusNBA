@@ -422,6 +422,17 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
   **16/32** sits worlds; no production branch or rung is claimed. An isolated fail-closed guard rejects a sixth
   foul and invalid fives; **24** focused checks pass. Preserve v1.3; any legal-play repair remains isolated until
   the registered gates pass. Normal smoke **108/108**; deliberate fault exited **1** with **86/108** passing.
+- **22 Nov 2026 · A1 guarded replay protocol:** freeze the same fixed game, 32 worlds and branch seeds with the
+  isolated guard enabled; record any sixth-foul failure rather than emitting a forecast. The unguarded source
+  and evidence were pushed as `a3baeab`.
+- **22 Nov 2026 · A1 guarded replay:** both fixed F4 branches correctly failed closed at an unsupported sixth foul
+  in Q3; neither emitted a forecast. A foul-out-only isolated candidate is needed before branch validity can be
+  established, and must pass the unchanged model gates before serving. A1 remains at 10%, Chunk A at 3%.
+- **22 Nov 2026 · Owner UX requests, in progress (D44):** minutes-share filter and grouped shooting distributions;
+  percentage outcomes exclude no-attempt worlds and disclose their share. New snapshot fields need a full nightly,
+  archived delivery and PWA verification. A legacy-replay smoke mismatch was reproduced and a schema-aware check
+  added; the final smoke passed **108/108**, and the deliberate fault failed as intended (**86/108**).
+  Isolated browser **19/19** and old-bundle PWA **18/18** passed; completion and delivery remain unverified.
 - **19 Nov 2026** — Studied MusSim. Probed sources: ESPN site API works with plain requests; NBA CDN returns 403.
   Owner: app shell first, play-by-play sim later.
 - **19 Nov 2026** — Phase 1 shipped (collection, placeholder engine, snapshots, views, server, app, PWA). Fixed: a

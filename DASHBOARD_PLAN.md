@@ -4,6 +4,16 @@
 
 **U1–U22 complete as of 22 November 2026.** Historical implementation notes: Scenarios, Given…, joint grids, drivers, averages deltas, Lab view, minutes basis and engine v1.3 added in the D29–D30 chunk; game flow, duels, duel of the night and who-guards-whom added in the D32 chunk. A1 S01–S06 were research-only; S07's availability and timing improvements are delivered with the 22 Nov nightly. Scope/progress live in [PLAN.md](PLAN.md) and HANDOFF.
 
+**In progress, 22 November (D44; not yet delivered):** Players replaces fixed 3+/8+ game filters with 10%,
+25% and 50% season-minute thresholds, default 10%, against a league-wide benchmark of 48 regulation minutes
+times the most games played by any team at the same cutoff. This is not roster eligibility; overtime or trades
+can exceed 100%. The player sheet groups FG, 3P and FT makes, attempts and percentages. Each percentage
+distribution is conditional on at least one attempt and explicitly reports no-attempt worlds separately; the tile
+percentage is mean makes divided by mean attempts, not the conditional mean of game percentages. New snapshots
+store period attempts and whole-percentage distributions; older snapshots without period worlds cannot acquire
+those period distributions retrospectively. Full-game distributions are derived only when saved player worlds
+exist. Delivery, nightly, selected-stat interaction, browser and PWA checks are still required.
+
 **A1 S07, delivered 22 November:** prospective unknown statuses are visible rather than hidden, with the
 uncalibrated fallback labelled in the Game Centre. Status-tag percentages are explicitly uncalibrated availability
 assumptions, including unknown statuses and the active-but-recently-inactive fallback; the Availability panel

@@ -41,7 +41,8 @@ PERIODS = ('q1', 'q2', 'q3', 'q4', 'h1', 'h2', 'fg')
 SLICES = {'q1': [0], 'q2': [1], 'q3': [2], 'q4': [3], 'h1': [0, 1], 'h2': [2, 3], 'fg': [0, 1, 2, 3, 4]}
 FG_DIST = ('min', 'pts', 'reb', 'oreb', 'dreb', 'ast', 'fg3m', 'fgm', 'ftm', 'stl', 'blk', 'tov', 'pra', 'pr', 'pa', 'ra', 'stocks',
            'fga', 'fta', 'fg3a')
-PERIOD_DIST = ('min', 'pts', 'reb', 'oreb', 'dreb', 'ast', 'fg3m', 'fgm', 'ftm', 'stl', 'blk', 'pra')
+PERIOD_DIST = ('min', 'pts', 'reb', 'oreb', 'dreb', 'ast', 'fg3m', 'fgm', 'ftm', 'stl', 'blk', 'pra', 'fga', 'fg3a', 'fta')
+SHOOTING_PAIRS = {'fgpct': ('fgm', 'fga'), 'fg3pct': ('fg3m', 'fg3a'), 'ftpct': ('ftm', 'fta')}
 BOX = ('pts', 'fgm', 'fga', 'fg3m', 'fg3a', 'ftm', 'fta', 'oreb', 'dreb', 'ast', 'stl', 'blk', 'tov')
 
 
@@ -73,6 +74,22 @@ def summary(values: np.ndarray, offset: bool = False) -> dict:
     quant = [int(np.searchsorted(cum, q * total, side='left')) + lo for q in (0.1, 0.25, 0.5, 0.75, 0.9)]
     return {'mean': round(float(values.mean()), 3), 'sd': round(float(values.std()), 3), 'q': quant,
             'min': lo, 'hist': counts.astype(int).tolist()}
+
+
+def shooting_summaries(values: dict) -> dict:
+    """Whole-percent distributions, conditional on at least one attempt in the selected period."""
+    out = {}
+    for key, (made, attempted) in SHOOTING_PAIRS.items():
+        if made not in values or attempted not in values:
+            continue
+        m, a = np.asarray(values[made]), np.asarray(values[attempted])
+        if np.any(m < 0) or np.any(a < 0) or np.any(m > a):
+            raise ValueError(f'Invalid shooting counts for {key}')
+        mask = a > 0
+        if mask.any():
+            pct = np.floor(100 * m[mask] / a[mask] + 0.5).astype(np.int64)
+            out[key] = {**summary(pct), 'defined': int(mask.sum()), 'total': int(a.size)}
+    return out
 
 
 # ---------------------------------------------------------------------------- team model
@@ -346,7 +363,7 @@ def package(game: dict, teams: dict, pts_by_period: dict, n_ot: np.ndarray, W: i
     teams[side] with tid, players (player_inputs), box[stat] (W, players, 5) and minutes (W, players, 5).
     Shared by the placeholder and the possession engine (scripts/engine.py)."""
     sides = ('home', 'away')
-    out = {'game_id': game['game_id'], 'model': model_id, 'sims': W,
+    out = {'game_id': game['game_id'], 'model': model_id, 'sims': W, 'shooting_distribution_schema': 1,
            'expectation': {k: round(v, 3) for k, v in exp.items()},
            'ot': round(float((n_ot > 0).mean()), 4), 'ot_periods': np.bincount(n_ot).astype(int).tolist(), 'periods': {}}
     for period, cols in SLICES.items():
@@ -390,7 +407,7 @@ def package(game: dict, teams: dict, pts_by_period: dict, n_ot: np.ndarray, W: i
                 entry['periods'][period] = {
                     'sec': round(float(mins_p.mean() * 60), 1),
                     'mean': {k: round(float(v[k].mean()), 3) for k in BOX + ('reb',)},
-                    'stats': {k: summary(v[k]) for k in dist},
+                    'stats': {**{k: summary(v[k]) for k in dist}, **shooting_summaries(v)},
                 }
             if not played_any[:, i].any():
                 del entry['periods']  # ruled out in every world: identity and status only

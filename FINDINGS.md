@@ -880,6 +880,15 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   The helper used in that probe is preserved at source commit **633fe47**; its SHA-256 agrees with the report.
   A subsequent isolated guard fails explicitly at a sixth foul, including the controlled injected-state
   reproduction, rather than altering the simulated game; it is not a legal foul-penalty implementation.
+- **Chunk A A1 guarded replay:** with the same game, 32-world branch seeds and actual-participant inputs, the
+  guard aborted both branches on their first unsupported sixth foul: plays world **31**, Q3 **649.0 seconds remaining**;
+  sits world **16**, Q3 **246.4 seconds remaining**. No branch forecast or capture was written. These are first failures in the chosen fixed
+  batch, not estimates of severity or actual game behaviour. Report:
+  `analysis/experiments/20261122_chunk_a_a1_branch_guarded.json`. The guard is a fallback, not a model promotion.
+- **22 Nov player-sheet accounting check (presentation only):** in retained simulated game `401910030`, player
+  `3032977` has no field-goal attempts in **2,958/10,000** worlds; the displayed FG% distribution conditions on
+  **7,042/10,000** and displays the no-attempt chance as **29.6%**. The six width/theme checks compare the visible
+  counts and chance to the saved distribution. This demonstrates display accounting, not predictive accuracy.
 - **S02 preparation, downloader integrity:** a network-free mock of three cached games in one season constructed the
   NBA `Store` three times, not once (`fetch_games` evaluates `Store(...)` before `setdefault`). Each construction
   scans and may flush the manifest. In isolated temporary storage, a second store constructed before the owning

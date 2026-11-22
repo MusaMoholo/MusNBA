@@ -7,6 +7,26 @@ Updated **22 November 2026 — Chunk A execution started; A1 contract frozen at 
 - **Current action:** the owner has requested both D42 chunks in order. Chunk A has started at A1; implement and
   verify the isolated one-player branches at rung 20% using the frozen contract below. Do not start Chunk B before
   Chunk A's delivery and checkpoint.
+- **Owner UX requests in progress (22 Nov):** replace the Players fixed 3+/8+ game filter with a season-progress
+  minutes-share benchmark; group player-game FG/3P/FT makes, attempts and shooting-percentage distributions.
+  Percentages condition on at least one attempt and explicitly show the no-attempt chance. Source and focused tests
+  are in the worktree; the affected stored-output contract requires a live nightly, iCloud bundle, Pages shell,
+  import/offline checks and browser inspection before this UX work is delivered. Focused Python **27/27**, Node
+  **2/2**, isolated view browser **19/19** plus **6/6** on a player with no-attempt worlds, and old-bundle isolated
+  PWA **18/18** passed; final normal smoke **108/108** passed after schema-aware legacy replay, and deliberate fault
+  exited **1** with **86/108** checks passing. Logs: `/tmp/musnba_user_ux_final_smoke.log` and
+  `/tmp/musnba_user_ux_fault.log`. Review servers :8767, :8768 and :8769 belong to this session; never touch :8766.
+  The guarded A1 replay sources and JSON are included in this partial checkpoint, not a completed rung.
+- **UX delivery next:** after tests/fault pass, checkpoint source and this in-progress ledger; run
+  `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=8 .venv/bin/python -u scripts/nightly_musnba.py` with a log, no history
+  backfill and no offline/no-rebuild shortcut. Require success before export, verify the newly stored period
+  distributions and their no-attempt accounting, rebuild the data-free shell and run
+  `node analysis/pwa_import_check.mjs --url http://127.0.0.1:8768/MusNBA/ --bundle "$HOME/Library/Mobile Documents/com~apple~CloudDocs/MusNBA/MusNBA.musnba.gz" --require-shooting yes`.
+  Recheck touched pages on :8767, publish only the reviewed shell to `gh-pages`, and record iCloud delivery separately
+  from manual phone import. Then checkpoint before continuing A1's isolated foul-out work.
+- **Doc review:** `DASHBOARD_PLAN`, `ENGINE_PLAN`, `FINDINGS`, `PLAN` and this handoff carry the new behaviour,
+  decision, measurement and live state. `TRAINING_PLAN` is unchanged because no training or selection gate changed;
+  `README` commands and file map are unchanged; `AGENTS.md` standing rules are unchanged.
 - **Progress:** original A1 **58.0%**, S01–S07 complete; S08–S12/S14 open, S13 historical forecast backfill
   deferred. New independent chunk boards: **A 3%** (A1 10%, A2/A3 0%) and **B 0%** (B1/B2/B3 all 0%). Keep
   the original A1 weights intact; new within-chunk weights do not reset or double-count A1.
@@ -36,8 +56,8 @@ Updated **22 November 2026 — Chunk A execution started; A1 contract frozen at 
   AGENTS §5 and PLAN §6c.
 - **Checkpoint orientation:** S07 delivery was **aa21515**; two-chunk planning **2a3155f**; View Centre planning
   **16893d9**. This live-handoff refresh is the subsequent docs-only checkpoint; use `git log -1` for its hash.
-  Earlier chronology below is historical evidence, not the current action list. At this checkpoint no
-  session-owned nightly, backtest, history download or review server is left running.
+  Earlier chronology below is historical evidence, not the current action list. The session-owned review servers
+  and active tests are listed in the current-action entry above; no nightly, backtest or history download is running.
 
 ## Earlier checkpoints and supporting evidence
 
@@ -1862,12 +1882,25 @@ do not resume U1–U22.
    worlds (**548/16,248** fives); team/player points and team minutes reconcile. These are one synthetic
    conditioning example, not a population-wide foul-out rate. An isolated `BranchLegalityGuard` now rejects
    invalid fives and any sixth foul before proceeding, including the reproduced engine defect; it does not
-   implement the legal five-player exception or change production. **24** focused tests pass. Next replay the
+   implement the legal five-player exception or change production. **25** focused tests pass. Next replay the
    fixed F4 branches with this guard and log the explicit outcome, then decide the A1 fallback. A proper repair
    needs the unchanged model gates before allowing production branches; do not claim A1 20% without evidence.
    Sequential normal/fault smoke finished as shell **2864**: **108/108** normal checks passed, and the deliberate
    fault exited **1** with **86/108** passing; logs `/tmp/musnba_a1_probe_{smoke,fault}.log`. No session-owned
    process remains running.
+   **Guarded replay frozen before execution:** repeat the same game, 32-world branches and exact seeds with
+   `--guarded`; retain distinct report and capture paths:
+   `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=8 .venv/bin/python -u scripts/a1_branch_world_probe.py --game 401810327
+   --worlds 32 --guarded --output analysis/experiments/20261122_chunk_a_a1_branch_guarded.json --worlds-dir
+   data/derived/experiments/20261122_chunk_a_a1_branch_guarded`. An unsupported sixth foul must be reported
+   as a failed branch rather than producing a forecast. Original unguarded probe source is checkpoint `a3baeab`.
+   The guarded replay finished as attached shell **2882**, exit **1**; log
+   `/tmp/musnba_chunk_a1_branch_guarded.log`. Both branches stopped explicitly at a sixth foul in Q3, and no
+   forecast or world capture was emitted; report `analysis/experiments/20261122_chunk_a_a1_branch_guarded.json`.
+   **Next:** develop an isolated foul-out-only candidate preserving D29 schedules and normal random streams until
+   a legal substitution is required. Reject unhandled short-roster cases explicitly; do not pretend this is the NBA
+   technical-penalty exception. Independently audit legal fives and score/minute accounting, then test against the
+   frozen player-first control and applicable promotion gates. The guard remains the safe fallback if it fails.
    **Document review:** HANDOFF, PLAN, FINDINGS, ENGINE_PLAN and README record the experiment, guard and next
    action. AGENTS, TRAINING_PLAN and DASHBOARD_PLAN need no change: standing rules, frozen gates and shipped UI
    are unchanged.

@@ -137,6 +137,18 @@ class OnePlayerBranchesTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'unsupported sixth foul for player 0'):
                 eng.simulate(game, 1, 20261122)
 
+    def test_guarded_trace_surfaces_the_same_explicit_failure(self):
+        game = self.game()
+        state = engine.Worlds(game, 1, np.random.default_rng(42))
+        lineup = np.array([[[0, 1, 2, 3, 4], [7, 8, 9, 10, 11]]])
+        trace = a1_branch_world_probe.GuardedTrace()
+        trace.begin(game, 1, np.ones((1, game.n), dtype=bool), 42)
+        trace.before_segment(game, state, np.array([0]), lineup)
+        state.ingame['pf_so_far'][0, 0] = 6
+        off = int(state.off[0])
+        with self.assertRaises(a1_lineup_branches.BranchLegalityError):
+            trace.after_fouls(game, state, np.array([0]), lineup[:, off], lineup[:, 1 - off])
+
 
 if __name__ == '__main__':
     unittest.main()

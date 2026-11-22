@@ -178,7 +178,7 @@ def from_worlds(path: Path, gid: str, sim: dict) -> dict | None:
     full-game distributions the snapshot lacks (FGM, FTM = PTS − 2·FGM − 3PM; OREB/DREB when the worlds carry them) — written
     into the view's copy of the projection so the player sheet shows them for snapshots built before they were packaged."""
     import numpy as np
-    from scripts.projection import summary
+    from scripts.projection import shooting_summaries, summary
     pl = path / 'engine_players.npz'
     if not pl.exists():
         return None
@@ -200,9 +200,13 @@ def from_worlds(path: Path, gid: str, sim: dict) -> dict | None:
             multi[str(x['id'])] = {k: round(float((tens[:, i] >= n).mean()), 5) for k, n in (('double', 2), ('triple', 3), ('quadruple', 4), ('quintuple', 5))}
             multi[str(x['id'])]['five_by_five'] = round(float(np.all([col[k][:, i] >= 5 for k in ('pts', 'reb', 'ast', 'stl', 'blk')], axis=0).mean()), 5)
             fg = x['periods']['fg']
-            for k in ('fgm', 'ftm', 'oreb', 'dreb'):
+            for k in ('fgm', 'ftm', 'oreb', 'dreb', 'fga', 'fg3a', 'fta'):
                 if k not in fg['stats'] and k in col:
                     fg['stats'][k] = summary(col[k][:, i])
+            shooting = shooting_summaries({k: v[:, i] for k, v in col.items()})
+            for k, v in shooting.items():
+                if k not in fg['stats']:
+                    fg['stats'][k] = v
     return multi
 
 

@@ -31,6 +31,7 @@ const CASES = [
   ['game-duels', '#/game/401910009/matchup', ['desktop', 'phone'], ['dark', 'light']],
   ['game-proj', '#/game/401910029', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['sheet', '#/game/401910009/player/3032977', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['sheet-shooting', '#/game/' + (args.shootGame || '401910030') + '/player/' + (args.shootPlayer || '4278053') + '/fg', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['sheet-q1', '#/game/401910019/player/5041935/q1', ['phone'], ['dark']],
   ['future-game', '#/game/' + (args.future || ''), ['phone'], ['dark']],
   ['standings', '#/standings/forecast', ['desktop', 'half', 'phone'], ['dark', 'light']],
@@ -110,6 +111,20 @@ for (const [name, hash, sizes, themes] of CASES) {
       const {result} = await send('Runtime.evaluate', {expression: "document.readyState === 'complete' && !document.querySelector('#view[aria-busy]') && !document.querySelector('#view .loading') && !!document.querySelector('#view > *')", returnByValue: true}, sessionId).catch(() => ({result: {}}));
       ready = result.value === true;
     }
+    let interaction = true;
+    if (name === 'sheet-shooting') {
+      interaction = (await send('Runtime.evaluate', {expression: `(async () => {
+        const button = document.querySelector('[data-stat="fgpct"]');
+        if (!button) return false;
+        button.click();
+        const ui = await import('./assets/ui.mjs'), game = await ui.api('game/' + ${JSON.stringify(args.shootGame || '401910030')});
+        const sim = game.projection.sim, player = [...sim.home.players, ...sim.away.players].find(p => p.id === ${JSON.stringify(args.shootPlayer || '4278053')});
+        const d = player?.periods?.fg?.stats?.fgpct, text = document.querySelector('#stat-block').textContent;
+        return !!d && text.includes('conditional on an attempt')
+          && text.includes('No field-goal attempts in ' + ui.pct((d.total - d.defined) / d.total, 1))
+          && text.includes(d.defined.toLocaleString() + ' of ' + d.total.toLocaleString());
+      })()`, returnByValue: true, awaitPromise: true}, sessionId)).result.value === true;
+    }
     await sleep(250);
     const {result: dims} = await send('Runtime.evaluate', {returnByValue: true, expression: `(() => {
       const wide = [...document.querySelectorAll('body *')].filter(el => { const r = el.getBoundingClientRect(); return r.right > innerWidth + 1 && !el.closest('.scroll') && getComputedStyle(el).position !== 'fixed'; }).slice(0, 5).map(el => el.tagName.toLowerCase() + (el.className ? '.' + String(el.className).split(' ')[0] : ''));
@@ -124,10 +139,10 @@ for (const [name, hash, sizes, themes] of CASES) {
     const expected = EXPECT[name];
     const content = !expected || (await send('Runtime.evaluate', {expression: `document.querySelector('#view').textContent.includes(${JSON.stringify(expected)})`, returnByValue: true}, sessionId)).result.value === true;
     const stacked = !(['team', 'team-no-proj'].includes(name) && size === 'phone') || (await send('Runtime.evaluate', {expression: `(() => { const items = [...document.querySelectorAll('.form-grid > div')]; return items.length < 2 || items[1].getBoundingClientRect().top >= items[0].getBoundingClientRect().bottom - 1; })()`, returnByValue: true}, sessionId)).result.value === true;
-    const ok = ready && content && stacked && !overflow && errors.length === 0;
+    const ok = ready && interaction && content && stacked && !overflow && errors.length === 0;
     if (!ok) failures++;
-    report.push({name, size, theme, ok, ready, content, stacked, overflow, scrollWidth: d.scrollWidth, wide: d.wide, errors});
-    console.log(`${ok ? 'PASS' : 'FAIL'}  ${name.padEnd(14)} ${size.padEnd(7)} ${theme.padEnd(5)} ${ready ? '' : 'not-ready '}${content ? '' : 'wrong-content '}${stacked ? '' : 'not-stacked '}${overflow ? `overflow ${d.scrollWidth}>${d.innerWidth} ${d.wide.join(',')} ` : ''}${errors.length ? 'errors: ' + errors.slice(0, 2).join(' | ') : ''}`);
+    report.push({name, size, theme, ok, ready, interaction, content, stacked, overflow, scrollWidth: d.scrollWidth, wide: d.wide, errors});
+    console.log(`${ok ? 'PASS' : 'FAIL'}  ${name.padEnd(14)} ${size.padEnd(7)} ${theme.padEnd(5)} ${ready ? '' : 'not-ready '}${interaction ? '' : 'interaction-failed '}${content ? '' : 'wrong-content '}${stacked ? '' : 'not-stacked '}${overflow ? `overflow ${d.scrollWidth}>${d.innerWidth} ${d.wide.join(',')} ` : ''}${errors.length ? 'errors: ' + errors.slice(0, 2).join(' | ') : ''}`);
     listeners.splice(listeners.indexOf(onMsg), 1);
     await send('Target.closeTarget', {targetId});
   }

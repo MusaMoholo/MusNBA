@@ -1,0 +1,28 @@
+{
+ "population": "fixed F4 game with actual participants; selected availability is synthetic",
+ "game": "401810327",
+ "model": "folds/v1.2d_F4_all",
+ "guarded": true,
+ "records": [
+  {
+   "branch_id": "lineup-v1:8/4432166=plays",
+   "seed": "9058102881389687176",
+   "worlds": 32,
+   "guard_error": "branch game 401810327 world 31 side 0 period 3 clock 649.0: unsupported sixth foul for player 4432810"
+  },
+  {
+   "branch_id": "lineup-v1:8/4432166=sits",
+   "seed": "14153229437098904587",
+   "worlds": 32,
+   "guard_error": "branch game 401810327 world 16 side 0 period 3 clock 246.4: unsupported sixth foul for player 2596112"
+  }
+ ],
+ "sha256": {
+  "scripts/a1_branch_world_probe.py": "d3db5ac455438da61e57f41878e58966b1517bb984be14f66626d91c730d0b9e",
+  "scripts/a1_lineup_branches.py": "10e2550b61dd9688db52581aec6166ce06548ad64651482f17c0ddc43df5d002",
+  "scripts/engine.py": "b8182363ef11100089ecb1f332daf15efaf19be573586a9a3af5c6a9cbe8a3c7",
+  "scripts/a1_substitution_world_audit.py": "d1f1b34834ffe6c9d82b246cbbaed453c6a4eea224e47da020c6e0f02d3cdf4e",
+  "models/v1.2d.json": "d0fded7eb9871494e0bc4a82a3627b0a3dc37c3c243d8c9378f151dec2789927",
+  "data/models/folds/v1.2d_F4_all/config.json": "1617769cb52f2c750e0f1276071b39fc21254ef53fc97ccc646869aaa50f5e71"
+ }
+}

@@ -38,6 +38,41 @@ def hist_mean(d):
     return sum((d['min'] + i) * c for i, c in enumerate(d['hist'])) / hist_total(d)
 
 
+def player_hist_problems(stats: dict, worlds: int, shooting_schema: bool) -> list[str]:
+    problems = []
+    for key, dist in stats.items():
+        if key not in projection.SHOOTING_PAIRS and hist_total(dist) != worlds:
+            problems.append(f'{key} histogram count')
+    if shooting_schema:
+        for key, (_, attempts) in projection.SHOOTING_PAIRS.items():
+            if attempts not in stats:
+                problems.append(f'{attempts} missing')
+                continue
+            a = stats[attempts]
+            zero = a['hist'][-a['min']] if a['min'] <= 0 < a['min'] + len(a['hist']) else 0
+            defined = worlds - zero
+            d = stats.get(key)
+            if (not defined and d is not None) or (defined and (d is None or d.get('defined') != defined
+                    or d.get('total') != worlds or hist_total(d) != defined
+                    or any(count and not 0 <= d['min'] + i <= 100 for i, count in enumerate(d['hist'])))):
+                problems.append(f'{key} conditional histogram count')
+    return problems
+
+
+def align_legacy_shooting_schema(stored: dict, replay: dict) -> None:
+    if 'shooting_distribution_schema' in stored:
+        return
+    replay.pop('shooting_distribution_schema', None)
+    for side in ('home', 'away'):
+        for player in replay[side]['players']:
+            for period, line in player.get('periods', {}).items():
+                for key in projection.SHOOTING_PAIRS:
+                    line['stats'].pop(key, None)
+                if period != 'fg':
+                    for key in ('fga', 'fg3a', 'fta'):
+                        line['stats'].pop(key, None)
+
+
 def lineup_accuracy_consistent(record: dict) -> bool:
     slates = list(record['slates'].values())
     overall = record.get('overall')
@@ -358,6 +393,8 @@ def main():
                   origin <= day and meta['cutoff'] == day_shift(origin, -1) and season['as_of'] == origin)
         problems = []
         for gid, g in games.items():
+            if g.get('shooting_distribution_schema') not in (None, 1):
+                problems.append(f'{gid} unknown shooting distribution schema')
             for period, x in g['periods'].items():
                 total_p = x['home']['win'] + x['away']['win'] + (0 if period == 'fg' else x['home']['tie'])
                 if abs(total_p - 1) > 1e-3:
@@ -377,8 +414,9 @@ def main():
                         if abs(seconds - 3600) > 30:
                             problems.append(f'{gid} {side} {period} player-seconds {seconds:.0f} (expected 3600)')
                     for p in playing:
-                        if any(hist_total(s) != W for s in p['periods'][period]['stats'].values()):
-                            problems.append(f'{gid} {p["id"]} {period} player hist')
+                        hist_errors = player_hist_problems(p['periods'][period]['stats'], W, g.get('shooting_distribution_schema') == 1)
+                        if hist_errors:
+                            problems.append(f'{gid} {p["id"]} {period} {hist_errors[0]}')
                             break
             fg = g['periods']['fg']
             p_home = sum(c for i, c in enumerate(fg['margin']['hist']) if fg['margin']['min'] + i > 0) / W
@@ -454,6 +492,7 @@ def main():
                     for player in again[side]['players']:
                         player.pop('availability_basis', None)
                 print(f'NOTE  legacy {day} replay checks reproducibility, not origin or report provenance')
+            align_legacy_shooting_schema(stored, again)
             check(f'{day}: stored game {gid} re-simulates bit-for-bit ({meta["model"]["id"]})',
                   json.dumps(again, sort_keys=True) == json.dumps(stored, sort_keys=True))
     else:

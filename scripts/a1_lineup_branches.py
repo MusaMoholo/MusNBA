@@ -8,6 +8,10 @@ import numpy as np
 from scripts import engine, minutes, rotations
 
 
+class BranchLegalityError(ValueError):
+    """A branch cannot be completed safely with the current foul-out rules."""
+
+
 class BranchLegalityGuard:
     """Reject unsupported foul-outs without changing the engine's draws or lineups."""
 
@@ -17,30 +21,30 @@ class BranchLegalityGuard:
 
     def begin(self, g: engine.Game, worlds: int, available: np.ndarray, seed: int) -> None:
         if available.shape != (worlds, g.n) or available.dtype != bool:
-            raise ValueError('branch availability does not match the game worlds')
+            raise BranchLegalityError('branch availability does not match the game worlds')
         for side in range(2):
             if (available[:, g.side == side].sum(axis=1) < 5).any():
-                raise ValueError(f'branch side {side} has fewer than five available players')
+                raise BranchLegalityError(f'branch side {side} has fewer than five available players')
         self.available = available.copy()
 
     def _check(self, g: engine.Game, st: engine.Worlds, active: np.ndarray, lineups: np.ndarray) -> None:
         if lineups.shape != (len(active), 2, 5):
-            raise ValueError('branch lineup dimensions do not match active worlds')
+            raise BranchLegalityError('branch lineup dimensions do not match active worlds')
         outside = ((lineups < 0) | (lineups >= g.n)).any(axis=2)
         if outside.any():
             row, side = np.argwhere(outside)[0]
-            raise ValueError(f'branch game {g.game["game_id"]} world {active[row]} side {side}: invalid five')
+            raise BranchLegalityError(f'branch game {g.game["game_id"]} world {active[row]} side {side}: invalid five')
         invalid = ((np.diff(np.sort(lineups, axis=2), axis=2) == 0).any(axis=2)
                    | (g.side[lineups] != np.arange(2)[None, :, None]).any(axis=2)
                    | (~self.available[active[:, None, None], lineups]).any(axis=2))
         if invalid.any():
             row, side = np.argwhere(invalid)[0]
-            raise ValueError(f'branch game {g.game["game_id"]} world {active[row]} side {side}: invalid five')
+            raise BranchLegalityError(f'branch game {g.game["game_id"]} world {active[row]} side {side}: invalid five')
         fouled = st.ingame['pf_so_far'][active[:, None, None], lineups] >= 6
         if fouled.any():
             row, side, slot = np.argwhere(fouled)[0]
             world = active[row]
-            raise ValueError(
+            raise BranchLegalityError(
                 f'branch game {g.game["game_id"]} world {world} side {side} '
                 f'period {st.period[world]} clock {st.clock[world]:.1f}: '
                 f'unsupported sixth foul for player {g.ids[int(lineups[row, side, slot])]}'
@@ -62,7 +66,7 @@ class BranchLegalityGuard:
 
     def finish(self, g: engine.Game, st: engine.Worlds) -> None:
         if not st.done.all():
-            raise ValueError('branch engine stopped before all worlds completed')
+            raise BranchLegalityError('branch engine stopped before all worlds completed')
 
 
 def one_player(game: engine.Game, team_id: str, player_id: str, plays: bool) -> engine.Game:

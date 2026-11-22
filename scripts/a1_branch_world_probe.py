@@ -58,6 +58,29 @@ class TracePolicy:
         }
 
 
+class GuardedTrace(TracePolicy):
+    def __init__(self) -> None:
+        super().__init__()
+        self.guard = a1_lineup_branches.BranchLegalityGuard()
+
+    def begin(self, g: engine.Game, worlds: int, available: np.ndarray, seed: int) -> None:
+        self.guard.begin(g, worlds, available, seed)
+        super().begin(g, worlds, available, seed)
+
+    def before_segment(self, g: engine.Game, st: engine.Worlds, active: np.ndarray,
+                       scheduled: np.ndarray) -> np.ndarray:
+        self.guard.before_segment(g, st, active, scheduled)
+        return super().before_segment(g, st, active, scheduled)
+
+    def after_fouls(self, g: engine.Game, st: engine.Worlds, active: np.ndarray,
+                    offense: np.ndarray, defense: np.ndarray) -> bool:
+        return self.guard.after_fouls(g, st, active, offense, defense)
+
+    def finish(self, g: engine.Game, st: engine.Worlds) -> None:
+        self.guard.finish(g, st)
+        super().finish(g, st)
+
+
 class CapturedGame(Exception):
     pass
 
@@ -68,6 +91,7 @@ def main() -> None:
     parser.add_argument('--worlds', type=int, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--worlds-dir', type=Path, required=True)
+    parser.add_argument('--guarded', action='store_true')
     args = parser.parse_args()
     if not args.game.isascii() or not args.game.isdigit() or args.worlds < 1:
         raise ValueError('game must be an ASCII-digit ID and worlds must be positive')
@@ -98,14 +122,19 @@ def main() -> None:
             branch_id = f'lineup-v1:{team}/{player}={label}'
             seed = projection.seed_for('lineup-v1', engine.ENGINE['id'], g.day, g.day, args.game, branch_id)
             branch = a1_lineup_branches.one_player(g, team, player, plays)
-            eng.rotation_policy = None
-            simulate(branch, worlds, seed)
+            eng.rotation_policy = a1_lineup_branches.BranchLegalityGuard() if args.guarded else None
+            try:
+                simulate(branch, worlds, seed)
+            except a1_lineup_branches.BranchLegalityError as exc:
+                records.append({'branch_id': branch_id, 'seed': str(seed), 'worlds': worlds,
+                                'guard_error': str(exc)})
+                continue
             reference = eng.last
             expected = {key: value.copy() for key, value in {
                 'score': reference.score, 'pts': reference.pts, 'minutes': reference.minutes,
                 'period': reference.period, **{f'box_{key}': value for key, value in reference.box.items()},
             }.items()}
-            policy = TracePolicy()
+            policy = GuardedTrace() if args.guarded else TracePolicy()
             eng.rotation_policy = policy
             simulate(branch, worlds, seed)
             state = eng.last
@@ -137,12 +166,12 @@ def main() -> None:
              ROOT / 'data/models/folds/v1.2d_F4_all/config.json')
     write_json(args.output, {
         'population': 'fixed F4 game with actual participants; selected availability is synthetic',
-        'game': args.game, 'model': 'folds/v1.2d_F4_all', 'records': records,
+        'game': args.game, 'model': 'folds/v1.2d_F4_all', 'guarded': args.guarded, 'records': records,
         'sha256': {str(path.relative_to(ROOT)): sha256_file(path) for path in paths},
     }, pretty=True)
     for record in records:
-        print(f"{record['branch_id']}: {record.get('audit_error', 'audit passed')}", flush=True)
-    if any('audit_error' in record for record in records):
+        print(f"{record['branch_id']}: {record.get('guard_error', record.get('audit_error', 'audit passed'))}", flush=True)
+    if any('audit_error' in record or 'guard_error' in record for record in records):
         raise SystemExit(1)
 
 

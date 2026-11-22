@@ -13,6 +13,39 @@ from scripts import engine, minutes, projection
 
 
 class ProjectionAvailabilityTests(unittest.TestCase):
+    def test_shooting_distributions_exclude_no_attempts_and_preserve_counts(self):
+        counts = {
+            'fgm': np.array([0, 1, 1, 2]), 'fga': np.array([0, 2, 1, 3]),
+            'fg3m': np.array([0, 0, 1, 0]), 'fg3a': np.array([0, 1, 1, 0]),
+            'ftm': np.zeros(4, dtype=int), 'fta': np.zeros(4, dtype=int),
+        }
+        got = projection.shooting_summaries(counts)
+        self.assertEqual((got['fgpct']['defined'], got['fgpct']['total']), (3, 4))
+        self.assertEqual([got['fgpct']['hist'][n] for n in (50, 67, 100)], [1, 1, 1])
+        self.assertEqual((got['fg3pct']['defined'], got['fg3pct']['hist'][0]), (2, 1))
+        self.assertNotIn('ftpct', got)
+        with self.assertRaisesRegex(ValueError, 'Invalid shooting counts'):
+            projection.shooting_summaries({'fgm': np.array([2]), 'fga': np.array([1])})
+
+    def test_package_saves_period_attempts_and_conditional_percentage_distributions(self):
+        box = {k: np.zeros((2, 1, 5), dtype=np.int64) for k in projection.BOX}
+        box['fgm'][1, 0, 0], box['fga'][1, 0, 0] = 1, 2
+        mins = np.zeros((2, 1, 5))
+        mins[1, 0, 0] = 5
+        player = {'id': 'p', 'name': 'Player', 'pos': 'G', 'jersey': '', 'starter': True,
+                  'status': 'Active', 'injury': None, 'availability': 1, 'base_min': 5}
+        team = {'tid': '1', 'players': [player], 'box': box, 'minutes': mins}
+        scores = {'home': np.zeros((2, 5), dtype=int), 'away': np.zeros((2, 5), dtype=int)}
+        packaged = projection.package({'game_id': 'g'}, {'home': team, 'away': team},
+                                      scores, np.zeros(2, dtype=int), 2, {'mu_home': 0, 'mu_away': 0}, 'test')
+        periods = packaged['home']['players'][0]['periods']
+        for period in ('q1', 'h1', 'fg'):
+            stats = periods[period]['stats']
+            self.assertEqual(stats['fga']['hist'], [1, 0, 1])
+            self.assertEqual((stats['fgpct']['defined'], stats['fgpct']['total']), (1, 2))
+            self.assertEqual(stats['fgpct']['q'][2], 50)
+        self.assertNotIn('fgpct', periods['q2']['stats'])
+
     def setUp(self):
         self.league = {
             'per_game': {k: v for k, v in (
@@ -140,6 +173,15 @@ class ProjectionAvailabilityTests(unittest.TestCase):
                 patch.object(projection, 'team_rates', return_value=rates), \
                 patch.object(projection, 'player_inputs', return_value=roster):
             result = projection.simulate_game(game, {}, {}, {}, {}, '2026-11-22', True, sims=100)
+        result.pop('shooting_distribution_schema')
+        for side in ('home', 'away'):
+            for player in result[side]['players']:
+                for period, line in player.get('periods', {}).items():
+                    for key in ('fgpct', 'fg3pct', 'ftpct'):
+                        line['stats'].pop(key, None)
+                    if period != 'fg':
+                        for key in ('fga', 'fg3a', 'fta'):
+                            line['stats'].pop(key, None)
         payload = json.dumps(result, sort_keys=True, separators=(',', ':')).encode()
         self.assertEqual(hashlib.sha256(payload).hexdigest(),
                          '87a6bb19a59d81bba09899653a5c3e37b9224235123acc9bc2a69acebb211ffe')
