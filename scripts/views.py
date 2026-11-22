@@ -468,7 +468,11 @@ def build(views_root: Path = VIEWS) -> dict:
                                     'ast': x['periods']['fg']['mean']['ast']}
                                    for x in sorted((y for y in p['sim'][side]['players'] if y.get('periods')),
                                                    key=lambda y: -y['periods']['fg']['mean']['pts'])[:1]] for side in ('away', 'home')},
-                'duel': None}
+                'duel': None,
+                # U2: the injury report as the engine used it — out (never plays) and maybes (0 < availability < 1)
+                'report': {side: {'out': [x['name'] for x in p['sim'][side]['players'] if (x.get('availability') or 0) <= 0 or not x.get('periods')],
+                                  'maybe': [x['name'] for x in p['sim'][side]['players'] if 0 < (x.get('availability') or 0) < 1 and x.get('periods')]}
+                           for side in ('away', 'home')}}
 
     def with_duel(gid, summary):
         if summary and summary['leaders'].get('away') and summary['leaders'].get('home'):

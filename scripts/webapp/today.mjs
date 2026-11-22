@@ -52,7 +52,7 @@ export async function render(view, {rest, meta, current}) {
     ${modelNote(slate)}
     ${slateStrip(games, day)}
     ${slate.spotlight ? `<div class="games spot-grid">${slateSpotlight(slate.spotlight, slate.watch)}</div>` : ''}
-    <div class="games">${games.map(card).join('')}</div>`;
+    <div class="games">${games.map(g => card(g, slate.watch?.closest?.game_id)).join('')}</div>`;
   view.querySelectorAll('[data-go]').forEach(b => b.onclick = () => { if (b.dataset.go) location.hash = '#/today/' + b.dataset.go; });
   view.querySelector('input[type=date]').onchange = e => { if (e.target.value) location.hash = '#/today/' + e.target.value; };
 }
@@ -97,7 +97,7 @@ function modelNote(slate) {
   return '';
 }
 
-function card(g) {
+function card(g, closestId) {
   const final = g.status === 'final', live = g.status === 'live';
   const pr = g.proj, tm = g.team_model;
   const pA = pr ? pr.p_away : tm ? 1 - tm.p_home : null, pH = pr ? pr.p_home : tm ? tm.p_home : null;
@@ -121,13 +121,21 @@ function card(g) {
     foot = `<span>Total ${f1(pr.total)}</span><span>${Math.abs(m) < 0.05 ? 'PK' : `${esc(team(fav.id).abbr)} −${Math.abs(m).toFixed(1)}`}</span><span>OT ${pct(pr.ot, 0)}</span>`;
   } else if (tm) foot = '<span>Team-strength estimate</span>';
   else foot = '<span>No projection</span>';
-  const right = live ? `<span class="pill bad">${esc(g.detail)}</span>` : final ? '' : esc(g.tv[0] || '');
+  const right = live ? `<span class="pill bad">${esc(g.detail)}</span>` : final ? '' :
+    `${g.id === closestId ? '<span class="pill accent" title="Highest chance of a finish within 5 on this slate">Closest</span> ' : ''}${esc(g.tv[0] || '')}`;
+  const rep = pr?.report && !final ? ['away', 'home'].map(k => {
+    const r = pr.report[k], ab = esc(team(g[k].id).abbr), bits = [];
+    if (r.out.length) bits.push(`<span class="down" title="${esc(r.out.join(', '))}">out ${r.out.length}</span>`);
+    if (r.maybe.length) bits.push(`<span title="${esc(r.maybe.join(', '))}">maybe ${r.maybe.length}</span>`);
+    return bits.length ? `<span><b>${ab}</b> ${bits.join(' · ')}</span>` : '';
+  }).filter(Boolean).join('') : '';
   return `<a class="game-card" href="#/game/${g.id}" aria-label="${esc(team(g.away.id).name)} at ${esc(team(g.home.id).name)}">
     <div class="when"><span>${esc(t.label)}</span><span>${right}</span></div>
     ${side('away', pA, muA)}${side('home', pH, muH)}
     ${pA != null ? `<div class="winbar" aria-hidden="true"><i class="a" style="width:${(100 * pA).toFixed(1)}%"></i><i class="h" style="width:${(100 * pH).toFixed(1)}%"></i></div>` : ''}
     ${pr?.leaders && !final ? `<div class="leaders">${['away', 'home'].map(k => (pr.leaders[k] || []).map(l => `<span><b>${esc(surname(l.name))}</b> ${f1(l.pts)} pts · ${f1(l.reb)} reb · ${f1(l.ast)} ast</span>`).join('')).join('')}</div>` : ''}
     ${pr?.duel && !final ? (() => { const last = k => esc(surname(pr.leaders[k][0].name)); return `<div class="duel-line" title="Chance each top scorer outscores the other, over the engine's simulated games">Duel: <b>${last('away')}</b> outscores ${pct(pr.duel.p_a, 0)} · <b>${last('home')}</b> ${pct(pr.duel.p_b, 0)} · level ${pct(pr.duel.p_level, 0)}</div>`; })() : ''}
+    ${rep ? `<div class="report-line" title="Injury report as the simulations used it (hover for names)">Report: ${rep}</div>` : ''}
     <div class="foot">${foot}</div></a>`;
 }
 
