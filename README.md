@@ -129,6 +129,7 @@ Dashboard routes: `#/standings/{forecast,seeds,wins,ratings,picture,races,movers
 | `scripts/a1_foul_out_probe.py` | Controlled reproduction of the existing engine's unupdated foul-out mask; research only |
 | `scripts/a1_substitution_in_coverage.py`, `scripts/a1_substitution_in_coverage_audit.py` | Incoming eligibility/position coverage and independent reconciliation; not a current-availability forecast |
 | `scripts/a1_substitution_in_screen.py`, `scripts/a1_substitution_in_screen_audit.py` | Frozen positive-versus-unlabelled incoming ranking screen, explicit-active-roster joint selector and independent accounting; research only |
+| `scripts/a1_substitution_engine_models.py` | Reproduces saved fold-screen scores and builds strictly earlier selected-timeout model/template artifacts for an isolated engine candidate; research only |
 | `scripts/matchups.py` | D30 implicit matchups: soft assignment of defenders to shooters from foul/block credits; shot types from the play text |
 | `scripts/fetch_nbastats.py` | D32 NBA Stats adapter (browser fetch headers, ~1 request/s, resumable): season logs, `boxscorematchupsv3`, tracking defence, play-by-play v3 → `data/raw/nbastats/<endpoint>/<season>/` (gzip + manifest) |
 | `scripts/nbastats.py` | D32 crosswalk (games by date + teams, players by name/stat line), reconciliation v ESPN (points, minutes, possessions), real matchups in ESPN ids → `data/derived/nbastats/` |

@@ -3,12 +3,15 @@ import io
 import json
 import math
 import unittest
+from unittest.mock import patch
 
+import numpy as np
 import pandas as pd
 
 from basketball_common import NBA_TEAM_IDS
 from scripts import (a1_substitution_audit, a1_substitution_dataset, a1_substitution_dataset_audit,
-                     a1_substitution_fold_data, a1_substitution_in_coverage, a1_substitution_in_screen,
+                     a1_substitution_engine_models, a1_substitution_fold_data, a1_substitution_in_coverage,
+                     a1_substitution_in_screen,
                      a1_substitution_in_screen_audit,
                      a1_substitution_opportunities,
                      a1_substitution_out_screen,
@@ -65,6 +68,36 @@ def target_fixture():
                           'date_et': '2025-01-01', 'prior_day': '2024-12-31',
                           'prior_profile_date': pd.Timestamp('2024-12-30'), 'tier': 'bench', 'control_mean': 20.}
                          for player in range(1, 12)])
+
+
+class EngineModelArtifactTests(unittest.TestCase):
+    def test_templates_keep_empty_overtime_periods_and_reject_future_dates(self):
+        windows = pd.DataFrame([
+            {'game_id': '1', 'date_et': '2024-01-01', 'season': 2024, 'window_id': '1:1',
+             'kind': 'timeout', 'period': 1, 'clock': 600.},
+            {'game_id': '1', 'date_et': '2024-01-01', 'season': 2024, 'window_id': '1:2',
+             'kind': 'timeout', 'period': 5, 'clock': 100.},
+            {'game_id': '2', 'date_et': '2024-01-02', 'season': 2024, 'window_id': '2:1',
+             'kind': 'timeout', 'period': 2, 'clock': 500.},
+        ])
+        periods = pd.DataFrame({'game_id': ['1', '2'], 'period': [5, 6]})
+        with patch.object(a1_substitution_engine_models.pd, 'read_parquet', return_value=periods):
+            output, _ = a1_substitution_engine_models.templates(windows, '2024-02-01')
+        self.assertEqual(output['regulation'], [[[1, 120.]], [[2, 220.]]])
+        self.assertEqual(output['overtime'], [[200.], [], []])
+        with self.assertRaisesRegex(ValueError, 'strictly before validation'):
+            a1_substitution_engine_models.templates(windows, '2024-01-02')
+
+    def test_saved_screen_reproduction_requires_identical_keys_and_scores(self):
+        rows = pd.DataFrame([{'window_id': '1', 'team': 'h', 'player': 'p'}])
+        saved = rows.assign(candidate_score=[0.25])
+        self.assertEqual(a1_substitution_engine_models.reproduce(rows, np.array([0.25]), saved,
+                                                                  'candidate_score'), 0)
+        with self.assertRaisesRegex(ValueError, 'differs'):
+            a1_substitution_engine_models.reproduce(rows, np.array([0.26]), saved, 'candidate_score')
+        with self.assertRaisesRegex(ValueError, 'population differs'):
+            a1_substitution_engine_models.reproduce(rows, np.array([0.25]), saved.assign(player='other'),
+                                                     'candidate_score')
 
 
 class SequentialSubstitutionTests(unittest.TestCase):
