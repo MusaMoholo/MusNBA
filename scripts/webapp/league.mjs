@@ -2,7 +2,7 @@
 import {api, dayLabel, esc, f1, heat, histogram, logo, pct, rate, record, seg, signed, statusTag, store, team, teamLink, tipTimes} from './ui.mjs';
 
 const state = {conf: store.get('conf', 'East'), view: store.get('standings-view', 'forecast'), seedMode: 'exact', sort: null, teamTab: 'roster',
-               winsMode: store.get('wins-mode', 'exact'), fWinsN: Number(store.get('f-wins-n', 41)) || 41, fWinsMode: store.get('f-wins-mode', 'atleast'),
+               winsSort: store.get('wins-sort', 'mean'), winsMode: store.get('wins-mode', 'exact'), fWinsN: Number(store.get('f-wins-n', 41)) || 41, fWinsMode: store.get('f-wins-mode', 'atleast'),
                fSeedN: Number(store.get('f-seed-n', 6)) || 6, fSeedMode: store.get('f-seed-mode', 'atleast')};
 
 export async function render(view, ctx) {
@@ -44,6 +44,7 @@ async function standings(view, {meta, current, rest}) {
           <label class="sr" for="fwins-n">Wins</label><input id="fwins-n" type="number" min="0" max="82" step="1" value="${state.fWinsN}" data-fwins></div></div>
         ${state.conf !== 'League' ? `<div class="seg-group"><span class="seg-label">Seed</span><div class="wins-pick">${seg([['atleast', 'Or better'], ['exact', 'Exactly']], state.fSeedMode, 'data-fsmode')}
           <label class="sr" for="fseed-n">Seed</label><input id="fseed-n" type="number" min="1" max="15" step="1" value="${state.fSeedN}" data-fseed></div></div>` : ''}</div>` : ''}
+      ${state.view === 'wins' ? `<div class="controls"><span class="seg-label">Order</span>${seg([['mean', 'Average wins'], ['spread', 'Widest range']], state.winsSort, 'data-wsort')}</div>` : ''}
       ${body}
       <details style="margin-top:12px"><summary class="note" style="cursor:pointer">How the forecast works</summary>
         <p class="note">${data.season_model && data.season_model.kind === 'team-pathway'
@@ -52,6 +53,7 @@ async function standings(view, {meta, current, rest}) {
     view.querySelectorAll('[data-conf]').forEach(b => b.onclick = () => { state.conf = b.dataset.conf; store.set('conf', state.conf); paint(); });
     view.querySelectorAll('[data-view]').forEach(b => b.onclick = () => { state.view = b.dataset.view; store.set('standings-view', state.view); location.replace('#/standings/' + state.view); });
     view.querySelectorAll('[data-seed]').forEach(b => b.onclick = () => { state.seedMode = b.dataset.seed; paint(); });
+    view.querySelectorAll('[data-wsort]').forEach(b => b.onclick = () => { state.winsSort = b.dataset.wsort; store.set('wins-sort', state.winsSort); paint(); });
     view.querySelectorAll('[data-wmode]').forEach(b => b.onclick = () => { state.winsMode = b.dataset.wmode; store.set('wins-mode', state.winsMode); paint(); });
     view.querySelectorAll('[data-fwmode]').forEach(b => b.onclick = () => { state.fWinsMode = b.dataset.fwmode; store.set('f-wins-mode', state.fWinsMode); paint(); });
     view.querySelectorAll('th[data-fsort]').forEach(th => th.onclick = th.onkeydown = e => {
@@ -82,7 +84,8 @@ function winsShare(w, lo, hi) {
 // Wins tab (owner, 20 Nov): the Seeds format for final wins — columns in steps of 5 from high to low; Exactly = that
 // 5-win band (top band open-ended, bottom band everything below), At least = that many wins or more.
 function winsTable(rows) {
-  const ordered = rows.slice().sort((a, b) => b.forecast.mean_w - a.forecast.mean_w || a.abbr.localeCompare(b.abbr));
+  const width = t => t.forecast.wins.q[4] - t.forecast.wins.q[0];
+  const ordered = rows.slice().sort((a, b) => (state.winsSort === 'spread' ? width(b) - width(a) : 0) || b.forecast.mean_w - a.forecast.mean_w || a.abbr.localeCompare(b.abbr));
   const qs = ordered.map(t => t.forecast.wins?.q || [0, 0, 0, 0, 0]);
   const top = Math.min(80, Math.max(45, Math.ceil(Math.max(...qs.map(q => q[4])) / 5) * 5));
   const bottom = Math.max(10, Math.min(35, Math.floor(Math.min(...qs.map(q => q[0])) / 5) * 5));
@@ -90,17 +93,26 @@ function winsTable(rows) {
   for (let k = top; k >= bottom; k -= 5) cuts.push(k);
   const exact = state.winsMode !== 'atleast';
   const label = (k, i) => (exact ? (i === 0 ? `${k}+` : i === cuts.length - 1 ? `≤${k + 4}` : `${k}–${k + 4}`) : `${k}+`);
-  const head = `<tr><th class="name">Team</th><th>Avg</th>${cuts.map((k, i) => `<th class="c">${label(k, i)}</th>`).join('')}</tr>`;
+  const head = `<tr><th class="name">Team</th><th>Avg</th><th class="l">Final wins · 0–82</th><th>Median</th><th>10–90%</th>${cuts.map((k, i) => `<th class="c">${label(k, i)}</th>`).join('')}</tr>`;
   const body = ordered.map(t => {
     const w = t.forecast.wins;
     const cells = cuts.map((k, i) => {
       const p = exact ? (i === 0 ? winsShare(w, k, 999) : i === cuts.length - 1 ? winsShare(w, -1, k + 4) : winsShare(w, k, k + 4)) : winsShare(w, k, 999);
       return heat(p);
     }).join('');
-    return `<tr class="link" data-team="${t.id}"><td class="name">${teamLink(t.id)}</td><td class="dim">${f1(t.forecast.mean_w)}</td>${cells}</tr>`;
+    return `<tr class="link" data-team="${t.id}"><td class="name">${teamLink(t.id)}</td><td class="dim">${f1(t.forecast.mean_w)}</td><td>${miniWins(w)}</td><td>${w.q[2]}</td><td class="dim">${w.q[0]}–${w.q[4]}</td>${cells}</tr>`;
   }).join('');
   return `<div class="scroll"><table><thead>${head}</thead><tbody>${body}</tbody></table></div>
-    <p class="note">${exact ? 'Chance the final win total lands in each 5-win band.' : 'Chance of at least that many wins.'} Final wins over the ${ordered[0]?.forecast.scheduled ?? '—'} scheduled games, from the ${'10,000'} simulated seasons; ordered by average wins.</p>`;
+    <p class="note">${exact ? 'Chance the final win total lands in each 5-win band.' : 'Chance of at least that many wins.'} Final wins over the ${ordered[0]?.forecast.scheduled ?? '—'} scheduled games, from the ${'10,000'} simulated seasons; ordered by ${state.winsSort === 'spread' ? 'width of the 10–90% range' : 'average wins'}. Mini charts share a 0–82 win axis; accent marks the median.</p>`;
+}
+
+function miniWins(w) {
+  if (!w?.hist?.length) return '<span class="dim">—</span>';
+  const max = Math.max(...w.hist, 1), bw = 180 / 83;
+  return `<svg class="mini-wins" viewBox="0 0 180 34" role="img" aria-label="Final wins: median ${w.q[2]}, 10–90 percent ${w.q[0]} to ${w.q[4]}">${w.hist.map((c, i) => {
+    const x = w.min + i, h = c / max * 30;
+    return `<rect x="${(x * bw).toFixed(2)}" y="${(32 - h).toFixed(2)}" width="${(bw - .3).toFixed(2)}" height="${h.toFixed(2)}"><title>${x} wins: ${pct(c / w.hist.reduce((a, b) => a + b, 0))}</title></rect>`;
+  }).join('')}<line x1="${(w.q[2] + .5) * bw}" x2="${(w.q[2] + .5) * bw}" y1="0" y2="34"></line></svg>`;
 }
 
 // Forecast table (owner, 20 Nov): current (W, L, W%, GB, L10, Strk, Net) and projected groups split by a dotted line;

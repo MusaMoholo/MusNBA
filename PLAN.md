@@ -325,3 +325,5 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 - **22 Nov 2026 · U15**: Roster grouped into projected starters, bench, rotation fringe and reported out; season minute bars against next-game projections, minute deltas and injury details. Six size/theme cases passed; desktop/phone screenshots inspected.
 
 - **22 Nov 2026 · U16**: Playoff picture tab: seed 1–10 favourites and alternatives, a unique-team illustrative first-round field and play-in paths; marginal probabilities explicitly distinguished from pairing odds. Six responsive/theme checks passed and screenshots inspected.
+
+- **22 Nov 2026 · U17**: Wins tab adds per-team mini histograms on a shared 0–82 axis, median and 10–90% ranges, and widest-range sorting. Six responsive/theme checks passed; screenshots reviewed.
