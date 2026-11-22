@@ -1,7 +1,7 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 70%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **a90e10e** (A1 70%, precise-time research); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **f89e295** (A1 70%, weighted-grid research); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
@@ -9,6 +9,27 @@ The preceding pushed checkpoint was **a90e10e** (A1 70%, precise-time research);
   without publishing an unvalidated forecast or changing the default production pathway. **Owner's latest stop:
   stop at the end of A1**, checkpoint/push and report gains and limitations; do not start A2, A3 or Chunk B in
   this run. The earlier dashboard house pass was already delivered; no nightly merely for this research checkpoint.
+- **A1 80% period-aware source, research only:** the fixture now preserves all five original player-period boxes
+  and float64 minutes, and checks player/team score identity in each period. Independent capture audits reconcile
+  **35,000,000 / 78,400,000** period-stat values and **2,500,000 / 5,600,000** exact period minutes on the
+  **20k / 40k** one-/two-player worlds. An isolated JS source checks branch weights, assignments, participation,
+  period-to-game totals and period scores; its seven periods' **21** player/team weighted means agree with the
+  separate capture audit for each game. Synthetic tests cover all **9** two-player either/plays/sits selections
+  and corrupt data. Full/partial/empty Given masses and **90** home-point bins still agree with prior independent
+  reports. `analysis/a1_branch_world_source.mjs` and the audit are not connected to the app or bundle.
+  The new fixtures are **90,269,502 / 202,138,676 bytes** raw, **23,633,263 / 47,709,803 bytes** in gzip-6
+  stream probes, not phone bundles. On the 40k fixture, one isolated Node run initially peaked at
+  **2,608,368 KiB**, taking **5.28 s** to decode/validate; bounded decoding then peaked at **835,328 KiB**,
+  taking **0.55 s**, with another audit running concurrently. These are single process samples, not browser,
+  phone, full-dashboard or predictive benchmarks. Outputs: `analysis/experiments/20261122_chunk_a_a1_d47_`
+  `browser_fixture_{one,two}_period_v2_audit.json`, `source_{one,two}_period_v2_audit.json`,
+  `source_{one,two}_period_v3_crosscheck.json`, `source_two_period_v{1,2}_benchmark.json`.
+  A1 remains **70%**, Chunk A **31.5%**. Doc review: HANDOFF/PLAN/FINDINGS record the partial evidence and
+  next work; README maps the new scripts. AGENTS, ENGINE_PLAN and TRAINING_PLAN need no change because standing
+  rules, design decisions and promotion gates are unchanged; DASHBOARD_PLAN needs no change because no UI shipped.
+  Focused Python/JS checks pass; normal smoke **108/108** and deliberate fault **86/108**, exit **1**, logs
+  `/tmp/musnba_a1_period_{smoke,fault}.log`. Existing forecasts, bundles and Pages shell are unchanged;
+  device import remains a separate manual action.
 - **A1 60% research accounting:** a common-interval prototype preserves exact per-game score vectors through
   weighted season paths, without duplicate near-term games. A reproducible independent replay checked all
   **17** near-term game score-vector marginals and per-path scores/wins, **959** game win probabilities, and
@@ -2251,12 +2272,14 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
 1. **A1 80%:** implement/test a gated branch UI only against fully audited isolated fixtures and preserve the
    existing unconditional production fallback; no unvalidated Expected data may be published. Research labels
    must carry through to any view. Check laptop/phone import and offline compatibility before claiming delivery.
-   The ignored two-player fixture and compact audit are recorded above. To rebuild under a new name, run
+   The ignored period-aware two-player fixture and compact audit are recorded above. To rebuild under a new name, run
    `.venv/bin/python analysis/a1_branch_browser_fixture.py analysis/experiments/20261122_chunk_a_a1_d47_10000_two.json --output data/derived/experiments/<new-fixture>.json`,
    then `.venv/bin/python analysis/a1_branch_browser_fixture_audit.py data/derived/experiments/<new-fixture>.json --output analysis/experiments/<new-audit>.json`;
-   never overwrite the existing evidence. The present browser-format fixture only has full-game player lines,
-   not the period-by-period player inputs needed to recalculate every existing period view. Extend and audit the
-   saved-data contract before attempting coherent period-aware UI; do not pretend the fixture already supports it.
+   never overwrite the existing evidence. Period-aware fixtures now have the player-period inputs, but they are
+   not a completed Game Centre contract: wire and test coherent derived summaries, all shared weighted consumers
+   and phone fallback without exposing an unvalidated switch. To compare period summaries with original captures,
+   run `node analysis/a1_branch_period_browser_audit.mjs data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_period_v1.json analysis/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_period_v2_audit.json analysis/experiments/<new-period-crosscheck>.json`.
+   Run `node tests/test_a1_branch_world_source.mjs` for all nine synthetic lineup selections and corruption cases.
    Run `node tests/test_a1_weighted_browser.mjs` for arithmetic edge cases; the real-fixture audit takes the
    fixture, a new audit output, Expected report and one or more matching Given reports, e.g.
    `node analysis/a1_weighted_browser_audit.mjs data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_one_v3.json analysis/experiments/<new-audit>.json analysis/experiments/20261122_chunk_a_a1_d47_expected_one_home_pts.json analysis/experiments/20261122_chunk_a_a1_d47_joint_one_full.json analysis/experiments/20261122_chunk_a_a1_d47_joint_one_empty.json`.

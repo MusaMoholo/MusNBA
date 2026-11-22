@@ -479,6 +479,12 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
   Different policies and streams preclude a matched-state or bias conclusion; neither is promoted. A1 remains **70%**.
 - **22 Nov 2026 · A1 80% grid groundwork:** isolated JS exact-mass grids and correlations agree with independent
   Python on **20k / 40k** research worlds. UI consumers and phone checks remain open; A1 stays **70%**.
+- **22 Nov 2026 · A1 80% period source:** the **20k / 40k** research captures independently reconcile
+  **35.0m / 78.4m** player-period stat values and **2.5m / 5.6m** exact period minutes; **21** weighted
+  player/team period means match a separate JS source for each game. Synthetic selection/corruption tests pass.
+  The larger fixture is **202.1 MB raw / 47.7 MB gzip**; bounded decoding reduced one Node peak from about
+  **2.5 GiB to 0.8 GiB**. These are research measurements, not browser/phone acceptance. UI, integration and
+  promotion remain open; no production model or bundle changed. A1 **70%**, Chunk A **31.5%**.
 - **22 Nov 2026 · dashboard house follow-up:** player box scores now precede game insights; game availability,
   bench, secondary team-roster groups and player game logs expand on demand. **61/61** responsive cases,
   laptop/phone offline **29/29 / 28/28** and laptop shell upgrade **31/31** passed. Startup race fixed in

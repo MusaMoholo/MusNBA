@@ -1,0 +1,48 @@
+{
+  "kind": "isolated browser source period accounting; not a forecast or browser integration",
+  "fixture": "data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_one_period_v1.json",
+  "fixture_sha256": "99d10ce2ac1f5cfbe6f6195262207938e833806a2b3bc070ce1b7414f437a12c",
+  "reference": "analysis/experiments/20261122_chunk_a_a1_d47_browser_fixture_one_period_v2_audit.json",
+  "reference_sha256": "6eef6fe0e5a8bfa38b2a9ed5aec41645ef463a78a7348f3c1f1020901d743dd2",
+  "source_sha256": "80ece1b6df418fed967c8ad5cf88b8049a68a8e51922b709c70024ec7e06d5d5",
+  "audit_sha256": "5f63d4a96bf23234eeb482c88e9bb5b1e85ad66e5457aaad973c37d44eff9410",
+  "worlds": 20000,
+  "player": "4432166",
+  "checks": {
+    "q1": {
+      "minutes": 6.596910374541878,
+      "player_points": 4.67715,
+      "home_points": 28.771
+    },
+    "q2": {
+      "minutes": 6.249152000402273,
+      "player_points": 4.86495,
+      "home_points": 28.59685
+    },
+    "q3": {
+      "minutes": 6.9934461244560095,
+      "player_points": 5.484825,
+      "home_points": 28.470275
+    },
+    "q4": {
+      "minutes": 6.348520749779681,
+      "player_points": 5.102475,
+      "home_points": 27.285275
+    },
+    "h1": {
+      "minutes": 12.84606237494415,
+      "player_points": 9.5421,
+      "home_points": 57.36785
+    },
+    "h2": {
+      "minutes": 13.341966874235743,
+      "player_points": 10.5873,
+      "home_points": 55.75555
+    },
+    "fg": {
+      "minutes": 26.260522874181163,
+      "player_points": 20.195025,
+      "home_points": 113.48955
+    }
+  }
+}

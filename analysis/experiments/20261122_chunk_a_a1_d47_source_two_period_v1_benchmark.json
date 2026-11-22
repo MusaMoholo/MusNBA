@@ -1,0 +1,53 @@
+{
+  "kind": "isolated Node branch source benchmark; not a browser, phone or forecast benchmark",
+  "fixture": "data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_period_v1.json",
+  "fixture_sha256": "01f1d30f7abcfbaa997b197b53f5afc979cc1725c07ac4c3bd47cfb93decee55",
+  "source_sha256": "2baf29ea6904ec654a3b04ee7a92ea5623146ed5bffb518d48483f4420c97f53",
+  "script_sha256": "d6e10c30493b812e5e48184d4124a888ddb7fcaf788c72ed35251b42de802335",
+  "fixture_bytes": 202138676,
+  "worlds": 40000,
+  "player": "3032977",
+  "seconds": {
+    "read_parse": 0.092339041,
+    "load_validate": 5.284225292,
+    "seven_period_summaries": 0.11156779199999983
+  },
+  "max_rss_kb": 2608368,
+  "summaries": {
+    "q1": {
+      "minutes_mean": 6.482749374250169,
+      "player_points_mean": 5.02138125,
+      "home_points_mean": 29.79841875
+    },
+    "q2": {
+      "minutes_mean": 5.662158562937396,
+      "player_points_mean": 5.4273375,
+      "home_points_mean": 29.95074375
+    },
+    "q3": {
+      "minutes_mean": 7.041739530583788,
+      "player_points_mean": 6.29424375,
+      "home_points_mean": 29.9409875
+    },
+    "q4": {
+      "minutes_mean": 4.4182989685667655,
+      "player_points_mean": 4.07499375,
+      "home_points_mean": 28.5009125
+    },
+    "h1": {
+      "minutes_mean": 12.144907937187634,
+      "player_points_mean": 10.44871875,
+      "home_points_mean": 59.7491625
+    },
+    "h2": {
+      "minutes_mean": 11.460038499150626,
+      "player_points_mean": 10.3692375,
+      "home_points_mean": 58.4419
+    },
+    "fg": {
+      "minutes_mean": 23.6494425925884,
+      "player_points_mean": 20.85579375,
+      "home_points_mean": 118.5330875
+    }
+  }
+}

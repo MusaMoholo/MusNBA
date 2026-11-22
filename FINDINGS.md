@@ -2,6 +2,21 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 — research branch player-period source:** the one-/two-selected-player prospective fixtures cover
+**20,000 / 40,000** saved worlds. Independent source-capture replay checked **35,000,000 / 78,400,000**
+player-period stat values and **2,500,000 / 5,600,000** exact float64 period-minute values. Seven periods'
+weighted player minutes, player points and home points (**21** means each) matched a separate JS decoder to
+`1e-10`; full/partial/empty Given masses and all **90** home-points bins still match independent references.
+Synthetic tests cover all nine two-player selections and corruption. The fixtures are **90,269,502 / 202,138,676**
+bytes raw, **23,633,263 / 47,709,803** gzip-6 bytes, not phone or transfer benchmarks. On the 40k sample, one Node
+process's peak RSS was **2,608,368 KiB** and decode/validation **5.28 s** with the original decoder; bounded
+base64 chunks gave **835,328 KiB / 0.55 s** in one rerun while a second audit ran. These are single Node samples,
+not browser, entire-page or phone tests, and neither fixture is a forecast. Reports
+`20261122_chunk_a_a1_d47_browser_fixture_{one,two}_period_v2_audit.json`,
+`20261122_chunk_a_a1_d47_source_{one,two}_period_v2_audit.json`,
+`20261122_chunk_a_a1_d47_source_{one,two}_period_v3_crosscheck.json`, and
+`20261122_chunk_a_a1_d47_source_two_period_v{1,2}_benchmark.json`.
+
 **22 Nov 2026 — experiment-file collision:** adding a weighted-season `.npz` under the retained experiments
 directory caused the smoke test's indiscriminate newest-`.npz` selection to parse it as a node-loss file and fail.
 The loader selection now matches `train.py`'s timestamped run filenames; the accounting tests remain intact.

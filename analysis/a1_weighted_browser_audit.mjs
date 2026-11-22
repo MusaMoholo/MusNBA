@@ -2,7 +2,8 @@
 // Cross-check browser arithmetic against separately reconstructed Python reports.
 import {createHash} from 'node:crypto';
 import {readFileSync, statSync, writeFileSync} from 'node:fs';
-import {branchWeights, distribution, joint} from './a1_weighted_browser.mjs';
+import {distribution, joint} from './a1_weighted_browser.mjs';
+import {branchWorldSource} from './a1_branch_world_source.mjs';
 
 const [fixturePath, output, expectedPath, ...paths] = process.argv.slice(2);
 if (!fixturePath || !output || !expectedPath || !paths.length) throw new Error('Provide fixture, new output, Expected and Given report paths');
@@ -21,34 +22,11 @@ if (!match || controls.some(c => c.given !== controls[0].given || c.event !== 'h
 }
 const playerId = match[1];
 const minimumSeconds = match[2] == null ? null : Number(match[2]);
-const specs = fixture.branches.map(b => ({worlds: b.worlds.worlds, weight: b.weight}));
-const {weights, denominator} = branchWeights(specs);
-const event = new Uint8Array(weights.length), given = new Uint8Array(weights.length);
-const homePoints = new Uint16Array(weights.length);
-const starts = [];
-let offset = 0;
-for (const branch of fixture.branches) {
-  const raw = branch.worlds, player = raw.players.indexOf(playerId);
-  if (player < 0 || raw.players.lastIndexOf(playerId) !== player) throw new Error('Given player missing or duplicated');
-  const points = Buffer.from(raw.team_periods, 'base64'), played = Buffer.from(raw.played, 'base64');
-  const minutes = Buffer.from(raw.minutes_f64_le, 'base64');
-  if (points.length !== raw.worlds * 10 || played.length !== raw.worlds * raw.players.length
-      || minutes.length !== raw.worlds * raw.players.length * 8) throw new Error('Malformed packed worlds');
-  starts.push(offset);
-  for (let w = 0; w < raw.worlds; w++) {
-    let home = 0, away = 0;
-    for (let q = 0; q < 5; q++) {
-      home += points[w * 10 + q];
-      away += points[w * 10 + 5 + q];
-    }
-    homePoints[offset + w] = home;
-    event[offset + w] = home > away ? 1 : 0;
-    const position = w * raw.players.length + player;
-    given[offset + w] = minimumSeconds == null ? played[position]
-      : (minutes.readDoubleLE(position * 8) * 60 >= minimumSeconds ? 1 : 0);
-  }
-  offset += raw.worlds;
-}
+const source = branchWorldSource(fixture), {weights, denominator} = source;
+const homePoints = source.teamPoints('home'), awayPoints = source.teamPoints('away');
+const event = homePoints.map((value, i) => value > awayPoints[i] ? 1 : 0);
+const given = minimumSeconds == null ? source.playerValues(playerId, 'plays')
+  : source.playerValues(playerId, 'min').map(value => value * 60 >= minimumSeconds ? 1 : 0);
 const compare = (num, den, expectedFraction) => {
   if (BigInt(num) * BigInt(expectedFraction.denominator) !== BigInt(den) * BigInt(expectedFraction.numerator)) {
     throw new Error('Exact weighted fraction differs from independent Python report');
@@ -56,13 +34,9 @@ const compare = (num, den, expectedFraction) => {
 };
 const checks = [];
 for (const [index, path] of paths.entries()) {
-  const control = controls[index], selection = new Uint8Array(weights.length);
+  const control = controls[index];
   if (control.game !== fixture.game || control.source_sha256 !== fixture.source_sha256) throw new Error('Joint report source differs');
-  fixture.branches.forEach((b, i) => {
-    const yes = Object.entries(control.lineup_conditions).every(([pid, plays]) =>
-      b.assignments.some(([, id, flag]) => id === pid && flag === plays));
-    if (yes) selection.fill(1, starts[i], starts[i] + b.worlds.worlds);
-  });
+  const selection = source.selection(control.lineup_conditions);
   const actual = joint(weights, event, given, selection), ref = control.result;
   if (actual.status !== ref.status) throw new Error('Conditional status differs');
   compare(actual.eventMass, actual.selected, ref.event);
@@ -80,7 +54,8 @@ dist.histogram.forEach(([value, mass], i) => {
   if (value !== row.value) throw new Error('Histogram values differ');
   compare(mass, dist.defined, row);
 });
-const sources = [fixturePath, ...paths, expectedPath, 'analysis/a1_weighted_browser.mjs', 'analysis/a1_weighted_browser_audit.mjs'];
+const sources = [fixturePath, ...paths, expectedPath, 'analysis/a1_branch_world_source.mjs',
+  'analysis/a1_weighted_browser.mjs', 'analysis/a1_weighted_browser_audit.mjs'];
 writeFileSync(output, JSON.stringify({
   kind: 'isolated browser arithmetic against Python accounting; not a forecast or browser integration',
   source_sha256: Object.fromEntries(sources.map(p => [p, sha(p)])),

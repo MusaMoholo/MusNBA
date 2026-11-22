@@ -1,0 +1,40 @@
+{
+  "kind": "isolated browser arithmetic against Python accounting; not a forecast or browser integration",
+  "source_sha256": {
+    "data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_period_v1.json": "01f1d30f7abcfbaa997b197b53f5afc979cc1725c07ac4c3bd47cfb93decee55",
+    "analysis/experiments/20261122_chunk_a_a1_d47_joint_full_v2.json": "67819cbea6e1d67117db9bbab50e6337d26d4994f840710c8d58708429ca3d3e",
+    "analysis/experiments/20261122_chunk_a_a1_d47_joint_empty_v2.json": "c5889515743d329317cb80229601389ed637237faedcd5cdd2cae7d05cc1a26d",
+    "analysis/experiments/20261122_chunk_a_a1_d47_joint_other_sits_v2.json": "11276a8b7dd084482315d718b66c6efc8ea227ddcd1b33d2be382de98a88da2a",
+    "analysis/experiments/20261122_chunk_a_a1_d47_expected_home_pts.json": "c7010849cbf219edfb2df579cc2ec2c1573f7289fb95c70ef01323bbb9d7fb20",
+    "analysis/a1_branch_world_source.mjs": "2baf29ea6904ec654a3b04ee7a92ea5623146ed5bffb518d48483f4420c97f53",
+    "analysis/a1_weighted_browser.mjs": "ef8f4f357647c109735d69e7065f989b5e36337c7e1303bacf1589d0114d69e3",
+    "analysis/a1_weighted_browser_audit.mjs": "e4f0f641abd20e929b8d8f946ff4891dc15b8bcb954705378a41df15e8618fa4"
+  },
+  "fixture_bytes": 202138676,
+  "worlds": 40000,
+  "denominator": 160000,
+  "joint_checks": [
+    {
+      "report": "analysis/experiments/20261122_chunk_a_a1_d47_joint_full_v2.json",
+      "worlds": 40000,
+      "status": "defined"
+    },
+    {
+      "report": "analysis/experiments/20261122_chunk_a_a1_d47_joint_empty_v2.json",
+      "worlds": 20000,
+      "status": "no matching condition worlds"
+    },
+    {
+      "report": "analysis/experiments/20261122_chunk_a_a1_d47_joint_other_sits_v2.json",
+      "worlds": 20000,
+      "status": "defined"
+    }
+  ],
+  "home_points_bins": 90,
+  "home_points_mean": 118.5330875,
+  "limitations": [
+    "Current dashboard still uses equal-weight consumers.",
+    "Availability assumptions and independence are uncalibrated.",
+    "No phone or UI test is implied."
+  ]
+}

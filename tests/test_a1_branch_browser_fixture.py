@@ -30,9 +30,14 @@ class BranchBrowserFixtureTests(unittest.TestCase):
         played = np.frombuffer(base64.b64decode(packed['played']), dtype=np.uint8).reshape(2, 2)
         minutes = np.frombuffer(base64.b64decode(packed['minutes_f64_le']), dtype='<f8').reshape(2, 2)
         periods = np.frombuffer(base64.b64decode(packed['team_periods']), dtype=np.uint8).reshape(2, 2, 5)
+        player_periods = np.frombuffer(base64.b64decode(packed['period_lines']), dtype=np.uint8).reshape(2, 2, 5, -1)
+        period_minutes = np.frombuffer(base64.b64decode(packed['period_minutes_f64_le']), dtype='<f8').reshape(2, 2, 5)
         self.assertEqual(packed['stats'], list(WORLD_STATS))
         self.assertEqual(lines[0, 0, WORLD_STATS.index('pts')], 3)
         self.assertEqual(periods[0, 0, 0], 3)
+        self.assertEqual(packed['period_stats'], list(WORLD_STATS[1:]))
+        self.assertEqual(player_periods[0, 0, 0, packed['period_stats'].index('pts')], 3)
+        self.assertEqual(period_minutes[0, 1, 0], 0.1)
         self.assertEqual(available[0, 1], 1)
         self.assertEqual(lines[0, 1, WORLD_STATS.index('min')], 0)
         self.assertEqual(played[0, 1], 1)
@@ -50,6 +55,11 @@ class BranchBrowserFixtureTests(unittest.TestCase):
             pack_capture(data)
         data = self.capture()
         data['team_points'][0, 0, 0] += 1
+        with self.assertRaisesRegex(ValueError, 'scores do not reconcile'):
+            pack_capture(data)
+        data = self.capture()
+        data['team_points'][0, 0, 0] -= 1
+        data['team_points'][0, 0, 1] += 1
         with self.assertRaisesRegex(ValueError, 'scores do not reconcile'):
             pack_capture(data)
 

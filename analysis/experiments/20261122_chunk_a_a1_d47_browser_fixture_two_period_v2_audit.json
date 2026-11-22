@@ -1,0 +1,61 @@
+{
+ "kind": "independent research browser fixture accounting; not a forecast",
+ "fixture": "data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_period_v1.json",
+ "fixture_sha256": "01f1d30f7abcfbaa997b197b53f5afc979cc1725c07ac4c3bd47cfb93decee55",
+ "fixture_bytes": 202138676,
+ "source": "analysis/experiments/20261122_chunk_a_a1_d47_10000_two.json",
+ "source_sha256": "20204539755935dbd19a362d98210f9c5831077c2b657f9a8635ff72a00372ce",
+ "audit_sha256": "7883b488b0a067358f8a134831074260c1e0f6c8613393524371e2514373762f",
+ "branches": 4,
+ "worlds": 40000,
+ "player_stat_values": 16800000,
+ "availability_values": 1120000,
+ "played_values": 1120000,
+ "exact_minute_values": 1120000,
+ "team_period_values": 400000,
+ "player_period_stat_values": 78400000,
+ "player_period_exact_minute_values": 5600000,
+ "positive_minutes_rounded_to_zero": 6527,
+ "available_did_not_play": 182738,
+ "threshold_player": "3032977",
+ "threshold_minutes": 30,
+ "exact_vs_rounded_threshold_disagreements": 963,
+ "exact_total_weight": "1",
+ "selected_period_means_from_captures": {
+  "q1": {
+   "minutes": 6.48274937425013,
+   "player_points": 5.021381249999999,
+   "home_points": 29.798418749999996
+  },
+  "q2": {
+   "minutes": 5.662158562937464,
+   "player_points": 5.4273375,
+   "home_points": 29.950743749999997
+  },
+  "q3": {
+   "minutes": 7.041739530583799,
+   "player_points": 6.29424375,
+   "home_points": 29.940987499999995
+  },
+  "q4": {
+   "minutes": 4.418298968566775,
+   "player_points": 4.07499375,
+   "home_points": 28.5009125
+  },
+  "h1": {
+   "minutes": 12.144907937187597,
+   "player_points": 10.44871875,
+   "home_points": 59.749162500000004
+  },
+  "h2": {
+   "minutes": 11.460038499150574,
+   "player_points": 10.3692375,
+   "home_points": 58.441900000000004
+  },
+  "fg": {
+   "minutes": 23.649442592588407,
+   "player_points": 20.85579375,
+   "home_points": 118.5330875
+  }
+ }
+}

@@ -37,20 +37,23 @@ def pack_capture(data: dict[str, np.ndarray]) -> dict:
             or minutes.shape != (worlds, players, 5) or periods.shape != (worlds, 2, 5)):
         raise ValueError('capture roster or world dimensions are invalid')
     box = {}
+    period_box = {}
     for stat in ('pts', 'oreb', 'dreb', 'ast', 'fg3m', 'stl', 'blk', 'tov', 'fgm', 'fga', 'fg3a', 'fta', 'ftm'):
         values = np.asarray(data[f'box_{stat}'])
         if values.shape != minutes.shape or not np.isfinite(values).all() or (values < 0).any():
             raise ValueError(f'capture {stat} has invalid dimensions or values')
+        period_box[stat] = values
         box[stat] = values.sum(axis=2)
     exact_minutes = minutes.sum(axis=2)
     lines = {'min': np.rint(exact_minutes), **box}
     lines['reb'] = lines['oreb'] + lines['dreb']
+    period_box['reb'] = period_box['oreb'] + period_box['dreb']
     if (not np.isfinite(minutes).all() or (minutes < 0).any()
             or (minutes[~available] != 0).any()
             or any((values[~available] != 0).any() for values in box.values())):
         raise ValueError('unavailable players or invalid minutes in capture')
     for team in (0, 1):
-        if not np.array_equal(box['pts'][:, side == team].sum(axis=1), periods[:, team].sum(axis=1)):
+        if not np.array_equal(period_box['pts'][:, side == team].sum(axis=1), periods[:, team]):
             raise ValueError('player and team scores do not reconcile')
     return {
         'worlds': worlds, 'stats': list(views.WORLD_STATS), 'players': list(map(str, ids)),
@@ -60,6 +63,9 @@ def pack_capture(data: dict[str, np.ndarray]) -> dict:
         'availability': packed_bytes(available),
         'played': packed_bytes(exact_minutes > 0),
         'minutes_f64_le': base64.b64encode(np.ascontiguousarray(exact_minutes, dtype='<f8').tobytes()).decode('ascii'),
+        'period_stats': list(views.WORLD_STATS[1:]),
+        'period_lines': packed_bytes(np.stack([period_box[stat] for stat in views.WORLD_STATS[1:]], axis=3)),
+        'period_minutes_f64_le': base64.b64encode(np.ascontiguousarray(minutes, dtype='<f8').tobytes()).decode('ascii'),
         'periods': ['q1', 'q2', 'q3', 'q4', 'ot'],
     }
 
