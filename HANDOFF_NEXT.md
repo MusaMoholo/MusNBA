@@ -11,16 +11,15 @@ Partial source checkpoint **4dce4a3** was pushed before the UX-delivery nightly.
 - **Owner UX requests in progress (22 Nov):** replace the Players fixed 3+/8+ game filter with a season-progress
   minutes-share benchmark; group player-game FG/3P/FT makes, attempts and shooting-percentage distributions.
   Percentages condition on at least one attempt and explicitly show the no-attempt chance. Source and focused tests
-  are in the worktree; the affected stored-output contract requires a live nightly, iCloud bundle, Pages shell,
+  were pushed in `4dce4a3`; the affected stored-output contract requires a live nightly, iCloud bundle, Pages shell,
   import/offline checks and browser inspection before this UX work is delivered. Focused Python **27/27**, Node
   **2/2**, isolated view browser **19/19** plus **6/6** on a player with no-attempt worlds, and old-bundle isolated
   PWA **18/18** passed; final normal smoke **108/108** passed after schema-aware legacy replay, and deliberate fault
   exited **1** with **86/108** checks passing. Logs: `/tmp/musnba_user_ux_final_smoke.log` and
   `/tmp/musnba_user_ux_fault.log`. Review servers :8767, :8768 and :8769 belong to this session; never touch :8766.
   The guarded A1 replay sources and JSON are included in this partial checkpoint, not a completed rung.
-- **UX delivery next:** after tests/fault pass, checkpoint source and this in-progress ledger; run
-  `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=8 .venv/bin/python -u scripts/nightly_musnba.py` with a log, no history
-  backfill and no offline/no-rebuild shortcut. Require success before export, verify the newly stored period
+- **UX delivery next:** the live nightly is already running; do not start a second one. Require success before
+  accepting its export, verify the newly stored period
   distributions and their no-attempt accounting, rebuild the data-free shell and run
   `node analysis/pwa_import_check.mjs --url http://127.0.0.1:8768/MusNBA/ --bundle "$HOME/Library/Mobile Documents/com~apple~CloudDocs/MusNBA/MusNBA.musnba.gz" --require-shooting yes`.
   Recheck touched pages on :8767, publish only the reviewed shell to `gh-pages`, and record iCloud delivery separately
@@ -30,7 +29,7 @@ Partial source checkpoint **4dce4a3** was pushed before the UX-delivery nightly.
   paths. Collection completed with **63 requests, 0 failures, 0 new finals**; NBA Stats had no new requests.
   Input rebuilding completed in **235.2 s**. Read the full result when done. Do not start a second NBA Stats stream. If it fails,
   preserve the previous iCloud bundle and record the precise blocker before retrying. Latest observed progress:
-  **4/17 games** completed as of **2026-11-22T16:57:05Z**, no error; the previous iCloud export remains in place.
+  **6/17 games** completed as of **2026-11-22T17:02:33Z**, no error; the previous iCloud export remains in place.
 - **Independent A2 research:** rung **10%** completed on the fixed S01 F4 control and fingerprinted prior-only
   S05 roles; protocol/source were pushed before scoring (`3ce6dec`/`aac8c92`). Of **4,346** player-games, **26**
   lacked a role join, **12** had unknown roles and **704** more fell below the minutes threshold, leaving **3,604**
@@ -42,23 +41,15 @@ Partial source checkpoint **4dce4a3** was pushed before the UX-delivery nightly.
   passed **107/107** with one bit-for-bit replay skipped because the running nightly rebuilt newer inputs; deliberate
   fault exited **1** (86/107). Repeat full smoke after the nightly finishes. Rung **20%** freezes talent,
   form and shared-factor hypotheses and no-double-count controls in TRAINING_PLAN before any fitting. F4 was
-  already inspected and cannot be called untouched confirmation. Next A2 rung is an isolated, calibrated
-  player-uncertainty candidate only if strictly earlier fitted predictions support an identifiable component;
-  otherwise record the unsupported result. A1 remains 10%.
-- **A2 feasibility preparation:** retained S04 control-shot predictions cover **136,578 F1**, **139,660 F2**
-  and **87,671 F3** validation shots. A source-order check matched game/date/zone/result and found no missing
-  shooter IDs; stronger cache/clock/coordinate and role-cutoff verification is still required. The exact
-  teacher-forced within-game residual screen is frozen in TRAINING_PLAN before measurement; it cannot by itself
-  distinguish persistent talent from nightly or shared form. `scripts/a2_shot_residuals.py` and focused tests
-  implement the frozen checks; after source checkpoint, run
-  `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python scripts/a2_shot_residuals.py`, independently audit
-  its report and record any failure. The first run saved `analysis/experiments/20261122_a2_shot_residuals_f1_f3.json`;
+  already inspected and cannot be called untouched confirmation. A1 remains 10%.
+- **A2 earlier-fold feasibility:** S04 control-shot predictions cover **136,578 F1**, **139,660 F2** and
+  **87,671 F3** validation shots; stronger source/cache clock/coordinate and prior-role checks passed. The first
+  teacher-forced within-game screen saved `analysis/experiments/20261122_a2_shot_residuals_f1_f3.json`;
   an independent ordered-pair audit reproduced all **16** estimates and bootstrap intervals. Its role table covers
   only **200/773 F1**, **200/782 F2** and **195/490 F3** validation games; `_v2.json` makes those exclusions
   explicit and reproduces the first report's estimates exactly. On **595** games / **11,217** player-games, pooled
   shot-residual covariance is **0.001368** (95% **−0.000104 to +0.002874**), inconclusive and unable to identify
-  latent talent/form components. Preserve both reports. A2 remains **20%**; the next task needs distinct
-  cutoff-safe component identification, not an unsupported variance draw. The cross-game persistence feasibility
+  latent talent/form components. Preserve both reports. The cross-game persistence feasibility
   screen and two-way player/game bootstrap are frozen in TRAINING_PLAN. On **595 games / 10,977 player-games**,
   pooled cross-game shot-residual covariance is **−0.000066** (95% **−0.002095 to +0.001786**); F3's star
   cohort has only 29 player-role groups and is insufficient. A separate sparse-matrix reconstruction independently
@@ -66,8 +57,13 @@ Partial source checkpoint **4dce4a3** was pushed before the UX-delivery nightly.
   `analysis/experiments/20261122_a2_shot_persistence_f1_f3.json`. This result is inconclusive, cannot identify
   a talent component and does not justify adding a calibrated draw. A separately frozen synthetic-only draw
   mechanics prototype can test mean preservation and deterministic streams without asserting any fitted variance
-  or changing the engine; its specification is in TRAINING_PLAN. Component identification and the registered
-  gates remain necessary before any candidate is used. No F4 or final-test outcomes entered.
+  or changing the engine; its specification is in TRAINING_PLAN. A2 rung **30%** now has this synthetic-only
+  prototype and tests: the analytical probability mean is unchanged, named streams reproduce across player
+  order/worker slices, and zero strength consumes no draw. At 10,000 synthetic worlds, mean deviations for
+  baseline probabilities 0.5 and 0.9 were **+0.001567 / −0.000420**, respectively; finite samples are not
+  claimed to have exact means. Component identification and registered gates remain necessary before any
+  candidate is used. Next A2 rung: freeze and test shared pace/shooting factors against actual and simulated
+  fold dependence, retaining explicit unsupported results. No F4 or final-test outcomes entered.
 - **Prepared, unpublished Pages shell:** isolated worktree `/tmp/musnba-user-ux-pages`, `gh-pages` at `f2932e1`,
   has only `assets/game.mjs`, `assets/players.mjs` and `sw.js` changed from the reviewed data-free shell
   `614f3061d9dc69a41bc4`. The shell passed **18/18** checks with the previous bundle. Do not publish until the new
@@ -76,7 +72,7 @@ Partial source checkpoint **4dce4a3** was pushed before the UX-delivery nightly.
   this handoff carry the A2 measurement and live state. `TRAINING_PLAN` freezes the A2 descriptive screen without
   changing selection gates; `README` maps the research command; `AGENTS.md` standing rules are unchanged.
 - **Progress:** original A1 **58.0%**, S01–S07 complete; S08–S12/S14 open, S13 historical forecast backfill
-  deferred. New independent chunk boards: **A 10%** (A1 10%, A2 20%, A3 0%) and **B 0%** (B1/B2/B3 all 0%). Keep
+  deferred. New independent chunk boards: **A 13.5%** (A1 10%, A2 30%, A3 0%) and **B 0%** (B1/B2/B3 all 0%). Keep
   the original A1 weights intact; new within-chunk weights do not reset or double-count A1.
 - **Production:** possession engine **v1.3/D29**, team pathway **v1**. S04's two defence candidates did not pass;
   S05's minute candidates did not meet the primary gate. S06's 200-game candidate improved minute CRPS
@@ -1302,7 +1298,7 @@ chunk weights are **separate within-chunk progress measures**, not replacements 
 A1 stays **58.0%**, and S13 remains deferred at 0% (the possible A1 ceiling while deferred is 95%).
 Update the original S08–S12/S14 status only when their original acceptance is met, without crediting work twice.
 Report a chunk bar and each active module at every 10% rung and each 5% overall boundary; long jobs also report
-item counts and measured rates. Current Chunk A progress is **10%**; Chunk B remains **0%**.
+item counts and measured rates. Current Chunk A progress is **13.5%**; Chunk B remains **0%**.
 
 **Shared gates:** use the unchanged player-first, paired fold, seed-noise, uncertainty, non-inferiority, cutoff and
 once-per-version final-test rules in PLAN §6b/TRAINING_PLAN §8. An early chunk can promote a standalone candidate
@@ -1326,8 +1322,8 @@ playback portion of S12, plus a chunk-end delivery; S10/S11/S12/S14 are not ther
 | A2 Form and late-game realism | 35% | S04/S06; A1 for integration | S09's paired player/game gates; retain v1.3 when unsupported or rejected |
 | A3 View Centre and delivery | 35% | A1/A2 decisions | Five labelled selections, reconciled event files and an interactive 2-D court/player in the Game Centre; responsive/offline checks and fresh nightly; no fake logs or completed claim on failure |
 
-**Live board:** Chunk A `██░░░░░░░░░░░░░░░░░░ 10%`; A1 `██░░░░░░░░░░░░░░░░░░ 10%`;
-A2 `████░░░░░░░░░░░░░░░░ 20%`; A3 `░░░░░░░░░░░░░░░░░░░░ 0%`.
+**Live board:** Chunk A `███░░░░░░░░░░░░░░░░░ 13.5%`; A1 `██░░░░░░░░░░░░░░░░░░ 10%`;
+A2 `██████░░░░░░░░░░░░░░ 30%`; A3 `░░░░░░░░░░░░░░░░░░░░ 0%`.
 Original A1 remains 58%; do not double-count the separate board.
 
 **A1 10% frozen branch contract (22 Nov; design, not implemented):**

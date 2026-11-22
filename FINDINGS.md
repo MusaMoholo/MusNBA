@@ -1883,3 +1883,10 @@ minimum, and have no estimate. An independently implemented sparse-matrix audit 
 supported point estimates and bootstrap intervals. Teacher-forced shot selection, model misspecification and
 sustained form can all contribute, so this inconclusive result does not identify a talent posterior or warrant a
 new draw. Report: `analysis/experiments/20261122_a2_shot_persistence_f1_f3.json`; F4 and the final test were not used.
+
+**Synthetic draw mechanics, not an empirical finding:** the prototype's symmetric uniform factor has analytically
+unchanged expected make probability without clipping and preserves 0/1 boundaries. In one reproducible
+**10,000-world** synthetic test, baselines **0.5 / 0.9** with strengths **1.0 / 0.5** had finite-sample mean
+deviations **+0.001567 / −0.000420** and probability ranges **0.2500–0.7499 / 0.8550–0.9450**. Player-order and
+worker-slice reproduction and zero-strength no-draw behavior passed; this is not calibrated to historical data,
+wired into the engine, or a model-accuracy claim.

@@ -451,6 +451,12 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
   shot-residual persistence **−0.000066** (two-way 95% **−0.002095 to +0.001786**). F3 star coverage is
   insufficient. An independent sparse-matrix calculation reproduced all **15** supported estimates and intervals.
   No separately identified talent variance or candidate is claimed; A2 remains **20%** and v1.3 is retained.
+- **22 Nov 2026 · Chunk A A2 30%:** isolated synthetic-only mean-preserving player-effect mechanics with
+  deterministic namespaced streams, zero-draw fallback and valid probability bounds. **9/9** focused A2 tests
+  pass; at **10,000** synthetic worlds the two tested probability means differ by **+0.001567 / −0.000420**
+  from baseline. Normal smoke **107/107** (newer inputs skip one replay); deliberate fault exited **1**.
+  Uniform factors and strengths are arbitrary research fixtures, not a calibrated or wired model. Chunk A
+  **13.5%**, original A1 **58%**; the D44 nightly remains in progress.
 - **19 Nov 2026** — Studied MusSim. Probed sources: ESPN site API works with plain requests; NBA CDN returns 403.
   Owner: app shell first, play-by-play sim later.
 - **19 Nov 2026** — Phase 1 shipped (collection, placeholder engine, snapshots, views, server, app, PWA). Fixed: a
