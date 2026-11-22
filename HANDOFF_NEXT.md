@@ -1351,6 +1351,10 @@ scheduled disqualifications, multiple worlds, unavailable/short rosters, context
 five/score/minute accounting. Before any branch claim, run the same fixed F4 game **401810327**, **32** worlds per
 plays/sits branch and frozen seeds, with independently recorded trace; the active D44 nightly must finish before
 editing `engine.py` or starting this engine replay. A passing probe is wiring evidence, not a promotion gate.
+**Partial implementation:** `scripts/a1_branch_foul_out.py` repairs only illegal fives, returns a world-local
+mask and fails closed on short rosters. **10/10** combined branch/covariance unit tests pass; it is deliberately
+not wired to the engine because its mask hook does not yet exist. Next: finish and verify the D44 nightly and
+delivery, then add the backwards-compatible mask hook and focused world-local context tests before the probe.
 
 | Rung | A1 — lineups and Expected |
 |---:|---|

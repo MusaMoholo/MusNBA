@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 import numpy as np
 
-from scripts import a1_branch_world_probe, a1_foul_out_probe, a1_lineup_branches, engine, minutes
+from scripts import a1_branch_foul_out, a1_branch_world_probe, a1_foul_out_probe, a1_lineup_branches, engine, minutes
 
 
 class OnePlayerBranchesTests(unittest.TestCase):
@@ -148,6 +148,49 @@ class OnePlayerBranchesTests(unittest.TestCase):
         off = int(state.off[0])
         with self.assertRaises(a1_lineup_branches.BranchLegalityError):
             trace.after_fouls(game, state, np.array([0]), lineup[:, off], lineup[:, 1 - off])
+
+    def test_isolated_foul_out_repairs_only_affected_worlds_and_sides(self):
+        game = self.game()
+        state = engine.Worlds(game, 3, np.random.default_rng(42))
+        state.off[:] = [0, 1, 1]
+        state.ingame['pf_so_far'][0, 0] = 6
+        state.ingame['pf_so_far'][2, 7] = 6
+        lineup = np.tile(np.array([[[0, 1, 2, 3, 4], [7, 8, 9, 10, 11]]]), (3, 1, 1))
+        original = lineup.copy()
+        active = np.arange(3)
+        policy = a1_branch_foul_out.BranchFoulOutPolicy()
+        policy.begin(game, 3, np.ones((3, game.n), dtype=bool), 42)
+        offense = lineup[active, state.off].copy()
+        defense = lineup[active, 1 - state.off].copy()
+        changed = policy.after_fouls(game, state, active, offense, defense)
+        np.testing.assert_array_equal(changed, [True, False, True])
+        np.testing.assert_array_equal(offense[1], original[1, 1])
+        np.testing.assert_array_equal(defense[1], original[1, 0])
+        self.assertEqual(offense[0, 0], 5)
+        self.assertEqual(offense[2, 0], 12)
+        np.testing.assert_array_equal(lineup, original)
+        repaired = policy.before_segment(game, state, active, lineup)
+        self.assertEqual(repaired[0, 0, 0], 5)
+        self.assertEqual(repaired[2, 1, 0], 12)
+        self.assertEqual(policy.counts, {'scheduled_replacements': 2, 'foul_out_replacements': 2})
+
+    def test_isolated_foul_out_handles_multiple_replacements_and_fails_short(self):
+        game = self.game()
+        state = engine.Worlds(game, 1, np.random.default_rng(42))
+        lineup = np.array([[[0, 1, 2, 3, 4], [7, 8, 9, 10, 11]]])
+        available = np.ones((1, game.n), dtype=bool)
+        policy = a1_branch_foul_out.BranchFoulOutPolicy()
+        policy.begin(game, 1, available, 42)
+        state.ingame['pf_so_far'][0, :2] = 6
+        repaired = policy.before_segment(game, state, np.array([0]), lineup)
+        np.testing.assert_array_equal(repaired[0, 0], [5, 6, 2, 3, 4])
+        available[0, 6] = False
+        policy.begin(game, 1, available, 42)
+        with self.assertRaisesRegex(a1_lineup_branches.BranchLegalityError, 'fewer than five eligible'):
+            policy.before_segment(game, state, np.array([0]), lineup)
+        lineup[0, 0, 1] = 0
+        with self.assertRaisesRegex(a1_lineup_branches.BranchLegalityError, 'invalid scheduled five'):
+            policy.before_segment(game, state, np.array([0]), lineup)
 
 
 if __name__ == '__main__':

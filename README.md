@@ -148,6 +148,7 @@ Dashboard routes: `#/standings/{forecast,seeds,wins,ratings,picture,races,movers
 | `scripts/a1_availability_spell_sim.py`, `scripts/a1_availability_spell_audit.py` | Research-only, five-game censored recorded-DNP trajectories and independent accounting using earlier-fold play proxies; evaluated, not a physical-absence model |
 | `scripts/a1_availability_starter_sim.py`, `scripts/a1_availability_starter_audit.py` | Research-only per-world starter frequencies for inferred rosters, with independent no-report draws and independent replay/accounting across F1–F4 |
 | `scripts/a1_lineup_branches.py` | Isolated one-player plays/sits game preparation and fail-closed lineup/foul guard; not wired into the nightly or certified for complete games |
+| `scripts/a1_branch_foul_out.py` | Unwired branch-only foul-out repair with world-local change masks and explicit short-roster failure; engine mask hook and full-game audit still pending |
 | `scripts/a1_branch_world_probe.py` | Isolated fixed-F4 branch replay, no-op event-lineup capture and independent world accounting; diagnostic only |
 | `scripts/a2_residual_dependence.py` | Frozen F4 player/team residual covariance diagnostic with role-centred, game-cluster bootstrap intervals; actual-participant research only |
 | `scripts/a1_substitution_world_capture.py`, `scripts/a1_substitution_world_audit.py` | Research-only raw world/lineup capture and independent player-minute, legal-five and score replay; enable with backtest `--audit-substitution-worlds` |
