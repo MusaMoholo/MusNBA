@@ -1,16 +1,20 @@
 // Season insights from retained season counts and cutoff-safe season statistics.
-import {api, dayLabel, esc, f1, heat, pct, seg, store, teamLink} from './ui.mjs';
+import {api, dayLabel, esc, f1, heat, pct, seg, signed, standingsTabs, store, team, teamLink} from './ui.mjs';
 const state = {conf: store.get('season-conf', 'East')};
 export async function render(view, {meta, current, rest}) {
+  const tab = ['races', 'movers', 'leaders'].includes(rest?.[0]) ? rest[0] : 'races';
   const data = await api('standings/' + meta.latest);
+  const moves = tab === 'movers' ? await api('season_movers') : null;
   if (!current()) return;
   const paint = () => {
-    view.innerHTML = `<section class="panel"><h2>Season · the races</h2><p class="note">As of ${esc(dayLabel(data.season_model?.as_of || data.date))} · ${data.sims.toLocaleString()} simulated seasons · only scheduled fixtures included</p>
-      <div class="controls" style="margin-top:12px">${seg([['East', 'East'], ['West', 'West'], ['League', 'League']], state.conf, 'data-season-conf')}</div>
+    view.innerHTML = `<section class="panel"><h2>Standings &amp; season forecast</h2><p class="note">As of ${esc(dayLabel(data.season_model?.as_of || data.date))} · ${data.sims.toLocaleString()} simulated seasons · only scheduled fixtures included</p>
+      <div class="controls" style="margin-top:12px">${seg(standingsTabs, tab, 'data-view')}</div></section>
+      ${tab === 'movers' ? movers(moves, data.teams) : `<section class="panel"><h2>Season races</h2><div class="controls">${seg([['East', 'East'], ['West', 'West'], ['League', 'League']], state.conf, 'data-season-conf')}</div>
       ${raceChart(data.teams.filter(t => state.conf === 'League' || t.conf === state.conf))}</section>
       <div class="season-grid">${['East', 'West'].map(conf => probabilityRace(data.teams.filter(t => t.conf === conf), 'first', conf + ' · #1 seed')).join('')}</div>
       ${probabilityRace(data.teams, 'worst_record', 'The bottom of the standings', true)}
-      <p class="note">Ranges are the 10th–90th percentiles of final wins. Top 6 means a direct playoff place; play-in and playoff rounds are not yet simulated. Ties are broken at random. <a href="#/standings/picture">Open the playoff picture →</a></p>`;
+      <p class="note">Ranges are the 10th–90th percentiles of final wins. Top 6 means a direct playoff place; play-in and playoff rounds are not yet simulated. Ties are broken at random. <a href="#/standings/picture">Open the playoff picture →</a></p>`}`;
+    view.querySelectorAll('[data-view]').forEach(b => b.onclick = () => location.replace('#/standings/' + b.dataset.view));
     view.querySelectorAll('[data-season-conf]').forEach(b => b.onclick = () => { state.conf = b.dataset.seasonConf; store.set('season-conf', state.conf); paint(); });
   };
   paint();
@@ -26,4 +30,14 @@ function probabilityRace(rows, key, title, bottom = false) {
   const sorted = rows.slice().sort((a, b) => b.forecast[key] - a.forecast[key]);
   return `<section class="panel"><h2>${esc(title)}</h2><div class="scroll"><table><thead><tr><th class="name">Team</th><th>Proj W</th><th>${bottom ? 'Worst record' : '#1 seed'}</th>${bottom ? '<th>Bottom 3</th>' : '<th>Top 6</th>'}</tr></thead><tbody>${sorted.slice(0, bottom ? 10 : 6).map(t => `<tr><td class="name">${teamLink(t.id)}</td><td>${f1(t.forecast.mean_w)}</td>${heat(t.forecast[key])}${heat(bottom ? t.forecast.bottom3 : t.forecast.top6)}</tr>`).join('')}</tbody></table></div>
     ${bottom ? '<p class="note">League record ranks, before any draft lottery. Bottom 3 counts exactly three teams per simulated season using the same random tiebreak as the best/worst-record race; older snapshots without these counts show —.</p>' : ''}</section>`;
+}
+
+function movers(data, teams) {
+  if (!data?.from || !data.teams.length) return '<section class="panel"><h2>Movers</h2><p class="note">A previous season forecast with an earlier cutoff and the same model is needed. Tomorrow’s copy of today’s forecast is not a second observation.</p></section>';
+  const changed = data.teams.slice().sort((a, b) => b.delta.mean_w - a.delta.mean_w);
+  const card = (rows, title) => `<section class="panel"><h2>${title}</h2>${rows.slice(0, 5).map(t => `<div class="mover-card">${teamLink(t.id)}<b class="${t.delta.mean_w >= 0 ? 'up' : 'down'}">${signed(t.delta.mean_w)} wins</b></div>`).join('')}</section>`;
+  return `<section class="panel"><h2>Since the previous forecast</h2><p class="note">${esc(dayLabel(data.from))} → ${esc(dayLabel(data.to))} · same season model · ${data.results.length} results in this interval${data.from_kind === 'retrospective' ? ' · previous forecast is retrospective' : ''}. Changes include results, updated inputs and simulation variation; no individual result is assigned a causal contribution.</p></section>
+    <div class="season-grid">${card(changed, 'Biggest risers')}${card(changed.slice().reverse(), 'Biggest fallers')}</div>
+    <section class="panel"><h2>Every team · forecast changes</h2><div class="scroll"><table><thead><tr><th class="name">Team</th><th>Previous W</th><th>Now W</th><th>Δ W</th><th>Δ Top 6</th><th>Δ Play-in</th><th>Δ #1</th></tr></thead><tbody>${changed.map(t => `<tr><td class="name">${teamLink(t.id)}</td><td>${f1(t.before.mean_w)}</td><td>${f1(t.now.mean_w)}</td><td class="${t.delta.mean_w >= 0 ? 'up' : 'down'}">${signed(t.delta.mean_w)}</td>${['top6', 'playin', 'first'].map(k => `<td class="${t.delta[k] >= 0 ? 'up' : 'down'}">${signed(100 * t.delta[k])} pp</td>`).join('')}</tr>`).join('')}</tbody></table></div><p class="note">Top 6 = direct playoff place; Play-in = regular-season seeds 7–10. Probability changes are percentage points.</p></section>
+    <section class="panel"><h2>Results between forecasts</h2>${data.results.length ? `<div class="result-list">${data.results.map(g => `<a href="#/game/${g.id}"><small>${esc(dayLabel(g.date))}</small><span>${esc(team(g.away).abbr)} <b>${g.away_pts}–${g.home_pts}</b> ${esc(team(g.home).abbr)}</span></a>`).join('')}</div>` : '<p class="note">No new results between these cutoffs; any movement comes from inputs or simulated paths.</p>'}</section>`;
 }

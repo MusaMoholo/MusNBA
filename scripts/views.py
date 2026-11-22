@@ -540,6 +540,34 @@ def opponent_history(registry: dict, teams: dict, M, day: str) -> dict:
     return lookup
 
 
+def season_movers(snaps, latest_day, season, master):
+    """Compare distinct season cutoffs, not tomorrow's duplicate of today's season."""
+    cutoff = season.get('as_of', latest_day)
+    previous = None
+    for day in sorted((d for d in snaps if d <= latest_day), reverse=True):
+        old = read_json(snaps[day]['path'] / 'season.json')
+        if old.get('as_of', day) < cutoff and old.get('model') == season.get('model'):
+            previous = (day, old)
+            break
+    if previous is None:
+        return {'from': None, 'to': cutoff, 'teams': [], 'results': []}
+    day, old = previous
+    since = old.get('as_of', day)
+    changes = []
+    for tid, f in season['teams'].items():
+        before = old['teams'].get(tid)
+        if not before:
+            continue
+        keys = ('mean_w', 'top6', 'playin', 'first')
+        changes.append({'id': tid, 'before': {k: before[k] for k in keys}, 'now': {k: f[k] for k in keys},
+                        'delta': {k: round(f[k] - before[k], 4) for k in keys}})
+    results = [{'id': r['game_id'], 'date': r['date_et'], 'home': r['home_id'], 'away': r['away_id'],
+                'home_pts': int(r['home_pts']), 'away_pts': int(r['away_pts'])}
+               for r in master if r['status'] == 'final' and since <= r['date_et'] < cutoff]
+    return {'from': since, 'from_snapshot': day, 'from_kind': snaps[day]['meta']['kind'],
+            'to': cutoff, 'model': season['model'], 'teams': changes, 'results': results}
+
+
 def trend_fields(p: dict | None) -> dict:
     """U13: last-10 per-game averages and the last 10 points totals (games played) for the Players tab's trend column."""
     if not p:
@@ -932,6 +960,8 @@ def build(views_root: Path = VIEWS) -> dict:
             'log': p['log'] if p else [], 'next': nxt_out, 'shots': shot_profiles.get(str(pid)), 'defence': dprof.get(str(pid)),
             'quarters': ([{k: round(Qall[pid][k][q], 1) for k in PERIOD_BOX} | {'games': Qall[pid]['games']} for q in range(4)]
                          if pid in Qall else None)})
+
+    write_json(api / 'season_movers.json', season_movers(snaps, latest_day, season_latest, master))
 
     write_json(api / 'lab.json', lab(latest['meta']['model']))
 

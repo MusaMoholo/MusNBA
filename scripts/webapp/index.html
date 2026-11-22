@@ -121,6 +121,8 @@
   .race-track i{position:absolute;top:50%;transform:translateY(-50%);border-radius:6px;background:var(--accent)}
   .race-band{height:3px;opacity:.6}.race-iqr{height:9px;opacity:.55}.race-track .race-mean{width:8px;height:16px;transform:translate(-50%,-50%)}
   @media(max-width:700px){.season-grid{grid-template-columns:1fr}.race-row{grid-template-columns:65px 1fr 70px;gap:6px;font-size:12px}.race-row small{display:block}.race-axis{grid-template-columns:65px repeat(5,1fr);margin-right:70px}}
+  .mover-card{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:46px;border-top:1px solid var(--line)}
+  .result-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px 20px}.result-list a{display:flex;justify-content:space-between;gap:12px;text-decoration:none;border-top:1px solid var(--line);padding:10px 0}.result-list small{color:var(--dim)}
   /* today */
   .daybar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px}
   .daynav{display:flex;align-items:center;gap:6px}
@@ -410,7 +412,7 @@
   }
   @media (max-width:640px){
     .wrap{padding:max(12px,env(safe-area-inset-top)) max(10px,env(safe-area-inset-right)) 40px max(10px,env(safe-area-inset-left))}
-    .mainnav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+    .mainnav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
     .mainnav a{padding:8px 4px;min-height:var(--tap);font-size:13px}
     .games{grid-template-columns:minmax(0,1fr)}
     .spot-leaders,.spot-leaders.compact{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
@@ -482,7 +484,6 @@
   <nav class="mainnav" aria-label="Main navigation">
     <a href="#/" data-nav="today">Today</a>
     <a href="#/standings" data-nav="standings">Standings</a>
-    <a href="#/season" data-nav="season">Season</a>
     <a href="#/teams" data-nav="teams">Teams</a>
     <a href="#/players" data-nav="players">Players</a>
     <a href="#/lab" data-nav="lab">Lab</a>

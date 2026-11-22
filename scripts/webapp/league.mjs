@@ -1,11 +1,14 @@
 // Standings (season simulation), Teams directory and team pages.
-import {api, dayLabel, esc, f1, heat, histogram, logo, pct, rate, record, seg, signed, statusTag, store, team, teamLink, tipTimes} from './ui.mjs';
+import {api, dayLabel, esc, f1, heat, histogram, logo, pct, rate, record, seg, signed, statusTag, store, standingsTabs, team, teamLink, tipTimes} from './ui.mjs';
+
+import * as season from './season.mjs';
 
 const state = {conf: store.get('conf', 'East'), view: store.get('standings-view', 'forecast'), seedMode: 'exact', sort: null, teamTab: 'roster',
                winsSort: store.get('wins-sort', 'mean'), winsMode: store.get('wins-mode', 'exact'), fWinsN: Number(store.get('f-wins-n', 41)) || 41, fWinsMode: store.get('f-wins-mode', 'atleast'),
                fSeedN: Number(store.get('f-seed-n', 6)) || 6, fSeedMode: store.get('f-seed-mode', 'atleast')};
 
 export async function render(view, ctx) {
+  if (ctx.name === 'standings' && ['races', 'movers', 'leaders'].includes(ctx.rest?.[0])) return season.render(view, ctx);
   if (ctx.name === 'standings') return standings(view, ctx);
   if (ctx.name === 'teams') return directory(view, ctx);
   return teamPage(view, ctx);
@@ -24,7 +27,7 @@ async function standings(view, {meta, current, rest}) {
   if (!current()) return;
   const paint = () => {
     const confs = [['East', 'East'], ['West', 'West'], ['League', 'League']];
-    const views = [['forecast', 'Forecast'], ['seeds', 'Seeds'], ['wins', 'Wins'], ['ratings', 'Ratings'], ['picture', 'Playoff picture']];
+    const views = standingsTabs;
     let rows = data.teams.filter(t => state.conf === 'League' || t.conf === state.conf);
     rows.sort((a, b) => (b.pct ?? 0) - (a.pct ?? 0) || (b.w - a.w) || (b.forecast.mean_w - a.forecast.mean_w) || a.abbr.localeCompare(b.abbr));
     let body;

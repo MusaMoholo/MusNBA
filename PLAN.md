@@ -329,3 +329,5 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 - **22 Nov 2026 · U17**: Wins tab adds per-team mini histograms on a shared 0–82 axis, median and 10–90% ranges, and widest-range sorting. Six responsive/theme checks passed; screenshots reviewed.
 
 - **22 Nov 2026 · U18**: New Season tab: conference/league win-range race, #1 seed races and worst-record race. Bottom-three record counts added to the season simulation (no changes to draws); populated by close-out nightly. Six browser cases passed, screenshots reviewed; Season included in PWA caches/export.
+
+- **22 Nov 2026 · U19**: Movers compares distinct season cutoffs (30 teams; 20→21 Nov, nine results), projected-win and Top 6/play-in/#1 changes, risers/fallers and linked interval results. Races/Movers/Leaders merged under Standings per owner; /season redirects. Six Movers cases and twelve merged-navigation cases passed; screenshots inspected.

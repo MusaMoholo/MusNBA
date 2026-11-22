@@ -187,3 +187,6 @@ export function modelPill(model) {
     ? `<span class="pill good" title="${esc(model.label)}">Engine ${esc(model.version || 'v1')}</span>`
     : `<span class="pill accent" title="${esc(model ? model.label : '')}">Placeholder model</span>`;
 }
+
+// Shared Standings sections: all season insights stay within one destination.
+export const standingsTabs = [['forecast', 'Forecast'], ['seeds', 'Seeds'], ['wins', 'Wins'], ['ratings', 'Ratings'], ['picture', 'Playoff picture'], ['races', 'Races'], ['movers', 'Movers'], ['leaders', 'Leaders']];
