@@ -2,6 +2,75 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 — experiment-file collision:** adding a weighted-season `.npz` under the retained experiments
+directory caused the smoke test's indiscriminate newest-`.npz` selection to parse it as a node-loss file and fail.
+The loader selection now matches `train.py`'s timestamped run filenames; the accounting tests remain intact.
+
+**22 Nov 2026 — weighted conditional accounting:** on one current-origin D47 four-branch capture, independent
+per-world reconstruction matched exact Given and Joint event masses over **40,000** worlds and over **20,000**
+worlds for each of two partial lineup selections. For a home win given player `3032977` has positive minutes,
+the full mixture yields **281/500**; forcing him unavailable gives an empty condition; forcing the other selected
+player unavailable yields **6877/10000**. These figures are uncalibrated research examples, not delivered
+forecasts; availability is not equivalent to positive minutes. Reports
+`20261122_chunk_a_a1_d47_joint_{full,empty,other_sits}_v2.json`.
+
+**22 Nov 2026 — isolated D48 retry pilot:** on fixed development-fold game `401810327` with actual participants
+and synthetic selected availability, three single-world control and three retry outputs passed saved-lineup
+accounting; one **deliberately injected** rejection required a seventh attempt. Every captured array and seed of
+the other two worlds matched exactly. Seven attempts took **3.35 s**, with individual attempts **0.44–0.52 s**
+(one core); this tiny pilot does not establish 10k throughput or real failure rates. In a separate synthetic
+10,000-uniform-draw experiment, rejection of values below 0.05 rejected **495** attempts affecting **472** worlds
+and moved the accepted mean from **0.49810** to **0.52300** (theoretical means **0.500 / 0.525**). This
+demonstrates rejection bias under a known artificial failure rule; it is not an NBA error rate or player/game
+prediction result. Reports `20261122_chunk_a_a1_d48_{isolated_world_probe_v3,synthetic_bias_v2}.json`.
+
+**22 Nov 2026 — artificial five-player D48 stress:** restricting the away side of fixed F4 game `401810327` to
+five players with their original D29 roles failed the branch's 240-minute target validation before simulation.
+Giving those five **synthetic 48-minute roles** allowed a deliberately extreme foul-out stress: **18** typed
+short-roster rejections in **28** attempts yielded **10** audited valid worlds in **12.13 s**. A run capped at
+two rejections stopped on the third and saved its failure reasons. This is not a realistic NBA failure rate or
+an accuracy/bias comparison. Reports `20261122_chunk_a_a1_d48_five_player_{initial_failure,stress10,stress_cap}.json`.
+
+**22 Nov 2026 — isolated browser fixture size and accounting:** on one prospective two-selected-player game,
+four saved 10k branch captures pack to a **24,431,244-byte** uncompressed research JSON, or **8,138,597 bytes**
+in an in-memory gzip-6 probe. This is neither a complete bundle nor a phone transfer benchmark. An independent
+decoder reconciled **16,800,000** player-stat, **1,120,000** availability and **400,000** team-period values;
+branch weights sum exactly to one. Availability and positive minutes remain separate. This does not constitute
+browser integration or model validation. Report `20261122_chunk_a_a1_d47_browser_fixture_two_audit.json`.
+
+**22 Nov 2026 — branch-label coverage:** across the two current-origin D47 10k branch cases, **71** ranked
+player records included **4** prior-only roles and **48** unlisted-active assumptions; all **3** selected
+players had observed roles and usage. Synthetic missing-status/cold-role tests preserve the Unknown status,
+null source, prior role and missing-field labels. The labelled full Expected histogram is identical to the
+unlabelled **40,000**-world result; the labelled season run independently reproduced all **17 / 959 / 30**
+game-marginal / season-game / team-distribution checks. These are research labels, not dashboard delivery,
+availability calibration or a promotion. Relevant reports have suffix `_labelled`.
+
+**22 Nov 2026 — weighted-season accounting, not an accepted forecast:** two current-origin D47 branch mixtures
+plus **15** retained unconditional games gave **122,428** paths (exact denominator **160,000**) at seed
+20261122. An independent replay checked all **17** exact complete period-score-vector marginals and every path's
+engine game scores/wins, **959** season game win probabilities and all **30** teams' exact win histograms and seed
+distributions. The pathway took **6.86 s** and weighted summaries **4.75 s**, maximum RSS **1.68 GB**; the separate
+audit took **12.44 s**. Across **32** seeds, path counts were **103,585–137,572** and effective weighted counts
+**80,914–121,570**. On the **136** near-term game pairs, joint-win covariance ranged **−0.0071245 to +0.00728455**;
+mean absolute covariance averaged **0.001403**, versus **0.001843** for a **10,000** independent-draw reference.
+This only measures Monte Carlo coupling on these inputs, not realistic injury dependence, accuracy or acceptance;
+the reference has its own sampling noise. The 15 unconditional games include games for which eligible branches
+were not captured. The research-only default **200,000** path limit is tested but is not a complete memory bound.
+Reports `20261122_chunk_a_a1_d47_season_{coupling_17_provenance,dependence_17_provenance,audit_17_provenance}.json`
+are in `analysis/experiments/`; detailed pathway results remain ignored in `data/derived/experiments/`.
+
+**22 Nov 2026 — exact D47 Expected research:** on current-origin game `401910030`, independently reconstructed
+home-points distributions for all **40,000** branch worlds and for the **20,000** worlds with player `3032977`
+fixed unavailable, plus the same player's per-world shooting percentage over all branches. All **90 / 88 / 209**
+histogram masses, means, nearest-rank quantiles and undefined probability masses matched exact rational
+reconstruction. The player's FG% is undefined in **1/4** of weighted worlds in this sample; this is a branch
+accounting result, not a forecast or availability-calibration finding. A synthetic counterexample retains the
+exact **1/20,000** probability that cannot be represented by 10,000 equal-weight worlds. A warm-cache
+single-metric CLI calculation including branch validation took **0.55 s**, producing an **8,718-byte** report;
+this is not full-view or nightly runtime. Reports `20261122_chunk_a_a1_d47_expected_{home_pts,home_pts_sits,
+player_fgpct}.json` in `analysis/experiments/`. Season consumption and serving remain unimplemented.
+
 **22 Nov 2026 — D47 quarter-scale pilot:** isolated 32-world branches for current-origin games `401910030`
 (two selected players, four branches) and `401910029` (one selected player, two branches) passed independent
 selection, exact-weight and saved-box checks: **128 / 64** total worlds, **31,989 / 15,949** recorded lineup
@@ -42,6 +111,11 @@ exception remains unsupported. The first 10,000-world branch completed in 163.1 
 `data/derived/experiments/20261122_chunk_a_a1_d46_10000_two_v2/branch-000.npz`, with the complete error in
 `data/derived/experiments/20261122_chunk_a_a1_d46_10000_two_v2/failure.log`; no four-branch manifest exists. This pre-D47 run is wiring evidence,
 not a forecast, promotion or completed A1 40% rung.
+For that game's away team (ID 25), the retained ESPN roster run `20261122T164220Z` has **18** unique players;
+the current registry retains all **18**, with no extras or missing IDs. Seven were marked out, one uncertain and
+ten assumed available. This compares the registry with the retained source, not the source against an official
+game-day active list. Branch repair already uses available, non-disqualified bench players before failing; it
+does not implement the NBA short-roster foul exception.
 
 **22 Nov 2026 — isolated lineup persistence:** for current-origin game `401910029`, three qualifying uncertain
 players produced four non-exhaustive unweighted sensitivities, **10,000** worlds each. Independent auditing

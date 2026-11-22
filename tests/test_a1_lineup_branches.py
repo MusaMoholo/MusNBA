@@ -122,6 +122,21 @@ class OnePlayerBranchesTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'entire origin roster'):
             a1_lineup_branches.select_uncertain(game, registry, latest, inputs)
 
+    def test_unknown_status_and_cold_role_remain_identified(self):
+        game, registry, latest, inputs = self.selection_inputs()
+        registry['100'].update(status=None, status_source=None)
+        game.players['home'][0].update(status='Unknown', availability_basis='unknown_status')
+        inputs['100'].update(status='Unknown', availability_basis='unknown_status')
+        del latest['100']
+        game.P['usage'][0] = np.nan
+        selected, ranking = a1_lineup_branches.select_uncertain(game, registry, latest, inputs)
+        self.assertEqual(selected[0].status, 'Unknown')
+        self.assertIsNone(selected[0].status_source)
+        self.assertEqual(selected[0].availability_basis, 'unknown_status')
+        self.assertEqual(selected[0].role_basis, 'prior')
+        self.assertEqual(selected[0].missing, ('observed_role', 'usage'))
+        self.assertEqual(next(row['role_basis'] for row in ranking if row['player_id'] == '100'), 'prior')
+
     def test_exact_joint_branches_are_order_independent_and_reallocate_together(self):
         game = self.game()
         game.avail[1:3] = [0.3, 0.4]
@@ -376,7 +391,7 @@ class OnePlayerBranchesTests(unittest.TestCase):
         np.testing.assert_array_equal(repaired[0, 0], [5, 6, 2, 3, 4])
         available[0, 6] = False
         policy.begin(game, 1, available, 42)
-        with self.assertRaisesRegex(a1_lineup_branches.BranchLegalityError, 'fewer than five eligible'):
+        with self.assertRaisesRegex(a1_branch_foul_out.ExhaustedEligiblePlayers, 'fewer than five eligible'):
             policy.before_segment(game, state, np.array([0]), lineup)
         lineup[0, 0, 1] = 0
         with self.assertRaisesRegex(a1_lineup_branches.BranchLegalityError, 'invalid scheduled five'):

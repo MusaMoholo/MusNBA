@@ -1,0 +1,13 @@
+{
+ "kind": "artificial five-player roster stress; not an NBA failure-rate estimate",
+ "game": "401810327",
+ "model": "folds/v1.2d_F4_all",
+ "stage": "branch preparation before any simulation",
+ "status": "failed",
+ "reason": "away D29 targets do not form a legal 240-minute allocation",
+ "limitations": [
+  "Roster was deliberately restricted to five players with their original D29 roles.",
+  "No world was simulated and this is not a measured NBA failure rate.",
+  "The later stress probe uses explicitly synthetic 48-minute roles to isolate the foul-out mechanism."
+ ]
+}

@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -32,6 +33,11 @@ def check(name, ok, detail=''):
 
 def hist_total(d):
     return sum(d['hist'])
+
+
+def training_loss_runs(directory: Path) -> list[Path]:
+    return sorted(path for path in directory.glob('*.npz')
+                  if re.fullmatch(r'\d{8}T\d{6}Z_.+\.npz', path.name))
 
 
 def hist_mean(d):
@@ -218,7 +224,7 @@ def main():
         check('team profiles: two rows per reconciled game, no missing style, rest 1-7 days',
               len(teams) == 2 * len(ok_games) and not teams[style].isna().any().any() and teams['rest_days'].between(1, 7).all(),
               {'rows': len(teams), 'games': len(ok_games)})
-    loss_runs = sorted((DERIVED / 'experiments').glob('*.npz'))
+    loss_runs = training_loss_runs(DERIVED / 'experiments')
     if loss_runs:
         import numpy as np
         from scripts import compare

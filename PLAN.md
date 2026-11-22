@@ -1,6 +1,6 @@
 # MusNBA — game plan and progress
 
-Updated **22 November 2026 (S01–S07 complete; Chunk A A1 at 40%, A2 at 30%; View Centre planned, D42–D43)**. The single record of scope, progress and decisions. Every agent updates it at
+Updated **22 November 2026 (S01–S07 complete; Chunk A A1 at 70%, A2 at 30%; View Centre planned, D42–D43)**. The single record of scope, progress and decisions. Every agent updates it at
 every checkpoint (AGENTS.md § Checkpoint protocol). New here? Read [AGENTS.md](AGENTS.md) first, then
 [HANDOFF_NEXT.md](HANDOFF_NEXT.md) — it says exactly what to do next.
 
@@ -133,7 +133,7 @@ remaining gate and next action rather than claim a fitted model is validated.
 
 **D42 split, now authorised for execution in order:** retain S01–S07 as completed and the original A1 weights/ladder below as the
 historical ledger (**58.0%**, S13 deferred). The new separately weighted chunks and their 60 concrete rungs are in
-HANDOFF § Execution; Chunk A A1 is at 40%, and Chunk B has not started. Chunk A targets believable lineup-aware games, shared form and
+HANDOFF § Execution; Chunk A A1 is at 70%, and Chunk B has not started. Chunk A targets believable lineup-aware games, shared form and
 late-game behaviour, plus five saved game examples; Chunk B tests a new player/lineup-defence mechanism, legal
 foul-outs, season calibration and integrated confirmation, and adds rotation visibility. Each has a fresh final
 nightly and a useful shipped dashboard improvement if no model passes the unchanged gate. Chunk A can promote an
@@ -438,10 +438,32 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
   prospective candidate consistently across selected and other uncertain players; retain the unrounded
   assumptions and sources, preserve uncertain endpoints, and do not claim calibration or change serving before
   its gates. The interrupted pre-D47 capture is wiring evidence.
+- **22 Nov 2026 · D48:** owner proposed generally replacing isolated random-world failures until 10,000 valid
+  worlds exist. Test deterministic isolation, counted/capped retries and conditional-sampling bias against the
+  S06 foul-penalty candidate; missing/corrupt inputs, cutoff/accounting defects and unknown or systematic failures
+  still fail. No player is silently reactivated and no production behaviour changed.
 - **22 Nov 2026 · Chunk A A1 40%:** isolated D47 one-/two-player cases completed **20,000 / 40,000** worlds,
   exact weights and independent saved-world accounting; four/eight-thread replays matched every array and
   capture hash. **77** focused tests, smoke **108/108**, deliberate fault **86/108**. A prior 10k short-roster
   failure remains explicit; no candidate or bundle promoted. Chunk A **22.5%**; next is exact Expected mixtures.
+- **22 Nov 2026 · Chunk A A1 50%:** isolated exact mixtures independently reconcile **40k / 20k / 40k** saved
+  worlds and **90 / 88 / 209** bins; the **1/20,000** counterexample and per-world undefined rates are preserved.
+  **32** focused tests pass. No model/bundle changed; Chunk A **25.5%**, next is the exact season identity.
+- **22 Nov 2026 · Chunk A A1 60%:** independent replay verified **17** complete score-vector marginals and
+  per-path results, **959** game win probabilities and **30** teams' win/seed distributions over **122,428**
+  weighted paths. Only two games use mixtures; 15 use unconditional inputs. Across **32** seeds, 136-pair
+  win-covariance deviations ranged **−0.00712 to +0.00728**; dependence is not validated. Existing pathway and
+  served forecasts remain unchanged; Chunk A **28.5%**, next is explicit status/dependence/cold-roster handling.
+- **22 Nov 2026 · Chunk A A1 70%:** research Expected and season reports retain status/source, prior-role,
+  missing-field and uncalibrated-independence labels; **33** focused tests pass. Across the two captured games,
+  **4/71** ranked records used prior roles and **48/71** were unlisted-active assumptions. Replayed labelled
+  output preserved all 17-game accounting; no dashboard, forecast or bundle changed. Chunk A **31.5%**.
+- **22 Nov 2026 · Chunk A A1 80% partial:** an isolated browser-format branch fixture independently reconciled
+  **40,000** worlds and **16.8 million** player-stat values, with availability separate from minutes and exact
+  weights. Its uncompressed size is **24.4 MB** for one two-player game; no app or phone compatibility is yet
+  claimed. Artificial five-player retry stress required **28** attempts for **10** audited worlds; caps stopped
+  a separate run. This deliberately extreme setup is not an NBA rate. Smoke **108/108**, deliberate fault
+  **86/108**; no production model or bundle changed. A1 remains **70%**, Chunk A **31.5%**.
 - **22 Nov 2026 · dashboard house follow-up:** player box scores now precede game insights; game availability,
   bench, secondary team-roster groups and player game logs expand on demand. **61/61** responsive cases,
   laptop/phone offline **29/29 / 28/28** and laptop shell upgrade **31/31** passed. Startup race fixed in

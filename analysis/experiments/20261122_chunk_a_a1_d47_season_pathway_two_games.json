@@ -1,0 +1,29 @@
+{
+ "kind": "isolated weighted season accounting; only two engine games supplied, not a forecast or score",
+ "origin": "2026-11-22",
+ "schedule_games": 959,
+ "paths": 55037,
+ "denominator": "160000",
+ "elapsed_seconds": 2.685,
+ "engine_games": [
+  {
+   "game": "401910029",
+   "home_win": {
+    "numerator": "2073",
+    "denominator": "5000"
+   },
+   "matched_paths": 55037
+  },
+  {
+   "game": "401910030",
+   "home_win": {
+    "numerator": "1671",
+    "denominator": "3200"
+   },
+   "matched_paths": 55037
+  }
+ ],
+ "source": "data/derived/experiments/20261122_chunk_a_a1_d47_season_coupling_two_games.npz",
+ "source_sha256": "be32e6617d1bd21eee6a0e8fff7143e47b8b90a83f0feb2c468ee24ee26e49eb",
+ "limitation": "all remaining games, including other near-term games, use the unmodified team pathway"
+}

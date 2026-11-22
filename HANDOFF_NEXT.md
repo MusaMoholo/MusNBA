@@ -1,17 +1,100 @@
 # Handoff — state and next actions
 
-Updated **22 November 2026 — Chunk A A1 at 40%, A2 at 30%; S01–S07 remain complete**.
-Latest pushed source before D46 implementation: **368a1de**; use `git log -1` for the current checkpoint.
+Updated **22 November 2026 — Chunk A A1 at 70%, A2 at 30%; S01–S07 remain complete**.
+The preceding pushed checkpoint was **18dac6d** (A1 40%); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
-- **Current action:** checkpoint A1 40% evidence, then start exact weighted Expected distributions at rung 50%.
-  Do not start Chunk B before Chunk A's
-  delivery and checkpoint. The owner
-  also requests a broader dashboard house-design pass: make supported information accessible and interactive
-  without overcrowding, prioritise essential game/player signals and group secondary details into collapsible
-  views. Integrate this alongside the authorised chunks; use supported data only, without presenting extremes as
-  typical. No nightly yet for presentation work; the next normal nightly rebuilds these summaries.
+- **Current action:** continue A1 80%: evaluate gated local/laptop branch UI and phone Expected-only compatibility
+  without publishing an unvalidated forecast or changing the default production pathway. **Owner's latest stop:
+  stop at the end of A1**, checkpoint/push and report gains and limitations; do not start A2, A3 or Chunk B in
+  this run. The earlier dashboard house pass was already delivered; no nightly merely for this research checkpoint.
+- **A1 60% research accounting:** a common-interval prototype preserves exact per-game score vectors through
+  weighted season paths, without duplicate near-term games. A reproducible independent replay checked all
+  **17** near-term game score-vector marginals and per-path scores/wins, **959** game win probabilities, and
+  **30** teams' full win/seed distributions. Two games use branch mixtures; the other **15** use retained
+  unconditional worlds, including games that could require branches. It is not complete branch integration.
+  At seed 20261122, **122,428** weighted paths with denominator **160,000** took **6.86 s** in the team pathway
+  plus **4.75 s** for weighted summaries (1.68 GB maximum RSS in this run); the independent replay took **12.44 s**.
+  Across **32** seeds and **136** game pairs, joint-win covariance ranged **−0.0071245 to +0.00728455**;
+  mean absolute covariance averaged **0.001403**, versus **0.001843** for a separate 10,000-independent-draw
+  reference. This comparison does not establish realistic predictive dependence or accept the method. A research
+  **200,000-path** default limit fails explicitly before coupled score arrays are built, but is not a full memory
+  guarantee. Preserve the existing production pathway. Reports
+  `analysis/experiments/20261122_chunk_a_a1_d47_season_{coupling_17_provenance,dependence_17_provenance,audit_17_provenance}.json`;
+  full weighted results remain ignored in `data/derived/experiments/20261122_chunk_a_a1_d47_season_pathway_17_mixed.json`;
+  the committed audit is a compact summary.
+  Earlier `_mixed`, `_bounded` and `_labelled` runs predate final helper hashes; use `_provenance` for current
+  source-hashed reproduction. No model, snapshot, bundle or shell changed.
+- **A1 70% research labels:** weighted Expected reports now retain selected players' status/source, role basis,
+  missing fields and uncalibrated weight assumptions. Season coupling also retains these assumptions and explicitly
+  labels unvalidated within-/across-game dependence and unconditional inputs. Synthetic missing-status and
+  cold-role cases retain `Unknown`, null source and prior/missing labels; short rosters already fail explicitly.
+  The two 10k branch cases had **71** ranked player records, **4** prior roles, and **48** unlisted-active
+  assumptions; their **3** selected players had no missing role/usage fields. This is coverage, not calibrated
+  health. **33** focused tests pass; the 40k-world labelled Expected distribution equals the prior report exactly.
+  The re-run source-hashed labelled coupling reproduced **17** marginal/per-path, **959** game and **30** team
+  identities; its 32-seed dependence report reproduced the research comparison. Reports use suffix `_labelled`.
+  Labels are in research outputs, **not yet in the dashboard**; no production model or bundle changed.
+- **A1 80% partial accounting:** the isolated `weighted_joint` computes exact event, Given and intersection
+  probability masses from the same weighted branch worlds and returns an explicit empty-condition state.
+  Independent reconstructions of the four-branch sample (**40,000** worlds) and two partial lineup selections
+  (**20,000** worlds each) matched every rational probability. For the sample home-win event given positive
+  minutes by player `3032977`, the full mixture yielded **281/500**; fixing him unavailable produced an empty
+  condition, while fixing the other selected player unavailable yielded **6877/10000**. These are isolated
+  accounting examples, not current delivered forecasts. Branch availability and positive minutes remain
+  different conditions. Reports `analysis/experiments/20261122_chunk_a_a1_d47_joint_{full,empty,other_sits}_v2.json`.
+  The shared UI still counts equally weighted worlds and the 80% rung remains open.
+- **A1 80% isolated browser fixture:** `analysis/a1_branch_browser_fixture.py` packs independently audited branch
+  captures into existing browser column order, carrying exact branch weights, assignments, status/source labels
+  and explicit per-world availability separately from rounded minutes. It rejects unrepresentable bytes instead
+  of clipping. The saved four-branch fixture has **40,000** worlds and is ignored at
+  `data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_two.json`; the independent decoder
+  `analysis/a1_branch_browser_fixture_audit.py` reconciled **16,800,000** player-stat values, **1,120,000**
+  availability values and **400,000** team-period values, with exact weight sum **1**. The fixture is
+  **24,431,244 bytes** uncompressed; an in-memory gzip-6 size probe was **8,138,597 bytes**, not a transfer or
+  phone benchmark. This is an experimental data contract, **not** wired to the app or bundle; it does not by
+  itself satisfy 80%. **76** targeted tests pass; final normal smoke **108/108** (`/tmp/musnba_a1_fixture_smoke.log`),
+  deliberate fault **86/108** with exit **1** (`/tmp/musnba_a1_70_fault_v3.log`). Report
+  `analysis/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_audit.json`.
+- **Smoke integration:** newly retained weighted-season `.npz` files exposed that smoke previously treated every
+  root experiment `.npz` as a training-loss file. Smoke now selects the timestamped filenames written by
+  `train.py`; a focused regression test includes both a loss file and an unrelated season array. No accounting
+  check was disabled. After the fix, normal smoke passed **108/108** and deliberate fault exited **1** with
+  **86/108** checks passing, logs `/tmp/musnba_a1_70_smoke_v2.log` and `/tmp/musnba_a1_70_fault_v3.log`.
+- **D48 partial retry research, not a rung or production change:** `scripts/a1_world_retry.py` runs independently
+  seeded, single-world callbacks, catches only explicitly classified recoverable failures, records attempt seeds
+  and reasons, and enforces both per-world and total rejection caps. The branch-only repair now raises the specific
+  `ExhaustedEligiblePlayers` type only when fewer than five players remain after foul-outs; ordinary roster, input,
+  accounting and unknown errors are not classified as retryable. The coordinator is **not wired to the engine or
+  nightly**. In fixed development-fold game `401810327`, a deliberately injected post-audit rejection produced
+  three accepted worlds in seven attempts across control+retry; all arrays and seeds of the two unaffected worlds
+  were identical. Seven single-world attempts took **3.35 s** combined (0.44–0.52 s each); this small pilot does
+  not establish 10k runtime. A 10,000-draw synthetic example rejected **495** attempts affecting **472** worlds
+  and shifted the mean **0.49810 → 0.52300** (theoretical **0.500 → 0.525**), demonstrating conditional-sampling
+  bias, **not an NBA failure rate or forecast bias**. Current source-hashed reports
+  `analysis/experiments/20261122_chunk_a_a1_d48_{isolated_world_probe_v3,synthetic_bias_v2}.json`.
+  Before any use: prove real failure classification/isolation and audited persisted outputs at scale; measure
+  observed rejection rates and bias on earlier folds; compare against the existing S06 penalty candidate with
+  policy differences disclosed; validate retry limits and runtime. Do not mask input/system failures.
+- **D48 artificial short-roster stress:** the first five-player preparation with original D29 roles failed its
+  240-minute legality check before simulation; this is the known allocator limitation, not a world to retry.
+  With the five retained players given explicitly synthetic 48-minute roles, actual simulated foul-outs produced
+  **18** specifically classified rejections in **28** attempts for **10** independently audited valid worlds;
+  **12.13 s** elapsed. A second run with a maximum of two rejections stopped on the third rejection and retained
+  its reasons. This deliberately extreme **18/28** rate is not an NBA estimate; frequent failures must stop rather
+  than be hidden in production. Reports `analysis/experiments/20261122_chunk_a_a1_d48_five_player_{initial_failure,
+  stress10,stress_cap}.json`. The existing S06 foul-penalty comparison and predictive bias remain open.
+- **Existing S06 comparison context:** its alternative player-foul-penalty rule retained an otherwise-disqualified
+  player and recorded a technical in the earlier eight-player F4 failure. Its **200-game** fixed screen improved
+  pooled minutes CRPS **3.5662 → 3.5309** but established only **66/69** non-inferiority bounds, so it was not
+  promoted. This selected-timeout policy differs from D29 branch repair, and no matched retry-versus-penalty bias
+  comparison has been run. See FINDINGS S06; do not treat the two as the same simulation policy.
+- **Research checkpoint doc review:** HANDOFF and PLAN record progress and stop point; ENGINE_PLAN and
+  TRAINING_PLAN record D48 and its gates; FINDINGS records observations and limits; README maps the research
+  scripts. AGENTS needs no change because standing rules are unchanged; DASHBOARD_PLAN needs no change because
+  the isolated fixture is not served or shipped. The production engine, snapshot, bundle and Pages shell remain
+  unchanged; the previous iCloud bundle still requires manual phone import.
 - **D47 owner clarification:** candidate prospective lineup certainty uses 0/25/50/75/100%, mapping to nearest
   quarter with halfway ties up and preserving uncertain values inside 25–75%. This applies consistently to
   selected weights and other per-world availability draws; original inputs/sources remain recorded. Probable's
@@ -42,6 +125,15 @@ Latest pushed source before D46 implementation: **368a1de**; use `git log -1` fo
   D47 and its gates; FINDINGS records measured evidence and the failed pre-D47 case; DASHBOARD_PLAN records the
   planned weighted Given/Joint design; README maps the research scripts. AGENTS needs no change because standing
   rules are unchanged. No nightly, bundle, shell or served model changed.
+- **A1 50%:** `scripts/a1_expected.py` forms exact-weight empirical distributions from every audited branch world,
+  including either/plays/sits marginalisation and undefined shooting denominators. **32** focused branch and
+  mixture tests pass, including the **1/20,000** indivisibility counterexample. Independent reconstruction of
+  game `401910030` checked full/one-player-conditioned home points and player FG%: **40,000 / 20,000 / 40,000**
+  worlds, **90 / 88 / 209** exact histogram bins, means, quantiles and missing masses. The full team-points CLI
+  took **0.55 s** warm-cache, report **8,718 bytes**, not a full pipeline benchmark. Experiment reports are
+  `analysis/experiments/20261122_chunk_a_a1_d47_expected_{home_pts,home_pts_sits,player_fgpct}.json`.
+  This is isolated accounting, not an accepted forecast. Season identity, foul exception, dashboard and promotion
+  remain open. No model, snapshot, bundle or shell changed.
 - **Dashboard house follow-up:** game player pages put box scores first, with a shortcut to player insights;
   availability and each bench are expandable. Team rosters collapse bench, fringe, no-projection and out groups,
   keeping starters visible. Player game logs also expand on demand. Expanded game sections survive mode changes;
@@ -104,7 +196,19 @@ Latest pushed source before D46 implementation: **368a1de**; use `git log -1` fo
   `data/derived/experiments/20261122_chunk_a_a1_d46_10000_two_v2/failure.log` (also in
   `/tmp/musnba_a1_d46_10000_two_v2.log`). No complete manifest was written. This is the explicitly unsupported
   NBA short-roster exception, not a successful capture. Preserve both artifacts and do not silently activate
-  an illegal player; the later D47 representative case passed, but the general limitation remains.
+  an illegal player; the later D47 representative case passed, but the general limitation remains. On the failed
+  team's retained source roster all **18/18** unique players reached the registry (seven out, one uncertain,
+  ten assumed available). This does not independently establish official active-list completeness. The owner
+  asked about bench depth: the policy already substitutes eligible bench players; investigate source coverage
+  and reuse/test the existing S06 foul-penalty candidate rather than inventing additional players.
+- **D48 owner fallback proposal:** generally replace explicitly identified world-local recoverable failures until
+  10,000 valid worlds remain, counting rejected attempts/reasons and capping retries. Missing/corrupt input,
+  cutoff/accounting violations, unknown exceptions and systematic failures must still stop immediately. No
+  production implementation or promotion yet. The engine
+  uses shared vectorised random streams and currently aborts the batch, so first isolate individual invalid worlds
+  and prove deterministic replacement without changing survivors. Rejection is conditional sampling and can bias
+  forecasts; measure the failure rate/effect, compare with the isolated S06 foul-penalty rule and keep explicit
+  failure for frequent errors. Do not silently reactivate unavailable players or claim the NBA exception is solved.
 - **Dashboard house pass:** Today puts games first with a shortcut to the still-accessible slate insights. Players
   keeps its table visible and movers expandable; player pages prioritise the next forecast and collapse opponent
   history and advanced rates. Game-player sheets put conditional/joint outcomes and comparisons before collapsible
@@ -1487,7 +1591,7 @@ chunk weights are **separate within-chunk progress measures**, not replacements 
 A1 stays **58.0%**, and S13 remains deferred at 0% (the possible A1 ceiling while deferred is 95%).
 Update the original S08–S12/S14 status only when their original acceptance is met, without crediting work twice.
 Report a chunk bar and each active module at every 10% rung and each 5% overall boundary; long jobs also report
-item counts and measured rates. Current Chunk A progress is **22.5%**; Chunk B remains **0%**.
+item counts and measured rates. Current Chunk A progress is **31.5%**; Chunk B remains **0%**.
 
 **Shared gates:** use the unchanged player-first, paired fold, seed-noise, uncertainty, non-inferiority, cutoff and
 once-per-version final-test rules in PLAN §6b/TRAINING_PLAN §8. An early chunk can promote a standalone candidate
@@ -1511,7 +1615,7 @@ playback portion of S12, plus a chunk-end delivery; S10/S11/S12/S14 are not ther
 | A2 Form and late-game realism | 35% | S04/S06; A1 for integration | S09's paired player/game gates; retain v1.3 when unsupported or rejected |
 | A3 View Centre and delivery | 35% | A1/A2 decisions | Five labelled selections, reconciled event files and an interactive 2-D court/player in the Game Centre; responsive/offline checks and fresh nightly; no fake logs or completed claim on failure |
 
-**Live board:** Chunk A `█████░░░░░░░░░░░░░░░ 22.5%`; A1 `████████░░░░░░░░░░░░ 40%`;
+**Live board:** Chunk A `██████░░░░░░░░░░░░░░ 31.5%`; A1 `██████████████░░░░░░ 70%`;
 A2 `██████░░░░░░░░░░░░░░ 30%`; A3 `░░░░░░░░░░░░░░░░░░░░ 0%`.
 Original A1 remains 58%; do not double-count the separate board.
 
@@ -2111,21 +2215,38 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
 
 ## Next actions — Chunk A in progress
 
-1. **A1 50%:** build and independently test exact weighted empirical Expected distributions from the retained
-   D47 branch worlds, including conditional on either player, undefined denominators and the 10k indivisibility
-   counterexample (FINDINGS §7). Do not sample or round to 10,000 equally weighted worlds. Carry original
-   source assumptions, scenario weights and every world; benchmark runtime/storage and use new experiment paths.
-   The season identity is still open at rung 60%, and the unsupported foul exception remains explicit: keep the
-   unconditional forecast and do not promote or publish a partial mixture. Then follow A1 rungs 60–100 and
-   A2/A3 ladders, completing Chunk A before Chunk B.
+1. **A1 80%:** implement/test a gated branch UI only against fully audited isolated fixtures and preserve the
+   existing unconditional production fallback; no unvalidated Expected data may be published. Research labels
+   must carry through to any view. Check laptop/phone import and offline compatibility before claiming delivery.
+   The ignored two-player fixture and compact audit are recorded above. To rebuild under a new name, run
+   `.venv/bin/python analysis/a1_branch_browser_fixture.py analysis/experiments/20261122_chunk_a_a1_d47_10000_two.json --output data/derived/experiments/<new-fixture>.json`,
+   then `.venv/bin/python analysis/a1_branch_browser_fixture_audit.py data/derived/experiments/<new-fixture>.json --output analysis/experiments/<new-audit>.json`;
+   never overwrite the existing evidence. The present browser-format fixture only has full-game player lines,
+   not the period-by-period player inputs needed to recalculate every existing period view. Extend and audit the
+   saved-data contract before attempting coherent period-aware UI; do not pretend the fixture already supports it.
+   The existing `outcomes.mjs` counts equally weighted worlds throughout Given/Joint, while saved branch worlds
+   have unequal weights: integrate exact weighted conditions across **all** shared consumers before exposing a
+   lineup switch. Implement a source contract with player availability separate from positive minutes, preserve
+   selected branch identity, and fail closed on missing/corrupt worlds. Continue D48 research above and the
+   short-roster penalty comparison without masking failures.
+   The completed **A1 60%** accounting task was to design and independently validate a season representation that consumes each near-term game once
+   and preserves every supported exact branch-weighted world marginal and win identity, including the 1/20,000
+   counterexample. Do not silently round or resample to 10,000 equal-weight universes; measure memory/runtime and
+   retain existing pathway if the representation is infeasible or changes predictive dependence. The unsupported
+   foul exception remains explicit: keep the unconditional forecast and do not promote or publish a partial
+   mixture. Then follow A1 rungs 80–100; stop after the A1 checkpoint under the owner's latest instruction.
+   A2/A3 and Chunk B remain documented for a later agent, and Chunk A must finish before Chunk B starts.
    The planned Game Centre presentation is recorded in DASHBOARD_PLAN: one shared either/plays/sits control,
    coherent team/player views and compact comparison, not separate uncertainty tabs; ship Expected only after
    its gates, including exact marginalisation when only one player's status is fixed. Given and Joint must slice
    those same selected worlds with the correct weights and an explicit empty-condition state.
-2. The owner requests dashboard reorganisation with important signals first and secondary information in clearly
-   labelled collapsible sections. Integrate with the chunk and checkpoint delivery. No nightly for presentation
-   work; the next normal nightly builds the per-world views automatically.
-3. Keep the existing player-first gates, protected final test and D40 history deferral. No production model or
+   Candidate to test (not accepted): couple each game's exact discrete world mass to a shared unit interval,
+   using a game-seeded permutation and circular offset; partition at the union of all game boundaries and carry
+   each interval's exact rational weight through one pathway universe. This can preserve all per-game marginals
+   without an exponential Cartesian product, but may induce artificial cross-game dependence; quantify that
+   explicitly against independent draws and existing pathway behaviour before deciding viability. Fail explicitly
+   if denominator/array limits or a roster make the representation infeasible.
+2. Keep the existing player-first gates, protected final test and D40 history deferral. No production model or
    branch policy changes without the documented evidence and promotion checks.
 
 ## Prior actions — A1 20% history (superseded)

@@ -1,0 +1,2991 @@
+{
+ "kind": "synthetic rejection-bias demonstration; not an NBA estimate",
+ "worlds": 10000,
+ "seed": "20261122",
+ "threshold": 0.05,
+ "control_mean": 0.49810184445370853,
+ "accepted_mean": 0.522999299079223,
+ "theoretical_unconditional_mean": 0.5,
+ "theoretical_conditional_mean": 0.525,
+ "rejected_attempts": 495,
+ "affected_worlds": 472,
+ "rejection_rate_over_attempts": 0.04716531681753216,
+ "rejections": [
+  {
+   "world": 9,
+   "attempt": 0,
+   "seed": "2986025332036386856",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 54,
+   "attempt": 0,
+   "seed": "1623876158730517186",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 94,
+   "attempt": 0,
+   "seed": "890662461022371911",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 161,
+   "attempt": 0,
+   "seed": "1779297108599878349",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 212,
+   "attempt": 0,
+   "seed": "2962629262276154636",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 247,
+   "attempt": 0,
+   "seed": "7945828042139444522",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 258,
+   "attempt": 0,
+   "seed": "10978491412688337730",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 289,
+   "attempt": 0,
+   "seed": "5192553762983242378",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 301,
+   "attempt": 0,
+   "seed": "12503476521003240788",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 378,
+   "attempt": 0,
+   "seed": "3024363719861268698",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 387,
+   "attempt": 0,
+   "seed": "12951234544143459026",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 398,
+   "attempt": 0,
+   "seed": "6902043701864726669",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 406,
+   "attempt": 0,
+   "seed": "5261733179053676763",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 415,
+   "attempt": 0,
+   "seed": "13564492219124924489",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 424,
+   "attempt": 0,
+   "seed": "1217607126811462670",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 435,
+   "attempt": 0,
+   "seed": "6671899740694724574",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 475,
+   "attempt": 0,
+   "seed": "13569433726024371539",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 485,
+   "attempt": 0,
+   "seed": "8751569576981309609",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 498,
+   "attempt": 0,
+   "seed": "16206291389552878744",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 535,
+   "attempt": 0,
+   "seed": "6968604976650822815",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 543,
+   "attempt": 0,
+   "seed": "12567871272954529966",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 603,
+   "attempt": 0,
+   "seed": "5747077808539917834",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 615,
+   "attempt": 0,
+   "seed": "17110969535467808011",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 652,
+   "attempt": 0,
+   "seed": "1848387544028512872",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 652,
+   "attempt": 1,
+   "seed": "11599447480522769881",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 652,
+   "attempt": 2,
+   "seed": "5896771828180139336",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 653,
+   "attempt": 0,
+   "seed": "1417912218539065430",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 657,
+   "attempt": 0,
+   "seed": "7129965986297896417",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 659,
+   "attempt": 0,
+   "seed": "9444521238215932654",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 675,
+   "attempt": 0,
+   "seed": "128161392412123079",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 737,
+   "attempt": 0,
+   "seed": "6505743815290764314",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 737,
+   "attempt": 1,
+   "seed": "15422386101924693873",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 753,
+   "attempt": 0,
+   "seed": "641941110411219012",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 753,
+   "attempt": 1,
+   "seed": "2291962878541477933",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 757,
+   "attempt": 0,
+   "seed": "15528629251833254441",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 758,
+   "attempt": 0,
+   "seed": "10198018978128772010",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 789,
+   "attempt": 0,
+   "seed": "8120893046157713899",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 803,
+   "attempt": 0,
+   "seed": "16246456117836664182",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 809,
+   "attempt": 0,
+   "seed": "7927590190572915566",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 939,
+   "attempt": 0,
+   "seed": "17699419287336986957",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 941,
+   "attempt": 0,
+   "seed": "18120002154047364761",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 950,
+   "attempt": 0,
+   "seed": "16563032733891162996",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 957,
+   "attempt": 0,
+   "seed": "7939806528976388672",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 964,
+   "attempt": 0,
+   "seed": "4219728558989688190",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 978,
+   "attempt": 0,
+   "seed": "7141863483576280942",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 994,
+   "attempt": 0,
+   "seed": "1323392174135188415",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1041,
+   "attempt": 0,
+   "seed": "4289284597435324003",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1041,
+   "attempt": 1,
+   "seed": "2378539407767775964",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1118,
+   "attempt": 0,
+   "seed": "14391071276146854027",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1121,
+   "attempt": 0,
+   "seed": "10155263944435629458",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1126,
+   "attempt": 0,
+   "seed": "8711150228656700170",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1166,
+   "attempt": 0,
+   "seed": "649902833817053519",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1170,
+   "attempt": 0,
+   "seed": "14503365759989543808",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1173,
+   "attempt": 0,
+   "seed": "5994136119260843975",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1177,
+   "attempt": 0,
+   "seed": "17147413531239912450",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1186,
+   "attempt": 0,
+   "seed": "8868784944860869535",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1191,
+   "attempt": 0,
+   "seed": "5554545022764272806",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1197,
+   "attempt": 0,
+   "seed": "10817125320622927749",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1201,
+   "attempt": 0,
+   "seed": "15063245806776385798",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1204,
+   "attempt": 0,
+   "seed": "1892734436312447319",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1222,
+   "attempt": 0,
+   "seed": "4176410812826089485",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1240,
+   "attempt": 0,
+   "seed": "13138406877321788506",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1257,
+   "attempt": 0,
+   "seed": "7958094408906228392",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1321,
+   "attempt": 0,
+   "seed": "10203775342344513165",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1327,
+   "attempt": 0,
+   "seed": "10924444375947660595",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1345,
+   "attempt": 0,
+   "seed": "12835770090458831778",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1348,
+   "attempt": 0,
+   "seed": "7872027480766986104",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1381,
+   "attempt": 0,
+   "seed": "1251998367047537759",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1382,
+   "attempt": 0,
+   "seed": "7306649435765690165",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1394,
+   "attempt": 0,
+   "seed": "5817467315376884603",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1404,
+   "attempt": 0,
+   "seed": "5965673599460470867",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1425,
+   "attempt": 0,
+   "seed": "15684388023481674823",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1456,
+   "attempt": 0,
+   "seed": "6664067044570306831",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1457,
+   "attempt": 0,
+   "seed": "12219340866944126466",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1461,
+   "attempt": 0,
+   "seed": "16877575514176421942",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1465,
+   "attempt": 0,
+   "seed": "12219806760923318642",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1476,
+   "attempt": 0,
+   "seed": "11110050330801247741",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1498,
+   "attempt": 0,
+   "seed": "10386062209826245382",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1501,
+   "attempt": 0,
+   "seed": "17274052463069091937",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1510,
+   "attempt": 0,
+   "seed": "7056428330283043867",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1517,
+   "attempt": 0,
+   "seed": "660121849580413496",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1536,
+   "attempt": 0,
+   "seed": "10106599388328740120",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1553,
+   "attempt": 0,
+   "seed": "5552425049278569625",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1555,
+   "attempt": 0,
+   "seed": "1665825323657353561",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1564,
+   "attempt": 0,
+   "seed": "16985790856443205319",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1580,
+   "attempt": 0,
+   "seed": "835569642058238636",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1592,
+   "attempt": 0,
+   "seed": "11521958785861669230",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1605,
+   "attempt": 0,
+   "seed": "8668537529985858666",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1614,
+   "attempt": 0,
+   "seed": "5881791902960138903",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1630,
+   "attempt": 0,
+   "seed": "2874757576896824937",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1670,
+   "attempt": 0,
+   "seed": "7399926653298990069",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1721,
+   "attempt": 0,
+   "seed": "15148519674217523513",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1724,
+   "attempt": 0,
+   "seed": "1169114310156988788",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1728,
+   "attempt": 0,
+   "seed": "16136924087078513264",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1737,
+   "attempt": 0,
+   "seed": "16185636135288911344",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1758,
+   "attempt": 0,
+   "seed": "4298473661640720978",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1803,
+   "attempt": 0,
+   "seed": "12015165442834767989",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1815,
+   "attempt": 0,
+   "seed": "9284229856187514163",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1828,
+   "attempt": 0,
+   "seed": "65643587250952306",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1876,
+   "attempt": 0,
+   "seed": "3559536108473396430",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1900,
+   "attempt": 0,
+   "seed": "10289218790357663857",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1932,
+   "attempt": 0,
+   "seed": "1539936734474691136",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1967,
+   "attempt": 0,
+   "seed": "444189655639913807",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 1968,
+   "attempt": 0,
+   "seed": "3197061045286051323",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2007,
+   "attempt": 0,
+   "seed": "11856774577619569472",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2025,
+   "attempt": 0,
+   "seed": "3270064672572773120",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2047,
+   "attempt": 0,
+   "seed": "12312015428230840980",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2053,
+   "attempt": 0,
+   "seed": "9119994394270427314",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2053,
+   "attempt": 1,
+   "seed": "2187838689531608937",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2065,
+   "attempt": 0,
+   "seed": "16578530120249026364",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2082,
+   "attempt": 0,
+   "seed": "17880660068655667425",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2112,
+   "attempt": 0,
+   "seed": "6914759633852429431",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2179,
+   "attempt": 0,
+   "seed": "7930430749666949255",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2180,
+   "attempt": 0,
+   "seed": "1945573032446876766",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2193,
+   "attempt": 0,
+   "seed": "15307232058137511151",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2194,
+   "attempt": 0,
+   "seed": "11926539159866824747",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2194,
+   "attempt": 1,
+   "seed": "17922397373354000953",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2215,
+   "attempt": 0,
+   "seed": "8558858707142726190",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2238,
+   "attempt": 0,
+   "seed": "4543556934986759056",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2261,
+   "attempt": 0,
+   "seed": "7854386989101017477",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2292,
+   "attempt": 0,
+   "seed": "2662087407614502106",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2294,
+   "attempt": 0,
+   "seed": "5493351882330208233",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2311,
+   "attempt": 0,
+   "seed": "14845974351290880195",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2348,
+   "attempt": 0,
+   "seed": "18038810864126822564",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2370,
+   "attempt": 0,
+   "seed": "7618248945785398744",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2375,
+   "attempt": 0,
+   "seed": "10132604281035380230",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2377,
+   "attempt": 0,
+   "seed": "17677471775760203900",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2412,
+   "attempt": 0,
+   "seed": "11812977195200667577",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2419,
+   "attempt": 0,
+   "seed": "4631744599168945444",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2480,
+   "attempt": 0,
+   "seed": "401543396294959471",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2481,
+   "attempt": 0,
+   "seed": "11211274223440380671",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2516,
+   "attempt": 0,
+   "seed": "7864449235498639922",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2523,
+   "attempt": 0,
+   "seed": "16224296421416593478",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2546,
+   "attempt": 0,
+   "seed": "11812186350405343075",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2547,
+   "attempt": 0,
+   "seed": "1664982533181989767",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2555,
+   "attempt": 0,
+   "seed": "16983727057408925174",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2598,
+   "attempt": 0,
+   "seed": "14015941580754242304",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2660,
+   "attempt": 0,
+   "seed": "2550120918383182593",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2662,
+   "attempt": 0,
+   "seed": "4682781606881645333",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2703,
+   "attempt": 0,
+   "seed": "15104732528577580069",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2718,
+   "attempt": 0,
+   "seed": "1603909750880353304",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2761,
+   "attempt": 0,
+   "seed": "14969024376556984681",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2798,
+   "attempt": 0,
+   "seed": "1353951452735666693",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2805,
+   "attempt": 0,
+   "seed": "2267377536029358670",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2834,
+   "attempt": 0,
+   "seed": "11991293231086525681",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2847,
+   "attempt": 0,
+   "seed": "1054082997627834799",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2875,
+   "attempt": 0,
+   "seed": "8830711240140816841",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2878,
+   "attempt": 0,
+   "seed": "4268475925120332940",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2879,
+   "attempt": 0,
+   "seed": "2263730372214879846",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2887,
+   "attempt": 0,
+   "seed": "9202574797495108002",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2915,
+   "attempt": 0,
+   "seed": "1619171866693100732",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2930,
+   "attempt": 0,
+   "seed": "13940828801822719543",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2940,
+   "attempt": 0,
+   "seed": "6895508307100409304",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2943,
+   "attempt": 0,
+   "seed": "15918485173574690549",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2963,
+   "attempt": 0,
+   "seed": "2773596470957620026",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 2977,
+   "attempt": 0,
+   "seed": "13910407700336651482",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3044,
+   "attempt": 0,
+   "seed": "9516014428508031541",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3056,
+   "attempt": 0,
+   "seed": "16571120362524485843",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3071,
+   "attempt": 0,
+   "seed": "14553979414856615663",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3120,
+   "attempt": 0,
+   "seed": "16889594605446947528",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3150,
+   "attempt": 0,
+   "seed": "7742217619208932625",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3180,
+   "attempt": 0,
+   "seed": "8465259762049706090",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3192,
+   "attempt": 0,
+   "seed": "14651957600507925793",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3197,
+   "attempt": 0,
+   "seed": "12803204259414117883",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3198,
+   "attempt": 0,
+   "seed": "16887278517335728413",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3208,
+   "attempt": 0,
+   "seed": "5944943223508468214",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3248,
+   "attempt": 0,
+   "seed": "13578552692085520244",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3249,
+   "attempt": 0,
+   "seed": "7072671362970446600",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3282,
+   "attempt": 0,
+   "seed": "9499187501389612713",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3311,
+   "attempt": 0,
+   "seed": "1952835423043850243",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3321,
+   "attempt": 0,
+   "seed": "7312323598613775496",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3323,
+   "attempt": 0,
+   "seed": "11980176717658570967",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3330,
+   "attempt": 0,
+   "seed": "4225424150137041443",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3334,
+   "attempt": 0,
+   "seed": "3571451186639492938",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3350,
+   "attempt": 0,
+   "seed": "9651704094813792384",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3367,
+   "attempt": 0,
+   "seed": "18196222701438779690",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3367,
+   "attempt": 1,
+   "seed": "18059525647794757038",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3379,
+   "attempt": 0,
+   "seed": "12949834791120645393",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3459,
+   "attempt": 0,
+   "seed": "234966933060573071",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3470,
+   "attempt": 0,
+   "seed": "6360259720493364172",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3532,
+   "attempt": 0,
+   "seed": "2196815675406623884",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3537,
+   "attempt": 0,
+   "seed": "9367868527747374124",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3537,
+   "attempt": 1,
+   "seed": "17938879588968379715",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3552,
+   "attempt": 0,
+   "seed": "17568682327467173874",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3575,
+   "attempt": 0,
+   "seed": "1841259727430271736",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3605,
+   "attempt": 0,
+   "seed": "5520720362654655396",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3620,
+   "attempt": 0,
+   "seed": "15261791997317614177",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3620,
+   "attempt": 1,
+   "seed": "11894357036290189938",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3636,
+   "attempt": 0,
+   "seed": "11432478891988099421",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3656,
+   "attempt": 0,
+   "seed": "2144133984502781221",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3670,
+   "attempt": 0,
+   "seed": "13809506683957707619",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3671,
+   "attempt": 0,
+   "seed": "10609015750593781175",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3675,
+   "attempt": 0,
+   "seed": "310003421177064318",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3682,
+   "attempt": 0,
+   "seed": "7195617523606535709",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3688,
+   "attempt": 0,
+   "seed": "17253851155830166843",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3690,
+   "attempt": 0,
+   "seed": "3986972744975124604",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3697,
+   "attempt": 0,
+   "seed": "2321280622498187923",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3707,
+   "attempt": 0,
+   "seed": "6792837284101043732",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3715,
+   "attempt": 0,
+   "seed": "15432455893197954115",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3748,
+   "attempt": 0,
+   "seed": "3964447072863226487",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3765,
+   "attempt": 0,
+   "seed": "8484219740092820073",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3808,
+   "attempt": 0,
+   "seed": "5159991061679212456",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3823,
+   "attempt": 0,
+   "seed": "14845361576207410357",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3849,
+   "attempt": 0,
+   "seed": "3627871011565340455",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3855,
+   "attempt": 0,
+   "seed": "4691882199896618136",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3877,
+   "attempt": 0,
+   "seed": "11005275859945611844",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3883,
+   "attempt": 0,
+   "seed": "8326727175113371487",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3929,
+   "attempt": 0,
+   "seed": "3585389745980672162",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3968,
+   "attempt": 0,
+   "seed": "6342484100292136841",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3976,
+   "attempt": 0,
+   "seed": "16449872504863320610",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 3981,
+   "attempt": 0,
+   "seed": "2572279654495563213",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4008,
+   "attempt": 0,
+   "seed": "4823186842162372907",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4023,
+   "attempt": 0,
+   "seed": "13060686335560296823",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4028,
+   "attempt": 0,
+   "seed": "182531763608661889",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4031,
+   "attempt": 0,
+   "seed": "15233009002125830913",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4044,
+   "attempt": 0,
+   "seed": "1495278675623879220",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4049,
+   "attempt": 0,
+   "seed": "14130125266982334499",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4057,
+   "attempt": 0,
+   "seed": "11989381982170099314",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4080,
+   "attempt": 0,
+   "seed": "1548543916471341209",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4086,
+   "attempt": 0,
+   "seed": "15939875739885472116",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4126,
+   "attempt": 0,
+   "seed": "12865397996634958632",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4139,
+   "attempt": 0,
+   "seed": "7408482999227029045",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4145,
+   "attempt": 0,
+   "seed": "16018792190467951191",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4203,
+   "attempt": 0,
+   "seed": "15978974711859571818",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4205,
+   "attempt": 0,
+   "seed": "1886138124925845998",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4240,
+   "attempt": 0,
+   "seed": "1158808675092763292",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4245,
+   "attempt": 0,
+   "seed": "10935778673049274179",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4256,
+   "attempt": 0,
+   "seed": "13532915645335250750",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4259,
+   "attempt": 0,
+   "seed": "9009436434638883102",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4283,
+   "attempt": 0,
+   "seed": "14106324235157914935",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4295,
+   "attempt": 0,
+   "seed": "10454999620348305451",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4323,
+   "attempt": 0,
+   "seed": "17526069832691675192",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4326,
+   "attempt": 0,
+   "seed": "7617176412902824358",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4336,
+   "attempt": 0,
+   "seed": "6561727682861358834",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4342,
+   "attempt": 0,
+   "seed": "16221926193502455429",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4389,
+   "attempt": 0,
+   "seed": "1648918112763580938",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4427,
+   "attempt": 0,
+   "seed": "11785091948878246654",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4457,
+   "attempt": 0,
+   "seed": "6397433134409346763",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4475,
+   "attempt": 0,
+   "seed": "13097376135900802299",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4482,
+   "attempt": 0,
+   "seed": "11104220451045500842",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4503,
+   "attempt": 0,
+   "seed": "3265643430288659880",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4506,
+   "attempt": 0,
+   "seed": "2388602701277727073",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4528,
+   "attempt": 0,
+   "seed": "5892989750525082299",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4560,
+   "attempt": 0,
+   "seed": "11627427583856642358",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4588,
+   "attempt": 0,
+   "seed": "3149860755003224088",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4588,
+   "attempt": 1,
+   "seed": "11391818811869041309",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4645,
+   "attempt": 0,
+   "seed": "5108853193893436376",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4645,
+   "attempt": 1,
+   "seed": "16003370884461220038",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4666,
+   "attempt": 0,
+   "seed": "298668033201299191",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4737,
+   "attempt": 0,
+   "seed": "1602131598856400862",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4739,
+   "attempt": 0,
+   "seed": "7283071355070400077",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4763,
+   "attempt": 0,
+   "seed": "15013658590885917565",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4766,
+   "attempt": 0,
+   "seed": "14834174821238859957",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4802,
+   "attempt": 0,
+   "seed": "11931007331955893269",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4804,
+   "attempt": 0,
+   "seed": "5909696095485469298",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4808,
+   "attempt": 0,
+   "seed": "10104191768834847828",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4819,
+   "attempt": 0,
+   "seed": "17355253329111926522",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4840,
+   "attempt": 0,
+   "seed": "6201071032549775398",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4840,
+   "attempt": 1,
+   "seed": "16067640296346169658",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4859,
+   "attempt": 0,
+   "seed": "86540787451924108",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4876,
+   "attempt": 0,
+   "seed": "12244080971879576145",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4927,
+   "attempt": 0,
+   "seed": "15000501301775416509",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4955,
+   "attempt": 0,
+   "seed": "10490669715569025236",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 4964,
+   "attempt": 0,
+   "seed": "2997555529006122226",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5012,
+   "attempt": 0,
+   "seed": "7227658341915588730",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5021,
+   "attempt": 0,
+   "seed": "626769696550141399",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5049,
+   "attempt": 0,
+   "seed": "11920199507187565555",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5053,
+   "attempt": 0,
+   "seed": "9625385960707588513",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5057,
+   "attempt": 0,
+   "seed": "913930748239490597",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5073,
+   "attempt": 0,
+   "seed": "8335966950186483854",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5119,
+   "attempt": 0,
+   "seed": "10860507364313910433",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5154,
+   "attempt": 0,
+   "seed": "4063854869320287554",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5188,
+   "attempt": 0,
+   "seed": "11600786066578503265",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5192,
+   "attempt": 0,
+   "seed": "6752600151837181671",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5260,
+   "attempt": 0,
+   "seed": "7971467586353969851",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5289,
+   "attempt": 0,
+   "seed": "4365031667835629899",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5290,
+   "attempt": 0,
+   "seed": "18359134038285937526",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5292,
+   "attempt": 0,
+   "seed": "7482758146473887176",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5294,
+   "attempt": 0,
+   "seed": "129255135209072168",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5305,
+   "attempt": 0,
+   "seed": "2948630033260163200",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5306,
+   "attempt": 0,
+   "seed": "3342320754967744698",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5340,
+   "attempt": 0,
+   "seed": "17370768710377219491",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5341,
+   "attempt": 0,
+   "seed": "7956968072400906325",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5417,
+   "attempt": 0,
+   "seed": "13963726644093396251",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5433,
+   "attempt": 0,
+   "seed": "5511260515582504152",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5444,
+   "attempt": 0,
+   "seed": "3655099553712347538",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5480,
+   "attempt": 0,
+   "seed": "10731272471747941812",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5488,
+   "attempt": 0,
+   "seed": "4495651187814148489",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5488,
+   "attempt": 1,
+   "seed": "13601672550287836484",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5498,
+   "attempt": 0,
+   "seed": "2084133787353474553",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5514,
+   "attempt": 0,
+   "seed": "8413095466980492385",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5514,
+   "attempt": 1,
+   "seed": "12922069617834549418",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5517,
+   "attempt": 0,
+   "seed": "6035901477949001525",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5520,
+   "attempt": 0,
+   "seed": "9965052900270886906",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5548,
+   "attempt": 0,
+   "seed": "12161916575343552270",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5568,
+   "attempt": 0,
+   "seed": "10679478805572034906",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5592,
+   "attempt": 0,
+   "seed": "2326412005977769810",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5631,
+   "attempt": 0,
+   "seed": "1333839633264822326",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5730,
+   "attempt": 0,
+   "seed": "10168563235996324470",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5745,
+   "attempt": 0,
+   "seed": "444851446303178949",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5756,
+   "attempt": 0,
+   "seed": "16567040105135537529",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5830,
+   "attempt": 0,
+   "seed": "7756548771068054010",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5864,
+   "attempt": 0,
+   "seed": "9509058186517691951",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5867,
+   "attempt": 0,
+   "seed": "10471498159424743450",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5917,
+   "attempt": 0,
+   "seed": "7944109038117360377",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5930,
+   "attempt": 0,
+   "seed": "2198985873254720051",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5943,
+   "attempt": 0,
+   "seed": "9319349110554525643",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5952,
+   "attempt": 0,
+   "seed": "15066198512690566459",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 5956,
+   "attempt": 0,
+   "seed": "17078672231075401486",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6003,
+   "attempt": 0,
+   "seed": "18094067978151353070",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6018,
+   "attempt": 0,
+   "seed": "4976419898032473447",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6021,
+   "attempt": 0,
+   "seed": "14395816041182656325",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6096,
+   "attempt": 0,
+   "seed": "13852214684700442814",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6138,
+   "attempt": 0,
+   "seed": "6061064198358080203",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6153,
+   "attempt": 0,
+   "seed": "11750686967953355433",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6185,
+   "attempt": 0,
+   "seed": "7356476413249686638",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6199,
+   "attempt": 0,
+   "seed": "12449426037041785597",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6204,
+   "attempt": 0,
+   "seed": "4931020207783716935",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6215,
+   "attempt": 0,
+   "seed": "7392684060704110033",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6219,
+   "attempt": 0,
+   "seed": "6259478054201554040",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6223,
+   "attempt": 0,
+   "seed": "6032475632865425159",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6229,
+   "attempt": 0,
+   "seed": "14615371086064269537",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6230,
+   "attempt": 0,
+   "seed": "5254027793765743889",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6241,
+   "attempt": 0,
+   "seed": "1713374907079300771",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6268,
+   "attempt": 0,
+   "seed": "13533281962445469761",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6337,
+   "attempt": 0,
+   "seed": "3218878798616795697",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6346,
+   "attempt": 0,
+   "seed": "5400000386560594707",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6364,
+   "attempt": 0,
+   "seed": "12404745607540805559",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6448,
+   "attempt": 0,
+   "seed": "16598170674047848162",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6452,
+   "attempt": 0,
+   "seed": "11379674274967313074",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6525,
+   "attempt": 0,
+   "seed": "11493955870438878667",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6530,
+   "attempt": 0,
+   "seed": "10720790312851127044",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6566,
+   "attempt": 0,
+   "seed": "152970761655102230",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6586,
+   "attempt": 0,
+   "seed": "5678414206380071392",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6588,
+   "attempt": 0,
+   "seed": "1083493005527419804",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6590,
+   "attempt": 0,
+   "seed": "12625765748289216830",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6606,
+   "attempt": 0,
+   "seed": "3981336916423393534",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6607,
+   "attempt": 0,
+   "seed": "3345625724134343323",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6634,
+   "attempt": 0,
+   "seed": "16181791435569130665",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6650,
+   "attempt": 0,
+   "seed": "10575625413263765682",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6657,
+   "attempt": 0,
+   "seed": "11481915608671380865",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6669,
+   "attempt": 0,
+   "seed": "12929662705994937256",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6669,
+   "attempt": 1,
+   "seed": "7310804816969044595",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6669,
+   "attempt": 2,
+   "seed": "661603834250546532",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6679,
+   "attempt": 0,
+   "seed": "5669289692587338986",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6707,
+   "attempt": 0,
+   "seed": "10644125789278484366",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6717,
+   "attempt": 0,
+   "seed": "974622907742081945",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6726,
+   "attempt": 0,
+   "seed": "4519018342102960177",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6729,
+   "attempt": 0,
+   "seed": "7670075134664696973",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6758,
+   "attempt": 0,
+   "seed": "1498839511831997388",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6832,
+   "attempt": 0,
+   "seed": "9991522562008805064",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6844,
+   "attempt": 0,
+   "seed": "500479690787237005",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6852,
+   "attempt": 0,
+   "seed": "1462188818575158667",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6856,
+   "attempt": 0,
+   "seed": "17828190339926827989",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6865,
+   "attempt": 0,
+   "seed": "535267874246401714",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6878,
+   "attempt": 0,
+   "seed": "2147652671149688533",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6919,
+   "attempt": 0,
+   "seed": "4589080154891583761",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 6930,
+   "attempt": 0,
+   "seed": "1436917926268684130",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7014,
+   "attempt": 0,
+   "seed": "16846490845726500062",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7050,
+   "attempt": 0,
+   "seed": "437801686335453567",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7050,
+   "attempt": 1,
+   "seed": "2865266841853839170",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7051,
+   "attempt": 0,
+   "seed": "9973320750244733852",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7078,
+   "attempt": 0,
+   "seed": "3643316482654476306",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7119,
+   "attempt": 0,
+   "seed": "2327687264509977199",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7129,
+   "attempt": 0,
+   "seed": "16913230292952243171",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7148,
+   "attempt": 0,
+   "seed": "15417817917874090961",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7160,
+   "attempt": 0,
+   "seed": "5886656395134086818",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7181,
+   "attempt": 0,
+   "seed": "17098941523962857912",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7183,
+   "attempt": 0,
+   "seed": "2515646184089360568",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7200,
+   "attempt": 0,
+   "seed": "11654507211384888421",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7233,
+   "attempt": 0,
+   "seed": "18382536757684596342",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7234,
+   "attempt": 0,
+   "seed": "10005752005529813428",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7250,
+   "attempt": 0,
+   "seed": "9327757400794049327",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7292,
+   "attempt": 0,
+   "seed": "16876197287081652039",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7303,
+   "attempt": 0,
+   "seed": "15245650119118460503",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7306,
+   "attempt": 0,
+   "seed": "5339352106815370081",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7325,
+   "attempt": 0,
+   "seed": "16088292113281812126",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7342,
+   "attempt": 0,
+   "seed": "16319240764654870354",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7354,
+   "attempt": 0,
+   "seed": "13730059304950082967",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7377,
+   "attempt": 0,
+   "seed": "14983020858753502957",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7415,
+   "attempt": 0,
+   "seed": "929478776179804913",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7429,
+   "attempt": 0,
+   "seed": "15052755616400512131",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7432,
+   "attempt": 0,
+   "seed": "3084225616610753624",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7434,
+   "attempt": 0,
+   "seed": "2064405710207477427",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7443,
+   "attempt": 0,
+   "seed": "1285332919500056259",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7456,
+   "attempt": 0,
+   "seed": "13099287447612966761",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7475,
+   "attempt": 0,
+   "seed": "14074349251556639777",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7491,
+   "attempt": 0,
+   "seed": "7881552158751769851",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7495,
+   "attempt": 0,
+   "seed": "3453214351727195786",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7531,
+   "attempt": 0,
+   "seed": "4414206289145659349",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7590,
+   "attempt": 0,
+   "seed": "793859239040174289",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7649,
+   "attempt": 0,
+   "seed": "11730240854544285438",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7651,
+   "attempt": 0,
+   "seed": "4324599538727904479",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7700,
+   "attempt": 0,
+   "seed": "8384819355601929168",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7726,
+   "attempt": 0,
+   "seed": "15686758188114615137",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7738,
+   "attempt": 0,
+   "seed": "5680772542230140805",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7741,
+   "attempt": 0,
+   "seed": "12931685886570826106",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7769,
+   "attempt": 0,
+   "seed": "10345632761151894242",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7823,
+   "attempt": 0,
+   "seed": "12766864791298521042",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7842,
+   "attempt": 0,
+   "seed": "11812178567819745780",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7844,
+   "attempt": 0,
+   "seed": "11619234775005651527",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7892,
+   "attempt": 0,
+   "seed": "6306499308073568527",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7928,
+   "attempt": 0,
+   "seed": "6636128515033354457",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7956,
+   "attempt": 0,
+   "seed": "5190823014519203925",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 7982,
+   "attempt": 0,
+   "seed": "5542232640664305044",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8038,
+   "attempt": 0,
+   "seed": "6912196653992651327",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8049,
+   "attempt": 0,
+   "seed": "13752165260954709527",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8058,
+   "attempt": 0,
+   "seed": "6950501094821533343",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8065,
+   "attempt": 0,
+   "seed": "5385057395506911799",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8108,
+   "attempt": 0,
+   "seed": "3275709316489389753",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8121,
+   "attempt": 0,
+   "seed": "15768590570850201567",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8132,
+   "attempt": 0,
+   "seed": "16942356456544444702",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8181,
+   "attempt": 0,
+   "seed": "14317488941779789201",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8200,
+   "attempt": 0,
+   "seed": "3807866945808571458",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8220,
+   "attempt": 0,
+   "seed": "3774187859718529488",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8279,
+   "attempt": 0,
+   "seed": "112235631932274196",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8288,
+   "attempt": 0,
+   "seed": "16248900145914260311",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8317,
+   "attempt": 0,
+   "seed": "11192013397021831",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8338,
+   "attempt": 0,
+   "seed": "17648716045766986414",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8359,
+   "attempt": 0,
+   "seed": "11353953171997657401",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8381,
+   "attempt": 0,
+   "seed": "6693102837013483197",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8408,
+   "attempt": 0,
+   "seed": "5301418663997158009",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8418,
+   "attempt": 0,
+   "seed": "7282466500612926080",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8419,
+   "attempt": 0,
+   "seed": "7398292517334775743",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8427,
+   "attempt": 0,
+   "seed": "14720125795954811574",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8445,
+   "attempt": 0,
+   "seed": "16950103315904620302",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8454,
+   "attempt": 0,
+   "seed": "16680926181467851208",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8469,
+   "attempt": 0,
+   "seed": "5808090957477660748",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8470,
+   "attempt": 0,
+   "seed": "16713480571326717203",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8483,
+   "attempt": 0,
+   "seed": "2988613651643097406",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8497,
+   "attempt": 0,
+   "seed": "12283443322894141060",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8508,
+   "attempt": 0,
+   "seed": "6458664270951522234",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8508,
+   "attempt": 1,
+   "seed": "10841235954688917958",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8544,
+   "attempt": 0,
+   "seed": "13245945909020551971",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8587,
+   "attempt": 0,
+   "seed": "13351902169590458528",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8598,
+   "attempt": 0,
+   "seed": "9695125951710283904",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8600,
+   "attempt": 0,
+   "seed": "9665907553985653145",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8621,
+   "attempt": 0,
+   "seed": "12703686385173451182",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8696,
+   "attempt": 0,
+   "seed": "10046147284744359519",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8705,
+   "attempt": 0,
+   "seed": "9263628998783732476",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8763,
+   "attempt": 0,
+   "seed": "10768913192005522980",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8779,
+   "attempt": 0,
+   "seed": "13677564670771809150",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8823,
+   "attempt": 0,
+   "seed": "5565519987136137168",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8823,
+   "attempt": 1,
+   "seed": "15013474788603723696",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8888,
+   "attempt": 0,
+   "seed": "17348684059286994614",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8916,
+   "attempt": 0,
+   "seed": "12272022775855758532",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8916,
+   "attempt": 1,
+   "seed": "5186626467851242113",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8928,
+   "attempt": 0,
+   "seed": "3117429448439384255",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 8953,
+   "attempt": 0,
+   "seed": "13867034252403841312",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9014,
+   "attempt": 0,
+   "seed": "33687071620817779",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9018,
+   "attempt": 0,
+   "seed": "13712859529149959043",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9018,
+   "attempt": 1,
+   "seed": "17105739235620466523",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9025,
+   "attempt": 0,
+   "seed": "12958374875490618428",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9049,
+   "attempt": 0,
+   "seed": "5125867620730017955",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9061,
+   "attempt": 0,
+   "seed": "6716184200113662774",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9112,
+   "attempt": 0,
+   "seed": "11509384906232613633",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9129,
+   "attempt": 0,
+   "seed": "6654876383018081472",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9187,
+   "attempt": 0,
+   "seed": "13622971662724797525",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9190,
+   "attempt": 0,
+   "seed": "3653330404557820778",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9240,
+   "attempt": 0,
+   "seed": "3574343366328678376",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9247,
+   "attempt": 0,
+   "seed": "781058116604574053",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9259,
+   "attempt": 0,
+   "seed": "8609797174781906300",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9378,
+   "attempt": 0,
+   "seed": "6876261237915536114",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9379,
+   "attempt": 0,
+   "seed": "10175796108726623589",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9381,
+   "attempt": 0,
+   "seed": "17856395697722555863",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9402,
+   "attempt": 0,
+   "seed": "3566725444920042658",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9406,
+   "attempt": 0,
+   "seed": "17951557936981455876",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9411,
+   "attempt": 0,
+   "seed": "106537913005112443",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9435,
+   "attempt": 0,
+   "seed": "431707583444324795",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9444,
+   "attempt": 0,
+   "seed": "5360511897383808851",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9446,
+   "attempt": 0,
+   "seed": "11317733777649797479",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9450,
+   "attempt": 0,
+   "seed": "3293332193606292005",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9451,
+   "attempt": 0,
+   "seed": "1353561478858195927",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9451,
+   "attempt": 1,
+   "seed": "15701245065102326132",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9463,
+   "attempt": 0,
+   "seed": "10453736254624500483",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9464,
+   "attempt": 0,
+   "seed": "16877450128194635857",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9475,
+   "attempt": 0,
+   "seed": "2153841011269923889",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9495,
+   "attempt": 0,
+   "seed": "1002791759617383864",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9504,
+   "attempt": 0,
+   "seed": "3800393161709704583",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9516,
+   "attempt": 0,
+   "seed": "2896974585442257771",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9522,
+   "attempt": 0,
+   "seed": "15747460666912936173",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9564,
+   "attempt": 0,
+   "seed": "14385188487597983625",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9602,
+   "attempt": 0,
+   "seed": "687640381449584067",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9615,
+   "attempt": 0,
+   "seed": "213794495552246131",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9634,
+   "attempt": 0,
+   "seed": "15682340279549297817",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9707,
+   "attempt": 0,
+   "seed": "12043144380507276232",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9708,
+   "attempt": 0,
+   "seed": "18027830780465110944",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9723,
+   "attempt": 0,
+   "seed": "3883471269388573345",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9726,
+   "attempt": 0,
+   "seed": "6665286513007659313",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9728,
+   "attempt": 0,
+   "seed": "17352294788417570709",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9747,
+   "attempt": 0,
+   "seed": "12043399596994083324",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9773,
+   "attempt": 0,
+   "seed": "6901730381470192125",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9982,
+   "attempt": 0,
+   "seed": "17644915381861632786",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9983,
+   "attempt": 0,
+   "seed": "8563419934916569184",
+   "reason": "synthetic outcome below 0.05"
+  },
+  {
+   "world": 9986,
+   "attempt": 0,
+   "seed": "3701386687934647821",
+   "reason": "synthetic outcome below 0.05"
+  }
+ ],
+ "analysis_sha256": "6ff287ddcc6313cedbe3fb403e55dd3b03bc04eb32613062b3b98db42a8b3eac",
+ "coordinator_sha256": "7e19b90fa63a5f67168d43f5834c97d486b490ff2bc5c2093ff44c1d366604ba",
+ "limitations": [
+  "Synthetic uniform outcome; not an NBA failure rate or measured game-forecast bias.",
+  "Retry cap and failure criterion are deliberately chosen for this demonstration."
+ ]
+}

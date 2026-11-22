@@ -701,6 +701,14 @@ All selected branch weights and unselected per-world draws must use the same can
 unchanged fallback under applicable player-first gates; pre-D47 captures are wiring evidence only. Until accepted,
 the served fallback remains unchanged and the final test stays protected.
 
+D48 proposes replacing explicitly identified world-local recoverable failures until 10,000 valid worlds exist.
+Missing/corrupt inputs, cutoff or accounting violations, and unknown/systemic exceptions fail immediately.
+Validate deterministic world isolation, explicit rejection counts/reasons, a finite retry cap, induced selection
+bias and a paired comparison with the isolated foul-penalty candidate before any use. Do not retry whole failed
+vectorised batches and claim untouched worlds, and do not use rejection to mask systematic roster/model failures.
+The isolated retry coordinator and injected-failure probe provide initial wiring evidence only. A 10,000-draw
+synthetic truncation demonstrates bias but does not measure NBA-world failure rates or satisfy the real-data gate.
+
 Chunk A A1 froze the prospective selection, branch identifiers and mixture contract in HANDOFF before implementation.
 D46 replaces the earlier 15-minute healthy-role/0.25 prior-usage scope rule with a top-three full-roster offensive
 contribution proxy and at most one uncertainty per team. The proxy is not a fitted total-impact measure;

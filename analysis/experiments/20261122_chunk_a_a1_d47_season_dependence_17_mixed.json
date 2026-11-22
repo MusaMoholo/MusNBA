@@ -1,0 +1,1846 @@
+{
+ "kind": "research covariance diagnostic; not a forecast or predictive acceptance",
+ "origin": "2026-11-22",
+ "runs": 32,
+ "independent_draws_per_run": 10000,
+ "coupling_report": "analysis/experiments/20261122_chunk_a_a1_d47_season_coupling_17_mixed.json",
+ "coupling_report_sha256": "a7d046c778e2f0fc1ce7085425364af616f3c8df90df51eafce7e59b72e96f72",
+ "algorithm_sha256": "a6601d8542c58f0409807cf4ca5fc7654f60a3a21aa2eaeaa78626fcd34165e1",
+ "analysis_sha256": "0bca008d0c1535d3cb3559f067f1a0ead0f68d4811459feed6ea0de4753eea4c",
+ "fixtures_sha256": "0e34e44e1e1edcf1089d2e844796940b5bf879be50d16fba2c9c0929554035c8",
+ "limitations": "Only two games use branch mixtures; other games are unconditional. Comparison to independent draws does not establish realistic across-game dependence, predictive skill, or acceptance.",
+ "games": [
+  "401910029",
+  "401910030",
+  "401910031",
+  "401910032",
+  "401910033",
+  "401910034",
+  "401910035",
+  "401910036",
+  "401910037",
+  "401910038",
+  "401910039",
+  "401910040",
+  "401910041",
+  "401910042",
+  "401910043",
+  "401910044",
+  "401910045"
+ ],
+ "exact_home_win_probabilities": [
+  0.4146,
+  0.5221875,
+  0.3413,
+  0.2901,
+  0.3888,
+  0.6211,
+  0.3744,
+  0.4285,
+  0.4215,
+  0.4138,
+  0.6338,
+  0.5969,
+  0.3394,
+  0.4337,
+  0.6258,
+  0.7643,
+  0.23
+ ],
+ "runs_detail": [
+  {
+   "seed": 20261122,
+   "paths": 122428,
+   "effective_weighted_paths": 103891.04426732463,
+   "coupled_mean_abs_covariance": 0.0013286345772080474,
+   "coupled_max_abs_covariance": 0.005130280000140985,
+   "independent_mean_abs_covariance": 0.0018187425000000007,
+   "independent_max_abs_covariance": 0.005522639999999995
+  },
+  {
+   "seed": 20261123,
+   "paths": 133730,
+   "effective_weighted_paths": 114377.6248771334,
+   "coupled_mean_abs_covariance": 0.0013776361029557125,
+   "coupled_max_abs_covariance": 0.005566030000079603,
+   "independent_mean_abs_covariance": 0.002013306323529411,
+   "independent_max_abs_covariance": 0.006117519999999987
+  },
+  {
+   "seed": 20261124,
+   "paths": 107403,
+   "effective_weighted_paths": 83456.67099163478,
+   "coupled_mean_abs_covariance": 0.0013668829779413332,
+   "coupled_max_abs_covariance": 0.004761479999974699,
+   "independent_mean_abs_covariance": 0.001702123161764708,
+   "independent_max_abs_covariance": 0.0063402200000000075
+  },
+  {
+   "seed": 20261125,
+   "paths": 115109,
+   "effective_weighted_paths": 90928.46487177665,
+   "coupled_mean_abs_covariance": 0.001504371636029336,
+   "coupled_max_abs_covariance": 0.005133650000135381,
+   "independent_mean_abs_covariance": 0.0019184448529411756,
+   "independent_max_abs_covariance": 0.005625310000000022
+  },
+  {
+   "seed": 20261126,
+   "paths": 122442,
+   "effective_weighted_paths": 103923.94066592511,
+   "coupled_mean_abs_covariance": 0.0013104226654545921,
+   "coupled_max_abs_covariance": 0.0047847199998627965,
+   "independent_mean_abs_covariance": 0.001816228676470591,
+   "independent_max_abs_covariance": 0.005835600000000052
+  },
+  {
+   "seed": 20261127,
+   "paths": 115062,
+   "effective_weighted_paths": 94016.02679456763,
+   "coupled_mean_abs_covariance": 0.001338948529429689,
+   "coupled_max_abs_covariance": 0.004622480000113838,
+   "independent_mean_abs_covariance": 0.0020211841176470597,
+   "independent_max_abs_covariance": 0.005750520000000037
+  },
+  {
+   "seed": 20261128,
+   "paths": 129911,
+   "effective_weighted_paths": 113381.69771376434,
+   "coupled_mean_abs_covariance": 0.001261314117629803,
+   "coupled_max_abs_covariance": 0.004290709999837106,
+   "independent_mean_abs_covariance": 0.0021052776470588254,
+   "independent_max_abs_covariance": 0.008475609999999995
+  },
+  {
+   "seed": 20261129,
+   "paths": 122355,
+   "effective_weighted_paths": 103847.2147852472,
+   "coupled_mean_abs_covariance": 0.001337002297805196,
+   "coupled_max_abs_covariance": 0.004443599999958692,
+   "independent_mean_abs_covariance": 0.0017373928676470607,
+   "independent_max_abs_covariance": 0.005695280000000011
+  },
+  {
+   "seed": 20261130,
+   "paths": 122607,
+   "effective_weighted_paths": 92461.4984541593,
+   "coupled_mean_abs_covariance": 0.0014760403676277957,
+   "coupled_max_abs_covariance": 0.004880010000035129,
+   "independent_mean_abs_covariance": 0.0017477760294117664,
+   "independent_max_abs_covariance": 0.005649500000000002
+  },
+  {
+   "seed": 20261131,
+   "paths": 122549,
+   "effective_weighted_paths": 106428.09036410046,
+   "coupled_mean_abs_covariance": 0.0013241464522098165,
+   "coupled_max_abs_covariance": 0.005037019999884096,
+   "independent_mean_abs_covariance": 0.001770270000000001,
+   "independent_max_abs_covariance": 0.007693590000000028
+  },
+  {
+   "seed": 20261132,
+   "paths": 129995,
+   "effective_weighted_paths": 108903.73080359041,
+   "coupled_mean_abs_covariance": 0.001448501011017395,
+   "coupled_max_abs_covariance": 0.005347169999824319,
+   "independent_mean_abs_covariance": 0.002135342058823528,
+   "independent_max_abs_covariance": 0.010099140000000006
+  },
+  {
+   "seed": 20261133,
+   "paths": 115046,
+   "effective_weighted_paths": 87910.27657397169,
+   "coupled_mean_abs_covariance": 0.0013127611213305907,
+   "coupled_max_abs_covariance": 0.00521103999986211,
+   "independent_mean_abs_covariance": 0.0017318775735294127,
+   "independent_max_abs_covariance": 0.005265599999999981
+  },
+  {
+   "seed": 20261134,
+   "paths": 133756,
+   "effective_weighted_paths": 120477.39166447044,
+   "coupled_mean_abs_covariance": 0.001476604301459352,
+   "coupled_max_abs_covariance": 0.004585468750131605,
+   "independent_mean_abs_covariance": 0.0015491123529411785,
+   "independent_max_abs_covariance": 0.005355790000000027
+  },
+  {
+   "seed": 20261135,
+   "paths": 137572,
+   "effective_weighted_paths": 121570.15452706361,
+   "coupled_mean_abs_covariance": 0.0013678991544058999,
+   "coupled_max_abs_covariance": 0.00484608999983327,
+   "independent_mean_abs_covariance": 0.0017252733088235254,
+   "independent_max_abs_covariance": 0.006219260000000032
+  },
+  {
+   "seed": 20261136,
+   "paths": 111258,
+   "effective_weighted_paths": 81718.64525808407,
+   "coupled_mean_abs_covariance": 0.0014601627573651848,
+   "coupled_max_abs_covariance": 0.006031609999933435,
+   "independent_mean_abs_covariance": 0.001868091544117644,
+   "independent_max_abs_covariance": 0.007426400000000027
+  },
+  {
+   "seed": 20261137,
+   "paths": 115070,
+   "effective_weighted_paths": 85987.98855284901,
+   "coupled_mean_abs_covariance": 0.001368750165433,
+   "coupled_max_abs_covariance": 0.004962800000141154,
+   "independent_mean_abs_covariance": 0.0017236230147058826,
+   "independent_max_abs_covariance": 0.006038800000000011
+  },
+  {
+   "seed": 20261138,
+   "paths": 133677,
+   "effective_weighted_paths": 117307.4279429959,
+   "coupled_mean_abs_covariance": 0.0014244411213202581,
+   "coupled_max_abs_covariance": 0.004814839999848747,
+   "independent_mean_abs_covariance": 0.0018797791911764705,
+   "independent_max_abs_covariance": 0.007141370000000008
+  },
+  {
+   "seed": 20261139,
+   "paths": 126260,
+   "effective_weighted_paths": 112537.36592227886,
+   "coupled_mean_abs_covariance": 0.001348068529414414,
+   "coupled_max_abs_covariance": 0.005244600000027744,
+   "independent_mean_abs_covariance": 0.002040536102941177,
+   "independent_max_abs_covariance": 0.006160639999999995
+  },
+  {
+   "seed": 20261140,
+   "paths": 115055,
+   "effective_weighted_paths": 85921.60995616655,
+   "coupled_mean_abs_covariance": 0.0013781481066204764,
+   "coupled_max_abs_covariance": 0.005504549999948649,
+   "independent_mean_abs_covariance": 0.0017414157352941158,
+   "independent_max_abs_covariance": 0.005533559999999993
+  },
+  {
+   "seed": 20261141,
+   "paths": 118785,
+   "effective_weighted_paths": 94016.02679456763,
+   "coupled_mean_abs_covariance": 0.0014866010845541254,
+   "coupled_max_abs_covariance": 0.004234469999920776,
+   "independent_mean_abs_covariance": 0.0018889402205882343,
+   "independent_max_abs_covariance": 0.005792049999999993
+  },
+  {
+   "seed": 20261142,
+   "paths": 115050,
+   "effective_weighted_paths": 89076.94020710388,
+   "coupled_mean_abs_covariance": 0.0013812731433769103,
+   "coupled_max_abs_covariance": 0.004450260000157746,
+   "independent_mean_abs_covariance": 0.002014200661764708,
+   "independent_max_abs_covariance": 0.008076050000000029
+  },
+  {
+   "seed": 20261143,
+   "paths": 115075,
+   "effective_weighted_paths": 90911.67362709166,
+   "coupled_mean_abs_covariance": 0.001386552610283609,
+   "coupled_max_abs_covariance": 0.004333679999868029,
+   "independent_mean_abs_covariance": 0.0018188025000000006,
+   "independent_max_abs_covariance": 0.006468039999999953
+  },
+  {
+   "seed": 20261144,
+   "paths": 103585,
+   "effective_weighted_paths": 80914.33195104683,
+   "coupled_mean_abs_covariance": 0.0013447338235198665,
+   "coupled_max_abs_covariance": 0.006075529999877705,
+   "independent_mean_abs_covariance": 0.0016791680882352945,
+   "independent_max_abs_covariance": 0.006981479999999984
+  },
+  {
+   "seed": 20261145,
+   "paths": 126292,
+   "effective_weighted_paths": 112569.0364794034,
+   "coupled_mean_abs_covariance": 0.0014656656801406297,
+   "coupled_max_abs_covariance": 0.00728455000006506,
+   "independent_mean_abs_covariance": 0.002011788602941178,
+   "independent_max_abs_covariance": 0.006131600000000001
+  },
+  {
+   "seed": 20261146,
+   "paths": 129993,
+   "effective_weighted_paths": 113379.68909163382,
+   "coupled_mean_abs_covariance": 0.001362582683832416,
+   "coupled_max_abs_covariance": 0.006353179999902869,
+   "independent_mean_abs_covariance": 0.0017047508823529423,
+   "independent_max_abs_covariance": 0.007095160000000003
+  },
+  {
+   "seed": 20261147,
+   "paths": 126251,
+   "effective_weighted_paths": 109756.30670027953,
+   "coupled_mean_abs_covariance": 0.001351523180152648,
+   "coupled_max_abs_covariance": 0.00554372000000708,
+   "independent_mean_abs_covariance": 0.0017245106617647058,
+   "independent_max_abs_covariance": 0.005370319999999998
+  },
+  {
+   "seed": 20261148,
+   "paths": 118805,
+   "effective_weighted_paths": 93096.3256043988,
+   "coupled_mean_abs_covariance": 0.001418787702197423,
+   "coupled_max_abs_covariance": 0.004439200000000254,
+   "independent_mean_abs_covariance": 0.001848843235294117,
+   "independent_max_abs_covariance": 0.0048279599999999645
+  },
+  {
+   "seed": 20261149,
+   "paths": 114909,
+   "effective_weighted_paths": 94529.82489826965,
+   "coupled_mean_abs_covariance": 0.001591267886028374,
+   "coupled_max_abs_covariance": 0.00708725000004698,
+   "independent_mean_abs_covariance": 0.0018653593382352955,
+   "independent_max_abs_covariance": 0.006079279999999965
+  },
+  {
+   "seed": 20261150,
+   "paths": 130096,
+   "effective_weighted_paths": 116465.27878876106,
+   "coupled_mean_abs_covariance": 0.0013875648345543542,
+   "coupled_max_abs_covariance": 0.007124499999990291,
+   "independent_mean_abs_covariance": 0.001845698014705878,
+   "independent_max_abs_covariance": 0.00865241
+  },
+  {
+   "seed": 20261151,
+   "paths": 115141,
+   "effective_weighted_paths": 98173.06069856268,
+   "coupled_mean_abs_covariance": 0.0014687210477961463,
+   "coupled_max_abs_covariance": 0.005686660000145283,
+   "independent_mean_abs_covariance": 0.0018965511764705864,
+   "independent_max_abs_covariance": 0.007217649999999964
+  },
+  {
+   "seed": 20261152,
+   "paths": 118757,
+   "effective_weighted_paths": 100912.15124208666,
+   "coupled_mean_abs_covariance": 0.0015464338419182936,
+   "coupled_max_abs_covariance": 0.00650665000012951,
+   "independent_mean_abs_covariance": 0.0019256028676470597,
+   "independent_max_abs_covariance": 0.00657743999999999
+  },
+  {
+   "seed": 20261153,
+   "paths": 107540,
+   "effective_weighted_paths": 86206.31595961773,
+   "coupled_mean_abs_covariance": 0.001491238823531282,
+   "coupled_max_abs_covariance": 0.005271699999962909,
+   "independent_mean_abs_covariance": 0.001710779264705881,
+   "independent_max_abs_covariance": 0.00485817999999999
+  }
+ ],
+ "pairs": [
+  {
+   "games": [
+    "401910029",
+    "401910030"
+   ],
+   "shared_teams": [],
+   "minimum": -0.001942687499903284,
+   "maximum": 0.002207312500102837,
+   "mean": -4.424999989758628e-05,
+   "mean_absolute": 0.0009120429687477331
+  },
+  {
+   "games": [
+    "401910029",
+    "401910031"
+   ],
+   "shared_teams": [],
+   "minimum": -0.002771729999998279,
+   "maximum": 0.00303452000000487,
+   "mean": 4.6434062502686765e-05,
+   "mean_absolute": 0.0011822265625030179
+  },
+  {
+   "games": [
+    "401910029",
+    "401910032"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0035254600000185626,
+   "maximum": 0.003199539999981821,
+   "mean": -3.190531251873966e-05,
+   "mean_absolute": 0.0011216221874976954
+  },
+  {
+   "games": [
+    "401910029",
+    "401910033"
+   ],
+   "shared_teams": [],
+   "minimum": -0.003921479999974803,
+   "maximum": 0.002541020000041083,
+   "mean": -0.0002785112499719888,
+   "mean_absolute": 0.001338622499997908
+  },
+  {
+   "games": [
+    "401910029",
+    "401910034"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0028205599998680775,
+   "maximum": 0.003360690000150046,
+   "mean": -5.130312350613148e-06,
+   "mean_absolute": 0.001240265312477666
+  },
+  {
+   "games": [
+    "401910029",
+    "401910035"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0036262399999859307,
+   "maximum": 0.004880010000035129,
+   "mean": 0.00017629906252098534,
+   "mean_absolute": 0.001601212187505541
+  },
+  {
+   "games": [
+    "401910029",
+    "401910036"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004443599999958692,
+   "maximum": 0.0033689000000665104,
+   "mean": -0.00046840468745083796,
+   "mean_absolute": 0.0014595328124876617
+  },
+  {
+   "games": [
+    "401910029",
+    "401910037"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004228899999949187,
+   "maximum": 0.0029648500000513667,
+   "mean": -0.00018417343745427174,
+   "mean_absolute": 0.001425098437508392
+  },
+  {
+   "games": [
+    "401910029",
+    "401910038"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004761479999974699,
+   "maximum": 0.004476020000050762,
+   "mean": -0.0003964409374586529,
+   "mean_absolute": 0.0015395846875011715
+  },
+  {
+   "games": [
+    "401910029",
+    "401910039"
+   ],
+   "shared_teams": [],
+   "minimum": -0.00424847999986927,
+   "maximum": 0.003976520000158301,
+   "mean": -4.027687485260237e-05,
+   "mean_absolute": 0.0012899387500062767
+  },
+  {
+   "games": [
+    "401910029",
+    "401910040"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0034622399998616715,
+   "maximum": 0.004450260000157746,
+   "mean": -0.00010813843735158965,
+   "mean_absolute": 0.0010122559374755539
+  },
+  {
+   "games": [
+    "401910029",
+    "401910041"
+   ],
+   "shared_teams": [],
+   "minimum": -0.002577740000000245,
+   "maximum": 0.003666010000001191,
+   "mean": 2.2845937501541312e-05,
+   "mean_absolute": 0.0010883053125003454
+  },
+  {
+   "games": [
+    "401910029",
+    "401910042"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0029182699999584782,
+   "maximum": 0.004344230000057875,
+   "mean": -4.8738749947463064e-05,
+   "mean_absolute": 0.0011190206249882748
+  },
+  {
+   "games": [
+    "401910029",
+    "401910043"
+   ],
+   "shared_teams": [],
+   "minimum": -0.003306679999851514,
+   "maximum": 0.004124570000185956,
+   "mean": 0.00044820281264839994,
+   "mean_absolute": 0.001562587812540225
+  },
+  {
+   "games": [
+    "401910029",
+    "401910044"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0030037799998679504,
+   "maximum": 0.002746220000110433,
+   "mean": 1.6141875126326338e-05,
+   "mean_absolute": 0.0010582031249984011
+  },
+  {
+   "games": [
+    "401910029",
+    "401910045"
+   ],
+   "shared_teams": [],
+   "minimum": -0.003558000000005848,
+   "maximum": 0.0028044999999944226,
+   "mean": 8.406249993929502e-06,
+   "mean_absolute": 0.0012799687499997522
+  },
+  {
+   "games": [
+    "401910030",
+    "401910031"
+   ],
+   "shared_teams": [],
+   "minimum": -0.002210093749963782,
+   "maximum": 0.00227740625005593,
+   "mean": 3.775781255080813e-05,
+   "mean_absolute": 0.00101558007812885
+  },
+  {
+   "games": [
+    "401910030",
+    "401910032"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0016178437499945464,
+   "maximum": 0.002038406250013891,
+   "mean": 3.469531251556676e-05,
+   "mean_absolute": 0.0008689453125013853
+  },
+  {
+   "games": [
+    "401910030",
+    "401910033"
+   ],
+   "shared_teams": [],
+   "minimum": -0.003076499999929927,
+   "maximum": 0.002798500000086468,
+   "mean": 1.432031258384505e-05,
+   "mean_absolute": 0.001253117187490163
+  },
+  {
+   "games": [
+    "401910030",
+    "401910034"
+   ],
+   "shared_teams": [],
+   "minimum": -0.002474406249878547,
+   "maximum": 0.003169343750105358,
+   "mean": -0.00024061718738260275,
+   "mean_absolute": 0.001126292968733818
+  },
+  {
+   "games": [
+    "401910030",
+    "401910035"
+   ],
+   "shared_teams": [],
+   "minimum": -0.002200749999930557,
+   "maximum": 0.0031742500000591922,
+   "mean": 0.0002287421875741772,
+   "mean_absolute": 0.0010666484374961746
+  },
+  {
+   "games": [
+    "401910030",
+    "401910036"
+   ],
+   "shared_teams": [],
+   "minimum": -0.002613593749873272,
+   "maximum": 0.002692656250089659,
+   "mean": 0.00020886718761167246,
+   "mean_absolute": 0.0010811718750257313
+  },
+  {
+   "games": [
+    "401910030",
+    "401910037"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0038020312498590336,
+   "maximum": 0.004585468750131605,
+   "mean": 0.000481953125106834,
+   "mean_absolute": 0.0014181054687608429
+  },
+  {
+   "games": [
+    "401910030",
+    "401910038"
+   ],
+   "shared_teams": [
+    "25"
+   ],
+   "minimum": -0.002031187499928977,
+   "maximum": 0.0034000625001234797,
+   "mean": 0.0004908828126016689,
+   "mean_absolute": 0.0012447500000372846
+  },
+  {
+   "games": [
+    "401910030",
+    "401910039"
+   ],
+   "shared_teams": [],
+   "minimum": -0.002693687499893016,
+   "maximum": 0.002706312500116159,
+   "mean": 0.00010416406261476614,
+   "mean_absolute": 0.0010314414062425978
+  },
+  {
+   "games": [
+    "401910030",
+    "401910040"
+   ],
+   "shared_teams": [],
+   "minimum": -0.003087468749860711,
+   "maximum": 0.0024687812501089645,
+   "mean": 8.284375012163059e-05,
+   "mean_absolute": 0.0012296874999997258
+  },
+  {
+   "games": [
+    "401910030",
+    "401910041"
+   ],
+   "shared_teams": [],
+   "minimum": -0.003274187499940434,
+   "maximum": 0.002088312500048345,
+   "mean": 0.00014788281254972044,
+   "mean_absolute": 0.0009873046875008302
+  },
+  {
+   "games": [
+    "401910030",
+    "401910042"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0028352187498915937,
+   "maximum": 0.0019897812501206147,
+   "mean": -5.726562384872347e-06,
+   "mean_absolute": 0.0011237753906415664
+  },
+  {
+   "games": [
+    "401910030",
+    "401910043"
+   ],
+   "shared_teams": [],
+   "minimum": -0.002797437499867328,
+   "maximum": 0.003052562500117706,
+   "mean": -0.00022653906238322662,
+   "mean_absolute": 0.0009986132812102432
+  },
+  {
+   "games": [
+    "401910030",
+    "401910044"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0026516562498932195,
+   "maximum": 0.002117093750082233,
+   "mean": 0.00024365625009093415,
+   "mean_absolute": 0.001018623046901276
+  },
+  {
+   "games": [
+    "401910030",
+    "401910045"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0025906250000038294,
+   "maximum": 0.003065624999995367,
+   "mean": -0.0001837890625048179,
+   "mean_absolute": 0.0008617187500018441
+  },
+  {
+   "games": [
+    "401910031",
+    "401910032"
+   ],
+   "shared_teams": [],
+   "minimum": -0.002711130000016715,
+   "maximum": 0.0043888699999837105,
+   "mean": 4.551062498296546e-05,
+   "mean_absolute": 0.0013299443749967307
+  },
+  {
+   "games": [
+    "401910031",
+    "401910033"
+   ],
+   "shared_teams": [],
+   "minimum": -0.003041190000014876,
+   "maximum": 0.0038025599999977344,
+   "mean": 0.0005445521874919554,
+   "mean_absolute": 0.001335600937499925
+  },
+  {
+   "games": [
+    "401910031",
+    "401910034"
+   ],
+   "shared_teams": [],
+   "minimum": -0.003850179999914133,
+   "maximum": 0.0035810700001018547,
+   "mean": 0.0003580231251007907,
+   "mean_absolute": 0.0015612831250253608
+  },
+  {
+   "games": [
+    "401910031",
+    "401910035"
+   ],
+   "shared_teams": [],
+   "minimum": -0.003851470000017801,
+   "maximum": 0.004367279999992563,
+   "mean": -0.000179009062515213,
+   "mean_absolute": 0.0017609259375039256
+  },
+  {
+   "games": [
+    "401910031",
+    "401910036"
+   ],
+   "shared_teams": [],
+   "minimum": -0.003972049999996313,
+   "maximum": 0.005977950000008864,
+   "mean": -0.00036150312499183806,
+   "mean_absolute": 0.0016041562499991687
+  },
+  {
+   "games": [
+    "401910031",
+    "401910037"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004439200000000254,
+   "maximum": 0.0021233000000048796,
+   "mean": -0.0003276765624950261,
+   "mean_absolute": 0.0013837890625014457
+  },
+  {
+   "games": [
+    "401910031",
+    "401910038"
+   ],
+   "shared_teams": [],
+   "minimum": -0.003729940000004789,
+   "maximum": 0.003945060000009243,
+   "mean": -0.00023208843749815931,
+   "mean_absolute": 0.001550422187500582
+  },
+  {
+   "games": [
+    "401910031",
+    "401910039"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0031659399998830717,
+   "maximum": 0.0032278100001105203,
+   "mean": 0.0001297631251068066,
+   "mean_absolute": 0.0012270893750200018
+  },
+  {
+   "games": [
+    "401910031",
+    "401910040"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004234469999920776,
+   "maximum": 0.0038030300001052897,
+   "mean": -0.00035888406241216513,
+   "mean_absolute": 0.0015390803124861576
+  },
+  {
+   "games": [
+    "401910031",
+    "401910041"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0041747200000190055,
+   "maximum": 0.0035877799999808474,
+   "mean": 3.4049999819126334e-06,
+   "mean_absolute": 0.001128871250002124
+  },
+  {
+   "games": [
+    "401910031",
+    "401910042"
+   ],
+   "shared_teams": [],
+   "minimum": -0.00455930999999829,
+   "maximum": 0.002440690000010237,
+   "mean": -0.0005864584374899607,
+   "mean_absolute": 0.0016130696875002477
+  },
+  {
+   "games": [
+    "401910031",
+    "401910043"
+   ],
+   "shared_teams": [],
+   "minimum": -0.005023039999928258,
+   "maximum": 0.003139460000090716,
+   "mean": -0.00025214156239743244,
+   "mean_absolute": 0.0018358646875095428
+  },
+  {
+   "games": [
+    "401910031",
+    "401910044"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0037555899998542586,
+   "maximum": 0.0026506600001286462,
+   "mean": -0.0005682853123473268,
+   "mean_absolute": 0.0010529903124190318
+  },
+  {
+   "games": [
+    "401910031",
+    "401910045"
+   ],
+   "shared_teams": [],
+   "minimum": -0.003249000000004859,
+   "maximum": 0.0021134999999945503,
+   "mean": -0.00024763281250616805,
+   "mean_absolute": 0.0011567734374995958
+  },
+  {
+   "games": [
+    "401910032",
+    "401910033"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004515880000016972,
+   "maximum": 0.004034119999982308,
+   "mean": 0.0003163465624818791,
+   "mean_absolute": 0.0015663265624943235
+  },
+  {
+   "games": [
+    "401910032",
+    "401910034"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0041686099999552195,
+   "maximum": 0.004031390000063473,
+   "mean": 0.00036029625005752543,
+   "mean_absolute": 0.0015699393750114735
+  },
+  {
+   "games": [
+    "401910032",
+    "401910035"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004975940000018136,
+   "maximum": 0.003449059999982615,
+   "mean": 0.00020765374998222858,
+   "mean_absolute": 0.0015033981249976298
+  },
+  {
+   "games": [
+    "401910032",
+    "401910036"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004070350000018388,
+   "maximum": 0.003623399999984553,
+   "mean": -1.3514062518299626e-05,
+   "mean_absolute": 0.0014837890625007616
+  },
+  {
+   "games": [
+    "401910032",
+    "401910037"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004039650000018519,
+   "maximum": 0.0026728499999787853,
+   "mean": -0.0008076187500188352,
+   "mean_absolute": 0.0014396125000079346
+  },
+  {
+   "games": [
+    "401910032",
+    "401910038"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0024558800000182013,
+   "maximum": 0.0029191199999800133,
+   "mean": 0.0005816199999812348,
+   "mean_absolute": 0.0011305612499954262
+  },
+  {
+   "games": [
+    "401910032",
+    "401910039"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0035341299999426534,
+   "maximum": 0.005434620000052931,
+   "mean": 0.00023989343756257442,
+   "mean_absolute": 0.001283429062509462
+  },
+  {
+   "games": [
+    "401910032",
+    "401910040"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0036481899999669665,
+   "maximum": 0.0033643100000373405,
+   "mean": -1.3814999953148943e-05,
+   "mean_absolute": 0.0013925781250020662
+  },
+  {
+   "games": [
+    "401910032",
+    "401910041"
+   ],
+   "shared_teams": [
+    "4"
+   ],
+   "minimum": -0.0019599400000161193,
+   "maximum": 0.0034963099999833075,
+   "mean": 0.00022951312498296428,
+   "mean_absolute": 0.0012622693749988552
+  },
+  {
+   "games": [
+    "401910032",
+    "401910042"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004041370000018751,
+   "maximum": 0.0030086299999843025,
+   "mean": -0.00014058875001775935,
+   "mean_absolute": 0.0013458518750000979
+  },
+  {
+   "games": [
+    "401910032",
+    "401910043"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004025829999953379,
+   "maximum": 0.0028054200000701968,
+   "mean": -0.00042133781244151156,
+   "mean_absolute": 0.0014252471874985654
+  },
+  {
+   "games": [
+    "401910032",
+    "401910044"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0028734299998906254,
+   "maximum": 0.00406407000012074,
+   "mean": 0.00012813250011756584,
+   "mean_absolute": 0.0012494150000182539
+  },
+  {
+   "games": [
+    "401910032",
+    "401910045"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004273000000004919,
+   "maximum": 0.004576999999993808,
+   "mean": -0.00024311718750626046,
+   "mean_absolute": 0.0012694921875015727
+  },
+  {
+   "games": [
+    "401910033",
+    "401910034"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004333679999868029,
+   "maximum": 0.0032163200001153747,
+   "mean": 9.913250014094432e-05,
+   "mean_absolute": 0.0013900175000411477
+  },
+  {
+   "games": [
+    "401910033",
+    "401910035"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0033417199999978275,
+   "maximum": 0.003414530000023508,
+   "mean": -1.867312499199969e-05,
+   "mean_absolute": 0.0014408887500011857
+  },
+  {
+   "games": [
+    "401910033",
+    "401910036"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0038257999999815884,
+   "maximum": 0.003486700000034232,
+   "mean": 0.0002499812500353759,
+   "mean_absolute": 0.0015050281250039987
+  },
+  {
+   "games": [
+    "401910033",
+    "401910037"
+   ],
+   "shared_teams": [],
+   "minimum": -0.003979199999981947,
+   "maximum": 0.004108300000030207,
+   "mean": -5.302812496849659e-05,
+   "mean_absolute": 0.001259893750004691
+  },
+  {
+   "games": [
+    "401910033",
+    "401910038"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004322939999977182,
+   "maximum": 0.003114560000047145,
+   "mean": -0.0005993071874730842,
+   "mean_absolute": 0.001671035937493251
+  },
+  {
+   "games": [
+    "401910033",
+    "401910039"
+   ],
+   "shared_teams": [],
+   "minimum": -0.00352143999985019,
+   "maximum": 0.004428560000172083,
+   "mean": 5.7856875148012445e-05,
+   "mean_absolute": 0.0014939181249942679
+  },
+  {
+   "games": [
+    "401910033",
+    "401910040"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0030122199998611765,
+   "maximum": 0.003781530000116995,
+   "mean": 0.00025262375012699047,
+   "mean_absolute": 0.0016847656250021503
+  },
+  {
+   "games": [
+    "401910033",
+    "401910041"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0038587200000153865,
+   "maximum": 0.0028162799999930654,
+   "mean": -0.0001813762500099906,
+   "mean_absolute": 0.0016978925000011805
+  },
+  {
+   "games": [
+    "401910033",
+    "401910042"
+   ],
+   "shared_teams": [],
+   "minimum": -0.003172559999967378,
+   "maximum": 0.004414940000031536,
+   "mean": 0.0002577134375380159,
+   "mean_absolute": 0.001375500312506989
+  },
+  {
+   "games": [
+    "401910033",
+    "401910043"
+   ],
+   "shared_teams": [],
+   "minimum": -0.00521103999986211,
+   "maximum": 0.004638960000144937,
+   "mean": -0.0005881884373571998,
+   "mean_absolute": 0.0018049996874756379
+  },
+  {
+   "games": [
+    "401910033",
+    "401910044"
+   ],
+   "shared_teams": [
+    "26"
+   ],
+   "minimum": -0.0022598399998539076,
+   "maximum": 0.00269641000012083,
+   "mean": 0.00016047250013531342,
+   "mean_absolute": 0.0012261137500136528
+  },
+  {
+   "games": [
+    "401910033",
+    "401910045"
+   ],
+   "shared_teams": [],
+   "minimum": -0.00439900000000619,
+   "maximum": 0.0027259999999939,
+   "mean": -0.0002999765625060209,
+   "mean_absolute": 0.0013992265625004181
+  },
+  {
+   "games": [
+    "401910034",
+    "401910035"
+   ],
+   "shared_teams": [],
+   "minimum": -0.00484608999983327,
+   "maximum": 0.003960160000129609,
+   "mean": -0.0002759728123715808,
+   "mean_absolute": 0.0018111328125009624
+  },
+  {
+   "games": [
+    "401910034",
+    "401910036"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0043413499998553595,
+   "maximum": 0.005133650000135381,
+   "mean": 0.00014458750014385326,
+   "mean_absolute": 0.0016696218749801244
+  },
+  {
+   "games": [
+    "401910034",
+    "401910037"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004956149999846227,
+   "maximum": 0.004106350000142811,
+   "mean": 4.90625145845372e-07,
+   "mean_absolute": 0.0019207156250168073
+  },
+  {
+   "games": [
+    "401910034",
+    "401910038"
+   ],
+   "shared_teams": [
+    "11"
+   ],
+   "minimum": -0.003898679999853938,
+   "maximum": 0.0040263200001859345,
+   "mean": -0.0006652815623508675,
+   "mean_absolute": 0.0016436153124608083
+  },
+  {
+   "games": [
+    "401910034",
+    "401910039"
+   ],
+   "shared_teams": [],
+   "minimum": -0.006353179999902869,
+   "maximum": 0.003946820000069684,
+   "mean": -0.0002875549999042989,
+   "mean_absolute": 0.0016966831249950968
+  },
+  {
+   "games": [
+    "401910034",
+    "401910040"
+   ],
+   "shared_teams": [],
+   "minimum": -0.003672089999893713,
+   "maximum": 0.0019591600001094833,
+   "mean": -0.0001838087498977261,
+   "mean_absolute": 0.001265443124993994
+  },
+  {
+   "games": [
+    "401910034",
+    "401910041"
+   ],
+   "shared_teams": [],
+   "minimum": -0.005001339999905374,
+   "maximum": 0.0034924100000848224,
+   "mean": -0.00028434781240166233,
+   "mean_absolute": 0.0016055246874823563
+  },
+  {
+   "games": [
+    "401910034",
+    "401910042"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004627319999814472,
+   "maximum": 0.004047680000155318,
+   "mean": -0.0004966559373571003,
+   "mean_absolute": 0.0017528290624801122
+  },
+  {
+   "games": [
+    "401910034",
+    "401910043"
+   ],
+   "shared_teams": [],
+   "minimum": -0.00410937999992006,
+   "maximum": 0.004053120000101218,
+   "mean": -0.00019961437490325674,
+   "mean_absolute": 0.0015173837499837025
+  },
+  {
+   "games": [
+    "401910034",
+    "401910044"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0023504799999090054,
+   "maximum": 0.0031432700000151303,
+   "mean": -2.5675312430480102e-05,
+   "mean_absolute": 0.0011998646874944036
+  },
+  {
+   "games": [
+    "401910034",
+    "401910045"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0029592499999983035,
+   "maximum": 0.003384500000029461,
+   "mean": 0.000337234375023982,
+   "mean_absolute": 0.0016000156250048888
+  },
+  {
+   "games": [
+    "401910035",
+    "401910036"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0039303999999712735,
+   "maximum": 0.005244600000027744,
+   "mean": 7.038125002709408e-05,
+   "mean_absolute": 0.0019456499999990703
+  },
+  {
+   "games": [
+    "401910035",
+    "401910037"
+   ],
+   "shared_teams": [],
+   "minimum": -0.003834599999992666,
+   "maximum": 0.004990400000020656,
+   "mean": 7.204062502375649e-05,
+   "mean_absolute": 0.0018396625000012138
+  },
+  {
+   "games": [
+    "401910035",
+    "401910038"
+   ],
+   "shared_teams": [],
+   "minimum": -0.003651719999985925,
+   "maximum": 0.004273280000017532,
+   "mean": 0.0003453503125203268,
+   "mean_absolute": 0.001372421562505076
+  },
+  {
+   "games": [
+    "401910035",
+    "401910039"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0028197199998512834,
+   "maximum": 0.005130280000140985,
+   "mean": 0.00018008468763581944,
+   "mean_absolute": 0.0012877559374851267
+  },
+  {
+   "games": [
+    "401910035",
+    "401910040"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004004359999885215,
+   "maximum": 0.0037206400001097983,
+   "mean": 0.0007936868751162009,
+   "mean_absolute": 0.0013643806250430513
+  },
+  {
+   "games": [
+    "401910035",
+    "401910041"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0031338600000177796,
+   "maximum": 0.004353639999988196,
+   "mean": 0.00028723374998444783,
+   "mean_absolute": 0.0014230468750014327
+  },
+  {
+   "games": [
+    "401910035",
+    "401910042"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0035022799999724907,
+   "maximum": 0.0028227200000323915,
+   "mean": 0.00044947781253005473,
+   "mean_absolute": 0.00129987343750895
+  },
+  {
+   "games": [
+    "401910035",
+    "401910043"
+   ],
+   "shared_teams": [],
+   "minimum": -0.005037019999884096,
+   "maximum": 0.005787980000130616,
+   "mean": 0.0001266518751318101,
+   "mean_absolute": 0.0014531250000045072
+  },
+  {
+   "games": [
+    "401910035",
+    "401910044"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0036539199998433802,
+   "maximum": 0.003483580000133435,
+   "mean": -1.9349687359173154e-05,
+   "mean_absolute": 0.0010447265624989998
+  },
+  {
+   "games": [
+    "401910035",
+    "401910045"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004712000000005878,
+   "maximum": 0.0024067499999949893,
+   "mean": -0.0003661015625060467,
+   "mean_absolute": 0.001410710937500336
+  },
+  {
+   "games": [
+    "401910036",
+    "401910037"
+   ],
+   "shared_teams": [],
+   "minimum": -0.002812749999948988,
+   "maximum": 0.00708725000004698,
+   "mean": 0.00010971093755344878,
+   "mean_absolute": 0.0009771640625009185
+  },
+  {
+   "games": [
+    "401910036",
+    "401910038"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004088299999953443,
+   "maximum": 0.0035117000000694787,
+   "mean": -0.00024454999995122614,
+   "mean_absolute": 0.00150132187499428
+  },
+  {
+   "games": [
+    "401910036",
+    "401910039"
+   ],
+   "shared_teams": [],
+   "minimum": -0.003933299999862638,
+   "maximum": 0.004272950000122011,
+   "mean": 1.2989062642083937e-05,
+   "mean_absolute": 0.001837829687517091
+  },
+  {
+   "games": [
+    "401910036",
+    "401910040"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0038528999998517777,
+   "maximum": 0.0016346000001442595,
+   "mean": -0.0007060249998513245,
+   "mean_absolute": 0.0012634062499544737
+  },
+  {
+   "games": [
+    "401910036",
+    "401910041"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004432899999992551,
+   "maximum": 0.0033983500000143996,
+   "mean": -0.0002834859374927787,
+   "mean_absolute": 0.0012648546875013303
+  },
+  {
+   "games": [
+    "401910036",
+    "401910042"
+   ],
+   "shared_teams": [],
+   "minimum": -0.005271699999962909,
+   "maximum": 0.00728455000006506,
+   "mean": 0.0006976359375611696,
+   "mean_absolute": 0.0018830296875134173
+  },
+  {
+   "games": [
+    "401910036",
+    "401910043"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0034552999998365697,
+   "maximum": 0.0040009500001563225,
+   "mean": 0.0003380593751435342,
+   "mean_absolute": 0.0015273437499981283
+  },
+  {
+   "games": [
+    "401910036",
+    "401910044"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0035837999998827863,
+   "maximum": 0.004684950000124255,
+   "mean": -9.825312487877873e-05,
+   "mean_absolute": 0.0017109375000001151
+  },
+  {
+   "games": [
+    "401910036",
+    "401910045"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0026487500000042102,
+   "maximum": 0.003557499999993885,
+   "mean": 0.000439921874993982,
+   "mean_absolute": 0.0012528906249991536
+  },
+  {
+   "games": [
+    "401910037",
+    "401910038"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004354199999958119,
+   "maximum": 0.005083300000043117,
+   "mean": -0.0002889656249552902,
+   "mean_absolute": 0.0014873781249884034
+  },
+  {
+   "games": [
+    "401910037",
+    "401910039"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0033966999998560343,
+   "maximum": 0.0036783000001133215,
+   "mean": -0.00013693437485564307,
+   "mean_absolute": 0.0014744031249858975
+  },
+  {
+   "games": [
+    "401910037",
+    "401910040"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0027308499998516533,
+   "maximum": 0.00650665000012951,
+   "mean": 0.00024336875014991082,
+   "mean_absolute": 0.0015546374999741716
+  },
+  {
+   "games": [
+    "401910037",
+    "401910041"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0032633500000009974,
+   "maximum": 0.005505400000011096,
+   "mean": -4.909218749573046e-05,
+   "mean_absolute": 0.0016405890625018913
+  },
+  {
+   "games": [
+    "401910037",
+    "401910042"
+   ],
+   "shared_teams": [],
+   "minimum": -0.005504549999948649,
+   "maximum": 0.004295450000088408,
+   "mean": -4.2049999943764675e-05,
+   "mean_absolute": 0.001764275000010816
+  },
+  {
+   "games": [
+    "401910037",
+    "401910043"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0038559499998562785,
+   "maximum": 0.004962800000141154,
+   "mean": -3.996874854327037e-06,
+   "mean_absolute": 0.0013976374999870658
+  },
+  {
+   "games": [
+    "401910037",
+    "401910044"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0036024499998740245,
+   "maximum": 0.003985050000125778,
+   "mean": 7.1203126236416e-06,
+   "mean_absolute": 0.0012812078124909733
+  },
+  {
+   "games": [
+    "401910037",
+    "401910045"
+   ],
+   "shared_teams": [],
+   "minimum": -0.003595000000003401,
+   "maximum": 0.0028987499999945793,
+   "mean": -3.09375000060539e-05,
+   "mean_absolute": 0.0010895312500010246
+  },
+  {
+   "games": [
+    "401910038",
+    "401910039"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0033226899998645143,
+   "maximum": 0.003321060000114062,
+   "mean": -0.0003687837498530227,
+   "mean_absolute": 0.0011427818749599281
+  },
+  {
+   "games": [
+    "401910038",
+    "401910040"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0047847199998627965,
+   "maximum": 0.004115280000141525,
+   "mean": -1.8313749853117803e-05,
+   "mean_absolute": 0.0017207031250020023
+  },
+  {
+   "games": [
+    "401910038",
+    "401910041"
+   ],
+   "shared_teams": [],
+   "minimum": -0.00554372000000708,
+   "maximum": 0.0024625300000058192,
+   "mean": -0.0003277043749992615,
+   "mean_absolute": 0.0016636700000017069
+  },
+  {
+   "games": [
+    "401910038",
+    "401910042"
+   ],
+   "shared_teams": [],
+   "minimum": -0.003940059999960888,
+   "maximum": 0.0040661900000392714,
+   "mean": -0.0002978724999486322,
+   "mean_absolute": 0.0016105468750011193
+  },
+  {
+   "games": [
+    "401910038",
+    "401910043"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0034185399998629684,
+   "maximum": 0.004650210000149646,
+   "mean": 0.00025392093764797785,
+   "mean_absolute": 0.0015670184375275592
+  },
+  {
+   "games": [
+    "401910038",
+    "401910044"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004023589999879729,
+   "maximum": 0.002388910000127087,
+   "mean": -4.253531237352788e-05,
+   "mean_absolute": 0.001442685312492557
+  },
+  {
+   "games": [
+    "401910038",
+    "401910045"
+   ],
+   "shared_teams": [],
+   "minimum": -0.003149000000003274,
+   "maximum": 0.002613499999994981,
+   "mean": -0.00016599218750602569,
+   "mean_absolute": 0.0010575546875015883
+  },
+  {
+   "games": [
+    "401910039",
+    "401910040"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0038152199999162972,
+   "maximum": 0.005566030000079603,
+   "mean": 0.0007328268750994744,
+   "mean_absolute": 0.00170054250003435
+  },
+  {
+   "games": [
+    "401910039",
+    "401910041"
+   ],
+   "shared_teams": [],
+   "minimum": -0.003811719999900237,
+   "maximum": 0.003657030000107614,
+   "mean": 0.00023242062510542803,
+   "mean_absolute": 0.0012611325000261141
+  },
+  {
+   "games": [
+    "401910039",
+    "401910042"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0037290599998607843,
+   "maximum": 0.0036834400001565792,
+   "mean": 5.511968764056359e-05,
+   "mean_absolute": 0.001674414062505977
+  },
+  {
+   "games": [
+    "401910039",
+    "401910043"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004257039999936929,
+   "maximum": 0.0033179600001174148,
+   "mean": 2.5381875094321327e-05,
+   "mean_absolute": 0.0015468749999988304
+  },
+  {
+   "games": [
+    "401910039",
+    "401910044"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0031383399999861394,
+   "maximum": 0.005686660000145283,
+   "mean": -4.341812493266137e-05,
+   "mean_absolute": 0.0014176831249866698
+  },
+  {
+   "games": [
+    "401910039",
+    "401910045"
+   ],
+   "shared_teams": [],
+   "minimum": -0.003948999999976777,
+   "maximum": 0.004026000000033558,
+   "mean": 0.00019260156252825632,
+   "mean_absolute": 0.001340492187503632
+  },
+  {
+   "games": [
+    "401910040",
+    "401910041"
+   ],
+   "shared_teams": [],
+   "minimum": -0.006031609999933435,
+   "maximum": 0.00451214000007405,
+   "mean": -6.188343741354504e-05,
+   "mean_absolute": 0.0017079853125076799
+  },
+  {
+   "games": [
+    "401910040",
+    "401910042"
+   ],
+   "shared_teams": [],
+   "minimum": -0.006075529999877705,
+   "maximum": 0.004186970000124357,
+   "mean": -1.9279999853315244e-05,
+   "mean_absolute": 0.0017303031250374898
+  },
+  {
+   "games": [
+    "401910040",
+    "401910043"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0047150199998968745,
+   "maximum": 0.004622480000113838,
+   "mean": -0.0005449028123980185,
+   "mean_absolute": 0.0021871534374739033
+  },
+  {
+   "games": [
+    "401910040",
+    "401910044"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0020169199998935627,
+   "maximum": 0.003426830000098413,
+   "mean": 0.000213158125074428,
+   "mean_absolute": 0.0012032393749994048
+  },
+  {
+   "games": [
+    "401910040",
+    "401910045"
+   ],
+   "shared_teams": [],
+   "minimum": -0.007124499999990291,
+   "maximum": 0.003338000000025876,
+   "mean": -0.0004623906249856518,
+   "mean_absolute": 0.0015358749999997163
+  },
+  {
+   "games": [
+    "401910041",
+    "401910042"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0038227799999930034,
+   "maximum": 0.004052220000025586,
+   "mean": 2.5852812509689557e-05,
+   "mean_absolute": 0.0016003084375016182
+  },
+  {
+   "games": [
+    "401910041",
+    "401910043"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0035527699999208517,
+   "maximum": 0.0029159800001071212,
+   "mean": -0.0001672231248988961,
+   "mean_absolute": 0.0010674893749745926
+  },
+  {
+   "games": [
+    "401910041",
+    "401910044"
+   ],
+   "shared_teams": [],
+   "minimum": -0.005347169999824319,
+   "maximum": 0.002590330000188823,
+   "mean": -0.0002243184373472394,
+   "mean_absolute": 0.0012927734374969663
+  },
+  {
+   "games": [
+    "401910041",
+    "401910045"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0026120000000048743,
+   "maximum": 0.004312999999993683,
+   "mean": 0.0002264765624937666,
+   "mean_absolute": 0.0010920234374994777
+  },
+  {
+   "games": [
+    "401910042",
+    "401910043"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004290709999837106,
+   "maximum": 0.0037467900001346144,
+   "mean": -0.000596374062357588,
+   "mean_absolute": 0.0016404403124786887
+  },
+  {
+   "games": [
+    "401910042",
+    "401910044"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0038769099998691714,
+   "maximum": 0.0036980900001251094,
+   "mean": -0.00017358968738056223,
+   "mean_absolute": 0.001344422812470004
+  },
+  {
+   "games": [
+    "401910042",
+    "401910045"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004413500000002457,
+   "maximum": 0.003611499999994397,
+   "mean": -0.0003209218750060026,
+   "mean_absolute": 0.0017229218749978447
+  },
+  {
+   "games": [
+    "401910043",
+    "401910044"
+   ],
+   "shared_teams": [],
+   "minimum": -0.004323939999934467,
+   "maximum": 0.003144810000067333,
+   "mean": 8.77787500685942e-05,
+   "mean_absolute": 0.0015729212500231841
+  },
+  {
+   "games": [
+    "401910043",
+    "401910045"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0024339999999969664,
+   "maximum": 0.004084750000032056,
+   "mean": 0.00025350000002560043,
+   "mean_absolute": 0.0014445312500038629
+  },
+  {
+   "games": [
+    "401910044",
+    "401910045"
+   ],
+   "shared_teams": [],
+   "minimum": -0.0026639999999171493,
+   "maximum": 0.002329750000079178,
+   "mean": 3.814843757431272e-05,
+   "mean_absolute": 0.0009697265624984469
+  }
+ ]
+}

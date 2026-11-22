@@ -1,0 +1,93 @@
+{
+ "kind": "independent research accounting audit; not a forecast or predictive acceptance",
+ "coupling_report_sha256": "d1f401fac1dec619e3dc4012e01429aa06882952789505db483235286c47dec6",
+ "pathway_report_sha256": "e6a98a76f11fecf82ac68840f4367390fca3f7380e0550da97989f40dc8c5746",
+ "origin": "2026-11-22",
+ "paths": 122428,
+ "schedule_games": 959,
+ "teams": 30,
+ "engine_game_marginals": [
+  {
+   "game": "401910029",
+   "distinct_vectors": 20000
+  },
+  {
+   "game": "401910030",
+   "distinct_vectors": 40000
+  },
+  {
+   "game": "401910031",
+   "distinct_vectors": 10000
+  },
+  {
+   "game": "401910032",
+   "distinct_vectors": 10000
+  },
+  {
+   "game": "401910033",
+   "distinct_vectors": 10000
+  },
+  {
+   "game": "401910034",
+   "distinct_vectors": 10000
+  },
+  {
+   "game": "401910035",
+   "distinct_vectors": 10000
+  },
+  {
+   "game": "401910036",
+   "distinct_vectors": 10000
+  },
+  {
+   "game": "401910037",
+   "distinct_vectors": 10000
+  },
+  {
+   "game": "401910038",
+   "distinct_vectors": 10000
+  },
+  {
+   "game": "401910039",
+   "distinct_vectors": 10000
+  },
+  {
+   "game": "401910040",
+   "distinct_vectors": 10000
+  },
+  {
+   "game": "401910041",
+   "distinct_vectors": 10000
+  },
+  {
+   "game": "401910042",
+   "distinct_vectors": 10000
+  },
+  {
+   "game": "401910043",
+   "distinct_vectors": 10000
+  },
+  {
+   "game": "401910044",
+   "distinct_vectors": 10000
+  },
+  {
+   "game": "401910045",
+   "distinct_vectors": 10000
+  }
+ ],
+ "win_histograms_and_seed_distributions_verified": 30,
+ "input_sha256": {
+  "scripts/pathway.py": "97afe9b90396fb7f27f999f38e3f192dcd13cd928fc8f6fbce41825890d92857",
+  "scripts/projection.py": "d93dce7ebd84f5d433897ad83177673c8bd122816ea3e14b5a67618bd6dc6406",
+  "scripts/season_stats.py": "ce683396adee2f44cdb084f87d913572e31091e3c5f3d5768912a9a102dedd77",
+  "scripts/box_scores.py": "9cf07196d6f9adfa63563bde7f6d73edf27bd6044804237912faaffde6ac2260",
+  "data/master_fixtures.csv": "0e34e44e1e1edcf1089d2e844796940b5bf879be50d16fba2c9c0929554035c8",
+  "data/derived/team_games.csv": "35e195b73a15ee762bc436fe438a69366588cc3c4fe941390b928a91613a2c7e",
+  "data/derived/teams.json": "130aa5358d49b944c2b5bee7e9a163f1e53285e93dae57262f039ca1636b7ecc",
+  "analysis/a1_season_mixture_audit.py": "e668138058b2ba6464e0ac08ec73460a5fcdab84941e55cefb82b091d51bea2f"
+ },
+ "numpy_version": "2.4.2",
+ "elapsed_seconds": 12.561,
+ "limitation": "Two branch mixtures and 15 unconditional inputs; no dependence or promotion claim."
+}

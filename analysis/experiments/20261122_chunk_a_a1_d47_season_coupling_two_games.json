@@ -1,0 +1,21 @@
+{
+ "kind": "research exact-marginal season coupling; cross-game dependence unvalidated",
+ "origin": "2026-11-22",
+ "seed": "20261122",
+ "sources": [
+  {
+   "game": "401910029",
+   "report": "analysis/experiments/20261122_chunk_a_a1_d47_10000_one.json",
+   "sha256": "b62ee8a59bde0fe331ce2d3046e2751cb8f772cf16847bcc40e11430bacfd628"
+  },
+  {
+   "game": "401910030",
+   "report": "analysis/experiments/20261122_chunk_a_a1_d47_10000_two.json",
+   "sha256": "20204539755935dbd19a362d98210f9c5831077c2b657f9a8635ff72a00372ce"
+  }
+ ],
+ "paths": 55037,
+ "denominator": "160000",
+ "worlds_output": "data/derived/experiments/20261122_chunk_a_a1_d47_season_coupling_two_games.npz",
+ "worlds_sha256": "be32e6617d1bd21eee6a0e8fff7143e47b8b90a83f0feb2c468ee24ee26e49eb"
+}

@@ -1,0 +1,52 @@
+{
+ "kind": "research exact-marginal season coupling; cross-game dependence unvalidated",
+ "origin": "2026-11-22",
+ "seed": "20261122",
+ "sources": [
+  {
+   "game": "401910029",
+   "engine": "engine-v1.3",
+   "report": "analysis/experiments/20261122_chunk_a_a1_d47_10000_one.json",
+   "sha256": "b62ee8a59bde0fe331ce2d3046e2751cb8f772cf16847bcc40e11430bacfd628"
+  },
+  {
+   "game": "401910030",
+   "engine": "engine-v1.3",
+   "report": "analysis/experiments/20261122_chunk_a_a1_d47_10000_two.json",
+   "sha256": "20204539755935dbd19a362d98210f9c5831077c2b657f9a8635ff72a00372ce"
+  }
+ ],
+ "snapshot_sources": [
+  {
+   "day": "2026-11-22",
+   "worlds_sha256": "cbe1f0131856cb4d863ee8a28f523fdb6a4a3e5bb4ff9bc60194f8f36ad989ce",
+   "meta_sha256": "c3a329344b0e6c1471de47cb85223fa3039a79c8b9c29588a762253e186f1002"
+  },
+  {
+   "day": "2026-11-23",
+   "worlds_sha256": "2380cca053c7e3cd8a9b02ad31ac3e665fe9af494087cf895d9d4601bf4910a1",
+   "meta_sha256": "e6e79ef416a4285e384e0965111278fe34ece12bba924241021101faa7a0b952"
+  }
+ ],
+ "unbranched_games": [
+  "401910031",
+  "401910032",
+  "401910033",
+  "401910034",
+  "401910035",
+  "401910036",
+  "401910037",
+  "401910038",
+  "401910039",
+  "401910040",
+  "401910041",
+  "401910042",
+  "401910043",
+  "401910044",
+  "401910045"
+ ],
+ "paths": 122428,
+ "denominator": "160000",
+ "worlds_output": "data/derived/experiments/20261122_chunk_a_a1_d47_season_coupling_17_mixed.npz",
+ "worlds_sha256": "8f703680dfaf918c90198fc53d0723255bd24141c6054d167a00226e5171b234"
+}

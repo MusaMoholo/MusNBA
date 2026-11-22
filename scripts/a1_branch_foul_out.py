@@ -3,7 +3,11 @@ from __future__ import annotations
 
 import numpy as np
 
-from scripts import a1_lineup_branches, engine
+from scripts import a1_lineup_branches, a1_world_retry, engine
+
+
+class ExhaustedEligiblePlayers(a1_lineup_branches.BranchLegalityError, a1_world_retry.RecoverableWorldError):
+    """A world with a valid initial roster has fewer than five players left after foul-outs."""
 
 
 class BranchFoulOutPolicy:
@@ -28,7 +32,7 @@ class BranchFoulOutPolicy:
                 f'branch game {g.game["game_id"]} world {world} side {side}: invalid scheduled five')
         legal = (g.side == side) & self.available[world] & (st.ingame['pf_so_far'][world] < 6)
         if legal.sum() < 5:
-            raise a1_lineup_branches.BranchLegalityError(
+            raise ExhaustedEligiblePlayers(
                 f'branch game {g.game["game_id"]} world {world} side {side}: '
                 f'fewer than five eligible players at period {st.period[world]} clock {st.clock[world]:.1f}')
         bad = np.flatnonzero(~legal[desired])

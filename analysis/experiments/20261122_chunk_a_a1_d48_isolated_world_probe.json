@@ -1,0 +1,112 @@
+{
+ "kind": "research synthetic-rejection wiring; not a forecast or promotion",
+ "population": "fixed F4 game with actual participants; selected availability synthetic",
+ "game": "401810327",
+ "model": "folds/v1.2d_F4_all",
+ "seed": "20261122",
+ "result": {
+  "selected_player": "4432166",
+  "worlds": 3,
+  "engine_attempts": 7,
+  "control_seeds": [
+   "7670511118652952252",
+   "1415220768911242514",
+   "1768439139339038499"
+  ],
+  "retry_seeds": [
+   "7670511118652952252",
+   "2282739932216541014",
+   "1768439139339038499"
+  ],
+  "rejections": [
+   {
+    "world": 1,
+    "attempt": 0,
+    "seed": "1415220768911242514",
+    "reason": "deliberately injected after successful world audit"
+   }
+  ],
+  "control_audits": [
+   {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 274,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 548,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   },
+   {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 247,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 494,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   },
+   {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 251,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 502,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  ],
+  "retry_audits": [
+   {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 274,
+    "post_foul_snapshots": 1,
+    "lineup_fives_checked": 548,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   },
+   {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 244,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 488,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   },
+   {
+    "game_id": "401810327",
+    "worlds": 1,
+    "players": 20,
+    "lineup_snapshots": 251,
+    "post_foul_snapshots": 0,
+    "lineup_fives_checked": 502,
+    "overtime_worlds": 0,
+    "max_replayed_player_minute_error": 0.0
+   }
+  ]
+ },
+ "elapsed_seconds": 3.292,
+ "sha256": {
+  "analysis/a1_world_retry_probe.py": "e4af691e5fd33528f52bdb30bcff20040a320c7e748f723e41f79cb33eb1ba20",
+  "scripts/a1_world_retry.py": "3f02c374e107c2c1b66c6e14dbff80fb84872fbec885803a27b218d3d02511f0",
+  "scripts/a1_branch_world_probe.py": "25c7820498beaafa7f71c4b349955f2c4cf4e41441ffd47e44ae361aca187b31",
+  "scripts/a1_branch_foul_out.py": "ee501eab70755921771a0888e7ee5820ce64c821f4283c87f33618a0b400eca5",
+  "scripts/a1_lineup_branches.py": "1b2c3ea7ff3172566d664c7fcc6b7fd5cb0f421c4d5453ff84a609311c23c76c",
+  "scripts/engine.py": "5431df17caac031eb051fc80968496366cb8d4d6915fc123db35f94ee9d9f339",
+  "scripts/a1_substitution_world_audit.py": "d1f1b34834ffe6c9d82b246cbbaed453c6a4eea224e47da020c6e0f02d3cdf4e",
+  "data/derived/experiments/20261122_a1_s03_f4_game_ids.json": "5d1285db46b129de9da954d9a44c93e03a281d0bc76bfa82ac4a97619da7bcc7",
+  "models/v1.2d.json": "d0fded7eb9871494e0bc4a82a3627b0a3dc37c3c243d8c9378f151dec2789927",
+  "data/models/folds/v1.2d_F4_all/config.json": "1617769cb52f2c750e0f1276071b39fc21254ef53fc97ccc646869aaa50f5e71"
+ },
+ "limitations": [
+  "Injected failure is not an observed foul-out.",
+  "No rejection rate, bias or 10,000-world runtime has been measured.",
+  "Single-world seeds differ from production vectorized streams."
+ ]
+}

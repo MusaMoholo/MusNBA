@@ -1,0 +1,48 @@
+{
+ "kind": "artificial five-player roster and 48-minute roles; not an NBA failure-rate estimate",
+ "game": "401810327",
+ "model": "folds/v1.2d_F4_all",
+ "seed": "20261122",
+ "attempts_per_world": 10,
+ "max_rejections": 2,
+ "provenance": "analysis/experiments/20261122_chunk_a_a1_d48_isolated_world_probe_v3.json",
+ "provenance_sha256": "785b95caa409dce5f6b4ecd8869826a2f6911acc751f5e223b9f6c0f57bf16d1",
+ "analysis_sha256": "166fe2bc3ffcee89fd24669ee44069e537aed336fb63033c5c34cfebc5a49e6f",
+ "elapsed_seconds": 1.584,
+ "result": {
+  "status": "retry limit exceeded",
+  "rejections": [
+   {
+    "world": 1,
+    "attempt": 0,
+    "seed": "1415220768911242514",
+    "reason": "branch game 401810327 world 0 side 1: fewer than five eligible players at period 4 clock 632.0"
+   },
+   {
+    "world": 1,
+    "attempt": 1,
+    "seed": "2282739932216541014",
+    "reason": "branch game 401810327 world 0 side 1: fewer than five eligible players at period 3 clock 462.0"
+   },
+   {
+    "world": 1,
+    "attempt": 2,
+    "seed": "8738611326084970369",
+    "reason": "branch game 401810327 world 0 side 1: fewer than five eligible players at period 3 clock 620.0"
+   }
+  ],
+  "attempts": 4,
+  "kept_away_player_ids": [
+   "3059319",
+   "2595516",
+   "4066261",
+   "4432848",
+   "4278053"
+  ]
+ },
+ "limitations": [
+  "Roster deliberately restricted to five players with synthetic 48-minute roles.",
+  "Not a realistic failure-rate, bias or predictive comparison.",
+  "Short-roster foul-penalty exception remains unsupported."
+ ]
+}
