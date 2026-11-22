@@ -24,7 +24,8 @@ class MinuteGateTests(unittest.TestCase):
                   'players': players, 'games': games,
                   'win': {'status': 'ok', 'brier': metric(), 'log_loss': metric()}}
         noise = {'runs': {'control': 'control'}, 'population': dict(population),
-                 'players': {'all': {'min': {'crps': {'ci_95': [-0.02, 0.02]}}}}}
+                 'players': {'all': {'min': {'status': 'ok', 'crps': {'ci_95': [-0.02, 0.02]}}}},
+                 'games': {}, 'win': {'status': 'ok'}}
         return report, noise
 
     def test_strict_bounds_noise_and_missing_intervals_cannot_pass(self):
@@ -38,10 +39,25 @@ class MinuteGateTests(unittest.TestCase):
         failed = {(row['outcome'], row['metric']) for row in result['non_inferiority']['not_established']}
         self.assertEqual(failed, {('star min', 'crps'), ('star pts', 'coverage'), ('win', 'log_loss')})
 
+    def test_seed_floor_uses_the_larger_absolute_endpoint(self):
+        report, noise = self.reports()
+        for bounds in ([-0.001, 0.03], [-0.03, 0.001]):
+            with self.subTest(bounds=bounds):
+                noise['players']['all']['min']['crps']['ci_95'] = bounds
+                result = a1_minutes_gate.assess(report, noise)['pooled_minute_crps']
+                self.assertEqual(result['seed_noise_floor'], 0.03)
+                self.assertFalse(result['passes_uncorrected_screen'])
+        report['players']['all']['min']['crps'] = {'change': -0.04, 'ci_95': [-0.06, -0.01]}
+        self.assertTrue(a1_minutes_gate.assess(report, noise)['pooled_minute_crps']['passes_uncorrected_screen'])
+
     def test_mismatched_games_and_invalid_intervals_raise(self):
         report, noise = self.reports()
         noise['population']['game_ids'] = ['different']
         with self.assertRaisesRegex(ValueError, 'frozen control and games'):
+            a1_minutes_gate.assess(report, noise)
+        report, noise = self.reports()
+        noise['players']['all']['min']['status'] = 'insufficient_sample'
+        with self.assertRaisesRegex(ValueError, 'seed-noise interval is unavailable'):
             a1_minutes_gate.assess(report, noise)
         with self.assertRaisesRegex(ValueError, 'ordered finite'):
             a1_minutes_gate.interval({'ci_95': [float('nan'), 0.0]})

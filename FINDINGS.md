@@ -1313,13 +1313,17 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   override the pooled primary gate. Of **69** listed player-tier/game non-inferiority interval checks, **59**
   are inside their frozen bounds; **10** are not established (six star bias/coverage and four game/quarter
   coverage intervals). An additional **10/10** pooled-player bias/coverage intervals are inside the same bounds.
-  An interval crossing a bound is inconclusive, not proof of harm. Full paired comparisons and accounting:
+  Direct sampling of game indices independently reproduced all **15** pooled player-statistic point estimates and
+  bootstrap intervals to maximum absolute error **1.5e-15**; it confirmed those 10 pooled bounds. An interval crossing
+  a bound is inconclusive, not proof of harm. Full paired comparisons and accounting:
   `20261122_a1_s05_nba_only_fixed200_{comparison,accounting}.json`.
 - **Preliminary minute-gate defect:** the first and v2 gate reports used the seed interval's **0.01653** half-width
   instead of the preregistered maximum absolute endpoint **0.02634** (interval **−0.00671 to +0.02634**).
-  They must not be used for selection. The NBA-only primary screen still fails under the correct floor and because
-  its 95% interval includes zero. Preserve the reports and their exact sources, then correct and regression-test
-  the checker before evaluating the strict-runtime candidate.
+  They must not be used for selection. Their exact sources were preserved in **00a51cc** and **890bee3**;
+  the corrected checker reuses the manifest's floor calculation and has an asymmetric-interval regression test.
+  Its new `20261122_a1_s05_nba_only_fixed200_gate_v3.json` reports the correct floor and the same **59/69**
+  established non-inferiority bounds. The NBA-only primary screen still fails because its improvement is smaller
+  than the correct floor and its 95% interval includes zero.
 - **Historical prior-box minute sensitivities:** the independently audited all-active and fixed no-report fallback
   screens cover F1–F4 respectively **200/200/195/200** games and **400/400/390/400** team-sides. The five F3
   season-opening games have no prior same-season team candidates; their players are not treated as zeroes. The

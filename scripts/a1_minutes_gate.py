@@ -11,6 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 from basketball_common import sha256_file, write_json  # noqa: E402
+from scripts import a1_manifest  # noqa: E402
 
 PLAYER_CRPS = {
     'star': {'min': 0.0578, 'pts': 0.0898, 'reb': 0.0304, 'ast': 0.0261, 'fg3m': 0.0200},
@@ -40,10 +41,13 @@ def assess(report: dict, noise_report: dict) -> dict:
         raise ValueError('comparison and seed-noise reports do not share the frozen control and games')
     if set(report['games']) != set(GAME_CRPS):
         raise ValueError('paired report does not contain exactly the registered game outcomes')
-    seed = interval(noise_report['players']['all']['min']['crps'])
-    if seed is None:
+    seed_result = noise_report['players']['all']['min']
+    seed = interval(seed_result['crps'])
+    if seed is None or seed_result['status'] != 'ok':
         raise ValueError('pooled minute seed-noise interval is unavailable')
-    floor = (seed[1] - seed[0]) / 2
+    floor = a1_manifest.noise_floors(noise_report)['players']['all']['min']['crps']
+    if floor is None or not math.isfinite(floor):
+        raise ValueError('pooled minute seed-noise floor is unavailable')
     primary = report['players']['all']['min']
     primary_ci = interval(primary['crps'])
     change = float(primary['crps']['change'])
@@ -80,7 +84,7 @@ def assess(report: dict, noise_report: dict) -> dict:
         'experiment': 'a1_minutes_preliminary_gate',
         'runs': report['runs'],
         'population': {key: report['population'][key] for key in ('fold', 'games', 'player_games')},
-        'pooled_minute_crps': {'change': change, 'ci_95': primary_ci, 'seed_noise_half_width': floor,
+        'pooled_minute_crps': {'change': change, 'ci_95': primary_ci, 'seed_noise_floor': floor,
                                'passes_uncorrected_screen': preliminary},
         'non_inferiority': {'checks': len(checks), 'established': len(checks) - len(failed),
                             'not_established': failed},
@@ -98,7 +102,7 @@ def main() -> None:
     if args.output.exists():
         raise FileExistsError(f'refusing to overwrite {args.output}')
     report = assess(json.loads(args.comparison.read_text()), json.loads(args.seed_noise.read_text()))
-    inputs = [path.resolve() for path in (args.comparison, args.seed_noise, Path(__file__))]
+    inputs = [path.resolve() for path in (args.comparison, args.seed_noise, Path(__file__), Path(a1_manifest.__file__))]
     if any(not path.is_relative_to(ROOT) for path in inputs):
         raise ValueError('gate inputs must be inside the repository')
     report['input_sha256'] = {str(path.relative_to(ROOT)): sha256_file(path) for path in inputs}
