@@ -12,6 +12,32 @@ from scripts import nightly, views
 
 
 class AvailabilityViewTests(unittest.TestCase):
+    def test_advanced_distributions_calculate_each_world_and_exclude_zero_denominators(self):
+        x = {'pts': np.array([0, 2, 2]), 'fgm': np.array([0, 1, 1]), 'fga': np.array([0, 1, 4]),
+             'fg3m': np.array([0, 0, 0]), 'fg3a': np.array([0, 0, 0]), 'fta': np.array([0, 0, 0]),
+             'ast': np.array([0, 2, 6]), 'tov': np.array([0, 1, 0])}
+        out = views.advanced_world_summaries(x)
+        self.assertEqual((out['efg']['defined'], out['efg']['total']), (2, 3))
+        self.assertEqual(out['efg']['exact_mean'], 62.5)
+        self.assertEqual(out['efg']['exact_q'][2], 25.0)
+        self.assertEqual(sum(out['efg']['hist']), 2)
+        self.assertEqual((out['astTov']['defined'], out['astTov']['exact_mean']), (1, 2.0))
+        self.assertEqual(views.advanced_world_summaries({**x, 'fga': np.zeros(3)})['efg'],
+                         {'defined': 0, 'total': 3})
+        self.assertNotIn('efg', views.advanced_world_summaries({k: v for k, v in x.items() if k != 'fg3m'}))
+
+    def test_team_advanced_distributions_pair_the_same_worlds(self):
+        team = {'pts': np.array([100, 110]), 'fga': np.array([80, 90]), 'oreb': np.array([10, 10]),
+                'dreb': np.array([30, 35]), 'tov': np.array([10, 15]), 'fta': np.array([0, 0]),
+                'fgm': np.array([40, 42]), 'fg3m': np.array([10, 10]), 'fg3a': np.array([30, 30]),
+                'ast': np.array([20, 25]), 'stl': np.array([8, 9])}
+        opp = {**team, 'pts': np.array([95, 105]), 'oreb': np.array([8, 12])}
+        out = views.advanced_world_summaries(team, opp)
+        expected = 50 * (100 / 80 + 110 / 95)
+        self.assertAlmostEqual(out['ortg']['exact_mean'], expected, places=3)
+        self.assertEqual((out['net']['defined'], out['net']['total']), (2, 2))
+        self.assertEqual(sum(out['oreb']['hist']), 2)
+
     def test_views_help_does_not_rebuild_outputs(self):
         with patch.object(sys, 'argv', ['views.py', '--help']), \
                 patch('basketball_common.read_json', side_effect=AssertionError('unexpected rebuild')), \
@@ -49,7 +75,7 @@ class AvailabilityViewTests(unittest.TestCase):
                'away': {'players': []}}
         with TemporaryDirectory() as temp:
             path = Path(temp)
-            np.savez(path / 'engine_players.npz', g__lines=lines, g__ids=np.array(['10']))
+            np.savez(path / 'engine_players.npz', g__lines=lines, g__ids=np.array(['10']), g__side=np.array([0]))
             views.from_worlds(path, 'g', sim)
         periods = sim['home']['players'][0]['periods']
         self.assertEqual(periods['fg']['stats']['fga']['hist'], [1, 0, 2])

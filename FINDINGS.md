@@ -2,6 +2,11 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 — advanced distribution accounting:** independent reconstruction of **32** saved games and **935**
+player-game entries reconciled **6,300** player/team metric distributions, including defined-world counts, full
+histograms, means and nearest-rank quantiles. This validates presentation accounting against retained simulations,
+not predictive accuracy. Player period worlds and individual on-court possession ratings were not retained.
+
 ## 1. Data sources (probed 19 Nov 2026)
 
 - ESPN site API answers plain requests (no key, no special headers): scoreboard by date, team schedules

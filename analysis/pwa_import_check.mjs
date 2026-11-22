@@ -94,7 +94,7 @@ if (args['upgrade-shell'] && args['upgrade-target'] && args['upgrade-version']) 
   if (waiting) await evaluate(`document.querySelector('#pwa-update').click()`);
   const activated = waiting && await waitFor(`(async () => {
     const ui = await import('./assets/ui.mjs');
-    return typeof ui.advancedRates === 'function'
+    return typeof ui.wireAdvancedPanels === 'function'
       && (await caches.keys()).some(key => key.endsWith(${JSON.stringify(args['upgrade-version'])}))
       && !!document.querySelector('#view .form-grid')
       && document.querySelector('#pwa-status')?.textContent.includes('Saved data through');
@@ -105,7 +105,7 @@ if (args['upgrade-shell'] && args['upgrade-target'] && args['upgrade-version']) 
     const response = await cache.match(new URL('./assets/ui.mjs', location.href).pathname);
     return {waiting: r?.waiting?.state, active: r?.active?.state, caches: names,
       cachedAdvanced: response ? (await response.text()).includes('function advancedRates') : null,
-      advanced: typeof ui.advancedRates, team: !!document.querySelector('#view .form-grid')};
+      advanced: typeof ui.wireAdvancedPanels, team: !!document.querySelector('#view .form-grid')};
   })()`));
   check('app update activates the new shell and keeps imported data', activated, detail);
 }
@@ -165,16 +165,22 @@ if (args['require-advanced'] && shootingTarget) {
   check('offline player advanced rates and action-share profile', await waitFor(`document.querySelector('#view').textContent.includes('Offensive action share')`) && await evaluate(`(async () => {
     const ui = await import('./assets/ui.mjs'), game = await ui.api('game/' + ${JSON.stringify(shootingTarget.game)});
     const player = ['home', 'away'].flatMap(side => game.projection.sim[side].players).find(p => p.id === ${JSON.stringify(shootingTarget.player)});
-    const profile = game.usage_profiles?.[player.id], text = document.querySelector('#view').textContent;
+    const profile = game.usage_profiles?.[player.id], dist = player.periods.fg.advanced?.efg;
+    const text = document.querySelector('#view').textContent;
     return !!profile && text.includes(ui.rate(profile.rate)) && text.includes('not conventional')
-      && text.toLowerCase().includes('ratios of simulated mean totals') && text.includes(ui.rate(ui.advancedRates(player.periods.fg.mean).efg));
+      && !!dist?.defined && text.includes('Each projected value is calculated in each saved world')
+      && text.includes(ui.f1(dist.exact_q[2]) + '%') && text.includes('Defined in ' + dist.defined.toLocaleString());
   })()`));
   await send('Page.navigate', {url: args.url + '#/game/' + shootingTarget.game + '/fg/team'}, s);
-  check('offline team advanced rates open and match saved box means', await waitFor(`document.querySelectorAll('#view details.panel').length >= 2`) && await evaluate(`(async () => {
+  check('offline team advanced distributions open and match saved worlds', await waitFor(`document.querySelectorAll('#view details.panel').length >= 2`) && await evaluate(`(async () => {
     const ui = await import('./assets/ui.mjs'), game = await ui.api('game/' + ${JSON.stringify(shootingTarget.game)});
     const panel = document.querySelector('#view details.panel'); panel.open = true;
-    return panel.open && panel.textContent.includes('not counted possessions')
-      && panel.textContent.includes(ui.f1(ui.teamAdvancedRates(game.projection.sim.away.box.fg, game.projection.sim.home.box.fg).ortg));
+    const dist = game.projection.sim.away.advanced?.ortg;
+    const chart = panel.querySelector('details[data-distribution]');
+    chart.open = true;
+    await new Promise(resolve => setTimeout(resolve, 100));
+    return panel.open && panel.textContent.includes('not counted possessions') && !!dist?.defined
+      && panel.textContent.includes(ui.f1(dist.exact_q[2])) && !!chart.querySelector('svg.hist');
   })()`));
 } else if (args['require-advanced']) check('offline advanced-stat source is available', false);
 if (args.profile) {

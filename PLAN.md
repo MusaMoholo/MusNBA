@@ -400,12 +400,16 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
    team outcomes with the player on the floor, not causal individual impact. Box Plus/Minus is a modelled estimate,
    distinct from game +/−; validate and label its definition rather than inventing it. **Partial delivery:** six
    box-derived player rates, 15 team metrics per side (including explicitly box-estimated ratings), actual full-game
-   +/− and a clearly labelled, dated action-share profile now appear where retained data support them. True
-   per-world USG%, on-court ratings and BPM remain unimplemented. **Owner follow-up:** replace projected ratios of
-   mean box totals with distributions derived per world where saved inputs permit; preserve zero-denominator
-   worlds and label unavailable periods instead of substituting the ratio of means. No nightly is needed yet for
-   this presentation work; the normal next nightly must include the derivation. Nightlies are mainly for major
-   improvements (owner, 22 Nov).
+   +/− and a clearly labelled, dated action-share profile now appear where retained data support them. Projected
+   rates now have per-world distributions with explicit undefined counts; unavailable periods are labelled, never
+   substituted with ratios of means. True per-world USG%, on-court ratings and BPM remain unimplemented. The next
+   normal nightly rebuilds these summaries; no nightly is needed yet for this presentation work. Nightlies are
+   mainly for major improvements (owner, 22 Nov).
+
+7. **Dashboard house design** (owner, 22 Nov): keep as much supported information accessible and interactive as
+   possible without overcrowding. Reorder around the important game/player signals and use clearly labelled
+   collapsible groups for secondary details; preserve controls, truthfulness and laptop/phone responsive behaviour.
+   Carry this across the dashboard as the authorised chunks proceed.
 
 ### 9c. Realism sweep — current mapping to A1 (updated 22 Nov)
 
@@ -425,6 +429,12 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 · per-world advanced visibility:** independently reconciled **6,300** metric distributions
+  across **32** saved games / **935** player-game entries. Defined counts and quantile bands accompany expandable
+  histograms; 15 team metrics are box-derived estimates where required. Local and hosted PWA checks **24/24 laptop**,
+  **23/23 phone**, old-to-new update **26/26**, expanded responsive checks **15/15**. Both iCloud bundles and
+  data-free Pages **857183b** delivered; devices need manual imports. No model or nightly changed. Owner requested
+  a broader progressive-disclosure/dashboard organisation pass while keeping information interactive.
 - **22 Nov 2026 · Chunk A A1 10%:** owner authorised both planned chunks in order; baseline clean at `e35fbe2`,
   smoke **108/108**. Froze selection, branch IDs, seeds, uncalibrated weights, provenance and non-exhaustive
   sensitivities in HANDOFF before implementation. Chunk A **3%**; original A1 remains **58%**. The exact weighted

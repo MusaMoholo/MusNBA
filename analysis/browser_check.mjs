@@ -54,6 +54,7 @@ const CASES = [
   ['scenario-set', '#/game/401909305/scenario/' + encodeURIComponent(JSON.stringify([{subj: 'p:4701230', v: 'pts', op: 'ge', x: 30}, {subj: 't:home', v: 'win'}])), ['desktop', 'phone'], ['dark']],
   ['team-drivers', '#/game/401909305/fg/team', ['desktop', 'phone'], ['light']],
   ['game-flow', '#/game/401910029/fg/team', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['game-advanced', '#/game/401910029/fg/team', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['sheet-whatif', '#/game/401909305/player/4701230/fg', ['desktop', 'phone'], ['dark', 'light']],
   ['today-leaders', '#/today/2026-11-21', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['tomorrow', '#/today/2026-11-22', ['desktop', 'half', 'phone'], ['dark']],
@@ -125,6 +126,19 @@ for (const [name, hash, sizes, themes] of CASES) {
           && text.includes(d.defined.toLocaleString() + ' of ' + d.total.toLocaleString());
       })()`, returnByValue: true, awaitPromise: true}, sessionId)).result.value === true;
     }
+    if (name === 'game-advanced') {
+      interaction = (await send('Runtime.evaluate', {expression: `(async () => {
+        const panel = document.querySelector('#view details.panel');
+        if (!panel) return false;
+        panel.open = true;
+        const chart = panel.querySelector('details[data-distribution]');
+        if (!chart) return false;
+        chart.open = true;
+        await new Promise(resolve => setTimeout(resolve, 150));
+        panel.scrollIntoView();
+        return !!chart.querySelector('svg.hist') && panel.textContent.includes('not counted possessions');
+      })()`, returnByValue: true, awaitPromise: true}, sessionId)).result.value === true;
+    }
     await sleep(250);
     const {result: dims} = await send('Runtime.evaluate', {returnByValue: true, expression: `(() => {
       const wide = [...document.querySelectorAll('body *')].filter(el => { const r = el.getBoundingClientRect(); return r.right > innerWidth + 1 && !el.closest('.scroll') && getComputedStyle(el).position !== 'fixed'; }).slice(0, 5).map(el => el.tagName.toLowerCase() + (el.className ? '.' + String(el.className).split(' ')[0] : ''));
@@ -132,8 +146,9 @@ for (const [name, hash, sizes, themes] of CASES) {
     })()`}, sessionId);
     const d = dims.value;
     const overflow = d.scrollWidth > d.innerWidth + 1;
+    const panelTop = name === 'game-advanced' ? (await send('Runtime.evaluate', {expression: `document.querySelector('#view details.panel')?.getBoundingClientRect().top + scrollY || 0`, returnByValue: true}, sessionId)).result.value : 0;
     const shot = await send('Page.captureScreenshot', {format: 'png', captureBeyondViewport: true,
-      clip: {x: 0, y: args.from ? Math.max(0, d.height - Number(args.from)) : 0, width, height: Math.min(args.from ? Number(args.from) : d.height, mobile ? 3200 : 2600), scale: 1}}, sessionId);
+      clip: {x: 0, y: args.from ? Math.max(0, d.height - Number(args.from)) : panelTop, width, height: Math.min(args.from ? Number(args.from) : d.height - panelTop, mobile ? 3200 : 2600), scale: 1}}, sessionId);
     const file = join(OUT, `${name}-${size}-${theme}.png`);
     writeFileSync(file, Buffer.from(shot.data, 'base64'));
     const expected = EXPECT[name];

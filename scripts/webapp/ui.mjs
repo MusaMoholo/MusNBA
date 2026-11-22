@@ -102,7 +102,8 @@ export function teamAdvancedRates(line, opponent) {
 }
 export function advancedPanel(line, actual, label, options = {}) {
   if (!line && !actual) return '';
-  const values = advancedRates(line), observed = advancedRates(actual);
+  const projected = label === 'Projected';
+  const values = projected ? {} : advancedRates(line), observed = advancedRates(actual);
   const metrics = [['efg', 'Effective FG%', '(FGM + 0.5 × 3PM) / FGA', true],
                    ['ts', 'True shooting%', 'PTS / (2 × (FGA + 0.44 × FTA))', true],
                    ['two', '2-point FG%', '(FGM − 3PM) / (FGA − 3PA)', true],
@@ -110,7 +111,7 @@ export function advancedPanel(line, actual, label, options = {}) {
                    ['ftRate', 'Free-throw attempt rate', 'FTA / FGA', true],
                    ['astTov', 'Assists per turnover', 'AST / TOV', false]];
   if (options.team) {
-    Object.assign(values, teamAdvancedRates(line, options.opponent));
+    if (!projected) Object.assign(values, teamAdvancedRates(line, options.opponent));
     Object.assign(observed, teamAdvancedRates(actual, options.actualOpponent));
     metrics.push(['poss', 'Estimated possessions', 'FGA − OREB + TOV + 0.44 × FTA', false],
                  ['ortg', 'Offensive rating · estimate', 'PTS / estimated possessions × 100', false],
@@ -123,17 +124,44 @@ export function advancedPanel(line, actual, label, options = {}) {
                  ['steals', 'Steal rate · estimate', 'STL / opponent estimated possessions', true]);
   }
   const format = (v, percent) => percent ? rate(v) : f1(v);
+  const distribution = (key, percent) => {
+    const d = options.distributions?.[key];
+    if (!d) return options.distributions ? '<p class="note">Per-world distribution unavailable for this metric.</p>' : '';
+    if (!d.defined) return `<p class="note">Undefined in all ${d.total.toLocaleString()} worlds (no positive denominator).</p>`;
+    const fmt = v => f1(v) + (percent ? '%' : '');
+    const [low, q1, median, q3, high] = d.exact_q;
+    const position = v => high === low ? 50 : 100 * (v - low) / (high - low);
+    return `<div class="advanced-summary"><b>${fmt(median)}</b><span>median · ${fmt(low)}–${fmt(high)} (10–90%)</span>
+      <div class="quantile-track" aria-label="Middle half ${esc(fmt(q1))} to ${esc(fmt(q3))}; median ${esc(fmt(median))}">
+        <i style="left:${position(q1)}%;width:${position(q3) - position(q1)}%"></i><b style="left:${position(median)}%"></b></div>
+      <small>Middle half: ${fmt(q1)}–${fmt(q3)} · mean ${fmt(d.exact_mean)}</small>
+      <small>Defined in ${d.defined.toLocaleString()} of ${d.total.toLocaleString()} worlds${d.defined < d.total ? '; the rest have no positive denominator' : ''}.</small>
+      <details class="advanced-dist" data-distribution="${esc(JSON.stringify(d))}" data-percent="${percent}"><summary>Show distribution</summary><div class="advanced-chart"></div>
+        <small>Values are rounded for the chart; very rare outer-tail bins may be omitted. Summaries use all defined worlds.</small></details></div>`;
+  };
   const element = options.collapsible ? 'details' : 'section';
   const title = esc(options.title || 'Advanced box-score rates');
-  return `<${element} class="panel">${options.collapsible ? `<summary><b>${title}</b> · ${metrics.length} metrics</summary>` : `<h3>${title}</h3>`}<div class="advanced-grid">
+  const unavailable = projected && line && !options.distributions
+    ? '<p class="note">Per-world distribution unavailable for this period or snapshot.</p>' : '';
+  if (unavailable && !actual) return `<${element} class="panel">${options.collapsible ? `<summary><b>${title}</b></summary>` : `<h3>${title}</h3>`}${unavailable}${options.team ? '<p class="note">Possessions and ratings are box-score estimates, not counted possessions.</p>' : ''}</${element}>`;
+  return `<${element} class="panel">${options.collapsible ? `<summary><b>${title}</b> · ${metrics.length} metrics</summary>` : `<h3>${title}</h3>`}${unavailable}<div class="advanced-grid">
     ${metrics.map(([key, title, formula, percent]) => `<div class="tile"><span>${esc(title)}</span>
-      <div class="lines">${line ? `<em>${esc(label)}</em><b>${format(values[key], percent)}</b>` : ''}
+      ${line && projected ? distribution(key, percent) : ''}
+      <div class="lines">${line && !projected ? `<em>${esc(label)}</em><b>${format(values[key], percent)}</b>` : ''}
       ${actual ? `<em>Actual</em><b>${format(observed[key], percent)}</b>` : ''}</div><small>${esc(formula)}</small></div>`).join('')}</div>
-    <p class="note">${line && actual ? 'Projected values are ratios of simulated mean totals, not means of the individual-game rates. '
-      : line && label === 'Projected' ? 'Ratios of simulated mean totals, not means of the individual-game rates. ' : ''}
+    <p class="note">${line && projected && options.distributions ? 'Each projected value is calculated in each saved world, not from ratios of mean totals. ' : ''}
       True shooting uses the conventional 0.44 free-throw approximation.
       ${options.team ? 'Possessions and ratings are box-score estimates, not counted possessions; player totals can exclude team rebounds and turnovers. ' : ''}
       — means missing data or a zero denominator.</p></${element}>`;
+}
+export function wireAdvancedPanels(root) {
+  root.querySelectorAll('details[data-distribution]').forEach(element => element.addEventListener('toggle', () => {
+    if (!element.open || element.dataset.ready) return;
+    const d = JSON.parse(element.dataset.distribution);
+    const suffix = element.dataset.percent === 'true' ? '%' : '';
+    element.querySelector('.advanced-chart').innerHTML = histogram(d, {height: 120, label: v => f1(v / d.scale) + suffix});
+    element.dataset.ready = 'true';
+  }));
 }
 export function usageProfilePanel(profile) {
   if (!profile) return '';

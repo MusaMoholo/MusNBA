@@ -17,7 +17,7 @@ test('player rates use retained totals and leave unavailable denominators undefi
   assert.equal(advancedRates({...line, fga: 8}).two, null);
   assert.equal(advancedRates({...line, tov: 0}).astTov, null);
   assert.equal(advancedRates({...line, fg3m: null}).efg, null);
-  assert.match(advancedPanel({pts: 5, fga: 1, fta: 0}, null, 'Projected'), /250\.0%/);
+  assert.match(advancedPanel({pts: 5, fga: 1, fta: 0}, null, 'Season'), /250\.0%/);
 });
 
 test('team estimates use each side’s own box possessions and preserve missingness', () => {
@@ -36,7 +36,18 @@ test('team estimates use each side’s own box possessions and preserve missingn
   assert.equal(teamAdvancedRates(a, null).drtg, null);
   const html = advancedPanel(a, null, 'Projected', {team: true, opponent: b});
   assert.match(html, /not counted possessions/);
-  assert.match(html, /ratios of simulated mean totals/i);
+  assert.match(html, /per-world distribution unavailable/i);
+});
+
+test('projected panels show saved world quantiles and undefined worlds, never ratio of means', () => {
+  const d = {defined: 2, total: 3, exact_q: [25, 25, 25, 100, 100], exact_mean: 62.5,
+             scale: 1, min: 25, hist: [1, 0, 1], q: [25, 25, 25, 27, 27], mean: 26};
+  const html = advancedPanel({fgm: 2, fg3m: 0, fga: 5}, null, 'Projected', {distributions: {efg: d}});
+  assert.match(html, /25\.0%/);
+  assert.match(html, /mean 62\.5%/);
+  assert.match(html, /Defined in 2 of 3 worlds/);
+  assert.match(html, /Show distribution/);
+  assert.doesNotMatch(html, />40\.0%</);
 });
 
 test('actual-only panels do not invent projected values', () => {

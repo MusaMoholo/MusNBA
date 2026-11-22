@@ -84,10 +84,12 @@ For presentation-only export changes, `--export-only` reuses already-current com
 candidate tests do not change the served model. Every actual development chunk still ends with a new live nightly
 and final integrated PWA delivery. **Each device must import the new data bundle**; shell updates alone do not update
 its simulations. Record the delivered model/generation separately from owner-confirmed device acceptance.
-The game player and team tabs include explicitly defined box-score rates; team possessions and ratings are
+The game player and team tabs include per-world advanced box-score distributions for supported full-game worlds,
+with undefined denominators counted separately; unavailable periods are labelled. Team possessions and ratings are
 box estimates, not counted possessions. The latest action-share input is not conventional USG% or a game forecast.
 Before rebuilding views directly with `.venv/bin/python scripts/views.py`, archive `data/views` outside the repo;
 `--help` only prints usage and does not rebuild.
+Audit retained advanced distributions with `.venv/bin/python -m analysis.advanced_world_audit`.
 
 ### Historical forecasts: deferred
 

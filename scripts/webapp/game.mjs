@@ -1,7 +1,7 @@
 // Game Centre. One period selector (Q1–Q4, H1, H2, FG) drives the bezel and both views:
 // Player = per-period box scores, Team = per-period team lines and distributions. Matchup is separate.
 import {advancedPanel, api, atLeast, modelPill, barChart, dayLabel, defaultLine, esc, f1, forecastTiming, halfLine, heat, histogram, logo, over, pct, percentileOf,
-        probWhere, rate, record, seg, segGroups, signed, stamp, statusTag, store, team, tipTimes, usageProfilePanel} from './ui.mjs';
+        probWhere, rate, record, seg, segGroups, signed, stamp, statusTag, store, team, tipTimes, usageProfilePanel, wireAdvancedPanels} from './ui.mjs';
 import * as S from './scenario.mjs';
 import {gameSpotlight} from './spotlight.mjs';
 
@@ -449,10 +449,11 @@ function teamView(el, data, period) {
       const other = side === 'away' ? 'home' : 'away';
       return advancedPanel(sim?.[side]?.box?.[period], actualBox(side), 'Projected', {
         team: true, collapsible: true, title: `${team(data.game[side].id).name} · advanced box-score rates`,
+        distributions: period === 'fg' ? sim?.[side]?.advanced : null,
         opponent: sim?.[other]?.box?.[period], actualOpponent: actualBox(other),
       });
     }).join('');
-  if (!per) { el.innerHTML = boxPanel; return; }
+  if (!per) { el.innerHTML = boxPanel; wireAdvancedPanels(el); return; }
   const margins = d => [1, 3, 5, 7, 10, 15].map(k => [`${H.abbr} by ${k}+`, atLeast(d, k)]).concat([1, 3, 5, 7, 10, 15].map(k => [`${A.abbr} by ${k}+`, probWhere(d, v => v <= -k)]));
   const blocks = [
     {id: period + '-away', title: `${A.name} points`, d: per.away.pts, ladder: d => stepLadder(d), actual: has ? actual.away : null},
@@ -463,6 +464,7 @@ function teamView(el, data, period) {
   const paint = () => {
     el.innerHTML = boxPanel + flowCharts(data) + blocks.map(b => distBlock(data, b)).join('') + '<p class="note">Over = strictly more than the line. Tap a bar to move the line there.</p>'
       + (data.worlds && period === 'fg' ? '<div id="drivers"></div>' : '');
+    wireAdvancedPanels(el);
     wireBlocks(el, data, paint);
     const drivers = el.querySelector('#drivers');
     if (drivers) S.driversPanel(drivers, data);
@@ -669,7 +671,8 @@ async function sheet(view, data, pid, current) {
         ${sim ? `<label class="sr" for="sheet-period">Period</label><select id="sheet-period" class="period">${options}</select>` : ''}
         <a class="btn ghost" href="#/player/${pid}">Player page</a></div>${tiles}</section>
       ${proj ? `${segGroups(STAT_GROUPS.map(([g, ks]) => [g, ks.filter(([k]) => choices.includes(k))]), state.stat, 'data-stat')}<div id="stat-block">${statBlock()}</div>` : ''}
-      ${advancedPanel(proj?.mean, period === 'fg' ? (actualRow?.dnp ? null : actualRow) : actualLine(actualRow, period), 'Projected')}
+      ${advancedPanel(proj?.mean, period === 'fg' ? (actualRow?.dnp ? null : actualRow) : actualLine(actualRow, period), 'Projected',
+        {distributions: proj?.advanced})}
       ${usageProfilePanel(data.usage_profiles?.[pid])}
       ${period === 'fg' && !actualRow?.dnp && Number.isFinite(actualRow?.pm) ? `<p class="note">Actual on-court +/−: <b>${signed(actualRow.pm, 0)}</b> · points scored minus allowed while on court.</p>` : ''}
       ${proj && period === 'fg' && data.worlds && !PERCENT_STATS.has(state.stat) ? '<div id="what-if"></div>' : ''}
@@ -677,6 +680,7 @@ async function sheet(view, data, pid, current) {
       ${period === 'fg' ? guardedPanel(data, pid) : ''}
       ${context ? contextPanel(context, period) : ''}
       <p class="note">${sim ? `${sim.sims.toLocaleString()} simulated games from the ${esc(data.projection.kind)} snapshot of ${esc(dayLabel(data.projection.snapshot))}. Counting-stat distributions include simulations where he does not play${period === 'fg' ? '' : '; overtime counts in FG only'}. Shooting percentages exclude no-attempt simulations and appear only when at least one simulation has an attempt. Some older snapshots do not contain all shooting distributions.` : ''}</p>`;
+    wireAdvancedPanels(view);
     view.querySelector('#sheet-period')?.addEventListener('change', e => location.replace(`#/game/${data.game.id}/player/${pid}/${e.target.value}`));
     view.querySelectorAll('[data-stat]').forEach(b => b.onclick = () => { state.stat = b.dataset.stat; store.set('stat', state.stat); paint(); });
     const block = view.querySelector('#stat-block');

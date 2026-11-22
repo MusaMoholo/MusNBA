@@ -175,6 +175,72 @@ def world_lines(path: Path, gid: str, sims: int) -> dict | None:
             'team_periods': base64.b64encode(np.clip(per, 0, 255).astype(np.uint8).tobytes()).decode(), 'periods': ['q1', 'q2', 'q3', 'q4', 'ot']}
 
 
+def advanced_world_summaries(values: dict, opponent: dict | None = None) -> dict:
+    """Distributions of per-world box-derived rates, conditional on a positive denominator."""
+    import numpy as np
+    from scripts.projection import summary
+
+    def ratio(required, numerator, denominator):
+        if any(k not in values for k in required):
+            return None
+        n, d = numerator(values), denominator(values)
+        out = np.full(np.shape(d), np.nan, dtype=float)
+        return np.divide(n, d, out=out, where=d > 0)
+
+    metrics = {
+        'efg': (ratio(('fgm', 'fg3m', 'fga'), lambda x: x['fgm'] + 0.5 * x['fg3m'], lambda x: x['fga']), True),
+        'ts': (ratio(('pts', 'fga', 'fta'), lambda x: x['pts'], lambda x: 2 * (x['fga'] + 0.44 * x['fta'])), True),
+        'two': (ratio(('fgm', 'fg3m', 'fga', 'fg3a'), lambda x: x['fgm'] - x['fg3m'],
+                      lambda x: x['fga'] - x['fg3a']), True),
+        'threeShare': (ratio(('fg3a', 'fga'), lambda x: x['fg3a'], lambda x: x['fga']), True),
+        'ftRate': (ratio(('fta', 'fga'), lambda x: x['fta'], lambda x: x['fga']), True),
+        'astTov': (ratio(('ast', 'tov'), lambda x: x['ast'], lambda x: x['tov']), False),
+    }
+    if opponent is not None:
+        def possessions(box):
+            return (box['fga'] - box['oreb'] + box['tov'] + 0.44 * box['fta']
+                    if all(k in box for k in ('fga', 'oreb', 'tov', 'fta')) else None)
+
+        own, opp = possessions(values), possessions(opponent)
+        def divide(n, d):
+            if n is None or d is None:
+                return None
+            return np.divide(n, d, out=np.full(np.shape(d), np.nan, dtype=float), where=d > 0)
+
+        ortg = divide(values.get('pts'), own)
+        drtg = divide(opponent.get('pts'), opp)
+        def rebound(key, other):
+            a, b = values.get(key), opponent.get(other)
+            return divide(a, a + b) if a is not None and b is not None else None
+        metrics.update({
+            'poss': (own, False), 'ortg': (100 * ortg if ortg is not None else None, False),
+            'drtg': (100 * drtg if drtg is not None else None, False),
+            'net': (100 * (ortg - drtg) if ortg is not None and drtg is not None else None, False),
+            'oreb': (rebound('oreb', 'dreb'), True), 'dreb': (rebound('dreb', 'oreb'), True),
+            'assist': (divide(values.get('ast'), values.get('fgm')), True),
+            'turnover': (divide(values.get('tov'), own), True), 'steals': (divide(values.get('stl'), opp), True),
+        })
+    out = {}
+    for key, (raw, percent) in metrics.items():
+        if raw is None:
+            continue
+        raw = np.asarray(raw, dtype=float)
+        if raw.ndim != 1 or np.isinf(raw).any():
+            raise ValueError(f'invalid per-world values for {key}')
+        defined = raw[np.isfinite(raw)] * (100 if percent else 1)
+        result = {'defined': int(defined.size), 'total': int(raw.size)}
+        if defined.size:
+            scale = 1 if percent else 10
+            bins = np.floor(defined * scale + 0.5).astype(np.int64)
+            ordered = np.sort(defined)
+            result.update(summary(bins, offset=True))
+            result.update({'scale': scale, 'exact_mean': round(float(defined.mean()), 3),
+                           'exact_q': [round(float(ordered[max(0, int(np.ceil(q * len(ordered))) - 1)]), 3)
+                                       for q in (0.1, 0.25, 0.5, 0.75, 0.9)]})
+        out[key] = result
+    return out
+
+
 def from_worlds(path: Path, gid: str, sim: dict) -> dict | None:
     """From the stored worlds (nothing simulated): each player's double/triple/quadruple/quintuple-double and 5×5 chances, and
     full-game distributions the snapshot lacks (FGM, FTM = PTS − 2·FGM − 3PM; OREB/DREB when the worlds carry them) — written
@@ -188,6 +254,7 @@ def from_worlds(path: Path, gid: str, sim: dict) -> dict | None:
         if f'{gid}__lines' not in z.files:
             return None
         lines, ids = z[f'{gid}__lines'].astype(np.int64), [str(x) for x in z[f'{gid}__ids']]
+        sides = z[f'{gid}__side']
     stats = list(WORLD_STATS)[:lines.shape[2]]
     col = {k: lines[:, :, j] for j, k in enumerate(stats)}
     if 'ftm' not in col:
@@ -202,6 +269,7 @@ def from_worlds(path: Path, gid: str, sim: dict) -> dict | None:
             multi[str(x['id'])] = {k: round(float((tens[:, i] >= n).mean()), 5) for k, n in (('double', 2), ('triple', 3), ('quadruple', 4), ('quintuple', 5))}
             multi[str(x['id'])]['five_by_five'] = round(float(np.all([col[k][:, i] >= 5 for k in ('pts', 'reb', 'ast', 'stl', 'blk')], axis=0).mean()), 5)
             fg = x['periods']['fg']
+            fg['advanced'] = advanced_world_summaries({k: v[:, i] for k, v in col.items()})
             for k in ('fgm', 'ftm', 'oreb', 'dreb', 'fga', 'fg3a', 'fta'):
                 if k not in fg['stats'] and k in col:
                     fg['stats'][k] = summary(col[k][:, i])
@@ -209,6 +277,20 @@ def from_worlds(path: Path, gid: str, sim: dict) -> dict | None:
             for k, v in shooting.items():
                 if k not in fg['stats']:
                     fg['stats'][k] = v
+    tm = path / 'engine_worlds.npz'
+    if tm.exists() and all(k in col for k in ('pts', 'fgm', 'fga', 'fg3m', 'fg3a', 'fta', 'oreb', 'dreb', 'ast', 'tov', 'stl')):
+        with np.load(tm) as worlds:
+            if gid in worlds.files:
+                points = worlds[gid].astype(np.int64).sum(axis=2)
+                if sides.shape != (len(ids),) or points.shape != (lines.shape[0], 2) or not np.isin(sides, (0, 1)).all():
+                    raise ValueError(f'invalid team world dimensions for {gid}')
+                team_boxes = [{k: v[:, sides == side].sum(axis=1) for k, v in col.items()} for side in (0, 1)]
+                for side in (0, 1):
+                    if not np.array_equal(team_boxes[side]['pts'], points[:, side]):
+                        raise ValueError(f'player and team world points differ for {gid}, side {side}')
+                    team_boxes[side]['pts'] = points[:, side]
+                for side, name in enumerate(('home', 'away')):
+                    sim[name]['advanced'] = advanced_world_summaries(team_boxes[side], team_boxes[1 - side])
     return multi
 
 
