@@ -7,7 +7,8 @@ are complete. PLAN §6a–6c defines the expanded next chunk; HANDOFF owns progr
 
 The dated decision table preserves how the design evolved. **D24/D26/D27/D35/D36 override older seven-day, player
 carry-over, defence-input and phone assumptions**; D38/D39 add the next-chunk protocol and current-model history,
-and D40 defers historical forecast backfill in favour of the current nightly. D41 stops this session after that run.
+and D40 defers historical forecast backfill in favour of the current nightly. D41 stopped execution after that run;
+D42 plans the remaining work in two future chunks.
 Sections below distinguish current behaviour from unimplemented design. Measured evidence lives in FINDINGS.
 
 ## Decisions so far
@@ -55,6 +56,7 @@ Sections below distinguish current behaviour from unimplemented design. Measured
 | D39 | Daily forecasts and a consistent current-model history | **Owner (22 Nov, latest clarification).** Store each day's Today prediction, with Tomorrow as an origin-dated preview. With a new accepted model, support rerunning season start→now so the default dashboard uses that model consistently. Preserve original and prior-version generations, but use the active version for normal historical review. Rebuilt predictions use the current frozen recipe with only pre-origin inputs and fitted parameters; label them retrospective, never originally published forecasts. Ordinary browsing reads stored predictions/results. See §17 for cutoffs, versioning, resume and atomic activation; the final test remains protected. |
 | D40 | Defer historical forecast backfill | **Owner (22 Nov, during A1):** “forget nightly backfill. lets just get nightly for next slate (today and tomorrow relative to this date). since were probably not at a perfect model yet”. Do not run or implement the S13 historical forecast replay during this A1 execution; preserve existing snapshots and history. Use the accepted engines for the current ET-origin Today/Tomorrow slates or next slate. The required rebuild of pre-origin model inputs and the 10,000-world future season simulation are not historical forecast backfills. D39/§17 remains a future safety design, not an instruction to run a replay now. |
 | D41 | Stop after the active nightly | **Owner (22 Nov):** “well stop after this nightly run, anything undone is future work”. Finish the currently running S07 nightly, its required verification/delivery and checkpoint, then stop; do not start a second nightly or S08–S14 in this session. Keep all uncompleted work explicitly open for a future session. This S07 delivery is not completion of the integrated S14 or the A1 chunk. |
+| D42 | Two future chunks and selected game worlds | **Owner proposal (22 Nov):** “split the rest of A1 into 2 chunks”, each delivering modular outcomes and a dashboard improvement if no model improves; retain five meaningful simulated games per matchup. Plan the split in HANDOFF/PLAN without resetting the original A1 progress or starting execution. Five labels may share a world; extremes are conditional examples, and the representative Expected game is a real selected world, not a synthetic mean. Existing cutoffs, model-promotion gates, data retention and D40 remain unchanged. |
 
 ## 0. What "true to form" means
 

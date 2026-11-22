@@ -158,8 +158,12 @@ clears Finder's hidden flag before/after rename; the first hidden export was rep
 
 ## Next accuracy chunk: planned app/PWA work, not shipped
 
-U1–U22 stay complete. A1 S08 adds local explicit lineup branches with coherent Expected output; S12 adds stored
-rotation maps and sampled-world event playback. Keep existing U3 role badges, U11 defence profiles and merged
+U1–U22 stay complete. The D42 future split plans local explicit lineup branches and coherent Expected output,
+then five selected real-world game replays per matchup in Chunk A and rotation maps in Chunk B. These are not shipped.
+The five labels are each team's largest score margin (even if all worlds lose), each team's highest single-player fantasy score, and the
+actual simulated world nearest the Expected outcome. Worlds may share labels; extremes are not typical forecasts.
+Selection metric, provenance and replay accounting must be fixed and tested before delivery; phone inclusion is
+subject to measured size and offline compatibility. Keep existing U3 role badges, U11 defence profiles and merged
 Standings navigation; don't create duplicate pages. Card groups remain multiples of three and changing text is dynamic.
 
 The owner deferred S13 historical forecast backfill (D40); the current nightly targets today and tomorrow instead.

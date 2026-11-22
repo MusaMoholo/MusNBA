@@ -12,6 +12,7 @@ or phone.
 > fact currently use a labelled placeholder. U1–U22 and public Pages/iCloud delivery are complete. Accuracy chunk
 > **A1 (14 tasks)** has completed S01–S07; S06's audited candidate did not clear its frozen gate. The 22 November
 > ET nightly is delivered, historical forecast backfill is deferred, and the owner requested a stop after that nightly.
+> Remaining work is planned as two future chunks, including selected game replays; neither has started.
 > See [PLAN.md](PLAN.md) and [HANDOFF_NEXT.md](HANDOFF_NEXT.md).
 
 ## Setup

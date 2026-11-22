@@ -10,7 +10,7 @@ for the next session, it goes in these files.
 1. **This file** — rules, owner preferences, checkpoint protocol.
 2. **[HANDOFF_NEXT.md](HANDOFF_NEXT.md)** — the current state and the exact next actions. Start working from there.
 3. **[PLAN.md](PLAN.md)** — goal, phases, milestone table (§6), open owner decisions, log.
-4. **[ENGINE_PLAN.md](ENGINE_PLAN.md)** — engine design and the owner's decisions D1–D41. Do not reopen a decision
+4. **[ENGINE_PLAN.md](ENGINE_PLAN.md)** — engine design and the owner's decisions D1–D42. Do not reopen a decision
    without new evidence; if evidence contradicts one, say so to the owner and record it.
 5. **[TRAINING_PLAN.md](TRAINING_PLAN.md)** — models, inputs, decay, folds, experiment protocol.
 6. **[FINDINGS.md](FINDINGS.md)** — measured facts and data quirks. Do not re-derive them; extend them.
@@ -70,6 +70,9 @@ Read-only/docs work needs no review server; start :8767 when inspecting or chang
   existing forecasts and archives. D39/ENGINE_PLAN §17 remains the safety contract if replay is reauthorised:
   historical inputs **and fitted parameters** must precede the origin, reconstructions must be labelled, versions
   must not be silently mixed, serving never recomputes, and the final test stays protected.
+- **Two future chunks (D42):** the remaining A1 work is planned in HANDOFF with independent chunk weights/ladders,
+  without resetting the original A1 ledger. Each chunk ends with a fresh nightly and a useful dashboard improvement
+  if no model promotes; selected real simulated games must be labelled and reconciled, not invented.
 - **PWA at relevant checkpoints (owner, 22 Nov):** a promoted model, changed forecast/bundle contract or shipped app
   change includes the necessary refreshed outputs and iCloud export, dynamic model/version metadata, import/offline
   checks and a data-free `gh-pages` shell update if assets changed. Do this at the affected subtask, not only at the

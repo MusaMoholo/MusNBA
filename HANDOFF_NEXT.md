@@ -1,6 +1,7 @@
 # Handoff — state and next actions
 
-Updated **22 November 2026 — A1 stopped after the requested nightly; S01–S07 complete, overall 58.0%**.
+Updated **22 November 2026 — A1 stopped after the requested nightly; S01–S07 complete, overall 58.0%;
+the remaining work is planned as two future chunks (D42)**.
 Dashboard U1–U22 complete and published.
 Dashboard close-out checkpoint **86c2a46**, A1 planning checkpoint **00a0731**; S01 checkpoint **c9d8008**
 and S02 checkpoint **93b3e1d** are committed and pushed (S01's exact control source is **c6d5db4**).
@@ -1185,6 +1186,139 @@ all 140 rungs are ordered 10→100; all A1 statuses are 0%; 19 local Markdown li
 checks pass. Only the eight root Markdown docs changed. No new model experiment, fetch, training, final-test score,
 nightly, app build, PWA export or publication was performed. Existing public shell/model/bundle remain as above.
 
+## Future execution — two chunks (D42; planning only)
+
+The owner asked for the remaining work to be split into two outcome-led chunks and suggested five meaningful saved
+games per matchup. This is a plan, not authorisation to start execution in this planning session. S01–S07 and their
+evidence remain complete; preserve the original A1 table/weights/ladders below as the historical accounting. The new
+chunk weights are **separate within-chunk progress measures**, not replacements for or double credits to A1: original
+A1 stays **58.0%**, and S13 remains deferred at 0% (the possible A1 ceiling while deferred is 95%).
+Update the original S08–S12/S14 status only when their original acceptance is met, without crediting work twice.
+Report a chunk bar and each active module at every 10% rung and each 5% overall boundary; long jobs also report
+item counts and measured rates. Both chunks start at **0%**.
+
+**Shared gates:** use the unchanged player-first, paired fold, seed-noise, uncertainty, non-inferiority, cutoff and
+once-per-version final-test rules in PLAN §6b/TRAINING_PLAN §8. An early chunk can promote a standalone candidate
+only after those applicable gates, with pathway v1 retained and integrated interactions assessed later; otherwise
+keep the accepted model. Every completed module gets evidence, docs, checks, review, commit/push and a short owner
+summary. A measured negative result is valid; unfinished work or an unrun test is not a pass. At each affected
+model/output/app checkpoint refresh/export/publish and verify PWA compatibility; research-only checkpoints say the
+served data are unchanged. Each development chunk ends with its own fresh live nightly, 10k game/season worlds,
+delivery checks and a useful shipped dashboard improvement if no model is promoted. Historical forecast backfill
+stays deferred; per-game iCloud streaming is separate future work, not assumed implemented.
+
+### Chunk A — believable individual games and visible simulations
+
+Headliners: (1) lineup-aware player/game distributions and realistic game-state response; (2) five meaningful saved
+simulation examples for every near-term game. Depends on completed S01–S07. A1 original scope: S08, S09 and the
+playback portion of S12, plus a chunk-end delivery; S10/S11/S12/S14 are not thereby marked complete.
+
+| Module | Weight | Dependencies | Acceptance / fallback |
+|---|---:|---|---|
+| A1 Lineups and Expected | 30% | S05–S07 | S08's exact branch/season identities and origin safety, or explicit blocked limitation; no invented availability calibration |
+| A2 Form and late-game realism | 35% | S04/S06; A1 for integration | S09's paired player/game gates; retain v1.3 when unsupported or rejected |
+| A3 Five games and delivery | 35% | A1/A2 decisions | Five labelled saved selections and reconciled playback per game, responsive/offline checks and fresh nightly; no fake logs or completed claim on failure |
+
+| Rung | A1 — lineups and Expected |
+|---:|---|
+| 10 | Freeze branch IDs, uncertain-player selection, provenance and independence caveats. |
+| 20 | One-player plays/sits branches re-solve minutes and defence with valid five-player lineups. |
+| 30 | Two-player branches and explicit >2-maybe non-exhaustive handling pass probability checks. |
+| 40 | Deterministic 10k worlds per supported branch persist with seeds and inputs. |
+| 50 | Expected distributions preserve exact branch weights; handle the 10k indivisibility counterexample explicitly. |
+| 60 | Season consumption preserves the documented weighted identities without duplicate near-term games. |
+| 70 | Missing status, unsupported dependence and cold rosters are visibly labelled or fail explicitly. |
+| 80 | Local branch UI and phone Expected-only compatibility pass focused tests. |
+| 90 | Representative-game accounting, restart, cutoff, runtime and responsive checks pass. |
+| 100 | Results/limitations and any required PWA refresh are verified, committed/pushed and summarised. |
+
+| Rung | A2 — form and late-game realism |
+|---:|---|
+| 10 | Quantify residual player/team covariance after role and minutes, with supported cohorts. |
+| 20 | Freeze earlier-fold talent/form hypotheses and no-double-count controls. |
+| 30 | Implement isolated player uncertainty draws with mean and deterministic-stream checks. |
+| 40 | Test shared pace/shooting factors and realistic teammate/opponent dependence on folds. |
+| 50 | Audit end-game fouls, clock, shot selection and overtime by supported historical states. |
+| 60 | Test supported state corrections against fixed earlier-fold controls; retain explicit missing cases. |
+| 70 | Run sequential paired player-first engine screens; report CRPS, bias, coverage and joint metrics. |
+| 80 | Test surviving combinations and seed sensitivity; reject variants failing registered bounds. |
+| 90 | Record a promotion/no-promotion decision with all applicable confirmation and cutoff gates. |
+| 100 | Evidence, fallbacks and required PWA delivery are verified, committed/pushed and summarised. |
+
+| Rung | A3 — five saved games and delivery |
+|---:|---|
+| 10 | Freeze selection definitions, tie-breaking, data budget, event schema and Expected-world provenance. |
+| 20 | Select each team's maximum winning margin and highest individual fantasy-score worlds from actual saved worlds. |
+| 30 | Select one representative expected-outcome world using a documented, predeclared multi-stat distance. |
+| 40 | Preserve five labelled selections per game, allowing the same real world to carry multiple labels. |
+| 50 | Capture or deterministically replay selected events with exact seed/model/input/branch provenance. |
+| 60 | Independently reconcile scores, periods, player boxes, legal lineups and event order with source worlds. |
+| 70 | Ship a stored-only Game Centre playback/list with honest extreme/typical labels and missing-data states. |
+| 80 | Measure bundle/runtime cost; test desktop/half/phone themes, screenshots, old snapshots and offline import. |
+| 90 | Run a fresh live 10k nightly on accepted systems, verify each slate's selections and iCloud/PWA delivery. |
+| 100 | Publish any data-free shell, document findings/limitations and next chunk; review, commit/push and summarise. |
+
+### Chunk B — stronger defence and reliable season paths
+
+Headliners: (1) player/lineup defence and legal game-state mechanics; (2) calibrated season paths and integrated
+confirmation. Depends on Chunk A's decisions and delivery. A1 original scope: S10, S11, remaining S12 and S14;
+the additional defence/foul-out work follows S03/S04/S06 evidence without reopening rejected variants unchanged.
+
+| Module | Weight | Dependencies | Acceptance / fallback |
+|---|---:|---|---|
+| B1 Defence and foul-outs | 30% | Chunk A, S03–S06 evidence | Test new player/lineup mechanism and the observed foul-out defect; unchanged gates, explicit rejection if unsupported |
+| B2 Season pathway | 30% | Chunk A; S07 evidence | S10's 16-origin, per-date paired calibration and exact near-term-world accounting; retain pathway v1 if rejected |
+| B3 Integration, visibility and delivery | 40% | B1/B2 decisions | Full S11 confirmation or recorded rejection; rotation-map dashboard improvement, S12/S14 checks and fresh nightly |
+
+| Rung | B1 — defence and foul-outs |
+|---:|---|
+| 10 | Reproduce the six-foul mask defect and freeze legal-five/short-roster rules and baseline fingerprints. |
+| 20 | Isolate a foul-out candidate and independently reconcile substitutions, penalties and preserved valid streams. |
+| 30 | Specify a new evidence-backed player/lineup-defence hypothesis and prior-only fold data; do not repeat rejected variants. |
+| 40 | Audit defender coverage, cutoffs, missingness and fitted-artifact provenance. |
+| 50 | Run frozen node-level fold ablations and reject mechanisms without a supported gain. |
+| 60 | Backtest surviving mechanics/defence candidates sequentially against matched player-first controls. |
+| 70 | Stress foul-outs, overtime and short rosters; reconcile player/team points, seconds and eligible fives. |
+| 80 | Measure player tiers, defensive expression, margins and non-inferiority with paired uncertainty. |
+| 90 | Confirm or reject each candidate under the unchanged gates; record unsupported comparisons and runtime. |
+| 100 | Evidence, fallback and any required delivery are checked, documented, committed/pushed and summarised. |
+
+| Rung | B2 — season pathway |
+|---:|---|
+| 10 | Reconcile pathway-v1 baseline, schedules and Cup accounting across all 16 historical origins. |
+| 20 | Build strictly prior carry-over/opponent-adjusted starting-rating candidates. |
+| 30 | Screen start ratings by leave-one-season-out, including November cold starts. |
+| 40 | Test memory/gain/drift against persistence without biased per-world rating updates. |
+| 50 | Assess absence-path support; retain no-future-absence fallback when historical evidence is insufficient. |
+| 60 | Consume accepted near-term Expected worlds once per game with validated mixture accounting. |
+| 70 | Run eligible candidates on all 16 origin combinations at 10k worlds. |
+| 80 | Report paired CRPS, dispersion, coverage and persistence by origin with uncertainty. |
+| 90 | Select or reject pathway candidates and freeze interactions for integrated confirmation. |
+| 100 | Results, limitations and any affected PWA delivery are checked, committed/pushed and summarised. |
+
+| Rung | B3 — integration, visibility and delivery |
+|---:|---|
+| 10 | Freeze candidate/control manifests and explicit B1/B2 retain/reject decisions. |
+| 20 | Screen combined effects and component removals on the fixed player-first F4 population. |
+| 30 | Confirm a survivor on all eligible F4 and fixed F1–F3 samples, or record the failed gate. |
+| 40 | Verify second-seed, 10k subset, legal-five, cutoff, accounting and runtime gates or document rejection. |
+| 50 | Score only a frozen qualifying new version once on the final test; otherwise retain accepted systems. |
+| 60 | Derive stored rotation probabilities summing to five and build the responsive rotation-map view. |
+| 70 | Verify playback/rotation labels, missing/legacy states, offline import, bundle size and screenshots. |
+| 80 | Run the final fresh live 10k nightly, audit outputs and deliver the iCloud bundle/data-free shell. |
+| 90 | Update all affected docs and construct the next chunk with headliners, weights and ten-rung ladders. |
+| 100 | Finish smoke/fault, PWA and accounting checks; review, commit/push and summarise outcomes and limitations. |
+
+For each chunk, mark rejection-path rungs with the actual reason, never as passed. Selection examples are conditional
+extremes of the 10k simulations, not likely outcomes; exact ties use a frozen deterministic rule. “Best team game”
+means largest own score margin, even if every simulated game is a loss; “highest player fantasy” means maximum single-player NBA fantasy score for that team
+(PTS + 1.2 REB + 1.5 AST + 3 STL + 3 BLK − TOV). The representative world must be a real world selected by a
+predeclared scaled distance to Expected team/player outcomes, with missing/zero-variance handling specified before
+selection; it is not a fabricated average game. Reusing an identical selected world for multiple labels is honest.
+If source worlds cannot be reproduced with complete events, report the blocker rather than manufacture a replay.
+The phone contract remains Expected-only for distribution/branch tools; compact playback is included only after
+measured size and offline checks, and any limitation is visible.
+
 ## Progress ladders — A1 overnight execution
 
 **Headliners:** player accuracy (including defence, roles and responsive minutes); calibrated games/seasons.
@@ -1595,10 +1729,10 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
 is done; do not resume U1–U22. In a future authorised session:
 
 1. Run `git status`, `git --no-pager log --oneline -5`, `.venv/bin/python scripts/smoke.py` and
-   `ls analysis/experiments/`; read this ledger and PLAN §6a–6c before acting. Start S08 at its **10%**
-   contract rung, using the existing S08 ladder and S05–S07 evidence; freeze branch IDs, probabilities,
+   `ls analysis/experiments/`; read the D42 two-chunk ladders above and PLAN §6a–6c before acting. Start future
+   Chunk A module A1 at its **10%** contract rung, using S05–S07 evidence; freeze branch IDs, probabilities,
    uncertainty selection and >2-maybe limitations before implementation. Do not award progress for a launched job.
-2. **S08–S10** follow dependency order. S08 must solve the exact weighted-mixture/10,000-unweighted-world
+2. **S08–S10** map into Chunks A/B as above. S08 must solve the exact weighted-mixture/10,000-unweighted-world
    counterexample without rounding away discrepancies; S10 must not infer a future physical-absence hazard from
    recorded-DNP proxies. Keep actual-participant diagnostics separate from pre-game availability.
 3. **S11 freezes the tested combination before promotion.** Confirm on the fixed wider folds and second seed, protect
@@ -1610,6 +1744,12 @@ is done; do not resume U1–U22. In a future authorised session:
 6. **Incremental iCloud delivery is a separate future item** (PLAN §9b): design atomic per-game publication,
    incomplete/complete generation labels, resume and safe import/offline handling. Current exports remain batch-only;
    never claim iCloud sync is a phone import.
+
+**D42 planning document review:** HANDOFF and PLAN contain both future chunk contracts and unchanged original A1
+accounting; ENGINE_PLAN records the owner proposal; DASHBOARD_PLAN describes the planned selected-world feature;
+AGENTS and README point to the split. TRAINING_PLAN needs no changes because its promotion/cutoff gates remain
+unchanged; FINDINGS needs no changes because this planning session made no new measurements. No model, dashboard,
+forecast, bundle or public shell changed, and no nightly or data job was run. Planning baseline smoke **108/108**.
 
 **S07 checkpoint document review:** HANDOFF records state, stop and future actions; PLAN records S07 completion,
 weights and the streaming backlog; FINDINGS records measured results and negatives; ENGINE_PLAN and TRAINING_PLAN

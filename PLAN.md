@@ -1,6 +1,6 @@
 # MusNBA — game plan and progress
 
-Updated **22 November 2026 (dashboard complete/public; A1 S01–S07 complete; stopped after this nightly)**. The single record of scope, progress and decisions. Every agent updates it at
+Updated **22 November 2026 (A1 S01–S07 complete; remaining work planned as two future chunks, D42)**. The single record of scope, progress and decisions. Every agent updates it at
 every checkpoint (AGENTS.md § Checkpoint protocol). New here? Read [AGENTS.md](AGENTS.md) first, then
 [HANDOFF_NEXT.md](HANDOFF_NEXT.md) — it says exactly what to do next.
 
@@ -131,6 +131,23 @@ weights sum to 100; each subtask has ten explicit done-when steps. A task is com
 current docs, any necessary PWA delivery and a committed/pushed checkpoint. A well-tested negative result counts as completed research; merely
 trying an idea or leaving a run underway does not. Data-limited work must deliver its coverage audit, safe fallback,
 remaining gate and next action rather than claim a fitted model is validated.
+
+**D42 future split, planning only:** retain S01–S07 as completed and the original A1 weights/ladder below as the
+historical ledger (**58.0%**, S13 deferred). The new separately weighted chunks and their 60 concrete rungs are in
+HANDOFF § Future execution; neither has started. Chunk A targets believable lineup-aware games, shared form and
+late-game behaviour, plus five saved game examples; Chunk B tests a new player/lineup-defence mechanism, legal
+foul-outs, season calibration and integrated confirmation, and adds rotation visibility. Each has a fresh final
+nightly and a useful shipped dashboard improvement if no model passes the unchanged gate. Chunk A can promote an
+independently confirmed candidate without pretending S11's later combined season assessment is complete.
+No historical forecast backfill is reauthorised. Keep current batch iCloud export until incremental delivery is
+separately built and tested.
+
+For each game, the planned five selections are: maximum own score margin for each team (even if all worlds lose);
+the actual world closest to
+Expected; and each team's highest single-player fantasy-score world. They are illustrative selected worlds, not
+five independently likely outcomes; one world may satisfy multiple labels. Retain real, reconciled events rather
+than a fabricated average, and specify selection/seed/version provenance, phone size and offline fallbacks before
+implementation. See DASHBOARD_PLAN and HANDOFF for the contract and delivery gates.
 
 | ID | Subtask | Weight | Depends on | Concrete deliverable and completion evidence |
 |---|---|---:|---|---|
@@ -781,6 +798,9 @@ face cards and unrelated presentation remain §9b backlog. NBA history moved to 
   remain active. Normal smoke **108/108**, fault **86/108** as expected, browser **72/72**, hosted PWA import/offline
   **17/17**. The **1,999-record** iCloud bundle needs manual device import; Pages shell `f2932e1` is data-free.
   S08–S14 remain future work; S13 history is deferred. A1 **58.0%**.
+- **22 Nov 2026 · D42 planning:** the owner proposed splitting remaining work into two modular chunks and selecting
+  five meaningful simulated games per matchup. HANDOFF specifies both chunk weights, dependencies, ten-rung
+  modules, acceptance/fallback and final-nightly requirements. Planning only: no model, app, forecast or bundle changed.
 - **22 Nov 2026 · S06 foul-out probe:** in a controlled world, an available substitute does not replace a player
   with six fouls because the current engine's foul-out mask is never updated. The finding is not a forecast gain
   or a population frequency; isolate and gate a repair alongside substitution research.
