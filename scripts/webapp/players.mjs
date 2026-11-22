@@ -98,6 +98,7 @@ async function playerPage(view, {rest, current}) {
       ${s ? `<div class="tiles" style="margin-top:12px">${tiles}</div><p class="note">${s.gp} games (${s.gs} starts) · ${shoot} · per-game season averages; L10 = last 10 games played, with the change v the season</p>` : '<p class="note">No games played this season.</p>'}</section>
     ${nextHtml}
     ${shotPanel(data.shots)}
+    ${defencePanel(data.defence)}
     ${quartersPanel(data.quarters)}
     ${log.length ? `<section class="panel" id="trend">${trendPanel(log, s)}</section>
     <section class="panel"><h3>Game log</h3><div class="scroll"><table><thead><tr><th class="l">Date</th><th class="l">Opp</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th><th>3PM</th><th>STL</th><th>BLK</th><th>TOV</th><th>FG</th><th>3P</th><th>FT</th><th>+/−</th></tr></thead><tbody>
@@ -156,6 +157,21 @@ function shotPanel(sh) {
     <div><div class="scroll"><table><thead><tr><th class="l">Zone</th><th>His shots</th><th>League</th><th>His FG%</th><th>League</th></tr></thead><tbody>${rows}</tbody></table></div>
     <p class="note">Assisted on ${Math.round(100 * sh.assisted)}% of his makes · FT ${(100 * sh.ft_pct).toFixed(1)}%.
     The pre-game profile the engine uses (decayed and shrunk toward his position group), through his last game (${esc(dayLabel(sh.as_of))}) — green zones beat the league's FG% there, red trail it.</p></div></div></section>`;
+}
+// U11: defensive profile from real NBA matchups — what his man does against him v what the same attackers do elsewhere
+function defencePanel(d) {
+  if (!d) return '';
+  const dd = d.exp_100 != null ? d.pts_100 - d.exp_100 : null, d3 = d.exp_fg3a_share != null ? d.fg3a_share - d.exp_fg3a_share : null;
+  const tile = (label, v, sub, good) => `<div class="tile"><span>${label}</span><b class="${good == null ? '' : good ? 'up' : 'down'}">${v}</b><small>${sub}</small></div>`;
+  const tiles = [
+    tile('Points allowed / 100 poss', f1(d.pts_100), d.exp_100 != null ? `those attackers elsewhere ${f1(d.exp_100)}` : '', dd == null ? null : dd < 0),
+    tile('Edge v expected', dd == null ? '—' : `${dd > 0 ? '+' : ''}${dd.toFixed(1)}`, 'points per 100 (negative = stingy)', dd == null ? null : dd < 0),
+    tile('Three-point share allowed', d.fg3a_share == null ? '—' : `${(100 * d.fg3a_share).toFixed(1)}%`, d.exp_fg3a_share != null ? `their normal ${(100 * d.exp_fg3a_share).toFixed(1)}%` : '', d3 == null ? null : d3 < 0),
+    tile('FG% allowed', d.fg_allowed == null ? '—' : `${(100 * d.fg_allowed).toFixed(1)}%`, `${d.pposs.toLocaleString()} partial possessions`, null)].join('');
+  const top = d.top.map(t => `<tr><td class="l"><a href="#/player/${t.id}">${esc(t.name)}</a></td><td>${t.pposs}</td><td>${t.pts}</td><td>${t.fgm}/${t.fga}</td></tr>`).join('');
+  return `<section class="panel"><h3 style="margin-top:0">Defence · real matchups</h3><div class="tiles">${tiles}</div>
+    <h4 class="sub-h">Whom he guards most</h4><div class="scroll"><table><thead><tr><th class="l">Attacker</th><th>Partial poss</th><th>His points</th><th>FG</th></tr></thead><tbody>${top}</tbody></table></div>
+    <p class="note">NBA tracking matchups since ${esc(dayLabel(d.since))}. "Expected" = the same attackers' scoring rate against everyone else, weighted by how much he guarded each. A three-point share below their normal = he keeps shooters off the line (the most stable defensive trait we measured). Team scheme is in these numbers too.</p></section>`;
 }
 const pctOf = (m, a) => a ? (100 * m / a).toFixed(1) + '%' : '—';
 const mmss = sec => { const t = Math.round(sec); return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`; };

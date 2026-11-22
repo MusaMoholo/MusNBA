@@ -468,6 +468,43 @@ def shot_profile_table() -> dict:
     return out
 
 
+def defence_profiles(M, day: str, registry: dict) -> dict:
+    """U11: each defender's real-matchup profile over the last 365 days before `day` (D32): partial possessions guarded,
+    points his man scored per 100 partial possessions v those attackers' own rate elsewhere (leave-one-out), three-point
+    attempt share allowed v their normal share (deterrence), FG% allowed, and whom he guarded most."""
+    if M is None:
+        return {}
+    from datetime import date, timedelta
+    since = (date.fromisoformat(day) - timedelta(days=365)).isoformat()
+    X = M[(M['date'] < day) & (M['date'] >= since)]
+    if X.empty:
+        return {}
+    pair = X.groupby(['def_player', 'off_player'], as_index=False)[['pposs', 'pts', 'fga', 'fgm', 'fg3a']].sum()
+    att = X.groupby('off_player')[['pposs', 'pts', 'fga', 'fg3a']].sum()
+    pair = pair.join(att, on='off_player', rsuffix='_att')
+    rest_pp = (pair['pposs_att'] - pair['pposs']).where(lambda v: v > 20)
+    pair['exp_pts'] = pair['pposs'] * (pair['pts_att'] - pair['pts']) / rest_pp
+    rest_fga = (pair['fga_att'] - pair['fga']).where(lambda v: v > 10)
+    pair['exp_fg3a'] = pair['fga'] * (pair['fg3a_att'] - pair['fg3a']) / rest_fga
+    out = {}
+    for d, g in pair.groupby('def_player'):
+        pp = float(g['pposs'].sum())
+        if pp < 150:
+            continue
+        ok = g.dropna(subset=['exp_pts'])
+        ok3 = g.dropna(subset=['exp_fg3a'])
+        top = g.sort_values('pposs', ascending=False).head(5)
+        out[str(d)] = {'since': since, 'pposs': round(pp), 'games_note': None,
+                       'pts_100': round(100 * float(g['pts'].sum()) / pp, 1),
+                       'exp_100': round(100 * float(ok['exp_pts'].sum()) / float(ok['pposs'].sum()), 1) if len(ok) and ok['pposs'].sum() > 0 else None,
+                       'fg_allowed': round(float(g['fgm'].sum()) / float(g['fga'].sum()), 3) if g['fga'].sum() > 0 else None,
+                       'fg3a_share': round(float(g['fg3a'].sum()) / float(g['fga'].sum()), 3) if g['fga'].sum() > 0 else None,
+                       'exp_fg3a_share': round(float(ok3['exp_fg3a'].sum()) / float(ok3['fga'].sum()), 3) if len(ok3) and ok3['fga'].sum() > 0 else None,
+                       'top': [{'id': str(r.off_player), 'name': (registry.get(str(r.off_player)) or {}).get('name', str(r.off_player)),
+                                'pposs': round(float(r.pposs)), 'pts': int(r.pts), 'fgm': int(r.fgm), 'fga': int(r.fga)} for r in top.itertuples(index=False)]}
+    return out
+
+
 def lead_fan(path: Path, gid: str) -> dict | None:
     """U5: the home lead after Q1, at half-time, after Q3 and at the final whistle (overtime included) in every stored world:
     10/25/50/75/90th percentiles per break, and the chance the home side leads at each."""
@@ -803,6 +840,7 @@ def build(views_root: Path = VIEWS) -> dict:
 
     latest_games = read_json(latest['path'] / 'games.json')
     shot_profiles = shot_profile_table()
+    dprof = defence_profiles(M_real, latest_day, registry)
     for pid, reg in registry.items():
         p = P.get(pid)
         if not p and not reg.get('on_roster'):
@@ -828,7 +866,7 @@ def build(views_root: Path = VIEWS) -> dict:
                                                                     'weight', 'experience', 'status', 'injury', 'on_roster')},
             'season': ({'gp': p['gp'], 'gs': p['gs'], 'dnp': p['dnp'], 'teams': p['teams'], 'tot': p['totals'],
                         'min_ewma': p['min_ewma']} if p else None),
-            'log': p['log'] if p else [], 'next': nxt_out, 'shots': shot_profiles.get(str(pid)),
+            'log': p['log'] if p else [], 'next': nxt_out, 'shots': shot_profiles.get(str(pid)), 'defence': dprof.get(str(pid)),
             'quarters': ([{k: round(Qall[pid][k][q], 1) for k in PERIOD_BOX} | {'games': Qall[pid]['games']} for q in range(4)]
                          if pid in Qall else None)})
 
