@@ -1,7 +1,8 @@
 # Training plan — models for the possession engine
 
 **Updated 22 November 2026.** Serving engine **v1.3**, 16 decision models, D29 minutes and D30 defence inputs;
-real-matchup candidates v1.4c/e/f were rejected (D37). A1 S01–S05 are complete; S06 substitution research follows. Historical
+real-matchup candidates v1.4c/e/f were rejected (D37). A1 S01–S06 are complete; S07's selected fallback and
+availability/timing safeguards are delivered. Historical
 M5 results remain in FINDINGS §3g–§3h; current contracts and promotion/replay gates are in §8 below. Progress and scope
 live in [PLAN.md](PLAN.md) and [HANDOFF_NEXT.md](HANDOFF_NEXT.md).
 
@@ -677,7 +678,7 @@ recorded-listing survival proxies do not justify adding physical injury, return-
 long-range pathway. Until dated evidence passes the frozen chronological support and calibration gates, retain
 pathway v1's no-future-absence model and disclose that limitation.
 
-The unshipped S07 placeholder repair explicitly flags worlds with fewer than five positive minute inputs and uses
+The delivered S07 placeholder repair explicitly flags worlds with fewer than five positive minute inputs and uses
 equal regulation-minute shares among their sampled available players; it is an uncalibrated emergency assumption,
 not inferred health or a replacement for the engine's separate D29 cold-player prior. Fewer than five available
 players still fails explicitly. Do not treat this synthetic fallback as a measured accuracy improvement.
@@ -824,6 +825,9 @@ was available. The additional play-by-play participant missing from the raw box 
   retains v1.3/pathway v1, delivers S12's model-facing UI improvement, and still finishes with S14's live nightly.
 
 ### 8.4 Date-safe current-model history
+
+**Deferred by owner D40 (22 Nov):** do not implement or run the historical forecast replay during this A1
+execution. The rules below remain safety requirements if it is later reauthorised; they do not justify running it now.
 
 The owner's preferred historical view uses the current accepted recipe across the whole season (ENGINE_PLAN D39/§17).
 This is retrospective reconstruction, distinct from originally published forecasts. A pre-season-trained version may

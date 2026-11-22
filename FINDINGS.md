@@ -1576,12 +1576,12 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   starter accuracy do not establish status calibration or physical health.
  - **S07 report-source distinction:** in the retained 21 Nov `20261121T225637Z` roster of **528** players, **110**
   have a matched injury-report status and **418** have no listed injury. The latter remain subject to the existing
-  available assumption, not a reported health status. Pending ingest/report changes preserve the nullable reported
+  available assumption, not a reported health status. Delivered ingest/report changes preserve the nullable reported
   value and source separately, and the Game Centre explicitly discloses the assumption; this does not calibrate it.
  - **Pre-tip provenance risk:** the previously served nightly computes each game's `pre_tip` from the slate
   simulation's start timestamp, before its games are simulated and before the snapshot is written. A run crossing a
   scheduled tip can therefore label an output pre-game even though it was not ready before that tip. This is a
-  code-path finding, not an estimate of occurrence. An unshipped repair records completion after the atomic snapshot
+  code-path finding, not an estimate of occurrence. The delivered repair records completion after the atomic snapshot
   rename, tests a run crossing tip, labels older outputs without completion timestamps timing-unverified, and excludes
   those from pre-game accuracy summaries. S13 must retain this distinction in its archive and activation work.
  - **Prospective preview origin defect:** the retained **22 Nov** preview shares the **21 Nov** season origin with
@@ -1589,7 +1589,7 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   games versus **235** for the origin-day snapshot: game **401910023** on 21 Nov entered the preview's target-date
   box inputs.
   The production engine profile rebuild uses the origin date, so these sources are also inconsistent. This observed
-  example violates the common pre-origin input contract. The unshipped S07 repair routes box/period data through a
+  example violates the common pre-origin input contract. The delivered S07 repair routes box/period data through a
   shared origin and independently rejects non-pre-origin saved team/player logs; after the S06 audit, the engine
   also gained origin-aware profile, minute, stint and pair-history guards. Previously saved previews must not be
   relabelled safe.
@@ -1652,10 +1652,11 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   Separately, a synthetic serving-path stress test with five roster players but only four available showed that
   the legacy target-table fallback reinstates the unavailable player for **2,880/2,880** seconds. This is a
   reproduced correctness bug, not an observed historical rate; the zero short-roster proxy-world count above
-  cannot validate rare or uncertain prospective rosters. The serving path has not yet been changed.
+  cannot validate rare or uncertain prospective rosters. The subsequent S07 repair rejects impossible
+  five-player worlds rather than reinstating unavailable players; it is included in the 22 Nov nightly.
 - **S07 report fallback reproduction:** synthetic roster fixtures exposed two existing issues: a missing injury
   report/status was labelled `Active`, and an injury entry from a previous team could overwrite a traded player's
-  current roster status. An uncommitted ingest repair marks these cases `Unknown`, warns on conflicting/missing
+  current roster status. The S07 ingest repair marks these cases `Unknown`, warns on conflicting/missing
   inputs, omits players listed on multiple teams and rejects malformed or unidentifiable report entries.
   Rebuilding the five retained valid report inventories reproduced all **528** roster-status counts per run
   exactly; this is parity on those inputs, not evidence that the fallback probability is calibrated. Additional
@@ -1666,11 +1667,11 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   can occur there. This is not a forecast of the risk under a future missing report. A separate prospective
   placeholder fixture returned a result despite **51/100** worlds having only four available players, and the
   projected-starter selector returned **four** starters for a seven-player pool with four certain players.
-  Candidate fail-fast and five-starter repairs are isolated and unshipped.
+  The fail-fast and five-starter repairs are included in the 22 Nov nightly.
 - **S07 cold-roster placeholder stress:** with six available players, no positive historical minute inputs and one
   unavailable player, the prospective placeholder returned team averages of **101.9/102.1 points** but **zero**
   players with displayed lines or minutes. Similar synthetic tests with **1 or 4** positive-minute players also
-  returned without flagging the unfillable allocation. An isolated, unshipped repair warns and records an
+  returned without flagging the unfillable allocation. The S07 repair warns and records an
   explicitly uncalibrated equal-share fallback among available players only for these worlds, fills five projected
   starter labels, and independently reconciles every quarter's player minutes and team/player points in
   **300 worlds per side**; the unavailable player receives no minutes or points. This is a conservative placeholder
@@ -1708,9 +1709,20 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   **132** team-games, **82.73%** starter-slot and **31.06%** all-five accuracy. The corresponding retained
   snapshots comprise **7** retrospective slates / **104** team-games and **3** prospective slates / **28**
   team-games; none records a completion timestamp. These are legacy scores, not verified pre-tip
-  accuracy. The working scorer retains the old per-slate and overall record separately and scores only prospective
-  games whose completed snapshot is explicitly pre-tip; this fix has not yet been delivered or applied to the
-  retained score file. Unverified timing is not evidence that these forecasts were actually late.
+  accuracy. The delivered scorer retains the old per-slate and overall record separately and scores only prospective
+  games whose completed snapshot is explicitly pre-tip; the refreshed record has **zero** verified slates so far.
+  Unverified timing is not evidence that these forecasts were actually late.
+- **S07 delivered nightly:** the 22 Nov ET origin rebuilt inputs from **241** pre-origin games, **59,803**
+  segments and **26,308** stints in **230.9 s**, then simulated **7** Today and **10** Tomorrow games at
+  **10,000** worlds each and **10,000** season paths over **959** remaining games. Both snapshots use origin
+  22 Nov and cutoff 21 Nov; all **17** completed before their listed tips. The independent saved-output audit
+  checked **599** origin-report entries, **340,000** player/team-world point totals and **17** season/game
+  identities; 22/23 Nov had **246/353** report entries, **185/283** missing reported-status values and
+  **49/59** ruled-out entries respectively. These are provenance/accounting counts, not calibrated health
+  probabilities. Report: `analysis/experiments/20261122_a1_s07_live_snapshot_audit.json`.
+  The iCloud export contains **1,999** independently hash-verified records and no per-world game files;
+  its SHA-256 is **8f8026e7b01febbbf9416c23faaa1e794bd94a116e29d3c22b6e1513cb12579a**. The unchanged
+  accepted models are engine v1.3 and pathway v1. A manual import is still required on each device.
 
 ## 6b. A1 S03 matched component diagnosis (22 Nov 2026; descriptive)
 

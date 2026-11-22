@@ -2,9 +2,9 @@
 
 **Phone v localhost (owner, 20 Nov, D36):** the phone bundle is stripped back — the 10,000-world distributions for the expected lineup only; everything built on the per-world files (Scenarios, Given…, joint grids, team drivers, duels, duel of the night, lineup branches) is localhost-only (`export_musnba.phone_record`).
 
-**U1–U22 complete as of 22 November 2026.** Historical implementation notes: Scenarios, Given…, joint grids, drivers, averages deltas, Lab view, minutes basis and engine v1.3 added in the D29–D30 chunk; game flow, duels, duel of the night and who-guards-whom added in the D32 chunk. A1 S01–S06 are research-only and complete; S07 delivery is pending. No A1 dashboard changes have shipped. Scope/progress live in [PLAN.md](PLAN.md) and HANDOFF.
+**U1–U22 complete as of 22 November 2026.** Historical implementation notes: Scenarios, Given…, joint grids, drivers, averages deltas, Lab view, minutes basis and engine v1.3 added in the D29–D30 chunk; game flow, duels, duel of the night and who-guards-whom added in the D32 chunk. A1 S01–S06 were research-only; S07's availability and timing improvements are delivered with the 22 Nov nightly. Scope/progress live in [PLAN.md](PLAN.md) and HANDOFF.
 
-**A1 S07, in review and not yet shipped:** prospective unknown statuses are visible rather than hidden, with the
+**A1 S07, delivered 22 November:** prospective unknown statuses are visible rather than hidden, with the
 uncalibrated fallback labelled in the Game Centre. Status-tag percentages are explicitly uncalibrated availability
 assumptions, including unknown statuses and the active-but-recently-inactive fallback; the Availability panel
 separately shows the observed share of simulated games played. New prospective outputs retain their own roster and
@@ -15,21 +15,25 @@ The updated shared availability display passed 36/36 projection/flow, player she
 checks at desktop/half/phone and both themes; all six projection screenshots and representative other pages were
 inspected after wrapping availability tags below player names.
 An uncalibrated equal-share cold-roster fallback, when present in a placeholder forecast, is disclosed with its
-team and simulated-world count; the production engine's separate cold-player prior is unchanged. The final isolated
+team and simulated-world count; the production engine's separate cold-player prior is unchanged. An earlier isolated
 shell (`c6977df6e7c00067d19b`) passed 15/15 import/offline checks with the old bundle.
-The data-free Pages shell and
-iCloud bundle remain unchanged until the S07 delivery checkpoint.
-The same unshipped work corrects Tomorrow's shared-origin cutoff. New snapshots record completion after their atomic
+The same work corrects Tomorrow's shared-origin cutoff. New snapshots record completion after their atomic
 write; Game Centre and final-game cards distinguish pre-game, after-tip, retrospective and timing-unverified forecasts,
 including old phone bundles without completion metadata. Unverified/after-tip forecasts are excluded from the
 pre-game accuracy summary. Today describes a prospective slate without claiming every game was pre-tip.
 The isolated timing-aware shell `f79ce8eab3ebe9182d59` imported the existing bundle and passed **16/16** checks,
 including honest legacy timing and offline use; this is not a Pages publication or a new phone import.
-The unshipped Lab also excludes starter scores without verified pre-tip snapshot completion, including legacy
+The Lab also excludes starter scores without verified pre-tip snapshot completion, including legacy
 imported bundles; it discloses the number of unverified slates instead of presenting their accuracy as pre-game.
 The prior per-slate and overall scores are retained separately in the next scorer run. Lab passed **6/6**
-width/theme checks and all six screenshots were inspected; isolated shell `0d7693ac00bad5eb2e00` imported the
-legacy bundle and passed **17/17** import/offline checks, including Lab timing. A new-bundle check remains.
+width/theme checks and all six screenshots were inspected; shell `0d7693ac00bad5eb2e00` imported both the
+legacy and new bundles and passed **17/17** local import/offline checks on each, including Lab timing.
+The data-free shell is published at `gh-pages` commit `f2932e1`; the new iCloud bundle contains **1,999**
+records (SHA-256 `8f8026e7b01febbbf9416c23faaa1e794bd94a116e29d3c22b6e1513cb12579a`).
+The hosted shell passed **17/17** import/offline checks with that bundle, and all eight changed hosted files match
+the reviewed build byte for byte. The 22/23 Nov slates and affected views passed **72/72** desktop/half/phone theme
+checks with representative screenshots inspected. Bundle delivery does not establish a phone import; each device
+must import it.
 
 ## Navigation
 
@@ -64,9 +68,9 @@ legacy bundle and passed **17/17** import/offline checks, including Lab timing. 
   "over" chance), so there are no pushes (`halfLine` in `ui.mjs`). Everything else about how figures are shown stays.
 - Probabilities: one decimal in the game and player views, whole percent in heat cells; `<0.1%`/`>99.9%`
   at the extremes; zero shows as "–". Over means strictly more than the line.
-- Pre-game snapshot = generated before tip-off with recorded origin/report provenance. Current retrospective
-  backfills use the placeholder and have no historic injury news; always labelled. Planned A1 S13 engine
-  reconstructions retain their version, origin, report coverage and retrospective kind, even if dated reports exist.
+- Pre-game snapshot = generated before tip-off with recorded origin/report provenance. Existing retrospective
+  backfills use the placeholder and have no historic injury news; always labelled. S13 engine reconstruction
+  is deferred by D40; if reauthorised it must retain version, origin, report coverage and retrospective kind.
 - Availability per simulation: Out 0, Doubtful 0.15, Questionable 0.5, Day-To-Day 0.7, Probable 0.9.
   Distributions include simulations where a player sits.
 - Theme: automatic, dark or light (toggle; per device). Logos switch to dark variants on dark themes.
@@ -158,12 +162,11 @@ U1–U22 stay complete. A1 S08 adds local explicit lineup branches with coherent
 rotation maps and sampled-world event playback. Keep existing U3 role badges, U11 defence profiles and merged
 Standings navigation; don't create duplicate pages. Card groups remain multiples of three and changing text is dynamic.
 
-A1 S13 preserves each day's Today forecast and labels Tomorrow previews. With a new accepted model, the owner
-expects a season-start→now rebuild and one consistent **active-version history** in Today/results, Game Centre,
-Movers and review metrics. Preserve previous versions and original live forecasts in archives. Historical rebuilds
-are labelled retrospective, with the original generation time/input cutoff/coverage available; never present them
-as forecasts actually issued then. Actuals join stored predictions; browsing never fits or simulates. Model-version
-switches must not silently splice incompatible histories or count Tomorrow's copied season twice.
+The owner deferred S13 historical forecast backfill (D40); the current nightly targets today and tomorrow instead.
+Preserve existing forecasts and archives. If versioned history is reauthorised, keep Today distinct from Tomorrow
+previews; label reconstructed history with its generation time, version and input cutoff, never as originally issued
+forecasts. Actuals join stored predictions; browsing never fits or simulates. Model-version switches must not silently
+splice incompatible histories or count Tomorrow's copied season twice.
 
 **PWA delivery is part of every affected subtask, not just S14** (owner, 22 Nov). Promoted model or output changes
 require refreshed accepted forecasts/views and a new iCloud bundle; asset changes require a rebuilt/published

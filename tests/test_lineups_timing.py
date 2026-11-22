@@ -7,7 +7,7 @@ from unittest.mock import patch
 import pandas as pd
 
 from basketball_common import verified_pre_tip, write_json
-from scripts import evaluate, lineups, views
+from scripts import evaluate, lineups, smoke, views
 
 
 class LineupTimingTests(unittest.TestCase):
@@ -56,8 +56,33 @@ class LineupTimingTests(unittest.TestCase):
         self.assertEqual(record['legacy_unverified_slates'], legacy)
         self.assertEqual(record['legacy_unverified_overall'], {'team_games': 132})
         self.assertEqual(record['overall']['team_games'], 2)
+        self.assertTrue(smoke.lineup_accuracy_consistent(record))
         self.assertEqual(again, record)
         self.assertEqual(json.loads((self.root / 'accuracy.json').read_text()), record)
+
+    def test_smoke_accepts_no_verified_scores_but_rejects_inconsistent_aggregates(self):
+        write_json(self.snap / 'meta.json', {**self.meta, 'completed_at': None})
+        with patch.object(lineups.pd, 'read_csv', return_value=self.box):
+            record = lineups.score([self.day])
+        self.assertEqual(record['slates'], {})
+        self.assertNotIn('overall', record)
+        self.assertTrue(smoke.lineup_accuracy_consistent(record))
+        self.assertFalse(smoke.lineup_accuracy_consistent({**record, 'overall': {'slot_accuracy': 0.8}}))
+        slate = {'team_games': 2, 'slot_accuracy': 0.8, 'all_five': 0.5}
+        self.assertFalse(smoke.lineup_accuracy_consistent({**record, 'slates': {'day': slate}}))
+        scored = {'slates': {'day': slate},
+                  'overall': {'slates': 1, 'team_games': 2, 'slot_accuracy': 0.8, 'all_five': 0.5}}
+        self.assertTrue(smoke.lineup_accuracy_consistent(scored))
+        self.assertFalse(smoke.lineup_accuracy_consistent(
+            {**scored, 'overall': {**scored['overall'], 'all_five': 0.8}}))
+        self.assertFalse(smoke.lineup_accuracy_consistent(
+            {**scored, 'overall': {**scored['overall'], 'slot_accuracy': float('nan')}}))
+        second = {'team_games': 3, 'slot_accuracy': 0.6, 'all_five': 0.3333}
+        weighted = {'slates': {'day1': slate, 'day2': second},
+                    'overall': {'slates': 2, 'team_games': 5, 'slot_accuracy': 0.68, 'all_five': 0.4}}
+        self.assertTrue(smoke.lineup_accuracy_consistent(weighted))
+        self.assertFalse(smoke.lineup_accuracy_consistent(
+            {**weighted, 'overall': {**weighted['overall'], 'team_games': 4}}))
 
     def test_missing_and_malformed_timing_remain_unverified(self):
         for metadata in ({}, {'completed_at': 'time'}, {'completed_at': 'time', 'pre_tip': None},

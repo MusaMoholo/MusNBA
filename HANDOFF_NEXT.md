@@ -1,6 +1,7 @@
 # Handoff — state and next actions
 
-Updated **22 November 2026 — A1 overnight execution, S01–S06 complete; S07 90%**. Dashboard U1–U22 complete and published.
+Updated **22 November 2026 — A1 stopped after the requested nightly; S01–S07 complete, overall 58.0%**.
+Dashboard U1–U22 complete and published.
 Dashboard close-out checkpoint **86c2a46**, A1 planning checkpoint **00a0731**; S01 checkpoint **c9d8008**
 and S02 checkpoint **93b3e1d** are committed and pushed (S01's exact control source is **c6d5db4**).
 The original S03/S05 experiment snapshot is **ab32eda**, committed and pushed before the candidate repair;
@@ -36,13 +37,24 @@ The independently audited S07 60% screen was pushed as **76f7cf5**.
 The isolated S06 foul-penalty source was pushed as **bf9cd21** before the probe; S07's spell/starter follow-up
 protocol was frozen as **857cc78**.
 The audited spell/starter follow-up and unrun S06 direct-state source were pushed as **d7e00aa**.
-This checkpoint completes S06 and preserves the tested but undelivered S07 source changes.
+S06 completion and the then-undelivered S07 source changes were pushed as **45a6df4**; this file is part of the
+subsequent S07 delivery checkpoint (use `git log -1` for its commit). Historical source-freeze/progress notes below
+describe their state at the time and are superseded by the current delivery summary in § State.
+**Owner scope change D40 (22 Nov):** “forget nightly backfill. lets just get nightly for next slate (today and
+tomorrow relative to this date). since were probably not at a perfect model yet”. Defer S13 and do not implement or
+run a historical forecast replay in this A1 execution. The required pre-origin input rebuild and future-season
+simulation remain in scope. Preserve existing
+snapshots/archives; D39/§17 remains a future safety contract. S13's original 5% weight and ladder stay unchanged but
+receive no progress credit, so a fully delivered remainder can reach 95%, not a falsely claimed 100%.
+**Owner stop D41 (22 Nov):** “well stop after this nightly run, anything undone is future work”. The nightly,
+verification and PWA delivery are complete; checkpoint and stop without starting another nightly or S08–S14 in this
+session. S13 stays deferred. The owner also suggested future incremental, atomic per-game iCloud delivery with a
+manifest and safe PWA import (PLAN §9b); it is not implemented, so nightlies still export one batch at the end.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
-product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S06 are complete;
-S07 is 90%; A1 overall is 57.4%.** Isolated assignment candidates have event-level diagnostics and wiring only;
-no defence candidate has had an engine-accuracy test, and no model promotion, forecast or PWA change has been made.
-The local web assets are modified in the working tree and may already be visible through either local server; the
-hosted Pages shell and iCloud bundle remain unchanged until S07 delivery.
+product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S07 are complete;
+A1 overall is 58.0%.** Isolated assignment candidates have event-level diagnostics and wiring only;
+no defence candidate has had an engine-accuracy test and no model was promoted. S07 delivered a corrected
+forecast/report contract, new iCloud bundle and updated data-free Pages shell.
 The fixed S06 200-game candidate backtest failed after at least **40/200** games (last progress **378 s**) because
 world **563**, side **0**, had fewer than five non-disqualified available players after a foul-out; no aggregate
 outputs were written. The explicit error is a robustness failure, not a paired accuracy result or promotion.
@@ -113,8 +125,8 @@ passed. Do not claim a direct same-opportunity target-table control or a causal 
 The working `scripts/a1_flow_audit.py --no-reference` can independently check the full candidate's flow accounting
 without pretending a second full same-policy backtest exists. On the existing three-game wiring capture it matched
 all **1,280** recorded-player-period checks and **96** team/component checks, with reproduction fields explicitly
-null; its existing reference mode and caller signature remain compatible. The future direct-state replay separately
-must establish exact same-policy reproduction. This audit change is not yet committed.
+null; its existing reference mode and caller signature remain compatible. The subsequent direct-state replay
+established exact same-policy reproduction and the audit change is committed.
 S07's first no-report/starter baseline protocol is frozen in TRAINING_PLAN §8.2 before scoring. A prior-position
 coverage setup initially failed on timestamp/string merge types; after converting stored dates to ISO it found
 **55/7,317** missing prior positions across **55/400** F4 team-games. This is coverage, not a starter score.
@@ -630,15 +642,15 @@ shell **2349** exited 0; logs `/tmp/musnba_a1_s07_starter_{sim,audit}_F{1,2,3,4}
 Before 80%, a synthetic stress test confirmed an existing serving bug: in a five-player pool with only four
 available, `Game._target_tables` silently reinstates the unavailable fifth player for all **2,880** regulation
 seconds. None of the **15,890,000** historical proxy worlds triggered it, which does not establish safety for a
-short or uncertain prospective roster. The working engine now fails explicitly instead and preserves the pinned
-valid-world RNG fingerprints; S07's delivery is still pending.
+short or uncertain prospective roster. The delivered engine now fails explicitly instead and preserves the pinned
+valid-world RNG fingerprints.
 The partial-source checkpoint's normal smoke passed **102/102** and deliberate-fault smoke passed its expected
 failure check: **80/102**, nonzero fault exit, former shell **2291**. Logs
 `/tmp/musnba_a1_s06_flow_partial_smoke.log` and `/tmp/musnba_a1_s06_flow_partial_fault.log`. The
 **31** current focused tests and direct-state-auditor Pylance check passed. This is a source-freeze checkpoint,
 not a completed S06 or S07 task.
 
-**S07 fallback repair, pending delivery:** missing injury files or statuses previously became
+**S07 fallback repair, source-freeze history:** missing injury files or statuses previously became
 `Active`, and an injury entry for an old team could overwrite a traded player's current roster status. The
 working `scripts/box_scores.py` now reports missing/conflicting statuses as `Unknown`, uses the existing
 uncalibrated unknown-status probability, warns on report/roster mismatches, omits ambiguous multi-team roster
@@ -657,7 +669,8 @@ An isolated data-free preview shell built at
 **5902923a710631db4ca0**, imported the existing iCloud bundle and passed **15/15** local import/offline checks,
 log `/tmp/musnba_a1_s07_pwa_preview.log`; its temporary :8768 server is stopped. This is not a Pages publication
 or a new bundle, and does not prove phone import.
-Review server shell **2404** serves `127.0.0.1:8767` (PID **22620**); never touch the owner's :8766 server.
+The former review server shell **2404** served `127.0.0.1:8767` (PID **22620**) and has been stopped; the owner's
+:8766 was not touched.
 The ingest/UI source's normal smoke passed **102/102** and its deliberate-fault run failed as expected with
 **80/102**, former shell **2440**, logs `/tmp/musnba_a1_s07_ingest_{smoke,fault}.log`. The applied engine/projection
 changes required a new smoke/fault check, completed in former shell **2605**; after the additional starter-score
@@ -680,17 +693,16 @@ when fewer than five players are certain. A prospective placeholder fixture also
 worlds with only four available players; the isolated candidate now rejects such worlds while preserving the
 retrospective path. **44** combined focused tests pass there, including both rotation fingerprints and a complete seeded valid placeholder
 forecast fingerprint. These changes have since been applied and retested in the live sources. The isolated copy
-symlinks the existing data and virtualenv; do not run jobs that write through its data link. No new forecasts, iCloud
-bundle or Pages shell has been published; the app changes require
-the documented browser, bundle/import/offline and data-free shell checks before S07's checkpoint.
-An additional report-provenance repair is pending delivery: new prospective game outputs freeze their own roster/status
+symlinks the existing data and virtualenv; do not run jobs that write through its data link. At this earlier source
+checkpoint no new forecasts, bundle or shell had been published; the later delivery and checks are in § State.
+The report-provenance repair makes new prospective game outputs freeze their own roster/status
 snapshot, including ruled-out players; views no longer substitute a later registry, and old snapshots explicitly
 show only the statuses they retained. The UI distinguishes fixed/unknown/recent-inactivity assumptions from
 simulated participation. The revised ingest/report also preserves a nullable reported status and its source: a
 present report with no injury entry retains the existing assumed-available probability but is explicitly marked
 `not_listed_assumption`, not a confirmed health status. The Game Centre discloses that distinction.
 The previously served nightly metadata uses slate-start time rather than output completion, so a run crossing tip
-can incorrectly claim a pre-game result. The pending repair below addresses new snapshots; S13 must carry its
+can incorrectly claim a pre-game result. The delivered repair below addresses new snapshots; S13 must carry its
 legacy-unverified distinction through versioned archives.
 A separate preview-origin defect was reproduced: retained 22 Nov's preview has season origin 21 Nov but reports
 cutoff 21 Nov instead of 20 Nov, and its league inputs include **236** games versus the origin snapshot's **235**.
@@ -703,14 +715,14 @@ transferred to the live sources after the S06 audit. **82** focused Python tests
 valid-world RNG fingerprints and origin-date injection. Retain the uncalibrated fixed status/recent-inactivity
 assumptions and D29 projected-starter fallback; no future physical-absence hazard is justified by the censored
 coach-DNP proxies. S08's two-maybe product weights are unvalidated independence assumptions and >2 one-out cases
-are non-exhaustive. S10 retains no fitted future player-absence hazard. Production snapshots and PWA have not yet
-been refreshed. The pre-repair S06 `engine.py` SHA-256 `3c62f518...681414e` remains reproducible from pushed
+are non-exhaustive. S10 retains no fitted future player-absence hazard. Production snapshots and PWA were refreshed
+after this source checkpoint, as recorded in § State. The pre-repair S06 `engine.py` SHA-256 `3c62f518...681414e` remains reproducible from pushed
 checkpoint `d7e00aa`; rerun the hash-locked S06 audit with that source, not the modified working engine.
-The pending snapshot writer now records completion after the atomic snapshot rename and computes pre-tip from
+The delivered snapshot writer records completion after the atomic snapshot rename and computes pre-tip from
 that time; legacy/incomplete outputs have unverified timing and are excluded from pre-game accuracy summaries.
 Focused before/after-tip, legacy-timing and audit tests pass. Isolated shell `f79ce8eab3ebe9182d59` passed **16/16**
 import/offline checks against the old bundle, including legacy timing (log
-`/tmp/musnba_a1_s07_pwa_timing_old_bundle_v2.log`); its :8768 server is stopped. The changes have not been shipped.
+`/tmp/musnba_a1_s07_pwa_timing_old_bundle_v2.log`); its :8768 server is stopped. That preview preceded delivery.
 An additional starter-score audit found that the existing **10-slate, 132-team-game** accuracy record includes
 **7** retrospective slates / **104** team-games and **3** prospective slates / **28** team-games without verified
 completion timestamps. The working scorer preserves its per-slate and overall legacy figures separately,
@@ -718,8 +730,8 @@ scores only explicitly pre-tip prospective games, and the Lab hides old-bundle s
 **78** combined focused Python and **4** JS tests passed, including legacy migration and incomplete/after-tip
 cases. Lab passed **6/6** width/theme checks with all six screenshots inspected in
 `/tmp/musnba-a1-s07-lab-legacy`; shell `0d7693ac00bad5eb2e00` passed **17/17** old-bundle import/offline checks,
-including Lab, log `/tmp/musnba_a1_s07_pwa_preview_latest_v2.log`; :8768 is stopped. The live score file, newly
-generated bundle and hosted shell still need the nightly/delivery checks. Post-repair normal smoke passed
+including Lab, log `/tmp/musnba_a1_s07_pwa_preview_latest_v2.log`; :8768 is stopped. The subsequent nightly,
+score migration, bundle and hosted shell passed the delivery checks in § State. Post-repair normal smoke passed
 **102/102** and deliberate-fault smoke failed as expected **80/102**, logs
 `/tmp/musnba_a1_s06_checkpoint_{smoke,fault}.log`.
 The existing local `data/views` was copied and byte-verified before the planned rebuild at
@@ -797,14 +809,13 @@ full-fold loss changes were **+0.00021749 / +0.00005594 / +0.00000852 / −0.000
 interaction cannot rescue either family. There are no retained inputs requiring player-engine confirmation.
 Keep original-publication and revision uncertainty explicit even though every event date is strictly before its target.
 
-**Use the app:** https://musamoholo.github.io/MusNBA/ — data-free GitHub Pages, source branch `gh-pages` at **e302d27**.
+**Use the app:** https://musamoholo.github.io/MusNBA/ — data-free GitHub Pages, source branch `gh-pages` at **f2932e1**.
 iPhone: Safari → Share → Add to Home Screen → launch the icon → Offline data & installation → Import data.
-Bundle: **iCloud Drive/MusNBA/MusNBA.musnba.gz**, also `exports/MusNBA.musnba.gz` and `~/Downloads/MusNBA.musnba.gz`.
-All three copies match (10,620,944 bytes, SHA-256
-`3055d277fc5e3c1b392d0b06466ec1b6a8c34de3313144b4fc856e1e5abd9ecf`, rechecked at 07:35 UK). Owner confirmed on 22 Nov
-that the file now appears on the phone; visibility is not confirmation of import.
+Bundle: **iCloud Drive/MusNBA/MusNBA.musnba.gz**, generation and SHA-256 in § State. The earlier close-out copies
+in `exports/` and `~/Downloads/` matched the then-current 10,620,944-byte bundle; they have not been verified as
+copies of the new iCloud generation. Earlier phone file visibility is not confirmation of this new import.
 
-**Refresh complete:** 21 Nov (6 games) and 22 Nov (7 games), engine v1.3, **10,000 worlds per game**, one rotation table
+**Earlier dashboard close-out refresh:** 21 Nov (6 games) and 22 Nov (7 games), engine v1.3, **10,000 worlds per game**, one rotation table
 per world; fresh **10,000-world season, 965 remaining games**, as of ET 21 Nov. Offline/no-rebuild nightly finished
 22 Nov 01:04 UK; finished-code views rebuilt at 01:05 before export (nightly had loaded views before U19 was added).
 Earlier snapshots/shells/bundles archived in `~/Basketball_archive_ops`. No fetch, training or model promotion in the dashboard close-out or this planning pass.
@@ -1144,9 +1155,8 @@ still needs owner acceptance; iCloud file delivery itself is confirmed.
 
 **Owner preferences from the dashboard chunk:** season insights belong inside Standings; comparable card groups come in
 multiples of three (Leaders: 9 player + 6 team cards); changing copy/counts/dates/qualifiers/model labels must derive from
-loaded data/configuration. Phone can stay stripped back (D36). A1 S02 is underway below. The latest owner instruction makes the active dashboard
-history consistent with the current accepted model: retain daily Today forecasts, and support a season-start→now
-rebuild per model version with strictly dated inputs/fits. Earlier generations remain archived (ENGINE_PLAN D39).
+loaded data/configuration. Phone can stay stripped back (D36). The earlier D39 history design is now deferred by D40;
+existing generations remain archived and the active session stops after the current nightly (D41).
 
 **Root-doc review for the pending partial checkpoint:** HANDOFF, PLAN, FINDINGS, TRAINING and README record the
 candidate work and commands; ENGINE corrects D38's stale planning-session wording. AGENTS needs no change because
@@ -1177,9 +1187,9 @@ nightly, app build, PWA export or publication was performed. Existing public she
 
 ## Progress ladders — A1 overnight execution
 
-**Headliners:** player accuracy (including defence, roles and responsive minutes); calibrated games/seasons with
-current-model historical predictions. Scope/dependencies: PLAN §6a. Acceptance: PLAN §6b, TRAINING_PLAN §8.
-The prior planning-only stop has been lifted for this overnight execution; the original scopes and gates still apply.
+**Headliners:** player accuracy (including defence, roles and responsive minutes); calibrated games/seasons.
+Historical forecast replay is deferred (D40). Scope/dependencies: PLAN §6a. Acceptance: PLAN §6b, TRAINING_PLAN §8.
+The owner now requests a stop after the active nightly (D41); unfinished tasks remain future work.
 
 For each S, p is its completed-rung percentage. Overall = Σ(weight × p) / 100. Weights below are fixed and total
 100%; they are progress weights, not runtime estimates. Post active-task bars and overall immediately after **every
@@ -1197,17 +1207,18 @@ weights, with the old and new accounting; do not hide unfinished tasks by deleti
 | S04 Defence and shot quality | 12% | 100% | Both families rejected at their frozen node gates; tracking rebuild and independent accounting verified; served model and bundle unchanged |
 | S05 Roles and minute allocation | 8% | 100% | Both matched screens and independent accounting complete; neither passes pooled MIN gate, retain D29 control; smoke/fault passed |
 | S06 Game-state substitutions | 12% | 100% | Fixed 200-game screen and state replay audited; D29 retained because 3 non-inferiority bounds remain unestablished; smoke/fault passed |
-| S07 Availability and future absences | 6% | 90% | Fixed uncalibrated status/starter fallbacks selected; no future absence hazard; tested source and shared-origin safeguards await delivery |
+| S07 Availability and future absences | 6% | 100% | Fixed uncalibrated status/starter fallbacks retained; no future absence hazard; corrected origin/report/timing delivered and independently audited |
 | S08 Lineup branches and Expected | 6% | 0% | Planned |
 | S09 Shared form and end-game behaviour | 10% | 0% | Planned |
 | S10 Season pathway calibration | 8% | 0% | Planned |
 | S11 Integrated confirmation/promotion | 5% | 0% | Planned |
 | S12 Model behaviour in the dashboard | 3% | 0% | Planned |
-| S13 Current-model season history | 5% | 0% | Planned |
+| S13 Current-model season history | 5% | 0% | Deferred by owner D40; no progress credit |
 | S14 Nightly, delivery, successor | 5% | 0% | Planned |
 
-**A1 overall: `███████████░░░░░░░░░ 57.4%`.** Both control seeds are complete; isolated assignment-event
-diagnostics and three-game wiring are not engine-accuracy tests. No candidate has been promoted or changed production/PWA.
+**A1 overall: `███████████░░░░░░░░░ 58.0%`.** Both control seeds are complete; isolated assignment-event
+diagnostics and three-game wiring are not engine-accuracy tests. No model candidate has been promoted;
+S07's provenance/timing repair and new forecast bundle are delivered.
 Each rung below is cumulative; 100% always includes updated docs, necessary PWA model/data/shell delivery, reviewed
 commit and push, plus the owner summary. See AGENTS §3/§5 and PLAN §6c for the per-subtask PWA checklist; research-only
 checkpoints record that the served bundle is unchanged. Delivery is not proof of manual phone import.
@@ -1398,6 +1409,9 @@ reason explicitly, not “passed”. This completes a decision task, never certi
 
 ### S13 — current-model season history and daily archives (5%)
 
+**Deferred at 0% by owner D40.** The original ladder is retained for a future reauthorisation, not a current work
+queue; no rungs or weight are redistributed or credited.
+
 | % | Done when |
 |---:|---|
 | 10 | Existing snapshots/archives are inventoried; model/origin/run identity and Today/preview/replay rules are frozen. |
@@ -1411,7 +1425,7 @@ reason explicitly, not “passed”. This completes a decision task, never certi
 | 90 | Atomic active-version switch, results review, Movers and PWA provenance checks pass; older generations remain recoverable. |
 | 100 | History/capability/deferrals are documented; activated history is exported and PWA-checked; commit/push and owner summary. |
 
-S13's default dashboard history uses the current accepted version. Historical recipes and reconstructed reports are
+If reauthorised, S13's default dashboard history uses the current accepted version. Historical recipes and reconstructed reports are
 labelled retrospective; no mixed-version or invented prospective accuracy claim. A **running** full-season rebuild
 is unfinished work, not a gate deferral. Log per-date completion at each 10% throughout; do not go silent between 70/80.
 
@@ -1440,6 +1454,34 @@ are counts over the worlds. The app slices the engine's stored worlds for joint 
 phone bundle is stripped back, D36).
 
 ## State
+
+**Current delivery (22 Nov, 12:39 UTC):** the requested live nightly completed successfully, using ESPN registry
+`20261122T115324Z` and rebuilding **241** pre-origin games, **59,803** segments and **26,308** stints in **230.9 s**.
+The 22/23 Nov ET slates contain **7/10** games, **10,000** worlds per game; the shared-origin future season has
+**10,000** paths over **959** games. Both snapshots use origin **2026-11-22**, cutoff **2026-11-21**, and completed
+pre-tip for all **17** games. The independent audit
+`analysis/experiments/20261122_a1_s07_live_snapshot_audit.json` reconciles **599** origin-report entries,
+**340,000** player/team-world point totals and **17** season/game identities; all **32** recorded input hashes
+still match. These are provenance/accounting
+checks, not a measured model-accuracy improvement. Engine **v1.3/D29** and **team-pathway-v1** remain accepted;
+there is no supported future physical-absence model, and fixed status/start assumptions remain uncalibrated.
+
+The iCloud bundle `~/Library/Mobile Documents/com~apple~CloudDocs/MusNBA/MusNBA.musnba.gz` was generated at
+**2026-11-22T12:39:01Z**, has **1,999** records and **11,752,334** bytes, and SHA-256
+`8f8026e7b01febbbf9416c23faaa1e794bd94a116e29d3c22b6e1513cb12579a`. All record hashes, current game
+origin/cutoff/model/10k metadata, both season views and omission of phone per-world files were independently
+verified. The data-free `gh-pages` shell is **f2932e1**, cache **0d7693ac00bad5eb2e00**, and the hosted
+import/offline check passed **17/17** (`/tmp/musnba_a1_s07_pwa_hosted.log`); all eight changed hosted files
+match the reviewed shell byte for byte. The bundle is readable in iCloud with its Finder-hidden flag clear,
+but each device still needs manual import; no new phone import has been confirmed. Earlier snapshots, views,
+bundle and shell remain archived under `~/Basketball_archive_ops`; the previous snapshot and bundle archives are
+`archive_20261122T123805Z_37780` and `archive_20261122T123906Z_42352`.
+
+Final checks: **12** focused timing/empty-score tests, normal smoke **108/108**, deliberate fault **86/108**
+with exit 1 as expected, and **72/72** touched/live-slate browser checks; representative desktop/half/phone
+screenshots in both themes were inspected. Logs: `/tmp/musnba_a1_s07_live_nightly.log`,
+`/tmp/musnba_a1_s07_final_{focused,smoke,fault}.log`. Review/preview servers :8767/:8768 were stopped; the
+owner's :8766 was not touched. No nightly, backtest or history job is left running by this session.
 
 **S01 startup (22 Nov, 01:49 UTC):** clean `main` at `00a0731db855a31b83dbdeffa303c7fd4b06969d`;
 startup `.venv/bin/python scripts/smoke.py` **102/102**, including a bit-for-bit 10k-world game and season replay.
@@ -1531,7 +1573,7 @@ inside Standings (owner request); old `/season` links redirect. No engine promot
 summary-only: all existing fields exactly unchanged on 10k worlds / 965 remaining fixtures / 13 engine games.
 
 **PWA:** public https://musamoholo.github.io/MusNBA/ (source also public, explicitly approved 22 Nov), branch-source
-`gh-pages` at `e302d27`, 24 data-free files (no simulation data). Hosted import/offline 15/15, including phone layout. Model source stays on `main`;
+`gh-pages` at `f2932e1`, 24 data-free files (no simulation data). Hosted import/offline **17/17**, including phone layout. Model source stays on `main`;
 simulation data/bundles stay ignored and on laptop/iCloud. `nightly_musnba.py` defaults to iCloud Drive/MusNBA; export-only
 reuses finished snapshots. `.github/workflows/pages.yml` is MusSim's optional manual Actions alternative, not the active
 branch deployment. Real iPhone installation/import remains owner acceptance.
@@ -1547,29 +1589,33 @@ picker (Scoring · Rebounding ALL/OFF/DEF · Handling · Defense · Time; makes 
 STL/BLK, shooting x/y (z%) coloured per part); bezel points Δ v season (above the value; no win/total Δ); player page "Open
 simulation" for tomorrow's games; phone bundle stripped back (D36).
 
-## Next actions — S07, then remaining A1
+## Next actions — stopped after S07; future work
 
-**Owner's overnight authority:** execute S01–S14 without waiting for input; the earlier planning-only stop is lifted.
-The dashboard programme is done. Do not resume U1–U22, repeat rejected defence variants unchanged or begin at S13.
+**Owner's latest stop instruction D41:** no further development or nightly in this session. The dashboard programme
+is done; do not resume U1–U22. In a future authorised session:
 
-1. **Finish S07 at 90%.** The fixed fallback and origin/timing safeguards are tested but not delivered. Pause any NBA Stats history
-   stream, then run `.venv/bin/python -u scripts/nightly_musnba.py` with a retained log and normal input rebuild.
-   The retained schedule has **7** games on 22 Nov and **10** on 23 Nov; report per-game progress/rates. Do not
-   use `--no-rebuild` for changed inputs. Check the new reports, origin/cutoff and per-world identities with
-   `.venv/bin/python scripts/a1_snapshot_availability_audit.py --days 2026-11-22 2026-11-23 --origin 2026-11-22
-   --expected-model engine-v1.3 --expected-sims 10000 --output <new-report.json>`. Then run smoke/fault, inspect
-   touched-route 1440/960/390 screenshots in both themes, verify the new iCloud bundle and its import/offline
-   behaviour, publish the reviewed data-free Pages shell and check the hosted service worker. Record the bundle
-   hash, run ID and manual phone-import requirement, then commit/push the S07 checkpoint.
-2. **Continue S08–S10** in dependency order. S08 must solve the exact weighted-mixture/10,000-unweighted-world
+1. Run `git status`, `git --no-pager log --oneline -5`, `.venv/bin/python scripts/smoke.py` and
+   `ls analysis/experiments/`; read this ledger and PLAN §6a–6c before acting. Start S08 at its **10%**
+   contract rung, using the existing S08 ladder and S05–S07 evidence; freeze branch IDs, probabilities,
+   uncertainty selection and >2-maybe limitations before implementation. Do not award progress for a launched job.
+2. **S08–S10** follow dependency order. S08 must solve the exact weighted-mixture/10,000-unweighted-world
    counterexample without rounding away discrepancies; S10 must not infer a future physical-absence hazard from
    recorded-DNP proxies. Keep actual-participant diagnostics separate from pre-game availability.
 3. **S11 freezes the tested combination before promotion.** Confirm on the fixed wider folds and second seed, protect
    the final test and use player outcomes first.
-4. **S12/S13 implement model visibility and versioned daily history.** Preserve original and previous-version
-   forecasts, reject future-trained inputs/fits and label retrospective histories; record any failed trust gate.
-5. **Finish S14** with a fresh live nightly, 10k games/branches and season, iCloud/PWA delivery and all checks. Build
-   the successor chunk in the same weighted, ten-rung format before the final commit/push.
+4. **S12 implements model visibility. S13 is deferred by D40:** do not build or run historical forecast replay;
+   preserve existing forecasts and prior-version archives. Its unchanged 5% weight receives no progress credit.
+5. **S14 remains unfinished:** when the remaining development is completed, run its fresh nightly and
+   iCloud/PWA checks, then construct the successor chunk in the documented weighted, ten-rung format.
+6. **Incremental iCloud delivery is a separate future item** (PLAN §9b): design atomic per-game publication,
+   incomplete/complete generation labels, resume and safe import/offline handling. Current exports remain batch-only;
+   never claim iCloud sync is a phone import.
+
+**S07 checkpoint document review:** HANDOFF records state, stop and future actions; PLAN records S07 completion,
+weights and the streaming backlog; FINDINGS records measured results and negatives; ENGINE_PLAN and TRAINING_PLAN
+record the delivered shared-origin/fallback design; DASHBOARD_PLAN records the shipped UI, shell and checks; README
+documents batch export and manual import. AGENTS already records the scoped overnight authority and D40, so its
+standing rules need no additional change. No model promotion or final-test scoring occurred.
 
 **S02 checkpoint document review:** HANDOFF records state, evidence, limitations and S03's next action; PLAN records
 the completion and measured totals; FINDINGS holds the population-specific audits; TRAINING_PLAN and README document

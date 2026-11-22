@@ -1,12 +1,13 @@
 # Engine plan — possession-level simulator (phase 2)
 
-**Updated 22 November 2026 — serving v1.3, A1 S01–S05 complete; S06 research underway.** Sixteen LightGBM nodes, D29 target minutes,
+**Updated 22 November 2026 — serving v1.3, A1 S01–S07 complete; later tasks remain open.** Sixteen LightGBM nodes, D29 target minutes,
 D30 player/lineup defence, 10,000 worlds per game and one rotation table per world. Team pathway v1 handles later games.
 M7 responsive substitutions, M8 shared form and M11 availability remain planned. U1–U22 and public Pages/iCloud delivery
 are complete. PLAN §6a–6c defines the expanded next chunk; HANDOFF owns progress; TRAINING_PLAN §8 owns acceptance.
 
 The dated decision table preserves how the design evolved. **D24/D26/D27/D35/D36 override older seven-day, player
-carry-over, defence-input and phone assumptions**; D38/D39 add the next-chunk protocol and current-model history.
+carry-over, defence-input and phone assumptions**; D38/D39 add the next-chunk protocol and current-model history,
+and D40 defers historical forecast backfill in favour of the current nightly. D41 stops this session after that run.
 Sections below distinguish current behaviour from unimplemented design. Measured evidence lives in FINDINGS.
 
 ## Decisions so far
@@ -52,6 +53,8 @@ Sections below distinguish current behaviour from unimplemented design. Measured
 | D37 | Real-matchup defence not promoted; v1.3 stays | **Engineering decision from data (20 Nov), under D22/D28.** NBA Stats matchups (D32) ingested and reconciled (FINDINGS §3t); the pre-game assignment on real shares is far better (top-1 36% → 50%, top-2 75%; §3u); defender traits measured (3PA share allowed r 0.77, 3P% allowed noise). Three engine candidates on the same 200-game backtest — v1.4c (real-share defender quality and θ), v1.4e (+ deterrence), v1.4f (+ top-1/top-2 defenders with confidence) — none beats v1.3 (margins level or worse, totals worse, players level or worse; §3w). Switch hunting (D35) shows no effect in who guards whom or who shoots (v1.4d not run). The data, crosswalk and assignment stay (nightly keeps them current; the Matchup view's who-guards-whom uses them). Reading: the engine compresses team differences generally (offence loading 0.73 v 1.14 real, defence 0.69 v 1.69 real; most component ratios 20–40% except turnovers), so the next engine work targets that compression, not more defender inputs |
 | D38 | Larger accuracy chunks and durable checkpoints | **Owner (22 Nov).** Replace the queued four-task chunk with a substantially larger modular programme (A1, 14 tasks), fixed weighted percentage progress and ten concrete steps per task. At every task completion update all affected docs, commit/push under the standing Git rule, and give a high-level result summary. Every actual development chunk ends with a fresh nightly and a fully specified successor chunk in the same format. Every affected subtask also delivers necessary PWA model/data/shell updates (latest owner clarification). The original session was documentation-only; overnight A1 execution has since started. Defence remains a priority; negative variants are evidence about those variants, not a reason to abandon defence. |
 | D39 | Daily forecasts and a consistent current-model history | **Owner (22 Nov, latest clarification).** Store each day's Today prediction, with Tomorrow as an origin-dated preview. With a new accepted model, support rerunning season start→now so the default dashboard uses that model consistently. Preserve original and prior-version generations, but use the active version for normal historical review. Rebuilt predictions use the current frozen recipe with only pre-origin inputs and fitted parameters; label them retrospective, never originally published forecasts. Ordinary browsing reads stored predictions/results. See §17 for cutoffs, versioning, resume and atomic activation; the final test remains protected. |
+| D40 | Defer historical forecast backfill | **Owner (22 Nov, during A1):** “forget nightly backfill. lets just get nightly for next slate (today and tomorrow relative to this date). since were probably not at a perfect model yet”. Do not run or implement the S13 historical forecast replay during this A1 execution; preserve existing snapshots and history. Use the accepted engines for the current ET-origin Today/Tomorrow slates or next slate. The required rebuild of pre-origin model inputs and the 10,000-world future season simulation are not historical forecast backfills. D39/§17 remains a future safety design, not an instruction to run a replay now. |
+| D41 | Stop after the active nightly | **Owner (22 Nov):** “well stop after this nightly run, anything undone is future work”. Finish the currently running S07 nightly, its required verification/delivery and checkpoint, then stop; do not start a second nightly or S08–S14 in this session. Keep all uncompleted work explicitly open for a future session. This S07 delivery is not completion of the integrated S14 or the A1 chunk. |
 
 ## 0. What "true to form" means
 
@@ -349,7 +352,7 @@ pre-date inputs, or the next slate if neither has games. It does not carry simul
 Tomorrow. Every later scheduled game uses the per-world team pathway, with no player/period forecast claimed there.
 The earlier seven-day design in D13/D18 is superseded, not an open choice.
 
-An unshipped S07 correction makes that origin explicit in snapshot metadata and team/player/period inputs; the
+A delivered S07 correction makes that origin explicit in snapshot metadata and team/player/period inputs; the
 engine now guards profiles and uses pre-origin minutes, stints and pair history. Older previews without explicit
 origin are not certified cutoff-safe. Forecast completion,
 not simulation start, is needed for a pre-tip label. Older outputs without completion metadata remain timing-unverified;
@@ -382,7 +385,7 @@ future physical-absence hazard; S10 must retain that limitation unless a candida
 
 Official postseason/tiebreak/Cup completeness remains later work. Current playoff pictures show marginal regular-
 season seeds and illustrative paths, not simulated playoff winners. Historical schedule definitions must reconcile
-before S10 compares calibration. S13 records a season forecast per historical origin under the accepted model version.
+before S10 compares calibration. S13 historical forecasts are deferred by D40.
 
 ## 13. Milestones (each ends with checks)
 
@@ -432,7 +435,11 @@ Engine v1.3 and team pathway v1 remain promoted; no training changes or final-te
 
 ## 17. Versioned daily forecasts and current-model season rebuilds (22 Nov)
 
-**Latest owner clarification governs:** preserve daily Today predictions, but with each new model the owner expects
+**Deferred by D40 (22 Nov):** the season-to-date forecast replay and S13 history work below are not to be run or
+implemented in the current A1 execution. They remain a prospective design only; existing forecasts and archives must
+be preserved, and no progress is credited for the deferred work.
+
+**Earlier D39 design:** preserve daily Today predictions, but with each new model the owner expects
 to rerun season start→now so the active dashboard treats the contemporary model as its consistent reference.
 S13 therefore builds both a durable daily archive and a resumable full-season replay. This supersedes the interim
 “gap-fill only” idea. Ordinary review reads the selected version's saved forecast and actual result; it never runs
@@ -485,9 +492,8 @@ worker-count determinism, origin/preview/result transitions, model switch, postp
 numerical payloads, excluding generation timestamps, on reproducibility tests. Existing `--backfill-days` is still a
 placeholder runner; no documented engine-replay command is runnable until S13 implements and tests it.
 
-**Run gate:** S11 freezes an accepted model and S13 proves cutoff/coverage/accounting safety before full reconstruction.
+**Future run gate, only if reauthorised:** S11 freezes an accepted model and S13 proves cutoff/coverage/accounting safety before full reconstruction.
 Use development dates for safety checks first. Current-season reconstructed results are for review, not repeated
 model selection: the once-per-version final-test rule still applies. If the gate fails, keep the previous accepted
-model/history, record the concrete limitation and do not claim a rebuild completed. The 22 Nov session is docs only;
-execution and the exact CLI/run manifests belong to the next agent. S14 ends with a fresh live nightly and a fully
-specified successor chunk in this same format.
+model/history, record the concrete limitation and do not claim a rebuild completed. S14 ends with a fresh live nightly
+and a fully specified successor chunk in this same format; it does not wait for or run the deferred historical replay.

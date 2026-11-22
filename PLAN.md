@@ -1,6 +1,6 @@
 # MusNBA — game plan and progress
 
-Updated **22 November 2026 (dashboard complete/public; A1 S01–S05 complete, S06 research active)**. The single record of scope, progress and decisions. Every agent updates it at
+Updated **22 November 2026 (dashboard complete/public; A1 S01–S07 complete; stopped after this nightly)**. The single record of scope, progress and decisions. Every agent updates it at
 every checkpoint (AGENTS.md § Checkpoint protocol). New here? Read [AGENTS.md](AGENTS.md) first, then
 [HANDOFF_NEXT.md](HANDOFF_NEXT.md) — it says exactly what to do next.
 
@@ -14,7 +14,7 @@ A local-first NBA simulator PWA, sibling to the owner's MusSim football app (`..
   quarter, half, game and player outcomes all come from the same simulated events.
 - **Season**: 10,000 universes, each playing every remaining game once → standings, seeds, play-in/playoff odds.
 - **Feedback loop**: real results and features update nightly. Weekly refit/promotion automation remains planned (D11);
-  model changes require the measured gate. Each accepted version can rebuild a consistent season-to-date history (D39).
+  model changes require the measured gate. A season-to-date forecast replay is not implemented and is deferred (D40).
 - Lineup-sensitive and game-state-aware; coaching tendencies learned from data, not hand-labelled.
 
 **The daily flow — two engines (owner, 20 Nov; ENGINE_PLAN D26).** On any date D:
@@ -54,7 +54,7 @@ LIVE (nightly)   ESPN site API → fetch_espn → data/raw/espn → master_fixtu
 HISTORY + MODEL  sportsdataverse ESPN season files → history (+ plays: one schema) → possessions (segments)
                  → rotations (stints, windows) → features (point-in-time profiles) → nodes (datasets)
                  → train (16 LightGBM nodes, F1–F4) → models/v1.3 → engine.py → M9 backtest
-PLANNED A1 S13  versioned daily archives + dated-input/dated-fit season replay → atomic active-history generation
+DEFERRED A1 S13 versioned daily archives + dated-input/dated-fit season replay → atomic active-history generation
 ```
 
 Slates are US Eastern game dates; tip-offs show UK time with ET alongside.
@@ -77,8 +77,8 @@ Slates are US Eastern game dates; tip-offs show UK time with ET alongside.
 | 0 | Discovery, data probe, plan | `██████████` done |
 | 1 | App shell, season stats, placeholder projections | `██████████` done — public Pages/iCloud live; real iPhone install/import acceptance pending |
 | 1b | Per-period Game Centre (owner spec), play-by-play parser, quarter-aware placeholder | `██████████` done |
-| 2 | Possession engine (data → models → engine → backtest) | `████████░░` **M1–M5b, M6a done · engine v1.3 is the app's default (D34), 10,000 worlds per game (D36) · backtest (M9) is the gate · NBA Stats matchups ingested; real-matchup defence not promoted (D37): team differences remain compressed (pool-0 offence ~64%, defence ~40% of observed effect) — A1 S01–S06 complete; S07 delivery pending** |
-| 3 | Evaluation and nightly feedback (Forecast Lab view, refit cadence) | `███░░░░░░░` **Forecast Lab page (`#/lab`), nightly projected-v-actual starters record (D33); refit cadence not started; A1 S11/S13 adds confirmation and versioned historical replay** |
+| 2 | Possession engine (data → models → engine → backtest) | `████████░░` **M1–M5b, M6a done · engine v1.3 is the app's default (D34), 10,000 worlds per game (D36) · backtest (M9) is the gate · NBA Stats matchups ingested; real-matchup defence not promoted (D37): team differences remain compressed (pool-0 offence ~64%, defence ~40% of observed effect) — A1 S01–S07 complete** |
+| 3 | Evaluation and nightly feedback (Forecast Lab view, refit cadence) | `███░░░░░░░` **Forecast Lab page (`#/lab`), nightly projected-v-actual starters record (D33); refit cadence not started; S11 confirmation remains future work, S13 historical replay deferred** |
 | 4 | Season on the engine: pathway calibration, availability, tiebreakers, play-in, Cup, what-ifs | `██░░░░░░░░` **team pathway v1 in the app (D25): per-world ratings, engine worlds for today + tomorrow; walk-forward calibration first cut (M12); A1 S07/S10 extends availability and calibration** |
 | 5 | Polish: hosting, iPhone acceptance, watch-a-sim, more views | `█████░░░░░` **Dashboard U1–U22 complete (22 Nov); personal GitHub Pages + iCloud flow follows MusSim; real iPhone acceptance and watch-a-sim remain** |
 
@@ -108,17 +108,20 @@ Each subtask ends with evidence, current docs and a commit/push checkpoint (AGEN
 | M11 | Availability model | ☐ **A1 S07/S08/S10**: report coverage, play/start probabilities, branches and future absences | Held-out calibration and games-missed realism where dated development data supports them; honest fallbacks otherwise | Planned |
 | M12 | Season pathway calibration | ◐ **first cut (20 Nov): team pathway v1 in the app** — walk-forward 2022-26 (480 team-starts): dispersion 1.00 (fixed probabilities 1.53), 10–90% coverage 84% (65%), CRPS −4% in every held-out season; still wide in November (0.84) and surprises fade with the date (sim 0.52 → 0.18 v real 0.40 flat) | Dispersion ≈ 1.0 **at every start date**, persistence matches | `pathway.py`, `season_backtest.py` |
 | UX | Dashboard upgrade programme U1–U22 | ✅ **22 Nov:** all 22 shipped; U15–U22 adds roster roles, playoff picture, win ranges, races/movers/leaders inside Standings and model guide; 156 full + 12 final layout browser checks, hosted PWA 15/15 | Checked at 1440/960/390, both themes, stored data only | DASHBOARD_PLAN.md |
-| A1 | Expanded accuracy/robustness programme | ◐ **57.4% — S01–S06 complete, S07 90%, 22 Nov**; 14 tasks, fixed weights, 140 rungs | Gates in §6b; final nightly + versioned history + successor chunk | HANDOFF § Progress ladders |
+| A1 | Expanded accuracy/robustness programme | ◐ **58.0% — S01–S07 complete, 22 Nov**; stopped after the requested nightly (D41), remaining tasks are future work | Gates in §6b; S13 history deferred (D40); integrated S14 remains open | HANDOFF § Progress ladders |
 
 ### 6a. Next chunk — A1: player accuracy, defence and trustworthy season paths
 
-**Owner request, 22 Nov:** the earlier planning-only stop is lifted for overnight A1 execution. U1–U22 are complete; do not restart
+**Owner request, 22 Nov:** the earlier planning-only stop was lifted for overnight A1 execution. The later stop
+instruction D41 ends this session after the active nightly, verification/delivery and checkpoint; uncompleted tasks
+remain future work. U1–U22 are complete; do not restart
 that programme. This replaces the old four-task S1–S4 chunk with **14 modular subtasks (3.5× the task count)** and
 substantially more modelling scope: M7, M8, M11, M12, full-fold confirmation and versioned daily history and season-to-date model rebuilds.
 This is not a claim of 3.5× runtime or a promised accuracy gain. All subtasks started at **0%**; live progress is in HANDOFF.
 
 **Two headliners:** (1) player outcomes that respond correctly to role, availability, game state and the defenders
-actually faced; (2) calibrated joint game/season outcomes, with daily archives and a consistent season history under the current model. **Defence is central, not abandoned.** D37 rejected three particular variants; it did not show that
+actually faced; (2) calibrated joint game/season outcomes. Historical forecast backfill is deferred (D40).
+**Defence is central, not abandoned.** D37 rejected three particular variants; it did not show that
 better defence is impossible. We will identify the loss of signal, then test different mechanisms with controlled
 ablations. Player/lineup defence remains the design (D35); no team-rating input or post-hoc score scaling in the
 possession engine. The team model remains a benchmark and the later-season engine.
@@ -143,7 +146,7 @@ remaining gate and next action rather than claim a fitted model is validated.
 | S10 | M12 season strength, persistence and availability | 8% | S07, S09 | Test carry-over/opponent-adjusted starting ratings, update memory/drift and future absence paths against pathway v1. Keep per-world rating updates centred on that world's expectation and consume the actual near-term Expected worlds. Leave-one-season-out selection over the 16 historical season/start combinations; report CRPS, dispersion, coverage and persistence at each start date. Correct schedule/Cup accounting before comparison if needed; do not calibrate away a schedule error. |
 | S11 | Integrated confirmation and promotion decision | 5% | S04–S10 | Compare each retained component and their combination with v1.3/pathway v1. Screen on the fixed 200 F4 games; confirm the frozen candidate on all eligible F4 games and fixed samples from F1–F3, with matched controls. Keep actual-availability and pre-game-availability results separate. Run a second seed and a 10k-world subset, stress/identity/cutoff/runtime checks. Promote only what passes; freeze the recipe before a single final-test score. Preserve fallbacks, refresh/export the accepted model to the PWA and explain rejected components. |
 | S12 | Make the model behaviour visible | 3% | S06, S08, S11 | Stored rotation probabilities (sum to five), a rotation-map view and five sampled-world event logs with a compact watch-a-sim list. Branch/availability and as-of labels must match stored evidence. Inspect 1440/960/390 in both themes; keep phone data small and Scenarios/branches local. If no model promotes, this is the useful dashboard improvement required at close-out. Face cards and unrelated polish remain backlog, not substitutes for model tests. |
-| S13 | Current-model season history and daily archives | 5% | S11; S12 labels | Preserve every daily Today forecast and distinguish Tomorrow previews. Build a resumable season-start→latest-completed-date replay using the selected model recipe and strictly dated inputs/fits. Store histories by model version; activate a complete validated generation so the default dashboard consistently uses the current model. Retain prior versions/original forecasts for audit. Test cutoffs, retries, results joins, after-tip labels, reschedules and older imports; run the season rebuild after a trusted promotion, then S14's fresh live nightly. |
+| S13 | Current-model season history and daily archives | 5% | S11; S12 labels | **Deferred, not completed or credited, by owner D40:** do not implement or run historical forecast backfill in this A1 execution. Preserve existing forecasts and archives; the former versioned-replay and cutoff contract remains in ENGINE_PLAN §17 for any future reauthorisation. The original weight and ladder remain unchanged. |
 | S14 | Fresh nightly, delivery and successor chunk | 5% | S01–S13 decided | Run the final live nightly on the best promoted engines, 10k game/branch worlds and 10k seasons, with authorised fetch/input rebuild and iCloud export. Verify smoke/fault, dashboard and hosted PWA, visible bundle and archives. Write the next evidence-led chunk in this same format before final commit/push; leave exact first commands, ten-step ladders, weights and run gates for the next agent. |
 
 **Execution order:** follow the dependency column, normally S01→S14. S02's download may run while CPU work runs, but
@@ -201,7 +204,11 @@ non-inferiority margins, seed noise and comparison families. TRAINING_PLAN §8 i
    final-test evaluation per version. Do not tune on its results or rename a candidate to retry the final test.
    A failure can block release; further development returns to the historical folds and documents the failure.
 
-**Current-model history is the default (latest owner clarification, 22 Nov).** Save each day's Today forecast;
+**D40 supersedes the mandatory history work below for this A1 execution:** the owner wants the current nightly for
+today and tomorrow, not a forecast backfill. S13 is deferred without progress credit; existing forecasts/archives
+remain untouched. The following D39 design and safety requirements apply only if historical replay is reauthorised.
+
+**Earlier D39 current-model history design.** Save each day's Today forecast;
 Tomorrow is a dated preview. With a new accepted model, support rerunning the nightly from the season's first slate
 through the latest completed ET date, then show that version's history throughout the default dashboard. This
 supersedes the earlier small gap-fill plan. The owner expects to do this with each new model: make it a normal,
@@ -226,8 +233,8 @@ from its reconstructed results. If no model promotes, keep the existing serving 
 tests the versioned runner, records whether a v1.3 reconstruction is justified, and carries any incomplete full run
 as explicit work, never as a completed rebuild. A failing model/cutoff/coverage gate defers production reconstruction.
 
-**Final live refresh:** S14 always runs `.venv/bin/python scripts/nightly_musnba.py` after the model decisions and any
-current-version season rebuild, pauses history fetching first, and verifies today/tomorrow (or next slate) plus a new 10,000-world
+**Final live refresh:** S14 always runs `.venv/bin/python scripts/nightly_musnba.py` after the model decisions,
+pauses history fetching first, and verifies today/tomorrow (or next slate) plus a new 10,000-world
 season. Use `--offline --no-rebuild` only if retained inputs are current and unchanged, with the reason logged;
 never use it to bypass rebuilding inputs after feature/parser/model changes. Include every explicit D31 branch
 at 10k worlds when branches are implemented. Archive replaced artifacts. Source commits go to `main`; a changed
@@ -246,8 +253,8 @@ A scientific rejection closes the task only after its planned evidence and fallb
 requires the necessary accepted-model refresh and iCloud export, with version/cutoff/world metadata and import/offline
 verification. A changed app shell is rebuilt and published data-free to `gh-pages`, with service-worker compatibility
 checked. Presentation/export-only changes can reuse current completed forecasts; research-only candidates leave the
-served model/bundle unchanged. S11 therefore delivers any promoted model, S12 delivers its shipped app/output changes,
-and S13 delivers the activated history generation; S14 repeats final delivery after its fresh nightly. Until a new
+served model/bundle unchanged. Future S11 delivers any promoted model and S12 its shipped app/output changes;
+S13 is deferred (D40), and S14 repeats final delivery after its fresh nightly. Until a new
 history is complete, clearly identify older historical generations rather than imply they use the new model. Log
 bundle bytes/records/hash/version, shell revision where changed and checks; tell the owner to import the new bundle
 on each device. Never equate export success with confirmed phone import.
@@ -296,7 +303,7 @@ last successful live refresh. This does not waive S14's nightly at the end of ac
 | `data/derived/nodes/<key>/<node>.npz` | Cached datasets per decision (folder = hash of code + inputs) |
 | `models/<version>.json` | A model version's settings and the fold run that validated it (in git) |
 | `data/models/<version>/` | Fitted LightGBM files + `config.json` (inputs, temperatures, final-test scores) |
-| `data/snapshots/<D>/` | Current daily snapshots (meta/games/season/stats); replacements archived. A1 S13 will add version/origin/run identity and active-generation history; not implemented yet |
+| `data/snapshots/<D>/` | Current daily snapshots (meta/games/season/stats); replacements archived. S13 versioned active-generation history is not implemented and is deferred (D40) |
 | `data/views/api/**.json` | API-ready presentation; rebuildable without simulation |
 | `MusNBA.musnba.gz` | gzip NDJSON bundle for the PWA |
 
@@ -316,7 +323,7 @@ last successful live refresh. This does not waive S14's nightly at the end of ac
 **Phone app (owner, 20 Nov, D36):** stripped back — 10,000-world distributions for the expected lineup (players, teams, periods);
    no Scenarios, Given…, joint grids, duels or lineup branches (those stay on localhost).
 2. **Decided (owner, 22 Nov):** make `MusaMoholo/MusNBA` public and copy MusSim’s personal GitHub Pages/iCloud flow.
-   Only the data-free shell is published on `gh-pages`; simulations stay local/iCloud. App name MusNBA. **Live:** https://musamoholo.github.io/MusNBA/ (22 Nov; `gh-pages` e302d27).
+   Only the data-free shell is published on `gh-pages`; simulations stay local/iCloud. App name MusNBA. **Live:** https://musamoholo.github.io/MusNBA/ (22 Nov; `gh-pages` f2932e1).
 3. iPhone acceptance of the PWA.
 4. ~~Player heights/weights~~ — **owner (19 Nov): needed** ("size and defence are important"): a polite ESPN athlete
    fetch (~1,000 players, one request each) for height and weight, then **archetype priors** — players clustered by
@@ -348,6 +355,12 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
    scenario (X plays / X sits) and the Game Centre offers a lineup selector; later a localhost **lineup editor** (default
    expected lineup and minutes; change who plays and their minutes → minutes re-solved to 240 (D29), matchups re-formed
    (D30)) through a separate what-if runner. A1 S08 adds stored branches on localhost; phone exports keep Expected only (D36).
+
+5. **Incremental iCloud delivery** (owner suggestion, 22 Nov): consider publishing each finished game atomically
+   during a nightly, with a generation manifest and validated resume. Keep partial and complete generations visibly
+   distinct and retain the previous complete bundle; PWA import/offline support must understand the new contract.
+   iCloud sync alone does not import data on the phone. This is future work: the delivered nightly and subsequent
+   nightlies still export one batch at the end until incremental delivery is implemented and verified.
 
 ### 9c. Realism sweep — current mapping to A1 (updated 22 Nov)
 
@@ -761,6 +774,13 @@ face cards and unrelated presentation remain §9b backlog. NBA history moved to 
 - **22 Nov 2026 · S06 complete:** independent state accounting and fixed-screen decision retain v1.3/D29; **66/69**
   bounds established, so no promotion or protected-season score. Final smoke **102/102**, deliberate fault
   **80/102** as expected. S07's tested source is preserved but its live nightly and PWA delivery remain; A1 **57.4%**.
+- **22 Nov 2026 · S07 complete:** the delivered ET-origin nightly rebuilt **241** pre-origin games and simulated
+  **7 + 10** games at **10,000** worlds plus **10,000** season paths over **959** games. Independent accounting
+  reconciled **340,000** player/team-world totals and **17** season/game identities. Status/start probabilities
+  remain uncalibrated fallbacks: no dated development report cohort supports fitting them. Engine v1.3 and pathway v1
+  remain active. Normal smoke **108/108**, fault **86/108** as expected, browser **72/72**, hosted PWA import/offline
+  **17/17**. The **1,999-record** iCloud bundle needs manual device import; Pages shell `f2932e1` is data-free.
+  S08–S14 remain future work; S13 history is deferred. A1 **58.0%**.
 - **22 Nov 2026 · S06 foul-out probe:** in a controlled world, an available substitute does not replace a player
   with six fouls because the current engine's foul-out mask is never updated. The finding is not a forecast gain
   or a population frequency; isolate and gate a repair alongside substitution research.

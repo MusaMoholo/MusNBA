@@ -38,6 +38,23 @@ def hist_mean(d):
     return sum((d['min'] + i) * c for i, c in enumerate(d['hist'])) / hist_total(d)
 
 
+def lineup_accuracy_consistent(record: dict) -> bool:
+    slates = list(record['slates'].values())
+    overall = record.get('overall')
+    if not slates:
+        return overall is None
+    if overall is None:
+        return False
+    n = sum(row['team_games'] for row in slates)
+    if n <= 0 or overall['team_games'] != n or overall['slates'] != len(slates):
+        return False
+    for metric in ('slot_accuracy', 'all_five'):
+        weighted = sum(row[metric] * row['team_games'] for row in slates) / n
+        if not abs(weighted - overall[metric]) < 1e-3:
+            return False
+    return all(0 <= row['all_five'] <= row['slot_accuracy'] <= 1 for row in slates)
+
+
 def m6a_player_outputs(folder: Path, reports: Path) -> list[Path]:
     outputs = []
     for path in folder.glob('*_m6a*.parquet'):
@@ -308,15 +325,14 @@ def main():
         a = matchups_mod.assignment(th, A, D)
         check(f'matchups: assignment rows sum to 1 over the five defenders ({theta_path[-1].name})',
               bool(np.allclose(a.sum(1), 1)) and bool((a > 0).all()))
-    # Projected starters record: overall = team-game-weighted mean of the slates; accuracies in [0, 1]
+    # Projected starters: an empty scored set has no overall; otherwise check the weighted scores.
     lin = DERIVED / 'lineups' / 'accuracy.json'
     if lin.exists():
         rec = json.loads(lin.read_text())
         sl = list(rec['slates'].values())
         n = sum(r['team_games'] for r in sl)
-        w = sum(r['slot_accuracy'] * r['team_games'] for r in sl) / max(1, n)
-        check(f'lineups: overall starter accuracy is the slates\' weighted mean ({len(sl)} slates, {n} team-games)',
-              abs(w - rec['overall']['slot_accuracy']) < 1e-3 and all(0 <= r['all_five'] <= r['slot_accuracy'] <= 1 for r in sl))
+        check(f'lineups: scored starter accuracy is consistent ({len(sl)} slates, {n} team-games)',
+              lineup_accuracy_consistent(rec))
 
     teams = read_json(DERIVED / 'teams.json')
     registry = read_json(DERIVED / 'players.json')['players']

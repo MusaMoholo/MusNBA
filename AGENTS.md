@@ -10,7 +10,7 @@ for the next session, it goes in these files.
 1. **This file** — rules, owner preferences, checkpoint protocol.
 2. **[HANDOFF_NEXT.md](HANDOFF_NEXT.md)** — the current state and the exact next actions. Start working from there.
 3. **[PLAN.md](PLAN.md)** — goal, phases, milestone table (§6), open owner decisions, log.
-4. **[ENGINE_PLAN.md](ENGINE_PLAN.md)** — engine design and the owner's decisions D1–D39. Do not reopen a decision
+4. **[ENGINE_PLAN.md](ENGINE_PLAN.md)** — engine design and the owner's decisions D1–D41. Do not reopen a decision
    without new evidence; if evidence contradicts one, say so to the owner and record it.
 5. **[TRAINING_PLAN.md](TRAINING_PLAN.md)** — models, inputs, decay, folds, experiment protocol.
 6. **[FINDINGS.md](FINDINGS.md)** — measured facts and data quirks. Do not re-derive them; extend them.
@@ -64,11 +64,12 @@ Read-only/docs work needs no review server; start :8767 when inspecting or chang
   **constructing the next chunk in these docs in the same format**: headliners, dependencies, weights totalling 100%,
   ten concrete rungs per subtask, acceptance/fallback, first commands and a final live nightly. Docs are the source
   of truth for any next agent; no important knowledge lives only in chat or private memory.
-- **Current-model history (owner, 22 Nov, D39):** store each day's Today forecast; Tomorrow is a dated preview. With
-  each accepted model, support a season-start→now nightly rebuild so the default dashboard uses that version
-  consistently. Keep original and prior-version forecasts archived. Historical runs use only pre-origin inputs
-  **and fitted parameters**, and are labelled retrospective; do not silently mix model versions. The full contract
-  is ENGINE_PLAN §17. Serving never recomputes historical predictions; the final test stays protected.
+- **History deferred (owner, 22 Nov, D40):** do not backfill historical forecasts or build a season-to-date replay
+  for this A1 run; focus the nightly on today and tomorrow relative to its ET origin (or the next slate). Rebuilding
+  model inputs from completed games before the origin is still required and is not a forecast backfill. Preserve
+  existing forecasts and archives. D39/ENGINE_PLAN §17 remains the safety contract if replay is reauthorised:
+  historical inputs **and fitted parameters** must precede the origin, reconstructions must be labelled, versions
+  must not be silently mixed, serving never recomputes, and the final test stays protected.
 - **PWA at relevant checkpoints (owner, 22 Nov):** a promoted model, changed forecast/bundle contract or shipped app
   change includes the necessary refreshed outputs and iCloud export, dynamic model/version metadata, import/offline
   checks and a data-free `gh-pages` shell update if assets changed. Do this at the affected subtask, not only at the

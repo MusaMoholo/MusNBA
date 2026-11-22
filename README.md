@@ -10,8 +10,8 @@ or phone.
 > from games before the origin; 10,000 worlds per game, one rotation table per world; the floor for later improvements, D22–D24); every later game from the **team pathway v1**, where
 > each simulated season carries its own team ratings and updates them after every game (D25). Past dates rebuilt after the
 > fact currently use a labelled placeholder. U1–U22 and public Pages/iCloud delivery are complete. Accuracy chunk
-> **A1 (14 tasks)** has completed S01–S06; S06's audited candidate did not clear its frozen gate and versioned,
-> cutoff-safe engine history remains planned.
+> **A1 (14 tasks)** has completed S01–S07; S06's audited candidate did not clear its frozen gate. The 22 November
+> ET nightly is delivered, historical forecast backfill is deferred, and the owner requested a stop after that nightly.
 > See [PLAN.md](PLAN.md) and [HANDOFF_NEXT.md](HANDOFF_NEXT.md).
 
 ## Setup
@@ -36,7 +36,7 @@ python3 -m venv .venv
   engine runs, its inputs (current-season segments, rotations, profiles) are rebuilt from every final before today
   (runtime depends on retained inputs; `--no-rebuild` skips only when those inputs are already current). The season sim then plays every later game through the team pathway (D25);
   `--placeholder` uses the old box-score placeholder instead, and backfilled past dates always do. `nightly.py --offline` reuses retained data; `--views-only` only rebuilds what the app reads;
-  `--backfill-days N` adds retrospective snapshots (labelled as such) for the previous N slates.
+  the optional `--backfill-days N` is a legacy retrospective-placeholder mode and is not part of the current nightly (D40).
 - The server reads files from disk: front-end edits appear on refresh, rebuilt views appear
   immediately; no restart needed. `serve.py --host 0.0.0.0` lets a phone on the same Wi-Fi in.
 - Slates are US Eastern game dates; tip-offs show UK time with ET.
@@ -63,7 +63,8 @@ Scenarios/Given…/duels and lineup branches remain localhost-only (D36). Real-d
 ```
 
 The default destination is iCloud Drive/MusNBA/MusNBA.musnba.gz. The wrapper checks destination access before starting,
-keeps the previous export on failure, and installs no scheduler. `--output PATH` overrides the destination; other options
+keeps the previous export on failure, and installs no scheduler. Exports are currently a **single batch after the nightly
+finishes**, not streamed game by game. `--output PATH` overrides the destination; other options
 pass through to the nightly. Previous exports are archived under `~/Basketball_archive_ops`. Export staging uses visible temporary names and clears Finder’s hidden flag before/after publication so the bundle appears in iCloud file pickers.
 
 ### Keep the PWA current with model and app changes
@@ -76,14 +77,14 @@ candidate tests do not change the served model. Every actual development chunk s
 and final integrated PWA delivery. **Each device must import the new data bundle**; shell updates alone do not update
 its simulations. Record the delivered model/generation separately from owner-confirmed device acceptance.
 
-### Historical forecasts: current support and next chunk
+### Historical forecasts: deferred
 
 Currently `nightly.py --backfill-days N` creates **retrospective placeholder** forecasts; it is not an engine replay.
-A1 S13 is planned to retain immutable Today forecasts, distinguish Tomorrow previews and support resumable
-**season-start→now rebuilds under each accepted model version**. The active dashboard will use one version's history
-consistently, with previous versions/original live forecasts archived. Historical inputs and all fitted artifacts
-must precede each origin; reconstructed predictions are labelled retrospective. No new engine-replay CLI exists yet;
-the next agent must implement/test it before documenting commands here. See ENGINE_PLAN §17 and TRAINING_PLAN §8.
+The owner deferred S13 and historical forecast backfill for the current A1 run (D40); the nightly instead projects
+today and tomorrow relative to its ET origin, or the next slate. Existing forecasts and archives are retained.
+If historical replay is reauthorised later, all historical inputs and fitted artifacts must precede each origin,
+reconstructed predictions must be labelled retrospective, and versions must not be mixed silently. No new
+engine-replay CLI exists. See ENGINE_PLAN §17 and TRAINING_PLAN §8.
 
 ### Build/publish the data-free shell
 
@@ -142,14 +143,14 @@ Dashboard routes: `#/standings/{forecast,seeds,wins,ratings,picture,races,movers
 | `scripts/a1_availability_baseline.py`, `scripts/a1_availability_baseline_audit.py` | Frozen F1–F4 no-report play proxies and prior-roster D29 starter-selector baseline, with independent score and bootstrap accounting; missing status/position coverage stays explicit |
 | `scripts/a1_availability_sequences.py`, `scripts/a1_availability_sequence_audit.py` | Development-only recorded DNP/return and rest sequence construction and independent accounting; unlisted games, trades, unknown labels and left-censored spells are not converted to absences |
 | `scripts/a1_availability_sequence_screen.py`, `scripts/a1_availability_sequence_screen_audit.py` | Frozen earlier-fold return/rest play-proxy screen, independent probability/interval accounting; not physical recovery or a deployable season-absence hazard |
-| `scripts/a1_availability_spell_sim.py`, `scripts/a1_availability_spell_audit.py` | Research-only, five-game censored recorded-DNP trajectories and independent accounting using earlier-fold play proxies; prepared but not yet scored |
-| `scripts/a1_availability_starter_sim.py`, `scripts/a1_availability_starter_audit.py` | Research-only per-world starter frequencies for inferred rosters, with independent no-report draws and independent replay/accounting; prepared but not yet scored |
+| `scripts/a1_availability_spell_sim.py`, `scripts/a1_availability_spell_audit.py` | Research-only, five-game censored recorded-DNP trajectories and independent accounting using earlier-fold play proxies; evaluated, not a physical-absence model |
+| `scripts/a1_availability_starter_sim.py`, `scripts/a1_availability_starter_audit.py` | Research-only per-world starter frequencies for inferred rosters, with independent no-report draws and independent replay/accounting across F1–F4 |
 | `scripts/a1_substitution_world_capture.py`, `scripts/a1_substitution_world_audit.py` | Research-only raw world/lineup capture and independent player-minute, legal-five and score replay; enable with backtest `--audit-substitution-worlds` |
 | `scripts/matchups.py` | D30 implicit matchups: soft assignment of defenders to shooters from foul/block credits; shot types from the play text |
 | `scripts/fetch_nbastats.py` | D32 NBA Stats adapter (browser fetch headers, ~1 request/s, resumable): season logs, `boxscorematchupsv3`, tracking defence, play-by-play v3 → `data/raw/nbastats/<endpoint>/<season>/` (gzip + manifest) |
 | `scripts/nbastats.py` | D32 crosswalk (games by date + teams, players by name/stat line), reconciliation v ESPN (points, minutes, possessions), real matchups in ESPN ids → `data/derived/nbastats/` |
 | `scripts/realmatch.py` | D32 real matchups: pre-game assignment fitted on real shares (ranks, stopper, pair history), per-game pair history (cutoff-safe) |
-| `scripts/lineups.py` | Projected v actual starters for every finished snapshot (nightly record, D33) |
+| `scripts/lineups.py` | Projected v actual starters for finished, verified pre-tip prospective snapshots; older unverified records are kept separately |
 | `scripts/backtest.py`, `scripts/backtest_compare.py` | Engine backtest on held-out fold games (M9; `--rotation targets`, `--models` to reuse fold models), with the team-rating model on the same games; legacy paired scorecard |
 | `scripts/a1_compare.py`, `scripts/a1_manifest.py`, `scripts/a1_quarter_audit.py`, `scripts/a1_output_audit.py`, `scripts/a1_availability_cohort.py`, `scripts/a1_data_inventory.py`, `scripts/a1_reconcile.py`, `scripts/a1_rotation_audit.py`, `scripts/a1_tracking_coverage.py`, `scripts/a1_lineup_audit.py`, `scripts/a1_subsplit_audit.py`, `scripts/a1_feature_parity.py`, `scripts/a1_causal_audit.py`, `scripts/a1_assignment_audit.py`, `scripts/a1_assignment_schedule.py`, `scripts/a1_node_cache_audit.py`, `scripts/a1_future_injection.py`, `scripts/a1_signal.py`, `scripts/a1_m6a_audit.py`, `scripts/a1_profile_spread.py`, `scripts/a1_shot_trace.py`, `scripts/a1_variant_components.py` | A1 paired bootstrap, frozen provenance, independent accounting, data integrity, dated assignment fits, sampled train/engine parity, causal injection tests and matched signal diagnosis |
 | `scripts/a1_flow_capture.py`, `scripts/a1_flow_audit.py`, `scripts/a1_flow_compare.py` | Opt-in free-running player/quarter flow capture, independent accounting and paired teacher-forced comparison |
