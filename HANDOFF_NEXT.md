@@ -39,8 +39,11 @@ Partial source checkpoint **4dce4a3** was pushed before the UX-delivery nightly.
   `analysis/experiments/20261122_a2_residual_dependence_f4.json`; a separate raw-pair reconstruction verified
   all **12** point estimates, two focused tests passed, and the report reproduced byte-for-byte. Normal smoke
   passed **107/107** with one bit-for-bit replay skipped because the running nightly rebuilt newer inputs; deliberate
-  fault exited **1** (86/107). Repeat full smoke after the nightly finishes. Next A2 rung: freeze earlier-fold
-  talent/form hypotheses and no-double-count controls before fitting. A1 remains 10%.
+  fault exited **1** (86/107). Repeat full smoke after the nightly finishes. Rung **20%** freezes talent,
+  form and shared-factor hypotheses and no-double-count controls in TRAINING_PLAN before any fitting. F4 was
+  already inspected and cannot be called untouched confirmation. Next A2 rung is an isolated, calibrated
+  player-uncertainty candidate only if strictly earlier fitted predictions support an identifiable component;
+  otherwise record the unsupported result. A1 remains 10%.
 - **Prepared, unpublished Pages shell:** isolated worktree `/tmp/musnba-user-ux-pages`, `gh-pages` at `f2932e1`,
   has only `assets/game.mjs`, `assets/players.mjs` and `sw.js` changed from the reviewed data-free shell
   `614f3061d9dc69a41bc4`. The shell passed **18/18** checks with the previous bundle. Do not publish until the new
@@ -49,7 +52,7 @@ Partial source checkpoint **4dce4a3** was pushed before the UX-delivery nightly.
   this handoff carry the A2 measurement and live state. `TRAINING_PLAN` freezes the A2 descriptive screen without
   changing selection gates; `README` maps the research command; `AGENTS.md` standing rules are unchanged.
 - **Progress:** original A1 **58.0%**, S01–S07 complete; S08–S12/S14 open, S13 historical forecast backfill
-  deferred. New independent chunk boards: **A 6.5%** (A1 10%, A2 10%, A3 0%) and **B 0%** (B1/B2/B3 all 0%). Keep
+  deferred. New independent chunk boards: **A 10%** (A1 10%, A2 20%, A3 0%) and **B 0%** (B1/B2/B3 all 0%). Keep
   the original A1 weights intact; new within-chunk weights do not reset or double-count A1.
 - **Production:** possession engine **v1.3/D29**, team pathway **v1**. S04's two defence candidates did not pass;
   S05's minute candidates did not meet the primary gate. S06's 200-game candidate improved minute CRPS
@@ -1275,7 +1278,7 @@ chunk weights are **separate within-chunk progress measures**, not replacements 
 A1 stays **58.0%**, and S13 remains deferred at 0% (the possible A1 ceiling while deferred is 95%).
 Update the original S08–S12/S14 status only when their original acceptance is met, without crediting work twice.
 Report a chunk bar and each active module at every 10% rung and each 5% overall boundary; long jobs also report
-item counts and measured rates. Current Chunk A progress is **6.5%**; Chunk B remains **0%**.
+item counts and measured rates. Current Chunk A progress is **10%**; Chunk B remains **0%**.
 
 **Shared gates:** use the unchanged player-first, paired fold, seed-noise, uncertainty, non-inferiority, cutoff and
 once-per-version final-test rules in PLAN §6b/TRAINING_PLAN §8. An early chunk can promote a standalone candidate
@@ -1299,8 +1302,8 @@ playback portion of S12, plus a chunk-end delivery; S10/S11/S12/S14 are not ther
 | A2 Form and late-game realism | 35% | S04/S06; A1 for integration | S09's paired player/game gates; retain v1.3 when unsupported or rejected |
 | A3 View Centre and delivery | 35% | A1/A2 decisions | Five labelled selections, reconciled event files and an interactive 2-D court/player in the Game Centre; responsive/offline checks and fresh nightly; no fake logs or completed claim on failure |
 
-**Live board:** Chunk A `█░░░░░░░░░░░░░░░░░░░ 6.5%`; A1 `██░░░░░░░░░░░░░░░░░░ 10%`;
-A2 `██░░░░░░░░░░░░░░░░░░ 10%`; A3 `░░░░░░░░░░░░░░░░░░░░ 0%`.
+**Live board:** Chunk A `██░░░░░░░░░░░░░░░░░░ 10%`; A1 `██░░░░░░░░░░░░░░░░░░ 10%`;
+A2 `████░░░░░░░░░░░░░░░░ 20%`; A3 `░░░░░░░░░░░░░░░░░░░░ 0%`.
 Original A1 remains 58%; do not double-count the separate board.
 
 **A1 10% frozen branch contract (22 Nov; design, not implemented):**

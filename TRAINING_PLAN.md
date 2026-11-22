@@ -300,6 +300,43 @@ covariances, their difference, complete-game counts, player/team-game/pair count
 team-games. These are exploratory observed residual associations, not causal evidence, simulated-world covariance,
 or a model-selection/promotion result; actual-minute selection and ratio-of-means are explicit limitations.
 
+#### Chunk A A2 talent/form hypotheses — 22 Nov, before fitting
+
+The F4 screen above was inspected during hypothesis construction and is **not an untouched confirmation set**.
+Test the following separately on F1–F4, with calibration based only on games and fitted parameters strictly before
+the assessed origin: (1) player talent uncertainty narrows with earlier effective shot exposure; (2) a distinct
+within-game player shooting-form factor persists across that player's shots; (3) a shared team/game component
+changes joint pace or shooting outcomes. These are falsifiable hypotheses, not presumed positive effects: the
+observed F4 scoring-rate teammate residual covariance was negative. If a credible variance component or a
+cutoff-safe estimate is unavailable, report it as unsupported and retain the control; never clamp a negative
+estimated excess to zero and call it evidence.
+
+Use chronological out-of-sample or cross-fitted pre-origin event predictions to estimate components; any training
+row's prediction must come from parameters fitted before that row. For F1, use only earlier training-window games
+and nested earlier fits, never a later development fold. F2–F4 may use earlier folds only where every event and
+its scoring parameters precede that fold's origin. Record all component sample sizes, effective exposures,
+estimates and uncertainty, including absent roles and sparse players; no post-origin identity or availability
+is used as a pre-game predictor. Actual-participant backtests remain explicitly conditional.
+
+No-double-count controls: estimate baseline **simulated-world** player and teammate/opponent dependence on the
+same games, in addition to observed residual dependence, because event draws, clock/score responses and minutes
+already create variation. For each latent factor compare control, that factor alone and (only if individually
+supported) combinations; identify whether uncertainty in persistent talent, nightly form and shared conditions
+is separately identifiable rather than summing overlapping residual variances. Factor draws must be independently
+namespaced by game/world/player or game/world/team, deterministic for a fixed seed and input, held fixed over the
+game, and never shared accidentally across players, teams, games or factors. The exact zero-factor path must
+reproduce the old engine without consuming additional draws. Probability tilts must preserve the baseline marginal
+mean over the factor distribution and leave valid outcome probabilities; verify numerically across boundary and
+interior cases rather than clipping or silently renormalising errors.
+
+Before any candidate engine result, freeze its calibration/implementation, fold-specific fitting cutoffs, paired
+game IDs, simulation seeds, joint-dependence estimands and any component-specific decisions. Compare player PTS
+CRPS first, then all registered tier/player/team non-inferiority bounds, seed-noise and coverage, plus observed and
+simulated teammate/opponent covariance with complete-game bootstrap uncertainty. No factor is promoted on
+node-level fit or matching covariance alone. Multiple tested candidates remain in the experiment log and use the
+existing familywise and once-per-version final-test rules; an unresolved interaction or excessive uncertainty is
+inconclusive, not a pass. A1 lineup-branch decisions are required before integrating a survivor.
+
 #### S03 signal-diagnosis specification — 22 Nov, before the diagnosis
 
 The fixed unit is a team-game side: the **200 unique S01 F4 game IDs** in the manifest, exactly matching the retained

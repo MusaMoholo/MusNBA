@@ -440,6 +440,9 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
   tests passed; the report reproduced byte-for-byte and all **12** point estimates reconciled independently.
   Smoke **107/107**, with the changed-input replay skipped pending nightly completion; deliberate fault exited
   **1**. Chunk A **6.5%**, original A1 **58%**. The D44 delivery nightly is still running.
+- **22 Nov 2026 · Chunk A A2 20%:** froze cutoff-safe talent, nightly form and shared-factor hypotheses and
+  explicit no-double-count controls in TRAINING_PLAN; no candidate was fitted or promoted. The inspected F4
+  descriptive screen is not untouched confirmation. Chunk A **10%**; A1 **10%**, A2 **20%**, A3 **0%**.
 - **19 Nov 2026** — Studied MusSim. Probed sources: ESPN site API works with plain requests; NBA CDN returns 403.
   Owner: app shell first, play-by-play sim later.
 - **19 Nov 2026** — Phase 1 shipped (collection, placeholder engine, snapshots, views, server, app, PWA). Fixed: a
