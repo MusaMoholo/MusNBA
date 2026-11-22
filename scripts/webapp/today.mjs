@@ -50,10 +50,41 @@ export async function render(view, {rest, meta, current}) {
       </div>
     </section>
     ${modelNote(slate)}
+    ${slateStrip(games, day)}
     ${slate.spotlight ? `<div class="games spot-grid">${slateSpotlight(slate.spotlight, slate.watch)}</div>` : ''}
     <div class="games">${games.map(card).join('')}</div>`;
   view.querySelectorAll('[data-go]').forEach(b => b.onclick = () => { if (b.dataset.go) location.hash = '#/today/' + b.dataset.go; });
   view.querySelector('input[type=date]').onchange = e => { if (e.target.value) location.hash = '#/today/' + e.target.value; };
+}
+
+// U1: slate header strip — tiles (games, projected points per game, tightest projected margin, first and last tip) and a tip-time
+// timeline on a UK clock axis, each game a marker (stacked when tips coincide)
+function slateStrip(games, day) {
+  const timed = games.filter(g => g.time_valid);
+  if (games.length < 2 || !timed.length) return '';
+  const pr = games.filter(g => g.proj);
+  const ukHM = d => new Intl.DateTimeFormat('en-GB', {timeZone: 'Europe/London', hour: '2-digit', minute: '2-digit'}).format(d);
+  const tips = timed.map(g => new Date(g.tip_utc).getTime());
+  const t0 = Math.min(...tips), t1 = Math.max(...tips), span = Math.max(t1 - t0, 3600e3);
+  const tight = pr.length ? pr.reduce((a, g) => (Math.abs(g.proj.margin_mean) < Math.abs(a.proj.margin_mean) ? g : a)) : null;
+  const tiles = [
+    ['Games', String(games.length)],
+    ['Projected points per game', pr.length ? f1(pr.reduce((a, g) => a + g.proj.total, 0) / pr.length) : '—'],
+    ['Tightest projected margin', tight ? `${esc(team(tight.away.id).abbr)} @ ${esc(team(tight.home.id).abbr)} · ${f1(Math.abs(tight.proj.margin_mean))}` : '—'],
+    ['First / last tip (UK)', `${ukHM(new Date(t0))} – ${ukHM(new Date(t1))}`],
+  ].map(([l, v]) => `<div class="tile"><span>${l}</span><b>${v}</b></div>`).join('');
+  const rows = {};
+  const marks = timed.slice().sort((a, b) => a.tip_utc.localeCompare(b.tip_utc)).map(g => {
+    const x = 4 + 92 * (new Date(g.tip_utc).getTime() - t0) / span;
+    const key = Math.round(x / 9);
+    const row = rows[key] = (rows[key] ?? -1) + 1;
+    return `<a class="tl-mark" href="#/game/${g.id}" style="left:${x.toFixed(1)}%;top:${4 + row * 26}px" title="${esc(team(g.away.id).name)} at ${esc(team(g.home.id).name)} · ${ukHM(new Date(g.tip_utc))} UK">${logo(g.away.id, 'sm')}${logo(g.home.id, 'sm')}</a>`;
+  });
+  const depth = Math.max(0, ...Object.values(rows)) + 1;
+  const hours = [];
+  for (let t = Math.ceil(t0 / 3600e3) * 3600e3; t <= t0 + span; t += 3600e3) hours.push(`<span class="tl-hour" style="left:${(4 + 92 * (t - t0) / span).toFixed(1)}%">${ukHM(new Date(t))}</span>`);
+  return `<section class="panel slate-strip"><div class="tiles">${tiles}</div>
+    <div class="timeline" style="height:${depth * 26 + 26}px" aria-label="Tip times (UK)">${marks.join('')}<div class="tl-axis" style="top:${depth * 26 + 6}px"></div>${hours.map(h => h.replace('class="tl-hour"', `class="tl-hour" data-top="${depth * 26 + 8}"`)).join('')}</div></section>`;
 }
 
 function modelNote(slate) {

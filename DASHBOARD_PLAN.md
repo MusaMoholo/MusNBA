@@ -65,7 +65,7 @@ everything is read from stored snapshots, worlds, finals and derived tables (ser
 
 | # | Item | Low-level parts | Status |
 |---|---|---|---|
-| U1 | **Today: slate header strip** | slate tiles (games, projected points per game, closest margin, first/last tip) · tip-time timeline (each game placed on a UK clock axis) · phone stacking | ☐ |
+| U1 | **Today: slate header strip** | slate tiles (games, projected points per game, closest margin, first/last tip) · tip-time timeline (each game placed on a UK clock axis) · phone stacking | ✅ tiles + UK tip timeline (stacked markers), 2-up tiles on phones (`today.slateStrip`) |
 | U2 | **Today: game card upgrades** | favourite margin pill · injury/maybe count per side (from projection statuses) · "closest game" badge · quick links (Scenarios, Matchup) · layout check | ☐ |
 | U3 | **Today: role change badges** | players gaining/losing ≥ 4 projected minutes v season (views) · why (teammate out / return ramp from minutes basis) · strip of badges per slate · link to sheet | ☐ |
 | U4 | **Results review for finished slates ("How we did")** | per finished slate: favourites' record, Brier and log loss of win %, total/margin errors · biggest player surprises (actual v projection, percentile) · card on Today for past dates | ☐ |
