@@ -45,6 +45,32 @@ def fixture():
     }
 
 
+def penalty_fixture():
+    data = fixture()
+    data['available'][0, 5] = False
+    data['trace_lineups'][:] = data['trace_lineups'][0]
+    data['minutes'][:] = 0
+    on_court = data['trace_lineups'][0].reshape(-1)
+    data['minutes'][0, on_court, :4] = 12
+    data['minutes'][0, on_court, 4] = 5
+    data['trace_fouls'][1:, 0, 0] = 6
+    data['trace_all_fouls'] = np.zeros((6, 11))
+    data['trace_all_fouls'][0, 0] = 5
+    data['trace_all_fouls'][1:, 0] = 6
+    data['player_ft_pct'] = np.zeros(11)
+    data['player_ft_pct'][6] = 1
+    data['player_fta'] = np.zeros_like(data['player_points'])
+    data['player_ftm'] = np.zeros_like(data['player_points'])
+    data['player_fta'][0, 6, 0] = 1
+    data['player_ftm'][0, 6, 0] = 1
+    data['player_points'][0, 6, 0], data['player_points'][0, 6, 3] = 1, 2
+    data['team_points'][0, 1, 0], data['team_points'][0, 1, 3] = 1, 2
+    for key, value in {'world': 0, 'period': 1, 'clock': 420., 'fouler': 0, 'shooter': 6,
+                       'made': 1, 'probability': 1.}.items():
+        data[f'technical_{key}'] = np.array([value])
+    return data
+
+
 class WorldAuditTests(unittest.TestCase):
     def test_replays_foul_replacement_periods_and_overtime(self):
         result = audit.audit_worlds(fixture())
@@ -80,6 +106,33 @@ class WorldAuditTests(unittest.TestCase):
             data[key] = np.delete(data[key], 2, axis=0)
         with self.assertRaisesRegex(ValueError, 'no traced start for period 2'):
             audit.audit_worlds(data)
+
+    def test_audits_foul_penalty_and_technical_attempt(self):
+        result = audit.audit_worlds(penalty_fixture(), foul_penalty=True)
+        self.assertEqual(result['foul_penalty_events'], 1)
+        self.assertEqual(result['foul_penalty_makes'], 1)
+        self.assertEqual(result['foul_penalty_lineups'], 5)
+
+    def test_rejects_missing_technical_and_available_replacement(self):
+        data = penalty_fixture()
+        for key in ('world', 'period', 'clock', 'fouler', 'shooter', 'made', 'probability'):
+            data[f'technical_{key}'] = data[f'technical_{key}'][:0]
+        with self.assertRaisesRegex(ValueError, 'no technical free throw'):
+            audit.audit_worlds(data, foul_penalty=True)
+        data = penalty_fixture()
+        data['available'][0, 5] = True
+        with self.assertRaisesRegex(ValueError, 'five eligible players'):
+            audit.audit_worlds(data, foul_penalty=True)
+
+    def test_rejects_wrong_side_or_unreconciled_technical(self):
+        data = penalty_fixture()
+        data['technical_shooter'][0] = 1
+        with self.assertRaisesRegex(ValueError, 'opposing five'):
+            audit.audit_worlds(data, foul_penalty=True)
+        data = penalty_fixture()
+        data['player_ftm'][0, 6, 0] = 0
+        with self.assertRaisesRegex(ValueError, 'do not reconcile'):
+            audit.audit_worlds(data, foul_penalty=True)
 
 
 if __name__ == '__main__':

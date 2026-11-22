@@ -5,7 +5,7 @@ import lightgbm as lgb
 import numpy as np
 import pandas as pd
 
-from scripts import a1_substitution_engine as candidate, engine
+from scripts import a1_foul_penalty_engine, a1_substitution_engine as candidate, engine
 
 
 class FixtureGame(engine.Game):
@@ -17,6 +17,7 @@ class FixtureGame(engine.Game):
         self.game = {'game_id': '1', 'home_id': '10', 'away_id': '20'}
         self.expected = np.arange(self.n, dtype=float) + 1
         self.avail = np.ones(self.n)
+        self.P = {'ft_pct': np.full(self.n, 0.75)}
 
     def lineup_tables(self, avail_world, rng):
         _ = avail_world, rng
@@ -34,6 +35,13 @@ def fixture_policy(game, probability=0.9, regulation=None, overtime=None, captur
     timing = {'regulation': regulation if regulation is not None else [[[1, 120.]]],
               'overtime': overtime if overtime is not None else [[40.]]}
     return candidate.SelectedTimeoutPolicy(outgoing, incoming, timing, rows, capture_trace=capture_trace)
+
+
+def fixture_penalty_policy(game, capture_trace=False):
+    base = fixture_policy(game, regulation=[[]], capture_trace=capture_trace)
+    return a1_foul_penalty_engine.PlayerFoulPenaltyPolicy(
+        base.outgoing, base.incoming, base.timing, pd.DataFrame(base.features.values()),
+        capture_trace=capture_trace)
 
 
 def schedule(worlds):
@@ -210,6 +218,108 @@ class RotationPolicyTests(unittest.TestCase):
         state.minutes[0, 0, 0] -= 1
         with self.assertRaisesRegex(ValueError, 'five-player game time'):
             policy.finish(game, state)
+
+
+class FoulPenaltyPolicyTests(unittest.TestCase):
+    def test_sixth_and_later_fouls_assess_one_technical_without_changing_possession(self):
+        game = FixtureGame()
+        game.P['ft_pct'][7:12] = [0., 0., 1., 0., 0.]
+        state = engine.Worlds(game, 1, np.random.default_rng(1))
+        available = np.ones((1, game.n), bool)
+        available[0, 5:7] = False
+        state.ingame['pf_so_far'][0, 0] = 5
+        policy = fixture_penalty_policy(game, capture_trace=True)
+        policy.begin(game, 1, available, 42)
+        lineup = policy.before_segment(game, state, np.array([0]), schedule(1))
+        state.off[0], state.clock[0] = 0, 420
+        state.ingame['pf_so_far'][0, 0] += 1
+        offense, defense = lineup[:, 0].copy(), lineup[:, 1].copy()
+        policy.after_fouls(game, state, np.array([0]), offense, defense)
+        self.assertIn(0, offense[0])
+        self.assertEqual(state.box['fta'][0, 9, 0], 1)
+        self.assertEqual(state.box['ftm'][0, 9, 0], 1)
+        self.assertEqual(state.score[0].tolist(), [0, 1])
+        self.assertEqual((state.off[0], state.clock[0]), (0, 420))
+
+        game.P['ft_pct'][7:12] = 0.
+        state.start[0] = engine.S['made_fg']
+        lineup = policy.before_segment(game, state, np.array([0]), schedule(1))
+        state.ingame['pf_so_far'][0, 0] += 1
+        policy.after_fouls(game, state, np.array([0]), lineup[:, 0].copy(), lineup[:, 1].copy())
+        self.assertEqual(state.box['fta'][0, 7:12, 0].sum(), 2)
+        self.assertEqual(state.box['ftm'][0, 7:12, 0].sum(), 1)
+        self.assertEqual(state.score[0].tolist(), [0, 1])
+        self.assertEqual(policy.counts['foul_penalty_attempts'], 2)
+        self.assertEqual(policy.counts['foul_penalty_makes'], 1)
+        self.assertEqual(len(policy.technical_events), 2)
+
+    def test_available_substitute_replaces_foul_out_and_removed_player_cannot_reenter(self):
+        game = FixtureGame()
+        state = engine.Worlds(game, 1, np.random.default_rng(1))
+        available = np.ones((1, game.n), bool)
+        available[0, 6] = False
+        state.ingame['pf_so_far'][0, :2] = 5
+        policy = fixture_penalty_policy(game)
+        policy.begin(game, 1, available, 2)
+        lineup = policy.before_segment(game, state, np.array([0]), schedule(1))
+        state.ingame['pf_so_far'][0, 0] += 1
+        offense, defense = lineup[:, 0].copy(), lineup[:, 1].copy()
+        policy.after_fouls(game, state, np.array([0]), offense, defense)
+        self.assertNotIn(0, offense[0])
+        self.assertIn(5, offense[0])
+        self.assertEqual(policy.counts['foul_penalty_attempts'], 0)
+        state.start[0] = engine.S['made_fg']
+        lineup = policy.before_segment(game, state, np.array([0]), schedule(1))
+        state.ingame['pf_so_far'][0, 1] += 1
+        offense, defense = lineup[:, 0].copy(), lineup[:, 1].copy()
+        policy.after_fouls(game, state, np.array([0]), offense, defense)
+        self.assertIn(1, offense[0])
+        self.assertNotIn(0, offense[0])
+        self.assertEqual(policy.counts['foul_penalty_attempts'], 1)
+        state.start[0] = engine.S['period_start']
+        state.period[0], state.clock[0] = 2, 720
+        lineup = policy.before_segment(game, state, np.array([0]), schedule(1))
+        self.assertEqual(set(lineup[0, 0]), {1, 2, 3, 4, 5})
+
+    def test_other_side_and_unknown_shooter_are_handled_explicitly(self):
+        game = FixtureGame()
+        game.P['ft_pct'][:5] = [0., 1., 0., 0., 0.]
+        state = engine.Worlds(game, 1, np.random.default_rng(1))
+        available = np.ones((1, game.n), bool)
+        available[0, 12:14] = False
+        state.ingame['pf_so_far'][0, 7] = 5
+        policy = fixture_penalty_policy(game)
+        policy.begin(game, 1, available, 3)
+        lineup = policy.before_segment(game, state, np.array([0]), schedule(1))
+        state.ingame['pf_so_far'][0, 7] += 1
+        policy.after_fouls(game, state, np.array([0]), lineup[:, 0].copy(), lineup[:, 1].copy())
+        self.assertEqual(state.score[0].tolist(), [1, 0])
+        self.assertEqual(state.box['fta'][0, 1, 0], 1)
+        game.P['ft_pct'][:5] = np.nan
+        state.start[0] = engine.S['made_fg']
+        lineup = policy.before_segment(game, state, np.array([0]), schedule(1))
+        state.ingame['pf_so_far'][0, 7] += 1
+        with self.assertRaisesRegex(ValueError, 'no opposing on-court player'):
+            policy.after_fouls(game, state, np.array([0]), lineup[:, 0].copy(), lineup[:, 1].copy())
+
+    def test_no_exception_preserves_the_original_policy_draws(self):
+        game, worlds = FixtureGame(), 20
+        states = [engine.Worlds(game, worlds, np.random.default_rng(1)) for _ in range(2)]
+        original = fixture_policy(game, regulation=[[[1, 120.]]])
+        revised = a1_foul_penalty_engine.PlayerFoulPenaltyPolicy(
+            original.outgoing, original.incoming, original.timing, pd.DataFrame(original.features.values()))
+        lineups = []
+        for policy, state in zip((original, revised), states):
+            policy.begin(game, worlds, np.ones((worlds, game.n), bool), 19)
+            policy.before_segment(game, state, np.arange(worlds), schedule(worlds))
+            state.clock[:], state.start[:] = 600, engine.S['made_fg']
+            lineup = policy.before_segment(game, state, np.arange(worlds), schedule(worlds))
+            policy.after_fouls(game, state, np.arange(worlds), lineup[:, 0].copy(), lineup[:, 1].copy())
+            lineups.append(lineup)
+        np.testing.assert_array_equal(lineups[0], lineups[1])
+        for key, value in original.counts.items():
+            self.assertEqual(revised.counts[key], value)
+        self.assertEqual(revised.counts['foul_penalty_attempts'], 0)
 
 
 class CapturedRebound(Exception):

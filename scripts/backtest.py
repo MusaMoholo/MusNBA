@@ -117,7 +117,7 @@ def simulation_seed(version: str, day: str, gid: str, stream: int | None = None,
 
 def _init(version, spec_path, fold, worlds, rotation='replay', known_starters=False, pool=None, stream=None, seed_key=None,
           flow_diagnostics=False, minutes_history='control', strict_minute_targets=False, substitution_report=None,
-          capture_substitution_worlds=False):
+          capture_substitution_worlds=False, substitution_foul_penalty=False):
     from scripts import engine
     if pool is not None:  # D36: rotation-table pool (0 = one table per world)
         engine.ROTATION['pool'] = pool
@@ -145,8 +145,13 @@ def _init(version, spec_path, fold, worlds, rotation='replay', known_starters=Fa
         from scripts import a1_substitution_engine
         outgoing, incoming, timing = a1_substitution_engine.load_candidate(Path(substitution_report), fold)
         features = a1_substitution_engine.load_features(fold)
-        _W['engine'].rotation_policy = a1_substitution_engine.SelectedTimeoutPolicy(
-            outgoing, incoming, timing, features, capture_trace=capture_substitution_worlds)
+        if substitution_foul_penalty:
+            from scripts import a1_foul_penalty_engine
+            policy = a1_foul_penalty_engine.PlayerFoulPenaltyPolicy
+        else:
+            policy = a1_substitution_engine.SelectedTimeoutPolicy
+        _W['engine'].rotation_policy = policy(outgoing, incoming, timing, features,
+                                               capture_trace=capture_substitution_worlds)
     if rotation == 'targets':  # D29 minutes: pre-game states for every history player-game; ramp and spread from before the window
         from scripts import minutes
         if minutes_history == 'control':
@@ -491,6 +496,8 @@ def main():
                     help='use the isolated 240-minute, 48-per-player allocator in targets mode')
     ap.add_argument('--substitution-candidate', type=Path, default=None,
                     help='isolated earlier-fold selected-timeout model report; research only')
+    ap.add_argument('--substitution-foul-penalty', action='store_true',
+                    help='opt into the isolated S06 five-player foul-penalty exception')
     ap.add_argument('--audit-substitution-worlds', action='store_true',
                     help='save raw player worlds and lineup traces for independent S06 accounting')
     ap.add_argument('--summarise', metavar='RUN', help='re-score a saved run (<stamp>_<name>) without simulating; updates its log')
@@ -502,6 +509,8 @@ def main():
         ap.error('the S06 candidate requires the unmodified targets control and projected starters')
     if args.audit_substitution_worlds and (args.substitution_candidate is None or args.summarise):
         ap.error('world accounting requires a new S06 candidate simulation')
+    if args.substitution_foul_penalty and (args.substitution_candidate is None or args.summarise):
+        ap.error('the foul-penalty exception requires a new S06 candidate simulation')
     start = time.time()
     spec = json.loads(args.config.read_text())
     if args.summarise:
@@ -534,7 +543,7 @@ def main():
                                                          args.known_starters, args.pool, args.simulation_stream, args.seed_key,
                                                          args.flow_diagnostics, args.minutes_history,
                                                          args.strict_minute_targets, args.substitution_candidate,
-                                                         args.audit_substitution_worlds)) as pool:
+                                                         args.audit_substitution_worlds, args.substitution_foul_penalty)) as pool:
         for i, r in enumerate(pool.imap(run_game, list(games), chunksize=1), 1):
             if world_dir is not None:
                 path = world_dir / f"{r['game_id']}.npz"
@@ -574,8 +583,11 @@ def main():
         paths = (Path(__file__), ROOT / 'scripts/engine.py', ROOT / 'scripts/a1_substitution_engine.py',
                  args.substitution_candidate, ROOT / f'data/derived/experiments/20261122_a1_s05_unconditional_{args.fold}_corrected.parquet',
                  a1_minutes_fold_eval.CAUSAL_PROFILES)
+        if args.substitution_foul_penalty:
+            paths += (ROOT / 'scripts/a1_foul_penalty_engine.py',)
         record['substitution_candidate'] = {
             'report': str(args.substitution_candidate),
+            'foul_penalty_exception': args.substitution_foul_penalty,
             'sha256': {str(p.resolve().relative_to(ROOT)): sha256_file(p) for p in paths},
             'limitations': 'Selected-timeout templates and actual-participant rosters are not pre-game availability forecasts.',
         }

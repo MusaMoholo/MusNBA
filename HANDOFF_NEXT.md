@@ -62,10 +62,10 @@ data/derived/experiments/20261122_a1_s07_baseline_F4.parquet --teams-output
 data/derived/experiments/20261122_a1_s07_baseline_F4_teams.parquet`. F1–F3 ran sequentially under the same options
 in former shell **2147**, log `/tmp/musnba_a1_s07_baseline_F1_F3.log`; F1/F2 scored **200/200** in
 **68.2/106.6 s**, F3 scored **195/200** in **91.3 s**, with five games lacking prior rosters. All four folds have
-passed independent accounting. The normal/fault checkpoint queue is active as attached shell **2160**, wrapper
+passed independent accounting. The normal/fault checkpoint queue completed as former attached shell **2160**, wrapper
 PID **12638**, with logs `/tmp/musnba_a1_s06_s07_partial_{unittest,smoke,fault}.log`; **15** focused unittest cases
-and normal smoke **102/102** passed. Deliberate-fault Python PID **14841** remains active; check shell **2160**
-for its required non-zero exit and final counts. An initial pytest command failed because pytest is not installed;
+and normal smoke **102/102** passed. The deliberate-fault run exited non-zero as required with **80/102** checks
+passing, and the checking wrapper exited 0. An initial pytest command failed because pytest is not installed;
 the project's existing unittest runner was used instead, with no dependency change.
 
 **Completed S05 evidence:** the 200-game flow and its independent accounting are complete; the comparison and
@@ -1339,8 +1339,12 @@ The dashboard programme is done. Do not resume U1–U22, repeat rejected defence
    four simulated foul-outs leave four eligible players with **4.4 s** left in Q4. TRAINING_PLAN §8.2 now freezes
    an opt-in player-foul-penalty exception: retain a necessary on-court six-foul player, assess the technical free
    throw and independently audit all roster/foul states. The official rule page returned HTTP 403; a secondary
-   basketball rule reference is cited. Implement and verify this without changing the original failed policy or the
-   default engine. Never
+   basketball rule reference is cited. The opt-in `scripts/a1_foul_penalty_engine.py` and its expanded trace
+   accounting are implemented; **26** policy/world/sequence tests pass. Before any real-game run, commit their source.
+   Then run the three original trace-wiring games and the single-game manifest
+   `analysis/experiments/20261122_a1_s06_recovery_probe_games.json` sequentially with
+   `--substitution-foul-penalty --audit-substitution-worlds`; compare the three no-exception outputs to the original
+   candidate and independently audit both captures. Keep the original failed policy and default engine unchanged. Never
    hide or exclude the failure when applying promotion gates. The 80% rung still requires a genuine measured
    minute-CRPS/state-response comparison; don't present the aborted screen as complete. Run no second engine
    backtest concurrently. No promotion follows from the trace check.

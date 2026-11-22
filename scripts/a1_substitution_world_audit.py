@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from collections import defaultdict
 from pathlib import Path
 from typing import Mapping
 
@@ -17,7 +18,95 @@ from basketball_common import DERIVED, sha256_file, write_json  # noqa: E402
 from scripts.evaluate import EXPERIMENTS, FOLDS  # noqa: E402
 
 
-def audit_worlds(data: Mapping[str, np.ndarray]) -> dict:
+def audit_foul_penalty(data: Mapping[str, np.ndarray], side: np.ndarray, available: np.ndarray,
+                       final_fouls: np.ndarray, player_points: np.ndarray, world: np.ndarray,
+                       period: np.ndarray, clock: np.ndarray, fives: np.ndarray,
+                       fouls: np.ndarray, phase: np.ndarray) -> dict:
+    all_fouls = data['trace_all_fouls']
+    ft_pct, fta, ftm = data['player_ft_pct'], data['player_fta'], data['player_ftm']
+    n_worlds, n_players = available.shape
+    if (all_fouls.shape != (len(world), n_players) or ft_pct.shape != (n_players,)
+            or fta.shape != player_points.shape or ftm.shape != player_points.shape
+            or not np.isfinite(all_fouls).all() or (all_fouls < 0).any()
+            or not np.equal(all_fouls, np.floor(all_fouls)).all()
+            or not np.isfinite(fta).all() or not np.isfinite(ftm).all()
+            or (fta < 0).any() or (ftm < 0).any() or (ftm > fta).any()):
+        raise ValueError('foul-penalty trace or free-throw totals are invalid')
+    if not np.array_equal(all_fouls[np.arange(len(world))[:, None, None], fives], fouls):
+        raise ValueError('lineup and full-roster foul traces differ')
+    if (all_fouls > final_fouls[world]).any():
+        raise ValueError('full-roster trace exceeds final personal fouls')
+    legal = available[world] & (all_fouls < 6)
+    legal_counts = np.column_stack([(legal & (side == team)).sum(axis=1) for team in (0, 1)])
+    if ((fouls >= 6) & (legal_counts[:, :, None] >= 5)).any():
+        raise ValueError('foul-out retained when five eligible players exist')
+    order = np.argsort(world, kind='stable')
+    world, period, clock, fives, fouls, phase, all_fouls = (
+        values[order] for values in (world, period, clock, fives, fouls, phase, all_fouls))
+    legal_counts = legal_counts[order]
+    same = np.r_[False, world[1:] == world[:-1]]
+    previous_fives = np.concatenate((np.full((1, 2, 5), -1), fives[:-1]))
+    was_on_court = (fives[:, :, :, None] == previous_fives[:, :, None, :]).any(axis=3)
+    if ((fouls >= 6) & (~same[:, None, None] | ~was_on_court)).any():
+        raise ValueError('previously removed foul-out reentered the game')
+    if ((all_fouls[1:] < all_fouls[:-1]) & same[1:, None]).any():
+        raise ValueError('personal fouls decreased within a world trace')
+    exposed = np.zeros((n_worlds, n_players), dtype=bool)
+    for team in (0, 1):
+        for slot in range(5):
+            mask = fouls[:, team, slot] >= 6
+            exposed[world[mask], fives[mask, team, slot]] = True
+    if ((final_fouls > 6) & ~exposed).any():
+        raise ValueError('more than six fouls without a recorded player-foul-penalty exception')
+    expected: dict[tuple[int, int, float, int], list[int]] = defaultdict(list)
+    post = np.flatnonzero((phase == 1) & same)
+    increments = all_fouls[post] - all_fouls[post - 1]
+    if ((increments < 0) | (increments > 1)).any():
+        raise ValueError('post-foul trace contains an invalid personal-foul increment')
+    for offset, fouler in np.argwhere((increments == 1) & (all_fouls[post] >= 6)):
+        index, fouler = int(post[offset]), int(fouler)
+        team = int(side[fouler])
+        if fouler in fives[index, team] and legal_counts[index, team] < 5:
+            expected[(int(world[index]), int(period[index]), float(clock[index]), fouler)].append(index)
+    keys = ('world', 'period', 'clock', 'fouler', 'shooter', 'made', 'probability')
+    events = {key: data[f'technical_{key}'] for key in keys}
+    count = len(events['world'])
+    if (any(values.shape != (count,) for values in events.values())
+            or any(not np.issubdtype(events[key].dtype, np.integer)
+                   for key in ('world', 'period', 'fouler', 'shooter', 'made'))
+            or not np.isfinite(events['clock']).all() or not np.isfinite(events['probability']).all()):
+        raise ValueError('technical event arrays have inconsistent shapes')
+    attempts, makes = np.zeros_like(fta), np.zeros_like(ftm)
+    for i in range(count):
+        w, per = int(events['world'][i]), int(events['period'][i])
+        fouler, shooter = int(events['fouler'][i]), int(events['shooter'][i])
+        made, probability = int(events['made'][i]), float(events['probability'][i])
+        key = (w, per, float(events['clock'][i]), fouler)
+        if not expected.get(key):
+            raise ValueError('technical event has no corresponding retained foul-out')
+        index = expected[key].pop()
+        if not (0 <= shooter < n_players) or shooter not in fives[index, 1 - int(side[fouler])]:
+            raise ValueError('technical shooter is not on the opposing five')
+        percentages = ft_pct[fives[index, 1 - int(side[fouler])]].astype(float)
+        if np.isinf(percentages).any() or ((percentages < 0) | (percentages > 1)).any():
+            raise ValueError('technical shooter group has an invalid pre-game FT percentage')
+        known = percentages[np.isfinite(percentages)]
+        if (not len(known) or not np.isclose(probability, float(ft_pct[shooter]), atol=1e-12, rtol=0)
+                or not np.isclose(probability, float(known.max()), atol=1e-12, rtol=0)
+                or made not in (0, 1)):
+            raise ValueError('technical shooter, probability or result differs from the frozen rule')
+        bucket = min(per - 1, 4)
+        attempts[w, shooter, bucket] += 1
+        makes[w, shooter, bucket] += made
+    if any(indices for indices in expected.values()):
+        raise ValueError('a retained foul-out has no technical free throw')
+    if (attempts > fta).any() or (makes > ftm).any() or (makes > player_points).any():
+        raise ValueError('technical shots do not reconcile to player free throws and points')
+    return {'foul_penalty_events': count, 'foul_penalty_makes': int(makes.sum()),
+            'foul_penalty_lineups': int((fouls >= 6).any(axis=2).sum())}
+
+
+def audit_worlds(data: Mapping[str, np.ndarray], foul_penalty: bool = False) -> dict:
     ids, side = data['player_ids'], data['side']
     available, final_period = data['available'], data['final_period']
     minutes, player_points = data['minutes'], data['player_points']
@@ -47,7 +136,7 @@ def audit_worlds(data: Mapping[str, np.ndarray]) -> dict:
         raise ValueError('saved world accounting contains invalid values')
     if (minutes[~available] != 0).any() or (player_points[~available] != 0).any() or (player_fouls[~available] != 0).any():
         raise ValueError('an unavailable player accumulated minutes, points or fouls')
-    if (player_fouls.sum(axis=2) > 6).any():
+    if not foul_penalty and (player_fouls.sum(axis=2) > 6).any():
         raise ValueError('a player accumulated more than six personal fouls')
 
     n_trace = len(world)
@@ -63,7 +152,7 @@ def audit_worlds(data: Mapping[str, np.ndarray]) -> dict:
     length = np.where(period <= 4, 720.0, 300.0)
     if not np.isfinite(clock).all() or ((clock < 0) | (clock > length)).any():
         raise ValueError('lineup trace has an invalid game clock')
-    if not np.isfinite(fouls).all() or ((fouls < 0) | (fouls >= 6)).any():
+    if not np.isfinite(fouls).all() or (fouls < 0).any() or (not foul_penalty and (fouls >= 6).any()):
         raise ValueError('lineup trace contains a disqualified player')
     if (np.diff(np.sort(fives, axis=2), axis=2) == 0).any():
         raise ValueError('lineup trace contains fewer than five distinct players')
@@ -73,6 +162,8 @@ def audit_worlds(data: Mapping[str, np.ndarray]) -> dict:
     final_fouls = player_fouls.sum(axis=2)
     if (fouls > final_fouls[world[:, None, None], fives]).any():
         raise ValueError('trace foul count exceeds the recorded final foul count')
+    penalty_report = audit_foul_penalty(data, side, available, final_fouls, player_points, world,
+                                        period, clock, fives, fouls, phase) if foul_penalty else {}
 
     start = np.where(period <= 4, (period - 1) * 720.0, 2880.0 + (period - 5) * 300.0)
     elapsed = start + length - clock
@@ -126,6 +217,7 @@ def audit_worlds(data: Mapping[str, np.ndarray]) -> dict:
         'lineup_fives_checked': 2 * n_trace,
         'overtime_worlds': int((final_period > 4).sum()),
         'max_replayed_player_minute_error': max_error,
+        **penalty_report,
     }
 
 
@@ -147,7 +239,7 @@ def audit_run(run: str) -> dict:
         if sha256_file(path) != digest:
             raise ValueError(f'world capture fingerprint differs: {relative}')
         with np.load(path, allow_pickle=False) as data:
-            record = audit_worlds(data)
+            record = audit_worlds(data, foul_penalty=log['substitution_candidate'].get('foul_penalty_exception', False))
             gid = record['game_id']
             match = games[games['game_id'] == gid]
             if len(match) != 1 or record['worlds'] != log['worlds']:
