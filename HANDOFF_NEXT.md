@@ -18,6 +18,7 @@ S06 partial checkpoints **637a025**, **70709ab**, **bdedeed** and **d77ac5e** ar
 corrected replay, frozen fold protocol, exact v2 sources/reports, audited v3 inputs and native screen implementation.
 Partial checkpoint **2f05d47** preserves the independently audited outgoing result, incoming coverage and original
 foul-out probe; **08cd659** preserves the type-correct probe. Both are pushed.
+The first incoming-screen implementation and protocol were pushed as **89f6dc4**, before any incoming fit.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
 product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S05 are complete;
 S06 is active at 40%; A1 overall is 44.8%.** Isolated assignment candidates have event-level diagnostics and wiring only;
@@ -311,7 +312,7 @@ Prior positions are known for **179,478** candidates and **10,672** entries; **2
 team-timeouts have multiple entries. `analysis/experiments/20261122_a1_s06_in_coverage{,_audit}.json` records
 all five populations and hashes. TRAINING_PLAN §8.2 now freezes a positive-versus-unlabelled-mixture incoming
 ranking screen and its eligibility/positional limits before fitting. The implementation and **25** focused tests now
-pass; its pre-fit source SHA-256 is `32265f58fc46622909eabea38903a872b2f5c2802b5bd78c0475e45d8691b459`.
+pass; its pre-fit source SHA-256 is `b63106d0866844dd1b1b5fa9006e84ff65e1a7c326f06120d35f3309e0634647`.
 Run `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u -m scripts.a1_substitution_in_screen`, then
 independently reproduce its fitted ranks and game bootstrap before awarding S06 50%.
 The checkpoint normal smoke passed **102/102** (`/tmp/musnba_a1_s06_40_smoke_default.log`); deliberate fault

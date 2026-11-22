@@ -125,7 +125,7 @@ def select_lineup(five: list[str], exits: list[str], active: set[str], disqualif
     return result, entrants
 
 
-def score_groups(valid: pd.DataFrame, windows: pd.DataFrame, all_rows: pd.DataFrame) -> pd.DataFrame:
+def score_groups(valid: pd.DataFrame, windows: pd.DataFrame, all_rows: pd.DataFrame, fold: str) -> pd.DataFrame:
     result = valid.copy()
     deficit = pd.to_numeric(result['target_deficit'], errors='raise')
     target = pd.to_numeric(result['target_mean_proxy'], errors='raise')
@@ -143,7 +143,9 @@ def score_groups(valid: pd.DataFrame, windows: pd.DataFrame, all_rows: pd.DataFr
     fives = {(window, team): group for (window, team), group in out.groupby(KEYS, sort=False)}
     disqualified_rows = all_rows.loc[all_rows['fouls_before'].ge(6) | all_rows['ejected_before']]
     disqualified_by_team_window = disqualified_rows.groupby(KEYS)['player'].agg(set).to_dict()
-    for (window, team), group in result.groupby(KEYS, sort=False):
+    total = len(result[KEYS].drop_duplicates())
+    started, next_mark = time.monotonic(), 1
+    for index, ((window, team), group) in enumerate(result.groupby(KEYS, sort=False), 1):
         key = (window, team)
         five_rows = fives[key]
         five = five_rows['player'].tolist()
@@ -168,6 +170,9 @@ def score_groups(valid: pd.DataFrame, windows: pd.DataFrame, all_rows: pd.DataFr
                 _, chosen = select_lineup(five, exits, active, disqualified, scores)
                 result.loc[group.index[group['player'].isin(chosen)], f'oracle_{name}_selected'] = True
             result.loc[group.index, 'oracle_scored'] = True
+        while next_mark <= 10 and index >= int(np.ceil(total * next_mark / 10)):
+            print(f'{fold} ranked {index}/{total} team-windows {time.monotonic() - started:.1f}s', flush=True)
+            next_mark += 1
     return result
 
 
@@ -228,7 +233,7 @@ def main() -> None:
         train = a1_substitution_out_screen.training_rows(populations, fold)
         valid = populations[fold].copy()
         valid['candidate_score'], model_details = fit_score(train, valid)
-        scored = score_groups(valid, windows_by_fold[fold], all_populations[fold])
+        scored = score_groups(valid, windows_by_fold[fold], all_populations[fold], fold)
         scored['fold'] = fold
         cases = scored.loc[scored['label'].fillna(False)]
         oracle_cases = cases.loc[cases['oracle_scored']]
