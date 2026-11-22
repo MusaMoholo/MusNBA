@@ -1,7 +1,7 @@
 // Players: sortable league table (per game / totals / per 36) and player pages with game logs.
 import {api, barChart, dayLabel, esc, f1, logo, normalise, pct, seg, signed, statusTag, store, team, teamLink, tipTimes} from './ui.mjs';
 
-const COLS = [['gp', 'GP'], ['min', 'MIN'], ['pts', 'PTS'], ['reb', 'REB'], ['ast', 'AST'], ['stl', 'STL'], ['blk', 'BLK'], ['tov', 'TOV'],
+const COLS = [['gp', 'GP'], ['min', 'MIN'], ['pts', 'PTS'], ['trend', 'L10 trend'], ['reb', 'REB'], ['ast', 'AST'], ['stl', 'STL'], ['blk', 'BLK'], ['tov', 'TOV'],
               ['fg3m', '3PM'], ['fg_pct', 'FG%'], ['fg3_pct', '3P%'], ['ft_pct', 'FT%'], ['ts_pct', 'TS%'], ['pm', '+/−']];
 const state = {mode: store.get('players-mode', 'pg'), sort: {key: 'pts', dir: -1}, q: '', team: '', minGp: 3, limit: 60};
 
@@ -14,6 +14,7 @@ function value(p, key, mode) {
   const t = p.tot, gp = p.gp;
   if (!gp) return null;
   if (key === 'gp') return gp;
+  if (key === 'trend') return p.l10 ? p.l10.pts - t.pts / gp : null;  // U13: last-10 points per game minus the season's
   if (key === 'fg_pct') return t.fga ? t.fgm / t.fga : null;
   if (key === 'fg3_pct') return t.fg3a ? t.fg3m / t.fg3a : null;
   if (key === 'ft_pct') return t.fta ? t.ftm / t.fta : null;
@@ -23,6 +24,14 @@ function value(p, key, mode) {
   if (mode === 'p36') return key === 'min' ? v / gp : t.min ? 36 * v / t.min : null;
   return v / gp;
 }
+// U13: sparkline of the last 10 points totals + the last-10 v season change
+const sparkCell = p => {
+  if (!p.spark?.length) return '—';
+  const m = Math.max(...p.spark, 1), W = 60, H = 18, bw = W / p.spark.length;
+  const d = p.l10.pts - p.tot.pts / p.gp;
+  return `<svg class="mini" viewBox="0 0 ${W} ${H}" aria-hidden="true">${p.spark.map((v, i) => `<rect x="${(i * bw).toFixed(1)}" y="${(H - H * v / m).toFixed(1)}" width="${Math.max(1, bw - 1).toFixed(1)}" height="${(H * v / m).toFixed(1)}"></rect>`).join('')}</svg>
+    <em class="${d > 0.5 ? 'up' : d < -0.5 ? 'down' : 'dim'}">${d > 0 ? '+' : ''}${d.toFixed(1)}</em>`;
+};
 const fmt = (key, v, mode) => v == null ? '—' : /_pct$/.test(key) ? (100 * v).toFixed(1) : key === 'gp' ? v : key === 'pm' ? signed(v, mode === 'tot' ? 0 : 1) : mode === 'tot' ? Math.round(v) : v.toFixed(1);
 
 async function table(view, {meta, current}) {
@@ -42,9 +51,13 @@ async function table(view, {meta, current}) {
     const {key, dir} = state.sort;
     rows = rows.map(p => ({p, v: value(p, key, state.mode)})).sort((a, b) => (a.v == null) - (b.v == null) || dir * ((a.v ?? 0) - (b.v ?? 0)) || a.p.name.localeCompare(b.p.name)).map(x => x.p);
     const shown = rows.slice(0, state.limit);
-    view.querySelector('#ptable').innerHTML = `<div class="scroll"><table><thead><tr><th>#</th><th class="name">Player</th><th class="l">Team</th>${COLS.map(([k, l]) => `<th data-sort="${k}" tabindex="0" aria-sort="${key === k ? (dir < 0 ? 'descending' : 'ascending') : 'none'}">${l}${key === k ? `<span class="arrow">${dir < 0 ? '▼' : '▲'}</span>` : ''}</th>`).join('')}</tr></thead><tbody>
+    const movers = data.players.filter(p => p.gp >= 8 && p.l10 && p.tot.min / p.gp >= 15).map(p => ({p, d: p.l10.pts - p.tot.pts / p.gp})).sort((a, b) => b.d - a.d);
+    const mv = x => `<a class="mv" href="#/player/${x.p.id}">${logo(x.p.team, 'sm')}<span>${esc(x.p.name)}</span><em class="${x.d > 0 ? 'up' : 'down'}">${x.d > 0 ? '+' : ''}${x.d.toFixed(1)}</em><small>${(x.p.tot.pts / x.p.gp).toFixed(1)} → ${x.p.l10.pts.toFixed(1)}</small></a>`;
+    const moversHtml = movers.length > 10 ? `<section class="panel movers"><div><span class="spot-kicker">Heating up · last 10 v season points</span>${movers.slice(0, 5).map(mv).join('')}</div>
+      <div><span class="spot-kicker">Cooling off</span>${movers.slice(-5).reverse().map(mv).join('')}</div></section>` : '';
+    view.querySelector('#ptable').innerHTML = `${moversHtml}<div class="scroll"><table><thead><tr><th>#</th><th class="name">Player</th><th class="l">Team</th>${COLS.map(([k, l]) => `<th data-sort="${k}" tabindex="0" aria-sort="${key === k ? (dir < 0 ? 'descending' : 'ascending') : 'none'}">${l}${key === k ? `<span class="arrow">${dir < 0 ? '▼' : '▲'}</span>` : ''}</th>`).join('')}</tr></thead><tbody>
       ${shown.map((p, i) => `<tr class="link" data-pid="${p.id}"><td class="dim">${i + 1}</td><td class="name">${esc(p.name)} <span class="tag">${esc(p.pos || '')}</span>${statusTag(p.status)}</td><td class="l">${teamLink(p.team, {short: true})}</td>
-        ${COLS.map(([k]) => `<td>${fmt(k, value(p, k, state.mode), state.mode)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
+        ${COLS.map(([k]) => `<td${k === 'trend' ? ' class="trend-c"' : ''}>${k === 'trend' ? sparkCell(p) : fmt(k, value(p, k, state.mode), state.mode)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
       <div class="row" style="margin-top:10px"><span class="note" style="margin:0">${shown.length} of ${rows.length} players</span>${rows.length > shown.length ? '<button class="ghost" id="more">Show more</button>' : ''}</div>`;
     view.querySelectorAll('th[data-sort]').forEach(th => th.onclick = th.onkeydown = e => {
       if (e.type === 'keydown' && e.key !== 'Enter') return;

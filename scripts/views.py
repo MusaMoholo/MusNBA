@@ -540,6 +540,18 @@ def opponent_history(registry: dict, teams: dict, M, day: str) -> dict:
     return lookup
 
 
+def trend_fields(p: dict | None) -> dict:
+    """U13: last-10 per-game averages and the last 10 points totals (games played) for the Players tab's trend column."""
+    if not p:
+        return {}
+    played = [g for g in p.get('log', []) if not g.get('dnp')][-10:]
+    if not played:
+        return {}
+    n = len(played)
+    return {'l10': {k: round(sum((g.get(k) or 0) for g in played) / n, 2) for k in ('pts', 'reb', 'ast', 'min')}, 'l10_n': n,
+            'spark': [int(g.get('pts') or 0) for g in played]}
+
+
 def lead_fan(path: Path, gid: str) -> dict | None:
     """U5: the home lead after Q1, at half-time, after Q3 and at the final whistle (overtime included) in every stored world:
     10/25/50/75/90th percentiles per break, and the chance the home side leads at each."""
@@ -834,7 +846,8 @@ def build(views_root: Path = VIEWS) -> dict:
         player_rows_out.append({'id': pid, 'name': reg.get('name') or (p or {}).get('name'), 'team': reg.get('team') or (p or {}).get('team'),
                                 'pos': reg.get('pos', ''), 'jersey': reg.get('jersey', ''), 'status': reg.get('status'),
                                 'on_roster': bool(reg.get('on_roster')), 'gp': p['gp'] if p else 0, 'gs': p['gs'] if p else 0,
-                                'tot': {k: p['totals'].get(k, 0) for k in BOX_TOTALS if k != 'pf' or True} if p else {}})
+                                'tot': {k: p['totals'].get(k, 0) for k in BOX_TOTALS if k != 'pf' or True} if p else {},
+                                **trend_fields(p)})
     player_rows_out.sort(key=lambda x: (-(x['tot'].get('pts', 0)), x['id']))
     write_json(api / 'players.json', {'date': latest_day, 'players': player_rows_out})
 
