@@ -172,6 +172,23 @@ function actCell(a, key) {
   return a[key] ?? '—';
 }
 
+// U7: availability — who is out or a maybe on each side, how often he plays in the simulations, minutes if he plays v season
+function availPanel(data) {
+  const av = data.availability;
+  if (!av || !(av.away?.length || av.home?.length)) return '';
+  const tone = st => (/out/i.test(st) ? 'down' : /doubt|question|day/i.test(st) ? 'warn' : 'dim');
+  const side = k => {
+    const rows = av[k] || [];
+    return `<div><h4>${logo(data.game[k].id, 'sm')} ${esc(team(data.game[k].id).name)}</h4>${rows.length ? rows.map(r => `<div class="av-row" title="${esc(r.comment || '')}">
+      <span class="av-name">${esc(r.name)}</span><span class="pill ${tone(r.status)}">${esc(r.status)}</span>
+      <span class="av-num">${r.plays > 0 ? `plays ${pct(r.plays, 0)}` : 'not simulated'}</span>
+      <span class="av-num dim">${[r.min_if_plays ? `${f1(r.min_if_plays)} min if he plays` : '', r.season_min != null ? `season ${f1(r.season_min)} min` : '',
+        r.return ? `back ~${esc(dayLabel(r.return.slice(0, 10)))}` : ''].filter(Boolean).join(' · ')}</span></div>`).join('') : '<p class="note">Nobody on the report.</p>'}</div>`;
+  };
+  return `<section class="panel"><h3 style="margin-top:0">Availability</h3><div class="av-grid">${side('away')}${side('home')}</div>
+    <p class="note">From the injury report as the simulations used it (hover a row for the report comment). "Plays" = share of the simulated games he appears in.</p></section>`;
+}
+
 function playerView(el, data, period) {
   const sim = sims(data), act = data.actual;
   const modes = [];
@@ -179,7 +196,7 @@ function playerView(el, data, period) {
   if (act) modes.push(['act', 'Actual']);
   if (sim && act) modes.push(['cmp', 'Actual vs projected']);
   const mode = modes.some(m => m[0] === state.mode) ? state.mode : (sim && act ? 'cmp' : modes[0][0]);
-  el.innerHTML = (period === 'fg' && data.spotlight ? gameSpotlight(data.spotlight) : '') +
+  el.innerHTML = (period === 'fg' && data.spotlight ? gameSpotlight(data.spotlight) : '') + (period === 'fg' ? availPanel(data) : '') +
     (modes.length > 1 ? `<div class="controls">${seg(modes, mode, 'data-mode')}</div>` : '') +
     ['away', 'home'].map(s => teamBox(data, s, mode, period)).join('') +
     `<p class="note">${period === 'fg' ? 'Full game includes overtime.' : `${esc(periodName(period))} only; overtime counts in FG.`} Projected values are means over ${sim ? sim.sims.toLocaleString() : ''} simulated games${mode === 'proj' && period === 'fg' && data.averages ? '; small numbers: projection minus his season average (MIN, PTS, REB, AST, STL, BLK; shooting in percentage points)' : ''}. Tap a player for distributions, lines and what-ifs.</p>`;

@@ -420,6 +420,29 @@ def spotlight_entries(gid: str, r: dict, sim: dict) -> list:
     return out
 
 
+def availability(r: dict, sim: dict, registry: dict, season_of) -> dict:
+    """U7: per side, everyone on the injury report — status and comment, the chance he plays in the simulations, minutes if he
+    plays and his season average; ruled-out players come from the registry (they never enter the simulations)."""
+    out = {}
+    for side in ('away', 'home'):
+        tid = str(r[f'{side}_id'])
+        simp = {str(x['id']): x for x in sim[side]['players']}
+        rows = []
+        for pid, reg in registry.items():
+            st = reg.get('status') or 'Active'
+            if str(reg.get('team')) != tid or st == 'Active' or not reg.get('on_roster', True):
+                continue
+            x = simp.get(str(pid))
+            sa = season_of(str(pid))
+            inj = reg.get('injury') or {}
+            rows.append({'id': str(pid), 'name': reg.get('name'), 'status': st, 'comment': inj.get('comment'), 'return': inj.get('return'),
+                         'plays': round(float(x.get('played') or 0), 3) if x else 0.0,
+                         'min_if_plays': round((x.get('if_plays') or {}).get('min') or (((x.get('periods') or {}).get('fg') or {}).get('sec', 0) / 60), 1) if x else None,
+                         'season_min': round(sa['season'].get('min') or 0, 1) if sa else None, 'gp': sa['gp'] if sa else 0})
+        out[side] = sorted(rows, key=lambda q: (-(q['season_min'] or 0)))
+    return out
+
+
 def lead_fan(path: Path, gid: str) -> dict | None:
     """U5: the home lead after Q1, at half-time, after Q3 and at the final whistle (overtime included) in every stored world:
     10/25/50/75/90th percentiles per break, and the chance the home side leads at each."""
@@ -666,6 +689,7 @@ def build(views_root: Path = VIEWS) -> dict:
             duel = duels(M_real, gid, r['date_et'], sides, final=bool(actual))
         write_json(api / 'game' / f'{gid}.json', {
             'game': core, 'duels': duel, 'multi': multi if p else None, 'lead_fan': lead_fan(snaps[p['day']]['path'], gid) if p else None,
+            'availability': availability(r, p['sim'], registry, season_lookup(p['day'])) if p and r['status'] != 'final' else None,
             'spotlight': (spotlight(spotlight_entries(gid, r, p['sim']), season_lookup(p['day']), snaps[p['day']]['path'])
                           if p and r['status'] != 'final' else None),
             'projection': ({'snapshot': p['day'], 'kind': p['meta']['kind'], 'generated': p['meta']['generated'],
