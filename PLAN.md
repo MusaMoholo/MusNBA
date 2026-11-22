@@ -429,6 +429,9 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 · D46:** owner narrowed lineup branching to the highest-impact uncertain player per team, only
+  within its top three; at most four exhaustive combinations. Freeze and label the pre-origin offensive proxy in
+  ENGINE_PLAN; earlier >2 sensitivities remain historical research, not the new design. Current production unchanged.
 - **22 Nov 2026 · dashboard house follow-up:** player box scores now precede game insights; game availability,
   bench, secondary team-roster groups and player game logs expand on demand. **61/61** responsive cases,
   laptop/phone offline **29/29 / 28/28** and laptop shell upgrade **31/31** passed. Startup race fixed in

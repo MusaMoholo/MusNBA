@@ -1,11 +1,11 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 30%, A2 at 30%; S01–S07 remain complete**.
-Latest pushed source before this dashboard/selection checkpoint: **fd00b49**; use `git log -1` for the current checkpoint.
+Latest pushed source before the A1 persistence work: **98a33ba**; use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
-- **Current action:** continue A1 rung 40% from the frozen contract below. Do not start Chunk B before Chunk A's
+- **Current action:** revise A1 selection for owner decision D46, then continue rung 40%. Do not start Chunk B before Chunk A's
   delivery and checkpoint. The owner
   also requests a broader dashboard house-design pass: make supported information accessible and interactive
   without overcrowding, prioritise essential game/player signals and group secondary details into collapsible
@@ -27,7 +27,7 @@ Latest pushed source before this dashboard/selection checkpoint: **fd00b49**; us
   `/tmp/musnba_house_pwa_url_{smoke,fault}.log`. Doc review: HANDOFF, PLAN, FINDINGS and DASHBOARD_PLAN record the
   hierarchy and startup evidence; README maps the research helper
   and existing update workflow; AGENTS, ENGINE_PLAN and TRAINING_PLAN retain standing rules and model gates.
-- **A1 40% partial:** isolated origin-aware selection now applies the frozen healthy-role/usage thresholds and labels
+- **A1 40% partial (superseded selection):** isolated origin-aware selection applies the old healthy-role/usage thresholds and labels
   unknown usage or prior-only roles, preserving status source and effective probability; mismatched rosters,
   invalid values and non-prior minutes history fail. The caller must supply cutoff-safe roster and profiles.
   **60** branch/selection/rotation/availability tests passed;
@@ -35,7 +35,32 @@ Latest pushed source before this dashboard/selection checkpoint: **fd00b49**; us
   **1** missing usage, producing **4** unweighted sensitivities. This is an input sanity check, not a forecast
   or calibration. Normal smoke **108/108**; deliberate fault exited **1** (86/108), logs
   `/tmp/musnba_a1_40_selection_{smoke,fault}.log`. No branch worlds have been simulated or saved for this rung;
-  it remains **30%** until all 10k branch persistence, provenance and independent checks pass.
+  it remains **30%** until D46 selection, all 10k branch persistence, provenance and independent checks pass.
+- **A1 persistence in progress:** `scripts/a1_branch_persist.py` is an isolated research path, not wired to
+  serving/nightly. It requires a matching prospective snapshot and current retained origin inputs, records exact
+  branch seeds/weights, selection and source/model hashes, audits lineups and retains complete player boxes.
+  `analysis/a1_branch_persist_audit.py` independently checks assignments, rational weights, fixed availability
+  and shooting/score accounting. Current-origin game `401910029`: **4 × 32** unweighted sensitivities passed,
+  **32,123** lineup snapshots; replay was identical across every saved array with 8 versus 4 LightGBM threads.
+  One-player game `401910043` and two-player game `401910033` each passed **32** worlds per branch and exact
+  independent weight totals of **1**. **30** focused tests passed. Preliminary report
+  `analysis/experiments/20261122_chunk_a_a1_persist32.json` predates the capture-source hardening;
+  use `_v2`, `_replay` and `_threads4` for reproducibility. No outcome was scored against the protected season.
+  Checkpoint smoke **108/108**; deliberate fault exited **1** (86/108), logs
+  `/tmp/musnba_a1_persist_checkpoint_{smoke,fault}.log`. AGENTS and DASHBOARD_PLAN need no change: this is
+  isolated research and no serving, model, bundle or presentation behaviour changed.
+  The earlier **10,000-world** four-sensitivity test passed: **40,000** worlds, **20,020,614** legal fives and
+  independent saved-box accounting; max replayed-minute error **3.55e-15**. Per-branch elapsed **158.5 / 156.3 /
+  155.1 / 157.4 s**, log `/tmp/musnba_a1_persist10000.log`, report
+  `analysis/experiments/20261122_chunk_a_a1_persist10000.json`, captures
+  `data/derived/experiments/20261122_chunk_a_a1_persist10000/`. **D46 supersedes that selection**; it remains
+  wiring evidence, not the new design. The old 10k two-player run was stopped at **2/4** when D46 arrived:
+  log `/tmp/musnba_a1_persist10000_two.log`, partial captures
+  `data/derived/experiments/20261122_chunk_a_a1_persist10000_two/`; no completed report. No branch job is running.
+  **Open cutoff guard:** the model's fill medians also read its full `pregame.parquet`;
+  this probe's maximum date was **2026-11-21**, before its **2026-11-22** origin, but the new capture CLI
+  must explicitly reject a file with dates on/after its origin before general use. Preserve this captured
+  source version in a checkpoint before changing it, then test the guard and rerun affected checks.
 - **Dashboard house pass:** Today puts games first with a shortcut to the still-accessible slate insights. Players
   keeps its table visible and movers expandable; player pages prioritise the next forecast and collapse opponent
   history and advanced rates. Game-player sheets put conditional/joint outcomes and comparisons before collapsible
@@ -1446,7 +1471,13 @@ playback portion of S12, plus a chunk-end delivery; S10/S11/S12/S14 are not ther
 A2 `██████░░░░░░░░░░░░░░ 30%`; A3 `░░░░░░░░░░░░░░░░░░░░ 0%`.
 Original A1 remains 58%; do not double-count the separate board.
 
-**A1 10% frozen branch contract (22 Nov; design, not implemented):**
+**A1 10% frozen branch contract (22 Nov; selection superseded by D46):**
+
+**D46 selection revision:** at most one uncertain player per team, only if among that team's top three by the
+labelled pre-origin offensive-contribution proxy in ENGINE_PLAN D46. Rank the whole origin roster including
+ruled-out players; retain the highest-ranked eligible uncertainty per side. The earlier threshold and >2 selection
+below are historical, not the current rule. Branch weights are still uncalibrated and independence unvalidated;
+other uncertain players retain their existing per-world draws. Do not change any served model or snapshot yet.
 
 - Use the origin's own roster, reported status, source, effective `projection.player_inputs` availability and
   pre-origin D29 state/profile. Select every uncertain rostered player (`0 < availability < 1`) whose healthy
@@ -2036,14 +2067,13 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
 
 ## Next actions — Chunk A in progress
 
-1. **A1 40%:** implement deterministic, provenance-bearing 10,000-world persistence for each supported branch.
-   First run `.venv/bin/python -m unittest tests.test_a1_lineup_branches` and trace the remaining exact model/input
-   artifact paths; the frozen selector and missing-data labels are implemented and tested. Integrate the isolated
-   multi-player branch preparer and foul-out policy without changing serving or the nightly. Persist seeds,
-   assignments, exact weights, world counts and input/model hashes; independently reconcile legal lineups and
-   scores, verify reproducibility and fail closed on unsupported worlds. Retain the current unconditional
-   forecast; no Expected or production promotion until later gates. Then follow A1 rungs 50–100 and A2/A3
-   ladders, completing Chunk A before Chunk B.
+1. **A1 40%:** checkpoint the captured pre-D46 source and evidence; then implement and test the revised D46
+   full-roster top-three proxy and the pregame-median cutoff guard noted above. Re-inventory current origin
+   selections, run representative one-/two-player **10,000-world** captures with new unique paths, independently
+   audit weights, legal lineups and boxes, and verify deterministic replay/worker invariance at production scale before crediting
+   the rung. Retain partial captures on failure, surface unsupported short rosters and keep the unconditional
+   forecast; no Expected or production promotion until later gates. Review and checkpoint code/evidence, then
+   follow A1 rungs 50–100 and A2/A3 ladders, completing Chunk A before Chunk B.
 2. The owner requests dashboard reorganisation with important signals first and secondary information in clearly
    labelled collapsible sections. Integrate with the chunk and checkpoint delivery. No nightly for presentation
    work; the next normal nightly builds the per-world views automatically.

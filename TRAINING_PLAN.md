@@ -688,14 +688,16 @@ placeholder roster may use a disclosed equal-share fallback; it is not an accura
 hazard is promoted from censored, coach-DNP-dominated proxies.
 
 For S08, these fixed probabilities are scenario weights, not calibrated injury probabilities; multiplying two of
-them is an unvalidated independence assumption, and more-than-two one-out branches are non-exhaustive. The exact
+them is an unvalidated independence assumption. D46 caps selection to at most one top-three-impact proxy player
+per team; the previous more-than-two one-out research captures are non-exhaustive and superseded. The exact
 Expected/season mixture must meet D31's accounting requirements rather than round away a discrepancy. For S10,
 the retained pathway has no fitted future player-absence hazard; do not treat DNP proxy durations or actual future
 participants as future availability. New hazard work requires dated pre-origin cohorts and the unchanged gates.
 
 Chunk A A1 froze the prospective selection, branch identifiers and mixture contract in HANDOFF before implementation.
-The 15-minute healthy-role or 0.25 prior-usage selection threshold is an engineering scope rule, not fitted
-availability evidence. Missing criteria are conservatively included and labelled. The exact season representation
+D46 replaces the earlier 15-minute healthy-role/0.25 prior-usage scope rule with a top-three full-roster offensive
+contribution proxy and at most one uncertainty per team. The proxy is not a fitted total-impact measure;
+prior-only roles and missing inputs must be identified, and invalid input must fail explicitly. The exact season representation
 and its runtime remain untested; no production or accuracy claim follows from freezing this contract.
 
 For S07's first **historical no-report and starter baselines**, freeze the following before scoring. Reuse the

@@ -2,6 +2,14 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 — isolated lineup persistence:** for current-origin game `401910029`, three qualifying uncertain
+players produced four non-exhaustive unweighted sensitivities, **10,000** worlds each. Independent auditing
+checked **20,020,614** five-player lineups and **40,000** world boxes; maximum lineup-replayed minutes error was
+**3.55e-15**. A separate 32-world replay reproduced all arrays and capture hashes across 4 and 8 LightGBM
+threads. One- and two-player examples also passed 32 worlds per branch with exact weights summing to one.
+These are wiring/accounting checks, not calibration, Expected forecasts, predictive scores or promotions. The
+owner's subsequent D46 supersedes the earlier player-selection rule and its more-than-two sensitivities.
+
 **22 Nov 2026 — PWA startup race:** forced service-worker bypass on the then-hosted shell reproduced fresh
 laptop and phone imports rendering an unreadable 404, because URL-object API calls bypassed the fetch shim.
 The corrected shell handles URL, string and Request inputs. Hosted forced-bypass import/offline checks passed
