@@ -30,22 +30,26 @@ Partial source checkpoint **4dce4a3** was pushed before the UX-delivery nightly.
   paths. Collection completed with **63 requests, 0 failures, 0 new finals**; NBA Stats had no new requests.
   Input rebuilding is underway. Read the full result when done. Do not start a second NBA Stats stream. If it fails,
   preserve the previous iCloud bundle and record the precise blocker before retrying.
-- **Independent A2 research:** while the nightly rebuilds inputs, the first A2 rung is beginning on the fixed S01
-  F4 control and fingerprinted prior-only S05 roles. The prespecified retrospective covariance screen is in
-  TRAINING_PLAN; its join audit found **4,320/4,346** matched player-games, with **26** missing joins and **12**
-  unknown-role matches. `scripts/a2_residual_dependence.py` implements the frozen analysis, and its two focused
-  tests pass; no residual results or candidate changes have been examined. Run
-  `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python scripts/a2_residual_dependence.py`, independently
-  audit the resulting report, then update the board and docs. A1 remains 10%, A2 0%.
+- **Independent A2 research:** rung **10%** completed on the fixed S01 F4 control and fingerprinted prior-only
+  S05 roles; protocol/source were pushed before scoring (`3ce6dec`/`aac8c92`). Of **4,346** player-games, **26**
+  lacked a role join, **12** had unknown roles and **704** more fell below the minutes threshold, leaving **3,604**
+  across **200 games**. Teammate scoring-rate residual covariance was **−1.215** (95% **−1.999 to −0.424**);
+  opponent covariance was **+0.462** (95% **−0.410 to +1.283**). This is exploratory observed association,
+  not simulated-world covariance or a candidate. The report is
+  `analysis/experiments/20261122_a2_residual_dependence_f4.json`; a separate raw-pair reconstruction verified
+  all **12** point estimates, two focused tests passed, and the report reproduced byte-for-byte. Normal smoke
+  passed **107/107** with one bit-for-bit replay skipped because the running nightly rebuilt newer inputs; deliberate
+  fault exited **1** (86/107). Repeat full smoke after the nightly finishes. Next A2 rung: freeze earlier-fold
+  talent/form hypotheses and no-double-count controls before fitting. A1 remains 10%.
 - **Prepared, unpublished Pages shell:** isolated worktree `/tmp/musnba-user-ux-pages`, `gh-pages` at `f2932e1`,
   has only `assets/game.mjs`, `assets/players.mjs` and `sw.js` changed from the reviewed data-free shell
   `614f3061d9dc69a41bc4`. The shell passed **18/18** checks with the previous bundle. Do not publish until the new
   bundle and its period-shooting import/offline check pass; never add data or bundles to Pages.
-- **Doc review:** `DASHBOARD_PLAN`, `ENGINE_PLAN`, `FINDINGS`, `PLAN` and this handoff carry the new behaviour,
-  decision, measurement and live state. `TRAINING_PLAN` freezes the independent A2 descriptive screen without
-  changing selection gates; `README` commands and file map are unchanged; `AGENTS.md` standing rules are unchanged.
+- **Doc review:** `DASHBOARD_PLAN` and `ENGINE_PLAN` record D44 behaviour and decisions; `FINDINGS`, `PLAN` and
+  this handoff carry the A2 measurement and live state. `TRAINING_PLAN` freezes the A2 descriptive screen without
+  changing selection gates; `README` maps the research command; `AGENTS.md` standing rules are unchanged.
 - **Progress:** original A1 **58.0%**, S01–S07 complete; S08–S12/S14 open, S13 historical forecast backfill
-  deferred. New independent chunk boards: **A 3%** (A1 10%, A2/A3 0%) and **B 0%** (B1/B2/B3 all 0%). Keep
+  deferred. New independent chunk boards: **A 6.5%** (A1 10%, A2 10%, A3 0%) and **B 0%** (B1/B2/B3 all 0%). Keep
   the original A1 weights intact; new within-chunk weights do not reset or double-count A1.
 - **Production:** possession engine **v1.3/D29**, team pathway **v1**. S04's two defence candidates did not pass;
   S05's minute candidates did not meet the primary gate. S06's 200-game candidate improved minute CRPS
@@ -1271,7 +1275,7 @@ chunk weights are **separate within-chunk progress measures**, not replacements 
 A1 stays **58.0%**, and S13 remains deferred at 0% (the possible A1 ceiling while deferred is 95%).
 Update the original S08–S12/S14 status only when their original acceptance is met, without crediting work twice.
 Report a chunk bar and each active module at every 10% rung and each 5% overall boundary; long jobs also report
-item counts and measured rates. Current Chunk A progress is **3%**; Chunk B remains **0%**.
+item counts and measured rates. Current Chunk A progress is **6.5%**; Chunk B remains **0%**.
 
 **Shared gates:** use the unchanged player-first, paired fold, seed-noise, uncertainty, non-inferiority, cutoff and
 once-per-version final-test rules in PLAN §6b/TRAINING_PLAN §8. An early chunk can promote a standalone candidate
@@ -1295,8 +1299,8 @@ playback portion of S12, plus a chunk-end delivery; S10/S11/S12/S14 are not ther
 | A2 Form and late-game realism | 35% | S04/S06; A1 for integration | S09's paired player/game gates; retain v1.3 when unsupported or rejected |
 | A3 View Centre and delivery | 35% | A1/A2 decisions | Five labelled selections, reconciled event files and an interactive 2-D court/player in the Game Centre; responsive/offline checks and fresh nightly; no fake logs or completed claim on failure |
 
-**Live board:** Chunk A `█░░░░░░░░░░░░░░░░░░░ 3%`; A1 `██░░░░░░░░░░░░░░░░░░ 10%`;
-A2 `░░░░░░░░░░░░░░░░░░░░ 0%`; A3 `░░░░░░░░░░░░░░░░░░░░ 0%`.
+**Live board:** Chunk A `█░░░░░░░░░░░░░░░░░░░ 6.5%`; A1 `██░░░░░░░░░░░░░░░░░░ 10%`;
+A2 `██░░░░░░░░░░░░░░░░░░ 10%`; A3 `░░░░░░░░░░░░░░░░░░░░ 0%`.
 Original A1 remains 58%; do not double-count the separate board.
 
 **A1 10% frozen branch contract (22 Nov; design, not implemented):**

@@ -433,6 +433,13 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
   archived delivery and PWA verification. A legacy-replay smoke mismatch was reproduced and a schema-aware check
   added; the final smoke passed **108/108**, and the deliberate fault failed as intended (**86/108**).
   Isolated browser **19/19** and old-bundle PWA **18/18** passed; completion and delivery remain unverified.
+- **22 Nov 2026 · Chunk A A2 10%:** frozen F4 residual screen and independent raw-pair accounting on **3,604**
+  player-games / **200** games. Teammate scoring-rate residual covariance **−1.215** (95% **−1.999 to −0.424**)
+  versus opponent **+0.462** (95% **−0.410 to +1.283**). This is a retrospective, actual-participant descriptive
+  result, not a model improvement or simulated-world comparison; v1.3/pathway v1 remain unchanged. Two focused
+  tests passed; the report reproduced byte-for-byte and all **12** point estimates reconciled independently.
+  Smoke **107/107**, with the changed-input replay skipped pending nightly completion; deliberate fault exited
+  **1**. Chunk A **6.5%**, original A1 **58%**. The D44 delivery nightly is still running.
 - **19 Nov 2026** — Studied MusSim. Probed sources: ESPN site API works with plain requests; NBA CDN returns 403.
   Owner: app shell first, play-by-play sim later.
 - **19 Nov 2026** — Phase 1 shipped (collection, placeholder engine, snapshots, views, server, app, PWA). Fixed: a

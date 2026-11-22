@@ -1837,3 +1837,26 @@ coverage motivate a separately isolated lagged tracking-defence increment; overl
 selection and unknown historical publication timing make its value uncertain. Missing/unsafe joins, no
 incremental fold gain or failed player/team gates disconfirm promotion. Both protocols are frozen in
 TRAINING_PLAN §8; neither is an attribution of the observed error to an individual defender.
+
+## Chunk A A2 — player residual dependence (22 Nov 2026)
+
+The preregistered F4 descriptive screen uses the S01 control's **200** pre-final-test games and 1,000 worlds,
+conditional on actual participants, joined to strictly prior S05 role profiles. Of **4,346** player-games, **26**
+had no role match, **12** matched an unknown role and **704** known-role rows fell below eight actual or simulated
+mean minutes; **3,604** remain. Role means are refitted in each of **10,000** complete-game bootstrap samples.
+Across **400** eligible team-games and **200** opponent games, teammate versus opponent residual covariances are:
+
+| Residual | Teammate | Opponent | Teammate − opponent |
+|---|---:|---:|---:|
+| Minutes | −1.121 [−1.679, −0.531] | +0.850 [+0.413, +1.320] | −1.971 [−2.402, −1.528] |
+| Points per 36 minutes | −1.215 [−1.999, −0.424] | +0.462 [−0.410, +1.283] | −1.676 [−2.740, −0.500] |
+
+Intervals are 95%. The separately prespecified stars/starters subset has **1,833** player-games, **392** eligible
+teammate team-games and **198** opponent games; scoring-rate covariances are **−2.504** [−4.712, −0.383] versus
+**+2.203** [+0.307, +4.253]. Its minutes covariances are **+5.384** [+2.916, +7.678] versus **+5.697**
+[+3.639, +7.967]; their difference **−0.313** [−2.660, +1.702] is inconclusive. The differences in weighting,
+actual-minute selection, roles and ratios of simulated means limit interpretation. These are associations in
+observed errors, not causal player effects, evidence of model-world dependence or a promotion result. All **12**
+point estimates were independently reconstructed from raw pairs; the saved report reproduced byte-for-byte.
+Protocol, exact counts, input hashes and intervals are in TRAINING_PLAN and
+`analysis/experiments/20261122_a2_residual_dependence_f4.json`. No final-test outcomes were scored.

@@ -98,7 +98,7 @@ def build_terms(rows: pd.DataFrame, game_ids: list[str]) -> tuple[dict, dict]:
               'team_games': 0, 'teammate_team_games': 0, 'teammate_ordered_pairs': 0,
               'opponent_games': 0, 'opponent_pairs': 0}
     for gid, game in rows.groupby('game_id', sort=False):
-        index = game_index[gid]
+        index = game_index[str(gid)]
         teams = [side for _, side in game.groupby('team', sort=True)]
         counts['team_games'] += len(teams)
         for role_index, role in enumerate(ROLES):
@@ -179,7 +179,7 @@ def main() -> None:
     np.add.at(weights, (np.arange(len(draws))[:, None], draws), 1)
     for name, cohort in (('all_supported', rows), ('stars_and_starters', rows[rows['tier'].isin(ROLES[:2])])):
         terms, cohort_counts = build_terms(cohort, game_ids)
-        result = {'counts': cohort_counts}
+        result: dict = {'counts': cohort_counts}
         if (cohort_counts['games'] < 50 or cohort_counts['teammate_team_games'] < 100
                 or cohort_counts['opponent_games'] < 50):
             result['status'] = 'insufficient supported games or team-games'
