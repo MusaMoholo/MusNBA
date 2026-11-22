@@ -1,14 +1,45 @@
 import unittest
+import runpy
+import sys
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest.mock import patch
 
 import numpy as np
+import pandas as pd
 
 from scripts import nightly, views
 
 
 class AvailabilityViewTests(unittest.TestCase):
+    def test_views_help_does_not_rebuild_outputs(self):
+        with patch.object(sys, 'argv', ['views.py', '--help']), \
+                patch('basketball_common.read_json', side_effect=AssertionError('unexpected rebuild')), \
+                patch('sys.stdout'):
+            with self.assertRaises(SystemExit) as exit_info:
+                runpy.run_path(str(Path(views.__file__)), run_name='__main__')
+            self.assertEqual(exit_info.exception.code, 0)
+
+    def test_usage_profile_preserves_missingness_and_rejects_future_data(self):
+        with TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / 'features').mkdir()
+            path = root / 'features' / 'latest.parquet'
+            rows = [
+                {'player': '10', 'date_et': '2026-11-21', 'usage': 0.23, 'off_segs_eff': 311.25},
+                {'player': '11', 'date_et': '2026-11-20', 'usage': np.nan, 'off_segs_eff': 50.0},
+            ]
+            pd.DataFrame(rows).to_parquet(path, index=False)
+            with patch.object(views, 'DERIVED', root):
+                result = views.usage_profile_table('2026-11-22')
+                self.assertEqual(result, {'10': {'rate': 0.23, 'off_segments_eff': 311.2, 'through': '2026-11-21'}})
+                with self.assertRaisesRegex(ValueError, 'not before'):
+                    views.usage_profile_table('2026-11-21')
+                rows[0]['usage'] = 1.1
+                pd.DataFrame(rows).to_parquet(path, index=False)
+                with self.assertRaisesRegex(ValueError, 'invalid usage'):
+                    views.usage_profile_table('2026-11-22')
+
     def test_existing_worlds_supply_shooting_distributions_without_inventing_periods(self):
         lines = np.zeros((3, 1, len(views.WORLD_STATS)), dtype=np.uint8)
         cols = {key: views.WORLD_STATS.index(key) for key in ('fgm', 'fga', 'fg3m', 'fg3a', 'ftm', 'fta')}

@@ -1,17 +1,40 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 20%, A2 at 30%; S01–S07 remain complete**.
-Latest pushed source before this A1 evidence checkpoint: **170e63a**; use `git log -1` for the current checkpoint.
+Latest pushed source before this advanced-visibility checkpoint: **14f2e27**; use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
-- **Current action:** finish and deliver the owner's advanced-stat UX request, then start A1 rung 30% from the
-  frozen contract below. Do not start Chunk B before Chunk A's delivery and checkpoint. The advanced-stat source
-  edits in `scripts/views.py` and `scripts/webapp/{ui,game,players}.mjs` and `index.html` are **unfinished and
-  uncommitted** at this evidence checkpoint: complete edge-case tests, view rebuild, browser/PWA verification,
-  documentation and delivery before committing them. The owner additionally requested as much supportable
-  visibility as possible in **both game-player and game-team tabs**; include the team tab using only available
-  box scores and clearly label any box-derived possession estimates.
+- **Current action:** replace the interim projected advanced ratios with **per-world distributions**, as the
+  owner requested after the first delivery; then start A1 rung 30% from the frozen contract below. Do not start
+  Chunk B before Chunk A's delivery and checkpoint. Full-game saved player and team worlds can support
+  box-derived metrics; aggregate their per-world values into both bundles. Preserve undefined-denominator
+  counts, label box-estimated team possessions, and never invent period worlds, on-court ratings or USG%.
+  Older/period snapshots without suitable worlds must say unavailable, not show ratios of means as a substitute.
+  The owner also wants more creative ways to show the signal in 10k simulations, not histograms alone; see
+  PLAN §9b and use supported data only, without presenting extremes as typical.
+- **Interim advanced game visibility delivered:** six player ratios of means, OREB/DREB/TOV in player boxes, real full-game
+  +/− when available, dated decayed/shrunk offensive-action share and 15 collapsible team metrics per side.
+  Team ratings and possessions are box-derived estimates; player rates are ratios of means, not averages of
+  per-world rates; the profile is not conventional USG% or a game forecast. **17** current-origin games contain
+  **487** player profiles; **516** player pages have one. Older origins do not receive today's profile.
+  Local responsive checks passed **24/24**, screenshots inspected; hosted PWA import/offline checks passed
+  **24/24 laptop** and **23/23 phone**. A reproduced upgrade failure showed the new service worker could fill
+  its new cache with old HTTP-cached assets; its install now fetches assets with `cache: reload`. An old-to-new
+  upgrade plus offline checks passed **26/26**. Data-free `gh-pages` **3567ed9**, cache **d820ceb526834e4c703a**.
+  iCloud laptop bundle **64,276,315 bytes**, SHA-256
+  `e28db4734c5bed1077428d39abd8b5ca9abddb8bb842f550bfdc9eeaf5ea2eb5`; phone **12,917,112 bytes**, SHA-256
+  `1cf6520311c399e3845c56448f9721d9c4ceb341140cdf16abe243528979e95a`. Laptop includes 32 world files, phone
+  none; all **1,971/1,939** API records match retained views/phone transforms. Each device requires a manual
+  import; no real-device import has been verified. The served engine and forecasts remain unchanged.
+  A mistaken `views.py --help` rebuilt views before archiving; the previous full laptop bundle was intact and
+  archived with both previous bundles at `~/Basketball_archive_ops/archive_20261122T180132Z_27364`. All
+  **1,971** prior API records reconciled apart from new profile fields and the build timestamp. The CLI now
+  handles `--help` safely; always archive views before rebuilding them.
+  Final smoke passed **108/108**; deliberate fault exited **1** (86/108), logs
+  `/tmp/musnba_advanced_{smoke,fault}.log`. Doc review: HANDOFF, PLAN, FINDINGS, DASHBOARD_PLAN and README
+  record delivery, evidence and next action; AGENTS, ENGINE_PLAN and TRAINING_PLAN need no changes because
+  standing rules, engine design and training gates are unchanged.
 - **A1 20% completed:** the frozen repaired F4 replay (game `401810327`, 32 worlds per branch, synthetic
   availability and actual participants) passed in both branches. An independent reconstruction of both retained
   captures checked 16,130 and 16,336 fives, 10 and 13 post-foul snapshots, every side's minutes and scores,
@@ -107,9 +130,8 @@ Latest pushed source before this A1 evidence checkpoint: **170e63a**; use `git l
 - **Progress:** original A1 **58.0%**, S01–S07 complete; S08–S12/S14 open, S13 historical forecast backfill
   deferred. New independent chunk boards: **A 16.5%** (A1 20%, A2 30%, A3 0%) and **B 0%** (B1/B2/B3 all 0%). Keep
   the original A1 weights intact; new within-chunk weights do not reset or double-count A1.
-- **Owner UX idea:** player usage, on-court +/−, offensive/defensive ratings, Box Plus/Minus and other supported
-  advanced stats are recorded in PLAN §9b. Existing internal segment usage is not automatically conventional
-  possession usage; on-court ratings are team outcomes, and BPM is a modelled estimate. No new stat is claimed delivered.
+- **Remaining advanced stats:** simulated on-court +/−, per-world possession-based USG%, individual on-court
+  ratings and modelled BPM require additional honest capture/definitions and remain unimplemented; see PLAN §9b.
 - **Production:** possession engine **v1.3/D29**, team pathway **v1**. S04's two defence candidates did not pass;
   S05's minute candidates did not meet the primary gate. S06's 200-game candidate improved minute CRPS
   **3.5662→3.5309** but only **66/69** non-inferiority bounds were established, so it was not promoted. Those
@@ -1953,11 +1975,15 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
 
 ## Next actions — Chunk A in progress
 
-1. Finish the unfinished advanced-stat presentation in the working tree, including both game-player and game-team
-   tabs; verify definitions, old/missing data,
-   period handling, zero denominators, cutoff and both device bundles. Archive affected views before rebuilding,
-   inspect responsive screenshots, deliver and independently check iCloud laptop and phone bundles and publish
-   only the data-free shell. Manual device imports remain unconfirmed. Update affected docs, review and commit/push.
+1. Replace projected advanced ratios of mean totals with independently verified per-world distributions on both
+   player and team game tabs. Retained `engine_players.npz` and `engine_worlds.npz` provide full-game saved
+   worlds, not per-period player worlds. Persist aggregate distributions/counts into views so the stripped phone
+   bundle works without raw worlds. Include no-denominator counts, never infer unavailable advanced stats, and
+   test against independently calculated saved worlds, missing/zero cases, responsive UI and laptop/phone offline
+   imports. Archive `data/views` before rebuild. Refresh both iCloud bundles, publish the data-free shell and
+    checkpoint after verification; manual device import remains unconfirmed. **Owner, 22 Nov:** do not run a
+    nightly for this presentation change; the per-world derivation must run automatically when the next nightly
+    builds views. Nightlies are mainly for major improvements.
 2. **A1 30%:** implement isolated two-player branch enumeration with exact decimal/rational weights summing to
    one, and non-exhaustive all-play/one-out sensitivities for more than two selected players. Test invalid
    probabilities, identities, missing inputs and reproducibility against the frozen contract above; never imply

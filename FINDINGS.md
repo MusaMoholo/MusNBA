@@ -894,6 +894,17 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   calibration or accuracy estimate. Short rosters fail closed; this is not the NBA technical-penalty exception.
   Re-run the saved-capture auditor without simulation with
   `.venv/bin/python -c "import numpy as np; from scripts.a1_substitution_world_audit import audit_worlds; from pathlib import Path; p=Path('data/derived/experiments/20261122_chunk_a_a1_branch_repair'); [print(n, audit_worlds(np.load(p / (n + '.npz'), allow_pickle=False))) for n in ('plays', 'sits')]"`.
+- **Advanced-stat view accounting, 22 Nov:** the latest retained prior-shrunk usage input has **935** profiles
+  through at most 21 Nov; the rebuilt views expose **516** on player pages and **487** across **17** current-origin
+  game views. Independently comparing all **1,971** previous laptop API records found no other changes except the
+  view build timestamp. A `views.py --help` invocation unexpectedly rebuilt derived views without first archiving
+  them; the previous complete laptop bundle was intact and archived alongside the phone bundle before replacement
+  (`archive_20261122T180132Z_27364`), and preserved all 1,971 prior API records. Raw inputs and forecast snapshots
+  were not changed. The CLI now parses `--help` without rebuilding; archive views before future rebuilds.
+- **PWA update cache, 22 Nov:** an isolated upgrade from shell `cf2ed4489761b16812cd` to
+  `17c19c26d287f41586e6` activated the new cache while retaining the old cached `ui.mjs`, leaving advanced
+  features absent. The browser's HTTP cache was reused during service-worker installation. Using `cache: reload`
+  for shell precaching yielded the new UI after activation and **26/26** update/import/offline checks.
 - **22 Nov player-sheet accounting check (presentation only):** in retained simulated game `401910030`, player
   `3032977` has no field-goal attempts in **2,958/10,000** worlds; the displayed FG% distribution conditions on
   **7,042/10,000** and displays the no-attempt chance as **29.6%**. The six width/theme checks compare the visible

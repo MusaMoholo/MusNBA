@@ -7,6 +7,8 @@ exactly these files, so laptop and phone always show the same responses.
 """
 from __future__ import annotations
 
+import argparse
+import math
 import shutil
 import sys
 from collections import defaultdict
@@ -480,6 +482,28 @@ def shot_profile_table() -> dict:
     return out
 
 
+def usage_profile_table(day: str) -> dict:
+    """The latest prior-only, decayed and shrunk offensive-segment usage input."""
+    path = DERIVED / 'features' / 'latest.parquet'
+    if not path.exists():
+        return {}
+    import pandas as pd
+    data = pd.read_parquet(path, columns=['player', 'date_et', 'usage', 'off_segs_eff'])
+    out = {}
+    for row in data.itertuples(index=False):
+        if pd.isna(row.date_et) or str(row.date_et) >= day:
+            raise ValueError(f'usage profile for {row.player} is not before {day}')
+        if pd.isna(row.usage) or pd.isna(row.off_segs_eff):
+            continue
+        usage, exposure = float(row.usage), float(row.off_segs_eff)
+        if not math.isfinite(usage) or not math.isfinite(exposure) or not 0 <= usage <= 1 or exposure < 0:
+            raise ValueError(f'invalid usage profile for {row.player}')
+        if exposure > 0:
+            out[str(row.player)] = {'rate': round(usage, 4), 'off_segments_eff': round(exposure, 1),
+                                    'through': str(row.date_et)}
+    return out
+
+
 def defence_profiles(M, day: str, registry: dict) -> dict:
     """U11: each defender's real-matchup profile over the last 365 days before `day` (D32): partial possessions guarded,
     points his man scored per 100 partial possessions v those attackers' own rate elsewhere (leave-one-out), three-point
@@ -679,6 +703,7 @@ def build(views_root: Path = VIEWS) -> dict:
         raise SystemExit('No snapshots yet: run scripts/nightly.py')
     latest_day = current_snapshot(snaps)
     latest = snaps[latest_day]
+    usage_profiles = usage_profile_table(latest_day)
     L = read_json(latest['path'] / 'stats.json')
     season_latest = read_json(latest['path'] / 'season.json')
     team_model = {g['game_id']: g for g in season_latest['games']}
@@ -849,6 +874,8 @@ def build(views_root: Path = VIEWS) -> dict:
             duel = duels(M_real, gid, duel_day, sides, final=bool(actual))
         write_json(api / 'game' / f'{gid}.json', {
             'game': core, 'duels': duel, 'multi': multi if p else None, 'lead_fan': lead_fan(snaps[p['day']]['path'], gid) if p else None,
+            'usage_profiles': ({str(pid): usage_profiles[str(pid)] for pid in sim_ids if str(pid) in usage_profiles}
+                               if p and p['meta'].get('origin') == latest_day else None),
             'availability': availability(p['sim'], season_lookup(p['day'])) if p and r['status'] != 'final' else None,
             'spotlight': (spotlight(spotlight_entries(gid, r, p['sim']), season_lookup(p['day']), snaps[p['day']]['path'])
                           if p and r['status'] != 'final' else None),
@@ -981,7 +1008,8 @@ def build(views_root: Path = VIEWS) -> dict:
                                                                     'weight', 'experience', 'status', 'injury', 'on_roster')},
             'season': ({'gp': p['gp'], 'gs': p['gs'], 'dnp': p['dnp'], 'teams': p['teams'], 'tot': p['totals'],
                         'min_ewma': p['min_ewma']} if p else None),
-            'log': p['log'] if p else [], 'next': nxt_out, 'shots': shot_profiles.get(str(pid)), 'defence': dprof.get(str(pid)),
+            'log': p['log'] if p else [], 'next': nxt_out, 'shots': shot_profiles.get(str(pid)),
+            'usage_profile': usage_profiles.get(str(pid)), 'defence': dprof.get(str(pid)),
             'quarters': ([{k: round(Qall[pid][k][q], 1) for k in PERIOD_BOX} | {'games': Qall[pid]['games']} for q in range(4)]
                          if pid in Qall else None)})
 
@@ -1009,4 +1037,5 @@ def build(views_root: Path = VIEWS) -> dict:
 
 
 if __name__ == '__main__':
+    argparse.ArgumentParser(description=__doc__).parse_args()
     build()

@@ -5,7 +5,7 @@
 //
 //   node analysis/pwa_import_check.mjs --url http://127.0.0.1:8768/MusNBA/ --bundle /path/MusNBA.musnba.gz [--out dir]
 import {spawn} from 'node:child_process';
-import {mkdtempSync, rmSync, writeFileSync} from 'node:fs';
+import {cpSync, mkdtempSync, rmSync, writeFileSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 
@@ -83,6 +83,32 @@ check('app update button is visible only for a waiting update', await evaluate(`
   return registration?.waiting ? !button.hidden && getComputedStyle(button).display !== 'none'
     : button.hidden && getComputedStyle(button).display === 'none';
 })()`));
+if (args['upgrade-shell'] && args['upgrade-target'] && args['upgrade-version']) {
+  cpSync(args['upgrade-shell'], args['upgrade-target'], {recursive: true});
+  await evaluate(`(async () => { const registration = await navigator.serviceWorker.getRegistration(); await registration.update(); })()`);
+  const waiting = await waitFor(`(async () => {
+    const registration = await navigator.serviceWorker.getRegistration(), button = document.querySelector('#pwa-update');
+    return !!registration?.waiting && !button.hidden && getComputedStyle(button).display !== 'none';
+  })()`, 30000);
+  check('new shell waits with visible update action', waiting);
+  if (waiting) await evaluate(`document.querySelector('#pwa-update').click()`);
+  const activated = waiting && await waitFor(`(async () => {
+    const ui = await import('./assets/ui.mjs');
+    return typeof ui.advancedRates === 'function'
+      && (await caches.keys()).some(key => key.endsWith(${JSON.stringify(args['upgrade-version'])}))
+      && !!document.querySelector('#view .form-grid')
+      && document.querySelector('#pwa-status')?.textContent.includes('Saved data through');
+  })()`, 30000);
+  const detail = activated ? '' : JSON.stringify(await evaluate(`(async () => {
+    const r = await navigator.serviceWorker.getRegistration(), ui = await import('./assets/ui.mjs');
+    const names = await caches.keys(), cache = await caches.open(names.find(name => name.endsWith(${JSON.stringify(args['upgrade-version'])})));
+    const response = await cache.match(new URL('./assets/ui.mjs', location.href).pathname);
+    return {waiting: r?.waiting?.state, active: r?.active?.state, caches: names,
+      cachedAdvanced: response ? (await response.text()).includes('function advancedRates') : null,
+      advanced: typeof ui.advancedRates, team: !!document.querySelector('#view .form-grid')};
+  })()`));
+  check('app update activates the new shell and keeps imported data', activated, detail);
+}
 await send('Network.emulateNetworkConditions', {offline: true, latency: 0, downloadThroughput: -1, uploadThroughput: -1}, s);
 await send('Page.navigate', {url: args.url + '#/standings'}, s);
 check('offline reload renders standings', await waitFor(`document.body.textContent.includes('Standings & season forecast') && !!document.querySelector('td.heat')`));
@@ -115,7 +141,8 @@ const shootingTarget = await evaluate(`(async () => {
     if (sim?.shooting_distribution_schema !== 1) continue;
     for (const side of ['home', 'away']) for (const p of sim[side].players) {
       const stats = p.periods?.q1?.stats, d = stats?.fgpct;
-      if (d && stats.fg3pct && stats.ftpct) return {game: fixture.id, player: p.id, defined: d.defined, total: d.total};
+      if (d && stats.fg3pct && stats.ftpct && (!${Boolean(args['require-advanced'])} || game.usage_profiles?.[p.id]))
+        return {game: fixture.id, player: p.id, defined: d.defined, total: d.total};
     }
   }
   return null;
@@ -133,6 +160,23 @@ if (shootingTarget) {
       && text.includes(${JSON.stringify(shootingTarget.defined.toLocaleString())} + ' of ' + ${JSON.stringify(shootingTarget.total.toLocaleString())});
   })()`));
 } else if (args['require-shooting']) check('offline period shooting distribution present in new bundle', false);
+if (args['require-advanced'] && shootingTarget) {
+  await send('Page.navigate', {url: args.url + '#/game/' + shootingTarget.game + '/player/' + shootingTarget.player + '/fg'}, s);
+  check('offline player advanced rates and action-share profile', await waitFor(`document.querySelector('#view').textContent.includes('Offensive action share')`) && await evaluate(`(async () => {
+    const ui = await import('./assets/ui.mjs'), game = await ui.api('game/' + ${JSON.stringify(shootingTarget.game)});
+    const player = ['home', 'away'].flatMap(side => game.projection.sim[side].players).find(p => p.id === ${JSON.stringify(shootingTarget.player)});
+    const profile = game.usage_profiles?.[player.id], text = document.querySelector('#view').textContent;
+    return !!profile && text.includes(ui.rate(profile.rate)) && text.includes('not conventional')
+      && text.toLowerCase().includes('ratios of simulated mean totals') && text.includes(ui.rate(ui.advancedRates(player.periods.fg.mean).efg));
+  })()`));
+  await send('Page.navigate', {url: args.url + '#/game/' + shootingTarget.game + '/fg/team'}, s);
+  check('offline team advanced rates open and match saved box means', await waitFor(`document.querySelectorAll('#view details.panel').length >= 2`) && await evaluate(`(async () => {
+    const ui = await import('./assets/ui.mjs'), game = await ui.api('game/' + ${JSON.stringify(shootingTarget.game)});
+    const panel = document.querySelector('#view details.panel'); panel.open = true;
+    return panel.open && panel.textContent.includes('not counted possessions')
+      && panel.textContent.includes(ui.f1(ui.teamAdvancedRates(game.projection.sim.away.box.fg, game.projection.sim.home.box.fg).ortg));
+  })()`));
+} else if (args['require-advanced']) check('offline advanced-stat source is available', false);
 if (args.profile) {
   check('imported bundle profile and world availability', await evaluate(`(async () => {
     const storage = await import('./assets/pwa-storage.mjs'), ui = await import('./assets/ui.mjs');

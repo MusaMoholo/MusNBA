@@ -5,7 +5,8 @@ const CACHE = PREFIX + '__SHELL_VERSION__';
 const MODULES = ['app', 'ui', 'today', 'game', 'league', 'players', 'lab', 'season', 'about', 'spotlight', 'outcomes', 'scenario', 'pwa', 'pwa-storage', 'static-api'];
 const FILES = ['', 'index.html', 'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png',
                ...MODULES.map(n => 'assets/' + n + '.mjs')].map(path => BASE + path);
-self.addEventListener('install', event => event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(FILES))));
+self.addEventListener('install', event => event.waitUntil(caches.open(CACHE).then(cache =>
+  cache.addAll(FILES.map(path => new Request(path, {cache: 'reload'}))))));
 self.addEventListener('activate', event => event.waitUntil((async () => {
   for (const name of await caches.keys()) if (name.startsWith(PREFIX) && name !== CACHE) await caches.delete(name);
   await self.clients.claim();

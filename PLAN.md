@@ -372,8 +372,10 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
    placed where they were taken (zone, distance band, side), makes and misses, the clock running, the box score filling;
    after the nba.com-style play-by-play list. Needs the engine's event log (five worlds per game) and shot coordinates
    sampled within the band for display. A1 S12 builds the event-list/rotation-map foundation; court playback remains later.
-2. **More depth on game outcomes**: richer, more sensitive graphs of player and team outcome distributions per game
-   (lines, ladders, joint outcomes, how a line moves with a player in or out).
+2. **More depth on game outcomes** (owner, 22 Nov): histograms need not be the only visualisation; creatively show
+   more signal from the 10k simulations, using percentile bands, exceedance curves and joint/conditional views where
+   saved data support them. Keep distributions and denominators honest, avoid presenting extreme examples as typical,
+   and respect laptop/phone world availability. Existing lines, ladders, joint outcomes and game-flow fans remain.
 3. **Competition tabs**: NBA regular season · **NBA Cup** · **NBA playoffs** — the playoffs tab seeds the bracket from the
    standings as they are expected to finish (per simulated season) and plays the play-in and every round per world,
    MusSim cup-style (bracket probabilities by round).
@@ -396,7 +398,14 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
    denominator against play-by-play, including substitutions, offensive-rebound continuations and free throws;
    disclose zero-exposure/absent worlds and match historical and forecast definitions. On-court ratings describe
    team outcomes with the player on the floor, not causal individual impact. Box Plus/Minus is a modelled estimate,
-   distinct from game +/−; validate and label its definition rather than inventing it. None is newly implemented yet.
+   distinct from game +/−; validate and label its definition rather than inventing it. **Partial delivery:** six
+   box-derived player rates, 15 team metrics per side (including explicitly box-estimated ratings), actual full-game
+   +/− and a clearly labelled, dated action-share profile now appear where retained data support them. True
+   per-world USG%, on-court ratings and BPM remain unimplemented. **Owner follow-up:** replace projected ratios of
+   mean box totals with distributions derived per world where saved inputs permit; preserve zero-denominator
+   worlds and label unavailable periods instead of substituting the ratio of means. No nightly is needed yet for
+   this presentation work; the normal next nightly must include the derivation. Nightlies are mainly for major
+   improvements (owner, 22 Nov).
 
 ### 9c. Realism sweep — current mapping to A1 (updated 22 Nov)
 
@@ -490,6 +499,14 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
   **1** (86/108). This is isolated wiring, not a promoted model or
   availability calibration. Chunk A **16.5%**, original A1 **58%**. Next: finish the owner's advanced-stat
   presentation and start the frozen two-player/non-exhaustive branch rung.
+- **22 Nov 2026 · advanced game visibility:** six player rates, latest pre-origin action-share profile, actual
+  full-game +/−, OREB/DREB/TOV player boxes and 15 collapsible team metrics per side; possession-based team
+  ratings explicitly estimated from box totals. **1,971** prior laptop API records reconciled except new profile
+  fields and the build timestamp; current-origin profiles cover **17** games / **487** player-game entries.
+  Hosted offline checks **24/24 laptop**, **23/23 phone**; responsive checks **24/24**. Both iCloud bundles
+  require manual imports. A reproduced stale-asset upgrade was fixed; old-to-new upgrade and offline checks passed
+  **26/26**. Data-free Pages **3567ed9**; smoke **108/108**, deliberate fault exited **1** (86/108).
+  No model promotion or new nightly.
 - **19 Nov 2026** — Studied MusSim. Probed sources: ESPN site API works with plain requests; NBA CDN returns 403.
   Owner: app shell first, play-by-play sim later.
 - **19 Nov 2026** — Phase 1 shipped (collection, placeholder engine, snapshots, views, server, app, PWA). Fixed: a

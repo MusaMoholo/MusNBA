@@ -1,7 +1,7 @@
 // Game Centre. One period selector (Q1–Q4, H1, H2, FG) drives the bezel and both views:
 // Player = per-period box scores, Team = per-period team lines and distributions. Matchup is separate.
-import {api, atLeast, modelPill, barChart, dayLabel, defaultLine, esc, f1, forecastTiming, halfLine, heat, histogram, logo, over, pct, percentileOf,
-        probWhere, rate, record, seg, segGroups, signed, stamp, statusTag, store, team, tipTimes} from './ui.mjs';
+import {advancedPanel, api, atLeast, modelPill, barChart, dayLabel, defaultLine, esc, f1, forecastTiming, halfLine, heat, histogram, logo, over, pct, percentileOf,
+        probWhere, rate, record, seg, segGroups, signed, stamp, statusTag, store, team, tipTimes, usageProfilePanel} from './ui.mjs';
 import * as S from './scenario.mjs';
 import {gameSpotlight} from './spotlight.mjs';
 
@@ -158,11 +158,13 @@ function bezel(data, period, {matchup, scenario, mode, base}) {
 }
 
 // ------------------------------------------------------------------ player view: box score per period
-const COLS = [['min', 'MIN'], ['pts', 'PTS'], ['reb', 'REB'], ['ast', 'AST'], ['stl', 'STL'], ['blk', 'BLK'], ['fg', 'FG'], ['fg3', '3P'], ['ft', 'FT']];
+const COLS = [['min', 'MIN'], ['pts', 'PTS'], ['reb', 'REB'], ['oreb', 'OREB'], ['dreb', 'DREB'], ['ast', 'AST'],
+              ['tov', 'TOV'], ['stl', 'STL'], ['blk', 'BLK'], ['fg', 'FG'], ['fg3', '3P'], ['ft', 'FT']];
 
 function actualLine(r, period) {
   if (!r || r.dnp) return null;
-  if (period === 'fg') return {sec: r.periods?.fg_sec ?? (r.min ?? 0) * 60, pts: r.pts, reb: r.reb, ast: r.ast, stl: r.stl, blk: r.blk,
+  if (period === 'fg') return {sec: r.periods?.fg_sec ?? (r.min ?? 0) * 60, pts: r.pts, reb: r.reb, oreb: r.oreb, dreb: r.dreb,
+    ast: r.ast, tov: r.tov, stl: r.stl, blk: r.blk,
     fgm: r.fgm, fga: r.fga, fg3m: r.fg3m, fg3a: r.fg3a, ftm: r.ftm, fta: r.fta};
   return r.periods?.[period] || null;
 }
@@ -295,13 +297,19 @@ function teamBox(data, side, mode, period) {
   const sep = label => `<tr class="sep"><td class="name">${label}</td>${COLS.map(() => '<td></td>').join('')}</tr>`;
   const projTeam = sim?.box?.[period];
   const totalRow = (label, line, projected) => `<tr class="sep"><td class="name">${label}</td>${COLS.map(([k]) =>
-    `<td>${k === 'min' ? '' : k === 'fg' ? shoot(line.fgm, line.fga, projected) : k === 'fg3' ? shoot(line.fg3m, line.fg3a, projected) : k === 'ft' ? shoot(line.ftm, line.fta, projected) : projected ? f1(line[k]) : line[k]}</td>`).join('')}</tr>`;
+    `<td>${k === 'min' ? '' : k === 'fg' ? shoot(line.fgm, line.fga, projected) : k === 'fg3' ? shoot(line.fg3m, line.fg3a, projected) : k === 'ft' ? shoot(line.ftm, line.fta, projected) : projected ? f1(line[k]) : line[k] ?? '—'}</td>`).join('')}</tr>`;
   let totals = '';
   if (projTeam && mode !== 'act') totals += totalRow('Team (projected)', projTeam, true);
   if (act && mode !== 'proj') {
-    const sum = {pts: 0, reb: 0, ast: 0, stl: 0, blk: 0, fgm: 0, fga: 0, fg3m: 0, fg3a: 0, ftm: 0, fta: 0};
+    const sum = {pts: 0, reb: 0, oreb: 0, dreb: 0, ast: 0, tov: 0, stl: 0, blk: 0,
+                 fgm: 0, fga: 0, fg3m: 0, fg3a: 0, ftm: 0, fta: 0};
     let complete = true;
-    for (const r of act.players) { if (r.dnp) continue; const a = actualLine(r, period); if (!a) { complete = false; continue; } for (const k in sum) sum[k] += a[k] || 0; }
+    for (const r of act.players) {
+      if (r.dnp) continue;
+      const a = actualLine(r, period);
+      if (!a) complete = false;
+      for (const k in sum) sum[k] = sum[k] != null && Number.isFinite(a?.[k]) ? sum[k] + a[k] : null;
+    }
     if (period === 'fg' && act.totals) Object.assign(sum, act.totals);
     else if (complete) sum.pts = actualPoints(data, side, period) ?? sum.pts;
     totals += totalRow('Team (actual)', sum, false);
@@ -408,6 +416,20 @@ function teamView(el, data, period) {
   const actual = act ? {away: actualPoints(data, 'away', period), home: actualPoints(data, 'home', period)} : null;
   const has = actual && actual.away != null && actual.home != null;
   const rows = [];
+  const actualBox = side => {
+    if (!act?.[side]) return null;
+    const players = act[side].players.filter(p => !p.dnp);
+    if (!players.length) return null;
+    const result = {};
+    for (const k of ['pts', 'reb', 'oreb', 'dreb', 'ast', 'tov', 'stl', 'blk', 'fgm', 'fga', 'fg3m', 'fg3a', 'ftm', 'fta']) {
+      const official = period === 'fg' ? act[side].totals?.[k] : null;
+      const entries = players.map(p => period === 'fg' ? p : p.periods?.[period]);
+      result[k] = Number.isFinite(official) ? official : entries.every(p => Number.isFinite(p?.[k]))
+        ? entries.reduce((sum, p) => sum + p[k], 0) : null;
+    }
+    if (Number.isFinite(actualPoints(data, side, period))) result.pts = actualPoints(data, side, period);
+    return result;
+  };
   for (const side of ['away', 'home']) {
     const info = team(data.game[side].id);
     if (sim) {
@@ -415,16 +437,21 @@ function teamView(el, data, period) {
       rows.push(`<tr><td class="name">${logo(data.game[side].id, 'sm')} ${esc(info.abbr)} <span class="tag">proj</span></td><td><b>${f1(per[side].pts.mean)}</b></td>${heat(per[side].win)}<td>${f1(b.reb)}</td><td>${f1(b.ast)}</td><td>${f1(b.stl)}</td><td>${f1(b.blk)}</td><td>${f1(b.tov)}</td><td>${shoot(b.fgm, b.fga, true)}</td><td>${shoot(b.fg3m, b.fg3a, true)}</td><td>${shoot(b.ftm, b.fta, true)}</td></tr>`);
     }
     if (act) {
-      const sum = {reb: 0, ast: 0, stl: 0, blk: 0, tov: 0, fgm: 0, fga: 0, fg3m: 0, fg3a: 0, ftm: 0, fta: 0};
-      for (const r of act[side].players) { if (r.dnp) continue; const a = period === 'fg' ? r : r.periods?.[period]; if (a) for (const k in sum) sum[k] += a[k] || 0; }
-      if (period === 'fg' && act[side].totals) Object.assign(sum, act[side].totals);
+      const sum = actualBox(side) || {};
       const won = has ? (actual[side] > actual[side === 'home' ? 'away' : 'home'] ? 'W' : actual[side] < actual[side === 'home' ? 'away' : 'home'] ? 'L' : 'T') : '';
-      rows.push(`<tr><td class="name">${logo(data.game[side].id, 'sm')} ${esc(info.abbr)} <span class="tag">actual</span></td><td><b>${actual?.[side] ?? '—'}</b></td><td class="c">${won}</td><td>${sum.reb}</td><td>${sum.ast}</td><td>${sum.stl}</td><td>${sum.blk}</td><td>${sum.tov}</td><td>${shoot(sum.fgm, sum.fga)}</td><td>${shoot(sum.fg3m, sum.fg3a)}</td><td>${shoot(sum.ftm, sum.fta)}</td></tr>`);
+      rows.push(`<tr><td class="name">${logo(data.game[side].id, 'sm')} ${esc(info.abbr)} <span class="tag">actual</span></td><td><b>${actual?.[side] ?? '—'}</b></td><td class="c">${won}</td><td>${sum.reb ?? '—'}</td><td>${sum.ast ?? '—'}</td><td>${sum.stl ?? '—'}</td><td>${sum.blk ?? '—'}</td><td>${sum.tov ?? '—'}</td><td>${shoot(sum.fgm, sum.fga)}</td><td>${shoot(sum.fg3m, sum.fg3a)}</td><td>${shoot(sum.ftm, sum.fta)}</td></tr>`);
     }
   }
   const lines = act ? linescore(data) : '';
   const boxPanel = `<section class="panel"><h3>${esc(periodName(period))} · team box</h3>${lines}<div class="scroll"><table class="box"><thead><tr><th class="name">Team</th><th>PTS</th><th>Win</th><th>REB</th><th>AST</th><th>STL</th><th>BLK</th><th>TOV</th><th>FG</th><th>3P</th><th>FT</th></tr></thead><tbody>${rows.join('')}</tbody></table></div>
-    ${per && period !== 'fg' ? `<p class="note">Tie in the period: ${pct(per.home.tie)}. Overtime is part of FG only.</p>` : per ? `<p class="note">Overtime in ${pct(sim.ot)} of simulations.</p>` : ''}</section>`;
+    ${per && period !== 'fg' ? `<p class="note">Tie in the period: ${pct(per.home.tie)}. Overtime is part of FG only.</p>` : per ? `<p class="note">Overtime in ${pct(sim.ot)} of simulations.</p>` : ''}</section>`
+    + ['away', 'home'].map(side => {
+      const other = side === 'away' ? 'home' : 'away';
+      return advancedPanel(sim?.[side]?.box?.[period], actualBox(side), 'Projected', {
+        team: true, collapsible: true, title: `${team(data.game[side].id).name} · advanced box-score rates`,
+        opponent: sim?.[other]?.box?.[period], actualOpponent: actualBox(other),
+      });
+    }).join('');
   if (!per) { el.innerHTML = boxPanel; return; }
   const margins = d => [1, 3, 5, 7, 10, 15].map(k => [`${H.abbr} by ${k}+`, atLeast(d, k)]).concat([1, 3, 5, 7, 10, 15].map(k => [`${A.abbr} by ${k}+`, probWhere(d, v => v <= -k)]));
   const blocks = [
@@ -642,6 +669,9 @@ async function sheet(view, data, pid, current) {
         ${sim ? `<label class="sr" for="sheet-period">Period</label><select id="sheet-period" class="period">${options}</select>` : ''}
         <a class="btn ghost" href="#/player/${pid}">Player page</a></div>${tiles}</section>
       ${proj ? `${segGroups(STAT_GROUPS.map(([g, ks]) => [g, ks.filter(([k]) => choices.includes(k))]), state.stat, 'data-stat')}<div id="stat-block">${statBlock()}</div>` : ''}
+      ${advancedPanel(proj?.mean, period === 'fg' ? (actualRow?.dnp ? null : actualRow) : actualLine(actualRow, period), 'Projected')}
+      ${usageProfilePanel(data.usage_profiles?.[pid])}
+      ${period === 'fg' && !actualRow?.dnp && Number.isFinite(actualRow?.pm) ? `<p class="note">Actual on-court +/−: <b>${signed(actualRow.pm, 0)}</b> · points scored minus allowed while on court.</p>` : ''}
       ${proj && period === 'fg' && data.worlds && !PERCENT_STATS.has(state.stat) ? '<div id="what-if"></div>' : ''}
       ${proj && period === 'fg' ? S.averagesPanel(data, pid, proj) : ''}
       ${period === 'fg' ? guardedPanel(data, pid) : ''}

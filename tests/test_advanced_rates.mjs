@@ -1,0 +1,46 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+
+globalThis.location = new URL('http://localhost/');
+const {advancedPanel, advancedRates, teamAdvancedRates} = await import('../scripts/webapp/ui.mjs');
+
+test('player rates use retained totals and leave unavailable denominators undefined', () => {
+  const line = {pts: 30, fgm: 10, fga: 20, fg3m: 4, fg3a: 8, fta: 6, ast: 6, tov: 2};
+  const x = advancedRates(line);
+  assert.equal(x.efg, 0.6);
+  assert.equal(x.ts, 30 / (2 * (20 + 0.44 * 6)));
+  assert.equal(x.two, 0.5);
+  assert.equal(x.threeShare, 0.4);
+  assert.equal(x.ftRate, 0.3);
+  assert.equal(x.astTov, 3);
+  assert.equal(advancedRates({...line, fga: 0}).efg, null);
+  assert.equal(advancedRates({...line, fga: 8}).two, null);
+  assert.equal(advancedRates({...line, tov: 0}).astTov, null);
+  assert.equal(advancedRates({...line, fg3m: null}).efg, null);
+  assert.match(advancedPanel({pts: 5, fga: 1, fta: 0}, null, 'Projected'), /250\.0%/);
+});
+
+test('team estimates use each side’s own box possessions and preserve missingness', () => {
+  const a = {pts: 110, fga: 90, oreb: 10, dreb: 32, tov: 12, fta: 20, fgm: 40, ast: 24, stl: 8};
+  const b = {pts: 100, fga: 80, oreb: 8, dreb: 30, tov: 10, fta: 25};
+  const x = teamAdvancedRates(a, b), ap = 90 - 10 + 12 + 0.44 * 20, bp = 80 - 8 + 10 + 0.44 * 25;
+  assert.equal(x.poss, ap);
+  assert.ok(Math.abs(x.ortg - 100 * 110 / ap) < 1e-10);
+  assert.ok(Math.abs(x.drtg - 100 * 100 / bp) < 1e-10);
+  assert.equal(x.oreb, 10 / 40);
+  assert.equal(x.dreb, 32 / 40);
+  assert.equal(x.assist, 24 / 40);
+  assert.equal(x.turnover, 12 / ap);
+  assert.equal(x.steals, 8 / bp);
+  assert.equal(teamAdvancedRates({...a, tov: null}, b).ortg, null);
+  assert.equal(teamAdvancedRates(a, null).drtg, null);
+  const html = advancedPanel(a, null, 'Projected', {team: true, opponent: b});
+  assert.match(html, /not counted possessions/);
+  assert.match(html, /ratios of simulated mean totals/i);
+});
+
+test('actual-only panels do not invent projected values', () => {
+  const html = advancedPanel(null, {pts: 4, fga: 2, fta: 0}, 'Projected');
+  assert.match(html, /Actual/);
+  assert.doesNotMatch(html, /Projected/);
+});
