@@ -1,6 +1,6 @@
 # Handoff — state and next actions
 
-Updated **22 November 2026 — A1 overnight execution, S01–S05 complete; S06 active at 40%**. Dashboard U1–U22 complete and published.
+Updated **22 November 2026 — A1 overnight execution, S01–S05 complete; S06 active at 50%**. Dashboard U1–U22 complete and published.
 Dashboard close-out checkpoint **86c2a46**, A1 planning checkpoint **00a0731**; S01 checkpoint **c9d8008**
 and S02 checkpoint **93b3e1d** are committed and pushed (S01's exact control source is **c6d5db4**).
 The original S03/S05 experiment snapshot is **ab32eda**, committed and pushed before the candidate repair;
@@ -18,10 +18,11 @@ S06 partial checkpoints **637a025**, **70709ab**, **bdedeed** and **d77ac5e** ar
 corrected replay, frozen fold protocol, exact v2 sources/reports, audited v3 inputs and native screen implementation.
 Partial checkpoint **2f05d47** preserves the independently audited outgoing result, incoming coverage and original
 foul-out probe; **08cd659** preserves the type-correct probe. Both are pushed.
-The first incoming-screen implementation and protocol were pushed as **89f6dc4**, before any incoming fit.
+The first incoming-screen implementation and protocol were pushed as **89f6dc4**, and progress logging as **2229066**,
+before any incoming fit.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
 product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S05 are complete;
-S06 is active at 40%; A1 overall is 44.8%.** Isolated assignment candidates have event-level diagnostics and wiring only;
+S06 is active at 50%; A1 overall is 46.0%.** Isolated assignment candidates have event-level diagnostics and wiring only;
 no defence candidate has had an engine-accuracy test, and no model promotion, forecast or PWA change has been made.
 
 **Completed S05 evidence:** the 200-game flow and its independent accounting are complete; the comparison and
@@ -311,13 +312,26 @@ entries, **172,273** unknown non-entries, **242** known disqualifications and **
 Prior positions are known for **179,478** candidates and **10,672** entries; **2,845** of **6,507** entry-bearing
 team-timeouts have multiple entries. `analysis/experiments/20261122_a1_s06_in_coverage{,_audit}.json` records
 all five populations and hashes. TRAINING_PLAN §8.2 now freezes a positive-versus-unlabelled-mixture incoming
-ranking screen and its eligibility/positional limits before fitting. The implementation and **25** focused tests now
-pass; its pre-fit source SHA-256 is `b63106d0866844dd1b1b5fa9006e84ff65e1a7c326f06120d35f3309e0634647`.
-Run `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u -m scripts.a1_substitution_in_screen`, then
-independently reproduce its fitted ranks and game bootstrap before awarding S06 50%.
+ranking screen and its eligibility/positional limits before fitting. The pre-fit source SHA-256 is
+`b63106d0866844dd1b1b5fa9006e84ff65e1a7c326f06120d35f3309e0634647`.
 The checkpoint normal smoke passed **102/102** (`/tmp/musnba_a1_s06_40_smoke_default.log`); deliberate fault
 exited **1**, **80/102** passing (`/tmp/musnba_a1_s06_40_fault_default.log`). Two earlier one-thread smoke
 attempts were stopped without results after about four minutes; the completed runs use normal engine threading.
+
+**S06 50%:** the frozen positive-versus-unlabelled incoming ranker scored **84,344** potential candidates and
+**10,711** observed in-pool entries across **6,507** selected team-timeouts. Given the observed exits and entry
+count, top-k entrant recall was **13.22%→58.10%**, paired gain **44.88 percentage points** (game-cluster 95%
+**43.53–46.20 pp**); all four fold points improve. This is an over-inclusive pool with unknown physical eligibility,
+and the simple deficit baseline is weak on it. Separately, under a retrospective participant-roster assumption,
+**10,680** entrants in **6,493** complete team-timeouts yield **45.23%→61.71%** recall, gain **16.48 pp**
+(95% **15.32–17.70 pp**). This oracle still does not prove current physical eligibility or forecast it. The joint
+selector requires an explicit active roster, disqualification mask and five distinct players; its inputs include
+the prior-position composition of the observed remaining lineup. Independent reconstruction/refits exactly match
+all **84,344** ranking scores and all game-bootstrap metrics; **26** focused tests pass. Reports:
+`analysis/experiments/20261122_a1_s06_in_screen{,_audit}.json`, retained candidate rows:
+`data/derived/experiments/20261122_a1_s06_in_screen.parquet`; log `/tmp/musnba_a1_s06_in_screen_v1.log`
+(**6,507** windows ranked in **24.7 s**, including fits). The audit's first syntax preflight failed before
+execution; corrected audit log `/tmp/musnba_a1_s06_in_screen_audit_v2.log` passes.
 
 The tracking family was frozen in TRAINING_PLAN §8 and built separately by
 `scripts/a1_tracking_features.py`: former wrapper PID **85586**, shell **1549**, log
@@ -768,7 +782,7 @@ weights, with the old and new accounting; do not hide unfinished tasks by deleti
 | S03 Offence/defence signal diagnosis | 8% | 100% | Fixed matched flow/accounting, component decomposition and two falsifiable candidate families documented; research-only checkpoint |
 | S04 Defence and shot quality | 12% | 100% | Both families rejected at their frozen node gates; tracking rebuild and independent accounting verified; served model and bundle unchanged |
 | S05 Roles and minute allocation | 8% | 100% | Both matched screens and independent accounting complete; neither passes pooled MIN gate, retain D29 control; smoke/fault passed |
-| S06 Game-state substitutions | 12% | 40% | Four-fold outgoing screen and independent score/bootstrap reproduction pass; unknown incoming eligibility remains explicit |
+| S06 Game-state substitutions | 12% | 50% | Incoming/outgoing fold screens and joint-selector accounting pass; unknown physical availability remains explicit |
 | S07 Availability and future absences | 6% | 0% | Planned |
 | S08 Lineup branches and Expected | 6% | 0% | Planned |
 | S09 Shared form and end-game behaviour | 10% | 0% | Planned |
@@ -778,7 +792,7 @@ weights, with the old and new accounting; do not hide unfinished tasks by deleti
 | S13 Current-model season history | 5% | 0% | Planned |
 | S14 Nightly, delivery, successor | 5% | 0% | Planned |
 
-**A1 overall: `█████████░░░░░░░░░░░ 44.8%`.** Both control seeds are complete; isolated assignment-event
+**A1 overall: `█████████░░░░░░░░░░░ 46.0%`.** Both control seeds are complete; isolated assignment-event
 diagnostics and three-game wiring are not engine-accuracy tests. No candidate has been promoted or changed production/PWA.
 Each rung below is cumulative; 100% always includes updated docs, necessary PWA model/data/shell delivery, reviewed
 commit and push, plus the owner summary. See AGENTS §3/§5 and PLAN §6c for the per-subtask PWA checklist; research-only
@@ -1124,10 +1138,14 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
 **Owner's overnight authority:** execute S01–S14 without waiting for input; the earlier planning-only stop is lifted.
 The dashboard programme is done. Do not resume U1–U22, repeat rejected defence variants unchanged or begin at S13.
 
-1. **Continue S06 substitution research at 40%.** The four-fold outgoing screen and independent audit are complete;
-   preserve their source/report hashes before further changes. Incoming eligibility, position and retained-window
-   coverage are independently audited; run the frozen incoming/joint-selection screen above and independently
-   reproduce the results before considering the 50% rung.
+1. **Continue S06 substitution research at 50%.** Both four-fold node screens and their independent audits pass,
+   but their selected-timeout populations cannot be applied as all-dead-ball hazards. Build an isolated, cutoff-safe
+   engine integration with recognised opportunities matched to training, explicit per-world rosters and the
+   reproduced foul-out correction; test simultaneous changes, periods, overtime and insufficient replacements.
+   Preserve both existing screens and their hashes. Start with
+   `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m unittest tests.test_a1_substitutions -q`, inspect
+   `scripts/engine.py`'s current segment/lineup transitions, and freeze the opportunity/engine protocol before
+   comparing results.
    Do not relabel unconfirmed non-entries as known eligible negatives; separate any actual-participant conditional
    diagnostic from a pre-game forecast. The selected-timeout outgoing result is not an engine validation. Fix the
    independently reproduced unupdated foul-out mask in an isolated S06 candidate, not the serving path, and test it
@@ -1176,7 +1194,7 @@ needs no change because the scoped overnight authority and checkpoint protocol a
 PWA bundle remain unchanged; phone import is still unconfirmed.
 
 **S06 partial document review:** HANDOFF carries the live ledger, data limitations and exact resume commands; PLAN
-records the 40% rung; FINDINGS records the populations, screen and failed preflights; TRAINING_PLAN freezes the out screen;
+records the 50% rung; FINDINGS records the populations, screens and failed preflights; TRAINING_PLAN freezes both screens;
 README maps the research scripts. ENGINE_PLAN and DASHBOARD_PLAN update status only because no engine, app, forecast,
 bundle or shell changed. AGENTS needs no change because the scoped overnight authority already applies. The served
 v1.3/pathway-v1 model and bundle remain unchanged; phone import is unconfirmed.

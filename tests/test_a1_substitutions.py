@@ -9,6 +9,7 @@ import pandas as pd
 from basketball_common import NBA_TEAM_IDS
 from scripts import (a1_substitution_audit, a1_substitution_dataset, a1_substitution_dataset_audit,
                      a1_substitution_fold_data, a1_substitution_in_coverage, a1_substitution_in_screen,
+                     a1_substitution_in_screen_audit,
                      a1_substitution_opportunities,
                      a1_substitution_out_screen,
                      a1_substitution_screen_audit, a1_substitution_seed_audit, a1_substitution_states, a1_substitutions)
@@ -378,6 +379,29 @@ class SequentialSubstitutionTests(unittest.TestCase):
         self.assertEqual(details['case_rows'], 8)
         self.assertEqual(details['reference_rows'], 240)
         self.assertEqual(int(rows['label'].isna().sum()), 232)
+
+    def test_incoming_independent_audit_detects_changed_joint_selection(self):
+        outgoing = [{'window_id': 'w', 'team': '10', 'player': str(index), 'decision': 'out',
+                     'label': index == 0, 'fouls_before': 0, 'ejected_before': False}
+                    for index in range(5)]
+        scored = pd.DataFrame([{'window_id': 'w', 'team': '10', 'player': '5', 'decision': 'in',
+                                'label': True, 'entry_count': 1, 'target_deficit': 2., 'target_mean_proxy': 20.,
+                                'baseline_score': 2., 'candidate_score': 1., 'baseline_selected': True,
+                                'candidate_selected': True, 'oracle_scored': True, 'oracle_baseline_selected': True,
+                                'oracle_candidate_selected': True, 'fouls_before': 0, 'ejected_before': False},
+                               {'window_id': 'w', 'team': '10', 'player': '6', 'decision': 'in',
+                                'label': None, 'entry_count': 1, 'target_deficit': 1., 'target_mean_proxy': 10.,
+                                'baseline_score': 1., 'candidate_score': 0., 'baseline_selected': False,
+                                'candidate_selected': False, 'oracle_scored': True, 'oracle_baseline_selected': False,
+                                'oracle_candidate_selected': False, 'fouls_before': 0, 'ejected_before': False}])
+        raw = pd.concat([pd.DataFrame(outgoing), scored], ignore_index=True)
+        windows = pd.DataFrame([{'window_id': 'w', 'home': '10', 'away': '20',
+                                 'home_players': [str(index) for index in range(7)], 'away_players': []}])
+        self.assertEqual(a1_substitution_in_screen_audit.audit_selections(scored, raw, windows)['team_windows'], 1)
+        scored.loc[0, 'oracle_candidate_selected'] = False
+        scored.loc[1, 'oracle_candidate_selected'] = True
+        with self.assertRaisesRegex(ValueError, 'participant-oracle lineup'):
+            a1_substitution_in_screen_audit.audit_selections(scored, raw, windows)
 
 
 if __name__ == '__main__':

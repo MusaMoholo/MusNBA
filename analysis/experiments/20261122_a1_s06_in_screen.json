@@ -1,0 +1,534 @@
+{
+ "experiment": "a1_s06_incoming_positive_vs_unlabelled_mixture_screen",
+ "model_params": {
+  "objective": "binary",
+  "num_leaves": 15,
+  "learning_rate": 0.05,
+  "min_data_in_leaf": 80,
+  "lambda_l2": 1.0,
+  "seed": 20261122,
+  "num_threads": 1,
+  "deterministic": true,
+  "force_col_wise": true,
+  "verbosity": -1
+ },
+ "num_boost_round": 120,
+ "features": [
+  "period",
+  "clock",
+  "margin",
+  "fouls_before",
+  "seconds_before",
+  "rest_before",
+  "target_mean_proxy",
+  "target_deficit",
+  "tier_star",
+  "tier_starter",
+  "tier_bench",
+  "tier_unknown",
+  "pos_G",
+  "pos_F",
+  "pos_C",
+  "pos_unknown",
+  "remaining_G",
+  "remaining_F",
+  "remaining_C",
+  "remaining_unknown"
+ ],
+ "folds": {
+  "F1": {
+   "training_through": "2023-04-09",
+   "training_games": 184,
+   "validation_candidates": 21845,
+   "validation_team_windows": 1607,
+   "baseline_target_fallback_rows": 13,
+   "baseline_missing_rows": 15,
+   "population_pool": {
+    "entries": 2668,
+    "games": 186,
+    "player_games": 2104,
+    "status": "ok",
+    "baseline_recall": 0.13793103448275862,
+    "candidate_recall": 0.5700899550224887,
+    "change": 0.43215892053973015,
+    "ci_95": [
+     0.40403608999292784,
+     0.4604967407646547
+    ]
+   },
+   "participant_oracle": {
+    "entries": 2663,
+    "games": 186,
+    "player_games": 2099,
+    "status": "ok",
+    "baseline_recall": 0.4588809613218175,
+    "candidate_recall": 0.607209913631243,
+    "change": 0.14832895230942547,
+    "ci_95": [
+     0.12407132243684993,
+     0.17337356434985482
+    ]
+   },
+   "tiers": {
+    "star": {
+     "entries": 182,
+     "games": 113,
+     "player_games": 145,
+     "status": "ok",
+     "baseline_recall": 0.06043956043956044,
+     "candidate_recall": 0.9010989010989011,
+     "change": 0.8406593406593407,
+     "ci_95": [
+      0.7777777777777778,
+      0.8978522053982883
+     ]
+    },
+    "starter": {
+     "entries": 915,
+     "games": 184,
+     "player_games": 740,
+     "status": "ok",
+     "baseline_recall": 0.1431693989071038,
+     "candidate_recall": 0.7256830601092896,
+     "change": 0.5825136612021858,
+     "ci_95": [
+      0.5364459035435744,
+      0.6269851994851995
+     ]
+    },
+    "bench": {
+     "entries": 1564,
+     "games": 186,
+     "player_games": 1213,
+     "status": "ok",
+     "baseline_recall": 0.1445012787723785,
+     "candidate_recall": 0.4398976982097187,
+     "change": 0.29539641943734013,
+     "ci_95": [
+      0.2614330179367234,
+      0.3291312953344164
+     ]
+    },
+    "unknown": {
+     "entries": 7,
+     "games": 6,
+     "player_games": 6,
+     "status": "insufficient_sample",
+     "baseline_recall": 0.0,
+     "candidate_recall": 0.7142857142857143,
+     "change": 0.7142857142857143,
+     "ci_95": null
+    }
+   },
+   "case_rows": 2595,
+   "reference_rows": 20262,
+   "weighted_team_windows": 1645.0,
+   "feature_split_counts": {
+    "period": 135,
+    "clock": 169,
+    "margin": 210,
+    "fouls_before": 21,
+    "seconds_before": 231,
+    "rest_before": 208,
+    "target_mean_proxy": 247,
+    "target_deficit": 257,
+    "tier_star": 2,
+    "tier_starter": 14,
+    "tier_bench": 40,
+    "tier_unknown": 5,
+    "pos_G": 3,
+    "pos_F": 4,
+    "pos_C": 37,
+    "pos_unknown": 21,
+    "remaining_G": 18,
+    "remaining_F": 18,
+    "remaining_C": 40,
+    "remaining_unknown": 0
+   }
+  },
+  "F2": {
+   "training_through": "2024-04-14",
+   "training_games": 370,
+   "validation_candidates": 21408,
+   "validation_team_windows": 1582,
+   "baseline_target_fallback_rows": 166,
+   "baseline_missing_rows": 28,
+   "population_pool": {
+    "entries": 2616,
+    "games": 181,
+    "player_games": 2000,
+    "status": "ok",
+    "baseline_recall": 0.12347094801223242,
+    "candidate_recall": 0.5768348623853211,
+    "change": 0.4533639143730887,
+    "ci_95": [
+     0.4246726450939081,
+     0.4810782433616266
+    ]
+   },
+   "participant_oracle": {
+    "entries": 2604,
+    "games": 181,
+    "player_games": 1991,
+    "status": "ok",
+    "baseline_recall": 0.4807987711213518,
+    "candidate_recall": 0.6167434715821812,
+    "change": 0.1359447004608295,
+    "ci_95": [
+     0.11204553082844008,
+     0.15946586046458525
+    ]
+   },
+   "tiers": {
+    "star": {
+     "entries": 213,
+     "games": 106,
+     "player_games": 148,
+     "status": "ok",
+     "baseline_recall": 0.03755868544600939,
+     "candidate_recall": 0.892018779342723,
+     "change": 0.8544600938967136,
+     "ci_95": [
+      0.8028846153846154,
+      0.9029126213592233
+     ]
+    },
+    "starter": {
+     "entries": 868,
+     "games": 177,
+     "player_games": 679,
+     "status": "ok",
+     "baseline_recall": 0.1152073732718894,
+     "candidate_recall": 0.6981566820276498,
+     "change": 0.5829493087557603,
+     "ci_95": [
+      0.5418125692954399,
+      0.6232397208872178
+     ]
+    },
+    "bench": {
+     "entries": 1521,
+     "games": 180,
+     "player_games": 1162,
+     "status": "ok",
+     "baseline_recall": 0.14135437212360288,
+     "candidate_recall": 0.4648257725180802,
+     "change": 0.3234714003944773,
+     "ci_95": [
+      0.2899600719742881,
+      0.35714285714285715
+     ]
+    },
+    "unknown": {
+     "entries": 14,
+     "games": 9,
+     "player_games": 11,
+     "status": "insufficient_sample",
+     "baseline_recall": 0.0,
+     "candidate_recall": 0.42857142857142855,
+     "change": 0.42857142857142855,
+     "ci_95": null
+    }
+   },
+   "case_rows": 5263,
+   "reference_rows": 42107,
+   "weighted_team_windows": 3252.0,
+   "feature_split_counts": {
+    "period": 168,
+    "clock": 149,
+    "margin": 234,
+    "fouls_before": 22,
+    "seconds_before": 173,
+    "rest_before": 229,
+    "target_mean_proxy": 187,
+    "target_deficit": 268,
+    "tier_star": 0,
+    "tier_starter": 8,
+    "tier_bench": 61,
+    "tier_unknown": 32,
+    "pos_G": 3,
+    "pos_F": 2,
+    "pos_C": 36,
+    "pos_unknown": 15,
+    "remaining_G": 26,
+    "remaining_F": 39,
+    "remaining_C": 28,
+    "remaining_unknown": 0
+   }
+  },
+  "F3": {
+   "training_through": "2025-04-11",
+   "training_games": 551,
+   "validation_candidates": 18681,
+   "validation_team_windows": 1630,
+   "baseline_target_fallback_rows": 114,
+   "baseline_missing_rows": 39,
+   "population_pool": {
+    "entries": 2646,
+    "games": 177,
+    "player_games": 1998,
+    "status": "ok",
+    "baseline_recall": 0.13038548752834467,
+    "candidate_recall": 0.5986394557823129,
+    "change": 0.46825396825396826,
+    "ci_95": [
+     0.44218170374757293,
+     0.4935997582554108
+    ]
+   },
+   "participant_oracle": {
+    "entries": 2643,
+    "games": 177,
+    "player_games": 1996,
+    "status": "ok",
+    "baseline_recall": 0.43851683692773363,
+    "candidate_recall": 0.6280741581536133,
+    "change": 0.18955732122587968,
+    "ci_95": [
+     0.16504013484986907,
+     0.21387956766507804
+    ]
+   },
+   "tiers": {
+    "star": {
+     "entries": 135,
+     "games": 84,
+     "player_games": 102,
+     "status": "ok",
+     "baseline_recall": 0.11851851851851852,
+     "candidate_recall": 0.8666666666666667,
+     "change": 0.7481481481481481,
+     "ci_95": [
+      0.6356589147286822,
+      0.8455882352941176
+     ]
+    },
+    "starter": {
+     "entries": 994,
+     "games": 171,
+     "player_games": 748,
+     "status": "ok",
+     "baseline_recall": 0.11569416498993963,
+     "candidate_recall": 0.7344064386317908,
+     "change": 0.6187122736418511,
+     "ci_95": [
+      0.5809612495776959,
+      0.6569648133589959
+     ]
+    },
+    "bench": {
+     "entries": 1495,
+     "games": 176,
+     "player_games": 1127,
+     "status": "ok",
+     "baseline_recall": 0.14180602006688964,
+     "candidate_recall": 0.48963210702341137,
+     "change": 0.34782608695652173,
+     "ci_95": [
+      0.31390103388141505,
+      0.3807560835917637
+     ]
+    },
+    "unknown": {
+     "entries": 22,
+     "games": 18,
+     "player_games": 21,
+     "status": "insufficient_sample",
+     "baseline_recall": 0.09090909090909091,
+     "candidate_recall": 0.22727272727272727,
+     "change": 0.13636363636363635,
+     "ci_95": null
+    }
+   },
+   "case_rows": 7879,
+   "reference_rows": 63515,
+   "weighted_team_windows": 4834.0,
+   "feature_split_counts": {
+    "period": 155,
+    "clock": 149,
+    "margin": 254,
+    "fouls_before": 14,
+    "seconds_before": 175,
+    "rest_before": 208,
+    "target_mean_proxy": 199,
+    "target_deficit": 255,
+    "tier_star": 3,
+    "tier_starter": 6,
+    "tier_bench": 66,
+    "tier_unknown": 27,
+    "pos_G": 7,
+    "pos_F": 2,
+    "pos_C": 31,
+    "pos_unknown": 20,
+    "remaining_G": 35,
+    "remaining_F": 40,
+    "remaining_C": 34,
+    "remaining_unknown": 0
+   }
+  },
+  "F4": {
+   "training_through": "2025-12-31",
+   "training_games": 728,
+   "validation_candidates": 22410,
+   "validation_team_windows": 1688,
+   "baseline_target_fallback_rows": 78,
+   "baseline_missing_rows": 25,
+   "population_pool": {
+    "entries": 2781,
+    "games": 191,
+    "player_games": 2131,
+    "status": "ok",
+    "baseline_recall": 0.13664149586479685,
+    "candidate_recall": 0.5785688601222582,
+    "change": 0.4419273642574613,
+    "ci_95": [
+     0.41690133499187054,
+     0.46634414365331806
+    ]
+   },
+   "participant_oracle": {
+    "entries": 2770,
+    "games": 191,
+    "player_games": 2122,
+    "status": "ok",
+    "baseline_recall": 0.43249097472924186,
+    "candidate_recall": 0.6166064981949458,
+    "change": 0.18411552346570398,
+    "ci_95": [
+     0.16195361237322684,
+     0.20646590302741247
+    ]
+   },
+   "tiers": {
+    "star": {
+     "entries": 156,
+     "games": 96,
+     "player_games": 129,
+     "status": "ok",
+     "baseline_recall": 0.057692307692307696,
+     "candidate_recall": 0.8269230769230769,
+     "change": 0.7692307692307693,
+     "ci_95": [
+      0.6993464052287581,
+      0.8344370860927153
+     ]
+    },
+    "starter": {
+     "entries": 938,
+     "games": 187,
+     "player_games": 735,
+     "status": "ok",
+     "baseline_recall": 0.1257995735607676,
+     "candidate_recall": 0.7388059701492538,
+     "change": 0.6130063965884861,
+     "ci_95": [
+      0.5765955118953396,
+      0.6494745200899291
+     ]
+    },
+    "bench": {
+     "entries": 1671,
+     "games": 191,
+     "player_games": 1255,
+     "status": "ok",
+     "baseline_recall": 0.15080789946140036,
+     "candidate_recall": 0.4655894673847995,
+     "change": 0.3147815679233992,
+     "ci_95": [
+      0.28530403780744784,
+      0.3441384192667247
+     ]
+    },
+    "unknown": {
+     "entries": 16,
+     "games": 10,
+     "player_games": 12,
+     "status": "insufficient_sample",
+     "baseline_recall": 0.0625,
+     "candidate_recall": 0.5625,
+     "change": 0.5,
+     "ci_95": null
+    }
+   },
+   "case_rows": 10525,
+   "reference_rows": 82196,
+   "weighted_team_windows": 6464.0,
+   "feature_split_counts": {
+    "period": 164,
+    "clock": 143,
+    "margin": 257,
+    "fouls_before": 13,
+    "seconds_before": 189,
+    "rest_before": 207,
+    "target_mean_proxy": 177,
+    "target_deficit": 259,
+    "tier_star": 5,
+    "tier_starter": 1,
+    "tier_bench": 61,
+    "tier_unknown": 39,
+    "pos_G": 13,
+    "pos_F": 3,
+    "pos_C": 43,
+    "pos_unknown": 11,
+    "remaining_G": 33,
+    "remaining_F": 20,
+    "remaining_C": 39,
+    "remaining_unknown": 3
+   }
+  }
+ },
+ "pooled": {
+  "entries": 10711,
+  "games": 735,
+  "player_games": 8233,
+  "status": "ok",
+  "baseline_recall": 0.13220054149939314,
+  "candidate_recall": 0.5809915040612454,
+  "change": 0.4487909625618523,
+  "ci_95": [
+   0.4353241733540345,
+   0.46199277273099815
+  ]
+ },
+ "participant_oracle_pooled": {
+  "entries": 10680,
+  "games": 735,
+  "player_games": 8208,
+  "status": "ok",
+  "baseline_recall": 0.45234082397003744,
+  "candidate_recall": 0.6171348314606742,
+  "change": 0.1647940074906367,
+  "ci_95": [
+   0.15317139277580294,
+   0.17703360794567138
+  ]
+ },
+ "favourable_fold_points": 4,
+ "diagnostic_screen_pass": true,
+ "limitations": "Selected timeouts and observed outgoing sets/counts are conditioned on future events. Unknown candidate eligibility is not a negative label; model scores are relative ranks, not entry probabilities. The participant oracle uses future appearances and assumes, rather than proves, current physical eligibility.",
+ "input_sha256": {
+  "scripts/a1_substitution_in_screen.py": "b63106d0866844dd1b1b5fa9006e84ff65e1a7c326f06120d35f3309e0634647",
+  "scripts/a1_substitution_in_coverage.py": "5cefed7037d452ea88630c33425887e9a7c0e712e1476b4df732f9c07b35558a",
+  "scripts/a1_substitution_out_screen.py": "aa3771d9037bed7f1bad7d2dc093c9ebac98f56f091221b95dc31970df18a15b",
+  "analysis/experiments/20261122_a1_s06_in_coverage_audit.json": "f023f088cd4dbe47eaba876a7d2cb2eca93420469db066dd327b763c213fc450",
+  "data/derived/variants/a1_causal_base_20261122_v2/features/pregame.parquet": "1bd657a66ef42e6f624b860f3ed235896a6a93baa94bb9b6c058ce8ebf74fd28",
+  "analysis/experiments/20261122_a1_s06_fold_seed_v3.json": "53dc5ec7ed6387b6fb319468da6cd1e75328ee2a8594a98fbb2c86ec9b15aa02",
+  "data/derived/experiments/20261122_a1_s06_fold_seed_v3.parquet": "d4b244f2de845a3d8bdadd3e7770e4db01f84c657c787f3957c62839af58ca4b",
+  "data/derived/experiments/20261122_a1_s06_fold_seed_v3_windows.parquet": "ace05f6b4bf5d7688be5b644e69757a1ca675aa48b7f93b45a143f43861c9d9f",
+  "analysis/experiments/20261122_a1_s06_fold_F1_v3.json": "4930d1c1bcf7f7ff0e37f90ea531c2d5ff27881114b460ecf0110ff4c56dadda",
+  "data/derived/experiments/20261122_a1_s06_fold_F1_v3.parquet": "02f201d2f8c47a39fe6fc5acbb7775991f086eb7dbd3a576bc5442b4f27d5425",
+  "data/derived/experiments/20261122_a1_s06_fold_F1_v3_windows.parquet": "193c648d96706a8bb964e25ae010e4895b21526d195ff8a22488af6415dc4a60",
+  "analysis/experiments/20261122_a1_s06_fold_F2_v3.json": "b74d16ba2b78a36e43494dce04997f67d29bd55921db7af3bb4b31390a624694",
+  "data/derived/experiments/20261122_a1_s06_fold_F2_v3.parquet": "b4dae0a55cc57e13c1db711949e0619da91eaeaecdf38595e1fc630d9fa85931",
+  "data/derived/experiments/20261122_a1_s06_fold_F2_v3_windows.parquet": "58c1f5ae37de600798de8da9194b53d5ad2859ce96d6b1f0f7597146e0a3bb4c",
+  "analysis/experiments/20261122_a1_s06_fold_F3_v3.json": "439dd65586144a62402bdf890d82ec6f222e69a94d178982e5af7bf84bd4a908",
+  "data/derived/experiments/20261122_a1_s06_fold_F3_v3.parquet": "449636afdf119f9b82a0f9b2013174a194439fff68cca5b4a5d476c7c342e2e8",
+  "data/derived/experiments/20261122_a1_s06_fold_F3_v3_windows.parquet": "9a0c78835059b1f300bd051d502e021370b1cab51041f5c7ffaad4e1d8d6f41d",
+  "analysis/experiments/20261122_a1_s06_fold_F4_v3.json": "2281144fbb71524c69ce5a3918d8863c24471199d891a88c0c40c415ced31493",
+  "data/derived/experiments/20261122_a1_s06_fold_F4_v3.parquet": "7f84384b9922121dc5f3360f741d3dc15ddd9d4455854c898bc1af59d97ca913",
+  "data/derived/experiments/20261122_a1_s06_fold_F4_v3_windows.parquet": "088be9f9f5a985d17305a683e1a1c058852202e7bec605b78ca950eeaf0399ee"
+ },
+ "output_sha256": {
+  "data/derived/experiments/20261122_a1_s06_in_screen.parquet": "c0199c83e6060ce3826f3cda0136c7cb7eb8b37a17fb2dc7203a11bacfe00b83"
+ }
+}

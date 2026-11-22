@@ -1471,6 +1471,18 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   appear somewhere in the game's retrospective participant list; that future information is coverage only, not a
   predictor or proof of their current physical eligibility. Independent raw-window aggregation reproduces all
   five seed/fold coverage reports (`20261122_a1_s06_in_coverage{,_audit}.json`).
+- **S06 incoming ranking:** given observed outgoing players and the in-pool entry count at **6,507** selected
+  F1–F4 team-timeouts, a fixed positive-versus-unlabelled-mixture ranker recovers **58.10%** of **10,711** observed
+  entrants versus **13.22%** for target-deficit ranking; paired gain **44.88 percentage points**, game-cluster
+  95% **43.53–46.20 pp**, with 4/4 fold improvements. The population pool is over-inclusive and the simple
+  baseline may rank unavailable prior-roster players. Restricting to the **6,493** complete transitions under an
+  explicitly retrospective, assumed-active participant roster gives **61.71% versus 45.23%** on **10,680**
+  entries (gain **16.48 pp**, 95% **15.32–17.70 pp**). Neither roster assumption proves physical availability;
+  observed exits/counts are oracle conditioning. Independent source reconstruction reproduces **84,344** scores,
+  all pool and participant-oracle selections, and bootstrap metrics exactly. The selector rejects inactive,
+  disqualified or duplicate replacements and insufficient scoreable players. Reports:
+  `20261122_a1_s06_in_screen{,_audit}.json`. These are ranking diagnostics, not calibrated entry probabilities
+  or a production/engine result.
 
 ## 6b. A1 S03 matched component diagnosis (22 Nov 2026; descriptive)
 

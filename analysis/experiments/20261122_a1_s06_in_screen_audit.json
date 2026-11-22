@@ -1,0 +1,33 @@
+{
+ "experiment": "a1_s06_incoming_screen_independent_audit",
+ "candidate_rows": 84344,
+ "observed_entries": 10711,
+ "group_counts": {
+  "F1": {
+   "team_windows": 1607,
+   "oracle_team_windows": 1605
+  },
+  "F2": {
+   "team_windows": 1582,
+   "oracle_team_windows": 1577
+  },
+  "F3": {
+   "team_windows": 1630,
+   "oracle_team_windows": 1629
+  },
+  "F4": {
+   "team_windows": 1688,
+   "oracle_team_windows": 1682
+  }
+ },
+ "bootstrap_replicates_per_supported_cell": 10000,
+ "maximum_score_error": 0.0,
+ "maximum_metric_error": 0.0,
+ "diagnostic_screen_pass": true,
+ "input_sha256": {
+  "scripts/a1_substitution_in_screen_audit.py": "f74efc8913de8e99462802e287303c49cf52d5c51276d49ba3719af82573ce3e",
+  "analysis/experiments/20261122_a1_s06_in_screen.json": "5322c7c3fcf9844bc68e75225c2c6e0ff09e926751242db420205460f0b32ea2",
+  "data/derived/experiments/20261122_a1_s06_in_screen.parquet": "c0199c83e6060ce3826f3cda0136c7cb7eb8b37a17fb2dc7203a11bacfe00b83",
+  "data/derived/variants/a1_causal_base_20261122_v2/features/pregame.parquet": "1bd657a66ef42e6f624b860f3ed235896a6a93baa94bb9b6c058ce8ebf74fd28"
+ }
+}
