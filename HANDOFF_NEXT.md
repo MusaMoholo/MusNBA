@@ -30,6 +30,7 @@ The audited world replay and S07 label evidence were pushed as **4260521**.
 The failed fixed screen, independently audited four-fold availability baselines and dated-cohort gate were preserved
 in pushed partial checkpoint **5fd5e00**.
 The typed accounting repair, foul-state probe and pre-run sequence builder were pushed as **8c8a50f**.
+The first independent sequence reconstruction and its exact auditor source were pushed as **1dcfd6b**.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
 product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S05 are complete;
 S06 is active at 70%; S07 is 50%; A1 overall is 51.4%.** Isolated assignment candidates have event-level diagnostics and wiring only;
@@ -481,8 +482,15 @@ fields each (`analysis/experiments/20261122_a1_s07_sequences_accounting.json`, l
 unlisted next games; **15,543** return and **97,808** recorded-rest known-outcome exposures remain. Across the
 **17,261** non-left-censored return observations, prior reasons are **14,889** coach, **1,798** other recorded,
 **494** explicit injury/illness and **80** exact rest. These are counts, not physical absence or calibrated hazard.
-The first auditor source/report must be checkpointed before fixing its two Pylance `np.select(default=None)` type
-diagnostics and rerunning under a new accounting filename.
+The first auditor source/report is preserved in **1dcfd6b**; its `np.select` type diagnostics were fixed and a
+second independent reconstruction passed with no Pylance diagnostics as
+`analysis/experiments/20261122_a1_s07_sequences_accounting_v2.json`. The frozen
+`scripts/a1_availability_sequence_screen.py` runner is implemented and five focused sequence/cutoff/smoothing tests
+pass; **no proxy fit/score has run**. Preserve this source before executing:
+`OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u scripts/a1_availability_sequence_screen.py --output
+analysis/experiments/20261122_a1_s07_sequence_screen.json --rows-output
+data/derived/experiments/20261122_a1_s07_sequence_screen.parquet`. Independently audit fitted groups, cutoff,
+predictions and 10,000-game bootstrap intervals before drawing a conclusion or awarding S07 60%.
 
 **S07 30%:** the four independently audited fixed baselines cover **28,530** inferred candidates, **20,665** known
 play/DNP labels and **7,865** unknowns. Across F1–F4, supported starter team-games are **399/400/376/399**; five
@@ -1336,8 +1344,8 @@ The dashboard programme is done. Do not resume U1–U22, repeat rejected defence
    The report archive has no development-season
    examples. Do not equate inferred membership with eligibility or score/tune status on the protected-season archive.
    The sequence builder has a passed synthetic/preflight check and produced **128,321** independently audited
-   prior-state rows. Preserve the first auditor source/report, fix its recorded Pylance diagnostics, repeat the audit
-   under a new filename, then fit/score the frozen return/rest proxies on earlier-fold inputs with explicit censoring.
+   prior-state rows. The Pylance-clean second audit and the unrun fold-screen source are prepared. Preserve the
+   screen source, run the exact command above, then independently audit predictions, earlier-fold fits and intervals.
    Continue S06–S10 in dependency order.
 3. **S11 freezes the tested combination before promotion.** Confirm on the fixed wider folds and second seed, protect
    the final test and use player outcomes first.

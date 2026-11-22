@@ -140,9 +140,9 @@ def reconstruct(season: int) -> tuple[pd.DataFrame, dict, list[Path]]:
         [~is_dnp, complete], ['rest', 'return'], default='left_censored_return')
     current['reason_prior_check'] = current['reason_first'].where(is_dnp)
     current['duration_check'] = current['length_check'].where(is_dnp)
-    current['duration_bin_check'] = pd.Series(
-        np.select([is_dnp & current['length_check'].eq(1), is_dnp & current['length_check'].le(3),
-                   is_dnp & current['length_check'].ge(4)], ['1', '2-3', '4+'], default=None), index=current.index)
+    duration = np.select([is_dnp & current['length_check'].eq(1), is_dnp & current['length_check'].le(3),
+                          is_dnp & current['length_check'].ge(4)], ['1', '2-3', '4+'], default='')
+    current['duration_bin_check'] = pd.Series(duration, index=current.index).where(is_dnp)
     current['reason_next_check'] = current['actual_reason'].where(current['state_check'].eq('dnp'))
     current['outcome_check'] = np.nan
     returning = current['cohort_check'].eq('return')

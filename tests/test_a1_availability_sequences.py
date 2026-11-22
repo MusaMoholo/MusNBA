@@ -2,7 +2,7 @@ import unittest
 
 import pandas as pd
 
-from scripts import a1_availability_sequences as sequences
+from scripts import a1_availability_sequence_screen as screen, a1_availability_sequences as sequences
 
 
 def example_schedule():
@@ -71,6 +71,34 @@ class SequenceTests(unittest.TestCase):
         columns = ['prior_day', 'date_et', 'cohort', 'prior_role', 'next_status', 'outcome']
         pd.testing.assert_series_equal(before.loc[before['prior_game_id'].eq('1'), columns].iloc[0],
                                        after.loc[after['prior_game_id'].eq('1'), columns].iloc[0])
+
+    def test_fold_selection_excludes_future_and_left_censored_observations(self):
+        data = pd.DataFrame([
+            {'cohort': 'return', 'outcome': 0., 'game_id': '1', 'team': '7', 'player': 'a',
+             'prior_day': '2025-12-29', 'date_et': '2025-12-30'},
+            {'cohort': 'return', 'outcome': 1., 'game_id': '2', 'team': '7', 'player': 'a',
+             'prior_day': '2026-01-01', 'date_et': '2026-01-02'},
+            {'cohort': 'left_censored_return', 'outcome': 1., 'game_id': '2', 'team': '7', 'player': 'b',
+             'prior_day': '2026-01-01', 'date_et': '2026-01-02'},
+            {'cohort': 'return', 'outcome': 0., 'game_id': '3', 'team': '7', 'player': 'a',
+             'prior_day': '2026-05-01', 'date_et': '2026-05-02'},
+        ])
+        train, valid = screen.choose_population(data, 'F4', 'return', ['2'])
+        self.assertEqual(train['game_id'].tolist(), ['1'])
+        self.assertEqual(valid['game_id'].tolist(), ['2'])
+        data.loc[1, 'prior_day'] = '2026-01-02'
+        with self.assertRaisesRegex(ValueError, 'date cutoff'):
+            screen.choose_population(data, 'F4', 'return', ['2'])
+
+    def test_smoothed_unseen_group_is_explicit_and_never_extreme(self):
+        train = pd.DataFrame({'prior_reason': ['coach', 'coach', 'rest'], 'outcome': [1, 0, 1]})
+        valid = pd.DataFrame({'prior_reason': ['coach', 'rest', 'injury']})
+        predictions, counts = screen.probabilities(train, valid, ['prior_reason'])
+        self.assertEqual(counts.tolist(), [2, 1, 0])
+        self.assertEqual(predictions.tolist(), [0.5, 2 / 3, 0.5])
+        train.loc[0, 'outcome'] = 2
+        with self.assertRaisesRegex(ValueError, 'binary'):
+            screen.probabilities(train, valid, ['prior_reason'])
 
 
 if __name__ == '__main__':
