@@ -55,6 +55,7 @@ assert.equal(joint(source.weights, [1, 0, 0, 0], [1, 0, 0, 0]).event, 3 / 8);
 assert.throws(() => source.selection({'10': 'sits'}), /choices/);
 assert.throws(() => source.playerValues('99', 'min'), /Unknown/);
 assert.throws(() => source.playerValues('10', 'plays', 'q1'), /unavailable/);
+assert.throws(() => source.playerValues('10', 'starts'), /unavailable/);
 assert.throws(() => source.playerValues('10', 'min', 'constructor'), /period/);
 for (const corrupt of [
   f => { f.branches[1].assignments[0][2] = true; },
@@ -72,6 +73,38 @@ for (const corrupt of [
   f => { f.branches[0].worlds.periods.reverse(); },
 ]) {
   const bad = structuredClone(fixture);
+  corrupt(bad);
+  assert.throws(() => branchWorldSource(bad));
+}
+const openingFixture = structuredClone(fixture);
+for (const [b, branch] of openingFixture.branches.entries()) {
+  const raw = branch.worlds;
+  raw.worlds = 1;
+  raw.players = ['10', '11', '12', '13', '14', '15', '20', '21', '22', '23', '24'];
+  raw.side = [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1];
+  const lineup = b === 0 ? [0, 1, 2, 3, 4, 6, 7, 8, 9, 10] : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  raw.opening_lineups = encode(lineup);
+  raw.availability = encode(raw.players.map((_, i) => Number(b === 0 || i !== 0)));
+  raw.played = encode(raw.players.map((_, i) => Number(lineup.includes(i))));
+  raw.minutes_f64_le = minutes(raw.players.map((_, i) => Number(lineup.includes(i))));
+  raw.lines = encode(raw.players.flatMap((_, i) => [Number(lineup.includes(i)), 0]));
+  raw.team_periods = encode(Array(10).fill(0));
+  raw.final_period = encode([4]);
+  delete raw.period_stats;
+  delete raw.period_lines;
+  delete raw.period_minutes_f64_le;
+}
+const openingSource = branchWorldSource(openingFixture);
+assert.deepEqual([...openingSource.playerValues('10', 'starts')], [1, 0]);
+assert.deepEqual([...openingSource.playerValues('15', 'starts')], [0, 1]);
+assert.throws(() => openingSource.playerValues('10', 'starts', 'q1'), /unavailable/);
+for (const corrupt of [
+  f => { f.branches[0].worlds.opening_lineups = encode([0, 0, 2, 3, 4, 6, 7, 8, 9, 10]); },
+  f => { f.branches[0].worlds.opening_lineups = encode([6, 1, 2, 3, 4, 0, 7, 8, 9, 10]); },
+  f => { f.branches[1].worlds.opening_lineups = encode([0, 2, 3, 4, 5, 6, 7, 8, 9, 10]); },
+  f => { delete f.branches[0].worlds.opening_lineups; },
+]) {
+  const bad = structuredClone(openingFixture);
   corrupt(bad);
   assert.throws(() => branchWorldSource(bad));
 }

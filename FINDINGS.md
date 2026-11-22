@@ -2,6 +2,15 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 — branch opening fives:** for the **20,000 / 40,000** saved branch worlds of the same two
+prospective games, independent replay matched **200,000 / 400,000** first-trace lineup entries at Q1 12:00,
+and JS recovered **50 / 112** per-branch player opening-five counts. In the four-branch sample, **4** players
+changed between 0 and 10,000 starts across branches: both selected players and their replacements. Thus a
+single unconditional starter label would be wrong for branch selections. These are simulated opening fives,
+not official lineup information; they do not supply branch-specific minute targets or prove predictive quality.
+Reports `20261122_chunk_a_a1_d47_browser_fixture_{one,two}_opening_v2_audit.json` and
+`20261122_chunk_a_a1_d47_source_{one,two}_opening_v1_audit.json`.
+
 **22 Nov 2026 — research overtime and adaptive grids:** on the **20,000 / 40,000** branch worlds of the same
 two prospective games, final-period values and exact weighted masses for **0–3** overtime periods independently
 match the original captures. A browser-format fixture now retains those values explicitly; a missing field is

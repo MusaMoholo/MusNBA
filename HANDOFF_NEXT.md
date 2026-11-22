@@ -1,7 +1,7 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 70%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **8121ea1** (A1 70%, period-source research); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **80726c7** (A1 70%, overtime and grids); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
@@ -9,6 +9,21 @@ The preceding pushed checkpoint was **8121ea1** (A1 70%, period-source research)
   without publishing an unvalidated forecast or changing the default production pathway. **Owner's latest stop:
   stop at the end of A1**, checkpoint/push and report gains and limitations; do not start A2, A3 or Chunk B in
   this run. The earlier dashboard house pass was already delivered; no nightly merely for this research checkpoint.
+- **A1 80% opening-five groundwork:** the research fixtures now retain each world's first captured Q1 12:00
+  lineup, with five distinct available teammates per side. These are simulated opening fives, not official
+  starters. Independent original-trace replay reconciled **200,000 / 400,000** lineup entries on **20k / 40k**
+  worlds; JS matched **50 / 112** per-branch player counts. In the two-player case, **4** players' opening-five
+  counts changed between branches (two selected players and two replacements), proving unconditional starter
+  metadata is unsafe. Fixtures are **90,562,924 / 202,725,520 bytes** raw, not phone benchmarks. Reports
+  `analysis/experiments/20261122_chunk_a_a1_d47_browser_fixture_{one,two}_opening_v2_audit.json` and
+  `analysis/experiments/20261122_chunk_a_a1_d47_source_{one,two}_opening_v1_audit.json`; ignored fixtures are
+  `data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_{one,two}_opening_v1.json`.
+  This supports deriving the selected worlds' opening fives; it does not reconstruct branch minute-target
+  metadata or integrate a view. HANDOFF/PLAN/FINDINGS record results; README maps the source. AGENTS,
+  ENGINE_PLAN and TRAINING_PLAN need no change (rules, decisions and gates unchanged); DASHBOARD_PLAN needs no
+  change (no UI shipped). The production model, bundle and shell remain unchanged; A1 **70%**, Chunk A **31.5%**.
+  Focused Python/JS tests pass; normal smoke **108/108** and deliberate fault **86/108**, exit **1**,
+  logs `/tmp/musnba_a1_opening_{smoke,fault}.log`.
 - **A1 80% overtime and adaptive-grid groundwork:** research fixtures now retain each world's actual final period,
   not an overtime flag inferred from points. Independent capture accounting reconciles **20,000 / 40,000**
   values and all four weighted overtime-count categories (0–3 OTs) in each sample. The branch source fails
@@ -2288,13 +2303,13 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
 1. **A1 80%:** implement/test a gated branch UI only against fully audited isolated fixtures and preserve the
    existing unconditional production fallback; no unvalidated Expected data may be published. Research labels
    must carry through to any view. Check laptop/phone import and offline compatibility before claiming delivery.
-   The ignored period-aware two-player fixture and compact audit are recorded above. To rebuild under a new name, run
+   The ignored opening-five/period-aware two-player fixture and compact audit are recorded above. To rebuild under a new name, run
    `.venv/bin/python analysis/a1_branch_browser_fixture.py analysis/experiments/20261122_chunk_a_a1_d47_10000_two.json --output data/derived/experiments/<new-fixture>.json`,
    then `.venv/bin/python analysis/a1_branch_browser_fixture_audit.py data/derived/experiments/<new-fixture>.json --output analysis/experiments/<new-audit>.json`;
    never overwrite the existing evidence. Period-aware fixtures now have the player-period inputs, but they are
    not a completed Game Centre contract: wire and test coherent derived summaries, all shared weighted consumers
    and phone fallback without exposing an unvalidated switch. To compare period summaries with original captures,
-   run `node analysis/a1_branch_period_browser_audit.mjs data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_period_v2.json analysis/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_period_v3_audit.json analysis/experiments/<new-period-crosscheck>.json`.
+   run    `node analysis/a1_branch_period_browser_audit.mjs data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_opening_v1.json analysis/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_opening_v2_audit.json analysis/experiments/<new-period-crosscheck>.json`.
    Run `node tests/test_a1_branch_world_source.mjs` for all nine synthetic lineup selections and corruption cases.
    Run `node tests/test_a1_weighted_browser.mjs` for arithmetic edge cases; the real-fixture audit takes the
    fixture, a new audit output, Expected report and one or more matching Given reports, e.g.

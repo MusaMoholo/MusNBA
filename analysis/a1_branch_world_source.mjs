@@ -30,7 +30,7 @@ export function branchWorldSource(fixture) {
         || ![0.25, 0.5, 0.75].includes(p.probability)) throw new Error('Invalid selected player');
   }
   const combinations = new Set(), prepared = [];
-  let roster = null, offset = 0, hasPeriods = null, hasFinalPeriod = null;
+  let roster = null, offset = 0, hasPeriods = null, hasFinalPeriod = null, hasOpening = null;
   for (const record of records) {
     const raw = record.worlds;
     if (!raw || !Array.isArray(record.assignments) || record.assignments.length !== selected.length
@@ -72,9 +72,13 @@ export function branchWorldSource(fixture) {
     if (hasFinalPeriod != null && hasFinal !== hasFinalPeriod) throw new Error('Branches differ in final-period data');
     hasFinalPeriod = hasFinal;
     const finalPeriod = hasFinal ? bytes(raw.final_period) : null;
+    const openingPresent = 'opening_lineups' in raw;
+    if (hasOpening != null && openingPresent !== hasOpening) throw new Error('Branches differ in opening lineups');
+    hasOpening = openingPresent;
+    const opening = openingPresent ? bytes(raw.opening_lineups) : null;
     if (lines.length !== n * p * k || available.length !== n * p || played.length !== n * p
         || mins.length !== n * p * 8 || periods.length !== n * 10
-        || (hasFinal && finalPeriod.length !== n)) throw new Error('Invalid packed-world lengths');
+        || (hasFinal && finalPeriod.length !== n) || (openingPresent && opening.length !== n * 10)) throw new Error('Invalid packed-world lengths');
     const minuteView = new DataView(mins.buffer, mins.byteOffset, mins.byteLength);
     const fields = ['period_stats', 'period_lines', 'period_minutes_f64_le'];
     const has = fields.some(field => field in raw);
@@ -93,6 +97,12 @@ export function branchWorldSource(fixture) {
     const pointsCol = raw.stats.indexOf('pts');
     if (pointsCol < 0) throw new Error('Player points are missing');
     for (let w = 0; w < n; w++) {
+      if (openingPresent) for (let side = 0; side < 2; side++) {
+        const lineup = opening.subarray(w * 10 + side * 5, w * 10 + side * 5 + 5);
+        if (new Set(lineup).size !== 5 || [...lineup].some(i => i >= p || raw.side[i] !== side || available[w * p + i] !== 1)) {
+          throw new Error('Invalid opening lineup');
+        }
+      }
       if (hasFinal && (finalPeriod[w] < 4
           || (finalPeriod[w] === 4 && (periods[w * 10 + 4] || periods[w * 10 + 9])))) {
         throw new Error('Invalid final period');
@@ -135,15 +145,16 @@ export function branchWorldSource(fixture) {
         if (score[side] !== total) throw new Error('Player and team scores differ');
       }
     }
-    prepared.push({raw, lines, available, played, minuteView, periodLines, periodMinuteView, periods, finalPeriod, offset, assignments});
+    prepared.push({raw, lines, available, played, minuteView, periodLines, periodMinuteView, periods, finalPeriod, opening, offset, assignments});
     offset += n;
   }
   const {weights, denominator} = branchWeights(prepared.map((b, i) => ({worlds: b.raw.worlds, weight: records[i].weight})));
   const playerValues = (id, stat, period = 'fg') => {
     const index = roster[0].indexOf(id), col = roster[2].indexOf(stat);
-    if (index < 0 || (col < 0 && !['plays', 'sits', 'available', 'unavailable'].includes(stat))) throw new Error('Unknown player or statistic');
+    if (index < 0 || (col < 0 && !['plays', 'sits', 'available', 'unavailable', 'starts'].includes(stat))) throw new Error('Unknown player or statistic');
+    if (stat === 'starts' && !hasOpening) throw new Error('Opening lineup data unavailable');
     if (!Object.hasOwn(SLICES, period)) throw new Error('Invalid period');
-    if (period !== 'fg' && (!hasPeriods || ['plays', 'sits', 'available', 'unavailable'].includes(stat))) {
+    if (period !== 'fg' && (!hasPeriods || ['plays', 'sits', 'available', 'unavailable', 'starts'].includes(stat))) {
       throw new Error('Player-period data or statistic unavailable');
     }
     const result = new Float64Array(offset);
@@ -161,6 +172,7 @@ export function branchWorldSource(fixture) {
         result[branch.offset + w] = stat === 'min' ? branch.minuteView.getFloat64(cell * 8, true)
           : stat === 'plays' ? branch.played[cell] : stat === 'sits' ? 1 - branch.played[cell]
             : stat === 'available' ? branch.available[cell] : stat === 'unavailable' ? 1 - branch.available[cell]
+              : stat === 'starts' ? Number(branch.opening.subarray(w * 10, w * 10 + 10).includes(index))
               : branch.lines[cell * k + col];
       }
     }

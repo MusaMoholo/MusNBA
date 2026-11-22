@@ -47,6 +47,24 @@ if (reference.final_period_values) {
     overtimeChecks++;
   }
 }
+let openingChecks = 0;
+if (reference.opening_lineup_values) {
+  if (reference.opening_lineup_values !== source.worlds * 10
+      || reference.opening_branch_starts_from_captures?.length !== fixture.branches.length) throw new Error('Incomplete opening-lineup reference');
+  for (let b = 0; b < fixture.branches.length; b++) {
+    const branch = fixture.branches[b], ref = reference.opening_branch_starts_from_captures[b];
+    if (ref.branch_id !== branch.branch_id || ref.players.join(',') !== branch.worlds.players.join(',')
+        || ref.counts.length !== ref.players.length) throw new Error('Opening-lineup reference differs');
+    const choices = Object.fromEntries(branch.assignments.map(([, id, plays]) => [id, plays]));
+    const mask = source.selection(choices);
+    for (let p = 0; p < ref.players.length; p++) {
+      const starts = source.playerValues(ref.players[p], 'starts');
+      const count = mask.reduce((sum, yes, i) => sum + yes * starts[i], 0);
+      if (count !== ref.counts[p]) throw new Error('Opening starter count differs from independently decoded captures');
+      openingChecks++;
+    }
+  }
+}
 writeFileSync(output, JSON.stringify({
   kind: 'isolated browser source period accounting; not a forecast or browser integration',
   fixture: fixturePath, fixture_sha256: hash(fixtureBytes),
@@ -55,5 +73,6 @@ writeFileSync(output, JSON.stringify({
   arithmetic_sha256: hash(read('analysis/a1_weighted_browser.mjs')),
   audit_sha256: hash(read('analysis/a1_branch_period_browser_audit.mjs')),
   worlds: source.worlds, player, checks, overtime_period_categories_checked: overtimeChecks,
+  opening_starter_counts_checked: openingChecks,
 }, null, 2) + '\n', {flag: 'wx'});
-console.log(`${source.worlds} worlds: 21 weighted period means and ${overtimeChecks} overtime masses match independently decoded captures`);
+console.log(`${source.worlds} worlds: 21 weighted period means, ${overtimeChecks} overtime masses and ${openingChecks} starter counts match independently decoded captures`);

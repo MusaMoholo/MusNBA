@@ -489,6 +489,11 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
   counts; independent checks match all four overtime-count mass categories. Adaptive weighted continuous-minute
   grids independently reconcile all **49 / 42** cells and exact total mass. Neither is wired to the dashboard;
   UI, phone and model gates remain open. A1 **70%**, Chunk A **31.5%**.
+- **22 Nov 2026 · A1 80% opening fives:** independent original-trace replay reconciled **200k / 400k**
+  lineup entries; JS matched **50 / 112** per-branch player counts. Four players' counts changed between
+  branches in the two-player sample, so unconditional starter metadata is unsafe. These simulated opening
+  fives are not official lineup data or branch minute-target metadata. No UI, model or bundle changed;
+  A1 **70%**, Chunk A **31.5%**.
 - **22 Nov 2026 · dashboard house follow-up:** player box scores now precede game insights; game availability,
   bench, secondary team-roster groups and player game logs expand on demand. **61/61** responsive cases,
   laptop/phone offline **29/29 / 28/28** and laptop shell upgrade **31/31** passed. Startup race fixed in

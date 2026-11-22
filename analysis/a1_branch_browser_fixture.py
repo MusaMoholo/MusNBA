@@ -25,6 +25,28 @@ def packed_bytes(values: np.ndarray) -> str:
     return base64.b64encode(np.ascontiguousarray(values, dtype=np.uint8).tobytes()).decode('ascii')
 
 
+def opening_lineups(data: dict[str, np.ndarray], worlds: int, side: np.ndarray,
+                    available: np.ndarray) -> np.ndarray:
+    trace_world = np.asarray(data['trace_world'])
+    if trace_world.ndim != 1 or not np.isin(trace_world, np.arange(worlds)).all():
+        raise ValueError('invalid trace-world identifiers')
+    ids, first = np.unique(trace_world, return_index=True)
+    if not np.array_equal(ids, np.arange(worlds)):
+        raise ValueError('every world requires an opening lineup')
+    lineup = np.asarray(data['trace_lineups'])[first]
+    if (lineup.shape != (worlds, 2, 5)
+            or not np.equal(np.asarray(data['trace_period'])[first], 1).all()
+            or not np.equal(np.asarray(data['trace_clock'])[first], 720).all()
+            or not np.equal(np.asarray(data['trace_phase'])[first], 0).all()
+            or (lineup < 0).any() or (lineup >= len(side)).any()):
+        raise ValueError('invalid opening trace')
+    if (np.any(np.diff(np.sort(lineup, axis=2), axis=2) == 0)
+            or not np.equal(side[lineup], np.arange(2)[None, :, None]).all()
+            or not available[np.arange(worlds)[:, None, None], lineup].all()):
+        raise ValueError('opening lineups must contain five distinct available teammates per side')
+    return lineup
+
+
 def pack_capture(data: dict[str, np.ndarray]) -> dict:
     ids, side = np.asarray(data['player_ids']), np.asarray(data['side'])
     available, minutes = np.asarray(data['available']), np.asarray(data['minutes'])
@@ -56,6 +78,7 @@ def pack_capture(data: dict[str, np.ndarray]) -> dict:
         raise ValueError('unavailable players or invalid minutes in capture')
     if np.any((final_period == 4) & (periods[:, :, 4].sum(axis=1) != 0)):
         raise ValueError('overtime scores without an overtime period')
+    opening = opening_lineups(data, worlds, side, available)
     for team in (0, 1):
         if not np.array_equal(period_box['pts'][:, side == team].sum(axis=1), periods[:, team]):
             raise ValueError('player and team scores do not reconcile')
@@ -71,6 +94,7 @@ def pack_capture(data: dict[str, np.ndarray]) -> dict:
         'period_lines': packed_bytes(np.stack([period_box[stat] for stat in views.WORLD_STATS[1:]], axis=3)),
         'period_minutes_f64_le': base64.b64encode(np.ascontiguousarray(minutes, dtype='<f8').tobytes()).decode('ascii'),
         'final_period': packed_bytes(final_period),
+        'opening_lineups': packed_bytes(opening),
         'periods': ['q1', 'q2', 'q3', 'q4', 'ot'],
     }
 

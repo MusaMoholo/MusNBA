@@ -42,7 +42,8 @@ def main() -> None:
     total_weight = Fraction()
     worlds = line_values = availability_values = played_values = minute_values = period_values = 0
     player_period_values = player_period_minute_values = 0
-    final_period_values = 0
+    final_period_values = opening_lineup_values = 0
+    opening_branch_starts: list[dict] = []
     overtime_mass: dict[int, Fraction] = {}
     slices = {'q1': [0], 'q2': [1], 'q3': [2], 'q4': [3], 'h1': [0, 1], 'h2': [2, 3], 'fg': [0, 1, 2, 3, 4]}
     selected_period_means = {key: {'minutes': 0.0, 'player_points': 0.0, 'home_points': 0.0} for key in slices}
@@ -67,6 +68,7 @@ def main() -> None:
         minutes = np.frombuffer(base64.b64decode(packed['minutes_f64_le'], validate=True), dtype='<f8').reshape(W, P)
         periods = decode(packed['team_periods'], (W, 2, 5))
         final_period = decode(packed['final_period'], (W,)) if 'final_period' in packed else None
+        opening = decode(packed['opening_lineups'], (W, 2, 5)) if 'opening_lineups' in packed else None
         period_fields = ('period_stats', 'period_lines', 'period_minutes_f64_le')
         has_player_periods = any(key in packed for key in period_fields)
         if has_player_periods:
@@ -76,6 +78,23 @@ def main() -> None:
             player_period_minutes = np.frombuffer(base64.b64decode(packed['period_minutes_f64_le'], validate=True),
                                                    dtype='<f8').reshape(W, P, 5)
         with np.load(original['capture'], allow_pickle=False) as data:
+            if opening is not None:
+                # First trace records are the opening lineups; verify against the trace, not the packer.
+                trace_world = data['trace_world']
+                first = np.full(W, -1, dtype=int)
+                for position, world in enumerate(trace_world):
+                    if first[world] == -1:
+                        first[world] = position
+                if ((first < 0).any() or not np.array_equal(opening, data['trace_lineups'][first])
+                        or not np.all(data['trace_period'][first] == 1)
+                        or not np.all(data['trace_clock'][first] == 720)
+                        or not np.all(data['trace_phase'][first] == 0)):
+                    raise ValueError('fixture opening lineups differ from first captured traces')
+                counts = np.bincount(data['trace_lineups'][first].ravel(), minlength=P)
+                opening_branch_starts.append({
+                    'branch_id': branch['branch_id'], 'players': packed['players'],
+                    'counts': counts.tolist(),
+                })
             if (packed['players'] != data['player_ids'].tolist() or packed['side'] != data['side'].tolist()
                     or not np.array_equal(availability, data['available'])
                     or not np.array_equal(played, data['minutes'].sum(axis=2) > 0)
@@ -121,6 +140,8 @@ def main() -> None:
             player_period_minute_values += player_period_minutes.size
         if final_period is not None:
             final_period_values += final_period.size
+        if opening is not None:
+            opening_lineup_values += opening.size
     if total_weight != 1:
         raise ValueError('fixture branch weights do not total one')
     write_json(args.output, {
@@ -134,6 +155,8 @@ def main() -> None:
         'player_period_stat_values': player_period_values,
         'player_period_exact_minute_values': player_period_minute_values,
         'final_period_values': final_period_values,
+        'opening_lineup_values': opening_lineup_values,
+        'opening_branch_starts_from_captures': opening_branch_starts,
         'overtime_period_mass_from_captures': {
             str(k): {'numerator': str(v.numerator), 'denominator': str(v.denominator)}
             for k, v in sorted(overtime_mass.items())
