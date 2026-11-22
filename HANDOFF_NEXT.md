@@ -14,8 +14,8 @@ The byte-identical typed tracking rebuild and original v2 minute-gate source/rep
 partial checkpoint **890bee3** before correcting the gate's seed-noise definition.
 The completed S04 defence checkpoint and corrected minute-gate report are committed and pushed as **38155fc**.
 The completed S05 minutes checkpoint and original S06 pilot sources are committed and pushed as **417f3f5**.
-S06 partial checkpoints **637a025** and **70709ab** preserve the initial corrected replay, F1 dataset, frozen fold
-protocol and exact v2 sources/reports; the v3 checkpoint follows.
+S06 partial checkpoints **637a025**, **70709ab** and **bdedeed** are pushed and preserve the initial corrected
+replay, frozen fold protocol, exact v2 sources/reports and audited v3 inputs.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
 product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S05 are complete;
 S06 is active at 30%; A1 overall is 43.6%.** Isolated assignment candidates have event-level diagnostics and wiring only;
@@ -280,6 +280,9 @@ The independent seed-target and cutoff-fit audit passes
 **6,354** prior-box targets and profiles reconcile across **184** games; the maximum team target-sum error is
 **0.0000931 minutes**. Perturbing **98,484** post-fit-cutoff player-games does not alter the dated ramp/spread;
 **71** target rows in two sampled games reproduce exactly. Source/fit and all four fold inputs are still research-only.
+The first out-screen attempt failed before any fit because scikit-learn is absent; the retry uses the existing native
+LightGBM API with the same frozen objective and settings. The error and source fingerprint are in
+`analysis/experiments/20261122_a1_s06_out_screen_wrapper_failed.json`.
 
 The tracking family was frozen in TRAINING_PLAN §8 and built separately by
 `scripts/a1_tracking_features.py`: former wrapper PID **85586**, shell **1549**, log

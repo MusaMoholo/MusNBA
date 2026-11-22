@@ -292,6 +292,19 @@ class SequentialSubstitutionTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'roster or prior box date differs'):
             a1_substitution_seed_audit.audit_membership(targets, boxes)
 
+    def test_out_screen_native_model_predicts_deterministically(self):
+        rows = pd.DataFrame([{'window_id': str(index), 'game_id': str(index // 10), 'date_et': '2023-02-01',
+                              'team': '10', 'player': str(index), 'period': 1, 'clock': 600.,
+                              'margin': index % 20, 'fouls_before': 0, 'seconds_before': 120.,
+                              'stint_before': 120., 'target_mean_proxy': 20., 'target_deficit': -1.,
+                              'prior_tier': 'bench', 'label': index % 3 == 0}
+                             for index in range(240)])
+        first, first_details = a1_substitution_out_screen.predictions(rows, rows.iloc[:10])
+        second, second_details = a1_substitution_out_screen.predictions(rows, rows.iloc[:10])
+        pd.testing.assert_frame_equal(first, second)
+        self.assertEqual(first_details, second_details)
+        self.assertTrue(first['candidate_probability'].between(0, 1).all())
+
 
 if __name__ == '__main__':
     unittest.main()

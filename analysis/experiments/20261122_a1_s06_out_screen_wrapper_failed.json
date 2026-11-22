@@ -1,0 +1,10 @@
+{
+ "experiment": "a1_s06_outgoing_screen_wrapper_preflight",
+ "status": "failed_before_fit",
+ "source": "scripts/a1_substitution_out_screen.py",
+ "source_sha256": "6a72f491e5a05884ded0a9f434e6da6f5327080e4aa9828a6a97b81a8a992b4d",
+ "source_commit": "bdedeed",
+ "error": "LightGBMError: scikit-learn is required for lightgbm.sklearn",
+ "log": "/tmp/musnba_a1_s06_out_screen_v1.log",
+ "resolution": "Use the repository's native LightGBM training API with the frozen binary objective, tree count and hyperparameters. No fold was fitted or scored before the failure."
+}

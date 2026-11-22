@@ -1443,6 +1443,10 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   error, and exact 1,000-draw reproduction of **71** targets in two games. Replacing **98,484** player-game minute
   outcomes from the 2022-12-01 fit cutoff onward left the earlier fitted ramp and spread unchanged. This establishes
   the sampled input mechanism, not the historical publication timing or a forecast gain.
+- **S06 screen preflight:** the first attempt failed before fitting because this environment has LightGBM but not
+  its optional scikit-learn wrapper. The retry uses the repository's native LightGBM API with the same frozen
+  binary objective and hyperparameters; the failed source and error are preserved in
+  `20261122_a1_s06_out_screen_wrapper_failed.json`. No fold result informed this implementation repair.
 
 ## 6b. A1 S03 matched component diagnosis (22 Nov 2026; descriptive)
 

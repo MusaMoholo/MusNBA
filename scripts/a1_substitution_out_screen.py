@@ -21,8 +21,9 @@ from scripts.evaluate import EXPERIMENTS, FOLDS, TEST_FROM  # noqa: E402
 TIERS = ('star', 'starter', 'bench', 'unknown')
 FEATURES = ('period', 'clock', 'margin', 'fouls_before', 'seconds_before', 'stint_before',
             'target_mean_proxy', 'target_deficit', *(f'tier_{tier}' for tier in TIERS))
-PARAMS = {'n_estimators': 120, 'num_leaves': 15, 'learning_rate': 0.05, 'min_child_samples': 80,
-          'reg_lambda': 1.0, 'random_state': 20261122, 'n_jobs': 1, 'deterministic': True,
+ROUNDS = 120
+PARAMS = {'objective': 'binary', 'num_leaves': 15, 'learning_rate': 0.05, 'min_data_in_leaf': 80,
+          'lambda_l2': 1.0, 'seed': 20261122, 'num_threads': 1, 'deterministic': True,
           'force_col_wise': True, 'verbosity': -1}
 
 
@@ -78,13 +79,11 @@ def predictions(train: pd.DataFrame, validation: pd.DataFrame) -> tuple[pd.DataF
     labels = train['label'].astype(int).to_numpy()
     if np.unique(labels).size != 2:
         raise ValueError('candidate training labels need both outgoing classes')
-    classifier = lgb.LGBMClassifier(**PARAMS)
-    classifier.fit(feature_matrix(train), labels)
+    classifier = lgb.train(PARAMS, lgb.Dataset(feature_matrix(train), label=labels), num_boost_round=ROUNDS)
     baseline, fallback_rows = conditional_baseline(train, validation)
-    predicted = classifier.predict_proba(feature_matrix(validation))
-    if not isinstance(predicted, np.ndarray) or predicted.shape != (len(validation), 2):
-        raise ValueError('candidate did not return one dense binary probability pair per decision')
-    candidate = predicted[:, 1]
+    candidate = classifier.predict(feature_matrix(validation), num_threads=1)
+    if not isinstance(candidate, np.ndarray) or candidate.shape != (len(validation),):
+        raise ValueError('candidate did not return one dense binary probability per decision')
     for name, probability in (('baseline', baseline), ('candidate', candidate)):
         if not np.isfinite(probability).all() or ((probability < 0) | (probability > 1)).any():
             raise ValueError(f'{name} produced invalid outgoing probabilities')
@@ -94,7 +93,7 @@ def predictions(train: pd.DataFrame, validation: pd.DataFrame) -> tuple[pd.DataF
     rows['candidate_probability'] = candidate
     return rows, {'baseline_overall_fallback_rows': fallback_rows,
                   'feature_split_counts': {name: int(value)
-                                           for name, value in zip(FEATURES, classifier.feature_importances_)}}
+                                           for name, value in zip(FEATURES, classifier.feature_importance())}}
 
 
 def summary(rows: pd.DataFrame) -> dict:
@@ -197,7 +196,7 @@ def main() -> None:
     favourable = sum(results[fold]['all']['brier']['change'] < 0 for fold in FOLDS)
     report = {
         'experiment': 'a1_s06_outgoing_selected_timeout_fold_screen',
-        'model_params': PARAMS, 'features': list(FEATURES), 'baseline_prior_weight': 20,
+        'model_params': PARAMS, 'num_boost_round': ROUNDS, 'features': list(FEATURES), 'baseline_prior_weight': 20,
         'folds': results, 'pooled': pooled, 'favourable_fold_points': favourable,
         'diagnostic_screen_pass': upper is not None and upper < 0 and favourable >= 3,
         'selection_rule': 'Pooled paired outgoing Brier 95% upper bound below zero and at least three of four '

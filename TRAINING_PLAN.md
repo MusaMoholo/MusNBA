@@ -438,7 +438,8 @@ previous fixed-fold games dated strictly before that fold's validation start; no
 same fold. The simple baseline is the earlier-training outgoing rate by period (OT pooled) and prior role tier,
 shrunk with 20 pseudo-observations toward the earlier-training overall rate; an unseen group uses that overall rate
 and its row count is reported. Compare it with one deterministic
-LightGBM binary model (120 trees, 15 leaves, learning rate 0.05, minimum leaf 80, L2 1, seed 20261122, one thread):
+native-API LightGBM binary model (120 trees, 15 leaves, learning rate 0.05, minimum leaf 80, L2 1,
+seed 20261122, one thread):
 period, clock, team-relative margin, fouls, elapsed seconds, stint, prior tier indicators, target mean and the
 regulation target deficit. Native missing values remain missing. The primary diagnostic is paired outgoing Brier
 loss; also report binary log loss, per-fold populations, missingness and 10,000 complete-game clustered bootstrap
