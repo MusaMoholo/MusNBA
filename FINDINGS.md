@@ -2,6 +2,16 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 — research overtime and adaptive grids:** on the **20,000 / 40,000** branch worlds of the same
+two prospective games, final-period values and exact weighted masses for **0–3** overtime periods independently
+match the original captures. A browser-format fixture now retains those values explicitly; a missing field is
+not reconstructed from scored points. Separately, weighted 2nd–98th-percentile minute/score grid edges with
+half-open intervals yield **7×7 / 7×6** grids; independent capture reconstruction matches all **49 / 42**
+exact cells and unit total mass. These are isolated accounting checks, not browser acceptance, predictive
+calibration or promotion. Reports `20261122_chunk_a_a1_d47_browser_fixture_{one,two}_period_v3_audit.json`,
+`20261122_chunk_a_a1_d47_source_{one,two}_period_v7_crosscheck.json`, and
+`20261122_chunk_a_a1_d47_dynamic_grid_{one,two}_v{2,3_audit}.json`.
+
 **22 Nov 2026 — research branch player-period source:** the one-/two-selected-player prospective fixtures cover
 **20,000 / 40,000** saved worlds. Independent source-capture replay checked **35,000,000 / 78,400,000**
 player-period stat values and **2,500,000 / 5,600,000** exact float64 period-minute values. Seven periods'

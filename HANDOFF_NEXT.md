@@ -1,7 +1,7 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 70%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **f89e295** (A1 70%, weighted-grid research); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **8121ea1** (A1 70%, period-source research); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
@@ -9,6 +9,22 @@ The preceding pushed checkpoint was **f89e295** (A1 70%, weighted-grid research)
   without publishing an unvalidated forecast or changing the default production pathway. **Owner's latest stop:
   stop at the end of A1**, checkpoint/push and report gains and limitations; do not start A2, A3 or Chunk B in
   this run. The earlier dashboard house pass was already delivered; no nightly merely for this research checkpoint.
+- **A1 80% overtime and adaptive-grid groundwork:** research fixtures now retain each world's actual final period,
+  not an overtime flag inferred from points. Independent capture accounting reconciles **20,000 / 40,000**
+  values and all four weighted overtime-count categories (0–3 OTs) in each sample. The branch source fails
+  explicitly if final-period data is absent instead of guessing. Its selected-player minute grid uses weighted
+  2nd/98th-percentile edges and half-open continuous intervals: independent reconstruction of **49 / 42** cells
+  preserved all exact mass for the one-/two-player captures, including fractional minutes. Synthetic tests include
+  all 9 two-player selections, corruption and fractional boundary cases. Reports
+  `analysis/experiments/20261122_chunk_a_a1_d47_browser_fixture_{one,two}_period_v3_audit.json`,
+  `source_{one,two}_period_v{4_audit,7_crosscheck}.json`,
+  `dynamic_grid_{one,two}_v{2,3_audit}.json`.
+  New ignored fixtures use `data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_{one,two}_period_v2.json`.
+  Normal smoke **108/108** and deliberate fault **86/108**, exit **1**, logs
+  `/tmp/musnba_a1_ot_grid_{smoke,fault}.log`. HANDOFF/PLAN/FINDINGS record evidence and README maps scripts;
+  AGENTS, ENGINE_PLAN and TRAINING_PLAN need no change (rules, decisions and gates unchanged); DASHBOARD_PLAN
+  needs no change (no UI shipped). This is isolated accounting, not browser integration, calibration or
+  promotion. A1 **70%**, Chunk A **31.5%**. Live model, bundles and shell remain unchanged.
 - **A1 80% period-aware source, research only:** the fixture now preserves all five original player-period boxes
   and float64 minutes, and checks player/team score identity in each period. Independent capture audits reconcile
   **35,000,000 / 78,400,000** period-stat values and **2,500,000 / 5,600,000** exact period minutes on the
@@ -2278,7 +2294,7 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
    never overwrite the existing evidence. Period-aware fixtures now have the player-period inputs, but they are
    not a completed Game Centre contract: wire and test coherent derived summaries, all shared weighted consumers
    and phone fallback without exposing an unvalidated switch. To compare period summaries with original captures,
-   run `node analysis/a1_branch_period_browser_audit.mjs data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_period_v1.json analysis/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_period_v2_audit.json analysis/experiments/<new-period-crosscheck>.json`.
+   run `node analysis/a1_branch_period_browser_audit.mjs data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_period_v2.json analysis/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_period_v3_audit.json analysis/experiments/<new-period-crosscheck>.json`.
    Run `node tests/test_a1_branch_world_source.mjs` for all nine synthetic lineup selections and corruption cases.
    Run `node tests/test_a1_weighted_browser.mjs` for arithmetic edge cases; the real-fixture audit takes the
    fixture, a new audit output, Expected report and one or more matching Given reports, e.g.

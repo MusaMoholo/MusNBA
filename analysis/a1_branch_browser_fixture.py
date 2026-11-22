@@ -29,12 +29,14 @@ def pack_capture(data: dict[str, np.ndarray]) -> dict:
     ids, side = np.asarray(data['player_ids']), np.asarray(data['side'])
     available, minutes = np.asarray(data['available']), np.asarray(data['minutes'])
     periods = np.asarray(data['team_points'])
+    final_period = np.asarray(data['final_period'])
     if available.ndim != 2 or available.dtype != bool:
         raise ValueError('availability must be a world-by-player boolean array')
     worlds, players = available.shape
     if (not worlds or not players or ids.shape != (players,) or side.shape != (players,)
             or len(set(map(str, ids))) != players or not np.isin(side, (0, 1)).all()
-            or minutes.shape != (worlds, players, 5) or periods.shape != (worlds, 2, 5)):
+            or minutes.shape != (worlds, players, 5) or periods.shape != (worlds, 2, 5)
+            or final_period.shape != (worlds,) or (final_period < 4).any()):
         raise ValueError('capture roster or world dimensions are invalid')
     box = {}
     period_box = {}
@@ -52,6 +54,8 @@ def pack_capture(data: dict[str, np.ndarray]) -> dict:
             or (minutes[~available] != 0).any()
             or any((values[~available] != 0).any() for values in box.values())):
         raise ValueError('unavailable players or invalid minutes in capture')
+    if np.any((final_period == 4) & (periods[:, :, 4].sum(axis=1) != 0)):
+        raise ValueError('overtime scores without an overtime period')
     for team in (0, 1):
         if not np.array_equal(period_box['pts'][:, side == team].sum(axis=1), periods[:, team]):
             raise ValueError('player and team scores do not reconcile')
@@ -66,6 +70,7 @@ def pack_capture(data: dict[str, np.ndarray]) -> dict:
         'period_stats': list(views.WORLD_STATS[1:]),
         'period_lines': packed_bytes(np.stack([period_box[stat] for stat in views.WORLD_STATS[1:]], axis=3)),
         'period_minutes_f64_le': base64.b64encode(np.ascontiguousarray(minutes, dtype='<f8').tobytes()).decode('ascii'),
+        'final_period': packed_bytes(final_period),
         'periods': ['q1', 'q2', 'q3', 'q4', 'ot'],
     }
 

@@ -1,0 +1,50 @@
+{
+  "kind": "isolated browser source period accounting; not a forecast or browser integration",
+  "fixture": "data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_period_v2.json",
+  "fixture_sha256": "0afeadab522a512a93951565a8ceaf2f372329883caf3569ba7ae911b6d9d139",
+  "reference": "analysis/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_period_v3_audit.json",
+  "reference_sha256": "415e5390fbba27f3f2d012956a9908dfd21c353b02e1e85908ac8ff4b0b85bce",
+  "source_sha256": "abba11bb8a54eeaedfffe9472de37a3089c8954118558bab59310422022bdc75",
+  "arithmetic_sha256": "83bd8e72887e21c6ce519ea1094825e9101ff7214656316754d1ac3b56058e7a",
+  "audit_sha256": "3e5f091d7330f8b7c5ded290d55d0f866f06b166c72068c6b93ea31ac3752c28",
+  "worlds": 40000,
+  "player": "3032977",
+  "checks": {
+    "q1": {
+      "minutes": 6.482749374250169,
+      "player_points": 5.02138125,
+      "home_points": 29.79841875
+    },
+    "q2": {
+      "minutes": 5.662158562937396,
+      "player_points": 5.4273375,
+      "home_points": 29.95074375
+    },
+    "q3": {
+      "minutes": 7.041739530583788,
+      "player_points": 6.29424375,
+      "home_points": 29.9409875
+    },
+    "q4": {
+      "minutes": 4.4182989685667655,
+      "player_points": 4.07499375,
+      "home_points": 28.5009125
+    },
+    "h1": {
+      "minutes": 12.144907937187634,
+      "player_points": 10.44871875,
+      "home_points": 59.7491625
+    },
+    "h2": {
+      "minutes": 11.460038499150626,
+      "player_points": 10.3692375,
+      "home_points": 58.4419
+    },
+    "fg": {
+      "minutes": 23.6494425925884,
+      "player_points": 20.85579375,
+      "home_points": 118.5330875
+    }
+  },
+  "overtime_period_categories_checked": 4
+}

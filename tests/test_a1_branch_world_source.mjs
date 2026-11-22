@@ -34,8 +34,10 @@ for (const branch of fixture.branches) {
     periodMinutes.push(q === 0 ? mins.readDoubleLE(cell * 8) : 0);
   }
   raw.period_stats = ['pts'];
+  raw.periods = ['q1', 'q2', 'q3', 'q4', 'ot'];
   raw.period_lines = encode(periodLines);
   raw.period_minutes_f64_le = minutes(periodMinutes);
+  raw.final_period = encode([5, 4]);
 }
 const source = branchWorldSource(fixture);
 assert.deepEqual([...source.playerValues('10', 'min')], [0.1, 0, 0, 0]);
@@ -47,6 +49,7 @@ assert.deepEqual([...source.playerValues('10', 'min', 'h1')], [0.1, 0, 0, 0]);
 assert.deepEqual([...source.playerValues('10', 'pts', 'q1')], [2, 0, 0, 0]);
 assert.deepEqual([...source.playerValues('10', 'pts', 'q2')], [0, 0, 0, 0]);
 assert.deepEqual([...source.teamPoints('home', 'q1')], [2, 0, 0, 0]);
+assert.deepEqual([...source.overtimePeriods()], [1, 0, 1, 0]);
 assert.deepEqual([...source.selection({'10': false})], [0, 0, 1, 1]);
 assert.equal(joint(source.weights, [1, 0, 0, 0], [1, 0, 0, 0]).event, 3 / 8);
 assert.throws(() => source.selection({'10': 'sits'}), /choices/);
@@ -64,6 +67,9 @@ for (const corrupt of [
   f => { f.branches[0].worlds.period_minutes_f64_le = minutes(Array(20).fill(0)); },
   f => { delete f.branches[1].worlds.period_lines; },
   f => { f.branches[0].worlds.team_periods = encode(Array(20).fill(0)); },
+  f => { f.branches[0].worlds.final_period = encode([3, 4]); },
+  f => { delete f.branches[1].worlds.final_period; },
+  f => { f.branches[0].worlds.periods.reverse(); },
 ]) {
   const bad = structuredClone(fixture);
   corrupt(bad);
@@ -98,6 +104,9 @@ two.branches = fixture.branches.flatMap(original => [true, false].map(available 
   return branch;
 }));
 const sourceTwo = branchWorldSource(two);
+const wrongSide = structuredClone(two);
+for (const branch of wrongSide.branches) branch.worlds.side = [0, 0];
+assert.throws(() => branchWorldSource(wrongSide), /metadata/);
 for (const home of [null, true, false]) for (const away of [null, true, false]) {
   const choices = {};
   if (home !== null) choices['10'] = home;

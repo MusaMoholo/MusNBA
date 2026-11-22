@@ -1,0 +1,88 @@
+{
+  "kind": "isolated adaptive weighted grid; not a forecast or browser integration",
+  "fixture": "data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_period_v2.json",
+  "fixture_sha256": "0afeadab522a512a93951565a8ceaf2f372329883caf3569ba7ae911b6d9d139",
+  "source": "analysis/experiments/20261122_chunk_a_a1_d47_10000_two.json",
+  "source_sha256": "20204539755935dbd19a362d98210f9c5831077c2b657f9a8635ff72a00372ce",
+  "source_code_sha256": "abba11bb8a54eeaedfffe9472de37a3089c8954118558bab59310422022bdc75",
+  "arithmetic_sha256": "83bd8e72887e21c6ce519ea1094825e9101ff7214656316754d1ac3b56058e7a",
+  "probe_sha256": "51f191296c1cdebe7dce93a0d35b1597729a27bf9ed02e968a138302825bf690",
+  "worlds": 40000,
+  "player": "3032977",
+  "denominator": 160000,
+  "x_edges": [
+    null,
+    6,
+    12,
+    18,
+    24,
+    30,
+    36,
+    null
+  ],
+  "y_edges": [
+    null,
+    104,
+    112,
+    120,
+    128,
+    136,
+    null
+  ],
+  "cells": [
+    [
+      6332,
+      0,
+      0,
+      105,
+      2391,
+      5667,
+      165
+    ],
+    [
+      9448,
+      0,
+      9,
+      51,
+      5181,
+      13638,
+      384
+    ],
+    [
+      11081,
+      0,
+      69,
+      168,
+      7386,
+      23301,
+      744
+    ],
+    [
+      8071,
+      0,
+      3,
+      111,
+      7707,
+      22734,
+      1134
+    ],
+    [
+      3634,
+      0,
+      0,
+      54,
+      4197,
+      14358,
+      801
+    ],
+    [
+      1434,
+      0,
+      12,
+      54,
+      1908,
+      7098,
+      570
+    ]
+  ]
+}

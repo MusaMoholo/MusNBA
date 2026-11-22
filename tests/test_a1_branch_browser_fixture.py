@@ -14,6 +14,7 @@ class BranchBrowserFixtureTests(unittest.TestCase):
             'available': np.array([[True, True], [True, False]]),
             'minutes': np.zeros((2, 2, 5)),
             'team_points': np.zeros((2, 2, 5), dtype=int),
+            'final_period': np.array([5, 4]),
         }
         for stat in ('pts', 'oreb', 'dreb', 'ast', 'fg3m', 'stl', 'blk', 'tov',
                      'fgm', 'fga', 'fg3a', 'fta', 'ftm'):
@@ -38,6 +39,7 @@ class BranchBrowserFixtureTests(unittest.TestCase):
         self.assertEqual(packed['period_stats'], list(WORLD_STATS[1:]))
         self.assertEqual(player_periods[0, 0, 0, packed['period_stats'].index('pts')], 3)
         self.assertEqual(period_minutes[0, 1, 0], 0.1)
+        self.assertEqual(list(base64.b64decode(packed['final_period'])), [5, 4])
         self.assertEqual(available[0, 1], 1)
         self.assertEqual(lines[0, 1, WORLD_STATS.index('min')], 0)
         self.assertEqual(played[0, 1], 1)
@@ -56,6 +58,15 @@ class BranchBrowserFixtureTests(unittest.TestCase):
         data = self.capture()
         data['team_points'][0, 0, 0] += 1
         with self.assertRaisesRegex(ValueError, 'scores do not reconcile'):
+            pack_capture(data)
+        data = self.capture()
+        data['final_period'][0] = 3
+        with self.assertRaisesRegex(ValueError, 'dimensions'):
+            pack_capture(data)
+        data = self.capture()
+        data['final_period'][0] = 4
+        data['box_pts'][0, 0, 4] = data['team_points'][0, 0, 4] = 1
+        with self.assertRaisesRegex(ValueError, 'overtime scores'):
             pack_capture(data)
         data = self.capture()
         data['team_points'][0, 0, 0] -= 1

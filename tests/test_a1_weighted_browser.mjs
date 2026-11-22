@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {branchWeights, correlation, distribution, grid, joint} from '../analysis/a1_weighted_browser.mjs';
+import {branchWeights, correlation, distribution, grid, gridEdges, joint} from '../analysis/a1_weighted_browser.mjs';
 
 const weight = (numerator, denominator) => ({numerator: String(numerator), denominator: String(denominator)});
 const {weights, denominator} = branchWeights([
@@ -38,6 +38,14 @@ assert.deepEqual(grid([0, 1, 2, 3], [0, 2, 4, 6], weights,
   [-Infinity, 2, Infinity], [-Infinity, 4, Infinity]),
 {cells: [[2, 0], [0, 6]], total: 8, columnMass: [2, 6], columnMean: [1, 5]});
 assert.throws(() => grid([0, 1, 2, 3], [0, 2, 4, 6], weights, [-Infinity, 2, 1, Infinity], [-Infinity, Infinity]), /edges/);
+const minutes = [0, 29.6, 30, 30.25], minuteEdges = gridEdges(minutes, weights);
+const minuteGrid = grid(minutes, [0, 0, 1, 1], weights, minuteEdges, [-Infinity, 0.5, Infinity]);
+assert.equal(minuteGrid.total, 8);
+assert.equal(minuteGrid.cells.flat().reduce((sum, mass) => sum + mass, 0), 8);
+assert.deepEqual(gridEdges([0, 100, 101], [1, 100, 3], null, 2), [-Infinity, 101, Infinity]);
+assert.deepEqual(gridEdges([0.9, 1.1], [1, 1], null, 1), [-Infinity, Infinity]);
+assert.deepEqual(gridEdges([1, 2], [1, 1], [0, 0]), []);
+assert.throws(() => gridEdges([1, Infinity], [1, 1]), /Infinite/);
 
 const tiny = branchWeights([{worlds: 10000, weight: weight(1, 2)}, {worlds: 10000, weight: weight(1, 2)}]);
 const values = new Uint8Array(20000);

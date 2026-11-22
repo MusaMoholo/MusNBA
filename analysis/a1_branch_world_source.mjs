@@ -20,21 +20,26 @@ const SLICES = {fg: [0, 1, 2, 3, 4], q1: [0], q2: [1], q3: [2], q4: [3], h1: [0,
 export function branchWorldSource(fixture) {
   const selected = fixture.selected_players, records = fixture.branches;
   if (!Array.isArray(selected) || selected.length < 1 || selected.length > 2
+      || selected.some(p => !p || typeof p !== 'object')
       || new Set(selected.map(p => p.player_id)).size !== selected.length
       || new Set(selected.map(p => p.team_id)).size !== selected.length
       || !Array.isArray(records) || records.length !== 2 ** selected.length) throw new Error('Invalid branch selection');
   for (const p of selected) {
-    if (!/^[0-9]+$/.test(p.player_id) || !/^[0-9]+$/.test(p.team_id)
+    if (typeof p.player_id !== 'string' || typeof p.team_id !== 'string'
+        || !/^[0-9]+$/.test(p.player_id) || !/^[0-9]+$/.test(p.team_id)
         || ![0.25, 0.5, 0.75].includes(p.probability)) throw new Error('Invalid selected player');
   }
   const combinations = new Set(), prepared = [];
-  let roster = null, offset = 0, hasPeriods = null;
+  let roster = null, offset = 0, hasPeriods = null, hasFinalPeriod = null;
   for (const record of records) {
     const raw = record.worlds;
     if (!raw || !Array.isArray(record.assignments) || record.assignments.length !== selected.length
         || !Array.isArray(raw.players) || !raw.players.length || !Array.isArray(raw.side)
         || !Array.isArray(raw.stats) || new Set(raw.players).size !== raw.players.length
         || new Set(raw.stats).size !== raw.stats.length || raw.side.length !== raw.players.length
+        || !Array.isArray(raw.periods) || !allEqual(raw.periods, ['q1', 'q2', 'q3', 'q4', 'ot'])
+        || (selected.length === 2 && raw.side[raw.players.indexOf(selected[0].player_id)]
+            === raw.side[raw.players.indexOf(selected[1].player_id)])
         || raw.side.some(s => s !== 0 && s !== 1)) throw new Error('Invalid branch world metadata');
     let numerator = 1n, denominator = 1n;
     const assignments = new Map(), choices = [];
@@ -63,8 +68,13 @@ export function branchWorldSource(fixture) {
     if (!Number.isSafeInteger(n) || n < 1) throw new Error('Invalid world count');
     const lines = bytes(raw.lines), available = bytes(raw.availability), played = bytes(raw.played);
     const mins = bytes(raw.minutes_f64_le), periods = bytes(raw.team_periods);
+    const hasFinal = 'final_period' in raw;
+    if (hasFinalPeriod != null && hasFinal !== hasFinalPeriod) throw new Error('Branches differ in final-period data');
+    hasFinalPeriod = hasFinal;
+    const finalPeriod = hasFinal ? bytes(raw.final_period) : null;
     if (lines.length !== n * p * k || available.length !== n * p || played.length !== n * p
-        || mins.length !== n * p * 8 || periods.length !== n * 10) throw new Error('Invalid packed-world lengths');
+        || mins.length !== n * p * 8 || periods.length !== n * 10
+        || (hasFinal && finalPeriod.length !== n)) throw new Error('Invalid packed-world lengths');
     const minuteView = new DataView(mins.buffer, mins.byteOffset, mins.byteLength);
     const fields = ['period_stats', 'period_lines', 'period_minutes_f64_le'];
     const has = fields.some(field => field in raw);
@@ -83,6 +93,10 @@ export function branchWorldSource(fixture) {
     const pointsCol = raw.stats.indexOf('pts');
     if (pointsCol < 0) throw new Error('Player points are missing');
     for (let w = 0; w < n; w++) {
+      if (hasFinal && (finalPeriod[w] < 4
+          || (finalPeriod[w] === 4 && (periods[w * 10 + 4] || periods[w * 10 + 9])))) {
+        throw new Error('Invalid final period');
+      }
       const score = [0, 0], periodScore = [new Array(5).fill(0), new Array(5).fill(0)];
       for (let i = 0; i < p; i++) {
         const cell = w * p + i, a = available[cell], didPlay = played[cell], minutes = minuteView.getFloat64(cell * 8, true);
@@ -121,7 +135,7 @@ export function branchWorldSource(fixture) {
         if (score[side] !== total) throw new Error('Player and team scores differ');
       }
     }
-    prepared.push({raw, lines, available, played, minuteView, periodLines, periodMinuteView, periods, offset, assignments});
+    prepared.push({raw, lines, available, played, minuteView, periodLines, periodMinuteView, periods, finalPeriod, offset, assignments});
     offset += n;
   }
   const {weights, denominator} = branchWeights(prepared.map((b, i) => ({worlds: b.raw.worlds, weight: records[i].weight})));
@@ -171,5 +185,13 @@ export function branchWorldSource(fixture) {
     }
     return mask;
   };
-  return {worlds: offset, weights, denominator, selected, playerValues, teamPoints, selection};
+  const overtimePeriods = () => {
+    if (!hasFinalPeriod) throw new Error('Final-period data unavailable');
+    const result = new Uint8Array(offset);
+    for (const branch of prepared) for (let w = 0; w < branch.raw.worlds; w++) {
+      result[branch.offset + w] = branch.finalPeriod[w] - 4;
+    }
+    return result;
+  };
+  return {worlds: offset, weights, denominator, selected, playerValues, teamPoints, selection, overtimePeriods};
 }

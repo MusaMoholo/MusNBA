@@ -32,12 +32,28 @@ for (const period of periods) {
   }
   checks[period] = actual;
 }
+let overtimeChecks = 0;
+if (reference.final_period_values) {
+  if (reference.final_period_values !== source.worlds) throw new Error('Incomplete final-period data');
+  const counts = new Map();
+  source.overtimePeriods().forEach((value, i) => counts.set(value, (counts.get(value) || 0) + source.weights[i]));
+  const expected = reference.overtime_period_mass_from_captures;
+  if (counts.size !== Object.keys(expected).length) throw new Error('Overtime categories differ');
+  for (const [value, mass] of counts) {
+    const ref = expected[value];
+    if (!ref || BigInt(mass) * BigInt(ref.denominator) !== BigInt(ref.numerator) * BigInt(source.denominator)) {
+      throw new Error('Overtime-period mass differs from independently decoded captures');
+    }
+    overtimeChecks++;
+  }
+}
 writeFileSync(output, JSON.stringify({
   kind: 'isolated browser source period accounting; not a forecast or browser integration',
   fixture: fixturePath, fixture_sha256: hash(fixtureBytes),
   reference: referencePath, reference_sha256: hash(read(referencePath)),
   source_sha256: hash(read('analysis/a1_branch_world_source.mjs')),
+  arithmetic_sha256: hash(read('analysis/a1_weighted_browser.mjs')),
   audit_sha256: hash(read('analysis/a1_branch_period_browser_audit.mjs')),
-  worlds: source.worlds, player, checks,
+  worlds: source.worlds, player, checks, overtime_period_categories_checked: overtimeChecks,
 }, null, 2) + '\n', {flag: 'wx'});
-console.log(`${source.worlds} worlds: 21 weighted player/team period means match independently decoded captures`);
+console.log(`${source.worlds} worlds: 21 weighted period means and ${overtimeChecks} overtime masses match independently decoded captures`);

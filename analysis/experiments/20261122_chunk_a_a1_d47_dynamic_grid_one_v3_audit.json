@@ -1,0 +1,13 @@
+{
+ "kind": "independent adaptive grid accounting; not a forecast",
+ "probe": "analysis/experiments/20261122_chunk_a_a1_d47_dynamic_grid_one_v2.json",
+ "probe_sha256": "66d41bd9c821202273d942b575d4af14d377bb1fad5e74850f05f5b5bca4f68b",
+ "source": "analysis/experiments/20261122_chunk_a_a1_d47_10000_one.json",
+ "source_sha256": "b62ee8a59bde0fe331ce2d3046e2751cb8f772cf16847bcc40e11430bacfd628",
+ "audit_sha256": "390c2c300000176546415811638b385f53f5ca1a4c1c6152d289d51b4a387aa6",
+ "worlds": 20000,
+ "rows": 7,
+ "columns": 7,
+ "cells_checked": 49,
+ "exact_total_mass": "1"
+}

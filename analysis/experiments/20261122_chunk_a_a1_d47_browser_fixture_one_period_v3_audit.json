@@ -1,0 +1,80 @@
+{
+ "kind": "independent research browser fixture accounting; not a forecast",
+ "fixture": "data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_one_period_v2.json",
+ "fixture_sha256": "3da7026016e1b1de1cc842df1ed108f875d1a1e308619444213082290ab0b5d2",
+ "fixture_bytes": 90296210,
+ "source": "analysis/experiments/20261122_chunk_a_a1_d47_10000_one.json",
+ "source_sha256": "b62ee8a59bde0fe331ce2d3046e2751cb8f772cf16847bcc40e11430bacfd628",
+ "audit_sha256": "c3733fd4945d183f95cc558581995939f8db0fcc67f9065b42b9410a8bbec366",
+ "branches": 2,
+ "worlds": 20000,
+ "player_stat_values": 7500000,
+ "availability_values": 500000,
+ "played_values": 500000,
+ "exact_minute_values": 500000,
+ "team_period_values": 200000,
+ "player_period_stat_values": 35000000,
+ "player_period_exact_minute_values": 2500000,
+ "final_period_values": 20000,
+ "overtime_period_mass_from_captures": {
+  "0": {
+   "numerator": "969",
+   "denominator": "1000"
+  },
+  "1": {
+   "numerator": "1141",
+   "denominator": "40000"
+  },
+  "2": {
+   "numerator": "91",
+   "denominator": "40000"
+  },
+  "3": {
+   "numerator": "1",
+   "denominator": "5000"
+  }
+ },
+ "positive_minutes_rounded_to_zero": 3712,
+ "available_did_not_play": 39675,
+ "threshold_player": "4432166",
+ "threshold_minutes": 30,
+ "exact_vs_rounded_threshold_disagreements": 187,
+ "exact_total_weight": "1",
+ "selected_period_means_from_captures": {
+  "q1": {
+   "minutes": 6.5969103745418884,
+   "player_points": 4.67715,
+   "home_points": 28.771
+  },
+  "q2": {
+   "minutes": 6.249152000402258,
+   "player_points": 4.86495,
+   "home_points": 28.59685
+  },
+  "q3": {
+   "minutes": 6.993446124456003,
+   "player_points": 5.484825000000001,
+   "home_points": 28.470274999999997
+  },
+  "q4": {
+   "minutes": 6.348520749779679,
+   "player_points": 5.102475,
+   "home_points": 27.285275
+  },
+  "h1": {
+   "minutes": 12.846062374944147,
+   "player_points": 9.5421,
+   "home_points": 57.367850000000004
+  },
+  "h2": {
+   "minutes": 13.34196687423568,
+   "player_points": 10.5873,
+   "home_points": 55.75555
+  },
+  "fg": {
+   "minutes": 26.26052287418114,
+   "player_points": 20.195025,
+   "home_points": 113.48955000000001
+  }
+ }
+}

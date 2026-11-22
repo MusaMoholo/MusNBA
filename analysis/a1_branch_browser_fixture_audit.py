@@ -42,6 +42,8 @@ def main() -> None:
     total_weight = Fraction()
     worlds = line_values = availability_values = played_values = minute_values = period_values = 0
     player_period_values = player_period_minute_values = 0
+    final_period_values = 0
+    overtime_mass: dict[int, Fraction] = {}
     slices = {'q1': [0], 'q2': [1], 'q3': [2], 'q4': [3], 'h1': [0, 1], 'h2': [2, 3], 'fg': [0, 1, 2, 3, 4]}
     selected_period_means = {key: {'minutes': 0.0, 'player_points': 0.0, 'home_points': 0.0} for key in slices}
     positive_rounded_to_zero = available_did_not_play = threshold_disagreements = 0
@@ -64,6 +66,7 @@ def main() -> None:
         played = decode(packed['played'], (W, P))
         minutes = np.frombuffer(base64.b64decode(packed['minutes_f64_le'], validate=True), dtype='<f8').reshape(W, P)
         periods = decode(packed['team_periods'], (W, 2, 5))
+        final_period = decode(packed['final_period'], (W,)) if 'final_period' in packed else None
         period_fields = ('period_stats', 'period_lines', 'period_minutes_f64_le')
         has_player_periods = any(key in packed for key in period_fields)
         if has_player_periods:
@@ -78,11 +81,15 @@ def main() -> None:
                     or not np.array_equal(played, data['minutes'].sum(axis=2) > 0)
                     or not np.array_equal(minutes, data['minutes'].sum(axis=2))
                     or (has_player_periods and not np.array_equal(player_period_minutes, data['minutes']))
+                    or (final_period is not None and not np.array_equal(final_period, data['final_period']))
                     or not np.array_equal(periods, data['team_points'])):
                 raise ValueError('fixture roster, availability, playing time or team periods differ')
             positive_rounded_to_zero += int(((played == 1) & (lines[:, :, 0] == 0)).sum())
             available_did_not_play += int(((availability == 1) & (played == 0)).sum())
             player = packed['players'].index(selected_player)
+            for value, count in zip(*np.unique(data['final_period'] - 4, return_counts=True), strict=True):
+                overtime_mass[int(value)] = overtime_mass.get(int(value), Fraction()) + (
+                    Fraction(int(weight['numerator']), int(weight['denominator'])) * int(count) / W)
             for name, indices in slices.items():
                 selected_period_means[name]['minutes'] += float(weight['numerator']) / float(weight['denominator']) * float(data['minutes'][:, player, indices].sum(axis=1).mean())
                 selected_period_means[name]['player_points'] += float(weight['numerator']) / float(weight['denominator']) * float(data['box_pts'][:, player, indices].sum(axis=1).mean())
@@ -112,6 +119,8 @@ def main() -> None:
         if has_player_periods:
             player_period_values += player_periods.size
             player_period_minute_values += player_period_minutes.size
+        if final_period is not None:
+            final_period_values += final_period.size
     if total_weight != 1:
         raise ValueError('fixture branch weights do not total one')
     write_json(args.output, {
@@ -124,6 +133,11 @@ def main() -> None:
         'exact_minute_values': minute_values, 'team_period_values': period_values,
         'player_period_stat_values': player_period_values,
         'player_period_exact_minute_values': player_period_minute_values,
+        'final_period_values': final_period_values,
+        'overtime_period_mass_from_captures': {
+            str(k): {'numerator': str(v.numerator), 'denominator': str(v.denominator)}
+            for k, v in sorted(overtime_mass.items())
+        },
         'positive_minutes_rounded_to_zero': positive_rounded_to_zero,
         'available_did_not_play': available_did_not_play,
         'threshold_player': selected_player, 'threshold_minutes': 30,

@@ -169,6 +169,7 @@ Dashboard routes: `#/standings/{forecast,seeds,wins,ratings,picture,races,movers
 | `analysis/a1_branch_world_source.mjs`, `analysis/a1_branch_period_browser_audit.mjs`, `analysis/a1_branch_source_benchmark.mjs` | Isolated fail-closed weighted branch source, independent period-mean comparison and Node-only load benchmark; not a shipped UI |
 | `analysis/a1_weighted_browser.mjs`, `analysis/a1_weighted_browser_audit.mjs` | Research-only exact integer-mass browser arithmetic and comparison with independently reconstructed Python reports; not wired into the UI |
 | `analysis/a1_weighted_grid_reference.py`, `analysis/a1_weighted_grid_audit.mjs` | Independent research comparison of weighted browser grids and correlations against saved branch captures |
+| `analysis/a1_dynamic_grid_probe.mjs`, `analysis/a1_dynamic_grid_audit.py` | Research-only adaptive weighted continuous-minute grid and independent exact-mass reconstruction |
 | `analysis/a1_expected_minutes_audit.py` | Research-only exact-second Given/Joint reconstruction from saved branch minutes; no production integration |
 | `scripts/a1_branch_foul_out.py` | Opt-in branch-only foul-out repair with world-local change masks and explicit short-roster failure; full-game audit still pending |
 | `scripts/a1_branch_world_probe.py` | Isolated fixed-F4 branch replay, `--repair` trace and independent world accounting; diagnostic only |

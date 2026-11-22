@@ -115,6 +115,50 @@ export function correlation(a, b, weights, selection = null) {
   return aa > 0 && bb > 0 ? ab / Math.sqrt(aa) / Math.sqrt(bb) : null;
 }
 
+export function gridEdges(values, weights, selection = null, maxBins = 7) {
+  validate(weights, selection);
+  if (values.length !== weights.length || !Number.isSafeInteger(maxBins) || maxBins < 1) {
+    throw new Error('Invalid grid values or bin limit');
+  }
+  const entries = [];
+  let total = 0;
+  for (let i = 0; i < values.length; i++) {
+    if ((selection && !selection[i]) || Number.isNaN(values[i])) continue;
+    if (!Number.isFinite(values[i])) throw new Error('Infinite outcome is invalid');
+    entries.push([values[i], weights[i]]);
+    total += weights[i];
+  }
+  if (!Number.isSafeInteger(total)) throw new Error('Grid mass exceeds browser integer limit');
+  if (!total) return [];
+  entries.sort((a, b) => a[0] - b[0]);
+  let cumulative = 0n, lo = null, hi = null;
+  for (const [value, weight] of entries) {
+    cumulative += BigInt(weight);
+    if (lo == null && cumulative * 100n >= BigInt(total) * 2n) lo = value;
+    if (cumulative * 100n >= BigInt(total) * 98n) { hi = value; break; }
+  }
+  if (maxBins === 1) return [-Infinity, Infinity];
+  const span = Math.max(1, hi - lo);
+  if (!Number.isFinite(span)) throw new Error('Grid range exceeds browser numeric limits');
+  const count = width => Math.floor(hi / width) - Math.floor(lo / width) + 1;
+  let width = [1, 2, 3, 4, 5, 6, 8, 10, 15, 20, 25].find(w => count(w) <= maxBins)
+    || Math.ceil(span / (maxBins - 1));
+  while (count(width) > maxBins) {
+    width *= 2;
+    if (!Number.isFinite(width)) throw new Error('Grid width exceeds browser numeric limits');
+  }
+  const edges = [-Infinity], start = Math.floor(lo / width) * width;
+  if (start + width <= start) throw new Error('Grid edges exceed browser numeric limits');
+  for (let next = start + width; next <= hi;) {
+    edges.push(next);
+    const following = next + width;
+    if (following <= next || !Number.isFinite(following)) throw new Error('Grid edges exceed browser numeric limits');
+    next = following;
+  }
+  edges.push(Infinity);
+  return edges;
+}
+
 export function grid(x, y, weights, xEdges, yEdges, selection = null) {
   validate(weights, selection);
   if (x.length !== weights.length || y.length !== weights.length) throw new Error('World arrays must match');
