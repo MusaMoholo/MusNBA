@@ -152,6 +152,7 @@ Dashboard routes: `#/standings/{forecast,seeds,wins,ratings,picture,races,movers
 | `scripts/a1_branch_world_probe.py` | Isolated fixed-F4 branch replay, no-op event-lineup capture and independent world accounting; diagnostic only |
 | `scripts/a2_residual_dependence.py` | Frozen F4 player/team residual covariance diagnostic with role-centred, game-cluster bootstrap intervals; actual-participant research only |
 | `scripts/a2_shot_residuals.py` | Frozen F1–F3 teacher-forced shooting-residual feasibility screen with source alignment and game-cluster intervals; not a calibrated form model |
+| `scripts/a2_shot_persistence.py` | Frozen earlier-fold cross-game shooting-residual screen with player/game bootstrap; not a talent-posterior estimate |
 | `scripts/a1_substitution_world_capture.py`, `scripts/a1_substitution_world_audit.py` | Research-only raw world/lineup capture and independent player-minute, legal-five and score replay; enable with backtest `--audit-substitution-worlds` |
 | `scripts/matchups.py` | D30 implicit matchups: soft assignment of defenders to shooters from foul/block credits; shot types from the play text |
 | `scripts/fetch_nbastats.py` | D32 NBA Stats adapter (browser fetch headers, ~1 request/s, resumable): season logs, `boxscorematchupsv3`, tracking defence, play-by-play v3 → `data/raw/nbastats/<endpoint>/<season>/` (gzip + manifest) |
