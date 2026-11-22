@@ -360,6 +360,23 @@ simulated-world comparison, with the original player-first gates.
 shots from in-panel missing/wrong-team/unknown roles; it reproduces all first-run estimates and intervals exactly.
 This is a fixed-panel screen, not an all-validation-games estimate.
 
+**Cross-game persistence feasibility, frozen before measurement:** using the same fingerprint-checked F1–F3
+control-shot predictions, fixed role panels, eligibility exclusions and two-shot player-games, group separately by
+fold, prior role and player; retain groups appearing in at least two distinct games. Within each fold and role,
+centre shot residuals by that cohort's shot-weighted mean. For each player-role-fold, average products across
+shots in **different** games only, weighting each game pair by its number of cross-game shot pairs; then average
+player-role-fold estimates equally. Report each fold and pooled F1–F3, all roles and each role, with shots,
+player-games, distinct games, player-role-fold groups and cross-game shot-pair counts. Require at least **50 games,
+100 player-games and 30 distinct player-role-fold groups** for a cohort.
+
+Use **10,000 two-way pigeonhole bootstrap replicates**, seed **20261122**: within each fold independently resample
+complete game IDs and player IDs with replacement, retain every eligible row for each drawn cluster, and recompute
+fold/role centres and player-level estimates. Products remain between distinct original games; duplicate draws of
+the same game do not create an artificial self-pair. Report the 2.5/97.5 percentiles and fail explicitly if a
+replicate has no eligible pairs. This exploratory persistence statistic still mixes talent, sustained form,
+opponents and model misspecification; an association is not a separately identified talent posterior or a
+simulated-world comparison. Do not select or promote a draw from it alone.
+
 #### S03 signal-diagnosis specification — 22 Nov, before the diagnosis
 
 The fixed unit is a team-game side: the **200 unique S01 F4 game IDs** in the manifest, exactly matching the retained

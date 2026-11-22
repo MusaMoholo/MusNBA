@@ -58,7 +58,9 @@ Partial source checkpoint **4dce4a3** was pushed before the UX-delivery nightly.
   explicit and reproduces the first report's estimates exactly. On **595** games / **11,217** player-games, pooled
   shot-residual covariance is **0.001368** (95% **−0.000104 to +0.002874**), inconclusive and unable to identify
   latent talent/form components. Preserve both reports. A2 remains **20%**; the next task needs distinct
-  cutoff-safe component identification, not an unsupported variance draw. No F4 or final-test outcomes entered.
+  cutoff-safe component identification, not an unsupported variance draw. The cross-game persistence feasibility
+  screen and two-way player/game bootstrap are now frozen in TRAINING_PLAN before measurement; implement and
+  independently verify them without touching the live engine. No F4 or final-test outcomes entered.
 - **Prepared, unpublished Pages shell:** isolated worktree `/tmp/musnba-user-ux-pages`, `gh-pages` at `f2932e1`,
   has only `assets/game.mjs`, `assets/players.mjs` and `sw.js` changed from the reviewed data-free shell
   `614f3061d9dc69a41bc4`. The shell passed **18/18** checks with the previous bundle. Do not publish until the new
