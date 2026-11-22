@@ -1220,7 +1220,16 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   require correction and a new screen. In the retained F1 no-report screen strict target-play probability increased
   for **4,390/7,423** candidates, including **2,715** with known play labels, and decreased for none; the largest
   increase was **0.155**. These changes do not demonstrate better availability. The control and NBA-only
-  comparisons are unaffected.
+  comparisons are unaffected. The corrected candidate first redistributes into already-positive legal headroom,
+  using zero-target players only if that is insufficient. In the corrected no-report F1 sensitivity the strict
+  and control target-play Brier are both **0.1211569**; all **7,423** original control and NBA-only rows reproduce
+  to `1e-12` for both F1 screens. The corrected strict maximum team-draw error is **1.14e-13** minutes.
+  The corrected conditional screen is independently reconciled in
+  `analysis/experiments/20261122_a1_s05_minutes_conditional_accounting_corrected.json`: all **17,303** rows
+  and **11** control/NBA-only values per row match the original within `1e-12`, all **13** corrected source/input
+  hashes match, and each fold covers the fixed 200 games/400 team-sides. Strict target means sum to 240 with maximum
+  per-fold error below `3e-13`. Strict-minus-control conditional CRPS is **−1.27e-8 / +3.58e-7 / +2.67e-8 /
+  −5.44e-8** across F1–F4; these minuscule target-only differences are not evidence of an engine improvement.
 - **Historical prior-box minute sensitivities:** the independently audited all-active and fixed no-report fallback
   screens cover F1–F4 respectively **200/200/195/200** games and **400/400/390/400** team-sides. The five F3
   season-opening games have no prior same-season team candidates; their players are not treated as zeroes. The
@@ -1278,6 +1287,27 @@ possessions/points-per-possession split assigns **−0.044 / −0.091 / +0.073**
 **+1.040 / +0.983 / +0.337** to the efficiency term. The score residual is reconstructed, not a stored FTM outcome;
 the model-version streams differ. These identities describe what moved, not which mechanism caused it.
 
+**Teacher-forced versus free-running flow** (`analysis/experiments/20261122_a1_s03_flow_comparison.json`;
+independent accounting `analysis/experiments/20261122_a1_s03_flow_fixed200_accounting.json`): the matched
+1,000-world control reproduced **18,600** original game and **95,612** original player values, and all **17**
+fitted-model hashes. The independent audit checked **86,920** player-period values, **6,384** complete-roster
+team-quarter/component sums, **400** recorded lineup-tick sets and **800** clock values; maximum difference was
+**2.84e-14**. One simulated roster player lacks box output, so that one team-side is excluded from independent
+player-sum accounting. The teacher/free player join contains **4,345** common player-games and one unmatched on
+each side.
+
+On these 200 games, the teacher-forced opponent-defence points/100 loading error is **−1.017** versus **−1.008**
+free-running; the paired free-minus-teacher error change is **+0.009** (95% **−0.195 to +0.211**). Thus the
+observed defence-loading shortfall is already present in conditional replay; the incremental flow contrast is
+inconclusive, not proof rotations are irrelevant. Mean free-minus-recorded segment count is **+0.977** per game
+(95% **−0.484 to +2.392**). Before foul-out replacements, scheduled fives match all five recorded players at
+**10.34%** of valid regulation tick-worlds and match **3.13/5** slots on average. Among common player-games,
+starters' free-running minutes average **+0.669** (95% **+0.298 to +1.037**) versus actual and bench minutes
+**−0.361** (**−0.601 to −0.105**); absolute errors average **4.19 / 5.36 minutes**. Actual-event replay uses
+event-filtered actuals, whereas free-running uses official/player-box outcomes; game state, clock and lineups
+change together. These comparisons locate a descriptive bottleneck, not a causal defence attribution or a
+pre-game availability forecast.
+
 **Player-profile spread** (`analysis/experiments/20261122_a1_s03_profile_spread.json`): among **35,413** fixed-panel
 shots, **378** actors are absent from the recorded offensive five; these remain identifiable shooters for the
 descriptive player profile, but their actor inputs are missing in the cached node. One invalid defensive five is
@@ -1302,3 +1332,12 @@ break, the shooter-profile Q4−Q1 gap is **0.55 pp observed / 3.06 pp predicted
 interval is **−5.01 to −0.01 pp**, also exploratory. Within-zone bin cutpoints use input values only. The **378**
 unknown actor-profile rows are counted, not filled; defender effective exposure is the mean of a valid five, not an
 on-ball attribution. Original source publication/revision timing remains unproven.
+
+**Falsifiable next mechanisms:** (1) the rim matchup quartile gap and defence-loading shortfall already present in
+teacher forcing motivate testing whether the existing matchup signal is under-expressed by the shot node, using a
+training-only, level-preserving calibration; held-out loss and player-first engine comparisons can disconfirm it.
+(2) Rim defender cross-half covariance above profile variance and the independently audited tracking-date
+coverage motivate a separately isolated lagged tracking-defence increment; overlapping five-player exposures,
+selection and unknown historical publication timing make its value uncertain. Missing/unsafe joins, no
+incremental fold gain or failed player/team gates disconfirm promotion. Both protocols are frozen in
+TRAINING_PLAN §8; neither is an attribution of the observed error to an individual defender.

@@ -151,7 +151,6 @@ class AvailabilityCohortTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'positive target'):
             a1_minutes_candidate.redraw(np.zeros(5), np.ones(5) * 48, np.zeros(5), 1, rng)
 
-    @unittest.expectedFailure
     def test_strict_redistribution_preserves_zero_when_active_players_can_fill(self):
         targets = np.array([
             [48.0, 48.0, 48.0, 48.0, 47.9999, 0.0],

@@ -17,7 +17,7 @@ from basketball_common import DERIVED, atomic_bytes, sha256_file, write_json  # 
 from scripts import (a1_availability_cohort, a1_compare, a1_flow_compare, a1_minutes_audit,
                      a1_minutes_candidate, a1_minutes_fold_eval, a1_minutes_unconditional,
                      a1_rotation_diagnose, aggregate, minutes, projection)  # noqa: E402
-from scripts.evaluate import EXPERIMENTS, FOLDS  # noqa: E402
+from scripts.evaluate import FOLDS  # noqa: E402
 
 
 def prior_fallback(cohort: pd.DataFrame, season: int) -> tuple[pd.DataFrame, Path]:
@@ -220,11 +220,11 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--fold', choices=list(FOLDS), required=True)
     parser.add_argument('--worlds', type=int, default=1000)
+    parser.add_argument('--suffix', default='', help='identifier appended to the immutable output names')
     args = parser.parse_args()
     if args.worlds != 1000:
         raise ValueError('the fixed screen uses 1,000 draws')
-    output = EXPERIMENTS / f'20261122_a1_s05_no_report_{args.fold}.json'
-    rows_output = DERIVED / 'experiments' / f'20261122_a1_s05_no_report_{args.fold}.parquet'
+    output, rows_output = a1_minutes_unconditional.output_paths('no_report', args.fold, args.suffix)
     if output.exists() or rows_output.exists():
         raise FileExistsError(f'refusing to overwrite {output} or {rows_output}')
     report, rows, paths = evaluate(args.fold, args.worlds)

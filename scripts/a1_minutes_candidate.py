@@ -58,8 +58,15 @@ def legal_minutes(values: np.ndarray, total: float = 240.0) -> np.ndarray:
     rows[over] *= (total / sums[over])[:, None]
     deficit = total - rows.sum(axis=1)
     room = 48.0 - rows
+    preferred_room = np.where(rows > 0, room, 0.0)
+    preferred_total = preferred_room.sum(axis=1)
+    preferred = (deficit > 0) & (preferred_total > 0)
+    first_fill = np.minimum(deficit[preferred], preferred_total[preferred])
+    rows[preferred] += (first_fill / preferred_total[preferred])[:, None] * preferred_room[preferred]
+    deficit = total - rows.sum(axis=1)
+    room = 48.0 - rows
     room_sum = room.sum(axis=1)
-    needs_fill = deficit > 0
+    needs_fill = deficit > 1e-10
     if (room_sum[needs_fill] <= 0).any():
         raise ValueError('no legal player headroom remains for unallocated minutes')
     rows[needs_fill] += (deficit[needs_fill] / room_sum[needs_fill])[:, None] * room[needs_fill]

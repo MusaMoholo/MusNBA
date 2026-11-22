@@ -1,6 +1,6 @@
 # MusNBA — game plan and progress
 
-Updated **22 November 2026 (dashboard complete/public; A1 S01–S02 complete, S03/S05 underway)**. The single record of scope, progress and decisions. Every agent updates it at
+Updated **22 November 2026 (dashboard complete/public; A1 S01–S03 complete, S04/S05 next)**. The single record of scope, progress and decisions. Every agent updates it at
 every checkpoint (AGENTS.md § Checkpoint protocol). New here? Read [AGENTS.md](AGENTS.md) first, then
 [HANDOFF_NEXT.md](HANDOFF_NEXT.md) — it says exactly what to do next.
 
@@ -77,7 +77,7 @@ Slates are US Eastern game dates; tip-offs show UK time with ET alongside.
 | 0 | Discovery, data probe, plan | `██████████` done |
 | 1 | App shell, season stats, placeholder projections | `██████████` done — public Pages/iCloud live; real iPhone install/import acceptance pending |
 | 1b | Per-period Game Centre (owner spec), play-by-play parser, quarter-aware placeholder | `██████████` done |
-| 2 | Possession engine (data → models → engine → backtest) | `████████░░` **M1–M5b, M6a done · engine v1.3 is the app's default (D34), 10,000 worlds per game (D36) · backtest (M9) is the gate · NBA Stats matchups ingested; real-matchup defence not promoted (D37): team differences remain compressed (pool-0 offence ~64%, defence ~40% of observed effect) — A1 S01 complete; S02–S09 next** |
+| 2 | Possession engine (data → models → engine → backtest) | `████████░░` **M1–M5b, M6a done · engine v1.3 is the app's default (D34), 10,000 worlds per game (D36) · backtest (M9) is the gate · NBA Stats matchups ingested; real-matchup defence not promoted (D37): team differences remain compressed (pool-0 offence ~64%, defence ~40% of observed effect) — A1 S01–S03 complete; S04/S05 next** |
 | 3 | Evaluation and nightly feedback (Forecast Lab view, refit cadence) | `███░░░░░░░` **Forecast Lab page (`#/lab`), nightly projected-v-actual starters record (D33); refit cadence not started; A1 S11/S13 adds confirmation and versioned historical replay** |
 | 4 | Season on the engine: pathway calibration, availability, tiebreakers, play-in, Cup, what-ifs | `██░░░░░░░░` **team pathway v1 in the app (D25): per-world ratings, engine worlds for today + tomorrow; walk-forward calibration first cut (M12); A1 S07/S10 extends availability and calibration** |
 | 5 | Polish: hosting, iPhone acceptance, watch-a-sim, more views | `█████░░░░░` **Dashboard U1–U22 complete (22 Nov); personal GitHub Pages + iCloud flow follows MusSim; real iPhone acceptance and watch-a-sim remain** |
@@ -108,7 +108,7 @@ Each subtask ends with evidence, current docs and a commit/push checkpoint (AGEN
 | M11 | Availability model | ☐ **A1 S07/S08/S10**: report coverage, play/start probabilities, branches and future absences | Held-out calibration and games-missed realism where dated development data supports them; honest fallbacks otherwise | Planned |
 | M12 | Season pathway calibration | ◐ **first cut (20 Nov): team pathway v1 in the app** — walk-forward 2022-26 (480 team-starts): dispersion 1.00 (fixed probabilities 1.53), 10–90% coverage 84% (65%), CRPS −4% in every held-out season; still wide in November (0.84) and surprises fade with the date (sim 0.52 → 0.18 v real 0.40 flat) | Dispersion ≈ 1.0 **at every start date**, persistence matches | `pathway.py`, `season_backtest.py` |
 | UX | Dashboard upgrade programme U1–U22 | ✅ **22 Nov:** all 22 shipped; U15–U22 adds roster roles, playoff picture, win ranges, races/movers/leaders inside Standings and model guide; 156 full + 12 final layout browser checks, hosted PWA 15/15 | Checked at 1440/960/390, both themes, stored data only | DASHBOARD_PLAN.md |
-| A1 | Expanded accuracy/robustness programme | ◐ **20.8% — S01–S02 complete, S03 50%, S05 60%, 22 Nov**; 14 tasks, fixed weights, 140 rungs | Gates in §6b; final nightly + versioned history + successor chunk | HANDOFF § Progress ladders |
+| A1 | Expanded accuracy/robustness programme | ◐ **24.8% — S01–S03 complete, S05 60%, 22 Nov**; 14 tasks, fixed weights, 140 rungs | Gates in §6b; final nightly + versioned history + successor chunk | HANDOFF § Progress ladders |
 
 ### 6a. Next chunk — A1: player accuracy, defence and trustworthy season paths
 
@@ -151,6 +151,16 @@ pause it for nightly provider fetches. Only one engine backtest at a time (measu
 has a retained log and deterministic resume information. Do not launch speculative full grids: S03 selects two or
 three plausible levers; screen cheaply, reject poor candidates, then broaden confirmation for survivors. Dependencies
 mean documented decisions, not mandatory promotion of every module; a rejected component leaves its control in place.
+
+**S03 → S04 candidate matrix (frozen, not promoted):**
+
+| Family | Evidence and predicted effect | Disconfirmation / required control |
+|---|---|---|
+| Rim matchup-expression calibration | Rim quartiles show more observed than predicted spread; training-tail calibration may express existing player/lineup signal without changing mean predicted make rate | Reject on paired fold shot loss or player-first engine gates; same baseline, games, seeds and strictly prior fold fits |
+| Incremental tracking defence | Independent cross-half profile and source-coverage audits motivate testing defended-shot information through the defensive five | Reject unsafe/missing joins, lack of independent paired fold gain or failed player/team gates; do not relabel old v1.4e |
+
+Both observations are descriptive; F4 suggested the hypotheses and cannot serve as sole independent confirmation.
+FINDINGS §6b records uncertainty and TRAINING_PLAN §8 fixes the test protocol and provenance limitations.
 
 **Larger scope, unchanged floor:** the chunk may span sessions. Each S completion earns a high-level owner summary:
 what changed/was added, what the measured result was, what remains, commit and push status. No execution begins in the
@@ -598,6 +608,24 @@ face cards and unrelated presentation remain §9b backlog. NBA history moved to 
 - **22 Nov 2026 · A1 S03 50%:** traced the saved F4 shot node on **35,413** aligned shots, by shooter, zone, usage,
   matchup and exposure. Rim matchup-profile quartiles differ **6.66 pp observed / 3.65 pp predicted**; post hoc
   game-clustered gap interval **0.25–5.73 pp**, exploratory and unadjusted. No candidate has been promoted.
+- **22 Nov 2026 · A1 S03 60%:** the **200-game** free-running capture reproduced **114,212** original game/player
+  values and all **17** model hashes; independent quarter, lineup and clock accounting passed except one explicitly
+  incomplete roster side. Defence-loading error is **−1.017** in teacher forcing and **−1.008** free-running;
+  their paired change **+0.009** (95% **−0.195 to +0.211**) does not locate additional loss in flow. Starters'
+  minutes are **+0.669**, bench **−0.361** against actuals. These are descriptive conditional diagnostics.
+- **22 Nov 2026 · A1 S03 70%:** the rejected v1.4c/e/f shared-pool variants' total shifts were **+0.996 / +0.893 /
+  +0.411 points per game**. Exact two-/three-point and residual score terms, FTA, offensive rebounds and the
+  pace/efficiency split are recorded in FINDINGS §6b; differing model-version streams preclude causal attribution.
+- **22 Nov 2026 · A1 S03 80%:** froze two falsifiable S04 families: training-only rim matchup-expression
+  calibration with the predicted make level preserved, and an isolated pre-origin tracking-defence increment through
+  the defending five. Both retain player-first fold/engine gates; F4 observations are hypothesis-generating, not
+  independent confirmation. Protocol and disconfirming conditions are in TRAINING_PLAN §8.
+- **22 Nov 2026 · A1 S03 90%:** linked each frozen mechanism to the matched node, profile, flow and
+  tracking-coverage evidence in FINDINGS §6b, including population, missingness and non-causal limitations.
+  Final checkpoint checks then passed.
+- **22 Nov 2026 · A1 S03 complete:** matched flow and replay independently reconciled; both defence families
+  have falsifiable cutoff-safe protocols. Smoke **102/102**, deliberate fault exited 1 with **80/102**, and
+  **30** focused tests passed. No model or PWA promotion; S04 and the concurrent S05 minute screens follow.
 - **22 Nov 2026 · A1 S05 10–20%:** separated membership, physical availability, rotation entry, starts, healthy role
   and conditional/unconditional minutes. The 200-game prior-box audit found **73** All-Star rows incorrectly labelled
   regular season; NBA-only reconstruction restores **12** memberships. Audited **7,317** candidates, including
@@ -615,8 +643,7 @@ face cards and unrelated presentation remain §9b backlog. NBA history moved to 
 - **22 Nov 2026 · A1 S05 60%:** exposed short-roster target underfill and >48-minute allocations; isolated strict
   runtime allocation conserves 240 to **1.43e-13 min** across 50,000 synthetic draws and all **400** fixed-panel
   absence cascades. It remains separate from the history filter and from production.
-- **22 Nov 2026 · A1 S03/S05 ongoing:** the matched free-running flow diagnostic reached **180/200** games; the
-  four-fold conditional minute screen covered **17,303** participants. The first strict allocator can turn a zero
-  target positive during redistribution, distorting target-play Brier; its results are provisional. A reproducing
-  test is temporarily expected to fail until the candidate and screens are corrected. Production and PWA remain
-  unchanged. See HANDOFF for live job counts, source hashes and exact resumption steps.
+- **22 Nov 2026 · A1 S05 ongoing:** the first strict allocator distorted target-play Brier by turning a zero target
+  positive; the original source is preserved in `ab32eda`. The corrected candidate passes **30** focused tests.
+  Its **17,303** conditional participant rows independently reproduce original control/NBA-only values;
+  unconditional screens are still running and are not injury forecasts. Production and PWA remain unchanged.

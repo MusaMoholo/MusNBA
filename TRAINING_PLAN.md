@@ -1,7 +1,8 @@
 # Training plan — models for the possession engine
 
 **Updated 22 November 2026.** Serving engine **v1.3**, 16 decision models, D29 minutes and D30 defence inputs;
-real-matchup candidates v1.4c/e/f were rejected (D37). A1 is in its S01 baseline audit. Historical
+real-matchup candidates v1.4c/e/f were rejected (D37). A1 S01–S03 are complete; S04 defence experiments and S05
+minute screening follow. Historical
 M5 results remain in FINDINGS §3g–§3h; current contracts and promotion/replay gates are in §8 below. Progress and scope
 live in [PLAN.md](PLAN.md) and [HANDOFF_NEXT.md](HANDOFF_NEXT.md).
 
@@ -402,6 +403,29 @@ do not prove which five was on court at every simulated event. Compare teacher-f
 pre-game role cohorts with paired game-cluster intervals, keeping each source's actual accounting separate; quarter
 and lineup/clock measurements are supporting diagnostics, not a causal isolation of each mechanism. This
 instrumentation and comparison are specified before running the expanded control, not a model-promotion test.
+
+S03's two S04 mechanism families are frozen after the full matched-flow audit, before their candidate runs:
+
+1. **Rim node expression.** Test a training-tail-fitted, zone-specific additive log-odds response to the existing
+   implicit player/defender matchup input on actual rim shots. Preserve the baseline training-tail mean predicted
+   make rate when fitting the response; missing matchup inputs retain the unchanged baseline prediction. Fit all
+   coefficients and centring using that fold's earlier training data only, and keep the original three-class
+   make/and-one ratio. The exploratory F4 trace predicts more matchup-profile expression at the rim, but the
+   positive contrast is confounded and post hoc. Reject the family if paired held-out shot loss or independently
+   confirmed player-first engine gates do not improve; increased spread alone is not success.
+2. **Incremental tracking defence.** From retained dated NBA tracking responses, test strictly pre-origin
+   player-level defended-shot counts/rates, aggregated through the actual or simulated defensive five, as a
+   separate increment over the same baseline. Join person to team through the dated game log, not the unreliable
+   latest-team field; retain unknown rates and audit all date/identity/five coverage. The provider's
+   `Less Than 6Ft` and `3 Pointers` categories must be described as source buckets, not assumed on-ball matchups.
+   Predict better rim/three-quality calibration without inflating the score level; disconfirm on paired fold loss,
+   missing-coverage/cutoff failures or the original player-first and team non-inferiority gates. Do not treat
+   v1.4e's mixed real-matchup-plus-deterrence result as this isolated ablation.
+
+Both use the exact S01 controls, fixed game sets, seeds and thresholds where applicable; F4 suggested these
+hypotheses, so F1–F3 and the predeclared confirmation/second-stream tests are essential independent checks. The
+tracking files' original publication/revision timing remains unproven. Neither family may use final-season
+results for selection, and a node-only gain never constitutes a model promotion.
 
 #### S01 population separation — 22 Nov, before availability candidates
 

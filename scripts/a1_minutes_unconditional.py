@@ -22,6 +22,15 @@ from scripts import (a1_availability_cohort, a1_compare, a1_flow_compare, a1_min
 from scripts.evaluate import EXPERIMENTS, FOLDS  # noqa: E402
 
 
+def output_paths(kind: str, fold: str, suffix: str = '') -> tuple[Path, Path]:
+    if kind not in ('unconditional', 'no_report') or fold not in FOLDS:
+        raise ValueError('unsupported historical minute screen or fold')
+    if suffix and not suffix.isidentifier():
+        raise ValueError('screen suffix must be a Python identifier')
+    stem = f'20261122_a1_s05_{kind}_{fold}' + (f'_{suffix}' if suffix else '')
+    return EXPERIMENTS / f'{stem}.json', DERIVED / 'experiments' / f'{stem}.parquet'
+
+
 def fixed_games(manifest: dict, fold: str) -> tuple[pd.DataFrame, Path]:
     games = a1_minutes_fold_eval.fold_games(manifest, fold)
     end = FOLDS[fold][2]
@@ -208,11 +217,11 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--fold', choices=list(FOLDS), required=True)
     parser.add_argument('--worlds', type=int, default=1000)
+    parser.add_argument('--suffix', default='', help='identifier appended to the immutable output names')
     args = parser.parse_args()
     if args.worlds != 1000:
         raise ValueError('the fixed screen uses 1,000 draws')
-    output = EXPERIMENTS / f'20261122_a1_s05_unconditional_{args.fold}.json'
-    rows_output = DERIVED / 'experiments' / f'20261122_a1_s05_unconditional_{args.fold}.parquet'
+    output, rows_output = output_paths('unconditional', args.fold, args.suffix)
     if output.exists() or rows_output.exists():
         raise FileExistsError(f'refusing to overwrite {output} or {rows_output}')
     report, rows, paths = evaluate(args.fold, args.worlds)

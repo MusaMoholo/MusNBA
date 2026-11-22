@@ -1,0 +1,1551 @@
+{
+ "experiment": "a1_s05_prior_roster_unconditional_minutes_screen",
+ "fold": "F1",
+ "games": 200,
+ "worlds": 1000,
+ "fold_cutoff": "2024-01-01",
+ "method": "Construct each team roster only from its latest uniquely observed prior box team, treat every candidate as physically available, and draw allocations from D29 latest states rebuilt strictly before each origin. Score known zero-minute DNPs and known positive regulation minutes; unknown statuses remain unscored but stay in the allocation. Previous pregame profile tiers are joined strictly before the origin. Fold ramp and residual distributions use pre-validation fits.",
+ "limitations": "This is a no-injury-information all-candidates-active sensitivity, not the production historical pregame forecast or a complete unconditional accuracy estimate. DNPs include injuries; unlisted candidates, missing on-court minutes and new roster members are not invented. Prior boxes lack publication timestamps. Tier definitions use the latest earlier profile, not S01 same-game profiles. Targets are not the full engine.",
+ "candidate_coverage": {
+  "experiment": "a1_prior_box_availability_coverage",
+  "control_run": "A1 preregistered fixed games",
+  "fold": "F1",
+  "season": 2024,
+  "games": 200,
+  "method": "Construct each game/team candidate universe from same-season box records strictly before its date; assign each player to their latest uniquely observed team, then join the current box for coverage only.",
+  "labels": "DNP is not played; non-DNP positive box minutes is played; zero/missing minutes and unlisted players remain unknown. No probability or predictive accuracy is evaluated.",
+  "candidate_player_games": 7423,
+  "known_play_labels": 5218,
+  "played_labels": 4358,
+  "dnp_labels": 860,
+  "unlisted_candidates": 2177,
+  "listed_unknown_play_labels": 28,
+  "observed_box_player_games": 5285,
+  "box_player_games_outside_universe": 39,
+  "unseen_positive_minute_player_games": 20,
+  "games_with_unseen_positive_minute_players": 16,
+  "outside_universe_dnp_player_games": 18,
+  "outside_universe_unknown_play_labels": 1,
+  "same_day_conflicting_team_listings": 16,
+  "raw_box_rows_without_player_id": 0,
+  "raw_box_rows_without_team_id": 0,
+  "non_nba_team_box_rows": 24,
+  "non_nba_team_games": 1,
+  "non_nba_team_ids": [
+   "31",
+   "32"
+  ],
+  "team_games_without_prior_candidates": [],
+  "origin_dates_with_ambiguous_latest_teams": {},
+  "limitations": "Prior boxes are retrospectively retained, without historical publication/correction timestamps; inferred membership is not an official dated roster or injury report. Unlisted players and zero/missing minutes remain unknown; later listings are diagnostic only."
+ },
+ "labels": {
+  "candidates": 7423,
+  "labelled_plays": 4358,
+  "labelled_dnps": 860,
+  "unknown_play": 2205,
+  "unlisted": 2177,
+  "known_regulation_actual": 5218,
+  "source_conflicts_excluded_from_minute_scores": 0,
+  "positive_box_minutes_without_on_court_regulation": 0
+ },
+ "minute_results_by_prior_profile_tier": {
+  "all": {
+   "control_crps": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": 5.038793830615811,
+    "ci_95": [
+     4.771173970664635,
+     5.316088106920033
+    ]
+   },
+   "control_bias": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": -3.350653437991962,
+    "ci_95": [
+     -3.580804741399321,
+     -3.126633484139464
+    ]
+   },
+   "control_covered": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": 0.6456496742046761,
+    "ci_95": [
+     0.6259383431878844,
+     0.6656520966337294
+    ]
+   },
+   "nba_only_crps": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": 5.041903461899425,
+    "ci_95": [
+     4.77354355913818,
+     5.318570754792611
+    ]
+   },
+   "nba_only_bias": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": -3.3501416148881087,
+    "ci_95": [
+     -3.58115359509994,
+     -3.125632126194254
+    ]
+   },
+   "nba_only_covered": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": 0.6443081640475278,
+    "ci_95": [
+     0.6245196529798324,
+     0.6643849290512155
+    ]
+   },
+   "strict_crps": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": 5.038793826258574,
+    "ci_95": [
+     4.771173966268804,
+     5.316088099350474
+    ]
+   },
+   "strict_bias": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": -3.3506534014881355,
+    "ci_95": [
+     -3.58080471805269,
+     -3.1266334619133818
+    ]
+   },
+   "strict_covered": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": 0.6456496742046761,
+    "ci_95": [
+     0.6259383431878844,
+     0.6656520966337294
+    ]
+   },
+   "combined_crps": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": 5.041903457028806,
+    "ci_95": [
+     4.773543554503268,
+     5.3185707517113086
+    ]
+   },
+   "combined_bias": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": -3.3501415778099264,
+    "ci_95": [
+     -3.5811535524057008,
+     -3.125632066794273
+    ]
+   },
+   "combined_covered": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": 0.6443081640475278,
+    "ci_95": [
+     0.6245196529798324,
+     0.6643849290512155
+    ]
+   },
+   "nba_only_minus_control_crps": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": 0.003109631283614894,
+    "ci_95": [
+     -0.0010381115295040404,
+     0.0073860511943078695
+    ]
+   },
+   "nba_only_minus_control_bias": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": 0.0005118231038529734,
+    "ci_95": [
+     -0.0023070148127845927,
+     0.0031740004525727403
+    ]
+   },
+   "nba_only_minus_control_covered": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": -0.0013415101571483327,
+    "ci_95": [
+     -0.003058118590828494,
+     0.00019175455417066154
+    ]
+   },
+   "strict_minus_control_crps": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": -4.357236848148816e-09,
+    "ci_95": [
+     -1.1464340312878218e-08,
+     1.7904839216444004e-09
+    ]
+   },
+   "strict_minus_control_bias": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": 3.650382664518434e-08,
+    "ci_95": [
+     1.4784817317248904e-08,
+     7.202635181134312e-08
+    ]
+   },
+   "strict_minus_control_covered": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": 0.0,
+    "ci_95": [
+     0.0,
+     0.0
+    ]
+   },
+   "combined_minus_control_crps": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": 0.003109626412996414,
+    "ci_95": [
+     -0.0010381187829617367,
+     0.0073860383517216485
+    ]
+   },
+   "combined_minus_control_bias": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": 0.0005118601820358765,
+    "ci_95": [
+     -0.002306988985792072,
+     0.003174060549159235
+    ]
+   },
+   "combined_minus_control_covered": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": -0.0013415101571483327,
+    "ci_95": [
+     -0.003058118590828494,
+     0.00019175455417066154
+    ]
+   }
+  },
+  "star": {
+   "control_crps": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": 3.8524174339517785,
+    "ci_95": [
+     3.374813978742354,
+     4.369010476222998
+    ]
+   },
+   "control_bias": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": -1.8440829180448914,
+    "ci_95": [
+     -2.70772850538192,
+     -0.9643607252532249
+    ]
+   },
+   "control_covered": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": 0.703125,
+    "ci_95": [
+     0.646151202749141,
+     0.759075907590759
+    ]
+   },
+   "nba_only_crps": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": 3.821103209799895,
+    "ci_95": [
+     3.3498748925010315,
+     4.334044815614605
+    ]
+   },
+   "nba_only_bias": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": -1.734571848567247,
+    "ci_95": [
+     -2.5953461961019118,
+     -0.847642983306862
+    ]
+   },
+   "nba_only_covered": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": 0.709375,
+    "ci_95": [
+     0.6535922879790214,
+     0.7639760713827662
+    ]
+   },
+   "strict_crps": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": 3.852417431945832,
+    "ci_95": [
+     3.3748139755445408,
+     4.369010473959327
+    ]
+   },
+   "strict_bias": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": -1.8440829108504118,
+    "ci_95": [
+     -2.707728500218921,
+     -0.9643607167533932
+    ]
+   },
+   "strict_covered": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": 0.703125,
+    "ci_95": [
+     0.646151202749141,
+     0.759075907590759
+    ]
+   },
+   "combined_crps": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": 3.8211032080029392,
+    "ci_95": [
+     3.349874889455864,
+     4.334044813984077
+    ]
+   },
+   "combined_bias": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": -1.734571841089694,
+    "ci_95": [
+     -2.5953461887257276,
+     -0.8476429742210824
+    ]
+   },
+   "combined_covered": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": 0.709375,
+    "ci_95": [
+     0.6535922879790214,
+     0.7639760713827662
+    ]
+   },
+   "nba_only_minus_control_crps": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": -0.031314224151883355,
+    "ci_95": [
+     -0.06598713091195105,
+     0.001317819272604408
+    ]
+   },
+   "nba_only_minus_control_bias": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": 0.10951106947764466,
+    "ci_95": [
+     0.06907720830889756,
+     0.15384355299683536
+    ]
+   },
+   "nba_only_minus_control_covered": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": 0.00625,
+    "ci_95": [
+     -0.006134969325153374,
+     0.019230769230769232
+    ]
+   },
+   "strict_minus_control_crps": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": -2.0059458052945622e-09,
+    "ci_95": [
+     -3.5114840073640627e-09,
+     -6.350893872841328e-10
+    ]
+   },
+   "strict_minus_control_bias": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": 7.1944798341050385e-09,
+    "ci_95": [
+     5.100783401125693e-09,
+     9.558274156930719e-09
+    ]
+   },
+   "strict_minus_control_covered": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": 0.0,
+    "ci_95": [
+     0.0,
+     0.0
+    ]
+   },
+   "combined_minus_control_crps": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": -0.03131422594883881,
+    "ci_95": [
+     -0.06598713203177314,
+     0.0013178188429557656
+    ]
+   },
+   "combined_minus_control_bias": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": 0.10951107695519773,
+    "ci_95": [
+     0.06907721642716895,
+     0.1538435601115717
+    ]
+   },
+   "combined_minus_control_covered": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": 0.00625,
+    "ci_95": [
+     -0.006134969325153374,
+     0.019230769230769232
+    ]
+   }
+  },
+  "starter": {
+   "control_crps": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": 4.402717341552948,
+    "ci_95": [
+     4.129345862321,
+     4.682935127506193
+    ]
+   },
+   "control_bias": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": -1.603960932414554,
+    "ci_95": [
+     -2.092005540942682,
+     -1.0960256714504009
+    ]
+   },
+   "control_covered": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": 0.6652360515021459,
+    "ci_95": [
+     0.6360309949999964,
+     0.6948848015079904
+    ]
+   },
+   "nba_only_crps": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": 4.406157229363572,
+    "ci_95": [
+     4.132260087909727,
+     4.686187162486302
+    ]
+   },
+   "nba_only_bias": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": -1.600766078514171,
+    "ci_95": [
+     -2.0891793762882114,
+     -1.091191627304415
+    ]
+   },
+   "nba_only_covered": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": 0.6646229307173513,
+    "ci_95": [
+     0.6349495084103293,
+     0.6945812807881774
+    ]
+   },
+   "strict_crps": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": 4.402717338041327,
+    "ci_95": [
+     4.129345861057729,
+     4.682935116613762
+    ]
+   },
+   "strict_bias": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": -1.6039608989483936,
+    "ci_95": [
+     -2.0920055050330544,
+     -1.0960256254796303
+    ]
+   },
+   "strict_covered": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": 0.6652360515021459,
+    "ci_95": [
+     0.6360309949999964,
+     0.6948848015079904
+    ]
+   },
+   "combined_crps": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": 4.4061572257526676,
+    "ci_95": [
+     4.13226008287867,
+     4.686187158438599
+    ]
+   },
+   "combined_bias": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": -1.6007660449880239,
+    "ci_95": [
+     -2.089179355893392,
+     -1.0911915959307552
+    ]
+   },
+   "combined_covered": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": 0.6646229307173513,
+    "ci_95": [
+     0.6349495084103293,
+     0.6945812807881774
+    ]
+   },
+   "nba_only_minus_control_crps": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": 0.0034398878106239746,
+    "ci_95": [
+     -0.0021941014956506927,
+     0.009482082827153314
+    ]
+   },
+   "nba_only_minus_control_bias": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": 0.003194853900383113,
+    "ci_95": [
+     -0.004811280251226663,
+     0.010611061686528136
+    ]
+   },
+   "nba_only_minus_control_covered": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": -0.0006131207847946045,
+    "ci_95": [
+     -0.003123048094940662,
+     0.0018610421836228288
+    ]
+   },
+   "strict_minus_control_crps": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": -3.511620387077206e-09,
+    "ci_95": [
+     -1.492027131709493e-08,
+     6.593032218914174e-09
+    ]
+   },
+   "strict_minus_control_bias": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": 3.3466160459104736e-08,
+    "ci_95": [
+     1.2606206913544433e-08,
+     6.279786260274518e-08
+    ]
+   },
+   "strict_minus_control_covered": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": 0.0,
+    "ci_95": [
+     0.0,
+     0.0
+    ]
+   },
+   "combined_minus_control_crps": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": 0.003439884199719817,
+    "ci_95": [
+     -0.0021941061266575385,
+     0.009482073408770058
+    ]
+   },
+   "combined_minus_control_bias": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": 0.0031948874265304733,
+    "ci_95": [
+     -0.004811240292081708,
+     0.010611089564543411
+    ]
+   },
+   "combined_minus_control_covered": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": -0.0006131207847946045,
+    "ci_95": [
+     -0.003123048094940662,
+     0.0018610421836228288
+    ]
+   }
+  },
+  "bench": {
+   "control_crps": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": 5.491795590941574,
+    "ci_95": [
+     5.153806448147505,
+     5.835558633060681
+    ]
+   },
+   "control_bias": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": -4.399070070955293,
+    "ci_95": [
+     -4.813534402110284,
+     -3.9989488713208687
+    ]
+   },
+   "control_covered": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": 0.6289774482545567,
+    "ci_95": [
+     0.6054609663916053,
+     0.6524283389311717
+    ]
+   },
+   "nba_only_crps": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": 5.498152629981314,
+    "ci_95": [
+     5.160494413002052,
+     5.8415500289148765
+    ]
+   },
+   "nba_only_bias": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": -4.410598654508013,
+    "ci_95": [
+     -4.824385660289991,
+     -4.010719882011582
+    ]
+   },
+   "nba_only_covered": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": 0.6265060240963856,
+    "ci_95": [
+     0.602781856762157,
+     0.6500615006150061
+    ]
+   },
+   "strict_crps": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": 5.491795585805497,
+    "ci_95": [
+     5.153806445058323,
+     5.835558630038392
+    ]
+   },
+   "strict_bias": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": -4.399070029877035,
+    "ci_95": [
+     -4.813534321481833,
+     -3.9989488586237965
+    ]
+   },
+   "strict_covered": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": 0.6289774482545567,
+    "ci_95": [
+     0.6054609663916053,
+     0.6524283389311717
+    ]
+   },
+   "combined_crps": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": 5.498152624052751,
+    "ci_95": [
+     5.160494408663713,
+     5.841550025444537
+    ]
+   },
+   "combined_bias": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": -4.410598612553241,
+    "ci_95": [
+     -4.824385609581307,
+     -4.0107198064260565
+    ]
+   },
+   "combined_covered": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": 0.6265060240963856,
+    "ci_95": [
+     0.602781856762157,
+     0.6500615006150061
+    ]
+   },
+   "nba_only_minus_control_crps": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": 0.006357039039739968,
+    "ci_95": [
+     0.0019047161645293915,
+     0.011001853079234205
+    ]
+   },
+   "nba_only_minus_control_bias": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": -0.01152858355271984,
+    "ci_95": [
+     -0.01548651727245794,
+     -0.007826972136869411
+    ]
+   },
+   "nba_only_minus_control_covered": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": -0.002471424158171146,
+    "ci_95": [
+     -0.0043103780147191574,
+     -0.000927070457354759
+    ]
+   },
+   "strict_minus_control_crps": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": -5.13607539534863e-09,
+    "ci_95": [
+     -1.1316753581944502e-08,
+     9.635896280042567e-11
+    ]
+   },
+   "strict_minus_control_bias": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": 4.1078257776483273e-08,
+    "ci_95": [
+     1.6389324005434043e-08,
+     8.388716647961277e-08
+    ]
+   },
+   "strict_minus_control_covered": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": 0.0,
+    "ci_95": [
+     0.0,
+     0.0
+    ]
+   },
+   "combined_minus_control_crps": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": 0.006357033111177111,
+    "ci_95": [
+     0.0019047120117622733,
+     0.011001849604161201
+    ]
+   },
+   "combined_minus_control_bias": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": -0.011528541597948456,
+    "ci_95": [
+     -0.015486474105791083,
+     -0.007826933563708607
+    ]
+   },
+   "combined_minus_control_covered": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": -0.002471424158171146,
+    "ci_95": [
+     -0.0043103780147191574,
+     -0.000927070457354759
+    ]
+   }
+  },
+  "unknown": {
+   "control_crps": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": 3.39594391126652,
+    "ci_95": null
+   },
+   "control_bias": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": -1.2584335072423263,
+    "ci_95": null
+   },
+   "control_covered": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": 0.7666666666666667,
+    "ci_95": null
+   },
+   "nba_only_crps": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": 3.3978910904578266,
+    "ci_95": null
+   },
+   "nba_only_bias": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": -1.267287874852733,
+    "ci_95": null
+   },
+   "nba_only_covered": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": 0.7666666666666667,
+    "ci_95": null
+   },
+   "strict_crps": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": 3.395943919892176,
+    "ci_95": null
+   },
+   "strict_bias": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": -1.258433486538801,
+    "ci_95": null
+   },
+   "strict_covered": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": 0.7666666666666667,
+    "ci_95": null
+   },
+   "combined_crps": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": 3.3978910984671993,
+    "ci_95": null
+   },
+   "combined_bias": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": -1.2672878551060631,
+    "ci_95": null
+   },
+   "combined_covered": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": 0.7666666666666667,
+    "ci_95": null
+   },
+   "nba_only_minus_control_crps": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": 0.001947179191306847,
+    "ci_95": null
+   },
+   "nba_only_minus_control_bias": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": -0.008854367610406795,
+    "ci_95": null
+   },
+   "nba_only_minus_control_covered": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": 0.0,
+    "ci_95": null
+   },
+   "strict_minus_control_crps": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": 8.625656337339175e-09,
+    "ci_95": null
+   },
+   "strict_minus_control_bias": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": 2.070352521273596e-08,
+    "ci_95": null
+   },
+   "strict_minus_control_covered": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": 0.0,
+    "ci_95": null
+   },
+   "combined_minus_control_crps": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": 0.0019471872006791458,
+    "ci_95": null
+   },
+   "combined_minus_control_bias": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": -0.0088543478637372,
+    "ci_95": null
+   },
+   "combined_minus_control_covered": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": 0.0,
+    "ci_95": null
+   }
+  }
+ },
+ "play_brier_by_prior_profile_tier": {
+  "all": {
+   "control_play_brier": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": 0.12638950670755078,
+    "ci_95": [
+     0.12103071475800771,
+     0.13181321370828544
+    ]
+   },
+   "nba_only_play_brier": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": 0.12647451264852436,
+    "ci_95": [
+     0.12113018643212932,
+     0.1318741539290771
+    ]
+   },
+   "nba_only_minus_control_play_brier": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": 8.500594097355295e-05,
+    "ci_95": [
+     -5.9206395387676215e-05,
+     0.00023360205256110997
+    ]
+   },
+   "strict_play_brier": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": 0.12638950670755078,
+    "ci_95": [
+     0.12103071475800771,
+     0.13181321370828544
+    ]
+   },
+   "strict_minus_control_play_brier": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": 0.0,
+    "ci_95": [
+     0.0,
+     0.0
+    ]
+   },
+   "combined_play_brier": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": 0.12647451264852436,
+    "ci_95": [
+     0.12113018643212932,
+     0.1318741539290771
+    ]
+   },
+   "combined_minus_control_play_brier": {
+    "observations": 5218,
+    "games": 200,
+    "missing": 2205,
+    "status": "ok",
+    "mean": 8.500594097355295e-05,
+    "ci_95": [
+     -5.9206395387676215e-05,
+     0.00023360205256110997
+    ]
+   }
+  },
+  "star": {
+   "control_play_brier": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": 0.03125,
+    "ci_95": [
+     0.014491706458909275,
+     0.05095703886650199
+    ]
+   },
+   "nba_only_play_brier": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": 0.03125,
+    "ci_95": [
+     0.014491706458909275,
+     0.05095703886650199
+    ]
+   },
+   "nba_only_minus_control_play_brier": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": 0.0,
+    "ci_95": [
+     0.0,
+     0.0
+    ]
+   },
+   "strict_play_brier": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": 0.03125,
+    "ci_95": [
+     0.014491706458909275,
+     0.05095703886650199
+    ]
+   },
+   "strict_minus_control_play_brier": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": 0.0,
+    "ci_95": [
+     0.0,
+     0.0
+    ]
+   },
+   "combined_play_brier": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": 0.03125,
+    "ci_95": [
+     0.014491706458909275,
+     0.05095703886650199
+    ]
+   },
+   "combined_minus_control_play_brier": {
+    "observations": 320,
+    "games": 180,
+    "missing": 81,
+    "status": "ok",
+    "mean": 0.0,
+    "ci_95": [
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "starter": {
+   "control_play_brier": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": 0.04620130165542612,
+    "ci_95": [
+     0.03565277974488685,
+     0.0572865778668792
+    ]
+   },
+   "nba_only_play_brier": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": 0.04636027345187002,
+    "ci_95": [
+     0.03581818678617077,
+     0.057434790908968004
+    ]
+   },
+   "nba_only_minus_control_play_brier": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": 0.00015897179644389935,
+    "ci_95": [
+     -4.895615807998427e-06,
+     0.0003693942841177966
+    ]
+   },
+   "strict_play_brier": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": 0.04620130165542612,
+    "ci_95": [
+     0.03565277974488685,
+     0.0572865778668792
+    ]
+   },
+   "strict_minus_control_play_brier": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": 0.0,
+    "ci_95": [
+     0.0,
+     0.0
+    ]
+   },
+   "combined_play_brier": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": 0.04636027345187002,
+    "ci_95": [
+     0.03581818678617077,
+     0.057434790908968004
+    ]
+   },
+   "combined_minus_control_play_brier": {
+    "observations": 1631,
+    "games": 200,
+    "missing": 385,
+    "status": "ok",
+    "mean": 0.00015897179644389935,
+    "ci_95": [
+     -4.895615807998427e-06,
+     0.0003693942841177966
+    ]
+   }
+  },
+  "bench": {
+   "control_play_brier": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": 0.17492983534136547,
+    "ci_95": [
+     0.1692762306557143,
+     0.18050106114277623
+    ]
+   },
+   "nba_only_play_brier": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": 0.17498676397899288,
+    "ci_95": [
+     0.16942237194368542,
+     0.18051997252921215
+    ]
+   },
+   "nba_only_minus_control_play_brier": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": 5.692863762743262e-05,
+    "ci_95": [
+     -0.00015665397188951427,
+     0.0002779893185461362
+    ]
+   },
+   "strict_play_brier": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": 0.17492983534136547,
+    "ci_95": [
+     0.1692762306557143,
+     0.18050106114277623
+    ]
+   },
+   "strict_minus_control_play_brier": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": 0.0,
+    "ci_95": [
+     0.0,
+     0.0
+    ]
+   },
+   "combined_play_brier": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": 0.17498676397899288,
+    "ci_95": [
+     0.16942237194368542,
+     0.18051997252921215
+    ]
+   },
+   "combined_minus_control_play_brier": {
+    "observations": 3237,
+    "games": 200,
+    "missing": 1531,
+    "status": "ok",
+    "mean": 5.692863762743262e-05,
+    "ci_95": [
+     -0.00015665397188951427,
+     0.0002779893185461362
+    ]
+   }
+  },
+  "unknown": {
+   "control_play_brier": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": 0.26327486666666666,
+    "ci_95": null
+   },
+   "nba_only_play_brier": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": 0.26327486666666666,
+    "ci_95": null
+   },
+   "nba_only_minus_control_play_brier": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": 0.0,
+    "ci_95": null
+   },
+   "strict_play_brier": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": 0.26327486666666666,
+    "ci_95": null
+   },
+   "strict_minus_control_play_brier": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": 0.0,
+    "ci_95": null
+   },
+   "combined_play_brier": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": 0.26327486666666666,
+    "ci_95": null
+   },
+   "combined_minus_control_play_brier": {
+    "observations": 30,
+    "games": 27,
+    "missing": 208,
+    "status": "insufficient_sample",
+    "mean": 0.0,
+    "ci_95": null
+   }
+  }
+ },
+ "input_sha256": {
+  "analysis/experiments/20261122_a1_pre_candidate_manifest.json": "195b4ddaf748e4f3520a02f813b5763736fe4fbfbe653e896161532d6d9c7e6b",
+  "data/derived/variants/a1_causal_base_20261122_v2/features/pregame.parquet": "1bd657a66ef42e6f624b860f3ed235896a6a93baa94bb9b6c058ce8ebf74fd28",
+  "data/derived/history/2024/segments.parquet": "4a7c3c2bce39580cc8e1092ffc215d11bbd49f7bf117b4551eee40337203d2c0",
+  "data/raw/hoopr/player_box_2024.parquet": "1e500a538ec45ddbcb58d9789b5494f8db4f25658eafd01d90f2d09600921665",
+  "data/derived/teams.json": "130aa5358d49b944c2b5bee7e9a163f1e53285e93dae57262f039ca1636b7ecc",
+  "scripts/minutes.py": "94dd0ed25e536708c75cd4cf1f386bf2f9fa35f2c334d83cbdd031d4448ba2d0",
+  "scripts/a1_minutes_candidate.py": "57c5efcdea56db9647830d2ba4a4509440d82ad6cb637986b5a1943d02af10cc",
+  "scripts/a1_availability_cohort.py": "6da9e4f6e27431b03918d17bf6e9a8ceac5b6f75ead38debbc4b9f4ef2089c4b",
+  "scripts/a1_minutes_fold_eval.py": "ee630c31d601b239318dc7f5f448750e595c737d98d88f9c774d7a267c088e4b",
+  "scripts/a1_minutes_unconditional.py": "110682da20f17dff0bce9ef9a5587a03d6b7a88515cf55d1d14ebcd26aa8be35",
+  "data/derived/history/2023/on_court.parquet": "ba9b4b13e16e5b839e5530905497d2d00d231413ea40f39ee46855f3ebce8c3b",
+  "data/derived/history/2024/on_court.parquet": "5461947edb052ef9e62b4a70ba49e57a0f98d929f4a19167f03aad3972457f95",
+  "data/derived/history/2025/on_court.parquet": "5bbabab60114aa3f7fa096d7708be96f47177c541debcae88059da6b1adb77e9",
+  "data/derived/history/2026/on_court.parquet": "1b0ffaf53490c3fda4edd28ac427766a0af3a1bfe86f1fece240cd63ed1e8410",
+  "data/raw/hoopr/player_box_2023.parquet": "968d835cd04b10533c5b5af8c0e41bf0154a73782e9446c76f765109223e8679",
+  "data/raw/hoopr/player_box_2025.parquet": "e89f7fbc1124092c715b722e6d72d9dd1b9d28776ca6888b508fd2831cd705e2",
+  "data/raw/hoopr/player_box_2026.parquet": "29a29dc9efd055a93e069a0382ac830d98a13274bee655beba69d95cff099713"
+ }
+}

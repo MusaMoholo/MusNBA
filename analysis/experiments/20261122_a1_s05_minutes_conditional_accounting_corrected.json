@@ -1,0 +1,78 @@
+{
+ "experiment": "a1_s05_conditional_minutes_screen_accounting",
+ "method": "Check fixed keys and dates, original fingerprints, corrected input hashes, unchanged control/NBA-only values, legal strict means and reported fold/tier metrics.",
+ "folds": {
+  "F1": {
+   "games": 200,
+   "team_games": 400,
+   "player_games": 4390,
+   "original_control_and_nba_only_reproduced": {
+    "rows": 4390,
+    "columns": 11,
+    "absolute_tolerance": 1e-12
+   },
+   "maximum_team_mean_minute_error": {
+    "control": 0.0008819756791069722,
+    "nba_only": 0.0008688500794846732,
+    "strict": 2.2737367544323206e-13,
+    "combined": 2.2737367544323206e-13
+   }
+  },
+  "F2": {
+   "games": 200,
+   "team_games": 400,
+   "player_games": 4232,
+   "original_control_and_nba_only_reproduced": {
+    "rows": 4232,
+    "columns": 11,
+    "absolute_tolerance": 1e-12
+   },
+   "maximum_team_mean_minute_error": {
+    "control": 0.007030585348985596,
+    "nba_only": 0.006911069035879791,
+    "strict": 1.9895196601282805e-13,
+    "combined": 2.5579538487363607e-13
+   }
+  },
+  "F3": {
+   "games": 200,
+   "team_games": 400,
+   "player_games": 4332,
+   "original_control_and_nba_only_reproduced": {
+    "rows": 4332,
+    "columns": 11,
+    "absolute_tolerance": 1e-12
+   },
+   "maximum_team_mean_minute_error": {
+    "control": 0.00043584855356471053,
+    "nba_only": 0.00039954140481768263,
+    "strict": 2.2737367544323206e-13,
+    "combined": 2.5579538487363607e-13
+   }
+  },
+  "F4": {
+   "games": 200,
+   "team_games": 400,
+   "player_games": 4349,
+   "original_control_and_nba_only_reproduced": {
+    "rows": 4349,
+    "columns": 11,
+    "absolute_tolerance": 1e-12
+   },
+   "maximum_team_mean_minute_error": {
+    "control": 0.0019109524164377945,
+    "nba_only": 0.0014690123218201734,
+    "strict": 2.2737367544323206e-13,
+    "combined": 2.5579538487363607e-13
+   }
+  }
+ },
+ "input_hashes_checked": 13,
+ "output_sha256": {
+  "analysis/experiments/20261122_a1_s05_minutes_fold_screen.json": "d1cf7ee333a0fab025699a35248a9b0c22fb3f784860bf4d46fb8aefe81ca19b",
+  "data/derived/experiments/20261122_a1_s05_minutes_fold_screen.parquet": "9082ee7f42856202d1546c1300d28aab392c07c18b71c8bb9087c526b705eb6b",
+  "analysis/experiments/20261122_a1_s05_minutes_fold_screen_corrected.json": "90b903efc6219badf950e399174de6a2481e7161867338f08e838b7a0f07e8b5",
+  "data/derived/experiments/20261122_a1_s05_minutes_fold_screen_corrected.parquet": "da60d684070dc664f2cf7de6c406e1404e6e53edf473f6614811aef0f8e1ea6d"
+ },
+ "audit_source_sha256": "43e1860119168f1e235301990a416cbdf0e2cd3c30ffd72bed41395bedaafd6d"
+}
