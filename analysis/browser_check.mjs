@@ -37,6 +37,7 @@ const CASES = [
   ['standings-picture', '#/standings/picture', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['season', '#/standings/races', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['season-movers', '#/standings/movers', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['season-leaders', '#/standings/leaders', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['teams', '#/teams', ['desktop', 'phone'], ['dark']],
   ['team', '#/team/14', ['desktop', 'half', 'phone'], ['light', 'dark']],
   ['players', '#/players', ['desktop', 'phone'], ['dark']],
