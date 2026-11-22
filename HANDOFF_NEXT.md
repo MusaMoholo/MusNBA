@@ -22,6 +22,7 @@ The first incoming-screen implementation and protocol were pushed as **89f6dc4**
 before any incoming fit.
 The audited incoming screen and S06 50% ledger were pushed as **1ecc78a**.
 The first selected-timeout engine protocol was frozen before an engine result in **b88840b**.
+The model-artifact builder was preserved before fitting in **19b34bc**.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
 product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S05 are complete;
 S06 is active at 50%; A1 overall is 46.0%.** Isolated assignment candidates have event-level diagnostics and wiring only;
@@ -335,15 +336,32 @@ all **84,344** ranking scores and all game-bootstrap metrics; **26** focused tes
 (**6,507** windows ranked in **24.7 s**, including fits). The audit's first syntax preflight failed before
 execution; corrected audit log `/tmp/musnba_a1_s06_in_screen_audit_v2.log` passes.
 
-**S06 60% in progress:** TRAINING_PLAN freezes an isolated simulation protocol, not a promotion. The new
-`scripts/a1_substitution_engine_models.py` independently refits the two existing frozen nodes for a chosen fold,
-requires their held-out scores to reproduce the saved screen, and builds earlier-game selected-timeout templates,
-including observed overtime periods with no selected timeout. Its first syntax preflight failed before any fit;
-the typo was corrected. **28** focused tests and Pylance syntax/diagnostics now pass. Next, preserve the source
-checkpoint, then run
-`OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u -m scripts.a1_substitution_engine_models --fold F4
---folder data/models/folds/a1_s06_selected_F4 --output analysis/experiments/20261122_a1_s06_engine_models_F4.json`
-and record the exact artifact hashes/results. No engine candidate or accepted output has yet changed.
+**S06 60% in progress:** TRAINING_PLAN freezes an isolated simulation protocol, not a promotion.
+`scripts/a1_substitution_engine_models.py` independently refitted the frozen F4 nodes on **729** earlier games
+through **2025-12-31**, reproducing both saved validation screens exactly (maximum error **0**). It saved **7,064**
+selected timeouts, **729** regulation and **30** observed-overtime templates, including empty overtime periods;
+the manifest is `analysis/experiments/20261122_a1_s06_engine_models_F4.json`, model/template artifacts are ignored
+under `data/models/folds/a1_s06_selected_F4/`, and log is `/tmp/musnba_a1_s06_engine_models_F4.log`. Its initial
+syntax preflight failed before fitting; the typo was corrected.
+
+The new opt-in policy and engine hooks are **research wiring only**, with no simulated-game result yet. They use a
+separate deterministic random stream, explicit active rosters, conditional simultaneous exits, learned incoming
+ranks, deferred plan changes, overtime templates and replacement before a free-throw rebound; a short eligible roster
+raises explicitly. The first hook test lacked a fake model's band table and failed before that check; the test fixture
+was corrected. **36** focused tests now pass, including the controlled free-throw rebound, feature parity, repeatability
+and accounting tests, and the new policy's Pylance diagnostics are clear. The F4 input loader verifies **7,317** strictly
+prior player targets across all **200** fixed games. Existing production engine/backtest files retain unrelated prior
+diagnostics; no new candidate-path diagnostic is reported. Next, preserve this pre-run source, reproduce the saved
+three-game default control, then run the same three-game candidate as a **wiring** test before considering the fixed
+200-game paired screen. Do not award the 60% rung until real-engine wiring and required identities pass.
+On this code, default smoke passed **102/102** (`/tmp/musnba_a1_s06_wiring_smoke.log`) and the deliberate fault
+exited **1** with **80/102** checks passing (`/tmp/musnba_a1_s06_wiring_fault.log`). Neither run changed the served
+model or PWA bundle; phone import remains unconfirmed.
+
+**S07 0% started independently** (S02/S05 dependencies are complete) while the S06 smoke runs. The retained ESPN
+archive has **5** collection folders dated 19–21 Nov 2026; all are in the protected final season. TRAINING_PLAN freezes
+an inventory-only audit using collection-finish-before-tip, status and box-presence coverage, with no status/outcome
+comparison or tuning on protected outcomes. The accepted availability fallback remains unchanged.
 
 The tracking family was frozen in TRAINING_PLAN §8 and built separately by
 `scripts/a1_tracking_features.py`: former wrapper PID **85586**, shell **1549**, log
@@ -1158,9 +1176,13 @@ The dashboard programme is done. Do not resume U1–U22, repeat rejected defence
    conditional outgoing draw, incoming rank sampling, schedule handoff and strict foul-out behaviour are now frozen
    in TRAINING_PLAN §8 before an engine result. Start with
    `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m unittest tests.test_a1_substitutions -q`, inspect
-   `scripts/engine.py`'s current segment/lineup transitions. The model-artifact builder and first command are recorded
-   under S06 60% above. Fit only earlier-fold substitution models, independently reproduce the stored node predictions,
-   and leave the default engine path unchanged before comparing results.
+   `scripts/engine.py`'s current segment/lineup transitions. The F4 artifact and pre-run wiring are recorded under S06
+   60% above. Reproduce the default using
+   `.venv/bin/python -u scripts/backtest.py --config models/v1.2d.json --fold F4 --game-ids
+   analysis/experiments/20261122_a1_reproduction_games.json --worlds 1000 --jobs 1 --threads 8 --rotation targets
+   --pool 0 --models folds/v1.2d_F4_all --name a1_s06_default_wiring`, then rerun the same command with
+   `--substitution-candidate analysis/experiments/20261122_a1_s06_engine_models_F4.json --name a1_s06_candidate_wiring`.
+   Compare the default to `20261122T015651Z_a1_s01_repro` and independently account the candidate.
    Do not relabel unconfirmed non-entries as known eligible negatives; separate any actual-participant conditional
    diagnostic from a pre-game forecast. The selected-timeout outgoing result is not an engine validation. Fix the
    independently reproduced unupdated foul-out mask in an isolated S06 candidate, not the serving path, and test it

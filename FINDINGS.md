@@ -1483,6 +1483,12 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   disqualified or duplicate replacements and insufficient scoreable players. Reports:
   `20261122_a1_s06_in_screen{,_audit}.json`. These are ranking diagnostics, not calibrated entry probabilities
   or a production/engine result.
+- **S06 engine-model preparation:** for the F4 feasibility candidate, frozen nodes refitted on **729** earlier games
+  through **31 Dec 2025** reproduce both saved F4 screen predictions with maximum absolute error **0**. The earlier
+  games contain **7,064** selected timeouts, yielding **729** regulation-game templates and **30** observed-overtime
+  period templates, including periods without a selected timeout. This verifies reconstruction and cutoff, not the
+  realism of those selected/opportunity-biased clocks or an engine gain. Manifest:
+  `20261122_a1_s06_engine_models_F4.json`.
 
 ## 6b. A1 S03 matched component diagnosis (22 Nov 2026; descriptive)
 

@@ -1,0 +1,49 @@
+{
+ "experiment": "a1_s06_frozen_selected_timeout_models",
+ "fold": "F4",
+ "validation_from": "2026-01-01",
+ "training_through": "2025-12-31",
+ "training_games": 729,
+ "training_timeout_windows": 7064,
+ "regulation_templates": 729,
+ "overtime_templates": 30,
+ "outgoing_training_rows": 70640,
+ "incoming_training_rows": 82196,
+ "screen_max_absolute_error": {
+  "outgoing": 0.0,
+  "incoming": 0.0
+ },
+ "input_sha256": {
+  "scripts/a1_substitution_engine_models.py": "8d3d116fdca054c2eac96f95aa705a82d7923718571a59c3de87abf583508cac",
+  "analysis/experiments/20261122_a1_s06_out_screen.json": "2ba049eee7461f19ef9048fae8137104733fd9ebfd610b4cbd79ec7cfceb197b",
+  "analysis/experiments/20261122_a1_s06_in_screen.json": "5322c7c3fcf9844bc68e75225c2c6e0ff09e926751242db420205460f0b32ea2",
+  "data/derived/variants/a1_causal_base_20261122_v2/features/pregame.parquet": "1bd657a66ef42e6f624b860f3ed235896a6a93baa94bb9b6c058ce8ebf74fd28",
+  "analysis/experiments/20261122_a1_s06_fold_seed_v3.json": "53dc5ec7ed6387b6fb319468da6cd1e75328ee2a8594a98fbb2c86ec9b15aa02",
+  "data/derived/experiments/20261122_a1_s06_fold_seed_v3.parquet": "d4b244f2de845a3d8bdadd3e7770e4db01f84c657c787f3957c62839af58ca4b",
+  "data/derived/experiments/20261122_a1_s06_fold_seed_v3_windows.parquet": "ace05f6b4bf5d7688be5b644e69757a1ca675aa48b7f93b45a143f43861c9d9f",
+  "analysis/experiments/20261122_a1_s06_fold_F1_v3.json": "4930d1c1bcf7f7ff0e37f90ea531c2d5ff27881114b460ecf0110ff4c56dadda",
+  "data/derived/experiments/20261122_a1_s06_fold_F1_v3.parquet": "02f201d2f8c47a39fe6fc5acbb7775991f086eb7dbd3a576bc5442b4f27d5425",
+  "data/derived/experiments/20261122_a1_s06_fold_F1_v3_windows.parquet": "193c648d96706a8bb964e25ae010e4895b21526d195ff8a22488af6415dc4a60",
+  "analysis/experiments/20261122_a1_s06_fold_F2_v3.json": "b74d16ba2b78a36e43494dce04997f67d29bd55921db7af3bb4b31390a624694",
+  "data/derived/experiments/20261122_a1_s06_fold_F2_v3.parquet": "b4dae0a55cc57e13c1db711949e0619da91eaeaecdf38595e1fc630d9fa85931",
+  "data/derived/experiments/20261122_a1_s06_fold_F2_v3_windows.parquet": "58c1f5ae37de600798de8da9194b53d5ad2859ce96d6b1f0f7597146e0a3bb4c",
+  "analysis/experiments/20261122_a1_s06_fold_F3_v3.json": "439dd65586144a62402bdf890d82ec6f222e69a94d178982e5af7bf84bd4a908",
+  "data/derived/experiments/20261122_a1_s06_fold_F3_v3.parquet": "449636afdf119f9b82a0f9b2013174a194439fff68cca5b4a5d476c7c342e2e8",
+  "data/derived/experiments/20261122_a1_s06_fold_F3_v3_windows.parquet": "9a0c78835059b1f300bd051d502e021370b1cab51041f5c7ffaad4e1d8d6f41d",
+  "analysis/experiments/20261122_a1_s06_fold_F4_v3.json": "2281144fbb71524c69ce5a3918d8863c24471199d891a88c0c40c415ced31493",
+  "data/derived/experiments/20261122_a1_s06_fold_F4_v3.parquet": "7f84384b9922121dc5f3360f741d3dc15ddd9d4455854c898bc1af59d97ca913",
+  "data/derived/experiments/20261122_a1_s06_fold_F4_v3_windows.parquet": "088be9f9f5a985d17305a683e1a1c058852202e7bec605b78ca950eeaf0399ee",
+  "data/derived/experiments/20261122_a1_s06_out_screen.parquet": "0909d67989f156cf4a87349b09ddb4c61b5edaf7c28a8cb69700f636a428a0df",
+  "data/derived/experiments/20261122_a1_s06_in_screen.parquet": "c0199c83e6060ce3826f3cda0136c7cb7eb8b37a17fb2dc7203a11bacfe00b83",
+  "data/derived/history/2023/segments.parquet": "813b53edadf92f6e6c607211b1d4c64b312aa9fbe689851110e912419101a76e",
+  "data/derived/history/2024/segments.parquet": "4a7c3c2bce39580cc8e1092ffc215d11bbd49f7bf117b4551eee40337203d2c0",
+  "data/derived/history/2025/segments.parquet": "d9db732172894ed8d3c6e5e99e3cd1c197006da22799413034ce3ce18cc5aee2",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc"
+ },
+ "output_sha256": {
+  "data/models/folds/a1_s06_selected_F4/outgoing.txt": "272bf308410ef505ca9d44c74b7ce65bdbdd4ae64c17531f5a94862db018bf8b",
+  "data/models/folds/a1_s06_selected_F4/incoming.txt": "99aeec61ba4f907d502565d312d16bc5fea16eef449967055c47e7422e5392b7",
+  "data/models/folds/a1_s06_selected_F4/templates.json": "f3e4804a1bad1a750dfef670d29f218993b353b8774c7a84330929c91d327241"
+ },
+ "limitation": "Training-selected timeout templates and relative incoming scores are research-only; historical participant rosters are not pre-game availability forecasts."
+}

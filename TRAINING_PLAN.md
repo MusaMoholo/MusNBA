@@ -498,6 +498,14 @@ substitutions, foul-outs, period changes, overtime, five-player/seconds/points i
 failure or a negative player-minute result retains the D29 control; no selected-timeout node score is itself a
 promotion or a reason to weaken S01's confirmation gates.
 
+For S07's initial report-coverage audit, inventory every retained ESPN collection run without fetching a new source.
+Treat each collection's `finished` UTC timestamp as the conservative latest capture time; a dated tip is usable only
+when the entire run finished strictly before that tip. Audit missing rosters, injury files, status counts, unmatched
+injury IDs and final-box **coverage** separately. Absence of an injury entry is not proof of health. Because retained
+2026-27 snapshots belong to the protected final season, count whether a final box contains a rostered player but do
+not compare status with play/start outcomes, estimate calibration or use those outcomes for selection. Development
+coverage and the scoring gate must be reported separately from this descriptive archive inventory.
+
 For S03's remaining flow diagnosis, reproduce the **same 200-game, 1,000-world** free-running control with its
 original seeds and opt-in diagnostics only; audit every original output field against the retained reproduction before
 using the extras. Record player FGA/FTA/turnovers and quarter minutes/scoring, simulated segment-clock summaries,

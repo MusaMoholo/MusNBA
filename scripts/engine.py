@@ -23,6 +23,7 @@ import json
 import sys
 import time
 from pathlib import Path
+from typing import Protocol
 
 import lightgbm as lgb
 import numpy as np
@@ -382,12 +383,26 @@ class Worlds:
         self.poss = np.zeros((W, 2))  # possessions per team (segments that start a new possession)
 
 
+class RotationPolicy(Protocol):
+    counts: dict[str, int]
+
+    def begin(self, g: Game, worlds: int, available: np.ndarray, seed: int) -> None: ...
+
+    def before_segment(self, g: Game, st: Worlds, active: np.ndarray, scheduled: np.ndarray) -> np.ndarray: ...
+
+    def after_fouls(self, g: Game, st: Worlds, active: np.ndarray,
+                    offense: np.ndarray, defense: np.ndarray) -> bool: ...
+
+    def finish(self, g: Game, st: Worlds) -> None: ...
+
+
 class Engine:
     def __init__(self, version: str | None = None):
         version = version or ENGINE.get('models', ENGINE['version'])  # the node models' version (v1.2 serves v1.1's models)
         self.m = Models(version)
         self.diag = None  # set to [] to record (start type, seconds to action, clock) per segment
         self.rotation_diag = None  # optional pre-foul-out scheduled rotation tables
+        self.rotation_policy: RotationPolicy | None = None
 
     # ----------------------------------------------------------------------------- inputs
     def _context(self, g, st, A, L_off, L_def):
@@ -495,6 +510,9 @@ class Engine:
         st = Worlds(g, W, rng)
         avail_world = rng.random((W, g.n)) < g.avail[None, :]
         tables, combo = g.lineup_tables(avail_world, rng)
+        policy = getattr(self, 'rotation_policy', None)
+        if policy is not None:
+            policy.begin(g, W, avail_world, int(seed))
         if self.rotation_diag is not None:
             self.rotation_diag.append((tables, combo))
         fouled_out = np.zeros((W, g.n), bool)
@@ -514,6 +532,8 @@ class Engine:
                     side_idx = np.flatnonzero((g.side == i) & avail_world[w] & ~fouled_out[w] & ~np.isin(np.arange(g.n), L[r, i]))
                     if side_idx.size:
                         L[r, i, k] = side_idx[np.argmax(g.expected[side_idx])]
+            if policy is not None:
+                L = policy.before_segment(g, st, A, L)
             off = st.off[A]
             new_poss = ~np.isin(st.start[A], [S['oreb'], S['foul'], S['other']])
             np.add.at(st.poss, (A[new_poss], off[new_poss]), 1)
@@ -649,6 +669,14 @@ class Engine:
             dfoul = np.flatnonzero(ev == 1)
             if dfoul.size:
                 self._fouler(g, st, A, dfoul, 0.0, ctx, def_five, L_def, pidx, rng)
+            if policy is not None and policy.after_fouls(g, st, A, L_off, L_def):
+                after = self._context(g, st, A, L_off, L_def)
+                lineup_columns = ('off_usage_sum', 'off_usage_max', 'off_ast_sum', 'off_three_sum',
+                                  'off_oreb_sum', 'off_bigs', 'off_min_mean', 'def_blk_sum', 'def_blk_max',
+                                  'def_stl_sum', 'def_dreb_sum', 'def_pf_sum', 'def_bigs', 'def_min_mean')
+                ctx.update({key: after[key] for key in (*lineup_columns, *self.m.optional_lineup)})
+                off_five = self._five(g, st, A, L_off, OFF_REL)
+                def_five = self._five(g, st, A, L_def, DEF_REL)
             # free throws: and-one 1, fouled on a 2 → 2, on a 3 → 3, penalty → 2
             trip = np.zeros(n, int)
             trip[and1] = 1
@@ -719,6 +747,8 @@ class Engine:
             st.off[A], st.start[A] = nxt_off, nxt_start
             ended = A[(st.clock[A] <= 0.0) | quiet]
             self._period_end(st, ended, rng)
+        if policy is not None:
+            policy.finish(g, st)
         return self._package(g, st, W)
 
     # ----------------------------------------------------------------------------- state updates
