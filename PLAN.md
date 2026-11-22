@@ -429,6 +429,11 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 · dashboard house pass:** games first on Today with a shortcut to slate insights; Players table
+  and next-game forecast prioritised; secondary movers, opponent history and advanced rates expandable. Player
+  and team chart expansion survives stat/line changes. **43/43** responsive checks and **26/26 / 25/25** local and hosted
+  laptop/phone offline checks passed; old-to-new upgrade **28/28**. Data-free Pages **8dfbbd7**, existing bundles
+  retained, no nightly or model change. Continue the owner-requested usability/design work alongside Chunk A.
 - **22 Nov 2026 · per-world advanced visibility:** independently reconciled **6,300** metric distributions
   across **32** saved games / **935** player-game entries. Defined counts and quantile bands accompany expandable
   histograms; 15 team metrics are box-derived estimates where required. Local and hosted PWA checks **24/24 laptop**,

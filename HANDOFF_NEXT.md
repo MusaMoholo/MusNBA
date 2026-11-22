@@ -1,7 +1,7 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 20%, A2 at 30%; S01–S07 remain complete**.
-Latest pushed source before this advanced-visibility checkpoint: **d50ba7d**; use `git log -1` for the current checkpoint.
+Latest pushed source before the dashboard house checkpoint: **da4f66c**; use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
@@ -11,6 +11,17 @@ Latest pushed source before this advanced-visibility checkpoint: **d50ba7d**; us
   without overcrowding, prioritise essential game/player signals and group secondary details into collapsible
   views. Integrate this alongside the authorised chunks; use supported data only, without presenting extremes as
   typical. No nightly yet for presentation work; the next normal nightly rebuilds these summaries.
+- **Dashboard house pass:** Today puts games first with a shortcut to the still-accessible slate insights. Players
+  keeps its table visible and movers expandable; player pages prioritise the next forecast and collapse opponent
+  history and advanced rates. Game-player sheets put conditional/joint outcomes and comparisons before collapsible
+  advanced rates; advanced panels and charts retain their open state across stat/line edits. Responsive browser
+  **43/43** with screenshots inspected; local and hosted offline laptop **26/26**, phone **25/25**, old-to-new upgrade
+  **28/28**. Smoke **108/108**; deliberate fault exited **1** (86/108). Data-free Pages **8dfbbd7**, cache
+  **5fcf7fcb83ffae8939a5**; hosted HTML, service worker and four changed modules match the reviewed shell byte-for-byte.
+  Existing iCloud bundles are unchanged;
+  no new nightly or model change. Manual imports from the previous per-world export remain unconfirmed.
+  Doc review: HANDOFF, PLAN and DASHBOARD_PLAN record the changed hierarchy; AGENTS, ENGINE_PLAN, TRAINING_PLAN,
+  FINDINGS and README need no changes because standing rules, engine/gates, empirical results and commands are unchanged.
 - **Per-world advanced visibility:** six player and 15 team metrics derive full-game distributions from retained
   worlds, showing median, 10–90%, middle half, mean, expandable histogram and defined-world counts. Zero
   denominators are undefined; period/legacy worlds are explicitly unavailable. Team possessions/ratings are

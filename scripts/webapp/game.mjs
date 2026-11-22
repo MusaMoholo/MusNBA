@@ -408,6 +408,21 @@ function flowCharts(data) {
   return fanSvg || qSvg ? `<section class="panel"><h3 style="margin-top:0">Game flow</h3><div class="flow-grid">${fanSvg}${qSvg}</div></section>` : '';
 }
 
+function advancedState(root) {
+  return [...root.querySelectorAll('details[data-advanced-panel]')].map(panel => ({
+    open: panel.open,
+    metrics: new Set([...panel.querySelectorAll('details[data-metric][open]')].map(x => x.dataset.metric)),
+  }));
+}
+
+function restoreAdvancedState(root, saved) {
+  root.querySelectorAll('details[data-advanced-panel]').forEach((panel, i) => {
+    if (!saved[i]) return;
+    panel.open = saved[i].open;
+    panel.querySelectorAll('details[data-metric]').forEach(x => { x.open = saved[i].metrics.has(x.dataset.metric); });
+  });
+}
+
 function teamView(el, data, period) {
   const sim = sims(data);
   const A = team(data.game.away.id), H = team(data.game.home.id);
@@ -461,10 +476,14 @@ function teamView(el, data, period) {
     {id: period + '-total', title: `Total points`, d: per.total, ladder: d => stepLadder(d), actual: has ? actual.away + actual.home : null},
     {id: period + '-margin', title: `Margin (${H.abbr} minus ${A.abbr})`, d: per.margin, side: true, A, H, ladder: margins, actual: has ? actual.home - actual.away : null},
   ];
+  let paintedTeam = false;
   const paint = () => {
+    const savedAdvanced = paintedTeam ? advancedState(el) : [];
     el.innerHTML = boxPanel + flowCharts(data) + blocks.map(b => distBlock(data, b)).join('') + '<p class="note">Over = strictly more than the line. Tap a bar to move the line there.</p>'
       + (data.worlds && period === 'fg' ? '<div id="drivers"></div>' : '');
     wireAdvancedPanels(el);
+    restoreAdvancedState(el, savedAdvanced);
+    paintedTeam = true;
     wireBlocks(el, data, paint);
     const drivers = el.querySelector('#drivers');
     if (drivers) S.driversPanel(drivers, data);
@@ -664,23 +683,27 @@ async function sheet(view, data, pid, current) {
       ${p.minutes_basis ? `<p class="note">Minutes basis: healthy role ${f1(p.minutes_basis.healthy)} min${p.minutes_basis.rotation < 0.95 ? ` · plays ${pct(p.minutes_basis.rotation, 0)} of the games he is available for` : ''} · target ${f1(p.minutes_basis.target)} if the listed roster plays${p.minutes_basis.k_back > 0 && p.minutes_basis.ramp < 0.995 ? ` · game ${p.minutes_basis.k_back} back after ${p.minutes_basis.missed} missed (ramp ×${p.minutes_basis.ramp.toFixed(2)})` : ''}${p.starter ? ' · projected starter' : ''}. Team minutes are shared to exactly 240 by priority, so an absent teammate's minutes pass down the rotation.</p>` : ''}
       ${p.if_plays ? `<p class="note">If he plays (full game): ${f1(p.if_plays.min)} min · ${f1(p.if_plays.pts)} pts · ${f1(p.if_plays.reb)} reb · ${f1(p.if_plays.ast)} ast. ${esc(p.status)}${p.injury?.comment ? ' — ' + esc(p.injury.comment) : ''}</p>` : ''}`
     : `<p class="note">${p && !p.periods ? `Ruled out in every simulation (${esc(p.status)}).` : 'No projection for this player in this game.'}</p>`;
+  let paintedSheet = false;
   const paint = () => {
+    const savedAdvanced = paintedSheet ? advancedState(view) : [];
     view.innerHTML = `<a class="crumb" href="#/game/${data.game.id}/${period}">‹ ${esc(team(data.game.away.id).abbr)} @ ${esc(team(data.game.home.id).abbr)} · ${esc(dayLabel(data.game.date))}</a>
       <section class="panel"><div class="row">${logo(tid, 'lg')}<div class="grow"><h2 style="margin:0;font-size:20px">${esc(name)}</h2>
         <p class="note" style="margin:0">${esc(team(tid).name)} · ${esc(p?.pos || actualRow?.pos || '')}${p?.jersey ? ' · #' + esc(p.jersey) : ''} · ${side === 'home' ? 'vs' : '@'} ${esc(team(opp).abbr)} ${p ? statusTag(p.status, p.availability, p.availability_basis) : ''}</p></div>
         ${sim ? `<label class="sr" for="sheet-period">Period</label><select id="sheet-period" class="period">${options}</select>` : ''}
         <a class="btn ghost" href="#/player/${pid}">Player page</a></div>${tiles}</section>
       ${proj ? `${segGroups(STAT_GROUPS.map(([g, ks]) => [g, ks.filter(([k]) => choices.includes(k))]), state.stat, 'data-stat')}<div id="stat-block">${statBlock()}</div>` : ''}
-      ${advancedPanel(proj?.mean, period === 'fg' ? (actualRow?.dnp ? null : actualRow) : actualLine(actualRow, period), 'Projected',
-        {distributions: proj?.advanced})}
-      ${usageProfilePanel(data.usage_profiles?.[pid])}
       ${period === 'fg' && !actualRow?.dnp && Number.isFinite(actualRow?.pm) ? `<p class="note">Actual on-court +/−: <b>${signed(actualRow.pm, 0)}</b> · points scored minus allowed while on court.</p>` : ''}
       ${proj && period === 'fg' && data.worlds && !PERCENT_STATS.has(state.stat) ? '<div id="what-if"></div>' : ''}
       ${proj && period === 'fg' ? S.averagesPanel(data, pid, proj) : ''}
+      ${advancedPanel(proj?.mean, period === 'fg' ? (actualRow?.dnp ? null : actualRow) : actualLine(actualRow, period), 'Projected',
+        {distributions: proj?.advanced, collapsible: true})}
+      ${usageProfilePanel(data.usage_profiles?.[pid])}
       ${period === 'fg' ? guardedPanel(data, pid) : ''}
       ${context ? contextPanel(context, period) : ''}
       <p class="note">${sim ? `${sim.sims.toLocaleString()} simulated games from the ${esc(data.projection.kind)} snapshot of ${esc(dayLabel(data.projection.snapshot))}. Counting-stat distributions include simulations where he does not play${period === 'fg' ? '' : '; overtime counts in FG only'}. Shooting percentages exclude no-attempt simulations and appear only when at least one simulation has an attempt. Some older snapshots do not contain all shooting distributions.` : ''}</p>`;
     wireAdvancedPanels(view);
+    restoreAdvancedState(view, savedAdvanced);
+    paintedSheet = true;
     view.querySelector('#sheet-period')?.addEventListener('change', e => location.replace(`#/game/${data.game.id}/player/${pid}/${e.target.value}`));
     view.querySelectorAll('[data-stat]').forEach(b => b.onclick = () => { state.stat = b.dataset.stat; store.set('stat', state.stat); paint(); });
     const block = view.querySelector('#stat-block');

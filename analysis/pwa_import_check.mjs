@@ -134,6 +134,22 @@ check('offline player minutes filter follows the loaded season', await waitFor(`
   return document.querySelector('#ptable .row .note')?.textContent.includes('of ' + expected + ' players')
     && document.querySelector('#view').textContent.includes(benchmark.toLocaleString() + ' regulation minutes');
 })()`));
+if (args['require-house']) {
+  check('offline player directory keeps movers expandable through sorting', await evaluate(`(() => {
+    const movers = document.querySelector('#player-movers'), table = document.querySelector('#ptable table');
+    if (!movers || movers.open || !table || !(movers.compareDocumentPosition(table) & Node.DOCUMENT_POSITION_FOLLOWING)) return false;
+    movers.open = true;
+    document.querySelector('#ptable th[data-sort="pts"]').click();
+    return document.querySelector('#player-movers')?.open && !!document.querySelector('#player-movers .mv');
+  })()`));
+  const today = await evaluate(`(async () => { const ui = await import('./assets/ui.mjs'); return ui.meta().latest; })()`);
+  await send('Page.navigate', {url: args.url + '#/today/' + today}, s);
+  check('offline slate puts games before accessible insights', await waitFor(`!!document.querySelector('.game-card')`) && await evaluate(`(() => {
+    const games = document.querySelector('.games:not(.spot-grid)'), insights = document.querySelector('#slate-insights');
+    return !!games && !!insights && !!document.querySelector('[data-insights]')
+      && !!(games.compareDocumentPosition(insights) & Node.DOCUMENT_POSITION_FOLLOWING);
+  })()`));
+}
 const shootingTarget = await evaluate(`(async () => {
   const ui = await import('./assets/ui.mjs'), slate = await ui.api('slate/' + ui.meta().latest);
   for (const fixture of slate.games) {
@@ -166,10 +182,18 @@ if (args['require-advanced'] && shootingTarget) {
     const ui = await import('./assets/ui.mjs'), game = await ui.api('game/' + ${JSON.stringify(shootingTarget.game)});
     const player = ['home', 'away'].flatMap(side => game.projection.sim[side].players).find(p => p.id === ${JSON.stringify(shootingTarget.player)});
     const profile = game.usage_profiles?.[player.id], dist = player.periods.fg.advanced?.efg;
+    const panel = document.querySelector('details[data-advanced-panel]');
+    if (!panel || panel.open) return false;
+    panel.open = true;
+    const chart = panel.querySelector('details[data-metric="efg"]');
+    if (!chart) return false;
+    chart.open = true;
+    await new Promise(resolve => setTimeout(resolve, 100));
     const text = document.querySelector('#view').textContent;
     return !!profile && text.includes(ui.rate(profile.rate)) && text.includes('not conventional')
       && !!dist?.defined && text.includes('Each projected value is calculated in each saved world')
-      && text.includes(ui.f1(dist.exact_q[2]) + '%') && text.includes('Defined in ' + dist.defined.toLocaleString());
+      && text.includes(ui.f1(dist.exact_q[2]) + '%') && text.includes('Defined in ' + dist.defined.toLocaleString())
+      && !!chart.querySelector('svg.hist');
   })()`));
   await send('Page.navigate', {url: args.url + '#/game/' + shootingTarget.game + '/fg/team'}, s);
   check('offline team advanced distributions open and match saved worlds', await waitFor(`document.querySelectorAll('#view details.panel').length >= 2`) && await evaluate(`(async () => {

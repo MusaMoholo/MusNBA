@@ -136,15 +136,15 @@ export function advancedPanel(line, actual, label, options = {}) {
         <i style="left:${position(q1)}%;width:${position(q3) - position(q1)}%"></i><b style="left:${position(median)}%"></b></div>
       <small>Middle half: ${fmt(q1)}–${fmt(q3)} · mean ${fmt(d.exact_mean)}</small>
       <small>Defined in ${d.defined.toLocaleString()} of ${d.total.toLocaleString()} worlds${d.defined < d.total ? '; the rest have no positive denominator' : ''}.</small>
-      <details class="advanced-dist" data-distribution="${esc(JSON.stringify(d))}" data-percent="${percent}"><summary>Show distribution</summary><div class="advanced-chart"></div>
+      <details class="advanced-dist" data-metric="${esc(key)}" data-distribution="${esc(JSON.stringify(d))}" data-percent="${percent}"><summary>Show distribution</summary><div class="advanced-chart"></div>
         <small>Values are rounded for the chart; very rare outer-tail bins may be omitted. Summaries use all defined worlds.</small></details></div>`;
   };
   const element = options.collapsible ? 'details' : 'section';
   const title = esc(options.title || 'Advanced box-score rates');
   const unavailable = projected && line && !options.distributions
     ? '<p class="note">Per-world distribution unavailable for this period or snapshot.</p>' : '';
-  if (unavailable && !actual) return `<${element} class="panel">${options.collapsible ? `<summary><b>${title}</b></summary>` : `<h3>${title}</h3>`}${unavailable}${options.team ? '<p class="note">Possessions and ratings are box-score estimates, not counted possessions.</p>' : ''}</${element}>`;
-  return `<${element} class="panel">${options.collapsible ? `<summary><b>${title}</b> · ${metrics.length} metrics</summary>` : `<h3>${title}</h3>`}${unavailable}<div class="advanced-grid">
+  if (unavailable && !actual) return `<${element} class="panel" data-advanced-panel>${options.collapsible ? `<summary><b>${title}</b> · unavailable</summary>` : `<h3>${title}</h3>`}${unavailable}${options.team ? '<p class="note">Possessions and ratings are box-score estimates, not counted possessions.</p>' : ''}</${element}>`;
+  return `<${element} class="panel" data-advanced-panel>${options.collapsible ? `<summary><b>${title}</b> · ${metrics.length} metrics</summary>` : `<h3>${title}</h3>`}${unavailable}<div class="advanced-grid">
     ${metrics.map(([key, title, formula, percent]) => `<div class="tile"><span>${esc(title)}</span>
       ${line && projected ? distribution(key, percent) : ''}
       <div class="lines">${line && !projected ? `<em>${esc(label)}</em><b>${format(values[key], percent)}</b>` : ''}

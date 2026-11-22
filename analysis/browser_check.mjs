@@ -55,6 +55,10 @@ const CASES = [
   ['team-drivers', '#/game/401909305/fg/team', ['desktop', 'phone'], ['light']],
   ['game-flow', '#/game/401910029/fg/team', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['game-advanced', '#/game/401910029/fg/team', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['sheet-advanced', '#/game/401910030/player/4278053/fg', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['players-house', '#/players', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['player-house', '#/player/3032977', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['today-house', '#/today/2026-11-22', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['sheet-whatif', '#/game/401909305/player/4701230/fg', ['desktop', 'phone'], ['dark', 'light']],
   ['today-leaders', '#/today/2026-11-21', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['tomorrow', '#/today/2026-11-22', ['desktop', 'half', 'phone'], ['dark']],
@@ -135,8 +139,65 @@ for (const [name, hash, sizes, themes] of CASES) {
         if (!chart) return false;
         chart.open = true;
         await new Promise(resolve => setTimeout(resolve, 150));
-        panel.scrollIntoView();
-        return !!chart.querySelector('svg.hist') && panel.textContent.includes('not counted possessions');
+        if (!chart.querySelector('svg.hist') || !panel.textContent.includes('not counted possessions')) return false;
+        const input = document.querySelector('#view input[data-line]');
+        if (!input) return false;
+        input.value = '120.5';
+        input.dispatchEvent(new Event('change', {bubbles: true}));
+        await new Promise(resolve => setTimeout(resolve, 150));
+        const next = document.querySelector('#view details[data-advanced-panel]');
+        next.scrollIntoView();
+        return next.open && next.querySelector('details[data-metric="efg"]').open
+          && !!next.querySelector('details[data-metric="efg"] svg.hist');
+      })()`, returnByValue: true, awaitPromise: true}, sessionId)).result.value === true;
+    }
+    if (name === 'sheet-advanced') {
+      interaction = (await send('Runtime.evaluate', {expression: `(async () => {
+        const panel = document.querySelector('details[data-advanced-panel]');
+        if (!panel || panel.open || !document.querySelector('[data-stat="fgm"]')) return false;
+        panel.open = true;
+        const chart = panel.querySelector('details[data-metric="efg"]');
+        if (!chart) return false;
+        chart.open = true;
+        await new Promise(resolve => setTimeout(resolve, 150));
+        if (!chart.querySelector('svg.hist')) return false;
+        document.querySelector('[data-stat="fgm"]').click();
+        await new Promise(resolve => setTimeout(resolve, 150));
+        const next = document.querySelector('details[data-advanced-panel]');
+        return next.open && next.querySelector('details[data-metric="efg"]').open
+          && !!next.querySelector('details[data-metric="efg"] svg.hist');
+      })()`, returnByValue: true, awaitPromise: true}, sessionId)).result.value === true;
+    }
+    if (name === 'players-house') {
+      interaction = (await send('Runtime.evaluate', {expression: `(() => {
+        const table = document.querySelector('#ptable table'), movers = document.querySelector('#player-movers');
+        if (!table || !movers || movers.open || !(movers.compareDocumentPosition(table) & Node.DOCUMENT_POSITION_FOLLOWING)) return false;
+        movers.open = true;
+        document.querySelector('#ptable th[data-sort="pts"]').click();
+        const next = document.querySelector('#player-movers'), cols = next.querySelectorAll('.movers > div');
+        return next.open && !!next.querySelector('.mv')
+          && (innerWidth > 600 || cols[1].getBoundingClientRect().top >= cols[0].getBoundingClientRect().bottom - 1);
+      })()`, returnByValue: true}, sessionId)).result.value === true;
+    }
+    if (name === 'player-house') {
+      interaction = (await send('Runtime.evaluate', {expression: `(() => {
+        const next = [...document.querySelectorAll('#view section.panel')].find(x => x.querySelector('h3')?.textContent === 'Next game');
+        const advanced = document.querySelector('details[data-advanced-panel]');
+        const history = next?.querySelector('details.sub');
+        if (history) { if (history.open) return false; history.open = true; if (!history.querySelector('table')) return false; }
+        return !!next && !!advanced && !advanced.open
+          && !!(next.compareDocumentPosition(advanced) & Node.DOCUMENT_POSITION_FOLLOWING);
+      })()`, returnByValue: true}, sessionId)).result.value === true;
+    }
+    if (name === 'today-house') {
+      interaction = (await send('Runtime.evaluate', {expression: `(async () => {
+        const games = document.querySelector('#view .games:not(.spot-grid)'), insights = document.querySelector('#view .spot-grid');
+        const jump = document.querySelector('[data-insights]');
+        if (!jump) return false;
+        jump.click();
+        await new Promise(resolve => setTimeout(resolve, 800));
+        return !!games?.querySelector('.game-card') && !!insights
+          && !!(games.compareDocumentPosition(insights) & Node.DOCUMENT_POSITION_FOLLOWING) && scrollY > 0;
       })()`, returnByValue: true, awaitPromise: true}, sessionId)).result.value === true;
     }
     await sleep(250);

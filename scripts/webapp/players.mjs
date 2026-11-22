@@ -59,6 +59,7 @@ async function table(view, {meta, current}) {
     <p class="note">${benchmark ? `Minutes share = season minutes ÷ ${benchmark.toLocaleString()} regulation minutes (48 × ${benchmark / 48} games, the most played by any team). League-wide benchmark, not roster eligibility; overtime and trades can put a player above 100%.` : 'Minutes-share filters are unavailable until a team has played a game.'}</p>
     <div id="ptable"></div></section>`;
   const paint = () => {
+    const moversOpen = view.querySelector('#player-movers')?.open || false;
     const q = normalise(state.q);
     let rows = data.players.filter(p => qualifiesMinutes(p, state.minMinutesShare, benchmark) && (!state.team || p.team === state.team) && (!q || normalise(p.name).includes(q)));
     const {key, dir} = state.sort;
@@ -66,8 +67,9 @@ async function table(view, {meta, current}) {
     const shown = rows.slice(0, state.limit);
     const movers = data.players.filter(p => p.gp >= 8 && p.l10 && p.tot.min / p.gp >= 15).map(p => ({p, d: p.l10.pts - p.tot.pts / p.gp})).sort((a, b) => b.d - a.d);
     const mv = x => `<a class="mv" href="#/player/${x.p.id}">${logo(x.p.team, 'sm')}<span>${esc(x.p.name)}</span><em class="${x.d > 0 ? 'up' : 'down'}">${x.d > 0 ? '+' : ''}${x.d.toFixed(1)}</em><small>${(x.p.tot.pts / x.p.gp).toFixed(1)} → ${x.p.l10.pts.toFixed(1)}</small></a>`;
-    const moversHtml = movers.length > 10 ? `<section class="panel movers"><div><span class="spot-kicker">Heating up · last 10 v season points</span>${movers.slice(0, 5).map(mv).join('')}</div>
-      <div><span class="spot-kicker">Cooling off</span>${movers.slice(-5).reverse().map(mv).join('')}</div></section>` : '';
+    const moversHtml = movers.length > 10 ? `<details class="panel" id="player-movers"${moversOpen ? ' open' : ''}><summary><b>Heating up &amp; cooling off</b> · last 10 v season points</summary>
+      <div class="movers"><div><span class="spot-kicker">Heating up</span>${movers.slice(0, 5).map(mv).join('')}</div>
+      <div><span class="spot-kicker">Cooling off</span>${movers.slice(-5).reverse().map(mv).join('')}</div></div></details>` : '';
     view.querySelector('#ptable').innerHTML = `${moversHtml}<div class="scroll"><table><thead><tr><th>#</th><th class="name">Player</th><th class="l">Team</th>${COLS.map(([k, l]) => `<th data-sort="${k}" tabindex="0" aria-sort="${key === k ? (dir < 0 ? 'descending' : 'ascending') : 'none'}">${l}${key === k ? `<span class="arrow">${dir < 0 ? '▼' : '▲'}</span>` : ''}</th>`).join('')}</tr></thead><tbody>
       ${shown.map((p, i) => `<tr class="link" data-pid="${p.id}"><td class="dim">${i + 1}</td><td class="name">${esc(p.name)} <span class="tag">${esc(p.pos || '')}</span>${statusTag(p.status)}</td><td class="l">${teamLink(p.team, {short: true})}</td>
         ${COLS.map(([k]) => `<td${k === 'trend' ? ' class="trend-c"' : ''}>${k === 'trend' ? sparkCell(p) : fmt(k, value(p, k, state.mode), state.mode)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
@@ -123,9 +125,9 @@ async function playerPage(view, {rest, current}) {
       <p class="note" style="margin:0">${p.team ? `<a href="#/team/${p.team}">${esc(team(p.team).name)}</a> · ` : ''}${esc(p.pos || '')}${p.jersey ? ' · #' + esc(p.jersey) : ''}${p.age ? ' · age ' + p.age : ''}${p.height ? ' · ' + esc(p.height) : ''}${p.on_roster === false ? ' · not on a current roster' : ''} ${statusTag(p.status)}</p>
       ${p.injury?.comment ? `<p class="note status-q" style="margin:4px 0 0">${esc(p.injury.comment)}</p>` : ''}</div></div>
       ${s ? `<div class="tiles" style="margin-top:12px">${tiles}</div><p class="note">${s.gp} games (${s.gs} starts) · ${shoot} · per-game season averages; L10 = last 10 games played, with the change v the season</p>` : '<p class="note">No games played this season.</p>'}</section>
-    ${advancedPanel(s?.tot, null, 'Season')}
-    ${usageProfilePanel(data.usage_profile)}
     ${nextHtml}
+    ${advancedPanel(s?.tot, null, 'Season', {collapsible: true})}
+    ${usageProfilePanel(data.usage_profile)}
     ${shotPanel(data.shots)}
     ${defencePanel(data.defence)}
     ${quartersPanel(data.quarters)}
@@ -195,8 +197,9 @@ function vsOpp(next) {
   const cell = (k, l) => { const d = h.avg[k] - h.overall[k]; return `<div class="tile"><span>${l}</span><b>${f1(h.avg[k])}</b><small>overall ${f1(h.overall[k])} <em class="${d > 0.5 ? 'up' : d < -0.5 ? 'down' : 'dim'}">${d > 0 ? '+' : ''}${d.toFixed(1)}</em></small></div>`; };
   const games = h.games.map(g => `<tr><td class="l">${esc(dayLabel(g.date))}</td><td>${g.min}</td><td><b>${g.pts}</b></td><td>${g.reb}</td><td>${g.ast}</td></tr>`).join('');
   const guards = h.guards.length ? `<p class="note" style="margin-top:6px">Guarded most by: ${h.guards.map(gd => `<a href="#/player/${gd.id}">${esc(gd.name)}</a> (${gd.pposs} poss, ${gd.pts} pts, ${gd.fgm}/${gd.fga})`).join(' · ')}</p>` : '';
-  return `<h4 class="sub-h">v ${esc(team(next.opp).name)} · ${h.n} game${h.n > 1 ? 's' : ''} since 2022-23</h4><div class="tiles">${cell('pts', 'PTS')}${cell('reb', 'REB')}${cell('ast', 'AST')}${cell('min', 'MIN')}</div>
-    <div class="scroll" style="margin-top:6px"><table><thead><tr><th class="l">Recent meetings</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th></tr></thead><tbody>${games}</tbody></table></div>${guards}`;
+  return `<details class="sub"><summary>History v ${esc(team(next.opp).name)} · ${h.n} game${h.n > 1 ? 's' : ''} since 2022-23</summary>
+    <div class="tiles">${cell('pts', 'PTS')}${cell('reb', 'REB')}${cell('ast', 'AST')}${cell('min', 'MIN')}</div>
+    <div class="scroll" style="margin-top:6px"><table><thead><tr><th class="l">Recent meetings</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th></tr></thead><tbody>${games}</tbody></table></div>${guards}</details>`;
 }
 
 // U11: defensive profile from real NBA matchups — what his man does against him v what the same attackers do elsewhere

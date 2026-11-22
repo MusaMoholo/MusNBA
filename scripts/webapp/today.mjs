@@ -50,12 +50,15 @@ export async function render(view, {rest, meta, current}) {
       </div>
     </section>
     ${modelNote(slate)}
+    ${games.length ? `<div class="row section-heading"><h2 class="section-title">Games · ${games.length}</h2>
+      ${slate.spotlight ? '<button class="ghost" data-insights>Slate insights ↓</button>' : ''}</div>` : ''}
+    <div class="games">${games.map(g => card(g, slate.watch?.closest?.game_id)).join('')}</div>
     ${slateStrip(games, day)}
     ${slate.completed_at ? review(slate.review) : ''}
-    ${slate.spotlight ? `<div class="games spot-grid">${slateSpotlight(slate.spotlight, slate.watch, slate.roles)}</div>` : ''}
-    <div class="games">${games.map(g => card(g, slate.watch?.closest?.game_id)).join('')}</div>`;
+    ${slate.spotlight ? `<div class="games spot-grid" id="slate-insights">${slateSpotlight(slate.spotlight, slate.watch, slate.roles)}</div>` : ''}`;
   view.querySelectorAll('[data-go]').forEach(b => b.onclick = () => { if (b.dataset.go) location.hash = '#/today/' + b.dataset.go; });
   view.querySelector('input[type=date]').onchange = e => { if (e.target.value) location.hash = '#/today/' + e.target.value; };
+  view.querySelector('[data-insights]')?.addEventListener('click', () => view.querySelector('#slate-insights').scrollIntoView({behavior: 'smooth'}));
 }
 
 // U1: slate header strip — tiles (games, projected points per game, tightest projected margin, first and last tip) and a tip-time

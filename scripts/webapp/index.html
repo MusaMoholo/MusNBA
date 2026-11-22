@@ -138,6 +138,8 @@
   .daynav{display:flex;align-items:center;gap:6px}
   .daynav button{min-width:40px;padding:8px 10px}
   .daybar h2{margin:0;font-size:18px;letter-spacing:-.01em}
+  .section-title{font-size:15px;margin:12px 0}
+  .section-heading{justify-content:space-between}
   .games{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;margin-bottom:16px}
   .game-card{display:block;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;transition:border-color .12s}
   /* spotlight (owner, 20 Nov): headliner and breakout full width, the six leaders on the game-card grid */
@@ -184,6 +186,7 @@
   .fx-p[data-side=w]{background:rgba(90,168,110,calc(.15 + .55 * var(--a)))} .fx-p[data-side=l]{background:rgba(210,90,80,calc(.15 + .55 * var(--a)))}
   svg.mini{width:60px;height:18px;vertical-align:middle} svg.mini rect{fill:var(--accent);opacity:.7} td.trend-c em{font-style:normal;font-weight:600;font-size:11px;margin-left:4px}
   .movers{display:grid;grid-template-columns:1fr 1fr;gap:6px 24px} .mv{display:grid;grid-template-columns:18px 1fr auto;gap:2px 6px;align-items:center;text-decoration:none;color:inherit;padding:4px 0;border-top:1px solid var(--line);font-size:13px}
+  @media(max-width:600px){.movers{grid-template-columns:1fr}}
   .mv em{font-style:normal;font-weight:700} .mv small{grid-column:2/-1;color:var(--dim);font-size:11px}
   h4.sub-h{margin:12px 0 4px;font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em}
   .shot-grid{display:grid;grid-template-columns:minmax(260px,420px) 1fr;gap:16px;align-items:start}
@@ -355,6 +358,8 @@
   .advanced-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
   details.panel > summary{cursor:pointer}
   details.panel[open] > summary{margin-bottom:12px}
+  details.sub > summary{cursor:pointer;margin-top:12px}
+  details.sub[open] > summary{margin-bottom:8px}
   .advanced-grid .lines{display:grid;grid-template-columns:auto 1fr;gap:1px 10px;align-items:baseline;margin-top:3px}
   .advanced-grid .lines em{font-style:normal;font-size:11px;color:var(--dim);font-weight:600}
   .advanced-grid .lines b{font-size:15px}
