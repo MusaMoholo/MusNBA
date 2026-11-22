@@ -1,6 +1,6 @@
 # Handoff — state and next actions
 
-Updated **22 November 2026 — A1 overnight execution, S01–S05 complete; S06 at 70%, S07 at 50%**. Dashboard U1–U22 complete and published.
+Updated **22 November 2026 — A1 overnight execution, S01–S05 complete; S06 at 70%, S07 at 60%**. Dashboard U1–U22 complete and published.
 Dashboard close-out checkpoint **86c2a46**, A1 planning checkpoint **00a0731**; S01 checkpoint **c9d8008**
 and S02 checkpoint **93b3e1d** are committed and pushed (S01's exact control source is **c6d5db4**).
 The original S03/S05 experiment snapshot is **ab32eda**, committed and pushed before the candidate repair;
@@ -31,9 +31,10 @@ The failed fixed screen, independently audited four-fold availability baselines 
 in pushed partial checkpoint **5fd5e00**.
 The typed accounting repair, foul-state probe and pre-run sequence builder were pushed as **8c8a50f**.
 The first independent sequence reconstruction and its exact auditor source were pushed as **1dcfd6b**.
+The frozen fold-screen source and corrected independent reconstruction were pushed as **4c6ba5f** before scoring.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
 product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S05 are complete;
-S06 is active at 70%; S07 is 50%; A1 overall is 51.4%.** Isolated assignment candidates have event-level diagnostics and wiring only;
+S06 is active at 70%; S07 is 60%; A1 overall is 52.0%.** Isolated assignment candidates have event-level diagnostics and wiring only;
 no defence candidate has had an engine-accuracy test, and no model promotion, forecast or PWA change has been made.
 The fixed S06 200-game candidate backtest failed after at least **40/200** games (last progress **378 s**) because
 world **563**, side **0**, had fewer than five non-disqualified available players after a foul-out; no aggregate
@@ -472,11 +473,10 @@ The isolated `scripts/a1_availability_sequences.py` builder and **3** synthetic 
 preserved in **8c8a50f**. Its four-season build completed as former shell **2214**, wrapper PID **14887**, Python
 PID **14888**, log `/tmp/musnba_a1_s07_sequences.log`: **9,846** team-games and **128,321** prior-state observations.
 An earliest-season preflight checked **2,460** team-games, **31,551** player listings and **31,471** observations;
-box/segment side coverage matched there. No sequence fit or score has run. The build used
+box/segment side coverage matched there. The build used
 `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u scripts/a1_availability_sequences.py --output
 analysis/experiments/20261122_a1_s07_sequences.json --rows-output
-data/derived/experiments/20261122_a1_s07_sequences.parquet`; independently audit it before fitting the pre-specified
-earlier-fold return/rest proxies. Independent vectorised reconstruction now matches **128,321** rows and **11**
+data/derived/experiments/20261122_a1_s07_sequences.parquet`. Independent vectorised reconstruction matches **128,321** rows and **11**
 fields each (`analysis/experiments/20261122_a1_s07_sequences_accounting.json`, log
 `/tmp/musnba_a1_s07_sequences_audit.log`). It found **6,137** left-censored prior DNP observations and **8,490**
 unlisted next games; **15,543** return and **97,808** recorded-rest known-outcome exposures remain. Across the
@@ -485,12 +485,14 @@ unlisted next games; **15,543** return and **97,808** recorded-rest known-outcom
 The first auditor source/report is preserved in **1dcfd6b**; its `np.select` type diagnostics were fixed and a
 second independent reconstruction passed with no Pylance diagnostics as
 `analysis/experiments/20261122_a1_s07_sequences_accounting_v2.json`. The frozen
-`scripts/a1_availability_sequence_screen.py` runner is implemented and five focused sequence/cutoff/smoothing tests
-pass; **no proxy fit/score has run**. Preserve this source before executing:
+`scripts/a1_availability_sequence_screen.py` runner and five focused sequence/cutoff/smoothing tests were pushed
+before fitting. The four-fold screen completed with:
 `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u scripts/a1_availability_sequence_screen.py --output
 analysis/experiments/20261122_a1_s07_sequence_screen.json --rows-output
-data/derived/experiments/20261122_a1_s07_sequence_screen.parquet`. Independently audit fitted groups, cutoff,
-predictions and 10,000-game bootstrap intervals before drawing a conclusion or awarding S07 60%.
+data/derived/experiments/20261122_a1_s07_sequence_screen.parquet`. Independent dictionary-based refitting,
+population reconstruction and direct 10,000-game bootstrap checking passed for all **18,612** predictions
+(`analysis/experiments/20261122_a1_s07_sequence_screen_accounting.json`; source
+`scripts/a1_availability_sequence_screen_audit.py`, log `/tmp/musnba_a1_s07_sequence_screen_audit.log`).
 
 **S07 30%:** the four independently audited fixed baselines cover **28,530** inferred candidates, **20,665** known
 play/DNP labels and **7,865** unknowns. Across F1–F4, supported starter team-games are **399/400/376/399**; five
@@ -514,7 +516,16 @@ is unsupported; the fixed status/no-report fallback remains untouched. TRAINING_
 gate: timestamped pre-tip rosters/reports, known outcomes with unknowns and coach DNPs separate, chronological splits,
 at least **100 player-games / 30 games** for each assessed subgroup, paired uncertainty and all promotion gates.
 Those are minimum support conditions, not a promise of promotion. The F1–F4 prior-box proxy scores cannot substitute
-for this cohort. The separate censored return/rest sequence research remains open.
+for this cohort.
+
+**S07 60%:** the frozen earlier-fold duration/return and recorded-rest play proxies are fitted and independently
+audited. Return candidate minus reason-only baseline Brier is **−0.00540/−0.01368/−0.01082/−0.01380** on
+**612/713/503/649** known next-listing observations (F1–F4); the F1 95% interval includes zero, while F2–F4 are
+negative. Rest-role Brier changes are approximately **+0.00000008/−0.00000012/−0.00000000/−0.00000059** on
+**4,051/4,005/4,001/4,078** observations. Star-return subgroups are unsupported in every fold. These are
+retrospective, selected listed-player proxies, dominated by coach DNP; neither a physical recovery estimate nor a
+deployable future-absence model follows. Continue with explicitly censored duration/role comparisons; fixed report
+fallback, engine v1.3, forecasts and bundle remain unchanged.
 
 The tracking family was frozen in TRAINING_PLAN §8 and built separately by
 `scripts/a1_tracking_features.py`: former wrapper PID **85586**, shell **1549**, log
@@ -966,7 +977,7 @@ weights, with the old and new accounting; do not hide unfinished tasks by deleti
 | S04 Defence and shot quality | 12% | 100% | Both families rejected at their frozen node gates; tracking rebuild and independent accounting verified; served model and bundle unchanged |
 | S05 Roles and minute allocation | 8% | 100% | Both matched screens and independent accounting complete; neither passes pooled MIN gate, retain D29 control; smoke/fault passed |
 | S06 Game-state substitutions | 12% | 70% | 3,000 worlds replayed; 200-game screen failed explicitly in game 401810472; player-first comparison unfinished |
-| S07 Availability and future absences | 6% | 50% | No dated report calibration possible; fixed fallback and 100-player-game/30-game collection gate retained |
+| S07 Availability and future absences | 6% | 60% | Earlier-fold recorded-DNP duration and rest proxies audited; no dated report calibration, fixed fallback retained |
 | S08 Lineup branches and Expected | 6% | 0% | Planned |
 | S09 Shared form and end-game behaviour | 10% | 0% | Planned |
 | S10 Season pathway calibration | 8% | 0% | Planned |
@@ -975,7 +986,7 @@ weights, with the old and new accounting; do not hide unfinished tasks by deleti
 | S13 Current-model season history | 5% | 0% | Planned |
 | S14 Nightly, delivery, successor | 5% | 0% | Planned |
 
-**A1 overall: `█████████░░░░░░░░░░░ 49.6%`.** Both control seeds are complete; isolated assignment-event
+**A1 overall: `██████████░░░░░░░░░░ 52.0%`.** Both control seeds are complete; isolated assignment-event
 diagnostics and three-game wiring are not engine-accuracy tests. No candidate has been promoted or changed production/PWA.
 Each rung below is cumulative; 100% always includes updated docs, necessary PWA model/data/shell delivery, reviewed
 commit and push, plus the owner summary. See AGENTS §3/§5 and PLAN §6c for the per-subtask PWA checklist; research-only
@@ -1339,14 +1350,15 @@ The dashboard programme is done. Do not resume U1–U22, repeat rejected defence
    Original tracking publication/revision timing remains unknown; preserve S02's cutoff and provenance limits. The
    raw inventory retained 45 older entries without original fetch URL/time. Provider access remains one polite stream,
    paused during the nightly.
-2. **Continue S07 independently at 50%:** all four baseline folds and their independent accounting are complete.
+2. **Continue S07 independently at 60%:** all four baseline folds and their independent accounting are complete.
    The original auditor source is in **5fd5e00**; its guarded v2 has passed Pylance/tests and four-fold accounting.
    The report archive has no development-season
    examples. Do not equate inferred membership with eligibility or score/tune status on the protected-season archive.
    The sequence builder has a passed synthetic/preflight check and produced **128,321** independently audited
-   prior-state rows. The Pylance-clean second audit and the unrun fold-screen source are prepared. Preserve the
-   screen source, run the exact command above, then independently audit predictions, earlier-fold fits and intervals.
-   Continue S06–S10 in dependency order.
+   prior-state rows. The independently audited frozen fold screen scored **18,612** conditional return/rest
+   observations; its exact source was committed before scoring. Specify and evaluate censored recorded-DNP spell
+   duration/return timing and starter-frequency comparisons by role, with uncertainty and honest unsupported cells.
+   Do not present selected listed-player outcomes as physical recovery. Continue S06–S10 in dependency order.
 3. **S11 freezes the tested combination before promotion.** Confirm on the fixed wider folds and second seed, protect
    the final test and use player outcomes first.
 4. **S12/S13 implement model visibility and versioned daily history.** Preserve original and previous-version

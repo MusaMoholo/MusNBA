@@ -1,0 +1,4083 @@
+{
+ "experiment": "a1_s07_recorded_dnp_return_and_rest_proxy_screen",
+ "folds": [
+  {
+   "fold": "F1",
+   "training_through": "2023-12-31",
+   "validation_from": "2024-01-01",
+   "validation_through": "2024-04-30",
+   "fixed_games": 200,
+   "populations": {
+    "return": {
+     "training_observations": 5294,
+     "training_games": 1529,
+     "training_last_outcome_date": "2023-12-31",
+     "validation": {
+      "observations": 612,
+      "games": 180,
+      "status": "ok",
+      "metrics": {
+       "baseline_brier": {
+        "observations": 612,
+        "games": 180,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.2572613768572217,
+        "ci_95": [
+         0.25038779661595073,
+         0.2643009823175599
+        ]
+       },
+       "candidate_brier": {
+        "observations": 612,
+        "games": 180,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.25186467124895245,
+        "ci_95": [
+         0.24234842004717558,
+         0.2614252244840611
+        ]
+       },
+       "brier_change": {
+        "observations": 612,
+        "games": 180,
+        "missing": 0,
+        "status": "ok",
+        "mean": -0.005396705608269308,
+        "ci_95": [
+         -0.012648680468709738,
+         0.0018086806454892836
+        ]
+       },
+       "baseline_log_loss": {
+        "observations": 612,
+        "games": 180,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.7076958931708641,
+        "ci_95": [
+         0.6937647636454577,
+         0.7219997210810571
+        ]
+       },
+       "candidate_log_loss": {
+        "observations": 612,
+        "games": 180,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.6969833063173231,
+        "ci_95": [
+         0.6769985459807379,
+         0.7171018570649672
+        ]
+       },
+       "log_loss_change": {
+        "observations": 612,
+        "games": 180,
+        "missing": 0,
+        "status": "ok",
+        "mean": -0.010712586853540922,
+        "ci_95": [
+         -0.025990551949213455,
+         0.004479391111068557
+        ]
+       }
+      },
+      "baseline_unseen_group_observations": 0,
+      "candidate_unseen_group_observations": 0
+     },
+     "subgroups": {
+      "prior_role:bench": {
+       "observations": 542,
+       "games": 175,
+       "status": "ok",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 542,
+         "games": 175,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.2592150923101417,
+         "ci_95": [
+          0.25193214241157497,
+          0.26665758259224
+         ]
+        },
+        "candidate_brier": {
+         "observations": 542,
+         "games": 175,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.2575314325955678,
+         "ci_95": [
+          0.24792781154037238,
+          0.2671489740102949
+         ]
+        },
+        "brier_change": {
+         "observations": 542,
+         "games": 175,
+         "missing": 0,
+         "status": "ok",
+         "mean": -0.0016836597145739338,
+         "ci_95": [
+          -0.009038660428510276,
+          0.005859439527584662
+         ]
+        },
+        "baseline_log_loss": {
+         "observations": 542,
+         "games": 175,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.7117517823203082,
+         "ci_95": [
+          0.6970263651800762,
+          0.7268042052150339
+         ]
+        },
+        "candidate_log_loss": {
+         "observations": 542,
+         "games": 175,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.7090672413536009,
+         "ci_95": [
+          0.6890126343807725,
+          0.7291001120346404
+         ]
+        },
+        "log_loss_change": {
+         "observations": 542,
+         "games": 175,
+         "missing": 0,
+         "status": "ok",
+         "mean": -0.002684540966707226,
+         "ci_95": [
+          -0.01808330464522901,
+          0.013000742391816861
+         ]
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_role:star": {
+       "observations": 23,
+       "games": 21,
+       "status": "insufficient_sample",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 23,
+         "games": 21,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.21688424224057182,
+         "ci_95": null
+        },
+        "candidate_brier": {
+         "observations": 23,
+         "games": 21,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.17741770859310377,
+         "ci_95": null
+        },
+        "brier_change": {
+         "observations": 23,
+         "games": 21,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": -0.039466533647468056,
+         "ci_95": null
+        },
+        "baseline_log_loss": {
+         "observations": 23,
+         "games": 21,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.623514257915127,
+         "ci_95": null
+        },
+        "candidate_log_loss": {
+         "observations": 23,
+         "games": 21,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.5359491761561368,
+         "ci_95": null
+        },
+        "log_loss_change": {
+         "observations": 23,
+         "games": 21,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": -0.08756508175899032,
+         "ci_95": null
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_role:starter": {
+       "observations": 47,
+       "games": 41,
+       "status": "insufficient_sample",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 47,
+         "games": 41,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.25449031985084525,
+         "ci_95": null
+        },
+        "candidate_brier": {
+         "observations": 47,
+         "games": 41,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.2229475540408457,
+         "ci_95": null
+        },
+        "brier_change": {
+         "observations": 47,
+         "games": 41,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": -0.03154276580999953,
+         "ci_95": null
+        },
+        "baseline_log_loss": {
+         "observations": 47,
+         "games": 41,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.7021189929981673,
+         "ci_95": null
+        },
+        "candidate_log_loss": {
+         "observations": 47,
+         "games": 41,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.636436331935296,
+         "ci_95": null
+        },
+        "log_loss_change": {
+         "observations": 47,
+         "games": 41,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": -0.06568266106287125,
+         "ci_95": null
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_reason:coach": {
+       "observations": 551,
+       "games": 170,
+       "status": "ok",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 551,
+         "games": 170,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.2592163498845704,
+         "ci_95": [
+          0.2521747321175254,
+          0.26643248244615386
+         ]
+        },
+        "candidate_brier": {
+         "observations": 551,
+         "games": 170,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.25615312423306436,
+         "ci_95": [
+          0.24713414204927378,
+          0.2653881585465606
+         ]
+        },
+        "brier_change": {
+         "observations": 551,
+         "games": 170,
+         "missing": 0,
+         "status": "ok",
+         "mean": -0.003063225651506005,
+         "ci_95": [
+          -0.010018490055697497,
+          0.003924524689961963
+         ]
+        },
+        "baseline_log_loss": {
+         "observations": 551,
+         "games": 170,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.7116796392838535,
+         "ci_95": [
+          0.6975320750048731,
+          0.7261778274329497
+         ]
+        },
+        "candidate_log_loss": {
+         "observations": 551,
+         "games": 170,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.7060771017317748,
+         "ci_95": [
+          0.6873532247641932,
+          0.725238699006286
+         ]
+        },
+        "log_loss_change": {
+         "observations": 551,
+         "games": 170,
+         "missing": 0,
+         "status": "ok",
+         "mean": -0.005602537552078477,
+         "ci_95": [
+          -0.01995572660184734,
+          0.008918016274290924
+         ]
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_reason:explicit_injury_or_illness": {
+       "observations": 22,
+       "games": 21,
+       "status": "insufficient_sample",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 22,
+         "games": 21,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.2348574982423882,
+         "ci_95": null
+        },
+        "candidate_brier": {
+         "observations": 22,
+         "games": 21,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.2361463862340483,
+         "ci_95": null
+        },
+        "brier_change": {
+         "observations": 22,
+         "games": 21,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.001288887991660093,
+         "ci_95": null
+        },
+        "baseline_log_loss": {
+         "observations": 22,
+         "games": 21,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.6633681405083754,
+         "ci_95": null
+        },
+        "candidate_log_loss": {
+         "observations": 22,
+         "games": 21,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.667396972669385,
+         "ci_95": null
+        },
+        "log_loss_change": {
+         "observations": 22,
+         "games": 21,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.004028832161009574,
+         "ci_95": null
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_reason:other_recorded_reason": {
+       "observations": 38,
+       "games": 32,
+       "status": "insufficient_sample",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 38,
+         "games": 32,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.24760233918128655,
+         "ci_95": null
+        },
+        "candidate_brier": {
+         "observations": 38,
+         "games": 32,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.20435754881029897,
+         "ci_95": null
+        },
+        "brier_change": {
+         "observations": 38,
+         "games": 32,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": -0.0432447903709876,
+         "ci_95": null
+        },
+        "baseline_log_loss": {
+         "observations": 38,
+         "games": 32,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.6883463877017659,
+         "ci_95": null
+        },
+        "candidate_log_loss": {
+         "observations": 38,
+         "games": 32,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.594721670051397,
+         "ci_95": null
+        },
+        "log_loss_change": {
+         "observations": 38,
+         "games": 32,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": -0.09362471765036876,
+         "ci_95": null
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_reason:rest": {
+       "observations": 1,
+       "games": 1,
+       "status": "insufficient_sample",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 1,
+         "games": 1,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.03999999999999998,
+         "ci_95": null
+        },
+        "candidate_brier": {
+         "observations": 1,
+         "games": 1,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.03999999999999998,
+         "ci_95": null
+        },
+        "brier_change": {
+         "observations": 1,
+         "games": 1,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.0,
+         "ci_95": null
+        },
+        "baseline_log_loss": {
+         "observations": 1,
+         "games": 1,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.2231435513142097,
+         "ci_95": null
+        },
+        "candidate_log_loss": {
+         "observations": 1,
+         "games": 1,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.2231435513142097,
+         "ci_95": null
+        },
+        "log_loss_change": {
+         "observations": 1,
+         "games": 1,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.0,
+         "ci_95": null
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      }
+     },
+     "calibration": {
+      "baseline": [
+       {
+        "lower": 0.0,
+        "upper": 0.2,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.2,
+        "upper": 0.4,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.4,
+        "upper": 0.6,
+        "observations": 589,
+        "games": 177,
+        "mean_prediction": 0.44762029774992074,
+        "observed_rate": 0.5500848896434635
+       },
+       {
+        "lower": 0.6,
+        "upper": 0.8,
+        "observations": 22,
+        "games": 21,
+        "mean_prediction": 0.6951219512195123,
+        "observed_rate": 0.6363636363636364
+       },
+       {
+        "lower": 0.8,
+        "upper": 1.0,
+        "observations": 1,
+        "games": 1,
+        "mean_prediction": 0.8,
+        "observed_rate": 1.0
+       }
+      ],
+      "candidate": [
+       {
+        "lower": 0.0,
+        "upper": 0.2,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.2,
+        "upper": 0.4,
+        "observations": 115,
+        "games": 80,
+        "mean_prediction": 0.31480264721371437,
+        "observed_rate": 0.4260869565217391
+       },
+       {
+        "lower": 0.4,
+        "upper": 0.6,
+        "observations": 455,
+        "games": 164,
+        "mean_prediction": 0.4704633318770219,
+        "observed_rate": 0.5736263736263736
+       },
+       {
+        "lower": 0.6,
+        "upper": 0.8,
+        "observations": 41,
+        "games": 34,
+        "mean_prediction": 0.718230099264642,
+        "observed_rate": 0.6829268292682927
+       },
+       {
+        "lower": 0.8,
+        "upper": 1.0,
+        "observations": 1,
+        "games": 1,
+        "mean_prediction": 0.8,
+        "observed_rate": 1.0
+       }
+      ]
+     }
+    },
+    "rest": {
+     "training_observations": 33608,
+     "training_games": 1682,
+     "training_last_outcome_date": "2023-12-31",
+     "validation": {
+      "observations": 4051,
+      "games": 200,
+      "status": "ok",
+      "metrics": {
+       "baseline_brier": {
+        "observations": 4051,
+        "games": 200,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.0002467931812753206,
+        "ci_95": [
+         4.337695431990644e-08,
+         0.0007473023781786212
+        ]
+       },
+       "candidate_brier": {
+        "observations": 4051,
+        "games": 200,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.00024687617884765526,
+        "ci_95": [
+         9.631943545612487e-08,
+         0.000747443574954988
+        ]
+       },
+       "brier_change": {
+        "observations": 4051,
+        "games": 200,
+        "missing": 0,
+        "status": "ok",
+        "mean": 8.299757233471033e-08,
+        "ci_95": [
+         5.294248113621845e-08,
+         1.4058289901402098e-07
+        ]
+       },
+       "baseline_log_loss": {
+        "observations": 4051,
+        "games": 200,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.00230072959289999,
+        "ci_95": [
+         0.0002082930393022273,
+         0.006545043957785559
+        ]
+       },
+       "candidate_log_loss": {
+        "observations": 4051,
+        "games": 200,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.002440605856786137,
+        "ci_95": [
+         0.0002674723242259846,
+         0.006841617413570226
+        ]
+       },
+       "log_loss_change": {
+        "observations": 4051,
+        "games": 200,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.0001398762638861475,
+        "ci_95": [
+         5.9179284923757165e-05,
+         0.00029802886937711895
+        ]
+       }
+      },
+      "baseline_unseen_group_observations": 0,
+      "candidate_unseen_group_observations": 0
+     },
+     "subgroups": {
+      "prior_role:bench": {
+       "observations": 1350,
+       "games": 200,
+       "status": "ok",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 1350,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 4.337695431990645e-08,
+         "ci_95": [
+          4.337695431990643e-08,
+          4.337695431990647e-08
+         ]
+        },
+        "candidate_brier": {
+         "observations": 1350,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 3.4369887908797163e-08,
+         "ci_95": [
+          3.4369887908797163e-08,
+          3.4369887908797197e-08
+         ]
+        },
+        "brier_change": {
+         "observations": 1350,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": -9.007066411109284e-09,
+         "ci_95": [
+          -9.00706641110929e-09,
+          -9.00706641110928e-09
+         ]
+        },
+        "baseline_log_loss": {
+         "observations": 1350,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.00020829303930222745,
+         "ci_95": [
+          0.00020829303930222724,
+          0.0002082930393022275
+         ]
+        },
+        "candidate_log_loss": {
+         "observations": 1350,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.00018540836244828628,
+         "ci_95": [
+          0.00018540836244828617,
+          0.00018540836244828636
+         ]
+        },
+        "log_loss_change": {
+         "observations": 1350,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": -2.2884676853941174e-05,
+         "ci_95": [
+          -2.288467685394119e-05,
+          -2.288467685394117e-05
+         ]
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_role:star": {
+       "observations": 1204,
+       "games": 200,
+       "status": "ok",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 1204,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 4.337695431990645e-08,
+         "ci_95": [
+          4.3376954319906415e-08,
+          4.3376954319906454e-08
+         ]
+        },
+        "candidate_brier": {
+         "observations": 1204,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 2.651014483329843e-07,
+         "ci_95": [
+          2.6510144833298413e-07,
+          2.6510144833298445e-07
+         ]
+        },
+        "brier_change": {
+         "observations": 1204,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 2.2172449401307787e-07,
+         "ci_95": [
+          2.2172449401307806e-07,
+          2.2172449401307816e-07
+         ]
+        },
+        "baseline_log_loss": {
+         "observations": 1204,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.00020829303930222743,
+         "ci_95": [
+          0.0002082930393022272,
+          0.00020829303930222743
+         ]
+        },
+        "candidate_log_loss": {
+         "observations": 1204,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.000515012629192527,
+         "ci_95": [
+          0.0005150126291925272,
+          0.0005150126291925277
+         ]
+        },
+        "log_loss_change": {
+         "observations": 1204,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.00030671958989029964,
+         "ci_95": [
+          0.0003067195898902993,
+          0.0003067195898902997
+         ]
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_role:starter": {
+       "observations": 1497,
+       "games": 200,
+       "status": "ok",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 1497,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.0006677677973313229,
+         "ci_95": [
+          4.337695431990642e-08,
+          0.002052576143493075
+         ]
+        },
+        "candidate_brier": {
+         "observations": 1497,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.0006678221903937086,
+         "ci_95": [
+          2.325537791515244e-08,
+          0.0020527850741020276
+         ]
+        },
+        "brier_change": {
+         "observations": 1497,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 5.439306238554664e-08,
+         "ci_95": [
+          -2.0121576404753983e-08,
+          2.0893060895269987e-07
+         ]
+        },
+        "baseline_log_loss": {
+         "observations": 1497,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.005870591288216412,
+         "ci_95": [
+          0.00020829303930222726,
+          0.01761375603442448
+         ]
+        },
+        "candidate_log_loss": {
+         "observations": 1497,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.006023058003331765,
+         "ci_95": [
+          0.00015250876954988363,
+          0.018198119042591936
+         ]
+        },
+        "log_loss_change": {
+         "observations": 1497,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.00015246671511535292,
+         "ci_95": [
+          -5.578426975234386e-05,
+          0.000584363008167455
+         ]
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      }
+     },
+     "calibration": {
+      "baseline": [
+       {
+        "lower": 0.0,
+        "upper": 0.2,
+        "observations": 4051,
+        "games": 200,
+        "mean_prediction": 0.0002082713478131509,
+        "observed_rate": 0.00024685262898049864
+       },
+       {
+        "lower": 0.2,
+        "upper": 0.4,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.4,
+        "upper": 0.6,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.6,
+        "upper": 0.8,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.8,
+        "upper": 1.0,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       }
+      ],
+      "candidate": [
+       {
+        "lower": 0.0,
+        "upper": 0.2,
+        "observations": 4051,
+        "games": 200,
+        "mean_prediction": 0.00027116313651778535,
+        "observed_rate": 0.00024685262898049864
+       },
+       {
+        "lower": 0.2,
+        "upper": 0.4,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.4,
+        "upper": 0.6,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.6,
+        "upper": 0.8,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.8,
+        "upper": 1.0,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "fold": "F2",
+   "training_through": "2024-12-31",
+   "validation_from": "2025-01-01",
+   "validation_through": "2025-04-30",
+   "fixed_games": 200,
+   "populations": {
+    "return": {
+     "training_observations": 9146,
+     "training_games": 2632,
+     "training_last_outcome_date": "2024-12-31",
+     "validation": {
+      "observations": 713,
+      "games": 188,
+      "status": "ok",
+      "metrics": {
+       "baseline_brier": {
+        "observations": 713,
+        "games": 188,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.24921081709407947,
+        "ci_95": [
+         0.24364890957242338,
+         0.2547015778613352
+        ]
+       },
+       "candidate_brier": {
+        "observations": 713,
+        "games": 188,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.23552914008276046,
+        "ci_95": [
+         0.22723376059333944,
+         0.24376246976982313
+        ]
+       },
+       "brier_change": {
+        "observations": 713,
+        "games": 188,
+        "missing": 0,
+        "status": "ok",
+        "mean": -0.013681677011318989,
+        "ci_95": [
+         -0.020977075615350716,
+         -0.006380418039539683
+        ]
+       },
+       "baseline_log_loss": {
+        "observations": 713,
+        "games": 188,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.6907926087705109,
+        "ci_95": [
+         0.6794337046913448,
+         0.7020018318231613
+        ]
+       },
+       "candidate_log_loss": {
+        "observations": 713,
+        "games": 188,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.6622335739394343,
+        "ci_95": [
+         0.64451233936619,
+         0.6797683818838101
+        ]
+       },
+       "log_loss_change": {
+        "observations": 713,
+        "games": 188,
+        "missing": 0,
+        "status": "ok",
+        "mean": -0.028559034831076614,
+        "ci_95": [
+         -0.044199917694049906,
+         -0.012828201707526644
+        ]
+       }
+      },
+      "baseline_unseen_group_observations": 0,
+      "candidate_unseen_group_observations": 0
+     },
+     "subgroups": {
+      "prior_role:bench": {
+       "observations": 562,
+       "games": 171,
+       "status": "ok",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 562,
+         "games": 171,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.2519803293821819,
+         "ci_95": [
+          0.24605957669327677,
+          0.25784950599428086
+         ]
+        },
+        "candidate_brier": {
+         "observations": 562,
+         "games": 171,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.24264982415025463,
+         "ci_95": [
+          0.2350076215982997,
+          0.2500032421533625
+         ]
+        },
+        "brier_change": {
+         "observations": 562,
+         "games": 171,
+         "missing": 0,
+         "status": "ok",
+         "mean": -0.009330505231927255,
+         "ci_95": [
+          -0.015596173310531463,
+          -0.003153211820798322
+         ]
+        },
+        "baseline_log_loss": {
+         "observations": 562,
+         "games": 171,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.6970098865487417,
+         "ci_95": [
+          0.6851146406272633,
+          0.7087694314025423
+         ]
+        },
+        "candidate_log_loss": {
+         "observations": 562,
+         "games": 171,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.677388069984018,
+         "ci_95": [
+          0.6613713779663087,
+          0.6927720979775293
+         ]
+        },
+        "log_loss_change": {
+         "observations": 562,
+         "games": 171,
+         "missing": 0,
+         "status": "ok",
+         "mean": -0.019621816564723737,
+         "ci_95": [
+          -0.032751032060102124,
+          -0.0066970194690396945
+         ]
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_role:star": {
+       "observations": 54,
+       "games": 41,
+       "status": "insufficient_sample",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 54,
+         "games": 41,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.23937615960033837,
+         "ci_95": null
+        },
+        "candidate_brier": {
+         "observations": 54,
+         "games": 41,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.1604154647299966,
+         "ci_95": null
+        },
+        "brier_change": {
+         "observations": 54,
+         "games": 41,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": -0.0789606948703418,
+         "ci_95": null
+        },
+        "baseline_log_loss": {
+         "observations": 54,
+         "games": 41,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.6687711480821412,
+         "ci_95": null
+        },
+        "candidate_log_loss": {
+         "observations": 54,
+         "games": 41,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.4970449289107319,
+         "ci_95": null
+        },
+        "log_loss_change": {
+         "observations": 54,
+         "games": 41,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": -0.17172621917140915,
+         "ci_95": null
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_role:starter": {
+       "observations": 97,
+       "games": 76,
+       "status": "insufficient_sample",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 97,
+         "games": 76,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.23863974079251699,
+         "ci_95": null
+        },
+        "candidate_brier": {
+         "observations": 97,
+         "games": 76,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.2360890784654153,
+         "ci_95": null
+        },
+        "brier_change": {
+         "observations": 97,
+         "games": 76,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": -0.0025506623271016877,
+         "ci_95": null
+        },
+        "baseline_log_loss": {
+         "observations": 97,
+         "games": 76,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.6670302249128429,
+         "ci_95": null
+        },
+        "candidate_log_loss": {
+         "observations": 97,
+         "games": 76,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.6663919250166904,
+         "ci_95": null
+        },
+        "log_loss_change": {
+         "observations": 97,
+         "games": 76,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": -0.0006382998961525012,
+         "ci_95": null
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_reason:coach": {
+       "observations": 571,
+       "games": 175,
+       "status": "ok",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 571,
+         "games": 175,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.253980232989763,
+         "ci_95": [
+          0.24812061561560728,
+          0.2597573312594395
+         ]
+        },
+        "candidate_brier": {
+         "observations": 571,
+         "games": 175,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.2467915955645381,
+         "ci_95": [
+          0.23985500252941402,
+          0.2535495100474093
+         ]
+        },
+        "brier_change": {
+         "observations": 571,
+         "games": 175,
+         "missing": 0,
+         "status": "ok",
+         "mean": -0.007188637425224888,
+         "ci_95": [
+          -0.012802503451428842,
+          -0.0016149404976862972
+         ]
+        },
+        "baseline_log_loss": {
+         "observations": 571,
+         "games": 175,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.701138284044122,
+         "ci_95": [
+          0.6893838630170072,
+          0.712727171345245
+         ]
+        },
+        "candidate_log_loss": {
+         "observations": 571,
+         "games": 175,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.6864078676930714,
+         "ci_95": [
+          0.6720817426619211,
+          0.7003850214840986
+         ]
+        },
+        "log_loss_change": {
+         "observations": 571,
+         "games": 175,
+         "missing": 0,
+         "status": "ok",
+         "mean": -0.014730416351050634,
+         "ci_95": [
+          -0.026292719032382884,
+          -0.003287876716280362
+         ]
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_reason:explicit_injury_or_illness": {
+       "observations": 33,
+       "games": 26,
+       "status": "insufficient_sample",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 33,
+         "games": 26,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.21487603305785125,
+         "ci_95": null
+        },
+        "candidate_brier": {
+         "observations": 33,
+         "games": 26,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.14619900606183064,
+         "ci_95": null
+        },
+        "brier_change": {
+         "observations": 33,
+         "games": 26,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": -0.06867702699602063,
+         "ci_95": null
+        },
+        "baseline_log_loss": {
+         "observations": 33,
+         "games": 26,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.6215656655416701,
+         "ci_95": null
+        },
+        "candidate_log_loss": {
+         "observations": 33,
+         "games": 26,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.4723839719131888,
+         "ci_95": null
+        },
+        "log_loss_change": {
+         "observations": 33,
+         "games": 26,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": -0.14918169362848138,
+         "ci_95": null
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_reason:other_recorded_reason": {
+       "observations": 100,
+       "games": 69,
+       "status": "ok",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 100,
+         "games": 69,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.25276169798857867,
+         "ci_95": [
+          0.24775945848371278,
+          0.2578516419025926
+         ]
+        },
+        "candidate_brier": {
+         "observations": 100,
+         "games": 69,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.21829708611616538,
+         "ci_95": [
+          0.182455861552721,
+          0.2552128562300012
+         ]
+        },
+        "brier_change": {
+         "observations": 100,
+         "games": 69,
+         "missing": 0,
+         "status": "ok",
+         "mean": -0.034464611872413224,
+         "ci_95": [
+          -0.07052727072461147,
+          0.0025455531401452226
+         ]
+        },
+        "baseline_log_loss": {
+         "observations": 100,
+         "games": 69,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.6986746664214616,
+         "ci_95": [
+          0.6886634035500625,
+          0.708861457052799
+         ]
+        },
+        "candidate_log_loss": {
+         "observations": 100,
+         "games": 69,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.6263668273110979,
+         "ci_95": [
+          0.5473329124286404,
+          0.7077560205563702
+         ]
+        },
+        "log_loss_change": {
+         "observations": 100,
+         "games": 69,
+         "missing": 0,
+         "status": "ok",
+         "mean": -0.07230783911036358,
+         "ci_95": [
+          -0.15219413777383184,
+          0.009643973545090341
+         ]
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_reason:rest": {
+       "observations": 9,
+       "games": 8,
+       "status": "insufficient_sample",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 9,
+         "games": 8,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.0330578512396694,
+         "ci_95": null
+        },
+        "candidate_brier": {
+         "observations": 9,
+         "games": 8,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.03999999999999998,
+         "ci_95": null
+        },
+        "brier_change": {
+         "observations": 9,
+         "games": 8,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.006942148760330578,
+         "ci_95": null
+        },
+        "baseline_log_loss": {
+         "observations": 9,
+         "games": 8,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.2006706954621511,
+         "ci_95": null
+        },
+        "candidate_log_loss": {
+         "observations": 9,
+         "games": 8,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.2231435513142097,
+         "ci_95": null
+        },
+        "log_loss_change": {
+         "observations": 9,
+         "games": 8,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.022472855852058604,
+         "ci_95": null
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      }
+     },
+     "calibration": {
+      "baseline": [
+       {
+        "lower": 0.0,
+        "upper": 0.2,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.2,
+        "upper": 0.4,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.4,
+        "upper": 0.6,
+        "observations": 671,
+        "games": 186,
+        "mean_prediction": 0.46308620169718545,
+        "observed_rate": 0.5081967213114754
+       },
+       {
+        "lower": 0.6,
+        "upper": 0.8,
+        "observations": 33,
+        "games": 26,
+        "mean_prediction": 0.6363636363636364,
+        "observed_rate": 0.696969696969697
+       },
+       {
+        "lower": 0.8,
+        "upper": 1.0,
+        "observations": 9,
+        "games": 8,
+        "mean_prediction": 0.8181818181818182,
+        "observed_rate": 1.0
+       }
+      ],
+      "candidate": [
+       {
+        "lower": 0.0,
+        "upper": 0.2,
+        "observations": 18,
+        "games": 17,
+        "mean_prediction": 0.16666666666666663,
+        "observed_rate": 0.16666666666666666
+       },
+       {
+        "lower": 0.2,
+        "upper": 0.4,
+        "observations": 106,
+        "games": 79,
+        "mean_prediction": 0.3272825460027076,
+        "observed_rate": 0.27358490566037735
+       },
+       {
+        "lower": 0.4,
+        "upper": 0.6,
+        "observations": 494,
+        "games": 167,
+        "mean_prediction": 0.4818630733409001,
+        "observed_rate": 0.5546558704453441
+       },
+       {
+        "lower": 0.6,
+        "upper": 0.8,
+        "observations": 86,
+        "games": 61,
+        "mean_prediction": 0.6883889264846944,
+        "observed_rate": 0.6744186046511628
+       },
+       {
+        "lower": 0.8,
+        "upper": 1.0,
+        "observations": 9,
+        "games": 8,
+        "mean_prediction": 0.8,
+        "observed_rate": 1.0
+       }
+      ]
+     }
+    },
+    "rest": {
+     "training_observations": 58288,
+     "training_games": 2903,
+     "training_last_outcome_date": "2024-12-31",
+     "validation": {
+      "observations": 4005,
+      "games": 200,
+      "status": "ok",
+      "metrics": {
+       "baseline_brier": {
+        "observations": 4005,
+        "games": 200,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.002994967954506021,
+        "ci_95": [
+         0.001461199941528155,
+         0.004987875041895405
+        ]
+       },
+       "candidate_brier": {
+        "observations": 4005,
+        "games": 200,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.00299484594768446,
+        "ci_95": [
+         0.0014612195438058846,
+         0.004987945642328615
+        ]
+       },
+       "brier_change": {
+        "observations": 4005,
+        "games": 200,
+        "missing": 0,
+        "status": "ok",
+        "mean": -1.2200682155960396e-07,
+        "ci_95": [
+         -6.493668288297671e-07,
+         2.859049294032331e-07
+        ]
+       },
+       "baseline_log_loss": {
+        "observations": 4005,
+        "games": 200,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.025415597280911587,
+        "ci_95": [
+         0.012513900490072961,
+         0.04217946427790983
+        ]
+       },
+       "candidate_log_loss": {
+        "observations": 4005,
+        "games": 200,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.025448788476361353,
+        "ci_95": [
+         0.011975005330478667,
+         0.04217637807942167
+        ]
+       },
+       "log_loss_change": {
+        "observations": 4005,
+        "games": 200,
+        "missing": 0,
+        "status": "ok",
+        "mean": 3.319119544976681e-05,
+        "ci_95": [
+         -0.000820870886335051,
+         0.0007623806584567752
+        ]
+       }
+      },
+      "baseline_unseen_group_observations": 0,
+      "candidate_unseen_group_observations": 0
+     },
+     "subgroups": {
+      "prior_role:bench": {
+       "observations": 1282,
+       "games": 200,
+       "status": "ok",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 1282,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.0015594162826497357,
+         "ci_95": [
+          4.9739176880194574e-08,
+          0.003966533685074102
+         ]
+        },
+        "candidate_brier": {
+         "observations": 1282,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.0015595938648732194,
+         "ci_95": [
+          2.5022852467555584e-08,
+          0.003967023545611606
+         ]
+        },
+        "brier_change": {
+         "observations": 1282,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 1.775822234833268e-07,
+         "ci_95": [
+          -2.4716324412638988e-08,
+          4.898605374973375e-07
+         ]
+        },
+        "baseline_log_loss": {
+         "observations": 1282,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.013340073315646477,
+         "ci_95": [
+          0.00022304769023646302,
+          0.03358818033264842
+         ]
+        },
+        "candidate_log_loss": {
+         "observations": 1282,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.013811209513752915,
+         "ci_95": [
+          0.0001581986450948937,
+          0.034886690576879736
+         ]
+        },
+        "log_loss_change": {
+         "observations": 1282,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.00047113619810643825,
+         "ci_95": [
+          -6.484904514156922e-05,
+          0.0012985102442313384
+         ]
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_role:star": {
+       "observations": 1107,
+       "games": 199,
+       "status": "ok",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 1107,
+         "games": 199,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.0027088680436920583,
+         "ci_95": [
+          4.9739176880194594e-08,
+          0.0062922059267332695
+         ]
+        },
+        "candidate_brier": {
+         "observations": 1107,
+         "games": 199,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.0027076712320595188,
+         "ci_95": [
+          2.2710871139372395e-07,
+          0.006289191290913019
+         ]
+        },
+        "brier_change": {
+         "observations": 1107,
+         "games": 199,
+         "missing": 0,
+         "status": "ok",
+         "mean": -1.1968116325385852e-06,
+         "ci_95": [
+          -3.014635820248708e-06,
+          1.7736953451352925e-07
+         ]
+        },
+        "baseline_log_loss": {
+         "observations": 1107,
+         "games": 199,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.023008991933834894,
+         "ci_95": [
+          0.00022304769023646307,
+          0.05315118975967418
+         ]
+        },
+        "candidate_log_loss": {
+         "observations": 1107,
+         "games": 199,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.021204157498867764,
+         "ci_95": [
+          0.00047667283271637207,
+          0.048623339103102195
+         ]
+        },
+        "log_loss_change": {
+         "observations": 1107,
+         "games": 199,
+         "missing": 0,
+         "status": "ok",
+         "mean": -0.0018048344349671382,
+         "ci_95": [
+          -0.004527850656572004,
+          0.0002536251424799093
+         ]
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_role:starter": {
+       "observations": 1616,
+       "games": 200,
+       "status": "ok",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 1616,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.004329800779129048,
+         "ci_95": [
+          0.0012264775099541524,
+          0.0082924565080086
+         ]
+        },
+        "candidate_brier": {
+         "observations": 1616,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.004330177371175068,
+         "ci_95": [
+          0.0012265710999530292,
+          0.008293194467397345
+         ]
+        },
+        "brier_change": {
+         "observations": 1616,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 3.7659204602003373e-07,
+         "ci_95": [
+          9.358999887696144e-08,
+          7.379593887443068e-07
+         ]
+        },
+        "baseline_log_loss": {
+         "observations": 1616,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.03664389792613668,
+         "ci_95": [
+          0.010539470448142057,
+          0.06997682850487696
+         ]
+        },
+        "candidate_log_loss": {
+         "observations": 1616,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.03758875303214688,
+         "ci_95": [
+          0.010774433220332839,
+          0.0718281502208724
+         ]
+        },
+        "log_loss_change": {
+         "observations": 1616,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.0009448551060102006,
+         "ci_95": [
+          0.00023496277219077355,
+          0.0018513217159954233
+         ]
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      }
+     },
+     "calibration": {
+      "baseline": [
+       {
+        "lower": 0.0,
+        "upper": 0.2,
+        "observations": 4005,
+        "games": 200,
+        "mean_prediction": 0.00022302281694973415,
+        "observed_rate": 0.00299625468164794
+       },
+       {
+        "lower": 0.2,
+        "upper": 0.4,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.4,
+        "upper": 0.6,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.6,
+        "upper": 0.8,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.8,
+        "upper": 1.0,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       }
+      ],
+      "candidate": [
+       {
+        "lower": 0.0,
+        "upper": 0.2,
+        "observations": 4005,
+        "games": 200,
+        "mean_prediction": 0.0002539573828560848,
+        "observed_rate": 0.00299625468164794
+       },
+       {
+        "lower": 0.2,
+        "upper": 0.4,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.4,
+        "upper": 0.6,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.6,
+        "upper": 0.8,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.8,
+        "upper": 1.0,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "fold": "F3",
+   "training_through": "2025-09-30",
+   "validation_from": "2025-10-01",
+   "validation_through": "2025-12-31",
+   "fixed_games": 200,
+   "populations": {
+    "return": {
+     "training_observations": 11781,
+     "training_games": 3344,
+     "training_last_outcome_date": "2025-04-13",
+     "validation": {
+      "observations": 503,
+      "games": 169,
+      "status": "ok",
+      "metrics": {
+       "baseline_brier": {
+        "observations": 503,
+        "games": 169,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.24246857287317214,
+        "ci_95": [
+         0.2365957196811769,
+         0.24840659807990714
+        ]
+       },
+       "candidate_brier": {
+        "observations": 503,
+        "games": 169,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.23165258055086782,
+        "ci_95": [
+         0.2216748766425766,
+         0.24183378611896839
+        ]
+       },
+       "brier_change": {
+        "observations": 503,
+        "games": 169,
+        "missing": 0,
+        "status": "ok",
+        "mean": -0.01081599232230428,
+        "ci_95": [
+         -0.018784383119862757,
+         -0.0028296891696561488
+        ]
+       },
+       "baseline_log_loss": {
+        "observations": 503,
+        "games": 169,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.6775688139047312,
+        "ci_95": [
+         0.6655502197245577,
+         0.689728293086181
+        ]
+       },
+       "candidate_log_loss": {
+        "observations": 503,
+        "games": 169,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.6540511749042154,
+        "ci_95": [
+         0.632713495654453,
+         0.6757197983207254
+        ]
+       },
+       "log_loss_change": {
+        "observations": 503,
+        "games": 169,
+        "missing": 0,
+        "status": "ok",
+        "mean": -0.02351763900051576,
+        "ci_95": [
+         -0.0405099812329484,
+         -0.006572007445928607
+        ]
+       }
+      },
+      "baseline_unseen_group_observations": 0,
+      "candidate_unseen_group_observations": 0
+     },
+     "subgroups": {
+      "prior_role:bench": {
+       "observations": 436,
+       "games": 155,
+       "status": "ok",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 436,
+         "games": 155,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.24389283311389892,
+         "ci_95": [
+          0.2380777274493179,
+          0.24985941504491913
+         ]
+        },
+        "candidate_brier": {
+         "observations": 436,
+         "games": 155,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.23756355078656616,
+         "ci_95": [
+          0.228597607606381,
+          0.24700820099226467
+         ]
+        },
+        "brier_change": {
+         "observations": 436,
+         "games": 155,
+         "missing": 0,
+         "status": "ok",
+         "mean": -0.006329282327332757,
+         "ci_95": [
+          -0.01374669345563058,
+          0.0009498693626293615
+         ]
+        },
+        "baseline_log_loss": {
+         "observations": 436,
+         "games": 155,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.680858433641049,
+         "ci_95": [
+          0.6691738743410559,
+          0.6928696669234622
+         ]
+        },
+        "candidate_log_loss": {
+         "observations": 436,
+         "games": 155,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.6672389793727426,
+         "ci_95": [
+          0.6485026346942947,
+          0.6870002817104147
+         ]
+        },
+        "log_loss_change": {
+         "observations": 436,
+         "games": 155,
+         "missing": 0,
+         "status": "ok",
+         "mean": -0.013619454268306436,
+         "ci_95": [
+          -0.02900919644006038,
+          0.0016554958444329347
+         ]
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_role:star": {
+       "observations": 23,
+       "games": 16,
+       "status": "insufficient_sample",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 23,
+         "games": 16,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.22844622422146288,
+         "ci_95": null
+        },
+        "candidate_brier": {
+         "observations": 23,
+         "games": 16,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.1315712013178284,
+         "ci_95": null
+        },
+        "brier_change": {
+         "observations": 23,
+         "games": 16,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": -0.09687502290363448,
+         "ci_95": null
+        },
+        "baseline_log_loss": {
+         "observations": 23,
+         "games": 16,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.6454147190002172,
+         "ci_95": null
+        },
+        "candidate_log_loss": {
+         "observations": 23,
+         "games": 16,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.43237799786641495,
+         "ci_95": null
+        },
+        "log_loss_change": {
+         "observations": 23,
+         "games": 16,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": -0.21303672113380234,
+         "ci_95": null
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_role:starter": {
+       "observations": 44,
+       "games": 35,
+       "status": "insufficient_sample",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 44,
+         "games": 35,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.2356853127375458,
+         "ci_95": null
+        },
+        "candidate_brier": {
+         "observations": 44,
+         "games": 35,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.22539550554167354,
+         "ci_95": null
+        },
+        "brier_change": {
+         "observations": 44,
+         "games": 35,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": -0.010289807195872226,
+         "ci_95": null
+        },
+        "baseline_log_loss": {
+         "observations": 44,
+         "games": 35,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.6617794952176689,
+         "ci_95": null
+        },
+        "candidate_log_loss": {
+         "observations": 44,
+         "games": 35,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.6392466368040242,
+         "ci_95": null
+        },
+        "log_loss_change": {
+         "observations": 44,
+         "games": 35,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": -0.02253285841364476,
+         "ci_95": null
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_reason:coach": {
+       "observations": 444,
+       "games": 157,
+       "status": "ok",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 444,
+         "games": 157,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.24524559074390362,
+         "ci_95": [
+          0.23963074114694477,
+          0.25108182245353083
+         ]
+        },
+        "candidate_brier": {
+         "observations": 444,
+         "games": 157,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.2395661181274399,
+         "ci_95": [
+          0.23102719439947908,
+          0.24819615903730602
+         ]
+        },
+        "brier_change": {
+         "observations": 444,
+         "games": 157,
+         "missing": 0,
+         "status": "ok",
+         "mean": -0.005679472616463694,
+         "ci_95": [
+          -0.012713197733717915,
+          0.0012024137254633223
+         ]
+        },
+        "baseline_log_loss": {
+         "observations": 444,
+         "games": 157,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.6836192215963339,
+         "ci_95": [
+          0.6723613666481558,
+          0.6953209508940392
+         ]
+        },
+        "candidate_log_loss": {
+         "observations": 444,
+         "games": 157,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.6715416749038552,
+         "ci_95": [
+          0.6537337538384027,
+          0.6894986408607429
+         ]
+        },
+        "log_loss_change": {
+         "observations": 444,
+         "games": 157,
+         "missing": 0,
+         "status": "ok",
+         "mean": -0.012077546692478623,
+         "ci_95": [
+          -0.02673363743240012,
+          0.0022943124275975734
+         ]
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_reason:explicit_injury_or_illness": {
+       "observations": 23,
+       "games": 18,
+       "status": "insufficient_sample",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 23,
+         "games": 18,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.19947457309063615,
+         "ci_95": null
+        },
+        "candidate_brier": {
+         "observations": 23,
+         "games": 18,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.18130252568065833,
+         "ci_95": null
+        },
+        "brier_change": {
+         "observations": 23,
+         "games": 18,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": -0.01817204740997782,
+         "ci_95": null
+        },
+        "baseline_log_loss": {
+         "observations": 23,
+         "games": 18,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.589430217903028,
+         "ci_95": null
+        },
+        "candidate_log_loss": {
+         "observations": 23,
+         "games": 18,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.5471491576040199,
+         "ci_95": null
+        },
+        "log_loss_change": {
+         "observations": 23,
+         "games": 18,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": -0.04228106029900812,
+         "ci_95": null
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_reason:other_recorded_reason": {
+       "observations": 34,
+       "games": 26,
+       "status": "insufficient_sample",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 34,
+         "games": 26,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.2487173533125276,
+         "ci_95": null
+        },
+        "candidate_brier": {
+         "observations": 34,
+         "games": 26,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.1751232140578543,
+         "ci_95": null
+        },
+        "brier_change": {
+         "observations": 34,
+         "games": 26,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": -0.07359413925467327,
+         "ci_95": null
+        },
+        "baseline_log_loss": {
+         "observations": 34,
+         "games": 26,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.6905817818311659,
+         "ci_95": null
+        },
+        "candidate_log_loss": {
+         "observations": 34,
+         "games": 26,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.5287853070035236,
+         "ci_95": null
+        },
+        "log_loss_change": {
+         "observations": 34,
+         "games": 26,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": -0.16179647482764237,
+         "ci_95": null
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_reason:rest": {
+       "observations": 2,
+       "games": 2,
+       "status": "insufficient_sample",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 2,
+         "games": 2,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.014172335600907034,
+         "ci_95": null
+        },
+        "candidate_brier": {
+         "observations": 2,
+         "games": 2,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.014872099940511599,
+         "ci_95": null
+        },
+        "brier_change": {
+         "observations": 2,
+         "games": 2,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.0006997643396045652,
+         "ci_95": null
+        },
+        "baseline_log_loss": {
+         "observations": 2,
+         "games": 2,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.1267517056391439,
+         "ci_95": null
+        },
+        "candidate_log_loss": {
+         "observations": 2,
+         "games": 2,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.13005312824819779,
+         "ci_95": null
+        },
+        "log_loss_change": {
+         "observations": 2,
+         "games": 2,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.003301422609053889,
+         "ci_95": null
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      }
+     },
+     "calibration": {
+      "baseline": [
+       {
+        "lower": 0.0,
+        "upper": 0.2,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.2,
+        "upper": 0.4,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.4,
+        "upper": 0.6,
+        "observations": 478,
+        "games": 168,
+        "mean_prediction": 0.4594138851422962,
+        "observed_rate": 0.4205020920502092
+       },
+       {
+        "lower": 0.6,
+        "upper": 0.8,
+        "observations": 23,
+        "games": 18,
+        "mean_prediction": 0.6575342465753422,
+        "observed_rate": 0.7391304347826086
+       },
+       {
+        "lower": 0.8,
+        "upper": 1.0,
+        "observations": 2,
+        "games": 2,
+        "mean_prediction": 0.8809523809523809,
+        "observed_rate": 1.0
+       }
+      ],
+      "candidate": [
+       {
+        "lower": 0.0,
+        "upper": 0.2,
+        "observations": 6,
+        "games": 6,
+        "mean_prediction": 0.15425531914893617,
+        "observed_rate": 0.0
+       },
+       {
+        "lower": 0.2,
+        "upper": 0.4,
+        "observations": 90,
+        "games": 59,
+        "mean_prediction": 0.31660075295712864,
+        "observed_rate": 0.23333333333333334
+       },
+       {
+        "lower": 0.4,
+        "upper": 0.6,
+        "observations": 365,
+        "games": 148,
+        "mean_prediction": 0.4875205558667838,
+        "observed_rate": 0.46301369863013697
+       },
+       {
+        "lower": 0.6,
+        "upper": 0.8,
+        "observations": 40,
+        "games": 34,
+        "mean_prediction": 0.7133320158102767,
+        "observed_rate": 0.7
+       },
+       {
+        "lower": 0.8,
+        "upper": 1.0,
+        "observations": 2,
+        "games": 2,
+        "mean_prediction": 0.8780487804878049,
+        "observed_rate": 1.0
+       }
+      ]
+     }
+    },
+    "rest": {
+     "training_observations": 73137,
+     "training_games": 3649,
+     "training_last_outcome_date": "2025-04-13",
+     "validation": {
+      "observations": 4001,
+      "games": 195,
+      "status": "ok",
+      "metrics": {
+       "baseline_brier": {
+        "observations": 4001,
+        "games": 195,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.00025007518219629754,
+        "ci_95": [
+         4.862306325915058e-07,
+         0.0007606575563380255
+        ]
+       },
+       "candidate_brier": {
+        "observations": 4001,
+        "games": 195,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.0002500704731126589,
+        "ci_95": [
+         6.305422109192031e-07,
+         0.0007603403336742931
+        ]
+       },
+       "brier_change": {
+        "observations": 4001,
+        "games": 195,
+        "missing": 0,
+        "status": "ok",
+        "mean": -4.709083638665068e-09,
+        "ci_95": [
+         -3.2732832953328446e-07,
+         1.6124073727234217e-07
+        ]
+       },
+       "baseline_log_loss": {
+        "observations": 4001,
+        "games": 195,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.002513989974323672,
+        "ci_95": [
+         0.0006975456251981271,
+         0.006229877486420223
+        ]
+       },
+       "candidate_log_loss": {
+        "observations": 4001,
+        "games": 195,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.002438000202107282,
+        "ci_95": [
+         0.0007081665078145767,
+         0.005965865651087992
+        ]
+       },
+       "log_loss_change": {
+        "observations": 4001,
+        "games": 195,
+        "missing": 0,
+        "status": "ok",
+        "mean": -7.598977221638969e-05,
+        "ci_95": [
+         -0.00026864551479752365,
+         2.480913385531413e-05
+        ]
+       }
+      },
+      "baseline_unseen_group_observations": 0,
+      "candidate_unseen_group_observations": 0
+     },
+     "subgroups": {
+      "prior_role:bench": {
+       "observations": 1342,
+       "games": 195,
+       "status": "ok",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 1342,
+         "games": 195,
+         "missing": 0,
+         "status": "ok",
+         "mean": 4.862306325915061e-07,
+         "ci_95": [
+          4.862306325915059e-07,
+          4.862306325915065e-07
+         ]
+        },
+        "candidate_brier": {
+         "observations": 1342,
+         "games": 195,
+         "missing": 0,
+         "status": "ok",
+         "mean": 4.47271867391749e-08,
+         "ci_95": [
+          4.4727186739174876e-08,
+          4.472718673917492e-08
+         ]
+        },
+        "brier_change": {
+         "observations": 1342,
+         "games": 195,
+         "missing": 0,
+         "status": "ok",
+         "mean": -4.415034458523313e-07,
+         "ci_95": [
+          -4.4150344585233165e-07,
+          -4.415034458523311e-07
+         ]
+        },
+        "baseline_log_loss": {
+         "observations": 1342,
+         "games": 195,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.0006975456251981278,
+         "ci_95": [
+          0.000697545625198127,
+          0.0006975456251981277
+         ]
+        },
+        "candidate_log_loss": {
+         "observations": 1342,
+         "games": 195,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.00021151039652450923,
+         "ci_95": [
+          0.00021151039652450904,
+          0.00021151039652450934
+         ]
+        },
+        "log_loss_change": {
+         "observations": 1342,
+         "games": 195,
+         "missing": 0,
+         "status": "ok",
+         "mean": -0.00048603522867361846,
+         "ci_95": [
+          -0.0004860352286736186,
+          -0.000486035228673618
+         ]
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_role:star": {
+       "observations": 1028,
+       "games": 195,
+       "status": "ok",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 1028,
+         "games": 195,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.0009718922570979494,
+         "ci_95": [
+          4.862306325915058e-07,
+          0.0029933095928894983
+         ]
+        },
+        "candidate_brier": {
+         "observations": 1028,
+         "games": 195,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.0009718177404535937,
+         "ci_95": [
+          1.019421243769229e-06,
+          0.00299197048662149
+         ]
+        },
+        "brier_change": {
+         "observations": 1028,
+         "games": 195,
+         "missing": 0,
+         "status": "ok",
+         "mean": -7.451664435584382e-08,
+         "ci_95": [
+          -1.3391062680086144e-06,
+          5.331906111777234e-07
+         ]
+        },
+        "baseline_log_loss": {
+         "observations": 1028,
+         "games": 195,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.007767189439255813,
+         "ci_95": [
+          0.000697545625198127,
+          0.02247854614723001
+         ]
+        },
+        "candidate_log_loss": {
+         "observations": 1028,
+         "games": 195,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.007719442050071665,
+         "ci_95": [
+          0.001010173980123168,
+          0.021680885995828625
+         ]
+        },
+        "log_loss_change": {
+         "observations": 1028,
+         "games": 195,
+         "missing": 0,
+         "status": "ok",
+         "mean": -4.774738918414881e-05,
+         "ci_95": [
+          -0.0007976601514013735,
+          0.00031262835492504114
+         ]
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_role:starter": {
+       "observations": 1631,
+       "games": 195,
+       "status": "ok",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 1631,
+         "games": 195,
+         "missing": 0,
+         "status": "ok",
+         "mean": 4.862306325915061e-07,
+         "ci_95": [
+          4.862306325915059e-07,
+          4.862306325915063e-07
+         ]
+        },
+        "candidate_brier": {
+         "observations": 1631,
+         "games": 195,
+         "missing": 0,
+         "status": "ok",
+         "mean": 8.849183647149501e-07,
+         "ci_95": [
+          8.8491836471495e-07,
+          8.849183647149509e-07
+         ]
+        },
+        "brier_change": {
+         "observations": 1631,
+         "games": 195,
+         "missing": 0,
+         "status": "ok",
+         "mean": 3.9868773212344394e-07,
+         "ci_95": [
+          3.9868773212344384e-07,
+          3.9868773212344426e-07
+         ]
+        },
+        "baseline_log_loss": {
+         "observations": 1631,
+         "games": 195,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.0006975456251981276,
+         "ci_95": [
+          0.000697545625198127,
+          0.0006975456251981279
+         ]
+        },
+        "candidate_log_loss": {
+         "observations": 1631,
+         "games": 195,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.0009411437333057463,
+         "ci_95": [
+          0.0009411437333057458,
+          0.0009411437333057469
+         ]
+        },
+        "log_loss_change": {
+         "observations": 1631,
+         "games": 195,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.0002435981081076186,
+         "ci_95": [
+          0.0002435981081076184,
+          0.00024359810810761868
+         ]
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      }
+     },
+     "calibration": {
+      "baseline": [
+       {
+        "lower": 0.0,
+        "upper": 0.2,
+        "observations": 4001,
+        "games": 195,
+        "mean_prediction": 0.0006973023968060816,
+        "observed_rate": 0.00024993751562109475
+       },
+       {
+        "lower": 0.2,
+        "upper": 0.4,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.4,
+        "upper": 0.6,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.6,
+        "upper": 0.8,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.8,
+        "upper": 1.0,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       }
+      ],
+      "candidate": [
+       {
+        "lower": 0.0,
+        "upper": 0.2,
+        "observations": 4001,
+        "games": 195,
+        "mean_prediction": 0.0007138302367527486,
+        "observed_rate": 0.00024993751562109475
+       },
+       {
+        "lower": 0.2,
+        "upper": 0.4,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.4,
+        "upper": 0.6,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.6,
+        "upper": 0.8,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.8,
+        "upper": 1.0,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "fold": "F4",
+   "training_through": "2025-12-31",
+   "validation_from": "2026-01-01",
+   "validation_through": "2026-04-30",
+   "fixed_games": 200,
+   "populations": {
+    "return": {
+     "training_observations": 13085,
+     "training_games": 3763,
+     "training_last_outcome_date": "2025-12-31",
+     "validation": {
+      "observations": 649,
+      "games": 187,
+      "status": "ok",
+      "metrics": {
+       "baseline_brier": {
+        "observations": 649,
+        "games": 187,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.25072500303267714,
+        "ci_95": [
+         0.24535502141586712,
+         0.2561475363302265
+        ]
+       },
+       "candidate_brier": {
+        "observations": 649,
+        "games": 187,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.23692714834266923,
+        "ci_95": [
+         0.226467612939208,
+         0.24741370322736606
+        ]
+       },
+       "brier_change": {
+        "observations": 649,
+        "games": 187,
+        "missing": 0,
+        "status": "ok",
+        "mean": -0.01379785469000798,
+        "ci_95": [
+         -0.022750088854034806,
+         -0.004407878804209426
+        ]
+       },
+       "baseline_log_loss": {
+        "observations": 649,
+        "games": 187,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.6943842955403101,
+        "ci_95": [
+         0.6835372739746924,
+         0.7053555903440358
+        ]
+       },
+       "candidate_log_loss": {
+        "observations": 649,
+        "games": 187,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.6666673859045746,
+        "ci_95": [
+         0.6441963871397604,
+         0.6895442617736309
+        ]
+       },
+       "log_loss_change": {
+        "observations": 649,
+        "games": 187,
+        "missing": 0,
+        "status": "ok",
+        "mean": -0.02771690963573556,
+        "ci_95": [
+         -0.047177591290308594,
+         -0.007042026678374216
+        ]
+       }
+      },
+      "baseline_unseen_group_observations": 0,
+      "candidate_unseen_group_observations": 0
+     },
+     "subgroups": {
+      "prior_role:bench": {
+       "observations": 493,
+       "games": 169,
+       "status": "ok",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 493,
+         "games": 169,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.251642833280496,
+         "ci_95": [
+          0.2455238559885675,
+          0.2577875971302627
+         ]
+        },
+        "candidate_brier": {
+         "observations": 493,
+         "games": 169,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.23928144269760443,
+         "ci_95": [
+          0.22969637899121795,
+          0.24903708791532436
+         ]
+        },
+        "brier_change": {
+         "observations": 493,
+         "games": 169,
+         "missing": 0,
+         "status": "ok",
+         "mean": -0.01236139058289164,
+         "ci_95": [
+          -0.019686788727574227,
+          -0.004872799382588004
+         ]
+        },
+        "baseline_log_loss": {
+         "observations": 493,
+         "games": 169,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.696423491906349,
+         "ci_95": [
+          0.684123968539145,
+          0.7087701723610748
+         ]
+        },
+        "candidate_log_loss": {
+         "observations": 493,
+         "games": 169,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.6707156738694674,
+         "ci_95": [
+          0.6507064760830413,
+          0.6912698686253291
+         ]
+        },
+        "log_loss_change": {
+         "observations": 493,
+         "games": 169,
+         "missing": 0,
+         "status": "ok",
+         "mean": -0.025707818036881606,
+         "ci_95": [
+          -0.041060322550993414,
+          -0.009903879296414434
+         ]
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_role:star": {
+       "observations": 22,
+       "games": 21,
+       "status": "insufficient_sample",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 22,
+         "games": 21,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.25115619993867616,
+         "ci_95": null
+        },
+        "candidate_brier": {
+         "observations": 22,
+         "games": 21,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.24752294869683686,
+         "ci_95": null
+        },
+        "brier_change": {
+         "observations": 22,
+         "games": 21,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": -0.0036332512418392597,
+         "ci_95": null
+        },
+        "baseline_log_loss": {
+         "observations": 22,
+         "games": 21,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.6954611196238539,
+         "ci_95": null
+        },
+        "candidate_log_loss": {
+         "observations": 22,
+         "games": 21,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.690860208726443,
+         "ci_95": null
+        },
+        "log_loss_change": {
+         "observations": 22,
+         "games": 21,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": -0.004600910897410942,
+         "ci_95": null
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_role:starter": {
+       "observations": 134,
+       "games": 87,
+       "status": "ok",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 134,
+         "games": 87,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.2472774161363587,
+         "ci_95": [
+          0.23517072138136177,
+          0.2591545659860601
+         ]
+        },
+        "candidate_brier": {
+         "observations": 134,
+         "games": 87,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.2265258444264398,
+         "ci_95": [
+          0.19649292200159646,
+          0.25818322168990787
+         ]
+        },
+        "brier_change": {
+         "observations": 134,
+         "games": 87,
+         "missing": 0,
+         "status": "ok",
+         "mean": -0.02075157170991893,
+         "ci_95": [
+          -0.04913743102639461,
+          0.010211662675961826
+         ]
+        },
+        "baseline_log_loss": {
+         "observations": 134,
+         "games": 87,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.6867050870455705,
+         "ci_95": [
+          0.661392724776836,
+          0.7114020081656703
+         ]
+        },
+        "candidate_log_loss": {
+         "observations": 134,
+         "games": 87,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.6478013555405951,
+         "ci_95": [
+          0.580459394300934,
+          0.7199808520749322
+         ]
+        },
+        "log_loss_change": {
+         "observations": 134,
+         "games": 87,
+         "missing": 0,
+         "status": "ok",
+         "mean": -0.03890373150497538,
+         "ci_95": [
+          -0.10217515010762941,
+          0.03158633273619851
+         ]
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_reason:coach": {
+       "observations": 532,
+       "games": 175,
+       "status": "ok",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 532,
+         "games": 175,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.2531635524765345,
+         "ci_95": [
+          0.2472775454938367,
+          0.2589969051810346
+         ]
+        },
+        "candidate_brier": {
+         "observations": 532,
+         "games": 175,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.23965033802269028,
+         "ci_95": [
+          0.23079073537554567,
+          0.2488044668822986
+         ]
+        },
+        "brier_change": {
+         "observations": 532,
+         "games": 175,
+         "missing": 0,
+         "status": "ok",
+         "mean": -0.013513214453844272,
+         "ci_95": [
+          -0.020379910629266647,
+          -0.006530228134449538
+         ]
+        },
+        "baseline_log_loss": {
+         "observations": 532,
+         "games": 175,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.6994947525430436,
+         "ci_95": [
+          0.6876933368748803,
+          0.7111905966368699
+         ]
+        },
+        "candidate_log_loss": {
+         "observations": 532,
+         "games": 175,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.6716248136002007,
+         "ci_95": [
+          0.6531425637364199,
+          0.6907722653139289
+         ]
+        },
+        "log_loss_change": {
+         "observations": 532,
+         "games": 175,
+         "missing": 0,
+         "status": "ok",
+         "mean": -0.027869938942842853,
+         "ci_95": [
+          -0.042300881903271394,
+          -0.013264108981372055
+         ]
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_reason:explicit_injury_or_illness": {
+       "observations": 20,
+       "games": 17,
+       "status": "insufficient_sample",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 20,
+         "games": 17,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.19565382044998886,
+         "ci_95": null
+        },
+        "candidate_brier": {
+         "observations": 20,
+         "games": 17,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.23479917714058257,
+         "ci_95": null
+        },
+        "brier_change": {
+         "observations": 20,
+         "games": 17,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.03914535669059371,
+         "ci_95": null
+        },
+        "baseline_log_loss": {
+         "observations": 20,
+         "games": 17,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.5814588935881279,
+         "ci_95": null
+        },
+        "candidate_log_loss": {
+         "observations": 20,
+         "games": 17,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.6670056407066708,
+         "ci_95": null
+        },
+        "log_loss_change": {
+         "observations": 20,
+         "games": 17,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.08554674711854286,
+         "ci_95": null
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_reason:other_recorded_reason": {
+       "observations": 96,
+       "games": 62,
+       "status": "insufficient_sample",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 96,
+         "games": 62,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.251126496611854,
+         "ci_95": null
+        },
+        "candidate_brier": {
+         "observations": 96,
+         "games": 62,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.22457023615620075,
+         "ci_95": null
+        },
+        "brier_change": {
+         "observations": 96,
+         "games": 62,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": -0.02655626045565318,
+         "ci_95": null
+        },
+        "baseline_log_loss": {
+         "observations": 96,
+         "games": 62,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.6954004796457683,
+         "ci_95": null
+        },
+        "candidate_log_loss": {
+         "observations": 96,
+         "games": 62,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.6446131027109743,
+         "ci_95": null
+        },
+        "log_loss_change": {
+         "observations": 96,
+         "games": 62,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": -0.050787376934794175,
+         "ci_95": null
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_reason:rest": {
+       "observations": 1,
+       "games": 1,
+       "status": "insufficient_sample",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 1,
+         "games": 1,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.016296966953372558,
+         "ci_95": null
+        },
+        "candidate_brier": {
+         "observations": 1,
+         "games": 1,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.0170132325141777,
+         "ci_95": null
+        },
+        "brier_change": {
+         "observations": 1,
+         "games": 1,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.0007162655608051426,
+         "ci_95": null
+        },
+        "baseline_log_loss": {
+         "observations": 1,
+         "games": 1,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.13657553500575073,
+         "ci_95": null
+        },
+        "candidate_log_loss": {
+         "observations": 1,
+         "games": 1,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.13976194237515874,
+         "ci_95": null
+        },
+        "log_loss_change": {
+         "observations": 1,
+         "games": 1,
+         "missing": 0,
+         "status": "insufficient_sample",
+         "mean": 0.0031864073694080064,
+         "ci_95": null
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      }
+     },
+     "calibration": {
+      "baseline": [
+       {
+        "lower": 0.0,
+        "upper": 0.2,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.2,
+        "upper": 0.4,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.4,
+        "upper": 0.6,
+        "observations": 628,
+        "games": 187,
+        "mean_prediction": 0.4619079341802088,
+        "observed_rate": 0.5207006369426752
+       },
+       {
+        "lower": 0.6,
+        "upper": 0.8,
+        "observations": 20,
+        "games": 17,
+        "mean_prediction": 0.6597014925373136,
+        "observed_rate": 0.75
+       },
+       {
+        "lower": 0.8,
+        "upper": 1.0,
+        "observations": 1,
+        "games": 1,
+        "mean_prediction": 0.8723404255319149,
+        "observed_rate": 1.0
+       }
+      ],
+      "candidate": [
+       {
+        "lower": 0.0,
+        "upper": 0.2,
+        "observations": 14,
+        "games": 11,
+        "mean_prediction": 0.1477832512315271,
+        "observed_rate": 0.2857142857142857
+       },
+       {
+        "lower": 0.2,
+        "upper": 0.4,
+        "observations": 122,
+        "games": 76,
+        "mean_prediction": 0.31398983226272514,
+        "observed_rate": 0.28688524590163933
+       },
+       {
+        "lower": 0.4,
+        "upper": 0.6,
+        "observations": 442,
+        "games": 163,
+        "mean_prediction": 0.48676715200567716,
+        "observed_rate": 0.5746606334841629
+       },
+       {
+        "lower": 0.6,
+        "upper": 0.8,
+        "observations": 70,
+        "games": 51,
+        "mean_prediction": 0.6864373538872156,
+        "observed_rate": 0.7
+       },
+       {
+        "lower": 0.8,
+        "upper": 1.0,
+        "observations": 1,
+        "games": 1,
+        "mean_prediction": 0.8695652173913043,
+        "observed_rate": 1.0
+       }
+      ]
+     }
+    },
+    "rest": {
+     "training_observations": 83036,
+     "training_games": 4132,
+     "training_last_outcome_date": "2025-12-31",
+     "validation": {
+      "observations": 4078,
+      "games": 200,
+      "status": "ok",
+      "metrics": {
+       "baseline_brier": {
+        "observations": 4078,
+        "games": 200,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.0014697797944545155,
+        "ci_95": [
+         0.0002469121217590515,
+         0.0029470710601366182
+        ]
+       },
+       "candidate_brier": {
+        "observations": 4078,
+        "games": 200,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.0014691883962093296,
+        "ci_95": [
+         0.00024692516328002513,
+         0.002945796779640367
+        ]
+       },
+       "brier_change": {
+        "observations": 4078,
+        "games": 200,
+        "missing": 0,
+        "status": "ok",
+        "mean": -5.913982451857009e-07,
+        "ci_95": [
+         -1.3256882522875675e-06,
+         3.80253035376526e-09
+        ]
+       },
+       "baseline_log_loss": {
+        "observations": 4078,
+        "games": 200,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.01141668812279481,
+        "ci_95": [
+         0.0024764394246528836,
+         0.02221699923550825
+        ]
+       },
+       "candidate_log_loss": {
+        "observations": 4078,
+        "games": 200,
+        "missing": 0,
+        "status": "ok",
+        "mean": 0.010993121793932146,
+        "ci_95": [
+         0.002437511898533633,
+         0.02133816514550667
+        ]
+       },
+       "log_loss_change": {
+        "observations": 4078,
+        "games": 200,
+        "missing": 0,
+        "status": "ok",
+        "mean": -0.00042356632886266464,
+        "ci_95": [
+         -0.000887266981000378,
+         -4.803552934926797e-05
+        ]
+       }
+      },
+      "baseline_unseen_group_observations": 0,
+      "candidate_unseen_group_observations": 0
+     },
+     "subgroups": {
+      "prior_role:bench": {
+       "observations": 1218,
+       "games": 200,
+       "status": "ok",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 1218,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 4.5480192375250286e-07,
+         "ci_95": [
+          4.548019237525025e-07,
+          4.54801923752503e-07
+         ]
+        },
+        "candidate_brier": {
+         "observations": 1218,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 6.755019667867016e-08,
+         "ci_95": [
+          6.755019667867012e-08,
+          6.755019667867018e-08
+         ]
+        },
+        "brier_change": {
+         "observations": 1218,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": -3.872517270738327e-07,
+         "ci_95": [
+          -3.8725172707383236e-07,
+          -3.872517270738322e-07
+         ]
+        },
+        "baseline_log_loss": {
+         "observations": 1218,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.0006746175415473023,
+         "ci_95": [
+          0.0006746175415473012,
+          0.000674617541547302
+         ]
+        },
+        "candidate_log_loss": {
+         "observations": 1218,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.0002599379876869468,
+         "ci_95": [
+          0.00025993798768694684,
+          0.0002599379876869471
+         ]
+        },
+        "log_loss_change": {
+         "observations": 1218,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": -0.0004146795538603556,
+         "ci_95": [
+          -0.0004146795538603558,
+          -0.00041467955386035536
+         ]
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_role:star": {
+       "observations": 915,
+       "games": 198,
+       "status": "ok",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 915,
+         "games": 198,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.00436614319503155,
+         "ci_95": [
+          0.0010516666123694448,
+          0.008977094981010576
+         ]
+        },
+        "candidate_brier": {
+         "observations": 915,
+         "games": 198,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.004364246340514485,
+         "ci_95": [
+          0.0010515361208847669,
+          0.00897274084113464
+         ]
+        },
+        "brier_change": {
+         "observations": 915,
+         "games": 198,
+         "missing": 0,
+         "status": "ok",
+         "mean": -1.8968545170640372e-06,
+         "ci_95": [
+          -4.354139875925977e-06,
+          -1.3049148467830137e-07
+         ]
+        },
+        "baseline_log_loss": {
+         "observations": 915,
+         "games": 198,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.0325916767986164,
+         "ci_95": [
+          0.00835990944160474,
+          0.06630182927237475
+         ]
+        },
+        "candidate_log_loss": {
+         "observations": 915,
+         "games": 198,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.03140286277255591,
+         "ci_95": [
+          0.00827584656836416,
+          0.06357613478446278
+         ]
+        },
+        "log_loss_change": {
+         "observations": 915,
+         "games": 198,
+         "missing": 0,
+         "status": "ok",
+         "mean": -0.0011888140260604908,
+         "ci_95": [
+          -0.002725694487911883,
+          -8.406287324057971e-05
+         ]
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      },
+      "prior_role:starter": {
+       "observations": 1945,
+       "games": 200,
+       "status": "ok",
+       "metrics": {
+        "baseline_brier": {
+         "observations": 1945,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.0010273455164979517,
+         "ci_95": [
+          4.548019237525028e-07,
+          0.0026011090204742953
+         ]
+        },
+        "candidate_brier": {
+         "observations": 1945,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.0010272404123554434,
+         "ci_95": [
+          7.856860600727018e-07,
+          0.0026003357415867612
+         ]
+        },
+        "brier_change": {
+         "observations": 1945,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": -1.0510414250784873e-07,
+         "ci_95": [
+          -7.732788875346879e-07,
+          3.308841363201996e-07
+         ]
+        },
+        "baseline_log_loss": {
+         "observations": 1945,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.008182100631577696,
+         "ci_95": [
+          0.0006746175415473015,
+          0.019687709481793547
+         ]
+        },
+        "candidate_log_loss": {
+         "observations": 1945,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": 0.008112970061575285,
+         "ci_95": [
+          0.0008867824142015795,
+          0.01918747899511544
+         ]
+        },
+        "log_loss_change": {
+         "observations": 1945,
+         "games": 200,
+         "missing": 0,
+         "status": "ok",
+         "mean": -6.913057000240808e-05,
+         "ci_95": [
+          -0.0005002304866780843,
+          0.00021216487265427773
+         ]
+        }
+       },
+       "baseline_unseen_group_observations": 0,
+       "candidate_unseen_group_observations": 0
+      }
+     },
+     "calibration": {
+      "baseline": [
+       {
+        "lower": 0.0,
+        "upper": 0.2,
+        "observations": 4078,
+        "games": 200,
+        "mean_prediction": 0.00067439003829572,
+        "observed_rate": 0.0014713094654242277
+       },
+       {
+        "lower": 0.2,
+        "upper": 0.4,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.4,
+        "upper": 0.6,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.6,
+        "upper": 0.8,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.8,
+        "upper": 1.0,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       }
+      ],
+      "candidate": [
+       {
+        "lower": 0.0,
+        "upper": 0.2,
+        "observations": 4078,
+        "games": 200,
+        "mean_prediction": 0.0007114127522099181,
+        "observed_rate": 0.0014713094654242277
+       },
+       {
+        "lower": 0.2,
+        "upper": 0.4,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.4,
+        "upper": 0.6,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.6,
+        "upper": 0.8,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       },
+       {
+        "lower": 0.8,
+        "upper": 1.0,
+        "observations": 0,
+        "games": 0,
+        "mean_prediction": null,
+        "observed_rate": null
+       }
+      ]
+     }
+    }
+   }
+  }
+ ],
+ "predicted_rows": 18612,
+ "bootstrap": {
+  "replicates": 10000,
+  "seed": 20261122,
+  "unit": "complete game ID",
+  "minimum_player_games": 100,
+  "minimum_games": 30
+ },
+ "limitations": "Conditional on a known next listed box outcome after a known prior listing; unlisted games, team changes, ambiguous labels, season ends and left-censored returns are excluded. Retrospective reason text lacks publication timestamps and is not physical recovery, pre-tip availability, a future roster model or a deployable season-absence hazard.",
+ "input_sha256": {
+  "scripts/a1_availability_sequence_screen.py": "db043dcad52f6863db0ee1981b9f8470418204fbb9f2587b0475714d210b2bc6",
+  "data/derived/experiments/20261122_a1_s07_sequences.parquet": "ecaa076133c881f983c67d707a2b7659162bc5dd864f650a35e3bc51e13fa8c3",
+  "analysis/experiments/20261122_a1_s07_sequences.json": "7ac9298eae07c3d2514e6aa70b104fb2ab47424adb6a52cb6a936aca0e92badf",
+  "analysis/experiments/20261122_a1_s07_sequences_accounting_v2.json": "32e243740e2a1195f6469cfe31e1d00afe2ab18914004fabb535a679cf3ece9a",
+  "analysis/experiments/20261122_a1_pre_candidate_manifest.json": "195b4ddaf748e4f3520a02f813b5763736fe4fbfbe653e896161532d6d9c7e6b",
+  "scripts/a1_compare.py": "435c1e0761f51ee9d218dfc462db8d219c0bc6f54dc8acd6bcae79968ddfcf68",
+  "scripts/a1_flow_compare.py": "1cb71e63c72410d79d03bcccdd489dc7ee5dd42279858aa034e4a14b3aace5b3",
+  "scripts/evaluate.py": "aeb59d057cf115fb80eeb043de3c6d74cd931753574e682927663494cfee134c"
+ },
+ "output_sha256": {
+  "data/derived/experiments/20261122_a1_s07_sequence_screen.parquet": "8b19412f650a992fa6c47333b814d4d5fc4c10de2cb4d8e8f3175f9155a95b86"
+ }
+}

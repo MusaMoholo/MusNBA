@@ -1572,6 +1572,18 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   other reasons are not assumed healthy. Dates and source reports remain retrospective, and these counts are
   neither physical recovery estimates nor fitted/validated hazards.
   Reports: `20261122_a1_s07_sequences{,_accounting}.json`.
+- **S07 recorded-DNP return/rest proxy screen:** on the fixed 200-game F1–F4 panels, earlier-fold reason-only versus
+  reason-plus-duration return Brier differences (candidate minus baseline) are **−0.00540** (95% **−0.01265 to
+  +0.00181**), **−0.01368** (**−0.02098 to −0.00638**), **−0.01082** (**−0.01878 to −0.00283**) and **−0.01380**
+  (**−0.02275 to −0.00441**), on **612/713/503/649** known next-listing observations. Corresponding log-loss
+  differences are **−0.01071/−0.02856/−0.02352/−0.02772**. Star-return cells have **23/54/23/22** observations
+  and do not meet the 100-player-game/30-game floor. Recorded-rest role-versus-overall Brier changes are
+  **+0.000000083/−0.000000122/−0.000000005/−0.000000591** on **4,051/4,005/4,001/4,078** observations; these
+  are very small and the F2–F4 intervals include zero. An independent dictionary-based reconstruction checked
+  all **18,612** predictions, training counts, group metrics, calibration cells and **10,000** game-bootstrap draws.
+  Selection on known next box listings and retrospective reason text limits these to conditional play proxies; they
+  neither establish physical recovery nor validate a season-absence hazard or pre-tip status. Reports:
+  `20261122_a1_s07_sequence_screen{,_accounting}.json`.
 
 ## 6b. A1 S03 matched component diagnosis (22 Nov 2026; descriptive)
 

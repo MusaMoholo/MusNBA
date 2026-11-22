@@ -1,0 +1,64 @@
+{
+ "experiment": "a1_s07_recorded_dnp_return_and_rest_proxy_screen_independent_audit",
+ "predictions_checked": 18612,
+ "bootstrap_replicates": 10000,
+ "populations": [
+  {
+   "fold": "F1",
+   "cohort": "return",
+   "training": 5294,
+   "validation": 612
+  },
+  {
+   "fold": "F1",
+   "cohort": "rest",
+   "training": 33608,
+   "validation": 4051
+  },
+  {
+   "fold": "F2",
+   "cohort": "return",
+   "training": 9146,
+   "validation": 713
+  },
+  {
+   "fold": "F2",
+   "cohort": "rest",
+   "training": 58288,
+   "validation": 4005
+  },
+  {
+   "fold": "F3",
+   "cohort": "return",
+   "training": 11781,
+   "validation": 503
+  },
+  {
+   "fold": "F3",
+   "cohort": "rest",
+   "training": 73137,
+   "validation": 4001
+  },
+  {
+   "fold": "F4",
+   "cohort": "return",
+   "training": 13085,
+   "validation": 649
+  },
+  {
+   "fold": "F4",
+   "cohort": "rest",
+   "training": 83036,
+   "validation": 4078
+  }
+ ],
+ "limitations": "Scores condition on known next box listings and retrospective reason text. They cannot validate physical availability, recovery, or pre-tip report calibration.",
+ "input_sha256": {
+  "scripts/a1_availability_sequence_screen_audit.py": "8ac494c02fb49fe943b242e6bca07f9ed247d23cbab0de75948eb97ddca4b73e",
+  "scripts/a1_availability_baseline_audit.py": "fc32df6345384f76f682ef605f27870523780d8a311fee6da518fc3734155bb4",
+  "analysis/experiments/20261122_a1_s07_sequence_screen.json": "2f954777f9e20bd0e30159ee6297ba722ff6e87e4446ccf92326fe1e1d36574f",
+  "data/derived/experiments/20261122_a1_s07_sequence_screen.parquet": "8b19412f650a992fa6c47333b814d4d5fc4c10de2cb4d8e8f3175f9155a95b86",
+  "data/derived/experiments/20261122_a1_s07_sequences.parquet": "ecaa076133c881f983c67d707a2b7659162bc5dd864f650a35e3bc51e13fa8c3",
+  "analysis/experiments/20261122_a1_pre_candidate_manifest.json": "195b4ddaf748e4f3520a02f813b5763736fe4fbfbe653e896161532d6d9c7e6b"
+ }
+}
