@@ -1,0 +1,406 @@
+{
+ "experiment": "a1_s07_timestamped_report_coverage",
+ "runs": 5,
+ "periods": {
+  "protected_final_season": 5
+ },
+ "pre_tip_games_with_roster_snapshots": 18,
+ "pre_tip_roster_player_snapshots": 1093,
+ "unique_pre_tip_roster_player_games": 634,
+ "unique_roster_player_game_final_box_coverage": {
+  "listed_in_final_box": 331,
+  "unlisted_in_final_box": 128,
+  "final_box_missing": 175
+ },
+ "run_inventory": [
+  {
+   "run": "20261119T145907Z",
+   "slate_date": "2026-11-19",
+   "started_utc": "2026-11-19T14:59:07+00:00",
+   "finished_utc": "2026-11-19T15:01:47+00:00",
+   "period": "protected_final_season",
+   "collection_failures": [],
+   "expected_teams": 30,
+   "roster_teams": 30,
+   "missing_roster_team_ids": [],
+   "unexpected_roster_team_ids": [],
+   "duplicate_roster_player_ids": 0,
+   "roster_players": 528,
+   "ambiguous_roster_players_excluded": 0,
+   "effective_roster_statuses": {
+    "Active": 427,
+    "Day-To-Day": 22,
+    "Out": 79
+   },
+   "injury_report": {
+    "statuses": {
+     "Day-To-Day": 22,
+     "Out": 79
+    },
+    "matching": {
+     "matched_roster_team": 101
+    },
+    "duplicate_player_ids": 0
+   },
+   "scoreboard_present": true,
+   "scoreboard_games": 4,
+   "game_origins": {
+    "pre_tip": 4
+   },
+   "pre_tip_roster_player_snapshots": 141,
+   "pre_tip_final_box_coverage": {
+    "listed_in_final_box": 105,
+    "unlisted_in_final_box": 36
+   }
+  },
+  {
+   "run": "20261119T235714Z",
+   "slate_date": "2026-11-19",
+   "started_utc": "2026-11-19T23:57:14+00:00",
+   "finished_utc": "2026-11-19T23:57:37+00:00",
+   "period": "protected_final_season",
+   "collection_failures": [],
+   "expected_teams": 30,
+   "roster_teams": 30,
+   "missing_roster_team_ids": [],
+   "unexpected_roster_team_ids": [],
+   "duplicate_roster_player_ids": 0,
+   "roster_players": 528,
+   "ambiguous_roster_players_excluded": 0,
+   "effective_roster_statuses": {
+    "Active": 420,
+    "Day-To-Day": 20,
+    "Out": 88
+   },
+   "injury_report": {
+    "statuses": {
+     "Out": 88,
+     "Day-To-Day": 20
+    },
+    "matching": {
+     "matched_roster_team": 108
+    },
+    "duplicate_player_ids": 0
+   },
+   "scoreboard_present": true,
+   "scoreboard_games": 4,
+   "game_origins": {
+    "pre_tip": 4
+   },
+   "pre_tip_roster_player_snapshots": 141,
+   "pre_tip_final_box_coverage": {
+    "listed_in_final_box": 105,
+    "unlisted_in_final_box": 36
+   }
+  },
+  {
+   "run": "20261120T092255Z",
+   "slate_date": "2026-11-20",
+   "started_utc": "2026-11-20T09:22:55+00:00",
+   "finished_utc": "2026-11-20T09:23:20+00:00",
+   "period": "protected_final_season",
+   "collection_failures": [],
+   "expected_teams": 30,
+   "roster_teams": 30,
+   "missing_roster_team_ids": [],
+   "unexpected_roster_team_ids": [],
+   "duplicate_roster_player_ids": 0,
+   "roster_players": 528,
+   "ambiguous_roster_players_excluded": 0,
+   "effective_roster_statuses": {
+    "Active": 420,
+    "Day-To-Day": 25,
+    "Out": 83
+   },
+   "injury_report": {
+    "statuses": {
+     "Out": 83,
+     "Day-To-Day": 25
+    },
+    "matching": {
+     "matched_roster_team": 108
+    },
+    "duplicate_player_ids": 0
+   },
+   "scoreboard_present": true,
+   "scoreboard_games": 9,
+   "game_origins": {
+    "pre_tip": 9
+   },
+   "pre_tip_roster_player_snapshots": 318,
+   "pre_tip_final_box_coverage": {
+    "listed_in_final_box": 226,
+    "unlisted_in_final_box": 92
+   }
+  },
+  {
+   "run": "20261120T163017Z",
+   "slate_date": "2026-11-20",
+   "started_utc": "2026-11-20T16:30:17+00:00",
+   "finished_utc": "2026-11-20T16:30:39+00:00",
+   "period": "protected_final_season",
+   "collection_failures": [],
+   "expected_teams": 30,
+   "roster_teams": 30,
+   "missing_roster_team_ids": [],
+   "unexpected_roster_team_ids": [],
+   "duplicate_roster_player_ids": 0,
+   "roster_players": 528,
+   "ambiguous_roster_players_excluded": 0,
+   "effective_roster_statuses": {
+    "Active": 420,
+    "Day-To-Day": 25,
+    "Out": 83
+   },
+   "injury_report": {
+    "statuses": {
+     "Out": 83,
+     "Day-To-Day": 25
+    },
+    "matching": {
+     "matched_roster_team": 108
+    },
+    "duplicate_player_ids": 0
+   },
+   "scoreboard_present": true,
+   "scoreboard_games": 9,
+   "game_origins": {
+    "pre_tip": 9
+   },
+   "pre_tip_roster_player_snapshots": 318,
+   "pre_tip_final_box_coverage": {
+    "listed_in_final_box": 226,
+    "unlisted_in_final_box": 92
+   }
+  },
+  {
+   "run": "20261121T225637Z",
+   "slate_date": "2026-11-21",
+   "started_utc": "2026-11-21T22:56:37+00:00",
+   "finished_utc": "2026-11-21T22:57:04+00:00",
+   "period": "protected_final_season",
+   "collection_failures": [],
+   "expected_teams": 30,
+   "roster_teams": 30,
+   "missing_roster_team_ids": [],
+   "unexpected_roster_team_ids": [],
+   "duplicate_roster_player_ids": 0,
+   "roster_players": 528,
+   "ambiguous_roster_players_excluded": 0,
+   "effective_roster_statuses": {
+    "Active": 418,
+    "Out": 93,
+    "Day-To-Day": 17
+   },
+   "injury_report": {
+    "statuses": {
+     "Out": 93,
+     "Day-To-Day": 17
+    },
+    "matching": {
+     "matched_roster_team": 110
+    },
+    "duplicate_player_ids": 0
+   },
+   "scoreboard_present": true,
+   "scoreboard_games": 6,
+   "game_origins": {
+    "at_or_after_tip": 1,
+    "pre_tip": 5
+   },
+   "pre_tip_roster_player_snapshots": 175,
+   "pre_tip_final_box_coverage": {
+    "final_box_missing": 175
+   }
+  }
+ ],
+ "method": "Use the collection finished timestamp as a conservative capture upper bound and only accept strictly pre-tip snapshots. Final boxes are inspected for rostered-player presence only, without comparing status to play/start outcomes.",
+ "limitations": "Active with no injury entry is not confirmed healthy; roster and box absence are unknown, not DNPs. Protected-season outcomes are not scored or used for model selection. Archived runs do not establish official historical report publication times.",
+ "input_sha256": {
+  "scripts/a1_availability_report_audit.py": "687e1eb026670ce17be3abef6d81d63babf25f8028d1d0af5d04220393f76f94",
+  "scripts/box_scores.py": "1bba0150a4bc08017433961e487e9839535db2522c6bea15dc1b084761ea9cc0",
+  "data/raw/espn/runs/20261119T145907Z/report.json": "0e4917904aa291d0f9e0a8faf731edb05270fda1f33e94583ef729f003cffea2",
+  "data/raw/espn/runs/20261119T145907Z/teams.json.gz": "0e972c027a7d2c98995dc1c806fbece0166c4e85bff7c90f388ff2c8972f8a99",
+  "data/raw/espn/runs/20261119T145907Z/roster/1.json.gz": "1a35c8b7b3ac16d39b3e79a2d826db000b19586507b09b05c41f5f70757dd0df",
+  "data/raw/espn/runs/20261119T145907Z/roster/10.json.gz": "d975d69770d7208fd693f8a4c50c6a634724e38e3ce1af4f403c201b6749b978",
+  "data/raw/espn/runs/20261119T145907Z/roster/11.json.gz": "6655aa5a76184f1dc9bc0c252e7347b8b5a77294aca3e662d81c8b6e129b86b2",
+  "data/raw/espn/runs/20261119T145907Z/roster/12.json.gz": "6b42f4435b5f2899b1041753060d8920eb8aa49ac4227c5d9cf16d11d50b3cfa",
+  "data/raw/espn/runs/20261119T145907Z/roster/13.json.gz": "5471b222a1def6f7637bcb56228ea8ea1d36f26711375d62c0ff394b58a8dbfe",
+  "data/raw/espn/runs/20261119T145907Z/roster/14.json.gz": "ae735a87eaec4960401c949bcbce05c833e5e488e25c0746996a06482b5e556c",
+  "data/raw/espn/runs/20261119T145907Z/roster/15.json.gz": "6b67217c48b801efb29e086abfde6f1201f3de26127bf804b73abd706cebde91",
+  "data/raw/espn/runs/20261119T145907Z/roster/16.json.gz": "87fe18ebfd02763eada3a70c5efdd53c07e636842629b7ecfd85b5d0e86f4cc6",
+  "data/raw/espn/runs/20261119T145907Z/roster/17.json.gz": "a6276f31208b3ec794d74b19e17201135c93e78b1cef76b5cb8ac63b73d2f462",
+  "data/raw/espn/runs/20261119T145907Z/roster/18.json.gz": "0b358bd3efc72d76dd42f74e39f44c19bd828801b2db309468e024cd0e656b61",
+  "data/raw/espn/runs/20261119T145907Z/roster/19.json.gz": "66e46bf2192c9d41dec9523d3fc02aec3ac7448e0bb660e9e03bcecbb25aada9",
+  "data/raw/espn/runs/20261119T145907Z/roster/2.json.gz": "a636fe4f615438cda1cc345b55bffa0e6fb584dae0f7544f79dabe58a8c62023",
+  "data/raw/espn/runs/20261119T145907Z/roster/20.json.gz": "bb570a5194aa7c299c98fa0897977cb6be8e58e30e5c266b14a8bfb8a8831f70",
+  "data/raw/espn/runs/20261119T145907Z/roster/21.json.gz": "9a3d4f71fc913e5ff698573a495a43811fb7bf1042a58e4444d8d405e2aa6c66",
+  "data/raw/espn/runs/20261119T145907Z/roster/22.json.gz": "b217391901916000012d9ff58b70fa44db3b241fa9b95d4a1fd1a62e38e23ca5",
+  "data/raw/espn/runs/20261119T145907Z/roster/23.json.gz": "62443557b780d526c0ff48023de3996608d224a29f0aebb71da34eb49a8b7bea",
+  "data/raw/espn/runs/20261119T145907Z/roster/24.json.gz": "5afa63b41643e360efc400eac592a64f04c5004649bd42ae1dddad9af8d8f2d2",
+  "data/raw/espn/runs/20261119T145907Z/roster/25.json.gz": "b844ab8afb57400fd6bee64145074d9d565c8f3de9251a5f7c801cf476ba52f6",
+  "data/raw/espn/runs/20261119T145907Z/roster/26.json.gz": "f078273b3f5f7295da586ea3aa005b28f3f7ab79148cdb0bed208e5f864ad7e5",
+  "data/raw/espn/runs/20261119T145907Z/roster/27.json.gz": "53522d866fabb6d4d1d3ca5f2f16b1f4eb2aa1da375968c8fb789de3ec9b5309",
+  "data/raw/espn/runs/20261119T145907Z/roster/28.json.gz": "97d3a3aaafc2c8744e1baaa84055febaaa796e1c1e567875608721610f85980a",
+  "data/raw/espn/runs/20261119T145907Z/roster/29.json.gz": "e7ec41257d393ee7fb8f2620d79c4a00a8ec90336f1322b71add17d0e66d8229",
+  "data/raw/espn/runs/20261119T145907Z/roster/3.json.gz": "dc469809f7674e50693ce48b48dbced623c382a3aaa83c44a087885e6e6d8ff8",
+  "data/raw/espn/runs/20261119T145907Z/roster/30.json.gz": "74b8c31842aac636797edec1f801faa896940fb079e48ed597f31c9b28ddb577",
+  "data/raw/espn/runs/20261119T145907Z/roster/4.json.gz": "640a82d6679eb8fc652d2c4d0382b03db66d22707aeb7714044da8dd2be31dd5",
+  "data/raw/espn/runs/20261119T145907Z/roster/5.json.gz": "642ad218e3e92709bdd1c31dbed87246edbb37ef1fe4c9b205cdd003cda812af",
+  "data/raw/espn/runs/20261119T145907Z/roster/6.json.gz": "b1f5d1c1bfa145d5ac76c5a8e5ae0f70e91a407588e18de5a88c1d93ebbc61f7",
+  "data/raw/espn/runs/20261119T145907Z/roster/7.json.gz": "d699ea34ebe6acc2f2d27b04ff7db8af33ca8fc2f862ba9dea31a29bb82b2126",
+  "data/raw/espn/runs/20261119T145907Z/roster/8.json.gz": "8410294a13d4e9b69a436755680104da460a6cec308c6ca9061e7074d0f1c6b1",
+  "data/raw/espn/runs/20261119T145907Z/roster/9.json.gz": "ce811ec8581b98c87642de7ff9eb6c9489700c22786e00a1ee82745c60eb2af1",
+  "data/raw/espn/runs/20261119T145907Z/injuries.json.gz": "c3b19866b04f2381b7adeb1b322166f0aec31c3359348d250491e3d3c93e3605",
+  "data/raw/espn/runs/20261119T145907Z/scoreboard_2026-11-19.json.gz": "7e2dab32070a98c1a7f8c1a27bb5612f2729d2497185de359e998b7fa73a3adf",
+  "data/raw/espn/final/401910019.json.gz": "3885cf498c01fcdecb6de8bfcaf65fa2f9dd9bf1a3e678c968f9ff9c001ba4ef",
+  "data/raw/espn/final/401910020.json.gz": "19a2fa73a750c734cfb9f4e5641c3f8e043b081c65c1e42bf467d5efd843e41d",
+  "data/raw/espn/final/401910021.json.gz": "b55cb45fe8c51506e07cc3c108c6157f920a07dc39a8427d27126266f635f66e",
+  "data/raw/espn/final/401910022.json.gz": "9770ee595178a084384dd40ad114c70b15941fb092365280ea71a1462c1df011",
+  "data/raw/espn/runs/20261119T235714Z/report.json": "3020a4f1bd86c99f44849ae2047f870adf013bb2601135f63c17c351dd4090ca",
+  "data/raw/espn/runs/20261119T235714Z/teams.json.gz": "0e972c027a7d2c98995dc1c806fbece0166c4e85bff7c90f388ff2c8972f8a99",
+  "data/raw/espn/runs/20261119T235714Z/roster/1.json.gz": "1516ec7efaecd42183b0075df3ab9ee1608562dd9fd23e37be3022130b231e96",
+  "data/raw/espn/runs/20261119T235714Z/roster/10.json.gz": "210814179551447194e42f89cb55de19ead9b4e0b4821fb06b05937aa83997c2",
+  "data/raw/espn/runs/20261119T235714Z/roster/11.json.gz": "b4c390ec08a6db23a9edaeebeb1b354625e7d1c2e66fb0f4a5c04ffe1ba608cf",
+  "data/raw/espn/runs/20261119T235714Z/roster/12.json.gz": "3cde32cc74fd57a4f3ae9c01ab2b199e44f08744c4d2a5d84c20072ca7a618a2",
+  "data/raw/espn/runs/20261119T235714Z/roster/13.json.gz": "47870b89d95adf26cfb1e76ca92ab70240b5a417dc55756116a22dfb82c81538",
+  "data/raw/espn/runs/20261119T235714Z/roster/14.json.gz": "6fd4bc3ce00963d4382a7761d942b7f13c5b085d57b18a480288aaca1e2bc090",
+  "data/raw/espn/runs/20261119T235714Z/roster/15.json.gz": "e805c0eb59db6220d11dffebb3b61fe2a517f4f132b784c82c17feb2d2c7b6b0",
+  "data/raw/espn/runs/20261119T235714Z/roster/16.json.gz": "6bc16251624967bb48f57cef12ee9dc804b06b7805d68e40e5b34f479d57c7f1",
+  "data/raw/espn/runs/20261119T235714Z/roster/17.json.gz": "414f0d1aec0896bcbf98a39bbe4e46caa1741f592b693f1aa9b3c93cd6e51d10",
+  "data/raw/espn/runs/20261119T235714Z/roster/18.json.gz": "028211100ad363294c5c9e88fb2cc7e3d1c197a66493f3a846f1eec8681d5f53",
+  "data/raw/espn/runs/20261119T235714Z/roster/19.json.gz": "2f0aee23099867aa9283a37a6f55007aad1548bfd4d8814c1df06681cfac9c00",
+  "data/raw/espn/runs/20261119T235714Z/roster/2.json.gz": "1dc715ea4d54c86b2a03dbfdf510180d42c7611ee4460bbe204116792241ccba",
+  "data/raw/espn/runs/20261119T235714Z/roster/20.json.gz": "27503f0a86845f20c5e5c463aedbc846927efc817178c22653d0b1ba139f4fab",
+  "data/raw/espn/runs/20261119T235714Z/roster/21.json.gz": "dd667c4f2effe1210757ba69ce9c14509e16bfed503792aa91191a2ccd084a75",
+  "data/raw/espn/runs/20261119T235714Z/roster/22.json.gz": "7e414c1bfda6b78670b2df08dbce5e92a6b9a7aa2932d99a669ca9d91c7572f3",
+  "data/raw/espn/runs/20261119T235714Z/roster/23.json.gz": "d1215ca9191a5bcf58856496638b298e807f7168d6bb1447f973fc135d41c79c",
+  "data/raw/espn/runs/20261119T235714Z/roster/24.json.gz": "31495457e690022b3fad6f6cd68821144ecafeb6accc3ac7552a1abd1aa002bc",
+  "data/raw/espn/runs/20261119T235714Z/roster/25.json.gz": "37f5b79c1ef8f5991777d048950ebda7511948a4de140bd46458b9e24c3335f8",
+  "data/raw/espn/runs/20261119T235714Z/roster/26.json.gz": "a5648ad45105508923eb208db072aefa9deaa1cf29ac351957e1522b6c301cb3",
+  "data/raw/espn/runs/20261119T235714Z/roster/27.json.gz": "bab561a8f8f7dcbff37de09427ad95684310c43c18b369c790260848262634c7",
+  "data/raw/espn/runs/20261119T235714Z/roster/28.json.gz": "516544c12b543b1831cfa18ae01bb6913f41aeb10b8e291b45894ebf290f1b8e",
+  "data/raw/espn/runs/20261119T235714Z/roster/29.json.gz": "12a4947117d0cacd01b6aace60ddad7e973680f77e1eef0ceba41ec46fdec829",
+  "data/raw/espn/runs/20261119T235714Z/roster/3.json.gz": "b594bb690e0bf2fde92f505c64e984236c5d70f4df469a3cb51f9faaff7cef8a",
+  "data/raw/espn/runs/20261119T235714Z/roster/30.json.gz": "9ac9a05b25fdc76fd693cdc84efe0ef29dcc71de9e6d3efb10677402bbfe18ec",
+  "data/raw/espn/runs/20261119T235714Z/roster/4.json.gz": "c51f872bd1cb2f62ad97cc17010608f10a6ddaef83464d27e4e7594551591219",
+  "data/raw/espn/runs/20261119T235714Z/roster/5.json.gz": "0dec22db56155a379bc43a553b03570a3b5e6c66139800b6d82da62b78f77c76",
+  "data/raw/espn/runs/20261119T235714Z/roster/6.json.gz": "865258ef0f9ffb02f30fffdba8818085d65f09f3c844da8700893790d0480814",
+  "data/raw/espn/runs/20261119T235714Z/roster/7.json.gz": "783302280f4eb05ea5c04670d47d4c36c9f708f7020f4651fa397defc1350316",
+  "data/raw/espn/runs/20261119T235714Z/roster/8.json.gz": "f3b9208991ead748a88a7455542275a2d21860da0fe36a6a9d4e900a2b4764e1",
+  "data/raw/espn/runs/20261119T235714Z/roster/9.json.gz": "a02a05492a1d6cddf655b08b96180f27c7290725fd03272d20fcde3c9b6cf922",
+  "data/raw/espn/runs/20261119T235714Z/injuries.json.gz": "f2cd96432ee076aada638845681f17277472f1882c12ba411a6947034b66aec3",
+  "data/raw/espn/runs/20261119T235714Z/scoreboard_2026-11-19.json.gz": "e2bc3170660d92794f5a8c7314ad0ace8b5219fc3962c69216273e9ec0f8ecba",
+  "data/raw/espn/runs/20261120T092255Z/report.json": "5fbdaacb6b374c7d1abc087d48e8628896197618c477c044dde53b947834ad47",
+  "data/raw/espn/runs/20261120T092255Z/teams.json.gz": "0e972c027a7d2c98995dc1c806fbece0166c4e85bff7c90f388ff2c8972f8a99",
+  "data/raw/espn/runs/20261120T092255Z/roster/1.json.gz": "e34c9bdc5b2069ccc431d65e3a666f35b9e5c9887d7facb144e05e5f990a7979",
+  "data/raw/espn/runs/20261120T092255Z/roster/10.json.gz": "8875a2b7a5cd932e8770ed85315c65077565fb6502901147fd501556413f2d56",
+  "data/raw/espn/runs/20261120T092255Z/roster/11.json.gz": "7aa723d0907d1c56294c947f844b18f4d514984e301f262d8790d113b1c00dd1",
+  "data/raw/espn/runs/20261120T092255Z/roster/12.json.gz": "642b2f6b8d9ce5f778b3df8d65efc7a2701eab29d43c63bb2ce29f0aad40e365",
+  "data/raw/espn/runs/20261120T092255Z/roster/13.json.gz": "3d30f678fce1123506ae7183b88650d9add8f361b2dcc2c422a6e69310706cec",
+  "data/raw/espn/runs/20261120T092255Z/roster/14.json.gz": "43b9a7250cdd88603ebee596f923d391ac6caf2e1165ab71a05d039c804dcdc4",
+  "data/raw/espn/runs/20261120T092255Z/roster/15.json.gz": "9a447130667bbd0954faba9f4c3720b9a33a9299c21961708b3e9da14fc6d816",
+  "data/raw/espn/runs/20261120T092255Z/roster/16.json.gz": "9911164da2c2de78855ba0b6f47e75850e60bda6a9550fc388de460f645957ff",
+  "data/raw/espn/runs/20261120T092255Z/roster/17.json.gz": "1f9a1594dd4323b6211108821e48a612031a17a7ac697bc190ab99282f048941",
+  "data/raw/espn/runs/20261120T092255Z/roster/18.json.gz": "dc1b21cd55a29f0bcfca50a577c503a9ce7cb3bf66b7f7b009be35c472d64fee",
+  "data/raw/espn/runs/20261120T092255Z/roster/19.json.gz": "f9fc54a807df700f70340bfadf30a7af2b147724a36944a85c09febfbe6ccbf5",
+  "data/raw/espn/runs/20261120T092255Z/roster/2.json.gz": "796ebe9d74e35b2cd38a1b8a525c1a8309d6ce0308db170c2bc1751414dabd98",
+  "data/raw/espn/runs/20261120T092255Z/roster/20.json.gz": "dadd28dc4bf9cabe8924d778592dce646ce2a317dca8c519ddb6fec0d5e6d9b2",
+  "data/raw/espn/runs/20261120T092255Z/roster/21.json.gz": "be62d019701aa047d6e5a3dbffc7a14094b2b458908b2a22e34b95e70b0c28af",
+  "data/raw/espn/runs/20261120T092255Z/roster/22.json.gz": "ead9d71072f442df630164568ea9b9c267f4b2a75e1663b0c34a93f46bcc0f97",
+  "data/raw/espn/runs/20261120T092255Z/roster/23.json.gz": "de7be20c8b23e53d6854ff609173fec4c319a008d7b422837c1af753c2f747b3",
+  "data/raw/espn/runs/20261120T092255Z/roster/24.json.gz": "669d3dbfdfca03643dba7665920ef21cc85e8bdeaf6b1f7a1b19d7064fca2abd",
+  "data/raw/espn/runs/20261120T092255Z/roster/25.json.gz": "4555fe57e40e619ab6ce5a94d8d29bf3794608c017a689aabd455069ed77bd6a",
+  "data/raw/espn/runs/20261120T092255Z/roster/26.json.gz": "6e9199c1ca05412dc24da4f39855026f7a0f358fc56e0d126c647512c111b423",
+  "data/raw/espn/runs/20261120T092255Z/roster/27.json.gz": "fa47ccdf319c086b76fe88ae450a5ddde6e8b9d2b0a072edf3bc4e08eb89b4fd",
+  "data/raw/espn/runs/20261120T092255Z/roster/28.json.gz": "13f52c5af6c71b8e6e2e1616deeeaecc7fac442f8c89f43c77d3b422fe03c023",
+  "data/raw/espn/runs/20261120T092255Z/roster/29.json.gz": "e49aac85cd80bb58b9561c88972f33d57fd3f9a863f1d2c4538796c54a0c7ee4",
+  "data/raw/espn/runs/20261120T092255Z/roster/3.json.gz": "c4a30aa8248809b5158f8fdb92a29bb8a29a7a506879235852e91a0368a385a3",
+  "data/raw/espn/runs/20261120T092255Z/roster/30.json.gz": "ebe89b137ff9d134e2292afe820b7b0f15c1b3f62be337d22bef7f797779de2e",
+  "data/raw/espn/runs/20261120T092255Z/roster/4.json.gz": "ee0c682b1f68562f455471251f96e51e020a34999859e0eab7a1ce2b1fb14464",
+  "data/raw/espn/runs/20261120T092255Z/roster/5.json.gz": "3392410ea391f5422ca16057296ab20fd516c698a7fe9ffbcae4922e0fa3a1be",
+  "data/raw/espn/runs/20261120T092255Z/roster/6.json.gz": "ffb55a8b2c856d101fe0d8d70ef524e2b3670d128ef154c4dd72db9320eb5f0b",
+  "data/raw/espn/runs/20261120T092255Z/roster/7.json.gz": "2ebd18a9c9ce4263e22faab3edc22b94435feb0891d3a29a49b42287e2fb8316",
+  "data/raw/espn/runs/20261120T092255Z/roster/8.json.gz": "148088ecc3a1c818404b1ae16610ba61bfaee9c75da8db3769ffcc8486a7e630",
+  "data/raw/espn/runs/20261120T092255Z/roster/9.json.gz": "f226f3905c7c558d3b59306995a9b7ec013afd823b155f1af369e83bd4aae963",
+  "data/raw/espn/runs/20261120T092255Z/injuries.json.gz": "2f082dacc84bcbe4c8aa870502b78034ec634b949fc19ed7414a145c08fd3da8",
+  "data/raw/espn/runs/20261120T092255Z/scoreboard_2026-11-20.json.gz": "dc0350c6486a834581dafd777590d3e19d5879db3a6e4396625df2d2f602227d",
+  "data/raw/espn/final/401909305.json.gz": "13c76b315618895d77e32ead260ae677c1578d49392655564732fceda1a688fc",
+  "data/raw/espn/final/401909306.json.gz": "3fca2f22c1be83dd9da785c08407ed37f715fd06c539776a3d938456516ce04c",
+  "data/raw/espn/final/401909307.json.gz": "ae611fbec938d55446a452c61b728441389195541582108aa6266c7e0a584685",
+  "data/raw/espn/final/401909308.json.gz": "a01098484a6e6c885fc2b1da9c22a399fd8eabe55594c298c9cbfeb219f228bf",
+  "data/raw/espn/final/401909309.json.gz": "ecf5f47dce96071573666d5af793a4450a9566fd771be782a6151542d1eb72df",
+  "data/raw/espn/final/401909310.json.gz": "be3bb3a483f4726b99f6643288d7628475c243320cc59cfdb0b86522353d6d36",
+  "data/raw/espn/final/401909311.json.gz": "162e9ce7114dc638c9b023dd66fd226d4dd0be49c0596843117b9267a5582f2d",
+  "data/raw/espn/final/401909312.json.gz": "9ee5e5b33371afc999207525bcf9e3b1bc864342b642eb925da1c79eac8d59a7",
+  "data/raw/espn/final/401909313.json.gz": "c8caee6cbf1cc43a44b009807fb1e9c5b8121432dd2f96f46cf6afd5ea9ee866",
+  "data/raw/espn/runs/20261120T163017Z/report.json": "c7cc71f82b4a398d059def47a90e4959ef46979d8c69a23506937b00fab9c889",
+  "data/raw/espn/runs/20261120T163017Z/teams.json.gz": "0e972c027a7d2c98995dc1c806fbece0166c4e85bff7c90f388ff2c8972f8a99",
+  "data/raw/espn/runs/20261120T163017Z/roster/1.json.gz": "2baa4ed9c96c36e5960580b67384c5ae384aafb3975447e44415d4e48763e155",
+  "data/raw/espn/runs/20261120T163017Z/roster/10.json.gz": "3ce18ca8c9ae702e919b0556ac08f8865ae3a0247975b0ba03eb093634318f35",
+  "data/raw/espn/runs/20261120T163017Z/roster/11.json.gz": "fa33ca569d96924c2b91dfdc68379ba2b23ce70dd1ad28a29239c7440900efe7",
+  "data/raw/espn/runs/20261120T163017Z/roster/12.json.gz": "4ec93abd2dcd1dd9be27c4037a45a12f3d714e7e240958d1f702cc61bddaf8dd",
+  "data/raw/espn/runs/20261120T163017Z/roster/13.json.gz": "d0a235df72d62b1cbee2b71d52b41c7eb86771179004c3a0a452e6c25b63fe16",
+  "data/raw/espn/runs/20261120T163017Z/roster/14.json.gz": "6f629c763cd8f75bb4428d06bfcd159d96da18264fe9048721eecb168cd0fa76",
+  "data/raw/espn/runs/20261120T163017Z/roster/15.json.gz": "650c65432ffc0364b190db6ce115e65d02d4f205e8645a98e1f1aafa6aaafcbb",
+  "data/raw/espn/runs/20261120T163017Z/roster/16.json.gz": "6574a058cda77387b2b66b421ccd6f37e7120f5ebbfc1c479081c98a03428a6e",
+  "data/raw/espn/runs/20261120T163017Z/roster/17.json.gz": "6a7b13c7e37e9106ff6d1e18d7152e9a5d6183896ade9b00fdff383096d5359d",
+  "data/raw/espn/runs/20261120T163017Z/roster/18.json.gz": "eca8f67148e44cd1c7be3239dc69ee8c103795a75151ecc850917eddb72faf13",
+  "data/raw/espn/runs/20261120T163017Z/roster/19.json.gz": "02b27b6ad11151b37077ecc0b3866f8dd1d2b3977342be69832351fdc2dfea5c",
+  "data/raw/espn/runs/20261120T163017Z/roster/2.json.gz": "0ef2826c240497e9f879d837854b05eb5426e52e5ec62b012f57f14eb3c7ac68",
+  "data/raw/espn/runs/20261120T163017Z/roster/20.json.gz": "3a65e97b960c58f0bd0a9f7dc4a43987aed66a5fa72e4f5d9cc4fb24d045886c",
+  "data/raw/espn/runs/20261120T163017Z/roster/21.json.gz": "0272adbd34bf15f4ab16a9425cbf1adfd9e8add18159d8dd5f567c214fc75008",
+  "data/raw/espn/runs/20261120T163017Z/roster/22.json.gz": "d454e30e6a5da52c5ce049384834626c71deb8d4418f3aca82863bdd8c2d7337",
+  "data/raw/espn/runs/20261120T163017Z/roster/23.json.gz": "db4f482425854031670b9caa1e4abf127ee675cb95f03e39433ac8dee10a9599",
+  "data/raw/espn/runs/20261120T163017Z/roster/24.json.gz": "7b3d157878f0554a713d08e8c61f8ade13c4578d4f709cc3ef7b074e8f16c885",
+  "data/raw/espn/runs/20261120T163017Z/roster/25.json.gz": "bef3c8b43dfacbba812ccb33b7dd6ec77520bea143c6bd5785c17341668dd82a",
+  "data/raw/espn/runs/20261120T163017Z/roster/26.json.gz": "bcb0b4d8cef389c151bdfc5b69b306191283361b818bfa3179a664718ca74115",
+  "data/raw/espn/runs/20261120T163017Z/roster/27.json.gz": "2b00fe7aa89dd0705fd379c558a2b5b464b2e9f573b8510089ae70fca116e648",
+  "data/raw/espn/runs/20261120T163017Z/roster/28.json.gz": "a154af85553d6a742dce246dfbc750339ae233c1c387031d964061ac401d280c",
+  "data/raw/espn/runs/20261120T163017Z/roster/29.json.gz": "ea07cc37ed3d8cdec55cb8962f6fe7f5652ee1b85e226010146de361b459f09d",
+  "data/raw/espn/runs/20261120T163017Z/roster/3.json.gz": "fcedff90152f345ae6a9d8dd77fe81dbdef2f1125cc3db51930e8e00833bfa9e",
+  "data/raw/espn/runs/20261120T163017Z/roster/30.json.gz": "177732a5c4bf532db78ca7b17a6b4d18eede34f3365273992a14980e2dc10df5",
+  "data/raw/espn/runs/20261120T163017Z/roster/4.json.gz": "143180fb6af8247d69b020946b3b588519d770abd0cbd863c15f40b0b05774bb",
+  "data/raw/espn/runs/20261120T163017Z/roster/5.json.gz": "848d5529465e9aaa120a77c6a028b89ea8f40f3ef0c041a2d65459da2030028b",
+  "data/raw/espn/runs/20261120T163017Z/roster/6.json.gz": "5a9a5798065687072bd14134c1e582565276956b96f73a2caa4dfef2fbc39f5f",
+  "data/raw/espn/runs/20261120T163017Z/roster/7.json.gz": "4ecd7f2cdcda1f73a5fb9629282091cc456193ab33053b4c4e7264b5462310ad",
+  "data/raw/espn/runs/20261120T163017Z/roster/8.json.gz": "d5295cc3a95fba248526fe0c3dbff833e1586f9bd55cd00311fb51c9185f088a",
+  "data/raw/espn/runs/20261120T163017Z/roster/9.json.gz": "61d94a721f06e83c581f6286bf269f8e72022546a849bf4d55b4aba991303fd1",
+  "data/raw/espn/runs/20261120T163017Z/injuries.json.gz": "911dfced31751a2015eb1f64efe5cb31e8737dc05c756cf2676003d18c17abd8",
+  "data/raw/espn/runs/20261120T163017Z/scoreboard_2026-11-20.json.gz": "a13ec16230b9e070370163a60d1d5efd87ebcbb59728618aacf955d7d48b85b5",
+  "data/raw/espn/runs/20261121T225637Z/report.json": "c7896b891dc0787c1397cd2832b295adcc19591a775dda50816053a80bf17945",
+  "data/raw/espn/runs/20261121T225637Z/teams.json.gz": "0e972c027a7d2c98995dc1c806fbece0166c4e85bff7c90f388ff2c8972f8a99",
+  "data/raw/espn/runs/20261121T225637Z/roster/1.json.gz": "9086422d167d165611f4535d48997709ecdb7752f9a714022340260824af381b",
+  "data/raw/espn/runs/20261121T225637Z/roster/10.json.gz": "2ba50e81f2453d9540d2f1242f8b0ce4773d7884af1067c168452d1a43c24dab",
+  "data/raw/espn/runs/20261121T225637Z/roster/11.json.gz": "282d2135c354aaf565fce5db1952e62588cc7371b5843323ef7cc91eb209e0a7",
+  "data/raw/espn/runs/20261121T225637Z/roster/12.json.gz": "94db4b92802dd2414c755a74c058d95d915f136c6e26c688971b8966f65495b7",
+  "data/raw/espn/runs/20261121T225637Z/roster/13.json.gz": "c13d51bc63a9e5b61b8ae54efbbb335edb261d7a3a5b0bd6ddf40ed61e13783d",
+  "data/raw/espn/runs/20261121T225637Z/roster/14.json.gz": "c26a1719c43118d507739076f90521ec65c0ccf5ae2dbed2f8e73e68c3df3c1e",
+  "data/raw/espn/runs/20261121T225637Z/roster/15.json.gz": "56ece30bd60e5adce7b6812a4ead955e773d8a026e3e6b6dcaa0f786e0bf52c9",
+  "data/raw/espn/runs/20261121T225637Z/roster/16.json.gz": "d215d2f941d3b37630865bb19b91d2b7d2909b392972550e13c9ba84436fee21",
+  "data/raw/espn/runs/20261121T225637Z/roster/17.json.gz": "cbd2829c0e5bc67bfa92d161bb4e76e1caff6593c50bc8d9ccadfe312bee16e7",
+  "data/raw/espn/runs/20261121T225637Z/roster/18.json.gz": "cd6688e15039d6af42516266c891ef72d9cddd1d3fdc03fa34eaa2d8e3126a6b",
+  "data/raw/espn/runs/20261121T225637Z/roster/19.json.gz": "641ee21af3c7b67ae71bf0e9cc93bfbe6b1e9d39acf3db3ba5a54f9e60cb909a",
+  "data/raw/espn/runs/20261121T225637Z/roster/2.json.gz": "44cc59d83a07371603f7a86e559b8d378bdb6b3375b5ffa7f0ba8469493e6141",
+  "data/raw/espn/runs/20261121T225637Z/roster/20.json.gz": "d6713846f3d6fce1737049f6bd54f75beb91c9f38c26010b783811e59b07a905",
+  "data/raw/espn/runs/20261121T225637Z/roster/21.json.gz": "f5a22cdeea70261338923b458b011e47eaadf8ac9fbea636eaacb31b31204186",
+  "data/raw/espn/runs/20261121T225637Z/roster/22.json.gz": "8a9179fcce9f087eb6f6b25428386f9b5378df9cb4850ffc184aa9c0fe76186b",
+  "data/raw/espn/runs/20261121T225637Z/roster/23.json.gz": "3015329369b0069e2ccea223532e302d090393ce1b87af363a2df34d654a7e32",
+  "data/raw/espn/runs/20261121T225637Z/roster/24.json.gz": "26f6ee5ba52b1cea5c4cf39901471a3ba3acadbc29f8dd2811cd4d1351789896",
+  "data/raw/espn/runs/20261121T225637Z/roster/25.json.gz": "a069c2edcc5938a8508dd56248b38d0d30283589f8542e91357267280b183aed",
+  "data/raw/espn/runs/20261121T225637Z/roster/26.json.gz": "3c0e6671b234341d5cb7f2a2f76bd6d673eff0a48e275606038dbfa91ffaa526",
+  "data/raw/espn/runs/20261121T225637Z/roster/27.json.gz": "0f9b007779430fefd8ad8b3ef2d1c146f86dc11ebf842671f17573f22d26724e",
+  "data/raw/espn/runs/20261121T225637Z/roster/28.json.gz": "3390f879478a2897deef2891d9b89505215d3975667c0c211a4032e276df13bd",
+  "data/raw/espn/runs/20261121T225637Z/roster/29.json.gz": "1ab162c6509be9247ac6f9391878e37a74d5ba43b4245a2f5c52d4b340f1d841",
+  "data/raw/espn/runs/20261121T225637Z/roster/3.json.gz": "60025f9fdc2657c3ea3f97681baab0c34cd424dc5a0b096ef984e8b66b316b57",
+  "data/raw/espn/runs/20261121T225637Z/roster/30.json.gz": "deef904a0b03807ff70eac7eda6e90dfdf1d718424613cc47062df19d3f1eb91",
+  "data/raw/espn/runs/20261121T225637Z/roster/4.json.gz": "0aec8665efc4219fa0e2c5eca8a8e6a43411d7cd137528cb4e38182db3ab0380",
+  "data/raw/espn/runs/20261121T225637Z/roster/5.json.gz": "4d9e0002682f071554294d3bd66661d24ee535d31ffe4ccff5f46d8bb138e2e9",
+  "data/raw/espn/runs/20261121T225637Z/roster/6.json.gz": "43e0d426cd28b191da8fc8c517abebcef14c7adc7cc6f7c186ae90933c9ea751",
+  "data/raw/espn/runs/20261121T225637Z/roster/7.json.gz": "06babca0a330129f7dc3af65d3991b43cbbac5e48dba15da88ed4afee20dd67f",
+  "data/raw/espn/runs/20261121T225637Z/roster/8.json.gz": "fbd55dc133297f70995e2544c32ad3d4c1f24e755cf858b2282dc9a824fbaec1",
+  "data/raw/espn/runs/20261121T225637Z/roster/9.json.gz": "c50124ee3737c3da16e4f51760b395503406d4e90f57a86c0ba4c9b805413d2d",
+  "data/raw/espn/runs/20261121T225637Z/injuries.json.gz": "62e49048f10145f6fcdb2422c239efc36469e031b32040ea4e477bdf5b04d797",
+  "data/raw/espn/runs/20261121T225637Z/scoreboard_2026-11-21.json.gz": "95efbfb781da3712e7ae3bdb6ddb57a1dd2eeb341010d8a5604a87731c39a352"
+ }
+}

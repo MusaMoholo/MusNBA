@@ -1,6 +1,6 @@
 # Handoff — state and next actions
 
-Updated **22 November 2026 — A1 overnight execution, S01–S05 complete; S06 active at 60%**. Dashboard U1–U22 complete and published.
+Updated **22 November 2026 — A1 overnight execution, S01–S05 complete; S06 at 60%, S07 at 10%**. Dashboard U1–U22 complete and published.
 Dashboard close-out checkpoint **86c2a46**, A1 planning checkpoint **00a0731**; S01 checkpoint **c9d8008**
 and S02 checkpoint **93b3e1d** are committed and pushed (S01's exact control source is **c6d5db4**).
 The original S03/S05 experiment snapshot is **ab32eda**, committed and pushed before the candidate repair;
@@ -24,9 +24,10 @@ The audited incoming screen and S06 50% ledger were pushed as **1ecc78a**.
 The first selected-timeout engine protocol was frozen before an engine result in **b88840b**.
 The model-artifact builder was preserved before fitting in **19b34bc**.
 The isolated policy source, model reconstruction and smoke evidence were pushed before real-game wiring in **74e3e71**.
+The three-game wiring rung and pre-audit S07 source were pushed as **9a0c178**.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
 product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S05 are complete;
-S06 is active at 60%; S07 is 0%; A1 overall is 47.2%.** Isolated assignment candidates have event-level diagnostics and wiring only;
+S06 is active at 60%; S07 is 10%; A1 overall is 47.8%.** Isolated assignment candidates have event-level diagnostics and wiring only;
 no defence candidate has had an engine-accuracy test, and no model promotion, forecast or PWA change has been made.
 
 **Completed S05 evidence:** the 200-game flow and its independent accounting are complete; the comparison and
@@ -345,7 +346,7 @@ the manifest is `analysis/experiments/20261122_a1_s06_engine_models_F4.json`, mo
 under `data/models/folds/a1_s06_selected_F4/`, and log is `/tmp/musnba_a1_s06_engine_models_F4.log`. Its initial
 syntax preflight failed before fitting; the typo was corrected.
 
-The new opt-in policy and engine hooks are **research wiring only**, with no simulated-game result yet. They use a
+The new opt-in policy and engine hooks are **research wiring only**, not a promoted model. They use a
 separate deterministic random stream, explicit active rosters, conditional simultaneous exits, learned incoming
 ranks, deferred plan changes, overtime templates and replacement before a free-throw rebound; a short eligible roster
 raises explicitly. The first hook test lacked a fake model's band table and failed before that check; the test fixture
@@ -368,11 +369,36 @@ On this code, default smoke passed **102/102** (`/tmp/musnba_a1_s06_wiring_smoke
 exited **1** with **80/102** checks passing (`/tmp/musnba_a1_s06_wiring_fault.log`). Neither run changed the served
 model or PWA bundle; phone import remains unconfirmed.
 
-**S07 0% started independently** (S02/S05 dependencies are complete) while the S06 smoke runs. The retained ESPN
-archive has **5** collection folders dated 19–21 Nov 2026; all are in the protected final season. TRAINING_PLAN freezes
-an inventory-only audit using collection-finish-before-tip, status and box-presence coverage, with no status/outcome
-comparison or tuning on protected outcomes. `scripts/a1_availability_report_audit.py` and **4** focused tests are
-prepared but the archive audit has not run. The accepted availability fallback remains unchanged.
+**S06 70% in progress:** a research-only `--audit-substitution-worlds` option now saves player/period worlds,
+availability and every segment lineup plus post-foul replacement lineups; `scripts/a1_substitution_world_audit.py`
+independently replays lineup durations, checks five distinct available non-disqualified players, and reconciles each
+player's minutes and each team's period/total points. Synthetic regulation, overtime, illegal-lineup, points,
+missing-period and conserved-but-misallocated-minute tests pass, as do an initial four-player roster failure and
+an exactly-five-player/no-eligible-replacement stress test. Trace capture must still reproduce the previous candidate
+and pass the three-game independent audit: **do not award 70% or start the 200-game screen until then**.
+The source is checkpointed before that run. Reproduce with
+`OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u scripts/backtest.py --config models/v1.2d.json --fold F4
+--game-ids analysis/experiments/20261122_a1_reproduction_games.json --worlds 1000 --jobs 1 --threads 8
+--rotation targets --pool 0 --models folds/v1.2d_F4_all --substitution-candidate
+analysis/experiments/20261122_a1_s06_engine_models_F4.json --audit-substitution-worlds --name
+a1_s06_world_trace_wiring`. Then run `scripts/a1_output_audit.py <new-run> --reference
+20261122T090745Z_a1_s06_candidate_wiring --output <new-accounting.json>` and
+`scripts/a1_substitution_world_audit.py <new-run> --output <new-world-accounting.json>`.
+
+**S07 10%:** the retained ESPN archive has **5** collections dated 19–21 Nov 2026, all in the protected final
+season and **none** in development. Using collection-finish-before-tip gives **31** pre-tip game snapshots covering
+**18** unique games and **1,093** roster/player snapshots covering **634** unique player-games; one snapshot was at
+or after tip. All five collections have 30 roster teams and an injury report; **535** injury entries match a
+collected team/player, with **426 Out** and **109 Day-To-Day** snapshot entries. The **2,105 Active** roster entries
+are the existing missing-injury fallback, not proof of health. Of the 634 unique pre-tip player-games, **331** are
+listed in retained final boxes, **128** are unlisted and **175** have no retained final box. Presence alone is not
+play/DNP status. No protected-season status-versus-outcome scores were computed or used to select a model. Independent
+`scripts/a1_availability_report_audit_check.py` reconstructs all **1,093** snapshot records and **634** unique
+coverage states; reports are `analysis/experiments/20261122_a1_s07_report_coverage{,_audit}.json`, logs
+`/tmp/musnba_a1_s07_report_coverage{,_audit}.log`. **4** focused tests and Pylance checks pass. The accepted
+availability fallback remains unchanged. The partial checkpoint's normal smoke passed **102/102**
+(`/tmp/musnba_a1_s07_10_smoke.log`), and the injected fault exited **1** with **80/102** checks passing
+(`/tmp/musnba_a1_s07_10_fault.log`).
 
 The tracking family was frozen in TRAINING_PLAN §8 and built separately by
 `scripts/a1_tracking_features.py`: former wrapper PID **85586**, shell **1549**, log
@@ -824,7 +850,7 @@ weights, with the old and new accounting; do not hide unfinished tasks by deleti
 | S04 Defence and shot quality | 12% | 100% | Both families rejected at their frozen node gates; tracking rebuild and independent accounting verified; served model and bundle unchanged |
 | S05 Roles and minute allocation | 8% | 100% | Both matched screens and independent accounting complete; neither passes pooled MIN gate, retain D29 control; smoke/fault passed |
 | S06 Game-state substitutions | 12% | 60% | Isolated selected-timeout/foul-out integration passes three-game wiring; per-world independent accounting remains |
-| S07 Availability and future absences | 6% | 0% | Protected-season-safe archive inventory prepared |
+| S07 Availability and future absences | 6% | 10% | Five protected-season collections audited; no development report archive or protected outcome scoring |
 | S08 Lineup branches and Expected | 6% | 0% | Planned |
 | S09 Shared form and end-game behaviour | 10% | 0% | Planned |
 | S10 Season pathway calibration | 8% | 0% | Planned |
@@ -833,7 +859,7 @@ weights, with the old and new accounting; do not hide unfinished tasks by deleti
 | S13 Current-model season history | 5% | 0% | Planned |
 | S14 Nightly, delivery, successor | 5% | 0% | Planned |
 
-**A1 overall: `█████████░░░░░░░░░░░ 47.2%`.** Both control seeds are complete; isolated assignment-event
+**A1 overall: `█████████░░░░░░░░░░░ 47.8%`.** Both control seeds are complete; isolated assignment-event
 diagnostics and three-game wiring are not engine-accuracy tests. No candidate has been promoted or changed production/PWA.
 Each rung below is cumulative; 100% always includes updated docs, necessary PWA model/data/shell delivery, reviewed
 commit and push, plus the owner summary. See AGENTS §3/§5 and PLAN §6c for the per-subtask PWA checklist; research-only
@@ -1198,11 +1224,10 @@ The dashboard programme is done. Do not resume U1–U22, repeat rejected defence
    Original tracking publication/revision timing remains unknown; preserve S02's cutoff and provenance limits. The
    raw inventory retained 45 older entries without original fetch URL/time. Provider access remains one polite stream,
    paused during the nightly.
-2. **Continue S07 independently:** after preserving its audit source, run
-   `.venv/bin/python -u scripts/a1_availability_report_audit.py --output
-   analysis/experiments/20261122_a1_s07_report_coverage.json`. Audit its origin/status/box-presence counts and
-   missing coverage without scoring protected-season status outcomes. Then continue S06–S10 in dependency order;
-   keep conditional-engine and actual pre-game availability populations separate.
+2. **Continue S07 independently at 10%:** the report archive has no development-season examples. Reuse S01/S05's
+   strictly prior-box cohort and source labels to separate prior eligibility, known DNPs, injury/rest reasons and
+   unknowns from the actual-participant oracle; independently audit the development populations before awarding 20%.
+   Do not score or tune status on the protected-season archive. Then continue S06–S10 in dependency order.
 3. **S11 freezes the tested combination before promotion.** Confirm on the fixed wider folds and second seed, protect
    the final test and use player outcomes first.
 4. **S12/S13 implement model visibility and versioned daily history.** Preserve original and previous-version
@@ -1243,6 +1268,11 @@ records the 60% rung; FINDINGS records the populations, screens and wiring; TRAI
 README maps the research scripts. ENGINE_PLAN and DASHBOARD_PLAN need no design/behaviour change because no accepted
 model, app, forecast, bundle or shell changed. AGENTS needs no change because the scoped overnight authority already applies. The served
 v1.3/pathway-v1 model and bundle remain unchanged; phone import is unconfirmed.
+
+**S07 partial document review:** HANDOFF and PLAN record the 10% archive rung and next action; FINDINGS records
+origin, status and box-coverage counts; TRAINING_PLAN freezes the protected-season-safe inventory; README maps both
+audit scripts. ENGINE_PLAN and DASHBOARD_PLAN require no change because no design, forecast or app changed; AGENTS
+already records the overnight authority. The model and bundle remain unchanged.
 
 ## Completed S01 audit and reproduction
 

@@ -116,7 +116,8 @@ def simulation_seed(version: str, day: str, gid: str, stream: int | None = None,
 
 
 def _init(version, spec_path, fold, worlds, rotation='replay', known_starters=False, pool=None, stream=None, seed_key=None,
-          flow_diagnostics=False, minutes_history='control', strict_minute_targets=False, substitution_report=None):
+          flow_diagnostics=False, minutes_history='control', strict_minute_targets=False, substitution_report=None,
+          capture_substitution_worlds=False):
     from scripts import engine
     if pool is not None:  # D36: rotation-table pool (0 = one table per world)
         engine.ROTATION['pool'] = pool
@@ -138,12 +139,14 @@ def _init(version, spec_path, fold, worlds, rotation='replay', known_starters=Fa
     _W.update({'engine': engine.Engine(version), 'mod': engine, 'inputs': load_inputs(spec, fold, flow_diagnostics), 'worlds': worlds,
                'teams': json.loads((DERIVED / 'teams.json').read_text()), 'rotation': rotation, 'known_starters': known_starters,
                'periods': periods, 'player_periods': player_periods, 'flow_diagnostics': flow_diagnostics,
-               'stream': stream, 'seed_key': seed_key, 'strict_minute_targets': strict_minute_targets})
+               'stream': stream, 'seed_key': seed_key, 'strict_minute_targets': strict_minute_targets,
+               'capture_substitution_worlds': capture_substitution_worlds})
     if substitution_report is not None:
         from scripts import a1_substitution_engine
         outgoing, incoming, timing = a1_substitution_engine.load_candidate(Path(substitution_report), fold)
         features = a1_substitution_engine.load_features(fold)
-        _W['engine'].rotation_policy = a1_substitution_engine.SelectedTimeoutPolicy(outgoing, incoming, timing, features)
+        _W['engine'].rotation_policy = a1_substitution_engine.SelectedTimeoutPolicy(
+            outgoing, incoming, timing, features, capture_trace=capture_substitution_worlds)
     if rotation == 'targets':  # D29 minutes: pre-game states for every history player-game; ramp and spread from before the window
         from scripts import minutes
         if minutes_history == 'control':
@@ -206,6 +209,9 @@ def run_game(gid: str) -> dict:
     if eng.rotation_policy is not None:
         for key, value in eng.rotation_policy.counts.items():
             out[f's06_{key}'] = value
+        if _W['capture_substitution_worlds']:
+            from scripts import a1_substitution_world_capture
+            out['_s06_world_capture'] = a1_substitution_world_capture.capture(g, st, eng.rotation_policy)
     if _W.get('flow_diagnostics'):
         from scripts import a1_flow_capture
         if eng.diag is None or eng.rotation_diag is None or len(eng.rotation_diag) != 1:
@@ -485,6 +491,8 @@ def main():
                     help='use the isolated 240-minute, 48-per-player allocator in targets mode')
     ap.add_argument('--substitution-candidate', type=Path, default=None,
                     help='isolated earlier-fold selected-timeout model report; research only')
+    ap.add_argument('--audit-substitution-worlds', action='store_true',
+                    help='save raw player worlds and lineup traces for independent S06 accounting')
     ap.add_argument('--summarise', metavar='RUN', help='re-score a saved run (<stamp>_<name>) without simulating; updates its log')
     args = ap.parse_args()
     if args.rotation != 'targets' and (args.minutes_history != 'control' or args.strict_minute_targets):
@@ -492,6 +500,8 @@ def main():
     if args.substitution_candidate is not None and (args.rotation != 'targets' or args.known_starters
                                                      or args.minutes_history != 'control' or args.strict_minute_targets):
         ap.error('the S06 candidate requires the unmodified targets control and projected starters')
+    if args.audit_substitution_worlds and (args.substitution_candidate is None or args.summarise):
+        ap.error('world accounting requires a new S06 candidate simulation')
     start = time.time()
     spec = json.loads(args.config.read_text())
     if args.summarise:
@@ -512,13 +522,24 @@ def main():
     games = select_games(eligible_games(seg), args.games, args.seed, args.game_ids)
     print(f'backtest {spec.get("version")} {args.fold}: {len(games)} games × {args.worlds} worlds, {args.jobs} jobs, models {version}', flush=True)
     os.environ['OMP_NUM_THREADS'] = str(max(1, (os.cpu_count() or 4) // max(1, args.jobs)))
+    name = args.name or f"backtest_{spec.get('version')}_{args.fold}"
+    stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ') if args.audit_substitution_worlds else None
+    world_dir = DERIVED / 'experiments' / f'{stamp}_{name}_worlds' if stamp else None
+    if world_dir is not None:
+        world_dir.mkdir(parents=True, exist_ok=False)
+    world_files = []
     ctx = mp.get_context('spawn')
     results = []
     with ctx.Pool(args.jobs, initializer=_init, initargs=(version, str(args.config), args.fold, args.worlds, args.rotation,
                                                          args.known_starters, args.pool, args.simulation_stream, args.seed_key,
                                                          args.flow_diagnostics, args.minutes_history,
-                                                         args.strict_minute_targets, args.substitution_candidate)) as pool:
+                                                         args.strict_minute_targets, args.substitution_candidate,
+                                                         args.audit_substitution_worlds)) as pool:
         for i, r in enumerate(pool.imap(run_game, list(games), chunksize=1), 1):
+            if world_dir is not None:
+                path = world_dir / f"{r['game_id']}.npz"
+                np.savez_compressed(path, **r.pop('_s06_world_capture'))
+                world_files.append(path)
             results.append(r)
             if i % min(10, max(1, len(games) // 10)) == 0 or i == len(games):
                 print(f'game {i}/{len(games)}  {time.time() - start:.0f}s', flush=True)
@@ -528,8 +549,7 @@ def main():
     summary = summarise(frame, players, pre)
     summary['team_rating_baseline'] = rating_baseline(frame)
     summary['m6a_same_games'] = m6a_same_games(frame)
-    name = args.name or f"backtest_{spec.get('version')}_{args.fold}"
-    stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
+    stamp = stamp or datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
     (DERIVED / 'experiments').mkdir(parents=True, exist_ok=True)
     frame.to_parquet(DERIVED / 'experiments' / f'{stamp}_{name}.parquet', index=False)
     players.to_parquet(DERIVED / 'experiments' / f'{stamp}_{name}_players.parquet', index=False)
@@ -558,6 +578,12 @@ def main():
             'report': str(args.substitution_candidate),
             'sha256': {str(p.resolve().relative_to(ROOT)): sha256_file(p) for p in paths},
             'limitations': 'Selected-timeout templates and actual-participant rosters are not pre-game availability forecasts.',
+        }
+    if world_dir is not None:
+        record['substitution_world_audit'] = {
+            'capture_sha256': sha256_file(ROOT / 'scripts/a1_substitution_world_capture.py'),
+            'world_sha256': {str(p.relative_to(ROOT)): sha256_file(p) for p in world_files},
+            'note': 'Per-world traces contain research-only simulated lineups, not availability forecasts.',
         }
     write_json(EXPERIMENTS / f'{stamp}_{name}.json', record, pretty=True)
     print(json.dumps(summary, indent=1))

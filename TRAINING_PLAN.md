@@ -498,6 +498,13 @@ substitutions, foul-outs, period changes, overtime, five-player/seconds/points i
 failure or a negative player-minute result retains the D29 control; no selected-timeout node score is itself a
 promotion or a reason to weaken S01's confirmation gates.
 
+For the independent S06 identity check, opt-in capture saves each segment's actual five and each post-foul
+replacement five, with the world, period, clock, availability and foul counts, alongside individual player
+minutes/points and team scores. A separate auditor reconstructs each player's time from successive lineup clocks,
+checks every traced five against roster, availability and foul limits, and reconciles player/period/team totals and
+saved backtest means. The same three pinned games and seeds must reproduce the prior candidate before the 200-game
+screen. This capture changes no policy draw and is diagnostic only.
+
 For S07's initial report-coverage audit, inventory every retained ESPN collection run without fetching a new source.
 Treat each collection's `finished` UTC timestamp as the conservative latest capture time; a dated tip is usable only
 when the entire run finished strictly before that tip. Audit missing rosters, injury files, status counts, unmatched

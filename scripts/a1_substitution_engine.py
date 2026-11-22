@@ -99,8 +99,11 @@ def elapsed(period: np.ndarray, clock: np.ndarray) -> np.ndarray:
 
 
 class SelectedTimeoutPolicy:
-    def __init__(self, outgoing: lgb.Booster, incoming: lgb.Booster, timing: dict, features: pd.DataFrame):
+    def __init__(self, outgoing: lgb.Booster, incoming: lgb.Booster, timing: dict, features: pd.DataFrame,
+                 capture_trace: bool = False):
         self.outgoing, self.incoming, self.timing = outgoing, incoming, timing
+        self.capture_trace = capture_trace
+        self.trace: list[dict[str, np.ndarray]] = []
         if not timing.get('regulation') or not timing.get('overtime'):
             raise ValueError('selected-timeout policy needs earlier regulation and overtime templates')
         keys = ['game_id', 'team', 'player']
@@ -110,6 +113,7 @@ class SelectedTimeoutPolicy:
         self.counts: dict[str, int] = {}
 
     def begin(self, g: engine.Game, worlds: int, available: np.ndarray, seed: int) -> None:
+        self.trace = []
         self.available = np.asarray(available, dtype=bool).copy()
         if self.available.shape != (worlds, g.n):
             raise ValueError('availability does not match the game worlds')
@@ -300,6 +304,16 @@ class SelectedTimeoutPolicy:
             time = float(elapsed(st.period[w:w + 1], st.clock[w:w + 1])[0])
             self._set(g, st, w, side, desired, time)
 
+    def _record_trace(self, st: engine.Worlds, active: np.ndarray, lineups: np.ndarray, phase: int) -> None:
+        self.trace.append({
+            'world': active.copy(),
+            'period': st.period[active].copy(),
+            'clock': st.clock[active].copy(),
+            'lineups': lineups.copy(),
+            'fouls': st.ingame['pf_so_far'][active[:, None, None], lineups].copy(),
+            'phase': np.full(len(active), phase, dtype=np.int8),
+        })
+
     def before_segment(self, g: engine.Game, st: engine.Worlds, active: np.ndarray,
                        scheduled: np.ndarray) -> np.ndarray:
         if scheduled.shape != (len(active), 2, 5):
@@ -326,7 +340,10 @@ class SelectedTimeoutPolicy:
                if self._timeout_due(int(w), int(periods[row]), float(st.clock[w]), bool(legal[row]))]
         if due:
             self._apply_timeouts(g, st, np.asarray(due, dtype=int))
-        return self.current[active].copy()
+        lineups = self.current[active].copy()
+        if self.capture_trace:
+            self._record_trace(st, active, lineups, 0)
+        return lineups
 
     def after_fouls(self, g: engine.Game, st: engine.Worlds, active: np.ndarray,
                     offense: np.ndarray, defense: np.ndarray) -> bool:
@@ -343,6 +360,13 @@ class SelectedTimeoutPolicy:
                 offense[row] = desired
             else:
                 defense[row] = desired
+        if self.capture_trace and affected.any():
+            rows = np.flatnonzero(affected.any(axis=1))
+            lineups = np.empty((len(rows), 2, 5), dtype=int)
+            off = st.off[active[rows]]
+            lineups[np.arange(len(rows)), off] = offense[rows]
+            lineups[np.arange(len(rows)), 1 - off] = defense[rows]
+            self._record_trace(st, active[rows], lineups, 1)
         return bool(affected.any())
 
     def finish(self, g: engine.Game, st: engine.Worlds) -> None:

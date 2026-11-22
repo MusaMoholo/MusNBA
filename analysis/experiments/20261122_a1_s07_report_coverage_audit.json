@@ -1,0 +1,45 @@
+{
+ "experiment": "a1_s07_report_coverage_independent_check",
+ "aggregate": {
+  "runs": 5,
+  "pre_tip_games_with_roster_snapshots": 18,
+  "pre_tip_roster_player_snapshots": 1093,
+  "unique_pre_tip_roster_player_games": 634,
+  "unique_roster_player_game_final_box_coverage": {
+   "listed_in_final_box": 331,
+   "unlisted_in_final_box": 128,
+   "final_box_missing": 175
+  }
+ },
+ "runs": [
+  {
+   "run": "20261119T145907Z",
+   "checked_fields": 16,
+   "pre_tip_snapshots": 141
+  },
+  {
+   "run": "20261119T235714Z",
+   "checked_fields": 16,
+   "pre_tip_snapshots": 141
+  },
+  {
+   "run": "20261120T092255Z",
+   "checked_fields": 16,
+   "pre_tip_snapshots": 318
+  },
+  {
+   "run": "20261120T163017Z",
+   "checked_fields": 16,
+   "pre_tip_snapshots": 318
+  },
+  {
+   "run": "20261121T225637Z",
+   "checked_fields": 16,
+   "pre_tip_snapshots": 175
+  }
+ ],
+ "input_sha256": {
+  "scripts/a1_availability_report_audit_check.py": "e552874baa91ac7d360a784c36ba05f79ac2b733000143bdeeeb2bd1c055790b",
+  "analysis/experiments/20261122_a1_s07_report_coverage.json": "d26667eb3aa2410cc1d6f2aba3059436d4efa114b3d643ae0c46ea31753b97a1"
+ }
+}

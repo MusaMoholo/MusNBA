@@ -24,7 +24,7 @@ class FixtureGame(engine.Game):
         return tables, np.array([[0, 1]])
 
 
-def fixture_policy(game, probability=0.9, regulation=None, overtime=None):
+def fixture_policy(game, probability=0.9, regulation=None, overtime=None, capture_trace=False):
     rows = pd.DataFrame([{'game_id': '1', 'team': '10' if i < 7 else '20', 'player': str(i),
                           'control_mean': 20., 'tier': 'bench', 'prior_position': 'G'}
                          for i in range(game.n)])
@@ -33,7 +33,7 @@ def fixture_policy(game, probability=0.9, regulation=None, overtime=None):
     incoming.predict.side_effect = lambda X, **_kwargs: np.arange(len(X), dtype=float) / 100
     timing = {'regulation': regulation if regulation is not None else [[[1, 120.]]],
               'overtime': overtime if overtime is not None else [[40.]]}
-    return candidate.SelectedTimeoutPolicy(outgoing, incoming, timing, rows)
+    return candidate.SelectedTimeoutPolicy(outgoing, incoming, timing, rows, capture_trace=capture_trace)
 
 
 def schedule(worlds):
@@ -112,6 +112,50 @@ class RotationPolicyTests(unittest.TestCase):
             results.append(policy.before_segment(game, state, np.arange(worlds), schedule(worlds)))
         self.assertTrue(np.array_equal(results[0], results[1]))
         self.assertEqual(policies[0].counts, policies[1].counts)
+
+    def test_trace_capture_preserves_draws_and_records_the_lineup_used_after_a_foul(self):
+        game, worlds = FixtureGame(), 20
+        states = [engine.Worlds(game, worlds, np.random.default_rng(1)) for _ in range(2)]
+        policies = [fixture_policy(game, capture_trace=enabled) for enabled in (False, True)]
+        results = []
+        for policy, state in zip(policies, states):
+            policy.begin(game, worlds, np.ones((worlds, game.n), bool), 123)
+            policy.before_segment(game, state, np.arange(worlds), schedule(worlds))
+            state.clock[:] = 600
+            state.start[:] = engine.S['made_fg']
+            lineups = policy.before_segment(game, state, np.arange(worlds), schedule(worlds))
+            state.off[:] = 0
+            offense, defense = lineups[:, 0].copy(), lineups[:, 1].copy()
+            state.ingame['pf_so_far'][0, defense[0, 0]] = 6
+            policy.after_fouls(game, state, np.arange(worlds), offense, defense)
+            results.append((offense, defense))
+        np.testing.assert_array_equal(results[0][0], results[1][0])
+        np.testing.assert_array_equal(results[0][1], results[1][1])
+        self.assertEqual(policies[0].counts, policies[1].counts)
+        self.assertEqual(len(policies[0].trace), 0)
+        trace = policies[1].trace[-1]
+        self.assertEqual(trace['phase'].tolist(), [1])
+        np.testing.assert_array_equal(trace['lineups'][0, 0], results[1][0][0])
+        np.testing.assert_array_equal(trace['lineups'][0, 1], results[1][1][0])
+        self.assertTrue((trace['fouls'] < 6).all())
+
+    def test_initial_short_roster_fails_and_exactly_five_never_activates_a_bench_player(self):
+        game = FixtureGame()
+        state = engine.Worlds(game, 1, np.random.default_rng(1))
+        policy = fixture_policy(game)
+        available = np.ones((1, game.n), bool)
+        available[0, 4:7] = False
+        with self.assertRaisesRegex(ValueError, 'fewer than five explicitly available'):
+            policy.begin(game, 1, available, 1)
+        available[0, 4] = True
+        policy.begin(game, 1, available, 1)
+        initial = policy.before_segment(game, state, np.array([0]), schedule(1))
+        state.clock[0], state.start[0] = 600, engine.S['made_fg']
+        after = policy.before_segment(game, state, np.array([0]), schedule(1))
+        np.testing.assert_array_equal(after[0, 0], initial[0, 0])
+        state.ingame['pf_so_far'][0, 0] = 6
+        with self.assertRaisesRegex(ValueError, 'fewer than five eligible'):
+            policy.after_fouls(game, state, np.array([0]), after[:, 0].copy(), after[:, 1].copy())
 
     def test_foul_out_uses_only_available_bench_and_short_roster_fails(self):
         game = FixtureGame()

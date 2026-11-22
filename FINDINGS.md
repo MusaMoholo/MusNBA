@@ -1496,6 +1496,16 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   candidate wiring sample; they are not historical rates. Independent saved-output checks reconcile **24** actual
   quarter scores, **64** player 3PM actuals and **6** complete team 3PM sums. Every-world team-minute and points
   assertions ran inside the candidate, but independent per-world saved accounting and the paired accuracy gate remain.
+- **S07 retained ESPN report coverage:** five collections (19–21 Nov 2026) are all in the protected 2026–27 season;
+  none is a permissible development report archive. Using each run's completion as a conservative capture bound gives
+  **31** pre-tip snapshots over **18** games (**1** other snapshot is at/after tip), with **1,093** roster/player
+  snapshots and **634** unique player-games. Every collection has all **30** roster teams and an injury file;
+  **535** injury entries match team/player IDs (**426 Out**, **109 Day-To-Day**, counted per collection). The
+  **2,105** roster records effectively labelled Active have no injury entry and are not proven healthy. Of the unique
+  player-games, **331** are listed in retained final boxes, **128** are unlisted, and **175** lack a final box.
+  Final-box listing does not establish play or DNP. Independent reconstruction matches all counts; no protected
+  status/outcome calibration or model-selection score was computed. Reports:
+  `20261122_a1_s07_report_coverage{,_audit}.json`.
 
 ## 6b. A1 S03 matched component diagnosis (22 Nov 2026; descriptive)
 
