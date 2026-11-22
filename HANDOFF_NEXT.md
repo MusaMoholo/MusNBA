@@ -1,11 +1,11 @@
 # Handoff — state and next actions
 
-Updated **22 November 2026 — Chunk A A1 at 20%, A2 at 30%; S01–S07 remain complete**.
-Latest pushed source before the dashboard house checkpoint: **da4f66c**; use `git log -1` for the current checkpoint.
+Updated **22 November 2026 — Chunk A A1 at 30%, A2 at 30%; S01–S07 remain complete**.
+Latest pushed source before this branch-enumeration checkpoint: **4588a02**; use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
-- **Current action:** start A1 rung 30% from the frozen contract below. Do not start Chunk B before Chunk A's
+- **Current action:** start A1 rung 40% from the frozen contract below. Do not start Chunk B before Chunk A's
   delivery and checkpoint. The owner
   also requests a broader dashboard house-design pass: make supported information accessible and interactive
   without overcrowding, prioritise essential game/player signals and group secondary details into collapsible
@@ -22,6 +22,18 @@ Latest pushed source before the dashboard house checkpoint: **da4f66c**; use `gi
   no new nightly or model change. Manual imports from the previous per-world export remain unconfirmed.
   Doc review: HANDOFF, PLAN and DASHBOARD_PLAN record the changed hierarchy; AGENTS, ENGINE_PLAN, TRAINING_PLAN,
   FINDINGS and README need no changes because standing rules, engine/gates, empirical results and commands are unchanged.
+- **A1 30%:** the isolated `scripts/a1_lineup_branches.py` enumerates one/two-player assignments with exact
+  rational products from the game input probabilities, sorted IDs and validated unit total. More than two yields
+  only all-play/one-out assignments with no weights. `prepare_branch` fixes all selected players simultaneously
+  before the existing D29 re-solve; impossible short rosters fail. **57** focused branch, availability, rotation
+  and accounting tests passed, including long-decimal arithmetic, order-independent IDs/seeds and original-input
+  immutability; an independent **100-input** exact marginal-accounting check also passed. Normal smoke passed
+  **108/108**; deliberate fault exited **1** (86/108), logs `/tmp/musnba_a1_30_{smoke,fault}.log`. Selection is
+  supplied by the research caller, not yet derived from origin status/role/usage;
+  no branch artifacts, calibrated independence, Expected mixture or production integration are claimed.
+  Doc review: HANDOFF and PLAN record progress and README updates the script map; AGENTS, ENGINE_PLAN and
+  TRAINING_PLAN retain the existing contract/gates; FINDINGS has no new real-game measurement and DASHBOARD_PLAN
+  has no shipped behaviour to document. The served engine, forecasts and bundles remain unchanged.
 - **Per-world advanced visibility:** six player and 15 team metrics derive full-game distributions from retained
   worlds, showing median, 10–90%, middle half, mean, expandable histogram and defined-world counts. Zero
   denominators are undefined; period/legacy worlds are explicitly unavailable. Team possessions/ratings are
@@ -152,7 +164,7 @@ Latest pushed source before the dashboard house checkpoint: **da4f66c**; use `gi
   and exact next probe. AGENTS, TRAINING_PLAN, FINDINGS and DASHBOARD_PLAN need no new change: the standing
   rules, frozen evaluation gates, empirical results and served dashboard remain unchanged.
 - **Progress:** original A1 **58.0%**, S01–S07 complete; S08–S12/S14 open, S13 historical forecast backfill
-  deferred. New independent chunk boards: **A 16.5%** (A1 20%, A2 30%, A3 0%) and **B 0%** (B1/B2/B3 all 0%). Keep
+  deferred. New independent chunk boards: **A 19.5%** (A1 30%, A2 30%, A3 0%) and **B 0%** (B1/B2/B3 all 0%). Keep
   the original A1 weights intact; new within-chunk weights do not reset or double-count A1.
 - **Remaining advanced stats:** simulated on-court +/−, per-world possession-based USG%, individual on-court
   ratings and modelled BPM require additional honest capture/definitions and remain unimplemented; see PLAN §9b.
@@ -1405,7 +1417,7 @@ playback portion of S12, plus a chunk-end delivery; S10/S11/S12/S14 are not ther
 | A2 Form and late-game realism | 35% | S04/S06; A1 for integration | S09's paired player/game gates; retain v1.3 when unsupported or rejected |
 | A3 View Centre and delivery | 35% | A1/A2 decisions | Five labelled selections, reconciled event files and an interactive 2-D court/player in the Game Centre; responsive/offline checks and fresh nightly; no fake logs or completed claim on failure |
 
-**Live board:** Chunk A `███░░░░░░░░░░░░░░░░░ 16.5%`; A1 `████░░░░░░░░░░░░░░░░ 20%`;
+**Live board:** Chunk A `████░░░░░░░░░░░░░░░░ 19.5%`; A1 `██████░░░░░░░░░░░░░░ 30%`;
 A2 `██████░░░░░░░░░░░░░░ 30%`; A3 `░░░░░░░░░░░░░░░░░░░░ 0%`.
 Original A1 remains 58%; do not double-count the separate board.
 
@@ -1999,11 +2011,15 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
 
 ## Next actions — Chunk A in progress
 
-1. **A1 30%:** implement isolated two-player branch enumeration with exact decimal/rational weights summing to
-   one, and non-exhaustive all-play/one-out sensitivities for more than two selected players. Test invalid
-   probabilities, identities, missing inputs and reproducibility against the frozen contract above; never imply
-   independence is calibrated or sensitivities form an Expected distribution. Credit and checkpoint only when
-   the rung passes. Then follow A1 rungs 40–100 and A2/A3 ladders, completing Chunk A before Chunk B.
+1. **A1 40%:** implement deterministic, provenance-bearing 10,000-world persistence for each supported branch.
+   First run `.venv/bin/python -m unittest tests.test_a1_lineup_branches` and trace the origin-safe
+   `projection.player_inputs` and model/input artifact paths; implement and test the
+   frozen selection criteria and explicit missing-data labels before using actual inputs. Integrate the isolated
+   multi-player branch preparer and foul-out policy without changing serving or the nightly. Persist seeds,
+   assignments, exact weights, world counts and input/model hashes; independently reconcile legal lineups and
+   scores, verify reproducibility and fail closed on unsupported worlds. Retain the current unconditional
+   forecast; no Expected or production promotion until later gates. Then follow A1 rungs 50–100 and A2/A3
+   ladders, completing Chunk A before Chunk B.
 2. The owner requests dashboard reorganisation with important signals first and secondary information in clearly
    labelled collapsible sections. Integrate with the chunk and checkpoint delivery. No nightly for presentation
    work; the next normal nightly builds the per-world views automatically.

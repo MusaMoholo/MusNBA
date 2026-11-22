@@ -1,11 +1,12 @@
 import json
 import unittest
+from fractions import Fraction
 from pathlib import Path
 from unittest.mock import patch
 
 import numpy as np
 
-from scripts import a1_branch_foul_out, a1_branch_world_probe, a1_foul_out_probe, a1_lineup_branches, engine, minutes
+from scripts import a1_branch_foul_out, a1_branch_world_probe, a1_foul_out_probe, a1_lineup_branches, engine, minutes, projection
 
 
 class OnePlayerBranchesTests(unittest.TestCase):
@@ -43,6 +44,99 @@ class OnePlayerBranchesTests(unittest.TestCase):
                   'm_fg_rim': np.full(n, 0.2)}
         game.P['m_fg_rim'][0] = 0.9
         return game
+
+    def test_exact_joint_branches_are_order_independent_and_reallocate_together(self):
+        game = self.game()
+        game.avail[1:3] = [0.3, 0.4]
+        game.players['home'][1]['availability'] = 0.3
+        game.players['home'][2]['availability'] = 0.4
+        selection = [('1', '101'), ('1', '100')]
+        branches = a1_lineup_branches.enumerate_branches(game, selection)
+        self.assertEqual(branches, a1_lineup_branches.enumerate_branches(game, selection[::-1]))
+        self.assertEqual(len(branches), 4)
+        self.assertTrue(all(b.weight is not None for b in branches))
+        self.assertEqual(sum(b.weight for b in branches if b.weight is not None), 1)
+        self.assertEqual({b.branch_id: b.weight for b in branches}, {
+            'lineup-v1:1/100=plays,1/101=plays': Fraction(3, 20),
+            'lineup-v1:1/100=plays,1/101=sits': Fraction(7, 20),
+            'lineup-v1:1/100=sits,1/101=plays': Fraction(3, 20),
+            'lineup-v1:1/100=sits,1/101=sits': Fraction(7, 20),
+        })
+        both_out = a1_lineup_branches.prepare_branch(game, branches[-1].assignments)
+        self.assertEqual(both_out.avail[:2].tolist(), [0, 0])
+        self.assertEqual(both_out.avail[2], 0.4)
+        self.assertEqual(both_out.players['home'][2]['availability'], 0.4)
+        self.assertEqual(both_out.expected[:2].tolist(), [0, 0])
+        self.assertAlmostEqual(sum(both_out.expected[:7]), 240)
+        self.assertEqual(game.avail[:2].tolist(), [0.5, 0.3])
+
+    def test_long_decimal_weights_and_branch_seeds_are_exact_and_reproducible(self):
+        game = self.game()
+        game.avail[:2] = [0.12345678901234566, 0.9876543210987654]
+        selected = [('1', '101'), ('1', '100')]
+        branches = a1_lineup_branches.enumerate_branches(game, selected)
+        p, q = (Fraction(str(x)) for x in game.avail[:2])
+        self.assertEqual(branches[0].weight, p * q)
+        self.assertEqual(sum(b.weight for b in branches if b.weight is not None), 1)
+        seeds = [projection.seed_for('lineup-v1', 'engine', '2026-01-01', '2026-01-02', '123', b.branch_id)
+                 for b in branches]
+        again = a1_lineup_branches.enumerate_branches(game, selected[::-1])
+        self.assertEqual(seeds, [projection.seed_for('lineup-v1', 'engine', '2026-01-01',
+                                                     '2026-01-02', '123', b.branch_id) for b in again])
+        self.assertEqual(len(set(seeds)), 4)
+
+    def test_one_player_weights_and_cross_team_assignments(self):
+        game = self.game()
+        self.assertEqual([b.weight for b in a1_lineup_branches.enumerate_branches(game, [('1', '100')])],
+                         [Fraction(1, 2), Fraction(1, 2)])
+        game.avail[7] = 0.8
+        game.players['away'][0]['availability'] = 0.8
+        branches = a1_lineup_branches.enumerate_branches(game, [('2', '200'), ('1', '100')])
+        self.assertEqual([b.weight for b in branches], [Fraction(2, 5), Fraction(1, 10),
+                                                       Fraction(2, 5), Fraction(1, 10)])
+        prepared = a1_lineup_branches.prepare_branch(game, branches[-1].assignments)
+        self.assertEqual([prepared.avail[0], prepared.avail[7]], [0, 0])
+        self.assertAlmostEqual(sum(prepared.expected[:7]), 240)
+        self.assertAlmostEqual(sum(prepared.expected[7:]), 240)
+
+    def test_more_than_two_are_unweighted_non_exhaustive_sensitivities(self):
+        game = self.game()
+        game.avail[1:3] = [0.3, 0.7]
+        branches = a1_lineup_branches.enumerate_branches(game, [('1', '102'), ('1', '100'), ('1', '101')])
+        self.assertEqual(len(branches), 4)
+        self.assertTrue(all(b.weight is None for b in branches))
+        self.assertEqual([[plays for _, _, plays in b.assignments] for b in branches],
+                         [[True, True, True], [False, True, True], [True, False, True], [True, True, False]])
+        for branch in branches:
+            prepared = a1_lineup_branches.prepare_branch(game, branch.assignments)
+            self.assertEqual(prepared.avail[:3].tolist(), [float(x[2]) for x in branch.assignments])
+
+    def test_branch_enumeration_rejects_missing_invalid_or_duplicate_selections(self):
+        game = self.game()
+        for selection in ([], [('1', '100'), ('1', '100')], [('2', '100')],
+                          [('1', 'missing')], [('1', '101')], [('', '100')]):
+            with self.subTest(selection=selection), self.assertRaises(ValueError):
+                a1_lineup_branches.enumerate_branches(game, selection)
+        game.mstate = None
+        with self.assertRaisesRegex(ValueError, 'D29'):
+            a1_lineup_branches.enumerate_branches(game, [('1', '100')])
+        game = self.game()
+        game.ids[1] = '100'
+        with self.assertRaisesRegex(ValueError, 'duplicate player'):
+            a1_lineup_branches.enumerate_branches(game, [('1', '100')])
+        game = self.game()
+        with self.assertRaisesRegex(ValueError, 'boolean'):
+            a1_lineup_branches.prepare_branch(game, (('1', '100', 1),))  # type: ignore[arg-type]
+        for probability in (float('nan'), float('inf'), -0.1, 1.1, 0.0, 1.0):
+            game.avail[0] = probability
+            with self.subTest(probability=probability), self.assertRaises(ValueError):
+                a1_lineup_branches.enumerate_branches(game, [('1', '100')])
+
+    def test_two_out_fails_explicitly_when_not_enough_players_remain(self):
+        game = self.game(size=6)
+        game.avail[1] = 0.3
+        with self.assertRaisesRegex(ValueError, 'fewer than five'):
+            a1_lineup_branches.prepare_branch(game, (('1', '100', False), ('1', '101', False)))
 
     def test_branches_reallocate_and_form_eligible_defending_fives(self):
         original = self.game()

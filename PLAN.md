@@ -1,6 +1,6 @@
 # MusNBA — game plan and progress
 
-Updated **22 November 2026 (S01–S07 complete; Chunk A A1 at 20%, A2 at 30%; View Centre planned, D42–D43)**. The single record of scope, progress and decisions. Every agent updates it at
+Updated **22 November 2026 (S01–S07 complete; Chunk A A1 at 30%, A2 at 30%; View Centre planned, D42–D43)**. The single record of scope, progress and decisions. Every agent updates it at
 every checkpoint (AGENTS.md § Checkpoint protocol). New here? Read [AGENTS.md](AGENTS.md) first, then
 [HANDOFF_NEXT.md](HANDOFF_NEXT.md) — it says exactly what to do next.
 
@@ -133,7 +133,7 @@ remaining gate and next action rather than claim a fitted model is validated.
 
 **D42 split, now authorised for execution in order:** retain S01–S07 as completed and the original A1 weights/ladder below as the
 historical ledger (**58.0%**, S13 deferred). The new separately weighted chunks and their 60 concrete rungs are in
-HANDOFF § Execution; Chunk A A1 is at 20%, and Chunk B has not started. Chunk A targets believable lineup-aware games, shared form and
+HANDOFF § Execution; Chunk A A1 is at 30%, and Chunk B has not started. Chunk A targets believable lineup-aware games, shared form and
 late-game behaviour, plus five saved game examples; Chunk B tests a new player/lineup-defence mechanism, legal
 foul-outs, season calibration and integrated confirmation, and adds rotation visibility. Each has a fresh final
 nightly and a useful shipped dashboard improvement if no model passes the unchanged gate. Chunk A can promote an
@@ -429,6 +429,10 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 · A1 30%:** isolated one/two-player branches use exact rational uncalibrated independent weights
+  and simultaneous D29 reallocation; larger selections expose only unweighted all-play/one-out sensitivities.
+  **57** focused tests passed. No actual-input selection, persisted branch worlds, Expected mixture, model or
+  served forecast is claimed. Chunk A **19.5%**; next is origin-safe selection and branch persistence.
 - **22 Nov 2026 · dashboard house pass:** games first on Today with a shortcut to slate insights; Players table
   and next-game forecast prioritised; secondary movers, opponent history and advanced rates expandable. Player
   and team chart expansion survives stat/line changes. **43/43** responsive checks and **26/26 / 25/25** local and hosted

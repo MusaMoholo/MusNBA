@@ -1,7 +1,11 @@
 """Isolated lineup-branch preparation; not connected to the nightly or serving."""
 from __future__ import annotations
 
+from collections.abc import Sequence
 from copy import deepcopy
+from dataclasses import dataclass
+from fractions import Fraction
+from itertools import product
 
 import numpy as np
 
@@ -69,35 +73,92 @@ class BranchLegalityGuard:
             raise BranchLegalityError('branch engine stopped before all worlds completed')
 
 
-def one_player(game: engine.Game, team_id: str, player_id: str, plays: bool) -> engine.Game:
-    """Prepare a separate conditional game without changing the original inputs."""
-    if not isinstance(plays, bool):
-        raise ValueError('plays must be a boolean')
-    if not all(isinstance(value, str) and value.isascii() and value.isdigit()
-               for value in (team_id, player_id)):
-        raise ValueError('team and player IDs must be ASCII digits')
+@dataclass(frozen=True)
+class Branch:
+    assignments: tuple[tuple[str, str, bool], ...]
+    weight: Fraction | None
+
+    @property
+    def branch_id(self) -> str:
+        return 'lineup-v1:' + ','.join(
+            f'{team}/{player}={"plays" if plays else "sits"}'
+            for team, player, plays in self.assignments
+        )
+
+
+def _selected_indices(game: engine.Game, selected: Sequence[tuple[str, str]]) -> list[tuple[str, str, int]]:
+    if not selected:
+        raise ValueError('at least one branch player is required')
     if game.mstate is None or game.strict_minute_targets:
-        raise ValueError('one-player branches require the default D29 target rotation')
+        raise ValueError('branches require the default D29 target rotation')
     ids = [str(pid) for pid in game.ids]
     if len(set(ids)) != len(ids):
         raise ValueError('duplicate player IDs in game')
-    sides = [i for i, side in enumerate(game.sides) if str(game.game[f'{side}_id']) == team_id]
-    if len(sides) != 1 or player_id not in ids:
-        raise ValueError('player and team must identify one game roster')
-    index = ids.index(player_id)
-    if int(game.side[index]) != sides[0]:
-        raise ValueError('player does not belong to that team')
     if not np.isfinite(game.avail).all() or not ((game.avail >= 0) & (game.avail <= 1)).all():
         raise ValueError('availability must be finite and between zero and one')
-    if not 0 < game.avail[index] < 1:
-        raise ValueError('branch player must have uncertain availability')
+    result = []
+    seen = set()
+    for team_id, player_id in selected:
+        if not all(isinstance(value, str) and value.isascii() and value.isdigit()
+                   for value in (team_id, player_id)):
+            raise ValueError('team and player IDs must be ASCII digits')
+        if player_id in seen:
+            raise ValueError('duplicate selected player ID')
+        seen.add(player_id)
+        sides = [i for i, side in enumerate(game.sides) if str(game.game[f'{side}_id']) == team_id]
+        if len(sides) != 1 or player_id not in ids:
+            raise ValueError('player and team must identify one game roster')
+        index = ids.index(player_id)
+        if int(game.side[index]) != sides[0]:
+            raise ValueError('player does not belong to that team')
+        if not 0 < game.avail[index] < 1:
+            raise ValueError('branch player must have uncertain availability')
+        result.append((team_id, player_id, index))
+    return sorted(result)
 
+
+def enumerate_branches(game: engine.Game, selected: Sequence[tuple[str, str]]) -> tuple[Branch, ...]:
+    """Use uncalibrated independent weights for <=2 players, else unweighted sensitivities."""
+    players = _selected_indices(game, selected)
+    if len(players) <= 2:
+        choices = product((True, False), repeat=len(players))
+    else:
+        choices = [tuple(i != missing for i in range(len(players))) for missing in range(-1, len(players))]
+    branches = []
+    for choice in choices:
+        weight = None
+        if len(players) <= 2:
+            weight = Fraction(1)
+            for (_, _, index), plays in zip(players, choice):
+                p = Fraction(str(game.avail[index]))
+                weight *= p if plays else 1 - p
+        assignments = tuple((team, player, plays) for (team, player, _), plays in zip(players, choice))
+        branches.append(Branch(assignments, weight))
+    if len(players) <= 2 and sum(branch.weight for branch in branches if branch.weight is not None) != 1:
+        raise ValueError('exhaustive branch weights do not sum to one')
+    return tuple(branches)
+
+
+def one_player(game: engine.Game, team_id: str, player_id: str, plays: bool) -> engine.Game:
+    """Prepare a separate conditional game without changing the original inputs."""
+    return prepare_branch(game, ((team_id, player_id, plays),))
+
+
+def prepare_branch(game: engine.Game, assignments: Sequence[tuple[str, str, bool]]) -> engine.Game:
+    """Fix selected availability together, then independently re-solve both rosters."""
+    if not all(isinstance(plays, bool) for _, _, plays in assignments):
+        raise ValueError('plays must be a boolean')
+    players = _selected_indices(game, [(team, player) for team, player, _ in assignments])
+    decisions = {(team, player): plays for team, player, plays in assignments}
     branch = deepcopy(game)
     if branch.mstate is None:
         raise ValueError('copied game has no D29 minute states')
-    branch.avail[index] = float(plays)
-    local_index = index - int(np.flatnonzero(branch.side == sides[0])[0])
-    branch.players[branch.sides[sides[0]]][local_index]['availability'] = float(plays)
+    for team, player, index in players:
+        plays = decisions[(team, player)]
+        side_index = int(branch.side[index])
+        branch.avail[index] = float(plays)
+        local_index = index - int(np.flatnonzero(branch.side == side_index)[0])
+        branch.players[branch.sides[side_index]][local_index]['availability'] = float(plays)
     for i, side in enumerate(branch.sides):
         indices = np.flatnonzero(branch.side == i)
         eligible = [int(j) for j in indices if branch.avail[j] > 0]
