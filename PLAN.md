@@ -1,6 +1,6 @@
 # MusNBA — game plan and progress
 
-Updated **22 November 2026 (A1 S01–S07 complete; remaining work planned as two future chunks, D42)**. The single record of scope, progress and decisions. Every agent updates it at
+Updated **22 November 2026 (A1 S01–S07 complete; two future chunks and planned View Centre, D42–D43)**. The single record of scope, progress and decisions. Every agent updates it at
 every checkpoint (AGENTS.md § Checkpoint protocol). New here? Read [AGENTS.md](AGENTS.md) first, then
 [HANDOFF_NEXT.md](HANDOFF_NEXT.md) — it says exactly what to do next.
 
@@ -148,6 +148,15 @@ Expected; and each team's highest single-player fantasy-score world. They are il
 five independently likely outcomes; one world may satisfy multiple labels. Retain real, reconciled events rather
 than a fabricated average, and specify selection/seed/version provenance, phone size and offline fallbacks before
 implementation. See DASHBOARD_PLAN and HANDOFF for the contract and delivery gates.
+
+**D43 View Centre:** Chunk A's five-world playback is an overhead 2-D basketball court, event overlays,
+score/clock/live box and an interactive timeline with smooth play, pause, speed and seek. It reads stored or locally
+opened, validated play-by-play files; it never simulates in the viewer. Build the player against a source-neutral
+event interface so a later adapter can replay resulted games from retained play-by-play without mixing actuals
+with forecasts. Actual-game playback is future work, not a forecast-history backfill. The current model produces
+shot zones/distance bands, not tracked player/ball coordinates: display only supported spatial evidence and label
+any illustrative animation. HANDOFF specifies provenance, deterministic capture, reconciliation, missing-data,
+accessibility and phone/offline gates.
 
 | ID | Subtask | Weight | Depends on | Concrete deliverable and completion evidence |
 |---|---|---:|---|---|
@@ -801,6 +810,9 @@ face cards and unrelated presentation remain §9b backlog. NBA history moved to 
 - **22 Nov 2026 · D42 planning:** the owner proposed splitting remaining work into two modular chunks and selecting
   five meaningful simulated games per matchup. HANDOFF specifies both chunk weights, dependencies, ten-rung
   modules, acceptance/fallback and final-nightly requirements. Planning only: no model, app, forecast or bundle changed.
+- **22 Nov 2026 · D43 planning:** the owner requested an overhead animated court View Centre, first for saved simulated
+  worlds and later for resulted games. The source-neutral player, event provenance and spatial limitations are
+  specified; actual-game playback remains future work. Planning only; no simulations or app changes.
 - **22 Nov 2026 · S06 foul-out probe:** in a controlled world, an available substitute does not replace a player
   with six fouls because the current engine's foul-out mask is never updated. The finding is not a forecast gain
   or a population frequency; isolate and gate a repair alongside substitution research.

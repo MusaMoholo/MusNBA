@@ -159,12 +159,22 @@ clears Finder's hidden flag before/after rename; the first hidden export was rep
 ## Next accuracy chunk: planned app/PWA work, not shipped
 
 U1–U22 stay complete. The D42 future split plans local explicit lineup branches and coherent Expected output,
-then five selected real-world game replays per matchup in Chunk A and rotation maps in Chunk B. These are not shipped.
+then five selected simulated-world game replays per matchup in Chunk A and rotation maps in Chunk B. These are not shipped.
 The five labels are each team's largest score margin (even if all worlds lose), each team's highest single-player fantasy score, and the
 actual simulated world nearest the Expected outcome. Worlds may share labels; extremes are not typical forecasts.
 Selection metric, provenance and replay accounting must be fixed and tested before delivery; phone inclusion is
 subject to measured size and offline compatibility. Keep existing U3 role badges, U11 defence profiles and merged
 Standings navigation; don't create duplicate pages. Card groups remain multiples of three and changing text is dynamic.
+
+**Planned View Centre (D43):** open a selected saved simulation or a validated local play-by-play file. Show an
+overhead responsive court with event overlays, score/period/clock, cumulative box and a synchronised event list;
+play/pause, speed, scrubbing, event stepping and quarter/OT jumps follow the saved event order. Highlight modelled
+shot regions, not invented precise player/ball paths; mark missing spatial evidence and any illustrative animation.
+The same source-neutral player will later accept resulted-game play-by-play through a separately validated adapter,
+with actual/simulated labels, retained source provenance and explicit gaps. Actual-game playback is not yet built.
+No viewer action fetches, fits or simulates. Test reduced motion, keyboard controls, responsive layouts, offline
+loading, invalid files and deterministic seek/clock/score consistency. HANDOFF records the full schema and
+five-world capture requirements.
 
 The owner deferred S13 historical forecast backfill (D40); the current nightly targets today and tomorrow instead.
 Preserve existing forecasts and archives. If versioned history is reauthorised, keep Today distinct from Tomorrow

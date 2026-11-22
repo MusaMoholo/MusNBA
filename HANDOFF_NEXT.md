@@ -1,7 +1,7 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — A1 stopped after the requested nightly; S01–S07 complete, overall 58.0%;
-the remaining work is planned as two future chunks (D42)**.
+the remaining work is planned as two future chunks (D42), including a reusable 2-D View Centre (D43)**.
 Dashboard U1–U22 complete and published.
 Dashboard close-out checkpoint **86c2a46**, A1 planning checkpoint **00a0731**; S01 checkpoint **c9d8008**
 and S02 checkpoint **93b3e1d** are committed and pushed (S01's exact control source is **c6d5db4**).
@@ -1209,15 +1209,15 @@ stays deferred; per-game iCloud streaming is separate future work, not assumed i
 
 ### Chunk A — believable individual games and visible simulations
 
-Headliners: (1) lineup-aware player/game distributions and realistic game-state response; (2) five meaningful saved
-simulation examples for every near-term game. Depends on completed S01–S07. A1 original scope: S08, S09 and the
+Headliners: (1) lineup-aware player/game distributions and realistic game-state response; (2) a 2-D View Centre
+for five meaningful saved simulation examples per near-term game. Depends on completed S01–S07. A1 original scope: S08, S09 and the
 playback portion of S12, plus a chunk-end delivery; S10/S11/S12/S14 are not thereby marked complete.
 
 | Module | Weight | Dependencies | Acceptance / fallback |
 |---|---:|---|---|
 | A1 Lineups and Expected | 30% | S05–S07 | S08's exact branch/season identities and origin safety, or explicit blocked limitation; no invented availability calibration |
 | A2 Form and late-game realism | 35% | S04/S06; A1 for integration | S09's paired player/game gates; retain v1.3 when unsupported or rejected |
-| A3 Five games and delivery | 35% | A1/A2 decisions | Five labelled saved selections and reconciled playback per game, responsive/offline checks and fresh nightly; no fake logs or completed claim on failure |
+| A3 View Centre and delivery | 35% | A1/A2 decisions | Five labelled selections, reconciled event files and an interactive 2-D court/player in the Game Centre; responsive/offline checks and fresh nightly; no fake logs or completed claim on failure |
 
 | Rung | A1 — lineups and Expected |
 |---:|---|
@@ -1245,16 +1245,16 @@ playback portion of S12, plus a chunk-end delivery; S10/S11/S12/S14 are not ther
 | 90 | Record a promotion/no-promotion decision with all applicable confirmation and cutoff gates. |
 | 100 | Evidence, fallbacks and required PWA delivery are verified, committed/pushed and summarised. |
 
-| Rung | A3 — five saved games and delivery |
+| Rung | A3 — five games, View Centre and delivery |
 |---:|---|
-| 10 | Freeze selection definitions, tie-breaking, data budget, event schema and Expected-world provenance. |
-| 20 | Select each team's maximum winning margin and highest individual fantasy-score worlds from actual saved worlds. |
+| 10 | Freeze selection, event-file schema, provenance, source-neutral simulated/actual boundary, spatial honesty and data budget. |
+| 20 | Select each team's maximum score-margin and highest individual fantasy-score worlds from actual saved worlds. |
 | 30 | Select one representative expected-outcome world using a documented, predeclared multi-stat distance. |
-| 40 | Preserve five labelled selections per game, allowing the same real world to carry multiple labels. |
-| 50 | Capture or deterministically replay selected events with exact seed/model/input/branch provenance. |
-| 60 | Independently reconcile scores, periods, player boxes, legal lineups and event order with source worlds. |
-| 70 | Ship a stored-only Game Centre playback/list with honest extreme/typical labels and missing-data states. |
-| 80 | Measure bundle/runtime cost; test desktop/half/phone themes, screenshots, old snapshots and offline import. |
+| 40 | Preserve five labelled selections and validate local event-file loading, missing/invalid data and synthetic future-source contracts. |
+| 50 | Capture or deterministically replay selected events with exact batch/seed/model/input/branch provenance, without changing simulation draws. |
+| 60 | Independently reconcile clocks, scores, periods, player boxes, legal lineups and event order with source worlds. |
+| 70 | Ship a stored-only View Centre: overhead court, supported event overlays, score/box, event list and playback controls. |
+| 80 | Verify smooth playback, seek, reduced motion, accessibility, both themes/three widths, phone budget and offline import. |
 | 90 | Run a fresh live 10k nightly on accepted systems, verify each slate's selections and iCloud/PWA delivery. |
 | 100 | Publish any data-free shell, document findings/limitations and next chunk; review, commit/push and summarise. |
 
@@ -1318,6 +1318,36 @@ selection; it is not a fabricated average game. Reusing an identical selected wo
 If source worlds cannot be reproduced with complete events, report the blocker rather than manufacture a replay.
 The phone contract remains Expected-only for distribution/branch tools; compact playback is included only after
 measured size and offline checks, and any limitation is visible.
+
+**View Centre design (D43; future implementation):** use one source-neutral renderer and event-player interface
+with explicit source kind, game/world identifiers, period, remaining clock, stable event order, participants/team,
+event type, score changes, available on-court players, spatial precision and provenance/version. Load the selected
+saved worlds from Game Centre and allow a validated local play-by-play file to be opened without uploading it or
+overwriting saved forecasts. An invalid, unsupported or incomplete file gets a clear error or labelled incomplete
+state. Simulated-world files and later resulted-game files have distinct source labels; never treat actual results as
+pre-game forecasts. Future actual-game adapters may use retained ESPN play-by-play and preserve source identity,
+clock/order, revisions, missing coordinates and reconciliation gaps; actual-game playback itself is not part of this
+planning session or promised by Chunk A. D40's forecast-backfill deferral is unchanged.
+
+Render a responsive overhead SVG court with period/clock, current score, cumulative box, on-court names when known,
+ordered event list and overlays for recorded shot zone/band, makes/misses, fouls, rebounds, turnovers and substitutions.
+Use play/pause, speed, scrub, step/event selection and quarter/OT jumps; transitions are smooth, deterministic and
+respect reduced-motion settings. Compress idle time as an explicit playback mode, while preserving event order and
+the recorded game clock. Update the active frame without repeatedly rebuilding the entire event list; release timers
+when the view closes. Seeking and resuming must reproduce the same state and never show future events.
+This is an event replay, not player-tracking footage: current simulated shots use a **zone and distance band**, not
+continuous player/ball coordinates. Highlight the supported region or label any decorative placement as illustrative;
+never imply inferred player movements, exact shot locations or passes were simulated. Actual x/y, if present and
+validated later, are provider-reported shot coordinates, not full player tracking. Missing spatial or lineup data
+remain visibly missing; timeline/box replay still works where supported. MusSim's `scripts/webapp/match-centre.mjs`
+is prior art for a court/pitch, event cutoff, controls and honest coverage—not a claim that it already animates players.
+
+The current engine batches worlds with a shared random stream: replaying only one world with the original seed is
+not assumed equivalent. Capture selected events without changing draws, or rerun the original batch with its exact
+world count/order/inputs and verify all relevant outputs; compare runtime and bundle size before choosing. Five
+selection labels can share one event file; do not capture all 10k event logs by default. Import, rendering and
+browsing never fetch, fit or simulate. Validate file structure/size and version before using it, preserve old
+snapshots, and test timer cleanup, repeated seeks, period/OT transitions, simultaneous events and truncated inputs.
 
 ## Progress ladders — A1 overnight execution
 
@@ -1744,6 +1774,12 @@ is done; do not resume U1–U22. In a future authorised session:
 6. **Incremental iCloud delivery is a separate future item** (PLAN §9b): design atomic per-game publication,
    incomplete/complete generation labels, resume and safe import/offline handling. Current exports remain batch-only;
    never claim iCloud sync is a phone import.
+
+**D43 planning document review:** HANDOFF and PLAN describe the future source-neutral View Centre, the simulated
+first release and later actual-game adapter; DASHBOARD_PLAN and ENGINE_PLAN record presentation and design; AGENTS
+and README point to the changed plan. TRAINING_PLAN needs no changes because model gates remain unchanged; FINDINGS
+needs no change because this planning session ran no experiment. Baseline smoke **108/108**. No model, dashboard,
+forecast, bundle or public shell changed; no nightly or data job was run.
 
 **D42 planning document review:** HANDOFF and PLAN contain both future chunk contracts and unchanged original A1
 accounting; ENGINE_PLAN records the owner proposal; DASHBOARD_PLAN describes the planned selected-world feature;
