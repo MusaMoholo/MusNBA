@@ -6,10 +6,12 @@ remaining season 10,000 times, and a static, offline-capable app shows the resul
 or phone.
 
 > The app is live on localhost and as a static PWA. Two engines, one daily flow (D26): today's and tomorrow's games come
-> from the **possession engine v1.1** (every possession simulated from 16 LightGBM decision models, inputs rebuilt nightly
-> from every game so far; the floor for later improvements, D22–D24); every later game from the **team pathway v1**, where
+> from the **possession engine v1.3** (every possession simulated from 16 LightGBM decision models, inputs rebuilt nightly
+> from games before the origin; 10,000 worlds per game, one rotation table per world; the floor for later improvements, D22–D24); every later game from the **team pathway v1**, where
 > each simulated season carries its own team ratings and updates them after every game (D25). Past dates rebuilt after the
-> fact use a labelled placeholder. See [PLAN.md](PLAN.md) and [HANDOFF_NEXT.md](HANDOFF_NEXT.md).
+> fact currently use a labelled placeholder. U1–U22 and public Pages/iCloud delivery are complete. The next accuracy
+> chunk **A1 (14 tasks)** is documented and **not started**; it adds versioned, cutoff-safe engine history.
+> See [PLAN.md](PLAN.md) and [HANDOFF_NEXT.md](HANDOFF_NEXT.md).
 
 ## Setup
 
@@ -28,10 +30,10 @@ python3 -m venv .venv
 .venv/bin/python scripts/serve.py            # browse at http://127.0.0.1:8766
 ```
 
-- Today's and tomorrow's slates are projected by the possession engine v1.1 (the default, D22–D24; ~20 s per game at
-  2,000 worlds; `--ahead N` sets how many days after today; no games in that window → the next slate, D26). Before the
+- Today's and tomorrow's slates are projected by the possession engine v1.3 (D34/D36; 10,000 worlds, measured ~130–150 s/game on the
+  21 Nov run; `--ahead N` sets how many days after today; no games in that window → the next slate, D26). Before the
   engine runs, its inputs (current-season segments, rotations, profiles) are rebuilt from every final before today
-  (~50 s; `--no-rebuild` skips). The season sim then plays every later game through the team pathway (D25);
+  (runtime depends on retained inputs; `--no-rebuild` skips only when those inputs are already current). The season sim then plays every later game through the team pathway (D25);
   `--placeholder` uses the old box-score placeholder instead, and backfilled past dates always do. `nightly.py --offline` reuses retained data; `--views-only` only rebuilds what the app reads;
   `--backfill-days N` adds retrospective snapshots (labelled as such) for the previous N slates.
 - The server reads files from disk: front-end edits appear on refresh, rebuilt views appear
@@ -62,6 +64,25 @@ Scenarios/Given…/duels and lineup branches remain localhost-only (D36). Real-d
 The default destination is iCloud Drive/MusNBA/MusNBA.musnba.gz. The wrapper checks destination access before starting,
 keeps the previous export on failure, and installs no scheduler. `--output PATH` overrides the destination; other options
 pass through to the nightly. Previous exports are archived under `~/Basketball_archive_ops`. Export staging uses visible temporary names and clears Finder’s hidden flag before/after publication so the bundle appears in iCloud file pickers.
+
+### Keep the PWA current with model and app changes
+
+At any subtask that promotes a model or changes stored forecast data, rebuild affected outputs on the accepted
+systems, export a fresh iCloud bundle, and check model/version/cutoff labels plus import/offline compatibility.
+For app-asset changes, also rebuild/publish the data-free shell below and verify its service-worker update.
+For presentation-only export changes, `--export-only` reuses already-current completed forecasts. Research-only
+candidate tests do not change the served model. Every actual development chunk still ends with a new live nightly
+and final integrated PWA delivery. **Each device must import the new data bundle**; shell updates alone do not update
+its simulations. Record the delivered model/generation separately from owner-confirmed device acceptance.
+
+### Historical forecasts: current support and next chunk
+
+Currently `nightly.py --backfill-days N` creates **retrospective placeholder** forecasts; it is not an engine replay.
+A1 S13 is planned to retain immutable Today forecasts, distinguish Tomorrow previews and support resumable
+**season-start→now rebuilds under each accepted model version**. The active dashboard will use one version's history
+consistently, with previous versions/original live forecasts archived. Historical inputs and all fitted artifacts
+must precede each origin; reconstructed predictions are labelled retrospective. No new engine-replay CLI exists yet;
+the next agent must implement/test it before documenting commands here. See ENGINE_PLAN §17 and TRAINING_PLAN §8.
 
 ### Build/publish the data-free shell
 
@@ -122,10 +143,10 @@ Rebuild in order after new data: `scripts/history.py` → `scripts/possessions.p
 ```sh
 .venv/bin/python scripts/train.py --name <label> [--drop @team …]     # an experiment on folds F1–F4 (~20 min)
 .venv/bin/python scripts/compare.py <run A> <run B> --noise <seed A> <seed B>   # keep / reject, per node
-.venv/bin/python scripts/train.py --config models/v1.1.json --final     # persist a version, score the final test once
-.venv/bin/python scripts/aggregate.py --config models/v1.1.json         # M6a aggregation test on F4 games
+.venv/bin/python scripts/train.py --config "models/<frozen-new-version>.json" --final  # only after acceptance; final test once
+.venv/bin/python scripts/aggregate.py --config models/v1.3.json         # M6a diagnosis with real lineups/clock
 .venv/bin/python scripts/parity.py [--fetch]                            # adapter and feed parity (M5b)
-.venv/bin/python scripts/backtest.py --config models/v1.3.json --games 200 --worlds 1000 --jobs 7 --rotation targets [--models folds/v1.3_F4_all]   # engine v1.3 backtest (M9)
+.venv/bin/python scripts/backtest.py --config models/v1.3.json --games 200 --worlds 1000 --jobs 7 --rotation targets --pool 0 [--models folds/v1.3_F4_all]   # engine v1.3 backtest (M9)
 .venv/bin/python scripts/backtest_compare.py <run A> <run B> [--log NAME]   # paired: player tiers, loading, margins, CRPS
 .venv/bin/python scripts/minutes.py --evaluate [--season 2025 --from 2025-01-01 --to 2025-04-30] [--set gamma=1]   # allocator v real (no engine)
 .venv/bin/python scripts/matchups.py --fit --through 2025-12-31            # D30 assignment θ → models/matchup_<through>.json
@@ -154,8 +175,15 @@ are `models/<version>.json` (in git).
 ```sh
 .venv/bin/python scripts/smoke.py                                   # accounting + determinism
 .venv/bin/python analysis/export_visibility_check.py                  # atomic bytes + macOS Finder visibility
-node analysis/browser_check.mjs --base http://127.0.0.1:8766        # phone/desktop, both themes
+node analysis/browser_check.mjs --base http://127.0.0.1:8767        # phone/desktop, both themes
 node analysis/pwa_import_check.mjs --url <shell url> --bundle <file.musnba.gz>
 ```
 
-Data: ESPN's public site API (unofficial). Personal, local use.
+Data: retained ESPN/hoopR history and owner-authorised NBA Stats API. Public source/app shell; data remains local/iCloud.
+
+## Development handover
+
+Read [AGENTS.md](AGENTS.md), then [HANDOFF_NEXT.md](HANDOFF_NEXT.md). A1's 14 subtasks, weights and 140 concrete
+progress rungs live in HANDOFF; detailed scope/gates are PLAN §6a–6c. Each task ends with updated docs, evidence and
+a commit/push. Every development chunk ends with a fresh nightly/PWA delivery and a successor chunk in the same
+format. The 22 Nov documentation session is planning only; the next agent starts S01.

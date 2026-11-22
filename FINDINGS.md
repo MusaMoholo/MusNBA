@@ -752,7 +752,7 @@ teams = 480 team-starts), ratings from the games before the date (as `team_table
 games), the real remaining regular-season schedule played in 10,000 universes by `scripts/pathway.py`; real final wins
 scored against the simulated distribution. Logs `analysis/experiments/20261120T093320Z_season_backtest.json` (variants)
 and `…093809Z_season_calibration.json` (36-setting grid with leave-one-season-out selection). History only; the
-2026-27 final test is untouched.
+2026-27 final test is untouched by this season-pathway calibration.
 
 | Variant (start draw × posterior SD, gain × estimator's, memory) | Dispersion (1.0) | 10–90% coverage (80%) | CRPS of final wins | Persistence, sim (real 0.40) |
 |---|---|---|---|---|
@@ -821,3 +821,32 @@ and `…093809Z_season_calibration.json` (36-setting grid with leave-one-season-
 - **Publication (owner authorised public source, 22 Nov):** audited 431 historical blobs for credential patterns and
   data/export paths (none found); Pages publishes only the 24-file static shell from `gh-pages`, final commit `e302d27`.
   Public URL HTTP 200, Pages status built, hosted import/offline tests pass. Data remains local/iCloud.
+
+## 6. Planning audit — current control and historical predictions (22 Nov 2026)
+
+Repository/code audit only; no new model experiment or final-test scoring. Baseline smoke passes **102/102**.
+
+- The serving-setting control is `20261120T162930Z_v1.3_pool_per_world_F4`: **200 F4 games, 1,000 worlds,
+  rotation targets, pool 0**. Its saved log gives margin CRPS **9.415**, total CRPS **11.723**, total bias **+1.81**,
+  win log loss **0.5738**, total 10–90% coverage **69%**, margin coverage **75.5%**. The earlier shared-pool control's
+  9.374 margin CRPS is a different simulation setting; do not mix the two when claiming a gain.
+- In that pool-0 control, offence loading is **0.727 v 1.144 real (63.5%)**; defence is **0.678 v 1.685 (40.2%)**.
+  Earlier shorthand saying "offence 0.73 / defence 0.69 of real" confused raw regression coefficients with ratios.
+  The same log's team benchmark gives margin/total CRPS **9.322 / 11.353**, win log loss **0.5584**.
+  These are conditional, historical diagnostics, not current live accuracy claims.
+- `scripts/backtest.py` explicitly uses **known availability: players who actually played**, even when
+  `--known-starters` is absent. That flag separately supplies actual starters. This is useful for isolating engine
+  quality but does not measure forecasting who plays. The next chunk must report conditional-engine and genuine
+  pre-game-availability populations separately.
+- `scripts/train.py::run_node` uses the latest 10% of the **training** window for early stopping and temperatures;
+  the later fold validation window is scored separately. Earlier wording in §3o saying "early stopping on the
+  held-out window" means that training-tail slice, not F4's scored games.
+- `scripts/nightly.py::project_slate` deliberately restricts the possession engine to prospective slates because
+  its normal inputs read latest profiles. Existing `--backfill-days` reconstructs **placeholder** snapshots.
+  It is not yet an engine-as-of-date runner; changing a date argument alone would not make it safe.
+- MusSim reference checked locally: `../Football/scripts/nightly.py::backfill_plan` preserves stored dates/cutoffs,
+  validates their ordering and builds a plan without publication; its handoff distinguishes reconstruction from
+  actual prospective publication. MusNBA must retain that distinction and use its own strict **games before ET D**
+  convention, rather than copy football's inclusive date convention. No Football files or jobs were changed.
+- Dashboard U1–U22 remain complete; the next accuracy chunk is a plan, **0% implemented**. D37 rejects specific
+  defence variants; it does not establish that defence gains are impossible. No new gain is claimed here.

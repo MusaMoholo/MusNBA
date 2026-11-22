@@ -1,12 +1,17 @@
 # Engine plan — possession-level simulator (phase 2)
 
-**v6 + D18–D31 · 20 November 2026 · approved; in implementation — the daily two-engine flow is D26 — progress in PLAN.md §6, next steps in HANDOFF_NEXT.md.** Built so far: M1–M6a
-and the engine (v1.1 serves the app, D23–D24); later sections describe the full design. Items marked **Proposed** become decisions once agreed; §14 lists the questions still open. Progress is tracked in
-[PLAN.md](PLAN.md); measured facts live in [FINDINGS.md](FINDINGS.md).
+**Updated 22 November 2026 — serving v1.3, planning A1 (not started).** Sixteen LightGBM nodes, D29 target minutes,
+D30 player/lineup defence, 10,000 worlds per game and one rotation table per world. Team pathway v1 handles later games.
+M7 responsive substitutions, M8 shared form and M11 availability remain planned. U1–U22 and public Pages/iCloud delivery
+are complete. PLAN §6a–6c defines the expanded next chunk; HANDOFF owns progress; TRAINING_PLAN §8 owns acceptance.
+
+The dated decision table preserves how the design evolved. **D24/D26/D27/D35/D36 override older seven-day, player
+carry-over, defence-input and phone assumptions**; D38/D39 add the next-chunk protocol and current-model history.
+Sections below distinguish current behaviour from unimplemented design. Measured evidence lives in FINDINGS.
 
 ## Decisions so far
 
-| # | Question | Decision (19 Nov) |
+| # | Question | Decision (dated in each entry; later decisions take precedence) |
 |---|---|---|
 | D1 | Possession unit | Segments; an offensive rebound continues the possession with a 14 s shot clock |
 | D2 | Quarter models | One model per decision, trained on every quarter, with period, clock and game state as inputs; per-quarter variants tested per node and kept only where they predict held-out games better |
@@ -29,7 +34,7 @@ and the engine (v1.1 serves the app, D23–D24); later sections describe the ful
 | D20 | Decision chain | Owner left the number of steps to the data. Fifteen decisions in four stages — **clock**: time to the event, event type (action, defensive foul, violation); **action**: who (of five) → what (rim, paint, mid, corner 3, above-break 3, turnover, fouled on a 2, fouled on a 3) → shot result (miss, make, and-one); **credit**: assisted → assister, blocked → blocker, turnover type (steal, offensive foul, other) → stealer, fouler; **after**: free throw, rebound (offence/defence × player/team) → rebounder. Rules, not models: free-throw counts, penalty/bonus, shot clock, period ends, foul-outs. Every node has ≥ 50k training rows |
 | D17 | Long-range strength | MusSim's per-world pathway: each universe starts from a draw around today's strength and updates every team after every simulated game — near-term engine results included — by the rating system's own response to the result, against the world's own expectation, with one gain calibrated to real season dispersion (§12) |
 | D21 | Shot location; team turnovers | **Engineering decision from data (19 Nov); owner confirmed the location stage (19 Nov) — team turnovers and team rebounds stay outcomes of existing stages, not new ones.** A 16th decision, **location** — the shot's distance band (21 bands, 3–5 per zone) given zone, shooter and context — sits between *what* and *shot result*; later decisions see the band's mean distance and lateral offset. Reason: distance is the strongest input after zone (leaving it out costs 3.1 nats per game over the chain: blocked +3.8%, assisted +1.1%, shot result +1.0%) and no step produced it. *Event* gains a fourth class, **team turnover** (shot clock, 8 s; 5.3% of turnovers), which credits no player. All-Star and exhibition games are excluded from every dataset |
-| D22 | Default model and the floor | *(Serves v1.1 since D23.)* **Owner (19 Nov): the possession engine v1 (`scripts/engine.py`, `models/v1.json`) is the dashboard's default projection from now on, and it is the floor** — a later engine, model version or rule replaces it only when the backtest/aggregation tests show it is better (M6a, M9). The placeholder `baseline-v1` stays for retrospective backfills (the engine reads latest profiles, so past dates would leak) and as a comparison saved beside each engine snapshot. The season simulation is still the placeholder's team-strength pathway, fed the engine's win probabilities for today's games |
+| D22 | Default model and the floor | *(Original decision; v1.3 now serves under D34.)* **Owner (19 Nov): the possession engine v1 (`scripts/engine.py`, `models/v1.json`) is the dashboard's default projection from now on, and it is the floor** — a later engine, model version or rule replaces it only when the backtest/aggregation tests show it is better (M6a, M9). The placeholder `baseline-v1` stays for retrospective backfills (the engine reads latest profiles, so past dates would leak) and as a comparison saved beside each engine snapshot. The season simulation is still the placeholder's team-strength pathway, fed the engine's win probabilities for today's games |
 | D23 | Rebound clock convention | **Engineering decision from data (19 Nov), under D22's test.** From 2026-27 ESPN stamps every rebound with the clock of the miss it follows (100% v 7–12% in every earlier month; FINDINGS §3k). Every season's segments now use that convention (`possessions.py`, default `--rebound-clock miss`), so history and live inputs are built alike. Measured: on live-style held-out rows the old models are worse on 12 of 16 nodes (chain +34.1 nats per game) and M6a box scores improve (threes bias +7.4% → +1.0%, steals +9.6% → +0.8%, turnovers +8.0% → +1.5%, defensive fouls −20.5% → −1.0%; CRPS lower on every stat but blocks, level). **v1.1** (v1's settings on this data) replaced v1 as the engine's models; v1 and its data are kept (`data/derived/variants/rebound_feed/`) |
 | D24 | Engine horizon: today and tomorrow | **Owner (19 Nov): the engine projects today's and tomorrow's slates, always** (replaces D13's seven-day near-term window for the dashboard). `nightly.py --ahead 1` (default) builds tomorrow's snapshot from what is known today — injury report, profiles through the last final — and rebuilds it the next night (the old one archived). The app's as-of date for standings and rosters stays the newest snapshot dated today or earlier (`views.current_snapshot`). Long-range games (D13/D16) are unchanged |
 | D25 | Season beyond tomorrow | **Owner (19 Nov); built 20 Nov as team pathway v1 (`scripts/pathway.py`, called by `projection.simulate_season`).** The nightly simulates today's and tomorrow's games with the engine and keeps each game's per-world points (`engine_worlds.npz` in the snapshot); one season is then played as of today: universe k takes engine world k mod W for those games, and every later game, in date order, draws both scores from that universe's own offensive and defensive ratings, after which both teams move by the rating estimator's response (1 / (n + 1 + K), K = 8) to the surprise against that universe's expectation (zero on average). **Spread calibrated on the walk-forward season test (M12 first cut, FINDINGS §3n):** start draw 0.4 × the estimate's posterior SD, the estimator's own gain, a 20-game memory (the gain stops shrinking after 20 games) — dispersion of final wins 1.00 (the old fixed-probability season sim: 1.53), 10–90% coverage 84% (65%), CRPS 2.611 v 2.727; chosen in 3 of 4 leave-one-season-out folds. Engineering decision from data: v1 replaces the fixed-probability season sim. Still slightly wide in November and its surprises fade with the date where real ones persist (0.40) — M12 continues. Today's and tomorrow's snapshots carry the same season (as of today) |
@@ -44,11 +49,14 @@ and the engine (v1.1 serves the app, D23–D24); later sections describe the ful
 | D34 | Engine v1.3 | **Engineering decision from data (20 Nov), under D22/D28's test.** v1.2 (D29 minutes on v1.1's models) and v1.3 (D30 defence inputs + D29 minutes) promoted in turn on the same 200-game F4 backtest: players first (minutes bias +6.5% → −1% for stars, coverage ≈ 80%; no tier worse with defence), then team sums (defence loading 0.42 → 0.69 of real 1.69; margin CRPS 9.64 → 9.37 v the team model's 9.32). Matchup θ fitted through 2025-12-31 and kept for production so the final test stays out of sample for it. FINDINGS §3p–§3s |
 | D35 | Defence stays player- and lineup-based; switch hunting | **Owner (20 Nov, D32 chunk):** a team's defensive rate in real life is drawn from the individual defenders in the lineup, so the engine keeps defence **strictly player- and lineup-dependent** — team defensive ratings never enter the possession models (answers D18's open question: no). Team defence is the aggregate of the five on the floor and how they are deployed (who guards whom, help at the rim). **Attackers hunt switches onto weak defenders**, so deployment is chosen by both sides: the assignment gets a hunting term (attacker usage × defender weakness, beside size, ranks, stopper tendency and pair history) and the *who* decision sees each attacker's likely defender (a mismatch draws the ball). Tested as v1.4d after v1.4c on the same backtest |
 | D36 | Phone app stripped back; localhost full; 10k worlds | **Owner (20 Nov, D32 chunk):** the phone (PWA bundle) carries the **10,000-world distributions for the expected lineup** — players and teams, every period — and nothing that needs the per-world files: no Scenarios, Given…, joint grids, duels or duel of the night, and no lineup branches (D31 stays a localhost feature). `export_musnba.phone_record` leaves out `api/game/<id>/worlds` and switches the flag off. Localhost keeps everything. The dashboard moves to **10,000 worlds per game** (D31's number) and **one rotation table per world** (minutes from 5× more distinct draws), the latter measured on the backtest first (minutes CRPS/coverage not worse). Reason: smoother, honest distributions (2,000 worlds: sampling noise ±10–20% per histogram bar, FINDINGS §3v) without a heavy phone bundle |
-| D37 | Real-matchup defence not promoted; v1.3 stays | **Engineering decision from data (20 Nov), under D22/D28.** NBA Stats matchups (D32) ingested and reconciled (FINDINGS §3t); the pre-game assignment on real shares is far better (top-1 36% → 50%, top-2 75%; §3u); defender traits measured (3PA share allowed r 0.77, 3P% allowed noise). Three engine candidates on the same 200-game backtest — v1.4c (real-share defender quality and θ), v1.4e (+ deterrence), v1.4f (+ top-1/top-2 defenders with confidence) — none beats v1.3 (margins level or worse, totals worse, players level or worse; §3w). Switch hunting (D35) shows no effect in who guards whom or who shoots (v1.4d not run). The data, crosswalk and assignment stay (nightly keeps them current; the Matchup view's who-guards-whom uses them). Reading: the engine compresses team differences generally (offence 0.73 of real, defence 0.69 of real, every component 20–40% except turnovers), so the next engine work targets that compression, not more defender inputs |
+| D37 | Real-matchup defence not promoted; v1.3 stays | **Engineering decision from data (20 Nov), under D22/D28.** NBA Stats matchups (D32) ingested and reconciled (FINDINGS §3t); the pre-game assignment on real shares is far better (top-1 36% → 50%, top-2 75%; §3u); defender traits measured (3PA share allowed r 0.77, 3P% allowed noise). Three engine candidates on the same 200-game backtest — v1.4c (real-share defender quality and θ), v1.4e (+ deterrence), v1.4f (+ top-1/top-2 defenders with confidence) — none beats v1.3 (margins level or worse, totals worse, players level or worse; §3w). Switch hunting (D35) shows no effect in who guards whom or who shoots (v1.4d not run). The data, crosswalk and assignment stay (nightly keeps them current; the Matchup view's who-guards-whom uses them). Reading: the engine compresses team differences generally (offence loading 0.73 v 1.14 real, defence 0.69 v 1.69 real; most component ratios 20–40% except turnovers), so the next engine work targets that compression, not more defender inputs |
+| D38 | Larger accuracy chunks and durable checkpoints | **Owner (22 Nov).** Replace the queued four-task chunk with a substantially larger modular programme (A1, 14 tasks), fixed weighted percentage progress and ten concrete steps per task. At every task completion update all affected docs, commit/push under the standing Git rule, and give a high-level result summary. Every actual development chunk ends with a fresh nightly and a fully specified successor chunk in the same format. Every affected subtask also delivers necessary PWA model/data/shell updates (latest owner clarification). This session is documentation only; the next agent starts A1. Defence remains a priority; negative variants are evidence about those variants, not a reason to abandon defence. |
+| D39 | Daily forecasts and a consistent current-model history | **Owner (22 Nov, latest clarification).** Store each day's Today prediction, with Tomorrow as an origin-dated preview. With a new accepted model, support rerunning season start→now so the default dashboard uses that model consistently. Preserve original and prior-version generations, but use the active version for normal historical review. Rebuilt predictions use the current frozen recipe with only pre-origin inputs and fitted parameters; label them retrospective, never originally published forecasts. Ordinary browsing reads stored predictions/results. See §17 for cutoffs, versioning, resume and atomic activation; the final test remains protected. |
 
 ## 0. What "true to form" means
 
-The engine is right when, on held-out games, its simulated distributions match reality:
+The engine is right when, on held-out games, its simulated distributions match reality. Numbers below are historical
+reference populations (see §1/FINDINGS), not universal targets; A1 evaluates each measure on its matched held-out cohort:
 
 | Level | Targets |
 |---|---|
@@ -121,7 +129,7 @@ period lengths, overtime, five players on court.
 Owner proposal: simulate each quarter from 0 to 12 minutes with possessions sprinkled along the
 timeline, sampling observed time per possession, and accumulate minutes from it.
 
-**Proposed: yes — the engine runs on the game clock**, with one refinement: each segment's duration
+**Implemented: the engine runs on the game clock**, with one refinement: each segment's duration
 is sampled *sequentially*, conditioned on how it started and on the game state, instead of placing
 "possession n at t seconds" independently. Why:
 
@@ -144,7 +152,9 @@ multiclass model.
 Requirement: substitutions happen inside the possession simulation, minutes aggregate to realistic
 expectations, and game state (fouls, blowouts, overtime) still bends them.
 
-**Proposed: a target-aware substitution model.**
+**Planned M7 (A1 S06): a target-aware substitution model.** Currently v1.3 rescales replayed rotation tables
+to D29 per-world targets; these do not respond to simulated score or ordinary foul trouble. The design below is not
+yet serving. S05 first audits rotation membership and minute allocation; S06 then integrates state-responsive changes.
 
 Before tip, per player and world:
 - availability (injury report, as today) and **target minutes** m\* for a competitive game, sampled
@@ -202,7 +212,7 @@ What carries from one quarter to the next, in order of importance:
 1. **State** — score margin, minutes and stint fatigue, personal fouls, timeouts (team fouls reset).
 2. **Game-state behaviour** — trailing teams take more threes and play faster, leaders slow down,
    garbage-time lineups appear: all learned from margin × time features.
-3. **Per-player form, per world (D3)** — at tip each world draws, for every player, a night's form in
+3. **Per-player form, per world (D3; planned M8/A1 S09, not yet serving)** — at tip each world draws, for every player, a night's form in
    three facets: *efficiency* (make probability), *aggressiveness* (his weight in the "who acts" choice —
    teammates' shares fall accordingly, because the choice is among the five on court) and *shot selection*
    (tilt toward harder/pull-up or rim attempts). Plus a team-level shared component (pace, team shooting
@@ -290,29 +300,18 @@ this lineup" rather than from a long personal history:
 - Games (and, for the season, batches of games) run in parallel processes; seeded per (model, date,
   game), so results are identical for any number of workers.
 
-**Expected timings on the laptop** (estimates; measured in M5):
+**Measured runtime, not the original design estimates:** on the 21 Nov close-out, 10,000-world games with one
+rotation table per world took about **130–150 seconds/game**. The 200-game F4 pool-0 backtest at 1,000 worlds took
+**1,365 seconds** (FINDINGS §3v). A 13-game live refresh completed in the dashboard close-out; new substitutions,
+branches and dated season rebuilds must be benchmarked separately. Run one backtest at a time; concurrent ones
+oversubscribe the laptop. Report log-derived rates and completed items, not invented deadlines.
 
-| Nightly step | LightGBM in the loop | Distilled tables |
-|---|---|---|
-| Collect + parse yesterday's games | 2–5 min | same |
-| Point-in-time player/team features | < 1 min | same |
-| Refit the node models (~1–5M rows each) | 5–15 min, weekly by default | same |
-| One game, 10,000 worlds (~60M model row-evaluations) | 20–60 s | 2–5 s |
-| Near-term engine, next 7 days (~50 games, median 52) on 6 cores | 3–8 min | — |
-| Season universes: long-range games + absence sampling (10,000 × ~930 games) | 1–3 min (vectorised NumPy) | — |
-| **Nightly total** | **~10–25 min**; refit nights +5–15 min | — |
+D10's **≤60-minute live nightly** remains the acceptance budget; the original ≤60-second single-game aspiration is
+not met at 10k worlds and must not be quoted as current performance. Full-season historical rebuilds are separately
+resumable batch jobs, not work the server performs or that must fit a single live-nightly budget. No lookup-table
+approximation is adopted: near-term inference stays in LightGBM; the horizon is **today/tomorrow or the next slate**.
 
-Budget: ≤ 60 min nightly end to end, ≤ 60 s for one game. Once trained, a run is mechanical: inputs
-(lineups, state) → probabilities → sample → next state.
-
-**Why no lookup tables.** A lookup table is the same model with its answers precomputed on a grid of
-situations and rounded to its cells: averages survive, but unusual situations (a star-heavy closing
-lineup down three with 40 seconds left) blur into their band. Running every remaining game through the
-engine 10,000 times would need them (~10M games a night), but the two-horizon design (D13) does not: the
-engine only plays the next seven days, and long-range games need team-level results, which a
-team-strength model provides more simply and more honestly.
-
-**Cadence (D11):** player/team features, injuries and availability update every night — that is
+**Cadence (D11; scheduled model refit/promotion automation still unimplemented):** player/team features, injuries and availability update every night — that is
 where yesterday's games enter (one night is ~0.2% of the training rows). Model weights refit when 7 or
 more days have passed since the last successful refit (a day-of-month rule such as `day % 7 == 0` would
 skip the 29th–31st and leave 9–10-day gaps, and a missed night would skip a refit), or on demand with
@@ -328,8 +327,8 @@ the previous model stays as a fallback. A pre-tip refresh for late scratches is 
   market closing lines (retained in raw summaries).
 - **Realism panel**: possessions and durations by start type, substitutions, stints, overtime rate,
   free-throw rate, three-point rate, garbage-time minutes.
-- **Gate** to replace `baseline-v1` in the app: better game and player CRPS over the backtest, no
-  calibration regression, every identity passing.
+- **Current promotion floor:** engine v1.3 and pathway v1, not the superseded placeholder. TRAINING_PLAN §8
+  and PLAN §6b specify player-first paired confirmation, uncertainty, robustness and final-test gates for A1.
 
 ## 11. Outputs
 
@@ -339,64 +338,32 @@ the previous model stays as a fallback. A pre-tip refresh for late scratches is 
 
 ## 12. Two horizons and the season simulation (D13–D16)
 
-The aim is sensitivity in the short term — lineups, injuries, game state — and an honest aggregation of
-it into end-of-season standings.
+**Current two-engine flow (D24–D27):** the possession engine runs Today and Tomorrow from the same origin's
+pre-date inputs, or the next slate if neither has games. It does not carry simulated player form from Today into
+Tomorrow. Every later scheduled game uses the per-world team pathway, with no player/period forecast claimed there.
+The earlier seven-day design in D13/D18 is superseded, not an open choice.
 
-**Near term — next 7 days (48 games from 19 Nov; median 52 per week, max 58).** The full engine, 10,000
-sims per game, with every player and period output. The app shows everything for these games.
+Universe k takes world k of each near-term engine game (modulo available worlds only where counts differ); those
+results update its own offensive/defensive ratings before later games. Later games draw scores using that world's
+ratings, then update against that world's own expected points. The ratings are never frozen at today's values.
+The estimator starts from pre-origin season ratings plus uncertainty; current pathway-v1 settings are K=8,
+start scale=0.4, update scale=1, memory cap=20 games (FINDINGS §3n). Each game's winner and every season probability
+come from those same worlds. Today/Tomorrow snapshots share one origin-date season forecast.
 
-**Long range — the rest of the season (~930 games).** A team-strength model gives each game a margin and
-total distribution from the two teams' strength *that night in that universe*. Strength comes from who is
-available (sampled absences) and the universe's talent draws, aggregated through player values over the
-likely rotation. It is calibrated to the engine: on each night's near-term games, its win probabilities,
-mean margins and totals must match the engine's within tolerance. The app shows only win %, expected score
-and spread for these games, labelled as a long-range estimate (D16).
+**M12 measured first cut:** 480 team-starts (four dates × four historical seasons × 30 teams), dispersion 1.00,
+10–90% coverage 84.2%, final-win CRPS 2.611 versus fixed probabilities 2.727. Per-date persistence still fades
+(0.52→0.18 simulated versus about 0.40 observed); November is too wide. A1 S10 tests improved starting estimates,
+gain/drift and availability with leave-one-season-out selection. Ratings may enter the **team pathway**; D35
+still prohibits feeding team defensive ratings into possession models or forcing their scores to match a benchmark.
 
-**Season universes (D14, D17) — the per-world pathway, as in MusSim.** 10,000 universes; each plays every
-remaining game once, in date order, so every season output has 10k granularity ("NYK finish 1st in the
-East: 2.34%"). Each universe carries its own strength state per team, and that state is what makes worlds
-diverge — a team can catch fire in one universe and collapse in another.
+**Planned availability (D15/M11, A1 S07/S10):** reported absences and uncertain returns, historical injury/rest hazards
+and durations, with role-specific evidence and uncertainty. This is not yet built into the long-range pathway.
+Evaluate games missed, return timing and calibration with dated information, without known future participants.
+A1 S08's Expected branch worlds, if validated, become the same near-term draws consumed by the season engine.
 
-For each universe *k*:
-1. **Ratings start from this season's real results.** Each team's long-range rating at the start of a world
-   is today's Elo/ratings fit on real results to date (plus a draw at its uncertainty, calibrated below).
-   This is separate from the possession models, which never take team strength as an input (D18).
-2. **Days 1–7: the engine plays.** Universe *k* takes world *k* of each near-term engine sim. Inside the
-   window each world plays a team's games in order, and after each game that world's player stats and
-   form update from the simulated box score before the next game (D18). Each result also updates both
-   teams' long-range ratings — so if the Heat win three of their next four in a world, they carry that into
-   the rest of that world's season.
-3. **Day 8 onward: the team model plays**, date by date: that night's availability in universe *k*
-   (sampled absences, D15) → each team's strength = pathway strength + availability adjustment →
-   expected margin and total (home court, rest, back-to-backs) → a sampled margin and total (game-level
-   spread calibrated to the engine) → result → both teams update → next game.
-4. **Update rule.** The update is the long-range rating estimator's own response to one more game with
-   that margin (as MusSim reads it by refitting with one synthetic match), scaled by one gain. The surprise is
-   measured against **the world's own expectation**, availability included, so it averages zero: favourites
-   do not drift up and a loss without the star does not mark down the full-strength team.
-5. **End of season.** Standings, tiebreakers and seeds per universe; probabilities are counts over the
-   10,000 universes. A long-range game's win % in the app is the share of universes in which that team won
-   it — path effects included.
-
-**Calibration (as MusSim's dispersion work).** Walk-forward on 2022-23 to 2025-26: from several dates each
-season, simulate the rest of the season and compare with what happened. One gain (and the start-draw
-width) is chosen so that (a) dispersion — actual final wins against the simulated distribution — is ≈ 1.0,
-neither too narrow (fixed strengths were 13% too narrow in football) nor too wide; (b) persistence — the
-correlation of each team's surprise in the first and second halves of the remaining season — matches the
-real one; (c) no fade unless the data asks for it. All computed per universe in vectorised NumPy, a game
-day at a time: seconds, not minutes.
-
-**Availability (D15).** Per universe and player, across every remaining date:
-- reported injuries hold until their expected return, with uncertainty around the date;
-- new injuries arrive at a per-game hazard from the player's (shrunk) historical games-missed rate, with
-  durations from historical absence lengths — most short, some long;
-- rest: back-to-back and load-management absences for players with that history.
-The same model sets availability for near-term games two to seven days out, where today's injury report
-says nothing yet. Realism check: simulated games played per star across the season against history (few
-stars play all 82).
-
-Phase 4 adds the actual NBA tiebreak procedure, the play-in tournament, the playoff bracket and the NBA
-Cup-determined games once scheduled.
+Official postseason/tiebreak/Cup completeness remains later work. Current playoff pictures show marginal regular-
+season seeds and illustrative paths, not simulated playoff winners. Historical schedule definitions must reconcile
+before S10 compares calibration. S13 records a season forecast per historical origin under the accepted model version.
 
 ## 13. Milestones (each ends with checks)
 
@@ -416,13 +383,12 @@ Cup-determined games once scheduled.
 | M11 | Availability model | Simulated games missed per player match history; reported return dates honoured |
 | M12 | Season pathway + calibration | Dispersion ≈ 1.0 and real persistence on 2022-23 to 2025-26 walk-forward; 10k universes in the app |
 
-## 14. Open questions for the owner
+## 14. Owner decisions and remaining product acceptance
 
-Settled 19 Nov: D1–D16 above. Nothing blocking; to confirm when convenient:
-
-1. **Near-term window**: fixed at seven days (proposed), or a number of games per team?
-2. **Long-range calibration tolerance**: proposed — on each night's near-term games, team-strength win
-   probabilities within 3 percentage points of the engine's on average, and mean margins within 1 point.
+No open decision blocks A1. Today/tomorrow is settled (D24/D27); player-based defence is settled (D35); public source,
+GitHub Pages and stripped-back phone are settled. The current-model historical workflow is D39. Real iPhone
+installation/import acceptance remains an owner check; iCloud file delivery was confirmed. Do not reopen these
+choices without new evidence. A new data provider still needs sign-off; ESPN and NBA Stats are already authorised.
 
 ## 15. Risks
 
@@ -433,9 +399,9 @@ Settled 19 Nov: D1–D16 above. Nothing blocking; to confirm when convenient:
 | Rare end-game situations overfit | Rules for mechanics; pooled models; regularisation |
 | Too-smooth simulations (variance too low) | Per-player form and talent draws, calibrated on held-out variance |
 | Rookie/second-year projections overconfident | Stat-specific shrinkage, archetype priors, posterior talent draws |
-| Runtime | Engine limited to the 7-day horizon; quarter-synchronised vectorisation; parallel games |
-| Long-range model drifting from the engine | Nightly calibration against the near-term engine sims |
-| Data-source change (ESPN unofficial) | Adapter boundary; raw retention; NBA Stats as an alternative |
+| Runtime | Engine limited to today/tomorrow (or next slate); quarter-synchronised vectorisation; parallel games |
+| Long-range model drifting from the engine | Compare on held-out outcomes; shared near-term worlds; do not force engine scores to match team ratings |
+| Data-source change (ESPN unofficial) | Adapter boundary; raw retention; NBA Stats already retained; source-parity and cutoff audits |
 
 ## 16. Additive season presentation outputs (22 Nov 2026)
 
@@ -444,3 +410,65 @@ already drawn for best/worst record. Exactly three teams qualify per world. This
 forecasts: parity verified on 10,000 retained worlds, 965 remaining games, 13 engine games (FINDINGS §5). Playoff diagrams
 are explicitly illustrations of marginal regular-season seeds; no postseason engine or joint pairing odds were added.
 Engine v1.3 and team pathway v1 remain promoted; no training changes or final-test use.
+
+## 17. Versioned daily forecasts and current-model season rebuilds (22 Nov)
+
+**Latest owner clarification governs:** preserve daily Today predictions, but with each new model the owner expects
+to rerun season start→now so the active dashboard treats the contemporary model as its consistent reference.
+S13 therefore builds both a durable daily archive and a resumable full-season replay. This supersedes the interim
+“gap-fill only” idea. Ordinary review reads the selected version's saved forecast and actual result; it never runs
+simulation while browsing. Earlier versions/original forecasts remain retained, not the default comparison target.
+
+### Daily archive and active version
+
+- Identity: model recipe/version + stable game ID + forecast origin (ET date/input cutoff) + run ID. Store generation
+  time, scheduled tip known at the run, model/config/input hashes, fit cutoffs, worlds, report provenance and kind.
+- Today and Tomorrow share the same before-origin inputs (D27). Tomorrow is a preview. On its own origin day, a new
+  Today forecast becomes the normal reference; keep the preview separately identifiable. Season outputs are keyed by
+  origin too; Tomorrow's identical season copy is not another historical observation for Movers.
+- For original live history choose the first successful origin-day forecast generated before the game's tip. Retain
+  later same-day runs as explicit revisions. A retry is idempotent; after-tip runs cannot claim pre-game provenance.
+  A missing Today forecast may use a labelled earlier preview, never an unlabelled hindsight substitution.
+- Predictions are immutable within a generation. Actuals join separately by game ID; reschedules, score corrections,
+  partial finals and later model versions do not rewrite old forecast values. Preserve archives on schema migration.
+- Histories live in distinct version/generation namespaces. Build the new version's season history in staging;
+  validate the required date manifest and then switch an active-generation pointer atomically. A failed or partial
+  build leaves the previous complete generation available. Never join old-version dates into a new-version series
+  silently; unsupported dates are explicit coverage gaps. Daily runs append to the chosen version's history.
+- Views, Movers, result reviews and PWA exports carry the active version, origin and reconstruction/live kind. An
+  active-version historical scorecard may review reconstructed predictions, but must not call them an original
+  prospective track record. Retain enough provenance to distinguish live, replay and placeholder populations.
+
+### Rebuild season start to now with the accepted recipe
+
+Derive the first slate and latest completed ET origin from the retained season schedule, not a hard-coded date.
+Produce an immutable run plan of origins, game IDs, expected outputs, hashes and coverage before running. For each D:
+result games before D; build dated inputs; run D and D+1 (or the next slate) with the chosen recipe; run its 10k-world
+season pathway. The stored **Today** output is that date's normal review reference; next-day previews stay separate.
+Do not duplicate a game in a date's season worlds. Finish with S14's live nightly and iCloud delivery.
+
+All player profiles, rotation/pair histories, team ratings and availability evidence must use games strictly before
+ET D; tomorrow uses the same origin. Every fitted artifact—node and assignment models, minute/ramp parameters,
+priors, calibration, availability—must have a recorded training cutoff before D. The current pre-season-trained
+v1.3 weights may be reused for later origins; a new recipe also trained pre-season can similarly cover the season.
+If weekly/new fits include games after an earlier origin, refit that same frozen recipe on the earlier window or
+use its matching dated fit. Merely filtering the input CSV is insufficient. Record warm-up/cold-start limitations.
+
+Use retained pre-origin injury reports/rosters and schedule revisions where available. Missing historical reports
+are explicitly reconstructed availability, never the actual participants, actual starters or eventual return date.
+Later revisions and a recipe selected retrospectively prevent claiming these forecasts were actually available then.
+The user's current-model view is compatible with honest retrospective labels; it does not waive cutoff safety.
+
+Build an isolated dated runner, reusing normal nightly components without overwriting live `latest` features during
+replay. Resume identity includes origin, raw/model/config hashes and seed; invalidated dependencies rebuild. Archive
+replaced generations outside the repo. Test interruptions/restart, stale-cache rejection, later-data injection,
+worker-count determinism, origin/preview/result transitions, model switch, postponed games and old bundles. Compare
+numerical payloads, excluding generation timestamps, on reproducibility tests. Existing `--backfill-days` is still a
+placeholder runner; no documented engine-replay command is runnable until S13 implements and tests it.
+
+**Run gate:** S11 freezes an accepted model and S13 proves cutoff/coverage/accounting safety before full reconstruction.
+Use development dates for safety checks first. Current-season reconstructed results are for review, not repeated
+model selection: the once-per-version final-test rule still applies. If the gate fails, keep the previous accepted
+model/history, record the concrete limitation and do not claim a rebuild completed. The 22 Nov session is docs only;
+execution and the exact CLI/run manifests belong to the next agent. S14 ends with a fresh live nightly and a fully
+specified successor chunk in this same format.

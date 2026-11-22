@@ -2,7 +2,7 @@
 
 **Phone v localhost (owner, 20 Nov, D36):** the phone bundle is stripped back — the 10,000-world distributions for the expected lineup only; everything built on the per-world files (Scenarios, Given…, joint grids, team drivers, duels, duel of the night, lineup branches) is localhost-only (`export_musnba.phone_record`).
 
-As of **22 November 2026** (Scenarios, Given…, joint grids, drivers, averages deltas, Lab view, minutes basis and engine v1.3 added in the D29–D30 chunk; game flow, duels, duel of the night and who-guards-whom added in the D32 chunk). Proposals and progress live in [PLAN.md](PLAN.md).
+**U1–U22 complete as of 22 November 2026.** Historical implementation notes: Scenarios, Given…, joint grids, drivers, averages deltas, Lab view, minutes basis and engine v1.3 added in the D29–D30 chunk; game flow, duels, duel of the night and who-guards-whom added in the D32 chunk. A1 is planned, not implemented; scope/progress live in [PLAN.md](PLAN.md) and HANDOFF.
 
 ## Navigation
 
@@ -37,8 +37,9 @@ As of **22 November 2026** (Scenarios, Given…, joint grids, drivers, averages 
   "over" chance), so there are no pushes (`halfLine` in `ui.mjs`). Everything else about how figures are shown stays.
 - Probabilities: one decimal in the game and player views, whole percent in heat cells; `<0.1%`/`>99.9%`
   at the extremes; zero shows as "–". Over means strictly more than the line.
-- Pre-game snapshot = built before tip-off with that day's injury report. Retrospective = rebuilt from box
-  scores before that date without injury news; always labelled.
+- Pre-game snapshot = generated before tip-off with recorded origin/report provenance. Current retrospective
+  backfills use the placeholder and have no historic injury news; always labelled. Planned A1 S13 engine
+  reconstructions retain their version, origin, report coverage and retrospective kind, even if dated reports exist.
 - Availability per simulation: Out 0, Doubtful 0.15, Questionable 0.5, Day-To-Day 0.7, Probable 0.9.
   Distributions include simulations where a player sits.
 - Theme: automatic, dark or light (toggle; per device). Logos switch to dark variants on dark themes.
@@ -86,7 +87,7 @@ everything is read from stored snapshots, worlds, finals and derived tables (ser
 | U15 | **Team page: roster minutes and roles** | minutes share bars (season) · projected minutes tonight · starters v bench · injury status chips | ✅ Roster grouped into projected starters, bench, rotation fringe and reported out; season minute bars against next-game projections, minute deltas and injury details. Six size/theme cases passed; desktop/phone screenshots inspected. |
 | U16 | **Standings: playoff picture** | most likely seeds 1–10 per conference with probabilities · projected first-round pairings (modal seeds) · play-in bracket view | ✅ Playoff picture tab: seed 1–10 favourites and alternatives, a unique-team illustrative first-round field and play-in paths; marginal probabilities explicitly distinguished from pairing odds. Six responsive/theme checks passed and screenshots inspected. |
 | U17 | **Standings: wins distributions per team** | mini histogram per row in the Wins tab (10k seasons) · median and 10–90 · sort by spread | ✅ Wins tab adds per-team mini histograms on a shared axis derived from scheduled games, median and 10–90% ranges, and widest-range sorting. Six responsive/theme checks passed; screenshots reviewed. |
-| U18 | **Season tab (new): races** | conference race chart (projected wins with 10–90 bands, sorted) · tank race (worst-record and bottom-3 chances) · #1 seed race | ✅ Standings Races (merged at owner request, 22 Nov): conference/league win-range race, #1 seed races and worst-record race. Bottom-three record counts added to the season simulation (no changes to draws); populated by close-out nightly. Six browser cases passed, screenshots reviewed; Season included in PWA caches/export. |
+| U18 | **Standings insights: races** | conference race chart (projected wins with 10–90 bands, sorted) · tank race (worst-record and bottom-3 chances) · #1 seed race | ✅ Standings Races (merged at owner request, 22 Nov): conference/league win-range race, #1 seed races and worst-record race. Bottom-three record counts added to the season simulation (no changes to draws); populated by close-out nightly. Six browser cases passed, screenshots reviewed; Season included in PWA caches/export. |
 | U19 | **Season tab: movers since the last snapshot** | change in projected wins and playoff odds v the previous snapshot's season · biggest risers/fallers with the results that moved them | ✅ Movers compares distinct season cutoffs (30 teams; 20→21 Nov, nine results), projected-win and Top 6/play-in/#1 changes, risers/fallers and linked interval results. Races/Movers/Leaders merged under Standings per owner; /season redirects. Six Movers cases and twelve merged-navigation cases passed; screenshots inspected. |
 | U20 | **Season tab: season leaders to date** | per-game leaders (PTS, REB, AST, 3PM, STL, BLK, FG%) with minimum games · team leaders | ✅ Standings Leaders: nine player leaderboards (PTS/REB/AST/3PM/STL/BLK/FG%/3P%/FT%) and six team leaderboards (offence/defence/net/pace/scoring/rebounding). Explicit minimum-games and shooting-attempt filters; current data qualifies at 12 GP. Distinct from forecast Races; six size/theme checks passed and screenshots reviewed. |
 | U21 | **About the model page (new)** | plain-language explainer of the two engines (play-by-play, team pathway), what 10,000 worlds means, how to read ranges, decision log highlights, data sources and freshness · linked from the model chip | ✅ About the model guide: two engines, 10k worlds, ranges and probability changes, cutoff safety, decision highlights, known limitations, sources and live retained-data freshness. Linked from engine/season chips and Model & data; PWA included. Six size/theme checks passed and screenshots reviewed. |
@@ -123,3 +124,24 @@ everything is read from stored snapshots, worlds, finals and derived tables (ser
 phone (geometry asserted, screenshots inspected). Personal Pages live at https://musamoholo.github.io/MusNBA/; source
 public by explicit owner approval. iCloud delivery confirmed on the phone. Exporter uses non-dot staging names and
 clears Finder's hidden flag before/after rename; the first hidden export was repaired and the regression is checked.
+
+## Next accuracy chunk: planned app/PWA work, not shipped
+
+U1–U22 stay complete. A1 S08 adds local explicit lineup branches with coherent Expected output; S12 adds stored
+rotation maps and sampled-world event playback. Keep existing U3 role badges, U11 defence profiles and merged
+Standings navigation; don't create duplicate pages. Card groups remain multiples of three and changing text is dynamic.
+
+A1 S13 preserves each day's Today forecast and labels Tomorrow previews. With a new accepted model, the owner
+expects a season-start→now rebuild and one consistent **active-version history** in Today/results, Game Centre,
+Movers and review metrics. Preserve previous versions and original live forecasts in archives. Historical rebuilds
+are labelled retrospective, with the original generation time/input cutoff/coverage available; never present them
+as forecasts actually issued then. Actuals join stored predictions; browsing never fits or simulates. Model-version
+switches must not silently splice incompatible histories or count Tomorrow's copied season twice.
+
+**PWA delivery is part of every affected subtask, not just S14** (owner, 22 Nov). Promoted model or output changes
+require refreshed accepted forecasts/views and a new iCloud bundle; asset changes require a rebuilt/published
+data-free shell and cache update. Verify model/cutoff/world metadata, fresh import, older-bundle handling, offline
+routes, and the phone's Expected-only contract. Keep large world files/branches local; compact replay summaries
+may ship only after measuring bundle cost. Report delivery and the need to import on each device separately from
+actual owner phone acceptance. Research-only checkpoints leave the served bundle unchanged and say so in docs.
+S14 finishes with a new nightly, integrated browser/PWA checks and the successor chunk documented at 0%.

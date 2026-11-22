@@ -10,7 +10,7 @@ for the next session, it goes in these files.
 1. **This file** — rules, owner preferences, checkpoint protocol.
 2. **[HANDOFF_NEXT.md](HANDOFF_NEXT.md)** — the current state and the exact next actions. Start working from there.
 3. **[PLAN.md](PLAN.md)** — goal, phases, milestone table (§6), open owner decisions, log.
-4. **[ENGINE_PLAN.md](ENGINE_PLAN.md)** — engine design and the owner's decisions D1–D37. Do not reopen a decision
+4. **[ENGINE_PLAN.md](ENGINE_PLAN.md)** — engine design and the owner's decisions D1–D39. Do not reopen a decision
    without new evidence; if evidence contradicts one, say so to the owner and record it.
 5. **[TRAINING_PLAN.md](TRAINING_PLAN.md)** — models, inputs, decay, folds, experiment protocol.
 6. **[FINDINGS.md](FINDINGS.md)** — measured facts and data quirks. Do not re-derive them; extend them.
@@ -20,12 +20,14 @@ for the next session, it goes in these files.
 
 ```sh
 git status && git log --oneline -5      # clean tree expected; the last commit is the last checkpoint
-.venv/bin/python scripts/smoke.py        # must pass (95+ checks) before you change anything
+.venv/bin/python scripts/smoke.py        # must pass (102 at 22 Nov; count grows) before changing code/data
 ls analysis/experiments/                 # latest experiment logs: what was last measured
 .venv/bin/python scripts/serve.py --port 8767 &   # your own review server (the owner's is :8766 — never stop it)
 ```
 
 Then do the first open item in HANDOFF_NEXT.md § Next actions. If smoke fails, fix or report that first.
+A planning-only request stays planning-only: the 22 Nov owner explicitly left A1 execution to the next agent.
+Read-only/docs work needs no review server; start :8767 when inspecting or changing presentation.
 
 ## 3. The owner and how to work with them
 
@@ -34,7 +36,8 @@ Then do the first open item in HANDOFF_NEXT.md § Next actions. If smoke fails, 
 - Wants rich data, but every input must earn its place by ablation on the folds.
 - Keep **PLAN.md detailed and current**; report progress in short, plain bullets with real numbers.
 - Develops on **localhost** (`.venv/bin/python scripts/serve.py`, :8766 — the owner runs it; never stop it, use
-  :8767 for your own checks). The PWA build is for the phone later.
+  :8767 for your own checks). The public PWA is live at https://musamoholo.github.io/MusNBA/; the iCloud bundle is delivered/visible on the
+  phone. Real-device install/import acceptance remains an owner check. Keep necessary PWA updates with model/app work.
 - UK-based; displayed times are UK with ET alongside. Slates are US Eastern dates.
 - Prefers you make engineering decisions yourself and explain them; ask only for real product choices (PLAN §9).
 - **Guiding light (owner, 20 Nov, D28): players first.** The play-by-play engine exists to show how individual players
@@ -51,6 +54,24 @@ Then do the first open item in HANDOFF_NEXT.md § Next actions. If smoke fails, 
   tomorrow's games and a fresh 10,000-world season come from the latest engines that passed their tests. A chunk always
   brings new findings; when it cannot improve an engine (negative results happen), its headliner is a dashboard
   improvement from the owner's UX backlog (PLAN §9b) instead.
+- **Larger modular chunks (owner, 22 Nov, D38):** A1 replaces the old four tasks with 14 weighted subtasks. Each
+  completed subtask gets a high-level summary (what changed/was added, measured outcome, limitations, next action),
+  current docs and a **commit and push** under the standing Git rule. A measured negative result is valid; unfinished
+  research is not completion. Preserve resumable state at partial-session stops. Every development chunk ends by
+  **constructing the next chunk in these docs in the same format**: headliners, dependencies, weights totalling 100%,
+  ten concrete rungs per subtask, acceptance/fallback, first commands and a final live nightly. Docs are the source
+  of truth for any next agent; no important knowledge lives only in chat or private memory.
+- **Current-model history (owner, 22 Nov, D39):** store each day's Today forecast; Tomorrow is a dated preview. With
+  each accepted model, support a season-start→now nightly rebuild so the default dashboard uses that version
+  consistently. Keep original and prior-version forecasts archived. Historical runs use only pre-origin inputs
+  **and fitted parameters**, and are labelled retrospective; do not silently mix model versions. The full contract
+  is ENGINE_PLAN §17. Serving never recomputes historical predictions; the final test stays protected.
+- **PWA at relevant checkpoints (owner, 22 Nov):** a promoted model, changed forecast/bundle contract or shipped app
+  change includes the necessary refreshed outputs and iCloud export, dynamic model/version metadata, import/offline
+  checks and a data-free `gh-pages` shell update if assets changed. Do this at the affected subtask, not only at the
+  final chunk. Research-only checkpoints explicitly record that the served model/bundle remains unchanged. A new
+  bundle on iCloud is not proof the phone imported it: report that manual import is needed. Never publish models,
+  raw data or simulation bundles to Pages. S14 repeats final integrated delivery after the last nightly.
 - **Dashboard taste (owner, 20 Nov):** he cares about player and team game-outcome presentation (scenarios, joint and
   conditional outcomes, deltas v averages); internal evaluation pages (the Lab) are not a priority. His examples are
   illustrations — generalise the idea rather than building only the example. He wants it **smooth and sleek at full width
@@ -103,9 +124,12 @@ Then do the first open item in HANDOFF_NEXT.md § Next actions. If smoke fails, 
   settings, never force-push or rewrite history. Data, the virtualenv and exports stay out of git (`.gitignore`);
   check `git status` before committing and never add secrets or `data/`.
 
-## 5. Checkpoint protocol — do this at the end of every milestone or work session
+## 5. Checkpoint protocol — every completed subtask and work-session stop
 
-Write as if you will not be the one to continue.
+Write as if you will not be the one to continue. Update documentation **before** the checkpoint commit, not as
+an uncommitted afterthought. Review all eight root docs; edit affected ones and record why the others need no change.
+HANDOFF owns the live ledger/next action; PLAN scope/status/log; ENGINE design/decisions; TRAINING tests/cutoffs;
+FINDINGS measured evidence; DASHBOARD shipped behaviour; README runnable commands; this file standing rules.
 
 1. **HANDOFF_NEXT.md**: rewrite *State* (what exists, what is running, what changed) and *Next actions* (numbered,
    concrete, with commands and done-when criteria). Remove anything stale.
@@ -113,15 +137,23 @@ Write as if you will not be the one to continue.
 3. **FINDINGS.md**: every new measured fact, data quirk and negative result, with the population it was measured on.
 4. **ENGINE_PLAN / TRAINING_PLAN**: record any new owner decision (next D-number) or design change, with the reason.
 5. **README / HANDOFF file map**: new scripts, outputs and commands.
-6. Run `.venv/bin/python scripts/smoke.py`; add a smoke check for every new output with an accounting identity, and
-   confirm `--fault` still fails.
-7. **Dashboard on the newest systems**: `.venv/bin/python scripts/nightly.py` (or `--offline --no-rebuild` when nothing
-   new was collected) so the slates and the 10k season come from the latest promoted engines; browser checks on :8767.
+6. At code/data checkpoints run `.venv/bin/python scripts/smoke.py`; add an independent accounting check for new
+   outputs and confirm `--fault` still fails. Run relevant model/browser/PWA checks. For a documentation-only planning
+   session, baseline smoke plus doc consistency/link checks suffice; do not launch data/model jobs to tidy docs.
+7. **Delivery when affected, always at chunk end:** after a promoted model or changed stored-output contract, refresh
+   the affected forecasts/views and export with `scripts/nightly_musnba.py` (or `--export-only` for already-current
+   completed outputs). Validate the PWA bundle/model labels and publish a changed data-free shell; record generation,
+   version, checks and phone import requirement. At the end of actual development always run a new full nightly:
+   today/tomorrow/next slate and 10k seasons on the latest accepted engines. `--offline --no-rebuild` is only for
+   current, unchanged retained inputs, with the reason recorded; never bypass required feature rebuilds. Browser
+   checks use :8767. Research-only subtasks need no repeated live nightly; the planning-only session starts none.
 8. **Commit and push**: `git add -A && git status` (review: no `data/`, no secrets), then
    `git commit -m "<milestone>: <what changed, key numbers>"` and `git push`. One commit per checkpoint at least; record
    the commit in HANDOFF_NEXT.md's header on the next checkpoint. If your environment asks for commit trailers or
    attribution lines, add them; never change the repo's git identity.
-9. Tell the owner, in a few bullets, what changed, what was measured and what is next.
+9. Tell the owner, in a few bullets, what changed/was added, what was measured, model/PWA impact, commit/push status
+   and what is next. At the final chunk checkpoint, first archive its completed progress and construct the successor
+   chunk at 0% in HANDOFF/PLAN with the same full format. Do not end with an unstructured backlog.
 
 ## 6. Running long jobs (any environment)
 
