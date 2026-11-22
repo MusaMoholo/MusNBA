@@ -505,6 +505,35 @@ checks every traced five against roster, availability and foul limits, and recon
 saved backtest means. The same three pinned games and seeds must reproduce the prior candidate before the 200-game
 screen. This capture changes no policy draw and is diagnostic only.
 
+For the S06 **player-foul-penalty robustness repair**, freeze the following before another candidate engine
+result. The first fixed screen failed because it rejected a world with only four players below six fouls. The
+NBA's five-player exception permits the last player to remain when he reaches six, with one technical free throw
+for that foul and each subsequent personal foul; a previously removed player is not voluntarily reintroduced.
+The [NBA official rule page](https://official.nba.com/rule-no-3-players-substitutes-and-coaches/) returned HTTP
+403 to this environment; the rule description is corroborated by the
+[basketball personal-foul reference](https://en.wikipedia.org/wiki/Personal_foul_(basketball)#Fouling_out).
+Ejections and in-game injuries are not modelled, so their separate re-entry exception is out of this candidate's
+scope. Fewer than five explicitly available players at game start still fails.
+
+Keep the original failed policy reproducible; add this only as an opt-in research policy. Continue to replace a
+six-foul player whenever an eligible substitute exists. Otherwise retain only the necessary already-on-court
+players, never activate an unavailable player, never reintroduce a previously removed foul-out and never suppress
+the foul or technical. For each triggering foul, the opposing on-court player with the highest finite pre-game
+`ft_pct` shoots one independent technical attempt using that earlier profile probability; player/team FTA, FTM,
+points and score must reconcile, the clock and possession are unchanged, and an isolated deterministic random
+stream leaves the ordinary policy's draws untouched. An all-missing or invalid shooter probability is an explicit
+failure, not an imputed success. This is a rare-rule approximation using the existing pre-game FT profile, not a
+new fitted free-throw model or a claim that technical shooters are known prospectively.
+
+Before the unchanged fixed F4 200-game / 1,000-world screen, unit-test sixth and subsequent foul penalties,
+available replacements, both sides, technical misses/makes, no voluntary re-entry, short rosters, ordinary
+free-throw rebound ordering and deterministic streams. Independently audit captured actual fives, all-player foul
+states, technical events, box-score points, seconds, overtime and roster eligibility in the original three games
+and in the previously failing game **401810472** using the same seeds. Preserve the originally failed screen,
+freeze source fingerprints before rerunning, and report a second failure honestly if one occurs. The original
+player-first/minute CRPS, state-response, paired uncertainty, seed-noise and confirmation gates are unchanged;
+neither an exception repair nor the node results alone justifies promotion.
+
 For S07's initial report-coverage audit, inventory every retained ESPN collection run without fetching a new source.
 Treat each collection's `finished` UTC timestamp as the conservative latest capture time; a dated tip is usable only
 when the entire run finished strictly before that tip. Audit missing rosters, injury files, status counts, unmatched

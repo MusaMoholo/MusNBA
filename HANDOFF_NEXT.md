@@ -32,6 +32,7 @@ in pushed partial checkpoint **5fd5e00**.
 The typed accounting repair, foul-state probe and pre-run sequence builder were pushed as **8c8a50f**.
 The first independent sequence reconstruction and its exact auditor source were pushed as **1dcfd6b**.
 The frozen fold-screen source and corrected independent reconstruction were pushed as **4c6ba5f** before scoring.
+The independently audited S07 60% screen was pushed as **76f7cf5**.
 The owner has lifted the planning-only stop for this overnight A1 execution and delegated in-scope engineering and
 product decisions without waiting; source, cutoff, promotion and retention gates are unchanged. **S01–S05 are complete;
 S06 is active at 70%; S07 is 60%; A1 overall is 52.0%.** Isolated assignment candidates have event-level diagnostics and wiring only;
@@ -1335,8 +1336,11 @@ The dashboard programme is done. Do not resume U1–U22, repeat rejected defence
 1. **Continue S06 substitution research at 70%.** Both node screens, earlier-fold model reproduction, three-game
    wiring and independent world replay are complete, but the fixed 200-game screen aborted on a no-eligible-player
    world. The same-stream probe identified fixed-panel game **401810472**, home team **7** with **8** actual players:
-   four simulated foul-outs leave four eligible players with **4.4 s** left in Q4. Choose a rule-correct, explicitly
-   documented recovery or retain D29; never
+   four simulated foul-outs leave four eligible players with **4.4 s** left in Q4. TRAINING_PLAN §8.2 now freezes
+   an opt-in player-foul-penalty exception: retain a necessary on-court six-foul player, assess the technical free
+   throw and independently audit all roster/foul states. The official rule page returned HTTP 403; a secondary
+   basketball rule reference is cited. Implement and verify this without changing the original failed policy or the
+   default engine. Never
    hide or exclude the failure when applying promotion gates. The 80% rung still requires a genuine measured
    minute-CRPS/state-response comparison; don't present the aborted screen as complete. Run no second engine
    backtest concurrently. No promotion follows from the trace check.
