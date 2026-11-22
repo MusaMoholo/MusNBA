@@ -19,16 +19,17 @@ function seasonPill(m) {  // which model made the season forecast (D25/D26: the 
 }
 
 async function standings(view, {meta, current, rest}) {
-  if (['forecast', 'seeds', 'wins', 'ratings'].includes(rest?.[0])) state.view = rest[0];  // #/standings/<tab> (linkable)
+  if (['forecast', 'seeds', 'wins', 'ratings', 'picture'].includes(rest?.[0])) state.view = rest[0];  // #/standings/<tab> (linkable)
   const data = await api('standings/' + meta.latest);
   if (!current()) return;
   const paint = () => {
     const confs = [['East', 'East'], ['West', 'West'], ['League', 'League']];
-    const views = [['forecast', 'Forecast'], ['seeds', 'Seeds'], ['wins', 'Wins'], ['ratings', 'Ratings']];
+    const views = [['forecast', 'Forecast'], ['seeds', 'Seeds'], ['wins', 'Wins'], ['ratings', 'Ratings'], ['picture', 'Playoff picture']];
     let rows = data.teams.filter(t => state.conf === 'League' || t.conf === state.conf);
     rows.sort((a, b) => (b.pct ?? 0) - (a.pct ?? 0) || (b.w - a.w) || (b.forecast.mean_w - a.forecast.mean_w) || a.abbr.localeCompare(b.abbr));
     let body;
     if (state.view === 'forecast') body = forecastTable(rows, state.conf === 'League');
+    else if (state.view === 'picture') body = playoffPicture(rows);
     else if (state.view === 'wins') body = winsTable(rows);
     else if (state.view === 'seeds') body = state.conf === 'League' ? '<p class="note">Seeds are within a conference: choose East or West.</p>' : seedsTable(rows);
     else body = ratingsTable(rows);
@@ -151,6 +152,44 @@ function seedsTable(rows) {
   }).join('');
   return `<div class="scroll"><table><thead>${head}</thead><tbody>${body}</tbody></table></div>
     <p class="note">${state.seedMode === 'atleast' ? 'Chance of finishing that seed or better.' : 'Chance of finishing exactly that seed.'} Ordered by average seed. Ties are broken at random until NBA tiebreakers are implemented.</p>`;
+}
+
+// Assign ten different teams to seeds, maximising the sum of their stored marginal seed probabilities.
+// This is an illustrative field, never a joint bracket probability or simulated postseason.
+function seedField(rows) {
+  const n = rows.length, N = 1 << n;
+  const score = new Float64Array(N).fill(-Infinity), choice = new Int16Array(N).fill(-1);
+  score[0] = 0;
+  let best = 0, value = -Infinity;
+  for (let mask = 0; mask < N; mask++) {
+    if (!Number.isFinite(score[mask])) continue;
+    let k = 0; for (let v = mask; v; v &= v - 1) k++;
+    if (k === 10) { if (score[mask] > value) { value = score[mask]; best = mask; } continue; }
+    for (let i = 0; i < n; i++) if (!(mask & (1 << i))) {
+      const next = mask | (1 << i), v = score[mask] + rows[i].forecast.seeds[k];
+      if (v > score[next]) { score[next] = v; choice[next] = i; }
+    }
+  }
+  const field = [];
+  while (best) { const i = choice[best]; field.push(rows[i]); best ^= 1 << i; }
+  return field.reverse();
+}
+function playoffPicture(rows) {
+  return ['East', 'West'].map(conf => {
+    const group = rows.filter(t => t.conf === conf);
+    if (!group.length) return '';
+    const field = seedField(group);
+    const slot = k => `<span class="bracket-team"><small>#${k}</small> ${teamLink(field[k - 1].id, {short: true})} <b>${pct(field[k - 1].forecast.seeds[k - 1], 0)}</b></span>`;
+    const likely = Array.from({length: 10}, (_, k) => {
+      const ranked = group.slice().sort((a, b) => b.forecast.seeds[k] - a.forecast.seeds[k]);
+      return `<tr><td>${k + 1}</td><td class="name">${teamLink(ranked[0].id)}</td>${heat(ranked[0].forecast.seeds[k])}<td class="l dim">${ranked.slice(1, 3).map(t => `${esc(t.abbr)} ${pct(t.forecast.seeds[k], 0)}`).join(' · ')}</td></tr>`;
+    }).join('');
+    return `<div class="picture"><h2>${conf} · playoff picture</h2><div class="picture-grid"><div class="scroll"><table><thead><tr><th>Seed</th><th class="name">Most likely team</th><th>Chance</th><th class="l">Also in the race</th></tr></thead><tbody>${likely}</tbody></table></div>
+      <div><h3>Illustrative first round</h3><div class="bracket">${[[1, 8], [2, 7], [3, 6], [4, 5]].map(([a, b]) => `<div class="bracket-pair">${slot(a)}${slot(b)}</div>`).join('')}</div>
+      <h3 style="margin-top:14px">Play-in path</h3><div class="bracket-pair">${slot(7)}${slot(8)}<p class="note">Winner → playoff #7 · loser gets one more chance</p></div>
+      <div class="bracket-pair">${slot(9)}${slot(10)}<p class="note">Winner faces the 7/8 loser for playoff #8 · loser is out</p></div></div></div>
+      <p class="note">Table: each seed's marginal favourite, so a team can appear more than once. Illustration: ten distinct teams assigned to maximise their combined seed probabilities; percentages are chances of that regular-season seed. Seeds 7/8 in the first round are provisional until the play-in. No joint pairing odds or postseason simulation. Ties use the season model's random tiebreak.</p></div>`;
+  }).join('');
 }
 
 function ratingsTable(rows) {
