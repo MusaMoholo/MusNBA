@@ -1,0 +1,278 @@
+{
+ "experiment": "a2_earlier_fold_cross_game_shot_persistence",
+ "protocol": "TRAINING_PLAN.md: cross-game persistence feasibility",
+ "population": "teacher-forced F1-F3 fixed role panels, not all validation games",
+ "bootstrap": {
+  "unit": "independently resampled complete player and game clusters within each fold",
+  "replicates": 10000,
+  "seed": 20261122,
+  "confidence": 0.95
+ },
+ "coverage": {
+  "F1": {
+   "shots": 136578,
+   "actor_outside_recorded_five": 1548,
+   "validation_games": 773,
+   "role_panel_games": 200,
+   "outside_role_panel_shots": 99798,
+   "in_panel_missing_wrong_team_or_unknown_role": 128,
+   "missing_wrong_team_or_unknown_role": 99926,
+   "eligible_shots": 35104
+  },
+  "F2": {
+   "shots": 139660,
+   "actor_outside_recorded_five": 1614,
+   "validation_games": 782,
+   "role_panel_games": 200,
+   "outside_role_panel_shots": 102649,
+   "in_panel_missing_wrong_team_or_unknown_role": 112,
+   "missing_wrong_team_or_unknown_role": 102761,
+   "eligible_shots": 35285
+  },
+  "F3": {
+   "shots": 87671,
+   "actor_outside_recorded_five": 1106,
+   "validation_games": 490,
+   "role_panel_games": 195,
+   "outside_role_panel_shots": 52024,
+   "in_panel_missing_wrong_team_or_unknown_role": 255,
+   "missing_wrong_team_or_unknown_role": 52279,
+   "eligible_shots": 34286
+  }
+ },
+ "cohorts": {
+  "F1": {
+   "all": {
+    "games": 200,
+    "player_games": 3736,
+    "player_role_folds": 527,
+    "shots": 34358,
+    "ordered_cross_game_shot_pairs": 3668144,
+    "status": "supported",
+    "estimate": -0.0007038255032035426,
+    "ci_95": [
+     -0.004381358610311166,
+     0.0028302721061955623
+    ]
+   },
+   "star": {
+    "games": 177,
+    "player_games": 306,
+    "player_role_folds": 37,
+    "shots": 5556,
+    "ordered_cross_game_shot_pairs": 972152,
+    "status": "supported",
+    "estimate": -0.0005724307730240478,
+    "ci_95": [
+     -0.003002095461740717,
+     0.0024357003437762833
+    ]
+   },
+   "starter": {
+    "games": 200,
+    "player_games": 1513,
+    "player_role_folds": 188,
+    "shots": 16597,
+    "ordered_cross_game_shot_pairs": 1988318,
+    "status": "supported",
+    "estimate": 0.0008758787040075666,
+    "ci_95": [
+     -0.004224719383484814,
+     0.005455648445425399
+    ]
+   },
+   "bench": {
+    "games": 200,
+    "player_games": 1917,
+    "player_role_folds": 302,
+    "shots": 12205,
+    "ordered_cross_game_shot_pairs": 707674,
+    "status": "supported",
+    "estimate": -0.0017033155560920521,
+    "ci_95": [
+     -0.007221277364326526,
+     0.004127712315549207
+    ]
+   }
+  },
+  "F2": {
+   "all": {
+    "games": 200,
+    "player_games": 3633,
+    "player_role_folds": 517,
+    "shots": 34436,
+    "ordered_cross_game_shot_pairs": 3722222,
+    "status": "supported",
+    "estimate": -0.0004155433834544117,
+    "ci_95": [
+     -0.003466334071616229,
+     0.0027204165124490713
+    ]
+   },
+   "star": {
+    "games": 164,
+    "player_games": 282,
+    "player_role_folds": 34,
+    "shots": 5372,
+    "ordered_cross_game_shot_pairs": 1008276,
+    "status": "supported",
+    "estimate": 0.001580572488069114,
+    "ci_95": [
+     -0.0027509379605338133,
+     0.005218103830499997
+    ]
+   },
+   "starter": {
+    "games": 200,
+    "player_games": 1468,
+    "player_role_folds": 185,
+    "shots": 16277,
+    "ordered_cross_game_shot_pairs": 1965896,
+    "status": "supported",
+    "estimate": -0.001248909027886789,
+    "ci_95": [
+     -0.005856821888271999,
+     0.002414073873532795
+    ]
+   },
+   "bench": {
+    "games": 200,
+    "player_games": 1883,
+    "player_role_folds": 298,
+    "shots": 12787,
+    "ordered_cross_game_shot_pairs": 748050,
+    "status": "supported",
+    "estimate": -0.00012593028080947895,
+    "ci_95": [
+     -0.004685630369478219,
+     0.004711287243166107
+    ]
+   }
+  },
+  "F3": {
+   "all": {
+    "games": 195,
+    "player_games": 3608,
+    "player_role_folds": 513,
+    "shots": 33528,
+    "ordered_cross_game_shot_pairs": 3546926,
+    "status": "supported",
+    "estimate": 0.0009415294529451189,
+    "ci_95": [
+     -0.0026767288336659585,
+     0.00413579698264346
+    ]
+   },
+   "star": {
+    "games": 153,
+    "player_games": 221,
+    "player_role_folds": 29,
+    "shots": 4041,
+    "ordered_cross_game_shot_pairs": 673814,
+    "status": "insufficient"
+   },
+   "starter": {
+    "games": 195,
+    "player_games": 1569,
+    "player_role_folds": 199,
+    "shots": 17495,
+    "ordered_cross_game_shot_pairs": 2147634,
+    "status": "supported",
+    "estimate": 0.00043586857502899166,
+    "ci_95": [
+     -0.002980514673766635,
+     0.004127720018257262
+    ]
+   },
+   "bench": {
+    "games": 195,
+    "player_games": 1818,
+    "player_role_folds": 285,
+    "shots": 11992,
+    "ordered_cross_game_shot_pairs": 725478,
+    "status": "supported",
+    "estimate": 0.001462065875460616,
+    "ci_95": [
+     -0.004628907543093981,
+     0.006584343933973579
+    ]
+   }
+  },
+  "pooled_F1_F3": {
+   "all": {
+    "games": 595,
+    "player_games": 10977,
+    "player_role_folds": 1557,
+    "shots": 102322,
+    "ordered_cross_game_shot_pairs": 10937292,
+    "status": "supported",
+    "estimate": -6.599059734961585e-05,
+    "ci_95": [
+     -0.0020948305533389296,
+     0.0017858567382474275
+    ]
+   },
+   "star": {
+    "games": 494,
+    "player_games": 809,
+    "player_role_folds": 100,
+    "shots": 14969,
+    "ordered_cross_game_shot_pairs": 2654242,
+    "status": "supported",
+    "estimate": 0.00012137514416261167,
+    "ci_95": [
+     -0.0028886732402485867,
+     0.0026365441757460802
+    ]
+   },
+   "starter": {
+    "games": 595,
+    "player_games": 4550,
+    "player_role_folds": 572,
+    "shots": 50369,
+    "ordered_cross_game_shot_pairs": 6101848,
+    "status": "supported",
+    "estimate": 3.5585441652335464e-05,
+    "ci_95": [
+     -0.0024632098614606056,
+     0.002299151662681456
+    ]
+   },
+   "bench": {
+    "games": 595,
+    "player_games": 5618,
+    "player_role_folds": 885,
+    "shots": 36984,
+    "ordered_cross_game_shot_pairs": 2181202,
+    "status": "supported",
+    "estimate": -0.00015281327357598745,
+    "ci_95": [
+     -0.0032375448176114488,
+     0.002835171266651193
+    ]
+   }
+  }
+ },
+ "input_sha256": {
+  "analysis/experiments/20261122_a1_s04_rim_F1_v2.json": "496f3073358c25c1efc27fe9b075e1695b8863bc94e06efc41b6d0a9ce6c8f75",
+  "data/derived/experiments/20261122_a1_s04_rim_F1_v2.parquet": "d7e9e58cb5b82e0a66aae1268cbc89dad42753bb0f270a07250716050dbca2ba",
+  "data/derived/history/2024/segments.parquet": "4a7c3c2bce39580cc8e1092ffc215d11bbd49f7bf117b4551eee40337203d2c0",
+  "data/derived/nodes/variant_80a4e8dce535/shot_result.npz": "b7c83441ff6f1e9b6f00cc65de5905c9db0065224e19dd42c71fcb8082c236ea",
+  "data/derived/experiments/20261122_a1_s05_unconditional_F1_corrected.parquet": "db6fb53c42c7ac0af4059c04631fcfa744c55eaa357f91b6a4ef5f477e6f6ca9",
+  "analysis/experiments/20261122_a1_s04_rim_F2_v2.json": "9a5bab508dffbfcab17a4b0722b097a961ea4fa5dcf3770f92d6a6d6734d5f56",
+  "data/derived/experiments/20261122_a1_s04_rim_F2_v2.parquet": "dbadf7b320c4b78800083112de58d2a11f8cf1ae4c15f5303374a1bf4e97f3b8",
+  "data/derived/history/2025/segments.parquet": "d9db732172894ed8d3c6e5e99e3cd1c197006da22799413034ce3ce18cc5aee2",
+  "data/derived/nodes/variant_edf6d83ed7a3/shot_result.npz": "48ae5accaeaf11c3c9c7bc3c1158b1246783e3f76416c3a0d67f891259e2776d",
+  "data/derived/experiments/20261122_a1_s05_unconditional_F2_corrected.parquet": "37a4d7e8e9b65ca2ad5db587dbd7a8dcf59b9bc9ab48e0ee93d1f03445d1c35f",
+  "analysis/experiments/20261122_a1_s04_rim_F3_v2.json": "15f3921f7853381c4db09e2ff8e1bd5869b74c42f130d525eb2217c20bd79271",
+  "data/derived/experiments/20261122_a1_s04_rim_F3_v2.parquet": "5fed150765562a1ab22bfbf3becbdec108ec6e7f3b43466f8cf999c290409f86",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+  "data/derived/nodes/variant_9d5aee5f8b7d/shot_result.npz": "67b1a0d4a91f2f29a5d66c8ca62fac9bb3af99789c7c20d5079a1724240e5be6",
+  "data/derived/experiments/20261122_a1_s05_unconditional_F3_corrected.parquet": "b7a2ce12c12c00d1efde160af32a143c3f049469587e47a4a1218e881ef06195"
+ },
+ "limitations": [
+  "actual shot selection and observed lineups",
+  "persistent talent, sustained form, opponents and misspecification are not separated",
+  "not a simulated-world comparison or a model promotion result"
+ ]
+}

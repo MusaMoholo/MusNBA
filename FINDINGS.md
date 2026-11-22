@@ -1873,3 +1873,13 @@ estimates and complete-game bootstrap intervals. These actual-shot, actual-lineu
 nightly form, shared game effects and model misspecification, so the pooled inconclusive result does **not**
 identify or calibrate a player latent factor. V2 explicitly separates panel exclusions and reproduces v1:
 `analysis/experiments/20261122_a2_shot_residuals_f1_f3{,_v2}.json`. No F4 or final-test outcomes were used.
+
+**Earlier-fold cross-game persistence:** the separate frozen screen keeps player-role-fold groups with shots in
+at least two distinct games: **595** fixed-panel F1–F3 games, **10,977** player-games and **1,557**
+player-role-fold groups. The role-centred cross-game residual product, weighted within each player by shot pairs
+and then equally across groups, is **−0.000066** (95% **−0.002095 to +0.001786**). Intervals use **10,000**
+independently resampled player/game clusters within folds; F3 stars have **29** groups, below the frozen **30**
+minimum, and have no estimate. An independently implemented sparse-matrix audit reconstructed all **15**
+supported point estimates and bootstrap intervals. Teacher-forced shot selection, model misspecification and
+sustained form can all contribute, so this inconclusive result does not identify a talent posterior or warrant a
+new draw. Report: `analysis/experiments/20261122_a2_shot_persistence_f1_f3.json`; F4 and the final test were not used.

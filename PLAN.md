@@ -447,6 +447,10 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
   pooled teacher-forced within-game shot-residual covariance **0.001368** (95% **−0.000104 to +0.002874**).
   Individual components are not identified. All **16** estimates and clustered intervals independently
   reconciled; v2 clarifies limited role-panel coverage and reproduces v1. A2 remains **20%**, no model changes.
+- **22 Nov 2026 · A2 cross-game feasibility:** **595** fixed-panel games / **10,977** player-games; pooled
+  shot-residual persistence **−0.000066** (two-way 95% **−0.002095 to +0.001786**). F3 star coverage is
+  insufficient. An independent sparse-matrix calculation reproduced all **15** supported estimates and intervals.
+  No separately identified talent variance or candidate is claimed; A2 remains **20%** and v1.3 is retained.
 - **19 Nov 2026** — Studied MusSim. Probed sources: ESPN site API works with plain requests; NBA CDN returns 403.
   Owner: app shell first, play-by-play sim later.
 - **19 Nov 2026** — Phase 1 shipped (collection, placeholder engine, snapshots, views, server, app, PWA). Fixed: a

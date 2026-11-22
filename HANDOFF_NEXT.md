@@ -59,10 +59,13 @@ Partial source checkpoint **4dce4a3** was pushed before the UX-delivery nightly.
   shot-residual covariance is **0.001368** (95% **−0.000104 to +0.002874**), inconclusive and unable to identify
   latent talent/form components. Preserve both reports. A2 remains **20%**; the next task needs distinct
   cutoff-safe component identification, not an unsupported variance draw. The cross-game persistence feasibility
-  screen and two-way player/game bootstrap are frozen in TRAINING_PLAN; `scripts/a2_shot_persistence.py` and its
-  focused tests implement the analysis. After checkpointing the source, run
-  `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u scripts/a2_shot_persistence.py`, independently
-  audit all supported estimates/intervals and record the result. No F4 or final-test outcomes entered.
+  screen and two-way player/game bootstrap are frozen in TRAINING_PLAN. On **595 games / 10,977 player-games**,
+  pooled cross-game shot-residual covariance is **−0.000066** (95% **−0.002095 to +0.001786**); F3's star
+  cohort has only 29 player-role groups and is insufficient. A separate sparse-matrix reconstruction independently
+  reconciled all **15** supported point estimates and 10,000-replicate two-way intervals. Saved report:
+  `analysis/experiments/20261122_a2_shot_persistence_f1_f3.json`. This result is inconclusive, cannot identify
+  a talent component and does not justify adding a draw. Next: investigate distinct, cutoff-safe sources of
+  identifiable uncertainty or record the model-preserving fallback; no F4 or final-test outcomes entered.
 - **Prepared, unpublished Pages shell:** isolated worktree `/tmp/musnba-user-ux-pages`, `gh-pages` at `f2932e1`,
   has only `assets/game.mjs`, `assets/players.mjs` and `sw.js` changed from the reviewed data-free shell
   `614f3061d9dc69a41bc4`. The shell passed **18/18** checks with the previous bundle. Do not publish until the new
