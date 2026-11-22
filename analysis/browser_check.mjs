@@ -123,10 +123,11 @@ for (const [name, hash, sizes, themes] of CASES) {
     writeFileSync(file, Buffer.from(shot.data, 'base64'));
     const expected = EXPECT[name];
     const content = !expected || (await send('Runtime.evaluate', {expression: `document.querySelector('#view').textContent.includes(${JSON.stringify(expected)})`, returnByValue: true}, sessionId)).result.value === true;
-    const ok = ready && content && !overflow && errors.length === 0;
+    const stacked = !(['team', 'team-no-proj'].includes(name) && size === 'phone') || (await send('Runtime.evaluate', {expression: `(() => { const items = [...document.querySelectorAll('.form-grid > div')]; return items.length < 2 || items[1].getBoundingClientRect().top >= items[0].getBoundingClientRect().bottom - 1; })()`, returnByValue: true}, sessionId)).result.value === true;
+    const ok = ready && content && stacked && !overflow && errors.length === 0;
     if (!ok) failures++;
-    report.push({name, size, theme, ok, ready, content, overflow, scrollWidth: d.scrollWidth, wide: d.wide, errors});
-    console.log(`${ok ? 'PASS' : 'FAIL'}  ${name.padEnd(14)} ${size.padEnd(7)} ${theme.padEnd(5)} ${ready ? '' : 'not-ready '}${content ? '' : 'wrong-content '}${overflow ? `overflow ${d.scrollWidth}>${d.innerWidth} ${d.wide.join(',')} ` : ''}${errors.length ? 'errors: ' + errors.slice(0, 2).join(' | ') : ''}`);
+    report.push({name, size, theme, ok, ready, content, stacked, overflow, scrollWidth: d.scrollWidth, wide: d.wide, errors});
+    console.log(`${ok ? 'PASS' : 'FAIL'}  ${name.padEnd(14)} ${size.padEnd(7)} ${theme.padEnd(5)} ${ready ? '' : 'not-ready '}${content ? '' : 'wrong-content '}${stacked ? '' : 'not-stacked '}${overflow ? `overflow ${d.scrollWidth}>${d.innerWidth} ${d.wide.join(',')} ` : ''}${errors.length ? 'errors: ' + errors.slice(0, 2).join(' | ') : ''}`);
     listeners.splice(listeners.indexOf(onMsg), 1);
     await send('Target.closeTarget', {targetId});
   }

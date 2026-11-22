@@ -807,3 +807,17 @@ and `…093809Z_season_calibration.json` (36-setting grid with leave-one-season-
 - Static export initially failed its module-boundary assertion because earlier Spotlight work omitted `spotlight` from
   both export/SW inventories. Fixed with `season` and `about` also listed. Verified data-free shell at `/MusNBA/`; test bundle
   **1,998 records, 10.6 MB** before the close-out refresh (size/counts are this measured export, not a fixed UI assumption).
+
+- **Final refreshed acceptance:** smoke **102/102**, fault run **80/102** (22 deliberate failures, exit 1), full browser
+  **156/156**, then **12/12** phone stacking cases, hosted PWA **15/15**. The final screenshots caught a real CSS cascade
+  issue: an earlier mobile `.form-grid` rule was overridden by the later base rule. Put the mobile override at the end;
+  browser/PWA checks now assert the chart and fixture strip stack geometrically, rather than relying on overflow alone.
+- **iCloud visibility failure, reproduced on the real export:** 10,620,938-byte bundle was present with `st_flags=32832`
+  (`UF_HIDDEN` set), while the directory was visible. The one-shot post-rename flag clear was insufficient with the
+  dot-prefixed staging name. Manual `chflags nohidden` exposed it; owner confirmed it appeared on the phone. Export now
+  uses non-dot staging names and clears the flag on staging and destination. Atomic-byte/hidden-flag regression passes;
+  a new real iCloud export remained visible after publication. Final bundle **1,998 records, 10,620,944 bytes**; matching
+  visible copies in iCloud, `exports/`, Downloads. Payloads unchanged; export creation time changes the compressed file.
+- **Publication (owner authorised public source, 22 Nov):** audited 431 historical blobs for credential patterns and
+  data/export paths (none found); Pages publishes only the 24-file static shell from `gh-pages`, final commit `e302d27`.
+  Public URL HTTP 200, Pages status built, hosted import/offline tests pass. Data remains local/iCloud.

@@ -1,6 +1,6 @@
 # MusNBA — game plan and progress
 
-Updated **20 November 2026 (evening UK, D32 chunk: NBA Stats + real-matchup defence)**. The single record of scope, progress and decisions. Every agent updates it at
+Updated **22 November 2026 (dashboard U1–U22 complete; personal PWA publication)**. The single record of scope, progress and decisions. Every agent updates it at
 every checkpoint (AGENTS.md § Checkpoint protocol). New here? Read [AGENTS.md](AGENTS.md) first, then
 [HANDOFF_NEXT.md](HANDOFF_NEXT.md) — it says exactly what to do next.
 
@@ -103,8 +103,7 @@ Do them in this order; each ends with its checks passing and a checkpoint (AGENT
 | M10 | Watch-a-sim view (owner, 20 Nov: nba.com-style play-by-play list first, then visual play-through) | ☐ | A saved world's events list and replay in the Game Centre, phone and desktop | `engine.py` event log, views, `game.mjs` |
 | M11 | Availability model | ☐ | Simulated games missed match history | (to build) |
 | M12 | Season pathway calibration | ◐ **first cut (20 Nov): team pathway v1 in the app** — walk-forward 2022-26 (480 team-starts): dispersion 1.00 (fixed probabilities 1.53), 10–90% coverage 84% (65%), CRPS −4% in every held-out season; still wide in November (0.84) and surprises fade with the date (sim 0.52 → 0.18 v real 0.40 flat) | Dispersion ≈ 1.0 **at every start date**, persistence matches | `pathway.py`, `season_backtest.py` |
-
-| UX | Dashboard upgrade programme U1–U22 | ✅ **22 Nov:** all 22 shipped; U15–U22 adds roster roles, playoff picture, win ranges, races/movers/leaders inside Standings and model guide; 130 full + 30 targeted browser checks, PWA 14/14 | Checked at 1440/960/390, both themes, stored data only | DASHBOARD_PLAN.md |
+| UX | Dashboard upgrade programme U1–U22 | ✅ **22 Nov:** all 22 shipped; U15–U22 adds roster roles, playoff picture, win ranges, races/movers/leaders inside Standings and model guide; 156 full + 12 final layout browser checks, hosted PWA 15/15 | Checked at 1440/960/390, both themes, stored data only | DASHBOARD_PLAN.md |
 
 ### Next major chunk (agreed with the owner, 21 Nov): "Express team strength, make minutes react"
 
@@ -157,8 +156,8 @@ HANDOFF_NEXT.md § Progress ladders. Before it, the owner asked for a dashboard 
    who guarded whom or defender distance.
 **Phone app (owner, 20 Nov, D36):** stripped back — 10,000-world distributions for the expected lineup (players, teams, periods);
    no Scenarios, Given…, joint grids, duels or lineup branches (those stay on localhost).
-2. Hosting the PWA: the repo is **private** (`MusaMoholo/MusNBA`, created 19 Nov); GitHub Pages needs a public repo
-   or a paid plan — decide when the phone app is ready. App name MusNBA.
+2. **Decided (owner, 22 Nov):** make `MusaMoholo/MusNBA` public and copy MusSim’s personal GitHub Pages/iCloud flow.
+   Only the data-free shell is published on `gh-pages`; simulations stay local/iCloud. App name MusNBA. **Live:** https://musamoholo.github.io/MusNBA/ (22 Nov; `gh-pages` 0c83937).
 3. iPhone acceptance of the PWA.
 4. ~~Player heights/weights~~ — **owner (19 Nov): needed** ("size and defence are important"): a polite ESPN athlete
    fetch (~1,000 players, one request each) for height and weight, then **archetype priors** — players clustered by
@@ -359,3 +358,10 @@ nightly; if S1 and S2 both promote, one production retrain (`train.py --final`) 
   data/configuration; loading/empty states; all 130 browser cases pass plus 30 targeted cases, PWA 14/14 including dynamic
   count/qualification changes. Owner: keep season insights in Standings, comparable card groups in multiples of three,
   copy MusSim's personal GitHub Pages + iCloud setup; explicitly approved making MusNBA source public.
+
+- **22 Nov 2026 · dashboard close-out:** U1–U22 complete; public source + Pages (`gh-pages` e302d27), URL
+  https://musamoholo.github.io/MusNBA/. Nightly refreshed ET 21/22 Nov: **13 × 10,000 game worlds + 10,000 seasons**
+  (965 remaining games). Smoke **102/102**, fault detects **22**, browser **156/156 + 12/12** final phone-layout cases,
+  hosted PWA **15/15**. Final **10.6 MB / 1,998-record** iCloud bundle delivered; owner confirms phone file visibility.
+  Fixed iCloud hidden-file inheritance with non-dot staging + pre/post flag clearing. Next: engine compression and M7;
+  actual iPhone installation/import acceptance remains with owner. No model/training/final-test changes.

@@ -40,8 +40,7 @@ python3 -m venv .venv
 
 ## Install on laptop or phone (MusSim pattern)
 
-The public app shell is served from personal GitHub Pages at **https://musamoholo.github.io/MusNBA/** once its deployment
-finishes (publication status: HANDOFF_NEXT.md). Source: https://github.com/MusaMoholo/MusNBA. No account is needed in the
+The public app shell is served from personal GitHub Pages at **https://musamoholo.github.io/MusNBA/** (publication status: HANDOFF_NEXT.md). Source: https://github.com/MusaMoholo/MusNBA. No account is needed in the
 app; the public shell contains no collected data or projections.
 
 On iPhone: open that address in Safari → Share → Add to Home Screen, open the installed icon, then choose
@@ -62,7 +61,7 @@ Scenarios/Given…/duels and lineup branches remain localhost-only (D36). Real-d
 
 The default destination is iCloud Drive/MusNBA/MusNBA.musnba.gz. The wrapper checks destination access before starting,
 keeps the previous export on failure, and installs no scheduler. `--output PATH` overrides the destination; other options
-pass through to the nightly. Previous exports are archived under `~/Basketball_archive_ops`.
+pass through to the nightly. Previous exports are archived under `~/Basketball_archive_ops`. Export staging uses visible temporary names and clears Finder’s hidden flag before/after publication so the bundle appears in iCloud file pickers.
 
 ### Build/publish the data-free shell
 
@@ -154,6 +153,7 @@ are `models/<version>.json` (in git).
 
 ```sh
 .venv/bin/python scripts/smoke.py                                   # accounting + determinism
+.venv/bin/python analysis/export_visibility_check.py                  # atomic bytes + macOS Finder visibility
 node analysis/browser_check.mjs --base http://127.0.0.1:8766        # phone/desktop, both themes
 node analysis/pwa_import_check.mjs --url <shell url> --bundle <file.musnba.gz>
 ```

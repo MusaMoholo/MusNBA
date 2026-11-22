@@ -35,11 +35,17 @@ STATIC_BOOT = ("<script type=\"module\" id=\"boot\">import {boot} from './assets
                "import {start} from './assets/pwa.mjs'; await start(boot);</script>")
 
 
+def clear_hidden(path: Path) -> None:
+    flags = getattr(path.stat(), 'st_flags', 0)
+    if hasattr(os, 'chflags') and flags & stat.UF_HIDDEN:
+        os.chflags(path, flags & ~stat.UF_HIDDEN)
+
+
 def publish(staging: Path, output: Path) -> None:
+    # Clear both sides of the atomic rename; iCloud must never inherit a hidden staging flag.
+    clear_hidden(staging)
     os.replace(staging, output)
-    flags = getattr(output.stat(), 'st_flags', 0)
-    if hasattr(os, 'chflags') and flags & stat.UF_HIDDEN:  # iCloud can keep a dot-file's hidden flag
-        os.chflags(output, flags & ~stat.UF_HIDDEN)
+    clear_hidden(output)
 
 
 def build_shell(destination: Path, base_path: str = '/', archive_root=None) -> str:
@@ -159,7 +165,7 @@ def export_bundle(output: Path, archive_root=None) -> dict:
         meta = json.loads((frozen / 'api' / 'meta.json').read_text())
         header = {'format': 'musnba', 'version': 1, 'created': datetime.now(timezone.utc).isoformat(timespec='seconds'),
                   'latest': meta['latest'], 'snapshots': [s['date'] for s in meta['snapshots']]}
-        descriptor, staging = tempfile.mkstemp(prefix='.musnba-', suffix='.partial', dir=output.parent)
+        descriptor, staging = tempfile.mkstemp(prefix='MusNBA-export-', suffix='.partial', dir=output.parent)
         os.close(descriptor)
         count = 0
         try:

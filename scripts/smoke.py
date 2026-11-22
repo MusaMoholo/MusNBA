@@ -570,6 +570,8 @@ def main():
     # Dashboard U15/U18/U19: presentation outputs reconcile to their retained sources.
     role_views = [read_json(p) for p in (VIEWS / 'api' / 'team').glob('*.json')]
     projected_roles = [t for t in role_views if t.get('tonight')]
+    if args.fault and projected_roles:
+        projected_roles[0]['tonight']['sims'] += 1
     role_ok = True
     for t in projected_roles:
         nxt = t['tonight']
@@ -583,8 +585,6 @@ def main():
             role_ok &= ((mean is None and role['min'] is None) or
                         (mean is not None and role['min'] is not None and abs(role['min'] - mean) <= .050001))
             role_ok &= role['starter'] == bool(source.get('starter'))
-    if args.fault:
-        role_ok = False
     check(f'roster roles: next-game minutes/starters and simulation counts equal stored games ({len(projected_roles)} teams)',
           bool(projected_roles) and role_ok)
 
@@ -597,12 +597,12 @@ def main():
     movers = read_json(VIEWS / 'api' / 'season_movers.json')
     if movers.get('from'):
         keys = ('mean_w', 'top6', 'playin', 'first')
+        if args.fault:
+            movers['teams'][0]['delta']['mean_w'] += .1
         delta_ok = all(abs(t['now'][k] - t['before'][k] - t['delta'][k]) < .000051
                        for t in movers['teams'] for k in keys)
         source_results = {r['game_id'] for r in master if r['status'] == 'final' and movers['from'] <= r['date_et'] < movers['to']}
         listed_results = {r['id'] for r in movers['results']}
-        if args.fault:
-            delta_ok = False
         check('season movers: 30 teams, deltas = now minus before; results exactly cover distinct-cutoff interval',
               len(movers['teams']) == len({t['id'] for t in movers['teams']}) == 30 and delta_ok
               and movers['from'] < movers['to'] and source_results == listed_results)

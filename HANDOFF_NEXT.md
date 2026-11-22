@@ -1,15 +1,30 @@
 # Handoff — state and next actions
 
-Updated **22 November 2026, UK** — dashboard U15–U22 completion in progress. Latest checkpoint **91ad4c2** (U21);
-U15–U21 each committed and pushed; U22 ready to checkpoint. Public source approved by owner; Pages deployment in progress. U22 completes grouped Standings controls, dynamic copy, 9 player / 6 team leader cards,
-loading states, content assertions and PWA packaging fixes. The owner asked to merge season insights into Standings;
-there is no separate main-nav Season tab. Comparable card grids use multiples of three; changing copy reads data/config.
+Updated **22 November 2026, 01:13 UK** — **dashboard upgrade programme U1–U22 complete** and published.
+Previous main checkpoint **5b0fada** (U22); this close-out is the latest commit (`git log --oneline -3`). Each U15–U22
+checkpoint was committed/pushed. Source is now **public**, explicitly approved by the owner on 22 Nov.
 
-**Running:** review server :8767; temporary PWA server :8768. Owner :8766 untouched. Required nightly is running in
-persistent session, PID 32485, log `/tmp/musnba-dashboard-nightly.log` (`--offline --no-rebuild`, engine v1.3, 10k worlds).
-Do not start another simulation or refresh while it runs. The NBA history download remains paused. Earlier snapshots
-will be archived automatically in `~/Basketball_archive_ops` before replacement. Browser checks: 130/130 full + 30/30 targeted, PWA 14/14; new
-accounting checks in smoke will run after the nightly (avoid concurrent engine simulations).
+**Use the app:** https://musamoholo.github.io/MusNBA/ — data-free GitHub Pages, source branch `gh-pages` at **e302d27**.
+iPhone: Safari → Share → Add to Home Screen → launch the icon → Offline data & installation → Import data.
+Bundle: **iCloud Drive/MusNBA/MusNBA.musnba.gz**, also `exports/MusNBA.musnba.gz` and `~/Downloads/MusNBA.musnba.gz`.
+All three copies match (10,620,944 bytes). Owner confirmed on 22 Nov that the file now appears on the phone.
+
+**Refresh complete:** 21 Nov (6 games) and 22 Nov (7 games), engine v1.3, **10,000 worlds per game**, one rotation table
+per world; fresh **10,000-world season, 965 remaining games**, as of ET 21 Nov. Offline/no-rebuild nightly finished
+22 Nov 01:04 UK; finished-code views rebuilt at 01:05 before export (nightly had loaded views before U19 was added).
+Earlier snapshots/shells/bundles archived in `~/Basketball_archive_ops`. No fetch, training or model promotion this chunk.
+
+**Running:** no data/simulation jobs. Review/test servers are closed at checkpoint; owner's :8766 remains untouched.
+NBA Stats pbp history remains paused at 1,895/5,508 retained historical games. Start your own :8767 server for checks.
+
+**Checks:** smoke **102/102**; deliberate `--fault` fails **22** checks (exit 1); full browser sweep **156/156**, then
+**12/12** targeted cases for the final phone stacking correction; hosted PWA **15/15** (import, phone stacking, offline
+sections, dynamic counts/qualifiers). macOS atomic export visibility regression passes. Real iPhone installation/import
+still needs owner acceptance; iCloud file delivery itself is confirmed.
+
+**Owner preferences added this chunk:** season insights belong inside Standings; comparable card groups come in
+multiples of three (Leaders: 9 player + 6 team cards); changing copy/counts/dates/qualifiers/model labels must derive from
+loaded data/configuration. Phone can stay stripped back (D36). The remaining engine chunk is queued below, not started.
 
 **How the owner wants a chunk run (AGENTS §3):** state your understanding and **one or two headliners**; **plan every subtask as
 a ladder of ten 10% steps with done-when criteria** and weights for the chunk %, keep the ladders below, and print the board
@@ -28,9 +43,9 @@ Chunk % = 0.80 × Delivery + 0.20 × Close-out. Each entry below is a concrete 1
 | Delivery (80%) | 10 baseline 99/99 + source audit; 20 U15 roster roles styled, six browser cases inspected, documented/committed/pushed; 30 U16 playoff picture checked/documented/committed/pushed; 40 U17 win distributions checked/documented/committed/pushed; 50 U18 season races checked/documented/committed/pushed; 60 U19 movers checked/documented/committed/pushed; 70 U20 leaders checked/documented/committed/pushed; 80 U21 guide checked/documented/committed/pushed; 90 U22 polish checked/documented/committed/pushed; 100 integration, all U statuses and commands consistent |
 | Close-out (20%) | 10 refresh configuration/cutoffs verified; 20 offline/no-rebuild nightly launched (10k, archives); 30 quarter of game logs complete; 40 half complete; 50 three quarters complete; 60 all games and fresh 10k season/views complete; 70 full browser sweep/screenshots reviewed; 80 smoke passes with new accounting checks; 90 fault run fails + PWA import/offline checks pass; 100 handoff/findings/plan current and final commit pushed |
 
-Current: Delivery 90%, Close-out 40%, overall 80%. U22 complete; nightly 8/13 engine games complete.
-Review server :8767; owner :8766 untouched. Full sweep log is in the tool session; screenshots `/tmp/musnba-u22-audited`.
-Initial baseline 99/99. Latest targeted rerun 18/18 after a transient metadata publication gap in the first sweep.
+Current: **Delivery 100%, Close-out 100%, overall 100%**. All steps complete. Public Pages and iCloud export verified.
+Final screenshots `/tmp/musnba-dashboard-final` (156 cases) and `/tmp/musnba-dashboard-team-stack` (12 cases).
+Logs: `/tmp/musnba-dashboard-{nightly,smoke,fault}.log`; measured parity: committed experiment log in FINDINGS §5.
 
 ## The product in one paragraph (ENGINE_PLAN D26)
 
@@ -70,7 +85,19 @@ every component but turnovers at 20–40%). Specs `models/v1.4{c,d,e,f}.json` (s
 
 **Team engine (team pathway v1, D25)** — unchanged.
 
-**App (DASHBOARD_PLAN) — this chunk:** Today/Game Centre **Spotlight** (headliner with points sparkline and 30+/40+/double/
+**Dashboard upgrade programme complete (22 Nov):** U1–U22 all shipped. This session finished U15 roster minutes/roles;
+U16 playoff picture; U17 row win distributions; U18 races; U19 forecast movers; U20 nine player + six team leader cards;
+U21 model guide; U22 grouped controls, dynamic copy, loading/missing-data states and PWA fixes. Races/Movers/Leaders are
+inside Standings (owner request); old `/season` links redirect. No engine promotion. Season bottom-three counts are
+summary-only: all existing fields exactly unchanged on 10k worlds / 965 remaining fixtures / 13 engine games.
+
+**PWA:** public https://musamoholo.github.io/MusNBA/ (source also public, explicitly approved 22 Nov), branch-source
+`gh-pages` at `e302d27`, 24 data-free files (no simulation data). Hosted import/offline 15/15, including phone layout. Model source stays on `main`;
+simulation data/bundles stay ignored and on laptop/iCloud. `nightly_musnba.py` defaults to iCloud Drive/MusNBA; export-only
+reuses finished snapshots. `.github/workflows/pages.yml` is MusSim's optional manual Actions alternative, not the active
+branch deployment. Real iPhone installation/import remains owner acceptance.
+
+**App core retained (see DASHBOARD_PLAN for all shipped behaviour):** Today/Game Centre **Spotlight** (headliner with points sparkline and 30+/40+/double/
 triple chances; breakout watch as a season→tonight dumbbell with the why; six leaders with each one's chance to lead the night
 or game; Today's games to watch: closest finish, highest-scoring, likeliest overtime);
 **who guards whom** (Matchup view, real matchups, earlier meetings + this game) and **player head-to-head** on sheets; Scenarios
@@ -80,12 +107,6 @@ Proj W / Proj L, sortable, current | projected split; player sheet **Shooting/Ch
 picker (Scoring · Rebounding ALL/OFF/DEF · Handling · Defense · Time; makes and main stats only); box score Δ v season (incl.
 STL/BLK, shooting x/y (z%) coloured per part); bezel points Δ v season (above the value; no win/total Δ); player page "Open
 simulation" for tomorrow's games; phone bundle stripped back (D36).
-
-**Checks (close-out, 21 Nov):** smoke **99/99**, `--fault` fails 19 (new: NBA Stats manifests, crosswalk one-to-one, matchups =
-raw, real weights sum to 1, pair history cutoff-safe, phone bundle stripped, multi-doubles nested, wins distributions sum to
-the seasons); browser **81/81** on :8767 (cases now include `game-proj` on a 22 Nov game, `today-leaders` 21 Nov, `tomorrow`
-22 Nov, `standings-wins`, `game-duels`). Nightly at 10,000 worlds: ~4 min input rebuild (incl. NBA Stats refresh) + ~130–150 s
-per game (13 games ≈ 30 min).
 
 ## Next actions (in order — the owner may reorder)
 
@@ -107,6 +128,8 @@ per game (13 games ≈ 30 min).
 6. **UX backlog (PLAN §9b + owner, 20 Nov):** player face cards (ESPN headshots fetched once, retained locally like logos) in
    spotlight cards, box scores and player pages; win % Δ only once the engine expresses team strength (dropped: two models
    disagree); competition tabs; watch-a-sim (M10); localhost lineup editor.
+
+**This dashboard chunk is finished.** Do not resume the U programme. The next development chunk is team-difference compression and M7 as described above.
 
 **End every chunk with the dashboard on the newest systems** (AGENTS §5 step 7): rerun the nightly (10,000 worlds now takes
 ~25–30 min for 15 games) so the slates and the 10k season come from the latest promoted engines.
@@ -130,6 +153,15 @@ now includes the assignment θ, `matchups.py`, `realmatch.py` and the pair histo
 ```
 
 Two backtests at once oversubscribe the CPU (each worker predicts with every core): one alone takes ~22–27 min for 200 games.
+
+## PWA export visibility — important operational fix (22 Nov)
+
+The first iCloud export existed but Finder set `UF_HIDDEN` (flags 32832), making it absent from Finder and the phone's
+file picker despite a successful export. Clearing it made the file visible; the owner confirmed phone delivery. The
+exporter now uses **non-dot staging names** (`MusNBA-export-*.partial`) and clears the hidden flag both before and after
+atomic rename. `analysis/export_visibility_check.py` verifies publication preserves bytes and clears the flag. The final
+new export remained visible after completion; local/Downloads copies are also explicitly unhidden. Do not restore the
+old dot-prefixed staging name. `nightly_musnba.py --export-only` retries export without a new nightly.
 
 ## File map
 
@@ -157,7 +189,8 @@ Two backtests at once oversubscribe the CPU (each worker predicts with every cor
 | `scripts/season_stats.py`, `scripts/projection.py` | Live season stats; placeholder; `simulate_season`; `package()` (OREB/DREB/FGM/FTM distributions, multi-doubles, 5×5) |
 | `scripts/nightly.py`, `scripts/views.py` | Nightly: ESPN + NBA Stats fetch → input rebuild (+ real matchups) → engine days (10k worlds) → season → snapshots → views (spotlight, duels, who-guards-whom, multi, averages, worlds, lab) |
 | `scripts/serve.py`, `scripts/export_musnba.py`, `scripts/nightly_musnba.py` | Local server; static shell + bundle (`phone_record`: stripped back, D36); iCloud export |
-| `scripts/webapp/` | The app; `spotlight.mjs` (headliner, breakout, leaders), `outcomes.mjs` (worlds, conditions, grouped variables), `scenario.mjs` (Scenarios, game flow, duels, Given…, drivers), `league.mjs` (standings tabs, pickers, sorting) |
+| `scripts/webapp/` | The app; `spotlight.mjs` (headliner, breakout, leaders), `outcomes.mjs` (worlds, conditions, grouped variables), `scenario.mjs` (Scenarios, game flow, duels, Given…, drivers), `league.mjs` (standings/teams), `season.mjs` (Races/Movers/Leaders), `about.mjs` (guide) |
+| `analysis/export_visibility_check.py` | Atomic export bytes/visibility regression (macOS hidden-flag check) |
 | `scripts/smoke.py`, `analysis/*.mjs` | Accounting/model checks (fault run must fail); browser checks (`--only`; cases incl. game-proj, game-duels, standings-wins) |
 
 ## Commands

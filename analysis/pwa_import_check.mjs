@@ -47,6 +47,8 @@ check('import completes and app renders slate', await waitFor(`!!document.queryS
 check('logo served from imported data', await waitFor(`[...document.querySelectorAll('img.logo')].some(i => i.complete && i.naturalWidth > 0)`, 15000));
 await send('Page.navigate', {url: args.url + '#/game/401910009'}, s);
 check('game centre renders from storage', await waitFor(`document.querySelector('.bezel') && !!document.querySelector('[data-mode=cmp]')`));
+await send('Page.navigate', {url: args.url + '#/team/14'}, s);
+check('phone team form stacks chart and fixtures', await waitFor(`(() => { const items = [...document.querySelectorAll('.form-grid > div')]; return items.length === 2 && items[1].getBoundingClientRect().top >= items[0].getBoundingClientRect().bottom - 1; })()`));
 check('service worker controls page', await waitFor(`!!navigator.serviceWorker.controller`, 15000) || (await send('Page.reload', {}, s), await waitFor(`!!navigator.serviceWorker.controller`, 15000)));
 await send('Network.emulateNetworkConditions', {offline: true, latency: 0, downloadThroughput: -1, uploadThroughput: -1}, s);
 await send('Page.navigate', {url: args.url + '#/standings'}, s);

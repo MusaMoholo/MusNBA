@@ -45,8 +45,8 @@ As of **22 November 2026** (Scenarios, Given…, joint grids, drivers, averages 
 
 ## Architecture
 
-`views.py` writes API-ready JSON; `serve.py` serves it read-only; the PWA bundle contains exactly the same
-files plus logos, so laptop and phone responses are identical. Routes are hash-based for static hosting.
+`views.py` writes API-ready JSON; `serve.py` serves it read-only. The PWA bundle retains distribution views and logos;
+`phone_record` removes world files and their dependent flags/duels (D36). Routes are hash-based for static hosting.
 In static mode `pwa.mjs` answers `/api/*` from IndexedDB and the service worker serves logos and the
 cached shell. Imports stage a new generation and switch one active pointer after verification.
 
@@ -117,3 +117,9 @@ everything is read from stored snapshots, worlds, finals and derived tables (ser
 - **PWA:** data-free static shell, retained-data import with checksum validation and previous-generation preservation;
   successful nightly exports via `nightly_musnba.py` to iCloud Drive/MusNBA. Owner approved public source + personal
   GitHub Pages on 22 Nov, following MusSim. No simulation data enters the public repo or shell.
+
+**Final checkpoint (22 Nov):** refreshed 13 games × 10,000 worlds + 10,000 seasons; smoke 102/102, fault run detects
+22 injected failures, browser 156/156 plus 12/12 final phone-layout cases, live PWA 15/15. Team form/fixtures stack on a
+phone (geometry asserted, screenshots inspected). Personal Pages live at https://musamoholo.github.io/MusNBA/; source
+public by explicit owner approval. iCloud delivery confirmed on the phone. Exporter uses non-dot staging names and
+clears Finder's hidden flag before/after rename; the first hidden export was repaired and the regression is checked.
