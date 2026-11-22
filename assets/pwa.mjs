@@ -8,7 +8,7 @@ export async function start(boot) {
   const base = new URL('../', import.meta.url).pathname;
   const originalFetch = window.fetch.bind(window);
   window.fetch = (input, options) => {
-    const u = new URL(typeof input === 'string' ? input : input.url, location.href);
+    const u = new URL(typeof input === 'string' || input instanceof URL ? input : input.url, location.href);
     return u.origin === location.origin && u.pathname.startsWith(base + 'api/') ? staticRequest(u.href) : originalFetch(input, options);
   };
   const panel = document.createElement('details');
