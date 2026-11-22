@@ -1,6 +1,6 @@
 # MusNBA — game plan and progress
 
-Updated **22 November 2026 (S01–S07 complete; Chunk A A1 at 10%, A2 at 30%; View Centre planned, D42–D43)**. The single record of scope, progress and decisions. Every agent updates it at
+Updated **22 November 2026 (S01–S07 complete; Chunk A A1 at 20%, A2 at 30%; View Centre planned, D42–D43)**. The single record of scope, progress and decisions. Every agent updates it at
 every checkpoint (AGENTS.md § Checkpoint protocol). New here? Read [AGENTS.md](AGENTS.md) first, then
 [HANDOFF_NEXT.md](HANDOFF_NEXT.md) — it says exactly what to do next.
 
@@ -133,7 +133,7 @@ remaining gate and next action rather than claim a fitted model is validated.
 
 **D42 split, now authorised for execution in order:** retain S01–S07 as completed and the original A1 weights/ladder below as the
 historical ledger (**58.0%**, S13 deferred). The new separately weighted chunks and their 60 concrete rungs are in
-HANDOFF § Execution; Chunk A A1 is at 10%, and Chunk B has not started. Chunk A targets believable lineup-aware games, shared form and
+HANDOFF § Execution; Chunk A A1 is at 20%, and Chunk B has not started. Chunk A targets believable lineup-aware games, shared form and
 late-game behaviour, plus five saved game examples; Chunk B tests a new player/lineup-defence mechanism, legal
 foul-outs, season calibration and integrated confirmation, and adds rotation visibility. Each has a fresh final
 nightly and a useful shipped dashboard improvement if no model passes the unchanged gate. Chunk A can promote an
@@ -484,6 +484,12 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
   Legacy/no-policy tests and the combined branch, availability, substitution and world-audit suite passed
   **73/73**. Smoke passed **108/108**; deliberate fault exited **1** (**86/108** passing). The previously frozen fixed 32-world F4 branch replay is still required; no rung or
   model promotion is claimed.
+- **22 Nov 2026 · A1 20%:** frozen fixed-game repaired plays/sits replay passed, 32 worlds each. Independent
+  reconstruction checked **16,130/16,336** legal fives and reconciled player minutes and team scores; trace
+  outputs were unchanged, **59** focused tests and **108/108** smoke checks passed; the deliberate fault exited
+  **1** (86/108). This is isolated wiring, not a promoted model or
+  availability calibration. Chunk A **16.5%**, original A1 **58%**. Next: finish the owner's advanced-stat
+  presentation and start the frozen two-player/non-exhaustive branch rung.
 - **19 Nov 2026** — Studied MusSim. Probed sources: ESPN site API works with plain requests; NBA CDN returns 403.
   Owner: app shell first, play-by-play sim later.
 - **19 Nov 2026** — Phase 1 shipped (collection, placeholder engine, snapshots, views, server, app, PWA). Fixed: a

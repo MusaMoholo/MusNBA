@@ -395,7 +395,9 @@ branch IDs and seeds, and explicitly uncalibrated one/two-player weights. More-t
 non-exhaustive. No branch or exact weighted-season implementation has been delivered.
 The first fixed F4 full-game branch probe failed foul-out accounting in both branches. An isolated guard now rejects
 any sixth foul or invalid five rather than silently using an illegal lineup; it is not the NBA foul-penalty rule and
-is not wired into the serving engine. A proper repair remains subject to the player-first promotion gates.
+is not wired into the serving engine. An isolated world-local repair completed the fixed 32-world plays/sits
+replay with legal fives and reconciled scores/minutes; it fails closed on insufficient eligible players and remains
+subject to the player-first promotion gates. Neither the repair nor branches are served.
 The selected S07 fallback keeps fixed report-status probabilities and recent-inactivity heuristics as uncalibrated,
 labels unlisted injuries as assumptions, and rejects unavailable five-player worlds. There is no supported
 future physical-absence hazard; S10 must retain that limitation unless a candidate passes the frozen tests.

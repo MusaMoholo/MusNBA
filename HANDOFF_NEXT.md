@@ -1,12 +1,29 @@
 # Handoff — state and next actions
 
-Updated **22 November 2026 — Chunk A execution started; A1 contract frozen at 10%; S01–S07 remain complete**.
-Latest pushed source before this A1 source-freeze checkpoint: **8efd34e**; use `git log -1` for the current checkpoint.
+Updated **22 November 2026 — Chunk A A1 at 20%, A2 at 30%; S01–S07 remain complete**.
+Latest pushed source before this A1 evidence checkpoint: **170e63a**; use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
-- **Current action:** run the frozen A1 20% repaired fixed 32-world branch probe below and independently audit its
-  trace; the hook and controlled tests now pass. Do not start Chunk B before Chunk A's delivery and checkpoint.
+- **Current action:** finish and deliver the owner's advanced-stat UX request, then start A1 rung 30% from the
+  frozen contract below. Do not start Chunk B before Chunk A's delivery and checkpoint. The advanced-stat source
+  edits in `scripts/views.py` and `scripts/webapp/{ui,game,players}.mjs` and `index.html` are **unfinished and
+  uncommitted** at this evidence checkpoint: complete edge-case tests, view rebuild, browser/PWA verification,
+  documentation and delivery before committing them. The owner additionally requested as much supportable
+  visibility as possible in **both game-player and game-team tabs**; include the team tab using only available
+  box scores and clearly label any box-derived possession estimates.
+- **A1 20% completed:** the frozen repaired F4 replay (game `401810327`, 32 worlds per branch, synthetic
+  availability and actual participants) passed in both branches. An independent reconstruction of both retained
+  captures checked 16,130 and 16,336 fives, 10 and 13 post-foul snapshots, every side's minutes and scores,
+  and player-minute replay to a maximum error of 1.78e-15 minutes. Tracing preserved all outputs exactly;
+  59 focused branch/availability/accounting tests passed; normal smoke passed 108/108 and deliberate fault exited
+  1 with 86/108 checks passing (`/tmp/musnba_a1_rung20_{smoke,fault}.log`). This is wiring evidence, not availability calibration,
+  model accuracy or promotion; short-roster NBA foul exceptions remain unsupported. Report:
+  `analysis/experiments/20261122_chunk_a_a1_branch_repair.json`; captures remain in
+  `data/derived/experiments/20261122_chunk_a_a1_branch_repair/`. Served model, forecasts, bundle and shell unchanged.
+  Doc review: HANDOFF, PLAN, FINDINGS and ENGINE_PLAN record the result and next step; AGENTS and TRAINING_PLAN
+  retain unchanged rules and gates, while DASHBOARD_PLAN and README require no change for this research-only
+  checkpoint because neither shipped behaviour nor commands changed.
 - **Owner UX requests delivered locally (22 Nov):** replace the Players fixed 3+/8+ game filter with a season-progress
   minutes-share benchmark; group player-game FG/3P/FT makes, attempts and shooting-percentage distributions.
   Percentages condition on at least one attempt and explicitly show the no-attempt chance. Source and focused tests
@@ -40,7 +57,7 @@ Latest pushed source before this A1 source-freeze checkpoint: **8efd34e**; use `
   Controlled tests first reproduced the prior ambiguous-array error and now pass, including rejection of an omitted
   changed lineup. The combined branch, availability, substitution and accounting suite passed **73/73**.
   Normal smoke passed **108/108** and deliberate fault exited **1** (**86/108** passing), logs
-  `/tmp/musnba_a1_mask_{smoke,fault}.log`. The fixed repaired replay has not yet run.
+  `/tmp/musnba_a1_mask_{smoke,fault}.log`. The subsequent fixed repaired replay passed as recorded above.
 - **Nightly completed:** former shell **2955**, log `/tmp/musnba_d44_nightly.log`. Collection had **63 requests,
   0 failures, 0 new finals**; NBA Stats had no new requests. Inputs rebuilt in **235.2 s**; **7 + 10** games and
   **10,000** season paths over **959** games were saved. Old snapshots and bundle were archived under
@@ -56,7 +73,7 @@ Latest pushed source before this A1 source-freeze checkpoint: **8efd34e**; use `
   passed **107/107** with one bit-for-bit replay skipped because the running nightly rebuilt newer inputs; deliberate
   fault exited **1** (86/107). Repeat full smoke after the nightly finishes. Rung **20%** freezes talent,
   form and shared-factor hypotheses and no-double-count controls in TRAINING_PLAN before any fitting. F4 was
-  already inspected and cannot be called untouched confirmation. A1 remains 10%.
+  already inspected and cannot be called untouched confirmation.
 - **A2 earlier-fold feasibility:** S04 control-shot predictions cover **136,578 F1**, **139,660 F2** and
   **87,671 F3** validation shots; stronger source/cache clock/coordinate and prior-role checks passed. The first
   teacher-forced within-game screen saved `analysis/experiments/20261122_a2_shot_residuals_f1_f3.json`;
@@ -88,7 +105,7 @@ Latest pushed source before this A1 source-freeze checkpoint: **8efd34e**; use `
   and exact next probe. AGENTS, TRAINING_PLAN, FINDINGS and DASHBOARD_PLAN need no new change: the standing
   rules, frozen evaluation gates, empirical results and served dashboard remain unchanged.
 - **Progress:** original A1 **58.0%**, S01–S07 complete; S08–S12/S14 open, S13 historical forecast backfill
-  deferred. New independent chunk boards: **A 13.5%** (A1 10%, A2 30%, A3 0%) and **B 0%** (B1/B2/B3 all 0%). Keep
+  deferred. New independent chunk boards: **A 16.5%** (A1 20%, A2 30%, A3 0%) and **B 0%** (B1/B2/B3 all 0%). Keep
   the original A1 weights intact; new within-chunk weights do not reset or double-count A1.
 - **Owner UX idea:** player usage, on-court +/−, offensive/defensive ratings, Box Plus/Minus and other supported
   advanced stats are recorded in PLAN §9b. Existing internal segment usage is not automatically conventional
@@ -1342,7 +1359,7 @@ playback portion of S12, plus a chunk-end delivery; S10/S11/S12/S14 are not ther
 | A2 Form and late-game realism | 35% | S04/S06; A1 for integration | S09's paired player/game gates; retain v1.3 when unsupported or rejected |
 | A3 View Centre and delivery | 35% | A1/A2 decisions | Five labelled selections, reconciled event files and an interactive 2-D court/player in the Game Centre; responsive/offline checks and fresh nightly; no fake logs or completed claim on failure |
 
-**Live board:** Chunk A `███░░░░░░░░░░░░░░░░░ 13.5%`; A1 `██░░░░░░░░░░░░░░░░░░ 10%`;
+**Live board:** Chunk A `███░░░░░░░░░░░░░░░░░ 16.5%`; A1 `████░░░░░░░░░░░░░░░░ 20%`;
 A2 `██████░░░░░░░░░░░░░░ 30%`; A3 `░░░░░░░░░░░░░░░░░░░░ 0%`.
 Original A1 remains 58%; do not double-count the separate board.
 
@@ -1935,6 +1952,21 @@ STL/BLK, shooting x/y (z%) coloured per part); bezel points Δ v season (above t
 simulation" for tomorrow's games; phone bundle stripped back (D36).
 
 ## Next actions — Chunk A in progress
+
+1. Finish the unfinished advanced-stat presentation in the working tree, including both game-player and game-team
+   tabs; verify definitions, old/missing data,
+   period handling, zero denominators, cutoff and both device bundles. Archive affected views before rebuilding,
+   inspect responsive screenshots, deliver and independently check iCloud laptop and phone bundles and publish
+   only the data-free shell. Manual device imports remain unconfirmed. Update affected docs, review and commit/push.
+2. **A1 30%:** implement isolated two-player branch enumeration with exact decimal/rational weights summing to
+   one, and non-exhaustive all-play/one-out sensitivities for more than two selected players. Test invalid
+   probabilities, identities, missing inputs and reproducibility against the frozen contract above; never imply
+   independence is calibrated or sensitivities form an Expected distribution. Credit and checkpoint only when
+   the rung passes. Then follow A1 rungs 40–100 and A2/A3 ladders, completing Chunk A before Chunk B.
+3. Keep the existing player-first gates, protected final test and D40 history deferral. No production model or
+   branch policy changes without the documented evidence and promotion checks.
+
+## Prior actions — A1 20% history (superseded)
 
 The owner has authorised both D42 chunks in order, superseding D41's earlier stop. The dashboard programme is done;
 do not resume U1–U22.

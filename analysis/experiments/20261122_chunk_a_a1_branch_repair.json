@@ -1,0 +1,62 @@
+{
+ "population": "fixed F4 game with actual participants; selected availability is synthetic",
+ "game": "401810327",
+ "model": "folds/v1.2d_F4_all",
+ "guarded": false,
+ "repair": true,
+ "records": [
+  {
+   "branch_id": "lineup-v1:8/4432166=plays",
+   "seed": "9058102881389687176",
+   "worlds": 32,
+   "trace_preserves_outputs": true,
+   "capture": "data/derived/experiments/20261122_chunk_a_a1_branch_repair/plays.npz",
+   "capture_sha256": "fe7877f6328eac4a1894e86cbeb37df6bb6169f513855ae5058cd103c6252ecb",
+   "policy_counts": {
+    "scheduled_replacements": 232,
+    "foul_out_replacements": 10
+   },
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 32,
+    "players": 20,
+    "lineup_snapshots": 8065,
+    "post_foul_snapshots": 10,
+    "lineup_fives_checked": 16130,
+    "overtime_worlds": 1,
+    "max_replayed_player_minute_error": 1.7763568394002505e-15
+   }
+  },
+  {
+   "branch_id": "lineup-v1:8/4432166=sits",
+   "seed": "14153229437098904587",
+   "worlds": 32,
+   "trace_preserves_outputs": true,
+   "capture": "data/derived/experiments/20261122_chunk_a_a1_branch_repair/sits.npz",
+   "capture_sha256": "7a6e29109540e0e5ea824f5e0ecb55b21afcbb2250cef3ab911680040046e4db",
+   "policy_counts": {
+    "scheduled_replacements": 277,
+    "foul_out_replacements": 13
+   },
+   "audit": {
+    "game_id": "401810327",
+    "worlds": 32,
+    "players": 20,
+    "lineup_snapshots": 8168,
+    "post_foul_snapshots": 13,
+    "lineup_fives_checked": 16336,
+    "overtime_worlds": 1,
+    "max_replayed_player_minute_error": 1.7763568394002505e-15
+   }
+  }
+ ],
+ "sha256": {
+  "scripts/a1_branch_world_probe.py": "25c7820498beaafa7f71c4b349955f2c4cf4e41441ffd47e44ae361aca187b31",
+  "scripts/a1_lineup_branches.py": "10e2550b61dd9688db52581aec6166ce06548ad64651482f17c0ddc43df5d002",
+  "scripts/a1_branch_foul_out.py": "1b4d82f5eef272a8362087090588617d361ddf36e04c4d41fdeff95c4db49acc",
+  "scripts/engine.py": "5431df17caac031eb051fc80968496366cb8d4d6915fc123db35f94ee9d9f339",
+  "scripts/a1_substitution_world_audit.py": "d1f1b34834ffe6c9d82b246cbbaed453c6a4eea224e47da020c6e0f02d3cdf4e",
+  "models/v1.2d.json": "d0fded7eb9871494e0bc4a82a3627b0a3dc37c3c243d8c9378f151dec2789927",
+  "data/models/folds/v1.2d_F4_all/config.json": "1617769cb52f2c750e0f1276071b39fc21254ef53fc97ccc646869aaa50f5e71"
+ }
+}

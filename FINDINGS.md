@@ -885,6 +885,15 @@ bundle are unchanged. The fixed pool-0 panel uses actual participants and projec
   sits world **16**, Q3 **246.4 seconds remaining**. No branch forecast or capture was written. These are first failures in the chosen fixed
   batch, not estimates of severity or actual game behaviour. Report:
   `analysis/experiments/20261122_chunk_a_a1_branch_guarded.json`. The guard is a fallback, not a model promotion.
+- **Chunk A A1 repaired replay:** in the same fixed F4 game and seeds, the isolated repair completed both
+  32-world branches. Independently reconstructed traces checked **16,130** plays and **16,336** sits fives,
+  including **10/13** post-foul substitutions, with no unavailable or disqualified players; side/period scores
+  and minutes reconciled, with maximum player-minute error **1.78e-15**. Capturing did not alter scores, boxes,
+  periods or minutes. Report `analysis/experiments/20261122_chunk_a_a1_branch_repair.json` fingerprints
+  the inputs and raw captures. These are one synthetic status, actual-participant game, not a frequency,
+  calibration or accuracy estimate. Short rosters fail closed; this is not the NBA technical-penalty exception.
+  Re-run the saved-capture auditor without simulation with
+  `.venv/bin/python -c "import numpy as np; from scripts.a1_substitution_world_audit import audit_worlds; from pathlib import Path; p=Path('data/derived/experiments/20261122_chunk_a_a1_branch_repair'); [print(n, audit_worlds(np.load(p / (n + '.npz'), allow_pickle=False))) for n in ('plays', 'sits')]"`.
 - **22 Nov player-sheet accounting check (presentation only):** in retained simulated game `401910030`, player
   `3032977` has no field-goal attempts in **2,958/10,000** worlds; the displayed FG% distribution conditions on
   **7,042/10,000** and displays the no-attempt chance as **29.6%**. The six width/theme checks compare the visible
