@@ -337,6 +337,24 @@ node-level fit or matching covariance alone. Multiple tested candidates remain i
 existing familywise and once-per-version final-test rules; an unresolved interaction or excessive uncertainty is
 inconclusive, not a pass. A1 lineup-branch decisions are required before integrating a survivor.
 
+**Earlier-fold event feasibility screen, frozen before residual measurement:** reuse the retained S04 v2 control
+shot-node probabilities, not its rim candidate, for the complete validation dates of F1, F2 and F3. The models were
+fit before their respective validation windows; F4 and the protected final test are excluded. Join each prediction
+to its actual shooter only after reconciling source/cache rows by game, date, period, zone, result, score margin,
+clock, shot time and coordinates, with their recorded fingerprints; exclude and count any shooter outside the
+recorded offensive five or lacking a valid prior role. This is teacher-forced observed-shot research, not a
+forecast or a comparison against simulated worlds.
+
+For each known-role player-game with at least two eligible shots, define residuals `actual_make − control_make`
+and calculate the mean product over distinct ordered shots of that player in that game. Within each game average
+eligible player-games equally; then average games equally. Report each fold and pooled F1–F3, all players and
+each prior star/starter/bench role, with player-game/shot/pair/game counts and 10,000 complete-game bootstrap
+95% intervals (seed 20261122). Require at least 50 games and 100 player-games per reported cohort. Count all
+missing/invalid exclusions; no negative estimate is clamped. The within-game residual excess combines any
+persistent talent, form, shared game effects and model misspecification, so it cannot identify their separate
+variance or justify a draw by itself. A valid component still needs a separately frozen identification and
+simulated-world comparison, with the original player-first gates.
+
 #### S03 signal-diagnosis specification — 22 Nov, before the diagnosis
 
 The fixed unit is a team-game side: the **200 unique S01 F4 game IDs** in the manifest, exactly matching the retained

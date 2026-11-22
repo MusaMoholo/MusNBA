@@ -44,6 +44,11 @@ Partial source checkpoint **4dce4a3** was pushed before the UX-delivery nightly.
   already inspected and cannot be called untouched confirmation. Next A2 rung is an isolated, calibrated
   player-uncertainty candidate only if strictly earlier fitted predictions support an identifiable component;
   otherwise record the unsupported result. A1 remains 10%.
+- **A2 feasibility preparation:** retained S04 control-shot predictions cover **136,578 F1**, **139,660 F2**
+  and **87,671 F3** validation shots. A source-order check matched game/date/zone/result and found no missing
+  shooter IDs; stronger cache/clock/coordinate and role-cutoff verification is still required. The exact
+  teacher-forced within-game residual screen is frozen in TRAINING_PLAN before measurement; it cannot by itself
+  distinguish persistent talent from nightly or shared form. No F4 or final-test outcomes will enter it.
 - **Prepared, unpublished Pages shell:** isolated worktree `/tmp/musnba-user-ux-pages`, `gh-pages` at `f2932e1`,
   has only `assets/game.mjs`, `assets/players.mjs` and `sw.js` changed from the reviewed data-free shell
   `614f3061d9dc69a41bc4`. The shell passed **18/18** checks with the previous bundle. Do not publish until the new
