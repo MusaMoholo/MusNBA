@@ -315,6 +315,49 @@ function wireBlocks(el, data, paint) {
   });
 }
 
+// U5 + U6: game flow — the home lead at each break as a fan (10–90 and 25–75 bands, median) and each side's points per
+// quarter with 10–90 whiskers (actual dots once final). From the stored worlds and period distributions.
+function flowCharts(data) {
+  const sim = sims(data), fan = data.lead_fan;
+  if (!sim) return '';
+  const A = team(data.game.away.id), H = team(data.game.home.id);
+  let fanSvg = '';
+  if (fan) {
+    const W = 420, Hh = 190, pl = 34, pr = 12, pt = 12, pb = 40;
+    const lo = Math.min(-5, ...fan.q.map(q => q[0])), hi = Math.max(5, ...fan.q.map(q => q[4]));
+    const x = i => pl + i * (W - pl - pr) / (fan.q.length - 1), y = v => pt + (hi - v) * (Hh - pt - pb) / (hi - lo);
+    const band = (a, b) => fan.q.map((q, i) => `${x(i).toFixed(1)},${y(q[a]).toFixed(1)}`).join(' ') + ' ' + fan.q.map((q, i) => `${x(i).toFixed(1)},${y(q[b]).toFixed(1)}`).reverse().join(' ');
+    const med = fan.q.map((q, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(q[2]).toFixed(1)}`).join(' ');
+    const ticks = [lo, 0, hi].map(v => `<text x="${pl - 6}" y="${(y(v) + 3).toFixed(1)}" text-anchor="end">${v > 0 ? '+' : ''}${v}</text>`).join('');
+    const anc = i => (i === 0 ? 'start' : i === fan.breaks.length - 1 ? 'end' : 'middle');
+    const labels = fan.breaks.map((b, i) => `<text x="${x(i).toFixed(1)}" y="${Hh - pb + 14}" text-anchor="${anc(i)}">${b}</text><text x="${x(i).toFixed(1)}" y="${Hh - pb + 28}" text-anchor="${anc(i)}" class="dim">${esc(H.abbr)} ${Math.round(100 * fan.p_lead[i])}%</text>`).join('');
+    fanSvg = `<div><h4>${esc(H.abbr)} lead at each break</h4><svg class="flow" viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Home lead by break">
+      <polygon class="b90" points="${band(0, 4)}"></polygon><polygon class="b50" points="${band(1, 3)}"></polygon>
+      <line class="zero" x1="${pl}" x2="${W - pr}" y1="${y(0).toFixed(1)}" y2="${y(0).toFixed(1)}"></line><path class="med" d="${med}"></path>
+      ${fan.q.map((q, i) => `<circle cx="${x(i).toFixed(1)}" cy="${y(q[2]).toFixed(1)}" r="3"></circle>`).join('')}${ticks}${labels}</svg>
+      <p class="note">Median lead (line), middle half (dark band) and 10–90% (light band) of the simulated games; % = chance ${esc(H.abbr)} leads at that break.</p></div>`;
+  }
+  const qs = ['q1', 'q2', 'q3', 'q4'].filter(k => sim.periods?.[k]);
+  let qSvg = '';
+  if (qs.length) {
+    const W = 420, Hh = 190, pl = 30, pt = 10, pb = 34;
+    const vals = qs.flatMap(k => ['away', 'home'].map(sd => sim.periods[k][sd].pts.q));
+    const hi = Math.max(...vals.map(q => q[4])) + 2, lo = Math.max(0, Math.min(...vals.map(q => q[0])) - 4);
+    const gw = (W - pl - 8) / qs.length, y = v => pt + (hi - v) * (Hh - pt - pb) / (hi - lo);
+    const act = data.actual ? k => ({away: actualPoints(data, 'away', k), home: actualPoints(data, 'home', k)}) : null;
+    const bars = qs.map((k, i) => ['away', 'home'].map((sd, j) => {
+      const d = sim.periods[k][sd].pts, cx = pl + i * gw + gw * (j ? 0.62 : 0.32), a = act?.(k)?.[sd];
+      return `<rect class="q-${sd}" x="${(cx - 9).toFixed(1)}" y="${y(d.mean).toFixed(1)}" width="18" height="${(y(lo) - y(d.mean)).toFixed(1)}"></rect>
+        <line class="wh" x1="${cx.toFixed(1)}" x2="${cx.toFixed(1)}" y1="${y(d.q[4]).toFixed(1)}" y2="${y(d.q[0]).toFixed(1)}"></line>
+        ${a != null ? `<circle class="act" cx="${cx.toFixed(1)}" cy="${y(a).toFixed(1)}" r="4"><title>${a} actual</title></circle>` : ''}
+        <text x="${cx.toFixed(1)}" y="${(y(d.q[4]) - 3).toFixed(1)}" text-anchor="middle">${d.mean.toFixed(1)}</text>`;
+    }).join('') + `<text x="${(pl + i * gw + gw / 2).toFixed(1)}" y="${Hh - pb + 16}" text-anchor="middle">${k.toUpperCase()}</text>`).join('');
+    qSvg = `<div><h4>Points per quarter</h4><svg class="flow" viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Points per quarter">${bars}</svg>
+      <p class="note"><i class="lg q-away"></i> ${esc(A.abbr)} <i class="lg q-home"></i> ${esc(H.abbr)} · bar = mean, whisker = 10–90%${act ? ' · dot = actual' : ''}.</p></div>`;
+  }
+  return fanSvg || qSvg ? `<section class="panel"><h3 style="margin-top:0">Game flow</h3><div class="flow-grid">${fanSvg}${qSvg}</div></section>` : '';
+}
+
 function teamView(el, data, period) {
   const sim = sims(data);
   const A = team(data.game.away.id), H = team(data.game.home.id);
@@ -349,7 +392,7 @@ function teamView(el, data, period) {
     {id: period + '-margin', title: `Margin (${H.abbr} minus ${A.abbr})`, d: per.margin, side: true, A, H, ladder: margins, actual: has ? actual.home - actual.away : null},
   ];
   const paint = () => {
-    el.innerHTML = boxPanel + blocks.map(b => distBlock(data, b)).join('') + '<p class="note">Over = strictly more than the line. Tap a bar to move the line there.</p>'
+    el.innerHTML = boxPanel + flowCharts(data) + blocks.map(b => distBlock(data, b)).join('') + '<p class="note">Over = strictly more than the line. Tap a bar to move the line there.</p>'
       + (data.worlds && period === 'fg' ? '<div id="drivers"></div>' : '');
     wireBlocks(el, data, paint);
     const drivers = el.querySelector('#drivers');

@@ -420,6 +420,26 @@ def spotlight_entries(gid: str, r: dict, sim: dict) -> list:
     return out
 
 
+def lead_fan(path: Path, gid: str) -> dict | None:
+    """U5: the home lead after Q1, at half-time, after Q3 and at the final whistle (overtime included) in every stored world:
+    10/25/50/75/90th percentiles per break, and the chance the home side leads at each."""
+    import numpy as np
+    f = path / 'engine_worlds.npz'
+    if not f.exists():
+        return None
+    with np.load(f) as z:
+        if gid not in z.files:
+            return None
+        per = z[gid].astype(int)  # (worlds, home/away, Q1–Q4 + OT)
+    lead = np.cumsum(per[:, 0, :] - per[:, 1, :], axis=1)
+    out = {'breaks': ['Q1', 'Half', 'Q3', 'Final'], 'q': [], 'p_lead': []}
+    for k in (0, 1, 2, 4):
+        v = lead[:, k]
+        out['q'].append([int(x) for x in np.percentile(v, [10, 25, 50, 75, 90])])
+        out['p_lead'].append(round(float((v > 0).mean()), 3))
+    return out
+
+
 def scorer_duel(path: Path, gid: str, a_id: str, b_id: str) -> dict | None:
     """Duel of the night (Today card): the chance the away side's projected top scorer outscores the home side's, read
     from the stored worlds (same worlds as the Game Centre; nothing simulated)."""
@@ -645,7 +665,7 @@ def build(views_root: Path = VIEWS) -> dict:
                     sides[s_] = sorted(((x['id'], x['name'], x.get('pts', 0)) for x in actual[s_]['players'] if not x['dnp']), key=lambda t: -(t[2] or 0))
             duel = duels(M_real, gid, r['date_et'], sides, final=bool(actual))
         write_json(api / 'game' / f'{gid}.json', {
-            'game': core, 'duels': duel, 'multi': multi if p else None,
+            'game': core, 'duels': duel, 'multi': multi if p else None, 'lead_fan': lead_fan(snaps[p['day']]['path'], gid) if p else None,
             'spotlight': (spotlight(spotlight_entries(gid, r, p['sim']), season_lookup(p['day']), snaps[p['day']]['path'])
                           if p and r['status'] != 'final' else None),
             'projection': ({'snapshot': p['day'], 'kind': p['meta']['kind'], 'generated': p['meta']['generated'],

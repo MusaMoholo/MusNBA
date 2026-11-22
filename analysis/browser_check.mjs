@@ -42,6 +42,7 @@ const CASES = [
   ['scenario', '#/game/401909305/scenario', ['desktop', 'phone'], ['dark', 'light']],
   ['scenario-set', '#/game/401909305/scenario/' + encodeURIComponent(JSON.stringify([{subj: 'p:4701230', v: 'pts', op: 'ge', x: 30}, {subj: 't:home', v: 'win'}])), ['desktop', 'phone'], ['dark']],
   ['team-drivers', '#/game/401909305/fg/team', ['desktop', 'phone'], ['light']],
+  ['game-flow', '#/game/401910029/fg/team', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['sheet-whatif', '#/game/401909305/player/4701230/fg', ['desktop', 'phone'], ['dark', 'light']],
   ['today-leaders', '#/today/2026-11-21', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['tomorrow', '#/today/2026-11-22', ['desktop', 'half', 'phone'], ['dark']],
