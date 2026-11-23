@@ -1,0 +1,16 @@
+{
+ "kind": "independent targeted F4 saved-world and seed accounting",
+ "summary": "analysis/experiments/20261122_a1_f4_six_roster_v1.json",
+ "summary_sha256": "4b01ebec994a9c313cfb69a8d7c8736191686165265a50a5499ca241dd258f95",
+ "details_sha256": "87e816cfa24ca794be2cf7ce704900d8201638a9b181819f6df9f3e5e50d3dd3",
+ "audit_sha256": "8efb06ed5d9ad57b75bd412b77b7c535ac5be39ba789f5dd667f70289a43aa75",
+ "attempts": 1000,
+ "completed_worlds": 798,
+ "exhausted": 202,
+ "lineup_snapshots": 195435,
+ "elapsed_seconds": 4.32,
+ "limitations": [
+  "Successful traces independently replayed; rejected trajectories not retained.",
+  "One selected oracle-roster game; not an NBA rate or retry-bias comparison."
+ ]
+}

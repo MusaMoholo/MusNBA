@@ -1,10 +1,26 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 80%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **2eb5bd8** (research roster pressure); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **d3859c5** (fixed F4 exhaustion screen); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
+- **A1 90% partial — targeted six-player exhaustion (23 Nov UTC):** after the F4 screen, deliberately
+  selected its sole seven-home-participant game `401811022`, then synthetically sat the top projected
+  home-minute player. Of **1,000** independent single-world attempts with the isolated D29 repair,
+  **202** exhausted eligible home players and **798** completed. Failures occurred in periods
+  **3/4/5/6 = 23/173/5/1**. Ten one-thread workers took **64.486s**. Separate replay checked all seeds,
+  **798** saved captures and **195,435** lineup snapshots in **4.32s**; rejected trajectories themselves
+  were not saved. Reports `analysis/experiments/20261122_a1_f4_six_roster_v1{,_audit}.json`, per-attempt
+  records and captures ignored in `data/derived/experiments/20261122_a1_f4_six_roster_v1/`. This is a
+  selected extreme oracle roster with a synthetic absence, **not** an NBA rejection rate or proof of retry
+  bias. It does show retries can discard a substantial, game-state-selected fraction rather than merely
+  occasional random failures. Keep the candidate isolated; next replay the rejected seeds under the
+  distinct S06 penalty policy, disclosing different substitution paths, then test bias on earlier folds.
+  The served model and bundles are unchanged; no protected-season actual outcomes were scored. Focused
+  tests **4/4**, smoke **107/107**, deliberate `--fault` **86/107** and exit 1. HANDOFF, PLAN, FINDINGS
+  and README record the work; AGENTS, ENGINE_PLAN, TRAINING_PLAN and DASHBOARD_PLAN need no changes because
+  standing rules, accepted engine, evaluation gates and shipped UI did not change.
 - **A1 90% partial — fixed F4 exhaustion screen (23 Nov UTC):** the 200-game S01 development panel,
   using oracle actual-participant rosters and a synthetic top-home-player plays/sits split, completed **2,000**
   separately seeded attempts (five per branch), with **0** invalid initial allocations and **0** typed
@@ -432,6 +448,15 @@ The preceding pushed checkpoint was **2eb5bd8** (research roster pressure); use 
   F4 conditional-roster stress screen with synthetic selected status, not F1–F3 confirmation, a pre-game
   failure rate, matched penalty-policy bias test, accuracy result or production retry. Do not score any
   protected 2026–27 results. Preserve every partial result if interrupted.
+- **A1 90% targeted six-player stress, frozen after the F4 screen and before its draws:** select the
+  unique F4 screen game with seven actual home participants (`401811022`); synthetically sit the same
+  highest-expected-minute home player, yielding six. Run **1,000** independently seeded single-world first
+  attempts with the isolated D29 repair, ten one-thread workers, no retries, recording each typed exhaustion
+  and independently auditing every completed saved trace. Report every 100 attempts. This deliberately
+  selects an extreme oracle-roster case and must not be presented as an NBA failure rate or an F1–F3 gate.
+  If any attempts exhaust, retain their seeds for a separately disclosed S06 penalty-policy comparison;
+  that policy changes substitutions and random paths, so the comparison cannot by itself prove counterfactual
+  retry bias. Unexpected input, cutoff, accounting and unknown errors must stop, not be retried.
 - **A1 80% complete, injection-only:** a single shared research lineup control now drives selected player, team,
   sheet, scenario/Given/Joint and driver views; branch-unavailable metadata/cards are omitted. Available and
   positive-minute participation are distinct; shooting-defined mass is weighted. No normal route registers the
@@ -2915,9 +2940,10 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
    `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -u analysis/a1_world_retry_probe.py --game 401810327 --worlds 20 --seed 20261122 --output analysis/experiments/<new-retry-report>.json`.
    It does not persist the full captures and does not prove a 10k runtime or real failure rate. The branch
    10k deterministic captures, isolated 200-world clean-stop/resume comparison, 200-game F4 exhaustion
-   screen and independent audits are listed above. The screen's absence of observed exhaustion leaves the
-   planned retry-versus-penalty comparison unresolved; use a clearly labelled targeted six-player stress
-   before claiming any effect, then F1–F3 and dated pre-game cohorts where available. The resume prototype
+   screen and independent audits are listed above. The targeted six-player stress has now identified
+   **202** exhausted seeds in its selected F4 case. Run the predeclared S06 penalty-policy comparison
+   on those retained seeds, documenting its distinct substitution paths and avoiding counterfactual
+   claims; then F1–F3 and dated pre-game cohorts where available. The resume prototype
    is single-operator only, and an orphaned partial batch fails for manual inspection. Source evidence and missing dated
    injury-report cohorts are documented there and in FINDINGS; do not score protected-season outcomes.
    The retry coordinator is deliberately unwired: prove world-local classification and survivor isolation,

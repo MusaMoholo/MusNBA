@@ -2,6 +2,18 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 ET — selected six-player branch:** the sole home seven-participant game in the preceding F4
+screen (`401811022`) was deliberately selected and its top projected home-minute player synthetically sat.
+With the isolated D29 foul-out repair, **202 / 1,000** separately seeded first attempts ran out of eligible
+home players; **798** completed. The recorded failures occurred in periods **3/4/5/6 = 23/173/5/1**.
+Ten single-thread workers took **64.486s**; a separate saved-file audit replayed **798** completed worlds
+and **195,435** lineup snapshots in **4.32s**, and checked the recorded seeds/reasons for all failures.
+Rejected trajectories were not retained and their counterfactual outcomes are unknown. This selected,
+oracle-roster synthetic absence is not a league rate or a measured predictive bias. It shows a substantial
+state-dependent failure mode in this stress case, so simply conditioning on successful worlds needs the
+already-registered bias/penalty comparison. Reports:
+`analysis/experiments/20261122_a1_f4_six_roster_v1{,_audit}.json`.
+
 **22 Nov 2026 ET — fixed-F4 exhaustion screen:** the 200 predeclared F4 games supplied oracle actual
 participants, with synthetic plays/sits of the top projected home-minute player. All **400** branches had
 valid initial D29 allocations; **2,000 / 2,000** separately seeded single-world attempts completed without

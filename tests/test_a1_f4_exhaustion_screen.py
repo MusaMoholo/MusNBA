@@ -1,3 +1,4 @@
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -7,6 +8,8 @@ from unittest.mock import patch
 import numpy as np
 
 from analysis import a1_f4_exhaustion_screen as screen
+from analysis import a1_f4_six_roster_audit as stress_audit
+from analysis import a1_f4_six_roster_stress as stress
 from scripts.a1_branch_foul_out import ExhaustedEligiblePlayers
 
 
@@ -63,6 +66,32 @@ class ExhaustionScreenTests(unittest.TestCase):
             result = screen.screen_game('123', tmp)
             self.assertTrue(all(b['status'] == 'invalid initial roster or allocation' and not b['attempts']
                                 for b in result['branches']))
+
+    def test_six_player_stress_rejects_only_explicit_world_failure(self):
+        stress._WORKER.update(engine=self.engine, branch=self.game,
+                              simulate=lambda *_args: (_ for _ in ()).throw(
+                                  ExhaustedEligiblePlayers('fewer than five eligible players')))
+        policy = SimpleNamespace()
+        with tempfile.TemporaryDirectory() as tmp, \
+             patch.object(stress.a1_branch_world_probe, 'RepairedTrace', return_value=policy):
+            self.assertEqual(stress.attempt(0, tmp)['status'], 'exhausted')
+            self.assertEqual(list(Path(tmp).iterdir()), [])
+            stress._WORKER['simulate'] = lambda *_args: (_ for _ in ()).throw(RuntimeError('unknown'))
+            with self.assertRaisesRegex(RuntimeError, 'unknown'):
+                stress.attempt(1, tmp)
+
+    def test_six_player_audit_rejects_changed_manifest_without_output(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            detail = root / 'manifest.json'
+            detail.write_text('{}')
+            summary = root / 'summary.json'
+            summary.write_text(json.dumps({'details': str(detail), 'details_sha256': 'wrong'}))
+            output = root / 'audit.json'
+            with patch.object(stress_audit.sys, 'argv', ['audit', str(summary), '--output', str(output)]):
+                with self.assertRaisesRegex(ValueError, 'detailed manifest differs'):
+                    stress_audit.main()
+            self.assertFalse(output.exists())
 
 
 if __name__ == '__main__':

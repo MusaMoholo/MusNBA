@@ -429,6 +429,11 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 ET · A1 targeted six-player stress:** one deliberately selected F4 oracle-roster game,
+  with a synthetic top-player absence, produced **202 / 1,000** typed exhausted-roster failures; the other
+  **798** worlds and **195,435** lineup snapshots passed independent saved-file replay. Generation
+  **64.486s**, ten one-thread workers. This is not a league failure rate or a retry-bias estimate; it does
+  demonstrate non-negligible state-selected losses in a short-roster case. No promotion; A1 **80%**, Chunk A **34.5%**.
 - **22 Nov 2026 ET · A1 fixed-F4 exhaustion screen:** on **200** fixed development games with oracle
   participants and synthetic top-home-player plays/sits branches, **2,000 / 2,000** single-world attempts
   completed, with **0** initial allocation failures and **0** recorded exhaustion. Independent replay checked
