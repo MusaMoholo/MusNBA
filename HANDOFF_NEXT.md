@@ -1,10 +1,51 @@
 # Handoff — state and next actions
 
 Updated **23 November 2026 — Chunk A A1 at 80%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **0ed0cad** (paired actual retry comparison); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **a893686** (10k paired retry stress); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
+- **A1 90% partial — vector matched-penalty wiring and real-outcome preflight (23 Nov ET):** the isolated
+  vector candidate reused the audited matched continuation without changing its fingerprinted source.
+  Its **1,000** single-world traces matched the independently audited saved references, including **190**
+  failed-first-seed states, **490,824** lineup fives and **331** technicals. A fixed synthetic **100-world**
+  vector run replayed identically and reconciled **48,968** fives and **26** technicals. The no-exception
+  check matched both worlds; two earlier four-world preflights exhausted, as expected for this selected
+  short roster, so they were not treated as no-exception samples. Focused two-world tests also check that
+  an exhaustion changes only its own lineup/score at the repair step. The three fixed F4 oracle-roster games,
+  **1,000** worlds each, ran in **71.0s** with four single-thread workers; independent accounting checked
+  **3,000** worlds, **1,473,288** lineup fives, **64** players and **320** player means/CRPS values, with
+  **0** technical events. The paired comparison against S01 has only three games and explicitly reports
+  insufficient samples; it is wiring, not a real-outcome gain. Vector engine draws share RNG, so distinct
+  world paths are not claimed independent after event divergence. Reports
+  `analysis/experiments/20261123_a1_vector_matched_penalty_probe_v1.json` and
+  `analysis/experiments/20261123_a1_vector_penalty_pilot_v1{,_audit,_compare}.json`; ignored pilot
+  captures and output parquet are under `data/derived/experiments/20261123_a1_vector_penalty_pilot_v1*`.
+  Focused tests **49/49**, smoke **107/107**, intentional fault **86/107** and exit 1. No job remains;
+  no production model, forecast, bundle or shell changed. A1 **80%**, Chunk A **34.5%**. HANDOFF, PLAN,
+  FINDINGS and README updated; AGENTS (standing rules), ENGINE_PLAN (design), TRAINING_PLAN (gates) and
+  DASHBOARD_PLAN (shipped UI) require no change. Next: measure safe worker/memory scaling and then run the
+  frozen 200-game F4 candidate only with a fresh source/output namespace; independently audit and compare
+  to the retained S01 control. Reject or retain based on the frozen player-first gates, not this pilot.
+- **Next A1 90% matched-penalty vector candidate protocol, frozen before implementation:** the measured
+  six-player retry shifts make blind replacement unsuitable as an assumed neutral repair. Test a separate
+  research-only vectorized D29 branch repair with the already studied foul-penalty continuation: replace
+  fouled-out players while five eligible remain; when fewer than five remain, retain only the necessary
+  currently on-court disqualified players and assess the separately seeded technical for the disqualifying
+  and subsequent fouls. Never revive a removed player, never hide invalid initial rosters or unrelated
+  errors, and preserve the original no-exception branch behavior and random streams. Do not edit the
+  completed experiments' fingerprinted source; create a new isolated candidate. First prove equality to
+  the independently replayed single-world matched reference for fixed surviving and exhausted seeds,
+  then test multi-world isolation, lineups, box/score/technical accounting and deterministic replay.
+  Validate a fixed three-game paired backtest against same-seed controls before attempting the existing
+  fixed **200-game F4** panel, **1,000 worlds/game**, actual-participant oracle rosters and earlier-fold
+  fitted artifacts. Compare player tiers/minutes/points/rebounds/assists/3PM first, then team scores,
+  using the existing game-clustered A1 comparison and preregistered uncertainty/non-inferiority bounds.
+  The F4 screen is diagnostic, not promotion: no F1–F3 confirmation, protected final outcomes, live
+  forecasts or production wiring. If equivalence, accounting, cutoff, finite-output, runtime or the
+  paired screen fails, retain the accepted model, record the failure and do not claim a validated scenario.
+  Freeze fresh input/model/source fingerprints and output namespaces before execution. This is a
+  continuation assumption, not proof of the unknowable no-exception outcome or a real-world injury model.
 - **A1 90% partial — real-retry 10k scale (23 Nov ET):** the selected F4 six-player synthetic
   oracle-roster run combined the previously audited **1,000** slots with **9,000** new slots, accepting
   **10,000** worlds after **2,330** typed rejections (including **1,893** failed first attempts).
@@ -3274,6 +3315,13 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
    A deliberate clean stop uses `--stop-after-batches N`; resume the same paths with `--resume` after
    inspecting the directory. Resume independently replays the complete new-batch prefix; any orphan
    fails closed and must be retained for inspection rather than overwritten.
+   The separate vector continuation's three-game real-outcome preflight is complete above. Reproduce with
+   `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -u analysis/a1_vector_penalty_backtest.py --pilot --name <fresh-name>`,
+   then `.venv/bin/python analysis/a1_vector_penalty_backtest_audit.py analysis/experiments/<fresh-name>.json --output analysis/experiments/<fresh-audit>.json`.
+   The preflight used four workers; before the 200-game screen, measure safe concurrency without exceeding
+   ten total compute threads and refreeze/revalidate any changed source under new names. Run candidate and
+   control on exactly the fixed games and same initial seeds; audit all candidate worlds and compare using
+   `scripts/a1_compare.py` and the existing registered player-first gate. A clean pilot is not promotion.
    Genuinely dated
    pre-game report cohorts remain unavailable for fitting or calibrating an availability model; labelled
    fixed scenario weights themselves remain permitted. The resume prototype

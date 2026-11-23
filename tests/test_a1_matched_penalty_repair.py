@@ -3,11 +3,38 @@ import unittest
 import numpy as np
 
 from analysis.a1_matched_penalty_repair import MatchedPenaltyTrace
+from analysis.a1_vector_matched_penalty import VectorMatchedPenaltyTrace
 from scripts import engine
 from tests.test_a1_lineup_branches import OnePlayerBranchesTests
 
 
 class MatchedPenaltyRepairTest(unittest.TestCase):
+    def test_vector_exhaustion_does_not_change_other_world_lineup_or_score(self):
+        game = OnePlayerBranchesTests().game(size=6)
+        game.P['ft_pct'] = np.ones(game.n)
+        state = engine.Worlds(game, 2, np.random.default_rng(42))
+        state.off[:] = 0
+        lineups = np.tile(np.array([[[0, 1, 2, 3, 4], [6, 7, 8, 9, 10]]]), (2, 1, 1))
+        active = np.array([0, 1])
+        state.ingame['pf_so_far'][:, 0] = 5
+        state.ingame['pf_so_far'][1, 5] = 6
+        policy = VectorMatchedPenaltyTrace()
+        policy.begin(game, 2, np.ones((2, game.n), dtype=bool), 42)
+        policy.before_segment(game, state, active, lineups)
+        state.ingame['pf_so_far'][:, 0] = 6
+        offense, defense = lineups[:, 0].copy(), lineups[:, 1].copy()
+        np.testing.assert_array_equal(policy.after_fouls(game, state, active, offense, defense), [True, False])
+        self.assertIn(5, offense[0])
+        self.assertIn(0, offense[1])
+        np.testing.assert_array_equal(state.score[:, 1], [0, 1])
+        self.assertFalse(policy.repair.exempt[0].any())
+        self.assertTrue(policy.repair.exempt[1, 0])
+        scheduled = lineups.copy()
+        scheduled[1, 0, 0] = 5
+        repaired = policy.before_segment(game, state, active, scheduled)
+        self.assertIn(0, repaired[1, 0])
+        self.assertNotIn(5, repaired[1, 0])
+
     def test_retains_only_current_foul_out_and_records_technical(self):
         for side in (0, 1):
             with self.subTest(side=side):

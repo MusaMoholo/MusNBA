@@ -429,6 +429,11 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **23 Nov 2026 ET · A1 vector matched-penalty preflight:** **1,000** single worlds matched the audited
+  continuation; **100** vector worlds replayed and reconciled. The fixed **3-game / 3,000-world** F4
+  oracle-roster run reconciled **1,473,288** fives and **320** player sample metrics; its real-outcome
+  comparison is explicitly insufficient. **71.0s** at four single-thread workers. A1 **80%**, Chunk A
+  **34.5%**; production unchanged. Measure safe concurrency, then run the frozen 200-game comparison.
 - **23 Nov 2026 ET · A1 real-retry 10k scale:** selected six-player synthetic F4 stress yielded **10,000**
   valid worlds after **2,330** rejections; independent replay matched every rejection, accepted world
   and first-failure continuation. Retry versus continuation total difference **−1.083 [−1.297, −0.873]**;

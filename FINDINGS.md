@@ -2,6 +2,21 @@
 
 Measured facts only. Each entry states its date and population.
 
+**23 Nov 2026 ET — vectorized matched-penalty wiring and F4 three-game preflight:** the opt-in vector
+candidate matched **1,000** previously independently audited single-world continuations, including **190**
+failed first seeds, **490,824** legal fives and **331** technicals. A 100-world six-player synthetic vector
+sample replayed identically and independently reconciled **48,968** lineup fives and **26** technicals;
+a two-world no-exception sample matched the original repair's saved arrays exactly. The first two proposed
+four-world no-exception samples actually exhausted and were not used as survivors. On the fixed three F4
+oracle-roster wiring games, the 1,000-world candidate completed in **71.0s** using four single-thread
+workers; independent accounting checked **1,473,288** fives, **64** players and **320** player sample
+means/CRPS values, with **0** technicals. A paired real-outcome comparison exists but has only **three**
+games and labels its estimates insufficient. The vector engine shares RNG across worlds; event divergence
+does not preserve unrelated whole-game streams. None of these tests establish an accuracy improvement,
+pre-game availability model or promotion. Reports
+`analysis/experiments/20261123_a1_vector_matched_penalty_probe_v1.json` and
+`analysis/experiments/20261123_a1_vector_penalty_pilot_v1{,_audit,_compare}.json`.
+
 **23 Nov 2026 ET — 10,000 actual retries versus matched first-seed continuations:** the deliberately
 selected F4 six-player synthetic-absence oracle roster yielded **10,000** accepted slots after **2,330**
 typed rejections, of which **1,893** were first attempts. The population extends the prior audited

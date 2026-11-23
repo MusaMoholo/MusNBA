@@ -1,0 +1,818 @@
+{
+ "experiment": "a1_paired_comparison",
+ "runs": {
+  "control": "20261122T022323Z_a1_s01_control",
+  "candidate": "20261123_a1_vector_penalty_pilot_v1"
+ },
+ "population": {
+  "fold": "F4",
+  "games": 3,
+  "game_ids": [
+   "401809247",
+   "401810357",
+   "401810393"
+  ],
+  "player_games": 64,
+  "expected_simulated_player_games": 64,
+  "unscored_simulated_players": [],
+  "tiers": {
+   "star": 5,
+   "starter": 23,
+   "bench": 36,
+   "unknown": 0
+  },
+  "selection": "analysis/experiments/20261122_a1_reproduction_games.json",
+  "availability": "conditional on actual participants; not an availability forecast"
+ },
+ "method": {
+  "bootstrap": "paired complete-game resampling; player games equally weighted",
+  "replicates": 10000,
+  "seed": 20261122,
+  "confidence": 0.95,
+  "coverage": "randomised PIT in [0.1, 0.9]",
+  "win_scoring": "Brier and log loss use empirical probabilities; zero probability on the outcome is infinite",
+  "bias_and_coverage_change": "change in absolute deviation from 0 and 0.8, respectively",
+  "minimum_player_games": 100,
+  "minimum_games": 30,
+  "limitations": "No Holm correction or promotion decision; cutoff safety depends on dated input provenance."
+ },
+ "players": {
+  "all": {
+   "min": {
+    "status": "insufficient_sample",
+    "observations": 64,
+    "games": 3,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 3.349768646388463,
+     "candidate": 3.352323895197803,
+     "change": 0.002555248809340327,
+     "ci_95": null
+    },
+    "bias": {
+     "control": 0.07734374999999999,
+     "candidate": 0.0804687500000002,
+     "change": 0.003125000000000211,
+     "ci_95": null
+    },
+    "coverage": {
+     "control": 0.796875,
+     "candidate": 0.8125,
+     "change": 0.009374999999999911,
+     "ci_95": null
+    }
+   },
+   "pts": {
+    "status": "insufficient_sample",
+    "observations": 64,
+    "games": 3,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 2.923932578125,
+     "candidate": 2.9048647812499997,
+     "change": -0.019067796875000376,
+     "ci_95": null
+    },
+    "bias": {
+     "control": 0.8769843750000001,
+     "candidate": 0.8574999999999999,
+     "change": -0.01948437500000022,
+     "ci_95": null
+    },
+    "coverage": {
+     "control": 0.765625,
+     "candidate": 0.765625,
+     "change": 0.0,
+     "ci_95": null
+    }
+   },
+   "reb": {
+    "status": "insufficient_sample",
+    "observations": 64,
+    "games": 3,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 1.434933390625,
+     "candidate": 1.4307720937500001,
+     "change": -0.004161296874999776,
+     "ci_95": null
+    },
+    "bias": {
+     "control": -0.018609374999999963,
+     "candidate": -0.005218750000000043,
+     "change": -0.01339062499999992,
+     "ci_95": null
+    },
+    "coverage": {
+     "control": 0.65625,
+     "candidate": 0.65625,
+     "change": 0.0,
+     "ci_95": null
+    }
+   },
+   "ast": {
+    "status": "insufficient_sample",
+    "observations": 64,
+    "games": 3,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 0.873465234375,
+     "candidate": 0.8697368125,
+     "change": -0.0037284218749999987,
+     "ci_95": null
+    },
+    "bias": {
+     "control": 0.28379687500000006,
+     "candidate": 0.27871875,
+     "change": -0.005078125000000044,
+     "ci_95": null
+    },
+    "coverage": {
+     "control": 0.75,
+     "candidate": 0.765625,
+     "change": -0.015625,
+     "ci_95": null
+    }
+   },
+   "fg3m": {
+    "status": "insufficient_sample",
+    "observations": 64,
+    "games": 3,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 0.6161187968749999,
+     "candidate": 0.6148899375000001,
+     "change": -0.0012288593749998356,
+     "ci_95": null
+    },
+    "bias": {
+     "control": -0.08439062500000001,
+     "candidate": -0.08859375,
+     "change": 0.004203124999999988,
+     "ci_95": null
+    },
+    "coverage": {
+     "control": 0.78125,
+     "candidate": 0.78125,
+     "change": 0.0,
+     "ci_95": null
+    }
+   }
+  },
+  "star": {
+   "min": {
+    "status": "insufficient_sample",
+    "observations": 5,
+    "games": 3,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 2.606398788672074,
+     "candidate": 2.568860944224694,
+     "change": -0.03753784444737995,
+     "ci_95": null
+    },
+    "bias": {
+     "control": 0.7627869980253046,
+     "candidate": 0.8765946649919961,
+     "change": 0.11380766696669153,
+     "ci_95": null
+    },
+    "coverage": {
+     "control": 0.8,
+     "candidate": 0.8,
+     "change": 0.0,
+     "ci_95": null
+    }
+   },
+   "pts": {
+    "status": "insufficient_sample",
+    "observations": 5,
+    "games": 3,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 3.1506991999999996,
+     "candidate": 3.1600476,
+     "change": 0.009348400000000368,
+     "ci_95": null
+    },
+    "bias": {
+     "control": 1.915200000000001,
+     "candidate": 2.0463999999999998,
+     "change": 0.13119999999999887,
+     "ci_95": null
+    },
+    "coverage": {
+     "control": 1.0,
+     "candidate": 1.0,
+     "change": 0.0,
+     "ci_95": null
+    }
+   },
+   "reb": {
+    "status": "insufficient_sample",
+    "observations": 5,
+    "games": 3,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 1.6299394,
+     "candidate": 1.6489376,
+     "change": 0.018998199999999965,
+     "ci_95": null
+    },
+    "bias": {
+     "control": -0.3813999999999999,
+     "candidate": -0.36960000000000026,
+     "change": -0.011799999999999644,
+     "ci_95": null
+    },
+    "coverage": {
+     "control": 0.6,
+     "candidate": 0.6,
+     "change": 0.0,
+     "ci_95": null
+    }
+   },
+   "ast": {
+    "status": "insufficient_sample",
+    "observations": 5,
+    "games": 3,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 1.9855746,
+     "candidate": 1.9744642000000003,
+     "change": -0.011110399999999743,
+     "ci_95": null
+    },
+    "bias": {
+     "control": 0.5582,
+     "candidate": 0.5494000000000001,
+     "change": -0.008799999999999919,
+     "ci_95": null
+    },
+    "coverage": {
+     "control": 0.8,
+     "candidate": 0.8,
+     "change": 0.0,
+     "ci_95": null
+    }
+   },
+   "fg3m": {
+    "status": "insufficient_sample",
+    "observations": 5,
+    "games": 3,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 0.8369056,
+     "candidate": 0.8347751999999999,
+     "change": -0.0021304000000000878,
+     "ci_95": null
+    },
+    "bias": {
+     "control": -0.7992000000000001,
+     "candidate": -0.7820000000000001,
+     "change": -0.017199999999999993,
+     "ci_95": null
+    },
+    "coverage": {
+     "control": 0.8,
+     "candidate": 0.8,
+     "change": 0.0,
+     "ci_95": null
+    }
+   }
+  },
+  "starter": {
+   "min": {
+    "status": "insufficient_sample",
+    "observations": 23,
+    "games": 3,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 2.90411626195593,
+     "candidate": 2.9125746464182294,
+     "change": 0.008458384462299406,
+     "ci_95": null
+    },
+    "bias": {
+     "control": 0.8632004336494248,
+     "candidate": 0.8646379698546904,
+     "change": 0.0014375362052656548,
+     "ci_95": null
+    },
+    "coverage": {
+     "control": 0.8260869565217391,
+     "candidate": 0.8695652173913043,
+     "change": 0.04347826086956519,
+     "ci_95": null
+    }
+   },
+   "pts": {
+    "status": "insufficient_sample",
+    "observations": 23,
+    "games": 3,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 3.901118652173913,
+     "candidate": 3.840628956521739,
+     "change": -0.0604896956521741,
+     "ci_95": null
+    },
+    "bias": {
+     "control": 1.9190869565217392,
+     "candidate": 1.8450434782608696,
+     "change": -0.07404347826086966,
+     "ci_95": null
+    },
+    "coverage": {
+     "control": 0.6956521739130435,
+     "candidate": 0.6956521739130435,
+     "change": 0.0,
+     "ci_95": null
+    }
+   },
+   "reb": {
+    "status": "insufficient_sample",
+    "observations": 23,
+    "games": 3,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 1.8623862173913046,
+     "candidate": 1.8449013478260867,
+     "change": -0.017484869565217886,
+     "ci_95": null
+    },
+    "bias": {
+     "control": -0.22708695652173896,
+     "candidate": -0.21700000000000005,
+     "change": -0.01008695652173891,
+     "ci_95": null
+    },
+    "coverage": {
+     "control": 0.6956521739130435,
+     "candidate": 0.6956521739130435,
+     "change": 0.0,
+     "ci_95": null
+    }
+   },
+   "ast": {
+    "status": "insufficient_sample",
+    "observations": 23,
+    "games": 3,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 1.0920876521739131,
+     "candidate": 1.087341652173913,
+     "change": -0.004746000000000139,
+     "ci_95": null
+    },
+    "bias": {
+     "control": 0.4448695652173913,
+     "candidate": 0.43860869565217386,
+     "change": -0.006260869565217431,
+     "ci_95": null
+    },
+    "coverage": {
+     "control": 0.6956521739130435,
+     "candidate": 0.7391304347826086,
+     "change": -0.04347826086956519,
+     "ci_95": null
+    }
+   },
+   "fg3m": {
+    "status": "insufficient_sample",
+    "observations": 23,
+    "games": 3,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 0.9393664782608696,
+     "candidate": 0.937156304347826,
+     "change": -0.002210173913043567,
+     "ci_95": null
+    },
+    "bias": {
+     "control": -0.09317391304347825,
+     "candidate": -0.10839130434782608,
+     "change": 0.015217391304347835,
+     "ci_95": null
+    },
+    "coverage": {
+     "control": 0.6521739130434783,
+     "candidate": 0.6521739130434783,
+     "change": 0.0,
+     "ci_95": null
+    }
+   }
+  },
+  "bench": {
+   "min": {
+    "status": "insufficient_sample",
+    "observations": 36,
+    "games": 3,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 3.7377368166809695,
+     "candidate": 3.742089102886573,
+     "change": 0.004352286205603573,
+     "ci_95": null
+    },
+    "bias": {
+     "control": -0.5199318045573139,
+     "candidate": -0.5311012953227177,
+     "change": 0.011169490765403745,
+     "ci_95": null
+    },
+    "coverage": {
+     "control": 0.7777777777777778,
+     "candidate": 0.7777777777777778,
+     "change": 0.0,
+     "ci_95": null
+    }
+   },
+   "pts": {
+    "status": "insufficient_sample",
+    "observations": 36,
+    "games": 3,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 2.268123888888889,
+     "candidate": 2.2715733888888887,
+     "change": 0.003449499999999883,
+     "ci_95": null
+    },
+    "bias": {
+     "control": 0.06700000000000002,
+     "candidate": 0.06144444444444441,
+     "change": -0.005555555555555605,
+     "ci_95": null
+    },
+    "coverage": {
+     "control": 0.7777777777777778,
+     "candidate": 0.7777777777777778,
+     "change": 0.0,
+     "ci_95": null
+    }
+   },
+   "reb": {
+    "status": "insufficient_sample",
+    "observations": 36,
+    "games": 3,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 1.134754361111111,
+     "candidate": 1.1358887500000001,
+     "change": 0.0011343888888890596,
+     "ci_95": null
+    },
+    "bias": {
+     "control": 0.16497222222222221,
+     "candidate": 0.1806944444444444,
+     "change": 0.015722222222222193,
+     "ci_95": null
+    },
+    "coverage": {
+     "control": 0.6388888888888888,
+     "candidate": 0.6388888888888888,
+     "change": 0.0,
+     "ci_95": null
+    }
+   },
+   "ast": {
+    "status": "insufficient_sample",
+    "observations": 36,
+    "games": 3,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 0.5793301666666666,
+     "candidate": 0.5772771388888889,
+     "change": -0.002053027777777716,
+     "ci_95": null
+    },
+    "bias": {
+     "control": 0.14277777777777778,
+     "candidate": 0.1389722222222222,
+     "change": -0.0038055555555555898,
+     "ci_95": null
+    },
+    "coverage": {
+     "control": 0.7777777777777778,
+     "candidate": 0.7777777777777778,
+     "change": 0.0,
+     "ci_95": null
+    }
+   },
+   "fg3m": {
+    "status": "insufficient_sample",
+    "observations": 36,
+    "games": 3,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 0.3789346111111111,
+     "candidate": 0.37845791666666667,
+     "change": -0.00047669444444442544,
+     "ci_95": null
+    },
+    "bias": {
+     "control": 0.020499999999999987,
+     "candidate": 0.020361111111111125,
+     "change": -0.00013888888888886203,
+     "ci_95": null
+    },
+    "coverage": {
+     "control": 0.8611111111111112,
+     "candidate": 0.8611111111111112,
+     "change": 0.0,
+     "ci_95": null
+    }
+   }
+  },
+  "unknown": {
+   "min": {
+    "status": "insufficient_sample",
+    "observations": 0,
+    "games": 0,
+    "missing_actuals": 0
+   },
+   "pts": {
+    "status": "insufficient_sample",
+    "observations": 0,
+    "games": 0,
+    "missing_actuals": 0
+   },
+   "reb": {
+    "status": "insufficient_sample",
+    "observations": 0,
+    "games": 0,
+    "missing_actuals": 0
+   },
+   "ast": {
+    "status": "insufficient_sample",
+    "observations": 0,
+    "games": 0,
+    "missing_actuals": 0
+   },
+   "fg3m": {
+    "status": "insufficient_sample",
+    "observations": 0,
+    "games": 0,
+    "missing_actuals": 0
+   }
+  }
+ },
+ "games": {
+  "total": {
+   "status": "insufficient_sample",
+   "observations": 3,
+   "games": 3,
+   "missing_actuals": 0,
+   "crps": {
+    "control": 11.563643,
+    "candidate": 11.275901999999997,
+    "change": -0.287741000000004,
+    "ci_95": null
+   },
+   "bias": {
+    "control": 18.709000000000003,
+    "candidate": 18.29333333333334,
+    "change": -0.4156666666666631,
+    "ci_95": null
+   },
+   "coverage": {
+    "control": 0.6666666666666666,
+    "candidate": 1.0,
+    "change": 0.06666666666666654,
+    "ci_95": null
+   }
+  },
+  "margin": {
+   "status": "insufficient_sample",
+   "observations": 3,
+   "games": 3,
+   "missing_actuals": 0,
+   "crps": {
+    "control": 10.523642333333333,
+    "candidate": 10.532471333333334,
+    "change": 0.00882900000000042,
+    "ci_95": null
+   },
+   "bias": {
+    "control": -11.023666666666665,
+    "candidate": -10.644,
+    "change": -0.37966666666666526,
+    "ci_95": null
+   },
+   "coverage": {
+    "control": 0.6666666666666666,
+    "candidate": 0.6666666666666666,
+    "change": 0.0,
+    "ci_95": null
+   }
+  },
+  "q1_total": {
+   "status": "insufficient_sample",
+   "observations": 3,
+   "games": 3,
+   "missing_actuals": 0,
+   "crps": {
+    "control": 7.5872449999999985,
+    "candidate": 7.5872449999999985,
+    "change": 0.0,
+    "ci_95": null
+   },
+   "bias": {
+    "control": 9.265,
+    "candidate": 9.265,
+    "change": 0.0,
+    "ci_95": null
+   },
+   "coverage": {
+    "control": 0.6666666666666666,
+    "candidate": 0.6666666666666666,
+    "change": 0.0,
+    "ci_95": null
+   }
+  },
+  "q1_margin": {
+   "status": "insufficient_sample",
+   "observations": 3,
+   "games": 3,
+   "missing_actuals": 0,
+   "crps": {
+    "control": 2.252425666666666,
+    "candidate": 2.252425666666666,
+    "change": 0.0,
+    "ci_95": null
+   },
+   "bias": {
+    "control": -1.3616666666666666,
+    "candidate": -1.3616666666666666,
+    "change": 0.0,
+    "ci_95": null
+   },
+   "coverage": {
+    "control": 1.0,
+    "candidate": 1.0,
+    "change": 0.0,
+    "ci_95": null
+   }
+  },
+  "q2_total": {
+   "status": "insufficient_sample",
+   "observations": 3,
+   "games": 3,
+   "missing_actuals": 0,
+   "crps": {
+    "control": 5.003763,
+    "candidate": 4.953621666666667,
+    "change": -0.05014133333333337,
+    "ci_95": null
+   },
+   "bias": {
+    "control": -1.8329999999999984,
+    "candidate": -1.699666666666668,
+    "change": -0.13333333333333042,
+    "ci_95": null
+   },
+   "coverage": {
+    "control": 0.6666666666666666,
+    "candidate": 0.6666666666666666,
+    "change": 0.0,
+    "ci_95": null
+   }
+  },
+  "q2_margin": {
+   "status": "insufficient_sample",
+   "observations": 3,
+   "games": 3,
+   "missing_actuals": 0,
+   "crps": {
+    "control": 6.301548333333333,
+    "candidate": 6.351976333333333,
+    "change": 0.05042800000000014,
+    "ci_95": null
+   },
+   "bias": {
+    "control": 2.965666666666667,
+    "candidate": 3.0269999999999997,
+    "change": 0.061333333333332796,
+    "ci_95": null
+   },
+   "coverage": {
+    "control": 0.3333333333333333,
+    "candidate": 0.6666666666666666,
+    "change": -0.3333333333333333,
+    "ci_95": null
+   }
+  },
+  "q3_total": {
+   "status": "insufficient_sample",
+   "observations": 3,
+   "games": 3,
+   "missing_actuals": 0,
+   "crps": {
+    "control": 6.234001666666667,
+    "candidate": 6.080111666666667,
+    "change": -0.15388999999999964,
+    "ci_95": null
+   },
+   "bias": {
+    "control": 7.115666666666665,
+    "candidate": 6.8530000000000015,
+    "change": -0.2626666666666635,
+    "ci_95": null
+   },
+   "coverage": {
+    "control": 0.6666666666666666,
+    "candidate": 0.6666666666666666,
+    "change": 0.0,
+    "ci_95": null
+   }
+  },
+  "q3_margin": {
+   "status": "insufficient_sample",
+   "observations": 3,
+   "games": 3,
+   "missing_actuals": 0,
+   "crps": {
+    "control": 4.717305,
+    "candidate": 4.363236333333333,
+    "change": -0.3540686666666666,
+    "ci_95": null
+   },
+   "bias": {
+    "control": -7.7250000000000005,
+    "candidate": -7.2556666666666665,
+    "change": -0.46933333333333405,
+    "ci_95": null
+   },
+   "coverage": {
+    "control": 1.0,
+    "candidate": 1.0,
+    "change": 0.0,
+    "ci_95": null
+   }
+  },
+  "q4_total": {
+   "status": "insufficient_sample",
+   "observations": 3,
+   "games": 3,
+   "missing_actuals": 0,
+   "crps": {
+    "control": 7.785295333333333,
+    "candidate": 7.642943333333332,
+    "change": -0.1423520000000007,
+    "ci_95": null
+   },
+   "bias": {
+    "control": 3.4040000000000012,
+    "candidate": 3.103999999999999,
+    "change": -0.30000000000000204,
+    "ci_95": null
+   },
+   "coverage": {
+    "control": 0.3333333333333333,
+    "candidate": 0.3333333333333333,
+    "change": 0.0,
+    "ci_95": null
+   }
+  },
+  "q4_margin": {
+   "status": "insufficient_sample",
+   "observations": 3,
+   "games": 3,
+   "missing_actuals": 0,
+   "crps": {
+    "control": 4.60132,
+    "candidate": 4.531104666666667,
+    "change": -0.07021533333333352,
+    "ci_95": null
+   },
+   "bias": {
+    "control": -4.888666666666667,
+    "candidate": -5.07,
+    "change": 0.1813333333333329,
+    "ci_95": null
+   },
+   "coverage": {
+    "control": 0.6666666666666666,
+    "candidate": 0.6666666666666666,
+    "change": 0.0,
+    "ci_95": null
+   }
+  }
+ },
+ "win": {
+  "status": "insufficient_sample",
+  "brier": {
+   "control": 0.2453226666666667,
+   "candidate": 0.25704866666666665,
+   "change": 0.011725999999999959,
+   "ci_95": null
+  },
+  "log_loss": {
+   "control": 0.6837218086021677,
+   "candidate": 0.7071447737671911,
+   "change": 0.0234229651650234,
+   "ci_95": null
+  }
+ }
+}
