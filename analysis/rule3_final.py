@@ -188,7 +188,7 @@ def score(name):
     report['method']['coverage'] = 'expected randomised PIT integrated over auxiliary uniform; legacy retained separately'
     report['final_manifest_sha256'] = sha256_file(MANIFEST)
     write_json(output, report, pretty=True)
-    gate = release_gate.assess(report, 'mechanics')
+    gate = release_gate.assess(report, 'mechanics', policy='v2')
     gate['comparison_sha256'] = sha256_file(output)
     write_json(output.with_name(output.stem + '_gate.json'), gate, pretty=True)
     print(gate['decision'], gate['core']['established'], '/', gate['core']['checks'], flush=True)

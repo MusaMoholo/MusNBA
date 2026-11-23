@@ -23,8 +23,8 @@ class NightlyFeatureRecipeTests(unittest.TestCase):
             root=Path(tmp); (root/'models').mkdir()
             (root/'models/v1.3.json').write_text(json.dumps({'features_variant':{
                 'out':'data/derived/variants/matchup/features','defence':True,'shot_types':True}}))
-            # There is intentionally no v1.3-r1.json or v1.3-r2.json runtime recipe.
-            for version in ('v1.3-r1','v1.3-r2'):
+            # Runtime aliases have no separate node/feature recipe.
+            for version in ('v1.3-r1','v1.3-r2','v1.3-r3'):
                 with self.subTest(version=version):
                     result,calls=self.rebuild(root,{'version':version,'models':'v1.3'})
                     self.assertEqual(result['games'],1)

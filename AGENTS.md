@@ -1,16 +1,12 @@
 # Working on MusNBA
 
-The repository is the handover. Keep enough current information for a new agent to continue without chat
-history, while keeping startup reading short. Updated 23 November 2026.
+The repository is the handover. Keep current decisions, evidence and exact next actions here, independent of chat history.
 
-## 1. Start here
+## Start
 
-1. Read this file, [HANDOFF_NEXT.md](HANDOFF_NEXT.md), then [PLAN.md](PLAN.md).
-2. Read only the task-relevant parts of [ENGINE_PLAN.md](ENGINE_PLAN.md),
-   [TRAINING_PLAN.md](TRAINING_PLAN.md), [FINDINGS.md](FINDINGS.md),
-   [DASHBOARD_PLAN.md](DASHBOARD_PLAN.md) and [README.md](README.md).
-3. Use [docs/README.md](docs/README.md) to find detailed protocols/history when needed. Do not load archives
-   by default; their old state, commands and next actions are historical, not current instructions.
+Read this file, [HANDOFF_NEXT](HANDOFF_NEXT.md), then [PLAN](PLAN.md). Read relevant sections of
+[MODEL](MODEL.md) for design/tests/evidence and [README](README.md) for commands/app behaviour.
+These are the five core docs. Completed history is in the verified archive described in README; never load it by default.
 
 ```sh
 git status --short --branch
@@ -19,104 +15,76 @@ git --no-pager log --oneline -5
 ls -t analysis/experiments/ | head -15
 ```
 
-Baseline smoke must pass before changes (108 checks at the latest checkpoint). Start with HANDOFF's first
-open action. Planning-only requests stay planning-only. Read-only/docs work needs no review server.
-Authorised A1 work continues only within its recorded boundary; do not silently advance modules at a stop.
+Smoke must pass before changes (108 checks at this checkpoint). Follow HANDOFF's first open action.
+Planning-only requests stay planning-only; honour explicit stops. Read-only/docs work needs no review server.
 
-## 2. Owner preferences
+## Owner and product
 
-- **Players first (D28):** minutes and per-possession performance against the actual defenders determine team
-  outcomes. Judge player tiers before team sums. The goal is accuracy against real outcomes, not betting;
-  bookmaker closing lines are a diagnostic reference, never a fitting target.
-- Make in-scope engineering choices independently. Ask only for genuine product/source decisions. Record
-  important assumptions/blockers in the appropriate document.
-- Each development chunk has one or two engine/product headliners. A measured negative result is valid;
-  unfinished research is not completion. If no engine improves, ship a useful dashboard improvement.
-- **The owner uses the PWA exclusively (D53):** every dashboard change includes tested/published PWA assets
-  and any needed bundles; localhost is development/review, never delivery. Laptop is primary; phone is
-  stripped (D45). Serving and browsing read stored data only.
-- Dashboard: smooth at 1440/960/390 in both themes; group controls and secondary detail. Comparable cards
-  form rows of three, then two/one as width shrinks. Changing dates/counts/versions/thresholds come from data.
-- UK display times with ET alongside; slate dates are ET. Keep the owner's server on :8766 running;
-  use :8767 for review. Inspect screenshots, not just browser-check pass counts.
-- Honour explicit stops. Current model/delivery/progress belongs in HANDOFF, never only in chat.
+- **Players first (D28):** accurate minutes and per-possession performance against defenders should produce accurate team sums.
+  Judge player tiers before team outcomes. Fit to real results; market lines are diagnostic references.
+- Make routine engineering choices independently; ask for genuine product/source choices. Keep updates short, with measured numbers.
+- Each chunk has one or two model/product headliners. A measured negative result can close research; an unfinished investigation cannot.
+  If no model improves, deliver a useful dashboard improvement. Record important knowledge in the docs.
+- **PWA only (D45/D53):** laptop is primary/full worlds; phone is stripped. App changes require tested/published shell assets and
+  needed bundles. Both devices import manually; an iCloud export proves neither import nor real-device acceptance.
+- Keep boxes/insights first, controls grouped, secondary detail expandable. Comparable cards: three/two/one across.
+  Inspect touched pages at 1440/960/390 in both themes, including screenshots. Dynamic numbers/versions come from data.
+- UK times with ET alongside; slate dates are ET. Owner's server:8766 must remain running; use:8767 for review.
+- Audit stale scorer rules and simplify proven duplication. Distinguish demonstrated harm, imprecision and unsupported data.
+  Preserve realistic probabilities/uncertainty; do not reject an idea because its experiment setup failed.
 
-## 3. Progress and scope
+## Scope and progress
 
-Before a multi-step chunk, put weights totalling 100% and ten concrete 10% done-when rungs per module in
-HANDOFF. Dependencies, acceptance/fallback, first commands and final live nightly must be clear. Progress is
-the fixed weighted sum, not elapsed time. Original A1 and the D42 A/B chunk ledgers are separate; never double-count.
+Before executing a multi-step chunk, HANDOFF must have dependencies, weights totalling 100%, ten concrete 10% rungs/module,
+acceptance/fallback, first commands and final nightly. Progress is the fixed weighted sum. Keep original programme and D42 ledgers separate.
+Print overall/active-module bars at every new 10% module or 5% overall boundary; report long-job counts at each 10%.
+Estimate time only from measured logs. Launched work earns no acceptance credit. Construct a fully specified 0% successor at closure.
 
-Print overall and active-module text bars immediately at every new 10% module rung and every 5% overall
-boundary. Drop completed modules from displayed per-module bars, not from the denominator. Long jobs also
-report completed items and measured throughput at each 10%; a launched job earns no acceptance rung.
-Estimate durations only from measured logs, naming the population/rate.
+## Safeguards
 
-## 4. Non-negotiable safeguards
+- Use `.venv/bin/python`; existing NumPy/pandas/pyarrow/LightGBM stack, Node for browser checks.
+- Accepted runtime/limits live in HANDOFF/MODEL. Production changes need frozen, class-appropriate evidence under an **explicit**
+  versioned policy. Preserve old results and sources; never move criteria just to pass a known candidate.
+- Serving (`serve.py`, `views.py`, PWA) only reads stored results. Never fetch, fit, simulate or reconstruct while browsing.
+- All inputs **and fitted auxiliary parameters** for origin D precede ET D. Missing data stays missing; no fabricated/clamped truth or tracking.
+- Protected 2026–27 test from 2026-07-01 is once per frozen recipe at promotion, never feature/parameter selection.
+- Log positive/negative experiments in `analysis/experiments/`; per-row arrays/fits remain ignored under `data/`.
+  Identical inputs/seeds reproduce results independently of worker assignment. Do not overwrite immutable reports/namespaces.
+- Raw responses are immutable. Archive replaced snapshots/views/bundles/shells and inventoried dependencies outside the repo at
+  `~/Basketball_archive_ops` before replacement/removal.
+- ESPN/sportsdataverse/NBA Stats are authorised; new providers require owner sign-off. No forbidden scraping.
+  NBA Stats: one polite resumable stream, about 1 request/s, retained raw manifest; pause history during nightly fetching.
+- D40 defers historical forecast backfill; rebuilding prior-game inputs is required. D50: possession engine today, pathway tomorrow onward.
+- Public repo `MusaMoholo/MusNBA`, main. Preserve local personal identity/helper; no force-push/history rewrite.
+  Never commit data/secrets/exports or publish them to Pages. **No repository CI workflows (D52).** Pages hosts the data-free shell.
 
-- Use `.venv/bin/python`. Existing dependencies: NumPy, pandas, pyarrow, LightGBM; Node for browser checks.
-- **Accepted floor:** engine-v1.3-r2 (Rule3/independent rotations, unchanged v1.3 nodes), 10,000 worlds/branch, D29 targets/pool0; team pathway v1.
-  Change production models/settings/rules through the current versioned player-first policy in TRAINING_PLAN
-  (D51 permits its audited redesign; preserve old evidence and freeze new requirements before confirmation).
-- **Serving never computes:** `serve.py`, `views.py` and PWA never fetch, fit or simulate; conditions slice saved worlds.
-- Inputs and fitted auxiliary parameters for origin D precede ET D. Never silently use later reports/profiles.
-- Final test is 2026–27 from 2026-07-01: once per frozen version at promotion, never for selection/tuning.
-- Log every experiment under `analysis/experiments/`; per-row results stay ignored under `data/derived/experiments/`.
-  Preserve negative results. Missing data stays missing; no invented/clamped outcomes or tracking.
-- Raw responses are immutable. Archive replaced snapshots/views/bundles/shells outside the repo under
-  `~/Basketball_archive_ops`. Never remove retained-run dependencies without an inventory and archive.
-- ESPN, sportsdataverse history and NBA Stats are authorised. New providers need owner sign-off; no forbidden
-  scraping. NBA Stats uses one polite stream (~1 request/s), raw manifests and resume; pause history for nightly fetches.
-- S13 historical forecast backfill is deferred (D40). Pre-origin input rebuilds remain required. D50 uses today's
-  possession games only, team pathway from tomorrow; preserve original forecasts and archives.
-- Never publish data/models/bundles to Pages. No force-push, history rewrite or git identity/credential changes.
+## Every checkpoint
 
-## 5. Every checkpoint: verify, update, commit and push
+Complete each S task/D42 module with its own checkpoint before starting the next. Session stops also checkpoint resumable state.
 
-A completed S task/D42 module and every session stop gets its own checkpoint before the next module.
+1. Review all five core docs. Update affected state/scope/design/evidence/behaviour/commands before committing; avoid repeated review narratives.
+   HANDOFF owns exact running command/session/log/namespace, resume rules, blockers and next actions.
+2. Code/data: smoke, deliberate `--fault` failure, independent accounting and relevant model/browser/PWA checks.
+   Docs-only: baseline smoke and docs checks; launch no model/data jobs for tidying.
+3. Promoted model/output changes refresh affected forecasts/views/bundles; changed app assets publish the data-free shell.
+   Verify dynamic model labels, import, legacy compatibility and offline use. Research-only checkpoints say production is unchanged.
+4. Each actual development chunk ends with a **fresh full nightly**, authorised fetch/required rebuild, today's10k worlds/branch
+   and fresh 10k season simulations on accepted engines. `--offline --no-rebuild` requires recorded current/unchanged-input justification.
+5. Run `scripts/check_docs.py`. Review `git add -A`/status for data/secrets, commit and push using existing identity.
+6. Report changes, measured result/limits, model/PWA impact, manual-import requirement, commit/push and next action.
 
-1. Update HANDOFF state/next action, affected scope/design/evidence/behaviour/commands, and any running job's
-   exact command, PID/log, namespace and resume rule. Review all eight docs; edit only affected ones.
-2. Run appropriate checks. Code/data: smoke, deliberate `--fault` must fail, independent accounting and relevant
-   model/browser/PWA checks. Docs-only: baseline smoke and documentation checks suffice; start no model/data jobs.
-3. Promoted models or changed outputs require affected refresh/export; app assets require data-free shell publication.
-   Verify dynamic metadata, fresh import, legacy compatibility and offline use. Each affected subtask delivers;
-   do not defer necessary PWA work to chunk end. Research-only checkpoints say production is unchanged.
-4. Every actual development chunk ends with a fresh full nightly: authorised fetch, required input rebuild,
-   today's 10k game worlds and 10k seasons on accepted systems. `--offline --no-rebuild` only with recorded
-   current/unchanged-input justification. Docs-only/research-only checkpoints need no repeated nightly.
-5. Review `git add -A` and `git status`: no `data/`, secrets, virtualenv or exports. Commit and push `main`
-   (`MusaMoholo/MusNBA`, public) using existing local identity/helper. `gh-pages` holds only the shell.
-6. Report concise changes, measured outcome, limitations, model/PWA impact, commit/push and next step.
-   iCloud export never proves import: each device must import manually; real-device acceptance is the owner's check.
-7. At final development-chunk closure, archive its finished ladder and construct the successor at 0% with
-   headliners, dependencies, weights, ten rungs/module, acceptance/fallback, commands and a final nightly.
+Keep docs lean **in file count and words at every commit**. Replace stale state; each fact has one canonical home.
+Use aggregate experiment JSON and Git history rather than new narrative files per run. Preserve frozen contracts/history in the verified archive.
+The local pre-commit hook enforces links, live file/word budgets and archive hashes. Fresh clones: inspect existing hooks before
+`git config --local core.hooksPath .githooks`. Raise a budget only with a documented need.
 
-**Keep docs lean at every commit (owner, 23 Nov).** Replace stale state; do not prepend another mini-handoff.
-Each fact has one canonical home (docs index). Completed work gets a short outcome + evidence link, with
-long protocols/reproduction detail in `docs/`. Keep recent log entries only; link older history. Preserve
-frozen decisions/protocols and evidence when condensing. Do not duplicate long logs, old commands, all-eight-doc
-review narratives or progress boards across files. Run `.venv/bin/python scripts/check_docs.py` before committing;
-word budgets are review gates, raised only with a recorded reason. History is consulted, not mandatory startup reading.
-The repository-managed `.githooks/pre-commit` runs this check automatically; `core.hooksPath` is `.githooks`
-on this checkout. On a fresh clone, enable it with `git config --local core.hooksPath .githooks` after
-checking for existing hooks. **D52: checks run locally; do not add CI workflows.** GitHub hosts only the
-data-free PWA shell from `gh-pages`; its built-in Pages deployment is hosting, not a test pipeline.
+## Compute
 
-## 6. Use compute efficiently
+Actively use up to **ten total heavy compute threads** on the 14-core/48 GiB Mac; leave headroom and reduce under memory pressure.
+Count process workers × inner threads across all simultaneous jobs, including fitting/compression. Parallelise independent work and overlap I/O;
+use detached logs for long jobs. No agent delegation is implied by CPU parallelism.
 
-On this 14-core Mac (10 performance + 4 efficiency, 48 GiB), actively use up to **10 total compute threads**
-whenever useful work is ready. Count process workers × inner threads across all concurrent heavy jobs.
-Parallelise independent work and overlap I/O/checks asynchronously; detach long jobs with logs. Reuse measured
-worker choices; benchmark new workloads briefly. Reduce concurrency under memory pressure/competing use.
-This is a scheduling budget, not CPU affinity or permission to expand scope.
-
-Verify actual controls: LightGBM `train.py --threads`; `backtest.py --jobs` sets OMP internally. On this Mac,
-`--jobs 5` means two OMP threads each, `--jobs 10` one each; default four implies twelve, over budget.
-Cap BLAS separately. Do not run independent backtests concurrently unless their combined inner-thread count
-and memory fit; sequential paired comparisons remain required. Whole-game vector timing favoured eight;
-D56's chunk prototype favoured ten for single-game latency. Neither establishes a universal worker optimum.
-Above-budget runs need explicit owner authorisation.
-
-Scratch goes outside the repo; resumable logs/results must be locatable from HANDOFF. Never use old runtime
-estimates as a promise for new branches/mechanics. Sibling MusSim (`../Football`) provides PWA/UI conventions.
+Verify actual controls: `train.py --threads`; `backtest.py --jobs 10` gives one OMP thread/worker, `--jobs 5` two,
+default four gives twelve and exceeds budget. Cap BLAS separately. Avoid nested pools/OMP; parent large-array work follows pool shutdown.
+Canonical 1k world chunks keep the shared queue occupied even for one remaining game. Preserve world independence, seeds and exact grouping.
+Benchmark new workloads; old runtime estimates are not promises. Scratch lives outside the repo; resumable evidence stays locatable in HANDOFF.

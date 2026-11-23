@@ -1,0 +1,8 @@
+{
+ "status": "pass; original10 paired chunks skipped and all41 original files unchanged in bytes/mtime/inode",
+ "resumed_pairs": 10,
+ "new_pairs": 20,
+ "unchanged_files": 41,
+ "inventory_sha256": "53f9b2d5098d6122fe66999519f4f710c6ba70f2cf70c9122b7374b63a986ed6",
+ "stress_audit_sha256": "a6c78d6413c3cdf0a9cb0af6a4fb9e02e739c2067aff02307a26dc64d2b29b33"
+}

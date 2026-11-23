@@ -1,5 +1,9 @@
-"""Opt-in contextual late-clock sampler; not selected by the accepted engine yet."""
+"""Prior-fitted contextual timing, selected by r3; older recorded runtimes retain legacy timing."""
 from __future__ import annotations
+
+from datetime import date
+import json
+from pathlib import Path
 
 import numpy as np
 
@@ -8,6 +12,7 @@ from scripts.projection import seed_for
 
 class ContextClock:
     def __init__(self, tables, support):
+        self.train_through = None
         self.pools = {}
         for kind, upper in (('bridge', 24.), ('contextual', 1.)):
             self.pools[kind] = {}
@@ -35,6 +40,10 @@ class ContextClock:
     def begin(self, seed):
         self.rng = np.random.default_rng(seed_for('a2-context-clock-v1', seed))
 
+    def check_origin(self, origin):
+        if self.train_through is not None and date.fromisoformat(origin) <= date.fromisoformat(self.train_through):
+            raise ValueError('clock parameters must precede forecast origin')
+
     def sample(self, period, clock, margin, seconds, quiet):
         period, clock, margin = map(np.asarray, (period, clock, margin))
         if not (period.shape == clock.shape == margin.shape == np.shape(seconds) == np.shape(quiet)) or clock.ndim != 1:
@@ -57,3 +66,18 @@ class ContextClock:
             drawn = values[pick] * clock[idx] if kind == 'contextual' else values[pick]
             result[idx] = np.where(no_action[idx], clock[idx], np.minimum(drawn, clock[idx]))
         return result, no_action
+
+
+def load_recipe(path, node_train_through):
+    """Load a fixed prior-fitted recipe; never fit or fetch from the engine."""
+    recipe = json.loads(Path(path).read_text())
+    cutoff = recipe['train_through']
+    date.fromisoformat(cutoff)
+    latest = recipe['training']['latest_training_date']
+    date.fromisoformat(latest)
+    if (recipe['kind'] != 'contextual-clock-v1' or cutoff != node_train_through
+            or recipe['training']['cutoff'] != cutoff or latest > cutoff):
+        raise ValueError('clock recipe and node training cutoffs differ')
+    policy = ContextClock(recipe['pools'], recipe['training']['cells'])
+    policy.train_through = cutoff
+    return policy

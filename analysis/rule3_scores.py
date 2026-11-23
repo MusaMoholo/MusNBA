@@ -59,7 +59,7 @@ def main():
                                *(ROOT / f'data/derived/experiments/{args.run}_{side}{tail}.parquet'
                                  for side in ('control', 'candidate') for tail in ('', '_players')))}
     write_json(args.output, report, pretty=True)
-    gate = release_gate.assess(report, 'mechanics')
+    gate = release_gate.assess(report, 'mechanics', policy='v2')
     gate['comparison_sha256'] = sha256_file(args.output)
     write_json(args.output.with_name(args.output.stem + '_gate.json'), gate, pretty=True)
     print(gate['decision'], gate['core']['established'], '/', gate['core']['checks'])

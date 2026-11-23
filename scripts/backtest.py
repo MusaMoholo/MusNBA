@@ -115,9 +115,26 @@ def simulation_seed(version: str, day: str, gid: str, stream: int | None = None,
     return projection.seed_for(*parts)
 
 
+def clock_runtime(version, recipe=None):
+    """Validate auxiliary cutoffs in the parent, before Pool can repeatedly respawn a failing initializer."""
+    from scripts import engine
+    from scripts.late_clock import load_recipe
+    runtime = {**engine.ENGINE, 'models': version}
+    if recipe is not None:
+        runtime['clock_recipe'] = str(Path(recipe).resolve())
+    if runtime.get('clock_recipe'):
+        config = json.loads((engine.MODELS / version / 'config.json').read_text())
+        try:
+            load_recipe(ROOT / runtime['clock_recipe'], config['train_through'])
+        except (OSError, ValueError, KeyError) as error:
+            raise ValueError('Backtest clock recipe must match the fold node cutoff; '
+                             'pass --clock-recipe with frozen prior-fitted fold parameters') from error
+    return runtime
+
+
 def _init(version, spec_path, fold, worlds, rotation='replay', known_starters=False, pool=None, stream=None, seed_key=None,
           flow_diagnostics=False, minutes_history='control', strict_minute_targets=False, substitution_report=None,
-          capture_substitution_worlds=False, substitution_foul_penalty=False):
+          capture_substitution_worlds=False, substitution_foul_penalty=False, runtime=None):
     from scripts import engine
     if pool is not None:  # D36: rotation-table pool (0 = one table per world)
         engine.ROTATION['pool'] = pool
@@ -136,7 +153,8 @@ def _init(version, spec_path, fold, worlds, rotation='replay', known_starters=Fa
         if period_rows.duplicated(keys).any():
             raise ValueError('duplicate player-period source records')
         player_periods = period_rows.set_index(keys)
-    _W.update({'engine': engine.Engine(version), 'mod': engine, 'inputs': load_inputs(spec, fold, flow_diagnostics), 'worlds': worlds,
+    _W.update({'engine': engine.Engine(version, **({'runtime': runtime} if runtime is not None else {})),
+               'mod': engine, 'inputs': load_inputs(spec, fold, flow_diagnostics), 'worlds': worlds,
                'teams': json.loads((DERIVED / 'teams.json').read_text()), 'rotation': rotation, 'known_starters': known_starters,
                'periods': periods, 'player_periods': player_periods, 'flow_diagnostics': flow_diagnostics,
                'stream': stream, 'seed_key': seed_key, 'strict_minute_targets': strict_minute_targets,
@@ -487,6 +505,7 @@ def main():
     ap.add_argument('--rotation', choices=('replay', 'targets'), default='replay',
                     help='replay = M3 v0 templates (v1.1); targets = D29 minutes (healthy roles, 240 by priority, ramp)')
     ap.add_argument('--models', default=None, help='reuse fitted fold models (e.g. folds/v1.1_F4_all) instead of fitting')
+    ap.add_argument('--clock-recipe', type=Path, help='frozen prior-fitted clock parameters matching the fold node cutoff')
     ap.add_argument('--known-starters', action='store_true', help='targets only: open with the real starters (a perfect lineup source)')
     ap.add_argument('--pool', type=int, default=None, help='rotation tables per side shared by the worlds (default 400; 0 = one per world, D36)')
     ap.add_argument('--flow-diagnostics', action='store_true', help='save opt-in clock, scheduled-five and player-quarter diagnostics')
@@ -527,6 +546,7 @@ def main():
         print(json.dumps(summary, indent=1))
         return
     version = args.models or fold_engine_version(args.fold, args.config, args.threads)
+    runtime = clock_runtime(version, args.clock_recipe)
     _, _, seg, _, _, _ = load_inputs(spec, args.fold)
     games = select_games(eligible_games(seg), args.games, args.seed, args.game_ids)
     print(f'backtest {spec.get("version")} {args.fold}: {len(games)} games × {args.worlds} worlds, {args.jobs} jobs, models {version}', flush=True)
@@ -543,7 +563,7 @@ def main():
                                                          args.known_starters, args.pool, args.simulation_stream, args.seed_key,
                                                          args.flow_diagnostics, args.minutes_history,
                                                          args.strict_minute_targets, args.substitution_candidate,
-                                                         args.audit_substitution_worlds, args.substitution_foul_penalty)) as pool:
+                                                         args.audit_substitution_worlds, args.substitution_foul_penalty, runtime)) as pool:
         for i, r in enumerate(pool.imap(run_game, list(games), chunksize=1), 1):
             if world_dir is not None:
                 path = world_dir / f"{r['game_id']}.npz"
@@ -568,6 +588,8 @@ def main():
               'game_ids': games.tolist(), 'game_selection_seed': args.seed,
               'game_ids_file': str(args.game_ids) if args.game_ids else None,
               'simulation_stream': args.simulation_stream, 'seed_key': args.seed_key,
+              'runtime': runtime,
+              'clock_recipe_sha256': sha256_file(ROOT / runtime['clock_recipe']) if runtime.get('clock_recipe') else None,
               'seconds': round(time.time() - start), 'summary': summary}
     if args.flow_diagnostics:
         paths = (Path(__file__), ROOT / 'scripts' / 'engine.py', ROOT / 'scripts' / 'a1_flow_capture.py')

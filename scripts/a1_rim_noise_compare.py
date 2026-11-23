@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify second-seed outputs and apply the pre-existing four-fold shot-node gate."""
+"""Historical S04 reproduction: preserve its frozen gate; new node work uses compare.py (MODEL.md)."""
 from __future__ import annotations
 
 import argparse

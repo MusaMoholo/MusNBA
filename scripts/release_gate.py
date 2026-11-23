@@ -13,9 +13,9 @@ from basketball_common import read_json, sha256_file, write_json  # noqa: E402
 from scripts.a1_minutes_gate import GAME_CRPS, PLAYER_BIAS, PLAYER_CRPS, interval  # noqa: E402
 
 
-def assess(report: dict, change_class: str, primary: str | None = None, *, policy: str = 'v2') -> dict:
+def assess(report: dict, change_class: str, primary: str | None = None, *, policy: str | None = None) -> dict:
     if policy not in ('v2','v3'):
-        raise ValueError('known versioned acceptance policy required')
+        raise ValueError('explicit versioned acceptance policy required (v2 or v3)')
     if change_class not in ('mechanics', 'learned'):
         raise ValueError('empirical score gate applies to mechanics or learned changes')
     if change_class == 'learned' and primary is None:
@@ -90,7 +90,7 @@ def main():
     parser.add_argument('comparison', type=Path)
     parser.add_argument('--class', dest='change_class', choices=('mechanics', 'learned'), required=True)
     parser.add_argument('--primary')
-    parser.add_argument('--policy',choices=('v2','v3'),default='v2')
+    parser.add_argument('--policy',choices=('v2','v3'),required=True)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     if args.output.exists():

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Paired comparison of two training runs on the same held-out rows (TRAINING_PLAN §7).
+"""Paired node comparison on the same declared held-out panels (MODEL.md).
 
 Each run of scripts/train.py stores every held-out decision's log loss (data/derived/experiments/<run>.npz).
 For each node and fold this prints the change in mean log loss from run A to run B, as a percentage of A, with a
@@ -7,7 +7,7 @@ z-score whose standard error is clustered by game (decisions within a game are n
 "chain", sums every node's change per game: the change in the log-likelihood of whole games, in nats per game.
 
 Noise has two sources: the held-out sample (the game-clustered z) and training randomness, which z does not see — a
-change of seed alone gives |z| up to 3.4 on some nodes (FINDINGS §3h). `--noise A0 A1` (two runs that differ only in
+change of seed alone has produced |z| up to 3.4 on some nodes. `--noise A0 A1` (two runs that differ only in
 seed) measures the second per node: noise = RMS over folds of the seed-to-seed change, in % of loss.
 
 Verdict per node (the owner's rule: keep a change only if the mean over folds improves and no fold gets worse by
@@ -16,6 +16,8 @@ more than noise):
   worse    mean change > +noise with pooled z ≥ 2, or a fold worse by more than 2 × noise with z > 2
   neutral  anything else (keep the simpler setting)
 Without --noise, noise = 0 (z only — too lenient for small nodes).
+Nonzero constant differences retain their direction when estimated SE is zero; z is undefined, not zero.
+Unmatched panels and invalid losses fail explicitly. Partial comparisons require --nodes/--folds scope.
 
   .venv/bin/python scripts/compare.py <run A> <run B> [--noise <seed run A0> <seed run A1>]
 """
@@ -47,7 +49,12 @@ def load(run: str) -> dict:
 
 def paired(a_loss, b_loss, games):
     """Mean of b − a and its game-clustered standard error."""
-    d = pd.Series(b_loss.astype(float) - a_loss.astype(float))
+    a_loss, b_loss, games = np.asarray(a_loss, float), np.asarray(b_loss, float), np.asarray(games)
+    if (a_loss.ndim != 1 or b_loss.shape != a_loss.shape or games.shape != a_loss.shape
+            or not len(a_loss) or not np.isfinite(a_loss).all() or not np.isfinite(b_loss).all()
+            or pd.isna(games).any() or len(np.unique(games)) < 2):
+        raise ValueError('finite nonempty matched losses and at least two game clusters required')
+    d = pd.Series(b_loss - a_loss)
     by_game = d.groupby(games).agg(['sum', 'size'])
     n, G = len(d), len(by_game)
     mean = d.sum() / n
@@ -56,16 +63,26 @@ def paired(a_loss, b_loss, games):
     return float(mean), float(se), by_game['sum']
 
 
-def seed_noise(run_a: str, run_b: str) -> dict:
+def seed_noise(run_a: str, run_b: str, *, nodes=None, folds=None) -> dict:
     """Per node: RMS over folds of the relative change between two runs that differ only in seed."""
-    r = compare(run_a, run_b)
+    r = compare(run_a, run_b, nodes=nodes, folds=folds)
     return {node: float(np.sqrt(np.mean([f['rel'] ** 2 for f in t['folds'].values()]))) for node, t in r['nodes'].items()}
 
 
-def compare(run_a: str, run_b: str, noise: dict | None = None) -> dict:
+def compare(run_a: str, run_b: str, noise: dict | None = None, *, nodes=None, folds=None) -> dict:
     noise = noise or {}
     A, B = load(run_a), load(run_b)
-    keys = [k for k in A if k in B]
+    scope = {'nodes': sorted(nodes) if nodes is not None else None,
+             'folds': sorted(folds) if folds is not None else None}
+    A, B = ({k: v for k, v in source.items()
+             if (nodes is None or k[0] in nodes) and (folds is None or k[1] in folds)} for source in (A, B))
+    if not A or set(A) != set(B):
+        raise ValueError(f'unmatched or empty node/fold panels: only A={sorted(set(A)-set(B))}, '
+                         f'only B={sorted(set(B)-set(A))}; declare an explicit common scope')
+    if ((nodes is not None and set(nodes) != {k[0] for k in A})
+            or (folds is not None and set(folds) != {k[1] for k in A})):
+        raise ValueError('requested node/fold scope is missing')
+    keys = list(A)
     nodes = list(dict.fromkeys(k[0] for k in keys))
     folds = sorted({k[1] for k in keys})
     table, chain = {}, {f: [] for f in folds}
@@ -76,21 +93,28 @@ def compare(run_a: str, run_b: str, noise: dict | None = None) -> dict:
                 continue
             a, b = A[(node, fold)], B[(node, fold)]
             if len(a['loss']) != len(b['loss']) or not np.array_equal(a['game'], b['game']):
-                raise SystemExit(f'{node} {fold}: runs do not share held-out rows')
+                raise ValueError(f'{node} {fold}: runs do not share held-out rows')
             mean, se, per_game = paired(a['loss'], b['loss'], a['game'])
             base = float(a['loss'].mean())
-            row[fold] = {'delta': mean, 'se': se, 'rel': mean / base, 'z': mean / se if se > 0 else 0.0, 'base': base}
+            if not np.isfinite(base) or base <= 0:
+                raise ValueError(f'{node} {fold}: positive baseline loss required for relative comparison')
+            row[fold] = {'delta': mean, 'se': se, 'rel': mean / base,
+                         'z': z_value(mean, se), 'zero_se': se == 0, 'base': base}
             chain[fold].append(per_game)
         rel = np.mean([r['rel'] for r in row.values()])
         pooled = np.mean([r['delta'] for r in row.values()])
         pooled_se = np.sqrt(np.sum([r['se'] ** 2 for r in row.values()])) / len(row)
-        zp = pooled / pooled_se if pooled_se > 0 else 0.0
-        worst = max(r['z'] for r in row.values())
+        zp = z_value(pooled, pooled_se)
+        worst = None if any(r['z'] is None for r in row.values()) else max(r['z'] for r in row.values())
         nz = noise.get(node, 0.0)
-        bad_fold = any(r['z'] > 2 and r['rel'] > 2 * nz for r in row.values())
-        verdict = ('better' if rel < -nz and zp <= -2 and not bad_fold else
-                   'worse' if (rel > nz and zp >= 2) or bad_fold else 'neutral')
-        table[node] = {'folds': row, 'mean_rel': rel, 'pooled_z': zp, 'worst_fold_z': worst, 'noise': nz, 'verdict': verdict}
+        if not np.isfinite(nz) or nz < 0:
+            raise ValueError('training noise must be finite and nonnegative')
+        bad_fold = any(r['delta'] > 2 * r['se'] and r['rel'] > 2 * nz for r in row.values())
+        verdict = ('better' if rel < -nz and pooled <= -2 * pooled_se and not bad_fold else
+                   'worse' if (rel > nz and pooled >= 2 * pooled_se) or bad_fold else 'neutral')
+        table[node] = {'folds': row, 'mean_rel': float(rel), 'pooled_z': zp,
+                       'pooled_delta': float(pooled), 'pooled_se': float(pooled_se),
+                       'worst_fold_z': worst, 'noise': float(nz), 'verdict': verdict}
     chain_rows = {}
     for fold, parts in chain.items():
         if not parts:
@@ -98,7 +122,17 @@ def compare(run_a: str, run_b: str, noise: dict | None = None) -> dict:
         s = pd.concat(parts, axis=1).fillna(0).sum(axis=1)
         G = len(s)
         chain_rows[fold] = {'nats_per_game': float(s.mean()), 'se': float(s.std(ddof=1) / np.sqrt(G)), 'games': G}
-    return {'a': run_a, 'b': run_b, 'nodes': table, 'chain': chain_rows}
+    return {'a': run_a, 'b': run_b, 'scope': scope, 'panels': [list(k) for k in keys],
+            'nodes': table, 'chain': chain_rows}
+
+
+def z_value(delta, se):
+    """None distinguishes a constant nonzero change from no change; JSON stays finite."""
+    return float(delta / se) if se > 0 else 0.0 if delta == 0 else None
+
+
+def format_z(value):
+    return 'const' if value is None else f'{value:+5.1f}'
 
 
 def main():
@@ -106,17 +140,18 @@ def main():
     ap.add_argument('run_a')
     ap.add_argument('run_b')
     ap.add_argument('--noise', nargs=2, metavar=('SEED_A', 'SEED_B'), help='two runs differing only in seed (training noise)')
+    ap.add_argument('--nodes', nargs='+', help='explicit partial node scope')
+    ap.add_argument('--folds', nargs='+', help='explicit partial fold scope')
     args = ap.parse_args()
-    noise = seed_noise(*args.noise) if args.noise else None
-    r = compare(args.run_a, args.run_b, noise)
+    noise = seed_noise(*args.noise, nodes=args.nodes, folds=args.folds) if args.noise else None
+    r = compare(args.run_a, args.run_b, noise, nodes=args.nodes, folds=args.folds)
     folds = sorted({f for n in r['nodes'].values() for f in n['folds']})
     print(f'B = {args.run_b}  v  A = {args.run_a}   (change in log loss, % of A; z clustered by game; negative = B better)')
     print(f"{'node':14}" + ''.join(f'{f:>17}' for f in folds) + f"{'mean':>10}{'pooled z':>10}{'noise':>9}  verdict")
     for node, t in r['nodes'].items():
-        cells = ''.join(f"{t['folds'][f]['rel']:+9.3%} ({t['folds'][f]['z']:+5.1f})" if f in t['folds'] else f"{'':>17}" for f in folds)
-        print(f"{node:14}{cells}{t['mean_rel']:+10.3%}{t['pooled_z']:+10.1f}{t['noise']:9.3%}  {t['verdict']}")
-    z = lambda c: c['nats_per_game'] / c['se'] if c['se'] > 0 else 0.0
-    cells = ''.join(f"{r['chain'][f]['nats_per_game']:+9.3f} ({z(r['chain'][f]):+5.1f})" for f in folds)
+        cells = ''.join(f"{t['folds'][f]['rel']:+9.3%} ({format_z(t['folds'][f]['z'])})" if f in t['folds'] else f"{'':>17}" for f in folds)
+        print(f"{node:14}{cells}{t['mean_rel']:+10.3%}{format_z(t['pooled_z']):>10}{t['noise']:9.3%}  {t['verdict']}")
+    cells = ''.join(f"{r['chain'][f]['nats_per_game']:+9.3f} ({format_z(z_value(r['chain'][f]['nats_per_game'], r['chain'][f]['se']))})" for f in folds)
     total = np.mean([c['nats_per_game'] for c in r['chain'].values()])
     print(f"{'chain':14}{cells}{total:+10.3f}  nats per game (all nodes summed)")
 

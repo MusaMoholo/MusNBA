@@ -1,0 +1,182 @@
+{
+ "status": "fixed candidate; not promoted",
+ "runtime": {
+  "id": "engine-v1.3-r3",
+  "kind": "engine",
+  "version": "v1.3-r3",
+  "models": "v1.3",
+  "rotation": "targets",
+  "sims": 10000,
+  "pool": 0,
+  "label": "Possession engine: each world draws its own player minutes and rotations, with legal foul-out handling. Prior-fitted timing responds to the score and clock late in Q4/overtime. Lineup probabilities are assumptions; defender impact and late foul/shot choices still need improvement.",
+  "foul_policy": "nba-rule3-v1",
+  "rotation_fit": "independent-v1",
+  "chunk_worlds": 1000,
+  "clock_recipe": "data/models/v1.3-r3/clock.json"
+ },
+ "node_models": "v1.3",
+ "clock_train_through": "2026-06-30",
+ "training": {
+  "cutoff": "2026-06-30",
+  "latest_training_date": "2026-06-13",
+  "legacy_rows": 55371,
+  "clean_rows": 49490,
+  "excluded_unknown_or_invalid": 5881,
+  "cells": {
+   "0": {
+    "opportunities": 519,
+    "games": 493,
+    "supported": true
+   },
+   "1": {
+    "opportunities": 552,
+    "games": 464,
+    "supported": true
+   },
+   "2": {
+    "opportunities": 603,
+    "games": 456,
+    "supported": true
+   },
+   "3": {
+    "opportunities": 343,
+    "games": 242,
+    "supported": true
+   },
+   "4": {
+    "opportunities": 423,
+    "games": 392,
+    "supported": true
+   },
+   "5": {
+    "opportunities": 349,
+    "games": 344,
+    "supported": true
+   },
+   "6": {
+    "opportunities": 230,
+    "games": 225,
+    "supported": true
+   },
+   "7": {
+    "opportunities": 432,
+    "games": 426,
+    "supported": true
+   },
+   "8": {
+    "opportunities": 529,
+    "games": 500,
+    "supported": true
+   },
+   "9": {
+    "opportunities": 423,
+    "games": 369,
+    "supported": true
+   },
+   "10": {
+    "opportunities": 121,
+    "games": 111,
+    "supported": true
+   },
+   "11": {
+    "opportunities": 384,
+    "games": 339,
+    "supported": true
+   },
+   "12": {
+    "opportunities": 386,
+    "games": 375,
+    "supported": true
+   },
+   "13": {
+    "opportunities": 247,
+    "games": 244,
+    "supported": true
+   },
+   "14": {
+    "opportunities": 814,
+    "games": 796,
+    "supported": true
+   },
+   "15": {
+    "opportunities": 1016,
+    "games": 854,
+    "supported": true
+   },
+   "16": {
+    "opportunities": 653,
+    "games": 525,
+    "supported": true
+   },
+   "17": {
+    "opportunities": 133,
+    "games": 122,
+    "supported": true
+   },
+   "18": {
+    "opportunities": 644,
+    "games": 526,
+    "supported": true
+   },
+   "19": {
+    "opportunities": 745,
+    "games": 684,
+    "supported": true
+   },
+   "20": {
+    "opportunities": 646,
+    "games": 639,
+    "supported": true
+   },
+   "21": {
+    "opportunities": 932,
+    "games": 891,
+    "supported": true
+   },
+   "22": {
+    "opportunities": 858,
+    "games": 747,
+    "supported": true
+   },
+   "23": {
+    "opportunities": 369,
+    "games": 335,
+    "supported": true
+   },
+   "24": {
+    "opportunities": 117,
+    "games": 101,
+    "supported": true
+   },
+   "25": {
+    "opportunities": 438,
+    "games": 394,
+    "supported": true
+   },
+   "26": {
+    "opportunities": 724,
+    "games": 650,
+    "supported": true
+   },
+   "27": {
+    "opportunities": 836,
+    "games": 823,
+    "supported": true
+   }
+  }
+ },
+ "pool_sha256": "a3596b043bc74279217e29018b7cf14acf74d7583b1278d5c9344481b781fe06",
+ "f4_parity_pool_sha256": "63ad4c5a4372f60ebf6b23cdcc84f4bf893f2d24a66a2c3c7d6a416d8007388d",
+ "fitted_with_unchanged_recipe": "analysis/a2_late_clock.py",
+ "fit_source_sha256": "f667fbd6cd9acf40abc06b1c5a2201ded4e2c249439fd44cf93475396b151f6f",
+ "history_sha256": {
+  "data/derived/history/2023/segments.parquet": "813b53edadf92f6e6c607211b1d4c64b312aa9fbe689851110e912419101a76e",
+  "data/derived/history/2024/segments.parquet": "4a7c3c2bce39580cc8e1092ffc215d11bbd49f7bf117b4551eee40337203d2c0",
+  "data/derived/history/2025/segments.parquet": "d9db732172894ed8d3c6e5e99e3cd1c197006da22799413034ce3ce18cc5aee2",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc"
+ },
+ "stress_sha256": "a6c78d6413c3cdf0a9cb0af6a4fb9e02e739c2067aff02307a26dc64d2b29b33",
+ "resume_sha256": "8edbc3ebedbf7a85f259982777d9b179f5152c7502df7c41e9eee0febe2718c3",
+ "protected_r2_controls": "analysis/experiments/independent_rotation_final_20261123_v1.json",
+ "limits": "Clock timing revision; no new shooting/form factor or universal player-accuracy claim."
+}

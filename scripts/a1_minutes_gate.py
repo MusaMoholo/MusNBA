@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Apply the frozen A1 minute-screen and non-inferiority bounds to paired reports."""
+"""Historical S05 minute-screen/v1 bounds; not a general promotion policy (see MODEL.md).
+
+Constants remain shared by versioned policies; this CLI preserves its original experiment's gate.
+"""
 from __future__ import annotations
 
 import argparse

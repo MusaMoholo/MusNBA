@@ -1,126 +1,107 @@
-# Handoff — current state and next actions
+# Handoff — live state and next action
 
-Updated **23 November 2026**. Previous pushed checkpoint: **880c0de**; `git log -1` identifies this checkpoint.
-Read [AGENTS](AGENTS.md), then this file and [PLAN](PLAN.md). Detailed history is indexed in
-[docs/README](docs/README.md); do not read archives as current instructions.
+Updated 23 November 2026. Previous pushed checkpoint **0d4aee9**; `git log -1` identifies this checkpoint.
+Read [AGENTS](AGENTS.md), then this and [PLAN](PLAN.md). [MODEL](MODEL.md) owns design/tests/evidence;
+[README](README.md) commands/app/history. Do not load the historical archive by default.
 
 ## State
 
-- **Delivered:** engine-v1.3-r2 (unchanged v1.3 nodes), Rule3, D29 targets/pool0, row-local rotation fit;
-  10k worlds/branch through canonical1k chunks on ten workers. Team-pathway-v1 starts tomorrow.
-- **Scope/progress:** original14-task programme64% (S01–S08 complete; S13 deferred). D42 Chunk A
-  **54.5%** = A1 **100%**×30% + A2 **70%**×35% + A3 **0%**×35%; B0. Finish A2 only, then stop.
-- A1 outcomes/ten-rung ledger: [completed checkpoint](docs/checkpoints/2026-11-23-a1.md).
-  [Release receipt](analysis/experiments/20261123_r2_release_v1.json). Fresh200 F4 establishes27/27
-  proper bounds plus all bias/coverage diagnostics; original protected v2 42/44 preserved, never repeated.
-  Post-result v3 revision is explicit; no universal player-accuracy or learned availability claim.
-- **A2:** analytical contextual-clock screens/confirmation and200-game engine development passed. Shared
-  shooting has no confirmed pooled missing PTS covariance, so no calibrated form factor was added.
-- **A2 F4/F1/F2 complete:**200/100/100 pairs establish27/27 proper bounds each. F1 total coverage
-  is imprecise; no material harm. Independent600-game readiness audit and smoke108 pass. F3 is next.
-  Production remains r2, no clock selected.
-  Do not repeat completed A1 simulations. Review server:8767; never stop owner:8766. D52: no CI workflows.
+- **A1 and A2 complete; stop before D54/A3/B execution.** Accepted **engine-v1.3-r3**, unchanged v1.3 nodes,
+  D29 targets/pool 0, legal Rule 3 foul-outs, independent rotation fitting,10k worlds/branch through a shared ten-worker 1k-chunk queue.
+- A1 delivers laptop lineup branches, exact Expected/season mixtures and independently varying minutes/rotations.
+  Original r2 protected v2 result remains 42/44; fresh prospective v3 confirmation supports the delivered repair.
+- A2: **r3 contextual timing qualified and delivered; all frozen final compatibility checks clear. MODEL records small score regressions and remaining realism gaps.** No calibrated shared shooting/form factor was supported. Better timing does not establish
+  realistic foul/shot choices. U23 outcome stories/startup recovery and photos are delivered. MODEL records limits.
+- Closing scorer fixes: zero-SE direction, explicit node/fold matching and explicit policy selection; frozen final evidence preserved.
+  Existing 400-game controls audit player coverage/team bias/participation; no new model round. See MODEL.
+- Docs:35 live Markdown files/28,933 words → **8 files/8,213 words**. Five core docs plus three policy contracts;
+  completed history is one verified 44-member archive, also backed up externally. Local commit checks enforce leanness.
+- Original programme **74%**; D42 Chunk A **65%** = A1(100%)×30%+A2(100%)×35%+A3(0%)×35%; B0.
+  S13 forecast replay remains deferred. These ledgers have not been reset.
 
-## Latest published PWA delivery
+## Latest delivery
 
-- Origin23Nov, generation**2026-11-23T18:06:16Z**;63requests/0failures, required advanced rebuild231.9s.
-  10games/15×10k batches; snapshot1184.0s. All53,732 histogram checks pass. Season80,337 weighted
-  paths/mass100k/952games; every original near-term atom exact. No iid-season/calibration claim.
-- Public data-free shell31317f88/cache318fb2858f9d58651de0 is unchanged. New iCloud laptop
-  **215,095,062 bytes**, phone**110,224,058**. Both require manual device import; real-device acceptance
-  is unverified. No incremental bundle publication yet. Assets support r2 through loaded metadata.
-- Hosted final imports/offline**29/29 laptop,27/27 phone**; smoke**108/108**, fault**86/108/exit1**.
-  Original asset delivery also passed installed upgrade32/32 and inspected normal-route24/24 at
-  1440/960/390 in both themes. Live output/model/bundle contracts are verified; no further asset push needed.
-- Receipts `20261123_r2_{integrated_delivery,live_accounting,season_accounting}_v1.json`.
-  Logs `/tmp/musnba_a1_r2_world_queue_nightly_20261123_v1.log` and
-  `/tmp/musnba_r2_delivery_{checks,smoke,fault,pwa_phone,pwa_laptop}_20261123_v1.log`.
-  Live root `data/derived/live_runs/2026-11-23-1795455992573123000` retained for replay.
+Origin 23 Nov, generation **2026-11-23T21:53:15Z**. Authorised collection 63 requests/0 failures; required rebuild 233.1s.
+Ten games/15×10k branches,150,000 worlds; snapshot/season **1194.11s**, full pipeline≤1610.4s.
+Season **80,337 weighted paths/mass100,000/952games**; every original near-term atom exact, no iid-path claim.
+**52,628 independent histogram checks**,20 focused tests, smoke 108/108, deliberate fault 86/108/exit1.
+Hosted PWA import/offline **30/30 laptop, 28/28 phone**; model r3 explicitly asserted. About 6/6; all six screenshots inspected at 1440/960/390, both themes.
+New iCloud bundles: **213,682,423 bytes laptop / 110,595,723 phone**.
+Existing shell31317f88/cache318fb2858f9d58651de0 is unchanged; no asset publication required.
+
+Both devices still require **manual bundle import**; real-device import/memory acceptance is unverified.
+Public Pages serves only the data-free shell; no repository CI workflows. Current assets support runtime metadata.
+Laptop includes saved-world lineup tools; phone Expected-only. No per-game incremental export yet.
+Owner server:8766 stays running; agent review:8767. **No heavy jobs running. Review server 8767 is reusable; never stop owner 8766.**
+
+## Completed evidence and resume boundary
+
+- Final clock run: `a2_clock_final_20261123_v1`, exactly 246 games×1k candidate worlds, retained r2 controls reused.
+  Single score and independent accounting are immutable. Sources: `data/derived/experiments/a2_clock_final_20261123_v1_sources/`.
+  Logs `/tmp/musnba_a2_clock_final_20261123_v1.log`, `/tmp/musnba_a2_clock_final_scores_20261123_v1.log`.
+- Prior recipe:55,371 late rows, latest 13 June, cutoff 30 June 2026; all 28 cells supported. Six raw wiring checks;
+  3 games×10k stresses,34,679,026 legal fives,41 resume files unchanged. Development/earlier/independent F4 evidence in MODEL.
+- Closing audit receipts: `analysis/experiments/20261123_closing_{scorer_precheck,scorer_audit,controls}_v1.json`.
+  Original S06 now warrants prospective reconsideration, not release or protected rescoring. No new factor/strength selected.
+- Final delivery receipts: **`analysis/experiments/20261123_r3_{integrated_delivery,live_accounting,season_accounting}_v1.json` and `20261123_a2_completion_v1.json`**. Check the recorded source hashes before replay; do not overwrite namespaces.
+- All old 43 Markdown documents plus the original manifest survive in the 44-member history archive.
+  External backup: `~/Basketball_archive_ops/docs_20261123_a2_close`. Old commands/next actions are historical.
 
 ## Next actions
 
-1. **A2 headliner:** test the frozen contextual late-clock correction in the engine against real outcomes.
-   Hook-off three raw r2 pilots pass; sampler3/3. Runtime manifest
-   `20261123_a2_clock_engine_runtime_manifest_v1.json` freezes current sources, unchanged pools/IDs/primary
-   and r2 baseline. Earlier-fold planned config aliases resolve via retained preparation records; model
-   identities/IDs/seeds are unchanged. Engine hook is opt-in only; production r2 timing remains legacy.
-   Use qualified r2 in both arms, reserve r3 for clock; no new form/variance factor or feature selection.
-   Read [original engine stages](docs/protocols/a2_clock_engine_20261123.md) and the prospective
-   [v3 development plan](docs/protocols/a2_clock_v3_development_20261123.md). Pools are already frozen
-   under `data/derived/experiments/20261123_a2_late_clock_{screen,confirmation}_v1/F*_pools.json`;
-   IDs in `20261123_a2_clock_engine_panels_v1.json`. Freeze driver/source/input/seed identities before results.
-2. **Research checkpoint complete:** [A2 engine evidence](docs/research/a2_clock_evidence_20261123.md)
-   owns populations/effects/accounting. Receipt `20261123_a2_research_checkpoint_v1.json`: smoke108/108,
-   deliberate fault86/108 exit1, sampler/recipe5/5. Independent raw-table audit reproduces all600 input
-   decisions/300 selected IDs,12,950 roster and127,610 template position cells. Production/PWA unchanged;
-   no repeated nightly at this research-only checkpoint. No heavy jobs running; F2/logs completed.
-3. **Next F3:** all inner OMP/OPENBLAS/VECLIB/MKL/NUMEXPR limits1, then
-   `analysis/a2_clock_ready_panels.py run --fold F3 --name a2_clock_earlier_f3_supported_20261123_v1 --jobs 10`,
-   log `/tmp/musnba_a2_clock_earlier_f3_supported_20261123_v1.log`. Start sleeping scorer
-   `/tmp/musnba_a2_score_when_audited.py a2_clock_earlier_f3_supported_20261123_v1 F3 earlier_ready`
-   with the same limits; it waits for complete100/audit and scores once. Inspect supported-fold compatibility.
-   Do not edit frozen engine/driver/scorer/auditor/models/inputs or repeat completed runs.
-   Then `analysis/a2_clock_pool.py score` must establish all27 on pooled300; manifestv2 uses each fold's
-   dated roles/raw game rows. Only survivors run unchanged200 F4 confirmation (`analysis/a2_clock_engine.py
-   run --phase confirmation --name a2_clock_confirmation_20261123_v1 --jobs 10`), stream30 and three10k
-   stresses. Reuse r2 `independent_rotation_policy_confirmation_20261123_v1` controls. Stress adapter still
-   needs implementation: ten deterministic1k chunks/game/arm, namespace `a2-clock-stress-chunk-v1`;
-   three real games, never30. Freeze adapters before outcomes. Protected r3 only after all stages qualify,
-   once; production clock loader/final adapter are not built. No recipe/threshold rescue or arbitrary variance.
-   [Readiness amendment](docs/protocols/a2_clock_readiness_amendment_20261123.md): original F1 setup
-   failed on missing position before aggregate scoring. All original partial files remain; ten complete
-   pairs reused/re-audited. Input-only replacement4/5/15 keeps100/fold, same hash order/recipe/seeds/gates.
-   Missing positions remain missing; excluded games stay unqualified. IDs `20261123_a2_clock_ready_panels_v1.json`.
-   Source copies: `data/derived/experiments/a2_clock_{engine,ready_panels}_20261123_v1_sources/`;
-   original pooled-v1 unused adapter copy also retained. [Execution semantics](docs/protocols/a2_clock_execution_review_20261123.md):
-   periods asynchronous, off-hook raw parity mandatory; explicit shot-clock state is absent.
-4. All12 archived/current input files are byte-identical after the rebuild; report
-   `20261123_r2_profile_refresh_identity_v1.json`. Exact controls remain reusable after parity. Archive
-   `/Users/moholom/Basketball_archive_ops/archive_20261123T174020Z_91228` remains backup; never restore
-   over production. Frozen r2 confirmation source31-file archive is under
-   `data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1_sources/`.
-5. Finish A2 with a measured accept/reject decision and limitations; review the original S09 ladder before
-   crediting its10% (diagnostics alone do not automatically complete it). Required fresh full nightly on accepted
-   engines, PWA/iCloud verification, eight-doc review, commit/push. If clock fails, retain accepted timing;
-   do not add arbitrary variance. U23 outcome stories already provide A2's delivered player-facing improvement.
-   Construct the D54 successor fully (weights/ten rungs/acceptance/commands/final nightly), then stop before
-   A3/B/replay. [D54 contract](docs/protocols/incremental_catchup.md). No forecast backfill authorised.
+1. This authorised A1/A2 session is complete. Report model/limits, bundle generation/manual imports and checkpoint commit/push; stop.
+2. When D54 is started, run the commands below, inspect actual pipeline/export dependencies, then implement its first rung.
+   Preserve current forecasts/archives and the accepted recipe. No historical forecast backfill or new provider is authorised.
+3. Later A3/B uses PLAN's preserved weights; extract only its full original ladder from the archive before activation.
+   Zone/order/zone-form ideas and current calibration gaps are recorded in MODEL/PLAN, not extra A2 jobs.
 
-First commands (A1 has finished; do not restart its jobs):
+## Successor D54 — complete-game publication, 0%
+
+Headliners: a completed, checked 10k-world game reaches both device bundles while other games continue;
+each imported game and season identifies its own generation. This interlude precedes A3/B and does not reset either ledger.
+Dependencies: completed A2 decision/delivery, accepted deterministic ten-worker queue, full-bundle importer, both profiles,
+archive/accounting tools. Historical reconstruction, automatic device import, new models and View Centre are outside this chunk.
+
+```text
+D54      ░░░░░░░░░░░░░░░░░░░░ 0%
+P1       ░░░░░░░░░░░░░░░░░░░░ 0%  weight40%
+P2       ░░░░░░░░░░░░░░░░░░░░ 0%  weight35%
+P3       ░░░░░░░░░░░░░░░░░░░░ 0%  weight25%
+```
+
+Ten cumulative done-when rungs;100 includes evidence/docs/checkpoint commit/push. P1 precedes P2 activation;
+P3 fixtures/design can overlap, integrated acceptance follows both. Count compression/export in the ten-thread budget.
+
+| Rung | P1 checked game checkpoints —40% | P2 bundles/freshness —35% | P3 integrated delivery —25% |
+|---:|---|---|---|
+| 10 | Trace queue→branch→game→snapshot completion. | Trace both exporters/importers/generation labels. | Freeze interruption/concurrency/profile/accounting matrix. |
+| 20 | Freeze completion schema and independent checks. | Benchmark full export and iCloud bytes copied. | Pin small ordinary/branched fixtures and sources. |
+| 30 | Persist immutable complete chunks with source/seed IDs. | Choose compatible format from measured cost. | Prove early publication against saved worlds. |
+| 40 | Mark game complete only after all branches/Expected reconcile. | Build checked temporary laptop/phone bundles. | Prove resume skips accepted worlds unchanged. |
+| 50 | Expose checked game-completion event to nightly. | Activate paired generations with receipt. | Interrupt simulation/compression/activation safely. |
+| 60 | Queue publications without blocking other simulations. | Keep previous bundles readable on failure. | Measure combined thread count/memory. |
+| 70 | Resume verified games; reject changed inputs/partials. | Show per-game generation/in-progress slate. | Test early→later import, old bundles/offline. |
+| 80 | Test clean/hard interruptions without duplicate worlds. | Keep season generation explicit until coherent refresh. | Inspect touched 1440/960/390 routes/both themes, phone size. |
+| 90 | Independently reconcile game/Expected/seed identities. | Check successive imports/missing games/legacy use. | Fresh full nightly; early 10k game and final season publication. |
+| 100 | Evidence/docs/checks, commit/push. | Publish changed shell, evidence/docs, commit/push. | Audit exports/manual import/successor, commit/push. |
+
+Acceptance: before the last slate game finishes, an earlier real game's complete required 10k branches must be importable
+in both bundles and match source worlds exactly. Interrupted activation leaves readable prior state or a detected recoverable partial pair.
+Resume changes no draws, reuses accepted games and rejects incompatible identities. Early games never imply an old season incorporates them.
+Stored-only browsing, both-profile import/upgrade/offline, independent accounting and responsive checks pass; no data reaches Pages.
+Benchmark reserving an export worker versus serial publication; no eleventh heavy worker.
+
+Fallback: retain end-of-nightly publication if guarantees fail, record the measured blocker and ship a useful player-facing freshness improvement.
+Every module checkpoints; final P3 runs a full accepted-engine nightly and constructs the successor in this format.
+Do not treat iCloud export as proof of device import.
 
 ```sh
 git status --short --branch
-git --no-pager log --oneline -3
-cat docs/protocols/a2_clock_v3_development_20261123.md
-.venv/bin/python -m unittest tests.test_late_clock -v
+.venv/bin/python scripts/smoke.py
+rg -n 'export|snapshot|branch|completed' scripts/nightly_musnba.py scripts/nightly.py scripts/live_forecast.py
+rg -n 'generation|importBundle|musnba.gz' scripts/export_musnba.py scripts/webapp
 .venv/bin/python scripts/check_docs.py
 ```
 
-## Progress ladders — Chunk A
-
-Headliners: lineup-aware player/game distributions; form/late-game realism; five saved games and 2-D replay.
-Dependencies/acceptance are in PLAN §6a; methods/gates belong to ENGINE/TRAINING. Ten cumulative rungs/module;
-100 includes evidence, necessary delivery, checks, docs and commit/push. Report every new 10% module/5% overall mark.
-
-```text
-Chunk A  ███████████░░░░░░░░░ 54.5%
-A2       ██████████████░░░░░░ 70%
-A3       ░░░░░░░░░░░░░░░░░░░░ 0%
-```
-
-| Rung | A2 form / late game (35%) | A3 View Centre / delivery (35%) |
-|---:|---|---|
-| 10 | Quantify residual covariance after roles/minutes. | Freeze five-world selection, schema, provenance, spatial/data budget. |
-| 20 | Freeze prior-fold talent/form hypotheses and no-double-count controls. | Select each team's maximum margin and maximum individual fantasy worlds. |
-| 30 | Isolated uncertainty draws preserve means/streams (synthetic only so far). | Select a real representative world using frozen multi-stat distance. |
-| 40 | Test shared pace/shooting and dependence on folds. | Persist five labels; validate local files and invalid/future-source contracts. |
-| 50 | Audit late fouls, clock, shot selection and OT by supported states. | Capture/replay exact original batch events without changing draws. |
-| 60 | Test supported state corrections against earlier-fold controls. | Independently reconcile event order, clocks, scores, boxes and legal fives. |
-| 70 | Sequential player-first screens: CRPS, bias, coverage, joint metrics. | Ship stored-only court, overlays, box, event list and playback controls. |
-| 80 | Test survivors together and under independent seeds. | Check seek/playback/accessibility, themes/widths, phone budget/offline. |
-| 90 | Freeze promote/reject decision under all applicable gates. | Fresh live 10k nightly; audit selections and iCloud/PWA delivery. |
-| 100 | Verify evidence/fallback/delivery, commit/push. | Publish shell; construct successor; checks, commit/push and summary. |
-
-A1 is complete; its ladder/outcome is archived above. A2 80–100 and A3 all remain open. Chunk B's full predeclared ladders and the original S01–S14 ladders are preserved in
-[the frozen planning record](docs/archive/2026-11-23-before-lean/HANDOFF_NEXT.md); open only the relevant section
-when preparing that chunk, and copy its current ladder here before execution.
+Inspect resolved files; no callback is assumed. Freeze implementation/test plan before editing. Aggregate receipts/log references go in
+`analysis/experiments/`; worlds/bundles/interrupted fixtures stay ignored in `data/` or scratch. Archive replacements externally.

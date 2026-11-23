@@ -1,0 +1,54 @@
+{
+ "kind": "closing audit; synthetic comparator checks and existing DEVELOPMENT reanalysis only; no final-test choice",
+ "synthetic_cases": [
+  {
+   "constant_loss_change": -0.125,
+   "expected_direction": "better",
+   "old_verdict": "neutral",
+   "old_z": 0.0
+  },
+  {
+   "constant_loss_change": 0.125,
+   "expected_direction": "worse",
+   "old_verdict": "neutral",
+   "old_z": 0.0
+  },
+  {
+   "constant_loss_change": 0.0,
+   "expected_direction": "neutral",
+   "old_verdict": "neutral",
+   "old_z": 0.0
+  }
+ ],
+ "panel_mismatch_old_behaviour": {
+  "compared_folds": [
+   "F1"
+  ],
+  "expected": "reject unmatched panels unless scope is explicitly declared"
+ },
+ "old_substitution_development_review": {
+  "source": "analysis/experiments/20261122_a1_s06_penalty_fixed200_compare.json",
+  "current_policy": "explicit learned/v3; audit only",
+  "decision": "development_scores_compatible",
+  "core_established": 27,
+  "core_checks": 27,
+  "nonestablished": [],
+  "coverage_material_harm": [],
+  "primary": {
+   "path": "players/all/min/crps",
+   "change": -0.03529358966337037,
+   "ci_95": [
+    -0.04462392502738064,
+    -0.02608508104472769
+   ],
+   "improvement_established": true,
+   "multiplicity": "uncorrected; only one frozen benefit claim can use this directly"
+  },
+  "qualification": "Not promoted; old baseline/seed/coverage provenance and independent current-baseline confirmation are still required. This is not a new protected score."
+ },
+ "source_sha256": {
+  "scripts/compare.py": "e8f632be1cd3e743f3368685ee5c56e3768ff9d3f025aed81eca25d4001fb27d",
+  "scripts/release_gate.py": "5521abe5552a63f277adefcf05624b6121ef21a3003c4e58fcf1a30c40f2e287",
+  "analysis/experiments/20261122_a1_s06_penalty_fixed200_compare.json": "ba7c09d98cf4db625a199947867c9881b2ca09106ad71a2b755592fd8c0c5b21"
+ }
+}

@@ -170,6 +170,9 @@ if (args['replacement-bundle']) {
       && ui.meta()?.model?.id===fresh.model?.id && ui.meta()?.latest===fresh.latest;
   })()`,120000));
 }
+if (args['expected-model']) check('imported model matches the accepted runtime', await evaluate(`(async () => {
+  const ui=await import('./assets/ui.mjs'); return ui.meta()?.model?.id===${JSON.stringify(args['expected-model'])};
+})()`));
 await send('Network.emulateNetworkConditions', {offline: true, latency: 0, downloadThroughput: -1, uploadThroughput: -1}, s);
 await send('Page.navigate', {url: args.url + '#/standings'}, s);
 check('offline reload renders standings', await waitFor(`document.body.textContent.includes('Standings & season forecast') && !!document.querySelector('td.heat')`));

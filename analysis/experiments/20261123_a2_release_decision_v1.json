@@ -1,0 +1,138 @@
+{
+ "decision": "accept engine-v1.3-r3 contextual timing; integrated delivery pending",
+ "runtime": {
+  "id": "engine-v1.3-r3",
+  "kind": "engine",
+  "version": "v1.3-r3",
+  "models": "v1.3",
+  "rotation": "targets",
+  "sims": 10000,
+  "pool": 0,
+  "label": "Possession engine: each world draws its own player minutes and rotations, with legal foul-out handling. Prior-fitted timing responds to the score and clock late in Q4/overtime. Lineup probabilities are assumptions; defender impact and late foul/shot choices still need improvement.",
+  "foul_policy": "nba-rule3-v1",
+  "rotation_fit": "independent-v1",
+  "chunk_worlds": 1000,
+  "clock_recipe": "data/models/v1.3-r3/clock.json"
+ },
+ "primary": "conditional late-clock joint time/no-action loss, not pooled player-score improvement",
+ "protected": {
+  "games": 246,
+  "scored_player_games": 5492,
+  "unscored_simulated_players": [
+   {
+    "game_id": "401909285",
+    "player": "4897449",
+    "team": "9"
+   },
+   {
+    "game_id": "401909863",
+    "player": "4683730",
+    "team": "18"
+   },
+   {
+    "game_id": "401909867",
+    "player": "4395650",
+    "team": "23"
+   },
+   {
+    "game_id": "401909872",
+    "player": "5105854",
+    "team": "11"
+   },
+   {
+    "game_id": "401909877",
+    "player": "4687718",
+    "team": "17"
+   },
+   {
+    "game_id": "401909910",
+    "player": "4687718",
+    "team": "17"
+   },
+   {
+    "game_id": "401909914",
+    "player": "4683934",
+    "team": "29"
+   },
+   {
+    "game_id": "401909929",
+    "player": "5105800",
+    "team": "25"
+   },
+   {
+    "game_id": "401909934",
+    "player": "3155535",
+    "team": "13"
+   },
+   {
+    "game_id": "401910013",
+    "player": "5107818",
+    "team": "8"
+   }
+  ],
+  "proper_established": 27,
+  "coverage_established": 25,
+  "bias_diagnostics_established": 17,
+  "legal_fives": 284662010,
+  "min_crps": {
+   "control": 3.9659774718328693,
+   "candidate": 3.966660850688907,
+   "change": 0.0006833788560376419,
+   "ci_95": [
+    7.194641423388105e-05,
+    0.001292172016513482
+   ]
+  },
+  "pts_crps": {
+   "control": 3.2611149779679534,
+   "candidate": 3.2624812370721052,
+   "change": 0.0013662591041518901,
+   "ci_95": [
+    -8.127337833211399e-05,
+    0.0028184660908754373
+   ]
+  },
+  "total_crps": {
+   "control": 11.226089276422764,
+   "candidate": 11.275186504065042,
+   "change": 0.049097227642278085,
+   "ci_95": [
+    0.012560907418711144,
+    0.08451405548779731
+   ]
+  },
+  "total_bias": {
+   "control": 4.465569105691057,
+   "candidate": 4.845422764227643,
+   "change": 0.3798536585365859,
+   "ci_95": [
+    0.33799542682926975,
+    0.42149603658536283
+   ]
+  }
+ },
+ "judgment": "Accept a supported timing correction with all frozen compatibility bounds clear. The final total CRPS increase +0.04910 and tiny MIN increase are real trade-offs, not an overall accuracy win. Late foul/3PA choices remain mixed; no form strength added.",
+ "source_archive_verified_files": 26,
+ "evidence_sha256": {
+  "20261123_a2_clock_final_manifest_v1.json": "2cd5d61dfda85889a25ffcc530addb8fc2f14ae690fe7adf8776ad07e6da3b4f",
+  "20261123_a2_clock_runtime_recipe_v1.json": "04a74982baa3734e4a66110b5ff8dfba86f4b67090c7a28253fdf666391fd963",
+  "20261123_a2_clock_runtime_parity_v1.json": "66ce832882e36abccdcbf89da51f32c2e3e69700423003a98a375a7cdfe3030e",
+  "a2_clock_final_20261123_v1.json": "ed5e7940c11e7b641d9623a22537a8d4935f74635bd9ba5b70bac11943172ad4",
+  "a2_clock_final_20261123_v1_audit.json": "d96191e84453a38600dde5dfaafa2825f2101d45509e67ad44a6697381c92b83",
+  "a2_clock_final_20261123_v1_compare.json": "74d29d5ea9502e38e37d565126612fd3f712f13837daeb490cc7ed7b6bde0177",
+  "a2_clock_final_20261123_v1_compare_gate.json": "151be790bc02506c319b6a5f085b5e944c7f7fe1e2f3e166a3370711fda39fe2",
+  "a2_clock_stress_20261123_v1_audit.json": "a6c78d6413c3cdf0a9cb0af6a4fb9e02e739c2067aff02307a26dc64d2b29b33",
+  "20261123_a2_clock_stress_resume_accounting_v1.json": "8edbc3ebedbf7a85f259982777d9b179f5152c7502df7c41e9eee0febe2718c3",
+  "a2_clock_earlier_pooled_supported_20261123_v1_compare_gate.json": "c0efb6f93eb43634ab800b9c6a7bca992994936c2f49b98f84261747f6bfec11",
+  "a2_clock_confirmation_20261123_v1_compare_gate.json": "85026e73450410b252c16dc43dfc333fb4ee054a69bf4024c74524ab2545cc25",
+  "a2_clock_stream_20261123_v1_compare_gate.json": "d2a055ec66d2d26a1d8462d9046b39636fa39ba4daf82e6f1b3de7efe1c1aba7"
+ },
+ "final_scored_once": true,
+ "no_automatic_promotion": true,
+ "delivery_required": "fresh authorised-fetch/rebuild nightly; both PWA exports/import/offline/accounting; <=60min full run",
+ "limitations": [
+  "conditional actual-participant historical qualification; availability assumptions unvalidated",
+  "clock primary has independent node confirmation; not a demonstrated pooled PTS gain",
+  "protected final never rerun or used for further tuning"
+ ]
+}

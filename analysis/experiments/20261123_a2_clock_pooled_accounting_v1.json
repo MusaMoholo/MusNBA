@@ -1,0 +1,35 @@
+{
+ "status": "pass; independent pooled-row/role/point-score accounting, not a second score or accuracy claim",
+ "games": 300,
+ "row_counts": {
+  "control": 300,
+  "control_players": 6448,
+  "candidate": 300,
+  "candidate_players": 6448
+ },
+ "numeric_point_checks": 184,
+ "source_sha256": {
+  "data/derived/experiments/a2_clock_earlier_pooled_supported_20261123_v1_control.parquet": "46431be8d0ea621f1d8923cad499b78f84e5c24c621bafb164bc102b96851df5",
+  "data/derived/experiments/a2_clock_earlier_f1_supported_20261123_v1_control.parquet": "5ce73bf711b31e7648baf4bf4e39b69105e0dd9ff81027bb7b55d6247065e53d",
+  "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1_control.parquet": "ec7cfce20e104440b3e92e6d890945ca65496b92d79a843bdd13c908b1e87c45",
+  "data/derived/experiments/a2_clock_earlier_f3_supported_20261123_v1_control.parquet": "31ea45cce418b892b5ca6119804604cd04609d090eb6679e782eb7839d3d5e29",
+  "data/derived/experiments/a2_clock_earlier_pooled_supported_20261123_v1_control_players.parquet": "9d707933b1f859277b81daf56844732cd84aeea741d52b4b7656108979193a09",
+  "data/derived/experiments/a2_clock_earlier_f1_supported_20261123_v1_control_players.parquet": "452259541633e1661b325a8c6a45e70881c34b9590f1c5df05239f58d0e3a19d",
+  "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1_control_players.parquet": "a3027e9b534077159fa2171fdbaa80c69de28f75cb6eca66be2a612084feec4e",
+  "data/derived/experiments/a2_clock_earlier_f3_supported_20261123_v1_control_players.parquet": "8f8af59119054a0671727e55e470dfe2214dd52889f1a0099fe5b31a8ac80f84",
+  "data/derived/experiments/a2_clock_earlier_pooled_supported_20261123_v1_candidate.parquet": "9951a4cfa80afb484542b4840d46df411e573d6aa6dee56c110ce48b5f72ce17",
+  "data/derived/experiments/a2_clock_earlier_f1_supported_20261123_v1_candidate.parquet": "34a7829f8fcf7869bee33c42226997444c4f7b4ea3d46ea5c8c658c6f831b786",
+  "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1_candidate.parquet": "4cbf3f5ed8fdf1019c2c1ef61ae1fed75a23edc7bd21ab9d7149c3d352d56e36",
+  "data/derived/experiments/a2_clock_earlier_f3_supported_20261123_v1_candidate.parquet": "36d9d5e47a19744ec175d387763c4d7d2252dd01fff0dca3347ee1b9ddb38cf1",
+  "data/derived/experiments/a2_clock_earlier_pooled_supported_20261123_v1_candidate_players.parquet": "3081da852d21044b2f9fc91dcb4ed88fe25e509745d14dfa9643c5ee3ba086ff",
+  "data/derived/experiments/a2_clock_earlier_f1_supported_20261123_v1_candidate_players.parquet": "a8e3ff290b37ccd72cf32cf73240442590fbd0e2ceb4f8cd3e6e6d05cd9a2612",
+  "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1_candidate_players.parquet": "ab26afef89ba05e14bfc1ae79fa20dcc4ca4b434b6cef8875f9de18b8594b06f",
+  "data/derived/experiments/a2_clock_earlier_f3_supported_20261123_v1_candidate_players.parquet": "0d209a30faeb0a49702735cb6082d1ae7ea7537d9136d2318019a640fbdccec7",
+  "analysis/experiments/a2_clock_earlier_f1_supported_20261123_v1_compare.json": "c43e92df356676f730e316ffffc0dacf7990ed5e267e41e77a511d5485e3f9ad",
+  "analysis/experiments/a2_clock_earlier_f2_supported_20261123_v1_compare.json": "2dfdef1fc05d2817a9d408febcb859a4b0c4ed68bd36c1ef3a19eb4d721a8084",
+  "analysis/experiments/a2_clock_earlier_f3_supported_20261123_v1_compare.json": "67a7474c2eda9c43581645331fad2a4711a2ea7d9c80ae77a29a84a5d48dc9a8",
+  "analysis/experiments/a2_clock_earlier_pooled_supported_20261123_v1_compare.json": "3ae99091c416bb686b10fd4a3183a791e805ed266d7508af29d648e00ab3550d"
+ },
+ "auditor_sha256": "773b8f3ea9c4665d946bd77f381c9736a87376b1b4fa92abf2d3ee9699e74100",
+ "limits": "Intervals are computed once by the unchanged frozen complete-game bootstrap; they are never averaged from fold intervals."
+}

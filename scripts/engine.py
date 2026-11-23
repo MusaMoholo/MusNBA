@@ -4,7 +4,7 @@
 Each world carries its own score, fouls, lineup, minutes and game clock. Runtime policies select
 qualified rule/rotation corrections while preserving legacy replay. Node artifacts and runtime versions
 are separate; ENGINE selects production. Optional research policies consume no draws when disabled.
-ENGINE_PLAN, TRAINING_PLAN and FINDINGS hold current design, acceptance and measured limitations.
+MODEL.md holds current design, acceptance and measured limitations.
 
   .venv/bin/python scripts/engine.py --game <game_id> [--worlds 2000]     one game from the master fixtures (today's inputs)
 """
@@ -36,9 +36,12 @@ ENGINE = {'id': 'engine-v1.3', 'kind': 'engine', 'version': 'v1.3', 'models': 'v
                    'compressed — real NBA matchups tested and not promoted (D37) — outcomes too tightly spread, minutes do not yet '
                    'react to the score (FINDINGS §3o, §3s–§3w)'}
 LEGACY_ENGINE = ENGINE.copy()
-ENGINE = {**ENGINE, 'id': 'engine-v1.3-r2', 'version': 'v1.3-r2', 'foul_policy': 'nba-rule3-v1',
-          'rotation_fit': 'independent-v1', 'chunk_worlds': 1000,
-          'label': ENGINE['label'] + '. Rule revision r1: legal foul-out replacements and NBA roster-exhaustion penalties; unchanged v1.3 fitted nodes. Revision r2: each world\'s rotation is fitted independently.'}
+ENGINE = {**LEGACY_ENGINE, 'id': 'engine-v1.3-r3', 'version': 'v1.3-r3',
+          'foul_policy': 'nba-rule3-v1', 'rotation_fit': 'independent-v1', 'chunk_worlds': 1000,
+          'clock_recipe': 'data/models/v1.3-r3/clock.json',
+          'label': 'Possession engine: each world draws its own player minutes and rotations, with legal foul-out handling. '
+                   'Prior-fitted timing responds to the score and clock late in Q4/overtime. '
+                   'Lineup probabilities are assumptions; defender impact and late foul/shot choices still need improvement.'}
 MODELS = DERIVED.parent / 'models'
 # D29 rotation tables (used when players carry minutes states): tables per side shared by worlds, 10-second bins,
 # template shapes smoothed over ~60 s (6 bins), offset fit to within 0.4 min of each table's targets.
@@ -401,7 +404,10 @@ class Engine:
         self.m = Models(version)
         self.diag = None  # set to [] to record (start type, seconds to action, clock) per segment
         self.rotation_diag = None  # optional pre-foul-out scheduled rotation tables
-        self.clock_policy = None  # opt-in research sampler; accepted runtime retains legacy timing
+        self.clock_policy = None  # recipe is explicit; older runtimes keep legacy timing
+        if self.runtime.get('clock_recipe') is not None:
+            from scripts.late_clock import load_recipe
+            self.clock_policy = load_recipe(ROOT / self.runtime['clock_recipe'], self.m.cfg['train_through'])
         self.rotation_policy: RotationPolicy | None = None
         if self.runtime.get('foul_policy') == 'nba-rule3-v1':
             from scripts.foul_out import Rule3Policy
@@ -511,6 +517,8 @@ class Engine:
     def simulate(self, g: Game, W: int, seed) -> dict:
         if self.m.dated_candidate and g.day <= self.m.cfg['train_through']:
             raise ValueError('dated candidate cannot simulate a game at or before its training cutoff')
+        if self.clock_policy is not None:
+            self.clock_policy.check_origin(g.input_before)
         rng = np.random.default_rng(seed)
         st = Worlds(g, W, rng)
         avail_world = rng.random((W, g.n)) < g.avail[None, :]

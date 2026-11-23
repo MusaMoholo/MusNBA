@@ -1,0 +1,15 @@
+{
+ "status": "pass",
+ "games": 400,
+ "scored_player_games": 8577,
+ "minute_and_points_coverage_checks": 17154,
+ "complete_minute_games": 391,
+ "participant_thresholds": [
+  0,
+  1,
+  5
+ ],
+ "method": "independent raw-array PIT integration and total-player counts/2; no diagnostic helper imported",
+ "source_sha256": "043c6bc4bce5c5d9299f965d4df31eda97826c42fee6e21db3627861f35db6ab",
+ "report_sha256": "3461ca2882032bdb28bbfa869c77d44b8daf99fb4716fdeebc2d3805c12850ff"
+}

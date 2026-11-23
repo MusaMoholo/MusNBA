@@ -1,14 +1,12 @@
 # MusNBA
 
-Local-first NBA player/game/season simulations: **10,000 possession worlds for today's ET games**, then
-**10,000 seasons** using each world's own evolving team ratings from tomorrow onward. Accepted engines:
-**engine-v1.3-r2 / team-pathway-v1** (unchanged v1.3 fitted nodes). The laptop PWA is primary; phone is stripped. Stored lineup branches are delivered on laptop; the 2-D
-View Centre remains future work. See [HANDOFF](HANDOFF_NEXT.md) for current state and [docs index](docs/README.md)
-for focused references/history; contributors start with [AGENTS](AGENTS.md).
+Local-first NBA simulations:10,000 possession worlds per lineup case for today's ET games, then season pathways with evolving
+team ratings from tomorrow. Current runtime/delivery: [HANDOFF](HANDOFF_NEXT.md). Contributors start with [AGENTS](AGENTS.md);
+[MODEL](MODEL.md) owns design/validation/evidence, [PLAN](PLAN.md) scope and backlog.
 
-## Setup and daily use
+## Daily use
 
-Python 3.12+, NumPy, pandas, pyarrow, LightGBM; macOS LightGBM requires libomp. Node is optional for browser checks.
+Python 3.12+, NumPy/pandas/pyarrow/LightGBM (macOS libomp); Node for browser checks.
 
 ```sh
 python3 -m venv .venv
@@ -17,124 +15,92 @@ python3 -m venv .venv
 .venv/bin/python scripts/serve.py
 ```
 
-The wrapper collects permitted ESPN/NBA Stats inputs, rebuilds current-season inputs, simulates today's games
-and future season, writes snapshots/views and exports to iCloud after success. `nightly.py --ahead` must be zero;
-a game-free day still builds a fresh season. Use `--offline --no-rebuild` only for recorded current/unchanged inputs.
-The server at :8766 belongs to the owner; use `serve.py --port 8767` for agent review and never stop :8766.
-Serving/browsing never fetches, fits or simulates.
+The nightly collects authorised ESPN/NBA inputs, rebuilds prior-game features, simulates today and a fresh season,
+writes snapshots/views and exports both bundles. `nightly.py --ahead` must be 0. Game-free days still refresh the season.
+Missed finals are collected; missed possession forecasts are **not** reconstructed. `--offline --no-rebuild` needs recorded unchanged-input justification.
+Owner's:8766 server stays running; agent review uses `serve.py --port 8767`. Serving never computes.
+Verified matching pre-tip forecasts may be retained with their original provenance; invalid/cross-tip replacements fail.
+Do not bypass guards. Archive existing views before standalone `scripts/views.py` rebuilds; `--help` is read-only.
 
-Late refresh preserves matching verified pre-tip games and their provenance, rejects invalid/cross-tip replacements
-and guards interrupted snapshot publication. All-retained live delivery was tested; mixed collections remain
-untested. Do not bypass guards. Archive existing views outside the repo before invoking `scripts/views.py` to rebuild;
-`--help` is read-only.
+## PWA and bundles
 
-## PWA and iCloud
+Install [MusNBA](https://musamoholo.github.io/MusNBA/). Source: [MusaMoholo/MusNBA](https://github.com/MusaMoholo/MusNBA).
+In **Offline data & installation → Import data**, select from iCloud Drive/MusNBA:
 
-App: [MusNBA](https://musamoholo.github.io/MusNBA/). Public source:
-[MusaMoholo/MusNBA](https://github.com/MusaMoholo/MusNBA). Pages contains the data-free shell only.
-
-Install the website as an app. In **Offline data & installation → Import data**, select from iCloud Drive/MusNBA:
-
-| Device | Bundle | Contents |
+| Device | File | Contents |
 |---|---|---|
-| Laptop | `MusNBA-laptop.musnba.gz` | Saved worlds, Scenarios/Given/Joint/duels and distributions. |
-| Phone | `MusNBA.musnba.gz` | Distributions; no world-dependent tools or lineup branches. |
+| Laptop | `MusNBA-laptop.musnba.gz` | Full saved worlds, lineup cases, Scenarios/Given/Joint/duels. |
+| Phone | `MusNBA.musnba.gz` | Expected distributions; no saved-world tools or lineup cases. |
 
-Each device imports separately; Safari and the installed iPhone app may use separate storage. Keep the app open
-and phone unlocked during import. An app-shell update does not import new simulations. Manual device import/
-memory acceptance remains necessary; exact current delivery sizes/checks are in HANDOFF.
+Each device imports separately; Safari and the installed iPhone app may have separate storage. Keep the phone unlocked/app open during import.
+Shell updates and data imports are separate. iCloud export is not proof of import or real-device memory acceptance.
 
 ```sh
 .venv/bin/python scripts/nightly_musnba.py --export-only
 .venv/bin/python scripts/export_musnba.py --shell exports/MusNBA-web --base-path /MusNBA/
 ```
 
-Export-only reuses completed snapshots. Both bundles publish after the nightly, not game-by-game. Each file
-is atomic, the pair is not; retry both after partial export. `--output PATH` overrides the phone destination,
-with `-laptop` added for laptop. Replaced artifacts archive to `~/Basketball_archive_ops`; visible staging and
-hidden-flag clearing keep exports in Finder/file pickers. Only shell contents and `.nojekyll` go to `gh-pages`
-(branch source `/`), never datasets/models/bundles. Existing local Git identity/helper stays unchanged.
-There are no repository CI workflows; GitHub's built-in Pages deployment serves this branch.
+Export-only reuses completed outputs. Current publication is end-of-nightly, not game-by-game; D54 is planned next.
+Each file is atomic, the pair is not: retry both after partial export. `--output PATH` sets the phone destination; laptop adds `-laptop`.
+Replacements archive to `~/Basketball_archive_ops`. Visible staging/hidden-flag clearing keeps files selectable.
+Only the data-free shell plus `.nojekyll` goes to `gh-pages` (branch source `/`), never models/data/bundles.
+No repository CI workflows; built-in Pages deployment provides hosting. Preserve local Git identity/helper.
 
-## Verification
+## App contract
+
+Today prioritises games/player boxes and expandable slate insight. Game Centre shares Q1–Q4/H1/H2/FG selectors across player/team/sheet/scenarios;
+FG includes OT for possession games. Future pathway totals/margins are regulation with a separately resolved winner, no player forecasts.
+Standings contains forecast/seeds/wins/ratings, races/playoff picture; marginal seeds are not simulated playoff winners.
+Teams/Players lead with schedules/rosters/logs/forecasts and expandable advanced detail. Lab is secondary.
+
+Laptop lineup controls and Given/Joint use the same exact weighted stored worlds; Expected is default and “either status” marginalises remaining weights.
+Participation conditions mean positive simulated minutes, not availability or causal lineup effects. Phone retains Expected only.
+U23 outcome stories show joint scorer and Q3-conditional win events from loaded worlds; headshots 526/528 use offline images/initials fallback.
+Startup Reload recovers failed shell downloads. View Centre/rotation map remain future work.
+
+Slates are ET; times show UK/ET. Spreads are projected mean margins. Exact float64 minutes drive conditions; display rounds to seconds.
+Over is strictly greater than x.5; shooting percentages condition on attempts and show no-attempt mass separately.
+Missing denominators/old unavailable periods stay undefined. Dates/counts/versions/thresholds come from loaded data; labelled examples stay illustrative.
+Actual/simulated, origin/cutoff/model and pre-tip/retrospective/unverified timing remain explicit; after-tip/unverified forecasts do not establish pre-game accuracy.
+Both themes at 1440/960/390, grouped controls, three/two/one card rows and 44 px touch targets are required.
+
+## Verification and code map
 
 ```sh
 .venv/bin/python scripts/smoke.py
 .venv/bin/python scripts/smoke.py --fault
+.venv/bin/python -m unittest tests.test_release_gate tests.test_late_clock tests.test_late_clock_recipe
 .venv/bin/python scripts/check_docs.py
 node analysis/browser_check.mjs --base http://127.0.0.1:8767
 node analysis/pwa_import_check.mjs --url <shell-url> --bundle <bundle.musnba.gz> --profile laptop
-.venv/bin/python analysis/export_visibility_check.py
 ```
 
-The deliberate fault must exit nonzero. Browser checks cover both themes at 1440/960/390; inspect screenshots.
-Use `--profile phone` for the stripped bundle. Baseline smoke is 108 checks at the current checkpoint; version,
-cutoff, import/offline and model/accounting gates are described in AGENTS/TRAINING, not inferred from counts.
+Fault must fail. Use `--profile phone` separately; inspect responsive screenshots. The local pre-commit hook runs docs checks.
+Fresh clones: inspect existing hooks before `git config --local core.hooksPath .githooks`. Heavy jobs total≤10 compute threads including inner OMP/BLAS.
 
-Documentation budgets/links/archive integrity run at every local commit through `.githooks/pre-commit`.
-This checkout has it enabled; for a fresh clone, inspect existing hooks first, then enable with
-`git config --local core.hooksPath .githooks`. Checks stay local (D52); do not add GitHub CI pipelines.
+Core path: `fetch_*`/`history` → `plays`/`possessions`/`rotations` → `features`/`minutes`/`matchups` → `nodes`/`train`/`evaluate`.
+`engine.py` simulates, `live_forecast.py` queues canonical chunks, `lineup_forecast.py`/`world_mass.py` preserve exact mixtures,
+`pathway.py` simulates seasons, `nightly*.py` orchestrates, `views.py`/`serve.py`/`webapp/` serve stored results.
+`compare.py` grades node runs; `a1_compare.py` grades matched engine distributions; `release_gate.py` requires explicit policy.
+Legacy `backtest_compare.py`/`a1_minutes_gate.py` are historical protocols, not generic promotion gates.
+Use runner `--help` and MODEL before launching. Fold backtests require `--clock-recipe` when the production pool cutoff differs from the fold nodes; freeze prior-fitted fold parameters first. Parent preflight rejects mismatched dates before worker startup. `train.py --threads 10` caps fitting; backtest uses `--jobs 10` plus BLAS caps.
+Configurations/reports are committed in `models/`/`analysis/experiments/`; fits, raw inputs, per-row arrays/worlds and exports stay ignored under `data/`.
+Current experiment namespaces are immutable; do not restart completed protected runs. `analysis/a2_world_diagnostics.py --closing-controls`
+audits existing 400-game controls without new worlds (fresh output required).
 
-## Model work and file map
+## Documentation history
 
-Rebuild order: history → possessions → rotations → features → nodes → train. Use isolated variants and frozen
-populations/hashes; never overwrite served inputs during research. Model version configs live in `models/`;
-ignored fitted artifacts in `data/models/`; raw/derived/snapshots/views in `data/`. Experiment reports are committed
-under `analysis/experiments/`, per-row arrays/captures stay ignored under `data/derived/experiments/`.
-
-| Files | Role |
-|---|---|
-| `basketball_common.py` | Paths, identities, ET/UK, atomic writes and archives. |
-| `scripts/fetch_espn.py`, `fetch_nbastats.py`, `history.py` | Permitted retained providers/history; NBA one polite resumable stream. |
-| `scripts/plays.py`, `possessions.py`, `rotations.py` | Canonical events, reconciled segments/periods, stints/opportunities. |
-| `scripts/features.py`, `minutes.py`, `matchups.py`, `realmatch.py` | Dated player/lineup inputs, D29 targets, implicit/real assignments. |
-| `scripts/nodes.py`, `train.py`, `evaluate.py`, `compare.py`, `aggregate.py` | Cached datasets, fold models, node gate and teacher-forced aggregation. |
-| `scripts/engine.py`, `backtest.py`, `backtest_compare.py`, `a1_compare.py` | Possession worlds, matched engine tests, legacy and strict A1 comparisons. |
-| `scripts/pathway.py`, `season_backtest.py`, `projection.py`, `season_stats.py` | Per-world team seasons, historical calibration, packaging/stats/placeholder. |
-| `scripts/nightly.py`, `nightly_musnba.py`, `views.py`, `serve.py`, `export_musnba.py` | Pipeline, snapshots, read-only app and PWA delivery. |
-| `scripts/live_forecast.py`, `lineup_forecast.py`, `forecast_output.py`, `world_mass.py` | Offline world queue, stored lineup cases and exact weighted summaries; independent-fit queue is runtime-gated. |
-| `scripts/player_worlds.py`, `lineup_minutes.py`, `player_icons.py` | Precise world/CDF storage and retained offline photo catalogue. |
-| `scripts/webapp/`, `analysis/*.mjs` | Native ES-module UI, browser/PWA checks; no build dependency. |
-| `scripts/a1_*.py`, `scripts/a2_*.py`, `analysis/a1_*` | Research/audits; [branch runbook](docs/research/a1_branches.md), frozen protocols and old full command map via docs index. |
-
-`scripts/foul_out.py:Rule3Policy` passed its single protected confirmation; qualified r2 is delivered
-with lineup/headshot PWA bundles; HANDOFF owns current generation state.
-`tests/test_foul_out.py` covers isolated accounting/rule cases. D56's per-world fitter and shared ten-worker
-world queue are qualified/default r2; recorded older runtimes retain their original fitting behaviour.
-
-`scripts/release_gate.py` applies the current class-specific statistical compatibility gate; it never publishes
-or promotes a model. Default policy: [v2](docs/protocols/promotion_v2_20261123.md); explicit
-[v3](docs/protocols/promotion_v3_20261123.md) requires fresh frozen confirmation after the documented audit.
-
-`scripts/a1_prior_roster_screen.py` and `analysis/a1_prior_roster_audit.py` census/reconstruct prior-box
-membership and required starter-position coverage without reading outcome columns or generating forecasts.
-
-`analysis/rule3_confirmation.py` runs the frozen opt-in paired rule checks (`--pilot`, `--stress`,
-`--stream-check`, verified `--resume`). Set OMP/BLAS threads to one and budget its `--jobs` across all runs.
-`analysis/rule3_capture_audit.py` independently reconciles captures; `analysis/rule3_scores.py` reports v2 bounds.
-`analysis/rotation_confirmation.py` and `rotation_final.py` qualify D56 with reused controls and a frozen,
-once-only protected run; HANDOFF owns active namespaces, logs and stop conditions.
-`analysis/a2_{shared_shooting,world_diagnostics}.py` implement A2 diagnostics without fitting factors.
-`analysis/a2_clock_engine.py` runs frozen clock panels; `a2_clock_ready_panels.py` adds the input-only
-earlier-fold readiness amendment. `a2_clock_scores.py` applies learned/v3 compatibility and
-`a2_clock_pool.py` pools original per-game rows with dated roles. HANDOFF owns active commands/namespaces;
-never restart a completed score or alter frozen sources during execution.
-
-Use `--help` to inspect a runner before choosing controls. Heavy compute totals at most ten threads; actual
-`--jobs` × inner-thread settings matter (AGENTS §6). Examples after protocol/namespace freeze:
+Five core docs plus three versioned policy contracts are live. Budgets include **all live Markdown**, not only root files.
+Completed protocols, old decision details and original pre-lean docs are retained exactly in
+[one archive](docs/archive/20261123_document_history.tar.gz), with a [44-member hash manifest](docs/archive/20261123_document_history.manifest.json)
+and external backup `~/Basketball_archive_ops/docs_20261123_a2_close`.
 
 ```sh
-.venv/bin/python scripts/train.py --config <candidate.json> --threads 10 --folds F4
-OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 .venv/bin/python scripts/backtest.py --config <candidate.json> --fold F4 --games 200 --worlds 1000 --jobs 10 --rotation targets --pool 0
-.venv/bin/python scripts/a1_compare.py <control-run> <candidate-run> --output <new-report.json>
-.venv/bin/python scripts/season_backtest.py --help
+tar -tzf docs/archive/20261123_document_history.tar.gz
+tar -xOf docs/archive/20261123_document_history.tar.gz ENGINE_PLAN.md
+tar -xOf docs/archive/20261123_document_history.tar.gz docs/archive/2026-11-23-before-lean/HANDOFF_NEXT.md
 ```
 
-`--game-ids` fixes selected games; `--simulation-stream 1` changes draws without game selection;
-`--seed-key` shares a starting namespace, not guaranteed event-aligned RNG. Legacy comparisons use actual-starter
-tiers; A1 uses pre-game tiers, strict matching and unmodified probabilities (zero winner probability gives
-infinite log loss). Neither exploratory output nor an interval alone is a promotion decision.
-
-Historical forecast replay is **deferred (D40)**. Existing `--backfill-days` is a labelled placeholder workflow,
-not a possession replay. Preserve archives; no runnable engine-reconstruction command is implied. Refitting/
-promotion automation and full availability modelling are also unfinished; consult HANDOFF before launching work.
+Read/extract only needed sections. Historical commands/next actions are not current instructions; replay old sources in an isolated checkout
+with their declared inputs, not by restoring stale docs over this root. Frozen source copies remain ignored under experiment namespaces.
+New completed history uses Git/aggregate JSON rather than another live narrative file.

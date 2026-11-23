@@ -1,0 +1,135 @@
+{
+ "runtime": {
+  "id": "engine-v1.3-r3",
+  "kind": "engine",
+  "version": "v1.3-r3",
+  "models": "v1.3",
+  "rotation": "targets",
+  "sims": 10000,
+  "pool": 0,
+  "label": "Possession engine: each world draws its own player minutes and rotations, with legal foul-out handling. Prior-fitted timing responds to the score and clock late in Q4/overtime. Lineup probabilities are assumptions; defender impact and late foul/shot choices still need improvement.",
+  "foul_policy": "nba-rule3-v1",
+  "rotation_fit": "independent-v1",
+  "chunk_worlds": 1000,
+  "clock_recipe": "data/models/v1.3-r3/clock.json",
+  "season_sims": 10000
+ },
+ "nightly_seconds_upper_bound": 1610.397771,
+ "nightly_finished_utc": "2026-11-23T21:55:40.397771+00:00",
+ "nightly_start_bound_utc": "2026-11-23T21:28:50Z",
+ "generated": "2026-11-23T21:53:15Z",
+ "snapshot_seconds": 1194.11,
+ "live_games": 10,
+ "complete_10k_batches": 15,
+ "saved_worlds": 150000,
+ "checks": {
+  "smoke": {
+   "log": "/tmp/musnba_r3_delivery_smoke_20261123_v1.log",
+   "sha256": "191d8861ae63367a8dbeeb29e9d893bdfd091dd336ce8ba8612f545615778edd"
+  },
+  "fault": {
+   "log": "/tmp/musnba_r3_delivery_fault_20261123_v1.log",
+   "sha256": "072c464347955a6ba00473f1c04464f9fd8c9517fde188c6a783c30456c0ca0b"
+  },
+  "phone": {
+   "log": "/tmp/musnba_r3_delivery_pwa_phone_20261123_v1.log",
+   "sha256": "2ae33df7de07621f68d76cb9ede2045f8c2a6aa229fed8a0fdef473635358823"
+  },
+  "laptop": {
+   "log": "/tmp/musnba_r3_delivery_pwa_laptop_20261123_v1.log",
+   "sha256": "9601f79377be32da338b036abd6da6ec78130c206175814d59bfb5dab1178ee1"
+  },
+  "about": {
+   "log": "/tmp/musnba_r3_delivery_about_20261123_v1.log",
+   "sha256": "8231845b11bd3c8bf349bc888a1af33e0ea80f77879d3e55a07d868dd3206c74"
+  },
+  "smoke_counts": {
+   "smoke": [
+    108,
+    108
+   ],
+   "fault": [
+    86,
+    108
+   ]
+  },
+  "smoke_exit": 0,
+  "fault_exit": 1
+ },
+ "accounting_sha256": {
+  "analysis/experiments/20261123_r3_live_accounting_v1.json": "b026792674c470b72636c80e0fbb47015b864382a7c2cd18d241e99138344267",
+  "analysis/experiments/20261123_r3_season_accounting_v1.json": "4a68347447c274fe21ee3cc1c7d4ec273a0e0d1270fda1d9549a7ccdf04ec25c"
+ },
+ "bundles": {
+  "phone": {
+   "header": {
+    "format": "musnba",
+    "version": 2,
+    "capabilities": [
+     "lineup-forecast-v1",
+     "minute-cdf-player-v2",
+     "player-icons-v1"
+    ],
+    "created": "2026-11-23T21:54:59+00:00",
+    "latest": "2026-11-23",
+    "snapshots": [
+     "2026-11-12",
+     "2026-11-13",
+     "2026-11-14",
+     "2026-11-15",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22",
+     "2026-11-23"
+    ],
+    "profile": "phone"
+   },
+   "bytes": 110595723,
+   "sha256": "4712e0fa38179f2e01b65162bd3ec98b1bb588c6a44e748bef507c70f79b4762"
+  },
+  "laptop": {
+   "header": {
+    "format": "musnba",
+    "version": 2,
+    "capabilities": [
+     "lineup-forecast-v1",
+     "minute-cdf-player-v2",
+     "player-icons-v1"
+    ],
+    "created": "2026-11-23T21:54:17+00:00",
+    "latest": "2026-11-23",
+    "snapshots": [
+     "2026-11-12",
+     "2026-11-13",
+     "2026-11-14",
+     "2026-11-15",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22",
+     "2026-11-23"
+    ],
+    "profile": "laptop"
+   },
+   "bytes": 213682423,
+   "sha256": "b42205fe95fc5805891a72bb40c6f4af57554e2aefc0a4c0f47430102ddce34f"
+  }
+ },
+ "existing_public_shell": "31317f88cec02d4ee61fe3a0cae3c4eb9bc3eb49",
+ "shell_assets_changed": false,
+ "controller_source_sha256": "3d705387b3fc140649f1b727b5f56ba2fe99e3b55a1cb2ebb6aec5b542b48d0e",
+ "checks_seconds": 85.78163250000216,
+ "limits": [
+  "Both devices still need manual bundle import; real-device acceptance is unverified.",
+  "Conditional historical qualification does not validate availability probabilities.",
+  "Single protected r3 result and frozen source copy remain unchanged; no rescoring.",
+  "Exact weighted season coupling is not certified iid season paths."
+ ]
+}

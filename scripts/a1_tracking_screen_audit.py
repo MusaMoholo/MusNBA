@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Independently reconstruct tracking-fold predictions, metrics and the frozen node gate."""
+"""Historical S04 tracking audit; frozen arithmetic, not a new-candidate promotion gate (MODEL.md)."""
 from __future__ import annotations
 
 import argparse

@@ -1,0 +1,89 @@
+{
+ "snapshot": "2026-11-23",
+ "model": "engine-v1.3-r3",
+ "games": [
+  {
+   "game": "401910036",
+   "branches": 2,
+   "worlds": 20000,
+   "cases": 3,
+   "independent_histograms": 7402,
+   "status": "pass"
+  },
+  {
+   "game": "401910037",
+   "branches": 2,
+   "worlds": 20000,
+   "cases": 3,
+   "independent_histograms": 7678,
+   "status": "pass"
+  },
+  {
+   "game": "401910038",
+   "branches": 2,
+   "worlds": 20000,
+   "cases": 3,
+   "independent_histograms": 6022,
+   "status": "pass"
+  },
+  {
+   "game": "401910039",
+   "branches": 1,
+   "worlds": 10000,
+   "cases": 1,
+   "independent_histograms": 2958,
+   "status": "pass"
+  },
+  {
+   "game": "401910040",
+   "branches": 1,
+   "worlds": 10000,
+   "cases": 1,
+   "independent_histograms": 2866,
+   "status": "pass"
+  },
+  {
+   "game": "401910041",
+   "branches": 1,
+   "worlds": 10000,
+   "cases": 1,
+   "independent_histograms": 2866,
+   "status": "pass"
+  },
+  {
+   "game": "401910042",
+   "branches": 2,
+   "worlds": 20000,
+   "cases": 3,
+   "independent_histograms": 8506,
+   "status": "pass"
+  },
+  {
+   "game": "401910043",
+   "branches": 1,
+   "worlds": 10000,
+   "cases": 1,
+   "independent_histograms": 3142,
+   "status": "pass"
+  },
+  {
+   "game": "401910044",
+   "branches": 1,
+   "worlds": 10000,
+   "cases": 1,
+   "independent_histograms": 2958,
+   "status": "pass"
+  },
+  {
+   "game": "401910045",
+   "branches": 2,
+   "worlds": 20000,
+   "cases": 3,
+   "independent_histograms": 8230,
+   "status": "pass"
+  }
+ ],
+ "independent_histograms": 52628,
+ "status": "pass",
+ "source_sha256": "3b8123acadf898614fdc649a9540b6d4d8dccecf147085063b38475d985aa7a3"
+}

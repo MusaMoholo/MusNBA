@@ -1,0 +1,452 @@
+{
+ "kind": "closing descriptive audit of saved r2 controls; no new simulation or acceptance gate",
+ "runs": [
+  "a2_clock_development_20261123_v1",
+  "a2_clock_confirmation_20261123_v1"
+ ],
+ "games": 400,
+ "worlds_per_game": 1000,
+ "player_games": 8577,
+ "team_outcomes": {
+  "total": {
+   "actual_mean": 228.9925,
+   "predicted_mean": 231.74445750000004,
+   "forecast_minus_actual": {
+    "n_games": 400,
+    "mean": 2.7519574999999996,
+    "ci_95": [
+     1.0473213125000005,
+     4.481251062499999
+    ]
+   },
+   "expected_80_coverage": {
+    "n_games": 400,
+    "mean": 0.7695934829059828,
+    "ci_95": [
+     0.7287659588675214,
+     0.8093125801282052
+    ]
+   },
+   "forecast_error_sd": 17.799090988325602,
+   "rms_within_world_sd": 16.940674349254813
+  },
+  "margin": {
+   "actual_mean": 1.9975,
+   "predicted_mean": 1.0661075000000002,
+   "forecast_minus_actual": {
+    "n_games": 400,
+    "mean": -0.9313924999999998,
+    "ci_95": [
+     -2.3054116875000004,
+     0.5213891874999982
+    ]
+   },
+   "expected_80_coverage": {
+    "n_games": 400,
+    "mean": 0.8127593552281052,
+    "ci_95": [
+     0.7723956681339494,
+     0.8497534496753246
+    ]
+   },
+   "forecast_error_sd": 14.09244283591187,
+   "rms_within_world_sd": 14.595463350901197
+  }
+ },
+ "player_outcomes": {
+  "all": {
+   "min": {
+    "player_games": 8577,
+    "actual_mean": 22.481009288406977,
+    "predicted_mean": 22.449268864209255,
+    "expected_80_coverage": 0.7850770562352861,
+    "coverage_ci_95": [
+     0.772990943061327,
+     0.7966136052066274
+    ]
+   },
+   "pts": {
+    "player_games": 8577,
+    "actual_mean": 10.679375072869302,
+    "predicted_mean": 10.80617395359683,
+    "expected_80_coverage": 0.7629006224891429,
+    "coverage_ci_95": [
+     0.7537676547229553,
+     0.7717256274814673
+    ]
+   },
+   "reb": {
+    "player_games": 8577,
+    "actual_mean": 4.092339979013641,
+    "predicted_mean": 4.080881193890637,
+    "expected_80_coverage": 0.768086022721417,
+    "coverage_ci_95": [
+     0.7603276283216477,
+     0.7758607524734957
+    ]
+   },
+   "ast": {
+    "player_games": 8577,
+    "actual_mean": 2.492246706307567,
+    "predicted_mean": 2.4772907776611865,
+    "expected_80_coverage": 0.7742129364537291,
+    "coverage_ci_95": [
+     0.7668113377497752,
+     0.7811591037950494
+    ]
+   },
+   "fg3m": {
+    "player_games": 8577,
+    "actual_mean": 1.2356301737204152,
+    "predicted_mean": 1.2628677859391395,
+    "expected_80_coverage": 0.7789431422423354,
+    "coverage_ci_95": [
+     0.772355442845753,
+     0.7851421498409962
+    ]
+   }
+  },
+  "star": {
+   "min": {
+    "player_games": 548,
+    "actual_mean": 31.90263686131387,
+    "predicted_mean": 31.23800867872256,
+    "expected_80_coverage": 0.8065693430656934,
+    "coverage_ci_95": [
+     0.7714273248566442,
+     0.8390162645898405
+    ]
+   },
+   "pts": {
+    "player_games": 548,
+    "actual_mean": 23.96897810218978,
+    "predicted_mean": 24.224653284671533,
+    "expected_80_coverage": 0.8156321862034909,
+    "coverage_ci_95": [
+     0.780910395312167,
+     0.8475189662625972
+    ]
+   },
+   "reb": {
+    "player_games": 548,
+    "actual_mean": 5.874087591240876,
+    "predicted_mean": 5.770686131386862,
+    "expected_80_coverage": 0.7870662034808452,
+    "coverage_ci_95": [
+     0.7556395576573895,
+     0.8178414315405367
+    ]
+   },
+   "ast": {
+    "player_games": 548,
+    "actual_mean": 5.616788321167883,
+    "predicted_mean": 5.4215383211678825,
+    "expected_80_coverage": 0.7623278730045848,
+    "coverage_ci_95": [
+     0.7274061796028279,
+     0.7935545438872894
+    ]
+   },
+   "fg3m": {
+    "player_games": 548,
+    "actual_mean": 2.3065693430656933,
+    "predicted_mean": 2.3699616788321167,
+    "expected_80_coverage": 0.7899394488248419,
+    "coverage_ci_95": [
+     0.7600807440993134,
+     0.8175424828774396
+    ]
+   }
+  },
+  "starter": {
+   "min": {
+    "player_games": 3108,
+    "actual_mean": 28.617142857142863,
+    "predicted_mean": 29.01425549712786,
+    "expected_80_coverage": 0.8198198198198198,
+    "coverage_ci_95": [
+     0.8034235152637834,
+     0.8353412973700559
+    ]
+   },
+   "pts": {
+    "player_games": 3108,
+    "actual_mean": 13.892857142857142,
+    "predicted_mean": 14.283449806949807,
+    "expected_80_coverage": 0.774311113465137,
+    "coverage_ci_95": [
+     0.759199337969291,
+     0.7884841945000683
+    ]
+   },
+   "reb": {
+    "player_games": 3108,
+    "actual_mean": 5.308558558558558,
+    "predicted_mean": 5.391943371943373,
+    "expected_80_coverage": 0.7764728696589348,
+    "coverage_ci_95": [
+     0.7631799488425312,
+     0.7898634808727729
+    ]
+   },
+   "ast": {
+    "player_games": 3108,
+    "actual_mean": 3.201737451737452,
+    "predicted_mean": 3.217602316602317,
+    "expected_80_coverage": 0.7852251514745999,
+    "coverage_ci_95": [
+     0.7730071754010112,
+     0.7971958126759752
+    ]
+   },
+   "fg3m": {
+    "player_games": 3108,
+    "actual_mean": 1.515122265122265,
+    "predicted_mean": 1.587490990990991,
+    "expected_80_coverage": 0.7859614035140006,
+    "coverage_ci_95": [
+     0.7753000187379689,
+     0.7970051893459996
+    ]
+   }
+  },
+  "bench": {
+   "min": {
+    "player_games": 4905,
+    "actual_mean": 17.570753992524637,
+    "predicted_mean": 17.35120250403582,
+    "expected_80_coverage": 0.7615914192314066,
+    "coverage_ci_95": [
+     0.7477584256906933,
+     0.7750691380447623
+    ]
+   },
+   "pts": {
+    "player_games": 4905,
+    "actual_mean": 7.183282364933741,
+    "predicted_mean": 7.127337410805302,
+    "expected_80_coverage": 0.7496487551697102,
+    "coverage_ci_95": [
+     0.7381410568069222,
+     0.7611567046437308
+    ]
+   },
+   "reb": {
+    "player_games": 4905,
+    "actual_mean": 3.130071355759429,
+    "predicted_mean": 3.0694316004077478,
+    "expected_80_coverage": 0.7609365895411249,
+    "coverage_ci_95": [
+     0.7507654958231198,
+     0.7714345460321692
+    ]
+   },
+   "ast": {
+    "player_games": 4905,
+    "actual_mean": 1.6978593272171254,
+    "predicted_mean": 1.684322731906218,
+    "expected_80_coverage": 0.7686743824447292,
+    "coverage_ci_95": [
+     0.7593679176087972,
+     0.7781465789510978
+    ]
+   },
+   "fg3m": {
+    "player_games": 4905,
+    "actual_mean": 0.9416921508664627,
+    "predicted_mean": 0.936139857288481,
+    "expected_80_coverage": 0.7730697598409396,
+    "coverage_ci_95": [
+     0.7645186001554989,
+     0.7813794012015978
+    ]
+   }
+  },
+  "unknown": {
+   "min": {
+    "player_games": 16,
+    "actual_mean": 13.146458333333333,
+    "predicted_mean": 9.062245313357538,
+    "expected_80_coverage": 0.5,
+    "coverage_ci_95": [
+     0.23518099547511315,
+     0.75
+    ]
+   },
+   "pts": {
+    "player_games": 16,
+    "actual_mean": 3.0625,
+    "predicted_mean": 3.5557499999999997,
+    "expected_80_coverage": 0.8028822682994938,
+    "coverage_ci_95": [
+     0.6171446568280814,
+     0.9567276481523854
+    ]
+   },
+   "reb": {
+    "player_games": 16,
+    "actual_mean": 1.8125,
+    "predicted_mean": 1.6037499999999998,
+    "expected_80_coverage": 0.6806179234314302,
+    "coverage_ci_95": [
+     0.4818934284794667,
+     0.8603527727615319
+    ]
+   },
+   "ast": {
+    "player_games": 16,
+    "actual_mean": 1.1875,
+    "predicted_mean": 0.9255625000000001,
+    "expected_80_coverage": 0.7400665551668321,
+    "coverage_ci_95": [
+     0.5535529277437699,
+     0.8865094826108517
+    ]
+   },
+   "fg3m": {
+    "player_games": 16,
+    "actual_mean": 0.375,
+    "predicted_mean": 0.449375,
+    "expected_80_coverage": 0.8395811821984833,
+    "coverage_ci_95": [
+     0.6976907455072789,
+     0.9260692883465058
+    ]
+   }
+  }
+ },
+ "positive_minutes_players": {
+  "0": {
+   "actual_per_team": {
+    "n_games": 391,
+    "mean": 10.71994884910486,
+    "ci_95": [
+     10.581390104291536,
+     10.85438144329897
+    ]
+   },
+   "simulated_per_team": {
+    "n_games": 391,
+    "mean": 10.211254475703324,
+    "ci_95": [
+     10.12295991602067,
+     10.295372758008266
+    ]
+   },
+   "simulated_minus_actual": {
+    "n_games": 391,
+    "mean": -0.5086943734015344,
+    "ci_95": [
+     -0.5680063816094618,
+     -0.4488411732212452
+    ]
+   }
+  },
+  "1": {
+   "actual_per_team": {
+    "n_games": 391,
+    "mean": 10.649616368286445,
+    "ci_95": [
+     10.514027069160997,
+     10.780931841247796
+    ]
+   },
+   "simulated_per_team": {
+    "n_games": 391,
+    "mean": 10.090785166240408,
+    "ci_95": [
+     10.009608291778196,
+     10.167718104113112
+    ]
+   },
+   "simulated_minus_actual": {
+    "n_games": 391,
+    "mean": -0.5588312020460358,
+    "ci_95": [
+     -0.6304119951305202,
+     -0.4858506756269347
+    ]
+   }
+  },
+  "5": {
+   "actual_per_team": {
+    "n_games": 391,
+    "mean": 9.891304347826088,
+    "ci_95": [
+     9.79156010230179,
+     9.991048593350383
+    ]
+   },
+   "simulated_per_team": {
+    "n_games": 391,
+    "mean": 9.736239130434782,
+    "ci_95": [
+     9.672144553299363,
+     9.796013838383839
+    ]
+   },
+   "simulated_minus_actual": {
+    "n_games": 391,
+    "mean": -0.1550652173913043,
+    "ci_95": [
+     -0.22769262286212677,
+     -0.08287304506041544
+    ]
+   }
+  }
+ },
+ "participant_exclusions": {
+  "401810401": [
+   "5107156"
+  ],
+  "401810516": [
+   "5107156"
+  ],
+  "401810744": [
+   "5107156"
+  ],
+  "401810785": [
+   "5107156"
+  ],
+  "401810358": [
+   "5107156"
+  ],
+  "401810458": [
+   "5107156"
+  ],
+  "401810591": [
+   "5107156"
+  ],
+  "401810607": [
+   "5107156"
+  ],
+  "401810725": [
+   "5107156"
+  ]
+ },
+ "deep_bench": {
+  "definition": "prior min_avg<8 and start_share<0.1, known pre-game values",
+  "player_games": 531,
+  "unknown_prior_player_games": 16,
+  "actual_minutes": 7.755225988700564,
+  "predicted_minutes": 6.6583849820551455
+ },
+ "bootstrap": {
+  "unit": "game",
+  "replicates": 5000,
+  "seed": 20261123
+ },
+ "limitations": [
+  "actual-participant oracle rosters cannot grade pre-tip availability or DNP prediction",
+  "positive-minute counts exclude games missing any captured player minute truth",
+  "coverage integrates randomized PIT rather than drawing one arbitrary PIT per observation",
+  "forecast error spread contains mean/input errors; it does not identify a missing latent factor",
+  "descriptive existing development evidence; no new threshold, strength or model selection"
+ ],
+ "source_sha256": {
+  "analysis/a2_world_diagnostics.py": "df41ef344e57232f8d6cb17c694b8da590ecc9c08eb0fea69f40badc11e4ff78",
+  "data/derived/variants/matchup/features/pregame.parquet": "49452d553a39049dfa7316d66f1e2e5507c29e55f963f2f87bb1f6ed055f4614",
+  "analysis/experiments/a2_clock_development_20261123_v1.json": "b94e035aacb74c0d4a1482a17bd335b093e091d71179bcf3812503e6e7487337",
+  "analysis/experiments/a2_clock_confirmation_20261123_v1.json": "ef8af47d0e6e7e684fe9047ec5805676aab456a24f8e50b25c6c87d7e288cac7"
+ }
+}

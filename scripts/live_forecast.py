@@ -19,13 +19,19 @@ from scripts import engine, lineup_forecast, player_worlds, projection
 _ENGINE = None
 
 
-def fingerprints():
+def fingerprints(runtime=None):
+    runtime = engine.ENGINE if runtime is None else runtime
     paths = [Path(__file__)]
     root = Path(__file__).resolve().parents[1]
     paths += [root / 'basketball_common.py']
     paths += [root / f'scripts/{name}.py' for name in ('engine', 'projection', 'minutes', 'rotations', 'nodes', 'matchups',
-              'foul_out', 'lineup_forecast', 'a1_lineup_branches', 'player_worlds', 'forecast_output', 'world_mass', 'rotation_fit', 'nightly')]
-    paths += list((engine.MODELS / engine.ENGINE['models']).glob('*'))
+              'foul_out', 'lineup_forecast', 'a1_lineup_branches', 'player_worlds', 'forecast_output', 'world_mass', 'rotation_fit', 'late_clock', 'nightly')]
+    paths += list((engine.MODELS / runtime['models']).glob('*'))
+    if runtime.get('clock_recipe') is not None:
+        recipe = root / runtime['clock_recipe']
+        if not recipe.is_file():
+            raise FileNotFoundError(recipe)
+        paths.append(recipe)
     return {str(path.relative_to(root)): sha256_file(path) for path in sorted(set(paths)) if path.is_file()}
 
 

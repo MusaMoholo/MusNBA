@@ -1,0 +1,76 @@
+{
+ "kind": "five-core live handoff consolidation, owner requested words and file count",
+ "before": {
+  "all_markdown_files": 43,
+  "live_markdown_files": 35,
+  "live_words": 28933,
+  "root_words": 13246
+ },
+ "after": {
+  "live_markdown_files": 8,
+  "core_files": 5,
+  "live_words": 8213,
+  "root_words": 5597
+ },
+ "live_word_reduction_fraction": 0.7161372826875886,
+ "archive": {
+  "path": "docs/archive/20261123_document_history.tar.gz",
+  "sha256": "47b093e900c3c1f96da1f3d380fe0cb935520020d3037816f494c4631cdcbf56",
+  "verified_members": 44,
+  "external_backup": "/Users/moholom/Basketball_archive_ops/docs_20261123_a2_close"
+ },
+ "guard_cases": [
+  {
+   "case": "valid five-core plus three-policy inventory",
+   "expected_exit": 0,
+   "actual_exit": 0
+  },
+  {
+   "case": "unplanned Markdown file rejected",
+   "expected_exit": 1,
+   "actual_exit": 1
+  },
+  {
+   "case": "broken link rejected",
+   "expected_exit": 1,
+   "actual_exit": 1
+  },
+  {
+   "case": "word bloat rejected",
+   "expected_exit": 1,
+   "actual_exit": 1
+  },
+  {
+   "case": "archive corruption rejected",
+   "expected_exit": 1,
+   "actual_exit": 1
+  },
+  {
+   "case": "restored valid inventory",
+   "expected_exit": 0,
+   "actual_exit": 0
+  },
+  {
+   "case": "in-place frozen policy change rejected",
+   "expected_exit": 1,
+   "actual_exit": 1
+  },
+  {
+   "case": "nested Markdown outside root/docs cannot bypass file budget",
+   "expected_exit": 1,
+   "actual_exit": 1
+  }
+ ],
+ "live_file_sha256": {
+  "AGENTS.md": "20942b55bc955b87205c8899bc5444b50fe9576d2278c82f9fe8f5b0163b5b61",
+  "HANDOFF_NEXT.md": "10dab95bbec3601a1e708387131838b1dc2f59ddd517f90aac5a11d27cef0bdf",
+  "PLAN.md": "e6881791957567bf19a4624561c23b9ffa80d33b8838e17024564b1dcf98eb89",
+  "MODEL.md": "f7092128b4ca129b46ce4daad8ec251d0614b567ef5a271c3917d12243ea4a23",
+  "README.md": "df789e1d5a2ce6ee6cb53dbc35645ee99914d5c3b023938600530fc718f63639",
+  "docs/protocols/promotion_v1_20261122.md": "1b9426b421da2d458dbbea46fbb53595ae088ec00734a79d768434d731244fb7",
+  "docs/protocols/promotion_v2_20261123.md": "d5e1776c3cfcd114b09fa9f937d264ea4ce6f4fcb427c804d4fc07daca7d928d",
+  "docs/protocols/promotion_v3_20261123.md": "d50e26dcf523fad05bfc203ea3c5ceaab73a41aa906f1e9164cbffcb2a40cfeb"
+ },
+ "guard_source_sha256": "b6f69524f2ef13a39e52278f485e61853429871771f00e63f546a412df1b466c",
+ "policy": "five core docs plus three frozen policy contracts;9000 total live words,8files; local hook, no CI"
+}

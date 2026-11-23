@@ -1,0 +1,636 @@
+{
+ "kind": "A2 conditional stored-engine diagnostics; no fitted or promoted factor",
+ "run": "a2_clock_development_20261123_v1",
+ "arm": "control",
+ "games": 200,
+ "selection": {
+  "player_games": 4280,
+  "unknown_role": 5,
+  "missing_outcome_or_prediction": 0,
+  "known_role_below_minutes_threshold": 640,
+  "supported": 3635,
+  "actual_late_opportunities": 2333,
+  "actual_invalid_time_or_unknown_event": 16
+ },
+ "dependence": {
+  "all": {
+   "counts": {
+    "player_games": 3635,
+    "games": 200,
+    "team_games": 400,
+    "teammate_team_games": 400,
+    "teammate_ordered_pairs": 29700,
+    "opponent_games": 200,
+    "opponent_pairs": 16550
+   },
+   "metrics": {
+    "teammate_MIN": {
+     "observed_role_centred_error_product": -1.2930870410041129,
+     "observed_ci_95": [
+      -1.9341102000575445,
+      -0.5519699859385698
+     ],
+     "within_world_covariance": -3.345700003987351,
+     "within_world_ci_95": [
+      -3.388998696035496,
+      -3.3008870129030656
+     ],
+     "observed_minus_world": 2.052612962983238,
+     "difference_ci_95": [
+      1.4116593861337328,
+      2.784909414343468
+     ]
+    },
+    "teammate_PTS": {
+     "observed_role_centred_error_product": -2.709312272118163,
+     "observed_ci_95": [
+      -3.0796168738124234,
+      -2.3498277175013675
+     ],
+     "within_world_covariance": -2.5436494962063496,
+     "within_world_ci_95": [
+      -2.5876024755406344,
+      -2.4992593604139706
+     ],
+     "observed_minus_world": -0.16566277591181322,
+     "difference_ci_95": [
+      -0.5268092921092439,
+      0.18186591680921294
+     ]
+    },
+    "opponent_MIN": {
+     "observed_role_centred_error_product": 0.8809102894420251,
+     "observed_ci_95": [
+      0.3247288317555446,
+      1.5719606774596493
+     ],
+     "within_world_covariance": 0.2028348439439385,
+     "within_world_ci_95": [
+      0.19188204009616094,
+      0.21375901050614665
+     ],
+     "observed_minus_world": 0.6780754454980866,
+     "difference_ci_95": [
+      0.1202573815711366,
+      1.3667729262740533
+     ]
+    },
+    "opponent_PTS": {
+     "observed_role_centred_error_product": 0.23771832952194147,
+     "observed_ci_95": [
+      0.010990456929420075,
+      0.4505894327416577
+     ],
+     "within_world_covariance": 0.21129219613032824,
+     "within_world_ci_95": [
+      0.2010087288383656,
+      0.22131448510713136
+     ],
+     "observed_minus_world": 0.026426133391613232,
+     "difference_ci_95": [
+      -0.1997426886067263,
+      0.23848835583369685
+     ]
+    }
+   },
+   "status": "supported"
+  },
+  "stars_starters": {
+   "counts": {
+    "player_games": 1825,
+    "games": 199,
+    "team_games": 397,
+    "teammate_team_games": 391,
+    "teammate_ordered_pairs": 7064,
+    "opponent_games": 198,
+    "opponent_pairs": 4225
+   },
+   "metrics": {
+    "teammate_MIN": {
+     "observed_role_centred_error_product": 5.824602039696178,
+     "observed_ci_95": [
+      3.7840236380040744,
+      8.064278302984151
+     ],
+     "within_world_covariance": -1.8557811565058528,
+     "within_world_ci_95": [
+      -1.960602896649309,
+      -1.7507899217669143
+     ],
+     "observed_minus_world": 7.6803831962020315,
+     "difference_ci_95": [
+      5.635153491733821,
+      9.904826338925337
+     ]
+    },
+    "teammate_PTS": {
+     "observed_role_centred_error_product": -2.6622332000049274,
+     "observed_ci_95": [
+      -4.347224275531981,
+      -1.016843059814888
+     ],
+     "within_world_covariance": -4.139061426281819,
+     "within_world_ci_95": [
+      -4.24217347052018,
+      -4.040438872836745
+     ],
+     "observed_minus_world": 1.4768282262768913,
+     "difference_ci_95": [
+      -0.19618342120120827,
+      3.130730785916713
+     ]
+    },
+    "opponent_MIN": {
+     "observed_role_centred_error_product": 3.7082945649951102,
+     "observed_ci_95": [
+      1.7011854037113723,
+      5.783236155213792
+     ],
+     "within_world_covariance": 0.2096026856967776,
+     "within_world_ci_95": [
+      0.18162617937574263,
+      0.23855089328827203
+     ],
+     "observed_minus_world": 3.498691879298333,
+     "difference_ci_95": [
+      1.4944409859749563,
+      5.576282444705928
+     ]
+    },
+    "opponent_PTS": {
+     "observed_role_centred_error_product": 0.6176735234088857,
+     "observed_ci_95": [
+      -0.5180565014268043,
+      1.777538084051683
+     ],
+     "within_world_covariance": 0.3623641042636683,
+     "within_world_ci_95": [
+      0.31843794576293566,
+      0.4057109342686856
+     ],
+     "observed_minus_world": 0.25530941914521743,
+     "difference_ci_95": [
+      -0.8696820473069301,
+      1.4107871097616065
+     ]
+    }
+   },
+   "status": "supported"
+  }
+ },
+ "late_states": [
+  {
+   "clock_seconds": "0–24",
+   "offensive_margin": "≤−9",
+   "actual_games": 94,
+   "actual_opportunities": 111,
+   "simulated_expected_opportunities_per_slate": 169.26600000000002,
+   "status": "supported",
+   "metrics": {
+    "seconds_to_action": {
+     "actual": 8.05945945945946,
+     "simulated": 5.659249409962534,
+     "change": -2.400210049496925,
+     "ci_95": [
+      -3.7847488981402915,
+      -1.1951099568186536
+     ]
+    },
+    "defensive_personal_foul_share": {
+     "actual": 0.036036036036036036,
+     "simulated": 0.09204447437760682,
+     "change": 0.056008438341570786,
+     "ci_95": [
+      0.01947108386468586,
+      0.08376963789608645
+     ]
+    },
+    "three_share_of_fga": {
+     "actual": 0.5,
+     "simulated": 0.5682954343050526,
+     "change": 0.06829543430505258,
+     "ci_95": [
+      -0.09375263618861016,
+      0.22717392647299098
+     ]
+    }
+   }
+  },
+  {
+   "clock_seconds": "0–24",
+   "offensive_margin": "−8…−4",
+   "actual_games": 52,
+   "actual_opportunities": 113,
+   "simulated_expected_opportunities_per_slate": 69.725,
+   "status": "supported",
+   "metrics": {
+    "seconds_to_action": {
+     "actual": 4.135398230088495,
+     "simulated": 6.038307697936684,
+     "change": 1.9029094678481888,
+     "ci_95": [
+      1.3566297656247228,
+      2.4141601793171974
+     ]
+    },
+    "defensive_personal_foul_share": {
+     "actual": 0.061946902654867256,
+     "simulated": 0.09002509860164935,
+     "change": 0.028078195946782097,
+     "ci_95": [
+      -0.015163760787953244,
+      0.0684318824238253
+     ]
+    },
+    "three_share_of_fga": {
+     "actual": 0.686046511627907,
+     "simulated": 0.5711365141524375,
+     "change": -0.11490999747546948,
+     "ci_95": [
+      -0.21119430639210793,
+      -0.014228775966575328
+     ]
+    }
+   }
+  },
+  {
+   "clock_seconds": "0–24",
+   "offensive_margin": "−3…−1",
+   "actual_games": 36,
+   "actual_opportunities": 69,
+   "simulated_expected_opportunities_per_slate": 44.852000000000004,
+   "status": "insufficient"
+  },
+  {
+   "clock_seconds": "0–24",
+   "offensive_margin": "0",
+   "actual_games": 13,
+   "actual_opportunities": 30,
+   "simulated_expected_opportunities_per_slate": 15.796000000000001,
+   "status": "insufficient"
+  },
+  {
+   "clock_seconds": "0–24",
+   "offensive_margin": "1…3",
+   "actual_games": 38,
+   "actual_opportunities": 72,
+   "simulated_expected_opportunities_per_slate": 42.513,
+   "status": "insufficient"
+  },
+  {
+   "clock_seconds": "0–24",
+   "offensive_margin": "4…8",
+   "actual_games": 48,
+   "actual_opportunities": 77,
+   "simulated_expected_opportunities_per_slate": 61.899,
+   "status": "insufficient"
+  },
+  {
+   "clock_seconds": "0–24",
+   "offensive_margin": "≥9",
+   "actual_games": 69,
+   "actual_opportunities": 79,
+   "simulated_expected_opportunities_per_slate": 120.429,
+   "status": "insufficient"
+  },
+  {
+   "clock_seconds": "24–60",
+   "offensive_margin": "≤−9",
+   "actual_games": 123,
+   "actual_opportunities": 199,
+   "simulated_expected_opportunities_per_slate": 206.92000000000002,
+   "status": "supported",
+   "metrics": {
+    "seconds_to_action": {
+     "actual": 9.039698492462312,
+     "simulated": 8.263960466627804,
+     "change": -0.7757380258345083,
+     "ci_95": [
+      -1.5273974242472657,
+      -0.08410843147030479
+     ]
+    },
+    "defensive_personal_foul_share": {
+     "actual": 0.1306532663316583,
+     "simulated": 0.1849023777305239,
+     "change": 0.054249111398865596,
+     "ci_95": [
+      0.007328115023338398,
+      0.09912117694547441
+     ]
+    },
+    "three_share_of_fga": {
+     "actual": 0.42038216560509556,
+     "simulated": 0.46220641417954944,
+     "change": 0.04182424857445388,
+     "ci_95": [
+      -0.03972187453898606,
+      0.12285727805513375
+     ]
+    }
+   }
+  },
+  {
+   "clock_seconds": "24–60",
+   "offensive_margin": "−8…−4",
+   "actual_games": 41,
+   "actual_opportunities": 81,
+   "simulated_expected_opportunities_per_slate": 89.029,
+   "status": "insufficient"
+  },
+  {
+   "clock_seconds": "24–60",
+   "offensive_margin": "−3…−1",
+   "actual_games": 38,
+   "actual_opportunities": 58,
+   "simulated_expected_opportunities_per_slate": 57.376,
+   "status": "insufficient"
+  },
+  {
+   "clock_seconds": "24–60",
+   "offensive_margin": "0",
+   "actual_games": 17,
+   "actual_opportunities": 34,
+   "simulated_expected_opportunities_per_slate": 19.926000000000002,
+   "status": "insufficient"
+  },
+  {
+   "clock_seconds": "24–60",
+   "offensive_margin": "1…3",
+   "actual_games": 41,
+   "actual_opportunities": 59,
+   "simulated_expected_opportunities_per_slate": 57.678,
+   "status": "insufficient"
+  },
+  {
+   "clock_seconds": "24–60",
+   "offensive_margin": "4…8",
+   "actual_games": 41,
+   "actual_opportunities": 75,
+   "simulated_expected_opportunities_per_slate": 88.302,
+   "status": "insufficient"
+  },
+  {
+   "clock_seconds": "24–60",
+   "offensive_margin": "≥9",
+   "actual_games": 122,
+   "actual_opportunities": 190,
+   "simulated_expected_opportunities_per_slate": 193.659,
+   "status": "supported",
+   "metrics": {
+    "seconds_to_action": {
+     "actual": 15.444210526315787,
+     "simulated": 14.222512251114251,
+     "change": -1.2216982752015362,
+     "ci_95": [
+      -2.391152733329195,
+      -0.11411107188587226
+     ]
+    },
+    "defensive_personal_foul_share": {
+     "actual": 0.12105263157894737,
+     "simulated": 0.18440661162145836,
+     "change": 0.06335398004251099,
+     "ci_95": [
+      0.013288074841092613,
+      0.11054637731762347
+     ]
+    },
+    "three_share_of_fga": {
+     "actual": 0.5204081632653061,
+     "simulated": 0.4311987162708122,
+     "change": -0.08920944699449396,
+     "ci_95": [
+      -0.191490888615456,
+      0.012867062491894942
+     ]
+    }
+   }
+  },
+  {
+   "clock_seconds": "60–120",
+   "offensive_margin": "≤−9",
+   "actual_games": 129,
+   "actual_opportunities": 333,
+   "simulated_expected_opportunities_per_slate": 314.977,
+   "status": "supported",
+   "metrics": {
+    "seconds_to_action": {
+     "actual": 9.557057057057056,
+     "simulated": 9.602480179108385,
+     "change": 0.04542312205132859,
+     "ci_95": [
+      -0.49592125492646,
+      0.5529383269059885
+     ]
+    },
+    "defensive_personal_foul_share": {
+     "actual": 0.14714714714714713,
+     "simulated": 0.19810652841318574,
+     "change": 0.050959381266038606,
+     "ci_95": [
+      0.016907433067285073,
+      0.08403000974040058
+     ]
+    },
+    "three_share_of_fga": {
+     "actual": 0.3968253968253968,
+     "simulated": 0.4411171153512035,
+     "change": 0.04429171852580671,
+     "ci_95": [
+      -0.011437311309347295,
+      0.09753615734917798
+     ]
+    }
+   }
+  },
+  {
+   "clock_seconds": "60–120",
+   "offensive_margin": "−8…−4",
+   "actual_games": 59,
+   "actual_opportunities": 115,
+   "simulated_expected_opportunities_per_slate": 124.876,
+   "status": "supported",
+   "metrics": {
+    "seconds_to_action": {
+     "actual": 9.811304347826086,
+     "simulated": 10.08952320465746,
+     "change": 0.2782188568313746,
+     "ci_95": [
+      -0.5704985434462259,
+      1.039187922877504
+     ]
+    },
+    "defensive_personal_foul_share": {
+     "actual": 0.21739130434782608,
+     "simulated": 0.1889154040808482,
+     "change": -0.028475900266977883,
+     "ci_95": [
+      -0.08897047419888905,
+      0.03375254917117424
+     ]
+    },
+    "three_share_of_fga": {
+     "actual": 0.35443037974683544,
+     "simulated": 0.43587358511711305,
+     "change": 0.0814432053702776,
+     "ci_95": [
+      -0.030010472176206112,
+      0.19317297542135559
+     ]
+    }
+   }
+  },
+  {
+   "clock_seconds": "60–120",
+   "offensive_margin": "−3…−1",
+   "actual_games": 38,
+   "actual_opportunities": 81,
+   "simulated_expected_opportunities_per_slate": 83.43,
+   "status": "insufficient"
+  },
+  {
+   "clock_seconds": "60–120",
+   "offensive_margin": "0",
+   "actual_games": 12,
+   "actual_opportunities": 31,
+   "simulated_expected_opportunities_per_slate": 28.683,
+   "status": "insufficient"
+  },
+  {
+   "clock_seconds": "60–120",
+   "offensive_margin": "1…3",
+   "actual_games": 43,
+   "actual_opportunities": 90,
+   "simulated_expected_opportunities_per_slate": 82.50699999999999,
+   "status": "insufficient"
+  },
+  {
+   "clock_seconds": "60–120",
+   "offensive_margin": "4…8",
+   "actual_games": 53,
+   "actual_opportunities": 115,
+   "simulated_expected_opportunities_per_slate": 123.30000000000001,
+   "status": "supported",
+   "metrics": {
+    "seconds_to_action": {
+     "actual": 13.668695652173914,
+     "simulated": 13.240259526498365,
+     "change": -0.42843612567554956,
+     "ci_95": [
+      -1.879487296454531,
+      0.9175699576166175
+     ]
+    },
+    "defensive_personal_foul_share": {
+     "actual": 0.14782608695652175,
+     "simulated": 0.20118410381184101,
+     "change": 0.05335801685531927,
+     "ci_95": [
+      -0.022674282073600793,
+      0.11866889555061824
+     ]
+    },
+    "three_share_of_fga": {
+     "actual": 0.4,
+     "simulated": 0.4187033042980899,
+     "change": 0.018703304298089862,
+     "ci_95": [
+      -0.09126255983972364,
+      0.12195582263475126
+     ]
+    }
+   }
+  },
+  {
+   "clock_seconds": "60–120",
+   "offensive_margin": "≥9",
+   "actual_games": 121,
+   "actual_opportunities": 305,
+   "simulated_expected_opportunities_per_slate": 294.01099999999997,
+   "status": "supported",
+   "metrics": {
+    "seconds_to_action": {
+     "actual": 12.824262295081967,
+     "simulated": 13.0862297636631,
+     "change": 0.2619674685811333,
+     "ci_95": [
+      -0.5841598767863441,
+      1.0587540537557134
+     ]
+    },
+    "defensive_personal_foul_share": {
+     "actual": 0.1540983606557377,
+     "simulated": 0.18193196853178967,
+     "change": 0.027833607876051963,
+     "ci_95": [
+      -0.014063922965683179,
+      0.06835382629098351
+     ]
+    },
+    "three_share_of_fga": {
+     "actual": 0.4474885844748858,
+     "simulated": 0.4283452292246754,
+     "change": -0.019143355250210436,
+     "ci_95": [
+      -0.09017368912955438,
+      0.05027819946905134
+     ]
+    }
+   }
+  }
+ ],
+ "overtime": {
+  "actual": 0.04,
+  "simulated": 0.027565000000000003,
+  "difference_ci_95": [
+   -0.042390124999999994,
+   0.012620125000000003
+  ]
+ },
+ "pace": {
+  "observed_error_variance": [
+   22.377357687975,
+   23.0507983471
+  ],
+  "within_world_variance": [
+   15.550377894999999,
+   15.567946780000005
+  ],
+  "observed_minus_world_variance_ci_95": [
+   [
+    1.9231077354393822,
+    12.018678999979366
+   ],
+   [
+    2.313363998769367,
+    12.977106773440628
+   ]
+  ],
+  "observed_error_opponent_covariance": 21.987818867849995,
+  "within_world_opponent_covariance": 15.052784225,
+  "difference_opponent_covariance_ci_95": [
+   1.9689645353393703,
+   12.212469983001869
+  ]
+ },
+ "source_sha256": {
+  "analysis/a2_world_diagnostics.py": "fbad4a6d477e0dc9ea60c686346c09f7798aad8bf9408569ba7c91071ccfa2d0",
+  "scripts/a2_residual_dependence.py": "bae4e2daa5441dc7cf9b28d025ba5b52f43d09657ea0bffde0a1870969aea0f9",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+  "analysis/experiments/a2_clock_development_20261123_v1.json": "b94e035aacb74c0d4a1482a17bd335b093e091d71179bcf3812503e6e7487337",
+  "docs/protocols/a2_joint_late_20261123.md": "49400d7738c00d894f26020d27ef8401c974ac26c735ad1ff3dcf22a4fdabd56"
+ },
+ "bootstrap": {
+  "unit": "game",
+  "replicates": 10000,
+  "seed": 20261122,
+  "refit": "observed role means"
+ },
+ "limitations": [
+  "actual-participant roster and minutes selection; fixed F4 panel",
+  "each arm retains its own predicted-minute eligibility; cross-arm contrasts may change cohort",
+  "state visitation differs; descriptive rather than causal or intentional-foul classification",
+  "forecast errors also contain input/mean misspecification; excess is not an identified latent variance"
+ ]
+}

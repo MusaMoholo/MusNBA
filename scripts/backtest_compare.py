@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Paired comparison of engine backtest runs on the same games (same --seed → same games; D28: players first).
+"""Legacy engine comparison using actual-starter tiers; not the current promotion gate.
+
+Use a1_compare.py and an explicit release_gate policy for new pre-game-tier qualification (MODEL.md).
 
 For each run: player tiers (bias, 10–90% coverage, CRPS for minutes, points, rebounds, assists), then strength loading,
 margin slope, total/margin CRPS and win log loss v the team-rating model. Each later run is paired with the first on

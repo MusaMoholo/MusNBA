@@ -1,0 +1,118 @@
+{
+ "kind": "prospective scorer correctness repair; no protected rescoring",
+ "unit_tests": {
+  "passed": 17,
+  "log": "/tmp/musnba_a2_closing_units_20261123_v1.log",
+  "sha256": "28c39a36bd855fdd4023e32655be040f0416d3fe32d97bc4f9aede706273c8a3"
+ },
+ "unchanged_policy_regressions": [
+  {
+   "development_report": "20261123_a1_vector_penalty_f4_200_v1_compare.json",
+   "policy": "v2",
+   "unchanged": true
+  },
+  {
+   "development_report": "20261123_a1_vector_penalty_f4_200_v1_compare.json",
+   "policy": "v3",
+   "unchanged": true
+  },
+  {
+   "development_report": "20261122_a1_seed_noise.json",
+   "policy": "v2",
+   "unchanged": true
+  },
+  {
+   "development_report": "20261122_a1_seed_noise.json",
+   "policy": "v3",
+   "unchanged": true
+  },
+  {
+   "development_report": "20261122_a1_s06_penalty_fixed200_compare.json",
+   "policy": "v2",
+   "unchanged": true
+  },
+  {
+   "development_report": "20261122_a1_s06_penalty_fixed200_compare.json",
+   "policy": "v3",
+   "unchanged": true
+  },
+  {
+   "development_report": "a2_clock_development_20261123_v1_compare.json",
+   "policy": "v2",
+   "unchanged": true
+  },
+  {
+   "development_report": "a2_clock_development_20261123_v1_compare.json",
+   "policy": "v3",
+   "unchanged": true
+  }
+ ],
+ "synthetic_before": [
+  {
+   "constant_loss_change": -0.125,
+   "expected_direction": "better",
+   "old_verdict": "neutral",
+   "old_z": 0.0
+  },
+  {
+   "constant_loss_change": 0.125,
+   "expected_direction": "worse",
+   "old_verdict": "neutral",
+   "old_z": 0.0
+  },
+  {
+   "constant_loss_change": 0.0,
+   "expected_direction": "neutral",
+   "old_verdict": "neutral",
+   "old_z": 0.0
+  }
+ ],
+ "synthetic_after": [
+  {
+   "constant_change": -0.125,
+   "verdict": "better"
+  },
+  {
+   "constant_change": 0.125,
+   "verdict": "worse"
+  },
+  {
+   "constant_change": 0.0,
+   "verdict": "neutral"
+  }
+ ],
+ "repairs": [
+  "unmatched panels require explicit common scope",
+  "constant nonzero change retains direction at zero estimated SE; no infinite JSON",
+  "invalid/nonfinite or single-game losses are setup errors",
+  "versioned release policy must be explicit"
+ ],
+ "historical_routes": "S05 and legacy engine/S04 scripts labelled historical; valid original math retained",
+ "old_candidate_review": {
+  "source": "analysis/experiments/20261122_a1_s06_penalty_fixed200_compare.json",
+  "current_policy": "explicit learned/v3; audit only",
+  "decision": "development_scores_compatible",
+  "core_established": 27,
+  "core_checks": 27,
+  "nonestablished": [],
+  "coverage_material_harm": [],
+  "primary": {
+   "path": "players/all/min/crps",
+   "change": -0.03529358966337037,
+   "ci_95": [
+    -0.04462392502738064,
+    -0.02608508104472769
+   ],
+   "improvement_established": true,
+   "multiplicity": "uncorrected; only one frozen benefit claim can use this directly"
+  },
+  "qualification": "Not promoted; old baseline/seed/coverage provenance and independent current-baseline confirmation are still required. This is not a new protected score."
+ },
+ "protected_report_unchanged_sha256": "74d29d5ea9502e38e37d565126612fd3f712f13837daeb490cc7ed7b6bde0177",
+ "source_sha256": {
+  "scripts/compare.py": "319d5623509cdbbe318d972399ccff2256390a509a8be5f562b554597676e053",
+  "scripts/release_gate.py": "2766fa72665708e3caad38b7d12424e6d9218faad65479b930c384ac434833a1",
+  "tests/test_release_gate.py": "551efceb9c4b61928a29055b90148ea894fb41312fdc5ba83503f91b80d94741"
+ },
+ "limits": "Synthetic bugs do not prove any real historical rejection was caused by them; no old model is auto-promoted."
+}

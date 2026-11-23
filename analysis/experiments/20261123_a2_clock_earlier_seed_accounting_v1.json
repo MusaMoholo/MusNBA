@@ -1,0 +1,33 @@
+{
+ "status": "pass; all300 earlier-fold numeric seed pairs match the original declared keys",
+ "folds": [
+  {
+   "fold": "F1",
+   "paired_games": 100,
+   "actual_seed_key": "a2-clock-engine-F1-v1",
+   "all_numeric_seeds_match": true
+  },
+  {
+   "fold": "F2",
+   "paired_games": 100,
+   "actual_seed_key": "a2-clock-engine-F2-v1",
+   "all_numeric_seeds_match": true
+  },
+  {
+   "fold": "F3",
+   "paired_games": 100,
+   "actual_seed_key": "a2-clock-engine-F3-v1",
+   "all_numeric_seeds_match": true
+  }
+ ],
+ "source_sha256": {
+  "data/derived/experiments/a2_clock_earlier_f1_supported_20261123_v1_control.parquet": "5ce73bf711b31e7648baf4bf4e39b69105e0dd9ff81027bb7b55d6247065e53d",
+  "data/derived/experiments/a2_clock_earlier_f1_supported_20261123_v1_candidate.parquet": "34a7829f8fcf7869bee33c42226997444c4f7b4ea3d46ea5c8c658c6f831b786",
+  "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1_control.parquet": "ec7cfce20e104440b3e92e6d890945ca65496b92d79a843bdd13c908b1e87c45",
+  "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1_candidate.parquet": "4cbf3f5ed8fdf1019c2c1ef61ae1fed75a23edc7bd21ab9d7149c3d352d56e36",
+  "data/derived/experiments/a2_clock_earlier_f3_supported_20261123_v1_control.parquet": "31ea45cce418b892b5ca6119804604cd04609d090eb6679e782eb7839d3d5e29",
+  "data/derived/experiments/a2_clock_earlier_f3_supported_20261123_v1_candidate.parquet": "36d9d5e47a19744ec175d387763c4d7d2252dd01fff0dca3347ee1b9ddb38cf1",
+  "analysis/experiments/20261123_a2_clock_engine_panels_v1.json": "ae8fc1e4bc7dd1c448f14c47dc8891e4e131db1aff315bae0cf624add04c2044"
+ },
+ "metadata_correction": "The generic companion run logs retain seed_key:null. It is an old writer label, not the execution recipe. Original panel seed keys and per-game simulation_seed values are authoritative; immutable logs/reports remain unchanged."
+}
