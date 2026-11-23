@@ -1,6 +1,6 @@
 # Handoff — current state and next actions
 
-Updated **23 November 2026**. Previous pushed checkpoint: **aa3d25d**; `git log -1` identifies this checkpoint.
+Updated **23 November 2026**. Previous pushed checkpoint: **e05edc7**; `git log -1` identifies this checkpoint.
 Read [AGENTS](AGENTS.md), then this file and [PLAN](PLAN.md). Detailed history is indexed in
 [docs/README](docs/README.md); do not read archives as current instructions.
 
@@ -25,6 +25,8 @@ Read [AGENTS](AGENTS.md), then this file and [PLAN](PLAN.md). Detailed history i
 - **No model/download jobs running at this checkpoint.** Documentation cleanup changes no models, snapshots,
   bundle contract, app assets or progress. Baseline smoke **108/108**; final documentation audit is in
   [the cleanup record](docs/maintenance/2026-11-23-lean-docs.md).
+- Local pre-commit documentation enforcement is enabled (`core.hooksPath=.githooks`). Hosted documentation CI
+  could not start because GitHub reports an account billing lock; this does not invalidate local checks.
 
 ## Latest live delivery
 

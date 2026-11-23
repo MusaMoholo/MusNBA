@@ -71,6 +71,11 @@ The deliberate fault must exit nonzero. Browser checks cover both themes at 1440
 Use `--profile phone` for the stripped bundle. Baseline smoke is 108 checks at the current checkpoint; version,
 cutoff, import/offline and model/accounting gates are described in AGENTS/TRAINING, not inferred from counts.
 
+Documentation budgets/links/archive integrity run at every local commit through `.githooks/pre-commit`.
+This checkout has it enabled; for a fresh clone, inspect existing hooks first, then enable with
+`git config --local core.hooksPath .githooks`. GitHub CI is also configured; its first run was blocked
+before any step by the account's billing lock, independently of the passing local checks.
+
 ## Model work and file map
 
 Rebuild order: history → possessions → rotations → features → nodes → train. Use isolated variants and frozen

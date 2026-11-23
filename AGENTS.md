@@ -95,6 +95,9 @@ long protocols/reproduction detail in `docs/`. Keep recent log entries only; lin
 frozen decisions/protocols and evidence when condensing. Do not duplicate long logs, old commands, all-eight-doc
 review narratives or progress boards across files. Run `.venv/bin/python scripts/check_docs.py` before committing;
 word budgets are review gates, raised only with a recorded reason. History is consulted, not mandatory startup reading.
+The repository-managed `.githooks/pre-commit` runs this check automatically; `core.hooksPath` is `.githooks`
+on this checkout. On a fresh clone, enable it with `git config --local core.hooksPath .githooks` after
+checking for existing hooks. GitHub documentation CI is configured, but currently blocked by account billing.
 
 ## 6. Use compute efficiently
 

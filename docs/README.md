@@ -48,3 +48,6 @@ Run `.venv/bin/python scripts/check_docs.py` before committing. The stdlib-only 
 word budgets, focused-reference budgets, local links/anchors, fenced blocks and archive integrity. Its source owns
 the budgets. A justified budget change needs a recorded reason, not an automatic increase when a file grows.
 The same check runs in GitHub Actions on documentation changes; it does not access providers, models or private data.
+The local `.githooks/pre-commit` also runs it on every commit (enabled here via `core.hooksPath=.githooks`).
+Fresh clones must inspect existing hooks before enabling it. GitHub's first run could not start because of
+an account billing lock; local enforcement remains available without hosted runners.
