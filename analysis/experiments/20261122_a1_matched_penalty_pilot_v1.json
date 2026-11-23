@@ -1,0 +1,16 @@
+{
+ "kind": "isolated matched D29 foul-penalty continuation; diagnostic only",
+ "stress": "analysis/experiments/20261122_a1_f4_six_roster_v1.json",
+ "stress_sha256": "4b01ebec994a9c313cfb69a8d7c8736191686165265a50a5499ca241dd258f95",
+ "manifest": "data/derived/experiments/20261122_a1_matched_penalty_pilot_v1/manifest.json",
+ "manifest_sha256": "9176c208d7455bbb83b5f1850efac44ce044a0dbefac7798aa97cf8429fdfab3",
+ "pilot": true,
+ "worlds": 10,
+ "workers": 4,
+ "elapsed_seconds": 7.165,
+ "limitations": [
+  "One selected synthetic oracle-roster case, not an NBA rate or accuracy test.",
+  "Continuation is an explicit alternative rule, not the unknowable no-exception outcome.",
+  "Does not establish a production retry, availability or promotion gate."
+ ]
+}

@@ -2,6 +2,21 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 ET — matched D29 continuation and selection:** on the previously selected F4 six-player
+synthetic-absence case, a separate diagnostic retains D29's existing decisions until an exhausted-roster
+state, then applies the S06-specified five-player foul-penalty assumption and independent technical-FT
+stream. All **798** original survivors reproduced their saved trajectories, and all **202** original
+failures matched the full engine state, current five and preceding trace at failure before continuation.
+All **1,000** completed in **164.8s** with four single-thread workers. A separate saved-file audit
+independently replayed the 202 original failure states, checked **492,616** lineup fives, **371** technical
+events and all 798 survivor hashes in **93.018s**. Survivor total points averaged **223.54** versus **225.19**
+across all continuation worlds: difference **−1.66**, paired-seed percentile 95% bootstrap **[−2.28, −1.07]**
+(5,000 resamples, unadjusted across the prespecified metrics). Home player `4431714` averaged **36.82 vs
+37.33** minutes, difference **−0.51 [−0.71, −0.31]**. These differences measure survivor selection relative
+to this explicit continuation in one chosen oracle-roster case, not the unknown no-exception outcome, an NBA
+failure rate, real-world forecast bias or a predictive gate. Reports
+`analysis/experiments/20261122_a1_matched_penalty_{pilot,full}_v1{,_audit}.json`.
+
 **22 Nov 2026 ET — selected six-player full-game policy comparison:** the already selected F4 synthetic-absence
 case was extended from the **202** D29-rejected seeds to all **1,000** original seeds under S06; generation of
 the other **798** S06 worlds took **100.1s** with four single-thread workers. Independent saved-file

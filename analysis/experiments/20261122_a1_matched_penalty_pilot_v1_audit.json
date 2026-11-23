@@ -1,0 +1,20 @@
+{
+ "kind": "independent selected matched D29 continuation accounting",
+ "report": "analysis/experiments/20261122_a1_matched_penalty_pilot_v1.json",
+ "report_sha256": "0e8f982db67cb43ca9c47f82b847119b9d67017d0a315b37381c5e05bc6eb228",
+ "audit_sha256": "1cec08a50d59e8e1f2490f385b7f2ed5593407ea64de4c6acc313c8be32480cd",
+ "pilot": true,
+ "worlds": 10,
+ "original_failures_replayed": 5,
+ "survivor_trajectories_matched": 5,
+ "lineup_fives_checked": 4986,
+ "technical_events": 7,
+ "metrics": null,
+ "bootstrap": null,
+ "elapsed_seconds": 6.359,
+ "limitations": [
+  "One selected synthetic oracle-roster case, not an NBA rate or accuracy test.",
+  "Continuation is an explicit alternative rule, not the unknowable no-exception outcome.",
+  "Does not establish a production retry, availability or promotion gate."
+ ]
+}

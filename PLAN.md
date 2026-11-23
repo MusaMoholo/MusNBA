@@ -429,6 +429,13 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 ET · A1 matched-state selection:** an isolated foul-penalty continuation reproduced all
+  **798** surviving D29 trajectories and matched all **202** first-failure engine states before continuing.
+  All **1,000** completed; independent replay checked **492,616** fives and **371** technicals. Survivors
+  averaged **1.66** fewer total points than all continuations (unadjusted paired-seed 95% bootstrap
+  **[−2.28, −1.07]**). One selected synthetic F4 case and one continuation assumption do not establish a
+  league rate or predictive/promotion gate. No production model or bundle changed. A1 **80%**, Chunk A
+  **34.5%**; see FINDINGS and HANDOFF.
 - **22 Nov 2026 ET · A1 selected full-game policy comparison:** independently checked **1,000** S06 worlds
   and **798** D29 survivors on one synthetic six-player F4 case. D29-survivor total averaged **223.54**
   versus S06 **225.86**, difference **−2.33** (unadjusted 95% paired-seed bootstrap **[−3.74, −0.91]**).
