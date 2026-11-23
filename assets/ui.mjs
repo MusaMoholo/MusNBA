@@ -80,6 +80,9 @@ export function advancedRates(line) {
     return den > 0 ? numerator(line) / den : null;
   };
   return {
+    fgpct: calc(['fgm', 'fga'], x => x.fgm, x => x.fga),
+    fg3pct: calc(['fg3m', 'fg3a'], x => x.fg3m, x => x.fg3a),
+    ftpct: calc(['ftm', 'fta'], x => x.ftm, x => x.fta),
     efg: calc(['fgm', 'fg3m', 'fga'], x => x.fgm + 0.5 * x.fg3m, x => x.fga),
     ts: calc(['pts', 'fga', 'fta'], x => x.pts, x => 2 * (x.fga + 0.44 * x.fta)),
     two: calc(['fgm', 'fg3m', 'fga', 'fg3a'], x => x.fgm - x.fg3m, x => x.fga - x.fg3a),
@@ -111,7 +114,8 @@ export function advancedPanel(line, actual, label, options = {}) {
   if (!line && !actual) return '';
   const projected = label === 'Projected';
   const values = projected ? {} : advancedRates(line), observed = advancedRates(actual);
-  const metrics = [['efg', 'Effective FG%', '(FGM + 0.5 × 3PM) / FGA', true],
+  const metrics = [['fgpct', 'Field-goal%', 'FGM / FGA', true], ['fg3pct', '3-point FG%', '3PM / 3PA', true],
+                   ['ftpct', 'Free-throw%', 'FTM / FTA', true], ['efg', 'Effective FG%', '(FGM + 0.5 × 3PM) / FGA', true],
                    ['ts', 'True shooting%', 'PTS / (2 × (FGA + 0.44 × FTA))', true],
                    ['two', '2-point FG%', '(FGM − 3PM) / (FGA − 3PA)', true],
                    ['threeShare', '3-point attempt rate', '3PA / FGA', true],
@@ -134,7 +138,13 @@ export function advancedPanel(line, actual, label, options = {}) {
   const distribution = (key, percent) => {
     const d = options.distributions?.[key];
     if (!d) return options.distributions ? '<p class="note">Per-world distribution unavailable for this metric.</p>' : '';
-    if (!d.defined) return `<p class="note">Undefined in all ${d.total.toLocaleString()} worlds (no positive denominator).</p>`;
+    const worlds = d.worlds ?? options.worlds;
+    const weighted = d.weighted ?? options.weighted ?? false;
+    const sample = d.defined_worlds != null ? `Defined in ${d.defined_worlds.toLocaleString()} of ${worlds.toLocaleString()} saved worlds`
+      : weighted ? `${worlds == null ? 'Saved worlds' : worlds.toLocaleString() + ' saved worlds'}`
+      : `Defined in ${d.defined.toLocaleString()} of ${d.total.toLocaleString()} worlds`;
+    const support = `${sample}${weighted ? ` · ${pct(d.defined / d.total)} weighted probability has a positive denominator` : ''}`;
+    if (!d.defined) return `<p class="note">${support}. No positive denominator.</p>`;
     const fmt = v => f1(v) + (percent ? '%' : '');
     const [low, q1, median, q3, high] = d.exact_q;
     const position = v => high === low ? 50 : 100 * (v - low) / (high - low);
@@ -142,7 +152,8 @@ export function advancedPanel(line, actual, label, options = {}) {
       <div class="quantile-track" aria-label="Middle half ${esc(fmt(q1))} to ${esc(fmt(q3))}; median ${esc(fmt(median))}">
         <i style="left:${position(q1)}%;width:${position(q3) - position(q1)}%"></i><b style="left:${position(median)}%"></b></div>
       <small>Middle half: ${fmt(q1)}–${fmt(q3)} · mean ${fmt(d.exact_mean)}</small>
-      <small>Defined in ${d.defined.toLocaleString()} of ${d.total.toLocaleString()} worlds${d.defined < d.total ? '; the rest have no positive denominator' : ''}.</small>
+      <small>${support}${d.defined < d.total ? '; undefined values are excluded' : ''}.</small>
+      ${options.explore ? `<a class="sm" href="#/game/${encodeURIComponent(options.explore.gid)}/scenario/${encodeURIComponent(JSON.stringify([{subj: options.explore.subj, v: key === 'two' ? 'twoPct' : key, op: 'ge', x: median}]))}">Explore ${fmt(median)} or higher →</a>` : ''}
       <details class="advanced-dist" data-metric="${esc(key)}" data-distribution="${esc(JSON.stringify(d))}" data-percent="${percent}"><summary>Show distribution</summary><div class="advanced-chart"></div>
         <small>Values are rounded for the chart; very rare outer-tail bins may be omitted. Summaries use all defined worlds.</small></details></div>`;
   };
@@ -222,7 +233,7 @@ export function statusTag(status, availability, basis) {
   const label = s === 'active' && uncertain ? 'Recent inactivity' :
     ({'day-to-day': 'DTD', questionable: 'Q', doubtful: 'D', probable: 'P', out: 'OUT'}[s] || raw || 'Unknown');
   const known = ['active', 'probable', 'day-to-day', 'questionable', 'doubtful', 'out', 'suspension', 'suspended', 'injured reserve'];
-  const fallback = s === 'unknown' || s === 'active' || basis === 'unknown_status' || basis === 'recent_inactivity'
+  const fallback = s === 'unknown' || s === 'active' || basis === 'unknown_status' || basis === 'recent_inactivity' || basis === 'ambiguous_report'
     || (!basis && !known.includes(s));
   const extra = uncertain ? ` · ${fallback ? 'fallback' : 'assumed available'} ${Math.round(availability * 100)}%` : '';
   const title = uncertain || s === 'unknown'
@@ -324,3 +335,84 @@ export function modelPill(model) {
 export const standingsTabs = [['forecast', 'Forecast'], ['seeds', 'Seeds'], ['wins', 'Wins'], ['ratings', 'Ratings'], ['picture', 'Playoff picture'], ['races', 'Races'], ['movers', 'Movers'], ['leaders', 'Leaders']];
 
 export const standingsNav = active => segGroups([['Standings', standingsTabs.slice(0, 5)], ['Season insights', standingsTabs.slice(5)]], active, 'data-view');
+
+// Shared table enhancement. Existing dataset-level sorters keep their full-population semantics.
+const tableSorts = new Map();
+export function tableSortValue(cell, heading = '') {
+  if (!cell) return null;
+  if (cell.dataset.sortValue != null) {
+    const raw = cell.dataset.sortValue;
+    return raw === '' ? null : Number.isFinite(Number(raw)) ? Number(raw) : raw;
+  }
+  const copy = cell.cloneNode(true);
+  copy.querySelectorAll('.sub, .tag, small, svg, img, .sr, .player-face').forEach(el => el.remove());
+  const text = copy.textContent.trim().replaceAll('−', '-').replaceAll('–', '-').replaceAll(',', '');
+  if (!text || /^[—·-]$/.test(text)) return null;
+  if (/^(date|tip)/i.test(heading)) return null; // dates need explicit ISO keys, never locale-string guesses
+  if (/^(player|team|attacker|defender|opponent|opp|lineup|zone|outcome|metric)$/i.test(heading)) return text;
+  const clock = text.match(/^(\d+):(\d{2})$/);
+  if (clock) return Number(clock[1]) + Number(clock[2]) / 60;
+  const pair = text.match(/^([\d.]+)\s*[-/]\s*([\d.]+)(?:\s*\([\d.]+%\))?$/);
+  if (pair) {
+    const a = Number(pair[1]), b = Number(pair[2]);
+    return /^W.?L$/i.test(heading.trim()) ? (a + b ? a / (a + b) : null) : b > 0 ? a / b : null;
+  }
+  const number = text.match(/^[<>≤≥]?\s*([+-]?(?:\d+(?:\.\d*)?|\.\d+))/);
+  return number ? Number(number[1]) : text;
+}
+export function wireSortableTables(root) {
+  root.querySelectorAll('table').forEach((table, index) => {
+    if (table.dataset.sortWired || table.matches('.grid') || table.querySelector('th[data-sort], th[data-fsort]')) return;
+    const heads = [...(table.tHead?.rows || [])];
+    if (heads.length !== 1 || !table.tBodies.length) return;
+    const headers = [...heads[0].cells];
+    if (/^(period|quarter|seed)$/i.test(headers[0]?.textContent.trim())) return;
+    table.dataset.sortWired = 'true';
+    const key = location.hash + '|' + index + '|' + headers.map(h => h.textContent.trim()).join('|');
+    const cellAt = (row, column) => { let position = 0; for (const cell of row.cells) { if (column >= position && column < position + cell.colSpan) return cell.colSpan === 1 ? cell : null; position += cell.colSpan; } return null; };
+    const fixed = row => row.matches('.grp, .sep, [data-sort-fixed]') || (row.cells.length !== headers.length && !row.dataset.gid);
+    const original = new WeakMap([...table.tBodies].flatMap(b => [...b.rows]).map((row, i) => [row, i]));
+    const apply = (column, direction) => {
+      const heading = headers[column].dataset.sortHeading;
+      const compare = (a, b) => {
+        const x = tableSortValue(cellAt(a, column), heading), y = tableSortValue(cellAt(b, column), heading);
+        if (x == null || y == null) return (x == null) - (y == null) || (original.get(a) ?? 0) - (original.get(b) ?? 0);
+        return direction * (typeof x === 'number' && typeof y === 'number' ? x - y : String(x).localeCompare(String(y), undefined, {numeric: true}))
+          || (original.get(a) ?? 0) - (original.get(b) ?? 0);
+      };
+      for (const body of table.tBodies) {
+        const fragment = document.createDocumentFragment(); let group = [];
+        const flush = () => { group.sort(compare).forEach(row => fragment.append(row)); group = []; };
+        for (const row of [...body.rows]) {
+          if (fixed(row)) { flush(); fragment.append(row); }
+          else group.push(row);
+        }
+        flush(); body.append(fragment);
+      }
+      headers.forEach((h, i) => {
+        if (!h.dataset.sortHeading) return;
+        h.setAttribute('aria-sort', i === column ? direction < 0 ? 'descending' : 'ascending' : 'none');
+        h.querySelector('.sort-marker').textContent = i === column ? direction < 0 ? ' ▼' : ' ▲' : ' ↕';
+      });
+      tableSorts.set(key, {column, direction});
+    };
+    headers.forEach((header, column) => {
+      const heading = header.textContent.trim();
+      if (!heading || heading === '#' || header.colSpan !== 1) return;
+      const values = [...table.tBodies].flatMap(b => [...b.rows]).filter(r => !fixed(r))
+        .map(r => tableSortValue(cellAt(r, column), heading)).filter(v => v != null);
+      if (!values.length) return;
+      header.dataset.sortHeading = heading;
+      header.classList.add('sortable'); header.tabIndex = 0; header.setAttribute('aria-sort', 'none');
+      header.title = `Sort by ${heading}${/^(FG|3P|FT|W.?L)$/i.test(heading) ? ' percentage' : ''}; missing values stay last; groups stay together`;
+      const marker = document.createElement('span'); marker.className = 'sort-marker'; marker.setAttribute('aria-hidden', 'true'); marker.textContent = ' ↕'; header.append(marker);
+      header.onclick = header.onkeydown = event => {
+        if (event.type === 'keydown' && !['Enter', ' '].includes(event.key)) return;
+        event.preventDefault(); const prior = tableSorts.get(key);
+        apply(column, prior?.column === column ? -prior.direction : typeof values[0] === 'number' ? -1 : 1);
+      };
+    });
+    const prior = tableSorts.get(key);
+    if (prior && headers[prior.column]?.dataset.sortHeading) apply(prior.column, prior.direction);
+  });
+}

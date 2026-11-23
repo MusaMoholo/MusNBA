@@ -4,7 +4,12 @@ import {esc, f1, heat, pct, signed, team} from './ui.mjs';
 import * as O from './outcomes.mjs';
 
 const memory = new Map();  // game id → conditions (also kept in the route)
-const BOX = [['min', 'MIN'], ['pts', 'PTS'], ['reb', 'REB'], ['ast', 'AST'], ['fg3m', '3PM'], ['stl', 'STL'], ['blk', 'BLK'], ['tov', 'TOV'], ['fgpct', 'FG%']];
+const CORE_BOX = [['min', 'MIN'], ['pts', 'PTS'], ['reb', 'REB'], ['ast', 'AST'], ['fg3m', '3PM'], ['stl', 'STL'], ['blk', 'BLK'], ['tov', 'TOV'], ['fgpct', 'FG%']];
+const BOX_GROUPS = {core: ['Core', CORE_BOX],
+  shooting: ['Shooting', [['fgm', 'FGM'], ['fga', 'FGA'], ['fgpct', 'FG%'], ['fg3m', '3PM'], ['fg3a', '3PA'], ['fg3pct', '3P%'], ['ftm', 'FTM'], ['fta', 'FTA'], ['ftpct', 'FT%']]],
+  efficiency: ['Efficiency', [['efg', 'eFG%'], ['ts', 'TS%'], ['twoPct', '2P%'], ['threeShare', '3PA rate%'], ['ftRate', 'FTA rate%'], ['astTov', 'AST/TOV']]],
+  combos: ['Combined totals', [['pra', 'PTS+REB+AST'], ['pr', 'PTS+REB'], ['pa', 'PTS+AST'], ['ra', 'REB+AST'], ['stocks', 'STL+BLK']]]};
+let boxMode = 'core';
 const calculations = Wd => Wd.weights ? O.branchCalculations(Wd) : O;
 const worldData = data => data._branchWorldData || O.load(data.game.id);
 const memoryKey = data => (data._branchWorldData ? 'research|' : '') + data.game.id;
@@ -23,7 +28,7 @@ export function decode(text) {
   try { const c = JSON.parse(decodeURIComponent(text || '')); return Array.isArray(c) ? c.filter(x => x && x.subj && x.v) : []; } catch { return []; }
 }
 
-/** Condition builder: subject → variable → (≥ / ≤ value). `prefix` keeps several builders on one page apart. */
+/** Condition builder: subject → variable → comparison and value. `prefix` keeps several builders on one page apart. */
 function builder(data, Wd, prefix, {subj = 't:home', v = 'win', op = 'ge', x = null, button = 'Add', variableOnly = false} = {}) {
   const vals = O.isFlag(v) ? null : Wd.values(subj, v);
   const exactMinute = v === 'min' && (Wd.weights || Wd.preciseMinutes);
@@ -32,8 +37,8 @@ function builder(data, Wd, prefix, {subj = 't:home', v = 'win', op = 'ge', x = n
   return `<div class="builder" data-builder="${prefix}"${variableOnly ? ' data-only="1"' : ''}>
     <select data-b="subj" aria-label="Who">${O.subjectOptions(data, subj)}</select>
     <select data-b="v" aria-label="What">${O.varOptions(subj, v, Wd)}</select>
-    <select data-b="op" aria-label="Comparison"${O.isFlag(v) || variableOnly ? ' hidden' : ''}><option value="ge"${op === 'ge' ? ' selected' : ''}>at least</option><option value="le"${op === 'le' ? ' selected' : ''}>at most</option></select>
-    <input data-b="x" type="number" step="${exactMinute ? 'any' : '1'}" value="${value}" aria-label="Value"${O.isFlag(v) || variableOnly ? ' hidden' : ''}>
+    <select data-b="op" aria-label="Comparison"${O.isFlag(v) || variableOnly ? ' hidden' : ''}><option value="ge"${op === 'ge' ? ' selected' : ''}>at least</option><option value="le"${op === 'le' ? ' selected' : ''}>at most</option><option value="eq"${op === 'eq' ? ' selected' : ''}>exactly</option><option value="gt"${op === 'gt' ? ' selected' : ''}>more than</option><option value="lt"${op === 'lt' ? ' selected' : ''}>less than</option></select>
+    <input data-b="x" type="number" step="any" value="${value}" aria-label="Value"${O.isFlag(v) || variableOnly ? ' hidden' : ''}>
     ${button ? `<button type="button" data-b="add">${esc(button)}</button>` : ''}</div>`;
 }
 function readBuilder(root) {
@@ -51,7 +56,7 @@ function wireBuilder(root, data, Wd, onChange, onAdd) {
     const input = root.querySelector('[data-b="x"]');
     input.hidden = flag;
     const exactMinute = v.value === 'min' && (Wd.weights || Wd.preciseMinutes);
-    input.step = exactMinute ? 'any' : '1';
+    input.step = 'any';
     if (!flag) { const values = Wd.values(subj.value, v.value), d = values ? (Wd.preciseMinutes && exactMinute ? O.preciseCalculations(Wd) : calculations(Wd)).dist(values) : null; if (d) input.value = exactMinute ? Number(d.q[3].toFixed(4)) : d.q[3]; }
   };
   subj.onchange = () => { v.innerHTML = O.varOptions(subj.value, subj.value.startsWith('p:') ? 'pts' : subj.value === 'g' ? 'total' : variableOnly ? 'pts' : 'win', Wd); refreshValue(); onChange?.(readBuilder(root)); };
@@ -89,9 +94,13 @@ function presets(data, Wd) {
     const d = C.dist(Wd.values('p:' + p.id, 'pts'));
     out.push([`${p.name} ${d.q[4]}+ pts`, [{subj: 'p:' + p.id, v: 'pts', op: 'ge', x: d.q[4]}], 'Stars'], [`${p.name} ≤ ${d.q[0]} pts`, [{subj: 'p:' + p.id, v: 'pts', op: 'le', x: d.q[0]}], 'Stars']);
   }
+  for (const p of stars) for (const [v, label, group] of [['fga', 'shot attempts', 'Shooting'], ['fg3a', '3-point attempts', 'Shooting'], ['pra', 'points + rebounds + assists', 'Combined totals']]) {
+    const values = Wd.values('p:' + p.id, v), d = values ? C.dist(values) : null;
+    if (d) out.push([`${p.name} ${d.q[3]}+ ${label}`, [{subj: 'p:' + p.id, v, op: 'ge', x: d.q[3]}], group]);
+  }
   return out;
 }
-const PRESET_GROUPS = ['Participation', 'Result', 'Totals', 'Game flow', 'Quarters', 'Stars'];
+const PRESET_GROUPS = ['Participation', 'Result', 'Totals', 'Game flow', 'Quarters', 'Stars', 'Shooting', 'Combined totals'];
 function presetRows(pres) {
   return `<div class="preset-groups">${PRESET_GROUPS.map(g => {
     const items = pres.map((p, i) => [p, i]).filter(([p]) => p[2] === g);
@@ -110,6 +119,7 @@ export async function scenarioView(el, data, encoded) {
     location.replace(`#/game/${data.game.id}/scenario${conds.length ? '/' + encode(conds) : ''}`);
   };
   const paint = () => {
+    const BOX = BOX_GROUPS[boxMode][1];
     const m = O.mask(Wd, conds), n = C.count(m), total = C.mass ? C.mass(base) : C.count(base);
     const selected = C.mass ? C.mass(m) : n, chance = selected / total;
     const indep = conds.length > 1 ? conds.reduce((p, c) => p * (C.mass ? C.mass(O.mask(Wd, [c])) : C.count(O.mask(Wd, [c]))) / total, 1) : null;
@@ -135,7 +145,7 @@ export async function scenarioView(el, data, encoded) {
             const vals = Wd.values(subj, k);
             if (!vals) return '<td>—</td>';
             const s = C.mean(vals, m), b = C.mean(vals, base);
-            return `<td>${s == null ? '—' : k === 'fgpct' ? f1(s) : f1(s)}${s == null || b == null ? '' : delta(s - b, 1)}</td>`;
+            return `<td data-sort-value="${s ?? ''}" class="corr" data-sign="${s < b ? 'neg' : 'pos'}" style="--r:${s == null || b == null ? 0 : Math.min(.7, Math.abs(s - b) / Math.max(1, Math.abs(b)))}">${s == null ? '—' : f1(s)}${s == null || b == null ? '' : delta(s - b, 1)}</td>`;
           }).join('')}</tr>`;
         }).join('');
         return `<section class="panel"><h3 style="margin-top:0">${esc(team(data.game[side].id).name)} under this scenario</h3><div class="scroll"><table class="box"><thead><tr><th class="name">Player</th>${BOX.map(([, l]) => `<th>${l}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div></section>`;
@@ -144,14 +154,15 @@ export async function scenarioView(el, data, encoded) {
       body = `<section class="panel"><div class="tiles"><div class="tile"><span>Chance of this scenario</span><b>${pct(chance, 1)}</b><small>${n.toLocaleString()} of ${C.count(base).toLocaleString()} saved worlds${Wd.weights ? ' · weighted chance' : ''}</small></div>
           ${indep != null ? `<div class="tile"><span>If the conditions were independent</span><b>${pct(indep, 1)}</b><small>${indep > 0 ? `×${(chance / indep).toFixed(2)} correlation lift` : ''}</small></div>` : ''}</div>
         ${n < 60 ? `<p class="note warn">Only ${n} simulated games match — read the numbers below as rough.</p>` : ''}
-        <div class="scroll" style="margin-top:10px"><table><thead><tr><th class="l">Team</th><th>Points (Δ)</th><th>Win given</th><th>Win, all</th></tr></thead><tbody>${teamRows}${game}</tbody></table></div></section>${flow}<div id="duel-slot"></div>${boxes}`;
+        <div class="scroll" style="margin-top:10px"><table><thead><tr><th class="l">Team</th><th>Points (Δ)</th><th>Win given</th><th>Win, all</th></tr></thead><tbody>${teamRows}${game}</tbody></table></div></section>${flow}<div id="duel-slot"></div><section class="panel"><h3>Player outcomes under these conditions</h3><div class="controls">${Object.entries(BOX_GROUPS).map(([key, [label]]) => `<button class="${key === boxMode ? 'active' : 'ghost'}" data-scenario-box="${key}" aria-pressed="${key === boxMode}">${label}</button>`).join('')}</div><p class="note">Colour shows each player’s change from this lineup’s unconditioned average: green above, red below; stronger colour means a larger proportional change. Rates average only defined worlds.</p></section>${boxes}`;
     }
     el.innerHTML = `<section class="panel"><h2 style="margin-top:0">Scenarios</h2>
-        <p class="note" style="margin-top:0">Pick conditions to filter the ${C.count(base).toLocaleString()} saved simulated games to those where every condition happens${Wd.weights ? ', using their branch weights' : ''}. Small grey numbers: change from all selected simulations. Plays and sits filter positive and zero saved minutes; they do not force availability and their differences are not causal lineup what-ifs. Older saved minutes may be rounded.</p>
+        <p class="note" style="margin-top:0">Pick conditions to filter the ${C.count(base).toLocaleString()} saved simulated games to those where every condition happens${Wd.weights ? ', using their branch weights' : ''}. Small grey numbers: change from all selected simulations. Plays and sits filter positive and zero saved minutes; they do not force availability and their differences are not causal lineup what-ifs. All player statistics here are full-game values. Rates exclude worlds with zero attempts or another zero denominator. True shooting uses the 0.44 free-throw estimate. Add lower and upper conditions for an interval. Older saved minutes may be rounded.</p>
         <div class="chips left">${chips || '<span class="note" style="margin:0">No conditions — all simulations.</span>'}${conds.length ? '<button type="button" class="ghost sm" data-clear>Clear</button>' : ''}</div>
         ${builder(data, Wd, 'scn')}
         <details style="margin-top:8px"><summary class="note" style="cursor:pointer">Quick scenarios</summary>${pre}</details></section>${body}`;
     const pres = presets(data, Wd);
+    el.querySelectorAll('[data-scenario-box]').forEach(b => b.onclick = () => { boxMode = b.dataset.scenarioBox; paint(); });
     el.querySelectorAll('[data-del]').forEach(b => b.onclick = () => setConds(conds.filter((_, i) => i !== Number(b.dataset.del))));
     el.querySelector('[data-clear]')?.addEventListener('click', () => setConds([]));
     el.querySelectorAll('[data-pre]').forEach(b => b.onclick = () => setConds([...conds, ...pres[Number(b.dataset.pre)][1]]));

@@ -44,10 +44,15 @@ export function setResearchGame(gid, provider) {
   researchGames.set(gid, {provider, choices: {}, generation: 0});
 }
 
+const availabilityReason = basis => ({game_report: 'Wording for this game', ambiguous_report: 'Unclear or stale report: neutral band', status: 'Clear listed status', not_listed_assumption: 'Not listed: assumed available', recent_inactivity: 'Recent inactivity fallback'})[basis] || 'Original saved assumption';
 function lineupControls(data) {
   const r = data._research || data._lineup;
   if (!r) return '';
   const players = new Map(['home', 'away'].flatMap(s => data.projection.sim[s].players.map(p => [p.id, p])));
+  const comparison = r.cases ? `<details class="lineup-compare"><summary>Compare lineup cases</summary><div class="scroll"><table><thead><tr><th class="l">Lineup</th><th>${esc(team(data.game.away.id).abbr)} win</th><th>${esc(team(data.game.home.id).abbr)} win</th><th>Total points</th><th>Saved worlds</th></tr></thead><tbody>${Object.entries(r.cases).filter(([key, c]) => !Object.keys(c.choices).length || !key.includes('x')).map(([key, c]) => {
+    const label = !Object.keys(c.choices).length ? 'Expected' : r.selected_players.map(p => `${players.get(p.player_id)?.name || p.player_id}: ${c.choices[p.player_id] ? 'available' : 'unavailable'}`).join(' · ');
+    return `<tr><td class="l"><button class="ghost sm" data-lineup-case="${esc(key)}">${esc(label)}</button></td><td>${pct(c.sim.periods.fg.away.win)}</td><td>${pct(c.sim.periods.fg.home.win)}</td><td>${f1(c.sim.periods.fg.total.mean)}</td><td>${c.sim.sims.toLocaleString()}</td></tr>`;
+  }).join('')}</tbody></table></div><p class="note">Select a row to use that lineup throughout this game. Expected combines the stored branches with their stated availability weights.</p></details>` : '';
   return `<section class="panel" data-research-lineups><h3>${data._research ? 'Research lineup selection · not a forecast' : data.worlds ? 'Lineup forecast' : 'Expected lineup forecast'}</h3>
     <div class="lineup-controls">${r.selected_players.map(p => {
       const player = players.get(p.player_id), choice = r.choices[p.player_id];
@@ -57,11 +62,16 @@ function lineupControls(data) {
         <option value="available"${choice === true ? ' selected' : ''}>Available</option>
         <option value="unavailable"${choice === false ? ' selected' : ''}>Unavailable</option></select>` : ''}</label>`;
     }).join('')}</div>
-    <p class="note">${data.worlds ? 'This game only; season views use Expected.' : 'Expected only on this device.'} Availability does not guarantee minutes.</p>
-    <details><summary>Assumptions &amp; saved games</summary><p class="note">Other uncertain players still vary. Availability probabilities and cross-team independence are unvalidated assumptions. Selectors cover at most one player per team, within its top three by a pre-game offensive contribution proxy. Opening-five shares are simulated, not official starters. ${r.selected_worlds.toLocaleString()} saved worlds; results use the stated branch weights.</p></details></section>`;
+    <p class="note"><b>${Object.keys(r.choices).length ? 'Selected lineup' : 'Expected lineup'}</b> · ${r.selected_worlds.toLocaleString()} saved worlds. ${data.worlds ? 'Applies across this game: boxes, player sheets, advanced rates and scenarios. Season views use Expected.' : 'Expected only on this device.'} Availability does not guarantee minutes.</p>${comparison}
+    <details><summary>Assumptions &amp; saved games</summary><p class="note">Other uncertain players still vary. Availability probabilities and cross-team independence are unvalidated assumptions. Selectors cover at most one player per team, within its top three by a pre-game offensive contribution proxy. For report-bands-v1 inputs: out 0%, doubtful 25%, questionable/ambiguous 50%, probable 75%, confirmed available 100%. Generic reports use game-specific wording; unlisted availability and recent inactivity remain explicit assumptions. Earlier forecasts retain their original weights. Opening-five shares are simulated, not official starters. ${r.selected_worlds.toLocaleString()} saved worlds; results use the stated branch weights.</p>${r.selected_players.map(p => `<p class="note"><b>${esc(players.get(p.player_id)?.name || p.player_id)}</b> · ${esc(availabilityReason(p.availability_basis))} · assumed ${pct(p.probability, 0)} available.<br>${esc(players.get(p.player_id)?.injury?.comment || 'No report comment retained.')}</p>`).join('')}</details></section>`;
 }
 
 function wireLineupControls(view, data, rerender, current) {
+  view.querySelectorAll('[data-lineup-case]').forEach(button => button.onclick = () => {
+    const r = data._lineup, selected = r.cases[button.dataset.lineupCase].choices;
+    for (const p of r.selected_players) O.chooseLineup(data.game.id, p.player_id, selected[p.player_id] ?? null);
+    if (current()) rerender();
+  });
   view.querySelectorAll('[data-lineup]').forEach(select => {
     select.onchange = () => {
       if (data._lineup) {
@@ -88,11 +98,11 @@ export async function render(view, {rest, current}) {
   let data = original;
   const descriptor = original.projection?.sim?.lineups;
   if (descriptor) {
-    let choices = {}, selected = null;
+    let choices = {}, selected = null, cases = null;
     if (original.worlds) {
       const saved = await O.lineupData(gid, descriptor);
       if (!current()) return;
-      choices = {...saved.choices};
+      choices = {...saved.choices}; cases = saved.raw.cases;
       const key = saved.source.selected.map(p => choices[p.player_id] == null ? 'x' : choices[p.player_id] ? '1' : '0').join('');
       const chosen = saved.raw.cases?.[key];
       if (!chosen || chosen.sim.game_id !== gid || chosen.sim.model !== original.projection.sim.model
@@ -101,7 +111,7 @@ export async function render(view, {rest, current}) {
       data = {...original, projection: {...original.projection, sim: Object.keys(choices).length ? chosen.sim : original.projection.sim}, lead_fan: chosen.lead_fan, _branchWorldData: selected};
       if (Object.keys(choices).length) Object.assign(data, {spotlight: null, availability: null, multi: null});
     }
-    data = {...data, _lineup: {...descriptor, choices, selected_worlds: data.projection.sim.sims,
+    data = {...data, _lineup: {...descriptor, choices, cases, selected_worlds: data.projection.sim.sims,
       selected_mass: data.projection.sim.probability_mass, total_mass: original.projection.sim.probability_mass}};
   }
   const entry = researchGames.get(gid);
@@ -298,8 +308,8 @@ function availPanel(data, open = false) {
       <span class="av-name">${esc(r.name)}</span><span class="pill ${tone(r.status)}">${esc(r.basis === 'recent_inactivity' ? 'Recent inactivity' : r.status)}</span>
       <span class="av-num">${r.simulated === false ? 'not simulated' : r.simulated || r.plays > 0 ? `plays ${pct(r.plays, 0)}` : 'not simulated'}</span>
       <span class="av-num dim">${[r.min_if_plays ? `${f1(r.min_if_plays)} min if he plays` : '', r.season_min != null ? `season ${f1(r.season_min)} min` : '',
-        r.return ? `back ~${esc(dayLabel(r.return.slice(0, 10)))}` : '', r.assumed_availability != null ? `assumed available ${pct(r.assumed_availability, 0)}` : ''].filter(Boolean).join(' · ')}</span>
-      ${canSlice(r, k) ? `<div class="av-slices">${sliceLinks(r)}</div>` : ''}</div>`).join('') : '<p class="note">No recorded entries.</p>'}</div>`;
+        r.return ? `back ~${esc(dayLabel(r.return.slice(0, 10)))}` : '', r.assumed_availability != null ? `assumed available ${pct(r.assumed_availability, 0)} · ${esc(availabilityReason(r.basis))}` : ''].filter(Boolean).join(' · ')}</span>
+      ${r.comment ? `<details class="av-report"><summary>Read saved report</summary><p class="note">${esc(r.comment)}</p></details>` : ''}${canSlice(r, k) ? `<div class="av-slices">${sliceLinks(r)}</div>` : ''}</div>`).join('') : '<p class="note">No recorded entries.</p>'}</div>`;
   };
   const source = av.source === 'partial-legacy'
     ? 'Older forecast: only saved player statuses are shown; ruled-out or omitted players may be missing.'
@@ -401,12 +411,25 @@ function teamBox(data, side, mode, period, benchOpen = false) {
     }
     rows.sort((x, y) => Number(y.starter) - Number(x.starter));
   }
+  const projectedById = new Map((sim?.players || []).map(p => [p.id, p]));
+  const actualById = new Map((act?.players || []).map(p => [p.id, p]));
+  for (const row of rows) {
+    const projection = projectedById.get(row.id)?.periods?.[period];
+    const line = mode === 'proj' ? projection?.mean : actualLine(actualById.get(row.id), period);
+    row.sortValues = COLS.map(([key]) => {
+      if (!line) return null;
+      if (key === 'min') { const seconds = mode === 'proj' ? projection.sec : line.sec; return Number.isFinite(seconds) ? seconds / 60 : null; }
+      const pair = {fg: ['fgm','fga'], fg3: ['fg3m','fg3a'], ft: ['ftm','fta']}[key];
+      if (pair) return line[pair[1]] > 0 ? line[pair[0]] / line[pair[1]] : null;
+      return Number.isFinite(line[key]) ? line[key] : null;
+    });
+  }
   if (data._research || data._lineup) {
     rows.sort((a, b) => b.openingShare - a.openingShare || a.name.localeCompare(b.name));
     rows.forEach((row, i) => { row.starter = i < 5; });
   }
   const starters = rows.filter(r => r.starter), bench = rows.filter(r => !r.starter);
-  const tr = r => `<tr class="link" data-pid="${esc(r.id)}" tabindex="0"><td class="name"><span class="player-label box-player">${playerFace(r.id, r.name)}<span>${esc(r.name)} <span class="tag">${esc(r.pos || '')}</span>${r.tag}</span></span></td>${r.cells.map(c => `<td>${c}</td>`).join('')}</tr>`;
+  const tr = r => `<tr class="link" data-pid="${esc(r.id)}" tabindex="0"><td class="name" data-sort-value="${esc(r.name)}"><span class="player-label box-player">${playerFace(r.id, r.name)}<span>${esc(r.name)} <span class="tag">${esc(r.pos || '')}</span>${r.tag}</span></span></td>${r.cells.map((c, i) => `<td data-sort-value="${r.sortValues[i] ?? ''}">${c}</td>`).join('')}</tr>`;
   const sep = label => `<tr class="sep"><td class="name">${label}</td>${COLS.map(() => '<td></td>').join('')}</tr>`;
   const projTeam = sim?.box?.[period];
   const totalRow = (label, line, projected) => `<tr class="sep"><td class="name">${label}</td>${COLS.map(([k]) =>
@@ -609,6 +632,7 @@ function teamView(el, data, period) {
     + ['away', 'home'].map(side => {
       const other = side === 'away' ? 'home' : 'away';
       return advancedPanel(sim?.[side]?.box?.[period], actualBox(side), 'Projected', {
+        worlds: sim.sims, weighted: sim.probability_mass != null,
         team: true, collapsible: true, title: `${team(data.game[side].id).name} · advanced box-score rates`,
         distributions: period === 'fg' ? sim?.[side]?.advanced : null,
         opponent: sim?.[other]?.box?.[period], actualOpponent: actualBox(other),
@@ -900,7 +924,7 @@ async function sheet(view, data, pid, current, rerender) {
       ${proj && period === 'fg' && data.worlds && !PERCENT_STATS.has(state.stat) ? '<div id="what-if"></div>' : ''}
       ${proj && period === 'fg' ? S.averagesPanel(data, pid, proj) : ''}
       ${advancedPanel(proj?.mean, period === 'fg' ? (actualRow?.dnp ? null : actualRow) : actualLine(actualRow, period), 'Projected',
-        {distributions: proj?.advanced, collapsible: true})}
+        {explore: data.worlds ? {gid: data.game.id, subj: 'p:' + pid} : null, distributions: proj?.advanced, worlds: sim?.sims, weighted: sim?.probability_mass != null, collapsible: true})}
       ${usageProfilePanel(data.usage_profiles?.[pid])}
       ${period === 'fg' ? guardedPanel(data, pid) : ''}
       ${context ? contextPanel(context, period) : ''}
