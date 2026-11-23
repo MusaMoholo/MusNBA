@@ -429,6 +429,11 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 ET · A1 complete-screen accounting:** independently reconciled the existing **600-game**,
+  **5,590-attempt** earlier-fold screens with the saved continuation for their sole F1 exhaustion.
+  Survivor-minus-all total means **−0.01789 / 0 / 0** points; F1's unadjusted game-cluster interval
+  **[−0.05715, 0]**. Five draws per branch and oracle rosters make this descriptive, not a population,
+  predictive or retry gate. No production model/bundle change; A1 **80%**, Chunk A **34.5%**.
 - **22 Nov 2026 ET · A1 earlier-fold matched selection:** three deliberately selected seven-player
   F1/F2/F3 synthetic branches had **22 / 2 / 7** exhaustions in **1,000** attempts each; independently
   replayed/accounted continuation captures yielded survivor-minus-all total means **−0.240 / −0.049 /

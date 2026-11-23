@@ -1,10 +1,39 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 80%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **83cf34f** (matched-state selection); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **9c9a9c2** (earlier-fold matched selection); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
+- **A1 90% partial — complete earlier-fold screen accounting (23 Nov UTC):** the three fixed F1/F2/F3
+  200-game screens contained **1,900 / 1,900 / 1,790** attempts and **1 / 0 / 0** exhaustions. Reusing
+  the independently audited matching F1 continuation only for its lone failure, survivor-minus-all pooled
+  total means are **−0.01789 / 0 / 0** points; paired game-cluster bootstrap 95% intervals
+  **[−0.05715, 0] / [0, 0] / [0, 0]**, unadjusted 5,000 resamples. An independent reconstruction checked
+  **5,590** attempted captures, 12 score estimates, and all seven home players in the affected branch
+  (four survivors versus five continuations). The latter are far too few to establish an individual effect.
+  Generation/audit took **12.446 / 3.241s**, each one thread. Report and audit:
+  `analysis/experiments/20261122_a1_dated_screen_selection_v1{,_audit}.json`; logs
+  `/tmp/musnba_a1_dated_screen_selection_v1{,_audit}.log`. These five-draw oracle-roster screens and one
+  assumed continuation are not predictive tests or population gates; zero observed failures does not imply
+  zero risk. Focused tests **40/40**, smoke **107/107**, intentional fault **86/107** and exit 1
+  (`/tmp/musnba_a1_screen_selection_{smoke,fault}_v1.log`). No protected outcomes scored, no running job
+  and no production model, forecast or bundle change. A1 **80%**, Chunk A **34.5%**. HANDOFF, PLAN,
+  FINDINGS and README updated; AGENTS (standing rules), ENGINE_PLAN (design), TRAINING_PLAN (gates) and
+  DASHBOARD_PLAN (shipped UI) require no change. Continue A1; the owner requested a stop only at its end.
+- **Next A1 90% research accounting, specified before calculation:** retrospectively reconcile the
+  already-audited F1/F2/F3 200-game, five-draw-per-feasible-branch screens with their saved D29 captures.
+  Reuse the independently audited matching F1 continuation for the sole original exhausted attempt;
+  all other screen attempts already survived and are unchanged by this continuation. Validate source,
+  manifest and capture hashes, game/branch/draw/seed identities and saved accounting; do not generate
+  replacement seeds, alter any historical files or score actual outcomes. For each fold report the pooled
+  survivor-versus-all continuation home/away/total/margin means and, for the affected F1 branch, every
+  available home player's points and minutes. Use 5,000 paired game-cluster bootstrap replicates, seed
+  20261122, with percentile intervals and no multiplicity correction; zero failures means identical samples,
+  not zero underlying selection. Independently reconstruct the aggregates and retain both reports. This is
+  post-hoc descriptive accounting on oracle rosters and only five attempts per branch; the lone failure makes
+  uncertainty especially fragile. It is not representative availability, real-outcome prediction, a retry
+  gate or permission to expose the research controls. Use fresh output names and keep earlier reports intact.
 - **A1 90% partial — earlier-fold matched continuations (23 Nov UTC):** on the three frozen selected
   seven-home-player synthetic branches below, F1/F2/F3 generated and audited **1,000** attempts each.
   Original D29 exhausted **22 / 2 / 7** times; generation matched each full failure state/trace before
@@ -3153,8 +3182,10 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
    All three earlier-fold conditional-roster screens and audits are complete. The selected full-game
    F4 comparison against S06 has different policies; the matched D29 continuation additionally quantifies
    selection under one explicit penalty assumption in that case and three selected earlier-fold cases, not a
-   population-wide gate. A full-screen continuation, alternative-assumption sensitivity and player-first
-   comparisons remain open; determine a prespecified design using these diagnostics before implementation.
+   population-wide gate. The complete earlier-fold five-draw screen is now accounted against the single
+   matching failure continuation; its sparse outcomes do not answer the full predictive comparison.
+   Alternative-assumption sensitivity and player-first comparisons remain open; determine a prespecified
+   design using these diagnostics before implementation.
    Genuinely dated
    pre-game report cohorts remain unavailable for fitting or calibrating an availability model; labelled
    fixed scenario weights themselves remain permitted. The resume prototype
@@ -3175,8 +3206,10 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
    `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -u analysis/a1_dated_matched_penalty.py --fold F1 --worlds-dir data/derived/experiments/<new-dir> --output analysis/experiments/<new-report>.json`
    and `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -u analysis/a1_dated_matched_penalty_audit.py analysis/experiments/<new-report>.json --output analysis/experiments/<new-audit>.json`;
    change `--fold` to F2 or F3, run folds sequentially, and use `--pilot` to replay the first five draws.
-   A full-screen continuation on earlier folds, alternative
-   continuation sensitivity and the player-first/promotion and live-slate checks remain unresolved.
+   Reproduce the complete saved-screen accounting with
+   `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -u analysis/a1_dated_screen_selection.py --output analysis/experiments/<new-report>.json`
+   and `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -u analysis/a1_dated_screen_selection_audit.py analysis/experiments/<new-report>.json --output analysis/experiments/<new-audit>.json`.
+   Alternative continuation sensitivity and the player-first/promotion and live-slate checks remain unresolved.
    Reproduce with `.venv/bin/python analysis/a1_game_context_audit.py data/snapshots/2026-11-22/meta.json data/master_fixtures.csv data/derived/experiments/20261122_chunk_a_a1_d47_game_view_one_full_v2.json data/derived/experiments/20261122_chunk_a_a1_d47_game_view_two_full_v2.json --payloads data/derived/experiments/20261122_chunk_a_a1_d47_expected_payload_one_shared_v1.json data/derived/experiments/20261122_chunk_a_a1_d47_expected_payload_two_shared_v1.json --output analysis/experiments/<new-context-audit>.json`.
 2. Finish A1 only after the actual rung requirements or the explicitly documented blocked fallback are resolved,
    review all root docs, smoke/fault, commit and push. Stop at the owner's A1 boundary; leave A2/A3 and Chunk B

@@ -1,0 +1,256 @@
+{
+ "kind": "retrospective screen matched-continuation accounting; research only",
+ "folds": [
+  {
+   "fold": "F1",
+   "games": 200,
+   "attempts": 1900,
+   "survivors": 1899,
+   "exhausted": 1,
+   "metrics": {
+    "home_points": {
+     "survivor_mean": 113.92996313849395,
+     "continuation_mean": 113.94,
+     "difference": -0.010036861506051764,
+     "ci_95": [
+      -0.03228880477486342,
+      0.0
+     ]
+    },
+    "away_points": {
+     "survivor_mean": 114.08162190626646,
+     "continuation_mean": 114.08947368421053,
+     "difference": -0.007851777944068772,
+     "ci_95": [
+      -0.025424134059320022,
+      0.0
+     ]
+    },
+    "total_points": {
+     "survivor_mean": 228.0115850447604,
+     "continuation_mean": 228.02947368421053,
+     "difference": -0.017888639450120536,
+     "ci_95": [
+      -0.05714890184137715,
+      0.0
+     ]
+    },
+    "home_margin": {
+     "survivor_mean": -0.15165876777251186,
+     "continuation_mean": -0.14947368421052631,
+     "difference": -0.0021850835619855458,
+     "ci_95": [
+      -0.00788291809278252,
+      0.0
+     ]
+    }
+   },
+   "affected_branch": {
+    "game": "401585382",
+    "branch": "sits",
+    "players": {
+     "3037789": {
+      "points": {
+       "survivor_mean": 18.25,
+       "continuation_mean": 18.2,
+       "difference": 0.05000000000000071
+      },
+      "minutes": {
+       "survivor_mean": 41.10458332498868,
+       "continuation_mean": 40.08699999173482,
+       "difference": 1.0175833332538602
+      }
+     },
+     "3907497": {
+      "points": {
+       "survivor_mean": 33.25,
+       "continuation_mean": 33.4,
+       "difference": -0.14999999999999858
+      },
+      "minutes": {
+       "survivor_mean": 44.57833333015442,
+       "continuation_mean": 44.30233333150545,
+       "difference": 0.2759999986489703
+      }
+     },
+     "3913180": {
+      "points": {
+       "survivor_mean": 10.0,
+       "continuation_mean": 10.2,
+       "difference": -0.1999999999999993
+      },
+      "minutes": {
+       "survivor_mean": 29.66125001311302,
+       "continuation_mean": 29.289666683673858,
+       "difference": 0.3715833294391615
+      }
+     },
+     "4397136": {
+      "points": {
+       "survivor_mean": 16.25,
+       "continuation_mean": 15.4,
+       "difference": 0.8499999999999996
+      },
+      "minutes": {
+       "survivor_mean": 42.64000000754992,
+       "continuation_mean": 42.2606666680177,
+       "difference": 0.3793333395322236
+      }
+     },
+     "4431680": {
+      "points": {
+       "survivor_mean": 6.75,
+       "continuation_mean": 11.8,
+       "difference": -5.050000000000001
+      },
+      "minutes": {
+       "survivor_mean": 30.98874999086062,
+       "continuation_mean": 32.109333326021826,
+       "difference": -1.1205833351612071
+      }
+     },
+     "4683736": {
+      "points": {
+       "survivor_mean": 1.75,
+       "continuation_mean": 2.8,
+       "difference": -1.0499999999999998
+      },
+      "minutes": {
+       "survivor_mean": 7.08125,
+       "continuation_mean": 8.167333332300185,
+       "difference": -1.086083332300185
+      }
+     },
+     "4701230": {
+      "points": {
+       "survivor_mean": 28.0,
+       "continuation_mean": 26.2,
+       "difference": 1.8000000000000007
+      },
+      "minutes": {
+       "survivor_mean": 43.94583333333333,
+       "continuation_mean": 43.78366666674614,
+       "difference": 0.16216666658718992
+      }
+     }
+    }
+   }
+  },
+  {
+   "fold": "F2",
+   "games": 200,
+   "attempts": 1900,
+   "survivors": 1900,
+   "exhausted": 0,
+   "metrics": {
+    "home_points": {
+     "survivor_mean": 112.22736842105263,
+     "continuation_mean": 112.22736842105263,
+     "difference": 0.0,
+     "ci_95": [
+      0.0,
+      0.0
+     ]
+    },
+    "away_points": {
+     "survivor_mean": 112.39368421052632,
+     "continuation_mean": 112.39368421052632,
+     "difference": 0.0,
+     "ci_95": [
+      0.0,
+      0.0
+     ]
+    },
+    "total_points": {
+     "survivor_mean": 224.62105263157895,
+     "continuation_mean": 224.62105263157895,
+     "difference": 0.0,
+     "ci_95": [
+      0.0,
+      0.0
+     ]
+    },
+    "home_margin": {
+     "survivor_mean": -0.16631578947368422,
+     "continuation_mean": -0.16631578947368422,
+     "difference": 0.0,
+     "ci_95": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "affected_branch": null
+  },
+  {
+   "fold": "F3",
+   "games": 200,
+   "attempts": 1790,
+   "survivors": 1790,
+   "exhausted": 0,
+   "metrics": {
+    "home_points": {
+     "survivor_mean": 114.78659217877095,
+     "continuation_mean": 114.78659217877095,
+     "difference": 0.0,
+     "ci_95": [
+      0.0,
+      0.0
+     ]
+    },
+    "away_points": {
+     "survivor_mean": 113.90782122905028,
+     "continuation_mean": 113.90782122905028,
+     "difference": 0.0,
+     "ci_95": [
+      0.0,
+      0.0
+     ]
+    },
+    "total_points": {
+     "survivor_mean": 228.69441340782123,
+     "continuation_mean": 228.69441340782123,
+     "difference": 0.0,
+     "ci_95": [
+      0.0,
+      0.0
+     ]
+    },
+    "home_margin": {
+     "survivor_mean": 0.8787709497206704,
+     "continuation_mean": 0.8787709497206704,
+     "difference": 0.0,
+     "ci_95": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "affected_branch": null
+  }
+ ],
+ "fingerprints": {
+  "analysis/experiments/20261122_a1_dated_f1_screen_v2.json": "cda7137a31454b0683b424534a4b396bdd4321db1d2d996371c84ae4c59790bc",
+  "analysis/experiments/20261122_a1_dated_f1_screen_v2_audit.json": "479775cb0a8287986539f7c0be056dbb7d695f894db9b42730a94b9e98ba3661",
+  "analysis/experiments/20261122_a1_dated_f2_screen_v1.json": "1e58731cd84cd4a05da3bf408bfbe54420d849593be15c0f4e8b0804d0d71179",
+  "analysis/experiments/20261122_a1_dated_f2_screen_v1_audit.json": "3875368c93c8bc2b951be7d2c6b056989aa31eccfae2ce04aa894b50f1456dca",
+  "analysis/experiments/20261122_a1_dated_f3_screen_v1.json": "b2b0ae301dbf6e01ac822721ae8e5353087b82eef1107f9e584ac4c1aa06f2ab",
+  "analysis/experiments/20261122_a1_dated_f3_screen_v1_audit.json": "9d5e3f694e6dd6520c4ba0043fa48a22d6c7d26a5952b7aa965271ef58ccfe36",
+  "analysis/experiments/20261122_a1_dated_matched_f1_full_v1.json": "e66a532da48fa87f5def6641c4d9faa1ab4f59c59d7abba331da450926c0884d",
+  "analysis/experiments/20261122_a1_dated_matched_f1_full_v1_audit.json": "6543fe73af514cbe4278badf6e2d58de7e21da17a1c859ce5de935a7ac3023e1",
+  "analysis/a1_dated_screen_selection.py": "1dbd248eebdd2ef1f39d5aacb689e5cacf647facc58771ad003f76c94aebcaa0",
+  "analysis/a1_dated_screen_selection_audit.py": "868ad8461a16043a26eacc4fdbf17a7552960156c440f901a82f81e1a2740d21"
+ },
+ "bootstrap": {
+  "replicates": 5000,
+  "seed": 20261122,
+  "unit": "game",
+  "interval": "95% percentile, unadjusted"
+ },
+ "elapsed_seconds": 12.446,
+ "limitations": [
+  "Oracle actual-participant rosters, synthetic absences and five attempts per branch.",
+  "One explicit continuation assumption; no real-outcome or predictive comparison.",
+  "One exhausted attempt makes intervals fragile; zero is not proof of no population risk."
+ ]
+}

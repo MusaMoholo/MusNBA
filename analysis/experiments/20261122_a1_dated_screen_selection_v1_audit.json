@@ -1,0 +1,37 @@
+{
+ "kind": "independent saved-screen selection accounting",
+ "report": "analysis/experiments/20261122_a1_dated_screen_selection_v1.json",
+ "report_sha256": "30870c59c447d5a4910c307369d4ffb33364d520ecd9647dd96224ca4270a620",
+ "folds": [
+  {
+   "fold": "F1",
+   "games": 200,
+   "attempts": 1900,
+   "exhausted": 1,
+   "checked_metrics": 4,
+   "checked_affected_players": 7
+  },
+  {
+   "fold": "F2",
+   "games": 200,
+   "attempts": 1900,
+   "exhausted": 0,
+   "checked_metrics": 4,
+   "checked_affected_players": 0
+  },
+  {
+   "fold": "F3",
+   "games": 200,
+   "attempts": 1790,
+   "exhausted": 0,
+   "checked_metrics": 4,
+   "checked_affected_players": 0
+  }
+ ],
+ "elapsed_seconds": 3.241,
+ "limitations": [
+  "Oracle actual-participant rosters, synthetic absences and five attempts per branch.",
+  "One explicit continuation assumption; no real-outcome or predictive comparison.",
+  "One exhausted attempt makes intervals fragile; zero is not proof of no population risk."
+ ]
+}

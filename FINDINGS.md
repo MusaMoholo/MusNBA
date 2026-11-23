@@ -2,6 +2,21 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 ET — retrospective full-screen continuation accounting:** the already-audited fixed
+F1/F2/F3 screens contain **1,900 / 1,900 / 1,790** attempted worlds across **200 games per fold**,
+with **1 / 0 / 0** exhaustions. Reusing the audited matched continuation for the sole F1 failure and the
+original saved captures for all survivors, the pooled survivor-minus-all total means are **−0.01789 /
+0 / 0** points; paired game-cluster bootstrap 95% intervals are **[−0.05715, 0] / [0, 0] / [0, 0]**
+(5,000 resamples, unadjusted). For the affected F1 branch, the seven available home players' points and
+minutes are individually recorded; its survivor means use only **four** worlds versus **five** continuations,
+so those descriptive player differences are extremely noisy. Independent reconstruction checked all
+**5,590** attempts, their captured scores/availability, the 12 fold-score estimates and affected player
+means. Reconstruction took **12.446s**, independent audit **3.241s**, each one thread.
+These are oracle participant rosters with synthetic absences, only five draws per feasible branch and one
+continuation assumption. Zero observed selection in two folds is not a bound on population bias; this
+post-hoc exercise is not predictive validation or a production retry gate. Reports
+`analysis/experiments/20261122_a1_dated_screen_selection_v1{,_audit}.json`.
+
 **22 Nov 2026 ET — selected earlier-fold matched continuations:** three deliberately selected F1/F2/F3
 synthetic-absence cases each started with seven available home players and used dated body-free diagnostic
 engines, not the serving engine. F1 was selected because its screen exhausted; F2/F3 were minimum-roster
