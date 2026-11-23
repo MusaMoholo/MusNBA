@@ -51,12 +51,18 @@ No repository CI workflows; built-in Pages deployment provides hosting. Preserve
 Today prioritises games/player boxes and expandable slate insight. Game Centre shares Q1–Q4/H1/H2/FG selectors across player/team/sheet/scenarios;
 FG includes OT for possession games. Future pathway totals/margins are regulation with a separately resolved winner, no player forecasts.
 Standings contains forecast/seeds/wins/ratings, races/playoff picture; marginal seeds are not simulated playoff winners.
-Teams/Players lead with schedules/rosters/logs/forecasts and expandable advanced detail. Lab is secondary.
+Teams/Players lead with schedules/rosters/logs and expandable advanced detail. Teams has three headline cards, six expandable profile cards and collapsible form;
+Standings collapses threshold controls. Lab is accessible through About, outside primary navigation.
 
-Laptop lineup controls and Given/Joint use the same exact weighted stored worlds; Expected is default and “either status” marginalises remaining weights.
-Participation conditions mean positive simulated minutes, not availability or causal lineup effects. Phone retains Expected only.
-U23 outcome stories show joint scorer and Q3-conditional win events from loaded worlds; headshots 526/528 use offline images/initials fallback.
-Startup Reload recovers failed shell downloads. View Centre/rotation map remain future work.
+**U24:** one game owns Expected and explicit lineup cases. Its selector controls boxes, sheets, advanced distributions and scenarios;
+Compare lineup cases shows win chances/totals. Advanced panels separate raw saved-world counts from weighted probability support,
+with nine player/eighteen team box-derived metrics, quantiles, histograms and player-rate scenario links. Phone retains Expected only.
+Scenarios offers attempts, combined totals and rates, exact/strict/inclusive comparisons and Core/Shooting/Efficiency/Combined tables.
+Heatmaps show league rank or conditional changes with explicit legends; no invented court tracking. Zero denominators stay undefined.
+Participation filters mean simulated minutes, not availability or causal effects. Report-band semantics/version live in MODEL.
+Advanced links and phone sortable headers have 44px targets. Sortable columns support click/keyboard, direction markers, missing-last order and preserved roster groups. Player directory name/team/stat
+sorting covers the full filtered population; other enhanced tables sort displayed rows. Shooting pairs sort by percentage; charts/period axes retain order.
+U23 joint-scorer/Q3 outcome stories, offline photos/initials fallback and startup Reload remain. Replay and competitions are next-chunk work.
 
 Slates are ET; times show UK/ET. Spreads are projected mean margins. Exact float64 minutes drive conditions; display rounds to seconds.
 Over is strictly greater than x.5; shooting percentages condition on attempts and show no-attempt mass separately.

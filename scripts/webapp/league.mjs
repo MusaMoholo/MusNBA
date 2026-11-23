@@ -3,6 +3,12 @@ import {playerFace, playerLabel, api, dayLabel, esc, f1, heat, histogram, logo, 
 
 import * as season from './season.mjs';
 
+const disclosure = new Set();
+function wireDisclosures(view) {
+  view.querySelectorAll('details[data-disclosure]').forEach(el => el.addEventListener('toggle', () => {
+    if (el.open) disclosure.add(el.dataset.disclosure); else disclosure.delete(el.dataset.disclosure);
+  }));
+}
 const state = {conf: store.get('conf', 'East'), view: store.get('standings-view', 'forecast'), seedMode: 'exact', sort: null, teamTab: 'roster',
                winsSort: store.get('wins-sort', 'mean'), winsMode: store.get('wins-mode', 'exact'), fWinsN: Number(store.get('f-wins-n', 41)) || 41, fWinsMode: store.get('f-wins-mode', 'atleast'),
                fSeedN: Number(store.get('f-seed-n', 6)) || 6, fSeedMode: store.get('f-seed-mode', 'atleast')};
@@ -41,17 +47,18 @@ async function standings(view, {meta, current, rest}) {
       <div class="controls">${seg(confs, state.conf, 'data-conf')}${standingsNav(state.view)}
         ${state.view === 'seeds' && state.conf !== 'League' ? seg([['exact', 'Exactly'], ['atleast', 'At least']], state.seedMode, 'data-seed') : ''}
         ${state.view === 'wins' ? seg([['exact', 'Exactly'], ['atleast', 'At least']], state.winsMode, 'data-wmode') : ''}</div>
-      ${state.view === 'forecast' ? `<div class="seg-groups">
+      ${state.view === 'forecast' ? `<details data-disclosure="forecast-controls"${disclosure.has('forecast-controls') ? ' open' : ''}><summary>Explore wins &amp; seeds · ${state.fWinsMode === 'exact' ? 'exactly' : 'at least'} ${state.fWinsN} wins${state.conf !== 'League' ? ` · seed ${state.fSeedMode === 'exact' ? '' : '≤'}${state.fSeedN}` : ''}</summary><div class="seg-groups">
         <div class="seg-group"><span class="seg-label">Final wins</span><div class="wins-pick">${seg([['atleast', 'At least'], ['exact', 'Exactly']], state.fWinsMode, 'data-fwmode')}
           <label class="sr" for="fwins-n">Wins</label><input id="fwins-n" type="number" min="0" max="82" step="1" value="${state.fWinsN}" data-fwins></div></div>
         ${state.conf !== 'League' ? `<div class="seg-group"><span class="seg-label">Seed</span><div class="wins-pick">${seg([['atleast', 'Or better'], ['exact', 'Exactly']], state.fSeedMode, 'data-fsmode')}
-          <label class="sr" for="fseed-n">Seed</label><input id="fseed-n" type="number" min="1" max="15" step="1" value="${state.fSeedN}" data-fseed></div></div>` : ''}</div>` : ''}
+          <label class="sr" for="fseed-n">Seed</label><input id="fseed-n" type="number" min="1" max="15" step="1" value="${state.fSeedN}" data-fseed></div></div>` : ''}</div></details>` : ''}
       ${state.view === 'wins' ? `<div class="controls"><span class="seg-label">Order</span>${seg([['mean', 'Average wins'], ['spread', 'Widest range']], state.winsSort, 'data-wsort')}</div>` : ''}
       ${body}
       <details style="margin-top:12px"><summary class="note" style="cursor:pointer">How the forecast works</summary>
         <p class="note">${data.season_model && data.season_model.kind === 'team-pathway'
           ? `${Number.isInteger(data.season_model.engine_games) ? data.season_model.engine_games.toLocaleString() : 'Some'} games use saved possession-engine worlds. Every other game is played in date order with that season's own offensive and defensive rating for each team (pace and home court included), and after every game both teams' ratings move by how much they beat or missed that season's expectation — so a March game is played with ratings each season's own path produced, not today's.`
           : 'Each unplayed game gets a home-win chance from shrunk team ratings (offence, defence, pace, home court); tonight\'s games use their full game simulation, including injuries.'} One simulated season settles every fixture once; standings come from ${data.sims.toLocaleString()} ${data.probability_mass != null ? 'weighted paths' : 'seasons'}. Top 6 = direct playoff seed; play-in = seeds 7–10. ${data.notes.map(esc).join(' ')}</p></details></section>`;
+    wireDisclosures(view);
     view.querySelectorAll('[data-conf]').forEach(b => b.onclick = () => { state.conf = b.dataset.conf; store.set('conf', state.conf); paint(); });
     view.querySelectorAll('[data-view]').forEach(b => b.onclick = () => { state.view = b.dataset.view; store.set('standings-view', state.view); location.replace('#/standings/' + state.view); });
     view.querySelectorAll('[data-seed]').forEach(b => b.onclick = () => { state.seedMode = b.dataset.seed; paint(); });
@@ -59,8 +66,9 @@ async function standings(view, {meta, current, rest}) {
     view.querySelectorAll('[data-wmode]').forEach(b => b.onclick = () => { state.winsMode = b.dataset.wmode; store.set('wins-mode', state.winsMode); paint(); });
     view.querySelectorAll('[data-fwmode]').forEach(b => b.onclick = () => { state.fWinsMode = b.dataset.fwmode; store.set('f-wins-mode', state.fWinsMode); paint(); });
     view.querySelectorAll('th[data-fsort]').forEach(th => th.onclick = th.onkeydown = e => {
-      if (e.type === 'keydown' && e.key !== 'Enter') return;
-      const k = th.dataset.fsort, def = ['l', 'gb', 'pl', 'out', 'worst'].includes(k) ? 1 : -1;
+      if (e.type === 'keydown' && !['Enter', ' '].includes(e.key)) return;
+      e.preventDefault();
+      const k = th.dataset.fsort, def = ['name', 'l', 'gb', 'pl', 'out', 'worst'].includes(k) ? 1 : -1;
       state.fSort = state.fSort?.key === k ? (state.fSort.dir === def ? {key: k, dir: -def} : null) : {key: k, dir: def};  // third click: standings order
       paint();
     });
@@ -142,10 +150,10 @@ function forecastTable(rows, league) {
                   ['out', 'Out', t => t.forecast.out, -1, null, ''], ['first', '#1 seed', t => t.forecast.first, -1, null, '']]),
   ];
   const rank = new Map(rows.map((t, i) => [t.id, i + 1]));
-  const sort = state.fSort && cols.find(c => c[0] === state.fSort.key) ? state.fSort : null;
-  const sorted = sort ? rows.slice().sort((a, b) => { const c = cols.find(x => x[0] === sort.key)[2]; return sort.dir * ((c(a) ?? -1) - (c(b) ?? -1)) || rank.get(a.id) - rank.get(b.id); }) : rows;
+  const sort = state.fSort && (state.fSort.key === 'name' || cols.find(c => c[0] === state.fSort.key)) ? state.fSort : null;
+  const sorted = sort ? rows.slice().sort((a, b) => { if (sort.key === 'name') return sort.dir * a.name.localeCompare(b.name); const c = cols.find(x => x[0] === sort.key)[2]; return sort.dir * ((c(a) ?? -1) - (c(b) ?? -1)) || rank.get(a.id) - rank.get(b.id); }) : rows;
   const th = ([k, label, , , , cls]) => `<th data-fsort="${k}" tabindex="0" class="${cls}" aria-sort="${sort?.key === k ? (sort.dir < 0 ? 'descending' : 'ascending') : 'none'}">${esc(label)}${sort?.key === k ? `<span class="arrow">${sort.dir < 0 ? '▼' : '▲'}</span>` : ''}</th>`;
-  const head = `<tr><th>#</th><th class="name">Team</th>${cols.map(th).join('')}</tr>`;
+  const head = `<tr><th>#</th><th class="name" data-fsort="name" tabindex="0" aria-sort="${sort?.key === 'name' ? (sort.dir < 0 ? 'descending' : 'ascending') : 'none'}">Team${sort?.key === 'name' ? `<span class="arrow">${sort.dir < 0 ? '▼' : '▲'}</span>` : ''}</th>${cols.map(th).join('')}</tr>`;
   const body = sorted.map((t, i) => {
     const zone = !sort && !league && (i === 5 || i === 9) ? ' class="zone link"' : ' class="link"';
     return `<tr${zone} data-team="${t.id}"><td class="dim">${rank.get(t.id)}</td><td class="name">${teamLink(t.id)}</td>${cols.map(([, , v, , cell, cls]) =>
@@ -212,8 +220,8 @@ function ratingsTable(rows) {
                 ['tov_pct', 'TOV%', rate], ['oreb_pct', 'OREB%', rate], ['ftr', 'FT rate', rate], ['fg3a_rate', '3PA rate', rate], ['fg3_pct', '3P%', rate]];
   const sorted = state.sort ? rows.slice().sort((a, b) => (state.sort.dir) * ((a[state.sort.key] ?? 0) - (b[state.sort.key] ?? 0))) : rows;
   return `<div class="scroll"><table><thead><tr><th class="name">Team</th><th>W–L</th>${keys.map(([k, l]) => `<th>${l}</th>`).join('')}</tr></thead><tbody>
-    ${sorted.map(t => `<tr class="link" data-team="${t.id}"><td class="name">${teamLink(t.id)}</td><td>${t.w}-${t.l}</td>${keys.map(([k, , fmt]) => `<td>${fmt(t[k])}${t.ranks?.[k] ? ` <span class="tag">${t.ranks[k]}</span>` : ''}</td>`).join('')}</tr>`).join('')}
-    </tbody></table></div><p class="note">Per 100 possessions; possessions estimated as FGA − OREB + TOV + 0.44 × FTA. Small numbers are league ranks.</p>`;
+    ${sorted.map(t => `<tr class="link" data-team="${t.id}"><td class="name">${teamLink(t.id)}</td><td>${t.w}-${t.l}</td>${keys.map(([k, , fmt]) => `<td data-sort-value="${t[k] ?? ''}" class="${t.ranks?.[k] ? 'heat' : ''}" style="--a:${t.ranks?.[k] ? (31 - t.ranks[k]) / 45 : 0}" title="${t.ranks?.[k] ? 'League rank ' + t.ranks[k] : 'Rank unavailable'}">${fmt(t[k])}${t.ranks?.[k] ? ` <span class="tag">${t.ranks[k]}</span>` : ''}</td>`).join('')}</tr>`).join('')}
+    </tbody></table></div><p class="note">Per 100 possessions; possessions estimated as FGA − OREB + TOV + 0.44 × FTA. Small numbers are league ranks. Stronger shading marks a higher league ranking within that column; pace ranks speed, not quality.</p>`;
 }
 
 // ------------------------------------------------------------------ directory
@@ -253,7 +261,7 @@ function formPanel(data) {
       <span class="fx-d">${esc(dayLabel(g.date))}${b2b(g) ? ' <span class="pill warn" title="Second night of a back-to-back">B2B</span>' : ''}</span>
       <span class="fx-o">${g.home ? 'vs' : '@'} ${logo(g.opp, 'sm')} ${esc(team(g.opp).abbr)}</span>${g.p_win != null ? heatSpan(g.p_win) : '<span class="dim">—</span>'}</a>`).join('')}</div>
       <p class="note">Win chance from a retained game simulation when available, otherwise the season simulation's team estimate.</p></div>` : '';
-  return chart || fx ? `<section class="panel"><div class="form-grid">${chart}${fx}</div></section>` : '';
+  return chart || fx ? `<div class="form-content"><div class="form-grid">${chart}${fx}</div></div>` : '';
 }
 const heatSpan = p => `<span class="fx-p" style="--a:${Math.abs(p - 0.5) * 2}" data-side="${p >= 0.5 ? 'w' : 'l'}">${pct(p, 0)}</span>`;
 
@@ -268,14 +276,16 @@ async function teamPage(view, {rest, current}) {
       .map(([l, v, r]) => `<div class="tile"><span>${l}</span><b>${v}</b>${r ? `<small>${ordinal(r)}</small>` : ''}</div>`).join('');
     view.innerHTML = `<section class="panel"><div class="row">${logo(t.id, 'lg')}<div class="grow"><h2 style="margin:0;font-size:20px">${esc(t.name)}</h2>
       <p class="note" style="margin:0">${record(data.record)} · ${esc(t.conf)} · ${esc(t.div)} · home ${record(s.home)} · away ${record(s.away)} · last 10 ${record(s.last10)} ${esc(s.streak || '')}</p></div></div>
-      <div class="tiles" style="margin-top:12px">${tiles}
-        <div class="tile"><span>Proj W–L</span><b>${f1(f.mean_w)}</b><small>–${f1(f.mean_l)}</small></div>
-        <div class="tile"><span>Top 6</span><b>${pct(f.top6, 0)}</b></div><div class="tile"><span>Play-in</span><b>${pct(f.playin, 0)}</b></div>
-        <div class="tile"><span>#1 seed</span><b>${pct(f.first, 0)}</b></div></div>
+      <div class="advanced-grid" style="margin-top:12px">
+        <div class="tile"><span>Projected W–L</span><b>${f1(f.mean_w)}–${f1(f.mean_l)}</b></div>
+        <div class="tile"><span>Top 6</span><b>${pct(f.top6, 0)}</b></div><div class="tile"><span>Play-in</span><b>${pct(f.playin, 0)}</b></div></div>
       <div style="margin-top:12px"><h3>Simulated final wins (of ${f.scheduled} scheduled)</h3>${histogram(f.wins, {height: 120})}</div></section>
-      ${formPanel(data)}
+      <details class="panel" data-disclosure="team-profile-${tid}"${disclosure.has('team-profile-' + tid) ? ' open' : ''}><summary>Team profile &amp; seed chances</summary><div class="advanced-grid" style="margin-top:12px">${tiles}
+        <div class="tile"><span>#1 seed</span><b>${pct(f.first, 0)}</b></div><div class="tile"><span>Outside top 10</span><b>${pct(f.out, 0)}</b></div></div></details>
+      <details class="panel" data-disclosure="team-form-${tid}"${disclosure.has('team-form-' + tid) ? ' open' : ''}><summary>Recent form &amp; upcoming games</summary>${formPanel(data)}</details>
       <div class="controls">${seg([['roster', 'Roster'], ['schedule', 'Schedule']], state.teamTab, 'data-tt')}</div>
       ${state.teamTab === 'roster' ? roster(data, openRosterGroups) : schedule(data)}`;
+    wireDisclosures(view);
     view.querySelectorAll('[data-tt]').forEach(b => b.onclick = () => { state.teamTab = b.dataset.tt; paint(); });
     view.querySelectorAll('[data-roster-group]').forEach(button => button.onclick = () => {
       const group = button.dataset.rosterGroup, open = !openRosterGroups.has(group);
@@ -318,7 +328,7 @@ function roster(data, openGroups) {
     return `<span class="min-values">${p.gp ? s.toFixed(1) : '—'}${t != null ? ` → <b>${t.toFixed(1)}</b>` : ''}</span><span class="minbar" title="Season ${s.toFixed(1)} min${t != null ? ` · tonight ${t.toFixed(1)}` : ''}"><i class="s" style="width:${(100 * s / 48).toFixed(1)}%"></i>${t != null ? `<i class="t" style="left:${(100 * Math.min(t, 48) / 48).toFixed(1)}%"></i>` : ''}</span>`;
   };
   const tn = p => { const t = proj(p); if (t == null) return '<td class="dim">—</td>'; const d = t - season(p);
-    return `<td><b>${t.toFixed(1)}</b>${p.gp && Math.abs(d) >= 2 ? ` <small class="${d > 0 ? 'up' : 'down'}">${d > 0 ? '+' : '−'}${Math.abs(d).toFixed(0)}</small>` : ''}</td>`; };
+    return `<td data-sort-value="${t}"><b>${t.toFixed(1)}</b>${p.gp && Math.abs(d) >= 2 ? ` <small class="${d > 0 ? 'up' : 'down'}">${d > 0 ? '+' : '−'}${Math.abs(d).toFixed(0)}</small>` : ''}</td>`; };
   const lost = data.roster.filter(isOut).reduce((a, p) => a + season(p), 0);
   const nx = data.tonight;
   const head = `<tr><th class="name">Player</th><th class="l">Minutes (season${T ? ' → next' : ''})</th>${T ? '<th>Next</th>' : ''}<th>GP</th><th>GS</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th><th>3PM</th><th>STL</th><th>BLK</th><th>TOV</th><th>FG%</th><th>3P%</th><th>FT%</th></tr>`;
@@ -328,9 +338,9 @@ function roster(data, openGroups) {
     const heading = collapsible ? `<button class="roster-toggle" data-roster-group="${esc(label)}" aria-expanded="${open}">${esc(label)} · ${ps.length}<span>${open ? 'Hide' : 'Show'}</span></button>`
       : `${esc(label)} <span class="dim">· ${ps.length}</span>`;
     return `<tr class="grp"><td colspan="${cols}">${heading}</td></tr>` + ps.map(p =>
-    `<tr class="link"${collapsible ? ` data-roster-member="${esc(label)}"${open ? '' : ' hidden'}` : ''} data-pid="${p.id}"><td class="name">${playerLabel(p.id, p.name)}${p.jersey ? ` <span class="tag">#${esc(p.jersey)}</span>` : ''} <span class="dim">${esc(p.pos || '')}</span>${statusTag(p.status)}${inj(p)}</td>
-      <td class="l">${bar(p)}</td>${T ? tn(p) : ''}<td>${p.gp}</td><td>${p.gs}</td><td>${pg(p, 'min')}</td><td><b>${pg(p, 'pts')}</b></td><td>${pg(p, 'reb')}</td><td>${pg(p, 'ast')}</td><td>${pg(p, 'fg3m')}</td><td>${pg(p, 'stl')}</td><td>${pg(p, 'blk')}</td><td>${pg(p, 'tov')}</td>
-      <td>${pctOf(p.tot.fgm, p.tot.fga)}</td><td>${pctOf(p.tot.fg3m, p.tot.fg3a)}</td><td>${pctOf(p.tot.ftm, p.tot.fta)}</td></tr>`).join('');
+    `<tr class="link"${collapsible ? ` data-roster-member="${esc(label)}"${open ? '' : ' hidden'}` : ''} data-pid="${p.id}"><td class="name" data-sort-value="${esc(p.name)}">${playerLabel(p.id, p.name)}${p.jersey ? ` <span class="tag">#${esc(p.jersey)}</span>` : ''} <span class="dim">${esc(p.pos || '')}</span>${statusTag(p.status)}${inj(p)}</td>
+      <td class="l" data-sort-value="${p.gp ? season(p) : ''}">${bar(p)}</td>${T ? tn(p) : ''}<td data-sort-value="${p.gp}">${p.gp}</td><td data-sort-value="${p.gs}">${p.gs}</td>${['min','pts','reb','ast','fg3m','stl','blk','tov'].map(k => `<td data-sort-value="${p.gp ? p.tot[k] / p.gp : ''}">${k === 'pts' ? `<b>${pg(p,k)}</b>` : pg(p,k)}</td>`).join('')}
+      ${[['fgm','fga'],['fg3m','fg3a'],['ftm','fta']].map(([m,a]) => `<td data-sort-value="${p.tot[a] ? p.tot[m]/p.tot[a] : ''}">${pctOf(p.tot[m],p.tot[a])}</td>`).join('')}</tr>`).join('');
   }).join('');
   const sub = nx ? `<p class="note" style="margin-top:0">Grouped by the projection for ${esc(dayLabel(nx.date))} ${nx.home ? 'vs' : '@'} ${esc(team(nx.opp).abbr)} (${nx.sims?.toLocaleString() || '—'} simulated games).` : '<p class="note" style="margin-top:0">No projected game yet: grouped by games started this season.';
   return `<section class="panel">${sub}${lost >= 1 ? ` Out: <b>${lost.toFixed(0)}</b> season minutes a game.` : ''}</p><div class="scroll"><table class="roster"><thead>${head}</thead><tbody>${body}</tbody></table></div>
@@ -341,7 +351,7 @@ function schedule(data) {
   const rows = data.schedule.map(g => {
     const t = tipTimes(g.tip_utc, g.date);
     const result = g.status === 'final' ? `<b class="${g.pts > g.opp_pts ? 'up' : 'down'}">${g.pts > g.opp_pts ? 'W' : 'L'}</b> ${g.pts}–${g.opp_pts}` : g.status === 'postponed' ? 'Postponed' : esc(t.uk);
-    return `<tr class="link" data-gid="${g.game_id}"><td class="l">${esc(dayLabel(g.date))}</td><td class="l">${g.home ? 'vs' : '@'} ${teamLink(g.opp)}</td><td class="l">${result}</td>${g.status === 'final' ? '<td></td>' : heat(g.p_win, {title: g.p_source === 'game' ? 'Game simulation' : 'Team-strength estimate'})}</tr>`;
+    return `<tr class="link" data-gid="${g.game_id}"><td class="l" data-sort-value="${esc(g.date)}">${esc(dayLabel(g.date))}</td><td class="l">${g.home ? 'vs' : '@'} ${teamLink(g.opp)}</td><td class="l">${result}</td>${g.status === 'final' ? '<td></td>' : heat(g.p_win, {title: g.p_source === 'game' ? 'Game simulation' : 'Team-strength estimate'})}</tr>`;
   }).join('');
   return `<section class="panel"><div class="scroll"><table><thead><tr><th class="l">Date</th><th class="l">Opponent</th><th class="l">Result / tip (UK)</th><th>Win</th></tr></thead><tbody>${rows}</tbody></table></div>
     <p class="note">Win chances for future games come from the season simulation's team-strength estimate; tonight's games use the full game simulation.</p></section>`;

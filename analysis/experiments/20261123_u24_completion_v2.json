@@ -1,0 +1,92 @@
+{
+ "status": "complete",
+ "updated": "2026-11-23T23:27:04.609884+00:00",
+ "supersedes": "20261123_u24_completion_v1.json",
+ "base_receipt_sha256": "8ca030bd7bd4f98ce8aad575887030648cd74faaf6cc2d1262ba19359bf82416",
+ "scope": "Final shell-only44px touch-target refinement; full U24 scope, model/input policy, raw accounting and bundle provenance remain in the base receipt.",
+ "runtime": "engine-v1.3-r3",
+ "availability_policy": "report-bands-v1",
+ "generation": "2026-11-23T23:07:37Z",
+ "nightly_seconds": 1514.010949,
+ "worlds": 140000,
+ "branches": 14,
+ "data_unchanged": true,
+ "bundle_hashes_rechecked": true,
+ "data_refresh_reason": "No new data contract or engine change after the fresh full nightly; source changes only index.html CSS. Reuse the same fresh iCloud bundles.",
+ "shell": {
+  "commit": "36288c021e0af1d8e0e408cd9f098984f51e4eb2",
+  "cache": "348f12dc782eaa5d92ed",
+  "data_free": true,
+  "previous": "1c5e751c8c97c09d3864a47263c2de7a932bcbaa",
+  "upgrade_baseline": "31317f88cec02d4ee61fe3a0cae3c4eb9bc3eb49"
+ },
+ "final_checks": {
+  "responsive": 114,
+  "suites": {
+   "focused": {
+    "checks": 36,
+    "report": "/tmp/musnba-u24-touch-focused/report.json",
+    "sha256": "a151322bfc349f811da9ecdbd495d31dc2b84144ebde25b138ddaedf90edc05f"
+   },
+   "pages": {
+    "checks": 36,
+    "report": "/tmp/musnba-u24-touch-pages/report.json",
+    "sha256": "c15d73c4be24366a080b64be51dc7c4f4e766247357d939ac2e62a996ba60420"
+   },
+   "games": {
+    "checks": 42,
+    "report": "/tmp/musnba-u24-touch-games/report.json",
+    "sha256": "9667fdcc3208f59f4d812b36979c7068705d42b1f9085e8467efd433e3da8a6e"
+   }
+  },
+  "pwa": {
+   "laptop": {
+    "checks": [
+     34,
+     34
+    ],
+    "log": "/tmp/musnba_u24_pwa_laptop_v3.log",
+    "sha256": "e5077184cb1e5bfd6b97c4142533e61828f451ae3ceda9c67cd63725976e9986"
+   },
+   "phone": {
+    "checks": [
+     32,
+     32
+    ],
+    "log": "/tmp/musnba_u24_pwa_phone_v3.log",
+    "sha256": "9caead26f6a5b430be8b95d1309c31f8981b45ed0c51492c705bddbb90bc1765"
+   },
+   "upgrade": {
+    "checks": [
+     36,
+     36
+    ],
+    "log": "/tmp/musnba_u24_pwa_upgrade_v3.log",
+    "sha256": "f3af3903e37c51585a7795aa9a58fbf1e9ff3ed0df85e57d04a83a2c79d05f38"
+   }
+  },
+  "touch_links_minimum_px": 44,
+  "phone_sort_headers_minimum_px": 44
+ },
+ "next_chunk": {
+  "manifest": "20261123_chunk_c_plan_v2.json",
+  "status": "0%",
+  "weights": {
+   "C1": 10,
+   "C2": 25,
+   "C3": 15,
+   "C4": 25,
+   "C5": 25
+  },
+  "first": "Early complete-game iCloud publication; current wrapper still exports at end"
+ },
+ "limitations": [
+  "Availability bands and cross-team independence are assumptions, not empirically calibrated.",
+  "Accepted node/clock recipes and protected evaluation remain unchanged.",
+  "Exact weighted season coupling is not certified iid season sampling.",
+  "Both devices still require app update and their own manual import; real-device acceptance unverified.",
+  "Zones, replay, dynamic Cup/play-in/playoff scheduling and further analysis depth remain planned."
+ ],
+ "manual_device_import_required": true,
+ "real_device_acceptance": "unverified"
+}

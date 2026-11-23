@@ -8,10 +8,31 @@ from unittest.mock import patch
 import numpy as np
 import pandas as pd
 
-from scripts import nightly, views
+from scripts import nightly, views, projection
 
 
 class AvailabilityViewTests(unittest.TestCase):
+    def test_report_bands_are_game_specific_conservative_and_discrete(self):
+        for status, expected in [('Active', 1), ('Probable', .75), ('Questionable', .5), ('Doubtful', .25), ('Out', 0), ('Unknown', .5)]:
+            self.assertEqual(projection.report_availability({'status': status}, '2026-11-23')[0], expected)
+        def report(text, stamp='2026-11-22T22:15Z'):
+            return projection.report_availability({'status': 'Day-To-Day', 'injury': {'comment': text, 'date': stamp}}, '2026-11-23')
+        cases = [("Wade is listed as probable for Monday's game.", .75),
+                 ("Player is questionable for Monday.", .5), ("Player is doubtful Monday.", .25),
+                 ("Player won't play Monday.", 0), ("Player will play Monday.", 1),
+                 ("Player is not expected to play Monday.", 0),
+                 ("Player is not yet cleared to play Monday.", .5),
+                 ("Player is unavailable for Monday.", 0),
+                 ("Player is expected to play Sunday.", .5),
+                 ("Player was probable Sunday but is questionable Monday.", .5),
+                 ("Player is expected to play.", .5)]
+        for text, expected in cases:
+            with self.subTest(text=text):
+                self.assertEqual(report(text)[0], expected)
+        self.assertEqual(report('Player will play tonight.', '2026-11-23T19:00Z')[0], 1)
+        self.assertEqual(report('Player will play Monday.', '2026-11-16T19:00Z')[0], .5)
+        self.assertEqual(report('Player will play Monday.', '2026-11-24T19:00Z')[0], .5)
+
     def test_advanced_distributions_calculate_each_world_and_exclude_zero_denominators(self):
         x = {'pts': np.array([0, 2, 2]), 'fgm': np.array([0, 1, 1]), 'fga': np.array([0, 1, 4]),
              'fg3m': np.array([0, 0, 0]), 'fg3a': np.array([0, 0, 0]), 'fta': np.array([0, 0, 0]),
@@ -23,7 +44,7 @@ class AvailabilityViewTests(unittest.TestCase):
         self.assertEqual(sum(out['efg']['hist']), 2)
         self.assertEqual((out['astTov']['defined'], out['astTov']['exact_mean']), (1, 2.0))
         self.assertEqual(views.advanced_world_summaries({**x, 'fga': np.zeros(3)})['efg'],
-                         {'defined': 0, 'total': 3})
+                         {'defined': 0, 'total': 3, 'worlds': 3, 'defined_worlds': 0, 'weighted': False})
         self.assertNotIn('efg', views.advanced_world_summaries({k: v for k, v in x.items() if k != 'fg3m'}))
 
     def test_team_advanced_distributions_pair_the_same_worlds(self):

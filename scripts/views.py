@@ -191,7 +191,9 @@ def world_lines(path: Path, gid: str, sims: int) -> dict | None:
         per = t[gid]  # (worlds, home/away, Q1–Q4 + OT)
     branch_file = path / 'lineups' / gid / 'worlds.json'
     if branch_file.exists():
-        return read_json(branch_file)
+        payload = read_json(branch_file)
+        enrich_lineup_rates(payload, players)
+        return payload
     stats = list(WORLD_STATS)[:lines.shape[2]]
     result = {'worlds': int(lines.shape[0]), 'stats': stats, 'players': [str(x) for x in ids], 'side': side.astype(int).tolist(),
               'lines': base64.b64encode(np.ascontiguousarray(lines).tobytes()).decode(),
@@ -202,6 +204,48 @@ def world_lines(path: Path, gid: str, sims: int) -> dict | None:
         result['period_minutes_f64_le'] = base64.b64encode(
             np.ascontiguousarray(players['minutes'], dtype='<f8').tobytes()).decode()
     return result
+
+
+def enrich_lineup_rates(payload: dict, players: dict) -> None:
+    """Enrich the exported view, never the retained simulation, with case-specific rates."""
+    import numpy as np
+    lines = players['lines'].astype(np.int64)
+    ids = list(map(str, players['ids']))
+    sides, weights = players['side'], players.get('weights')
+    if weights is None:
+        raise ValueError('lineup summaries require exact stored weights')
+    import base64
+    branches = payload['branches']
+    boundaries = np.r_[0, np.cumsum([b['worlds']['worlds'] for b in branches])]
+    if boundaries[-1] != len(lines):
+        raise ValueError('lineup and merged world counts differ')
+    for i, branch in enumerate(branches):
+        raw = branch['worlds']
+        stored = np.frombuffer(base64.b64decode(raw['lines']), dtype=np.uint8).reshape(
+            raw['worlds'], len(raw['players']), len(raw['stats']))
+        if (raw['players'] != ids or raw['side'] != sides.tolist()
+                or raw['stats'] != list(WORLD_STATS[:lines.shape[2]])
+                or not np.array_equal(stored, lines[boundaries[i]:boundaries[i + 1]])):
+            raise ValueError('lineup source rows differ from the merged snapshot')
+    for case in payload['cases'].values():
+        keep = np.zeros(len(lines), dtype=bool)
+        for i, branch in enumerate(branches):
+            assignments = {str(pid): value for _, pid, value in branch['assignments']}
+            if all(assignments.get(pid) == value for pid, value in case['choices'].items()):
+                keep[boundaries[i]:boundaries[i + 1]] = True
+        if (int(keep.sum()) != case['sim']['sims']
+                or int(weights[keep].sum()) != case['sim']['probability_mass']):
+            raise ValueError('selected lineup count differs from its summary')
+        selected = lines[keep]
+        columns = {k: selected[:, :, j] for j, k in enumerate(WORLD_STATS[:lines.shape[2]])}
+        boxes = [{k: a[:, sides == side].sum(axis=1) for k, a in columns.items()} for side in (0, 1)]
+        for side, name in enumerate(('home', 'away')):
+            case['sim'][name]['advanced'] = advanced_world_summaries(boxes[side], boxes[1 - side], weights[keep])
+            for player in case['sim'][name]['players']:
+                if player.get('periods'):
+                    j = ids.index(str(player['id']))
+                    player['periods']['fg']['advanced'] = advanced_world_summaries(
+                        {k: a[:, j] for k, a in columns.items()}, weights=weights[keep])
 
 
 def minute_marginals(path: Path, gid: str) -> dict | None:
@@ -235,6 +279,9 @@ def advanced_world_summaries(values: dict, opponent: dict | None = None, weights
         return np.divide(n, d, out=out, where=d > 0)
 
     metrics = {
+        'fgpct': (ratio(('fgm', 'fga'), lambda x: x['fgm'], lambda x: x['fga']), True),
+        'fg3pct': (ratio(('fg3m', 'fg3a'), lambda x: x['fg3m'], lambda x: x['fg3a']), True),
+        'ftpct': (ratio(('ftm', 'fta'), lambda x: x['ftm'], lambda x: x['fta']), True),
         'efg': (ratio(('fgm', 'fg3m', 'fga'), lambda x: x['fgm'] + 0.5 * x['fg3m'], lambda x: x['fga']), True),
         'ts': (ratio(('pts', 'fga', 'fta'), lambda x: x['pts'], lambda x: 2 * (x['fga'] + 0.44 * x['fta'])), True),
         'two': (ratio(('fgm', 'fg3m', 'fga', 'fg3a'), lambda x: x['fgm'] - x['fg3m'],
@@ -278,7 +325,9 @@ def advanced_world_summaries(values: dict, opponent: dict | None = None, weights
         mass = WorldMass(len(raw), weights)
         mask = np.isfinite(raw)
         defined = raw[mask] * (100 if percent else 1)
-        result = {'defined': int(mask.sum()) if weights is None else int(weights[mask].sum()), 'total': mass.total}
+        # Histogram counts are probability mass; they are not independent world counts.
+        result = {'defined': int(mask.sum()) if weights is None else int(weights[mask].sum()), 'total': mass.total,
+                  'worlds': len(raw), 'defined_worlds': int(mask.sum()), 'weighted': weights is not None}
         if defined.size:
             selected = mass.subset(mask)
             scale = 1 if percent else 10
@@ -595,7 +644,8 @@ def availability(sim: dict, season_of) -> dict:
             inj = entry.get('injury') or {}
             rows.append({'id': pid, 'name': entry.get('name'), 'status': st, 'status_source': entry.get('status_source'),
                          'comment': inj.get('comment'), 'return': inj.get('return'),
-                         'assumed_availability': assumed, 'basis': x.get('availability_basis') if x else None,
+                         'assumed_availability': assumed, 'basis': x.get('availability_basis') if x else entry.get('availability_basis'),
+                         'policy': x.get('availability_policy') if x else entry.get('availability_policy'),
                          'simulated': x is not None,
                          'plays': round(float(x.get('played') or 0), 3) if x else 0.0,
                          'min_if_plays': round((x.get('if_plays') or {}).get('min') or (((x.get('periods') or {}).get('fg') or {}).get('sec', 0) / 60), 1) if x else None,
@@ -1202,7 +1252,7 @@ def build(views_root: Path = VIEWS) -> dict:
         'app': APP_NAME, 'season': SEASON_LABEL, 'built': utc_now(), 'latest': latest_day,
         'snapshots': snapshot_rows, 'first_date': slate_dates[0], 'last_date': slate_dates[-1],
         'dates': {d: len(by_date.get(d, [])) for d in slate_dates},
-        'teams': teams, 'model': latest['meta']['model'],
+        'teams': teams, 'model': latest['meta']['model'], 'availability_policy': latest['meta'].get('availability_policy'),
         'player_icons': player_icons(),
         'required_capabilities': ['player-icons-v1'] + (['minute-cdf-player-v2', 'lineup-forecast-v1'] if any(p['sim'].get('lineups') for p in projections.values()) else []),
         'data': {'finals': len(finals), 'last_final': max((r['date_et'] for r in finals), default=None),

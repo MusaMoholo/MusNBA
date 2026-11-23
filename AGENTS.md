@@ -29,6 +29,7 @@ Planning-only requests stay planning-only; honour explicit stops. Read-only/docs
   needed bundles. Both devices import manually; an iCloud export proves neither import nor real-device acceptance.
 - Keep boxes/insights first, controls grouped, secondary detail expandable. Comparable cards: three/two/one across.
   Inspect touched pages at 1440/960/390 in both themes, including screenshots. Dynamic numbers/versions come from data.
+  Make meaningful table columns sortable; preserve group/axis semantics, exact keys and missingness.
 - UK times with ET alongside; slate dates are ET. Owner's server:8766 must remain running; use:8767 for review.
 - Audit stale scorer rules and simplify proven duplication. Distinguish demonstrated harm, imprecision and unsupported data.
   Preserve realistic probabilities/uncertainty; do not reject an idea because its experiment setup failed.
@@ -81,7 +82,8 @@ The local pre-commit hook enforces links, live file/word budgets and archive has
 ## Compute
 
 Actively use up to **ten total heavy compute threads** on the 14-core/48 GiB Mac; leave headroom and reduce under memory pressure.
-Count process workers × inner threads across all simultaneous jobs, including fitting/compression. Parallelise independent work and overlap I/O;
+For every task, identify independent compute/I/O first. Count process workers × inner threads across simultaneous jobs, including fitting/compression.
+Keep shared queues occupied; parallelise independent work and overlap I/O;
 use detached logs for long jobs. No agent delegation is implied by CPU parallelism.
 
 Verify actual controls: `train.py --threads`; `backtest.py --jobs 10` gives one OMP thread/worker, `--jobs 5` two,

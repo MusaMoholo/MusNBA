@@ -55,3 +55,41 @@ test('actual-only panels do not invent projected values', () => {
   assert.match(html, /Actual/);
   assert.doesNotMatch(html, /Projected/);
 });
+
+
+test('weighted probability mass is never labelled as independent simulations', () => {
+  const d = {defined: 70000, total: 100000, worlds: 20000, defined_worlds: 10000, weighted: true,
+    exact_q: [25, 25, 25, 100, 100], exact_mean: 62.5, scale: 1, min: 25, hist: [35000, 35000]};
+  const html = advancedPanel({fgm: 2}, null, 'Projected', {distributions: {efg: d}, explore: {gid: 'g', subj: 'p:1'}});
+  assert.match(html, /Defined in 10,000 of 20,000 saved worlds/);
+  assert.match(html, /70.0% weighted probability/);
+  assert.doesNotMatch(html, /100,000.*worlds/);
+  assert.match(html, /Explore 25.0% or higher/);
+  const legacy = {...d}; delete legacy.worlds; delete legacy.defined_worlds; delete legacy.weighted;
+  const old = advancedPanel({fgm: 2}, null, 'Projected', {distributions: {efg: legacy}, worlds: 20000, weighted: true});
+  assert.match(old, /20,000 saved worlds/);
+  assert.doesNotMatch(old, /100,000.*worlds/);
+});
+
+const O = await import('../scripts/webapp/outcomes.mjs');
+test('expanded conditions use exact per-world rates, joint masks and defined support', () => {
+  const stats = ['min', 'pts', 'reb', 'oreb', 'dreb', 'ast', 'fgm', 'fga', 'fg3m', 'fg3a', 'ftm', 'fta', 'stl', 'blk', 'tov'];
+  const rows = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], [20,2,3,1,2,4,1,3,0,1,0,0,1,2,2], [30,12,5,2,3,6,4,8,2,4,2,2,2,1,0]];
+  const raw = {worlds: 3, players: ['1'], side: [0], stats,
+    lines: Buffer.from(rows.flat()).toString('base64'), team_periods: Buffer.alloc(30).toString('base64')};
+  const w = O.worldData(raw);
+  assert.deepEqual([...w.values('p:1', 'pra')], [0, 9, 23]);
+  assert.deepEqual([...w.values('p:1', 'twoAtt')], [0, 2, 4]);
+  assert.ok(Number.isNaN(w.values('p:1', 'fgpct')[0]));
+  assert.equal(w.values('p:1', 'fgpct')[1], 100 / 3);
+  assert.deepEqual([...O.mask(w, [{subj: 'p:1', v: 'fgpct', op: 'gt', x: 33.34}])], [0, 0, 1]);
+  assert.deepEqual([...O.mask(w, [{subj: 'p:1', v: 'fga', op: 'eq', x: 3}])], [0, 1, 0]);
+  assert.deepEqual([...O.mask(w, [{subj: 'p:1', v: 'fga', op: 'ge', x: 3}, {subj: 'p:1', v: 'pra', op: 'lt', x: 20}])], [0, 1, 0]);
+  assert.throws(() => O.mask(w, [{subj: 'p:1', v: 'missing', op: 'ge', x: 1}]), /unavailable/);
+  assert.throws(() => O.mask(w, [{subj: 'p:1', v: 'fga', op: 'wat', x: 1}]), /Invalid/);
+  w.weights = Float64Array.from([1, 3, 6]); w.baseMask = Uint8Array.from([1, 1, 1]);
+  const c = O.branchCalculations(w), m = O.mask(w, [{subj: 'p:1', v: 'fga', op: 'ge', x: 3}]);
+  assert.equal(c.count(m), 2); assert.equal(c.mass(m), 9);
+  assert.equal(c.mean(w.values('p:1', 'fgpct'), m), (100 + 300) / 9);
+  assert.match(O.varOptions('p:1', 'fga', w), /Combined totals/);
+});

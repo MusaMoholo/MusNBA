@@ -15,8 +15,14 @@ class WeightedViewsTests(unittest.TestCase):
                'tov':[0,1,2,4], 'oreb':[0,1,2,3], 'dreb':[0,3,5,6], 'stl':[0,1,2,3]}.items()}
         opponent = {k: a[::-1] for k, a in box.items()}
         repeated = lambda data: {k: np.repeat(a, weights) for k, a in data.items()}
-        self.assertEqual(views.advanced_world_summaries(box, opponent, weights),
-                         views.advanced_world_summaries(repeated(box), repeated(opponent)))
+        weighted = views.advanced_world_summaries(box, opponent, weights)
+        replicated = views.advanced_world_summaries(repeated(box), repeated(opponent))
+        for key, value in weighted.items():
+            self.assertEqual(value['worlds'], 4)
+            self.assertEqual(value['total'], 40)
+            self.assertTrue(value['weighted'])
+            self.assertEqual({k: v for k, v in value.items() if k not in ('worlds', 'defined_worlds', 'weighted')},
+                             {k: v for k, v in replicated[key].items() if k not in ('worlds', 'defined_worlds', 'weighted')})
 
     def test_slate_leaders_use_the_same_exact_coupling_as_seasons(self):
         with tempfile.TemporaryDirectory() as temporary:

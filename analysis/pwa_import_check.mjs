@@ -544,7 +544,10 @@ check('model guide numbers follow loaded simulation counts', await evaluate(`(as
   (await ui.api('standings/' + ui.meta().latest)).sims = 4321;
   await page.render(document.querySelector('#view'), {meta: ui.meta(), current: () => true});
   const text = document.querySelector('#view').textContent;
-  return text.includes('1,234 possible outcomes') && text.includes('740 of 1,234') && text.includes('4,321 possible seasons');
+  const season=await ui.api('standings/'+ui.meta().latest);
+  return text.includes('1,234 worlds per lineup case') && text.includes('Each explicit lineup case is played 1,234 times')
+    && text.includes('4,321 '+(season.probability_mass!=null?'weighted season paths':'simulated seasons'))
+    && text.includes('60% of the probability weight');
 })()`));
 if (args['require-headshots']) {
   await send('Page.navigate', {url: args.url + '#/player/1966'}, s);
@@ -562,6 +565,41 @@ if (args['require-headshots']) {
     try { await storage.importBundle(compressed); return false; }
     catch (error) { return error.message.includes('Update') && before === await storage.read('meta','active'); }
   })()`));
+}
+if (args['require-u24']) {
+  check('U24 shell navigation and report-policy metadata work offline', await evaluate(`(async () => {
+    const ui=await import('./assets/ui.mjs');
+    return !document.querySelector('[data-nav="lab"]') && document.querySelectorAll('.mainnav a').length===4
+      && ui.meta().availability_policy==='report-bands-v1';
+  })()`));
+  await send('Page.navigate',{url:args.url+'#/players'},s);
+  check('offline player names sort across the filtered list',await waitFor(`!!document.querySelector('th[data-sort="name"]')`) && await evaluate(`(() => {
+    document.querySelector('th[data-sort="name"]').click();
+    const names=[...document.querySelectorAll('#ptable tbody .player-label > span:last-child')].map(x=>x.textContent);
+    return names.length>2 && names.every((name,i)=>!i || names[i-1].localeCompare(name)<=0);
+  })()`));
+  if (args['lineups-game']) {
+    const gid=args['lineups-game'];
+    const pid=await evaluate(`(async () => {const ui=await import('./assets/ui.mjs'),game=await ui.api('game/'+${JSON.stringify(gid)});return game.projection.sim.home.players.find(p=>p.periods&&p.periods.fg.mean.pts>5).id;})()`);
+    await send('Page.navigate',{url:args.url+'#/game/'+gid+'/player/'+pid+'/fg'},s);
+    check('offline advanced panel uses raw counts and nine supported metrics',await waitFor(`!!document.querySelector('[data-advanced-panel]')`) && await evaluate(`(async () => {
+      const ui=await import('./assets/ui.mjs'),game=await ui.api('game/'+${JSON.stringify(gid)}),p=game.projection.sim.home.players.find(p=>p.id===${JSON.stringify(pid)});
+      const panel=document.querySelector('[data-advanced-panel]');panel.open=true;
+      const d=p.periods.fg.advanced.efg;
+      return panel.querySelectorAll('.advanced-grid > .tile').length===9
+        && panel.textContent.includes(d.worlds.toLocaleString()+' saved worlds')
+        && (!!panel.querySelector('a[href*="/scenario/"]'))===${JSON.stringify(args.profile==='laptop')}
+        && [...panel.querySelectorAll('a[href*="/scenario/"]')].every(a=>a.getBoundingClientRect().height>=44);
+    })()`));
+    await send('Page.navigate',{url:args.url+'#/game/'+gid+'/scenario'},s);
+    check('offline scenario choices match the device profile',await waitFor(args.profile==='laptop' ? `!!document.querySelector('[data-builder="scn"]')` : `!!document.querySelector('#game-body .box')`) && await evaluate(`(() => {
+      if (${JSON.stringify(args.profile)}==='phone') return !document.querySelector('[data-builder="scn"]');
+      const root=document.querySelector('[data-builder="scn"]'),subj=root.querySelector('[data-b="subj"]');
+      subj.value='p:'+${JSON.stringify(pid)};subj.dispatchEvent(new Event('change'));
+      const options=[...root.querySelector('[data-b="v"]').options].map(x=>x.value);
+      return ['fga','fg3a','fta','ts','pra'].every(v=>options.includes(v)) && !!root.querySelector('[data-b="op"] option[value="eq"]');
+    })()`));
+  }
 }
 const repeat = await evaluate(`(async () => { const {importBundle} = await import('./assets/pwa-storage.mjs'); return 'ok'; })()`).catch(e => String(e));
 check('storage module loads offline', repeat === 'ok', repeat === 'ok' ? '' : repeat);

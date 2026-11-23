@@ -1,0 +1,335 @@
+{
+ "status": "complete",
+ "updated": "2026-11-23T23:21:27.700641+00:00",
+ "task": "U24 current-data dashboard fixes before Chunk C",
+ "runtime": {
+  "id": "engine-v1.3-r3",
+  "kind": "engine",
+  "version": "v1.3-r3",
+  "models": "v1.3",
+  "rotation": "targets",
+  "sims": 10000,
+  "pool": 0,
+  "label": "Possession engine: each world draws its own player minutes and rotations, with legal foul-out handling. Prior-fitted timing responds to the score and clock late in Q4/overtime. Lineup probabilities are assumptions; defender impact and late foul/shot choices still need improvement.",
+  "foul_policy": "nba-rule3-v1",
+  "rotation_fit": "independent-v1",
+  "chunk_worlds": 1000,
+  "clock_recipe": "data/models/v1.3-r3/clock.json",
+  "season_sims": 10000
+ },
+ "availability_policy": "report-bands-v1",
+ "generation": "2026-11-23T23:07:37Z",
+ "nightly_seconds": 1514.010949,
+ "live_games": 10,
+ "branches": 14,
+ "worlds": 140000,
+ "weighted_season_paths": 40000,
+ "delivered": [
+  "Truthful raw/defined-world counts separate from weighted probability mass",
+  "Case-specific player/team advanced summaries and shared lineup comparison/selection",
+  "Player attempts, combinations, shooting/efficiency rates and strict/exact scenario conditions",
+  "Nine player/eighteen team advanced metrics, histograms, quantiles and player-rate scenario links",
+  "Scenario efficiency/shooting/combination tables and conditional/rank heatmaps",
+  "Sortable player/team/game/roster/log columns with underlying keys, missing-last and group semantics",
+  "Three headline team cards with six expandable profile cards; collapsed form and standings controls; Lab in About",
+  "Report-to-band assumptions with game-day wording, saved evidence and five discrete bands"
+ ],
+ "checks": {
+  "smoke": {
+   "smoke": [
+    108,
+    108
+   ],
+   "fault": [
+    86,
+    108
+   ]
+  },
+  "focused_python": {
+   "tests": 63,
+   "log": "/tmp/musnba_u24_focused_all.log"
+  },
+  "node": {
+   "tests": 19,
+   "log": "/tmp/musnba_u24_node_full.log"
+  },
+  "independent_histograms": 47724,
+  "independent_advanced_distributions": 6435,
+  "unique_responsive_checks": 114,
+  "browser_suites": {
+   "focused": {
+    "checks": 36,
+    "report_sha256": "a151322bfc349f811da9ecdbd495d31dc2b84144ebde25b138ddaedf90edc05f",
+    "screenshots": "/tmp/musnba-u24-final-focused"
+   },
+   "pages": {
+    "checks": 36,
+    "report_sha256": "c15d73c4be24366a080b64be51dc7c4f4e766247357d939ac2e62a996ba60420",
+    "screenshots": "/tmp/musnba-u24-final-pages"
+   },
+   "games": {
+    "checks": 38,
+    "report_sha256": "28d95f9568e8e55900c6beaa2a974cc3acdf8e82cee981c8483f53af4d3226b9",
+    "screenshots": "/tmp/musnba-u24-final-games"
+   },
+   "teams": {
+    "checks": 6,
+    "report_sha256": "291ba240f2170c89fc1edab89cf60cff54de364e7c717354e7ffb06eca508548",
+    "screenshots": "/tmp/musnba-u24-final-teams"
+   }
+  },
+  "pwa": {
+   "laptop": {
+    "checks": [
+     34,
+     34
+    ],
+    "log": "/tmp/musnba_u24_pwa_laptop_v2.log",
+    "sha256": "b17a73e21eb5d2dffec5c93d6940008832f5eda47c0739974d9e629120e5a189"
+   },
+   "phone": {
+    "checks": [
+     32,
+     32
+    ],
+    "log": "/tmp/musnba_u24_pwa_phone_v2.log",
+    "sha256": "ed8951b3f82dc8766559ad8946019d856c8dce9247b8f9c3d89c8cb4915ec6c8"
+   },
+   "upgrade": {
+    "checks": [
+     36,
+     36
+    ],
+    "log": "/tmp/musnba_u24_pwa_upgrade_v2.log",
+    "sha256": "08d7cad678c73e6b63b302ba76151550407c34d9fe5d3f44d498d2fa122dbf08"
+   }
+  }
+ },
+ "receipts": [
+  "20261123_u24_accounting_v2.json",
+  "20261123_u24_season_accounting_v2.json",
+  "20261123_u24_input_policy_v1.json"
+ ],
+ "bundles": {
+  "laptop": {
+   "path": "/Users/moholom/Library/Mobile Documents/com~apple~CloudDocs/MusNBA/MusNBA-laptop.musnba.gz",
+   "bytes": 194967756,
+   "sha256": "ae58903229e149f6df9247bb8ae4f8c30a68645d6cf8578cdd1ffcccf4361317",
+   "header": {
+    "format": "musnba",
+    "version": 2,
+    "capabilities": [
+     "lineup-forecast-v1",
+     "minute-cdf-player-v2",
+     "player-icons-v1"
+    ],
+    "created": "2026-11-23T23:08:45+00:00",
+    "latest": "2026-11-23",
+    "snapshots": [
+     "2026-11-12",
+     "2026-11-13",
+     "2026-11-14",
+     "2026-11-15",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22",
+     "2026-11-23"
+    ],
+    "profile": "laptop"
+   }
+  },
+  "phone": {
+   "path": "/Users/moholom/Library/Mobile Documents/com~apple~CloudDocs/MusNBA/MusNBA.musnba.gz",
+   "bytes": 102685412,
+   "sha256": "6638b66618d522d620ed034af4f9f1e133d4e27e2b9dd09ff4100d7bd7374dc3",
+   "header": {
+    "format": "musnba",
+    "version": 2,
+    "capabilities": [
+     "lineup-forecast-v1",
+     "minute-cdf-player-v2",
+     "player-icons-v1"
+    ],
+    "created": "2026-11-23T23:09:22+00:00",
+    "latest": "2026-11-23",
+    "snapshots": [
+     "2026-11-12",
+     "2026-11-13",
+     "2026-11-14",
+     "2026-11-15",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22",
+     "2026-11-23"
+    ],
+    "profile": "phone"
+   }
+  }
+ },
+ "shell": {
+  "commit": "1c5e751c8c97c09d3864a47263c2de7a932bcbaa",
+  "cache": "128fb0374337d241bb75",
+  "files": 27,
+  "data_free": true,
+  "upgrade_baseline": "31317f88cec02d4ee61fe3a0cae3c4eb9bc3eb49"
+ },
+ "availability_changes": [
+  {
+   "game": "401910036",
+   "before": [
+    {
+     "player_id": "4433287",
+     "probability": 0.7,
+     "status": "Day-To-Day",
+     "availability_basis": "status"
+    }
+   ],
+   "after": []
+  },
+  {
+   "game": "401910037",
+   "before": [
+    {
+     "player_id": "3917376",
+     "probability": 0.7,
+     "status": "Day-To-Day",
+     "availability_basis": "status"
+    }
+   ],
+   "after": [
+    {
+     "player_id": "3917376",
+     "probability": 0.75,
+     "status": "Day-To-Day",
+     "availability_basis": "game_report"
+    }
+   ]
+  },
+  {
+   "game": "401910038",
+   "before": [
+    {
+     "player_id": "3149673",
+     "probability": 0.7,
+     "status": "Day-To-Day",
+     "availability_basis": "status"
+    }
+   ],
+   "after": [
+    {
+     "player_id": "3149673",
+     "probability": 0.5,
+     "status": "Day-To-Day",
+     "availability_basis": "game_report"
+    }
+   ]
+  },
+  {
+   "game": "401910042",
+   "before": [
+    {
+     "player_id": "4395628",
+     "probability": 0.7,
+     "status": "Day-To-Day",
+     "availability_basis": "status"
+    }
+   ],
+   "after": [
+    {
+     "player_id": "4395628",
+     "probability": 0.75,
+     "status": "Day-To-Day",
+     "availability_basis": "game_report"
+    }
+   ]
+  },
+  {
+   "game": "401910045",
+   "before": [
+    {
+     "player_id": "5104157",
+     "probability": 0.7,
+     "status": "Day-To-Day",
+     "availability_basis": "status"
+    }
+   ],
+   "after": [
+    {
+     "player_id": "5104157",
+     "probability": 0.5,
+     "status": "Day-To-Day",
+     "availability_basis": "game_report"
+    }
+   ]
+  }
+ ],
+ "measured_compute": {
+  "active_heavy_processes": 10,
+  "aggregate_cpu_percent": 992.3,
+  "utc_observation_window": [
+   "2026-11-23T22:53:50Z",
+   "2026-11-23T22:57:42Z"
+  ],
+  "meaning": "read-only ps sample; ten simulation workers at about ten cores"
+ },
+ "validation_repairs": [
+  {
+   "issue": "Independent audit reordered ratio/percentage operations, moving half-bin floats by one ULP; first mismatch seven mass units across57/58percent bins.",
+   "resolution": "Retain strict histogram checks using the declared ratio-then-display-units convention; runtime, views and worlds unchanged."
+  },
+  {
+   "issue": "Guide test expected obsolete unweighted per-game count teaching copy.",
+   "resolution": "Assert dynamic per-lineup counts, weighted-path labels and probability-weight explanation; rerun all three full PWA checks."
+  }
+ ],
+ "retained_failed_check_logs": {
+  "/tmp/musnba_u24_accounting_20261123_v1.log": "8e2d5af4b0c66c1fba240eaad4ec25f56ae2160e00b0e299c34dd348ea20af66",
+  "/tmp/musnba_u24_pwa_upgrade.log": "dad01ccc8236af30b005deeedf773d0f879c8179b60fd91b3d4e9a08ff4502c5",
+  "/tmp/musnba_u24_pwa_phone.log": "e0ed708211b449784b8d15aa79b5636d5535d9ff849f13c7e8b9eb4e81c44ff4",
+  "/tmp/musnba_u24_pwa_laptop.log": "87b27404898c7cd24c57a3ff1fdb9073f757699b9bf2f3ee9000b980b662d1c2"
+ },
+ "documentation": {
+  "live_markdown_files": 8,
+  "archived_originals": 44,
+  "frozen_policies": "unchanged, hash checked",
+  "reviewed_core": [
+   "AGENTS.md",
+   "HANDOFF_NEXT.md",
+   "PLAN.md",
+   "MODEL.md",
+   "README.md"
+  ]
+ },
+ "next_chunk": {
+  "manifest": "20261123_chunk_c_plan_v2.json",
+  "status": "0%",
+  "weights": {
+   "C1": 10,
+   "C2": 25,
+   "C3": 15,
+   "C4": 25,
+   "C5": 25
+  },
+  "first": "Early complete-game iCloud publication; current wrapper still exports at end"
+ },
+ "limits": [
+  "Availability bands and cross-team independence are assumptions, not empirically calibrated.",
+  "Accepted node/clock recipes and protected evaluation remain unchanged.",
+  "Exact weighted season coupling is not certified iid season sampling.",
+  "Both devices still require app update and their own manual import; real-device acceptance unverified.",
+  "Zones, replay, dynamic Cup/play-in/playoff scheduling and further analysis depth remain planned."
+ ],
+ "logs": {
+  "nightly": "/tmp/musnba_u24_nightly_20261123_v1.log",
+  "accounting": "/tmp/musnba_u24_accounting_20261123_v2.log"
+ },
+ "audit_source_sha256": "0b7495609d99d0fb51b89625ee5efd6a7eb4c7fcdf97093bca135d4508a8e8b1"
+}

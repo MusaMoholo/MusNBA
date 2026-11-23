@@ -213,7 +213,7 @@ def live_selection(game, registry, minute_inputs, T, lg, P, Q, priors):
     inputs = {}
     for side in game.sides:
         team = str(game.game[f'{side}_id'])
-        for player in projection.player_inputs(team, P, registry, lg, T, True, Q, priors):
+        for player in projection.player_inputs(team, P, registry, lg, T, True, Q, priors, game.day):
             pid = str(player['id'])
             if pid in inputs:
                 raise ValueError('duplicate player in origin rosters')

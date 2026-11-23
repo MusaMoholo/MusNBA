@@ -312,6 +312,8 @@ class OnePlayerBranchesTests(unittest.TestCase):
         game.game = {'game_id': '123'}
         game.ids = [str(i) for i in range(game.n)]
         eng = a1_foul_out_probe.ProbeEngine()
+        eng.runtime = {}
+        eng.clock_policy = None
         eng.rotation_policy = a1_lineup_branches.BranchLegalityGuard()
 
         class FouledWorlds(engine.Worlds):

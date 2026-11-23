@@ -28,10 +28,13 @@ export function chooseLineup(gid, pid, choice) {
 }
 const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
 
-// Owner (20 Nov): makes and the main stats (no combos or attempts); OREB/DREB where the stored worlds carry them
+// Current-data catalogue: each option is offered only when its saved inputs exist.
 export const PLAYER_VARS = [['available', 'Available'], ['unavailable', 'Unavailable'], ['plays', 'Plays'], ['sits', 'Sits (does not play)'], ['min', 'Minutes'], ['pts', 'Points'], ['reb', 'Rebounds'],
   ['oreb', 'Offensive rebounds'], ['dreb', 'Defensive rebounds'], ['ast', 'Assists'], ['fg3m', 'Threes made'], ['fgm', 'Field goals made'],
-  ['ftm', 'Free throws made'], ['stl', 'Steals'], ['blk', 'Blocks'], ['tov', 'Turnovers'], ['fgpct', 'FG% (of attempts)']];
+  ['ftm', 'Free throws made'], ['stl', 'Steals'], ['blk', 'Blocks'], ['tov', 'Turnovers'], ['fgpct', 'FG% (of attempts)'], ['fga', 'Field-goal attempts'], ['fg3a', 'Three-point attempts'], ['fta', 'Free-throw attempts'],
+  ['twoMade', 'Two-pointers made'], ['twoAtt', 'Two-point attempts'], ['twoPct', '2P%'], ['fg3pct', '3P%'], ['ftpct', 'FT%'], ['efg', 'Effective FG%'], ['ts', 'True shooting%'],
+  ['threeShare', '3-point attempt rate%'], ['ftRate', 'Free-throw attempt rate%'], ['astTov', 'Assists per turnover'],
+  ['pra', 'Points + rebounds + assists'], ['pr', 'Points + rebounds'], ['pa', 'Points + assists'], ['ra', 'Rebounds + assists'], ['stocks', 'Steals + blocks']];
 export const TEAM_VARS = [['win', 'Wins'], ['lose', 'Loses'], ['pts', 'Points'], ['margin', 'Margin'],
   ['q1', 'Q1 points'], ['q2', 'Q2 points'], ['q3', 'Q3 points'], ['q4', 'Q4 points'], ['h1', '1st-half points'], ['h2', '2nd-half points'],
   ['wq1', 'Wins Q1'], ['wq2', 'Wins Q2'], ['wq3', 'Wins Q3'], ['wq4', 'Wins Q4'], ['wh1', 'Wins the 1st half'], ['wh2', 'Wins the 2nd half'],
@@ -152,7 +155,7 @@ export function worldData(raw, source = null) {
     for (let w = 0; w < W; w++) out[w] = lines[(w * n + i) * k + j];
     return out;
   };
-  const add = (...cols) => { const out = new Float64Array(W); for (const c of cols) for (let w = 0; w < W; w++) out[w] += c[w]; return out; };
+  const add = (...cols) => { if (cols.some(c => !c)) return null; const out = new Float64Array(W); for (const c of cols) for (let w = 0; w < W; w++) out[w] += c[w]; return out; };
   const teamCol = (side, q) => {
     if (source) {
       const key = `team-column|${side}|${q}`;
@@ -206,8 +209,19 @@ export function worldData(raw, source = null) {
       else if (v === 'pa') out = add(c('pts'), c('ast'));
       else if (v === 'ra') out = add(c('reb'), c('ast'));
       else if (v === 'stocks') out = add(c('stl'), c('blk'));
-      else if (v === 'fgpct') { const m = c('fgm'), a = c('fga'); out = m.map((x, w) => (a[w] > 0 ? Math.round(100 * x / a[w]) : NaN)); }
-      else if (v === 'ftm' && !raw.stats.includes('ftm')) { const p_ = c('pts'), m = c('fgm'), t = c('fg3m'); out = p_.map((x, w) => Math.max(0, x - 2 * m[w] - t[w])); }
+      else if (['twoMade', 'twoAtt'].includes(v)) {
+        const a = c(v === 'twoMade' ? 'fgm' : 'fga'), b = c(v === 'twoMade' ? 'fg3m' : 'fg3a');
+        out = a && b ? a.map((x, w) => x - b[w]) : null;
+      } else if (['fgpct', 'twoPct', 'fg3pct', 'ftpct', 'efg', 'ts', 'threeShare', 'ftRate', 'astTov'].includes(v)) {
+        const spec = {fgpct: ['fgm', 'fga'], twoPct: ['twoMade', 'twoAtt'], fg3pct: ['fg3m', 'fg3a'], ftpct: ['ftm', 'fta'],
+          threeShare: ['fg3a', 'fga'], ftRate: ['fta', 'fga'], astTov: ['ast', 'tov']}[v];
+        let a, b;
+        if (spec) { a = c(spec[0]); b = c(spec[1]); }
+        else if (v === 'efg') { const m = c('fgm'), t = c('fg3m'); a = m && t ? m.map((x, w) => x + .5 * t[w]) : null; b = c('fga'); }
+        else { a = c('pts'); const f = c('fga'), t = c('fta'); b = f && t ? f.map((x, w) => 2 * (x + .44 * t[w])) : null; }
+        out = a && b ? a.map((x, w) => b[w] > 0 ? (v === 'astTov' ? 1 : 100) * x / b[w] : NaN) : null;
+      }
+      else if (v === 'ftm' && !raw.stats.includes('ftm')) { const p_ = c('pts'), m = c('fgm'), t = c('fg3m'); out = p_ && m && t ? p_.map((x, w) => Math.max(0, x - 2 * m[w] - t[w])) : null; }
       else out = statCol(i, v);
     } else if (subj.startsWith('t:')) {
       const side = subj.slice(2), other = side === 'home' ? 'away' : 'home';
@@ -254,23 +268,22 @@ export function worldData(raw, source = null) {
   return W_;
 }
 
-/** Worlds selected by every condition (AND). A condition: {subj, v, op ('ge' | 'le'), x} or a flag variable. */
+/** Worlds selected by every condition (AND). A condition: {subj, v, op ('ge' | 'le' | 'eq' | 'gt' | 'lt'), x} or a flag variable. */
 export function mask(Wd, conds) {
   const m = Wd.baseMask ? Wd.baseMask.slice() : new Uint8Array(Wd.W).fill(1);
   for (const c of conds) {
-    if (Wd.baseMask && (!c || typeof c.subj !== 'string' || typeof c.v !== 'string'
-        || (!isFlag(c.v) && (!['ge', 'le'].includes(c.op) || !Number.isFinite(c.x))))) {
+    if (!c || typeof c.subj !== 'string' || typeof c.v !== 'string'
+        || (!isFlag(c.v) && (!['ge', 'le', 'eq', 'gt', 'lt'].includes(c.op) || !Number.isFinite(c.x)))) {
       throw new Error('Invalid condition for selected worlds');
     }
     const vals = Wd.values(c.subj, c.v);
     if (!vals) {
-      if (Wd.baseMask || ['available', 'unavailable'].includes(c.v)) throw new Error('Condition is unavailable in the selected worlds');
-      continue;
+      throw new Error('Condition is unavailable in the selected worlds');
     }
     for (let w = 0; w < Wd.W; w++) {
       if (!m[w]) continue;
       const x = vals[w];
-      m[w] = isFlag(c.v) ? (x === 1 ? 1 : 0) : Number.isNaN(x) ? 0 : (c.op === 'le' ? x <= c.x : x >= c.x) ? 1 : 0;
+      m[w] = isFlag(c.v) ? (x === 1 ? 1 : 0) : Number.isNaN(x) ? 0 : ({le: () => x <= c.x, ge: () => x >= c.x, eq: () => x === c.x, gt: () => x > c.x, lt: () => x < c.x}[c.op]()) ? 1 : 0;
     }
   }
   return m;
@@ -351,7 +364,7 @@ export function label(c, names, teams) {
   const name = (vars.find(([k]) => k === c.v) || [c.v, c.v])[1];
   const lc = t => (/^[A-Z][a-z]/.test(t) ? t[0].toLowerCase() + t.slice(1) : t);  // "Wins Q1" → "wins Q1", keep "Q1 points"
   if (isFlag(c.v)) return c.subj === 'g' ? name : `${subj} ${lc(name)}`;
-  return `${subj} ${lc(name)} ${c.op === 'le' ? '≤' : '≥'} ${c.x}`;
+  return `${subj} ${lc(name)} ${({le: '≤', ge: '≥', eq: '=', gt: '>', lt: '<'})[c.op]} ${c.x}`;
 }
 
 /** Overlaid histogram: the conditional distribution as bars, the baseline as a step outline (both as shares). */
@@ -455,18 +468,25 @@ export function subjectOptions(data, selected) {
 }
 // Grouped "what" options (owner: grouping in dropdowns); every variable belongs to one group
 const VAR_GROUPS = {
-  p: [['Availability and participation', ['available', 'unavailable', 'plays', 'sits', 'min']], ['Scoring', ['pts', 'fgm', 'fg3m', 'ftm', 'fgpct']], ['Rebounding', ['reb', 'oreb', 'dreb']],
-      ['Handling', ['ast', 'tov']], ['Defense', ['stl', 'blk']]],
+  p: [['Availability and participation', ['available', 'unavailable', 'plays', 'sits', 'min']], ['Scoring', ['pts', 'fgm', 'fg3m', 'ftm', 'fga', 'fg3a', 'fta', 'twoMade', 'twoAtt']], ['Rebounding', ['reb', 'oreb', 'dreb']],
+      ['Efficiency', ['fgpct', 'twoPct', 'fg3pct', 'ftpct', 'efg', 'ts', 'threeShare', 'ftRate', 'astTov']],
+      ['Combined totals', ['pra', 'pr', 'pa', 'ra', 'stocks']], ['Handling', ['ast', 'tov']], ['Defense', ['stl', 'blk']]],
   t: [['Result', ['win', 'lose', 'margin']], ['Points', ['pts', 'h1', 'h2', 'q1', 'q2', 'q3', 'q4']],
       ['Periods won', ['wq1', 'wq2', 'wq3', 'wq4', 'wh1', 'wh2', 'qwins', 'sweep']],
       ['Leads', ['q1m', 'h1m', 'q3m', 'q4m', 'lead1', 'leadh', 'lead3']], ['Flow', ['comeback', 'blown', 'wire']]],
   g: [['Totals', ['total', 'th1', 'th2', 't1', 't4']], ['Margin & flow', ['absm', 'close3', 'changes', 'flip']], ['Overtime', ['ot', 'not']]],
 };
+const PLAYER_INPUTS = {plays: ['min'], sits: ['min'], ftm: ['pts','fgm','fg3m'],
+  pra: ['pts','reb','ast'], pr: ['pts','reb'], pa: ['pts','ast'], ra: ['reb','ast'], stocks: ['stl','blk'],
+  twoMade: ['fgm','fg3m'], twoAtt: ['fga','fg3a'], twoPct: ['twoMade','twoAtt'],
+  fgpct: ['fgm','fga'], fg3pct: ['fg3m','fg3a'], ftpct: ['ftm','fta'], efg: ['fgm','fg3m','fga'],
+  ts: ['pts','fga','fta'], threeShare: ['fg3a','fga'], ftRate: ['fta','fga'], astTov: ['ast','tov']};
 export function varOptions(subj, selected, Wd) {
   const kind = subj.startsWith('p:') ? 'p' : subj.startsWith('t:') ? 't' : 'g';
-  const vars = new Map((kind === 'p' ? PLAYER_VARS.filter(([k]) =>
-    !['oreb', 'dreb', 'available', 'unavailable'].includes(k)
-      || (['available', 'unavailable'].includes(k) ? Boolean(Wd.weights) : Wd.stats.includes(k))) : kind === 't' ? TEAM_VARS : GAME_VARS));
+  const available = new Set(Wd.stats);
+  const supports = key => ['available','unavailable'].includes(key) ? Boolean(Wd.weights)
+    : available.has(key) || Boolean(PLAYER_INPUTS[key]?.every(supports));
+  const vars = new Map((kind === 'p' ? PLAYER_VARS.filter(([key]) => supports(key)) : kind === 't' ? TEAM_VARS : GAME_VARS));
   const opt = k => `<option value="${k}"${k === selected ? ' selected' : ''}>${esc(vars.get(k))}</option>`;
   return VAR_GROUPS[kind].map(([label, ks]) => { const o = ks.filter(k => vars.has(k)).map(opt).join(''); return o ? `<optgroup label="${esc(label)}">${o}</optgroup>` : ''; }).join('');
 }

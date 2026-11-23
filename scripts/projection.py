@@ -20,6 +20,9 @@ from __future__ import annotations
 
 import hashlib
 import math
+import re
+from datetime import date, datetime, timedelta
+from zoneinfo import ZoneInfo
 import sys
 import warnings
 from pathlib import Path
@@ -35,8 +38,9 @@ MODEL = {
     'home_court': 2.0, 'team_sd': 11.25, 'team_rho': 0.35, 'prior_games': 8, 'prior_minutes': 80,
     'quarter_prior_seconds': 3600, 'usage_prior_points': 15, 'usage_prior_assists': 8,
 }
-AVAILABILITY = {'active': 1.0, 'probable': 0.9, 'day-to-day': 0.7, 'questionable': 0.5,
-                'doubtful': 0.15, 'out': 0.0, 'suspension': 0.0, 'suspended': 0.0, 'injured reserve': 0.0}
+AVAILABILITY_POLICY = 'report-bands-v1'  # owner-defined assumptions, not calibrated probabilities
+AVAILABILITY = {'active': 1.0, 'probable': 0.75, 'day-to-day': 0.5, 'questionable': 0.5,
+                'doubtful': 0.25, 'out': 0.0, 'suspension': 0.0, 'suspended': 0.0, 'injured reserve': 0.0}
 PERIODS = ('q1', 'q2', 'q3', 'q4', 'h1', 'h2', 'fg')
 SLICES = {'q1': [0], 'q2': [1], 'q3': [2], 'q4': [3], 'h1': [0, 1], 'h2': [2, 3], 'fg': [0, 1, 2, 3, 4]}
 FG_DIST = ('min', 'pts', 'reb', 'oreb', 'dreb', 'ast', 'fg3m', 'fgm', 'ftm', 'stl', 'blk', 'tov', 'pra', 'pr', 'pa', 'ra', 'stocks',
@@ -132,11 +136,52 @@ def team_rates(T: dict, lg: dict, tid: str) -> dict:
 # ---------------------------------------------------------------------------- players
 
 def availability(status: str | None) -> float:
-    return AVAILABILITY.get((status or '').strip().lower(), 0.6)
+    return AVAILABILITY.get((status or '').strip().lower(), 0.5)
+
+
+def report_availability(reg: dict, game_day: str | None) -> tuple[float, str]:
+    """Conservative, auditable report-to-band conversion for the specified ET game date.
+
+    Structured clear status wins. Generic DTD/unknown uses only a recent report explicitly
+    naming this game day. Stale/ambiguous text cannot rule a player in or out.
+    """
+    status = (reg.get('status') or '').strip().lower()
+    basis = 'not_listed_assumption' if status == 'active' and reg.get('status_source') == 'not_listed_assumption' else 'status'
+    if status in AVAILABILITY and status != 'day-to-day':
+        return availability(status), basis
+    injury = reg.get('injury') or {}
+    try:
+        target = date.fromisoformat(game_day)
+        published = datetime.fromisoformat(injury['date'].replace('Z', '+00:00')).astimezone(ZoneInfo('America/New_York')).date()
+    except (TypeError, ValueError, KeyError):
+        return .5, 'ambiguous_report'
+    text = str(injury.get('comment') or '').lower().replace('’', "'")
+    weekdays = re.findall(r'\b(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b', text)
+    named_day = set(weekdays) == {target.strftime('%A').lower()}
+    same_day = published == target and bool(re.search(r'\b(today|tonight)\b', text)) and not weekdays
+    if not (timedelta(0) <= target - published < timedelta(days=7) and (named_day or same_day)):
+        return .5, 'ambiguous_report'
+    # Contradictory historical wording is ambiguous; no optimistic keyword fallback.
+    if re.search(r'not (?:yet )?cleared|unclear|not clear|whether .*will play', text):
+        return .5, 'ambiguous_report'
+    signals = set()
+    for pattern, band in (
+        (r"(?:won't|will not|not expected to) play|ruled out|will miss|unavailable for|(?:listed|designated) as out", 0),
+        (r"(?:listed as |listed |is |to |deemed )doubtful", .25),
+        (r"(?:listed as |listed |is |to |remains? )questionable|game.time decision", .5),
+        (r"(?:listed as |listed |is |to |deemed )probable|expected to play", .75),
+        (r"(?:will|cleared to) play|available (?:to play|for)", 1),
+    ):
+        if re.search(r'\b(?:' + pattern + r')\b', text):
+            signals.add(band)
+    # 'not expected to play' contains 'expected to play'; the explicit negative wins.
+    if 'not expected to play' in text:
+        signals.discard(.75)
+    return (signals.pop(), 'game_report') if len(signals) == 1 else (.5, 'ambiguous_report')
 
 
 def player_inputs(tid: str, P: dict, registry: dict, lg: dict, T: dict, prospective: bool,
-                  Q: dict | None = None, priors: dict | None = None) -> list[dict]:
+                  Q: dict | None = None, priors: dict | None = None, game_day: str | None = None) -> list[dict]:
     if prospective:
         ids = [pid for pid, r in registry.items() if r.get('on_roster') and r.get('team') == tid]
     else:
@@ -151,11 +196,9 @@ def player_inputs(tid: str, P: dict, registry: dict, lg: dict, T: dict, prospect
         gp, mins = (p['gp'], t.get('min', 0)) if p else (0, 0)
         if prospective:
             status = (reg.get('status') or '').strip() or 'Unknown'
-            basis = ('not_listed_assumption' if status.lower() == 'active' and reg.get('status_source') == 'not_listed_assumption'
-                     else 'status' if status.lower() in AVAILABILITY else 'unknown_status')
-            a = availability(status)
-            if p and a == 1.0 and p['recent_window'] >= 3 and p['recent_played'] == 0:
-                a = 0.8 if (p['min_ewma'] or 0) >= 20 else 0.5
+            a, basis = report_availability(reg, game_day)
+            if p and a == 1.0 and basis == 'not_listed_assumption' and p['recent_window'] >= 3 and p['recent_played'] == 0:
+                a = 0.75 if (p['min_ewma'] or 0) >= 20 else 0.5
                 basis = 'recent_inactivity'
         else:
             status, basis = 'Unknown (retrospective)', None
@@ -173,7 +216,7 @@ def player_inputs(tid: str, P: dict, registry: dict, lg: dict, T: dict, prospect
         out.append({
             'id': pid, 'name': reg.get('name') or (p['name'] if p else pid), 'pos': reg.get('pos') or (p['pos'] if p else ''),
             'jersey': reg.get('jersey', ''),
-            'status': status, 'availability_basis': basis,
+            'status': status, 'availability_basis': basis, 'availability_policy': AVAILABILITY_POLICY if prospective else None,
             'injury': reg.get('injury') if prospective else None, 'availability': a, 'base_min': m0,
             'recent_started': p['recent_started'] if p else 0, 'gp': gp,
             'r3': r3, 'r2': r2, 'rft': rft, 'p3': p3, 'p2': p2, 'pft': pft,
@@ -238,7 +281,7 @@ def simulate_game(game: dict, T: dict, lg: dict, P: dict, registry: dict, day: s
     other = {'home': 'away', 'away': 'home'}
     teams, fallbacks = {}, []
     for side, tid in sides.items():
-        players = player_inputs(tid, P, registry, lg, T, prospective, Q, priors)
+        players = player_inputs(tid, P, registry, lg, T, prospective, Q, priors, game['date_et'])
         if prospective and sum(bool(p['starter']) for p in players) < 5:
             eligible = sorted((p for p in players if p['availability'] > 0),
                               key=lambda p: (-p.get('recent_started', 0), -p['base_min'], p['id']))

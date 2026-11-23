@@ -1,0 +1,28 @@
+{
+ "policy": "report-bands-v1",
+ "authorised": "Owner 23 November: interpret game reports into discrete branch weights",
+ "bands": {
+  "active": 1.0,
+  "probable": 0.75,
+  "day-to-day": 0.5,
+  "questionable": 0.5,
+  "doubtful": 0.25,
+  "out": 0.0,
+  "suspension": 0.0,
+  "suspended": 0.0,
+  "injured reserve": 0.0
+ },
+ "unknown": 0.5,
+ "game_report": "DTD/unknown only; explicit target weekday or same-day today/tonight; report 0-6 ET dates before game; contradictory/stale/undated wording remains 50%",
+ "inactivity": "Unlisted active with 3+ recent games but no appearances: 75% for prior20+minute role, otherwise50%; clear available report is not overridden",
+ "claim": "Owner-selected input/scenario assumptions; no calibrated availability or learned-model improvement claimed",
+ "preservation": "Historical forecasts retain their weights; prior r3 protected scores and frozen sources unchanged",
+ "nightly_started": "2026-11-23T22:44:30.001933+00:00",
+ "sources": {
+  "scripts/projection.py": "53aac59e59743c1ee93b5b261bfb991253954710c94ca17190f4520e51b9f427",
+  "scripts/engine.py": "a1c3cf07759fe2dd448df44b3584dde1b5a0786c32279cc22cdc3849c71ed2fe",
+  "scripts/a1_lineup_branches.py": "1378390c51d4b5201710c1ec7a4acc581c84a4af3259519603bb4aa4148f211f",
+  "scripts/nightly.py": "2af490ab2511aea826be492a08018631d487ebfd17507fe04dfa26d55e3a02ce",
+  "scripts/forecast_output.py": "0feaf0df0a7e5bfa29f79cdb0a5bf6e8ce144e67707d298fa30ad417fd7a401b"
+ }
+}

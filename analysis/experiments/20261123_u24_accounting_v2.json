@@ -1,0 +1,199 @@
+{
+ "status": "pass",
+ "generated": "2026-11-23T23:07:37Z",
+ "origin": "2026-11-23",
+ "runtime": {
+  "id": "engine-v1.3-r3",
+  "kind": "engine",
+  "version": "v1.3-r3",
+  "models": "v1.3",
+  "rotation": "targets",
+  "sims": 10000,
+  "pool": 0,
+  "label": "Possession engine: each world draws its own player minutes and rotations, with legal foul-out handling. Prior-fitted timing responds to the score and clock late in Q4/overtime. Lineup probabilities are assumptions; defender impact and late foul/shot choices still need improvement.",
+  "foul_policy": "nba-rule3-v1",
+  "rotation_fit": "independent-v1",
+  "chunk_worlds": 1000,
+  "clock_recipe": "data/models/v1.3-r3/clock.json",
+  "season_sims": 10000
+ },
+ "availability_policy": "report-bands-v1",
+ "nightly_seconds": 1514.010949,
+ "snapshot_seconds": 1114.85,
+ "games": [
+  {
+   "game": "401910036",
+   "branches": 1,
+   "worlds": 10000,
+   "cases": 1,
+   "independent_histograms": 2498,
+   "status": "pass",
+   "view_rates": {
+    "game": "401910036",
+    "cases_including_game_view": 1,
+    "rate_distributions_checked": 279,
+    "status": "pass"
+   }
+  },
+  {
+   "game": "401910037",
+   "branches": 2,
+   "worlds": 20000,
+   "cases": 3,
+   "independent_histograms": 7678,
+   "status": "pass",
+   "view_rates": {
+    "game": "401910037",
+    "cases_including_game_view": 4,
+    "rate_distributions_checked": 1143,
+    "status": "pass"
+   }
+  },
+  {
+   "game": "401910038",
+   "branches": 2,
+   "worlds": 20000,
+   "cases": 3,
+   "independent_histograms": 6022,
+   "status": "pass",
+   "view_rates": {
+    "game": "401910038",
+    "cases_including_game_view": 4,
+    "rate_distributions_checked": 927,
+    "status": "pass"
+   }
+  },
+  {
+   "game": "401910039",
+   "branches": 1,
+   "worlds": 10000,
+   "cases": 1,
+   "independent_histograms": 2958,
+   "status": "pass",
+   "view_rates": {
+    "game": "401910039",
+    "cases_including_game_view": 1,
+    "rate_distributions_checked": 324,
+    "status": "pass"
+   }
+  },
+  {
+   "game": "401910040",
+   "branches": 1,
+   "worlds": 10000,
+   "cases": 1,
+   "independent_histograms": 2866,
+   "status": "pass",
+   "view_rates": {
+    "game": "401910040",
+    "cases_including_game_view": 1,
+    "rate_distributions_checked": 315,
+    "status": "pass"
+   }
+  },
+  {
+   "game": "401910041",
+   "branches": 1,
+   "worlds": 10000,
+   "cases": 1,
+   "independent_histograms": 2866,
+   "status": "pass",
+   "view_rates": {
+    "game": "401910041",
+    "cases_including_game_view": 1,
+    "rate_distributions_checked": 315,
+    "status": "pass"
+   }
+  },
+  {
+   "game": "401910042",
+   "branches": 2,
+   "worlds": 20000,
+   "cases": 3,
+   "independent_histograms": 8506,
+   "status": "pass",
+   "view_rates": {
+    "game": "401910042",
+    "cases_including_game_view": 4,
+    "rate_distributions_checked": 1251,
+    "status": "pass"
+   }
+  },
+  {
+   "game": "401910043",
+   "branches": 1,
+   "worlds": 10000,
+   "cases": 1,
+   "independent_histograms": 3142,
+   "status": "pass",
+   "view_rates": {
+    "game": "401910043",
+    "cases_including_game_view": 1,
+    "rate_distributions_checked": 342,
+    "status": "pass"
+   }
+  },
+  {
+   "game": "401910044",
+   "branches": 1,
+   "worlds": 10000,
+   "cases": 1,
+   "independent_histograms": 2958,
+   "status": "pass",
+   "view_rates": {
+    "game": "401910044",
+    "cases_including_game_view": 1,
+    "rate_distributions_checked": 324,
+    "status": "pass"
+   }
+  },
+  {
+   "game": "401910045",
+   "branches": 2,
+   "worlds": 20000,
+   "cases": 3,
+   "independent_histograms": 8230,
+   "status": "pass",
+   "view_rates": {
+    "game": "401910045",
+    "cases_including_game_view": 4,
+    "rate_distributions_checked": 1215,
+    "status": "pass"
+   }
+  }
+ ],
+ "live_games": 10,
+ "branches": 14,
+ "worlds": 140000,
+ "histograms": 47724,
+ "rate_distributions": 6435,
+ "smoke": {
+  "smoke": [
+   108,
+   108
+  ],
+  "fault": [
+   86,
+   108
+  ]
+ },
+ "logs": {
+  "smoke": "/tmp/musnba_u24_smoke_20261123_v2.log",
+  "fault": "/tmp/musnba_u24_fault_20261123_v2.log"
+ },
+ "season_receipt": "20261123_u24_season_accounting_v2.json",
+ "browser_game": "401910037",
+ "browser_player": "4431678",
+ "measured_compute": {
+  "active_heavy_processes": 10,
+  "aggregate_cpu_percent": 992.3,
+  "utc_observation_window": [
+   "2026-11-23T22:53:50Z",
+   "2026-11-23T22:57:42Z"
+  ],
+  "meaning": "read-only ps sample; ten simulation workers at about ten cores"
+ },
+ "controller_source_sha256": "12bbbdfd235a10a0da5e576fde63624db86469b1c30f655ca08155c52072bf36",
+ "audit_source_sha256": "0b7495609d99d0fb51b89625ee5efd6a7eb4c7fcdf97093bca135d4508a8e8b1",
+ "seconds": 77.84373616600351
+}

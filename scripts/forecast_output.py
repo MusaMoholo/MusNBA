@@ -39,6 +39,11 @@ def game(game: dict, teams: dict, pts_by_period: dict, n_ot: np.ndarray, W: int,
     out = {'game_id': game['game_id'], 'model': model_id, 'sims': W, 'shooting_distribution_schema': 1,
            'expectation': {k: round(v, 3) for k, v in exp.items()},
            'ot': round(float(mean(n_ot > 0)), 4), 'ot_periods': np.bincount(n_ot).astype(int).tolist() if weights is None else mass.counts(n_ot)[1].tolist(), 'periods': {}}
+    policies = {p.get('availability_policy') for side in sides for p in teams[side]['players'] if p.get('availability_policy')}
+    if len(policies) > 1:
+        raise ValueError('mixed availability policies in one game')
+    if policies:
+        out['availability_policy'] = policies.pop()
     if weights is not None:
         out.update(weighted_worlds_schema=1, probability_mass=mass.total)
     for period, cols in SLICES.items():
@@ -58,6 +63,8 @@ def game(game: dict, teams: dict, pts_by_period: dict, n_ot: np.ndarray, W: int,
             entry = {k: x[k] for k in ('id', 'name', 'pos', 'jersey', 'starter', 'status', 'injury')}
             if x.get('availability_basis'):
                 entry['availability_basis'] = x['availability_basis']
+            if x.get('availability_policy'):
+                entry['availability_policy'] = x['availability_policy']
             if x.get('minutes'):  # D29: what the engine's minutes rest on (engine v1.2+)
                 mm = x['minutes']
                 entry['minutes_basis'] = {'healthy': round(mm['healthy'], 1), 'target': round(mm.get('target', 0.0), 1),

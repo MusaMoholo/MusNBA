@@ -889,7 +889,7 @@ def inputs_for(game: dict, day: str, T, lg, P, registry, Q=None, priors=None, ro
     origin = day if origin is None else origin
     if origin > day:
         raise ValueError(f'forecast origin {origin} is after slate {day}')
-    players = {s: [p for p in projection.player_inputs(game[f'{s}_id'], P, registry, lg, T, True, Q, priors) if p['availability'] > 0]
+    players = {s: [p for p in projection.player_inputs(game[f'{s}_id'], P, registry, lg, T, True, Q, priors, day) if p['availability'] > 0]
                for s in ('home', 'away')}
     feats = features_dir(models)  # v1.3+: the defence variant's latest profiles (rebuilt nightly)
     profiles = pd.read_parquet(feats / 'latest.parquet')

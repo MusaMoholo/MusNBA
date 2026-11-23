@@ -1,0 +1,141 @@
+{
+ "version": 2,
+ "date": "2026-11-23",
+ "supersedes": "20261123_chunk_c_plan_v1.json",
+ "owner_decision": "D59: current-data UX now (U24); remaining vision in next Chunk C",
+ "headliners": [
+  "More believable player decisions and coherent season paths",
+  "One comprehensive, interactive NBA analysis workspace"
+ ],
+ "modules": [
+  {
+   "id": "C1",
+   "title": "Early delivery",
+   "weight": 10,
+   "rungs": {
+    "10": "Trace completion/export; pin real cases and costs.",
+    "20": "Freeze complete-game/generation/interruption contracts.",
+    "30": "Persist verified completions and bounded pending queue.",
+    "40": "Fail promptly; cancel pending work, retain completed chunks.",
+    "50": "Reject changed-input resume; prevent duplicate worlds.",
+    "60": "Publish complete game/Expected with season freshness.",
+    "70": "Import both profiles before remaining slate finishes.",
+    "80": "Pass interrupted activation, legacy and offline checks.",
+    "90": "Fresh r3 nightly proves early delivery, exact worlds,≤60min.",
+    "100": "Publish shell/bundles; evidence/docs/checkpoint."
+   }
+  },
+  {
+   "id": "C2",
+   "title": "Court-aware shots",
+   "weight": 25,
+   "rungs": {
+    "10": "Audit current zones, permitted sources and event joins.",
+    "20": "Freeze versioned zones, unknowns, exposures and pooling.",
+    "30": "Build strictly prior attacker/defender zone profiles.",
+    "40": "Audit counts/units/cutoffs; matched-data control parity.",
+    "50": "Fit at most three declared node variants versus control.",
+    "60": "Select at most one supported recipe; otherwise reject.",
+    "70": "One paired 200-game engine development screen.",
+    "80": "Grade PTS, team totals, tails, dependence and bench coverage.",
+    "90": "Freeze survivor and independent confirmation inputs.",
+    "100": "Record measured research decision; checkpoint without promotion."
+   }
+  },
+  {
+   "id": "C3",
+   "title": "Rotations",
+   "weight": 15,
+   "rungs": {
+    "10": "Recover exact S06 recipe; identify r3 interactions.",
+    "20": "Freeze causal pre-event inputs and fold fits.",
+    "30": "Port one unchanged policy beside independent r3 fitting.",
+    "40": "Audit legal fives, seconds, foul-outs and state response.",
+    "50": "One paired 200-game development screen.",
+    "60": "Grade MIN primary, proper scores and coverage.",
+    "70": "Separate uncertainty from harm; no rescue retuning.",
+    "80": "Freeze survivor/removal contribution for C4.",
+    "90": "Prove production-policy wiring and replay provenance.",
+    "100": "Record measured research decision; checkpoint without promotion."
+   }
+  },
+  {
+   "id": "C4",
+   "title": "Analysis & replay",
+   "weight": 25,
+   "rungs": {
+    "10": "Inventory derived metrics; freeze capture/schema/size and UX scope.",
+    "20": "Select five real positive-mass examples; record branch/chunk/world IDs.",
+    "30": "Replay original full chunks with read-only capture.",
+    "40": "Reconcile raw parity, events, boxes, clocks and rotations.",
+    "50": "Ship court/event/box view with honest spatial precision.",
+    "60": "Add seek/step/speed/quarters and rotation timeline.",
+    "70": "Add supported zone maps, interactive outcomes and advanced metrics.",
+    "80": "Check metric discovery, shared lineup filters, sorting and responsive UX.",
+    "90": "Confirm frozen survivors/removals independently; freeze qualifier.",
+    "100": "Ship accepted-runtime exploration; record limits/checkpoint."
+   }
+  },
+  {
+   "id": "C5",
+   "title": "Competitions & release",
+   "weight": 25,
+   "rungs": {
+    "10": "Freeze current-season rules, source precedence and calendar manifest.",
+    "20": "Define canonical event flags and missing regular-season slots.",
+    "30": "Build world-local Cup groups, ties, hosts and knockout paths.",
+    "40": "Fill nonqualifier/quarterfinal-loser slots; prove82/team.",
+    "50": "Add play-in paths and coherent fixed-bracket best-of-seven series.",
+    "60": "Resolve regulation/final/OT and official standings tiebreak accounting.",
+    "70": "Ship Regular season/Cup/Playoffs with conditional stage/matchup tools.",
+    "80": "Prove path identities/mass, calendar fixtures and honest assumptions.",
+    "90": "One protected possession test for frozen qualifier; accept/retain engines.",
+    "100": "Fresh integrated nightly, playback/exports/PWA checks, successor/checkpoint."
+   }
+  }
+ ],
+ "product_contract": [
+  "Expose every meaningful derived/predicted metric with its support, definitions and interactive views; inventory gaps rather than invent outputs.",
+  "Shared one-game lineup context across boxes, advanced stats, conditions and replay.",
+  "Regular season, Cup and Playoffs are core competition sections; Players/Teams remain shared tools.",
+  "Expand conditions, advanced rates, heatmaps and outcome exploration; diagrams are examples, not a feature ceiling.",
+  "Keep controls grouped, secondary detail collapsible, tables sortable and primary navigation free of Lab."
+ ],
+ "current_data_census": {
+  "scheduled_games": 1200,
+  "teams": 30,
+  "scheduled_per_team": 80,
+  "cup_labelled": 60,
+  "regular_target": 1230,
+  "regular_per_team_target": 82,
+  "scope": "retained2026-27 master; no dynamic Cup/play-in/bracket scheduling yet"
+ },
+ "references": [
+  "https://pr.nba.com/nba-cup-semifinal-host-sites-coachs-challenge-rules/",
+  "https://pr.nba.com/hinkle-fieldhouse-emirates-nba-cup-2026-championship/",
+  "https://www.nba.com/news/nba-cup-101",
+  "https://www.nba.com/news/nba-cup-frequently-asked-questions",
+  "https://www.nba.com/news/nba-play-in-tournament",
+  "https://www.nba.com/standings?os=0",
+  "https://baseballsavant.mlb.com/illustrator",
+  "https://baseballsavant.mlb.com/visuals",
+  "https://nextgenstats.nfl.com/"
+ ],
+ "rules_notes": [
+  "2026-27 Cup semifinals are higher-seed home games; final neutral Indianapolis. Prefer dated current-season league announcements over stale team landing pages/FAQ dates.",
+  "Group games already count toward regular82. QF/SF fill TBD league slots; Cup final excluded from league records/stats. Add30 league games to1200, not2 beyond82 per team.",
+  "22 nonqualifiers each need2 games;4 quarterfinal losers each need1; league QF4+SF2 complete remaining30. Canonical event simulated once even when both Cup and league.",
+  "Exact unpublished pairing/travel algorithm is unknown: freeze feasible matching assumptions, label and sensitivity-check; official fixtures replace slots.",
+  "Use Cup regulation-only differential/points rules; team pathway currently stores regulation scores plus a separately resolved winner, requiring explicit final/OT semantics.",
+  "Play-in produces16 playoff teams; best-of-seven fixed bracket, no reseeding, correct2-2-1-1-1 hosts, stop at4 wins;15 series and1 champion per world.",
+  "Existing all-teams-equal-scheduled invariant is competition-scoped: partial80-game league schedules and unequal postseason game counts are legitimate."
+ ],
+ "limits": [
+  "Only two bounded learned possession families; preserve MODEL qualification caps/protected test.",
+  "No pathway calibration retune, broad rewrite, new provider or historical forecast backfill.",
+  "Postseason path mechanics do not establish historical calibration.",
+  "Inspiration references concern presentation; they do not authorise ingesting new data sources."
+ ],
+ "baseline_checkpoint": "U24: current-data dashboard fixes and report-bands-v1 delivered; 20261123_u24_completion_v2.json",
+ "entry": "C1 early complete-game iCloud publication; current nightly still exports at end"
+}

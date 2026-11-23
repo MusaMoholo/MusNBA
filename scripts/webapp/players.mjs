@@ -21,6 +21,8 @@ export async function render(view, ctx) {
 }
 
 function value(p, key, mode) {
+  if (key === 'name') return p.name;
+  if (key === 'team') return team(p.team).abbr;
   const t = p.tot, gp = p.gp;
   if (!gp) return null;
   if (key === 'gp') return gp;
@@ -63,21 +65,22 @@ async function table(view, {meta, current}) {
     const q = normalise(state.q);
     let rows = data.players.filter(p => qualifiesMinutes(p, state.minMinutesShare, benchmark) && (!state.team || p.team === state.team) && (!q || normalise(p.name).includes(q)));
     const {key, dir} = state.sort;
-    rows = rows.map(p => ({p, v: value(p, key, state.mode)})).sort((a, b) => (a.v == null) - (b.v == null) || dir * ((a.v ?? 0) - (b.v ?? 0)) || a.p.name.localeCompare(b.p.name)).map(x => x.p);
+    rows = rows.map(p => ({p, v: value(p, key, state.mode)})).sort((a, b) => (a.v == null) - (b.v == null) || dir * (typeof a.v === 'string' ? a.v.localeCompare(b.v) : (a.v ?? 0) - (b.v ?? 0)) || a.p.name.localeCompare(b.p.name)).map(x => x.p);
     const shown = rows.slice(0, state.limit);
     const movers = data.players.filter(p => p.gp >= 8 && p.l10 && p.tot.min / p.gp >= 15).map(p => ({p, d: p.l10.pts - p.tot.pts / p.gp})).sort((a, b) => b.d - a.d);
     const mv = x => `<a class="mv" href="#/player/${x.p.id}">${logo(x.p.team, 'sm')}<span>${playerLabel(x.p.id, x.p.name)}</span><em class="${x.d > 0 ? 'up' : 'down'}">${x.d > 0 ? '+' : ''}${x.d.toFixed(1)}</em><small>${(x.p.tot.pts / x.p.gp).toFixed(1)} → ${x.p.l10.pts.toFixed(1)}</small></a>`;
     const moversHtml = movers.length > 10 ? `<details class="panel" id="player-movers"${moversOpen ? ' open' : ''}><summary><b>Heating up &amp; cooling off</b> · last 10 v season points</summary>
       <div class="movers"><div><span class="spot-kicker">Heating up</span>${movers.slice(0, 5).map(mv).join('')}</div>
       <div><span class="spot-kicker">Cooling off</span>${movers.slice(-5).reverse().map(mv).join('')}</div></div></details>` : '';
-    view.querySelector('#ptable').innerHTML = `${moversHtml}<div class="scroll"><table><thead><tr><th>#</th><th class="name">Player</th><th class="l">Team</th>${COLS.map(([k, l]) => `<th data-sort="${k}" tabindex="0" aria-sort="${key === k ? (dir < 0 ? 'descending' : 'ascending') : 'none'}">${l}${key === k ? `<span class="arrow">${dir < 0 ? '▼' : '▲'}</span>` : ''}</th>`).join('')}</tr></thead><tbody>
+    view.querySelector('#ptable').innerHTML = `${moversHtml}<div class="scroll"><table><thead><tr><th>#</th><th class="name" data-sort="name" tabindex="0" aria-sort="${key === 'name' ? (dir < 0 ? 'descending' : 'ascending') : 'none'}">Player${key === 'name' ? `<span class="arrow">${dir < 0 ? '▼' : '▲'}</span>` : ''}</th><th class="l" data-sort="team" tabindex="0" aria-sort="${key === 'team' ? (dir < 0 ? 'descending' : 'ascending') : 'none'}">Team${key === 'team' ? `<span class="arrow">${dir < 0 ? '▼' : '▲'}</span>` : ''}</th>${COLS.map(([k, l]) => `<th data-sort="${k}" tabindex="0" aria-sort="${key === k ? (dir < 0 ? 'descending' : 'ascending') : 'none'}">${l}${key === k ? `<span class="arrow">${dir < 0 ? '▼' : '▲'}</span>` : ''}</th>`).join('')}</tr></thead><tbody>
       ${shown.map((p, i) => `<tr class="link" data-pid="${p.id}"><td class="dim">${i + 1}</td><td class="name">${playerLabel(p.id, p.name)} <span class="tag">${esc(p.pos || '')}</span>${statusTag(p.status)}</td><td class="l">${teamLink(p.team, {short: true})}</td>
         ${COLS.map(([k]) => `<td${k === 'trend' ? ' class="trend-c"' : ''}>${k === 'trend' ? sparkCell(p) : fmt(k, value(p, k, state.mode), state.mode)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
       <div class="row" style="margin-top:10px"><span class="note" style="margin:0">${shown.length} of ${rows.length} players</span>${rows.length > shown.length ? '<button class="ghost" id="more">Show more</button>' : ''}</div>`;
     view.querySelectorAll('th[data-sort]').forEach(th => th.onclick = th.onkeydown = e => {
-      if (e.type === 'keydown' && e.key !== 'Enter') return;
+      if (e.type === 'keydown' && !['Enter', ' '].includes(e.key)) return;
+      e.preventDefault();
       const k = th.dataset.sort;
-      state.sort = {key: k, dir: state.sort.key === k ? -state.sort.dir : (k === 'tov' ? 1 : -1)};
+      state.sort = {key: k, dir: state.sort.key === k ? -state.sort.dir : (['name', 'team', 'tov'].includes(k) ? 1 : -1)};
       paint();
     });
     view.querySelectorAll('tr[data-pid]').forEach(tr => tr.onclick = e => { if (!e.target.closest('a')) location.hash = '#/player/' + tr.dataset.pid; });
@@ -133,7 +136,7 @@ async function playerPage(view, {rest, current}) {
     ${quartersPanel(data.quarters)}
     ${log.length ? `<section class="panel" id="trend">${trendPanel(log, s)}</section>
     <details class="panel" data-game-log><summary><b>Game log</b> · ${log.length} ${log.length === 1 ? 'entry' : 'entries'}</summary><div class="scroll"><table><thead><tr><th class="l">Date</th><th class="l">Opp</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th><th>3PM</th><th>STL</th><th>BLK</th><th>TOV</th><th>FG</th><th>3P</th><th>FT</th><th>+/−</th></tr></thead><tbody>
-      ${log.slice().reverse().map(r => `<tr class="link" data-gid="${r.game_id}"><td class="l">${esc(dayLabel(r.date))}</td><td class="l">${r.home ? 'vs' : '@'} ${esc(team(r.opp).abbr)}</td>
+      ${log.slice().reverse().map(r => `<tr class="link" data-gid="${r.game_id}"><td class="l" data-sort-value="${esc(r.date)}">${esc(dayLabel(r.date))}</td><td class="l">${r.home ? 'vs' : '@'} ${esc(team(r.opp).abbr)}</td>
         ${r.dnp ? `<td class="l dim" colspan="12">${esc(r.reason || 'Did not play')}</td>` : `<td>${r.min}</td><td><b>${r.pts}</b></td><td>${r.reb}</td><td>${r.ast}</td><td>${r.fg3m}</td><td>${r.stl}</td><td>${r.blk}</td><td>${r.tov}</td><td>${r.fgm}-${r.fga}</td><td>${r.fg3m}-${r.fg3a}</td><td>${r.ftm}-${r.fta}</td><td>${signed(r.pm, 0)}</td>`}</tr>`).join('')}
       </tbody></table></div></details>` : ''}`;
   view.querySelectorAll('tr[data-gid]').forEach(tr => tr.onclick = () => { location.hash = '#/game/' + tr.dataset.gid; });

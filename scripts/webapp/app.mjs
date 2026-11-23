@@ -1,5 +1,5 @@
 // Application glue: boot, hash routes, theme, search and the model/data panel.
-import {playerFace, playerLabel, api, esc, errorPanel, logo, meta, normalise, refreshLogos, setMeta, stamp, store, team, dayLabel} from './ui.mjs';
+import {playerFace, playerLabel, api, esc, errorPanel, logo, meta, normalise, refreshLogos, setMeta, stamp, store, team, dayLabel, wireSortableTables} from './ui.mjs';
 import * as today from './today.mjs';
 import * as game from './game.mjs';
 import * as league from './league.mjs';
@@ -22,6 +22,10 @@ export async function boot() {
   };
   matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => refreshLogos());
   setupSearch();
+  const content = document.getElementById('view');
+  new MutationObserver(changes => {
+    if (changes.some(change => [...change.addedNodes].some(node => node.nodeType === 1 && (node.matches('table') || node.querySelector('table'))))) wireSortableTables(content);
+  }).observe(content, {childList: true, subtree: true});
   let info;
   try {
     info = await api('meta');
@@ -68,6 +72,7 @@ export async function route() {
     console.error(error);
   }
   if (mine !== token) return;
+  wireSortableTables(view);
   view.removeAttribute('aria-busy');
   const saved = scrolls.get(hash);
   const sameView = hash.split('/').slice(0, 3).join('/') === lastHash.split('/').slice(0, 3).join('/');
@@ -82,7 +87,7 @@ function renderDataPanel(info) {
   const rows = info.snapshots.slice().reverse().map(s =>
     `<tr><td class="l"><a href="#/today/${s.date}">${dayLabel(s.date)}</a></td><td class="l">${s.kind}</td><td>${s.games}</td><td class="l">${esc(stamp(s.generated))}</td><td class="l">${esc(s.model)}</td></tr>`).join('');
   document.getElementById('data-body').innerHTML = `
-    <p class="note"><a href="#/about">About the model →</a></p><p class="note"><b>${esc(info.model.label)}</b>. Each game is simulated ${info.model.sims.toLocaleString()} times; the season sims every unplayed fixture ${(info.model.season_sims || info.model.sims).toLocaleString()} times. ${['engine', 'preview'].includes(info.model.kind) ? 'The possession engine plays every possession of today\'s games; it is the floor — a new model replaces it only if the backtest says it is better (PLAN.md). Past dates rebuilt after the fact use the placeholder.' : 'Placeholder model — the possession engine is the default for today\'s slate (PLAN.md).'}</p>
+    <p class="note"><a href="#/about">About the model →</a></p><p class="note"><b>${esc(info.model.label)}</b>. Each explicit lineup case has ${info.model.sims.toLocaleString()} worlds; Expected combines its branches with their stated weights. Standings shows the actual season-path count. ${['engine', 'preview'].includes(info.model.kind) ? 'The possession engine plays today’s games. Changes are checked against real player and team outcomes before release. Retrospective reconstructions are labelled.' : 'This is a labelled placeholder forecast.'}</p>
     <p class="note">Season ${esc(info.season)} · ${info.data.finals} of ${info.data.games} scheduled games final · collection run ${esc(info.data.collected_run)} · views built ${esc(stamp(info.built))}. Sources: ESPN and NBA Stats (retained matchups/tracking). Times in UK with ET.</p>
     <div class="scroll" style="margin-top:10px"><table><thead><tr><th class="l">Slate</th><th class="l">Kind</th><th>Games</th><th class="l">Generated</th><th class="l">Model</th></tr></thead><tbody>${rows}</tbody></table></div>
     <p class="note">Pre-game timing requires a recorded completion before tip-off. Older snapshots may have unverified timing; retrospective snapshots use earlier box scores without dated injury news.</p>`;

@@ -72,7 +72,9 @@ def forecast_availability_report(game: dict, registry: dict) -> dict:
             status = (row.get('status') or '').strip() or 'Unknown'
             report[side].append({'id': str(pid), 'name': row.get('name'), 'status': status,
                                  'reported_status': row.get('reported_status'), 'status_source': row.get('status_source'),
-                                 'injury': deepcopy(row.get('injury')), 'availability': projection.availability(status)})
+                                 'injury': deepcopy(row.get('injury')), 'availability': projection.report_availability(row, game.get('date_et'))[0],
+                                 'availability_basis': projection.report_availability(row, game.get('date_et'))[1],
+                                 'availability_policy': projection.AVAILABILITY_POLICY})
     return report
 
 
@@ -350,7 +352,7 @@ def write_snapshot(part: dict, season: dict, archive_root=None) -> dict:
         'schema': 1, 'season': SEASON_LABEL, 'slate_date': day, 'origin': origin, 'cutoff': day_shift(origin, -1),
         'kind': 'prospective' if prospective else 'retrospective', 'generated': part['generated'],
         'started_at': part['generated'], 'completed_at': None,
-        'model': part['model'], 'sims': part['sims'], 'season_sims': season['sims'],
+        'model': part['model'], 'availability_policy': projection.AVAILABILITY_POLICY if prospective else None, 'sims': part['sims'], 'season_sims': season['sims'],
         'saved_worlds': {gid: game['sims'] for gid, game in part['games'].items()},
         'season_model': {'id': season['model'], 'as_of': season['as_of'], 'label': season['pathway']['label']},
         'seeds': 'sha256(model|slate date|game) per game; (season model|as-of date|season)',

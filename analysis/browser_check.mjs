@@ -19,6 +19,12 @@ const only = args.only ? String(args.only).split(',') : null;
 
 // name, hash, sizes, themes
 const CASES = [
+  ['u24-roster-sort', '#/team/14', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['u24-players-sort', '#/players', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['u24-scenario', '#/game/' + (args['lineup-game'] || '401910036') + '/scenario', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['u24-advanced', '#/game/' + (args['lineup-game'] || '401910036') + '/player/' + (args['lineup-player'] || '4065733') + '/fg', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['u24-lineup-compare', '#/game/' + (args['lineup-game'] || '401910036') + '/fg/team', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['u24-standings-controls', '#/standings/forecast', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['boot-retry', '#/', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['today', '#/today/2026-11-19', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['results', '#/today/2026-11-18', ['desktop', 'phone'], ['light']],
@@ -44,7 +50,7 @@ const CASES = [
   ['season-movers', '#/standings/movers', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['season-leaders', '#/standings/leaders', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['about', '#/about', ['desktop', 'half', 'phone'], ['dark', 'light']],
-  ['teams', '#/teams', ['desktop', 'phone'], ['dark']],
+  ['teams', '#/teams', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['team', '#/team/14', ['desktop', 'half', 'phone'], ['light', 'dark']],
   ['team-no-proj', '#/team/20', ['desktop', 'half', 'phone'], ['light', 'dark']],
   ['legacy-season', '#/season', ['desktop', 'half', 'phone'], ['dark', 'light']],
@@ -403,6 +409,83 @@ for (const [name, hash, sizes, themes] of CASES) {
         panel.scrollIntoView(); return panel.querySelectorAll('.player-face').length >= 6;
       })()`, returnByValue:true}, sessionId)).result.value === true;
     }
+    if (name.startsWith('u24-')) {
+      interaction = (await send('Runtime.evaluate', {expression: `(async () => {
+        const kind = ${JSON.stringify(name)};
+        const wait = async test => { for (let i=0;i<100;i++) { if (test()) return true; await new Promise(r=>setTimeout(r,100)); } return false; };
+        if (kind === 'u24-roster-sort') {
+          const form=document.querySelector('[data-disclosure^="team-form-"]'); if(form) {form.open=true;await new Promise(r=>setTimeout(r,30));}
+          const table=document.querySelector('table.roster'); if (!table) return false;
+          const headers=[...table.tHead.rows[0].cells], index=headers.findIndex(h=>h.dataset.sortHeading==='PTS');
+          if (index<0) return false;
+          const groups=[...table.querySelectorAll('tr.grp')].map(r=>r.textContent);
+          const check = direction => { let last=null; for (const row of table.tBodies[0].rows) {
+            if (row.classList.contains('grp')) { last=null; continue; }
+            const value=Number(row.cells[index].textContent); if (Number.isNaN(value)) continue;
+            if(last!=null && direction*(value-last)<0) return false; last=value;
+          } return true; };
+          headers[index].click(); if (!check(-1)) return false;
+          headers[index].dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true}));
+          if (!check(1) || JSON.stringify(groups)!==JSON.stringify([...table.querySelectorAll('tr.grp')].map(r=>r.textContent))) return false;
+          const bench=table.querySelector('[data-roster-group="Bench"]'); bench?.click();
+          return !bench || [...table.querySelectorAll('tr[data-roster-member="Bench"]')].every(r=>!r.hidden);
+        }
+        if (kind === 'u24-players-sort') {
+          const heading=document.querySelector('th[data-sort="name"]'); if (!heading) return false;
+          heading.click();
+          const names=[...document.querySelectorAll('#ptable tbody .player-label > span:last-child')].map(e=>e.textContent);
+          if(names.length<3 || names.some((n,i)=>i && names[i-1].localeCompare(n)>0)) return false;
+          const team=document.querySelector('th[data-sort="team"]'); team.dispatchEvent(new KeyboardEvent('keydown',{key:' ',bubbles:true}));
+          return document.querySelector('th[data-sort="team"]').getAttribute('aria-sort')==='ascending';
+        }
+        if (kind === 'u24-standings-controls') {
+          let d=document.querySelector('[data-disclosure="forecast-controls"]'); if (!d || d.open) return false;
+          d.open=true; await new Promise(r=>setTimeout(r,30));
+          const input=document.querySelector('[data-fwins]'); input.value='45'; input.dispatchEvent(new Event('change'));
+          d=document.querySelector('[data-disclosure="forecast-controls"]');
+          if(!d.open || !d.textContent.includes('45')) return false;
+          document.querySelector('th[data-fsort="name"]').click();
+          return document.querySelector('th[data-fsort="name"]').getAttribute('aria-sort')==='ascending';
+        }
+        const ui=await import('./assets/ui.mjs'), O=await import('./assets/outcomes.mjs');
+        const gid=location.hash.split('/')[2], data=await ui.api('game/'+gid);
+        if (kind === 'u24-scenario') {
+          const player=['home','away'].flatMap(s=>data.projection.sim[s].players).find(p=>p.periods && p.periods.fg.mean.pts>10);
+          const root=document.querySelector('[data-builder="scn"]'); if(!root || !player) return false;
+          const select=(key,value)=>{const el=root.querySelector('[data-b="'+key+'"]');el.value=value;el.dispatchEvent(new Event('change'));};
+          select('subj','p:'+player.id);select('v','fga');select('op','eq');
+          root.querySelector('[data-b="x"]').value='10';root.querySelector('[data-b="add"]').click();
+          if(!await wait(()=>document.querySelector('#game-body .chip'))) return false;
+          const W=await O.load(gid), C=W.weights?O.branchCalculations(W):O;
+          const m=O.mask(W,[{subj:'p:'+player.id,v:'fga',op:'eq',x:10}]), base=O.mask(W,[]);
+          const expected=ui.pct((C.mass?C.mass(m):C.count(m))/(C.mass?C.mass(base):C.count(base)),1);
+          const chance=[...document.querySelectorAll('#game-body .tile')].find(e=>e.textContent.includes('Chance of this scenario'));
+          if(!chance || chance.querySelector('b').textContent!==expected) return false;
+          document.querySelector('[data-scenario-box="efficiency"]').click();
+          return [...document.querySelectorAll('#game-body table.box th')].some(e=>e.textContent.includes('TS%'));
+        }
+        if (kind === 'u24-advanced') {
+          const panel=document.querySelector('[data-advanced-panel]'); if(!panel) return false; panel.open=true;
+          const player=data.projection.sim.home.players.concat(data.projection.sim.away.players).find(p=>p.id===location.hash.split('/')[4]);
+          if(!player) return false;
+          const d=player.periods.fg.advanced.efg;
+          if(!panel.textContent.includes(d.worlds.toLocaleString()+' saved worlds') || /100,000.*worlds/.test(panel.textContent)) return false;
+          const dist=panel.querySelector('details[data-metric="efg"]');dist.open=true;
+          return await wait(()=>dist.querySelector('svg')) && [...panel.querySelectorAll('a[href*="/scenario/"]')].every(a=>a.getBoundingClientRect().height>=44);
+        }
+        if (kind === 'u24-lineup-compare') {
+          const detail=document.querySelector('.lineup-compare');if(!detail) return false;detail.open=true;
+          const buttons=[...detail.querySelectorAll('[data-lineup-case]')];if(buttons.length<3) return false;
+          buttons.find(b=>!b.dataset.lineupCase.includes('x')).click();
+          if(!await wait(()=>document.querySelector('[data-research-lineups] p')?.textContent.includes('Selected lineup'))) return false;
+          const panels=[...document.querySelectorAll('[data-advanced-panel]')];if(panels.length!==2) return false;
+          panels.forEach(p=>p.open=true);
+          const compare=document.querySelector('.lineup-compare');compare.open=true;
+          return panels.every(p=>p.querySelectorAll('.advanced-grid > .tile').length===18);
+        }
+        return false;
+      })()`,returnByValue:true,awaitPromise:true},sessionId)).result.value===true;
+    }
     await sleep(250);
     const {result: dims} = await send('Runtime.evaluate', {returnByValue: true, expression: `(() => {
       const wide = [...document.querySelectorAll('body *')].filter(el => { const r = el.getBoundingClientRect(); return r.right > innerWidth + 1 && !el.closest('.scroll') && getComputedStyle(el).position !== 'fixed'; }).slice(0, 5).map(el => el.tagName.toLowerCase() + (el.className ? '.' + String(el.className).split(' ')[0] : ''));
@@ -410,7 +493,9 @@ for (const [name, hash, sizes, themes] of CASES) {
     })()`}, sessionId);
     const d = dims.value;
     const overflow = d.scrollWidth > d.innerWidth + 1;
-    const panelTop = ['game-advanced', 'team-stories', 'today-headshots'].includes(name) ? (await send('Runtime.evaluate', {expression: `document.querySelector(${JSON.stringify(name === 'team-stories' ? '[data-game-stories]' : name === 'today-headshots' ? '#slate-insights' : '#view details.panel')})?.getBoundingClientRect().top + scrollY || 0`, returnByValue: true}, sessionId)).result.value : 0;
+    const u24Focus = {'u24-roster-sort':'table.roster','u24-players-sort':'#ptable','u24-standings-controls':'[data-disclosure="forecast-controls"]','u24-advanced':'[data-advanced-panel]','u24-scenario':'[data-scenario-box]','u24-lineup-compare':'.lineup-compare'}[name];
+    const focusedTop = u24Focus ? (await send('Runtime.evaluate',{expression:`Math.max(0,document.querySelector(${JSON.stringify(u24Focus)})?.getBoundingClientRect().top + scrollY - 20 || 0)`,returnByValue:true},sessionId)).result.value : 0;
+    const panelTop = u24Focus ? focusedTop : ['game-advanced', 'team-stories', 'today-headshots'].includes(name) ? (await send('Runtime.evaluate', {expression: `document.querySelector(${JSON.stringify(name === 'team-stories' ? '[data-game-stories]' : name === 'today-headshots' ? '#slate-insights' : '#view details.panel')})?.getBoundingClientRect().top + scrollY || 0`, returnByValue: true}, sessionId)).result.value : 0;
     const shot = await send('Page.captureScreenshot', {format: 'png', captureBeyondViewport: true,
       clip: {x: 0, y: args.from ? Math.max(0, d.height - Number(args.from)) : panelTop, width, height: Math.min(args.from ? Number(args.from) : d.height - panelTop, mobile ? 3200 : 2600), scale: 1}}, sessionId);
     const file = join(OUT, `${name}-${size}-${theme}.png`);

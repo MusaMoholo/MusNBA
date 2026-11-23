@@ -1,0 +1,48 @@
+{
+ "kind": "exact near-term atom accounting and numerical-dependence diagnostic; no real outcome scoring",
+ "origin": "2026-11-23",
+ "games": 10,
+ "game_ids": [
+  "401910036",
+  "401910037",
+  "401910038",
+  "401910039",
+  "401910040",
+  "401910041",
+  "401910042",
+  "401910043",
+  "401910044",
+  "401910045"
+ ],
+ "paths": 40000,
+ "probability_mass": 40000,
+ "effective_paths": 40000.0,
+ "every_joint_world_atom_exact": true,
+ "status_joint_errors": [
+  0.0006999999999999784,
+  0.0011499999999999844,
+  0.0009000000000000119,
+  -0.0004250000000000087,
+  0.0010000000000000009,
+  0.0010749999999999926
+ ],
+ "max_abs_cross_game_total_margin_correlation": 0.021466467338023057,
+ "independent_references": 32,
+ "independent_effective_size": 40000,
+ "reference_max_abs_correlation_range": [
+  0.011596734555734893,
+  0.021377053332969152
+ ],
+ "reference_max_abs_correlation_quantiles": [
+  0.011740538380643558,
+  0.014945311655251167,
+  0.02025354504963282
+ ],
+ "sources": {
+  "analysis/a1_live_season_audit.py": "3e278e87a9196c6825beb5fd926a5c01eec9105ad1443cd9a37658548339b94d",
+  "data/snapshots/2026-11-23/season.json": "24f8fa5e74d49ea9a55b3e313f68740567234b8ee8ae4ce2dfd48bd0af498a7b",
+  "data/snapshots/2026-11-23/season_engine_worlds.npz": "db5137531f7834dfb71c5ed42681c3adff8a7117c4b5e5608d872f24067ef7f2",
+  "data/snapshots/2026-11-23/season_player_indices.npz": "4a0943d59a997f7844348f334f7c8786e9f12251168dd56a3b5b22c6cf4100aa"
+ },
+ "limitation": "Independent offsets imply product marginals in expectation; a finite coupling has numerical cross-game dependence. Availability dependence is an assumption, not calibrated injury skill."
+}
