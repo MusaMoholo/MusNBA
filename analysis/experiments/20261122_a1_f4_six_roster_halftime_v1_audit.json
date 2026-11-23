@@ -1,0 +1,57 @@
+{
+ "kind": "independent selected six-player halftime accounting",
+ "report": "analysis/experiments/20261122_a1_f4_six_roster_halftime_v1.json",
+ "report_sha256": "0ead18efd671ea846a2015f28490434eb9d81edbb061de07bc99d9d42bae66e8",
+ "audit_sha256": "df49018f04b9770ca641fafbb2bea5783574ddc8dc17700085ae8a2e5554337e",
+ "attempts": 1000,
+ "completed": 798,
+ "exhausted": 202,
+ "metrics": {
+  "home_score": {
+   "all_attempts_mean": 54.026,
+   "survivors_mean": 53.721804511278194,
+   "failed_mean": 55.227722772277225,
+   "survivor_minus_all": -0.3041954887218097,
+   "bootstrap_95_percentile": [
+    -0.5693508958260802,
+    -0.04406273628743058
+   ]
+  },
+  "away_score": {
+   "all_attempts_mean": 57.91,
+   "survivors_mean": 57.865914786967416,
+   "failed_mean": 58.084158415841586,
+   "survivor_minus_all": -0.04408521303258084,
+   "bootstrap_95_percentile": [
+    -0.3108624651032933,
+    0.22161459785374307
+   ]
+  },
+  "home_personal_fouls": {
+   "all_attempts_mean": 9.888,
+   "survivors_mean": 9.390977443609023,
+   "failed_mean": 11.851485148514852,
+   "survivor_minus_all": -0.49702255639097714,
+   "bootstrap_95_percentile": [
+    -0.5997060696890237,
+    -0.3962127213021124
+   ]
+  },
+  "home_players_three_plus_fouls": {
+   "all_attempts_mean": 1.409,
+   "survivors_mean": 1.2431077694235588,
+   "failed_mean": 2.0643564356435644,
+   "survivor_minus_all": -0.1658922305764412,
+   "bootstrap_95_percentile": [
+    -0.20244345877749487,
+    -0.13121341414735854
+   ]
+  }
+ },
+ "elapsed_seconds": 3.106,
+ "limitations": [
+  "One selected oracle-roster game with synthetic absence; not an NBA rate.",
+  "Halftime selection only; rejected final outcomes and full-game predictive bias are unknown.",
+  "Does not promote any retry or foul-penalty policy."
+ ]
+}

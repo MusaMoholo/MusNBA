@@ -1,10 +1,29 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 80%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **c264e69** (six-player exhaustion stress); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **b5d55bd** (six-player S06 comparison); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
+- **A1 90% partial — halftime selection diagnostic (23 Nov UTC):** replayed all **1,000** original
+  six-player D29 attempts, matching the **798** complete-world digests and **202** exact failure reasons.
+  At halftime, the **798** eventual survivors averaged **9.391** home fouls versus **9.888** over all
+  attempts; survivor-minus-all **−0.497**, unadjusted attempt-bootstrap 95% interval **[−0.600, −0.396]**.
+  Home players with at least three fouls averaged **1.243 vs 1.409**, difference **−0.166**
+  **[−0.202, −0.131]**. Halftime home score difference was **−0.304 [−0.569, −0.044]**; away score
+  **−0.044 [−0.311, 0.222]**. The four percentile intervals are not multiplicity-adjusted.
+  A separate saved-file audit reconciled all **1,000** halftime player/team minute, point and foul arrays,
+  seeds, outcomes and estimates in **3.106s**; generation took **98.301s**, six one-thread workers.
+  This directly demonstrates selection of *pre-failure* states in one extreme selected oracle-roster case,
+  not the missing full-game counterfactual, a league rate or a predictive gate. Failed final outcomes remain
+  unknown; do not wire retry to production on this evidence. Reports
+  `analysis/experiments/20261122_a1_f4_six_roster_halftime_v1{,_audit}.json`, ignored captures
+  `data/derived/experiments/20261122_a1_f4_six_roster_halftime_v1/`, log
+  `/tmp/musnba_a1_f4_six_roster_halftime_v1.log`. Focused tests **8/8**, smoke **107/107**, intentional
+  fault **86/107** and exit 1 (`/tmp/musnba_a1_halftime_{smoke,fault}_v1.log`). HANDOFF, PLAN, FINDINGS
+  and README record the work; AGENTS, ENGINE_PLAN, TRAINING_PLAN and DASHBOARD_PLAN need no changes:
+  standing rules, accepted engine, evaluation gates and shipped UI remain unchanged. No protected-season
+  outcomes were scored; accepted model and bundles remain unchanged. A1 **80%**, Chunk A **34.5%**.
 - **A1 90% partial — six-player S06 comparison (23 Nov UTC):** the separate selected-timeout/foul-penalty
   policy completed **202/202** single-world attempts using the exact seeds rejected by the D29 repair on the
   selected synthetic-absence F4 case. **46** worlds had technicals, **85** technical events total; four
@@ -481,6 +500,16 @@ The preceding pushed checkpoint was **c264e69** (six-player exhaustion stress); 
   technicals only; this deliberately selects D29 failures, and changed policy/random paths prevent treating
   same-seed results as matched states, estimating retry bias, league rates or predictive accuracy. Stop on
   any unexpected error and retain partial records. No model or forecast promotion.
+- **A1 90% six-player halftime selection diagnostic, frozen before replay:** replay all **1,000** original
+  six-player D29 attempts with unchanged seeds and a read-only halftime observer. Record halftime home/away
+  score and home personal fouls plus the count of available home players with at least three fouls; all
+  recorded failures were after halftime. Verify each of the **798** successful complete-world digests and
+  each of the **202** exact classified failure reasons against the original manifest. Independently audit
+  saved halftime player/period minutes and points against team totals, and foul values/availability. Compare all attempts to the
+  successful subset for these prespecified halftime measures, with 5,000 seeded bootstrap resamples over
+  attempts and 95% percentile intervals. This can measure selection in the common pre-failure state of this
+  selected synthetic case, not estimate missing final-game outcomes, production rates or general predictive
+  accuracy. Unexpected errors or changed replay identities stop the run; retain partial files.
 - **A1 80% complete, injection-only:** a single shared research lineup control now drives selected player, team,
   sheet, scenario/Given/Joint and driver views; branch-unavailable metadata/cards are omitted. Available and
   positive-minute participation are distinct; shooting-defined mass is weighted. No normal route registers the
@@ -2966,8 +2995,9 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
    10k deterministic captures, isolated 200-world clean-stop/resume comparison, 200-game F4 exhaustion
    screen and independent audits are listed above. The targeted six-player stress has now identified
    **202** exhausted seeds in its selected F4 case; the S06 comparison is complete and independently
-   audited, with different policies/paths and no bias conclusion. Continue F1–F3 and dated pre-game
-   cohorts where available. The resume prototype
+   audited, with different policies/paths and no final-outcome bias conclusion. A matched replay now
+   establishes selected pre-failure halftime states in this extreme case; full-game bias remains unknown.
+   Continue F1–F3 and dated pre-game cohorts where available. The resume prototype
    is single-operator only, and an orphaned partial batch fails for manual inspection. Source evidence and missing dated
    injury-report cohorts are documented there and in FINDINGS; do not score protected-season outcomes.
    The retry coordinator is deliberately unwired: prove world-local classification and survivor isolation,

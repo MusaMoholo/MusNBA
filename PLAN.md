@@ -429,6 +429,12 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 ET · A1 retry-selection diagnostic:** on the selected six-player F4 stress, all **1,000**
+  attempts were replayed with matching completed-world digests/failure reasons. Halftime home fouls were
+  **9.391** among survivors versus **9.888** across attempts, difference **−0.497**, unadjusted 95%
+  attempt-bootstrap **[−0.600, −0.396]**. Separate saved-file accounting passed. This establishes
+  selection of pre-failure states in that case, not final-outcome bias, league rate or a promotion.
+  No production model/bundle change; A1 **80%**, Chunk A **34.5%**.
 - **22 Nov 2026 ET · A1 six-player S06 comparison:** on the **202** D29-exhausted seeds from a selected
   synthetic-absence F4 game, the separate S06 policy completed **202**, with **85** technical events in
   **46** worlds. Independent accounting reconciled **101,962** lineup fives. Different substitutions

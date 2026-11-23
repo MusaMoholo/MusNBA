@@ -8,6 +8,7 @@ from unittest.mock import patch
 import numpy as np
 
 from analysis import a1_f4_exhaustion_screen as screen
+from analysis import a1_f4_six_roster_halftime_audit as halftime_audit
 from analysis import a1_f4_six_roster_audit as stress_audit
 from analysis import a1_f4_six_roster_penalty_audit as penalty_audit
 from analysis import a1_f4_six_roster_penalty_compare as penalty
@@ -129,6 +130,33 @@ class ExhaustionScreenTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, 'stress summary differs'):
                     penalty_audit.main()
             self.assertFalse(output.exists())
+
+    def test_halftime_accounting_rejects_missing_seconds_or_player_points(self):
+        side = np.array([0] * 6 + [1] * 6)
+        minutes = np.zeros((12, 5))
+        minutes[[0, 1, 2, 3, 4, 6, 7, 8, 9, 10], :2] = 12
+        points = np.zeros((12, 5), dtype=int)
+        points[0, 0] = 2
+        data = {'side': side, 'available': np.ones(12, dtype=bool), 'minutes': minutes,
+                'player_points': points, 'player_fouls': np.zeros((12, 5), dtype=int),
+                'team_points': np.array([[2, 0, 0, 0, 0], [0, 0, 0, 0, 0]]),
+                'score': np.array([2, 0])}
+        np.testing.assert_array_equal(halftime_audit.metrics(data), [2, 0, 0, 0])
+        minutes[0, 0] -= 1
+        with self.assertRaisesRegex(ValueError, 'minutes or points'):
+            halftime_audit.metrics(data)
+        minutes[0, 0] += 1
+        points[0, 0] += 1
+        with self.assertRaisesRegex(ValueError, 'minutes or points'):
+            halftime_audit.metrics(data)
+
+    def test_halftime_selection_detects_survivor_conditioning(self):
+        success = np.array([True] * 798 + [False] * 202)
+        values = np.zeros((1000, 4))
+        values[~success, 0] = 1
+        result = halftime_audit.summary(values, success)['home_score']
+        self.assertAlmostEqual(result['survivor_minus_all'], -0.202)
+        self.assertLess(result['bootstrap_95_percentile'][1], 0)
 
 
 if __name__ == '__main__':

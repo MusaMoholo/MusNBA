@@ -2,6 +2,21 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 ET — halftime survivor selection in the selected six-player F4 stress:** all **1,000**
+original seeds were replayed; all **798** completed worlds reproduced their original full-world digest and all
+**202** failures reproduced their recorded reason. These failures occurred after halftime. Halftime home
+personal fouls averaged **9.888** over all attempts, **9.391** among survivors and **11.851** among failures.
+Survivor minus all is **−0.497**, 95% attempt-bootstrap percentile interval **[−0.600, −0.396]**.
+Home players with 3+ fouls averaged **1.409 / 1.243 / 2.064**, survivor minus all **−0.166**
+**[−0.202, −0.131]**. Halftime home score survivor minus all was **−0.304 [−0.569, −0.044]**;
+away score **−0.044 [−0.311, 0.222]**. Intervals use **5,000** resamples, seed **20261122**, and are
+not adjusted across the four prespecified metrics. Generation took **98.301s** with six one-thread workers;
+separate saved-file replay reconciled all halftime player/team arrays, seeds and calculations in **3.106s**.
+The discarded world's earlier states demonstrably differ in this deliberately selected synthetic oracle-roster
+case; final outcomes for failed worlds are unknown, and this is not a league rate, estimate of production
+forecast bias, or evidence to promote retry. Reports
+`analysis/experiments/20261122_a1_f4_six_roster_halftime_v1{,_audit}.json`.
+
 **22 Nov 2026 ET — selected six-player S06 comparison:** replaying the **202** seeds rejected by D29
 repair in the deliberately selected synthetic-absence F4 case, the separate S06 selected-timeout and
 player-foul-penalty policy completed **202/202** attempts. It recorded **85** technical events in **46**
