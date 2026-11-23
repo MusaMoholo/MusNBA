@@ -177,6 +177,7 @@ before adding variation; event/minute/state randomness already creates covarianc
 [Shared-shooting/world/late-state methods](docs/protocols/a2_joint_late_20261123.md) extend these diagnostics.
 The [contextual late-clock screen](docs/protocols/a2_late_clock_20261123.md) freezes one prior-fitted candidate,
 clean bridge removal control, earlier-fold proper-score criteria and a separate 200-game F4 manifest before results.
+[Engine stages](docs/protocols/a2_clock_engine_20261123.md) freeze control reuse, sequential compatibility and survivor confirmation before clock-engine results.
 The fresh 200-game D51 confirmation pass captures accepted-control worlds once for both modules. A read-only
 observer reproduces 1,556 legacy pilot fields; an independent auditor checks scores, precise minutes, rule/team
 fouls and integrated discrete coverage. Stop/resume hashes match. Panel/stress/stream evidence is complete;

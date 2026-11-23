@@ -1,0 +1,208 @@
+{
+ "kind": "current-slate branch planning only; no simulations or release",
+ "origin": "2026-11-23",
+ "input_sha256": {
+  "data/derived/teams.json": "130aa5358d49b944c2b5bee7e9a163f1e53285e93dae57262f039ca1636b7ecc",
+  "data/derived/players.json": "2e8f9c53fa2cafedeeccb81aedf18d37242471a5cd73762d420e03a9d3836121",
+  "data/derived/team_games.csv": "fdca602cd63062b4135a4540cddb30b0fa3d17e966854cdaee3b4dbf609f8c62",
+  "data/derived/player_games.csv": "f49d0dc3ad5de9cfadfbc22668585f50b8e86e02c72dd97cbc63345f075c13f1",
+  "data/derived/player_periods.csv": "2f0935f9e18c440dfc8549f2404da9e842f0b073a9ee07b870dcdd4c7b69185a",
+  "data/derived/variants/matchup/features/latest.parquet": "eb61e684db9af45c4612ab4226016b184521187c4a577fd697aa1afc6ee965a1",
+  "data/derived/variants/matchup/features/team_latest.parquet": "a256554c29a0d0ef54704c87d063c33d18b25b0f77d564a61c93632d26d18dda"
+ },
+ "source_sha256": "62fef735b185ef6684d9bdb8b320abccb007d5e352fed2de3df8be528735c937",
+ "games": [
+  {
+   "game": "401910036",
+   "selected": [
+    {
+     "team_id": "30",
+     "player_id": "4433287",
+     "probability": 0.7,
+     "status": "Day-To-Day",
+     "availability_basis": "status",
+     "status_source": "injury_report",
+     "reported_status": "Day-To-Day",
+     "healthy_role": 29.744334558107198,
+     "role_basis": "history_based",
+     "usage": 0.2549368441104889,
+     "missing": [],
+     "impact_rank": 1,
+     "impact_proxy": 19.638441994921617
+    }
+   ],
+   "branches": [
+    {
+     "id": "lineup-v1:30/4433287=plays",
+     "weight": {
+      "numerator": "7",
+      "denominator": "10"
+     }
+    },
+    {
+     "id": "lineup-v1:30/4433287=sits",
+     "weight": {
+      "numerator": "3",
+      "denominator": "10"
+     }
+    }
+   ],
+   "simulations_needed": 2
+  },
+  {
+   "game": "401910037",
+   "selected": [
+    {
+     "team_id": "20",
+     "player_id": "3917376",
+     "probability": 0.7,
+     "status": "Day-To-Day",
+     "availability_basis": "status",
+     "status_source": "injury_report",
+     "reported_status": "Day-To-Day",
+     "healthy_role": 33.53073005756055,
+     "role_basis": "history_based",
+     "usage": 0.26598823070526123,
+     "missing": [],
+     "impact_rank": 2,
+     "impact_proxy": 22.876467664498872
+    }
+   ],
+   "branches": [
+    {
+     "id": "lineup-v1:20/3917376=plays",
+     "weight": {
+      "numerator": "7",
+      "denominator": "10"
+     }
+    },
+    {
+     "id": "lineup-v1:20/3917376=sits",
+     "weight": {
+      "numerator": "3",
+      "denominator": "10"
+     }
+    }
+   ],
+   "simulations_needed": 2
+  },
+  {
+   "game": "401910038",
+   "selected": [],
+   "branches": [],
+   "simulations_needed": 1
+  },
+  {
+   "game": "401910039",
+   "selected": [],
+   "branches": [],
+   "simulations_needed": 1
+  },
+  {
+   "game": "401910040",
+   "selected": [],
+   "branches": [],
+   "simulations_needed": 1
+  },
+  {
+   "game": "401910041",
+   "selected": [],
+   "branches": [],
+   "simulations_needed": 1
+  },
+  {
+   "game": "401910042",
+   "selected": [
+    {
+     "team_id": "3",
+     "player_id": "4395628",
+     "probability": 0.7,
+     "status": "Day-To-Day",
+     "availability_basis": "status",
+     "status_source": "injury_report",
+     "reported_status": "Day-To-Day",
+     "healthy_role": 31.211970942979104,
+     "role_basis": "history_based",
+     "usage": 0.22054332494735718,
+     "missing": [],
+     "impact_rank": 1,
+     "impact_proxy": 21.55427041264352
+    }
+   ],
+   "branches": [
+    {
+     "id": "lineup-v1:3/4395628=plays",
+     "weight": {
+      "numerator": "7",
+      "denominator": "10"
+     }
+    },
+    {
+     "id": "lineup-v1:3/4395628=sits",
+     "weight": {
+      "numerator": "3",
+      "denominator": "10"
+     }
+    }
+   ],
+   "simulations_needed": 2
+  },
+  {
+   "game": "401910043",
+   "selected": [],
+   "branches": [],
+   "simulations_needed": 1
+  },
+  {
+   "game": "401910044",
+   "selected": [],
+   "branches": [],
+   "simulations_needed": 1
+  },
+  {
+   "game": "401910045",
+   "selected": [
+    {
+     "team_id": "24",
+     "player_id": "5104157",
+     "probability": 0.7,
+     "status": "Day-To-Day",
+     "availability_basis": "status",
+     "status_source": "injury_report",
+     "reported_status": "Day-To-Day",
+     "healthy_role": 29.69395456211914,
+     "role_basis": "history_based",
+     "usage": 0.3011765778064728,
+     "missing": [],
+     "impact_rank": 1,
+     "impact_proxy": 28.99305971432935
+    }
+   ],
+   "branches": [
+    {
+     "id": "lineup-v1:24/5104157=plays",
+     "weight": {
+      "numerator": "7",
+      "denominator": "10"
+     }
+    },
+    {
+     "id": "lineup-v1:24/5104157=sits",
+     "weight": {
+      "numerator": "3",
+      "denominator": "10"
+     }
+    }
+   ],
+   "simulations_needed": 2
+  }
+ ],
+ "game_branch_batches": 14,
+ "worlds_per_batch": 10000,
+ "retained_original_report": {
+  "path": "data/derived/experiments/20261123_a1_live_branch_plan_v1_full.json",
+  "sha256": "c8bee75c78cff1390b41c4e569bb72a0192aa11d9214248de138da5998b8eba3",
+  "diagnostic_roster_rows": 353
+ },
+ "postprocess": "Move per-player diagnostic rankings to ignored data; retain selected players, every game/branch, original inputs and generator SHA in the committed summary."
+}

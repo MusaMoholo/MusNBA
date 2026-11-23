@@ -1,0 +1,35 @@
+{
+ "at": "2026-11-23T12:46:32.913412+00:00",
+ "kind": "partial research checkpoint; execution continues",
+ "model": "engine-v1.3 unchanged",
+ "pwa": "9f09eb4 unchanged; codec and decoder assets are unpublished preparation, no new served contract",
+ "progress": {
+  "chunk_a": 48.0,
+  "a1": 90,
+  "a2": 60
+ },
+ "checks": {
+  "python": "58 focused cases across current and prior focus runs; 21 lineup / 2 CDF / 4 profile checks newly rerun",
+  "javascript": "branch decoder/summary/view/Expected, weighted CDF, legacy precise minutes and player qualification checks passed",
+  "browser": "12/12 game-proj and sheet; screenshots inspected; initial --only game matched zero tests and is not evidence",
+  "smoke": "108/108; --fault 86/108 exit1, retained v2 logs",
+  "source_identity": "all63 frozen final source/model/input hashes unchanged during unrelated integration preparation",
+  "shell": "build succeeds; unpublished cache11f7ca22bac10a9ca148"
+ },
+ "findings": [
+  "Four original 70% single-player branches among ten games ->14 game/branch batches.",
+  "Full score marginal identities exact with84212weighted season paths; pathway4.96s versus0.40s baseline under concurrent load.",
+  "CDF independent3780 thresholds pass;86.1MBJSON/29.1MBgzip full game record is too large for phone delivery. Split per-player and measure lossless shuffling next."
+ ],
+ "doc_review": {
+  "AGENTS": "Standing scope/compute/PWA/checkpoint rules unchanged.",
+  "HANDOFF_NEXT": "Jobs, pipeline auditor, new panels, storage result and exact next action updated.",
+  "PLAN": "Same milestones/progress; no module completed or scope changed.",
+  "ENGINE_PLAN": "Accepted engines unchanged; integration details in linked focused design.",
+  "TRAINING_PLAN": "Staged clock engine protocol linked before new engine outcomes.",
+  "FINDINGS": "Measured storage/runtime/threshold results added within word budget.",
+  "DASHBOARD_PLAN": "Prepared reader and phone-size blocker explicitly unpublished.",
+  "README": "Daily commands unchanged; focused scripts/protocols linked from HANDOFF/docs index."
+ },
+ "per_row_retention": "Full v1/v2 branch plans retained in ignored data with original byte hashes; committed summaries remove only diagnostic roster rankings. Simulation and codec results unchanged."
+}

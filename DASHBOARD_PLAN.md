@@ -78,6 +78,8 @@ Expected is default; “either status” exactly marginalises remaining branch w
 selected weighted worlds and exact numerator/denominator; zero-mass conditions are unavailable. No branch control
 appears without supported stored branches. Avoid retaining incompatible unconditional cards/targets after selection.
 Research injection hooks, weighted adapters and private bundles exist; normal routes do not register them.
+The schema-2 weighted minute-CDF reader is prepared, with legacy game/sheet regression **12/12**. No new CDF
+payload is served: a measured 86 MB all-player record requires per-player splitting/compression before phone delivery.
 
 A3's five saved-world labels and 2-D View Centre follow ENGINE_PLAN D42/D43: real selected worlds, reconciled
 events, supported spatial precision, court/score/clock/box/event list and smooth play/pause/speed/seek/step/jumps.

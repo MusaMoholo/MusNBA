@@ -1,6 +1,6 @@
 # Handoff — current state and next actions
 
-Updated **23 November 2026**. Previous pushed checkpoint: **a768454**; `git log -1` identifies this checkpoint.
+Updated **23 November 2026**. Previous pushed checkpoint: **d9465be**; `git log -1` identifies this checkpoint.
 Read [AGENTS](AGENTS.md), then this file and [PLAN](PLAN.md). Detailed history is indexed in
 [docs/README](docs/README.md); do not read archives as current instructions.
 
@@ -64,13 +64,15 @@ Log `/tmp/musnba_a1_availability_nightly_20261123.log`.
    preserved all IDs/draws; archive/resume receipt `rule3_stream_20261123_reallocation_v1.json`.
 2. **Running:** formal rule-only final, `analysis/rule3_final.py run --jobs 8`, session **66878**, log
    `/tmp/musnba_rule3_final_20261123_v1.log`; **246 fixed current-season games**, 1k worlds/arm, eight × OMP1/BLAS1.
-   [Frozen final contract](docs/protocols/rule3_final_20261123.md) and manifest
+   **129/246 complete at 12:44 UTC**. [Frozen final contract](docs/protocols/rule3_final_20261123.md) and manifest
    `analysis/experiments/20261123_rule3_final_manifest_v1.json`. **Do not change fingerprinted engine/model/input
-   files.** After completion run `analysis/rule3_capture_audit.py rule3_final_20261123_v1 --output
-   analysis/experiments/rule3_final_20261123_v1_audit.json`, then `analysis/rule3_final.py score` with OMP/BLAS1.
+   files.** Independent audit already watches completed pairs: `analysis/rule3_pipeline_audit.py`, session **31346**,
+   log `/tmp/musnba_rule3_final_20261123_v1_audit.log`, output `analysis/experiments/rule3_final_20261123_v1_audit.json`.
+   Do not edit its source or launch a duplicate auditor. After generation/audit finish, run
+   `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python analysis/rule3_final.py score` once.
    The final is one frozen evaluation, never selection/retuning. Latest smoke **108/108**, deliberate fault
    **86/108**, exit 1; logs `/tmp/musnba_a1_a2_research_{smoke,fault}_20261123_v2.log`. Those sessions finished;
-   final worker parent **70969**, eight workers. Two compute slots are free for useful independent work.
+   final worker parent **70969**, eight workers plus one audit worker; one compute slot remains.
    PWA delivery remains above; export log `/tmp/musnba_a2_stories_export_20261123.log`.
    :8767 review session **58196**; static/upgrade servers :8768/**35424**, :8769/**18564**.
    Temporary retry-shell server :8770/**19954**. All eight root docs reviewed/updated; no CI workflows exist.
@@ -78,14 +80,24 @@ Log `/tmp/musnba_a1_availability_nightly_20261123.log`.
    before each game and fits minute auxiliaries before July 2026. Retain the old node final score.
    Release only after all applicable v2 gates.
    Follow the [delivery design](docs/protocols/lineup_delivery_20261123.md); wire structurally valid 10k branches/Expected/season views with
-   explicit availability assumptions; unsupported individual games fail visibly. The common-interval season
-   prototype's joint dependence remains unaccepted; inspect it before wiring. A1 checkpoints before A2.
+   explicit availability assumptions; unsupported individual games fail visibly. Common-interval coupling independently
+   shuffles/offsets atoms. Current ten-game plan needs **14** batches; planning-only repeated-score probe yields
+   **84,212** weighted season paths, **4.96s** pathway time, exact full joint marginals. This proves size/accounting,
+   not branch skill. Reports `20261123_a1_live_branch_plan_v2.json`, `20261123_a1_season_delivery_probe_v1.json`.
+   A1 checkpoints before A2 integration. The final run's **63** source/model/input hashes were rechecked unchanged.
 4. A2 clock: `20261123_a2_late_clock_{recipe,screen,confirmation,audit}_v1.json`; prototype
    `analysis/a2_late_clock.py`, [contract](docs/protocols/a2_late_clock_20261123.md). Earlier 1,932 games / 5,382
    opportunities: joint loss 0.19856→0.12849; F4 199 games / 474: 0.21633→0.13415. No model/clock change served.
    After A1 decision, freeze optional hook and matched engine compatibility/component/stream tests before runs.
    Disconnected `scripts/late_clock.py` sampler and `world_mass.py` exact-summary helper pass six new checks;
-   shared browser decoders/summary preserve original probabilities. Normal app routes remain unchanged.
+   shared browser decoder preserves original probabilities; production reads precomputed cases.
+   [Frozen engine stages](docs/protocols/a2_clock_engine_20261123.md) and `20261123_a2_clock_engine_panels_v1.json`
+   fix the next panels before clock-engine results. Normal branch routes remain unwired.
+   **CDF in progress:** 3,780 retained-world threshold checks pass, but one 30-player payload is **86.1 MB JSON /
+   29.1 MB gzip**. Split per-player and measure lossless byte shuffling before delivery. Probe script/report:
+   `analysis/a1_minute_cdf_probe.py`, `20261123_a1_minute_cdf_probe_v1.json`; old unpromoted worlds, codec evidence only.
+   Focused Python/JS threshold/corruption tests pass; game/sheet browser **12/12**, screenshots inspected at
+   `/tmp/musnba-lineup-minutes-browser-20261123-v2`. Decoder assets/format remain unpublished; served data unchanged.
    Finish with a fresh accepted-system nightly, independent accounting and required dashboard/PWA/iCloud
    delivery, commit/push and stop. A3 and repository-wide cleanup remain successor work; preserve View Centre scope.
 5. **D54 immediate successor:** per-game complete 10k bundle publication; [planned contract](docs/protocols/incremental_catchup.md).

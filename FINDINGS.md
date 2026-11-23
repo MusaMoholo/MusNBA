@@ -117,6 +117,11 @@ assignment fit cannot be reused for F1–F3; corrected fold inputs need dated fi
   eligible roster below nine. Exact Expected/browser arithmetic and two-game branch season coupling were audited.
   The season prototype used **122,428 weighted paths / denominator 160k**, 17 near-term games, 959 total games;
   only two games had branches, so it is not full integration or validated dependence.
+  Today's ten-game planning-only probe needs **14** batches; repeated accepted scores give **84,212** exact-marginal
+  weighted paths, pathway **4.96s** (10k unweighted **0.40s**) under concurrent load. Not new branch forecasts;
+  `20261123_a1_season_delivery_probe_v1.json`. A retained 40k-world/30-player codec probe passes **3,780** weighted
+  minute thresholds but creates **86.1 MB JSON / 29.1 MB gzip**; split/compress before delivery, no phone acceptance.
+  `20261123_a1_minute_cdf_probe_v1.json`.
 - **Representative gap:** fixed 200-game F4 oracle-roster screen had **0/2,000** typed exhaustion attempts;
   five draws/branch and known participants do not estimate actual pre-game risk. Earlier-fold screens are also
   conditional and sparse. Dated development injury-status calibration remains unavailable.

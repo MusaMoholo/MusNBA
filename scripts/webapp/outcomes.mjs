@@ -2,6 +2,7 @@
 // Every world is one simulated game; a condition selects worlds, and any outcome's distribution is read from the
 // selected worlds. Nothing is simulated or fitted here: the app only slices the engine's own worlds.
 import {api, esc, pct, team} from './ui.mjs';
+import {decodeMinuteCdfs} from './precise-minutes.mjs';
 import {correlation as weightedCorrelation, distribution as weightedDistribution, grid as weightedGrid,
   gridEdges, selectedMass, weightedMean, weightedShare} from './weighted-worlds.mjs';
 
@@ -44,6 +45,7 @@ export async function loadMinuteMarginals(gid) {
 }
 
 export function minuteMarginalData(raw) {
+  if (raw.schema === 2) return decodeMinuteCdfs(raw);
   const periods = ['q1', 'q2', 'q3', 'q4', 'h1', 'h2', 'fg'];
   const W = raw.worlds, ids = raw.players, n = ids?.length;
   if (raw.schema !== 1 || !Number.isSafeInteger(W) || W < 1 || !Array.isArray(ids) || !n

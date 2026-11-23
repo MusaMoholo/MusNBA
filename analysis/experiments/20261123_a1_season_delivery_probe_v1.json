@@ -1,0 +1,38 @@
+{
+ "kind": "runtime/accounting probe only; both synthetic branches repeat the same accepted unconditional scores",
+ "origin": "2026-11-23",
+ "plan_sha256": "4b8aaea43712abae6a363d9de8b704c8f6ff3566124a5fa6b56feeb0cf008eef",
+ "scores_sha256": "cf7e0c11f19d29ad635e439c3878b758cdef407f08bbd38d7fce0ef907c6501c",
+ "source_sha256": "73a572aa79de184920151d273b53587a44c210e294d1a4668674f8d842817c62",
+ "coupling_sha256": "d13f404f386bfe76fab9f401e7771d47ab9eae82282240126da03414d4579357",
+ "seed": "12701319211957919906",
+ "games": 10,
+ "batches": 14,
+ "layout_seconds": 0.073642833987833,
+ "weighted_paths": 84212,
+ "mass_denominator": "100000",
+ "effective_paths": 74581.22641368702,
+ "all_full_joint_score_marginals_exact": true,
+ "cross_game_win_covariance": {
+  "mean_absolute": 0.0011718964444620641,
+  "max_absolute": 0.003241119999832176
+ },
+ "timings": {
+  "unweighted_10000": {
+   "paths": 10000,
+   "pathway_seconds": 0.3966563750000205
+  },
+  "exact_weighted_layout": {
+   "paths": 84212,
+   "pathway_seconds": 4.964595291996375
+  }
+ },
+ "process_peak_rss_bytes": 1012154368,
+ "concurrency": "eight single-thread rule-final simulators plus one independent auditor; this probe is the tenth compute slot",
+ "limitations": "Not branch accuracy, real availability dependence, isolated timing or a release. No live views/bundles changed.",
+ "retained_input_plan": {
+  "path": "data/derived/experiments/20261123_a1_live_branch_plan_v2_full.json",
+  "sha256": "4b8aaea43712abae6a363d9de8b704c8f6ff3566124a5fa6b56feeb0cf008eef",
+  "diagnostic_roster_rows": 353
+ }
+}

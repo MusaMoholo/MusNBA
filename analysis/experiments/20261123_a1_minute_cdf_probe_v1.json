@@ -1,0 +1,18 @@
+{
+ "kind": "new marginal codec accounting/size only; retained unpromoted research worlds",
+ "source_report_sha256": "6111ca22d0981ff3cc14bda9bb8cdaa77f9cf90b88e243583c3d98223a72c3ed",
+ "source_sha256": "e28be6438b28a01a34293890864e4a49bb7820b67adcce7faaa36a794469ad16",
+ "encoder_sha256": "9dc76b3e3ab784c120546a25c845b43670dd1f12baa99eef81502a0c91fd90dd",
+ "worlds": 40000,
+ "players": 30,
+ "probability_mass": 160000,
+ "unique_support_values": 4035664,
+ "independent_threshold_checks": 3780,
+ "encode_seconds": 0.5595063749933615,
+ "json_bytes": 86096268,
+ "gzip_bytes": 29103122,
+ "process_peak_rss_bytes": 733446144,
+ "cdf_output": "data/derived/experiments/20261123_a1_minute_cdf_probe_v1.json",
+ "cdf_sha256": "d323f93489494906b9e0cd32f9f2806067c3659f04799c5f2dd5e16d4ccbb957",
+ "status": "pass; not engine qualification or device acceptance"
+}

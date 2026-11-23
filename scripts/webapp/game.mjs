@@ -807,8 +807,8 @@ async function sheet(view, data, pid, current, rerender) {
   const getMinutes = () => {
     if (!preciseMinutes && minuteWorlds) {
       const worlds = minuteWorlds;
-      preciseMinutes = minuteDistribution(worlds.minuteValues(pid, period),
-        worlds.weights || new Float64Array(worlds.W).fill(1), worlds.baseMask);
+      preciseMinutes = worlds.minuteDistribution ? worlds.minuteDistribution(pid, period)
+        : minuteDistribution(worlds.minuteValues(pid, period), worlds.weights || new Float64Array(worlds.W).fill(1), worlds.baseMask);
       if (!preciseMinutes) throw new Error('No selected minute worlds');
     }
     return preciseMinutes;

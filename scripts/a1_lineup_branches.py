@@ -10,7 +10,7 @@ from itertools import product
 
 import numpy as np
 
-from scripts import engine, minutes, rotations
+from scripts import engine, minutes, projection, rotations
 
 
 class BranchLegalityError(ValueError):
@@ -206,6 +206,21 @@ def select_uncertain(game: engine.Game, registry: Mapping[str, dict],
     if chosen:
         _selected_indices(game, [(p.team_id, p.player_id) for p in chosen])
     return tuple(sorted(chosen, key=lambda p: (p.team_id, p.player_id))), tuple(rankings)
+
+
+def live_selection(game, registry, minute_inputs, T, lg, P, Q, priors):
+    """Apply D46 to the full origin roster, preserving original status probabilities."""
+    inputs = {}
+    for side in game.sides:
+        team = str(game.game[f'{side}_id'])
+        for player in projection.player_inputs(team, P, registry, lg, T, True, Q, priors):
+            pid = str(player['id'])
+            if pid in inputs:
+                raise ValueError('duplicate player in origin rosters')
+            state = minutes.player_state(minute_inputs, team, pid, game.day)
+            inputs[pid] = {**player, 'healthy_role': state['healthy']}
+    selected, rankings = select_uncertain(game, registry, minute_inputs['latest'], inputs)
+    return selected, rankings
 
 
 def _selected_indices(game: engine.Game, selected: Sequence[tuple[str, str]]) -> list[tuple[str, str, int]]:

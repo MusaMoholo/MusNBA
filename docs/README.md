@@ -24,6 +24,7 @@ Do not load historical archives routinely. Root documents describe the present; 
 - [Historical promotion v1](protocols/promotion_v1_20261122.md): verbatim original S01 gate, retained for old experiment reproduction.
 - [Frozen A2 protocols](protocols/a2_form_20261122.md): verbatim preregistered residual/form methods.
 - [A2 contextual clock](protocols/a2_late_clock_20261123.md): earlier-fold learned-clock screen, component removal and confirmation boundaries.
+- [A2 engine stages](protocols/a2_clock_engine_20261123.md): matched compatibility, control reuse, broader folds, seeds/stress and protected-version boundary.
 - [Incremental delivery/catch-up](protocols/incremental_catchup.md): immediate successor priority and proposed historical reconstruction boundary.
 - [Cleanup audit](maintenance/2026-11-23-lean-docs.md): before/after counts, preservation checks and checkpoint validation.
 - Experiment JSON/text under `analysis/experiments/` contains exact configurations, outcomes, uncertainty and fingerprints;

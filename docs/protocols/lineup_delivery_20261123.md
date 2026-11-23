@@ -18,11 +18,26 @@ and saved raw worlds in Given/joint tools. Persist player/team/period distributi
 availability, actual simulated opening shares and conditional-on-playing summaries. Expected must not present
 one branch's minute target or opening five as certain. Unsupported games stay visibly unsupported.
 
+Use the full Expected integer world masses even when filtering a selection; divide by their selected sum.
+Backend histograms, conditional shooting denominators, raw-world tools and marginal CDFs then share the same
+numerator units. Fully fixed cases can reuse a branch summary with every histogram/conditional count scaled
+by that branch's per-world mass. Partial/Expected cases need the weighted packager. Put all precomputed cases
+alongside laptop branch worlds under the existing `/api/game/<id>/worlds` record so phone stripping excludes
+them together; its game record retains Expected and a separate weighted minute-CDF record only.
+
 The backend's summary functions should gain optional exact integer masses while preserving the existing
 unweighted code path. Distinguish **saved world count** from **probability-mass denominator**; histogram sums
 and conditional shooting denominators use mass, displayed simulation counts use real worlds. All app areas
 reading Expected—slate, game, leaders, roster, comparisons and season—must use its same source/generation.
 An isolated game-page override is insufficient for full S08 acceptance.
+
+Keep runtime component identity separate from the unchanged fitted-node version. Snapshot replay must use
+its own recorded foul/clock rules and output ID, rather than today's global `ENGINE` ID; verify old and new
+replay paths. Phone precise minutes use weighted marginal CDF schema 2 (exact support/cumulative integer mass),
+not an invented ordering of independent marginal samples. Schema 1 remains readable. Split CDF records by
+player and validate their source/world/mass identity against the game metadata. Measure byte shuffling before
+delivery: the retained four-branch fixture's monolithic record is 86 MB JSON. Conditional/weighted payloads need
+a bundle version/capability guard so old shells reject them safely; keep importing legacy version-1 bundles.
 
 ## Season consumption
 
@@ -40,6 +55,13 @@ is unacceptable, explicitly revise the season approximation contract using measu
 do not claim that a sampled 10k subset equals the complete empirical mixture. Every near-term game is used
 once and each future path updates its own ratings. Store weighted counts/denominator separately from paths.
 
+23 Nov planning probe: original 70% probabilities select four one-player games among ten, hence **14** 10k
+batches. Repeating existing unconditional score arrays only to test layout/runtime yields **84,212 weighted
+paths**, denominator 100k, with every full joint score marginal exact. Pathway time **4.96s**, versus **0.40s**
+for 10k unweighted paths, under concurrent evaluation load. This supports tractability, not branch accuracy or
+final runtime acceptance; source/probe reports are `20261123_a1_live_branch_plan_v2.json` and
+`20261123_a1_season_delivery_probe_v1.json` in experiments. Check the actual post-fetch slate again at delivery.
+
 ## PWA and acceptance
 
 Laptop includes all supported saved branches and stored selection summaries. Phone includes Expected,
@@ -48,10 +70,10 @@ Normal routes register only source-verified stored providers. Generation changes
 rapid selection/navigation cannot render stale choices. Retain unaffected actual results and dated context;
 hide or explicitly label summary panels that are not valid under the selected assumption.
 
-The branch decoder and summary now have shared app modules (`lineup-worlds.mjs`, `lineup-summary.mjs`), with
-old research import paths re-exporting them. Original 15% probabilities pass exact-weight tests. They are
-not registered on normal routes yet; their existence is no app/PWA delivery claim. Update the explicit shell
-module inventory/service-worker list when wiring. Test arbitrary original probabilities, corrupt/mismatched
+The branch decoder is shared (`lineup-worlds.mjs`), with its old research import path re-exporting it.
+Original 15% probabilities pass exact-weight tests. The browser research summary calculator stays in
+`analysis/`; production reads precomputed cases. Normal routes do not register branches yet; these helpers
+are no app/PWA delivery claim. Shell inventories include the decoder. Test original probabilities, corrupt/mismatched
 sources, exact partial conditions, player/period/team/season identities, all touched pages at 1440/960/390
 in both themes, import/offline/upgrade and the stripped phone profile. Inspect screenshots and disclose any
 scope limitation. Archive old outputs before replacing; final nightly and both iCloud exports remain required.
