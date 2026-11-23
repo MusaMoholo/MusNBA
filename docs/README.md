@@ -8,7 +8,7 @@ Do not load historical archives routinely. Root documents describe the present; 
 | [AGENTS](../AGENTS.md) | Owner preferences, safeguards, compute, checkpoint/documentation rules. |
 | [HANDOFF](../HANDOFF_NEXT.md) | Current systems/delivery, blockers, jobs, exact next action and active progress ladders. |
 | [PLAN](../PLAN.md) | Scope, dependencies, milestone ledger, completion criteria and product backlog. |
-| [ENGINE_PLAN](../ENGINE_PLAN.md) | Current design, D1–D51 decision index, implemented/planned boundaries. |
+| [ENGINE_PLAN](../ENGINE_PLAN.md) | Current design, D1–D52 decision index, implemented/planned boundaries. |
 | [TRAINING_PLAN](../TRAINING_PLAN.md) | Folds, cutoffs, frozen numerical gates, confirmation/release requirements. |
 | [FINDINGS](../FINDINGS.md) | Concise measured conclusions and negative decisions, with population and report links. |
 | [DASHBOARD_PLAN](../DASHBOARD_PLAN.md) | Current shipped UI, definitions, constraints and pending product contracts. |
@@ -52,5 +52,5 @@ word budgets, focused-reference budgets, local links/anchors, fenced blocks and 
 the budgets. A justified budget change needs a recorded reason, not an automatic increase when a file grows.
 The same check runs in GitHub Actions on documentation changes; it does not access providers, models or private data.
 The local `.githooks/pre-commit` also runs it on every commit (enabled here via `core.hooksPath=.githooks`).
-Fresh clones must inspect existing hooks before enabling it. GitHub's first run could not start because of
-an account billing lock; local enforcement remains available without hosted runners.
+Fresh clones must inspect existing hooks before enabling it. D52 removes repository CI workflows;
+checks stay local, while GitHub Pages continues serving the data-free `gh-pages` shell.

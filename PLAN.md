@@ -121,6 +121,7 @@ reflects loaded data/configuration. These items do not authorise forecast-histor
 
 | Date | Result | Evidence |
 |---|---|---|
+| 23 Nov | D52 removes unwanted CI workflows; local checks and branch-based Pages hosting retained. No model/app change. | AGENTS local-check rule; README hosting commands. |
 | 23 Nov | D51 reopens A1 release review; v2 compatibility/confirmation and retained defender-result audit. | [Active policy](docs/protocols/promotion_v2_20261123.md) |
 | 23 Nov | A1 no-release fallback: 28,530 memberships audited, 783/800 starter contexts supported; v1.3 retained. | [Decision](docs/research/a1_no_release_20261123.md) |
 | 23 Nov | Lean documentation maintenance; no model/app/data/progress change. | [Maintenance record](docs/maintenance/2026-11-23-lean-docs.md) |

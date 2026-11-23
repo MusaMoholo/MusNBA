@@ -1,6 +1,6 @@
 # Handoff — current state and next actions
 
-Updated **23 November 2026**. Previous pushed checkpoint: **f19d15e**; `git log -1` identifies this checkpoint.
+Updated **23 November 2026**. Previous pushed checkpoint: **0be0b04**; `git log -1` identifies this checkpoint.
 Read [AGENTS](AGENTS.md), then this file and [PLAN](PLAN.md). Detailed history is indexed in
 [docs/README](docs/README.md); do not read archives as current instructions.
 
@@ -27,8 +27,9 @@ Read [AGENTS](AGENTS.md), then this file and [PLAN](PLAN.md). Detailed history i
   A3/Chunk B are not part of this request. Startup smoke **108/108**, log
   `/tmp/musnba_a1_a2_start_smoke_20261123.log`. Gate/rule preflight: **12/12** focused checks; same-model null establishes 61/69 legacy bounds. Smoke **108/108**, fault **86/108** and exit 1; logs `/tmp/musnba_gate_v2_{smoke,fault}_20261123.log`. No jobs running. Production unchanged.
   Active A1 protocol: [prior-roster screen](docs/protocols/a1_prior_roster_20261123.md).
-- Local pre-commit documentation enforcement is enabled (`core.hooksPath=.githooks`). Hosted documentation CI
-  could not start because GitHub reports an account billing lock; this does not invalidate local checks.
+- **D52:** removed both repository Actions workflows after unwanted failure emails. Checks run locally through
+  `core.hooksPath=.githooks`; GitHub Pages still serves `gh-pages`. Do not reintroduce CI. The workflow-disable API
+  returned 403 for this credential, so removing their trigger files is the supported fix; no queued runs existed.
 
 ## Latest live delivery
 

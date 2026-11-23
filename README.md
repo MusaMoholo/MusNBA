@@ -54,7 +54,7 @@ is atomic, the pair is not; retry both after partial export. `--output PATH` ove
 with `-laptop` added for laptop. Replaced artifacts archive to `~/Basketball_archive_ops`; visible staging and
 hidden-flag clearing keep exports in Finder/file pickers. Only shell contents and `.nojekyll` go to `gh-pages`
 (branch source `/`), never datasets/models/bundles. Existing local Git identity/helper stays unchanged.
-The optional manual Actions workflow is not the active deployment route.
+There are no repository CI workflows; GitHub's built-in Pages deployment serves this branch.
 
 ## Verification
 
@@ -73,8 +73,7 @@ cutoff, import/offline and model/accounting gates are described in AGENTS/TRAINI
 
 Documentation budgets/links/archive integrity run at every local commit through `.githooks/pre-commit`.
 This checkout has it enabled; for a fresh clone, inspect existing hooks first, then enable with
-`git config --local core.hooksPath .githooks`. GitHub CI is also configured; its first run was blocked
-before any step by the account's billing lock, independently of the passing local checks.
+`git config --local core.hooksPath .githooks`. Checks stay local (D52); do not add GitHub CI pipelines.
 
 ## Model work and file map
 
