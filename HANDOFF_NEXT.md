@@ -1,10 +1,38 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 80%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **79c02b2** (exact-minute research accounting); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **715625f** (exact-minute research view); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
+- **A1 production-minute format checkpoint (23 Nov UTC; still 22 Nov ET):** new simulations now retain
+  five float64 period-minute values per player/world in versioned snapshot schema 1; older snapshots decode
+  as rounded and cannot acquire lost precision. The laptop retains world identity for precise sheets,
+  participation, Given and Joint. The phone retains sorted, independent seven-period minute marginals, not
+  world identities or conditional scenarios. Invalid/incomplete precise data fails explicitly. This changes
+  storage and presentation, not the engine, availability assumptions or predictive accuracy.
+  Three isolated 10,000-world captures each independently checked **2.1 million** exact laptop values,
+  **2.1 million** sorted phone values, **210** player-period distributions and **1,470** conditional
+  thresholds; reports `analysis/experiments/20261122_a1_production_minutes_{033,034,035}_v1.json`.
+  The phone minute-only record compressed to **6.54–6.94 MB per 30-player game**; real-device memory
+  and rendering remain unmeasured. A private synthetic precise bundle passed **22/22 phone / 23/23 laptop**
+  offline tests; it combines research captures and unrelated metadata and must never be published as a forecast.
+  Focused tests **38 Python** plus four JS suites, responsive **37/37** and injected research **6/6**
+  passed; screenshots inspected. After refreshing views from unchanged retained snapshots, final smoke
+  **107/107**, deliberately injected fault **86/107** and exit 1. No fresh simulation was run.
+  All **7** today games remain the original pre-tip rounded-minute forecasts and all **10** tomorrow games
+  use the team pathway; neither their missing precision nor an accuracy gain is claimed. Views archived at
+  `~/Basketball_archive_ops/archive_20261123T021731Z_8258`; prior Pages tree archived at
+  `~/Basketball_archive_ops/archive_20261123T021910Z_8409`.
+  Actual iCloud phone/laptop bundles are **12,634,136 / 42,906,219 bytes**, SHA-256
+  `8a82f10f4dc577d6c61a9fa1b40d86c96e66e5cf5d36cafb32f9e39cab6a9a9f` /
+  `43cdebf878627cca30b48c731d9d1dc0a82543abb7100f9a151ef2cceef3098b`;
+  hosted import/offline checks **23/23 / 24/24**. Data-free `gh-pages` **e3c7798**, cache
+  `113ddcd01405374c5573`, deployed; four changed hosted files match the reviewed shell. Actual retained bundles
+  do not contain the new precise data. Manual physical-phone import remains unconfirmed; no per-game iCloud
+  streaming exists. Engine **v1.3** and team-pathway **v1** remain unchanged; A1 **80%**, Chunk A **34.5%**.
+  Documentation review: HANDOFF, PLAN, FINDINGS, DASHBOARD_PLAN and README updated; AGENTS standing rules,
+  ENGINE_PLAN model design and TRAINING_PLAN cutoff/promotion gates need no change.
 - **Owner's latest horizon change (22 Nov; delivered):** stop possession-engine forecasts for
   tomorrow and later: simulate today's ET games only; tomorrow onward belongs to the season team engine.
   Exclude tomorrow's old possession forecasts and future player/possession sensitivities from the active dashboard
@@ -187,7 +215,7 @@ The preceding pushed checkpoint was **79c02b2** (exact-minute research accountin
   **20,000 worlds each**, with **4,932,579 / 4,857,339** lineup snapshots and weights exactly one.
   Their full-mixture research summaries independently reconciled **3,958 distributions each** and
   **3,709 / 3,714 means** against the captures using the current whole-minute histogram convention;
-  that agreement does not resolve the minute-precision blocker below.
+  that agreement did not resolve the minute-precision blocker described below.
   Separate browser decoding checks reconciled **21 weighted period means and 60 opening-lineup counts**
   per game, plus all **4 / 5** overtime-period masses.
   `034` completed **4/4 branches**, independently reconciled **40,000 worlds** and **9,647,518** lineup
@@ -199,11 +227,11 @@ The preceding pushed checkpoint was **79c02b2** (exact-minute research accountin
   Their fingerprint covers **all** `scripts/*.py` and origin inputs: no such input changed during capture.
   Subsequent snapshot-safety edits change the current source hash, not the completed captures' stored fingerprint.
   The two other qualifying games already have D47 10k branch captures.
-- **Minute-precision blocker:** the branch source preserves float64 per-world and period minutes, and weighted
+- **Minute-precision blocker at the earlier research checkpoint (partly addressed above):** the branch source preserves float64 per-world and period minutes, and weighted
   Given conditions use those values, but `analysis/a1_branch_game_summary.mjs` still rounds minute histograms to
   whole minutes. Do not ship that inconsistency as the owner's requested seconds-sensitive dashboard. Reconcile
   stored-minute precision, histogram/line units, the Given/Joint consumers and their independent accounting;
-  the production `engine_players.npz` still rounds to whole minutes as well.
+  the then-current production `engine_players.npz` also rounded to whole minutes.
   A new encoding probe on four saved branches of game `401910034` (**40,000** worlds, 30 players) measured
   **21** 30-minute classification changes from float32, **227** from rounded whole seconds and **126**
   positive cells rounded to zero. Float64 preserved the exact values. Its gzip-compressed full-game minute
@@ -241,7 +269,7 @@ The preceding pushed checkpoint was **79c02b2** (exact-minute research accountin
   audit, plus first-half over 10 minutes and the rounded Expected-only label. **6/6** viewport/theme cases
   passed with screenshots inspected; **30/30** normal Game Centre/scenario checks passed. Report
   `analysis/experiments/20261122_a1_precise_game_browser_v4.json`. No normal route registers this provider,
-  production snapshots still round player worlds, and legacy minutes cannot be recovered.
+  production snapshots at that checkpoint rounded player worlds, and legacy minutes cannot be recovered.
   Four-branch, 30-player **minute-only** JSON/gzip sizing from game `401910034` measured **18,713,888 bytes**
   for five per-world periods and **26,348,197 bytes** for sorted seven-period marginals. The latter discards
   world identities, so it cannot support Given or Joint. These are not full bundle sizes or phone benchmarks;
@@ -2763,16 +2791,17 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
 
 ## Next actions — Chunk A in progress
 
-0. **A1 precision, still open:** the explicitly injected branch sheet now uses exact minute thresholds, split
-   bins and Given, but no normal route supplies those worlds. Complete versioned period-minute storage with
-   explicit legacy decoding and integrate the exact arithmetic across production and branch summaries,
-   player sheets, Given/Joint and participation. Do not recover invented precision from retained legacy
-   worlds. Measure real laptop/phone bundle and browser/rendering costs before any delivery. To repeat the
+0. **A1 precision follow-through:** schema 1 is delivered for new simulations but today's retained forecasts
+   are legacy-rounded, and no normal route supplies precise branch worlds. Evaluate full-slate bundle size,
+   import/rendering and memory on real new outputs and physical devices; do not infer them from the isolated
+   per-game size or synthetic bundle. Do not recover invented precision from retained legacy worlds. To repeat the
    existing two-player probe, use
    `node --max-old-space-size=4096 analysis/a1_precise_minutes_probe.mjs data/derived/experiments/20261122_a1_live_branch_034_fixture_v1.json '{}' data/derived/experiments/<new-output>.json analysis/experiments/<new-probe>.json`
    then `.venv/bin/python analysis/a1_precise_minutes_audit.py analysis/experiments/<new-probe>.json --output analysis/experiments/<new-audit>.json`;
    use `'{"3149673":true}'` for the previously tested partial selection. Run
    `node tests/test_a1_precise_minutes.mjs` and `.venv/bin/python -m unittest tests.test_a1_minute_encoding_probe`.
+   To independently repeat the production decoder audit, use
+   `.venv/bin/python analysis/a1_production_minutes_audit.py data/derived/experiments/20261122_a1_live_branch_034_v1.json --output analysis/experiments/<new-audit>.json`.
 1. **A1 90%:** continue from the audited 10k isolated-retry test in State. Independently verify representative
    branch accounting, source cutoff provenance and restart behavior; quantify runtime and rejection/selection
    bias on earlier folds. Do not equate its synthetic fixed-game benchmark with a

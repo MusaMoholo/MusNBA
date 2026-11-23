@@ -1,5 +1,15 @@
 # App — shipped behaviour
 
+**A1 precise-minute storage/display (22–23 Nov):** new schema-1 snapshots retain original float64
+period minutes. Laptop player sheets and Given/Joint use exact values and world identity; phone sheets use
+independently sorted period marginals without world identities or world-based conditions. Displayed times round
+to seconds, thresholds use stored precision, and bars split at the chosen line. Legacy retained snapshots are
+labelled rounded; today's seven forecasts were retained and have no recoverable extra precision. An isolated
+synthetic precise-bundle import passed **22/22 phone / 23/23 laptop**, and hosted actual legacy-bundle
+import/offline passed **23/23 / 24/24**. Data-free `gh-pages` **e3c7798**, cache
+`113ddcd01405374c5573`; manual device import and full-slate physical-device performance remain unverified.
+This does not ship the lineup control, change forecasts, or implement per-game iCloud streaming.
+
 **A1 precision research shell (22–23 Nov):** the data-free shell now caches the exact-minute helper
 (`gh-pages` **5144f35**, cache **52fb655ed8e21314249a**); existing iCloud bundles passed hosted import/offline
 **23/23 phone / 24/24 laptop**, with no new bundle or confirmed device import. Normal routes remain unchanged.
@@ -18,7 +28,8 @@ individual game forecast times. The live refresh retained all seven original pre
 produced a 10,000-world season; the new views passed **36/36** responsive cases plus **6/6** timing-label
 cases, with screenshots inspected. Actual iCloud bundles passed hosted import/offline checks **24/24**
 phone and **25/25** laptop. Data-free Pages `1b4cc6c`, cache `871e52f6e7a2ca20b58b`; device import remains
-manual. The lineup plays/sits control and precise world minutes are still research-only or incomplete.
+manual. The lineup plays/sits control remains research-only; the later precision checkpoint above supplies the
+versioned format for new simulations but cannot change retained rounded worlds.
 
 **Isolated lineup view research (22 Nov):** the updated shell contains an explicit test-only provider hook; no
 normal app route registers one, and no branch selector or Expected forecast is shipped. When injected privately,

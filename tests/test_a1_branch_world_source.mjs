@@ -43,7 +43,7 @@ for (const branch of fixture.branches) {
 }
 const source = branchWorldSource(fixture);
 globalThis.location = {href: 'http://localhost/'};
-const {branchCalculations, branchWorldData, mask, varOptions} = await import('../scripts/webapp/outcomes.mjs');
+const {branchCalculations, branchWorldData, mask, minuteMarginalData, preciseCalculations, varOptions, worldData} = await import('../scripts/webapp/outcomes.mjs');
 const adapted = branchWorldData(source);
 assert.deepEqual([...adapted.values('p:10', 'min')], [0.1, 0, 0, 0]);
 assert.deepEqual([...adapted.minuteValues('10', 'q1')], [0.1, 0, 0, 0]);
@@ -201,5 +201,62 @@ for (const home of [null, true, false]) for (const away of [null, true, false]) 
   assert.equal(C.mean(points), scoreMass / mass);
   assert.equal(C.share(plays, null, value => value === 1), playingMass / mass);
   assert.equal(C.count(playMask), playMask.reduce((sum, yes) => sum + yes, 0));
+}
+const production = {
+  worlds: 3, players: ['10', '20'], side: [0, 1], stats: ['min', 'pts'],
+  periods: ['q1', 'q2', 'q3', 'q4', 'ot'],
+  lines: encode([0, 0, 0, 0, 30, 10, 0, 0, 30, 20, 0, 0]),
+  team_periods: encode(Array(30).fill(0)),
+  minutes_schema: 1,
+  period_minutes_f64_le: minutes([.1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    10, 19.9999, 0, 0, 0, 0, 0, 0, 0, 0, 10, 20.0001, 0, 0, 0, 0, 0, 0, 0, 0]),
+};
+const exactWorlds = worldData(production), exactCalc = preciseCalculations(exactWorlds);
+assert.deepEqual([...exactWorlds.minuteValues('10', 'h1')], [.1, 29.9999, 30.0001]);
+assert.deepEqual([...exactWorlds.values('p:10', 'plays')], [1, 1, 1]);
+assert.deepEqual([...mask(exactWorlds, [{subj: 'p:10', v: 'min', op: 'ge', x: 30}])], [0, 0, 1]);
+assert.equal(exactCalc.share(exactWorlds.values('p:10', 'min'), null, v => v > 30), 1 / 3);
+assert.deepEqual(exactCalc.dist(exactWorlds.values('p:10', 'min'), null, {minute: true}).hist.slice(29), [1, 1]);
+assert.match(exactCalc.grid(exactWorlds.values('p:10', 'min'), exactWorlds.values('p:10', 'pts'), null,
+  {xName: 'Minutes', yName: 'Points'}), /Share of probability/);
+const legacy = structuredClone(production);
+delete legacy.minutes_schema;
+delete legacy.period_minutes_f64_le;
+assert.equal(worldData(legacy).preciseMinutes, undefined);
+assert.deepEqual([...worldData(legacy).values('p:10', 'plays')], [0, 1, 1]);
+const marginalValues = [];
+for (let w = 0; w < 3; w++) for (const id of production.players) for (const period of ['q1', 'q2', 'q3', 'q4', 'h1', 'h2', 'fg']) {
+  marginalValues.push([...exactWorlds.minuteValues(id, period)].sort((a, b) => a - b)[w]);
+}
+const marginal = {schema: 1, worlds: 3, players: production.players,
+  periods: ['q1', 'q2', 'q3', 'q4', 'h1', 'h2', 'fg'], minutes_f64_le: minutes(marginalValues)};
+const phone = minuteMarginalData(marginal);
+assert.deepEqual([...phone.minuteValues('10', 'fg')], [.1, 29.9999, 30.0001]);
+assert.deepEqual([...phone.minuteValues('10', 'h1')], [.1, 29.9999, 30.0001]);
+assert.throws(() => phone.minuteValues('99', 'fg'), /Unknown/);
+for (const corrupt of [
+  raw => { raw.schema = 2; },
+  raw => { raw.minutes_f64_le = minutes([0]); },
+  raw => { raw.periods.reverse(); },
+  raw => { raw.players = ['10', '10']; },
+  raw => { raw.minutes_f64_le = minutes(marginalValues.map((v, i) => i === 0 ? -0.5 : v)); },
+  raw => { raw.minutes_f64_le = minutes(marginalValues.map((v, i) => i === 0 ? NaN : v)); },
+  raw => { raw.minutes_f64_le = minutes([...marginalValues].reverse()); },
+]) {
+  const bad = structuredClone(marginal);
+  corrupt(bad);
+  assert.throws(() => minuteMarginalData(bad), /minute/i);
+}
+for (const corrupt of [
+  raw => { raw.minutes_schema = 2; },
+  raw => { delete raw.period_minutes_f64_le; },
+  raw => { raw.period_minutes_f64_le = minutes([0]); },
+  raw => { raw.periods.reverse(); },
+  raw => { raw.lines = encode(Array(12).fill(0)); },
+  raw => { raw.period_minutes_f64_le = minutes(Array(30).fill(NaN)); },
+]) {
+  const bad = structuredClone(production);
+  corrupt(bad);
+  assert.throws(() => worldData(bad), /minute/i);
 }
 console.log('branch world source: focused cases passed');

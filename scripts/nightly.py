@@ -33,7 +33,7 @@ sys.path.insert(0, str(ROOT))
 from basketball_common import (CONFERENCE_OF, DERIVED, DIVISION_OF, MASTER_CSV, SEASON_LABEL, SNAPSHOTS,  # noqa: E402
                                archive_paths, day_shift, forecast_meta, parse_utc, read_json, sha256_file, today_et, utc_now,
                                verified_pre_tip, write_json)
-from scripts import box_scores, master_fixtures, pbp, projection, views  # noqa: E402
+from scripts import box_scores, master_fixtures, pbp, player_worlds as player_worlds_io, projection, views  # noqa: E402
 from scripts.fetch_espn import collect, latest_run  # noqa: E402
 from scripts.season_stats import period_profiles, player_table, team_table  # noqa: E402
 
@@ -118,7 +118,9 @@ def project_slate(day: str, teams: dict, master: list[dict], team_rows: list[dic
                               st.box['fg3a'].sum(2), st.box['fta'].sum(2), st.box['oreb'].sum(2), st.box['dreb'].sum(2),
                               st.box['ftm'].sum(2)], axis=2)
             player_worlds[game['game_id']] = {'ids': np.array([str(x) for x in g.ids]), 'side': g.side.astype(np.int8),
-                                              'lines': np.clip(lines, 0, 255).astype(np.uint8)}
+                                              'lines': np.clip(lines, 0, 255).astype(np.uint8),
+                                              'minutes_schema': np.array(player_worlds_io.MINUTES_SCHEMA, dtype=np.uint8),
+                                              'minutes': st.minutes.copy()}
             print(f"  engine {game['game_id']}: {result['periods']['fg']['home']['pts']['mean']:.1f}–{result['periods']['fg']['away']['pts']['mean']:.1f}", flush=True)
         if prospective:
             result['availability_report'] = forecast_availability_report(game, registry)
@@ -210,7 +212,7 @@ def load_retained(target: Path, slate: list[dict], completed: str) -> dict:
             source_meta = forecast_meta(meta, gid)
             game, base = games[gid], placeholder[gid]
             team_worlds = worlds[gid]
-            player_worlds = {key: players[f'{gid}__{key}'] for key in ('ids', 'side', 'lines')}
+            player_worlds = player_worlds_io.read_player_worlds(players, gid)
             n = source_meta['sims']
             lines, player_ids, sides = player_worlds['lines'], player_worlds['ids'], player_worlds['side']
             if (source_meta.get('kind') != 'prospective' or verified_pre_tip(source_meta, gid) is not True
@@ -261,8 +263,9 @@ def validate_retained(part: dict, season: dict, target: Path, completed: str) ->
                 or saved['placeholder'] != original['placeholder'] or part['games'].get(gid) != original['game']
                 or part['placeholder'].get(gid) != original['placeholder']
                 or not np.array_equal(part['worlds'][gid], original['worlds'])
-                or any(not np.array_equal(part['player_worlds'][gid][key], original['players'][key])
-                       for key in ('ids', 'side', 'lines'))):
+                or set(part['player_worlds'][gid]) != set(original['players'])
+                or any(not np.array_equal(part['player_worlds'][gid][key], value)
+                       for key, value in original['players'].items())):
             raise ValueError(f'{gid}: retained forecast, model, origin or worlds changed')
         scores = original['worlds'].sum(axis=2)
         expected = {'p_home': round(float((scores[:, 0] > scores[:, 1]).mean()), 4),
@@ -307,7 +310,11 @@ def write_snapshot(part: dict, season: dict, archive_root=None) -> dict:
     if part['worlds']:  # per-world engine points: the season re-simulates from them (smoke); views never read them
         np.savez_compressed(staging / 'engine_worlds.npz', **part['worlds'])
     if part.get('player_worlds'):  # per-world player lines (app: joint and conditional outcomes; views packs them per game)
-        np.savez_compressed(staging / 'engine_players.npz', **{f'{gid}__{k}': v for gid, d in part['player_worlds'].items() for k, v in d.items()})
+        player_path = staging / 'engine_players.npz'
+        np.savez_compressed(player_path, **{f'{gid}__{k}': v for gid, d in part['player_worlds'].items() for k, v in d.items()})
+        with np.load(player_path, allow_pickle=False) as archive:
+            for gid in part['player_worlds']:
+                player_worlds_io.read_player_worlds(archive, gid)
     write_json(staging / 'season.json', season)
     write_json(staging / 'stats.json', {'teams': T, 'league': lg, 'players': part['P']})
     completed = utc_now()

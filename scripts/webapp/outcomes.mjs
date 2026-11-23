@@ -6,6 +6,7 @@ import {correlation as weightedCorrelation, distribution as weightedDistribution
   gridEdges, selectedMass, weightedMean, weightedShare} from './weighted-worlds.mjs';
 
 const cache = new Map();
+const marginalCache = new Map();
 const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
 
 // Owner (20 Nov): makes and the main stats (no combos or attempts); OREB/DREB where the stored worlds carry them
@@ -34,6 +35,46 @@ export async function load(gid) {
   return result;
 }
 
+export async function loadMinuteMarginals(gid) {
+  if (marginalCache.has(gid)) return marginalCache.get(gid);
+  const raw = await api(`game/${encodeURIComponent(gid)}/minute-marginals`);
+  const result = minuteMarginalData(raw);
+  marginalCache.set(gid, result);
+  return result;
+}
+
+export function minuteMarginalData(raw) {
+  const periods = ['q1', 'q2', 'q3', 'q4', 'h1', 'h2', 'fg'];
+  const W = raw.worlds, ids = raw.players, n = ids?.length;
+  if (raw.schema !== 1 || !Number.isSafeInteger(W) || W < 1 || !Array.isArray(ids) || !n
+      || new Set(ids).size !== n || ids.some(id => typeof id !== 'string')
+      || JSON.stringify(raw.periods) !== JSON.stringify(periods) || typeof raw.minutes_f64_le !== 'string') {
+    throw new Error('Invalid minute-marginal metadata');
+  }
+  const bytes = b64(raw.minutes_f64_le);
+  if (bytes.length !== W * n * periods.length * 8) throw new Error('Invalid minute-marginal dimensions');
+  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength), memo = new Map();
+  for (let i = 0; i < n; i++) for (let q = 0; q < periods.length; q++) {
+    let previous = -1;
+    for (let w = 0; w < W; w++) {
+      const value = view.getFloat64(((w * n + i) * periods.length + q) * 8, true);
+      if (!Number.isFinite(value) || value < 0 || value < previous) throw new Error('Invalid sorted minute marginal');
+      previous = value;
+    }
+  }
+  return {W, minuteValues(id, period) {
+    const i = ids.indexOf(id), q = periods.indexOf(period);
+    if (i < 0 || q < 0) throw new Error('Unknown player or minute period');
+    const key = `${i}|${q}`;
+    if (!memo.has(key)) {
+      const values = new Float64Array(W);
+      for (let w = 0; w < W; w++) values[w] = view.getFloat64(((w * n + i) * periods.length + q) * 8, true);
+      memo.set(key, values);
+    }
+    return memo.get(key);
+  }};
+}
+
 /** Adapt a validated research source without changing the saved production-world path. */
 export function branchWorldData(source, choices = {}) {
   const raw = {worlds: source.worlds, players: source.players, side: source.side, stats: source.stats};
@@ -47,9 +88,30 @@ export function branchWorldData(source, choices = {}) {
   return result;
 }
 
-function worldData(raw, source = null) {
+export function worldData(raw, source = null) {
   const W = raw.worlds, n = raw.players.length, k = raw.stats.length;
   const lines = source ? null : b64(raw.lines), tp = source ? null : b64(raw.team_periods);
+  let minuteView = null;
+  if (!source && (raw.minutes_schema != null || raw.period_minutes_f64_le != null)) {
+    if (raw.minutes_schema !== 1 || typeof raw.period_minutes_f64_le !== 'string') throw new Error('Unsupported or incomplete minute-world schema');
+    const minCol = raw.stats.indexOf('min');
+    if (!Number.isSafeInteger(W) || W < 1 || !n || minCol < 0 || lines.length !== W * n * k
+        || JSON.stringify(raw.periods) !== JSON.stringify(['q1', 'q2', 'q3', 'q4', 'ot'])) throw new Error('Invalid minute-world metadata');
+    const bytes = b64(raw.period_minutes_f64_le);
+    if (bytes.length !== W * n * 5 * 8) throw new Error('Invalid minute-world dimensions');
+    minuteView = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+    for (let cell = 0; cell < W * n; cell++) {
+      let total = 0;
+      for (let q = 0; q < 5; q++) {
+        const value = minuteView.getFloat64((cell * 5 + q) * 8, true);
+        if (!Number.isFinite(value) || value < 0) throw new Error('Invalid precise minute world');
+        total += value;
+      }
+      const floor = Math.floor(total), fraction = total - floor;
+      const rounded = fraction === 0.5 ? floor + floor % 2 : Math.round(total);
+      if (Math.min(255, rounded) !== lines[cell * k + minCol]) throw new Error('Precise minute worlds do not match player lines');
+    }
+  }
   const idx = new Map(raw.players.map((p, i) => [p, i]));
   const memo = new Map();
   const statCol = (i, s) => {
@@ -72,6 +134,21 @@ function worldData(raw, source = null) {
   };
   const W_ = {W, ids: raw.players, side: raw.side.map(s => (s === 0 ? 'home' : 'away')), stats: raw.stats};
   if (source) Object.assign(W_, {weights: source.weights, baseMask: source.baseMask});
+  if (minuteView) {
+    const slices = {q1: [0], q2: [1], q3: [2], q4: [3], h1: [0, 1], h2: [2, 3], fg: [0, 1, 2, 3, 4]};
+    W_.preciseMinutes = true;
+    W_.minuteValues = (id, period) => {
+      const i = idx.get(id), cols = Object.hasOwn(slices, period) ? slices[period] : null;
+      if (i == null || !cols) throw new Error('Unknown player or minute period');
+      const key = `minute|${id}|${period}`;
+      if (!memo.has(key)) {
+        const out = new Float64Array(W);
+        for (let w = 0; w < W; w++) for (const q of cols) out[w] += minuteView.getFloat64(((w * n + i) * 5 + q) * 8, true);
+        memo.set(key, out);
+      }
+      return memo.get(key);
+    };
+  }
   /** Side's cumulative margin after the first k quarters (k = 1..4), every world. */
   W_.lead = (side, k) => {
     const key = 'lead|' + side + '|' + k;
@@ -91,6 +168,7 @@ function worldData(raw, source = null) {
       if (i == null) return null;
       const c = s => W_.values(subj, s);
       if (source && ['plays', 'sits', 'available', 'unavailable'].includes(v)) out = source.player(subj.slice(2), v);
+      else if (v === 'min' && W_.preciseMinutes) out = W_.minuteValues(subj.slice(2), 'fg');
       else if (v === 'plays' || v === 'sits') { const m = c('min'); out = m.map(x => (v === 'plays' ? x > 0 : x === 0) ? 1 : 0); }
       else if (v === 'pra') out = add(c('pts'), c('reb'), c('ast'));
       else if (v === 'pr') out = add(c('pts'), c('reb'));
@@ -195,6 +273,11 @@ export function branchCalculations(Wd) {
     corr: (a, b, mask = null) => weightedCorrelation(a, b, Wd.weights, selected(mask)),
     grid: (x, y, mask, names) => weightedGridView(x, y, Wd.weights, selected(mask), names),
   };
+}
+
+export function preciseCalculations(Wd) {
+  if (!Wd.preciseMinutes) throw new Error('Precise minute worlds required');
+  return branchCalculations({W: Wd.W, weights: new Float64Array(Wd.W).fill(1), baseMask: new Uint8Array(Wd.W).fill(1)});
 }
 
 /** Distribution of integer outcomes over the selected worlds, in the app's histogram format ({min, hist, mean, q}). */

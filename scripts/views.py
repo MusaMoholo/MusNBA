@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 from basketball_common import (APP_NAME, DERIVED, LINEUP_TIMING_POLICY, SEASON_LABEL, SNAPSHOTS, VIEWS, forecast_meta, read_json,  # noqa: E402
                                today_et, utc_now, verified_pre_tip, write_json)
-from scripts import box_scores, master_fixtures, pbp  # noqa: E402
+from scripts import box_scores, master_fixtures, pbp, player_worlds  # noqa: E402
 from scripts.season_stats import period_profiles  # noqa: E402
 
 TEAM_FIELDS = ('gp', 'w', 'l', 'home', 'away', 'conf_rec', 'last10', 'streak', 'pts', 'opp_pts', 'ortg', 'drtg', 'net',
@@ -185,13 +185,37 @@ def world_lines(path: Path, gid: str, sims: int) -> dict | None:
     with np.load(pl) as z, np.load(tm) as t:
         if f'{gid}__lines' not in z.files or gid not in t.files:
             return None
-        lines, ids, side = z[f'{gid}__lines'], z[f'{gid}__ids'], z[f'{gid}__side']
+        players = player_worlds.read_player_worlds(z, gid)
+        lines, ids, side = players['lines'], players['ids'], players['side']
         per = t[gid]  # (worlds, home/away, Q1–Q4 + OT)
     stats = list(WORLD_STATS)[:lines.shape[2]]
-    return {'worlds': int(lines.shape[0]), 'stats': stats, 'players': [str(x) for x in ids], 'side': side.astype(int).tolist(),
-            'lines': base64.b64encode(np.ascontiguousarray(lines).tobytes()).decode(),
-            # team points per world and period: worlds × (home, away) × (Q1, Q2, Q3, Q4, OT), uint8
-            'team_periods': base64.b64encode(np.clip(per, 0, 255).astype(np.uint8).tobytes()).decode(), 'periods': ['q1', 'q2', 'q3', 'q4', 'ot']}
+    result = {'worlds': int(lines.shape[0]), 'stats': stats, 'players': [str(x) for x in ids], 'side': side.astype(int).tolist(),
+              'lines': base64.b64encode(np.ascontiguousarray(lines).tobytes()).decode(),
+              # team points per world and period: worlds × (home, away) × (Q1, Q2, Q3, Q4, OT), uint8
+              'team_periods': base64.b64encode(np.clip(per, 0, 255).astype(np.uint8).tobytes()).decode(), 'periods': ['q1', 'q2', 'q3', 'q4', 'ot']}
+    if 'minutes' in players:
+        result['minutes_schema'] = int(players['minutes_schema'])
+        result['period_minutes_f64_le'] = base64.b64encode(
+            np.ascontiguousarray(players['minutes'], dtype='<f8').tobytes()).decode()
+    return result
+
+
+def minute_marginals(path: Path, gid: str) -> dict | None:
+    """Sorted independent period distributions for the Expected-only phone bundle."""
+    import base64
+    import numpy as np
+    from scripts.projection import SLICES
+
+    with np.load(path / 'engine_players.npz', allow_pickle=False) as archive:
+        players = player_worlds.read_player_worlds(archive, gid)
+    if 'minutes' not in players:
+        return None
+    minutes = players['minutes']
+    values = np.stack([np.sort(minutes[:, :, cols].sum(axis=2), axis=0)
+                       for cols in SLICES.values()], axis=2)
+    return {'schema': 1, 'worlds': int(minutes.shape[0]), 'players': [str(x) for x in players['ids']],
+            'periods': list(SLICES),
+            'minutes_f64_le': base64.b64encode(np.ascontiguousarray(values, dtype='<f8').tobytes()).decode()}
 
 
 def advanced_world_summaries(values: dict, opponent: dict | None = None) -> dict:
@@ -952,6 +976,7 @@ def build(views_root: Path = VIEWS) -> dict:
                 }
         tm = team_model.get(gid)
         avg = None
+        marginals = None
         if p:
             sim_ids = [x['id'] for side in ('home', 'away') for x in p['sim'][side]['players']]
             avg = averages(stats_source['players'], sim_ids)
@@ -959,6 +984,11 @@ def build(views_root: Path = VIEWS) -> dict:
             wl = world_lines(snaps[p['day']]['path'], gid, p['meta'].get('sims'))
             if wl is not None:
                 write_json(api / 'game' / gid / 'worlds.json', wl)
+                if wl.get('minutes_schema') and p['meta'].get('origin') == latest_day and p['day'] == latest_day:
+                    marginals = minute_marginals(snaps[p['day']]['path'], gid)
+                    if marginals is None:
+                        raise ValueError(f'{gid}: precise minute marginals are missing')
+                    write_json(api / 'game' / gid / 'minute-marginals.json', marginals)
         duel = None
         if M_real is not None and (p or actual):
             sides = {}
@@ -983,7 +1013,9 @@ def build(views_root: Path = VIEWS) -> dict:
                             'cutoff': p['meta']['cutoff'], 'sim': p['sim']} if p else None),
             'team_model': ({'snapshot': latest_day, 'sims': season_latest['sims'], **tm} if tm and not p else None),
             'actual': actual, 'comparison': comparison, 'comparison_as_of': as_of, 'averages': avg,
-            'worlds': bool(p and (api / 'game' / gid / 'worlds.json').exists())})
+            'worlds': bool(p and (api / 'game' / gid / 'worlds.json').exists()),
+            'worlds_minutes_schema': wl.get('minutes_schema') if p and wl is not None else None,
+            'minute_marginals': marginals is not None})
 
     for day, snap in snaps.items():
         if day > latest_day:

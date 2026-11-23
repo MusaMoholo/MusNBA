@@ -1,0 +1,21 @@
+{
+ "kind": "isolated production minute decoding audit; not a forecast or predictive test",
+ "manifest": "data/derived/experiments/20261122_a1_live_branch_034_v1.json",
+ "manifest_sha256": "6111ca22d0981ff3cc14bda9bb8cdaa77f9cf90b88e243583c3d98223a72c3ed",
+ "branch_index": 0,
+ "capture": "data/derived/experiments/20261122_a1_live_branch_034_v1/branch-000.npz",
+ "capture_sha256": "b460a7f8b87158fe507fe583eaf11ac2b35c65e87bc9caa8ac5ac355ed134bc8",
+ "audit_sha256": "a228dff529fb4d1d93828872c5bf8728765966f34d0f91cbe9b7a0da98309bef",
+ "decoder_sha256": "ec5707a05a1e350ea8ddf83353427d7e5333c3a9166dd486740b4aaa83cdf404",
+ "worlds": 10000,
+ "players": 30,
+ "distributions": 210,
+ "thresholds_per_distribution": 7,
+ "conditional_win_thresholds": 1470,
+ "values_bitwise_checked": 2100000,
+ "phone_marginal_values_bitwise_checked": 2100000,
+ "phone_minute_record_json_bytes": 22400403,
+ "phone_minute_record_gzip_bytes": 6537656,
+ "size_limitation": "Minute-only record, not a full bundle or a physical-phone performance measurement.",
+ "seconds": 3.08
+}

@@ -2,6 +2,19 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 ET — production-format minute accounting:** independent audits of three isolated research
+captures, each **10,000 worlds × 30 players**, bitwise reconciled **2.1 million** laptop period values
+and **2.1 million** sorted phone marginal values across **210** player-period distributions per capture.
+Each audit also checked **1,470** conditional-on-team-win thresholds. Phone minute-only records compressed
+to **6,741,690 / 6,537,656 / 6,941,421 bytes**, respectively: these are not complete bundle sizes or
+physical-phone performance measurements. Reports with source hashes:
+`analysis/experiments/20261122_a1_production_minutes_{033,034,035}_v1.json`.
+A private synthetic fixture passed offline import **22/22 phone / 23/23 laptop**, but its mixed metadata
+means it is not a forecast. The actual refreshed, legacy-rounded bundles were **12,634,136 / 42,906,219**
+bytes (phone/laptop) and passed hosted offline **23/23 / 24/24**. New schema 1 preserves float64 minutes
+only in newly generated worlds; the seven retained forecasts cannot regain lost precision. These checks
+establish representation and accounting, not predictive accuracy.
+
 **22 Nov 2026 ET — D50 live delivery:** after all seven scheduled tips, a live collection made **65**
 requests with **0** failures and two new final summaries. Rebuilding inputs through 21 Nov took **230.1s**.
 The retained and post-collection team, league and player cutoff tables matched exactly. The new
@@ -17,7 +30,7 @@ of pre-tip publication. No model was promoted.
 **22 Nov 2026 — minute precision:** in one retained 10,000-world D47 conditional branch (25 players,
 five period slots), **527,727/1,250,000** player-period-world minute values were not integer seconds
 at tolerance 1e-8; maximum distance from a whole second was **0.5 s**. The source retains float64
-minutes, but the research game-summary histograms currently round to whole minutes. This is a storage
+minutes, but the research game-summary histograms at that checkpoint rounded to whole minutes. This was a storage
 and presentation observation, not an accuracy result or a shipped fix. Reproduction and source hash:
 `analysis/experiments/20261122_a1_minute_precision_v1.json`.
 Three additional independent browser-fixture audits, covering two, four and two branches respectively

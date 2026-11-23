@@ -179,6 +179,8 @@ def export_bundle(output: Path, archive_root=None, profile: str = 'phone') -> di
                 stream.write(packed(header) + '\n')
                 for path in sorted((frozen / 'api').rglob('*.json')):
                     key = '/api/' + path.relative_to(frozen / 'api').with_suffix('').as_posix()
+                    if profile == 'laptop' and key.startswith('/api/game/') and key.endswith('/minute-marginals'):
+                        continue
                     text = path.read_text(encoding='utf-8')
                     body = phone_record(key, text) if profile == 'phone' else text
                     if body is None:

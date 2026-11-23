@@ -429,6 +429,14 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 ET · A1 precise-minute delivery:** schema 1 retains float64 period minutes for future
+  worlds; laptop sheets and conditional outcomes use world identity, while phone receives independent sorted
+  marginals. Three isolated 10,000-world captures each independently reconciled **2.1 million** values per
+  profile and **1,470** conditional thresholds. Today's seven retained pre-tip forecasts remain rounded, not
+  regenerated; there is no claimed predictive improvement. Synthetic precise-bundle offline checks passed
+  **22/22 phone / 23/23 laptop**; actual retained bundles passed hosted **23/23 / 24/24**, and data-free
+  Pages **e3c7798** deployed. Physical-phone import and full-slate precise-bundle cost remain unverified.
+  Smoke **107/107**, deliberate fault **86/107** and exit 1. No model promotion; A1 **80%**, Chunk A **34.5%**.
 - **22 Nov 2026 ET · A1 precise-minute research view:** injected branch sheets now share exact fractional
   minute thresholds with Given and split their display bins correctly; an independent capture audit checked
   **196** player-period distributions and conditional win thresholds. **6/6** research and **30/30** normal

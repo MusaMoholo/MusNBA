@@ -160,6 +160,11 @@ class TodayOnlyTests(unittest.TestCase):
                 'lines': np.zeros((2, 2, 15), dtype=np.uint8)}.items()}
             for gid in ('a', 'b'):
                 player_arrays[f'{gid}__lines'][:, :, 1] = scores.sum(axis=2)
+            exact = np.zeros((2, 2, 5), dtype=np.float64)
+            exact[0, 0, 0] = .1
+            exact[1, 1, 1] = .3
+            player_arrays['a__minutes_schema'] = np.array(1, dtype=np.uint8)
+            player_arrays['a__minutes'] = exact
             write_json(target / 'meta.json', old_meta)
             write_json(target / 'games.json', old_games)
             write_json(target / 'games_placeholder.json', {'a': 'old-a', 'b': 'old-b'})
@@ -173,8 +178,9 @@ class TodayOnlyTests(unittest.TestCase):
                     'model': model, 'sims': 2, 'season_sims': 2, 'engine_inputs': {}, 'started': 0,
                     'games': {'a': old_games['a'], 'b': {**old_games['b'], 'marker': 'new-b'}},
                     'placeholder': {'a': 'old-a', 'b': 'new-b'}, 'worlds': {'a': scores, 'b': scores},
-                    'player_worlds': {gid: {key: player_arrays[f'{gid}__{key}']
-                                           for key in ('ids', 'side', 'lines')} for gid in ('a', 'b')},
+                    'player_worlds': {gid: {key: value for full_key, value in player_arrays.items()
+                                            if full_key.startswith(gid + '__')
+                                            for key in (full_key.split('__', 1)[1],)} for gid in ('a', 'b')},
                     'retained': retained}
             season = {'model': 'pathway', 'as_of': '2026-11-22', 'pathway': {'label': 'test'}, 'sims': 2,
                       'games': [{'game_id': gid, 'source': 'engine', 'p_home': .5, 'mu_home': .5, 'mu_away': .5}
@@ -189,6 +195,16 @@ class TodayOnlyTests(unittest.TestCase):
                 altered = {**part, 'worlds': {**part['worlds'], 'a': np.zeros_like(scores)}}
                 with self.assertRaisesRegex(ValueError, 'worlds changed'):
                     nightly.validate_retained(altered, season, target, '2026-11-22T18:31:00Z')
+                altered_players = {**part['player_worlds'], 'a': {
+                    key: value for key, value in part['player_worlds']['a'].items() if key != 'minutes'}}
+                with self.assertRaisesRegex(ValueError, 'worlds changed'):
+                    nightly.validate_retained({**part, 'player_worlds': altered_players}, season, target,
+                                              '2026-11-22T18:31:00Z')
+                corrupt = {**part['player_worlds'], 'b': {**part['player_worlds']['b'],
+                           'minutes_schema': np.array(1, dtype=np.uint8), 'minutes': np.ones((2, 2, 5))}}
+                with self.assertRaisesRegex(ValueError, 'invalid precise minute'):
+                    nightly.write_snapshot({**part, 'player_worlds': corrupt}, season)
+                self.assertEqual(read_json(target / 'games.json'), old_games)
                 with self.assertRaisesRegex(ValueError, 'season does not use'):
                     nightly.validate_retained(part, {**season, 'games': []}, target, '2026-11-22T18:31:00Z')
                 with patch.object(nightly, 'utc_now', side_effect=['2026-11-22T19:59:59Z',
@@ -205,11 +221,54 @@ class TodayOnlyTests(unittest.TestCase):
             with np.load(target / 'engine_worlds.npz') as saved:
                 np.testing.assert_array_equal(saved['a'], scores)
             with np.load(target / 'engine_players.npz') as saved:
-                for key in ('ids', 'side', 'lines'):
+                for key in ('ids', 'side', 'lines', 'minutes_schema', 'minutes'):
                     np.testing.assert_array_equal(saved[f'a__{key}'], player_arrays[f'a__{key}'])
             later = nightly.load_retained(target, fixtures, '2026-11-22T20:01:00Z')
             self.assertEqual(later['a']['meta'], old_meta)
             self.assertEqual(later['b']['meta']['completed_at'], '2026-11-22T18:31:00Z')
+            self.assertNotIn('minutes', later['b']['players'])
+
+    def test_world_lines_exposes_exact_minutes_and_rejects_bad_schema(self):
+        import base64
+
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp)
+            lines = np.zeros((2, 1, 15), dtype=np.uint8)
+            minutes = np.zeros((2, 1, 5), dtype=np.float64)
+            minutes[0, 0, :2] = [.1, 30.125]
+            lines[0, 0, 0] = 30
+            arrays = {'g__ids': np.array(['h']), 'g__side': np.array([0]), 'g__lines': lines}
+            np.savez_compressed(path / 'engine_worlds.npz', g=np.zeros((2, 2, 5), dtype=np.int16))
+            np.savez_compressed(path / 'engine_players.npz', **arrays)
+            legacy = views.world_lines(path, 'g', 2)
+            self.assertNotIn('minutes_schema', legacy)
+            self.assertIsNone(views.minute_marginals(path, 'g'))
+            arrays.update(g__minutes_schema=np.array(1, dtype=np.uint8), g__minutes=minutes)
+            np.savez_compressed(path / 'engine_players.npz', **arrays)
+            raw = views.world_lines(path, 'g', 2)
+            self.assertEqual(raw['minutes_schema'], 1)
+            decoded = np.frombuffer(base64.b64decode(raw['period_minutes_f64_le']), dtype='<f8')
+            np.testing.assert_array_equal(decoded.reshape(minutes.shape), minutes)
+            marginal = views.minute_marginals(path, 'g')
+            self.assertEqual(marginal['periods'], list(projection.SLICES))
+            decoded = np.frombuffer(base64.b64decode(marginal['minutes_f64_le']), dtype='<f8').reshape(2, 1, 7)
+            for q, cols in enumerate(projection.SLICES.values()):
+                np.testing.assert_array_equal(decoded[:, :, q], np.sort(minutes[:, :, cols].sum(axis=2), axis=0))
+            for change in (
+                {'g__minutes_schema': np.array(2, dtype=np.uint8)},
+                {'g__minutes': minutes.astype(np.float32)},
+                {'g__minutes': np.full(minutes.shape, np.nan)},
+                {'g__minutes': minutes[:, :, :4]},
+                {'g__minutes': np.zeros_like(minutes)},
+            ):
+                with self.subTest(change=list(change)):
+                    np.savez_compressed(path / 'engine_players.npz', **{**arrays, **change})
+                    with self.assertRaisesRegex(ValueError, 'precise minute'):
+                        views.world_lines(path, 'g', 2)
+            del arrays['g__minutes_schema']
+            np.savez_compressed(path / 'engine_players.npz', **arrays)
+            with self.assertRaisesRegex(ValueError, 'incomplete precise minute'):
+                views.world_lines(path, 'g', 2)
 
     def test_project_slate_does_not_resimulate_a_retained_game(self):
         game = {'game_id': 'a', 'date_et': '2026-11-22'}

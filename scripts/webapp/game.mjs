@@ -785,11 +785,22 @@ async function sheet(view, data, pid, current, rerender) {
   const name = p?.name || actualRow.name;
   const period = state.period;
   const proj = p?.periods?.[period];
+  let minuteWorlds = data._branchWorldData || null;
+  const loadMinuteWorlds = async () => {
+    if (!minuteWorlds && data.worlds && data.worlds_minutes_schema != null) {
+      if (data.worlds_minutes_schema !== 1) throw new Error('Unsupported minute-world schema');
+      minuteWorlds = await O.load(data.game.id);
+      if (!minuteWorlds.preciseMinutes) throw new Error('Precise minute worlds are missing');
+    } else if (!minuteWorlds && !data._research && !data.worlds && data.minute_marginals) {
+      minuteWorlds = await O.loadMinuteMarginals(data.game.id);
+    }
+  };
   let preciseMinutes = null;
   const getMinutes = () => {
-    if (!preciseMinutes && data._branchWorldData) {
-      const worlds = data._branchWorldData;
-      preciseMinutes = minuteDistribution(worlds.minuteValues(pid, period), worlds.weights, worlds.baseMask);
+    if (!preciseMinutes && minuteWorlds) {
+      const worlds = minuteWorlds;
+      preciseMinutes = minuteDistribution(worlds.minuteValues(pid, period),
+        worlds.weights || new Float64Array(worlds.W).fill(1), worlds.baseMask);
       if (!preciseMinutes) throw new Error('No selected minute worlds');
     }
     return preciseMinutes;
@@ -798,11 +809,13 @@ async function sheet(view, data, pid, current, rerender) {
     : d.support ? Number(d.quantiles[2].toFixed(4)) : defaultLine(d);
   const choices = (period === 'fg' ? SHEET_FG : SHEET_PERIOD).filter(k => !proj || proj.stats?.[k]);
   if (!choices.includes(state.stat)) state.stat = 'pts';
+  if (state.stat === 'min') await loadMinuteWorlds();
+  if (!current()) return;
   const key = () => `${data.game.id}|${pid}|${period}|${state.stat}`;
   const options = [['Quarters', ['q1', 'q2', 'q3', 'q4']], ['Halves', ['h1', 'h2']], ['Game', ['fg']]].map(([label, ids]) =>
     `<optgroup label="${label}">${ids.map(id => `<option value="${id}"${id === period ? ' selected' : ''}>${PERIODS.find(x => x[0] === id)[1]} · ${periodName(id)}</option>`).join('')}</optgroup>`).join('');
   const statBlock = () => {
-    const d = state.stat === 'min' && data._branchWorldData ? getMinutes() : proj.stats[state.stat];
+    const d = state.stat === 'min' && minuteWorlds ? getMinutes() : proj.stats[state.stat];
     const exactMinutes = Boolean(d.support);
     const act = actualValue(actualRow, period, state.stat, exactMinutes);
     const isPercent = PERCENT_STATS.has(state.stat), unit = isPercent ? '%' : '';
@@ -823,7 +836,7 @@ async function sheet(view, data, pid, current, rerender) {
       <span class="note" style="margin:0">mean ${exactMinutes ? show(d.mean) : f1(d.mean) + unit} · median ${show(quantiles[2])} · 10–90%: ${show(quantiles[0])} to ${show(quantiles[4])}</span></div>
       ${shooting ? `<p class="note">${noAttempt == null ? `The ${shooting[0]} attempts distribution is not stored for this snapshot.` : `No ${shooting[0]} attempts in ${pct(noAttempt, 1)} of simulations; at least one in ${pct(1 - noAttempt, 1)}.`}
         ${isPercent ? `Below: ${data._research ? `${pct(d.defined_mass / d.total_mass, 1)} weighted chance of an attempt` : `only the ${d.defined.toLocaleString()} of ${d.total.toLocaleString()} simulations with an attempt`}. The distribution and all chances are conditional on an attempt; no attempts means no percentage, not 0%. Percentages are rounded to whole percentage points.` : 'Counting-stat distributions include all simulations.'}</p>` : ''}
-      ${exactMinutes ? '<p class="note">Minute values and thresholds use full stored precision; displayed times round to seconds. Bars cover whole-minute intervals and split at the line.</p>' : data._research && state.stat === 'min' ? '<p class="note">This research payload has only whole-minute-rounded distributions; precise minute worlds are unavailable.</p>' : ''}
+      ${exactMinutes ? `<p class="note">Minute values and thresholds use full stored precision; displayed times round to seconds. Bars cover whole-minute intervals and split at the line.${data.minute_marginals && !data.worlds ? ' These independent period distributions do not retain world identities.' : ''}</p>` : state.stat === 'min' ? `<p class="note">${data._research ? 'This research payload has only whole-minute-rounded distributions; precise minute worlds are unavailable.' : data.worlds_minutes_schema && !data.worlds ? 'Precise minute distributions are not included in this bundle. This minute distribution is rounded to whole minutes.' : 'Precise minute worlds are unavailable for this snapshot. This minute distribution is rounded to whole minutes.'}</p>` : ''}
       <div class="dist" style="margin-top:8px"><div>${exactMinutes ? minuteHistogram(d, line) : histogram(d, {line, actual: act, label: v => v + unit})}
         <div class="lineinput"><label for="line-stat">Over</label><input id="line-stat" type="number" step="${exactMinutes ? 'any' : '1'}" min="${exactMinutes ? '0' : '0.5'}" value="${line}" data-line="stat">
           <output>Over${isPercent ? ' if attempted' : ''}: ${pct(pOver)}</output><span class="dim">${exactMinutes ? 'At or below' : 'Under'}${isPercent ? ' if attempted' : ''}: ${pct(1 - pOver)}</span></div>
@@ -865,15 +878,19 @@ async function sheet(view, data, pid, current, rerender) {
     restoreAdvancedState(view, savedAdvanced);
     paintedSheet = true;
     view.querySelector('#sheet-period')?.addEventListener('change', e => location.replace(`#/game/${data.game.id}/player/${pid}/${e.target.value}`));
-    view.querySelectorAll('[data-stat]').forEach(b => b.onclick = () => { state.stat = b.dataset.stat; store.set('stat', state.stat); paint(); });
+    view.querySelectorAll('[data-stat]').forEach(b => b.onclick = async () => {
+      state.stat = b.dataset.stat; store.set('stat', state.stat);
+      try { if (state.stat === 'min') await loadMinuteWorlds(); if (current()) paint(); }
+      catch (error) { if (current()) { view.innerHTML = errorPanel(error); console.error(error); } }
+    });
     const block = view.querySelector('#stat-block');
     const input = block?.querySelector('input[data-line]');
-    if (input) input.onchange = () => { const v = Number(input.value); if (Number.isFinite(v)) { state.lines.set(key(), state.stat === 'min' && data._branchWorldData ? Math.max(0, v) : halfLine(Math.max(0, v))); paint(); } };
+    if (input) input.onchange = () => { const v = Number(input.value); if (Number.isFinite(v)) { state.lines.set(key(), state.stat === 'min' && minuteWorlds ? Math.max(0, v) : halfLine(Math.max(0, v))); paint(); } };
     const svg = block?.querySelector('svg.hist');
-    if (svg) svg.onclick = e => { const v = e.target.closest('rect.hit')?.dataset.v; if (v != null) { state.lines.set(key(), Number(v) - (state.stat === 'min' && data._branchWorldData ? 0 : 0.5)); paint(); } };
+    if (svg) svg.onclick = e => { const v = e.target.closest('rect.hit')?.dataset.v; if (v != null) { state.lines.set(key(), Number(v) - (state.stat === 'min' && minuteWorlds ? 0 : 0.5)); paint(); } };
     const whatIf = view.querySelector('#what-if');
     if (whatIf) {
-      const d = state.stat === 'min' && data._branchWorldData ? getMinutes() : proj.stats[state.stat];
+      const d = state.stat === 'min' && minuteWorlds ? getMinutes() : proj.stats[state.stat];
       S.sheetPanels(whatIf, data, pid, state.stat, getLine(d));
     }
   };

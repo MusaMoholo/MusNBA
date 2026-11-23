@@ -1,0 +1,65 @@
+{
+  "kind": "isolated injected research Game Centre browser check; not a forecast or phone import",
+  "source_sha256": {
+    "data/derived/experiments/20261122_chunk_a_a1_d47_browser_fixture_two_identity_v1.json": "3e543e61b2eb0aee44a23a0e069a9f55cab1db086afd63612ac62db554180c03",
+    "data/derived/experiments/20261122_chunk_a_a1_d47_expected_payload_two_shared_v1.json": "a4ab3909d1a3c2d83a6d71ff3dda9009ca405a3bf6eae9e12eacdb4f56e299df",
+    "data/derived/experiments/20261122_chunk_a_a1_d47_game_summary_two_shared_v1.json": "e29e1c0bc31734696ebf48f18aa9cb9cbf78ea4fd3cf66933cfa731ffe850f06",
+    "data/derived/experiments/20261122_chunk_a_a1_d47_game_summary_two_home_sits_identity_v1.json": "b6c6fb3138bfb0a331b608448493479884544b624c6e900270097c5e61f27e60",
+    "analysis/experiments/20261122_chunk_a_a1_d47_game_summary_two_shared_v1_audit.json": "0b1be4a3ca8e58f1f6f41de9e954541ae5514b266b59ca4f5bc7a596bdf01a4f",
+    "analysis/experiments/20261122_chunk_a_a1_d47_game_summary_two_home_sits_identity_v1_audit.json": "5ae0ad60966a073ec722e154d54d85c43c85acef36176aa4d9816c45289b8632",
+    "data/derived/experiments/20261122_a1_precise_minutes_030_all_v4.json": "7008a5cc57c941d37242b82a2774d2ce25f187e73f33a174b553b3ebe9bba8b9",
+    "analysis/experiments/20261122_a1_precise_minutes_030_all_v5_audit.json": "409318cd6099e9bb2bc89d83c6b24310cb7373687f52395a07e3f2b16b97c210",
+    "analysis/a1_game_view_browser_check.mjs": "01534324d39c9b29c01cf07383704808102bcc42aaf888685655009d4e9d1648",
+    "analysis/a1_game_view_contract.mjs": "7645b3e26beb877e5d82c7a3e84640c705a704cdfb5a69613caf4661622cebe8",
+    "analysis/a1_branch_game_summary.mjs": "b5049cfe3b3bd373b089166cee1291928f57d9c50b58f99494491f981fe10bc7",
+    "analysis/a1_branch_world_source.mjs": "deff0b48ee2f50fd29fe52add91f06591ba0e333c11adeece636a78cd485e4a5",
+    "scripts/webapp/game.mjs": "d2fda317a7aac8700af3b5dd9ebc17f40589f62e789da0017bd49b1f96dbf39a",
+    "scripts/webapp/scenario.mjs": "015a97883bbc321df734c6dd6c35e064ded33f4474b8f14158c07d8ba47c0074",
+    "scripts/webapp/outcomes.mjs": "ec5707a05a1e350ea8ddf83353427d7e5333c3a9166dd486740b4aaa83cdf404",
+    "scripts/webapp/weighted-worlds.mjs": "8e8fe7dcdfda9105295364531db86aa08243ad3475292fbfeb96acd298de7e5d",
+    "scripts/webapp/precise-minutes.mjs": "21f72ab9861dc61c7e4e0902adacdb871b476573f4a311da934437617d9f84fd"
+  },
+  "game": "401910030",
+  "player": "3032977",
+  "team": "14",
+  "full_home_points": "118.5",
+  "selected_home_points": "114.7",
+  "selected_worlds": 20000,
+  "sizes": [
+    {
+      "width": 1440,
+      "theme": "dark"
+    },
+    {
+      "width": 1440,
+      "theme": "light"
+    },
+    {
+      "width": 960,
+      "theme": "dark"
+    },
+    {
+      "width": 960,
+      "theme": "light"
+    },
+    {
+      "width": 390,
+      "theme": "dark"
+    },
+    {
+      "width": 390,
+      "theme": "light"
+    }
+  ],
+  "precise_minute_checks": [
+    "fg over 30.25",
+    "split 30-minute bin",
+    "h1 over 10",
+    "Given and all-world chances"
+  ],
+  "expected_only_without_worlds": true,
+  "limitations": [
+    "Research source was injected explicitly, not served to users.",
+    "Phone viewport emulation is not a phone bundle import or real-device acceptance."
+  ]
+}

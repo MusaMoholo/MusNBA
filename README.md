@@ -12,8 +12,8 @@ or phone.
 > fact currently use a labelled placeholder. U1–U22 and public Pages/iCloud delivery are complete. Accuracy chunk
 > **A1 (14 tasks)** has completed S01–S07; S06's audited candidate did not clear its frozen gate. The 22 November
 > ET nightly is delivered and historical forecast backfill is deferred. The owner has authorised two remaining chunks
-> in order; Chunk A has started by freezing its lineup-branch contract. D50 delivery is pending: the retained
-> 22 November data still reflects the earlier two-day horizon until the safe refresh described in HANDOFF.
+> in order; Chunk A has started by freezing its lineup-branch contract. D50 is delivered: today's retained
+> forecasts use the possession engine, and tomorrow onward uses the team pathway.
 > The 2-D selected-world View Centre, designed
 > for later resulted-game playback, remains unimplemented.
 > See [PLAN.md](PLAN.md) and [HANDOFF_NEXT.md](HANDOFF_NEXT.md).
@@ -57,7 +57,10 @@ python3 -m venv .venv
   the explicitly injected research view (`analysis/a1_precise_minutes.mjs` re-exports it);
   `analysis/a1_precise_minutes_probe.mjs` and `analysis/a1_precise_minutes_audit.py` measure and independently
   check it against original captures. `analysis/a1_minute_payload_probe.py` sizes minute-only storage options.
-  No normal route supplies precise branch worlds.
+  New snapshots retain schema-1 float64 period minutes; old rounded snapshots cannot regain precision. Laptop
+  sheets and Given/Joint preserve world identity; the phone carries independently sorted period marginals
+  without conditional world controls. `analysis/a1_production_minutes_audit.py <capture-manifest> --output
+  <new-report.json>` independently checks both representations. No normal route supplies precise branch worlds.
 - The server reads files from disk: front-end edits appear on refresh, rebuilt views appear
   immediately; no restart needed. `serve.py --host 0.0.0.0` lets a phone on the same Wi-Fi in.
 - Slates are US Eastern game dates; tip-offs show UK time with ET.

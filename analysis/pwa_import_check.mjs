@@ -142,6 +142,20 @@ if (args['upgrade-shell'] && args['upgrade-target'] && args['upgrade-version']) 
 await send('Network.emulateNetworkConditions', {offline: true, latency: 0, downloadThroughput: -1, uploadThroughput: -1}, s);
 await send('Page.navigate', {url: args.url + '#/standings'}, s);
 check('offline reload renders standings', await waitFor(`document.body.textContent.includes('Standings & season forecast') && !!document.querySelector('td.heat')`));
+if (args['precise-game'] && args['precise-player'] && args['precise-over']) {
+  const game = args['precise-game'], player = args['precise-player'];
+  await send('Page.navigate', {url: args.url + '#/game/' + game + '/player/' + player + '/fg'}, s);
+  const ready = await waitFor(`!!document.querySelector('[data-stat="min"]')`);
+  if (ready) await evaluate(`document.querySelector('[data-stat="min"]').click()`);
+  const precise = ready && await waitFor(`document.querySelector('#stat-block')?.textContent.includes('full stored precision')`, 60000);
+  check('exact player minutes work offline', precise && await evaluate(`(() => {
+    const input = document.querySelector('#line-stat');
+    input.value = '30.25'; input.dispatchEvent(new Event('change', {bubbles: true}));
+    return input.step === 'any' && document.querySelector('#stat-block output')?.textContent === ${JSON.stringify('Over: ' + args['precise-over'])}
+      && (${JSON.stringify(args.profile)} !== 'phone' || (!document.querySelector('#what-if')
+        && document.querySelector('#stat-block').textContent.includes('do not retain world identities')));
+  })()`));
+}
 if (args.future) {
   await send('Page.navigate', {url: args.url + '#/game/' + encodeURIComponent(args.future)}, s);
   const ready = await waitFor(`document.querySelectorAll('.pathway-grid [data-block]').length === 3`);

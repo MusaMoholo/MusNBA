@@ -21,8 +21,9 @@ class BundleProfilesTests(unittest.TestCase):
             files = {
                 api / 'meta.json': {'latest': '2026-11-22', 'snapshots': [{'date': '2026-11-22'}]},
                 api / 'players.json': {'players': []},
-                api / 'game' / '123.json': {'worlds': True},
+                api / 'game' / '123.json': {'worlds': True, 'minute_marginals': True},
                 api / 'game' / '123' / 'worlds.json': {'worlds': 2, 'players': ['1']},
+                api / 'game' / '123' / 'minute-marginals.json': {'schema': 1},
                 api / 'slate' / '2026-11-22.json': {'games': [{'proj': {'duel': {'id': 1}}}]},
             }
             for path, data in files.items():
@@ -40,6 +41,9 @@ class BundleProfilesTests(unittest.TestCase):
             self.assertEqual(laptop[0]['profile'], 'laptop')
             self.assertNotIn('/api/game/123/worlds', phone[1])
             self.assertEqual(json.loads(phone[1]['/api/game/123']['body'])['worlds'], False)
+            self.assertTrue(json.loads(phone[1]['/api/game/123']['body'])['minute_marginals'])
+            self.assertIn('/api/game/123/minute-marginals', phone[1])
+            self.assertNotIn('/api/game/123/minute-marginals', laptop[1])
             self.assertNotIn('duel', json.loads(phone[1]['/api/slate/2026-11-22']['body'])['games'][0]['proj'])
             for key, path in (('/api/game/123', api / 'game' / '123.json'),
                               ('/api/game/123/worlds', api / 'game' / '123' / 'worlds.json'),
