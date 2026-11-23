@@ -1,10 +1,27 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 80%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **9d5aa10** (dated-fold preparation); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **9e46193** (earlier-fold screens); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
+- **A1 90% partial — full-game selected policy comparison (23 Nov UTC):** using the same fixed F4
+  six-player synthetic-absence case, S06 completed the **798** original D29-survivor seeds in **100.1s**
+  with four single-thread workers; the earlier **202** D29-rejected seeds were reused. Independent
+  saved-file accounting checked all **1,000** S06 worlds, **500,536** lineup fives and **325** technical
+  events, plus all **798** D29 survivors. D29 survivors averaged **223.54** total points versus **225.86**
+  for all S06 worlds, difference **−2.33** (unadjusted paired-seed bootstrap 95% interval **[−3.74, −0.91]**);
+  home-player minutes differed by **−1.57 to +1.47** depending on player. These are different policies and
+  random paths on one selected oracle roster: the difference does **not** isolate retry bias or establish a
+  league rate, accuracy or a promotion gate. Reports `analysis/experiments/20261122_a1_f4_six_roster_full_v2{,_audit}.json`,
+  log `/tmp/musnba_a1_f4_six_roster_full_v2.log`, ignored captures
+  `data/derived/experiments/20261122_a1_f4_six_roster_full_v2/`. The preserved `_v1` generation completed
+  798 worlds but its audit failed on absolute/relative path comparison; the corrected auditor changed the
+  frozen source hash, so `_v1` is invalid and `_v2` was generated afresh. Focused tests **13/13**, smoke
+  **107/107**, intentional fault **86/107** and exit 1. No protected-season outcomes were scored, no
+  accepted model or served bundle changed. A1 **80%**, Chunk A **34.5%**. Documentation review: HANDOFF,
+  PLAN, FINDINGS and README updated; AGENTS (standing rules), ENGINE_PLAN (design and decisions),
+  TRAINING_PLAN (evaluation gates) and DASHBOARD_PLAN (shipped behaviour) need no changes.
 - **A1 90% partial — earlier-fold screens complete (23 Nov UTC):** fixed **200**-game F1/F2/F3 panels
   respectively had **1 / 0 / 0** exhausted attempts out of **1,900 / 1,900 / 1,790**, **0 / 0 / 0**
   invalid allocations and **20 / 20 / 42** unsupported missing-position branches. F1's game-cluster
@@ -36,8 +53,8 @@ The preceding pushed checkpoint was **9d5aa10** (dated-fold preparation); use `g
   outcomes were scored. Focused tests **10/10**, smoke **107/107**, deliberate fault **86/107** and exit 1
   (`/tmp/musnba_a1_dated_prepare_{smoke,fault}_v1.log`). HANDOFF, PLAN, FINDINGS and README record the work;
   AGENTS, ENGINE_PLAN, TRAINING_PLAN and DASHBOARD_PLAN need no changes: rules, accepted engine, gates and
-  shipped UI remain unchanged. A1 **80%**, Chunk A **34.5%**. Next run the predeclared conditional-roster
-  screens and saved-file audits below, one fold at a time under the shared compute budget.
+  shipped UI remain unchanged. A1 **80%**, Chunk A **34.5%**. The predeclared conditional-roster screens
+  and saved-file audits subsequently completed, as recorded above.
 - **A1 90% partial — halftime selection diagnostic (23 Nov UTC):** replayed all **1,000** original
   six-player D29 attempts, matching the **798** complete-world digests and **202** exact failure reasons.
   At halftime, the **798** eventual survivors averaged **9.391** home fouls versus **9.888** over all
@@ -562,6 +579,19 @@ The preceding pushed checkpoint was **9d5aa10** (dated-fold preparation); use `g
   S02's body-free diagnostic differs from the accepted engine and its oracle participant roster is not
   pre-game availability. Do not compare its raw failure rate to F4 as if the models were identical, infer a
   league rate or claim the missing dated-availability or full-game retry-bias gates.
+- **A1 90% selected full-game policy comparison, frozen before its draws:** for the already selected F4
+  six-player synthetic-absence case, retain the audited 202 S06 worlds for D29-rejected seeds and run S06
+  once for each of the other 798 original seeds, with no retries. Independently audit all 1,000 S06 traces
+  and the 798 saved D29 survivor traces, including identities and accounting. Prespecify home and away
+  final score, total and margin, and each available home player's points and minutes. Compare the D29
+  survivor mean with the S06 mean over all 1,000 seeds, using 5,000 seed-cluster bootstrap resamples and
+  unadjusted 95% percentile intervals. This is a deliberately selected synthetic oracle-roster case and
+  the two policies have different substitutions and random paths: the differences combine policy and
+  survivor selection and **cannot identify retry bias** or substitute for fold/pregame/promotion gates.
+  Use four one-thread workers, new output names, verify source hashes, and fail on unexpected errors.
+  The first `_v1` generation completed 798 worlds, but its saved-file audit failed because it compared
+  absolute and relative capture paths. Preserve its files as an invalid, unaudited run; correct the auditor
+  and generate `_v2` afresh because the audit source hash is part of the frozen run fingerprint.
 - **Earlier-fold F1 screen correction (before rerun):** the first screen stopped with an `AttributeError`
   on a missing historical position used by projected-starter selection. Its pool shut down only after
   queued jobs finished, leaving **190** complete game records and **1,899** partial capture files in
@@ -3057,9 +3087,10 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
    **202** exhausted seeds in its selected F4 case; the S06 comparison is complete and independently
    audited, with different policies/paths and no final-outcome bias conclusion. A matched replay now
    establishes selected pre-failure halftime states in this extreme case; full-game bias remains unknown.
-   F1–F3 diagnostic engines are now fitted; run the predeclared conditional-roster screens, e.g.
-   All three earlier-fold conditional-roster screens and audits are complete, but dated pre-game cohorts
-   remain unavailable and full-game retry bias is unresolved. The resume prototype
+   All three earlier-fold conditional-roster screens and audits are complete. The selected full-game
+   F4 comparison also completed, but its different policies cannot identify retry bias. Genuinely dated
+   pre-game report cohorts remain unavailable for fitting or calibrating an availability model; labelled
+   fixed scenario weights themselves remain permitted. The resume prototype
    is single-operator only, and an orphaned partial batch fails for manual inspection. Source evidence and missing dated
    injury-report cohorts are documented there and in FINDINGS; do not score protected-season outcomes.
    The retry coordinator is deliberately unwired: prove world-local classification and survivor isolation,
@@ -3067,6 +3098,9 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
    policy on development folds, and do not retry input/cutoff/accounting/unknown errors. Keep the existing
    forecast if those gates cannot be met. The two retained research contexts now pass the independent snapshot
    check above; enforce equivalent origin-safe provenance for any future view before enabling the research path.
+   The full-game selected comparison can be repeated under fresh names with
+   `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -u analysis/a1_f4_six_roster_full_comparison.py --worlds-dir data/derived/experiments/<new-dir> --output analysis/experiments/<new-report>.json`,
+   then `.venv/bin/python analysis/a1_f4_six_roster_full_audit.py analysis/experiments/<new-report>.json --output analysis/experiments/<new-audit>.json`.
    Reproduce with `.venv/bin/python analysis/a1_game_context_audit.py data/snapshots/2026-11-22/meta.json data/master_fixtures.csv data/derived/experiments/20261122_chunk_a_a1_d47_game_view_one_full_v2.json data/derived/experiments/20261122_chunk_a_a1_d47_game_view_two_full_v2.json --payloads data/derived/experiments/20261122_chunk_a_a1_d47_expected_payload_one_shared_v1.json data/derived/experiments/20261122_chunk_a_a1_d47_expected_payload_two_shared_v1.json --output analysis/experiments/<new-context-audit>.json`.
 2. Finish A1 only after the actual rung requirements or the explicitly documented blocked fallback are resolved,
    review all root docs, smoke/fault, commit and push. Stop at the owner's A1 boundary; leave A2/A3 and Chunk B

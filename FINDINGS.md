@@ -2,6 +2,19 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 ET — selected six-player full-game policy comparison:** the already selected F4 synthetic-absence
+case was extended from the **202** D29-rejected seeds to all **1,000** original seeds under S06; generation of
+the other **798** S06 worlds took **100.1s** with four single-thread workers. Independent saved-file
+accounting checked all 1,000 S06 worlds, **500,536** lineup fives and **325** technical events, and all
+**798** D29 survivors. D29 survivors averaged **223.54** total points versus **225.86** over all S06 worlds,
+difference **−2.33** (paired-seed percentile 95% bootstrap interval **[−3.74, −0.91]**, 5,000 resamples,
+unadjusted across the prespecified metrics). Individual available home-player minute-mean differences ranged
+from **−1.57 to +1.47**. The different substitution policies and random paths confound policy differences
+with survivor selection; this does not identify retry bias, the failed worlds' counterfactual outcomes, a
+league rate or predictive accuracy. The first generation's audit failed due to relative/absolute paths and
+its corrected-source rerun used a new namespace; `_v1` remains invalid. Reports
+`analysis/experiments/20261122_a1_f4_six_roster_full_v2{,_audit}.json`.
+
 **22 Nov 2026 ET — fixed earlier-fold branch exhaustion screens:** 200 predeclared games per F1/F2/F3,
 using dated body-free S02 diagnostic models and oracle actual participants, with synthetic top-home-player
 plays/sits branches and five seeds per feasible branch. F1/F2/F3 had **1 / 0 / 0** typed exhaustion

@@ -1,0 +1,16 @@
+{
+ "kind": "selected six-player F4 S06 survivor-seed captures; diagnostic only",
+ "stress": "analysis/experiments/20261122_a1_f4_six_roster_v1.json",
+ "stress_sha256": "4b01ebec994a9c313cfb69a8d7c8736191686165265a50a5499ca241dd258f95",
+ "penalty": "analysis/experiments/20261122_a1_f4_six_roster_penalty_v1.json",
+ "penalty_sha256": "4a2c9c4ef0e7da65c1fa89ad4c3d465125bb5355c496c68c6ca19e66fe147de2",
+ "manifest": "data/derived/experiments/20261122_a1_f4_six_roster_full_v1/manifest.json",
+ "manifest_sha256": "f664f84516161939bb6f1dffa385186189f100f5f95da0dfed23fd0da7553e68",
+ "worlds": 798,
+ "workers": 4,
+ "elapsed_seconds": 109.471,
+ "limitations": [
+  "Synthetic selected oracle-roster case, not an NBA rate or accuracy test.",
+  "Different policies and random paths prevent identifying retry bias."
+ ]
+}

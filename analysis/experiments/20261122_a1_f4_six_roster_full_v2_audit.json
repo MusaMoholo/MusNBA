@@ -1,0 +1,168 @@
+{
+ "kind": "independent selected six-player full-game accounting and descriptive comparison",
+ "report": "analysis/experiments/20261122_a1_f4_six_roster_full_v2.json",
+ "report_sha256": "d54f1cbc37e0493a66d9913c03b69236f770071731317f651ed2895feab77918",
+ "attempts": 1000,
+ "d29_survivors": 798,
+ "s06_worlds": 1000,
+ "s06_lineup_fives_checked": 500536,
+ "s06_technical_events": 325,
+ "metrics": {
+  "home_points": {
+   "d29_survivor_mean": 108.84962406015038,
+   "s06_all_mean": 110.045,
+   "difference": -1.195375939849626,
+   "ci_95": [
+    -2.1046534545311095,
+    -0.28740897489377537
+   ]
+  },
+  "away_points": {
+   "d29_survivor_mean": 114.68546365914787,
+   "s06_all_mean": 115.818,
+   "difference": -1.132536340852127,
+   "ci_95": [
+    -2.11380562543675,
+    -0.14371988335430824
+   ]
+  },
+  "total_points": {
+   "d29_survivor_mean": 223.53508771929825,
+   "s06_all_mean": 225.863,
+   "difference": -2.327912280701753,
+   "ci_95": [
+    -3.743644180519508,
+    -0.9058930488508319
+   ]
+  },
+  "home_margin": {
+   "d29_survivor_mean": -5.835839598997493,
+   "s06_all_mean": -5.773,
+   "difference": -0.0628395989974937,
+   "ci_95": [
+    -1.3345882233735844,
+    1.133224449327109
+   ]
+  },
+  "home_player_3934620_points": {
+   "d29_survivor_mean": 15.837092731829573,
+   "s06_all_mean": 15.205,
+   "difference": 0.632092731829573,
+   "ci_95": [
+    0.1145561695276379,
+    1.117823741244464
+   ]
+  },
+  "home_player_4397784_points": {
+   "d29_survivor_mean": 16.291979949874687,
+   "s06_all_mean": 15.707,
+   "difference": 0.5849799498746862,
+   "ci_95": [
+    0.06838213952459733,
+    1.102171562977193
+   ]
+  },
+  "home_player_4431714_points": {
+   "d29_survivor_mean": 18.973684210526315,
+   "s06_all_mean": 20.231,
+   "difference": -1.2573157894736866,
+   "ci_95": [
+    -1.8321227748058155,
+    -0.6588710405310214
+   ]
+  },
+  "home_player_4432821_points": {
+   "d29_survivor_mean": 16.075187969924812,
+   "s06_all_mean": 16.342,
+   "difference": -0.2668120300751866,
+   "ci_95": [
+    -0.7854250798804369,
+    0.26449731407680493
+   ]
+  },
+  "home_player_4432887_points": {
+   "d29_survivor_mean": 18.86591478696742,
+   "s06_all_mean": 19.141,
+   "difference": -0.27508521303257893,
+   "ci_95": [
+    -0.8598684972481455,
+    0.3156499037829709
+   ]
+  },
+  "home_player_5242502_points": {
+   "d29_survivor_mean": 22.805764411027567,
+   "s06_all_mean": 23.419,
+   "difference": -0.613235588972433,
+   "ci_95": [
+    -1.2158904278276061,
+    -0.00025291117002832007
+   ]
+  },
+  "home_player_3934620_minutes": {
+   "d29_survivor_mean": 43.942364243216616,
+   "s06_all_mean": 42.47261333276282,
+   "difference": 1.4697509104538113,
+   "ci_95": [
+    1.0653347117687217,
+    1.8956674245401899
+   ]
+  },
+  "home_player_4397784_minutes": {
+   "d29_survivor_mean": 44.54149749402187,
+   "s06_all_mean": 43.40506333342616,
+   "difference": 1.1364341605957478,
+   "ci_95": [
+    0.8600167132365237,
+    1.4210992638019724
+   ]
+  },
+  "home_player_4431714_minutes": {
+   "d29_survivor_mean": 36.81841896301682,
+   "s06_all_mean": 38.38694666614482,
+   "difference": -1.568527703127998,
+   "ci_95": [
+    -1.9567933425757282,
+    -1.1775442466786261
+   ]
+  },
+  "home_player_4432821_minutes": {
+   "d29_survivor_mean": 37.62356516252611,
+   "s06_all_mean": 38.49073333271457,
+   "difference": -0.8671681701884495,
+   "ci_95": [
+    -1.3228673455452902,
+    -0.4256146558356851
+   ]
+  },
+  "home_player_4432887_minutes": {
+   "d29_survivor_mean": 36.31179407050377,
+   "s06_all_mean": 36.12769666791235,
+   "difference": 0.18409740259139085,
+   "ci_95": [
+    -0.12635066417509222,
+    0.49173970804103206
+   ]
+  },
+  "home_player_5242502_minutes": {
+   "d29_survivor_mean": 41.42025480355691,
+   "s06_all_mean": 41.86694666703927,
+   "difference": -0.44669186348238554,
+   "ci_95": [
+    -0.7658308863621499,
+    -0.1369682930259202
+   ]
+  }
+ },
+ "bootstrap": {
+  "replicates": 5000,
+  "seed": 20261122,
+  "unit": "original seed",
+  "interval": "95% percentile, unadjusted across metrics"
+ },
+ "elapsed_seconds": 11.338,
+ "limitations": [
+  "Selected synthetic oracle-roster case; not an NBA rate or accuracy test.",
+  "Different substitutions and random paths confound policy differences with survivor selection.",
+  "Does not identify retry bias, counterfactual failed outcomes or promotion."
+ ]
+}

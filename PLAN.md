@@ -429,6 +429,11 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 ET · A1 selected full-game policy comparison:** independently checked **1,000** S06 worlds
+  and **798** D29 survivors on one synthetic six-player F4 case. D29-survivor total averaged **223.54**
+  versus S06 **225.86**, difference **−2.33** (unadjusted 95% paired-seed bootstrap **[−3.74, −0.91]**).
+  Policy and path changes confound selection, so retry bias and promotion remain unresolved. No live model or
+  bundle changed. A1 **80%**, Chunk A **34.5%**; see FINDINGS and HANDOFF.
 - **22 Nov 2026 ET · A1 earlier-fold exhaustion screens:** the fixed **200** games per F1/F2/F3 produced
   **1 / 0 / 0** typed exhaustions in **1,900 / 1,900 / 1,790** attempts, with **20 / 20 / 42**
   missing-position branches explicitly unsupported. Independent audits reconciled **5,589** completed
