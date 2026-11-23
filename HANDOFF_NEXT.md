@@ -1,6 +1,6 @@
 # Handoff — current state and next actions
 
-Updated **23 November 2026**. Previous pushed checkpoint: **0be0b04**; `git log -1` identifies this checkpoint.
+Updated **23 November 2026**. Previous pushed checkpoint: **0eeebd5**; `git log -1` identifies this checkpoint.
 Read [AGENTS](AGENTS.md), then this file and [PLAN](PLAN.md). Detailed history is indexed in
 [docs/README](docs/README.md); do not read archives as current instructions.
 
@@ -21,12 +21,17 @@ Read [AGENTS](AGENTS.md), then this file and [PLAN](PLAN.md). Detailed history i
   in `analysis/experiments/20261123_rule3_confirmation_manifest_v1.json`. Rule correctness, independent
   confirmation and delivery remain required; no automatic resurrection of rejected model variants.
   The prior-roster census is now a coverage limitation of that historical pipeline, not a universal live gate.
-- **A2:** residual-dependence diagnostics and a synthetic mean-preserving draw prototype exist. No fitted latent
-  factor, engine wiring or accuracy gain; within-/cross-game residual evidence is inconclusive. No A2 promotion.
+- **A2:** earlier player-form/persistence screens are inconclusive; shared-shot F1–F3 evidence is positive,
+  F4 teammate-minus-opponent excess is unresolved. Accepted-control world/late-state diagnostics are pending.
+  A synthetic mean-preserving prototype exists; no fitted factor, engine wiring or A2 promotion.
 - **Execution authorised:** owner requests completion of A1 and A2 (23 Nov), lifting the prior A1 stop.
   A3/Chunk B are not part of this request. Startup smoke **108/108**, log
-  `/tmp/musnba_a1_a2_start_smoke_20261123.log`. Gate/rule preflight: **12/12** focused checks; same-model null establishes 61/69 legacy bounds. Smoke **108/108**, fault **86/108** and exit 1; logs `/tmp/musnba_gate_v2_{smoke,fault}_20261123.log`. No jobs running. Production unchanged.
-  Active A1 protocol: [prior-roster screen](docs/protocols/a1_prior_roster_20261123.md).
+  `/tmp/musnba_a1_a2_start_smoke_20261123.log`. Gate/rule/coverage/A2 preflight **19/19** focused checks.
+  Pilot: **1,556 unchanged control fields**, **1,725,578 candidate fives** independently reconciled; report
+  `analysis/experiments/rule3_pilot_20261123_v1_audit.json`. The legacy auditor needed a signed phase adapter
+  for NumPy's -1 sentinel; capture bytes and simulation outputs were unchanged. Engine recipes unchanged.
+  Smoke **108/108**, fault **86/108**, exit 1; `/tmp/musnba_rule3_preflight_{smoke,fault}_20261123.log`.
+  Active A1 method: [rule confirmation](docs/protocols/rule3_implementation_20261123.md).
 - **D52:** removed both repository Actions workflows after unwanted failure emails. Checks run locally through
   `core.hooksPath=.githooks`; GitHub Pages still serves `gh-pages`. Do not reintroduce CI. The workflow-disable API
   returned 403 for this credential, so removing their trigger files is the supported fix; no queued runs existed.
@@ -39,24 +44,39 @@ Log `/tmp/musnba_a1_availability_nightly_20261123.log`.
 
 - Independent precision/accounting: **14.7M** minute values, **20.58M** phone marginals, **200k** team scores;
   marginal error 0, maximum team-quarter minute error **4.27e−14**. This is accounting, not accuracy.
-- iCloud `MusNBA-laptop.musnba.gz` **111,413,527 bytes**; phone `MusNBA.musnba.gz` **86,886,931 bytes**.
-  Each device imports manually; real phone import/memory acceptance remains unverified. No incremental streaming.
-- Data-free Pages shell **fd367b9**, cache **d9ebff876348239a7a58**. Hosted import/offline **24/24 laptop,
-  23/23 phone**; responsive interactions **13/13**, screenshots inspected; installed-shell upgrade **24/24**.
-- Last code checkpoint smoke **108/108**, deliberate fault exited 1 (**86/108**). Production unchanged since then.
+- Each device imports its own bundle manually; real phone import/memory acceptance remains unverified.
+  No incremental streaming.
+- PWA-only update **9f09eb4**, cache **fbf36cdfebb84d7e3865**: six saved-world outcome cards and a bootstrap
+  download-failure reload action. Browser **30/30** across regression/cards/retry cases; inspected 3/2/1-column
+  screenshots. Hosted import/offline **24/24 laptop, 23/23 phone**, installed upgrade **26/26**. Phone includes a
+  deliberate blocked-download recovery. Evidence: `analysis/experiments/20261123_a2_stories_delivery_v1.json`.
+  Export-only refresh: laptop **111,413,488 bytes / 2,031 records**; phone **86,886,931 / 2,009**. Snapshot/model
+  payloads unchanged; existing imports support the cards. A new simulation bundle is still imported manually.
+- Latest smoke **108/108**, deliberate fault exited 1 (**86/108**); `/tmp/musnba_rule3_preflight_{smoke,fault}_20261123.log`.
 
 ## Next actions
 
-1. D51 framework and 12/12 controlled rule/gate checks are ready. The opt-in correction is
-   `scripts/foul_out.py:Rule3Policy`; it now includes retained offenders' offensive team fouls and is
-   **not** a default engine policy. Preserve the old experiment code/captures. Next implement the paired
-   runner and independent capture auditor; freeze their identities before simulation.
-2. Implement/freeze the corrected rule policy and one paired-control capture runner. Validate the original
-   three-game integration pilot, then run the fresh 200-game panel at eight one-thread workers. Capture raw
-   world dependence and late states in that pass for A2; don't rerun a separate 200-game control just for moments.
+1. **Running:** `rule3_confirmation_20261123_v1`, eight one-thread workers, session **99485**, log
+   `/tmp/musnba_rule3_confirmation_20261123_v1.log`; per-game pairs and frozen 60-file identity in
+   `data/derived/experiments/rule3_confirmation_20261123_v1/plan.json`. Do not change fingerprinted engine/model/
+   input files or run the nightly until complete. Runner: `analysis/rule3_confirmation.py`; auditor:
+   `analysis/rule3_capture_audit.py`; scorecard: `analysis/rule3_scores.py`. All are opt-in; no release enabled.
+2. Resume pilot passed: all canonical world digests equal the uninterrupted pilot; **1,556 legacy fields** equal.
+   Stress `rule3_stress_20261123_v1` session **1015**, worker **65017**, log `/tmp/musnba_rule3_stress_20261123_v1.log`;
+   stream `rule3_stream_20261123_v1` session **35390**, worker **65027**, log `/tmp/musnba_rule3_stream_20261123_v1.log`.
+   Both workers resumed after smoke/export; no worker remains SIGSTOP'd. Normal total **8+1+1=10**.
+   Stress/stream wall times include this checkpoint pause; don't claim unpaused pace.
+   Reuse captured control dependence/late states for A2. Shared-shot report is `20261123_a2_shared_shooting_v1.json`;
+   no factor fitted. PWA delivery is complete above; export log `/tmp/musnba_a2_stories_export_20261123.log`.
+   :8767 review session **58196**; static/upgrade servers :8768/**35424**, :8769/**18564**.
+   Temporary retry-shell server :8770/**19954**. All eight root docs reviewed/updated; no CI workflows exist.
 3. Independently audit outputs; assess unchanged core harm margins and required rule/stress/stream evidence.
-   Release only after the applicable v2 gate. Wire structurally valid 10k branches/Expected/season views with
-   explicit availability assumptions; unsupported individual games fail visibly. A1 checkpoints before A2.
+   If compatible, freeze a rule-level final recipe before reading protected outcomes. A current-season adapter
+   is required (`backtest._init` is historical-only); non-fold `Models` medians need strict prior-origin filtering
+   in both arms. Retain the old node final score. Release only after all applicable v2 gates.
+   Wire structurally valid 10k branches/Expected/season views with
+   explicit availability assumptions; unsupported individual games fail visibly. The common-interval season
+   prototype's joint dependence remains unaccepted; inspect it before wiring. A1 checkpoints before A2.
 4. Complete A2 shared-factor/late-game evidence and any supported candidates with v2's learned-change gate.
    Finish with a fresh accepted-system nightly, independent accounting and required dashboard/PWA/iCloud
    delivery, commit/push and stop. A3 and repository-wide cleanup remain successor work; preserve View Centre scope.

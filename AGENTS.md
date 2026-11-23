@@ -32,7 +32,9 @@ Authorised A1 work continues only within its recorded boundary; do not silently 
   important assumptions/blockers in the appropriate document.
 - Each development chunk has one or two engine/product headliners. A measured negative result is valid;
   unfinished research is not completion. If no engine improves, ship a useful dashboard improvement.
-- Laptop PWA is primary; phone is stripped (D45). Serving and browsing read stored data only.
+- **The owner uses the PWA exclusively (D53):** every dashboard change includes tested/published PWA assets
+  and any needed bundles; localhost is development/review, never delivery. Laptop is primary; phone is
+  stripped (D45). Serving and browsing read stored data only.
 - Dashboard: smooth at 1440/960/390 in both themes; group controls and secondary detail. Comparable cards
   form rows of three, then two/one as width shrinks. Changing dates/counts/versions/thresholds come from data.
 - UK display times with ET alongside; slate dates are ET. Keep the owner's server on :8766 running;

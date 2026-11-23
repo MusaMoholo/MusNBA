@@ -40,6 +40,11 @@ rebuilt fold-specific features. First-season whole-season priors, static measure
 batch-wide missing-defender fills are not certified causal. Corrected integrity variants are research-only.
 Do not equate historical event dates with proven original publication/revision timing.
 
+Formal current-season rule evaluation needs its own loader: `backtest._init` reads historical season files.
+For non-fold artifacts `Models` reads fallback medians from the full retained pregame table; a retrospective
+adapter must use medians strictly before each evaluated origin in **both arms**. Live rebuilding already
+retains only pre-origin games. Reuse the accepted nodes' existing final score; don't refit/rescore them as new nodes.
+
 ## 5. Folds and final test
 
 | Fold | Fit through | Validate |
@@ -168,6 +173,12 @@ residual, shot-feasibility, cross-game-persistence and synthetic-draw definition
 it is not untouched confirmation. Estimate persistent talent, nightly player form and shared conditions
 separately from strictly prior/cross-fitted predictions. Compare observed AND baseline simulated dependence
 before adding variation; event/minute/state randomness already creates covariance.
+
+[Shared-shooting/world/late-state methods](docs/protocols/a2_joint_late_20261123.md) extend these diagnostics.
+The fresh 200-game D51 confirmation pass captures accepted-control worlds once for both modules. A read-only
+observer reproduces 1,556 legacy pilot fields; an independent auditor checks scores, precise minutes, rule/team
+fouls and integrated discrete coverage. Stop/resume hashes match. The full panel/stress/seed evidence is pending;
+pilot agreement does not qualify a model. `analysis/rule3_scores.py` retains legacy PIT alongside integrated coverage.
 
 Namespaced factors stay fixed per game/world/player or team; zero strength consumes no new draws. Tilts
 preserve baseline marginal means without clipping. Unsupported/negative excess is not clamped into evidence.

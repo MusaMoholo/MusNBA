@@ -104,6 +104,11 @@ or promotes a model. Active policy: [promotion v2](docs/protocols/promotion_v2_2
 `scripts/a1_prior_roster_screen.py` and `analysis/a1_prior_roster_audit.py` census/reconstruct prior-box
 membership and required starter-position coverage without reading outcome columns or generating forecasts.
 
+`analysis/rule3_confirmation.py` runs the frozen opt-in paired rule checks (`--pilot`, `--stress`,
+`--stream-check`, verified `--resume`). Set OMP/BLAS threads to one and budget its `--jobs` across all runs.
+`analysis/rule3_capture_audit.py` independently reconciles captures; `analysis/rule3_scores.py` reports v2 bounds.
+`analysis/a2_{shared_shooting,world_diagnostics}.py` implement the frozen A2 diagnostics, without fitting factors.
+
 Use `--help` to inspect a runner before choosing controls. Heavy compute totals at most ten threads; actual
 `--jobs` × inner-thread settings matter (AGENTS §6). Examples after protocol/namespace freeze:
 

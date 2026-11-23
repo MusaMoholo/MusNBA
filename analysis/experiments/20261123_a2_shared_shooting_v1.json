@@ -1,0 +1,445 @@
+{
+ "kind": "A2 distinct-player shared-shooting feasibility; not a fitted factor",
+ "protocol": "docs/protocols/a2_joint_late_20261123.md",
+ "exclusions": {
+  "F1": {
+   "shots": 136578,
+   "actor_outside_recorded_five": 1548,
+   "validation_games": 773,
+   "role_panel_games": 200,
+   "outside_role_panel_shots": 99798,
+   "in_panel_missing_wrong_team_or_unknown_role": 128,
+   "missing_wrong_team_or_unknown_role": 99926,
+   "eligible_shots": 35104
+  },
+  "F2": {
+   "shots": 139660,
+   "actor_outside_recorded_five": 1614,
+   "validation_games": 782,
+   "role_panel_games": 200,
+   "outside_role_panel_shots": 102649,
+   "in_panel_missing_wrong_team_or_unknown_role": 112,
+   "missing_wrong_team_or_unknown_role": 102761,
+   "eligible_shots": 35285
+  },
+  "F3": {
+   "shots": 87671,
+   "actor_outside_recorded_five": 1106,
+   "validation_games": 490,
+   "role_panel_games": 195,
+   "outside_role_panel_shots": 52024,
+   "in_panel_missing_wrong_team_or_unknown_role": 255,
+   "missing_wrong_team_or_unknown_role": 52279,
+   "eligible_shots": 34286
+  },
+  "F4": {
+   "shots": 135680,
+   "actor_outside_recorded_five": 1650,
+   "validation_games": 766,
+   "role_panel_games": 200,
+   "outside_role_panel_shots": 98995,
+   "in_panel_missing_wrong_team_or_unknown_role": 176,
+   "missing_wrong_team_or_unknown_role": 99171,
+   "eligible_shots": 34859
+  }
+ },
+ "cohorts": {
+  "F1": {
+   "all": {
+    "games": 200,
+    "team_games": 400,
+    "shots": 35104,
+    "teammate_contributing_team_games": 400,
+    "opponent_contributing_games": 200,
+    "shot_pairs": {
+     "teammate": 2659764,
+     "opponent": 1541949
+    },
+    "status": "supported",
+    "moments": {
+     "teammate": {
+      "estimate": 0.0010907110424683323,
+      "ci_95": [
+       0.000626296625106192,
+       0.001544268981039864
+      ]
+     },
+     "opponent": {
+      "estimate": -8.568268205871841e-05,
+      "ci_95": [
+       -0.0005417479700620285,
+       0.0003429388103696608
+      ]
+     },
+     "difference": {
+      "estimate": 0.0011763937245270507,
+      "ci_95": [
+       0.0005844767766273028,
+       0.0018102015331346146
+      ]
+     }
+    }
+   },
+   "stars_starters": {
+    "games": 200,
+    "team_games": 400,
+    "shots": 22393,
+    "teammate_contributing_team_games": 398,
+    "opponent_contributing_games": 200,
+    "shot_pairs": {
+     "teammate": 982834,
+     "opponent": 631587
+    },
+    "status": "supported",
+    "moments": {
+     "teammate": {
+      "estimate": 0.001273944510692307,
+      "ci_95": [
+       0.0004538136083743495,
+       0.0020661174073797633
+      ]
+     },
+     "opponent": {
+      "estimate": -0.00012174862844407444,
+      "ci_95": [
+       -0.0007934709902457514,
+       0.0004947546111604668
+      ]
+     },
+     "difference": {
+      "estimate": 0.0013956931391363814,
+      "ci_95": [
+       0.0003586663007360593,
+       0.002472234045157179
+      ]
+     }
+    }
+   }
+  },
+  "F2": {
+   "all": {
+    "games": 200,
+    "team_games": 400,
+    "shots": 35285,
+    "teammate_contributing_team_games": 400,
+    "opponent_contributing_games": 200,
+    "shot_pairs": {
+     "teammate": 2683648,
+     "opponent": 1559009
+    },
+    "status": "supported",
+    "moments": {
+     "teammate": {
+      "estimate": 0.0007935426297498631,
+      "ci_95": [
+       0.00036464814510330326,
+       0.001224118246523532
+      ]
+     },
+     "opponent": {
+      "estimate": 0.0002820406668896158,
+      "ci_95": [
+       -0.00014736966667379517,
+       0.0007156205335750001
+      ]
+     },
+     "difference": {
+      "estimate": 0.0005115019628602473,
+      "ci_95": [
+       -5.750993955971758e-05,
+       0.0011345260126397136
+      ]
+     }
+    }
+   },
+   "stars_starters": {
+    "games": 200,
+    "team_games": 399,
+    "shots": 21953,
+    "teammate_contributing_team_games": 395,
+    "opponent_contributing_games": 199,
+    "shot_pairs": {
+     "teammate": 954098,
+     "opponent": 613975
+    },
+    "status": "supported",
+    "moments": {
+     "teammate": {
+      "estimate": 0.0003319903096433235,
+      "ci_95": [
+       -0.0005399501661236994,
+       0.0011872741600530727
+      ]
+     },
+     "opponent": {
+      "estimate": 0.00047406460557742507,
+      "ci_95": [
+       -0.00017735763473623127,
+       0.001112223657077797
+      ]
+     },
+     "difference": {
+      "estimate": -0.00014207429593410156,
+      "ci_95": [
+       -0.0011830363773552702,
+       0.0008812408612766511
+      ]
+     }
+    }
+   }
+  },
+  "F3": {
+   "all": {
+    "games": 195,
+    "team_games": 390,
+    "shots": 34286,
+    "teammate_contributing_team_games": 390,
+    "opponent_contributing_games": 195,
+    "shot_pairs": {
+     "teammate": 2613874,
+     "opponent": 1510437
+    },
+    "status": "supported",
+    "moments": {
+     "teammate": {
+      "estimate": 0.00046243950568374925,
+      "ci_95": [
+       5.012280969834982e-06,
+       0.0009291193945238618
+      ]
+     },
+     "opponent": {
+      "estimate": 0.0005446088252344565,
+      "ci_95": [
+       0.0001182310665363412,
+       0.0009512298322073266
+      ]
+     },
+     "difference": {
+      "estimate": -8.216931955070728e-05,
+      "ci_95": [
+       -0.000585174107173438,
+       0.00046034272973389216
+      ]
+     }
+    }
+   },
+   "stars_starters": {
+    "games": 195,
+    "team_games": 390,
+    "shots": 21765,
+    "teammate_contributing_team_games": 389,
+    "opponent_contributing_games": 195,
+    "shot_pairs": {
+     "teammate": 961554,
+     "opponent": 613409
+    },
+    "status": "supported",
+    "moments": {
+     "teammate": {
+      "estimate": 0.0007284658083639863,
+      "ci_95": [
+       2.3624283741401075e-05,
+       0.0014361688321440367
+      ]
+     },
+     "opponent": {
+      "estimate": 0.00020366547938681573,
+      "ci_95": [
+       -0.00039410699963679974,
+       0.0007713679829399123
+      ]
+     },
+     "difference": {
+      "estimate": 0.0005248003289771706,
+      "ci_95": [
+       -0.00038122290963545335,
+       0.0014612891270966652
+      ]
+     }
+    }
+   }
+  },
+  "F4": {
+   "all": {
+    "games": 200,
+    "team_games": 400,
+    "shots": 34859,
+    "teammate_contributing_team_games": 400,
+    "opponent_contributing_games": 200,
+    "shot_pairs": {
+     "teammate": 2640464,
+     "opponent": 1520294
+    },
+    "status": "supported",
+    "moments": {
+     "teammate": {
+      "estimate": 0.0004963386339345702,
+      "ci_95": [
+       7.600057439786157e-05,
+       0.0009099270807347594
+      ]
+     },
+     "opponent": {
+      "estimate": 0.0004763113391202927,
+      "ci_95": [
+       4.797293216863006e-05,
+       0.0008899441612300334
+      ]
+     },
+     "difference": {
+      "estimate": 2.0027294814277527e-05,
+      "ci_95": [
+       -0.0005088521551244122,
+       0.0005886541506369006
+      ]
+     }
+    }
+   },
+   "stars_starters": {
+    "games": 200,
+    "team_games": 398,
+    "shots": 21249,
+    "teammate_contributing_team_games": 392,
+    "opponent_contributing_games": 198,
+    "shot_pairs": {
+     "teammate": 918330,
+     "opponent": 575851
+    },
+    "status": "supported",
+    "moments": {
+     "teammate": {
+      "estimate": 0.00034546671247745627,
+      "ci_95": [
+       -0.0007897202332691296,
+       0.0014075032244308832
+      ]
+     },
+     "opponent": {
+      "estimate": 0.0011936068789792414,
+      "ci_95": [
+       0.00047413064956251555,
+       0.0018826979323453008
+      ]
+     },
+     "difference": {
+      "estimate": -0.0008481401665017852,
+      "ci_95": [
+       -0.0020670143465758204,
+       0.00038810063173039147
+      ]
+     }
+    }
+   }
+  },
+  "pooled_F1_F3": {
+   "all": {
+    "games": 595,
+    "team_games": 1190,
+    "shots": 104675,
+    "teammate_contributing_team_games": 1190,
+    "opponent_contributing_games": 595,
+    "shot_pairs": {
+     "teammate": 7957286,
+     "opponent": 4611395
+    },
+    "status": "supported",
+    "moments": {
+     "teammate": {
+      "estimate": 0.0007849183832806221,
+      "ci_95": [
+       0.0005181480017374617,
+       0.001044313522822339
+      ]
+     },
+     "opponent": {
+      "estimate": 0.00024448792922167817,
+      "ci_95": [
+       -2.1909350380290516e-05,
+       0.0004902891673709999
+      ]
+     },
+     "difference": {
+      "estimate": 0.0005404304540589439,
+      "ci_95": [
+       0.000210860774032549,
+       0.0008942232077695381
+      ]
+     }
+    }
+   },
+   "stars_starters": {
+    "games": 595,
+    "team_games": 1189,
+    "shots": 66111,
+    "teammate_contributing_team_games": 1182,
+    "opponent_contributing_games": 594,
+    "shot_pairs": {
+     "teammate": 2898486,
+     "opponent": 1858971
+    },
+    "status": "supported",
+    "moments": {
+     "teammate": {
+      "estimate": 0.0007796440668513044,
+      "ci_95": [
+       0.00031474506738006876,
+       0.0012174436429231723
+      ]
+     },
+     "opponent": {
+      "estimate": 0.00018468669916081107,
+      "ci_95": [
+       -0.0001961157927127948,
+       0.0005387906220473062
+      ]
+     },
+     "difference": {
+      "estimate": 0.0005949573676904933,
+      "ci_95": [
+       3.721082281241192e-05,
+       0.001165365765563023
+      ]
+     }
+    }
+   }
+  }
+ },
+ "source_sha256": {
+  "analysis/a2_shared_shooting.py": "5612da9c350d9eb8c19995b5c0b308dc9334af3847d03171bb64606cb664d29b",
+  "scripts/a2_shot_residuals.py": "2b1aadf4fd56d80d1c44cfe9dd8a10a788778fe2ba23ab124ad09746c221e0db",
+  "docs/protocols/a2_joint_late_20261123.md": "71965c44405d2f32f2011ba6f98a971c6d590873867595d8b9732faf7dbe46f0"
+ },
+ "input_sha256": {
+  "analysis/experiments/20261122_a1_s04_rim_F1_v2.json": "496f3073358c25c1efc27fe9b075e1695b8863bc94e06efc41b6d0a9ce6c8f75",
+  "data/derived/experiments/20261122_a1_s04_rim_F1_v2.parquet": "d7e9e58cb5b82e0a66aae1268cbc89dad42753bb0f270a07250716050dbca2ba",
+  "data/derived/history/2024/segments.parquet": "4a7c3c2bce39580cc8e1092ffc215d11bbd49f7bf117b4551eee40337203d2c0",
+  "data/derived/nodes/variant_80a4e8dce535/shot_result.npz": "b7c83441ff6f1e9b6f00cc65de5905c9db0065224e19dd42c71fcb8082c236ea",
+  "data/derived/experiments/20261122_a1_s05_unconditional_F1_corrected.parquet": "db6fb53c42c7ac0af4059c04631fcfa744c55eaa357f91b6a4ef5f477e6f6ca9",
+  "analysis/experiments/20261122_a1_s04_rim_F2_v2.json": "9a5bab508dffbfcab17a4b0722b097a961ea4fa5dcf3770f92d6a6d6734d5f56",
+  "data/derived/experiments/20261122_a1_s04_rim_F2_v2.parquet": "dbadf7b320c4b78800083112de58d2a11f8cf1ae4c15f5303374a1bf4e97f3b8",
+  "data/derived/history/2025/segments.parquet": "d9db732172894ed8d3c6e5e99e3cd1c197006da22799413034ce3ce18cc5aee2",
+  "data/derived/nodes/variant_edf6d83ed7a3/shot_result.npz": "48ae5accaeaf11c3c9c7bc3c1158b1246783e3f76416c3a0d67f891259e2776d",
+  "data/derived/experiments/20261122_a1_s05_unconditional_F2_corrected.parquet": "37a4d7e8e9b65ca2ad5db587dbd7a8dcf59b9bc9ab48e0ee93d1f03445d1c35f",
+  "analysis/experiments/20261122_a1_s04_rim_F3_v2.json": "15f3921f7853381c4db09e2ff8e1bd5869b74c42f130d525eb2217c20bd79271",
+  "data/derived/experiments/20261122_a1_s04_rim_F3_v2.parquet": "5fed150765562a1ab22bfbf3becbdec108ec6e7f3b43466f8cf999c290409f86",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+  "data/derived/nodes/variant_9d5aee5f8b7d/shot_result.npz": "67b1a0d4a91f2f29a5d66c8ca62fac9bb3af99789c7c20d5079a1724240e5be6",
+  "data/derived/experiments/20261122_a1_s05_unconditional_F3_corrected.parquet": "b7a2ce12c12c00d1efde160af32a143c3f049469587e47a4a1218e881ef06195",
+  "analysis/experiments/20261122_a1_s04_rim_F4_v2.json": "f11af1c86b2c9db33ac90e6b9d859fe3f793a9c135993916bb9269a0d2267c51",
+  "data/derived/experiments/20261122_a1_s04_rim_F4_v2.parquet": "4ebda1e8190fe7c54bee9fa678f7ffe7b5b0919ca9770ab7ee6a16780a3bd0fd",
+  "data/derived/nodes/variant_c756fe9e92bb/shot_result.npz": "4562b08d144ebd9e09a41684c51a0c5d62cee6702d8373d7c4f5db3fd70d64b9",
+  "data/derived/experiments/20261122_a1_s05_unconditional_F4_corrected.parquet": "d3a3e1fbf818a7d1babc77c86aecbf5a0be73d2d2f7f7cc04c5a04a9cd5c78f5"
+ },
+ "bootstrap": {
+  "replicates": 10000,
+  "seed": 20261122,
+  "unit": "game",
+  "refit": "fold/cohort residual centre"
+ },
+ "limitations": [
+  "fixed prior-role panels, observed shots and recorded lineups",
+  "talent, form, shared conditions and misspecification remain confounded",
+  "no factor selected, calibrated or promoted"
+ ]
+}

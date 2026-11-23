@@ -1,6 +1,6 @@
 # Dashboard — current behaviour and product contract
 
-Updated **23 November 2026**. U1–U22 are delivered. [HANDOFF](HANDOFF_NEXT.md) owns current shell/bundle IDs,
+Updated **23 November 2026**. U1–U23 are delivered. [HANDOFF](HANDOFF_NEXT.md) owns current shell/bundle IDs,
 checks and delivery; [PLAN §9b](PLAN.md#9b-product-backlog) owns backlog. Full previous release notes:
 [frozen dashboard record](docs/archive/2026-11-23-before-lean/DASHBOARD_PLAN.md).
 
@@ -9,6 +9,8 @@ checks and delivery; [PLAN §9b](PLAN.md#9b-product-backlog) owns backlog. Full 
 - Laptop PWA is primary and imports full saved worlds; phone imports distributions without world-dependent tools.
   Both browse offline after manual import. Pages carries only the data-free shell. An app update and data import
   are separate; iCloud export is not proof of device import.
+- **D53: the owner only uses the PWA.** Every dashboard update includes a tested, published PWA update and
+  any required data exports; localhost review is not a shipped result.
 - Today's games use possession projections. Tomorrow onward has team-pathway home/away/total/margin regulation
   distributions, with a separately resolved winner for ties, no simulated OT points and no player projections.
   Future cards come in three, with total/margin switching in the third.
@@ -30,6 +32,7 @@ checks and delivery; [PLAN §9b](PLAN.md#9b-product-backlog) owns backlog. Full 
 | Game Centre | Shared period selector (Q1–Q4/H1/H2/FG), Player/Team/Matchup. Bezel shows points/win/total/projected margin, ranges and timing/model. Player boxes precede insights; availability/bench are collapsible. Finals have Actual/Projected/comparison modes. |
 | Player box/sheet | Period minutes, counting/shooting stats, deltas versus season; MIN/PTS/REB/AST/shooting/chance distributions and editable thresholds. Given/Joint and comparisons precede expandable advanced panels. Player/stat changes preserve expanded panels. |
 | Team view | Team box, distributions/lines and 15 expandable metrics; box-estimated possessions/ratings disclose omissions. With worlds: result drivers, teammate correlations, big/quiet nights and participation-conditioned changes. |
+| Outcome stories (U23) | Three cards/team: both leading scorers above their forecast means, and win chance when trailing/leading after Q3. Counts/thresholds come from the loaded worlds; links open matching scenarios. Laptop saved worlds required; phone retains its lighter view. Undefined correlations show “—”. |
 | Scenarios | Saved-world conditions on players, teams and game/period flow; Given/intersections, independence lift, joint grids, duels and conditional boxes. Conditions are shareable routes. Small/empty selections warn. “Plays” means positive simulated minutes, not available. |
 | Matchup | Cutoff-date team comparison; real who-guards-whom shares/outcomes in earlier meetings, and this game once final. Player sheets show real opponent-matchup history. |
 | Standings | Forecast/Seeds/Wins/Ratings, current/projected split, sortable fields, win/seed pickers, heat tables; Playoff picture/Races/Movers/Leaders live inside Standings. Marginal seeds/illustrative paths are not simulated playoff winners. |
@@ -62,6 +65,13 @@ Routes are hash-based: `#/game/<id>/<period>[/team]`, `#/game/<id>/matchup`,
   Distinguish availability from positive minutes. D47 quarter-scaling is not shipped.
 
 ## Pending branch and replay UI
+
+U23 and startup recovery are published in the PWA: **30/30** browser checks (18 regression, six card
+probability/link, six retry-screen cases), hosted import/offline **24/24 laptop / 23/23 phone**, installed
+upgrade **26/26**. Screenshots inspected; existing bundles support the cards without prediction/schema changes.
+A real `league.mjs` download failure exposed indefinite Loading; a 44px Reload app action now recovers, verified
+with a deliberately blocked download before phone import/offline checks. The harness closes its browser on
+failure. Evidence: `analysis/experiments/20261123_a2_stories_delivery_v1.json`; current IDs/exports in HANDOFF.
 
 One compact team-grouped lineup control should follow selected player/team/sheet/scenario views once A1 qualifies.
 Expected is default; “either status” exactly marginalises remaining branch weights. Given/Joint use the same

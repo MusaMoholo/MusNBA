@@ -19,6 +19,7 @@ const only = args.only ? String(args.only).split(',') : null;
 
 // name, hash, sizes, themes
 const CASES = [
+  ['boot-retry', '#/', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['today', '#/today/2026-11-19', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['results', '#/today/2026-11-18', ['desktop', 'phone'], ['light']],
   ['game-box', '#/game/401910019', ['desktop', 'phone'], ['dark', 'light']],
@@ -53,6 +54,7 @@ const CASES = [
   ['scenario', '#/game/401909305/scenario', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['scenario-set', '#/game/401909305/scenario/' + encodeURIComponent(JSON.stringify([{subj: 'p:4701230', v: 'pts', op: 'ge', x: 30}, {subj: 't:home', v: 'win'}])), ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['team-drivers', '#/game/401909305/fg/team', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['team-stories', '#/game/401909305/fg/team', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['game-flow', '#/game/401910029/fg/team', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['game-advanced', '#/game/401910029/fg/team', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['sheet-advanced', '#/game/401910030/player/4278053/fg', ['desktop', 'half', 'phone'], ['dark', 'light']],
@@ -106,7 +108,10 @@ for (const [name, hash, sizes, themes] of CASES) {
       if (msg.sessionId !== sessionId) return;
       if (msg.method === 'Runtime.exceptionThrown') errors.push(msg.params.exceptionDetails.exception?.description || msg.params.exceptionDetails.text);
       if (msg.method === 'Runtime.consoleAPICalled' && ['error', 'assert'].includes(msg.params.type)) errors.push(msg.params.args.map(a => a.value ?? a.description).join(' '));
-      if (msg.method === 'Log.entryAdded' && msg.params.entry.level === 'error') errors.push(msg.params.entry.text + ' ' + (msg.params.entry.url || ''));
+      if (msg.method === 'Log.entryAdded' && msg.params.entry.level === 'error') {
+        const entry = msg.params.entry;
+        if (!(name === 'boot-retry' && entry.url?.endsWith('/assets/league.mjs') && entry.text.includes('ERR_BLOCKED_BY_CLIENT'))) errors.push(entry.text + ' ' + (entry.url || ''));
+      }
     };
     listeners.push(onMsg);
     await send('Page.enable', {}, sessionId);
@@ -122,6 +127,10 @@ for (const [name, hash, sizes, themes] of CASES) {
         static now() { return fixed; }
       };
     }`}, sessionId);
+    if (name === 'boot-retry') {
+      await send('Network.enable', {}, sessionId);
+      await send('Network.setBlockedURLs', {urls: ['*/assets/league.mjs']}, sessionId);
+    }
     await send('Page.navigate', {url: BASE + '/' + hash}, sessionId);
     let ready = false;
     for (let i = 0; i < 60 && !ready; i++) {
@@ -130,6 +139,40 @@ for (const [name, hash, sizes, themes] of CASES) {
       ready = result.value === true;
     }
     let interaction = true;
+    if (name === 'boot-retry') interaction = (await send('Runtime.evaluate', {expression: `document.querySelector('#view [role="alert"]')?.textContent.includes('couldn’t load') && document.querySelector('#boot-retry')?.getBoundingClientRect().height >= 44`, returnByValue: true}, sessionId)).result.value === true;
+    if (name === 'team-stories') {
+      interaction = (await send('Runtime.evaluate', {expression: `(async () => {
+        for (let i = 0; i < 80 && !document.querySelector('[data-game-stories]'); i++) await new Promise(r => setTimeout(r, 100));
+        const ui = await import('./assets/ui.mjs'), O = await import('./assets/outcomes.mjs');
+        const Wd = await O.load('401909305'), groups = [...document.querySelectorAll('[data-game-stories]')];
+        if (groups.length !== 2) return false;
+        const columns = innerWidth <= 600 ? 1 : innerWidth <= 1000 ? 2 : 3;
+        for (const group of groups) {
+          if (getComputedStyle(group).gridTemplateColumns.split(' ').length !== columns) return false;
+          const links = [...group.querySelectorAll('a.story-card')];
+          if (links.length !== 3) return false;
+          const win = Wd.values('t:' + group.dataset.gameStories, 'win');
+          for (let k = 0; k < links.length; k++) {
+            const conditions = JSON.parse(decodeURIComponent(links[k].getAttribute('href').split('/').at(-1)));
+            const values = conditions.map(c => Wd.values(c.subj, c.v));
+            let n = 0, wins = 0;
+            for (let w = 0; w < Wd.W; w++) if (conditions.every((c, i) => c.op === 'ge' ? values[i][w] >= c.x : values[i][w] <= c.x)) { n++; wins += win[w]; }
+            const expected = k === 0 ? n / Wd.W : n ? wins / n : null;
+            if (links[k].querySelector('b').textContent !== ui.pct(expected, 1)
+                || (n && !links[k].textContent.includes(n.toLocaleString() + ' matching worlds'))
+                || links[k].getBoundingClientRect().height < 44) return false;
+          }
+        }
+        const href = groups[0].querySelector('a').getAttribute('href');
+        location.hash = href;
+        for (let i = 0; i < 80 && !document.querySelector('#game-body .chip'); i++) await new Promise(r => setTimeout(r, 100));
+        if (document.querySelectorAll('#game-body .chip').length !== 2) return false;
+        location.hash = '#/game/401909305/fg/team';
+        for (let i = 0; i < 80 && !document.querySelector('[data-game-stories]'); i++) await new Promise(r => setTimeout(r, 100));
+        document.querySelector('[data-game-stories]')?.closest('section').scrollIntoView();
+        return !!document.querySelector('[data-game-stories]');
+      })()`, returnByValue: true, awaitPromise: true}, sessionId)).result.value === true;
+    }
     if (name === 'availability-slices' || name === 'availability-archived') {
       interaction = (await send('Runtime.evaluate', {expression: `(async () => {
         const panel = document.querySelector('details[data-player-availability]');
@@ -327,7 +370,7 @@ for (const [name, hash, sizes, themes] of CASES) {
     })()`}, sessionId);
     const d = dims.value;
     const overflow = d.scrollWidth > d.innerWidth + 1;
-    const panelTop = name === 'game-advanced' ? (await send('Runtime.evaluate', {expression: `document.querySelector('#view details.panel')?.getBoundingClientRect().top + scrollY || 0`, returnByValue: true}, sessionId)).result.value : 0;
+    const panelTop = ['game-advanced', 'team-stories'].includes(name) ? (await send('Runtime.evaluate', {expression: `document.querySelector(${JSON.stringify(name === 'team-stories' ? '[data-game-stories]' : '#view details.panel')})?.closest('section,details.panel')?.getBoundingClientRect().top + scrollY || 0`, returnByValue: true}, sessionId)).result.value : 0;
     const shot = await send('Page.captureScreenshot', {format: 'png', captureBeyondViewport: true,
       clip: {x: 0, y: args.from ? Math.max(0, d.height - Number(args.from)) : panelTop, width, height: Math.min(args.from ? Number(args.from) : d.height - panelTop, mobile ? 3200 : 2600), scale: 1}}, sessionId);
     const file = join(OUT, `${name}-${size}-${theme}.png`);

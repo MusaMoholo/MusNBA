@@ -47,6 +47,12 @@ FG attempts with held-out actual segments under the same definitions. Minimum 30
 not causal or matched-opportunity policy effects. Do not call fouls intentional without a source label.
 Compare actual versus simulated OT frequency over all 200 games with game bootstrap uncertainty.
 
+Actual-event accounting (specified before this state diagnostic): defensive personal foul means a `foul`/
+`fouled` segment or an and-one; an ordinary field-goal attempt means `end_type=shot`, with `value=3` for a
+three. Exclude/count unknown event labels and missing, negative or longer-than-start-clock action times.
+Retain period-ending opportunities with valid action times. Report opportunity-weighted cell rates and
+complete-game bootstrap intervals; state definitions do not imply that the visited populations match.
+
 An isolated observational policy must reproduce baseline outputs. Independently reconcile player/team
 points, period minutes, clocks, count deltas, source fingerprints and sample metrics before interpreting results.
 Persist completed games under hashed input/source identity; resume only fully written, verified game pairs.

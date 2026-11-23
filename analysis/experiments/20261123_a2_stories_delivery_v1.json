@@ -1,0 +1,91 @@
+{
+ "kind": "U23 PWA delivery and research preflight; no model promotion",
+ "engine": "engine-v1.3",
+ "season_engine": "team-pathway-v1",
+ "forecast_origin": "2026-11-23",
+ "simulation_payload": "unchanged; export-only used completed retained views",
+ "pages": {
+  "commit": "9f09eb4896099cef430f703ceb36b3a22c3d4a49",
+  "prior_cards_commit": "9e6976e38159e2e1aaaf81ead0f2c8e7bbab2bc6",
+  "shell_version": "fbf36cdfebb84d7e3865",
+  "status": "built",
+  "data_free": true
+ },
+ "checks": {
+  "smoke": {
+   "passed": 108,
+   "total": 108,
+   "exit": 0
+  },
+  "fault": {
+   "passed": 86,
+   "total": 108,
+   "exit": 1
+  },
+  "focused": {
+   "passed": 19,
+   "total": 19
+  },
+  "browser": {
+   "regression": 18,
+   "card_probabilities_and_links": 6,
+   "blocked_boot_responsive": 6,
+   "all_passed": true,
+   "screenshots_inspected": true
+  },
+  "hosted_laptop_current_bundle": {
+   "passed": 24,
+   "total": 24
+  },
+  "hosted_phone_current_bundle_and_blocked_download": {
+   "passed": 23,
+   "total": 23
+  },
+  "installed_upgrade": {
+   "passed": 26,
+   "total": 26
+  }
+ },
+ "cold_start_defect": {
+  "observed": "client net::ERR_FAILED on assets/league.mjs; app remained on Loading before bundle import",
+  "fix": "bootstrap download error shows an accessible Reload app action; test runner cleans temporary Chrome on failure",
+  "verification": "deliberate blocked-download recovery plus import/offline checks",
+  "unforced_failed_attempt_retained": "/tmp/musnba_a2_stories_fresh_phone.log"
+ },
+ "bundles": {
+  "MusNBA-laptop.musnba.gz": {
+   "bytes": 111413488,
+   "sha256": "b64eb5ad389a9bd828ba28972cd0fb1154e2ef476b150689a193e2929666d0f7",
+   "records": 2031
+  },
+  "MusNBA.musnba.gz": {
+   "bytes": 86886931,
+   "sha256": "41bc748949c2b97a995e4c472b4d0c4c1cd680a582ce31f321f99172288b49fb",
+   "records": 2009
+  }
+ },
+ "source_sha256": {
+  "scripts/webapp/index.html": "4772dff592aee56b51d26b8b8de9ad6e33e11397563f28de9d6201883dd48d96",
+  "scripts/webapp/scenario.mjs": "a1446cb09dd6d917f5bdae59e1af6d33a059bd179c67e3a5bd25d6f7784e784c",
+  "analysis/browser_check.mjs": "016355652ddb838e9c5327538e584e7d0e4fd257668b6ee2db19e72692302183",
+  "analysis/pwa_import_check.mjs": "8f2862f5d05c97ee7603d6076a06468d01f7b01a1b484d31200cd892735a236b"
+ },
+ "log_sha256": {
+  "musnba_rule3_preflight_smoke_20261123.log": "90563b61ef14928ccfcbb7e3a598acaccb036382332f52f36717a3a79f7dab0f",
+  "musnba_rule3_preflight_fault_20261123.log": "dde1f2cd526c52ab55c1a68f91bd9d086cff63f7f9a1171df899a16ae758882b",
+  "musnba_rule3_a2_final_focused_20261123.log": "5d1862ceebef44b3837557d37f9997d1c698e043699478bdf563d7fa6432d0f4",
+  "musnba_a2_stories_browser.log": "7d3e808be2ece062c7eaaaf28c248afb21048d6a62068efd2bc31a44f5582781",
+  "musnba_a2_stories_final_browser.log": "3e3d43d12fe779d8136655ccb4aa8262c4c6470b7c8f731154b39fab978e8128",
+  "musnba_boot_retry_final_browser.log": "913d350bc3986b57d468eaca5f8f528e573d87b5d98dbb81f1704c733b1e9f85",
+  "musnba_a2_stories_fresh_laptop.log": "a1a9983cbed6ace67b7dd79162a447074ea5ef8425f1122b66223129e529e1b0",
+  "musnba_a2_retry_hosted_phone.log": "9b84a09b7bcb616e9ac74181fc246192d9edecbc31a388050e1c33077fec6e3b",
+  "musnba_a2_retry_final_upgrade.log": "8ddfc54118271a51b013309c7e642f75e182d250de7dbb6d1d267a53371c1725",
+  "musnba_a2_stories_export_20261123.log": "0ea7182507579ee213612cee49e00dc7eb7662312eb1098c10da8744a087ed6b"
+ },
+ "limits": [
+  "manual real-device import/memory acceptance is unverified",
+  "PWA cards use existing imports; new simulation bundles require separate manual import",
+  "A1 rule confirmation/stress/seed and A2 world diagnostics remain in progress",
+  "no GitHub CI workflows; Pages hosting only"
+ ]
+}

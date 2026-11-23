@@ -76,6 +76,7 @@ behaviour follows the latest applicable decision, especially D45–D50.
 | D50 | Today-only possession slate; tomorrow onward uses pathway regulation distributions; preserve originals. |
 | D51 | Owner (23 Nov) authorises promotion-framework audit/redesign; v2 separates mechanics, learned changes and stored scenarios. Preserve old evidence; freeze new gates/confirmation before further results, never auto-ship. |
 | D52 | Owner (23 Nov): no repository CI pipelines. Run checks locally; retain data-free GitHub Pages hosting for laptop/phone PWA. |
+| D53 | Owner (23 Nov) uses the PWA exclusively. A dashboard change is incomplete until its PWA update is tested and published, with any required exports; localhost alone is never delivery. |
 
 ## 2. Possession chain
 
@@ -101,6 +102,17 @@ period/team/box reconciliation. Technical-penalty candidates need their own expl
 Raw shot feet use basket (25, 0): rim ≤4 ft; paint |x−25| ≤8 and y≤19; corner three |x−25|≥21.8 and y≤14.
 The model supplies zones/distance bands, not continuous trajectories. Shot credits can indicate involvement,
 not proof of a primary defender or tracking position.
+
+Current shooting inputs already combine left/right: rim/paint/mid/corner3/above3 and **21 distance bands**;
+`train.band_distances` substitutes training-band means for distance and absolute lateral offset. Raw x/y are
+retained as source data, not precise shot-result inputs. Defender/on-court/matchup accuracy currently uses
+rim/paint/mid/**combined three**, so corner versus above-break defence and wing/elbow subdivisions are possible
+future ablations, not implemented upgrades or explanations established by the form diagnostic.
+Owner's proposed next representation starts with [NBA basic/advanced zones](https://jr.nba.com/how-to-read-a-shot-chart/),
+optionally sided; his dunker/post/wing/slot examples are illustrative. Fit shooter/defender attempts and makes,
+pooling sparse cells to broader parents. Audit source units/orientation, label coverage, unknowns and defender
+attribution before a versioned mapping. Compare zone-only against added within-zone distance; no new taxonomy,
+discarded distance or model change is accepted yet. The current NBA adapter does not collect shot-chart zones.
 
 ## 4. Minutes and defence
 

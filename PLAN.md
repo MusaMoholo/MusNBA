@@ -112,6 +112,7 @@ installation/import/memory acceptance remains an owner check; exporting to iClou
 | Incremental iCloud export | Future separate contract: atomic per-game generations, resume/import/offline validation; current export remains end-of-nightly. |
 | Advanced player stats | Actual +/−, six box-derived rates and dated action-share input exist. True simulated possession USG%, on-court ratings, simulated +/− and BPM need honest capture/definitions/validation. |
 | Code simplification (owner, 23 Nov) | After A1/A2, inventory production dependencies, duplicate logic and research-only files; target proven maintenance/runtime costs. Preserve reproducibility and View Centre scope; no line-count-driven wholesale rewrite or blind deletion. |
+| Shooting geography (owner hypothesis, 23 Nov) | Start from NBA source-defined basic/advanced zones; the owner's dunker/post/wing/slot examples are illustrative, not a required bespoke taxonomy. Fit shooter/defender attempts and makes by zone, pooling sparse cells to broader parents and retaining supported side/direction. Compare current five zones/21 bands, source-zone-only, then within-zone distance on folds. Preserve raw data; audit source units/orientation, labels/coverage and observed versus inferred defender attribution. Version derived mappings/unknowns; extend the existing zone-choice node only after evidence. No mapping/model chosen or collection started. |
 | House design/face cards | Keep key boxes first, secondary content expandable, state preserved; face cards remain future. Extend existing U3 role badges/U11 defence profiles. Lab polish is low priority. |
 
 Spatial displays must follow D43: zones/bands or validated source positions; no invented tracking. All dashboard copy
@@ -121,6 +122,7 @@ reflects loaded data/configuration. These items do not authorise forecast-histor
 
 | Date | Result | Evidence |
 |---|---|---|
+| 23 Nov | Rule pilot/resume reconcile 1.73M fives and 1,556 unchanged fields; confirmation running. Shared-shot evidence measured; six saved-world cards shipped in PWA, smoke 108/108, fault exits 1. | HANDOFF running jobs/delivery; FINDINGS §7/§8. |
 | 23 Nov | D52 removes unwanted CI workflows; local checks and branch-based Pages hosting retained. No model/app change. | AGENTS local-check rule; README hosting commands. |
 | 23 Nov | D51 reopens A1 release review; v2 compatibility/confirmation and retained defender-result audit. | [Active policy](docs/protocols/promotion_v2_20261123.md) |
 | 23 Nov | A1 no-release fallback: 28,530 memberships audited, 783/800 starter contexts supported; v1.3 retained. | [Decision](docs/research/a1_no_release_20261123.md) |

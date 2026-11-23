@@ -89,6 +89,12 @@ assignment fit cannot be reused for F1–F3; corrected fold inputs need dated fi
   None establishes a pooled scoring improvement; these are not proof of pooled harm. Original model
   version streams differ, old rows omit quarter/3PM outputs, and this is no new promotion confirmation.
   Reports `analysis/experiments/20261123_gate_review_v14{c,e,f}.json`; no simulation reruns or final-test use.
+
+- **Rule 3 integration/resume pilot:** three original wiring games × 1,000 worlds/branch. Unchanged control
+  reproduces **1,556 game/player fields to 1e−12**; **1,725,578 candidate fives** reconcile, maximum replayed
+  player-minute error **1.78e−15**. Stop/resume canonical arrays match uninterrupted execution exactly.
+  No exhaustion exception occurred in these games; synthetic fixtures cover it. These are correctness checks,
+  not population accuracy evidence. Reports `rule3_{pilot,resume}_20261123_v1_audit.json` in experiments.
 - **23 Nov prior-roster readiness census:** on the fixed 800 F1–F4 games, inferred source rosters cover
   795 and required starter pools are supported in **783/800** (199/200/184/200 by fold). **371/28,530**
   candidates lack a prior profile/position; 19 required-pool positions affect 12 games, plus five missing
@@ -133,10 +139,12 @@ Frozen methods: [A2 protocols](docs/protocols/a2_form_20261122.md). No factor is
 | F4 residual dependence: 200 games, 3,604 eligible player-games, role-centred | Teammate/opponent minute covariance −1.121/+0.850; PTS/36 covariance −1.215/+0.462; difference −1.676 [−2.740,−0.500]. Actual-minute selection/ratio-of-means limit interpretation; these are observed errors, not baseline simulated dependence. |
 | Within-player-game shot residuals: 595 fixed-panel F1–F3 games / 11,217 known-role player-games | Covariance 0.001368 [−0.000104,+0.002874]. Panel coverage 200/773, 200/782, 195/490 validation games. Pooled excess inconclusive and cannot separate talent/form/shared misspecification. |
 | Cross-game shot residuals: same 595 games / 10,977 player-games / 1,557 player-role-fold groups | −0.000066 [−0.002095,+0.001786], two-way player/game bootstrap. F3 stars unsupported at 29 groups against minimum 30. No identified talent posterior. |
+| Different-player shared shooting: 139,534 aligned eligible shots, fixed F1–F4 panels | Earlier F1–F3 teammate-minus-opponent residual product **+0.000540 [0.000211,0.000894]**; F4 **+0.000020 [−0.000509,+0.000589]**. Shot-weighted fold/cohort centres refit per game bootstrap. This association mixes talent/form/conditions/misspecification; it does not identify a factor strength. |
 | Synthetic draw prototype | `p + s*z*p*(1-p)`, uniform z∈[−1,1], preserves mean/boundaries analytically; namespaced streams/zero-strength no-draw tests pass. Shape/strength arbitrary, no engine wiring or empirical calibration. |
 
 Reports: `analysis/experiments/20261122_a2_residual_dependence_f4.json`,
 `20261122_a2_shot_residuals_f1_f3_v2.json`, `20261122_a2_shot_persistence_f1_f3.json` in the same directory.
+Shared-shooting report: `analysis/experiments/20261123_a2_shared_shooting_v1.json`.
 All reported intervals are exploratory 95%; no protected final outcomes were used.
 
 ## 9. Latest storage/delivery facts

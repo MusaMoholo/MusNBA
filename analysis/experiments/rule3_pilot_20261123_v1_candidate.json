@@ -1,0 +1,19 @@
+{
+ "run": "rule3_pilot_20261123_v1_candidate",
+ "fold": "F4",
+ "config": "models/v1.2d.json",
+ "models": "folds/v1.2d_F4_all",
+ "games": 3,
+ "worlds": 1000,
+ "rotation": "targets",
+ "pool": 0,
+ "known_starters": false,
+ "simulation_stream": null,
+ "seed_key": null,
+ "game_ids": [
+  "401809247",
+  "401810357",
+  "401810393"
+ ],
+ "kind": "conditional paired rule confirmation; no pre-game injury calibration"
+}

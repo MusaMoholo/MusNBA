@@ -14,6 +14,7 @@ if (!args.url || !args.bundle) { console.error('usage: --url <shell url> --bundl
 const CHROME = args.chrome || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const profile = mkdtempSync(join(tmpdir(), 'musnba-pwa-'));
 const chrome = spawn(CHROME, ['--headless=new', '--remote-debugging-port=0', `--user-data-dir=${profile}`, '--no-first-run', '--no-default-browser-check', 'about:blank'], {stdio: ['ignore', 'ignore', 'pipe']});
+process.once('exit', () => { chrome.kill(); try { rmSync(profile, {recursive: true, force: true}); } catch { /* best effort */ } });
 const wsUrl = await new Promise((resolve, reject) => {
   let b = ''; chrome.stderr.on('data', d => { b += d; const m = b.match(/DevTools listening on (ws:\/\/\S+)/); if (m) resolve(m[1]); });
   setTimeout(() => reject(new Error('Chrome did not start')), 15000);
@@ -38,8 +39,18 @@ const waitFor = async (expression, ms = 20000) => { for (const end = Date.now() 
 const results = [];
 const check = (name, ok, detail = '') => { results.push({name, ok, detail}); console.log(`${ok ? 'PASS' : 'FAIL'}  ${name}${detail ? '  ' + detail : ''}`); };
 
+if (args['block-boot']) await send('Network.setBlockedURLs', {urls: ['*/assets/league.mjs']}, s);
 await send('Page.navigate', {url: args.url}, s);
-check('fresh install asks for data', await waitFor(`document.querySelector('#pwa-status')?.textContent.includes('Import your')`));
+if (args['block-boot']) {
+  const retry = await waitFor(`!!document.querySelector('#boot-retry') && document.querySelector('#view [role="alert"]')?.textContent.includes('couldn’t load')`);
+  check('failed app download offers a reload action', retry);
+  if (!retry) process.exit(1);
+  await send('Network.setBlockedURLs', {urls: []}, s);
+  await evaluate(`document.querySelector('#boot-retry').click()`);
+}
+const fresh = await waitFor(`document.querySelector('#pwa-status')?.textContent.includes('Import your')`);
+check('fresh install asks for data', fresh, fresh ? '' : await evaluate(`JSON.stringify({url: location.href, title: document.title, body: document.body.innerText.slice(0, 400)})`));
+if (!fresh) process.exit(1);
 const {root} = await send('DOM.getDocument', {}, s);
 const {nodeId} = await send('DOM.querySelector', {nodeId: root.nodeId, selector: '#pwa-file'}, s);
 const started = Date.now();
@@ -56,8 +67,7 @@ const importDetail = imported ? '' : ' · ' + JSON.stringify(await evaluate(`(as
 })()`));
 check('import completes and app renders slate', imported, `${((Date.now() - started) / 1000).toFixed(1)}s${importDetail}`);
 if (!imported) {
-  ws.close(); chrome.kill();
-  try { rmSync(profile, {recursive: true, force: true}); } catch { /* best effort */ }
+  ws.close();
   process.exit(1);
 }
 if (args['bypass-service-worker']) {
@@ -314,6 +324,18 @@ if (args.profile) {
     check('laptop scenarios render from saved worlds offline', await waitFor(`!!document.querySelector('[data-builder="scn"]') && document.querySelector('#view').textContent.includes(${JSON.stringify('of ' + shootingTarget.total.toLocaleString() + ' saved worlds')})`, 30000));
   }
 }
+if (args['stories-game']) {
+  const gid = args['stories-game'];
+  await send('Page.navigate', {url: args.url + '#/game/' + gid + '/fg/team'}, s);
+  const laptop = args.profile === 'laptop';
+  check('outcome stories respect the imported profile offline', await waitFor(laptop
+    ? `document.querySelectorAll('[data-game-stories] a.story-card').length === 6`
+    : `!!document.querySelector('#game-body .box') && !document.querySelector('[data-game-stories]')`));
+  if (laptop) {
+    await evaluate(`document.querySelector('[data-game-stories] a.story-card').click()`);
+    check('outcome-story link opens its saved worlds offline', await waitFor(`document.querySelectorAll('#game-body .chip').length === 2 && !!document.querySelector('[data-builder="scn"]')`));
+  }
+}
 if (args['availability-game']) {
   const gid = args['availability-game'];
   await send('Page.navigate', {url: args.url + '#/game/' + encodeURIComponent(gid) + '/fg'}, s);
@@ -456,8 +478,7 @@ const repeat = await evaluate(`(async () => { const {importBundle} = await impor
 check('storage module loads offline', repeat === 'ok', repeat === 'ok' ? '' : repeat);
 if (args.out) { const shot = await send('Page.captureScreenshot', {format: 'png'}, s); writeFileSync(join(args.out, 'pwa-offline-standings.png'), Buffer.from(shot.data, 'base64')); }
 check('no uncaught exceptions', errors.length === 0, errors.slice(0, 2).join(' | '));
-ws.close(); chrome.kill();
-try { rmSync(profile, {recursive: true, force: true}); } catch { /* best effort */ }
+ws.close();
 const failed = results.filter(r => !r.ok).length;
 console.log(`\n${results.length - failed}/${results.length} passed`);
 process.exit(failed ? 1 : 0);
