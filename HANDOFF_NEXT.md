@@ -1,10 +1,52 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 80%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **9c9a9c2** (earlier-fold matched selection); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **1620650** (complete-screen accounting); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
+- **A1 actual retry pilot and full comparison (23 Nov UTC):** isolated paired retry implementation
+  and auditor passed **34/34** focused tests. The 20-slot pilot produced **20** accepted worlds, **7**
+  rejections and **4** first-seed exhaustions in **11.0s**; independent replay checked all **20** accepted
+  worlds, all **7** rejected attempts and **4** matched failure continuations (**9,772 / 9,706** retry /
+  paired lineup fives and **4** technicals), audit **8.459s**. Reports
+  `analysis/experiments/20261123_a1_real_retry_paired_pilot_v1{,_audit}.json`, logs
+  `/tmp/musnba_a1_real_retry_paired_pilot_v1{,_audit}.log`, ignored captures
+  `data/derived/experiments/20261123_a1_real_retry_paired_pilot_v1/`. The predeclared **1,000-slot**
+  generation finished with **230** rejections (**190** failed first seeds) in **233.798s**; its first **20** slots matched the pilot's
+  first/accepted captures, seeds, failures and retry records. Log `/tmp/musnba_a1_real_retry_paired_full_v1.log`.
+  Generation command:
+  `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -u analysis/a1_real_retry_paired.py --worlds-dir data/derived/experiments/20261123_a1_real_retry_paired_full_v1 --output analysis/experiments/20261123_a1_real_retry_paired_full_v1.json`.
+  It is not resumable: on failure retain its partial directory/log and use a fresh namespace after inspection.
+  Independent audit finished in **103.319s**, replaying all **230** rejections, **1,000** accepted worlds
+  and **190** first-failure continuations; it checked **488,802 / 490,824** retry/paired fives and **331**
+  technicals. Retry versus continuation total **224.379 / 225.183**, difference **−0.804**
+  [**−1.433, −0.184**]; home player `4431714` minutes **37.160 / 37.685**, difference **−0.525**
+  [**−0.746, −0.300**]. Intervals are unadjusted 95% paired-slot percentile bootstrap, 5,000 draws.
+  Audit log `/tmp/musnba_a1_real_retry_paired_full_v1_audit.log`; reproduce with a fresh output using:
+  `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -u analysis/a1_real_retry_paired_audit.py analysis/experiments/20261123_a1_real_retry_paired_full_v1.json --output analysis/experiments/20261123_a1_real_retry_paired_full_v1_audit.json`.
+  Reports `analysis/experiments/20261123_a1_real_retry_paired_full_v1{,_audit}.json`. This is one selected
+  synthetic oracle-roster case and continuation assumption, not a population rate, actual-outcome score,
+  10k run or production gate. Focused tests **34/34**, smoke **107/107**, deliberate fault **86/107**
+  and exit 1 (`/tmp/musnba_a1_real_retry_{smoke,fault}_v1.log`). No job remains; production model,
+  forecast and bundle unchanged. A1 **80%**, Chunk A **34.5%**. HANDOFF, PLAN, FINDINGS and README
+  updated; AGENTS (standing rules), ENGINE_PLAN (design), TRAINING_PLAN (gates) and DASHBOARD_PLAN
+  (shipped UI) require no change. Continue A1; the owner requested a stop only at its end.
+- **Next A1 90% actual retry pilot, frozen before implementation:** on the previously selected F4
+  six-player synthetic-absence game `401811022`, run **1,000** independent world slots with fixed base seed
+  `20261123`, eight single-thread processes and the existing deterministic retry coordinator. Retry only
+  the typed D29 fewer-than-five-eligible failure; other errors propagate. Cap at **10** attempts per slot and
+  **500** rejections overall; crossing either limit fails, not a partial success. On each slot's first
+  seed, preserve its D29 survivor capture or, if exhausted, its complete original failure state/trace and
+  a matched D29-plus-foul-penalty continuation from that same seed. Save every accepted retry capture,
+  rejected seed/reason and paired first-seed continuation; independently verify seeds, no unclassified
+  errors, lineup/box/minute/technical accounting, state identities and unchanged first-seed survivors.
+  Compare actual accepted retry outcomes against paired first-seed continuations for all six available home
+  players' points/minutes and home/away/total/margin using **5,000** paired slot-bootstrap percentile 95%
+  intervals (seed 20261123, unadjusted). This deliberately extreme oracle-roster case and explicit penalty
+  assumption do not establish an NBA failure rate, production retry gate or real-result predictive accuracy.
+  Start with a small wiring pilot and use fresh immutable paths; 1,000 accepted slots are not a 10k acceptance
+  test. No production integration, historical forecast backfill or protected-season actual outcomes.
 - **A1 90% partial — complete earlier-fold screen accounting (23 Nov UTC):** the three fixed F1/F2/F3
   200-game screens contained **1,900 / 1,900 / 1,790** attempts and **1 / 0 / 0** exhaustions. Reusing
   the independently audited matching F1 continuation only for its lone failure, survivor-minus-all pooled
@@ -192,8 +234,8 @@ The preceding pushed checkpoint was **9c9a9c2** (earlier-fold matched selection)
   records and captures ignored in `data/derived/experiments/20261122_a1_f4_six_roster_v1/`. This is a
   selected extreme oracle roster with a synthetic absence, **not** an NBA rejection rate or proof of retry
   bias. It does show retries can discard a substantial, game-state-selected fraction rather than merely
-  occasional random failures. Keep the candidate isolated; next replay the rejected seeds under the
-  distinct S06 penalty policy, disclosing different substitution paths, then test bias on earlier folds.
+  occasional random failures. Subsequent distinct-S06 and matched-continuation comparisons are recorded
+  above; the candidate remains isolated and their limitations still apply.
   The served model and bundles are unchanged; no protected-season actual outcomes were scored. Focused
   tests **4/4**, smoke **107/107**, deliberate `--fault` **86/107** and exit 1. HANDOFF, PLAN, FINDINGS
   and README record the work; AGENTS, ENGINE_PLAN, TRAINING_PLAN and DASHBOARD_PLAN need no changes because
@@ -1016,8 +1058,9 @@ The preceding pushed checkpoint was **9c9a9c2** (earlier-fold matched selection)
 - **Existing S06 comparison context:** its alternative player-foul-penalty rule retained an otherwise-disqualified
   player and recorded a technical in the earlier eight-player F4 failure. Its **200-game** fixed screen improved
   pooled minutes CRPS **3.5662 → 3.5309** but established only **66/69** non-inferiority bounds, so it was not
-  promoted. This selected-timeout policy differs from D29 branch repair, and no matched retry-versus-penalty bias
-  comparison has been run. See FINDINGS S06; do not treat the two as the same simulation policy.
+  promoted. At this earlier checkpoint no matched retry-versus-penalty comparison had been run; the later
+  research-only comparison above uses a D29-matched penalty continuation, not this selected-timeout policy.
+  See FINDINGS S06; do not treat the two as the same simulation policy.
 - **D48 artificial S06 comparison:** on the **18** seeds rejected in the extreme synthetic five-player D29
   stress, the distinct S06 selected-timeout/foul-penalty policy completed **18/18** single-world attempts.
   **13** worlds recorded technicals, **35** technical events total. Independent saved-trace replay reconciled
@@ -3177,15 +3220,18 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
    10k deterministic captures, isolated 200-world clean-stop/resume comparison, 200-game F4 exhaustion
    screen and independent audits are listed above. The targeted six-player stress has now identified
    **202** exhausted seeds in its selected F4 case; the S06 comparison is complete and independently
-   audited, with different policies/paths and no final-outcome bias conclusion. A matched replay now
-   establishes selected pre-failure halftime states in this extreme case; full-game bias remains unknown.
+   audited, with different policies/paths and no isolated selection conclusion. Later matched continuations
+   and actual retries quantify full-game differences under an explicit assumption in this selected case;
+   the real-world bias and predictive effects remain unknown.
    All three earlier-fold conditional-roster screens and audits are complete. The selected full-game
    F4 comparison against S06 has different policies; the matched D29 continuation additionally quantifies
    selection under one explicit penalty assumption in that case and three selected earlier-fold cases, not a
    population-wide gate. The complete earlier-fold five-draw screen is now accounted against the single
    matching failure continuation; its sparse outcomes do not answer the full predictive comparison.
-   Alternative-assumption sensitivity and player-first comparisons remain open; determine a prespecified
-   design using these diagnostics before implementation.
+   Actual retries are now paired against first-seed matched continuations in one selected F4 case; the
+   player-first differences and uncertainty are recorded above. Alternative continuation assumptions and
+   comparisons against real outcomes on development folds remain open. The retry prototype remains
+   unwired; no predictive or production gate has been passed.
    Genuinely dated
    pre-game report cohorts remain unavailable for fitting or calibrating an availability model; labelled
    fixed scenario weights themselves remain permitted. The resume prototype

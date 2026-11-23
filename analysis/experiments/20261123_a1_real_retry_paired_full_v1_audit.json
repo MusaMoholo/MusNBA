@@ -1,0 +1,169 @@
+{
+ "kind": "independent replay of paired real retry and continuation",
+ "report": "analysis/experiments/20261123_a1_real_retry_paired_full_v1.json",
+ "report_sha256": "6f9deccee7e61790404f063e0cdf9d958132595e7d262f1e1c5b241f450e3181",
+ "worlds": 1000,
+ "rejections_replayed": 230,
+ "first_exhaustions": 190,
+ "retry_fives_checked": 488802,
+ "paired_fives_checked": 490824,
+ "technical_events": 331,
+ "metrics": {
+  "home_points": {
+   "retry_mean": 109.611,
+   "continuation_mean": 109.999,
+   "difference": -0.387999999999991,
+   "ci_95": [
+    -0.8080250000000067,
+    0.027000000000001023
+   ]
+  },
+  "away_points": {
+   "retry_mean": 114.768,
+   "continuation_mean": 115.184,
+   "difference": -0.4159999999999968,
+   "ci_95": [
+    -0.8529999999999948,
+    0.0189999999999916
+   ]
+  },
+  "total_points": {
+   "retry_mean": 224.379,
+   "continuation_mean": 225.183,
+   "difference": -0.804000000000002,
+   "ci_95": [
+    -1.4330249999999929,
+    -0.1839999999999975
+   ]
+  },
+  "home_margin": {
+   "retry_mean": -5.157,
+   "continuation_mean": -5.185,
+   "difference": 0.02799999999999958,
+   "ci_95": [
+    -0.5460250000000002,
+    0.6000499999999989
+   ]
+  },
+  "home_player_3934620_points": {
+   "retry_mean": 15.762,
+   "continuation_mean": 15.609,
+   "difference": 0.15300000000000047,
+   "ci_95": [
+    -0.08199999999999896,
+    0.39799999999999974
+   ]
+  },
+  "home_player_4397784_points": {
+   "retry_mean": 16.266,
+   "continuation_mean": 16.182,
+   "difference": 0.08399999999999963,
+   "ci_95": [
+    -0.16300000000000026,
+    0.32602499999999845
+   ]
+  },
+  "home_player_4431714_points": {
+   "retry_mean": 19.289,
+   "continuation_mean": 19.57,
+   "difference": -0.2809999999999988,
+   "ci_95": [
+    -0.5860249999999986,
+    0.02699999999999756
+   ]
+  },
+  "home_player_4432821_points": {
+   "retry_mean": 16.056,
+   "continuation_mean": 16.072,
+   "difference": -0.015999999999998238,
+   "ci_95": [
+    -0.2779999999999987,
+    0.2429999999999986
+   ]
+  },
+  "home_player_4432887_points": {
+   "retry_mean": 19.023,
+   "continuation_mean": 19.13,
+   "difference": -0.10699999999999932,
+   "ci_95": [
+    -0.37102500000000216,
+    0.17099999999999937
+   ]
+  },
+  "home_player_5242502_points": {
+   "retry_mean": 23.215,
+   "continuation_mean": 23.436,
+   "difference": -0.22100000000000009,
+   "ci_95": [
+    -0.5090000000000003,
+    0.06399999999999659
+   ]
+  },
+  "home_player_3934620_minutes": {
+   "retry_mean": 43.85948499952083,
+   "continuation_mean": 43.61117999928458,
+   "difference": 0.24830500023625035,
+   "ci_95": [
+    -0.010279416481717795,
+    0.4954596666286135
+   ]
+  },
+  "home_player_4397784_minutes": {
+   "retry_mean": 44.461998333351325,
+   "continuation_mean": 44.433294999985776,
+   "difference": 0.028703333365548644,
+   "ci_95": [
+    -0.15490916661922877,
+    0.2091425833746697
+   ]
+  },
+  "home_player_4431714_minutes": {
+   "retry_mean": 37.159964998829,
+   "continuation_mean": 37.685278332246845,
+   "difference": -0.5253133334178486,
+   "ci_95": [
+    -0.7456443334884023,
+    -0.2997309581459855
+   ]
+  },
+  "home_player_4432821_minutes": {
+   "retry_mean": 37.231984999920186,
+   "continuation_mean": 37.19946666669548,
+   "difference": 0.032518333224707874,
+   "ci_95": [
+    -0.22247562517989738,
+    0.2940226665628339
+   ]
+  },
+  "home_player_4432887_minutes": {
+   "retry_mean": 36.29755333484871,
+   "continuation_mean": 36.123655001695326,
+   "difference": 0.17389833315338166,
+   "ci_95": [
+    -0.031985708028020275,
+    0.3729938749811293
+   ]
+  },
+  "home_player_5242502_minutes": {
+   "retry_mean": 41.514013333529974,
+   "continuation_mean": 41.67212500009201,
+   "difference": -0.15811166656203568,
+   "ci_95": [
+    -0.3441207498343502,
+    0.03423083371281992
+   ]
+  }
+ },
+ "bootstrap": {
+  "replicates": 5000,
+  "seed": 20261123,
+  "unit": "slot",
+  "interval": "95% percentile, unadjusted"
+ },
+ "elapsed_seconds": 103.319,
+ "limitations": [
+  "Selected six-player synthetic oracle roster, not a population failure rate.",
+  "Continuation is an explicit assumption, not the no-exception counterfactual.",
+  "Neither a predictive comparison nor permission to promote or serve retries."
+ ]
+}

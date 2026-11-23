@@ -1,0 +1,19 @@
+{
+ "kind": "paired real D29 retries and matched continuation; research only",
+ "game": "401811022",
+ "pilot": true,
+ "worlds": 20,
+ "base_seed": 20261123,
+ "attempts_per_world": 10,
+ "max_rejections": 500,
+ "workers": 8,
+ "manifest": "data/derived/experiments/20261123_a1_real_retry_paired_pilot_v1/manifest.json",
+ "manifest_sha256": "1ccad4de9632ee2d7ff4f75301a39d2ff61f5e27c2d8c764483ce532e9aa159e",
+ "rejections": 7,
+ "elapsed_seconds": 11.289,
+ "limitations": [
+  "Selected six-player synthetic oracle roster, not a population failure rate.",
+  "Continuation is an explicit assumption, not the no-exception counterfactual.",
+  "Neither a predictive comparison nor permission to promote or serve retries."
+ ]
+}

@@ -1,0 +1,19 @@
+{
+ "kind": "independent replay of paired real retry and continuation",
+ "report": "analysis/experiments/20261123_a1_real_retry_paired_pilot_v1.json",
+ "report_sha256": "238e56e6c8d6a8d24d00b90766aaa4f55828ee5d4ff6a75db5d9024888d2b785",
+ "worlds": 20,
+ "rejections_replayed": 7,
+ "first_exhaustions": 4,
+ "retry_fives_checked": 9772,
+ "paired_fives_checked": 9706,
+ "technical_events": 4,
+ "metrics": null,
+ "bootstrap": null,
+ "elapsed_seconds": 8.459,
+ "limitations": [
+  "Selected six-player synthetic oracle roster, not a population failure rate.",
+  "Continuation is an explicit assumption, not the no-exception counterfactual.",
+  "Neither a predictive comparison nor permission to promote or serve retries."
+ ]
+}

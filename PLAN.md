@@ -429,6 +429,12 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 ET · A1 paired actual retries:** a selected six-player F4 stress yielded **1,000** accepted
+  worlds after **230** genuine typed rejections; independent replay matched every rejection, accepted world
+  and first-failure continuation. Retry versus matched-continuation total averaged **224.379 / 225.183**,
+  difference **−0.804 [−1.433, −0.184]**; one home player's minutes **37.160 / 37.685**, difference
+  **−0.525 [−0.746, −0.300]** (unadjusted paired 95% intervals). One synthetic oracle-roster case and one
+  assumption are not a population or predictive gate. A1 **80%**, Chunk A **34.5%**; production unchanged.
 - **22 Nov 2026 ET · A1 complete-screen accounting:** independently reconciled the existing **600-game**,
   **5,590-attempt** earlier-fold screens with the saved continuation for their sole F1 exhaustion.
   Survivor-minus-all total means **−0.01789 / 0 / 0** points; F1's unadjusted game-cluster interval

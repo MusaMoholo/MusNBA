@@ -2,6 +2,21 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 ET — actual retries versus matched first-seed continuations:** in the deliberately selected
+F4 six-player synthetic-absence oracle roster, **1,000** isolated retry slots accepted **1,000** worlds
+after **230** typed exhaustions, including **190** failed first attempts. Each first failure was continued
+with the explicit matched five-player foul-penalty assumption; first-seed survivors were unchanged. The
+independent audit re-simulated all **230** rejected attempts and **1,000** accepted worlds, reproduced all
+**190** matched continuations and checked **488,802 / 490,824** retry/paired lineup fives and **331**
+technicals. Retried versus first-seed continuation total averaged **224.379 / 225.183**, difference
+**−0.804** [**−1.433, −0.184**]; home player `4431714` minutes **37.160 / 37.685**, difference
+**−0.525** [**−0.746, −0.300**]. Intervals are unadjusted paired-slot percentile bootstrap 95%,
+5,000 resamples; all prespecified player and team estimates are in the audit. Generation took **233.798s**
+and audit **103.319s** with eight single-thread workers. The pilot and full run's first **20** first/accepted
+worlds, seeds, failure states and rejection records matched. This is one extreme selected case and one
+continuation assumption, not an NBA rate, unknowable no-exception outcome, real-outcome prediction or
+promotion test. Reports `analysis/experiments/20261123_a1_real_retry_paired_{pilot,full}_v1{,_audit}.json`.
+
 **22 Nov 2026 ET — retrospective full-screen continuation accounting:** the already-audited fixed
 F1/F2/F3 screens contain **1,900 / 1,900 / 1,790** attempted worlds across **200 games per fold**,
 with **1 / 0 / 0** exhaustions. Reusing the audited matched continuation for the sole F1 failure and the
