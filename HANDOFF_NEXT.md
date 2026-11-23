@@ -1,10 +1,36 @@
 # Handoff — state and next actions
 
 Updated **23 November 2026 — Chunk A A1 at 80%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **a893686** (10k paired retry stress); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **fd9091e** (vector penalty preflight); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
+- **A1 90% partial — candidate concurrency measurement (23 Nov ET):** after revalidating the three-game
+  preflight with the worker-aware source, the same fixed **10-game × 1,000-world** F4 oracle-roster sample
+  ran sequentially at four and eight single-thread workers. Elapsed times were **204.265 / 138.004s**
+  (eight **32.4%** shorter); summed per-worker peak RSS **5.80 / 11.72 GB**, excluding parent, OS and
+  other applications, on a **51.54 GB** physical-memory machine. A post-run memory-pressure check reported
+  zero swap-ins/outs; it does not measure continuous system pressure. Independent audits each reconciled
+  **4,983,286** lineup fives, **205** players, **1,025** player statistics and **1** technical; a separate
+  comparison matched all world contents and game/player outputs across worker counts. Use **8** workers
+  for the frozen 200-game candidate screen, reducing under competing load; total heavy threads remain capped
+  at ten. Ten games are not a full-slate benchmark, accuracy result or proof that eight is globally optimal.
+  Reports `analysis/experiments/20261123_a1_vector_penalty_{pilot_v2,pilot_v2_audit,scale4_v1,scale4_v1_audit,scale8_v1,scale8_v1_audit,scaling_v1_compare}.json`.
+  The earlier pilot's source hashes refer to checkpoint **fd9091e**; the worker-aware source and new
+  reports must be kept together. Focused tests **50/50**, smoke **107/107**, deliberate fault **86/107**
+  and exit 1. No job remains; production model, forecast, bundle and shell unchanged. A1 **80%**, Chunk A
+  **34.5%**. HANDOFF, PLAN, FINDINGS and README updated; AGENTS (standing rules), ENGINE_PLAN (design),
+  TRAINING_PLAN (gates) and DASHBOARD_PLAN (shipped UI) require no change.
+- **Next A1 90% concurrency measurement, frozen before runs:** repeat the vector candidate's verified
+  F4 preflight under fresh names after adding an explicit worker count. Then run the same first **10**
+  ordered fixed-panel games at **1,000 worlds/game**, first with **4** and then **8** single-thread
+  workers, never concurrently. Record elapsed time, world/accounting audit and each worker's peak resident
+  set; sum per-worker peaks as a conservative bound for those processes, explicitly excluding the parent,
+  operating system and unrelated workloads. Select **8** only if it improves observed throughput and
+  leaves reasonable physical-memory headroom; otherwise use **4**. Both experiments are runtime/wiring
+  diagnostics on fixed oracle rosters, not feature-selection or accuracy tests. Never exceed ten total
+  compute threads, never overwrite prior captures or reports, and preserve the original source at its
+  preceding commit. The resulting 200-game run remains the previously frozen F4 diagnostic.
 - **A1 90% partial — vector matched-penalty wiring and real-outcome preflight (23 Nov ET):** the isolated
   vector candidate reused the audited matched continuation without changing its fingerprinted source.
   Its **1,000** single-world traces matched the independently audited saved references, including **190**
@@ -27,6 +53,13 @@ The preceding pushed checkpoint was **a893686** (10k paired retry stress); use `
   DASHBOARD_PLAN (shipped UI) require no change. Next: measure safe worker/memory scaling and then run the
   frozen 200-game F4 candidate only with a fresh source/output namespace; independently audit and compare
   to the retained S01 control. Reject or retain based on the frozen player-first gates, not this pilot.
+  The measured worker choice is **8**. Full command, using a fresh name:
+  `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 .venv/bin/python -u analysis/a1_vector_penalty_backtest.py --jobs 8 --name <fresh-200-game-name>`.
+  It is not resumable: preserve an interrupted world directory and use a new name after inspection.
+  Independently audit the complete report with `analysis/a1_vector_penalty_backtest_audit.py`, then run
+  `scripts/a1_compare.py 20261122T022323Z_a1_s01_control <fresh-200-game-name> --game-ids data/derived/experiments/20261122_a1_s03_f4_game_ids.json --output analysis/experiments/<fresh-comparison>.json`
+  and the existing registered non-inferiority/seed-noise checks. Never mistake the diagnostic F4 result
+  for multi-fold or protected-final promotion.
 - **Next A1 90% matched-penalty vector candidate protocol, frozen before implementation:** the measured
   six-player retry shifts make blind replacement unsuitable as an assumed neutral repair. Test a separate
   research-only vectorized D29 branch repair with the already studied foul-penalty continuation: replace

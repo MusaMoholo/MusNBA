@@ -1,14 +1,24 @@
+import sys
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 
 from analysis.a1_matched_penalty_repair import MatchedPenaltyTrace
 from analysis.a1_vector_matched_penalty import VectorMatchedPenaltyTrace
+from analysis import a1_vector_penalty_backtest
 from scripts import engine
 from tests.test_a1_lineup_branches import OnePlayerBranchesTests
 
 
 class MatchedPenaltyRepairTest(unittest.TestCase):
+    def test_vector_backtest_rejects_worker_count_outside_budget(self):
+        for jobs in ('0', '11'):
+            with self.subTest(jobs=jobs), \
+                 patch.object(sys, 'argv', ['backtest', '--name', 'test', '--jobs', jobs]), \
+                 self.assertRaisesRegex(ValueError, 'between 1 and 10'):
+                a1_vector_penalty_backtest.main()
+
     def test_vector_exhaustion_does_not_change_other_world_lineup_or_score(self):
         game = OnePlayerBranchesTests().game(size=6)
         game.P['ft_pct'] = np.ones(game.n)

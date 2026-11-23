@@ -1,0 +1,36 @@
+{
+ "kind": "independently audited worker scaling comparison; not a forecast",
+ "reports": [
+  {
+   "path": "analysis/experiments/20261123_a1_vector_penalty_scale4_v1.json",
+   "sha256": "d4f8a7a81d511f0c17cde728b61c024a1b0e41a5b4d91392b14a3cece9bff5cd"
+  },
+  {
+   "path": "analysis/experiments/20261123_a1_vector_penalty_scale8_v1.json",
+   "sha256": "37c87d65123f1cff519491678f9adfc4caa50c6ef6eb596d02da48e699775c33"
+  }
+ ],
+ "audits": [
+  {
+   "path": "analysis/experiments/20261123_a1_vector_penalty_scale4_v1_audit.json",
+   "sha256": "4fef511116d8dd9f16e5740ce85b5eada556b387fb464432f95d71df329478a8"
+  },
+  {
+   "path": "analysis/experiments/20261123_a1_vector_penalty_scale8_v1_audit.json",
+   "sha256": "8cab5df7b0863bd4201a4a807e8acf829f957cea2829418f206d6ec842eeaca5"
+  }
+ ],
+ "comparison_script_sha256": "212de41da5afce7f03b0e14dd9f2e68fb0f705f1dc5bf90b3f47fada51597712",
+ "games": 10,
+ "worlds_per_game": 1000,
+ "contents_and_outputs_identical": true,
+ "four_seconds": 204.265,
+ "eight_seconds": 138.004,
+ "elapsed_reduction_fraction": 0.3243874378870585,
+ "four_worker_peak_rss_sum_bytes": 5804277760,
+ "eight_worker_peak_rss_sum_bytes": 11717935104,
+ "limitations": [
+  "Ten fixed oracle-roster games, not a full-slate benchmark.",
+  "Summed worker high-water RSS excludes parent, OS and other processes."
+ ]
+}

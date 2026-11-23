@@ -2,6 +2,16 @@
 
 Measured facts only. Each entry states its date and population.
 
+**23 Nov 2026 ET — vector-candidate worker scaling:** the same first **10** fixed F4 oracle-roster
+games, **1,000** worlds/game, ran at four then eight single-thread workers in **204.265 / 138.004s**.
+Eight reduced elapsed time **32.4%** for this sample; summed per-worker peak resident sets were
+**5.80 / 11.72 GB**, excluding parent, OS and unrelated workloads, on a **51.54 GB** physical-memory
+machine. A post-run pressure reading showed zero swap-ins/outs, not a continuous pressure trace.
+Independent audits of each run reconciled **4,983,286** fives, **205** players, **1,025** player
+means/CRPS values and **one** technical. Their capture contents and backtest outputs matched exactly.
+This fixed small sample is not a full-slate or general machine-utilisation benchmark. Reports
+`analysis/experiments/20261123_a1_vector_penalty_{scale4_v1,scale4_v1_audit,scale8_v1,scale8_v1_audit,scaling_v1_compare}.json`.
+
 **23 Nov 2026 ET — vectorized matched-penalty wiring and F4 three-game preflight:** the opt-in vector
 candidate matched **1,000** previously independently audited single-world continuations, including **190**
 failed first seeds, **490,824** legal fives and **331** technicals. A 100-world six-player synthetic vector

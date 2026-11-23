@@ -429,6 +429,10 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **23 Nov 2026 ET · A1 vector candidate scaling:** **10** fixed F4 games × **1,000** worlds took
+  **204.265 / 138.004s** at four/eight workers, with identical audited worlds and outputs. Summed
+  worker peak RSS **5.80 / 11.72 GB**, excluding other processes. Use eight for the frozen 200-game
+  screen; the small timing panel is not an accuracy or full-slate benchmark. A1 **80%**, Chunk A **34.5%**.
 - **23 Nov 2026 ET · A1 vector matched-penalty preflight:** **1,000** single worlds matched the audited
   continuation; **100** vector worlds replayed and reconciled. The fixed **3-game / 3,000-world** F4
   oracle-roster run reconciled **1,473,288** fives and **320** player sample metrics; its real-outcome

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import resource
 import sys
 import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -55,17 +56,26 @@ def game(gid, directory):
     path = Path(directory) / f'{gid}.npz'
     if not path.is_file():
         raise ValueError(f'{gid}: missing candidate capture')
+    peak_rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    if sys.platform != 'darwin':
+        peak_rss *= 1024
     return result, {'game': gid, 'capture': str(path), 'sha256': sha256_file(path),
-                    'technical_events': len(policy.technical_events)}
+                    'technical_events': len(policy.technical_events), 'worker_pid': os.getpid(),
+                    'worker_peak_rss_bytes': int(peak_rss)}
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--name', required=True, help='fresh experiment slug')
-    parser.add_argument('--pilot', action='store_true', help='use the fixed three-game wiring panel')
+    selection = parser.add_mutually_exclusive_group()
+    selection.add_argument('--pilot', action='store_true', help='use the fixed three-game wiring panel')
+    selection.add_argument('--scaling', action='store_true', help='use ten fixed games for runtime measurement')
+    parser.add_argument('--jobs', type=int, default=4, help='single-thread workers, at most ten')
     args = parser.parse_args()
     if not args.name or not all(c.isascii() and (c.isalnum() or c in '-_') for c in args.name):
         raise ValueError('name must contain only ASCII letters, digits, hyphens or underscores')
+    if not 1 <= args.jobs <= 10:
+        raise ValueError('jobs must be between 1 and 10')
     if any(os.environ.get(name) != '1' for name in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS')):
         raise ValueError('set OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1')
     derived, experiments = ROOT / 'data/derived/experiments', ROOT / 'analysis/experiments'
@@ -90,7 +100,9 @@ def main():
 
     verify()
     ids = read_json(PILOT if args.pilot else PANEL)
-    if len(ids) != (3 if args.pilot else 200) or len(set(ids)) != len(ids):
+    if args.scaling:
+        ids = sorted(ids)[:10]
+    if len(ids) != (3 if args.pilot else 10 if args.scaling else 200) or len(set(ids)) != len(ids):
         raise ValueError('fixed panel differs')
     control = read_json(experiments / f'{CONTROL}.json')
     if (control['fold'] != 'F4' or control['worlds'] != 1000 or control['rotation'] != 'targets'
@@ -99,16 +111,18 @@ def main():
         raise ValueError('control is not the fixed comparable backtest')
     world_dir.mkdir(parents=True)
     start = time.monotonic()
-    results, captures = {}, {}
-    with ProcessPoolExecutor(max_workers=4, initializer=init_worker) as pool:
+    results, captures, peaks = {}, {}, {}
+    with ProcessPoolExecutor(max_workers=args.jobs, initializer=init_worker) as pool:
         futures = {pool.submit(game, gid, str(world_dir)): gid for gid in ids}
         for future in as_completed(futures):
             result, capture = future.result()
             gid = futures[future]
             if result['game_id'] != gid or capture['game'] != gid:
                 raise ValueError('worker returned the wrong game')
+            pid = capture.pop('worker_pid')
+            peaks[pid] = max(peaks.get(pid, 0), capture['worker_peak_rss_bytes'])
             results[gid], captures[gid] = result, capture
-            if len(results) % (1 if args.pilot else 20) == 0:
+            if len(results) % (1 if args.pilot or args.scaling else 20) == 0:
                 print(f'{len(results)}/{len(ids)} games in {time.monotonic() - start:.1f}s', flush=True)
     verify()
     ordered = [results[gid] for gid in sorted(ids)]
@@ -122,7 +136,10 @@ def main():
         'models': 'folds/v1.2d_F4_all', 'games': len(ids), 'worlds': 1000,
         'rotation': 'targets', 'known_starters': False, 'pool': 0, 'simulation_stream': None,
         'seed_key': None, 'game_ids': sorted(ids), 'control': CONTROL, 'pilot': args.pilot,
-        'workers': 4, 'game_rows_sha256': sha256_file(paths[1]),
+        'scaling': args.scaling, 'workers': args.jobs, 'workers_observed': len(peaks),
+        'sum_worker_peak_rss_upper_bound_bytes': sum(peaks.values()),
+        'memory_limitation': 'Sum of per-worker high-water RSS; excludes parent, OS and other processes.',
+        'game_rows_sha256': sha256_file(paths[1]),
         'player_rows_sha256': sha256_file(paths[2]), 'captures': [captures[gid] for gid in sorted(ids)],
         'fingerprints': fingerprints, 'elapsed_seconds': round(time.monotonic() - start, 3),
         'limitations': ['Actual-participant oracle rosters are not pre-game availability forecasts.',

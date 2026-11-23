@@ -40,7 +40,8 @@ def main():
     name, control = report['run'], report['control']
     if args.report.name != f'{name}.json' or report['fold'] != 'F4' or report['worlds'] != 1000:
         raise ValueError('report name, fold or world count differs')
-    if len(report['game_ids']) != (3 if report['pilot'] else 200) or len(report['captures']) != report['games']:
+    expected_games = 3 if report['pilot'] else 10 if report.get('scaling') else 200
+    if len(report['game_ids']) != expected_games or len(report['captures']) != report['games']:
         raise ValueError('panel population differs')
 
     def verify():
@@ -116,7 +117,7 @@ def main():
                 if not 0 <= row[f'{stat}_pit'] <= 1:
                     raise ValueError('player PIT outside [0, 1]')
                 player_metrics += 1
-        if index % (1 if report['pilot'] else 20) == 0:
+        if index % (1 if report['pilot'] or report.get('scaling') else 20) == 0:
             print(f'{index}/{report["games"]} games independently reconciled in '
                   f'{time.monotonic() - started:.1f}s', flush=True)
     verify()
