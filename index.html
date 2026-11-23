@@ -377,6 +377,7 @@
   .story-card{display:block;color:var(--ink);text-decoration:none;min-height:var(--tap)}
   .story-card p{font-size:13px;margin:6px 0;line-height:1.5;overflow-wrap:anywhere}
   .story-card:hover,.story-card:focus-visible{border-color:var(--accent);outline:2px solid var(--accent);outline-offset:2px}
+  #boot-retry{min-height:var(--tap)}
   .advanced-summary > b{font-size:17px}
   .advanced-summary > span{font-size:11px;letter-spacing:0;text-transform:none;font-weight:400}
   .quantile-track{height:5px;background:var(--line);position:relative;margin:8px 2px}
@@ -541,6 +542,13 @@
   <div class="row"><input id="search-input" type="search" placeholder="Player or team" autocomplete="off" aria-label="Search players and teams" class="grow"><button class="ghost" id="search-close">Close</button></div>
   <ul id="search-results"></ul>
 </dialog>
+<script>
+addEventListener('error', event => {
+  if (event.target?.id !== 'boot') return;
+  document.getElementById('view').innerHTML = '<section class="panel" role="alert"><h2>MusNBA couldn’t load</h2><p>Check your connection and reload the app. Your saved data is still on this device.</p><button id="boot-retry">Reload app</button></section>';
+  document.getElementById('boot-retry').onclick = () => location.reload();
+}, true);
+</script>
 <script type="module" id="boot">import {boot} from './assets/app.mjs'; import {start} from './assets/pwa.mjs'; await start(boot);</script>
 </body>
 </html>
