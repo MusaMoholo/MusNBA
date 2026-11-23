@@ -1,0 +1,54 @@
+{
+  "source_commit": "aa3d25d554df2608690503513422797abd9b91c4",
+  "purpose": "Exact pre-cleanup documentation; historical only, not live instructions.",
+  "files": {
+    "AGENTS.md": {
+      "sha256": "55e4a62d595ba83d873d9f268c21b5e2575fef7bfc0306bf7aa744f68d719552",
+      "bytes": 20850,
+      "words": 3104,
+      "lines": 218
+    },
+    "HANDOFF_NEXT.md": {
+      "sha256": "3e9eb069bbc0cc941d62a2cc81dda8e6e12bdf6729eaf96d175e4ff305c7def5",
+      "bytes": 386908,
+      "words": 46999,
+      "lines": 3874
+    },
+    "PLAN.md": {
+      "sha256": "9ee0a3d4337651acd84ce45b5df2dc8c601776a790048949e813b9e5fba3b893",
+      "bytes": 142113,
+      "words": 19768,
+      "lines": 1289
+    },
+    "ENGINE_PLAN.md": {
+      "sha256": "9cd4e5c251656ca10159adbc47372b1bbab898dd4f18aa759084cdb957869332",
+      "bytes": 71522,
+      "words": 10904,
+      "lines": 540
+    },
+    "TRAINING_PLAN.md": {
+      "sha256": "19fd936bbc98d18edd20a8b7933bb370f673e99b49803d201d21c2909be110f5",
+      "bytes": 92637,
+      "words": 13071,
+      "lines": 999
+    },
+    "FINDINGS.md": {
+      "sha256": "3638ac66d25f4f2266fb827fb82215ff4983a223a8d8e44217bf55e83de2cbf2",
+      "bytes": 257392,
+      "words": 35228,
+      "lines": 2641
+    },
+    "DASHBOARD_PLAN.md": {
+      "sha256": "384036efb8251adc1698c1628b466a8c1ad6ed72b4a7a42505cf86053c6de17e",
+      "bytes": 47792,
+      "words": 6957,
+      "lines": 329
+    },
+    "README.md": {
+      "sha256": "2493af3be22685fa63c6f72e10bf77e6794d36a4f8840de62a355edb3f1106eb",
+      "bytes": 42009,
+      "words": 4584,
+      "lines": 346
+    }
+  }
+}
