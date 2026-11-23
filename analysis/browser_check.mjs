@@ -48,6 +48,12 @@ const CASES = [
   ['team', '#/team/14', ['desktop', 'half', 'phone'], ['light', 'dark']],
   ['team-no-proj', '#/team/20', ['desktop', 'half', 'phone'], ['light', 'dark']],
   ['legacy-season', '#/season', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['lineup-game', '#/game/' + (args['lineup-game'] || ''), ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['lineup-sits', '#/game/' + (args['lineup-game'] || ''), ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['lineup-scenario', '#/game/' + (args['lineup-game'] || '') + '/scenario', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['lineup-sheet', '#/game/' + (args['lineup-game'] || '') + '/player/' + (args['lineup-player'] || ''), ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['player-search', '#/players', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['today-headshots', '#/today/2026-11-23', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['players', '#/players', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['player', '#/player/3032977', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['lab', '#/lab', ['desktop', 'half', 'phone'], ['dark', 'light']],
@@ -70,7 +76,7 @@ const CASES = [
   ['sheet-whatif', '#/game/401909305/player/4701230/fg', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['today-leaders', '#/today/2026-11-21', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['tomorrow', '#/today/2026-11-22', ['desktop', 'half', 'phone'], ['dark']],
-].filter(c => (!only || only.includes(c[0])) && !(c[0] === 'future-game' && !args.future));
+].filter(c => (!only || only.includes(c[0])) && !(c[0] === 'future-game' && !args.future) && (!c[0].startsWith('lineup-') || args['lineup-game']) && (c[0] !== 'lineup-sheet' || args['lineup-player']));
 
 const profile = mkdtempSync(join(tmpdir(), 'musnba-chrome-'));
 const chrome = spawn(CHROME, ['--headless=new', '--remote-debugging-port=0', `--user-data-dir=${profile}`, '--no-first-run',
@@ -363,6 +369,40 @@ for (const [name, hash, sizes, themes] of CASES) {
           && [...document.querySelectorAll('tr[data-roster-member="Bench"]')].every(x => !x.hidden);
       })()`, returnByValue: true}, sessionId)).result.value === true;
     }
+    if (name.startsWith('lineup-')) {
+      interaction = (await send('Runtime.evaluate', {expression: `(async () => {
+        const select = document.querySelector('[data-lineup]'); if (!select) return false;
+        const ui = await import(new URL('assets/ui.mjs',location.href)), O = await import(new URL('assets/outcomes.mjs',location.href));
+        const gid = ${JSON.stringify(args['lineup-game'] || '')};
+        const game = await ui.api('game/'+gid), raw = await ui.api('game/'+gid+'/worlds');
+        const initial = await O.load(gid);
+        if (initial.W !== game.projection.sim.sims || O.branchCalculations(initial).mass(null) !== game.projection.sim.probability_mass) return false;
+        if (${JSON.stringify(name)} !== 'lineup-sits') return !document.querySelector('#view').textContent.includes('Research · not a forecast');
+        const pid = select.dataset.lineup; select.value='unavailable'; select.dispatchEvent(new Event('change',{bubbles:true}));
+        for(let i=0;i<100;i++) { await new Promise(r=>setTimeout(r,50)); if(document.querySelector('[data-lineup]')?.value === 'unavailable' && !document.querySelector('[data-lineup]').disabled) break; }
+        const choice = raw.selected_players.map(p=>p.player_id===pid?'0':'x').join(''), expected=raw.cases[choice].sim;
+        const loaded=await O.load(gid), C=O.branchCalculations(loaded);
+        return document.querySelector('[data-lineup]').value==='unavailable'
+          && C.mass(null)===expected.probability_mass
+          && C.mean(loaded.minuteValues(pid,'fg'))===0
+          && Math.abs(C.mean(loaded.values('t:home','pts'))-expected.periods.fg.home.pts.mean)<.000501
+          && document.querySelector('.bz-team.home .bz-stats b')?.textContent === ui.f1(expected.periods.fg.home.pts.mean);
+      })()`, returnByValue:true, awaitPromise:true}, sessionId)).result.value === true;
+    }
+    if (name === 'player-search') {
+      interaction = (await send('Runtime.evaluate', {expression: `(async () => {
+        document.querySelector('#search-open').click();
+        const input = document.querySelector('#search-input'); input.value = 'james'; input.dispatchEvent(new Event('input', {bubbles:true}));
+        for (let i=0;i<40 && !document.querySelector('#search-results .player-face img');i++) await new Promise(r=>setTimeout(r,100));
+        return document.querySelector('#search-dialog').open && !!document.querySelector('#search-results .player-face img');
+      })()`, returnByValue:true, awaitPromise:true}, sessionId)).result.value === true;
+    }
+    if (name === 'today-headshots') {
+      interaction = (await send('Runtime.evaluate', {expression: `(() => {
+        const panel = document.querySelector('#slate-insights'); if (!panel) return false;
+        panel.scrollIntoView(); return panel.querySelectorAll('.player-face').length >= 6;
+      })()`, returnByValue:true}, sessionId)).result.value === true;
+    }
     await sleep(250);
     const {result: dims} = await send('Runtime.evaluate', {returnByValue: true, expression: `(() => {
       const wide = [...document.querySelectorAll('body *')].filter(el => { const r = el.getBoundingClientRect(); return r.right > innerWidth + 1 && !el.closest('.scroll') && getComputedStyle(el).position !== 'fixed'; }).slice(0, 5).map(el => el.tagName.toLowerCase() + (el.className ? '.' + String(el.className).split(' ')[0] : ''));
@@ -370,7 +410,7 @@ for (const [name, hash, sizes, themes] of CASES) {
     })()`}, sessionId);
     const d = dims.value;
     const overflow = d.scrollWidth > d.innerWidth + 1;
-    const panelTop = ['game-advanced', 'team-stories'].includes(name) ? (await send('Runtime.evaluate', {expression: `document.querySelector(${JSON.stringify(name === 'team-stories' ? '[data-game-stories]' : '#view details.panel')})?.closest('section,details.panel')?.getBoundingClientRect().top + scrollY || 0`, returnByValue: true}, sessionId)).result.value : 0;
+    const panelTop = ['game-advanced', 'team-stories', 'today-headshots'].includes(name) ? (await send('Runtime.evaluate', {expression: `document.querySelector(${JSON.stringify(name === 'team-stories' ? '[data-game-stories]' : name === 'today-headshots' ? '#slate-insights' : '#view details.panel')})?.getBoundingClientRect().top + scrollY || 0`, returnByValue: true}, sessionId)).result.value : 0;
     const shot = await send('Page.captureScreenshot', {format: 'png', captureBeyondViewport: true,
       clip: {x: 0, y: args.from ? Math.max(0, d.height - Number(args.from)) : panelTop, width, height: Math.min(args.from ? Number(args.from) : d.height - panelTop, mobile ? 3200 : 2600), scale: 1}}, sessionId);
     const file = join(OUT, `${name}-${size}-${theme}.png`);

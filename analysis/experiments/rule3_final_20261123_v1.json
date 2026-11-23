@@ -1,0 +1,1488 @@
+{
+ "run": "rule3_final_20261123_v1",
+ "game_ids": [
+  "401909088",
+  "401909089",
+  "401909090",
+  "401909091",
+  "401909092",
+  "401909093",
+  "401909094",
+  "401909095",
+  "401909096",
+  "401909277",
+  "401909278",
+  "401909279",
+  "401909280",
+  "401909281",
+  "401909282",
+  "401909283",
+  "401909284",
+  "401909285",
+  "401909286",
+  "401909287",
+  "401909288",
+  "401909289",
+  "401909290",
+  "401909291",
+  "401909292",
+  "401909293",
+  "401909294",
+  "401909295",
+  "401909296",
+  "401909297",
+  "401909298",
+  "401909299",
+  "401909300",
+  "401909301",
+  "401909302",
+  "401909303",
+  "401909304",
+  "401909305",
+  "401909306",
+  "401909307",
+  "401909308",
+  "401909309",
+  "401909310",
+  "401909311",
+  "401909312",
+  "401909313",
+  "401909834",
+  "401909835",
+  "401909836",
+  "401909837",
+  "401909838",
+  "401909839",
+  "401909840",
+  "401909841",
+  "401909842",
+  "401909843",
+  "401909844",
+  "401909845",
+  "401909846",
+  "401909847",
+  "401909848",
+  "401909849",
+  "401909850",
+  "401909851",
+  "401909852",
+  "401909853",
+  "401909854",
+  "401909855",
+  "401909856",
+  "401909857",
+  "401909858",
+  "401909859",
+  "401909860",
+  "401909861",
+  "401909862",
+  "401909863",
+  "401909864",
+  "401909865",
+  "401909866",
+  "401909867",
+  "401909868",
+  "401909869",
+  "401909870",
+  "401909871",
+  "401909872",
+  "401909873",
+  "401909874",
+  "401909875",
+  "401909876",
+  "401909877",
+  "401909878",
+  "401909879",
+  "401909880",
+  "401909881",
+  "401909882",
+  "401909883",
+  "401909884",
+  "401909885",
+  "401909886",
+  "401909887",
+  "401909888",
+  "401909889",
+  "401909890",
+  "401909891",
+  "401909892",
+  "401909893",
+  "401909894",
+  "401909895",
+  "401909896",
+  "401909897",
+  "401909898",
+  "401909899",
+  "401909900",
+  "401909901",
+  "401909902",
+  "401909903",
+  "401909904",
+  "401909905",
+  "401909906",
+  "401909907",
+  "401909908",
+  "401909909",
+  "401909910",
+  "401909911",
+  "401909912",
+  "401909913",
+  "401909914",
+  "401909915",
+  "401909916",
+  "401909917",
+  "401909918",
+  "401909919",
+  "401909920",
+  "401909921",
+  "401909922",
+  "401909923",
+  "401909924",
+  "401909925",
+  "401909926",
+  "401909927",
+  "401909928",
+  "401909929",
+  "401909930",
+  "401909931",
+  "401909932",
+  "401909933",
+  "401909934",
+  "401909936",
+  "401909937",
+  "401909938",
+  "401909939",
+  "401909940",
+  "401909941",
+  "401909942",
+  "401909943",
+  "401909944",
+  "401909945",
+  "401909946",
+  "401909947",
+  "401909948",
+  "401909949",
+  "401909950",
+  "401909951",
+  "401909952",
+  "401909953",
+  "401909954",
+  "401909955",
+  "401909956",
+  "401909957",
+  "401909958",
+  "401909959",
+  "401909960",
+  "401909961",
+  "401909962",
+  "401909963",
+  "401909964",
+  "401909965",
+  "401909966",
+  "401909967",
+  "401909968",
+  "401909969",
+  "401909970",
+  "401909971",
+  "401909972",
+  "401909973",
+  "401909974",
+  "401909975",
+  "401909976",
+  "401909977",
+  "401909978",
+  "401909979",
+  "401909980",
+  "401909981",
+  "401909982",
+  "401909983",
+  "401909984",
+  "401909985",
+  "401909986",
+  "401909987",
+  "401909988",
+  "401909989",
+  "401909990",
+  "401909991",
+  "401909992",
+  "401909993",
+  "401909994",
+  "401909995",
+  "401909996",
+  "401909997",
+  "401909998",
+  "401909999",
+  "401910000",
+  "401910001",
+  "401910002",
+  "401910003",
+  "401910004",
+  "401910005",
+  "401910006",
+  "401910007",
+  "401910008",
+  "401910009",
+  "401910010",
+  "401910011",
+  "401910012",
+  "401910013",
+  "401910014",
+  "401910015",
+  "401910016",
+  "401910017",
+  "401910018",
+  "401910019",
+  "401910020",
+  "401910022",
+  "401910023",
+  "401910024",
+  "401910025",
+  "401910026",
+  "401910027",
+  "401910028",
+  "401910029",
+  "401910030",
+  "401910031",
+  "401910032",
+  "401910033",
+  "401910034",
+  "401910035"
+ ],
+ "worlds": 1000,
+ "directory": "data/derived/experiments/rule3_final_20261123_v1",
+ "manifest_sha256": "19adb5255d5d07b7aa6168833371526f2ce9891f49bd2d5b0bf3a161b9a7231f",
+ "workers": 8,
+ "elapsed_this_invocation": 4732.695980375007,
+ "captures": [
+  {
+   "game": "401909088",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909088.json",
+   "meta_sha256": "cc7646cf03583007f5c1195e913e75b34caa055cb893332550f638b73b2ffbdb"
+  },
+  {
+   "game": "401909089",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909089.json",
+   "meta_sha256": "5182ae2948a2b68d3a3ad81fcc9603be8f109e795ee838727d716515a509f1e2"
+  },
+  {
+   "game": "401909090",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909090.json",
+   "meta_sha256": "25c9b131c5a57851c7cb62cbc8222d964d00d3876439b60c91685082f355877b"
+  },
+  {
+   "game": "401909091",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909091.json",
+   "meta_sha256": "2fcc21da0832fe1def089666c121af344fde7055a5faa6c7e6b59980482dc114"
+  },
+  {
+   "game": "401909092",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909092.json",
+   "meta_sha256": "e38d832d058a0dcc2294ab2125fb424918e4f7626770d62e02c5dd8798c71f7d"
+  },
+  {
+   "game": "401909093",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909093.json",
+   "meta_sha256": "f832ada99772a876308a6d65fdccb6c57c5a7147cee8dc39a9ce9e1c09bf951e"
+  },
+  {
+   "game": "401909094",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909094.json",
+   "meta_sha256": "cf4ca5961644441b1f0fbd7f72f497a5540ff4db914c6ce06fb9dca0076bc5ac"
+  },
+  {
+   "game": "401909095",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909095.json",
+   "meta_sha256": "878f0079c9404540e6863a59549e0f7278b04b7ec158eaa4eb350a8065ab4598"
+  },
+  {
+   "game": "401909096",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909096.json",
+   "meta_sha256": "5a7fb281f37a0cbbffec9e39db602d7c91678ba0886e39aa8e713775e287f5fa"
+  },
+  {
+   "game": "401909277",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909277.json",
+   "meta_sha256": "59e0c3fc4dad6bcdb5705eb72c686fb5cffa774ec2f79490ad12ee7539ca648c"
+  },
+  {
+   "game": "401909278",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909278.json",
+   "meta_sha256": "9cfca238bc52ae0c385dd38f38d2e85e8ae33d0363234016cbf4fd630dfc6d95"
+  },
+  {
+   "game": "401909279",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909279.json",
+   "meta_sha256": "aa0512b90f3a2549e0ca0330c0b0cd39b0e63ca7dc38b87b37ce5bea0861be92"
+  },
+  {
+   "game": "401909280",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909280.json",
+   "meta_sha256": "f56be7c05d431b9c66bab3d201c3c5cd10625d1304fbb62f1bdafb106a34b438"
+  },
+  {
+   "game": "401909281",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909281.json",
+   "meta_sha256": "08ba47017983619c5a70c692b657b202aaad50ca15bbd2cba816d8049c8c3dbe"
+  },
+  {
+   "game": "401909282",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909282.json",
+   "meta_sha256": "e8287619bb019a9a2267a17088684dea3518d9d29577d7f79a34350f24816da1"
+  },
+  {
+   "game": "401909283",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909283.json",
+   "meta_sha256": "516008a835b1ccedf454715966220c212a25364c145bdea9d85026aa8a9caac4"
+  },
+  {
+   "game": "401909284",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909284.json",
+   "meta_sha256": "31ceb93ec93f22ae27c17b869bb69e2d2efbf7ce5157a5f18bcfcdfe223009ee"
+  },
+  {
+   "game": "401909285",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909285.json",
+   "meta_sha256": "6ee133fb33f794d656f7f71572c0ffa2cd791ab3ec15ac280ed79667ca45eb67"
+  },
+  {
+   "game": "401909286",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909286.json",
+   "meta_sha256": "7d2e981b0397219c29edb12bbdf7ef06ac236fa6490230ed7ea63865df85879b"
+  },
+  {
+   "game": "401909287",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909287.json",
+   "meta_sha256": "33a9e7a9d14723fa67e2e03eb093f4e3f86bb8dacc6ab8aafe05914ed5d1b863"
+  },
+  {
+   "game": "401909288",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909288.json",
+   "meta_sha256": "50b50783eb03cae0870e2098256cd0fbb8e10550c35b368ff932cca7ae74fea0"
+  },
+  {
+   "game": "401909289",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909289.json",
+   "meta_sha256": "507743897dae0ec6e779de8c9d960ad82c2891cbe7662f3f89d6e68f02a0f6b5"
+  },
+  {
+   "game": "401909290",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909290.json",
+   "meta_sha256": "f7e1e794be693cd5b727a6620d611cf2726f6a7ae912e5e02320da1a0e8324d3"
+  },
+  {
+   "game": "401909291",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909291.json",
+   "meta_sha256": "0bfac0a0232058d49788066561041bdc87db071a23c359cfa8bd2f1453c8ea8e"
+  },
+  {
+   "game": "401909292",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909292.json",
+   "meta_sha256": "941f1fe356d053c3b19acb9ff8f930e2cd453ee218e6488d5659f740fbb19591"
+  },
+  {
+   "game": "401909293",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909293.json",
+   "meta_sha256": "420345f610c576557525550c6444932854db5e26a6ddab9ad0552f62c4520bf8"
+  },
+  {
+   "game": "401909294",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909294.json",
+   "meta_sha256": "b68dfac67e0c4e73425642a1cb60f1385cd7391e36286b8e49a32a1f1fee5c40"
+  },
+  {
+   "game": "401909295",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909295.json",
+   "meta_sha256": "286593183a8b5723baa9e69ccc8377ab1a07ee3c17e1d581b6142b563a2f7599"
+  },
+  {
+   "game": "401909296",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909296.json",
+   "meta_sha256": "aabca5a2ab00a4e7dd1cd1146cbc9db320b12bb744a3a7ed509d0f95759f89be"
+  },
+  {
+   "game": "401909297",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909297.json",
+   "meta_sha256": "3dbb9d24a1ecc164d8930e5b6524714a6f9327a3e6b88c56250ffeeb2d15bbc6"
+  },
+  {
+   "game": "401909298",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909298.json",
+   "meta_sha256": "fd77b7ef74483acea4efbeb359f6567958ca3275a8dc76d22a822ac91fa5e9fb"
+  },
+  {
+   "game": "401909299",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909299.json",
+   "meta_sha256": "702ce99c26a8ad788db9e0bf70908dccafccf0eec06bc3efbf5c5587981b8f00"
+  },
+  {
+   "game": "401909300",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909300.json",
+   "meta_sha256": "3567f273093e6d2011b1ffbdd753336120f47d91de23f2bf51b30f87efe0a978"
+  },
+  {
+   "game": "401909301",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909301.json",
+   "meta_sha256": "f4a41d986a5b7bd2cad32c37a246e6e1f0d4ba36a24348d3be7e8f058e247223"
+  },
+  {
+   "game": "401909302",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909302.json",
+   "meta_sha256": "3240a1d55b42fa3e7aac52f0685a5cb0cc44cfdc0f07dbcecd4e21a5388f4b8a"
+  },
+  {
+   "game": "401909303",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909303.json",
+   "meta_sha256": "7e22a3ed97962ba876f7dd8d2582211e7227bef3591482e043484ca0ace7cca0"
+  },
+  {
+   "game": "401909304",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909304.json",
+   "meta_sha256": "7333ed7d34423a1fe845c8dee8c6525c2bf3581ed565dc7c411d6b2a9af72ea7"
+  },
+  {
+   "game": "401909305",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909305.json",
+   "meta_sha256": "7dba1e72bf7fe85a2bf42c0464496241d4e20613bc7a54bd3490a0d7d99d60f1"
+  },
+  {
+   "game": "401909306",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909306.json",
+   "meta_sha256": "8334bcc61530fdab8e965e36bc6f8fa8b2da9b3e7b173c8c6da58da5a3f8928d"
+  },
+  {
+   "game": "401909307",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909307.json",
+   "meta_sha256": "2a0469bd922702b55e0f5394111347ddc9d3c8a698153230012a19f7fa49bb1f"
+  },
+  {
+   "game": "401909308",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909308.json",
+   "meta_sha256": "c1f84abd777a24688a18751cc15e8f23595bc3c127ab2c1f236df533b88a3e7e"
+  },
+  {
+   "game": "401909309",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909309.json",
+   "meta_sha256": "edfd503d7656ef7ef0ca4bddcdb9151a9a3be6195f9f1c1019a7b2142637aa3c"
+  },
+  {
+   "game": "401909310",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909310.json",
+   "meta_sha256": "69c42d5056bee25634bef7650c5f2625c87093655f995595af2b2208e6b3184a"
+  },
+  {
+   "game": "401909311",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909311.json",
+   "meta_sha256": "aa143126c7069e7d79222020bdd2b43fec3211958b9294abe988cf079ec0ef46"
+  },
+  {
+   "game": "401909312",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909312.json",
+   "meta_sha256": "c785bc8c154bf532416fb62caf8f85c1c292d13c83142ff4e2833d4965a49097"
+  },
+  {
+   "game": "401909313",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909313.json",
+   "meta_sha256": "a12396bee9e1059c0848655b9bcf8cfe75bacc53b6ff3ccd49aaa22b429e3cdf"
+  },
+  {
+   "game": "401909834",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909834.json",
+   "meta_sha256": "88bd5af33118fe2a337cf79c01b2cd2d7f7547a9aa45287d04d9298b157caf97"
+  },
+  {
+   "game": "401909835",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909835.json",
+   "meta_sha256": "7405c9753c306803b7a9c252ad79e9025649e1717291098d757b4726003b4def"
+  },
+  {
+   "game": "401909836",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909836.json",
+   "meta_sha256": "c09d3d3a4c941b4d861b1d0daf1b4cbab242a9e81eb20e9a9a6a4e5a992f8d4a"
+  },
+  {
+   "game": "401909837",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909837.json",
+   "meta_sha256": "7fcc6406c8925f75f6110a686fef357bda8c7d8b67befafbabac73e551c029f6"
+  },
+  {
+   "game": "401909838",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909838.json",
+   "meta_sha256": "d6c0c80318d97a0ba5e787977d9b8698a0c9f8b1c6deecf492731d347681728e"
+  },
+  {
+   "game": "401909839",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909839.json",
+   "meta_sha256": "07a7f003ca31be73a783f94e993ee4673fc2f58c60fa19d58d2dbf3b78fce8c9"
+  },
+  {
+   "game": "401909840",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909840.json",
+   "meta_sha256": "85cf345087432d1dd1df1612454040b31f8c36a00403587ee0632eeec27032fe"
+  },
+  {
+   "game": "401909841",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909841.json",
+   "meta_sha256": "ad8340da534df3a04163f77c04a0cd7532b913650993096c015b6199c5a5d13a"
+  },
+  {
+   "game": "401909842",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909842.json",
+   "meta_sha256": "9fcedc83f8be778fd4f9a6cba2627eda9c115dcf01285309071ee849419bbd5d"
+  },
+  {
+   "game": "401909843",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909843.json",
+   "meta_sha256": "d49143f6e76164ebb3b14bdfa85e50832f0de1faafd806e6be9871f2e5ccec16"
+  },
+  {
+   "game": "401909844",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909844.json",
+   "meta_sha256": "639065a35ea8496f8022b9a856c4d65594583f586bbb2e8dcbe62991e99336b5"
+  },
+  {
+   "game": "401909845",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909845.json",
+   "meta_sha256": "51ed43f1e07729b37256b34d8ce13978cc823f500c6e925f2018ede30473f9cc"
+  },
+  {
+   "game": "401909846",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909846.json",
+   "meta_sha256": "57545684aa1625da9f6820644a2db9c515a6c51288bb0c8270dad1466b248ee2"
+  },
+  {
+   "game": "401909847",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909847.json",
+   "meta_sha256": "787907830a317ad81008ec3043066db11f20bea0c94ade285698324b5d83e27e"
+  },
+  {
+   "game": "401909848",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909848.json",
+   "meta_sha256": "f5fed7907d5d9a4cb1108f661b1f532455580e247710a2b2c14b952dbaada7e6"
+  },
+  {
+   "game": "401909849",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909849.json",
+   "meta_sha256": "63395a98e3c03dccb28b7d94d494d4a274c8a749da0cc45060749edb959bab0d"
+  },
+  {
+   "game": "401909850",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909850.json",
+   "meta_sha256": "02137291b1ea7889626e6ece600f4066e9356e20d73143b28b62bdce42dda3c3"
+  },
+  {
+   "game": "401909851",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909851.json",
+   "meta_sha256": "09a021a7fa74e10c8dd9e1dba821e57329ab04344a439c35bacd9ecd0009c0bd"
+  },
+  {
+   "game": "401909852",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909852.json",
+   "meta_sha256": "be691676965352c4dee8116ca42472349b5db387fa23daf61cf7ba0512079107"
+  },
+  {
+   "game": "401909853",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909853.json",
+   "meta_sha256": "2d17713050e99cfec9901742daae025afbba9c1d1e526dcef80e3cc9c69d4e6d"
+  },
+  {
+   "game": "401909854",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909854.json",
+   "meta_sha256": "71e319a12a8db01938ce6818fab7a3d2f52ddb2b79f9a504d7c99b226378b6ef"
+  },
+  {
+   "game": "401909855",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909855.json",
+   "meta_sha256": "6c22bb09e246a154ce623c667e805aa58ec42f0d7bbebf8b1fd3b5f57e4855d2"
+  },
+  {
+   "game": "401909856",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909856.json",
+   "meta_sha256": "9ad5fe05b0d8c95a09f735ad9b15e0548762c59430fc9d2a6d16808e44dd5ecc"
+  },
+  {
+   "game": "401909857",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909857.json",
+   "meta_sha256": "077f4c441bce1137b11ad75dd862491b1d0b9c2cc5dcddfc5009da88089a5d7a"
+  },
+  {
+   "game": "401909858",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909858.json",
+   "meta_sha256": "ac6b45299f7d6d710328d6d96472ae0caaf55bb86499c9001ec6cceb66c691f5"
+  },
+  {
+   "game": "401909859",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909859.json",
+   "meta_sha256": "4fef3b52fdb42f0ab4c457847f92d5615069f04ed59e96815b3d7f47728b8a88"
+  },
+  {
+   "game": "401909860",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909860.json",
+   "meta_sha256": "cff9d439dfa1cb1a2badabdb83619ed0c6cb90d95089b809cbd032b4774321ea"
+  },
+  {
+   "game": "401909861",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909861.json",
+   "meta_sha256": "8d1a98f94cb7e01a0cd0773258d8bec48e50595f50a4ff9135c6fd11b817432d"
+  },
+  {
+   "game": "401909862",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909862.json",
+   "meta_sha256": "cb66023b6b8d4ad5371c9e5063fdc87f56bf859a8d35856f10c01ea5e2164725"
+  },
+  {
+   "game": "401909863",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909863.json",
+   "meta_sha256": "e35ef654e408933aa3ca6c9c6777edfbbe5937d39f3ac894a29e1e164195a918"
+  },
+  {
+   "game": "401909864",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909864.json",
+   "meta_sha256": "9d332fee9d78da5ecf7b3394c766cf802babdff2639fa008fca80dad08d79998"
+  },
+  {
+   "game": "401909865",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909865.json",
+   "meta_sha256": "7ca25691d33075e264741753baa74a7a1792514891b7e1d54331835b847f67df"
+  },
+  {
+   "game": "401909866",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909866.json",
+   "meta_sha256": "cad935bbd660837c1470a0ab16c6cd0b58a93103177a9ca939a78ace55a852ab"
+  },
+  {
+   "game": "401909867",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909867.json",
+   "meta_sha256": "1d00b2d496e2b730a011df3330f14e6bd249c0dda6da68d3807e224359b126f1"
+  },
+  {
+   "game": "401909868",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909868.json",
+   "meta_sha256": "e77cbcf4dcbb347ab1d3a0556d27fd1976596a121d3c8cda9d180b73c8acc720"
+  },
+  {
+   "game": "401909869",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909869.json",
+   "meta_sha256": "30bcc82df428f8a4f7525e1f1bf85b919c42a040c577597b8a875cb6bcf6d18d"
+  },
+  {
+   "game": "401909870",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909870.json",
+   "meta_sha256": "e4067176926acd49daae5e02c00f11fd33515576a5a08e09f9a8c3ae71909145"
+  },
+  {
+   "game": "401909871",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909871.json",
+   "meta_sha256": "2ccbf0757bbb34321b2823bb693d5aa04ee2ab8ee15d0a2fd77f9c3e928cb6b7"
+  },
+  {
+   "game": "401909872",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909872.json",
+   "meta_sha256": "4120b1a0578a137c4bd13e340e7dfd3f600ae7778aeeb09a5d8b1899f5a44ddb"
+  },
+  {
+   "game": "401909873",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909873.json",
+   "meta_sha256": "7762cd88f37c7cd1d430b096049a2b16e68ec70bfa1a70883a37aae13aac86a3"
+  },
+  {
+   "game": "401909874",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909874.json",
+   "meta_sha256": "d1dde1d20b0168a6ee68f1f12b9a7c57e7c3f698bb02f1604746f7be25c2ac2e"
+  },
+  {
+   "game": "401909875",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909875.json",
+   "meta_sha256": "eba0fc1346b1820b73bbd8375a25cca1bcb06ad80ac1ac5e5f88660c75ab4a48"
+  },
+  {
+   "game": "401909876",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909876.json",
+   "meta_sha256": "31304802756a8ad5d3796f5d4abeece2a08b74deebe7105214cd3618a157f0c1"
+  },
+  {
+   "game": "401909877",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909877.json",
+   "meta_sha256": "64312a692475b9e09e4be59ba7eb1cccf13b56582a0f4a11eefff98e39a11c36"
+  },
+  {
+   "game": "401909878",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909878.json",
+   "meta_sha256": "04d598846dbb375431da5d407b780ec5b1678cc5015bc2db5885258557cd3f08"
+  },
+  {
+   "game": "401909879",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909879.json",
+   "meta_sha256": "954ab8a73d4b5a7edc4922c3d05e0c0106b3b7e5027a935fb0f9185ac79594dc"
+  },
+  {
+   "game": "401909880",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909880.json",
+   "meta_sha256": "e0a6db1759350d13ee5524339ba06a7fefb0189dfa7d48707beaebd8955cc4fa"
+  },
+  {
+   "game": "401909881",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909881.json",
+   "meta_sha256": "ace3fd1b4d28f5b0ed883ea1df232b6bc75d87de9a5b43a31690dd33b911a851"
+  },
+  {
+   "game": "401909882",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909882.json",
+   "meta_sha256": "cceed7dab605aa89561d61dda0bdb2a536d235b449459612c14060addb313f6a"
+  },
+  {
+   "game": "401909883",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909883.json",
+   "meta_sha256": "af490e659f3e433c1b8cf9c080e4d04854e2c19246d8f547778d85af4176d9d8"
+  },
+  {
+   "game": "401909884",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909884.json",
+   "meta_sha256": "d6ed37fb8eb100f85f66b0a5a0424f6d99ffffe7b65ed55d0758950d12599458"
+  },
+  {
+   "game": "401909885",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909885.json",
+   "meta_sha256": "251007db32b39c9db3eb685581f5477e2933599502e8dc1aad0a16c1de4e7a13"
+  },
+  {
+   "game": "401909886",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909886.json",
+   "meta_sha256": "66f5cae758c6a8d887b93e98e3abb40b2a730db589759eda29149c54118ff4f2"
+  },
+  {
+   "game": "401909887",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909887.json",
+   "meta_sha256": "f020a6500ba7fde17f864f2557a5de3baea9e1b8df08c904650eb10e1e42ba6e"
+  },
+  {
+   "game": "401909888",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909888.json",
+   "meta_sha256": "95a2386864d85bc7a078369fe9effb745b18bf7a487aaebf716cc7015ca358e0"
+  },
+  {
+   "game": "401909889",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909889.json",
+   "meta_sha256": "00a151c350036e7707b33ef3c4dbb24b4ddbff03c03906a8cf7e009d8391ef94"
+  },
+  {
+   "game": "401909890",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909890.json",
+   "meta_sha256": "b3c6be5998c32357a8b06b846bf2da03864c57ef55c548ebc9c20fe4f951ab33"
+  },
+  {
+   "game": "401909891",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909891.json",
+   "meta_sha256": "78913833563a1c3c050b3e22da744a6eeb37790726c0481b12dc16b049c6ab00"
+  },
+  {
+   "game": "401909892",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909892.json",
+   "meta_sha256": "e51f15f275b472c0ff75cc33f588def8ccee8b474df12cede1724be74834202f"
+  },
+  {
+   "game": "401909893",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909893.json",
+   "meta_sha256": "982c1a551722579ce6862677bd249fc3007369d08d6272e683c8cfe1a141a76b"
+  },
+  {
+   "game": "401909894",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909894.json",
+   "meta_sha256": "8f7fb93fe30f524797a33d63c2f5ec67c326176fa3e404f0fb76b9ff43a0b5e3"
+  },
+  {
+   "game": "401909895",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909895.json",
+   "meta_sha256": "89a93b1246545f60149b3da2887563b3f1b46de410989a8715b8f7b5ea4f7791"
+  },
+  {
+   "game": "401909896",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909896.json",
+   "meta_sha256": "6fcc922b2f5e371955599f4dee2aa24ca3a2db8af5d1eabd158b6fbade08e66e"
+  },
+  {
+   "game": "401909897",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909897.json",
+   "meta_sha256": "40f0c380cbbe32448dfc40e783fd45688f7247069ebd14fd93575dc9390c541a"
+  },
+  {
+   "game": "401909898",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909898.json",
+   "meta_sha256": "9baf377b4b734b06b35b2edf7d7f7dc9922978427a43f9440fddaf1fb3df2821"
+  },
+  {
+   "game": "401909899",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909899.json",
+   "meta_sha256": "b3d572b563481c55e91f24a9d0b64ee6acade01b270e8edd37569ea4dc317fe7"
+  },
+  {
+   "game": "401909900",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909900.json",
+   "meta_sha256": "bcba992df84539fd004bfd8937f9a15fca09435d4e00ac0fd8572525a1267e7c"
+  },
+  {
+   "game": "401909901",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909901.json",
+   "meta_sha256": "2339afd786748290650246fb99e3f0e9d64c0f003232ae925a6bfe2b5ccf5083"
+  },
+  {
+   "game": "401909902",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909902.json",
+   "meta_sha256": "df6babc4afc7c027b495684782d00b44524f745be126b42be90891b912577103"
+  },
+  {
+   "game": "401909903",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909903.json",
+   "meta_sha256": "f0757b94e1068ed59bc90e75e622593f1c468013e59f2f43a6ec0376ea837148"
+  },
+  {
+   "game": "401909904",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909904.json",
+   "meta_sha256": "c8b7dbc28ecd1d3671ac702f63b6fe39390f20b61d4ba0be7d6108128a8bdcca"
+  },
+  {
+   "game": "401909905",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909905.json",
+   "meta_sha256": "254fcd088aff72ac7e970edd3faecc2d35d3bcb67749c2587a1539746867fa26"
+  },
+  {
+   "game": "401909906",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909906.json",
+   "meta_sha256": "83b66e8819b1527bcfd8d0f31698ca994823b9aba42d68b43a1f96db5095417e"
+  },
+  {
+   "game": "401909907",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909907.json",
+   "meta_sha256": "f7b009b6c26567fe28c49ed843df881a7a6b2d9f456f2a5ea1f954e530ce8609"
+  },
+  {
+   "game": "401909908",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909908.json",
+   "meta_sha256": "3323ff717da1cd9b2f6f3288ffe2d6d9b51c89333b68c39c597c9084a6aa969e"
+  },
+  {
+   "game": "401909909",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909909.json",
+   "meta_sha256": "68e4fd68859cf3977d1f23590d0a5cce60530b3d94f4dd62ef4aae1d30486a3a"
+  },
+  {
+   "game": "401909910",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909910.json",
+   "meta_sha256": "d4a642168aec3ab21ce1b6349e3bc2562286c8172284e2923fd4c1a489f10372"
+  },
+  {
+   "game": "401909911",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909911.json",
+   "meta_sha256": "a1e91901d662548d5aec3ac2503d1b2a6bdf38ca7369236438820dcc9eed5323"
+  },
+  {
+   "game": "401909912",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909912.json",
+   "meta_sha256": "4f5ecfdddb67e3def36975c3a8597ee223840e4fa1404353274685b8eec967eb"
+  },
+  {
+   "game": "401909913",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909913.json",
+   "meta_sha256": "3b447cd998bb9f0dac148e4759123142e431b70f15a4f9b8b3d0d48d77ba99cb"
+  },
+  {
+   "game": "401909914",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909914.json",
+   "meta_sha256": "800f8628a0deb24d4b9070a611137e637da0a72530c693111c3b276c7c0dc529"
+  },
+  {
+   "game": "401909915",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909915.json",
+   "meta_sha256": "266aec1fadf0f18f677b65dae80a064812ad9e841b1656bf9c5f41e1d03282e5"
+  },
+  {
+   "game": "401909916",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909916.json",
+   "meta_sha256": "4a579a693a4eec6bcdd337b541b093822f3f6067c309ef3a40b90fbe2923839e"
+  },
+  {
+   "game": "401909917",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909917.json",
+   "meta_sha256": "1d6266752572061387c87588bf382c7916be7d574c69cc9760453b87f41a022c"
+  },
+  {
+   "game": "401909918",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909918.json",
+   "meta_sha256": "e10b3d0d96ed69db6a775c815743afaa374de9f3b699749d0f42acd364fdf1f7"
+  },
+  {
+   "game": "401909919",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909919.json",
+   "meta_sha256": "a62a7c7a67b0e2420781f6b4524b4d3d44fd549465da3a5d5d968e2c93b40b3e"
+  },
+  {
+   "game": "401909920",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909920.json",
+   "meta_sha256": "26eb47bd041b0e6e50cdd8b0f419ba305a1c3b0c188226ac905a58e7334d80fc"
+  },
+  {
+   "game": "401909921",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909921.json",
+   "meta_sha256": "8bdecc5c63254d3ee69c2d14c82e743d6fb26263b4b1773a3a48da7069645ed6"
+  },
+  {
+   "game": "401909922",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909922.json",
+   "meta_sha256": "4280a03c5467b95e6169f21636757bb72871d8edc5ba87107fe99c67d34c09b7"
+  },
+  {
+   "game": "401909923",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909923.json",
+   "meta_sha256": "a2dd16d4f187e1241af94a4ad188924558fa787f47fb532fcb83bc3d763db12f"
+  },
+  {
+   "game": "401909924",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909924.json",
+   "meta_sha256": "1d4df3a9b46dc3d7678b1a4c09e461e0ecd2c150ce25a03d678e43eabd780649"
+  },
+  {
+   "game": "401909925",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909925.json",
+   "meta_sha256": "35e1eec5805024aee0bbf8025d1daedd175bab884bac397ca1aae65954166261"
+  },
+  {
+   "game": "401909926",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909926.json",
+   "meta_sha256": "63b9c05e8314c71903536c4b081269b8f6ddfdc1270ee56a48536282560b8d60"
+  },
+  {
+   "game": "401909927",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909927.json",
+   "meta_sha256": "e5b3c5bfbfdf3ce6b03dc5ffb7804f550410e5724b595dc7938c94e5b6c8cae0"
+  },
+  {
+   "game": "401909928",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909928.json",
+   "meta_sha256": "293466fde1d4aeb8466b6820faca670271eb42467d405260666c3d4f32038e9b"
+  },
+  {
+   "game": "401909929",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909929.json",
+   "meta_sha256": "3619d365a99d954988e2b7b8711b3bba4a685a523826b7e3d1996af6d7b8b0de"
+  },
+  {
+   "game": "401909930",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909930.json",
+   "meta_sha256": "9730f0f40b00012a4a7d8aabfdbf7c01263b13f7e6375593e8bf6ebfdab209ed"
+  },
+  {
+   "game": "401909931",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909931.json",
+   "meta_sha256": "f18af7dafacc8fb3408f3d99884c94917dd966276e232355ee6bd3a2eac0d4aa"
+  },
+  {
+   "game": "401909932",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909932.json",
+   "meta_sha256": "d933794e8f6811f04d93d06ac4ee4870b5fdd66f6b44c5f12779c76bbb462868"
+  },
+  {
+   "game": "401909933",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909933.json",
+   "meta_sha256": "c6ea09bda899912db519d3dea6f720e867ce3b692d988856b8a880099359cf9e"
+  },
+  {
+   "game": "401909934",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909934.json",
+   "meta_sha256": "1330fbd65be8117c6175a2b58158652132513d9531a087becdd696ecf58d9119"
+  },
+  {
+   "game": "401909936",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909936.json",
+   "meta_sha256": "e84a724071b9bad106412743435c169d65b185bf6214328be9e2af2b1668fb01"
+  },
+  {
+   "game": "401909937",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909937.json",
+   "meta_sha256": "749abbe4ffb3b650ac57c853f025a56bff827b5ce2b4bea7e6533569ce4ffa47"
+  },
+  {
+   "game": "401909938",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909938.json",
+   "meta_sha256": "31848db74d0c51f406464af14acebcf984c5cca1a5ed663cf9cbe4566d70f481"
+  },
+  {
+   "game": "401909939",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909939.json",
+   "meta_sha256": "1b0d08be6e11c6d4caa8ccaec3d67cfb61e011aac659353cdfc8a5db4a719259"
+  },
+  {
+   "game": "401909940",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909940.json",
+   "meta_sha256": "4106664ff342bbe137c9be92359955906a1b8b26a45cad1138d4f170bd5d862c"
+  },
+  {
+   "game": "401909941",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909941.json",
+   "meta_sha256": "f6466eecc17c4740b459ecf0e89055cf1229897dea262bf1add2bdfd01527f6d"
+  },
+  {
+   "game": "401909942",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909942.json",
+   "meta_sha256": "5285fa77899173db892b3aa13161c64e8e5f3e8f629f0d3d95835512f4241fcc"
+  },
+  {
+   "game": "401909943",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909943.json",
+   "meta_sha256": "5cc4d123e288218e268edad5113f8fd69c96f67b50d36da9dc1782320d4a7257"
+  },
+  {
+   "game": "401909944",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909944.json",
+   "meta_sha256": "8aa51edd2f684a2e73bbfd80008c420046fde4455dda347be959550d714ea540"
+  },
+  {
+   "game": "401909945",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909945.json",
+   "meta_sha256": "e1f1970345ea67229f934aec0a0f75c2c7f1321914bb10c61561b4c33c353391"
+  },
+  {
+   "game": "401909946",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909946.json",
+   "meta_sha256": "90000ae719cda70d519e4858f7c9f86785872aefe66dc940704f7ebcbc2fdd69"
+  },
+  {
+   "game": "401909947",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909947.json",
+   "meta_sha256": "11ac938c0f51099c01795619b826151c5a0161369e5df6080220d5edb2f6d25f"
+  },
+  {
+   "game": "401909948",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909948.json",
+   "meta_sha256": "b384512c2f462ac57d726f06a158df00cdc9bff6cc652b7558ab9520619ae02c"
+  },
+  {
+   "game": "401909949",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909949.json",
+   "meta_sha256": "8d0839ec6c9aef84c77af0bafcb3f8f8e8cdf14b2a05c7fa861020d4e20ad423"
+  },
+  {
+   "game": "401909950",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909950.json",
+   "meta_sha256": "bcbc48b1767513f4bf134cf8fe2e82806dbff1d532f0a07f6ad4f2eb3480beb2"
+  },
+  {
+   "game": "401909951",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909951.json",
+   "meta_sha256": "536467f3dd55bee29c2aaa5fa908d322f110b3096c85f56607eb4d7c3ca00fc0"
+  },
+  {
+   "game": "401909952",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909952.json",
+   "meta_sha256": "f4d594fa856a76ab988ef287730d4dd342cbf69f35e5f3ab188f7447e5063f1c"
+  },
+  {
+   "game": "401909953",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909953.json",
+   "meta_sha256": "7130fd1caf75c61ee762db3b3eee94ca83d72f68b4f070a62fc50d4c511da3e4"
+  },
+  {
+   "game": "401909954",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909954.json",
+   "meta_sha256": "523ffbe2e75b3131aaeb2ca667eadf37329ad420abd4b2b4030d5f6c36083342"
+  },
+  {
+   "game": "401909955",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909955.json",
+   "meta_sha256": "ebc705ad4e153516329ba46476fc8b219ec32d1ec8e527a1882b6b48f071f0e2"
+  },
+  {
+   "game": "401909956",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909956.json",
+   "meta_sha256": "f829f9577b7e0bd19ec038b1e8a7c41f2564838be6ce5f9327fb9d81d7cd0eff"
+  },
+  {
+   "game": "401909957",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909957.json",
+   "meta_sha256": "0ba6aecb68d009262e2da7c7f3862df13be501b121f8946fc9501fe2d3ee61e5"
+  },
+  {
+   "game": "401909958",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909958.json",
+   "meta_sha256": "c67e2e47c2d63b2ff29b5b1841aa8c275fa1bbf7c9d7bb86c272a66c839e6399"
+  },
+  {
+   "game": "401909959",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909959.json",
+   "meta_sha256": "fa83e414ee0a55bccec68925d4fec00abe1d5ecdca2379ca9d2db7ea79049156"
+  },
+  {
+   "game": "401909960",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909960.json",
+   "meta_sha256": "6fb55151e476234b1124d19e1f954610c59e8faaf3a4a4904b62376dca930720"
+  },
+  {
+   "game": "401909961",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909961.json",
+   "meta_sha256": "c354f7f0d4e36a15e2027bcbc6e2eb30110f86d09f777dce0672c5cffd0c03a0"
+  },
+  {
+   "game": "401909962",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909962.json",
+   "meta_sha256": "76e0b312b725c31fbbdfc3369dd97075212300813bfc01a36b4c3ab874acfd13"
+  },
+  {
+   "game": "401909963",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909963.json",
+   "meta_sha256": "ec89762f87ff6f37b346b8691258e9165fcf0b14c8d60ff164281b501e1d4b81"
+  },
+  {
+   "game": "401909964",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909964.json",
+   "meta_sha256": "39bce510e8360d5db8ea979f0bf95df647de66f0372ca19eda7bf0a56f54c5be"
+  },
+  {
+   "game": "401909965",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909965.json",
+   "meta_sha256": "fa6cfa86f1499fa798436cf58e8b71df2e45eacd0975eac08ed240f337e8ef97"
+  },
+  {
+   "game": "401909966",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909966.json",
+   "meta_sha256": "2d978cbeabdb752d994618cead3fd77edf11ec626a4dca099ded8df3d368ec21"
+  },
+  {
+   "game": "401909967",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909967.json",
+   "meta_sha256": "a536b11afc9ac096318618d60dd3297ab966c6fc8e84d71a11ae6a5719e135ba"
+  },
+  {
+   "game": "401909968",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909968.json",
+   "meta_sha256": "3fc46141f8f8da6c9569e43422c5fdb717dacb92a5964b9e203a0bb33090b8ed"
+  },
+  {
+   "game": "401909969",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909969.json",
+   "meta_sha256": "1fd5df9be041215d9f8ccc7525c02f482201bea5b5dcd9d299ab86fb0e2a402f"
+  },
+  {
+   "game": "401909970",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909970.json",
+   "meta_sha256": "05beb51af1790c902dfb8fca8547a40c505f7bdda0b8cb51c714ee6463d9f384"
+  },
+  {
+   "game": "401909971",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909971.json",
+   "meta_sha256": "ca7c540cb2d0c9b5e8af741c7bbce6b556f543dab9cfc1d8dc967fffd954428a"
+  },
+  {
+   "game": "401909972",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909972.json",
+   "meta_sha256": "604166830c53c99fef9d3c140e53b9ffa3daff1057f6809f72a292a7ae7d743b"
+  },
+  {
+   "game": "401909973",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909973.json",
+   "meta_sha256": "00bfdd97dc325b6159e521c9b4625baf31fca8459d9281345b944fe9e22683e6"
+  },
+  {
+   "game": "401909974",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909974.json",
+   "meta_sha256": "16ce94306a98c20ed55f50c10529ef2447e6e2e213b6f5171f26cc9e1a325505"
+  },
+  {
+   "game": "401909975",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909975.json",
+   "meta_sha256": "02e4cf621dc7f955ae3716745c3307384c1fb988adeb2bd2539cf8262284b6d5"
+  },
+  {
+   "game": "401909976",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909976.json",
+   "meta_sha256": "714c2f2154cf578d4c9e177d5ac13559e753d01ddea5797e010f496648b813ba"
+  },
+  {
+   "game": "401909977",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909977.json",
+   "meta_sha256": "d262a11eb54acb1ebf9f664cbd225d08183882c8536bfa8d7764975e91fd2c08"
+  },
+  {
+   "game": "401909978",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909978.json",
+   "meta_sha256": "710f9953f1add9bb7254d3bc35555592c99b4b3907fab45b3d2da4e26f2ee88b"
+  },
+  {
+   "game": "401909979",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909979.json",
+   "meta_sha256": "5386255bb58fca3a631fd1e031b5552e4fc644939356d36413f3af2a9839ee5f"
+  },
+  {
+   "game": "401909980",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909980.json",
+   "meta_sha256": "aa555e85ed3f93054040ff038f8651a3c9bd0b5a44ab4febd7171b97b5097491"
+  },
+  {
+   "game": "401909981",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909981.json",
+   "meta_sha256": "eb53c96a9a5e634141c0b9ee2046050fabf2db8a8d5e1197bafe7975091e85cb"
+  },
+  {
+   "game": "401909982",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909982.json",
+   "meta_sha256": "3de3d02b68f5622bf67139482fa5bd9441fd301ed87dbb1f2630803b96a54791"
+  },
+  {
+   "game": "401909983",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909983.json",
+   "meta_sha256": "82e7e2665e46dc372c59e29d889c728ebfd575640f29a07fc3c312513210e808"
+  },
+  {
+   "game": "401909984",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909984.json",
+   "meta_sha256": "7209018948d3d0d4de648cdec4408efa3191078f125b17a4ab2301890851f418"
+  },
+  {
+   "game": "401909985",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909985.json",
+   "meta_sha256": "2bbf938d1784ee8fcc4f5878797924eae4ee97b28da8ef05bd309683d99dd740"
+  },
+  {
+   "game": "401909986",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909986.json",
+   "meta_sha256": "c085c12da2746af5b14ea5f73e2737180d3bb645f77800703b3ec56d2b1c54ca"
+  },
+  {
+   "game": "401909987",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909987.json",
+   "meta_sha256": "72560d7d6d1e4dfac8cdbdfd0873c1832b3f916a339554876b1b5712666957bd"
+  },
+  {
+   "game": "401909988",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909988.json",
+   "meta_sha256": "e1b6d8a4f99c735d5693028c3a99c086e2a5151c98c289ca7760447393692fe7"
+  },
+  {
+   "game": "401909989",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909989.json",
+   "meta_sha256": "717144e178b5ac18b815526ce8c92cf8afcbb1e08ac52e72cec16a85d5af4d5f"
+  },
+  {
+   "game": "401909990",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909990.json",
+   "meta_sha256": "0b33c55859928ce384c25dd31edf4f1cfb95cae28ff099df8d4162305034f923"
+  },
+  {
+   "game": "401909991",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909991.json",
+   "meta_sha256": "39d45f154d4a8816f2cb202fab66268eda95be22def4044a4b3b4ed3959a7b68"
+  },
+  {
+   "game": "401909992",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909992.json",
+   "meta_sha256": "c2c029d4ebb528fc7f3bafa7dc0c797c4f44bac3775e396de0f9d9e767fa6296"
+  },
+  {
+   "game": "401909993",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909993.json",
+   "meta_sha256": "474fed1e9a06e426c04ebd42908317d4a91f31b441ac5dd8a2c2f294c646c12a"
+  },
+  {
+   "game": "401909994",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909994.json",
+   "meta_sha256": "02c65f513e4fc93257a52d1fa23477f55f55f31d394b697ae11d4ef10c20028c"
+  },
+  {
+   "game": "401909995",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909995.json",
+   "meta_sha256": "84155665c30a4ad2f6cf7c2d79774c5b2d85eaca745124f75be3eb1eb154a852"
+  },
+  {
+   "game": "401909996",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909996.json",
+   "meta_sha256": "12f822b511def2361f68142618eeb6cfddab66a0740b59ac15f74fb3024782b7"
+  },
+  {
+   "game": "401909997",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909997.json",
+   "meta_sha256": "83d1be3cc5e4af3f53b667787bade31af6fa483c61353a1c3614f59ad1bcf99a"
+  },
+  {
+   "game": "401909998",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909998.json",
+   "meta_sha256": "5bef6a40430ea95bb71fefd3f1da3c85b5e51bafc25a15da830eb1cf24c4465c"
+  },
+  {
+   "game": "401909999",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401909999.json",
+   "meta_sha256": "158ad325eda5f4b7dc059b6b5f02745e50a38326e12f9e34699a13207087d144"
+  },
+  {
+   "game": "401910000",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910000.json",
+   "meta_sha256": "9b58678d93c0ba080386d1f9f7b27172dae5fba1cf221c32ae6033154796e9d4"
+  },
+  {
+   "game": "401910001",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910001.json",
+   "meta_sha256": "41ea5460b6e950dd5c7bbca7258ed081df423f31d13d7f8ea58aee16acb1ab98"
+  },
+  {
+   "game": "401910002",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910002.json",
+   "meta_sha256": "dcfb71f625cc9a6dd08f8e0c6d370601fb2ea64d56401371cfe323d8b09d8068"
+  },
+  {
+   "game": "401910003",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910003.json",
+   "meta_sha256": "251d10cf9313fc32904f0d0622c9613cbe2648a1543190f9d5239769f830fc7a"
+  },
+  {
+   "game": "401910004",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910004.json",
+   "meta_sha256": "cc24343668b9e6d9cf0b99f42ae4ff1ae60fa1d81ea55b8d3c81de62c326a09f"
+  },
+  {
+   "game": "401910005",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910005.json",
+   "meta_sha256": "a67616139113e118c8ea11bdb1742de687c588edee6e0d897d2ebde8f37b1aa1"
+  },
+  {
+   "game": "401910006",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910006.json",
+   "meta_sha256": "d29cb3380d6e642d713534f344eb73ba5e3447d11b0f22191f13c03193295064"
+  },
+  {
+   "game": "401910007",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910007.json",
+   "meta_sha256": "342e3c630daf35da869919718818ba255af7d0d0a6547d8a58e9bca7dc7f26e0"
+  },
+  {
+   "game": "401910008",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910008.json",
+   "meta_sha256": "0cf0412c494e12e9253523a13fd597f1e31b1780cb083a402722bd64294baa40"
+  },
+  {
+   "game": "401910009",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910009.json",
+   "meta_sha256": "dd9b15e637fa2594e81dc8b27b8f68ce546b522019b32374ab372a098b446065"
+  },
+  {
+   "game": "401910010",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910010.json",
+   "meta_sha256": "4d4ea2e3657e1d86f7f1e67b4ecb5ee1bb862bf19edc39813d29e264101772e2"
+  },
+  {
+   "game": "401910011",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910011.json",
+   "meta_sha256": "1ec2638a52ffbf99d98b81c4bc75eabf249efab57aa0d69da081965734094f24"
+  },
+  {
+   "game": "401910012",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910012.json",
+   "meta_sha256": "47c56104cc2f16abf4debdf6b07b78fbe06a0a29da78b36a160d731b1df096b7"
+  },
+  {
+   "game": "401910013",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910013.json",
+   "meta_sha256": "e805c6662a8101980499f5b023454e61a95c0f22620c33f96902ab65647c1d37"
+  },
+  {
+   "game": "401910014",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910014.json",
+   "meta_sha256": "385da5d23caba39c87e8116601e5da9b7f2f24a325cdff20286a660dbec94ce0"
+  },
+  {
+   "game": "401910015",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910015.json",
+   "meta_sha256": "c1a5941af5cf974c9fd2ccca3e6007a9a9bc5e5a3d67e5bd494ca6147977fad8"
+  },
+  {
+   "game": "401910016",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910016.json",
+   "meta_sha256": "176958419b7789bc3d2c7f0f27ed00dff77f42dc613d501f083c3c6f8dbd8df2"
+  },
+  {
+   "game": "401910017",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910017.json",
+   "meta_sha256": "f6d1c92664ba1ad0f29e7d7a9e71ab0243385073f7a7a03a6bfd8d31d0e2e3c8"
+  },
+  {
+   "game": "401910018",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910018.json",
+   "meta_sha256": "f57ccf338c53b37f0da7a8ab18e50f2039dacaff1c3e89c8c9fa14f959997615"
+  },
+  {
+   "game": "401910019",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910019.json",
+   "meta_sha256": "9a9e8d69b711f320a0cb684d96309b199065492b9dc307ba2f7c02080094cad3"
+  },
+  {
+   "game": "401910020",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910020.json",
+   "meta_sha256": "ec88c9b31f4eb2de034abc0dd46715aa5dc5e29d403c68d4cf54e1cf275cd23a"
+  },
+  {
+   "game": "401910022",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910022.json",
+   "meta_sha256": "b58b3e9dcb2503a90c35fc7411b6d4a88dd0baa42ed7a17f91b12492af829ea4"
+  },
+  {
+   "game": "401910023",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910023.json",
+   "meta_sha256": "67e31becd3fa0ab1133ef0c9c5a55597111b08133862e5268f58da8c325d4536"
+  },
+  {
+   "game": "401910024",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910024.json",
+   "meta_sha256": "77e49dd3603533084592d852f9472b0c9995012d3b2ed182ba4a1e4f5d7f24da"
+  },
+  {
+   "game": "401910025",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910025.json",
+   "meta_sha256": "e6328b6f06780054907cdf0cafd43426e5035dc7ecb9529f65a1cc6b974d7ec8"
+  },
+  {
+   "game": "401910026",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910026.json",
+   "meta_sha256": "07a2506e95780a6cd63e4606204cb0695932372cbad3e1e574e7be0ea9f1145a"
+  },
+  {
+   "game": "401910027",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910027.json",
+   "meta_sha256": "8517b3bc93e4a55a2e07299a674973b2b835f5ca7b9955b94d6d6a5be2a2ddcf"
+  },
+  {
+   "game": "401910028",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910028.json",
+   "meta_sha256": "98fc5a23b61f54f4fd04d1b9a4d2308f1f4a45d3b5dcd962a7f63f728d670d27"
+  },
+  {
+   "game": "401910029",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910029.json",
+   "meta_sha256": "8b0372fa4fd6412e67170a11db38b93e109fa16915502f1416076b3313c75a36"
+  },
+  {
+   "game": "401910030",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910030.json",
+   "meta_sha256": "8845c342262565652d2a2f87d112a68d5ea2fec3522109ee7221a33c0a1b086e"
+  },
+  {
+   "game": "401910031",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910031.json",
+   "meta_sha256": "b61846b03cc7951f1920b8b18da4ccf6c05d39f3b5ce36c0ab7958aa7e511489"
+  },
+  {
+   "game": "401910032",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910032.json",
+   "meta_sha256": "69552c17ba887b4bd2a4350431363b67dbaa4bde4fbb81f003d862118196d6ca"
+  },
+  {
+   "game": "401910033",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910033.json",
+   "meta_sha256": "bc192bd80ab6450457518a813a983d8c88ec66ef1f3b019aefe99260d318ee45"
+  },
+  {
+   "game": "401910034",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910034.json",
+   "meta_sha256": "ba979eba7f9f1b006e649383185796d18dcf09f9e76298dd6004f132dbfa8a3d"
+  },
+  {
+   "game": "401910035",
+   "meta": "data/derived/experiments/rule3_final_20261123_v1/401910035.json",
+   "meta_sha256": "5b0cd7e464f15e5ea0f23ad69043d07705c56d8aef66674a16ef5d60e86f2a6a"
+  }
+ ]
+}

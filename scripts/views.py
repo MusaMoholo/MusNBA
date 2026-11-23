@@ -20,6 +20,7 @@ from basketball_common import (APP_NAME, DERIVED, LINEUP_TIMING_POLICY, SEASON_L
                                today_et, utc_now, verified_pre_tip, write_json)
 from scripts import box_scores, master_fixtures, pbp, player_worlds  # noqa: E402
 from scripts.season_stats import period_profiles  # noqa: E402
+from scripts.player_icons import catalogue as player_icons
 
 TEAM_FIELDS = ('gp', 'w', 'l', 'home', 'away', 'conf_rec', 'last10', 'streak', 'pts', 'opp_pts', 'ortg', 'drtg', 'net',
                'pace', 'efg', 'opp_efg', 'tov_pct', 'opp_tov_pct', 'oreb_pct', 'dreb_pct', 'ftr', 'opp_ftr',
@@ -188,6 +189,9 @@ def world_lines(path: Path, gid: str, sims: int) -> dict | None:
         players = player_worlds.read_player_worlds(z, gid)
         lines, ids, side = players['lines'], players['ids'], players['side']
         per = t[gid]  # (worlds, home/away, Q1–Q4 + OT)
+    branch_file = path / 'lineups' / gid / 'worlds.json'
+    if branch_file.exists():
+        return read_json(branch_file)
     stats = list(WORLD_STATS)[:lines.shape[2]]
     result = {'worlds': int(lines.shape[0]), 'stats': stats, 'players': [str(x) for x in ids], 'side': side.astype(int).tolist(),
               'lines': base64.b64encode(np.ascontiguousarray(lines).tobytes()).decode(),
@@ -218,7 +222,7 @@ def minute_marginals(path: Path, gid: str) -> dict | None:
             'minutes_f64_le': base64.b64encode(np.ascontiguousarray(values, dtype='<f8').tobytes()).decode()}
 
 
-def advanced_world_summaries(values: dict, opponent: dict | None = None) -> dict:
+def advanced_world_summaries(values: dict, opponent: dict | None = None, weights=None) -> dict:
     """Distributions of per-world box-derived rates, conditional on a positive denominator."""
     import numpy as np
     from scripts.projection import summary
@@ -270,16 +274,22 @@ def advanced_world_summaries(values: dict, opponent: dict | None = None) -> dict
         raw = np.asarray(raw, dtype=float)
         if raw.ndim != 1 or np.isinf(raw).any():
             raise ValueError(f'invalid per-world values for {key}')
-        defined = raw[np.isfinite(raw)] * (100 if percent else 1)
-        result = {'defined': int(defined.size), 'total': int(raw.size)}
+        from scripts.world_mass import WorldMass
+        mass = WorldMass(len(raw), weights)
+        mask = np.isfinite(raw)
+        defined = raw[mask] * (100 if percent else 1)
+        result = {'defined': int(mask.sum()) if weights is None else int(weights[mask].sum()), 'total': mass.total}
         if defined.size:
+            selected = mass.subset(mask)
             scale = 1 if percent else 10
             bins = np.floor(defined * scale + 0.5).astype(np.int64)
-            ordered = np.sort(defined)
-            result.update(summary(bins, offset=True))
-            result.update({'scale': scale, 'exact_mean': round(float(defined.mean()), 3),
-                           'exact_q': [round(float(ordered[max(0, int(np.ceil(q * len(ordered))) - 1)]), 3)
-                                       for q in (0.1, 0.25, 0.5, 0.75, 0.9)]})
+            order = np.argsort(defined, kind='stable')
+            ordered = defined[order]
+            cumulative = np.cumsum(np.ones(len(order), np.int64) if weights is None else weights[mask][order])
+            result.update(selected.summary(bins, offset=True))
+            result.update({'scale': scale, 'exact_mean': round(float(selected.mean(defined)), 3),
+                           'exact_q': [round(float(ordered[np.searchsorted(cumulative * d, n * selected.total, side='left')]), 3)
+                                       for n, d in ((1,10),(1,4),(1,2),(3,4),(9,10))]})
         out[key] = result
     return out
 
@@ -298,6 +308,11 @@ def from_worlds(path: Path, gid: str, sim: dict) -> dict | None:
             return None
         lines, ids = z[f'{gid}__lines'].astype(np.int64), [str(x) for x in z[f'{gid}__ids']]
         sides = z[f'{gid}__side']
+        weights = z[f'{gid}__weights'] if f'{gid}__weights' in z else None
+    from scripts.world_mass import WorldMass
+    from scripts.forecast_output import shooting_summaries
+    mass = WorldMass(len(lines), weights)
+    summary = mass.summary
     stats = list(WORLD_STATS)[:lines.shape[2]]
     col = {k: lines[:, :, j] for j, k in enumerate(stats)}
     if 'ftm' not in col:
@@ -309,14 +324,14 @@ def from_worlds(path: Path, gid: str, sim: dict) -> dict | None:
             if str(x['id']) not in ids or not x.get('periods'):
                 continue
             i = ids.index(str(x['id']))
-            multi[str(x['id'])] = {k: round(float((tens[:, i] >= n).mean()), 5) for k, n in (('double', 2), ('triple', 3), ('quadruple', 4), ('quintuple', 5))}
-            multi[str(x['id'])]['five_by_five'] = round(float(np.all([col[k][:, i] >= 5 for k in ('pts', 'reb', 'ast', 'stl', 'blk')], axis=0).mean()), 5)
+            multi[str(x['id'])] = {k: round(float(mass.mean(tens[:, i] >= n)), 5) for k, n in (('double', 2), ('triple', 3), ('quadruple', 4), ('quintuple', 5))}
+            multi[str(x['id'])]['five_by_five'] = round(float(mass.mean(np.all([col[k][:, i] >= 5 for k in ('pts', 'reb', 'ast', 'stl', 'blk')], axis=0))), 5)
             fg = x['periods']['fg']
-            fg['advanced'] = advanced_world_summaries({k: v[:, i] for k, v in col.items()})
+            fg['advanced'] = advanced_world_summaries({k: v[:, i] for k, v in col.items()}, weights=weights)
             for k in ('fgm', 'ftm', 'oreb', 'dreb', 'fga', 'fg3a', 'fta'):
                 if k not in fg['stats'] and k in col:
                     fg['stats'][k] = summary(col[k][:, i])
-            shooting = shooting_summaries({k: v[:, i] for k, v in col.items()})
+            shooting = shooting_summaries({k: v[:, i] for k, v in col.items()}, None if weights is None else mass)
             for k, v in shooting.items():
                 if k not in fg['stats']:
                     fg['stats'][k] = v
@@ -333,7 +348,7 @@ def from_worlds(path: Path, gid: str, sim: dict) -> dict | None:
                         raise ValueError(f'player and team world points differ for {gid}, side {side}')
                     team_boxes[side]['pts'] = points[:, side]
                 for side, name in enumerate(('home', 'away')):
-                    sim[name]['advanced'] = advanced_world_summaries(team_boxes[side], team_boxes[1 - side])
+                    sim[name]['advanced'] = advanced_world_summaries(team_boxes[side], team_boxes[1 - side], weights)
     return multi
 
 
@@ -354,7 +369,13 @@ def _game_lines(path: Path, gid: str):
         if pl.exists():
             with np.load(pl) as z:
                 if f'{gid}__lines' in z.files:
-                    out = (z[f'{gid}__lines'], [str(x) for x in z[f'{gid}__ids']])
+                    lines = z[f'{gid}__lines']
+                    weights = None
+                    coupled = path / 'season_player_indices.npz'
+                    if coupled.exists():
+                        with np.load(coupled, allow_pickle=False) as layout:
+                            lines, weights = lines[layout[gid]], layout['weights']
+                    out = (lines, [str(x) for x in z[f'{gid}__ids']], weights)
         _LINES_CACHE[key] = out
     return _LINES_CACHE[key]
 
@@ -368,7 +389,7 @@ def lead_chances(path: Path, gids: list, stat: str, pids: list) -> dict:
         got = _game_lines(path, gid)
         if got is None:
             return {}
-        lines, gids_ids = got
+        lines, gids_ids, weights = got
         j = list(WORLD_STATS).index(stat)
         cols.append(lines[:, :, j].astype(float))
         ids += gids_ids
@@ -376,7 +397,8 @@ def lead_chances(path: Path, gids: list, stat: str, pids: list) -> dict:
     M = np.concatenate([c[:W] for c in cols], axis=1)
     top = M.max(1, keepdims=True)
     lead = (M == top)
-    share = (lead / lead.sum(1, keepdims=True)).mean(0)
+    from scripts.world_mass import WorldMass
+    share = WorldMass(W, weights).mean(lead / lead.sum(1, keepdims=True))
     pos = {p: i for i, p in enumerate(ids)}
     return {p: round(float(share[pos[p]]), 4) for p in pids if p in pos}
 
@@ -752,6 +774,13 @@ def lead_fan(path: Path, gid: str) -> dict | None:
         if gid not in z.files:
             return None
         per = z[gid].astype(int)  # (worlds, home/away, Q1–Q4 + OT)
+    weights = None
+    with np.load(path / 'engine_players.npz', allow_pickle=False) as players:
+        if f'{gid}__weights' in players:
+            weights = players[f'{gid}__weights']
+    if weights is not None:
+        from scripts.lineup_forecast import lead_fan as weighted_fan
+        return weighted_fan({'team_points': per}, weights)
     lead = np.cumsum(per[:, 0, :] - per[:, 1, :], axis=1)
     out = {'breaks': ['Q1', 'Half', 'Q3', 'Final'], 'q': [], 'p_lead': []}
     for k in (0, 1, 2, 4):
@@ -772,12 +801,15 @@ def scorer_duel(path: Path, gid: str, a_id: str, b_id: str) -> dict | None:
         if f'{gid}__lines' not in z.files:
             return None
         lines, ids = z[f'{gid}__lines'], [str(x) for x in z[f'{gid}__ids']]
+        weights = z[f'{gid}__weights'] if f'{gid}__weights' in z else None
+    from scripts.world_mass import WorldMass
+    mass = WorldMass(len(lines), weights)
     if a_id not in ids or b_id not in ids:
         return None
     k = list(WORLD_STATS).index('pts')
     d = lines[:, ids.index(a_id), k].astype(int) - lines[:, ids.index(b_id), k].astype(int)
-    return {'a': a_id, 'b': b_id, 'p_a': round(float((d > 0).mean()), 4), 'p_level': round(float((d == 0).mean()), 4),
-            'p_b': round(float((d < 0).mean()), 4), 'worlds': int(len(d))}
+    return {'a': a_id, 'b': b_id, 'p_a': round(float(mass.mean(d > 0)), 4), 'p_level': round(float(mass.mean(d == 0)), 4),
+            'p_b': round(float(mass.mean(d < 0)), 4), 'worlds': int(len(d))}
 
 
 def lab(serving: dict) -> dict:
@@ -880,6 +912,7 @@ def build(views_root: Path = VIEWS) -> dict:
             return None
         fg = p['sim']['periods']['fg']
         return {'snapshot': p['day'], 'kind': p['meta']['kind'], 'completed_at': p['meta'].get('completed_at'),
+                'saved_worlds': p['sim']['sims'], 'lineup_branches': 2 ** len(p['sim']['lineups']['selected_players']) if p['sim'].get('lineups') else 1,
                 'pre_tip': verified_pre_tip(p['meta'], gid),
                 'p_home': fg['home']['win'], 'p_away': fg['away']['win'],
                 'mu_home': fg['home']['pts']['mean'], 'mu_away': fg['away']['pts']['mean'],
@@ -978,17 +1011,28 @@ def build(views_root: Path = VIEWS) -> dict:
         avg = None
         marginals = None
         if p:
+            import numpy as np
             sim_ids = [x['id'] for side in ('home', 'away') for x in p['sim'][side]['players']]
             avg = averages(stats_source['players'], sim_ids)
             multi = from_worlds(snaps[p['day']]['path'], gid, p['sim'])
             wl = world_lines(snaps[p['day']]['path'], gid, p['meta'].get('sims'))
             if wl is not None:
                 write_json(api / 'game' / gid / 'worlds.json', wl)
-                if wl.get('minutes_schema') and p['meta'].get('origin') == latest_day and p['day'] == latest_day:
-                    marginals = minute_marginals(snaps[p['day']]['path'], gid)
-                    if marginals is None:
-                        raise ValueError(f'{gid}: precise minute marginals are missing')
-                    write_json(api / 'game' / gid / 'minute-marginals.json', marginals)
+                if (wl.get('minutes_schema') or wl.get('branches')) and p['meta'].get('origin') == latest_day and p['day'] == latest_day:
+                    with np.load(snaps[p['day']]['path'] / 'engine_players.npz', allow_pickle=False) as archive:
+                        precise = player_worlds.read_player_worlds(archive, gid)
+                    provenance = snaps[p['day']]['path'] / 'lineups' / gid / 'provenance.json'
+                    if provenance.exists():
+                        from scripts.lineup_minutes import encode_players
+                        source_id = read_json(provenance)['source_id']
+                        if p['sim'].get('lineups', {}).get('source_id', source_id) != source_id:
+                            raise ValueError('Lineup and precise-minute sources differ')
+                        marginals = encode_players(precise['minutes'], list(map(str, precise['ids'])), precise.get('weights'), api / 'game' / gid / 'minute-marginals', source_id)
+                    else:
+                        marginals = minute_marginals(snaps[p['day']]['path'], gid)
+                        if marginals is None:
+                            raise ValueError(f'{gid}: precise minute marginals are missing')
+                        write_json(api / 'game' / gid / 'minute-marginals.json', marginals)
         duel = None
         if M_real is not None and (p or actual):
             sides = {}
@@ -1014,8 +1058,8 @@ def build(views_root: Path = VIEWS) -> dict:
             'team_model': ({'snapshot': latest_day, 'sims': season_latest['sims'], **tm} if tm and not p else None),
             'actual': actual, 'comparison': comparison, 'comparison_as_of': as_of, 'averages': avg,
             'worlds': bool(p and (api / 'game' / gid / 'worlds.json').exists()),
-            'worlds_minutes_schema': wl.get('minutes_schema') if p and wl is not None else None,
-            'minute_marginals': marginals is not None})
+            'worlds_minutes_schema': (1 if wl.get('branches') else wl.get('minutes_schema')) if p and wl is not None else None,
+            'minute_marginals': marginals if isinstance(marginals, dict) and marginals.get('schema') == 2 else marginals is not None})
 
     for day, snap in snaps.items():
         if day > latest_day:
@@ -1038,6 +1082,7 @@ def build(views_root: Path = VIEWS) -> dict:
         write_json(api / 'standings' / f'{day}.json', {
             'date': day, 'kind': snap['meta']['kind'], 'generated': snap['meta']['generated'],
             'model': snap['meta']['model'], 'sims': season['sims'], 'notes': season['notes'],
+            **({'probability_mass': season['probability_mass']} if 'probability_mass' in season else {}),
             'season_model': ({'id': season['model'], 'kind': season['pathway'].get('kind'), 'label': season['pathway'].get('label'),
                               'as_of': season.get('as_of'), 'engine_games': len(season.get('engine_games', []))}
                              if season.get('pathway') else {'id': season['model'], 'kind': 'placeholder', 'label': snap['meta']['model'].get('label')}),
@@ -1158,6 +1203,8 @@ def build(views_root: Path = VIEWS) -> dict:
         'snapshots': snapshot_rows, 'first_date': slate_dates[0], 'last_date': slate_dates[-1],
         'dates': {d: len(by_date.get(d, [])) for d in slate_dates},
         'teams': teams, 'model': latest['meta']['model'],
+        'player_icons': player_icons(),
+        'required_capabilities': ['player-icons-v1'] + (['minute-cdf-player-v2', 'lineup-forecast-v1'] if any(p['sim'].get('lineups') for p in projections.values()) else []),
         'data': {'finals': len(finals), 'last_final': max((r['date_et'] for r in finals), default=None),
                  'games': len(master), 'collected_run': registry and read_json(DERIVED / 'players.json')['run']}})
 

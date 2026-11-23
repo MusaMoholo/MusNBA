@@ -1,0 +1,13 @@
+{
+ "kind": "offline player icon collection; no model inputs changed",
+ "population": 2,
+ "added": 2,
+ "reused": 0,
+ "missing": 0,
+ "requests": 2,
+ "elapsed_seconds": 0.5447035420074826,
+ "manifest_sha256": "346a1371ea6ae0c918630a7f94216297a8a5316f3a678c1e88f33fbc25afb5d7",
+ "retained_icons": 2,
+ "bytes": 25605,
+ "source_sha256": "98e10c84733256fbaf59998deba27c45dba56a3eaf1d3f84bbfdf80e38751377"
+}

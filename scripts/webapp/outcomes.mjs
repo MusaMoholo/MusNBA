@@ -3,11 +3,29 @@
 // selected worlds. Nothing is simulated or fitted here: the app only slices the engine's own worlds.
 import {api, esc, pct, team} from './ui.mjs';
 import {decodeMinuteCdfs} from './precise-minutes.mjs';
+import {branchWorldSource} from './lineup-worlds.mjs';
 import {correlation as weightedCorrelation, distribution as weightedDistribution, grid as weightedGrid,
   gridEdges, selectedMass, weightedMean, weightedShare} from './weighted-worlds.mjs';
 
 const cache = new Map();
 const marginalCache = new Map();
+const lineups = new Map();
+export async function lineupData(gid, descriptor) {
+  let saved = lineups.get(gid);
+  if (!saved || saved.raw.source_id !== descriptor.source_id) {
+    const raw = await api(`game/${encodeURIComponent(gid)}/worlds`);
+    if (raw.schema !== 1 || raw.game !== gid || raw.source_id !== descriptor.source_id
+        || JSON.stringify(raw.selected_players) !== JSON.stringify(descriptor.selected_players)) throw new Error('Lineup source differs from this forecast');
+    saved = {raw, source: branchWorldSource(raw), choices: {}};
+    lineups.set(gid, saved);
+  }
+  return saved;
+}
+export function chooseLineup(gid, pid, choice) {
+  const saved = lineups.get(gid);
+  if (!saved || !saved.source.selected.some(p => p.player_id === pid) || ![null, true, false].includes(choice)) throw new Error('Invalid lineup choice');
+  if (choice == null) delete saved.choices[pid]; else saved.choices[pid] = choice;
+}
 const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
 
 // Owner (20 Nov): makes and the main stats (no combos or attempts); OREB/DREB where the stored worlds carry them
@@ -31,16 +49,27 @@ export const isFlag = v => FLAGS.has(v);
 export async function load(gid) {
   if (cache.has(gid)) return cache.get(gid);
   const raw = await api(`game/${encodeURIComponent(gid)}/worlds`);
+  if (raw.branches) {
+    const saved = await lineupData(gid, raw);
+    return branchWorldData(saved.source, saved.choices);
+  }
   const result = worldData(raw);
   cache.set(gid, result);
   return result;
 }
 
-export async function loadMinuteMarginals(gid) {
-  if (marginalCache.has(gid)) return marginalCache.get(gid);
-  const raw = await api(`game/${encodeURIComponent(gid)}/minute-marginals`);
+export async function loadMinuteMarginals(gid, pid = null, contract = true) {
+  const split = contract && typeof contract === 'object';
+  if (split && (contract.schema !== 2 || contract.scope !== 'player' || !/^[a-f0-9]{64}$/.test(contract.source_id)
+      || !Array.isArray(contract.players) || !contract.players.includes(pid))) throw new Error('Invalid player minute contract');
+  const key = split ? `${gid}|${contract.source_id}|${pid}` : gid;
+  if (marginalCache.has(key)) return marginalCache.get(key);
+  const raw = await api(`game/${encodeURIComponent(gid)}/minute-marginals${split ? '/' + encodeURIComponent(pid) : ''}`);
+  if (split && (raw.source_id !== contract.source_id || raw.worlds !== contract.worlds || raw.probability_mass !== contract.probability_mass
+      || raw.players?.length !== 1 || raw.players[0] !== pid)) throw new Error('Player minute source differs from the loaded game');
   const result = minuteMarginalData(raw);
-  marginalCache.set(gid, result);
+  if (split && marginalCache.size >= 6) marginalCache.delete(marginalCache.keys().next().value);
+  marginalCache.set(key, result);
   return result;
 }
 

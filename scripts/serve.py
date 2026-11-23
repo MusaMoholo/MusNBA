@@ -21,9 +21,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 from basketball_common import LOGOS, VIEWS, WEB  # noqa: E402
+from scripts.player_icons import ICONS
 
 API_PATH = re.compile(r'^/api/([a-z0-9_-]+(?:/[A-Za-z0-9_.-]+)*)$')
 LOGO_PATH = re.compile(r'^/logos/(\d+(?:-dark)?)\.png$')
+PLAYER_ICON_PATH = re.compile(r'^/player-icons/(\d+)\.png$')
 WEB_FILES = {'/': 'index.html', '/index.html': 'index.html', '/manifest.webmanifest': 'manifest.webmanifest',
              '/sw.js': 'sw.js', '/icon.svg': 'icon.svg', '/icon-192.png': 'icon-192.png',
              '/icon-512.png': 'icon-512.png', '/apple-touch-icon.png': 'apple-touch-icon.png'}
@@ -74,6 +76,11 @@ class Handler(BaseHTTPRequestHandler):
             if not target.is_file():
                 return self.error_json(404, 'Logo not collected')
             return self.send(200, target.read_bytes(), 'image/png', 'max-age=86400')
+        if (m := PLAYER_ICON_PATH.match(path)):
+            target = ICONS / (m.group(1) + '.png')
+            if not target.is_file():
+                return self.error_json(404, 'Player photo not retained')
+            return self.send(200, target.read_bytes(), 'image/png', 'no-cache')
         name = WEB_FILES.get(path)
         if name is None and re.fullmatch(r'/assets/[a-z0-9-]+\.mjs', path):
             name = path.removeprefix('/assets/')

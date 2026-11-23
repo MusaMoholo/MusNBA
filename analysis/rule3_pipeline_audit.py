@@ -32,8 +32,9 @@ def audit_pair(task):
         if audit.capture_digest(data) != output['world_sha256']:
             raise ValueError('canonical captured worlds differ')
         compatible = {**data, 'trace_phase': data['trace_phase'].astype(np.int16)}
-        result = audit.audit_worlds(compatible, foul_penalty=True) if label == 'candidate' else audit.accounting(data)
-        result.update(audit.team_fouls(data, label == 'candidate'))
+        corrected = label == 'candidate' or entry.get('control_corrected', False)
+        result = audit.audit_worlds(compatible, foul_penalty=True) if corrected else audit.accounting(data)
+        result.update(audit.team_fouls(data, corrected))
         audit.audit_metrics(data, output['result'])
         reports.append({'game': entry['game'], 'label': label, **result})
         captures[output['capture']] = output['sha256']

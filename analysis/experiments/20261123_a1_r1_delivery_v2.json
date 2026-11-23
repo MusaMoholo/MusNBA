@@ -1,0 +1,233 @@
+{
+ "kind": "qualified r1 live/PWA delivery; independent fitter remains experimental",
+ "engine": "engine-v1.3-r1",
+ "nodes": "v1.3",
+ "season_engine": "team-pathway-v1",
+ "forecast": {
+  "meta": {
+   "schema": 1,
+   "season": "2026-27",
+   "slate_date": "2026-11-23",
+   "origin": "2026-11-23",
+   "cutoff": "2026-11-22",
+   "kind": "prospective",
+   "generated": "2026-11-23T16:43:38Z",
+   "started_at": "2026-11-23T16:19:12Z",
+   "completed_at": "2026-11-23T16:43:38Z",
+   "model": {
+    "id": "engine-v1.3-r1",
+    "kind": "engine",
+    "version": "v1.3-r1",
+    "models": "v1.3",
+    "rotation": "targets",
+    "sims": 10000,
+    "pool": 0,
+    "label": "Possession engine v1.3 — the default projection and the floor every change must beat (D22): each game simulated possession by possession; defence now enters every shot (D30: each shooter's likely defenders by size and position, their shooting allowed by zone, help at the rim; backtest: the opponent's defence expressed at 41% of its real effect, up from 26%; margin CRPS 9.67 → 9.37); minutes from healthy roles shared to exactly 240 per team by priority, with a return ramp and per-world ranges (D29: stars' minutes +6.5% → −1%). Starters are our own projection (D33). 10,000 simulated games per game (D36). Known gaps: team differences compressed — real NBA matchups tested and not promoted (D37) — outcomes too tightly spread, minutes do not yet react to the score (FINDINGS §3o, §3s–§3w). Rule revision r1: legal foul-out replacements and NBA roster-exhaustion penalties; unchanged v1.3 fitted nodes.",
+    "foul_policy": "nba-rule3-v1",
+    "season_sims": 10000
+   },
+   "sims": 10000,
+   "season_sims": 80337,
+   "saved_worlds": {
+    "401910040": 10000,
+    "401910039": 10000,
+    "401910041": 10000,
+    "401910043": 10000,
+    "401910037": 20000,
+    "401910044": 10000,
+    "401910042": 20000,
+    "401910036": 20000,
+    "401910038": 20000,
+    "401910045": 20000
+   },
+   "season_model": {
+    "id": "team-pathway-v1",
+    "as_of": "2026-11-23",
+    "label": "Team pathway v1 — per-world offensive and defensive ratings, updated after every simulated game; spread calibrated walk-forward on 2022-26 (M12 first cut: slightly wide in November)"
+   },
+   "seeds": "sha256(model|slate date|game) per game; (season model|as-of date|season)",
+   "games": [
+    "401910036",
+    "401910037",
+    "401910038",
+    "401910039",
+    "401910040",
+    "401910041",
+    "401910042",
+    "401910043",
+    "401910044",
+    "401910045"
+   ],
+   "pre_tip": {
+    "401910036": true,
+    "401910037": true,
+    "401910038": true,
+    "401910039": true,
+    "401910040": true,
+    "401910041": true,
+    "401910042": true,
+    "401910043": true,
+    "401910044": true,
+    "401910045": true
+   },
+   "inputs": {
+    "master_sha256": "3fecec43c1d4be1ecd3fc30930929cc994c8a96adb8fb2c09182959f5560a569",
+    "player_games_sha256": "f49d0dc3ad5de9cfadfbc22668585f50b8e86e02c72dd97cbc63345f075c13f1",
+    "team_games_sha256": "fdca602cd63062b4135a4540cddb30b0fa3d17e966854cdaee3b4dbf609f8c62",
+    "player_periods_sha256": "2f0935f9e18c440dfc8549f2404da9e842f0b073a9ee07b870dcdd4c7b69185a",
+    "registry_run": "20261123T161604Z",
+    "completed_games_used": 248,
+    "engine_inputs_sha256": {
+     "latest": "eb61e684db9af45c4612ab4226016b184521187c4a577fd697aa1afc6ee965a1",
+     "team_latest": "a256554c29a0d0ef54704c87d063c33d18b25b0f77d564a61c93632d26d18dda",
+     "stints": "97e8e2c26eb00fe58fb516fe281d0b916b2c4b39cee50bced5a291b36fb20328",
+     "on_court": "40ba37c7ee747d52e6415a78bc5f74af4bd3535fcacad644509e1bf55188db28",
+     "models": "a2e1dbf7b5fffba8f01a3a5aed687f38e53187567fd492dc38d38d5535b03cdf"
+    }
+   },
+   "notes": [],
+   "seconds": 1465.33
+  },
+  "games": 10,
+  "complete_10k_batches": 15,
+  "worlds": 150000,
+  "snapshot_seconds": 1465.33,
+  "input_rebuild_seconds": 156.3
+ },
+ "pages": {
+  "commit": "31317f88cec02d4ee61fe3a0cae3c4eb9bc3eb49",
+  "cache": "318fb2858f9d58651de0",
+  "data_free": true
+ },
+ "checks": {
+  "hosted_laptop_preflight": {
+   "log": "/tmp/musnba_a1_hosted_laptop_20261123_v1.log",
+   "sha256": "28e48fce8148a08af0ed0c4331357bc66ff2f4c0763ea225c64a9a21010b775f",
+   "expected": "29/29 passed"
+  },
+  "hosted_phone_preflight": {
+   "log": "/tmp/musnba_a1_hosted_phone_20261123_v1.log",
+   "sha256": "65e5fb24a929dbc91f68a89b1c772156ff091035d963fdff796d391a6018a157",
+   "expected": "27/27 passed"
+  },
+  "hosted_phone_fresh": {
+   "log": "/tmp/musnba_a1_delivery_fresh_phone_20261123_v3.log",
+   "sha256": "d66a27bb8fd728e278ddb9f3411147d9f8bcb41c3eb9cf17eea074784fd89607",
+   "expected": "27/27 passed"
+  },
+  "installed_upgrade_and_replacement": {
+   "log": "/tmp/musnba_a1_installed_upgrade_20261123_v2.log",
+   "sha256": "948e2302353546cbfbfdb99dad344438b61822c41e924e99337acca57f94f5be",
+   "expected": "32/32 passed"
+  },
+  "focused": {
+   "log": "/tmp/musnba_a1_delivery_focused_20261123_v2.log",
+   "sha256": "7f90f53f06e4a53e1bcade702059a5c6709ba5c05707ed63be882c4aae44002e",
+   "expected": "Ran 58 tests"
+  },
+  "nightly": {
+   "log": "/tmp/musnba_a1_qualified_r1_delivery_nightly_20261123_v2.log",
+   "sha256": "1d086fdae52a8bb72afc1b192a01c239e4921a14ba994df32860a38cab4457dd",
+   "expected": "phone bundle:"
+  },
+  "smoke": {
+   "log": "/tmp/musnba_a1_r1_delivery_smoke_20261123_v2.log",
+   "sha256": "ad4c7aa64792a94476ff2cb28d49445d92a5b05f41d36c8f4fae1abbbcf731a0",
+   "expected": "108/108",
+   "exit": 0
+  },
+  "fault": {
+   "log": "/tmp/musnba_a1_r1_delivery_fault_20261123_v2.log",
+   "sha256": "9f8991c5d271563030b72094eb8e95f23f9122b2d238700ab10491e20f580696",
+   "expected": "86/108",
+   "exit": 1
+  },
+  "hosted_laptop_fresh": {
+   "log": "/tmp/musnba_a1_delivery_fresh_laptop_20261123_v2.log",
+   "sha256": "21684a3137805dbd020815a3874eb8745c3169ae741fe32498a77162065ee28b",
+   "expected": "29/29 passed"
+  }
+ },
+ "bundles": {
+  "MusNBA-laptop.musnba.gz": {
+   "header": {
+    "format": "musnba",
+    "version": 2,
+    "capabilities": [
+     "lineup-forecast-v1",
+     "minute-cdf-player-v2",
+     "player-icons-v1"
+    ],
+    "created": "2026-11-23T16:44:47+00:00",
+    "latest": "2026-11-23",
+    "snapshots": [
+     "2026-11-12",
+     "2026-11-13",
+     "2026-11-14",
+     "2026-11-15",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22",
+     "2026-11-23"
+    ],
+    "profile": "laptop"
+   },
+   "bytes": 213252073,
+   "sha256": "1fd7525f642fa4ee478d15466272baa81dd25dc6be872498b78e86eeef2b61bd",
+   "records": 2557
+  },
+  "MusNBA.musnba.gz": {
+   "header": {
+    "format": "musnba",
+    "version": 2,
+    "capabilities": [
+     "lineup-forecast-v1",
+     "minute-cdf-player-v2",
+     "player-icons-v1"
+    ],
+    "created": "2026-11-23T16:45:29+00:00",
+    "latest": "2026-11-23",
+    "snapshots": [
+     "2026-11-12",
+     "2026-11-13",
+     "2026-11-14",
+     "2026-11-15",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22",
+     "2026-11-23"
+    ],
+    "profile": "phone"
+   },
+   "bytes": 107474233,
+   "sha256": "920d726d94bd0e5a64241332aef96b2808996a41ad2e5188e48e13f14f81b8bb",
+   "records": 2827
+  }
+ },
+ "accounting": {
+  "histograms": 53732,
+  "paths": 80337,
+  "mass": 100000,
+  "every_world_atom_exact": true,
+  "live_report": "analysis/experiments/20261123_a1_r1_delivery_live_accounting_v2.json",
+  "season_report": "analysis/experiments/20261123_a1_r1_delivery_season_audit_v2.json"
+ },
+ "browser_preflight": "analysis/experiments/20261123_a1_full_preflight_v1.json",
+ "limits": [
+  "Manual device refresh/import and real-device memory acceptance remain owner actions.",
+  "Legacy D29 batch-fit coupling retained pending the frozen v3 independent-fit confirmation.",
+  "Availability probabilities/dependence remain assumptions; finite exact-marginal season coupling is not certified independent/calibrated."
+ ],
+ "evidence_sha256": {
+  "analysis/experiments/20261123_a1_r1_delivery_live_accounting_v2.json": "74a44ac0cc8a8f0877a4f534dea82b09c514ade04713860aa14be1e1f8a942f3",
+  "analysis/experiments/20261123_a1_r1_delivery_season_audit_v2.json": "4b64fe5bed8e11e1c88c8a0bcbf50bda0a2416556e5a0a13dc60f5916b1df283"
+ }
+}

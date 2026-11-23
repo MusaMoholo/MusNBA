@@ -1,0 +1,17 @@
+{
+ "kind": "D56 worker count comparison; fixed complete 10k candidate game",
+ "games": [
+  "401910038"
+ ],
+ "chunk_worlds": 1000,
+ "worlds_per_game": 10000,
+ "seconds_8": 134.0630346250109,
+ "seconds_10": 74.4414929170016,
+ "elapsed_reduction": 0.4447276751177336,
+ "all_chunks_and_merged_arrays_identical": true,
+ "evidence": {
+  "analysis/experiments/20261123_world_chunks_8x1000_v1.json": "e1c8f7b67218f18cd70032e3e57b5aace8ea297ccfe27ad9f059c28466ec1c1c",
+  "analysis/experiments/20261123_world_chunks_10x1000_v1.json": "2c1ccc11e8f9fc3b49cd738a6c2d720235b727dcda3e7cecd364e3d8411418ba"
+ },
+ "limitation": "One current-slate ordinary game, unpromoted independent-fit candidate. This is not a whole-slate benchmark or a real-device/model-accuracy result."
+}

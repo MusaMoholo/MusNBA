@@ -1,0 +1,123 @@
+{
+ "kind": "independent complete live world/branch accounting",
+ "directory": "data/derived/live_runs/2026-11-23-1795440988912882000",
+ "origin": "2026-11-23",
+ "game_ids": [
+  "401910036",
+  "401910037",
+  "401910038",
+  "401910039",
+  "401910040",
+  "401910041",
+  "401910042",
+  "401910043",
+  "401910044",
+  "401910045"
+ ],
+ "audit_source_sha256": "3b8123acadf898614fdc649a9540b6d4d8dccecf147085063b38475d985aa7a3",
+ "master_sha256": "3fecec43c1d4be1ecd3fc30930929cc994c8a96adb8fb2c09182959f5560a569",
+ "games": [
+  {
+   "game": "401910036",
+   "branches": 2,
+   "worlds": 20000,
+   "cases": 3,
+   "independent_histograms": 7402,
+   "status": "pass",
+   "audit_source_sha256": "3b8123acadf898614fdc649a9540b6d4d8dccecf147085063b38475d985aa7a3",
+   "game_sha256": "87fe322e6ef61b734667b48d05cc8cdefe32d3b98ec73125603626309e193d51"
+  },
+  {
+   "game": "401910037",
+   "branches": 2,
+   "worlds": 20000,
+   "cases": 3,
+   "independent_histograms": 7678,
+   "status": "pass",
+   "audit_source_sha256": "3b8123acadf898614fdc649a9540b6d4d8dccecf147085063b38475d985aa7a3",
+   "game_sha256": "5515cce3897c09d75478fa6f7f8e462276cd19b6316803b7603ee2b8cdd5ed7d"
+  },
+  {
+   "game": "401910038",
+   "branches": 1,
+   "worlds": 10000,
+   "cases": 1,
+   "independent_histograms": 2038,
+   "status": "pass",
+   "audit_source_sha256": "3b8123acadf898614fdc649a9540b6d4d8dccecf147085063b38475d985aa7a3",
+   "game_sha256": "1153929d5c78cc27c62423c5bf5a4f0b1e2703f2b300092eb891f8f1c9a801d9"
+  },
+  {
+   "game": "401910039",
+   "branches": 1,
+   "worlds": 10000,
+   "cases": 1,
+   "independent_histograms": 2866,
+   "status": "pass",
+   "audit_source_sha256": "3b8123acadf898614fdc649a9540b6d4d8dccecf147085063b38475d985aa7a3",
+   "game_sha256": "5de0c06b44ce4e3281ed7b55a26a41d9f40fd82026bcdb59c8df47c59a4446e4"
+  },
+  {
+   "game": "401910040",
+   "branches": 1,
+   "worlds": 10000,
+   "cases": 1,
+   "independent_histograms": 2866,
+   "status": "pass",
+   "audit_source_sha256": "3b8123acadf898614fdc649a9540b6d4d8dccecf147085063b38475d985aa7a3",
+   "game_sha256": "2fb0c0c7fcd69f783bda9b2856a4339a764996adf068744b75d7bf8ce2e26c58"
+  },
+  {
+   "game": "401910041",
+   "branches": 1,
+   "worlds": 10000,
+   "cases": 1,
+   "independent_histograms": 2774,
+   "status": "pass",
+   "audit_source_sha256": "3b8123acadf898614fdc649a9540b6d4d8dccecf147085063b38475d985aa7a3",
+   "game_sha256": "eed5a86901dcc8c53757a5e173ac902c878920b31d46cb573ec48f20dc1aecb5"
+  },
+  {
+   "game": "401910042",
+   "branches": 2,
+   "worlds": 20000,
+   "cases": 3,
+   "independent_histograms": 8230,
+   "status": "pass",
+   "audit_source_sha256": "3b8123acadf898614fdc649a9540b6d4d8dccecf147085063b38475d985aa7a3",
+   "game_sha256": "ecfb1c76b3e9f2dc49abbd0d1183c67f1852d52023a850a51f84e2e38b3e7990"
+  },
+  {
+   "game": "401910043",
+   "branches": 1,
+   "worlds": 10000,
+   "cases": 1,
+   "independent_histograms": 3142,
+   "status": "pass",
+   "audit_source_sha256": "3b8123acadf898614fdc649a9540b6d4d8dccecf147085063b38475d985aa7a3",
+   "game_sha256": "7eff3ec17c8755d4ff099a763f946bc375e34aed7b6c383dd24cb4bb7105ff58"
+  },
+  {
+   "game": "401910044",
+   "branches": 1,
+   "worlds": 10000,
+   "cases": 1,
+   "independent_histograms": 2958,
+   "status": "pass",
+   "audit_source_sha256": "3b8123acadf898614fdc649a9540b6d4d8dccecf147085063b38475d985aa7a3",
+   "game_sha256": "0f5be9d5368397de570e4851ccd526834dbf31178ce1d5fcda1ae177fe32a247"
+  },
+  {
+   "game": "401910045",
+   "branches": 2,
+   "worlds": 20000,
+   "cases": 3,
+   "independent_histograms": 7954,
+   "status": "pass",
+   "audit_source_sha256": "3b8123acadf898614fdc649a9540b6d4d8dccecf147085063b38475d985aa7a3",
+   "game_sha256": "c0ee08942085ca3f0ef885a261632a618992609d103a25abdb42ce678aa6fe22"
+  }
+ ],
+ "histograms_checked": 47908,
+ "status": "pass"
+}

@@ -65,12 +65,13 @@ def couple(games: dict[str, list[tuple[np.ndarray, Fraction]]], seed: int,
         raise ValueError('season interval weights do not partition the unit interval')
     if len(numerators) > max_paths:
         raise ValueError(f'weighted season needs {len(numerators)} paths, exceeding limit {max_paths}')
-    coupled = {}
+    coupled, coupled_indices = {}, {}
     for game, (worlds, permutation, ends, offset) in layouts.items():
         positions = (edges[:-1] - offset) % denominator
         indices = permutation[np.searchsorted(ends, positions, side='right')]
         coupled[game] = worlds[indices]
-    return {'numerators': numerators, 'denominator': denominator, 'games': coupled}
+        coupled_indices[game] = indices
+    return {'numerators': numerators, 'denominator': denominator, 'games': coupled, 'indices': coupled_indices}
 
 
 def from_reports(paths: list[Path]) -> tuple[dict, list[dict], str]:

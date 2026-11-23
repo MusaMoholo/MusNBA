@@ -95,14 +95,6 @@ assignment fit cannot be reused for F1–F3; corrected fold inputs need dated fi
   player-minute error **1.78e−15**. Stop/resume canonical arrays match uninterrupted execution exactly.
   No exhaustion exception occurred in these games; synthetic fixtures cover it. These are correctness checks,
   not population accuracy evidence. Reports `rule3_{pilot,resume}_20261123_v1_audit.json` in experiments.
-- **Fresh Rule 3 confirmation:** 200 previously excluded F4 games, **4,280 scored player-games** (five unknown
-  roles; four additional simulated players lack scored box labels), 1,000 worlds/arm. All **44 core v2 bounds**
-  established. Pooled MIN CRPS Δ **−0.004352 [−0.007927,−0.001058]**; PTS **+0.001703 [−0.001827,+0.005238]**.
-  Q3-total coverage is imprecise (harm CI −0.029234…+0.031471), not demonstrated harm. Independent audit:
-  **200k candidate worlds, 114,109,290 legal fives, 39 exhaustion penalties**, maximum replayed minute error
-  **3.55e−15**. Additional three 10k stress pairs audit **17,255,568** legal fives; separate stream's 30 games
-  establish **34/34 supported** core bounds (ten star bounds unsupported). Formal final pending; no promotion.
-  Reports `rule3_{confirmation,stress,stream}_20261123_v1_{compare,compare_gate,audit}.json` (stress audit only).
 - **23 Nov prior-roster readiness census:** on the fixed 800 F1–F4 games, inferred source rosters cover
   795 and required starter pools are supported in **783/800** (199/200/184/200 by fold). **371/28,530**
   candidates lack a prior profile/position; 19 required-pool positions affect 12 games, plus five missing
@@ -113,35 +105,49 @@ assignment fit cannot be reused for F1–F3; corrected fold inputs need dated fi
 - **Legal-five defect:** fixed F4 game 401810327, 32 worlds/branch, synthetic uncertainty/actual participants:
   original run had disqualified fives in **14/32 plays and 16/32 sits** worlds; isolated repair reconciled
   **16,130/16,336** fives. This is one diagnostic, not a population rate or promotion.
-- **Research scale/accounting:** three prospective games produced **80k branch worlds** with no post-foul
-  eligible roster below nine. Exact Expected/browser arithmetic and two-game branch season coupling were audited.
-  The season prototype used **122,428 weighted paths / denominator 160k**, 17 near-term games, 959 total games;
-  only two games had branches, so it is not full integration or validated dependence.
-  Today's ten-game planning-only probe needs **14** batches; repeated accepted scores give **84,212** exact-marginal
-  weighted paths, pathway **4.96s** (10k unweighted **0.40s**) under concurrent load. Not new branch forecasts;
-  `20261123_a1_season_delivery_probe_v1.json`. A retained 40k-world/30-player codec probe passes **3,780** weighted
-  minute thresholds but creates **86.1 MB JSON / 29.1 MB gzip**; split/compress before delivery, no phone acceptance.
-  `20261123_a1_minute_cdf_probe_v1.json`.
+- **Qualified Rule 3 (D51):** fresh 200 F4 pairs establish **44/44 core bounds**; independent stream
+  establishes 34/34 supported bounds (ten star bounds unsupported). All three 10k stress pairs reconcile.
+  Frozen final: **246 games / 5,492 scored player-games**, all **44/44** core bounds; Q3-margin coverage
+  remains imprecise, no demonstrated harm. Independent audit **142,218,382 legal fives / 455 exhaustion
+  penalties**, maximum replayed minute error 3.56e−15. Unchanged fitted nodes; no availability-skill claim.
+  Reports `rule3_{confirmation,final}_20261123_v1{,_compare,_compare_gate,_audit}.json` in experiments; r1 PWA delivery is complete (HANDOFF).
+- **Mixture/storage accounting:** latest23Nov r1 nightly:10games/15×10k batches,80,337 weighted
+  season paths/mass100k, every atom exact,53,732 histogram checks. Max cross-game correlation.02001
+  versus32 independent references.00876–.01369: descriptive benchmark, not a calibrated coupling-null
+  test or validated dependence model. Reports `20261123_a1_r1_delivery_{live_accounting,season_audit}_v2.json`.
+  Earlier14-batch generation/evidence retained. Precise-minute codec:3,780 exact threshold checks;
+  per-player byte shuffling reduces gzip29.1→18.2MB, maxrecord4.01MB
+  (`20261123_a1_minute_cdf_probe_v{1,2}.json`). Not real-device acceptance.
 - **Representative gap:** fixed 200-game F4 oracle-roster screen had **0/2,000** typed exhaustion attempts;
   five draws/branch and known participants do not estimate actual pre-game risk. Earlier-fold screens are also
   conditional and sparse. Dated development injury-status calibration remains unavailable.
-- **Actual retry stress:** one selected synthetic six-player F4 roster produced **10k accepted worlds** after
-  **2,330 rejections**, including 1,893 failed first attempts. Against matched penalty continuations, total
-  Δ **−1.083 [−1.297,−0.873]** and player 4431714 minutes Δ **−0.591 [−0.663,−0.520]**. These unadjusted
-  paired-slot 95% intervals show distribution changes under one continuation assumption; not real-world bias,
-  a population failure rate or an accuracy test. Clean-stop resume reproduced; hard-interrupted batches fail closed.
+- **Retry stress:** one artificial six-player F4 roster needed **2,330 rejections** for 10k accepted worlds.
+  Matched penalty continuations have different scoring/minute distributions: a selection effect under one
+  assumption, not measured real-world bias or a population failure rate. Clean-stop resume reproduced;
+  hard-interrupted batches fail closed. Full counts/effects:
   [Independent audit](analysis/experiments/20261123_a1_retry_scale_full_v1_audit.json).
-- **Latest vector penalty screen:** 200 fixed F4 games × 1,000 worlds, actual-participant oracle rosters:
-  MIN CRPS Δ **−0.001262 [−0.003540,+0.001033]**; **67/69** non-inferiority bounds, Q3/Q4 margin coverage
-  inconclusive. PTS Δ **+0.000691 [−0.002957,+0.004274]**, margin Δ **−0.041181 [−0.093283,+0.010238]**.
-  Unadjusted 95% game-cluster intervals; primary screen failed, no multi-fold/final promotion. Independent
-  accounting checked **98,276,074** fives, **50** technicals and **21,730** player means/CRPS values.
+- **Historical vector penalty screen:** 200 F4 games × 1k, oracle rosters; **67/69** bounds, Q3/Q4 coverage
+  inconclusive, primary screen failed. No multi-fold/final promotion. Independent accounting passed.
   [Gate](analysis/experiments/20261123_a1_vector_penalty_f4_200_v1_gate.json),
   [audit](analysis/experiments/20261123_a1_vector_penalty_f4_200_v1_audit.json). Do not rerun unchanged.
-- **Worker benchmark:** fixed ten-game/1k candidate took **204.265s at four / 138.004s at eight** single-thread
-  workers (32.4% shorter), identical outputs; summed worker peak RSS **5.80/11.72 GB**, excluding parent/OS.
-  Full 200-game run at eight: **1,756.325s**, summed worker peaks **13.39 GB**. Spot zero swap activity is
-  not continuous memory monitoring or proof eight is globally optimal.
+- **D56 independence/performance:** legacy D29 chooses one fit iteration from batch-maximum error;
+  another world can affect retained rotations. No histogram steps were observed. Canonical row-local
+  correction matches separate one-world fits/regrouping; three preparation checks pass. One10k game/1k
+  chunks took74.441s at10 versus134.063s at8 workers, identical arrays; repeat72.381s. Queue probe
+  (one ordinary/one branched,1k each) passes9,440 histogram checks across worker counts. Reports
+  `20261123_world_{chunk_workers_compare,queue_workers_compare}_v1.json`; candidate remains off.
+  Development200 F4 pairs:44/44 core,25/25 coverage; MIN/PTS CRPS∆−.02876/−.00854. Stream30:
+  28 established/six imprecise/ten unsupported. Stress3×10k:34,512,482 independently checked fives.
+  Protected246:42/44, all27 proper scores; unresolved star MIN/PTS cohort-bias increases+.34253min
+  [+.02442,+.44989]/+.24087PTS[−.25976,+.31726], margins.30. No demonstrated material harm;
+  one imprecise star-minute coverage diagnostic. Audit284,432,368 legal fives. Preserved reports
+  `independent_rotation_{f4,stream,stress,final}_20261123_v1*`; protected score never repeated.
+- **D57 gate sanity:** independent complete-game reconstruction reproduces both protected bias estimates
+  and10k-bootstrap intervals to1e−12. A labelled synthetic example improves every individual's error
+  while breaching the cohort-mean bias margin through reduced cancellation. Arithmetic is correct; the
+  universal veto conflicts with individual accuracy. A/A v2 establishes43/44, a precision warning.
+  [Audit](analysis/experiments/20261123_independent_rotation_gate_sanity_v1.json);
+  [v3 policy](docs/protocols/promotion_v3_20261123.md) requires fresh unseen confirmation, not automatic release.
 
 ## 8. A2 form evidence
 
@@ -164,7 +170,7 @@ Shared-shooting report: `analysis/experiments/20261123_a2_shared_shooting_v1.jso
 Fresh-world report: `analysis/experiments/20261123_a2_world_diagnostics_v1.json`; captures pass independent accounting.
 All reported intervals are exploratory 95%; no protected final outcomes were used.
 
-## 9. Latest storage/delivery facts
+## 9. Legacy v1.3 storage/delivery facts
 
 23 Nov slate, **10 games × 10k worlds**: independently checked **14.7M** float64 minute values,
 **20.58M** phone marginal values and **200k** team scores; maximum team-quarter minute error **4.27e−14**,

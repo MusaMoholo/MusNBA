@@ -55,7 +55,7 @@ Estimate durations only from measured logs, naming the population/rate.
 ## 4. Non-negotiable safeguards
 
 - Use `.venv/bin/python`. Existing dependencies: NumPy, pandas, pyarrow, LightGBM; Node for browser checks.
-- **Accepted floor:** possession engine v1.3, 10,000 worlds, D29 targets, rotation pool 0; team pathway v1.
+- **Accepted floor:** engine-v1.3-r1 (Rule3, unchanged v1.3 nodes), 10,000 worlds/branch, D29 targets/pool0; team pathway v1.
   Change production models/settings/rules through the current versioned player-first policy in TRAINING_PLAN
   (D51 permits its audited redesign; preserve old evidence and freeze new requirements before confirmation).
 - **Serving never computes:** `serve.py`, `views.py` and PWA never fetch, fit or simulate; conditions slice saved worlds.
@@ -114,8 +114,9 @@ This is a scheduling budget, not CPU affinity or permission to expand scope.
 Verify actual controls: LightGBM `train.py --threads`; `backtest.py --jobs` sets OMP internally. On this Mac,
 `--jobs 5` means two OMP threads each, `--jobs 10` one each; default four implies twelve, over budget.
 Cap BLAS separately. Do not run independent backtests concurrently unless their combined inner-thread count
-and memory fit; sequential paired comparisons remain required. Existing vector-candidate timing favoured eight
-single-thread workers, not proof ten is always faster. Above-budget runs need explicit owner authorisation.
+and memory fit; sequential paired comparisons remain required. Whole-game vector timing favoured eight;
+D56's chunk prototype favoured ten for single-game latency. Neither establishes a universal worker optimum.
+Above-budget runs need explicit owner authorisation.
 
 Scratch goes outside the repo; resumable logs/results must be locatable from HANDOFF. Never use old runtime
 estimates as a promise for new branches/mechanics. Sibling MusSim (`../Football`) provides PWA/UI conventions.

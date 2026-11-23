@@ -5,12 +5,13 @@
 //
 //   node analysis/pwa_import_check.mjs --url http://127.0.0.1:8768/MusNBA/ --bundle /path/MusNBA.musnba.gz [--out dir]
 import {spawn} from 'node:child_process';
-import {cpSync, mkdtempSync, rmSync, writeFileSync} from 'node:fs';
+import {cpSync, mkdirSync, mkdtempSync, rmSync, writeFileSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 
 const args = Object.fromEntries(process.argv.slice(2).reduce((acc, a, i, all) => a.startsWith('--') ? [...acc, [a.slice(2), all[i + 1]]] : acc, []));
 if (!args.url || !args.bundle) { console.error('usage: --url <shell url> --bundle <file.musnba.gz> [--out dir]'); process.exit(2); }
+if (args.out) mkdirSync(args.out, {recursive:true});
 const CHROME = args.chrome || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const profile = mkdtempSync(join(tmpdir(), 'musnba-pwa-'));
 const chrome = spawn(CHROME, ['--headless=new', '--remote-debugging-port=0', `--user-data-dir=${profile}`, '--no-first-run', '--no-default-browser-check', 'about:blank'], {stdio: ['ignore', 'ignore', 'pipe']});
@@ -34,7 +35,11 @@ const {sessionId: s} = await send('Target.attachToTarget', {targetId, flatten: t
 for (const d of ['Page', 'Runtime', 'DOM', 'Network', 'Performance']) await send(d + '.enable', {}, s);
 if (args['bypass-service-worker']) await send('Network.setBypassServiceWorker', {bypass: true}, s);
 await send('Emulation.setDeviceMetricsOverride', {width: 390, height: 844, deviceScaleFactor: 2, mobile: true}, s);
-const evaluate = async expression => (await send('Runtime.evaluate', {expression, returnByValue: true, awaitPromise: true}, s)).result.value;
+const evaluate = async expression => {
+  const result = await send('Runtime.evaluate', {expression, returnByValue: true, awaitPromise: true}, s);
+  if (result.exceptionDetails) throw Error(result.exceptionDetails.exception?.description || result.exceptionDetails.text);
+  return result.result.value;
+};
 const waitFor = async (expression, ms = 20000) => { for (const end = Date.now() + ms; Date.now() < end; await sleep(200)) if (await evaluate(expression).catch(() => false)) return true; return false; };
 const results = [];
 const check = (name, ok, detail = '') => { results.push({name, ok, detail}); console.log(`${ok ? 'PASS' : 'FAIL'}  ${name}${detail ? '  ' + detail : ''}`); };
@@ -124,6 +129,7 @@ check('app update button is visible only for a waiting update', await evaluate(`
     : button.hidden && getComputedStyle(button).display === 'none';
 })()`));
 if (args['upgrade-shell'] && args['upgrade-target'] && args['upgrade-version']) {
+  const previousDocument = await evaluate('performance.timeOrigin');
   cpSync(args['upgrade-shell'], args['upgrade-target'], {recursive: true});
   await evaluate(`(async () => { const registration = await navigator.serviceWorker.getRegistration(); await registration.update(); })()`);
   const waiting = await waitFor(`(async () => {
@@ -133,6 +139,7 @@ if (args['upgrade-shell'] && args['upgrade-target'] && args['upgrade-version']) 
   check('new shell waits with visible update action', waiting);
   if (waiting) await evaluate(`document.querySelector('#pwa-update').click()`);
   const activated = waiting && await waitFor(`(async () => {
+    if (performance.timeOrigin === ${JSON.stringify(previousDocument)}) return false;
     const ui = await import('./assets/ui.mjs');
     return typeof ui.wireAdvancedPanels === 'function'
       && (await caches.keys()).some(key => key.endsWith(${JSON.stringify(args['upgrade-version'])}))
@@ -148,6 +155,20 @@ if (args['upgrade-shell'] && args['upgrade-target'] && args['upgrade-version']) 
       advanced: typeof ui.wireAdvancedPanels, team: !!document.querySelector('#view .form-grid')};
   })()`));
   check('app update activates the new shell and keeps imported data', activated, detail);
+}
+if (args['replacement-bundle']) {
+  const previous = await evaluate(`(async () => {const storage=await import('./assets/pwa-storage.mjs'); return storage.read('meta','active');})()`);
+  const {root: currentRoot} = await send('DOM.getDocument', {}, s);
+  const {nodeId: currentInput} = await send('DOM.querySelector', {nodeId:currentRoot.nodeId,selector:'#pwa-file'}, s);
+  await send('DOM.setFileInputFiles', {nodeId:currentInput,files:[args['replacement-bundle']]}, s);
+  check('installed updated app imports the new bundle and switches generation', await waitFor(`(async () => {
+    const storage=await import('./assets/pwa-storage.mjs'), ui=await import('./assets/ui.mjs');
+    const active=await storage.read('meta','active'); if(active===${JSON.stringify(previous)})return false;
+    const info=await storage.read('meta',active), fresh=await (await fetch(new URL('api/meta',ui.BASE))).json();
+    return document.querySelector('#pwa-status')?.textContent.includes(ui.stamp(info.created))
+      && !!document.querySelector('#view .form-grid') && info.profile===${JSON.stringify(args.profile)}
+      && ui.meta()?.model?.id===fresh.model?.id && ui.meta()?.latest===fresh.latest;
+  })()`,120000));
 }
 await send('Network.emulateNetworkConditions', {offline: true, latency: 0, downloadThroughput: -1, uploadThroughput: -1}, s);
 await send('Page.navigate', {url: args.url + '#/standings'}, s);
@@ -230,7 +251,8 @@ const shootingTarget = await evaluate(`(async () => {
     for (const side of ['home', 'away']) for (const p of sim[side].players) {
       const stats = p.periods?.q1?.stats, d = stats?.fgpct;
       if (d && stats.fg3pct && stats.ftpct && (!${Boolean(args['require-advanced'])} || game.usage_profiles?.[p.id]))
-        return {game: fixture.id, player: p.id, defined: d.defined, total: d.total};
+        return {game: fixture.id, player: p.id, defined: d.defined, total: d.total,
+          weighted: Boolean(sim.weighted_worlds_schema), worlds: sim.sims};
     }
   }
   return null;
@@ -272,7 +294,9 @@ if (shootingTarget) {
       .every(stat => !!document.querySelector('[data-stat="' + stat + '"]'))
       && text.includes('conditional on an attempt')
       && text.includes('No field-goal attempts in ' + ui.pct((${shootingTarget.total} - ${shootingTarget.defined}) / ${shootingTarget.total}, 1))
-      && text.includes(${JSON.stringify(shootingTarget.defined.toLocaleString())} + ' of ' + ${JSON.stringify(shootingTarget.total.toLocaleString())});
+      && (${Boolean(shootingTarget.weighted)}
+        ? text.includes(ui.pct(${shootingTarget.defined}/${shootingTarget.total},1)+' weighted chance of an attempt')
+        : text.includes(${JSON.stringify(shootingTarget.defined.toLocaleString())}+' of '+${JSON.stringify(shootingTarget.total.toLocaleString())}));
   })()`));
 } else if (args['require-shooting']) check('offline period shooting distribution present in new bundle', false);
 if (args['require-advanced'] && shootingTarget) {
@@ -316,12 +340,14 @@ if (args.profile) {
     if (${JSON.stringify(args.profile)} === 'phone') return game.worlds === false;
     const worlds = await ui.api('game/' + ${JSON.stringify(shootingTarget?.game || '')} + '/worlds');
     const outcomes = await import('./assets/outcomes.mjs'), loaded = await outcomes.load(${JSON.stringify(shootingTarget?.game || '')});
+    if (worlds.branches) return game.worlds===true && loaded.W===game.projection.sim.sims
+      && outcomes.branchCalculations(loaded).mass(null)===game.projection.sim.probability_mass;
     return game.worlds === true && worlds.worlds === game.projection.sim.sims && loaded.W === worlds.worlds
       && loaded.values('t:home', 'pts').length === worlds.worlds;
   })()`));
   if (args.profile === 'laptop' && shootingTarget) {
     await send('Page.navigate', {url: args.url + '#/game/' + shootingTarget.game + '/scenario'}, s);
-    check('laptop scenarios render from saved worlds offline', await waitFor(`!!document.querySelector('[data-builder="scn"]') && document.querySelector('#view').textContent.includes(${JSON.stringify('of ' + shootingTarget.total.toLocaleString() + ' saved worlds')})`, 30000));
+    check('laptop scenarios render from saved worlds offline', await waitFor(`!!document.querySelector('[data-builder="scn"]') && document.querySelector('#view').textContent.includes(${JSON.stringify((shootingTarget.weighted?'': 'of ') + shootingTarget.worlds.toLocaleString() + ' saved worlds')})`, 30000));
   }
 }
 if (args['stories-game']) {
@@ -385,6 +411,49 @@ if (args['availability-game']) {
   const heap = metrics.find(metric => metric.name === 'JSHeapUsedSize');
   console.log(heap ? `METRIC  current renderer JS heap ${(heap.value / 1048576).toFixed(1)} MiB (not whole-browser or device memory)`
     : 'METRIC  current renderer JS heap unavailable');
+}
+if (args['lineups-game']) {
+  const gid = args['lineups-game'], laptop = args.profile === 'laptop';
+  await send('Page.navigate', {url: args.url + '#/game/' + gid + '/fg'}, s);
+  check('production lineup forecast opens offline', await waitFor(`!!document.querySelector('[data-research-lineups]') && !!document.querySelector('#game-body .box')`));
+  check('production lineup controls respect profile and original mass', await evaluate(`(async () => {
+    const ui = await import('./assets/ui.mjs'), O = await import('./assets/outcomes.mjs');
+    const game = await ui.api('game/' + ${JSON.stringify(gid)}), sim = game.projection.sim;
+    const chosen = sim.lineups.selected_players;
+    if (!chosen.length || !document.querySelector('[data-research-lineups]').textContent.includes('unvalidated assumptions')) return false;
+    if (!${laptop}) {
+      const absent = await fetch(new URL('api/game/' + ${JSON.stringify(gid)} + '/worlds', ui.BASE));
+      return !game.worlds && !absent.ok && !document.querySelector('[data-lineup]')
+        && document.querySelector('[data-research-lineups]').textContent.includes('Expected only');
+    }
+    const worlds = await O.load(${JSON.stringify(gid)});
+    return game.worlds && worlds.W === sim.sims && O.branchCalculations(worlds).mass(null) === sim.probability_mass
+      && document.querySelectorAll('[data-lineup]').length === chosen.length;
+  })()`));
+  if (laptop) {
+    await evaluate(`(() => {const select=document.querySelector('[data-lineup]'); select.value='unavailable'; select.dispatchEvent(new Event('change',{bubbles:true}));})()`);
+    check('offline forced-unavailable selection matches saved weighted summary', await waitFor(`(async () => {
+      const select=document.querySelector('[data-lineup]'); if(select?.value!=='unavailable'||select.disabled)return false;
+      const ui=await import('./assets/ui.mjs'), O=await import('./assets/outcomes.mjs');
+      const raw=await ui.api('game/'+${JSON.stringify(gid)}+'/worlds'), pid=select.dataset.lineup;
+      const key=raw.selected_players.map(p=>p.player_id===pid?'0':'x').join(''), expected=raw.cases[key].sim;
+      const worlds=await O.load(${JSON.stringify(gid)}), C=O.branchCalculations(worlds);
+      return C.mass(null)===expected.probability_mass && C.mean(worlds.minuteValues(pid,'fg'))===0
+        && Math.abs(C.mean(worlds.values('t:home','pts'))-expected.periods.fg.home.pts.mean)<.000501
+        && document.querySelector('.bz-team.home .bz-stats b')?.textContent===ui.f1(expected.periods.fg.home.pts.mean);
+    })()`));
+    await evaluate('location.reload()');
+    check('offline lineup reload returns complete Expected forecast', await waitFor(`!!document.querySelector('#game-body .box') && document.querySelector('[data-lineup]')?.value==='either'`));
+  } else {
+    check('phone weighted minute CDF preserves the complete Expected mass offline', await evaluate(`(async () => {
+      const ui=await import('./assets/ui.mjs'), P=await import('./assets/precise-minutes.mjs');
+      const game=await ui.api('game/'+${JSON.stringify(gid)}), sim=game.projection.sim;
+      const pid=sim.lineups.selected_players[0].player_id;
+      const raw=await ui.api('game/'+${JSON.stringify(gid)}+'/minute-marginals/'+pid), dist=P.decodeMinuteCdfs(raw).minuteDistribution(pid,'fg');
+      return raw.source_id===sim.lineups.source_id && dist.worlds===sim.sims && dist.mass===sim.probability_mass
+        && P.minuteThreshold(dist,0).below===0 && dist.support.length>1;
+    })()`));
+  }
 }
 if (args['research-game']) {
   const gid = args['research-game'];
@@ -474,6 +543,23 @@ check('model guide numbers follow loaded simulation counts', await evaluate(`(as
   const text = document.querySelector('#view').textContent;
   return text.includes('1,234 possible outcomes') && text.includes('740 of 1,234') && text.includes('4,321 possible seasons');
 })()`));
+if (args['require-headshots']) {
+  await send('Page.navigate', {url: args.url + '#/player/1966'}, s);
+  check('retained player photo renders offline', await waitFor(`document.querySelector('#view .player-face img')?.naturalWidth === 96`));
+  check('missing photo uses accessible adjacent name and initials', await evaluate(`(async () => {
+    const ui = await import('./assets/ui.mjs');
+    const node = document.createElement('div'); node.innerHTML = ui.playerLabel('0', 'Missing Player');
+    return !node.querySelector('img') && node.querySelector('.player-face').textContent === 'MP'
+      && node.querySelector('.player-label').textContent.includes('Missing Player');
+  })()`));
+  check('unknown bundle capabilities fail without replacing active data', await evaluate(`(async () => {
+    const storage = await import('./assets/pwa-storage.mjs'), before = await storage.read('meta', 'active');
+    const text = JSON.stringify({format:'musnba',version:2,capabilities:['unknown-future-format'],snapshots:['2026-11-23'],latest:'2026-11-23'}) + String.fromCharCode(10);
+    const compressed = await new Response(new Blob([text]).stream().pipeThrough(new CompressionStream('gzip'))).blob();
+    try { await storage.importBundle(compressed); return false; }
+    catch (error) { return error.message.includes('Update') && before === await storage.read('meta','active'); }
+  })()`));
+}
 const repeat = await evaluate(`(async () => { const {importBundle} = await import('./assets/pwa-storage.mjs'); return 'ok'; })()`).catch(e => String(e));
 check('storage module loads offline', repeat === 'ok', repeat === 'ok' ? '' : repeat);
 if (args.out) { const shot = await send('Page.captureScreenshot', {format: 'png'}, s); writeFileSync(join(args.out, 'pwa-offline-standings.png'), Buffer.from(shot.data, 'base64')); }

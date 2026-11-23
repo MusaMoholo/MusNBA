@@ -1,0 +1,265 @@
+{
+ "kind": "D51 paired rule confirmation and raw diagnostic capture",
+ "run": "independent_rotation_stream_20261123_v1",
+ "game_ids": [
+  "401810347",
+  "401810356",
+  "401810361",
+  "401810394",
+  "401810438",
+  "401810445",
+  "401810463",
+  "401810516",
+  "401810543",
+  "401810548",
+  "401810614",
+  "401810630",
+  "401810636",
+  "401810661",
+  "401810663",
+  "401810706",
+  "401810721",
+  "401810752",
+  "401810836",
+  "401810859",
+  "401810876",
+  "401810889",
+  "401810894",
+  "401810896",
+  "401810920",
+  "401810943",
+  "401810945",
+  "401811003",
+  "401811011",
+  "401811021"
+ ],
+ "worlds": 1000,
+ "stream": 1,
+ "fingerprints": {
+  "analysis/experiments/20261123_independent_rotation_panels_v2.json": "0f02051ebf28ec732e046d6635adc45e66ebea06167e404cca8f8e18df87c7d9",
+  "analysis/rule3_capture_audit.py": "8ad4b8e1e21ae1c2318a72c89b554fb5b3063be7b6082237d19e32476569870b",
+  "analysis/rule3_confirmation.py": "aa5f13e9a12e874f71cf878cb673c829152612fbf9df29b138e53bcdd77fc639",
+  "basketball_common.py": "be2b0643eebb4e1cd51b3eb8214d13b8718fd820864d3df7f7ac8fc1dd5bb48a",
+  "data/derived/athletes.parquet": "3b8e24488790edca5289a2a52f30867243a69f6cab57032e1c839967bb65d5be",
+  "data/derived/history/2023/on_court.parquet": "ba9b4b13e16e5b839e5530905497d2d00d231413ea40f39ee46855f3ebce8c3b",
+  "data/derived/history/2023/player_periods.csv.gz": "d549a82d8704e95218379b945bef5ddb1bf4fa59db0e0b7e479e37f408281342",
+  "data/derived/history/2023/segments.parquet": "813b53edadf92f6e6c607211b1d4c64b312aa9fbe689851110e912419101a76e",
+  "data/derived/history/2023/stints.parquet": "f067fa85961f5792edba3bf6b1f3c3080b912c35bb06b0962615508ac16c3a5c",
+  "data/derived/history/2024/on_court.parquet": "5461947edb052ef9e62b4a70ba49e57a0f98d929f4a19167f03aad3972457f95",
+  "data/derived/history/2024/player_periods.csv.gz": "7f1bfaab40aceab115081cd2ae6db4b6e8694f69cc1f2c4585d2d2f10ee1bb90",
+  "data/derived/history/2024/segments.parquet": "4a7c3c2bce39580cc8e1092ffc215d11bbd49f7bf117b4551eee40337203d2c0",
+  "data/derived/history/2024/stints.parquet": "7555ba3a82f9e97b68f04aa2b24d26451b8ba54562976e20c66251fe021e068b",
+  "data/derived/history/2025/on_court.parquet": "5bbabab60114aa3f7fa096d7708be96f47177c541debcae88059da6b1adb77e9",
+  "data/derived/history/2025/player_periods.csv.gz": "8f513a5802292f4427f80022f4e57ae718a50ae880ef07f8ad2f9c06beebaf63",
+  "data/derived/history/2025/segments.parquet": "d9db732172894ed8d3c6e5e99e3cd1c197006da22799413034ce3ce18cc5aee2",
+  "data/derived/history/2025/stints.parquet": "e01c20cec0ac57a8146cab04b3483de62ee1db4c7bfb0702834f107c97afc95c",
+  "data/derived/history/2026/on_court.parquet": "1b0ffaf53490c3fda4edd28ac427766a0af3a1bfe86f1fece240cd63ed1e8410",
+  "data/derived/history/2026/player_periods.csv.gz": "ef35bb5c33c46e6a194cea30075d9974ead5d44be96c6074b60f6dac49e69c28",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+  "data/derived/history/2026/stints.parquet": "29de886d2afd2a5d9a55af2acb027fd3ee83a887584c71a9fe9951a9c2cc225f",
+  "data/derived/teams.json": "130aa5358d49b944c2b5bee7e9a163f1e53285e93dae57262f039ca1636b7ecc",
+  "data/derived/variants/matchup/features/features_report.json": "1b904943ea8837e236a9e73a85619c41f2711960db0cf107b6a9f111ce134edd",
+  "data/derived/variants/matchup/features/pregame.parquet": "49452d553a39049dfa7316d66f1e2e5507c29e55f963f2f87bb1f6ed055f4614",
+  "data/derived/variants/matchup/features/team_pregame.parquet": "11d11bb6484169b1955fb57b46e7d63bca591153c4880e66befe66038c8591a5",
+  "data/models/folds/v1.2d_F4_all/assisted.txt": "0a094b183b18b8d45a6e5cf047fb117f8aed62dc6941bb9b7944391c3afec690",
+  "data/models/folds/v1.2d_F4_all/assister.txt": "f32c49ac6c7ca5774aad414c5cf500d1b5fd1bbd8fa6c0ddd50ee1934b1d3961",
+  "data/models/folds/v1.2d_F4_all/blocked.txt": "e085efcacd0baea9568f27f7ee05dd43687e7762ba55015d7569cc1efe175c04",
+  "data/models/folds/v1.2d_F4_all/blocker.txt": "5975f284a6c41a013db80fb669230e64dda7167137554bba9051dd04fe4004f0",
+  "data/models/folds/v1.2d_F4_all/config.json": "1617769cb52f2c750e0f1276071b39fc21254ef53fc97ccc646869aaa50f5e71",
+  "data/models/folds/v1.2d_F4_all/duration.txt": "2603f8bf64f3bbef3146285638f79262446eb9a76572c4217f45e6df77dee72c",
+  "data/models/folds/v1.2d_F4_all/event.txt": "d62e1cac4c4fa1cbec0ba5fccc321bae6838202b17253c80a0e8f502395e7e36",
+  "data/models/folds/v1.2d_F4_all/fouler.txt": "70ee6709fcd1fae1ca43ea925babaeb9c9355eaf7e4edeeb601d0cb11c45d266",
+  "data/models/folds/v1.2d_F4_all/free_throw.txt": "ddd7ef48ede7de973c9967b01826f3c293ee824147ca2da772de17a1d781f612",
+  "data/models/folds/v1.2d_F4_all/location.txt": "8f12f8c3bb168ab94dfae313f7624e1ff43074764db665b03ba9511d69c12979",
+  "data/models/folds/v1.2d_F4_all/meta.json": "4a3dfcdff94a856f718fe7f30ea14a44255364cdc2977b62b524c081909139a7",
+  "data/models/folds/v1.2d_F4_all/rebound.txt": "b94d0f957b02d633ca751dff3ef921ffb7e9f57ce6bd206cbba41893ee6f34ff",
+  "data/models/folds/v1.2d_F4_all/rebounder.txt": "337225efb0be006b8889cb377254f6b03c39b356d73d366d3af153ab9133b094",
+  "data/models/folds/v1.2d_F4_all/shot_result.txt": "993fce9f6450e7f317c19e93cadf562db741efa7b58c05d32a8d561ff5f1bbfc",
+  "data/models/folds/v1.2d_F4_all/stealer.txt": "ceea8df151ace738c6181be7615f93fbbebc13cfc434cc371ff8f7566143c581",
+  "data/models/folds/v1.2d_F4_all/turnover_type.txt": "307defe709ae1a8639407d131e28bfabc8eda32bb291a4820113cf3a5b7001d0",
+  "data/models/folds/v1.2d_F4_all/what.txt": "d093989f161b78686804078c07a1d94a629719893085d399465a52314c0de231",
+  "data/models/folds/v1.2d_F4_all/who.txt": "c792950c30a7e7eecec20ab1d12681b0adc574838f2327bbc948213aa574150d",
+  "data/raw/hoopr/player_box_2023.parquet": "968d835cd04b10533c5b5af8c0e41bf0154a73782e9446c76f765109223e8679",
+  "data/raw/hoopr/player_box_2024.parquet": "1e500a538ec45ddbcb58d9789b5494f8db4f25658eafd01d90f2d09600921665",
+  "data/raw/hoopr/player_box_2025.parquet": "e89f7fbc1124092c715b722e6d72d9dd1b9d28776ca6888b508fd2831cd705e2",
+  "data/raw/hoopr/player_box_2026.parquet": "29a29dc9efd055a93e069a0382ac830d98a13274bee655beba69d95cff099713",
+  "docs/protocols/rule3_implementation_20261123.md": "22373ce32a4833133d4f5dcca69c1a3eb0367eb27107f7d29c2dddd4ed2e2ccb",
+  "models/matchup_2025-12-31.json": "176ce8a25f6fd5cc0cee99abca618a72380bac4ed8cabc6f86d2f6129203206c",
+  "models/v1.2d.json": "d0fded7eb9871494e0bc4a82a3627b0a3dc37c3c243d8c9378f151dec2789927",
+  "scripts/a1_compare.py": "435c1e0761f51ee9d218dfc462db8d219c0bc6f54dc8acd6bcae79968ddfcf68",
+  "scripts/a1_substitution_world_audit.py": "d1f1b34834ffe6c9d82b246cbbaed453c6a4eea224e47da020c6e0f02d3cdf4e",
+  "scripts/backtest.py": "2ff491455b5c1cac40b5c3502db97bcb4cdbc159e4f0fa494c09e7c5eb24533d",
+  "scripts/engine.py": "aa7b5c93bd7289bca5312d56d48137b3b3581bce729b16673df8f1b587955c8e",
+  "scripts/foul_out.py": "32b51b7ad72bd3875d9f7c5301190b98545d347bf920be1d07b2d4e501c1da8c",
+  "scripts/matchups.py": "70bbb3f069e78477c83b63ab66e518c4148217b11c415ff1825856914861a153",
+  "scripts/minutes.py": "94dd0ed25e536708c75cd4cf1f386bf2f9fa35f2c334d83cbdd031d4448ba2d0",
+  "scripts/nodes.py": "78749b680b889993e83ba26baab51877cd7393ee0a5a3d9f4fdaf9123d3b161f",
+  "scripts/projection.py": "90ac118a4944ee5a57d0c9784feee4692741295f2b633a0b4291e088af1a688e",
+  "scripts/rotations.py": "1abf8fd173f4ca96d608813f315df8b034436a4bb26060e55410e3710c7e9c3a",
+  "analysis/rotation_confirmation.py": "d95c9c8635a291586513520e8da5faae2198219ad9c84f392d5499146d542d92",
+  "scripts/rotation_fit.py": "46b9c7e301076531617793021425c2f08cdbeb1594638de1a851cba6ba66bfe6",
+  "scripts/forecast_output.py": "e5ace444bb7901d240cac9f606b565a5f875a40239a15e3a1150d35be1d26ca6",
+  "scripts/world_mass.py": "8a4c7c06bf83a21527866f7704aa7f20da99e1816a46721734969785080072cb",
+  "docs/protocols/world_independence_20261123.md": "2faaa121335b8377a26504035692ae3ca1a85c0468d4948f84030ae2ce38963f",
+  "docs/protocols/world_independence_amendment_20261123.md": "cc2d64f1ec9c5078113bcc8023f5d349b23776b34a1adbd6d7a9a5bbd1c99277"
+ },
+ "directory": "data/derived/experiments/independent_rotation_stream_20261123_v1",
+ "pilot": false,
+ "stress": false,
+ "workers": 4,
+ "elapsed_this_invocation": 540.5210682500037,
+ "resumed_completed_games": 0,
+ "captures": [
+  {
+   "game": "401810347",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810347.json",
+   "meta_sha256": "2232ae84fcb1a3d37b18b0349175b5e70a93628f188e14471dd97c80c659efae"
+  },
+  {
+   "game": "401810356",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810356.json",
+   "meta_sha256": "f4fc34501c1dd37c5471659ca118ab2888bf91ec8c37d65c734a7bcc71cb7d87"
+  },
+  {
+   "game": "401810361",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810361.json",
+   "meta_sha256": "c35f63205224e0177e714b7dc9037e72d90cb3037ccdc7f624dae5ce08e66b06"
+  },
+  {
+   "game": "401810394",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810394.json",
+   "meta_sha256": "5d577714fcde8a78018e459434c199504622472d829fc44020e44fa4a1b63d7a"
+  },
+  {
+   "game": "401810438",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810438.json",
+   "meta_sha256": "a7e7ecbbacf311ab9257493d9c2d4aa52635b24df3beaa26d9234c36c5a1f3ee"
+  },
+  {
+   "game": "401810445",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810445.json",
+   "meta_sha256": "b36734bc39debcb66c025de71ccbf6528139f44e618f6330144cf70954045536"
+  },
+  {
+   "game": "401810463",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810463.json",
+   "meta_sha256": "d85b5f13eeec535196cd4e06e5085fab2ee393b8bdb4e6af24b14b65dc9c2289"
+  },
+  {
+   "game": "401810516",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810516.json",
+   "meta_sha256": "e0ce3b4ebe3754f0615ccfb1ca827c88b31a437c38c1041ac3bec6617432cc12"
+  },
+  {
+   "game": "401810543",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810543.json",
+   "meta_sha256": "e7189a222583686460ad117221d546b38d935eb441a5a73d9b625e66dfc40bd4"
+  },
+  {
+   "game": "401810548",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810548.json",
+   "meta_sha256": "6bf667d583badad51e4d6dead650eaf7b4916e5fcac65c878342e246b3d33dc1"
+  },
+  {
+   "game": "401810614",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810614.json",
+   "meta_sha256": "28a4937a35d3b81061ccee2cf20558e66b0cc087971f23fe2f34c2edcd5ecf60"
+  },
+  {
+   "game": "401810630",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810630.json",
+   "meta_sha256": "6c4a4f64b89937490df83a5b68e90352c49e73ea82cf8b682aab10c39014738e"
+  },
+  {
+   "game": "401810636",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810636.json",
+   "meta_sha256": "4e592a6ade48e6641b0137bad373c65cbf85c2076f140166c3b8b35543bb11e9"
+  },
+  {
+   "game": "401810661",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810661.json",
+   "meta_sha256": "fe9dad207f7ccdb12788a041c34d2261f853ef47765e737f1d66bfa44a08eb0c"
+  },
+  {
+   "game": "401810663",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810663.json",
+   "meta_sha256": "738dec552ebed7561f26419e068c0e062b05ff2e5d07f13327d30dac6cdc17a7"
+  },
+  {
+   "game": "401810706",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810706.json",
+   "meta_sha256": "6675788547addc2c0ae88bb50f46849c4d08b3e5070ab199ddc53097303fba91"
+  },
+  {
+   "game": "401810721",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810721.json",
+   "meta_sha256": "cdce7b83b0837d99df6bc1639aa330f4a06529346d3526ed3fb2d5a2abdc325e"
+  },
+  {
+   "game": "401810752",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810752.json",
+   "meta_sha256": "559101282b15f0600a1aba5720c72d4bbc8369e10659ae17b8142802f6cd3087"
+  },
+  {
+   "game": "401810836",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810836.json",
+   "meta_sha256": "ee4b0ba05f1d505a0ce52afb1a2e647b39e42fecdda96c55c65d9cf7f26367d7"
+  },
+  {
+   "game": "401810859",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810859.json",
+   "meta_sha256": "0c39e8ae02afda1a4d1e717f4772dbae9ff4fa5b6b6af2b5aaafa973c37df8e8"
+  },
+  {
+   "game": "401810876",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810876.json",
+   "meta_sha256": "cf9661c083e35b143cbd1742283a21b76a03d03ca26d5aaafbd7d879bb7aec9d"
+  },
+  {
+   "game": "401810889",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810889.json",
+   "meta_sha256": "a24f5a93f3ca492793d600bac990cf0fd68909fee8f15a4458197994dca2e1da"
+  },
+  {
+   "game": "401810894",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810894.json",
+   "meta_sha256": "a3503ca01b4619d44f4a8032f48cd0be9f57e90a7aa23891ac432ed48faefd9f"
+  },
+  {
+   "game": "401810896",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810896.json",
+   "meta_sha256": "e400cb3c3223d8894486b881a7a79a108b595a47550bb976cb10fbd5d9c430db"
+  },
+  {
+   "game": "401810920",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810920.json",
+   "meta_sha256": "011ff60acc4d7e13be552076d2ec5ced47e515d8410316530570ce6eda01af26"
+  },
+  {
+   "game": "401810943",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810943.json",
+   "meta_sha256": "11bbb7b64b7586d5f50e82f465dd86c92cca2a5539fb96470a2706119009d8ac"
+  },
+  {
+   "game": "401810945",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401810945.json",
+   "meta_sha256": "6b554bc1d3761b4f3b55410e917b2b0bde94a66e6da3073ba8aa463ec0433353"
+  },
+  {
+   "game": "401811003",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401811003.json",
+   "meta_sha256": "8e6dacd58d81c3d10f2620685ae3d3f4b0de40500199d8521805f25792a98c23"
+  },
+  {
+   "game": "401811011",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401811011.json",
+   "meta_sha256": "596583a3bbf86d878034323add6333e7661b00811a249c49df67c704f947c9a6"
+  },
+  {
+   "game": "401811021",
+   "meta": "data/derived/experiments/independent_rotation_stream_20261123_v1/401811021.json",
+   "meta_sha256": "c1d773378d96590eadb1824320ed7d4cb741e15e03ae08dd08abea1511bc5e17"
+  }
+ ],
+ "release": "not enabled; independent accounting/score/confirmation gates still apply"
+}

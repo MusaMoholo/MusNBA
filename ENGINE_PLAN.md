@@ -8,14 +8,14 @@ Later decisions override earlier horizons/delivery assumptions; do not reopen se
 ## Current architecture
 
 For ET origin D, result games before D and rebuild pre-origin profiles, rotations, minutes, pair history and
-team ratings. **Possession engine v1.3** plays today's games only (10k worlds/game); **team pathway v1** plays
+team ratings. **Possession engine-v1.3-r1** (unchanged v1.3 nodes) plays today's games only (10k worlds/game); **team pathway v1** plays
 tomorrow onward (10k seasons), including a fresh season on game-free days. Each season consumes its own stored
 near-term outcomes, then updates its own team ratings after every later result. No per-world player carry-over
 is needed inside the possession horizon. Views/PWA only read stored outputs.
 
 `models/v1.3.json` defines production; fitted nodes are in `data/models/v1.3/`. `scripts/engine.py:ENGINE`
-uses target rotations, 10,000 worlds and pool 0 (one target rotation table/world). Neither richer real-matchup
-candidates, responsive substitutions, branch repairs, D47 scaling nor latent form are promoted.
+uses target rotations, 10,000 worlds and pool 0 (one target rotation table/world). Rule3 foul-out/exhaustion mechanics and stored lineup mixtures are delivered. Richer real-matchup
+candidates, responsive substitutions, D47 scaling and latent form remain unpromoted.
 
 ## Decisions so far
 
@@ -78,6 +78,9 @@ behaviour follows the latest applicable decision, especially D45–D50.
 | D52 | Owner (23 Nov): no repository CI pipelines. Run checks locally; retain data-free GitHub Pages hosting for laptop/phone PWA. |
 | D53 | Owner (23 Nov) uses the PWA exclusively. A dashboard change is incomplete until its PWA update is tested and published, with any required exports; localhost alone is never delivery. |
 | D54 | Owner (23 Nov): immediate successor work publishes checked, complete 10k game worlds to the device bundles as each game finishes. Historical actual-participant reconstruction is proposed separately; current nightly still collects missed results but forecasts today only. |
+| D55 | Owner (23 Nov) requests player icons with a full layout sweep. Use retained ESPN headshot URLs, cached offline with an initials fallback; shared sizing and 1440/960/390 checks in both themes before PWA delivery. |
+| D56 | Owner (23 Nov): queue world chunks across up to ten workers, including a single remaining game; merge by game/branch/world range. Worlds share starting inputs, never sampled outcomes. Audit/fix the discovered shared rotation-fit decision before chunked generation; benchmark latency and throughput. No histogram-step defect was reported. |
+| D57 | D51 audit finds a general signed-cohort-bias veto conflict with individual accuracy. Explicit v3 keeps27 proper-score checks and calibration safeguards, reports17 bias diagnostics, and requires fresh frozen confirmation after known r2 v2 failure. Preserve final result; no protected rerun or automatic release. |
 
 ## 2. Possession chain
 
@@ -89,10 +92,9 @@ Rules govern 24/14-second clocks, period ends, free-throw counts, bonus, five-pl
 Regulation periods are 720 seconds, OT 300; quarters/halves exclude OT, full game includes it. Offensive rebounds
 and non-shooting defensive fouls can continue a possession. Worlds advance quarter-synchronously in vector batches.
 
-**Known defect:** production initialises the foul-out mask but does not update it. The controlled six-foul
-reproduction leaves a disqualified player on court. Research legal-five repairs/penalty continuations exist but
-have not passed the production gates; do not describe serving mechanics as solved. D48 cannot mask this through
-unmeasured rejection. Missing/corrupt inputs, cutoff/accounting errors and unknown exceptions always fail.
+**Legacy defect / qualified repair:** v1.3 leaves disqualified players on court. Rule revision r1 passed
+frozen development, stress and final compatibility/accounting checks and is published with PWA bundles. It replaces fouled-out players and applies the NBA exhaustion exception/technical without rejection.
+Explicit recorded runtime identity preserves legacy snapshot replay. D48 retries remain unpromoted. Missing/corrupt inputs, cutoff/accounting errors and unknown exceptions always fail.
 
 ## 3. Time, location and accounting
 
@@ -135,9 +137,11 @@ wired. Frozen hypotheses/methods are linked in TRAINING; inconclusive components
 
 ## 9. Runtime
 
-D10's whole live-nightly budget remains ≤60 minutes. Use the active ten-thread total budget in AGENTS §6;
-worker count does not change model settings/seeds. Historical 10k pool-0 games took ~130–150s/game (21 Nov).
-New branches, retries and weighted pathways need their own measured representative runtime/memory evidence.
+D10's whole live-nightly budget remains ≤60 minutes. Use AGENTS §6's ten-thread total cap. D56 schedules
+canonical world chunks, then branch/game finalisation, in one bounded pool; worker assignment/order does not
+change their seeds. Parent large-array loading follows pool shutdown. The route remains gated on qualified
+independent fitting. Single-game timing and its limits are in FINDINGS §7; full accepted nightly throughput
+is recorded in HANDOFF. Never infer sample count from worker count or treat a partial game as complete.
 
 ## 12. Branches and season coherence
 

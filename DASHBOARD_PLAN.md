@@ -14,7 +14,7 @@ checks and delivery; [PLAN §9b](PLAN.md#9b-product-backlog) owns backlog. Full 
 - Today's games use possession projections. Tomorrow onward has team-pathway home/away/total/margin regulation
   distributions, with a separately resolved winner for ties, no simulated OT points and no player projections.
   Future cards come in three, with total/margin switching in the third.
-- **Full lineup branches/Expected mixture are not shipped.** Today's availability panel can link an eligible
+- **Stored lineup branches/Expected mixture are shipped on qualified r1.** Legacy imports' availability panel can link an eligible
   uncertain player to positive-/zero-minute slices of saved worlds. These are observational participation
   conditions, not a forced-lineup forecast or causal effect. Phone explains the absence of saved worlds.
 - Schema-1 snapshots preserve original float64 period minutes. Laptop sheets/Given/Joint use exact world values;
@@ -64,7 +64,13 @@ Routes are hash-based: `#/game/<id>/<period>[/team]`, `#/game/<id>/matchup`,
   unknown .6 and recent-inactivity .8 where applicable. An unlisted injury is an assumption, not reported health.
   Distinguish availability from positive minutes. D47 quarter-scaling is not shipped.
 
-## Pending branch and replay UI
+## Lineups, photos and pending replay
+
+**D55 player headshots:** requested alongside A1/A2. Use a shared compact component, consistent dimensions,
+initials fallback and retained ESPN roster-source images in both offline bundles. Sweep player-bearing slate,
+game/sheet, roster/list/profile, leaders and scenario surfaces at 1440/960/390 in both themes; inspect screenshots.
+The shared component and retained collection are implemented; full final bundles pass hosted import/offline29/29 laptop and27/27 phone, with installed upgrade32/32.
+Icons are published and included in both offline bundles (526/528 retained; missing uses initials). Current evidence and sizes are in HANDOFF.
 
 U23 and startup recovery are published in the PWA: **30/30** browser checks (18 regression, six card
 probability/link, six retry-screen cases), hosted import/offline **24/24 laptop / 23/23 phone**, installed
@@ -73,13 +79,14 @@ A real `league.mjs` download failure exposed indefinite Loading; a 44px Reload a
 with a deliberately blocked download before phone import/offline checks. The harness closes its browser on
 failure. Evidence: `analysis/experiments/20261123_a2_stories_delivery_v1.json`; current IDs/exports in HANDOFF.
 
-One compact team-grouped lineup control should follow selected player/team/sheet/scenario views once A1 qualifies.
+A compact team-grouped lineup control follows selected player/team/sheet/scenario views on supported imports.
 Expected is default; “either status” exactly marginalises remaining branch weights. Given/Joint use the same
 selected weighted worlds and exact numerator/denominator; zero-mass conditions are unavailable. No branch control
 appears without supported stored branches. Avoid retaining incompatible unconditional cards/targets after selection.
-Research injection hooks, weighted adapters and private bundles exist; normal routes do not register them.
-The schema-2 weighted minute-CDF reader is prepared, with legacy game/sheet regression **12/12**. No new CDF
-payload is served: a measured 86 MB all-player record requires per-player splitting/compression before phone delivery.
+Normal routes now load source-bound stored branches, share selection with Scenarios and use precomputed
+weighted summaries; this is published on r1. Phone retains Expected only. The schema-2 minute CDFs are
+split per player and compressed losslessly; full current-data laptop/phone imports pass locally. Final
+accepted-runtime refresh/export and public shell are delivered; owner device import remains required.
 
 A3's five saved-world labels and 2-D View Centre follow ENGINE_PLAN D42/D43: real selected worlds, reconciled
 events, supported spatial precision, court/score/clock/box/event list and smooth play/pause/speed/seek/step/jumps.

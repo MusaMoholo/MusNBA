@@ -1,120 +1,85 @@
 # Handoff — current state and next actions
 
-Updated **23 November 2026**. Previous pushed checkpoint: **d9465be**; `git log -1` identifies this checkpoint.
+Updated **23 November 2026**. Previous pushed checkpoint: **d11ac5f**; `git log -1` identifies this checkpoint.
 Read [AGENTS](AGENTS.md), then this file and [PLAN](PLAN.md). Detailed history is indexed in
 [docs/README](docs/README.md); do not read archives as current instructions.
 
 ## State
 
-- **Accepted production:** possession **engine-v1.3**, D29 minutes, pool 0, **10,000 worlds/game**;
-  **team-pathway-v1**, **10,000 seasons**. Today's ET games use possessions; tomorrow onward uses pathway.
-- **Scope:** original 14-task A1 programme **58.0%** (S01–S07 complete, S13 deferred). Separate D42
+- **Published/iCloud:** qualified **engine-v1.3-r1** (Rule3, unchanged v1.3 nodes), D29 targets/pool0;
+  10k worlds per branch and team-pathway-v1 10k seasons. Public shell31317f8/cache318fb2858f9d58651de0.
+  Lineups/photos are delivered; each device must refresh its shell and manually import its own iCloud bundle.
+- **Scope:** original 14-task A1 programme **64.0%** (S01–S08 complete, S13 deferred). Separate D42
   **Chunk A 48.0%** = A1 lineups **90% (reopened D51)** × 30% + A2 form **60%** × 35% + A3 replay **0%** × 35%.
   Chunk B **0%**. Do not reset/double-credit the original ledger; see PLAN §6.
-- **A1 release decision reopened under D51 (owner, 23 Nov).** The earlier no-release fallback at
-  `f19d15e` remains a historical decision; the owner authorised redesigning potentially over-restrictive
-  gates. Progress returns from 100% fallback to **90% review**, explicitly reflecting added scope.
-  [Promotion v2](docs/protocols/promotion_v2_20261123.md) separates mechanical corrections, learned
-  predictors and stored scenarios. The existing repair establishes all **44 core score/bias bounds**;
-  two quarter-coverage diagnostics are unresolved, not demonstrated harm. No production change yet.
-  A fresh **200 F4 games outside the old panel**, 30 stream-1 games and three 10k stress games are frozen
-  in `analysis/experiments/20261123_rule3_confirmation_manifest_v1.json`. Rule correctness, independent
-  confirmation and delivery remain required; no automatic resurrection of rejected model variants.
-  The prior-roster census is now a coverage limitation of that historical pipeline, not a universal live gate.
+- **D56:** independent fitter corrects a reproduced batch-wide fit decision; protected v2 result42/44,
+  with two unresolved star-cohort bias bounds. All27 proper-score checks pass. Independent reconstruction
+  confirms arithmetic; a general counterexample exposes a cohort-bias veto conflicting with individual error.
+  [V3 policy](docs/protocols/promotion_v3_20261123.md) is frozen after known results, with a fresh200 F4
+  confirmation required. Original final remains unchanged, never repeated. Candidate fitter/queue stay off.
+- **A1:** qualified r1 lineups, exact Expected, photos and phone CDFs are published. Availability weights
+  remain assumptions; historical prior-roster coverage is limited. Fresh nightly/delivery checkpoint pending.
 - **A2 60%:** contextual late-clock candidate passed frozen F1–F3 and separate F4 analytical screens against
   legacy and clean-bridge controls; 600 empirical distributions independently audited. No engine integration
   yet. Shared shooting has no confirmed missing pooled scoring covariance; pace/minute gaps remain separate.
-- **Execution authorised:** owner requests completion of A1 and A2 (23 Nov), lifting the prior A1 stop.
-  A3/Chunk B are not part of this request. Startup smoke **108/108**, log
-  `/tmp/musnba_a1_a2_start_smoke_20261123.log`. Gate/rule/coverage/A2 preflight **19/19** focused checks.
-  Pilot: **1,556 unchanged control fields**, **1,725,578 candidate fives** independently reconciled; report
-  `analysis/experiments/rule3_pilot_20261123_v1_audit.json`. The legacy auditor needed a signed phase adapter
-  for NumPy's -1 sentinel; capture bytes and simulation outputs were unchanged. Engine recipes unchanged.
-  Smoke **108/108**, fault **86/108**, exit 1; `/tmp/musnba_rule3_preflight_{smoke,fault}_20261123.log`.
-  Active A1 method: [rule confirmation](docs/protocols/rule3_implementation_20261123.md).
-- **D52:** removed both repository Actions workflows after unwanted failure emails. Checks run locally through
-  `core.hooksPath=.githooks`; GitHub Pages still serves `gh-pages`. Do not reintroduce CI. The workflow-disable API
-  returned 403 for this credential, so removing their trigger files is the supported fix; no queued runs existed.
+- **Execution authorised:** finish A1/A2 only; A3/B and historical forecast backfill remain outside this
+  session. Startup smoke108/108 and baseline focused checks passed. Current checks/jobs are below;
+  measured earlier pilots and rule evidence belong in FINDINGS §7 and linked reports.
+- **D52:** repository Actions workflows removed; checks run locally through `.githooks`. Pages hosts only
+  the data-free shell. Do not reintroduce CI.
 
-## Latest live delivery
+## Latest published PWA delivery
 
-23 Nov ET origin: fetch exited 0 (68 requests, five new finals, zero failures); rebuilt inputs through 22 Nov
-in **228.7s**. Snapshot stage **1,415.78s**: **10 games × 10k**, **10k seasons / 952 remaining games**.
-Log `/tmp/musnba_a1_availability_nightly_20261123.log`.
-
-- Independent precision/accounting: **14.7M** minute values, **20.58M** phone marginals, **200k** team scores;
-  marginal error 0, maximum team-quarter minute error **4.27e−14**. This is accounting, not accuracy.
-- Each device imports its own bundle manually; real phone import/memory acceptance remains unverified.
-  No incremental streaming.
-- PWA-only update **9f09eb4**, cache **fbf36cdfebb84d7e3865**: six saved-world outcome cards and a bootstrap
-  download-failure reload action. Browser **30/30** across regression/cards/retry cases; inspected 3/2/1-column
-  screenshots. Hosted import/offline **24/24 laptop, 23/23 phone**, installed upgrade **26/26**. Phone includes a
-  deliberate blocked-download recovery. Evidence: `analysis/experiments/20261123_a2_stories_delivery_v1.json`.
-  Export-only refresh: laptop **111,413,488 bytes / 2,031 records**; phone **86,886,931 / 2,009**. Snapshot/model
-  payloads unchanged; existing imports support the cards. A new simulation bundle is still imported manually.
-- Latest smoke **108/108**, deliberate fault exited 1 (**86/108**); `/tmp/musnba_rule3_preflight_{smoke,fault}_20261123.log`.
+- Fresh r1 generation **2026-11-23T16:43:38Z**: fetch63 requests/0failures, rebuild156.3s through22Nov;
+  snapshot1,465.33s,10 games/15×10k batches. Season80,337 weighted paths/mass100k/952 games.
+  Exact weighted refinement preserves all near-term atoms; this is not a claim of80k independent histories.
+- Public shell **31317f88**, cache **318fb2858f9d58651de0**. Latest iCloud laptop~213.3MB/2,557 records;
+  phone~107.5MB/2,827. Both exports complete. Each device must manually refresh/import its own file.
+- Hosted **29/29 laptop,27/27 phone** on the final refreshed files; installed old bundle→new shell→new bundle **32/32**.
+  Branch routes24/24 at1440/960/390/both themes inspected.
+  Final replay smoke108/108; deliberate fault86/108, exit1.
+  Delivery receipt: `analysis/experiments/20261123_a1_r1_delivery_v2.json`.
 
 ## Next actions
 
-1. Fresh 200-game run, source/input verification, scorecard and independent audit all completed successfully:
-   `rule3_confirmation_20261123_v1{,_compare,_compare_gate,_audit}.json` in experiments. **44/44 core bounds**,
-   one imprecise coverage diagnostic, **114.1M legal fives / 39 exhaustion penalties**. Logs share that name in /tmp.
-   Stress finished/audited all **3 × 10k pairs / 17,255,568 legal fives**; stream finished/audited 30 pairs,
-   **34/34 supported core bounds**, ten star bounds unsupported. No demonstrated coverage harm. Reallocation
-   preserved all IDs/draws; archive/resume receipt `rule3_stream_20261123_reallocation_v1.json`.
-2. **Running:** formal rule-only final, `analysis/rule3_final.py run --jobs 8`, session **66878**, log
-   `/tmp/musnba_rule3_final_20261123_v1.log`; **246 fixed current-season games**, 1k worlds/arm, eight × OMP1/BLAS1.
-   **129/246 complete at 12:44 UTC**. [Frozen final contract](docs/protocols/rule3_final_20261123.md) and manifest
-   `analysis/experiments/20261123_rule3_final_manifest_v1.json`. **Do not change fingerprinted engine/model/input
-   files.** Independent audit already watches completed pairs: `analysis/rule3_pipeline_audit.py`, session **31346**,
-   log `/tmp/musnba_rule3_final_20261123_v1_audit.log`, output `analysis/experiments/rule3_final_20261123_v1_audit.json`.
-   Do not edit its source or launch a duplicate auditor. After generation/audit finish, run
-   `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python analysis/rule3_final.py score` once.
-   The final is one frozen evaluation, never selection/retuning. Latest smoke **108/108**, deliberate fault
-   **86/108**, exit 1; logs `/tmp/musnba_a1_a2_research_{smoke,fault}_20261123_v2.log`. Those sessions finished;
-   final worker parent **70969**, eight workers plus one audit worker; one compute slot remains.
-   PWA delivery remains above; export log `/tmp/musnba_a2_stories_export_20261123.log`.
-   :8767 review session **58196**; static/upgrade servers :8768/**35424**, :8769/**18564**.
-   Temporary retry-shell server :8770/**19954**. All eight root docs reviewed/updated; no CI workflows exist.
-3. Assess the frozen final under unchanged v2 mechanical margins; adapter filters both arms' medians strictly
-   before each game and fits minute auxiliaries before July 2026. Retain the old node final score.
-   Release only after all applicable v2 gates.
-   Follow the [delivery design](docs/protocols/lineup_delivery_20261123.md); wire structurally valid 10k branches/Expected/season views with
-   explicit availability assumptions; unsupported individual games fail visibly. Common-interval coupling independently
-   shuffles/offsets atoms. Current ten-game plan needs **14** batches; planning-only repeated-score probe yields
-   **84,212** weighted season paths, **4.96s** pathway time, exact full joint marginals. This proves size/accounting,
-   not branch skill. Reports `20261123_a1_live_branch_plan_v2.json`, `20261123_a1_season_delivery_probe_v1.json`.
-   A1 checkpoints before A2 integration. The final run's **63** source/model/input hashes were rechecked unchanged.
-4. A2 clock: `20261123_a2_late_clock_{recipe,screen,confirmation,audit}_v1.json`; prototype
-   `analysis/a2_late_clock.py`, [contract](docs/protocols/a2_late_clock_20261123.md). Earlier 1,932 games / 5,382
-   opportunities: joint loss 0.19856→0.12849; F4 199 games / 474: 0.21633→0.13415. No model/clock change served.
-   After A1 decision, freeze optional hook and matched engine compatibility/component/stream tests before runs.
-   Disconnected `scripts/late_clock.py` sampler and `world_mass.py` exact-summary helper pass six new checks;
-   shared browser decoder preserves original probabilities; production reads precomputed cases.
-   [Frozen engine stages](docs/protocols/a2_clock_engine_20261123.md) and `20261123_a2_clock_engine_panels_v1.json`
-   fix the next panels before clock-engine results. Normal branch routes remain unwired.
-   **CDF in progress:** 3,780 retained-world threshold checks pass, but one 30-player payload is **86.1 MB JSON /
-   29.1 MB gzip**. Split per-player and measure lossless byte shuffling before delivery. Probe script/report:
-   `analysis/a1_minute_cdf_probe.py`, `20261123_a1_minute_cdf_probe_v1.json`; old unpromoted worlds, codec evidence only.
-   Focused Python/JS threshold/corruption tests pass; game/sheet browser **12/12**, screenshots inspected at
-   `/tmp/musnba-lineup-minutes-browser-20261123-v2`. Decoder assets/format remain unpublished; served data unchanged.
-   Finish with a fresh accepted-system nightly, independent accounting and required dashboard/PWA/iCloud
-   delivery, commit/push and stop. A3 and repository-wide cleanup remain successor work; preserve View Centre scope.
-5. **D54 immediate successor:** per-game complete 10k bundle publication; [planned contract](docs/protocols/incremental_catchup.md).
-   Nightly collects missed finals but generates today's possession forecasts only. Actual-participant historical
-   reconstruction is proposed, remains deferred under D40, and must predict minutes with pre-origin inputs/fits.
+1. **S08/r1 delivery checkpoint complete:** receipt `20261123_a1_r1_delivery_v2.json`; public shell,
+   current iCloud files, all10 live games/15batches,53,732 histogram checks, exact season atoms, hosted
+   imports29/27, upgrade32, smoke108/108 and fault86/108 exit1. Full log
+   `/tmp/musnba_a1_qualified_r1_delivery_nightly_20261123_v2.log`. No need to repeat completed checks.
+   A1 remains90 while the additional D56 fitter/queue decision below is completed; no candidate default.
+2. **Frozen v3 fresh confirmation:** initial12 pairs cleanly saved/audited; resumed session88301 with
+   eight single-thread workers (replay checks now complete), clean stop after40 more pairs, log
+   `/tmp/musnba_rotation_policy_confirmation_20261123_v2.log`. Manifest
+   `20261123_rotation_policy_confirmation_manifest_v1.json`; source-frozen runner
+   `analysis/rotation_policy_confirmation.py run --jobs 8 --resume --stop-after 40`.
+   After clean stop, `run --jobs 10 --resume` (all other heavy checks are finished). In-worker independent audits
+   count inside worker budget. Unseen200 F4 IDs; never repeat protected r2. Do not edit fingerprinted
+   engine/model/input/gate/runner files while active. Need fresh27/27 proper bounds/no demonstrated
+   coverage harm plus existing correctness/stream/stress/determinism. New evidence failure ends attempt.
+   Preserve old42/44 protected outcome; no release from retrospective reclassification alone.
+3. **A1 completion:** after the fixed fitter decision, record evidence/fallback and checkpoint before A2.
+   Candidate r2, if qualified, still needs proper Engine hook/raw parity, retained replay/season checks,
+   a fresh nightly and PWA export. r1's known coupled fitting remains a limitation until then. Old protected
+   r2 result246pairs/284,432,368 legal fives is retained under `independent_rotation_final_20261123_v1*`.
+4. **A2 after A1 checkpoint:** no clock engine outcome yet. The new prospective
+   [development plan](docs/protocols/a2_clock_v3_development_20261123.md) freezes baseline selection from
+   A1, explicit v3 checks and the original staged panels/pools/primary loss. Read original
+   [stages](docs/protocols/a2_clock_engine_20261123.md) too. Reuse exact matching controls; finish staged
+   compatibility/confirmation or measured fallback, then fresh full nightly/PWA/iCloud, docs, commit/push.
+   Stop before A3/B. No arbitrary form factor, new source or historical forecast backfill.
+5. **D54 successor:** complete10k per-game bundle publication/resume;
+   [contract](docs/protocols/incremental_catchup.md). Nightly collects missed results and forecasts today.
 
-First commands (read-only setup; do not launch old candidates):
+First commands (do not duplicate jobs or alter source-frozen producers):
 
 ```sh
 git status --short --branch
-git --no-pager log --oneline -5
-.venv/bin/python scripts/smoke.py
+tail -n 8 /tmp/musnba_a1_qualified_r1_delivery_nightly_20261123_v2.log
+tail -n 8 /tmp/musnba_rotation_policy_confirmation_20261123_v2.log
 .venv/bin/python scripts/check_docs.py
-ls -t analysis/experiments/ | head -15
 ```
 
-Startup baseline passed. No historical forecast backfill, extra provider or A3/Chunk B work is authorised.
+Review :8767; owner :8766 must remain running. No A3, Chunk B, new provider or forecast backfill here.
 
 ## Progress ladders — Chunk A
 

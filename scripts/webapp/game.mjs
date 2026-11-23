@@ -1,6 +1,6 @@
 // Game Centre. One period selector (Q1–Q4, H1, H2, FG) drives the bezel and both views:
 // Player = per-period box scores, Team = per-period team lines and distributions. Matchup is separate.
-import {advancedPanel, api, atLeast, errorPanel, modelPill, barChart, dayLabel, defaultLine, esc, etToday, f1, forecastTiming, halfLine, heat, histogram, logo, over, pct, percentileOf,
+import {playerFace, playerLabel, advancedPanel, api, atLeast, errorPanel, modelPill, barChart, dayLabel, defaultLine, esc, etToday, f1, forecastTiming, halfLine, heat, histogram, logo, over, pct, percentileOf,
         probWhere, rate, record, seg, segGroups, signed, stamp, statusTag, store, team, tipTimes, usageProfilePanel, wireAdvancedPanels} from './ui.mjs';
 import * as S from './scenario.mjs';
 import * as O from './outcomes.mjs';
@@ -44,27 +44,33 @@ export function setResearchGame(gid, provider) {
   researchGames.set(gid, {provider, choices: {}, generation: 0});
 }
 
-function researchControls(data) {
-  const r = data._research;
+function lineupControls(data) {
+  const r = data._research || data._lineup;
   if (!r) return '';
   const players = new Map(['home', 'away'].flatMap(s => data.projection.sim[s].players.map(p => [p.id, p])));
-  return `<section class="panel" data-research-lineups><h3>Research ${data.worlds ? 'lineup selection' : 'Expected only'} · not a forecast</h3>
-    <p class="note">Availability is not the same as playing minutes. Other uncertain players still vary.</p>
-    <div class="controls">${r.selected_players.map(p => {
+  return `<section class="panel" data-research-lineups><h3>${data._research ? 'Research lineup selection · not a forecast' : data.worlds ? 'Lineup forecast' : 'Expected lineup forecast'}</h3>
+    <div class="lineup-controls">${r.selected_players.map(p => {
       const player = players.get(p.player_id), choice = r.choices[p.player_id];
-      const description = `${esc(player.name)} · ${esc(team(p.team_id).abbr)} · ${esc(p.status || 'Unknown')} · assumed ${pct(p.probability, 0)} available`;
-      return data.worlds ? `<label>${description} <select data-lineup="${esc(p.player_id)}">
-        <option value="either"${choice == null ? ' selected' : ''}>Either status</option>
+      const identity = `<span class="lineup-person">${playerFace(p.player_id, player.name)}<span><b>${esc(player.name)}</b><small>${esc(team(p.team_id).abbr)} · ${esc(p.status || 'Unknown')} · assumed ${pct(p.probability, 0)} available</small></span></span>`;
+      return `<label class="lineup-choice">${identity}${data.worlds ? `<select aria-label="${esc(player.name)} availability" data-lineup="${esc(p.player_id)}">
+        <option value="either"${choice == null ? ' selected' : ''}>Expected · either status</option>
         <option value="available"${choice === true ? ' selected' : ''}>Available</option>
-        <option value="unavailable"${choice === false ? ' selected' : ''}>Unavailable</option></select></label>`
-        : `<span>${description}</span>`;
+        <option value="unavailable"${choice === false ? ' selected' : ''}>Unavailable</option></select>` : ''}</label>`;
     }).join('')}</div>
-    <p class="note">Availability probabilities and cross-team independence are unvalidated assumptions. Top-three selection uses an offensive contribution proxy. Opening-five shares are simulated, not official starters. ${r.selected_worlds.toLocaleString()} saved worlds; results are weighted, not equally counted.</p></section>`;
+    <p class="note">${data.worlds ? 'This game only; season views use Expected.' : 'Expected only on this device.'} Availability does not guarantee minutes.</p>
+    <details><summary>Assumptions &amp; saved games</summary><p class="note">Other uncertain players still vary. Availability probabilities and cross-team independence are unvalidated assumptions. Selectors cover at most one player per team, within its top three by a pre-game offensive contribution proxy. Opening-five shares are simulated, not official starters. ${r.selected_worlds.toLocaleString()} saved worlds; results use the stated branch weights.</p></details></section>`;
 }
 
-function wireResearchControls(view, data, rerender, current) {
+function wireLineupControls(view, data, rerender, current) {
   view.querySelectorAll('[data-lineup]').forEach(select => {
     select.onchange = () => {
+      if (data._lineup) {
+        if (!['either', 'available', 'unavailable'].includes(select.value)) return;
+        O.chooseLineup(data.game.id, select.dataset.lineup, select.value === 'either' ? null : select.value === 'available');
+        view.querySelectorAll('[data-lineup]').forEach(input => { input.disabled = true; });
+        rerender().catch(error => { if (current()) { view.innerHTML = errorPanel(error); console.error(error); } });
+        return;
+      }
       const entry = researchGames.get(data.game.id);
       if (!entry || !['either', 'available', 'unavailable'].includes(select.value)) return;
       if (select.value === 'either') delete entry.choices[select.dataset.lineup];
@@ -80,6 +86,24 @@ export async function render(view, {rest, current}) {
   const gid = rest[0];
   const original = await api('game/' + encodeURIComponent(gid));
   let data = original;
+  const descriptor = original.projection?.sim?.lineups;
+  if (descriptor) {
+    let choices = {}, selected = null;
+    if (original.worlds) {
+      const saved = await O.lineupData(gid, descriptor);
+      if (!current()) return;
+      choices = {...saved.choices};
+      const key = saved.source.selected.map(p => choices[p.player_id] == null ? 'x' : choices[p.player_id] ? '1' : '0').join('');
+      const chosen = saved.raw.cases?.[key];
+      if (!chosen || chosen.sim.game_id !== gid || chosen.sim.model !== original.projection.sim.model
+          || Object.keys(chosen.choices).length !== Object.keys(choices).length || Object.entries(choices).some(([pid, value]) => chosen.choices[pid] !== value)) throw new Error('Stored lineup summary differs from selection');
+      selected = O.branchWorldData(saved.source, choices);
+      data = {...original, projection: {...original.projection, sim: Object.keys(choices).length ? chosen.sim : original.projection.sim}, lead_fan: chosen.lead_fan, _branchWorldData: selected};
+      if (Object.keys(choices).length) Object.assign(data, {spotlight: null, availability: null, multi: null});
+    }
+    data = {...data, _lineup: {...descriptor, choices, selected_worlds: data.projection.sim.sims,
+      selected_mass: data.projection.sim.probability_mass, total_mass: original.projection.sim.probability_mass}};
+  }
   const entry = researchGames.get(gid);
   if (entry) {
     const generation = entry.generation, choices = {...entry.choices};
@@ -110,8 +134,8 @@ export async function render(view, {rest, current}) {
   state.period = period;
   const base = `#/game/${gid}`;
   view.innerHTML = `<a class="crumb" href="#/today/${data.game.date}">‹ ${esc(dayLabel(data.game.date))} slate</a>
-    ${researchControls(data)}${bezel(data, period, {matchup, scenario, mode, base})}<div id="game-body"></div>`;
-  wireResearchControls(view, data, rerender, current);
+    ${lineupControls(data)}${bezel(data, period, {matchup, scenario, mode, base})}<div id="game-body"></div>`;
+  wireLineupControls(view, data, rerender, current);
   const body = view.querySelector('#game-body');
   const go = (p, m) => location.replace(`${base}/${p}${m === 'team' ? '/team' : ''}`);
   view.querySelector('select.period')?.addEventListener('change', e => go(e.target.value, matchup ? 'player' : mode));
@@ -211,7 +235,7 @@ function bezel(data, period, {matchup, scenario, mode, base}) {
       <span class="pill">${sim.sims.toLocaleString()} saved worlds · weighted</span></div>`
     : P ? `<div class="chips">${modelPill(P.model)}
       <span class="pill ${P.kind === 'prospective' && P.completed_at && P.pre_tip === true ? 'good' : 'warn'}">${timing}</span>
-      <span class="pill">${sim.sims.toLocaleString()} sims · ${esc(stamp(P.generated))}</span></div>`
+      <span class="pill">${sim.sims.toLocaleString()} ${data._lineup ? 'saved worlds · weighted' : 'sims'} · ${esc(stamp(P.generated))}</span></div>`
     : tm ? '<div class="chips"><span class="pill">Team-strength estimate from the season simulation</span></div>' : '';
   return `<section class="panel bezel">
     <p class="bz-meta">${esc(dayLabel(g.date, {weekday: 'short', day: 'numeric', month: 'short'}))} · ${esc(t.label)}${g.venue ? ' · ' + esc(g.venue) : ''}${g.tv.length ? ' · ' + esc(g.tv.join(', ')) : ''}</p>
@@ -308,7 +332,7 @@ function playerView(el, data, period) {
     (modes.length > 1 ? `<div class="controls">${seg(modes, mode, 'data-mode')}</div>` : '') +
     ['away', 'home'].map(s => teamBox(data, s, mode, period, benchOpen[s])).join('') +
     (fallbacks ? `<p class="note">Placeholder fallback (uncalibrated): ${fallbacks}</p>` : '') +
-    `<p class="note">${period === 'fg' ? 'Full game includes overtime.' : `${esc(periodName(period))} only; overtime counts in FG.`} ${data._research ? `Values are weighted means over ${sim.sims.toLocaleString()} selected saved worlds` : `Projected values are means over ${sim ? sim.sims.toLocaleString() : ''} simulated games`}${mode === 'proj' && period === 'fg' && data.averages ? '; small numbers: projection minus his season average (MIN, PTS, REB, AST, STL, BLK; shooting in percentage points)' : ''}. ${mode === 'proj' ? 'Not listed on a report is not proof of health. ' : ''}Tap a player for distributions, lines and what-ifs.</p>` +
+    `<p class="note">${period === 'fg' ? 'Full game includes overtime.' : `${esc(periodName(period))} only; overtime counts in FG.`} ${(data._research || data._lineup) ? `Values are weighted means over ${sim.sims.toLocaleString()} selected saved worlds` : `Projected values are means over ${sim ? sim.sims.toLocaleString() : ''} simulated games`}${mode === 'proj' && period === 'fg' && data.averages ? '; small numbers: projection minus his season average (MIN, PTS, REB, AST, STL, BLK; shooting in percentage points)' : ''}. ${mode === 'proj' ? 'Not listed on a report is not proof of health. ' : ''}Tap a player for distributions, lines and what-ifs.</p>` +
     (period === 'fg' && data.spotlight ? `<div id="game-insights">${gameSpotlight(data.spotlight)}</div>` : '');
   el.querySelectorAll('[data-mode]').forEach(b => b.onclick = () => { state.mode = b.dataset.mode; playerView(el, data, period); });
   el.querySelector('[data-game-insights]')?.addEventListener('click', () => el.querySelector('#game-insights').scrollIntoView({behavior: 'smooth'}));
@@ -327,9 +351,9 @@ function teamBox(data, side, mode, period, benchOpen = false) {
   let rows = [];
   if (mode === 'proj') {
     const avg = period === 'fg' ? data.averages || {} : {};
-    rows = sim.players.filter(p => p.periods).map(p => ({id: p.id, name: p.name, pos: p.pos, starter: data._research ? true : p.starter,
+    rows = sim.players.filter(p => p.periods).map(p => ({id: p.id, name: p.name, pos: p.pos, starter: (data._research || data._lineup) ? true : p.starter,
       openingShare: p.opening_share,
-      tag: statusTag(p.status, p.availability, p.availability_basis) + (data._research ? `<span class="tag">opening five ${pct(p.opening_share, 0)}</span>` : ''), cells: COLS.map(([k]) => {
+      tag: statusTag(p.status, p.availability, p.availability_basis) + ((data._research || data._lineup) && p.opening_share > 0 && p.opening_share < 0.999 ? `<span class="tag" title="Simulated opening-five share">starts ${pct(p.opening_share, 0)}</span>` : ''), cells: COLS.map(([k]) => {
         const cell = projCell(p.periods[period], k), a = avg[p.id]?.season;
         if (!a) return cell;
         const m = p.periods.fg.mean;
@@ -377,12 +401,12 @@ function teamBox(data, side, mode, period, benchOpen = false) {
     }
     rows.sort((x, y) => Number(y.starter) - Number(x.starter));
   }
-  if (data._research) {
+  if (data._research || data._lineup) {
     rows.sort((a, b) => b.openingShare - a.openingShare || a.name.localeCompare(b.name));
     rows.forEach((row, i) => { row.starter = i < 5; });
   }
   const starters = rows.filter(r => r.starter), bench = rows.filter(r => !r.starter);
-  const tr = r => `<tr class="link" data-pid="${esc(r.id)}" tabindex="0"><td class="name">${esc(r.name)} <span class="tag">${esc(r.pos || '')}</span>${r.tag}</td>${r.cells.map(c => `<td>${c}</td>`).join('')}</tr>`;
+  const tr = r => `<tr class="link" data-pid="${esc(r.id)}" tabindex="0"><td class="name"><span class="player-label box-player">${playerFace(r.id, r.name)}<span>${esc(r.name)} <span class="tag">${esc(r.pos || '')}</span>${r.tag}</span></span></td>${r.cells.map(c => `<td>${c}</td>`).join('')}</tr>`;
   const sep = label => `<tr class="sep"><td class="name">${label}</td>${COLS.map(() => '<td></td>').join('')}</tr>`;
   const projTeam = sim?.box?.[period];
   const totalRow = (label, line, projected) => `<tr class="sep"><td class="name">${label}</td>${COLS.map(([k]) =>
@@ -408,8 +432,8 @@ function teamBox(data, side, mode, period, benchOpen = false) {
   const title = mode === 'act' ? `${actualPoints(data, side, period) ?? '—'} pts` : per ? `Projected ${f1(per.pts.mean)} pts · win ${pct(per.win)}${mode === 'cmp' ? ` · actual ${actualPoints(data, side, period) ?? '—'}` : ''}` : '';
   void pts;
   return `<section class="panel"><div class="row" style="margin-bottom:8px">${logo(tid)}<h2 style="margin:0">${esc(info.name)}</h2><span class="note" style="margin:0">${title}</span></div>
-    <div class="scroll"><table class="box"><thead>${head}</thead><tbody>${sep(data._research ? 'Top five by simulated opening-five chance' : 'Starters')}${starters.map(tr).join('')}${totals}</tbody></table></div>
-    ${bench.length ? `<details class="box-bench" data-bench-side="${side}"${benchOpen ? ' open' : ''}><summary>${data._research ? 'Other players' : 'Bench'} · ${bench.length} ${bench.length === 1 ? 'player' : 'players'}</summary>
+    <div class="scroll"><table class="box"><thead>${head}</thead><tbody>${sep((data._research || data._lineup) ? 'Likely starters' : 'Starters')}${starters.map(tr).join('')}${totals}</tbody></table></div>
+    ${bench.length ? `<details class="box-bench" data-bench-side="${side}"${benchOpen ? ' open' : ''}><summary>${(data._research || data._lineup) ? 'Other players' : 'Bench'} · ${bench.length} ${bench.length === 1 ? 'player' : 'players'}</summary>
       <div class="scroll"><table class="box"><thead>${head}</thead><tbody>${bench.map(tr).join('')}</tbody></table></div></details>` : ''}
     ${ruledOut.length ? `<p class="note"><b>Out:</b> ${ruledOut.map(p => `<a href="#/game/${data.game.id}/player/${esc(p.id)}">${esc(p.name)}</a>${p.injury?.type ? ` <span class="dim">(${esc(p.injury.type)})</span>` : ''}`).join(', ')}</p>` : ''}</section>`;
 }
@@ -800,7 +824,7 @@ async function sheet(view, data, pid, current, rerender) {
       minuteWorlds = await O.load(data.game.id);
       if (!minuteWorlds.preciseMinutes) throw new Error('Precise minute worlds are missing');
     } else if (!minuteWorlds && !data._research && !data.worlds && data.minute_marginals) {
-      minuteWorlds = await O.loadMinuteMarginals(data.game.id);
+      minuteWorlds = await O.loadMinuteMarginals(data.game.id, pid, data.minute_marginals);
     }
   };
   let preciseMinutes = null;
@@ -843,7 +867,7 @@ async function sheet(view, data, pid, current, rerender) {
     return `<section class="panel"><div class="row" style="justify-content:space-between"><h2 style="margin:0">${esc(NAME[state.stat] || LABEL[state.stat])} · ${esc(periodName(period))}</h2>
       <span class="note" style="margin:0">mean ${exactMinutes ? show(d.mean) : f1(d.mean) + unit} · median ${show(quantiles[2])} · 10–90%: ${show(quantiles[0])} to ${show(quantiles[4])}</span></div>
       ${shooting ? `<p class="note">${noAttempt == null ? `The ${shooting[0]} attempts distribution is not stored for this snapshot.` : `No ${shooting[0]} attempts in ${pct(noAttempt, 1)} of simulations; at least one in ${pct(1 - noAttempt, 1)}.`}
-        ${isPercent ? `Below: ${data._research ? `${pct(d.defined_mass / d.total_mass, 1)} weighted chance of an attempt` : `only the ${d.defined.toLocaleString()} of ${d.total.toLocaleString()} simulations with an attempt`}. The distribution and all chances are conditional on an attempt; no attempts means no percentage, not 0%. Percentages are rounded to whole percentage points.` : 'Counting-stat distributions include all simulations.'}</p>` : ''}
+        ${isPercent ? `Below: ${data._research || data._lineup ? `${pct((d.defined_mass ?? d.defined) / (d.total_mass ?? d.total), 1)} weighted chance of an attempt` : `only the ${d.defined.toLocaleString()} of ${d.total.toLocaleString()} simulations with an attempt`}. The distribution and all chances are conditional on an attempt; no attempts means no percentage, not 0%. Percentages are rounded to whole percentage points.` : 'Counting-stat distributions include all simulations.'}</p>` : ''}
       ${exactMinutes ? `<p class="note">Minute values and thresholds use full stored precision; displayed times round to seconds. Bars cover whole-minute intervals and split at the line.${data.minute_marginals && !data.worlds ? ' These independent period distributions do not retain world identities.' : ''}</p>` : state.stat === 'min' ? `<p class="note">${data._research ? 'This research payload has only whole-minute-rounded distributions; precise minute worlds are unavailable.' : data.worlds_minutes_schema && !data.worlds ? 'Precise minute distributions are not included in this bundle. This minute distribution is rounded to whole minutes.' : 'Precise minute worlds are unavailable for this snapshot. This minute distribution is rounded to whole minutes.'}</p>` : ''}
       <div class="dist" style="margin-top:8px"><div>${exactMinutes ? minuteHistogram(d, line) : histogram(d, {line, actual: act, label: v => v + unit})}
         <div class="lineinput"><label for="line-stat">Over</label><input id="line-stat" type="number" step="${exactMinutes ? 'any' : '1'}" min="${exactMinutes ? '0' : '0.5'}" value="${line}" data-line="stat">
@@ -858,7 +882,7 @@ async function sheet(view, data, pid, current, rerender) {
       <div class="tile"><span>Rebounds</span><b>${f1(proj.mean.reb)}</b></div>
       <div class="tile"><span>Assists</span><b>${f1(proj.mean.ast)}</b></div>
       ${stackTile('Shooting', [['FG', shoot(proj.mean.fgm, proj.mean.fga, true)], ['3P', shoot(proj.mean.fg3m, proj.mean.fg3a, true)], ['FT', shoot(proj.mean.ftm, proj.mean.fta, true)]], 'Tile % = mean makes ÷ mean attempts')}
-      ${stackTile('Chances', [...(data._research ? [['Available', pct(p.selected_availability, 0)]] : []), ['Plays', pct(p.played, 0)], ...(period === 'fg' ? multiRows(p, data.multi?.[pid]) : [])])}</div>
+      ${stackTile('Chances', [...(data._research || data._lineup ? [['Available', pct(p.selected_availability ?? p.availability_simulated, 0)]] : []), ['Plays', pct(p.played, 0)], ...(period === 'fg' ? multiRows(p, data.multi?.[pid]) : [])])}</div>
       ${p.minutes_basis ? `<p class="note">Minutes basis: healthy role ${f1(p.minutes_basis.healthy)} min${p.minutes_basis.rotation < 0.95 ? ` · plays ${pct(p.minutes_basis.rotation, 0)} of the games he is available for` : ''} · target ${f1(p.minutes_basis.target)} if the listed roster plays${p.minutes_basis.k_back > 0 && p.minutes_basis.ramp < 0.995 ? ` · game ${p.minutes_basis.k_back} back after ${p.minutes_basis.missed} missed (ramp ×${p.minutes_basis.ramp.toFixed(2)})` : ''}${p.starter ? ' · projected starter' : ''}. Team minutes are shared to exactly 240 by priority, so an absent teammate's minutes pass down the rotation.</p>` : ''}
       ${p.if_plays ? `<p class="note">If he plays (full game): ${f1(p.if_plays.min)} min · ${f1(p.if_plays.pts)} pts · ${f1(p.if_plays.reb)} reb · ${f1(p.if_plays.ast)} ast. ${esc(p.status)}${p.injury?.comment ? ' — ' + esc(p.injury.comment) : ''}</p>` : ''}`
     : `<p class="note">${p && !p.periods ? `Ruled out in every simulation (${esc(p.status)}).` : 'No projection for this player in this game.'}</p>`;
@@ -866,8 +890,8 @@ async function sheet(view, data, pid, current, rerender) {
   const paint = () => {
     const savedAdvanced = paintedSheet ? advancedState(view) : [];
     view.innerHTML = `<a class="crumb" href="#/game/${data.game.id}/${period}">‹ ${esc(team(data.game.away.id).abbr)} @ ${esc(team(data.game.home.id).abbr)} · ${esc(dayLabel(data.game.date))}</a>
-      ${researchControls(data)}
-      <section class="panel"><div class="row">${logo(tid, 'lg')}<div class="grow"><h2 style="margin:0;font-size:20px">${esc(name)}</h2>
+      ${lineupControls(data)}
+      <section class="panel"><div class="row">${playerFace(pid, name, 'lg')}<div class="grow"><h2 style="margin:0;font-size:20px">${esc(name)}</h2>
         <p class="note" style="margin:0">${esc(team(tid).name)} · ${esc(p?.pos || actualRow?.pos || '')}${p?.jersey ? ' · #' + esc(p.jersey) : ''} · ${side === 'home' ? 'vs' : '@'} ${esc(team(opp).abbr)} ${p ? statusTag(p.status, p.availability, p.availability_basis) : ''}</p></div>
         ${sim ? `<label class="sr" for="sheet-period">Period</label><select id="sheet-period" class="period">${options}</select>` : ''}
         <a class="btn ghost" href="#/player/${pid}">Player page</a></div>${tiles}</section>
@@ -880,8 +904,8 @@ async function sheet(view, data, pid, current, rerender) {
       ${usageProfilePanel(data.usage_profiles?.[pid])}
       ${period === 'fg' ? guardedPanel(data, pid) : ''}
       ${context ? contextPanel(context, period) : ''}
-      <p class="note">${sim ? `${sim.sims.toLocaleString()} ${data._research ? 'selected saved worlds, weighted by branch; research only' : `simulated games from the ${esc(data.projection.kind)} snapshot of ${esc(dayLabel(data.projection.snapshot))}`}. Counting-stat distributions include simulations where he does not play${period === 'fg' ? '' : '; overtime counts in FG only'}. Shooting percentages exclude no-attempt simulations and appear only when at least one simulation has an attempt. Some older snapshots do not contain all shooting distributions.` : ''}</p>`;
-    wireResearchControls(view, data, rerender, current);
+      <p class="note">${sim ? `${sim.sims.toLocaleString()} ${data._research ? 'selected saved worlds, weighted by branch; research only' : data._lineup ? 'selected saved worlds, weighted by the stated availability assumptions' : `simulated games from the ${esc(data.projection.kind)} snapshot of ${esc(dayLabel(data.projection.snapshot))}`}. Counting-stat distributions include simulations where he does not play${period === 'fg' ? '' : '; overtime counts in FG only'}. Shooting percentages exclude no-attempt simulations and appear only when at least one simulation has an attempt. Some older snapshots do not contain all shooting distributions.` : ''}</p>`;
+    wireLineupControls(view, data, rerender, current);
     wireAdvancedPanels(view);
     restoreAdvancedState(view, savedAdvanced);
     paintedSheet = true;

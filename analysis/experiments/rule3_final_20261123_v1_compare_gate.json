@@ -1,0 +1,789 @@
+{
+ "policy": "promotion-v2-20261123",
+ "change_class": "mechanics",
+ "runs": {
+  "control": "rule3_final_20261123_v1_control",
+  "candidate": "rule3_final_20261123_v1_candidate"
+ },
+ "population": {
+  "fold": "final-rule3",
+  "games": 246,
+  "player_games": 5492
+ },
+ "core": {
+  "checks": 44,
+  "established": 44,
+  "details": [
+   {
+    "outcome": "star min",
+    "metric": "crps",
+    "margin": 0.0578,
+    "change": -0.016631831648765694,
+    "ci_95": [
+     -0.029538796769785658,
+     -0.0036327197697042877
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "star min",
+    "metric": "bias",
+    "margin": 0.3,
+    "change": -0.12917825978253383,
+    "ci_95": [
+     -0.14607779027815287,
+     0.1219823257743488
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "star pts",
+    "metric": "crps",
+    "margin": 0.0898,
+    "change": 0.00546894805194853,
+    "ci_95": [
+     -0.014528433462155354,
+     0.026207072977808974
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "star pts",
+    "metric": "bias",
+    "margin": 0.3,
+    "change": -0.10810129870129864,
+    "ci_95": [
+     -0.13588215745329002,
+     0.12229615119985361
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "star reb",
+    "metric": "crps",
+    "margin": 0.0304,
+    "change": 0.0016914623376618199,
+    "ci_95": [
+     -0.00412938147495473,
+     0.007741590009210616
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "star reb",
+    "metric": "bias",
+    "margin": 0.1,
+    "change": 0.010490909090909118,
+    "ci_95": [
+     -0.029610693981200656,
+     0.030409138289255913
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "star ast",
+    "metric": "crps",
+    "margin": 0.0261,
+    "change": -0.0014336909090908456,
+    "ci_95": [
+     -0.006765164052227468,
+     0.0040411078877860655
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "star ast",
+    "metric": "bias",
+    "margin": 0.1,
+    "change": -0.023571428571428625,
+    "ci_95": [
+     -0.030492302631578927,
+     0.028909096633844795
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "star fg3m",
+    "metric": "crps",
+    "margin": 0.02,
+    "change": 0.0010971558441559282,
+    "ci_95": [
+     -0.002453785981004694,
+     0.004637878442924417
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "star fg3m",
+    "metric": "bias",
+    "margin": 0.05,
+    "change": -0.006444155844155847,
+    "ci_95": [
+     -0.010929251492552399,
+     0.010756983287183566
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "starter min",
+    "metric": "crps",
+    "margin": 0.0605,
+    "change": -0.005639055412292038,
+    "ci_95": [
+     -0.01117087215935717,
+     -0.0001547010894175312
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "starter min",
+    "metric": "bias",
+    "margin": 0.3,
+    "change": -0.029638328223562736,
+    "ci_95": [
+     -0.036113521358703785,
+     0.034241787389496986
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "starter pts",
+    "metric": "crps",
+    "margin": 0.0711,
+    "change": -0.002742095238094766,
+    "ci_95": [
+     -0.009116564556541019,
+     0.003408663768196263
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "starter pts",
+    "metric": "bias",
+    "margin": 0.3,
+    "change": 0.020345110087045593,
+    "ci_95": [
+     0.012913491248124005,
+     0.027974287030757463
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "starter reb",
+    "metric": "crps",
+    "margin": 0.029,
+    "change": -0.0007094229390680606,
+    "ci_95": [
+     -0.0035395179385333876,
+     0.0020903679773777825
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "starter reb",
+    "metric": "bias",
+    "margin": 0.1,
+    "change": -0.005093189964157703,
+    "ci_95": [
+     -0.007858353131332789,
+     0.006919216228683294
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "starter ast",
+    "metric": "crps",
+    "margin": 0.0207,
+    "change": 0.00045202867383520307,
+    "ci_95": [
+     -0.001528959704289795,
+     0.0024245615014674925
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "starter ast",
+    "metric": "bias",
+    "margin": 0.1,
+    "change": -0.0021986687147977323,
+    "ci_95": [
+     -0.004342152997635114,
+     0.0038461341009443195
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "starter fg3m",
+    "metric": "crps",
+    "margin": 0.02,
+    "change": -0.0006799631336406042,
+    "ci_95": [
+     -0.0020164707893782522,
+     0.0005843768564098566
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "starter fg3m",
+    "metric": "bias",
+    "margin": 0.05,
+    "change": 0.0014920634920634994,
+    "ci_95": [
+     -0.002503544121044116,
+     0.003216181726072536
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "bench min",
+    "metric": "crps",
+    "margin": 0.0796,
+    "change": -0.010900221457860404,
+    "ci_95": [
+     -0.016939215808401055,
+     -0.0063832845613473795
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "bench min",
+    "metric": "bias",
+    "margin": 0.3,
+    "change": -0.033726592975147004,
+    "ci_95": [
+     -0.03892330084312141,
+     0.036041086332619314
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "bench pts",
+    "metric": "crps",
+    "margin": 0.0553,
+    "change": -0.0025760900581017765,
+    "ci_95": [
+     -0.0065697863453952786,
+     0.0013716990133854745
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "bench pts",
+    "metric": "bias",
+    "margin": 0.3,
+    "change": -0.01736313750806978,
+    "ci_95": [
+     -0.02224818557372387,
+     0.014036614839644648
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "bench reb",
+    "metric": "crps",
+    "margin": 0.0237,
+    "change": -0.001517632020658688,
+    "ci_95": [
+     -0.002974799304647363,
+     -2.003767153441816e-05
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "bench reb",
+    "metric": "bias",
+    "margin": 0.1,
+    "change": -0.007191091026468699,
+    "ci_95": [
+     -0.009234025417886168,
+     0.007705328218243822
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "bench ast",
+    "metric": "crps",
+    "margin": 0.0155,
+    "change": -0.001370306003873556,
+    "ci_95": [
+     -0.0025726444500023204,
+     -0.00018830368533437678
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "bench ast",
+    "metric": "bias",
+    "margin": 0.1,
+    "change": -0.003708198837959975,
+    "ci_95": [
+     -0.005071826638417445,
+     0.003971301636803412
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "bench fg3m",
+    "metric": "crps",
+    "margin": 0.02,
+    "change": -0.00011074241446096256,
+    "ci_95": [
+     -0.0009354834087903246,
+     0.0007043826033067041
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "bench fg3m",
+    "metric": "bias",
+    "margin": 0.05,
+    "change": 0.0009367333763718594,
+    "ci_95": [
+     -0.0013212334455579996,
+     0.0020135381673233414
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "margin",
+    "metric": "crps",
+    "margin": 0.2,
+    "change": 0.0011587398373986701,
+    "ci_95": [
+     -0.046256908130080765,
+     0.04768937184958978
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "total",
+    "metric": "crps",
+    "margin": 0.2,
+    "change": 0.016702398373986682,
+    "ci_95": [
+     -0.02671108384146312,
+     0.05916599684958661
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "q1_margin",
+    "metric": "crps",
+    "margin": 0.1,
+    "change": 0.0008140813008132852,
+    "ci_95": [
+     -0.001265110365854305,
+     0.003215780894308228
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "q1_total",
+    "metric": "crps",
+    "margin": 0.1,
+    "change": -0.0011846178861789625,
+    "ci_95": [
+     -0.003466803150405462,
+     0.0007517156504074137
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "q2_margin",
+    "metric": "crps",
+    "margin": 0.1,
+    "change": -0.0018420040650397596,
+    "ci_95": [
+     -0.026208134552845184,
+     0.022436356097561914
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "q2_total",
+    "metric": "crps",
+    "margin": 0.1,
+    "change": -0.011340207317073414,
+    "ci_95": [
+     -0.028333336686991138,
+     0.005672947560974091
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "q3_margin",
+    "metric": "crps",
+    "margin": 0.1,
+    "change": 0.012543654471544485,
+    "ci_95": [
+     -0.019234579268295925,
+     0.04375772540650697
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "q3_total",
+    "metric": "crps",
+    "margin": 0.1,
+    "change": 0.004123873983740367,
+    "ci_95": [
+     -0.021594699390240547,
+     0.02889979105690916
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "q4_margin",
+    "metric": "crps",
+    "margin": 0.1,
+    "change": 0.0014304024390252579,
+    "ci_95": [
+     -0.02795438556910652,
+     0.03220675548780468
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "q4_total",
+    "metric": "crps",
+    "margin": 0.1,
+    "change": 0.004623361788617331,
+    "ci_95": [
+     -0.023398684552846705,
+     0.032858597662603656
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "margin",
+    "metric": "bias",
+    "margin": 0.5,
+    "change": 0.012284552845528762,
+    "ci_95": [
+     -0.06616727642276443,
+     0.08064308943089414
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "total",
+    "metric": "bias",
+    "margin": 1.0,
+    "change": 0.107764227642277,
+    "ci_95": [
+     0.0480607723577265,
+     0.16834552845528367
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "win",
+    "metric": "brier",
+    "margin": 0.005,
+    "change": 0.00021361382113824212,
+    "ci_95": [
+     -0.0021091792682926846,
+     0.0025103993902438984
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "win",
+    "metric": "log_loss",
+    "margin": 0.01,
+    "change": 0.00038611097245733195,
+    "ci_95": [
+     -0.0045222186180409515,
+     0.005231660465690696
+    ],
+    "status": "established"
+   }
+  ]
+ },
+ "coverage": {
+  "checks": 25,
+  "details": [
+   {
+    "outcome": "star min",
+    "metric": "coverage",
+    "margin": 0.03,
+    "change": 0.0025974025974025983,
+    "ci_95": [
+     -0.005420054200542035,
+     0.01120448179271705
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "star pts",
+    "metric": "coverage",
+    "margin": 0.03,
+    "change": -0.0010681018227219896,
+    "ci_95": [
+     -0.011882892572851906,
+     0.013507162943605251
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "star reb",
+    "metric": "coverage",
+    "margin": 0.03,
+    "change": 0.0005291276608876405,
+    "ci_95": [
+     -0.00583249491294385,
+     0.0066819005980401245
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "star ast",
+    "metric": "coverage",
+    "margin": 0.03,
+    "change": -0.00019842782226753286,
+    "ci_95": [
+     -0.004147475506036105,
+     0.004303381909122766
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "star fg3m",
+    "metric": "coverage",
+    "margin": 0.03,
+    "change": -0.0018978040559867182,
+    "ci_95": [
+     -0.006125639534740454,
+     0.005321076815526377
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "starter min",
+    "metric": "coverage",
+    "margin": 0.03,
+    "change": 0.0,
+    "ci_95": [
+     -0.004610714818378131,
+     0.0045848775745792785
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "starter pts",
+    "metric": "coverage",
+    "margin": 0.03,
+    "change": -0.001582362718009489,
+    "ci_95": [
+     -0.004838124633704419,
+     0.0015840419075349298
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "starter reb",
+    "metric": "coverage",
+    "margin": 0.03,
+    "change": -0.0005880561149623764,
+    "ci_95": [
+     -0.002955206478443104,
+     0.0019628262265503735
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "starter ast",
+    "metric": "coverage",
+    "margin": 0.03,
+    "change": 0.00019145283923083234,
+    "ci_95": [
+     -0.0018647288976936876,
+     0.002274098229287277
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "starter fg3m",
+    "metric": "coverage",
+    "margin": 0.03,
+    "change": -0.0004966906851470165,
+    "ci_95": [
+     -0.002003033009268207,
+     0.000972125921440728
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "bench min",
+    "metric": "coverage",
+    "margin": 0.03,
+    "change": -0.0006455777921239303,
+    "ci_95": [
+     -0.003507681032939469,
+     0.001934859722670046
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "bench pts",
+    "metric": "coverage",
+    "margin": 0.03,
+    "change": 0.0005833507726141773,
+    "ci_95": [
+     -0.0018917665596470679,
+     0.0030018465063738147
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "bench reb",
+    "metric": "coverage",
+    "margin": 0.03,
+    "change": -0.00019031831202331873,
+    "ci_95": [
+     -0.001781261731154668,
+     0.001424949031468614
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "bench ast",
+    "metric": "coverage",
+    "margin": 0.03,
+    "change": 0.0003217559035756379,
+    "ci_95": [
+     -0.0009089735919631192,
+     0.0015355150413570548
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "bench fg3m",
+    "metric": "coverage",
+    "margin": 0.03,
+    "change": 6.151302959156446e-05,
+    "ci_95": [
+     -0.0010232365264784076,
+     0.0011409753250722597
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "margin",
+    "metric": "coverage",
+    "margin": 0.03,
+    "change": 0.0021938314621241517,
+    "ci_95": [
+     -0.009680281326622854,
+     0.013937282229965153
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "total",
+    "metric": "coverage",
+    "margin": 0.03,
+    "change": -0.00283961895804008,
+    "ci_95": [
+     -0.018217459133898415,
+     0.013174160199793911
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "q1_margin",
+    "metric": "coverage",
+    "margin": 0.03,
+    "change": 0.0,
+    "ci_95": [
+     0.0,
+     0.0
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "q1_total",
+    "metric": "coverage",
+    "margin": 0.03,
+    "change": 0.0017334203442369578,
+    "ci_95": [
+     -0.0032518625771541547,
+     0.008229498055850049
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "q2_margin",
+    "metric": "coverage",
+    "margin": 0.03,
+    "change": -0.006837017189281647,
+    "ci_95": [
+     -0.018573457426744537,
+     0.017556012472110815
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "q2_total",
+    "metric": "coverage",
+    "margin": 0.03,
+    "change": -0.003573214927515167,
+    "ci_95": [
+     -0.01622418156476246,
+     0.013776199273792354
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "q3_margin",
+    "metric": "coverage",
+    "margin": 0.03,
+    "change": 0.013095961216413432,
+    "ci_95": [
+     -0.019347255401295223,
+     0.030801465055794505
+    ],
+    "status": "unresolved"
+   },
+   {
+    "outcome": "q3_total",
+    "metric": "coverage",
+    "margin": 0.03,
+    "change": 0.002991521117646445,
+    "ci_95": [
+     -0.013913841687491997,
+     0.01970349774526193
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "q4_margin",
+    "metric": "coverage",
+    "margin": 0.03,
+    "change": 0.0010886850417631821,
+    "ci_95": [
+     -0.009994163835829115,
+     0.01102862773732222
+    ],
+    "status": "established"
+   },
+   {
+    "outcome": "q4_total",
+    "metric": "coverage",
+    "margin": 0.03,
+    "change": 0.011887414961497256,
+    "ci_95": [
+     -0.017590705353092356,
+     0.02269938912154886
+    ],
+    "status": "established"
+   }
+  ],
+  "unresolved": 1
+ },
+ "primary": null,
+ "statistical_compatibility": true,
+ "decision": "development_scores_compatible",
+ "release_requirements": "This is development score evidence only. Rule correctness, independent confirmation, provenance, accounting, stress, runtime and delivery manifest remain required; no automatic promotion or publication.",
+ "comparison_sha256": "cc704c906d546260f72021353d503aae0c9d277e6cc2ea5324d94f6a9821a387"
+}

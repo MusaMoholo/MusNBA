@@ -18,6 +18,10 @@ segments → rotations → player and team profiles — so form and roles carry 
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ProcessPoolExecutor, as_completed
+import os
+for _thread_limit in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'VECLIB_MAXIMUM_THREADS', 'MKL_NUM_THREADS', 'NUMEXPR_NUM_THREADS'):
+    os.environ[_thread_limit] = '1'
 import json
 import shutil
 import sys
@@ -36,6 +40,7 @@ from basketball_common import (CONFERENCE_OF, DERIVED, DIVISION_OF, MASTER_CSV, 
 from scripts import box_scores, master_fixtures, pbp, player_worlds as player_worlds_io, projection, views  # noqa: E402
 from scripts.fetch_espn import collect, latest_run  # noqa: E402
 from scripts.season_stats import period_profiles, player_table, team_table  # noqa: E402
+from scripts.world_mass import WorldMass  # noqa: E402
 
 
 def team_registry(run: Path) -> dict:
@@ -71,6 +76,19 @@ def forecast_availability_report(game: dict, registry: dict) -> dict:
     return report
 
 
+def completed_live_tasks(tasks, runtime, median):
+    """Keep all generation/finalisation in the worker budget; parent loads large arrays afterwards."""
+    from scripts import live_forecast
+    if runtime.get('rotation_fit') == 'independent-v1':
+        yield from live_forecast.run(tasks, runtime, median, workers=10,
+                                     chunk_worlds=runtime.get('chunk_worlds',1000))
+    else:
+        with ProcessPoolExecutor(max_workers=min(8,len(tasks)), initializer=live_forecast.initialise,
+                                 initargs=(runtime,)) as pool:
+            for future in as_completed([pool.submit(live_forecast.project,task) for task in tasks]):
+                yield future.result()
+
+
 def project_slate(day: str, teams: dict, master: list[dict], team_rows: list[dict], player_rows: list[dict],
                   registry: dict, prospective: bool, sims: int, period_rows=None, engine_worlds: int = 0,
                   origin: str | None = None, retained: dict | None = None) -> dict:
@@ -92,6 +110,10 @@ def project_slate(day: str, teams: dict, master: list[dict], team_rows: list[dic
     slate = [r for r in master if r['date_et'] == day]
     generated = utc_now()
     games, placeholder, worlds, player_worlds = {}, {}, {}, {}
+    live_tasks, live_dirs = [], {}
+    from scripts import live_forecast
+    source_hashes = live_forecast.fingerprints() if engine_worlds and prospective else {}
+    live_root = DERIVED / "live_runs" / (day + "-" + str(time.time_ns()))
     eng = engine_mod = None
     if engine_worlds and prospective:
         from scripts import engine as engine_mod
@@ -103,28 +125,45 @@ def project_slate(day: str, teams: dict, master: list[dict], team_rows: list[dic
             saved = retained[gid]
             games[gid], placeholder[gid] = deepcopy(saved['game']), deepcopy(saved['placeholder'])
             worlds[gid], player_worlds[gid] = saved['worlds'], saved['players']
+            if saved.get('live_dir'):
+                live_dirs[gid] = saved['live_dir']
             continue
         result = projection.simulate_game(game, T, lg, P, registry, day, prospective, sims, Q, priors)
         if eng is not None:
             assert engine_mod is not None
             placeholder[game['game_id']] = result
             g = engine_mod.inputs_for(game, day, T, lg, P, registry, Q, priors, origin=origin)
-            result = eng.simulate(g, engine_worlds, projection.seed_for(engine_mod.ENGINE['id'], day, game['game_id']))
-            worlds[game['game_id']] = eng.last.pts.astype(np.int16)  # (worlds, home/away, Q1–Q4 + OT)
-            st = eng.last  # per-world full-game player lines for the app's joint outcomes (views.WORLD_STATS order)
-            reb = st.box['oreb'].sum(2) + st.box['dreb'].sum(2)
-            lines = np.stack([np.rint(st.minutes.sum(2)), st.box['pts'].sum(2), reb, st.box['ast'].sum(2), st.box['fg3m'].sum(2),
-                              st.box['stl'].sum(2), st.box['blk'].sum(2), st.box['tov'].sum(2), st.box['fgm'].sum(2), st.box['fga'].sum(2),
-                              st.box['fg3a'].sum(2), st.box['fta'].sum(2), st.box['oreb'].sum(2), st.box['dreb'].sum(2),
-                              st.box['ftm'].sum(2)], axis=2)
-            player_worlds[game['game_id']] = {'ids': np.array([str(x) for x in g.ids]), 'side': g.side.astype(np.int8),
-                                              'lines': np.clip(lines, 0, 255).astype(np.uint8),
-                                              'minutes_schema': np.array(player_worlds_io.MINUTES_SCHEMA, dtype=np.uint8),
-                                              'minutes': st.minutes.copy()}
-            print(f"  engine {game['game_id']}: {result['periods']['fg']['home']['pts']['mean']:.1f}–{result['periods']['fg']['away']['pts']['mean']:.1f}", flush=True)
+            from scripts import a1_lineup_branches
+            selected, _ = a1_lineup_branches.live_selection(g, registry, engine_mod._MINUTES[origin], T, lg, P, Q, priors)
+            live_tasks.append((g, selected, engine_worlds, str(live_root / gid), {'origin': origin, 'sources': source_hashes, 'registry_run': read_json(DERIVED / 'players.json')['run']}))
+            continue
         if prospective:
             result['availability_report'] = forecast_availability_report(game, registry)
         games[game['game_id']] = result
+    if live_tasks:
+        from scripts import live_forecast
+        if any(os.environ.get(key) != '1' for key in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS')):
+            raise ValueError('Nightly workers require OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1')
+        live_tasks.sort(key=lambda task: (-2**len(task[1]), task[0].game['game_id']))
+        completed_dirs = []
+        for directory in completed_live_tasks(live_tasks,engine_mod.ENGINE,eng.m.median):
+            folder = Path(directory)
+            completed_dirs.append(folder)
+            print(f"engine {len(completed_dirs)}/{len(live_tasks)} complete games; {folder.name} in {time.time()-started:.1f}s",flush=True)
+        # The pool has shut down: decompression here cannot become an eleventh compute worker.
+        for folder in completed_dirs:
+            gid = folder.name
+            result = read_json(folder/'game.json')
+            game = next(row for row in slate if row['game_id']==gid)
+            result['availability_report'] = forecast_availability_report(game,registry)
+            games[gid] = result
+            with np.load(folder/'points.npz',allow_pickle=False) as z:
+                worlds[gid] = z['points']
+            with np.load(folder/'players.npz',allow_pickle=False) as z:
+                player_worlds[gid] = {key:z[key] for key in z.files}
+            live_dirs[gid] = folder
+        if live_forecast.fingerprints() != source_hashes:
+            raise ValueError('Live runtime/model sources changed during generation; refusing publication')
     if engine_mod is not None:
         assert engine_mod is not None
         model = {**engine_mod.ENGINE, 'sims': engine_worlds, 'season_sims': sims}
@@ -136,7 +175,7 @@ def project_slate(day: str, teams: dict, master: list[dict], team_rows: list[dic
     else:
         model, engine_inputs = projection.MODEL, {}
     return {'day': day, 'origin': origin, 'T': T, 'lg': lg, 'P': P, 'slate': slate, 'games': games, 'placeholder': placeholder, 'worlds': worlds,
-            'player_worlds': player_worlds,
+            'player_worlds': player_worlds, 'live_dirs': live_dirs,
             'prospective': prospective, 'generated': generated, 'started': started, 'model': model,
             'sims': engine_worlds if engine_mod is not None else sims, 'season_sims': sims, 'engine_inputs': engine_inputs,
             'retained': retained or {}}
@@ -213,11 +252,15 @@ def load_retained(target: Path, slate: list[dict], completed: str) -> dict:
             game, base = games[gid], placeholder[gid]
             team_worlds = worlds[gid]
             player_worlds = player_worlds_io.read_player_worlds(players, gid)
-            n = source_meta['sims']
+            n = game['sims']
+            mass = WorldMass(n, player_worlds.get('weights'))
             lines, player_ids, sides = player_worlds['lines'], player_worlds['ids'], player_worlds['side']
             if (source_meta.get('kind') != 'prospective' or verified_pre_tip(source_meta, gid) is not True
                     or source_meta.get('slate_date') != target.name or game.get('game_id') != gid
-                    or game.get('sims') != n or game.get('model') != source_meta.get('model', {}).get('id')
+                    or source_meta.get('saved_worlds', {}).get(gid, n) != n
+                    or (not game.get('lineups') and n != source_meta['sims'])
+                    or game.get('probability_mass', n) != mass.total
+                    or game.get('model') != source_meta.get('model', {}).get('id')
                     or any(str(game[side]['team_id']) != str(fixtures[gid][f'{side}_id'])
                            for side in ('home', 'away'))
                     or team_worlds.shape != (n, 2, 5) or lines.ndim != 3 or lines.shape[:2] != (n, len(player_ids))
@@ -232,13 +275,17 @@ def load_retained(target: Path, slate: list[dict], completed: str) -> dict:
                 points = lines[:, sides == side, 1].astype(np.int64).sum(axis=1)
                 if not np.array_equal(points, scores[:, side]):
                     raise ValueError(f'{gid}: retained player points do not sum to team worlds')
-                if abs(float(scores[:, side].mean()) - game['periods']['fg'][name]['pts']['mean']) > 0.00051:
+                if abs(float(mass.mean(scores[:, side])) - game['periods']['fg'][name]['pts']['mean']) > 0.00051:
                     raise ValueError(f'{gid}: retained team mean does not match game worlds')
-            win = round(float((scores[:, 0] > scores[:, 1]).mean()), 4)
+            win = round(float(mass.mean(scores[:, 0] > scores[:, 1])), 4)
             if game['periods']['fg']['home']['win'] != win:
                 raise ValueError(f'{gid}: retained win probability does not match game worlds')
+            folder = target / 'lineups' / gid
+            if game.get('lineups') and not folder.is_dir():
+                raise ValueError(f'{gid}: retained lineup replay inputs are missing')
             out[gid] = {'game': game, 'placeholder': base, 'worlds': team_worlds,
-                        'players': player_worlds, 'meta': deepcopy(source_meta)}
+                        'players': player_worlds, 'meta': deepcopy(source_meta),
+                        'live_dir': folder if folder.is_dir() else None}
     return out
 
 
@@ -253,7 +300,7 @@ def validate_retained(part: dict, season: dict, target: Path, completed: str) ->
     if read_json(target / 'stats.json') != {'teams': part['T'], 'league': part['lg'], 'players': part['P']}:
         raise ValueError('retained forecast statistics differ from the new season context')
     season_rows = {row['game_id']: row for row in season['games']}
-    if season['sims'] != part['sims']:
+    if not part.get('season_worlds') and season['sims'] != part['sims']:
         raise ValueError('retained forecasts and season require the same world count')
     for gid, saved in retained.items():
         original = current[gid]
@@ -268,9 +315,25 @@ def validate_retained(part: dict, season: dict, target: Path, completed: str) ->
                        for key, value in original['players'].items())):
             raise ValueError(f'{gid}: retained forecast, model, origin or worlds changed')
         scores = original['worlds'].sum(axis=2)
-        expected = {'p_home': round(float((scores[:, 0] > scores[:, 1]).mean()), 4),
-                    'mu_home': round(float(scores[:, 0].mean()), 2),
-                    'mu_away': round(float(scores[:, 1].mean()), 2)}
+        mass = WorldMass(len(scores), original['players'].get('weights'))
+        if part.get('season_worlds'):
+            weights = part['season_weights']
+            season_mass = WorldMass(season['sims'], weights)
+            indices = part['season_indices'][gid]
+            if (indices.shape != (season['sims'],) or indices.dtype.kind not in 'iu'
+                    or (indices < 0).any() or (indices >= len(scores)).any()
+                    or not np.array_equal(part['season_worlds'][gid], original['worlds'][indices])):
+                raise ValueError(f'{gid}: retained season world identities differ')
+            counts = np.zeros(len(scores), np.int64)
+            np.add.at(counts, indices, weights)
+            original_weights = np.ones(len(scores), np.int64) if mass.weights is None else mass.weights
+            if not np.array_equal(counts.astype(object)*mass.total, original_weights.astype(object)*season_mass.total):
+                raise ValueError(f'{gid}: retained season probability masses differ')
+        elif mass.weights is not None:
+            raise ValueError(f'{gid}: retained weighted game requires season identity sidecars')
+        expected = {'p_home': round(float(mass.mean(scores[:, 0] > scores[:, 1])), 4),
+                    'mu_home': round(float(mass.mean(scores[:, 0])), 2),
+                    'mu_away': round(float(mass.mean(scores[:, 1])), 2)}
         if (gid not in season_rows or season_rows[gid].get('source') != 'engine'
                 or any(season_rows[gid].get(key) != value for key, value in expected.items())):
             raise ValueError(f'{gid}: season does not use retained game worlds')
@@ -287,7 +350,8 @@ def write_snapshot(part: dict, season: dict, archive_root=None) -> dict:
         'schema': 1, 'season': SEASON_LABEL, 'slate_date': day, 'origin': origin, 'cutoff': day_shift(origin, -1),
         'kind': 'prospective' if prospective else 'retrospective', 'generated': part['generated'],
         'started_at': part['generated'], 'completed_at': None,
-        'model': part['model'], 'sims': part['sims'], 'season_sims': part['season_sims'],
+        'model': part['model'], 'sims': part['sims'], 'season_sims': season['sims'],
+        'saved_worlds': {gid: game['sims'] for gid, game in part['games'].items()},
         'season_model': {'id': season['model'], 'as_of': season['as_of'], 'label': season['pathway']['label']},
         'seeds': 'sha256(model|slate date|game) per game; (season model|as-of date|season)',
         'games': [g['game_id'] for g in slate], 'pre_tip': {g['game_id']: False for g in slate},
@@ -315,6 +379,11 @@ def write_snapshot(part: dict, season: dict, archive_root=None) -> dict:
         with np.load(player_path, allow_pickle=False) as archive:
             for gid in part['player_worlds']:
                 player_worlds_io.read_player_worlds(archive, gid)
+    for gid, folder in part.get('live_dirs', {}).items():
+        shutil.copytree(folder, staging / 'lineups' / gid)
+    if part.get('season_worlds'):
+        np.savez_compressed(staging / 'season_engine_worlds.npz', weights=part['season_weights'], **part['season_worlds'])
+        np.savez_compressed(staging / 'season_player_indices.npz', weights=part['season_weights'], **part['season_indices'])
     write_json(staging / 'season.json', season)
     write_json(staging / 'stats.json', {'teams': T, 'league': lg, 'players': part['P']})
     completed = utc_now()
@@ -508,7 +577,17 @@ def main():
     if parts:  # D25/D26: one season from today — universe k plays engine world k of every engine game, then the pathway
         T, lg = team_table(team_rows, day, teams)
         worlds = {gid: w for part in parts for gid, w in part['worlds'].items()}
-        season = projection.simulate_season(T, lg, master, day, teams, worlds or None, args.sims)
+        if any(part.get('live_dirs') and any('weights' in p for p in part['player_worlds'].values()) for part in parts):
+            from scripts import a1_season_mixture, live_forecast
+            pieces = {gid: live_forecast.pieces(part['live_dirs'][gid], w) if gid in part['live_dirs'] else [(w, __import__('fractions').Fraction(1))]
+                      for part in parts for gid, w in part['worlds'].items()}
+            coupled = a1_season_mixture.couple(pieces, projection.seed_for('live-season-mixture-v1', day))
+            season = projection.simulate_season(T, lg, master, day, teams, coupled['games'], len(coupled['numerators']), weights=coupled['numerators'])
+            for part in parts:
+                part['season_worlds'], part['season_weights'] = coupled['games'], coupled['numerators']
+                part['season_indices'] = coupled['indices']
+        else:
+            season = projection.simulate_season(T, lg, master, day, teams, worlds or None, args.sims)
         for part in parts:
             write_snapshot(part, season, args.archive_root)
     try:  # owner (20 Nov): projected v actual starters for every finished slate (scripts/lineups.py)

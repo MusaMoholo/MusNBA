@@ -1,0 +1,1346 @@
+{
+ "experiment": "a1_paired_comparison",
+ "runs": {
+  "control": "independent_rotation_stream_20261123_v1_control",
+  "candidate": "independent_rotation_stream_20261123_v1_candidate"
+ },
+ "population": {
+  "fold": "F4",
+  "games": 30,
+  "game_ids": [
+   "401810347",
+   "401810356",
+   "401810361",
+   "401810394",
+   "401810438",
+   "401810445",
+   "401810463",
+   "401810516",
+   "401810543",
+   "401810548",
+   "401810614",
+   "401810630",
+   "401810636",
+   "401810661",
+   "401810663",
+   "401810706",
+   "401810721",
+   "401810752",
+   "401810836",
+   "401810859",
+   "401810876",
+   "401810889",
+   "401810894",
+   "401810896",
+   "401810920",
+   "401810943",
+   "401810945",
+   "401811003",
+   "401811011",
+   "401811021"
+  ],
+  "player_games": 666,
+  "expected_simulated_player_games": 667,
+  "unscored_simulated_players": [
+   {
+    "game_id": "401810516",
+    "player": "5107156",
+    "team": "4"
+   }
+  ],
+  "tiers": {
+   "star": 38,
+   "starter": 228,
+   "bench": 400,
+   "unknown": 0
+  },
+  "selection": "exact equality of both complete runs",
+  "availability": "conditional on actual participants; not an availability forecast"
+ },
+ "method": {
+  "bootstrap": "paired complete-game resampling; player games equally weighted",
+  "replicates": 10000,
+  "seed": 20261122,
+  "confidence": 0.95,
+  "coverage": "expected randomised PIT in [0.1, 0.9], integrating the auxiliary uniform; legacy retained separately",
+  "win_scoring": "Brier and log loss use empirical probabilities; zero probability on the outcome is infinite",
+  "bias_and_coverage_change": "change in absolute deviation from 0 and 0.8, respectively",
+  "minimum_player_games": 100,
+  "minimum_games": 30,
+  "limitations": "No Holm correction or promotion decision; cutoff safety depends on dated input provenance."
+ },
+ "players": {
+  "all": {
+   "min": {
+    "status": "ok",
+    "observations": 666,
+    "games": 30,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 3.246967613327741,
+     "candidate": 3.191881930380143,
+     "change": -0.05508568294759808,
+     "ci_95": [
+      -0.13378971571522677,
+      0.006477974675333456
+     ]
+    },
+    "bias": {
+     "control": -0.014397782784064696,
+     "candidate": -0.011798973975171856,
+     "change": -0.002598808808892841,
+     "ci_95": [
+      -0.00828564685978251,
+      0.006304585983927271
+     ]
+    },
+    "coverage": {
+     "control": 0.8153153153153153,
+     "candidate": 0.8333333333333334,
+     "change": 0.018018018018018056,
+     "ci_95": [
+      -0.02983784915893214,
+      0.03125
+     ]
+    },
+    "coverage_legacy_randomised_pit": {
+     "control": 0.8153153153153153,
+     "candidate": 0.8333333333333334,
+     "change": 0.018018018018018056,
+     "ci_95": [
+      -0.02983784915893214,
+      0.03125
+     ]
+    }
+   },
+   "pts": {
+    "status": "ok",
+    "observations": 666,
+    "games": 30,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 2.899233891891892,
+     "candidate": 2.878886686186186,
+     "change": -0.020347205705705917,
+     "ci_95": [
+      -0.04271845963105384,
+      -0.00133767072051101
+     ]
+    },
+    "bias": {
+     "control": 0.017861861861861873,
+     "candidate": 0.018133633633633604,
+     "change": 0.00027177177177173037,
+     "ci_95": [
+      -0.014837231791830536,
+      0.012663786086408894
+     ]
+    },
+    "coverage": {
+     "control": 0.784083964729272,
+     "candidate": 0.7852894341811514,
+     "change": -0.0012054694518793818,
+     "ci_95": [
+      -0.010542856628957108,
+      0.00732281883837147
+     ]
+    },
+    "coverage_legacy_randomised_pit": {
+     "control": 0.7822822822822822,
+     "candidate": 0.7867867867867868,
+     "change": -0.0045045045045045695,
+     "ci_95": [
+      -0.016591251885369585,
+      0.009090909090909038
+     ]
+    }
+   },
+   "reb": {
+    "status": "ok",
+    "observations": 666,
+    "games": 30,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 1.2525794219219217,
+     "candidate": 1.2434743963963963,
+     "change": -0.00910502552552539,
+     "ci_95": [
+      -0.024051550907080825,
+      0.0029431219170050365
+     ]
+    },
+    "bias": {
+     "control": 0.056578078078078076,
+     "candidate": 0.05745645645645641,
+     "change": 0.0008783783783783347,
+     "ci_95": [
+      -0.0032846346099689814,
+      0.005140158611879839
+     ]
+    },
+    "coverage": {
+     "control": 0.780354204366822,
+     "candidate": 0.7848109882892089,
+     "change": -0.004456783922386909,
+     "ci_95": [
+      -0.011043931677834929,
+      0.005872584969222432
+     ]
+    },
+    "coverage_legacy_randomised_pit": {
+     "control": 0.7792792792792793,
+     "candidate": 0.7882882882882883,
+     "change": -0.009009009009009028,
+     "ci_95": [
+      -0.02124430955993928,
+      0.0121765601217656
+     ]
+    }
+   },
+   "ast": {
+    "status": "ok",
+    "observations": 666,
+    "games": 30,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 0.8870583018018019,
+     "candidate": 0.8901135180180181,
+     "change": 0.0030552162162161833,
+     "ci_95": [
+      -0.0022103544943727236,
+      0.009373424483281866
+     ]
+    },
+    "bias": {
+     "control": -0.06259909909909911,
+     "candidate": -0.06349399399399401,
+     "change": 0.0008948948948949015,
+     "ci_95": [
+      -0.0033436780455153724,
+      0.0044519162651994884
+     ]
+    },
+    "coverage": {
+     "control": 0.7746259708058811,
+     "candidate": 0.7716286102592302,
+     "change": 0.0029973605466508957,
+     "ci_95": [
+      -0.0026241732638309866,
+      0.007574872980443281
+     ]
+    },
+    "coverage_legacy_randomised_pit": {
+     "control": 0.7777777777777778,
+     "candidate": 0.7732732732732732,
+     "change": 0.0045045045045045695,
+     "ci_95": [
+      -0.007429420505200568,
+      0.014556571224871796
+     ]
+    }
+   },
+   "fg3m": {
+    "status": "ok",
+    "observations": 666,
+    "games": 30,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 0.5587145,
+     "candidate": 0.5559060285285286,
+     "change": -0.002808471471471452,
+     "ci_95": [
+      -0.007628714661840938,
+      0.0011354292908527764
+     ]
+    },
+    "bias": {
+     "control": -0.010752252252252252,
+     "candidate": -0.011298798798798797,
+     "change": 0.0005465465465465443,
+     "ci_95": [
+      -0.00298638675121034,
+      0.0033455266580541695
+     ]
+    },
+    "coverage": {
+     "control": 0.7898616384702005,
+     "candidate": 0.7927414623458079,
+     "change": -0.002879823875607368,
+     "ci_95": [
+      -0.007173214244902714,
+      0.0040894464783456175
+     ]
+    },
+    "coverage_legacy_randomised_pit": {
+     "control": 0.7957957957957958,
+     "candidate": 0.8003003003003003,
+     "change": -0.003903903903903938,
+     "ci_95": [
+      -0.01195814648729443,
+      0.009480156235653051
+     ]
+    }
+   }
+  },
+  "star": {
+   "min": {
+    "status": "insufficient_sample",
+    "observations": 38,
+    "games": 26,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 2.121560567424075,
+     "candidate": 2.1150842614092404,
+     "change": -0.00647630601483451,
+     "ci_95": null
+    },
+    "bias": {
+     "control": -0.17015210658669686,
+     "candidate": -0.20995030838867407,
+     "change": 0.03979820180197721,
+     "ci_95": null
+    },
+    "coverage": {
+     "control": 0.868421052631579,
+     "candidate": 0.8947368421052632,
+     "change": 0.02631578947368418,
+     "ci_95": null
+    },
+    "coverage_legacy_randomised_pit": {
+     "control": 0.868421052631579,
+     "candidate": 0.8947368421052632,
+     "change": 0.02631578947368418,
+     "ci_95": null
+    }
+   },
+   "pts": {
+    "status": "insufficient_sample",
+    "observations": 38,
+    "games": 26,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 3.7240007105263153,
+     "candidate": 3.7175027894736843,
+     "change": -0.006497921052631028,
+     "ci_95": null
+    },
+    "bias": {
+     "control": -0.8452894736842108,
+     "candidate": -0.8439473684210524,
+     "change": -0.0013421052631583663,
+     "ci_95": null
+    },
+    "coverage": {
+     "control": 0.868421052631579,
+     "candidate": 0.868421052631579,
+     "change": 0.0,
+     "ci_95": null
+    },
+    "coverage_legacy_randomised_pit": {
+     "control": 0.868421052631579,
+     "candidate": 0.868421052631579,
+     "change": 0.0,
+     "ci_95": null
+    }
+   },
+   "reb": {
+    "status": "insufficient_sample",
+    "observations": 38,
+    "games": 26,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 1.578129710526316,
+     "candidate": 1.5793134210526316,
+     "change": 0.0011837105263157177,
+     "ci_95": null
+    },
+    "bias": {
+     "control": 0.6716578947368419,
+     "candidate": 0.6235263157894736,
+     "change": -0.0481315789473683,
+     "ci_95": null
+    },
+    "coverage": {
+     "control": 0.7584567050345883,
+     "candidate": 0.766742257744446,
+     "change": -0.008285552709857757,
+     "ci_95": null
+    },
+    "coverage_legacy_randomised_pit": {
+     "control": 0.7105263157894737,
+     "candidate": 0.7105263157894737,
+     "change": 0.0,
+     "ci_95": null
+    }
+   },
+   "ast": {
+    "status": "insufficient_sample",
+    "observations": 38,
+    "games": 26,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 1.3399372368421054,
+     "candidate": 1.3516257631578947,
+     "change": 0.011688526315789316,
+     "ci_95": null
+    },
+    "bias": {
+     "control": 0.30139473684210527,
+     "candidate": 0.2719210526315789,
+     "change": -0.029473684210526374,
+     "ci_95": null
+    },
+    "coverage": {
+     "control": 0.7798602244906326,
+     "candidate": 0.787433624712374,
+     "change": -0.007573400221741355,
+     "ci_95": null
+    },
+    "coverage_legacy_randomised_pit": {
+     "control": 0.7894736842105263,
+     "candidate": 0.8157894736842105,
+     "change": 0.0052631578947367474,
+     "ci_95": null
+    }
+   },
+   "fg3m": {
+    "status": "insufficient_sample",
+    "observations": 38,
+    "games": 26,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 1.0342806315789475,
+     "candidate": 1.0389030263157892,
+     "change": 0.004622394736841784,
+     "ci_95": null
+    },
+    "bias": {
+     "control": -0.43305263157894736,
+     "candidate": -0.4391842105263158,
+     "change": 0.006131578947368432,
+     "ci_95": null
+    },
+    "coverage": {
+     "control": 0.7403086771631235,
+     "candidate": 0.7259886050325832,
+     "change": 0.014320072130540318,
+     "ci_95": null
+    },
+    "coverage_legacy_randomised_pit": {
+     "control": 0.7368421052631579,
+     "candidate": 0.7368421052631579,
+     "change": 0.0,
+     "ci_95": null
+    }
+   }
+  },
+  "starter": {
+   "min": {
+    "status": "ok",
+    "observations": 228,
+    "games": 30,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 2.8877246788872983,
+     "candidate": 2.830009233947345,
+     "change": -0.057715444939953287,
+     "ci_95": [
+      -0.16548708938089796,
+      0.022384504268754175
+     ]
+    },
+    "bias": {
+     "control": 0.8990392386523884,
+     "candidate": 0.8866157152928793,
+     "change": -0.012423523359509137,
+     "ci_95": [
+      -0.08341934755037642,
+      0.04489605974905482
+     ]
+    },
+    "coverage": {
+     "control": 0.8201754385964912,
+     "candidate": 0.8464912280701754,
+     "change": 0.02631578947368418,
+     "ci_95": [
+      -0.036363636363636376,
+      0.053811659192825045
+     ]
+    },
+    "coverage_legacy_randomised_pit": {
+     "control": 0.8201754385964912,
+     "candidate": 0.8464912280701754,
+     "change": 0.02631578947368418,
+     "ci_95": [
+      -0.036363636363636376,
+      0.053811659192825045
+     ]
+    }
+   },
+   "pts": {
+    "status": "ok",
+    "observations": 228,
+    "games": 30,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 3.109094390350877,
+     "candidate": 3.088341399122807,
+     "change": -0.020752991228070172,
+     "ci_95": [
+      -0.05324011207347218,
+      0.008191503427502422
+     ]
+    },
+    "bias": {
+     "control": 0.6156798245614035,
+     "candidate": 0.6090745614035088,
+     "change": -0.00660526315789467,
+     "ci_95": [
+      -0.052421033724340114,
+      0.03389433760683773
+     ]
+    },
+    "coverage": {
+     "control": 0.8487273986743653,
+     "candidate": 0.8489008480979104,
+     "change": 0.0001734494235451356,
+     "ci_95": [
+      -0.013790044094055787,
+      0.016210683904880323
+     ]
+    },
+    "coverage_legacy_randomised_pit": {
+     "control": 0.8464912280701754,
+     "candidate": 0.8596491228070176,
+     "change": 0.013157894736842146,
+     "ci_95": [
+      -0.008333333333333304,
+      0.03587847937623716
+     ]
+    }
+   },
+   "reb": {
+    "status": "ok",
+    "observations": 228,
+    "games": 30,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 1.3971335219298244,
+     "candidate": 1.39065425,
+     "change": -0.006479271929824337,
+     "ci_95": [
+      -0.020687339189829106,
+      0.005762822122346626
+     ]
+    },
+    "bias": {
+     "control": 0.38144298245614033,
+     "candidate": 0.37839035087719297,
+     "change": -0.0030526315789473624,
+     "ci_95": [
+      -0.022605929387140428,
+      0.014960710152116398
+     ]
+    },
+    "coverage": {
+     "control": 0.7783521735462926,
+     "candidate": 0.7791012060614839,
+     "change": -0.0007490325151913169,
+     "ci_95": [
+      -0.007803007974236356,
+      0.006316161203222742
+     ]
+    },
+    "coverage_legacy_randomised_pit": {
+     "control": 0.7850877192982456,
+     "candidate": 0.7894736842105263,
+     "change": -0.004385964912280715,
+     "ci_95": [
+      -0.02155172413793105,
+      0.018018018018017945
+     ]
+    }
+   },
+   "ast": {
+    "status": "ok",
+    "observations": 228,
+    "games": 30,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 0.9880194999999999,
+     "candidate": 0.9902895263157895,
+     "change": 0.0022700263157895417,
+     "ci_95": [
+      -0.0071701863311249775,
+      0.011373179490188753
+     ]
+    },
+    "bias": {
+     "control": -0.0014298245614035344,
+     "candidate": -0.006236842105263168,
+     "change": 0.004807017543859634,
+     "ci_95": [
+      -0.011089397321428572,
+      0.015219467963386751
+     ]
+    },
+    "coverage": {
+     "control": 0.8248727682359845,
+     "candidate": 0.8226679221739719,
+     "change": -0.0022048460620126553,
+     "ci_95": [
+      -0.011630624039375434,
+      0.00910339940837619
+     ]
+    },
+    "coverage_legacy_randomised_pit": {
+     "control": 0.8289473684210527,
+     "candidate": 0.8201754385964912,
+     "change": -0.00877192982456143,
+     "ci_95": [
+      -0.021008403361344574,
+      0.013157894736842146
+     ]
+    }
+   },
+   "fg3m": {
+    "status": "ok",
+    "observations": 228,
+    "games": 30,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 0.5652993070175438,
+     "candidate": 0.5604805394736843,
+     "change": -0.00481876754385957,
+     "ci_95": [
+      -0.010545673041931958,
+      0.0007840830532963261
+     ]
+    },
+    "bias": {
+     "control": 0.09767543859649125,
+     "candidate": 0.09381140350877194,
+     "change": -0.003864035087719306,
+     "ci_95": [
+      -0.011355541061706035,
+      0.005618730961493383
+     ]
+    },
+    "coverage": {
+     "control": 0.8533079788883989,
+     "candidate": 0.8565576569627106,
+     "change": 0.003249678074311646,
+     "ci_95": [
+      -0.0009124304240201662,
+      0.007891967772093394
+     ]
+    },
+    "coverage_legacy_randomised_pit": {
+     "control": 0.8552631578947368,
+     "candidate": 0.868421052631579,
+     "change": 0.013157894736842146,
+     "ci_95": [
+      -0.004444444444444473,
+      0.03238913255360631
+     ]
+    }
+   }
+  },
+  "bench": {
+   "min": {
+    "status": "ok",
+    "observations": 400,
+    "games": 30,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 3.558649755319642,
+     "candidate": 3.500445145899073,
+     "change": -0.05820460942056904,
+     "ci_95": [
+      -0.1412940186559184,
+      0.0006602436792219488
+     ]
+    },
+    "bias": {
+     "control": -0.520260224241593,
+     "candidate": -0.5050709700886782,
+     "change": -0.015189254152914833,
+     "ci_95": [
+      -0.05011623729220473,
+      0.014429302622950353
+     ]
+    },
+    "coverage": {
+     "control": 0.8075,
+     "candidate": 0.82,
+     "change": 0.012499999999999956,
+     "ci_95": [
+      -0.03163097278662642,
+      0.02331606217616578
+     ]
+    },
+    "coverage_legacy_randomised_pit": {
+     "control": 0.8075,
+     "candidate": 0.82,
+     "change": 0.012499999999999956,
+     "ci_95": [
+      -0.03163097278662642,
+      0.02331606217616578
+     ]
+    }
+   },
+   "pts": {
+    "status": "ok",
+    "observations": 400,
+    "games": 30,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 2.7012605600000006,
+     "candidate": 2.6798289700000004,
+     "change": -0.021431590000000167,
+     "ci_95": [
+      -0.04942091956533066,
+      0.0004685698236345886
+     ]
+    },
+    "bias": {
+     "control": -0.240895,
+     "candidate": -0.236805,
+     "change": -0.00409000000000001,
+     "ci_95": [
+      -0.02401922049988883,
+      0.013214735155781568
+     ]
+    },
+    "coverage": {
+     "control": 0.7392251840298496,
+     "candidate": 0.741133424495808,
+     "change": -0.0019082404659583885,
+     "ci_95": [
+      -0.013594421841826024,
+      0.00898817921023994
+     ]
+    },
+    "coverage_legacy_randomised_pit": {
+     "control": 0.7375,
+     "candidate": 0.7375,
+     "change": 0.0,
+     "ci_95": [
+      -0.01724137931034475,
+      0.01711491442542779
+     ]
+    }
+   },
+   "reb": {
+    "status": "ok",
+    "observations": 400,
+    "games": 30,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 1.1392563075000002,
+     "candidate": 1.1276771725,
+     "change": -0.011579135000000074,
+     "ci_95": [
+      -0.030100359638047004,
+      0.0033999632521874755
+     ]
+    },
+    "bias": {
+     "control": -0.1870275,
+     "candidate": -0.1792525,
+     "change": -0.007775000000000004,
+     "ci_95": [
+      -0.016493892888208076,
+      0.004392983405483363
+     ]
+    },
+    "coverage": {
+     "control": 0.7835756243710861,
+     "candidate": 0.7897820935607647,
+     "change": -0.006206469189678598,
+     "ci_95": [
+      -0.01580512047025704,
+      0.0082834510526303
+     ]
+    },
+    "coverage_legacy_randomised_pit": {
+     "control": 0.7825,
+     "candidate": 0.795,
+     "change": -0.012500000000000067,
+     "ci_95": [
+      -0.027638190954773826,
+      0.017369727047146344
+     ]
+    }
+   },
+   "ast": {
+    "status": "ok",
+    "observations": 400,
+    "games": 30,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 0.7864869199999999,
+     "candidate": 0.7891695299999999,
+     "change": 0.0026826100000000297,
+     "ci_95": [
+      -0.002062274550304888,
+      0.009058970432979341
+     ]
+    },
+    "bias": {
+     "control": -0.13204500000000002,
+     "candidate": -0.12799499999999997,
+     "change": -0.0040500000000000536,
+     "ci_95": [
+      -0.010027493640818457,
+      0.0040133036028791496
+     ]
+    },
+    "coverage": {
+     "control": 0.7454880421706709,
+     "candidate": 0.7410347260947789,
+     "change": 0.004453316075891944,
+     "ci_95": [
+      -0.00015154779766609057,
+      0.008717470487807912
+     ]
+    },
+    "coverage_legacy_randomised_pit": {
+     "control": 0.7475,
+     "candidate": 0.7425,
+     "change": 0.0050000000000000044,
+     "ci_95": [
+      -0.009999999999999901,
+      0.02025444965623592
+     ]
+    }
+   },
+   "fg3m": {
+    "status": "ok",
+    "observations": 400,
+    "games": 30,
+    "missing_actuals": 0,
+    "crps": {
+     "control": 0.5097823775,
+     "candidate": 0.5074138425,
+     "change": -0.002368535000000005,
+     "ci_95": [
+      -0.008282405915884852,
+      0.00230121316738833
+     ]
+    },
+    "bias": {
+     "control": -0.0324375,
+     "candidate": -0.030562500000000006,
+     "change": -0.0018749999999999947,
+     "ci_95": [
+      -0.0055147102118748405,
+      0.0039816880341880185
+     ]
+    },
+    "coverage": {
+     "control": 0.7584047557559999,
+     "candidate": 0.7627077528589296,
+     "change": -0.004302997102929695,
+     "ci_95": [
+      -0.009744331685183235,
+      0.000417424296860802
+     ]
+    },
+    "coverage_legacy_randomised_pit": {
+     "control": 0.7675,
+     "candidate": 0.7675,
+     "change": 0.0,
+     "ci_95": [
+      -0.01272264631043252,
+      0.013746734321460752
+     ]
+    }
+   }
+  },
+  "unknown": {
+   "min": {
+    "status": "insufficient_sample",
+    "observations": 0,
+    "games": 0,
+    "missing_actuals": 0
+   },
+   "pts": {
+    "status": "insufficient_sample",
+    "observations": 0,
+    "games": 0,
+    "missing_actuals": 0
+   },
+   "reb": {
+    "status": "insufficient_sample",
+    "observations": 0,
+    "games": 0,
+    "missing_actuals": 0
+   },
+   "ast": {
+    "status": "insufficient_sample",
+    "observations": 0,
+    "games": 0,
+    "missing_actuals": 0
+   },
+   "fg3m": {
+    "status": "insufficient_sample",
+    "observations": 0,
+    "games": 0,
+    "missing_actuals": 0
+   }
+  }
+ },
+ "games": {
+  "total": {
+   "status": "ok",
+   "observations": 30,
+   "games": 30,
+   "missing_actuals": 0,
+   "crps": {
+    "control": 9.118878566666666,
+    "candidate": 9.0507486,
+    "change": -0.06812996666666571,
+    "ci_95": [
+     -0.2511407641666656,
+     0.12323223083333706
+    ]
+   },
+   "bias": {
+    "control": 0.41690000000000016,
+    "candidate": 0.4211333333333338,
+    "change": 0.004233333333333644,
+    "ci_95": [
+     -0.3260683333333324,
+     0.27900250000000204
+    ]
+   },
+   "coverage": {
+    "control": 0.7666666666666667,
+    "candidate": 0.7666666666666667,
+    "change": 0.0,
+    "ci_95": [
+     0.0,
+     0.0
+    ]
+   },
+   "coverage_legacy_randomised_pit": {
+    "control": 0.7666666666666667,
+    "candidate": 0.7666666666666667,
+    "change": 0.0,
+    "ci_95": [
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "margin": {
+   "status": "ok",
+   "observations": 30,
+   "games": 30,
+   "missing_actuals": 0,
+   "crps": {
+    "control": 9.690505899999998,
+    "candidate": 9.756547199999998,
+    "change": 0.06604130000000019,
+    "ci_95": [
+     -0.0989568741666651,
+     0.22416314500000087
+    ]
+   },
+   "bias": {
+    "control": 2.692366666666667,
+    "candidate": 2.5426,
+    "change": -0.14976666666666683,
+    "ci_95": [
+     -0.39740333333333355,
+     0.30046833333333395
+    ]
+   },
+   "coverage": {
+    "control": 0.6888888888888888,
+    "candidate": 0.7,
+    "change": -0.011111111111111183,
+    "ci_95": [
+     -0.033333333333333326,
+     0.022222222222222254
+    ]
+   },
+   "coverage_legacy_randomised_pit": {
+    "control": 0.6666666666666666,
+    "candidate": 0.7,
+    "change": -0.033333333333333326,
+    "ci_95": [
+     -0.10000000000000009,
+     0.033333333333333326
+    ]
+   }
+  },
+  "q1_total": {
+   "status": "ok",
+   "observations": 30,
+   "games": 30,
+   "missing_actuals": 0,
+   "crps": {
+    "control": 4.167318133333333,
+    "candidate": 4.124544066666667,
+    "change": -0.04277406666666561,
+    "ci_95": [
+     -0.11486810666666714,
+     0.025978665833335867
+    ]
+   },
+   "bias": {
+    "control": -0.07080000000000007,
+    "candidate": -0.057066666666666536,
+    "change": -0.013733333333333535,
+    "ci_95": [
+     -0.09740083333333283,
+     0.08419999999999962
+    ]
+   },
+   "coverage": {
+    "control": 0.8962962962962963,
+    "candidate": 0.8963963963963963,
+    "change": 0.00010010010010008674,
+    "ci_95": [
+     -0.010810810810810811,
+     0.011111111111111183
+    ]
+   },
+   "coverage_legacy_randomised_pit": {
+    "control": 0.9,
+    "candidate": 0.9,
+    "change": 0.0,
+    "ci_95": [
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "q1_margin": {
+   "status": "ok",
+   "observations": 30,
+   "games": 30,
+   "missing_actuals": 0,
+   "crps": {
+    "control": 5.234162333333334,
+    "candidate": 5.211863666666668,
+    "change": -0.022298666666666023,
+    "ci_95": [
+     -0.12706525499999882,
+     0.08672632666666691
+    ]
+   },
+   "bias": {
+    "control": 1.8272000000000002,
+    "candidate": 1.8292000000000006,
+    "change": 0.002000000000000446,
+    "ci_95": [
+     -0.15050333333333393,
+     0.14810333333333278
+    ]
+   },
+   "coverage": {
+    "control": 0.7816987339663501,
+    "candidate": 0.7446708463949843,
+    "change": 0.03702788757136588,
+    "ci_95": [
+     -0.0547430830039527,
+     0.08867993560038169
+    ]
+   },
+   "coverage_legacy_randomised_pit": {
+    "control": 0.7333333333333333,
+    "candidate": 0.7333333333333333,
+    "change": 0.0,
+    "ci_95": [
+     -0.09999999999999998,
+     0.09999999999999998
+    ]
+   }
+  },
+  "q2_total": {
+   "status": "ok",
+   "observations": 30,
+   "games": 30,
+   "missing_actuals": 0,
+   "crps": {
+    "control": 4.7584513333333325,
+    "candidate": 4.736574766666666,
+    "change": -0.021876566666666264,
+    "ci_95": [
+     -0.11249805333333492,
+     0.06306661916666664
+    ]
+   },
+   "bias": {
+    "control": 2.2509333333333332,
+    "candidate": 2.2627,
+    "change": 0.011766666666666925,
+    "ci_95": [
+     -0.11120166666666642,
+     0.12220333333333445
+    ]
+   },
+   "coverage": {
+    "control": 0.672,
+    "candidate": 0.6785714285714286,
+    "change": -0.006571428571428561,
+    "ci_95": [
+     -0.0357142857142857,
+     0.016000000000000014
+    ]
+   },
+   "coverage_legacy_randomised_pit": {
+    "control": 0.7,
+    "candidate": 0.6666666666666666,
+    "change": 0.033333333333333326,
+    "ci_95": [
+     -0.033333333333333326,
+     0.10000000000000009
+    ]
+   }
+  },
+  "q2_margin": {
+   "status": "ok",
+   "observations": 30,
+   "games": 30,
+   "missing_actuals": 0,
+   "crps": {
+    "control": 4.819525266666668,
+    "candidate": 4.876279033333333,
+    "change": 0.05675376666666487,
+    "ci_95": [
+     -0.027424342500001496,
+     0.14404090416666626
+    ]
+   },
+   "bias": {
+    "control": 2.038533333333334,
+    "candidate": 1.8913,
+    "change": -0.147233333333334,
+    "ci_95": [
+     -0.2787683333333335,
+     0.20024166666666668
+    ]
+   },
+   "coverage": {
+    "control": 0.8333333333333334,
+    "candidate": 0.8333333333333334,
+    "change": 0.0,
+    "ci_95": [
+     0.0,
+     0.0
+    ]
+   },
+   "coverage_legacy_randomised_pit": {
+    "control": 0.8333333333333334,
+    "candidate": 0.8333333333333334,
+    "change": 0.0,
+    "ci_95": [
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "q3_total": {
+   "status": "ok",
+   "observations": 30,
+   "games": 30,
+   "missing_actuals": 0,
+   "crps": {
+    "control": 4.398754133333333,
+    "candidate": 4.4391633,
+    "change": 0.04040916666666661,
+    "ci_95": [
+     -0.03412434833333428,
+     0.11404080999999863
+    ]
+   },
+   "bias": {
+    "control": -2.2125333333333335,
+    "candidate": -2.2237000000000005,
+    "change": 0.011166666666666991,
+    "ci_95": [
+     -0.11140250000000058,
+     0.133108333333333
+    ]
+   },
+   "coverage": {
+    "control": 0.9294871794871795,
+    "candidate": 0.8402231718898386,
+    "change": -0.08926400759734088,
+    "ci_95": [
+     -0.152511870845204,
+     0.04331232193732178
+    ]
+   },
+   "coverage_legacy_randomised_pit": {
+    "control": 0.9333333333333333,
+    "candidate": 0.8333333333333334,
+    "change": -0.09999999999999998,
+    "ci_95": [
+     -0.16666666666666663,
+     0.06666666666666676
+    ]
+   }
+  },
+  "q3_margin": {
+   "status": "ok",
+   "observations": 30,
+   "games": 30,
+   "missing_actuals": 0,
+   "crps": {
+    "control": 5.640262466666667,
+    "candidate": 5.643191833333334,
+    "change": 0.002929366666666766,
+    "ci_95": [
+     -0.08363516916666827,
+     0.09736818333333387
+    ]
+   },
+   "bias": {
+    "control": 0.08060000000000006,
+    "candidate": 0.11303333333333328,
+    "change": 0.03243333333333322,
+    "ci_95": [
+     -0.12703500000000043,
+     0.13993416666666608
+    ]
+   },
+   "coverage": {
+    "control": 0.7271604938271605,
+    "candidate": 0.7111111111111111,
+    "change": 0.016049382716049387,
+    "ci_95": [
+     -0.016049382716049387,
+     0.04814814814814816
+    ]
+   },
+   "coverage_legacy_randomised_pit": {
+    "control": 0.7333333333333333,
+    "candidate": 0.7333333333333333,
+    "change": 0.0,
+    "ci_95": [
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "q4_total": {
+   "status": "ok",
+   "observations": 30,
+   "games": 30,
+   "missing_actuals": 0,
+   "crps": {
+    "control": 4.506789799999999,
+    "candidate": 4.4843473,
+    "change": -0.022442499999999477,
+    "ci_95": [
+     -0.0924758766666669,
+     0.04547449583333271
+    ]
+   },
+   "bias": {
+    "control": 0.4977999999999999,
+    "candidate": 0.46209999999999973,
+    "change": -0.035700000000000176,
+    "ci_95": [
+     -0.1512683333333332,
+     0.13016666666666624
+    ]
+   },
+   "coverage": {
+    "control": 0.8333333333333334,
+    "candidate": 0.8333333333333334,
+    "change": 0.0,
+    "ci_95": [
+     0.0,
+     0.0
+    ]
+   },
+   "coverage_legacy_randomised_pit": {
+    "control": 0.8333333333333334,
+    "candidate": 0.8333333333333334,
+    "change": 0.0,
+    "ci_95": [
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "q4_margin": {
+   "status": "ok",
+   "observations": 30,
+   "games": 30,
+   "missing_actuals": 0,
+   "crps": {
+    "control": 4.358707066666668,
+    "candidate": 4.379892899999999,
+    "change": 0.02118583333333124,
+    "ci_95": [
+     -0.061168620833334034,
+     0.10625428749999945
+    ]
+   },
+   "bias": {
+    "control": -1.389933333333333,
+    "candidate": -1.4295666666666667,
+    "change": 0.03963333333333363,
+    "ci_95": [
+     -0.08794499999999965,
+     0.1658333333333344
+    ]
+   },
+   "coverage": {
+    "control": 0.8348333333333334,
+    "candidate": 0.815873015873016,
+    "change": -0.018960317460317455,
+    "ci_95": [
+     -0.04407142857142865,
+     0.040277777777777746
+    ]
+   },
+   "coverage_legacy_randomised_pit": {
+    "control": 0.8333333333333334,
+    "candidate": 0.8,
+    "change": -0.033333333333333326,
+    "ci_95": [
+     -0.06666666666666665,
+     0.06666666666666676
+    ]
+   }
+  }
+ },
+ "win": {
+  "status": "ok",
+  "brier": {
+   "control": 0.17567900000000003,
+   "candidate": 0.17757773333333332,
+   "change": 0.0018987333333332912,
+   "ci_95": [
+    -0.005573775000000003,
+    0.009122234166666668
+   ]
+  },
+  "log_loss": {
+   "control": 0.5370328615330812,
+   "candidate": 0.5408122156934857,
+   "change": 0.0037793541604045355,
+   "ci_95": [
+    -0.012419730796504581,
+    0.019597091288076136
+   ]
+  }
+ },
+ "input_sha256": {
+  "analysis/rule3_scores.py": "5d7dbcc8361fe65974e9a227029ce9ccb6673a1465aa95d0370765da4ec490c7",
+  "scripts/a1_compare.py": "435c1e0761f51ee9d218dfc462db8d219c0bc6f54dc8acd6bcae79968ddfcf68",
+  "analysis/experiments/independent_rotation_stream_20261123_v1.json": "ff7decb2bc50cb2d0c4658c5823c00c05eb7dd6568814ca48c13c5d625643b8c",
+  "data/derived/experiments/independent_rotation_stream_20261123_v1_control.parquet": "c2de204e7c24f0d5091e96b38e320d2450632576137453ec8ffc94cc51674ff0",
+  "data/derived/experiments/independent_rotation_stream_20261123_v1_control_players.parquet": "c598ce707451be8c9c4da3f88f4ade58d62ca2b0433a47b1a9a5131783f64901",
+  "data/derived/experiments/independent_rotation_stream_20261123_v1_candidate.parquet": "e9de437fb18ecc2ca1891bafb926a9777ba624793260959332f5a1410ffe5d7e",
+  "data/derived/experiments/independent_rotation_stream_20261123_v1_candidate_players.parquet": "4b5c0bbab8be54945b6e179e3cc83fbe2388e171860c9452ecc3912307132edd"
+ }
+}

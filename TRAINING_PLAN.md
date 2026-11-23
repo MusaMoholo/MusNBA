@@ -1,6 +1,6 @@
 # Training and validation contract
 
-Updated **23 November 2026**. Accepted systems: engine v1.3 and team pathway v1. No new promotion is implied.
+Updated **23 November 2026**. Accepted systems: Rule3 engine-v1.3-r1 (unchanged nodes) and team pathway v1.
 [HANDOFF](HANDOFF_NEXT.md) owns current work; [FINDINGS](FINDINGS.md) owns outcomes. Frozen detailed protocols
 are indexed in [docs/README](docs/README.md). D51 redesigns release classification prospectively; historical
 results and numerical harm margins remain preserved.
@@ -79,7 +79,11 @@ never establishes whole-engine promotion. Frozen completed S02–S07 methods rem
 
 ## 8. A1 acceptance and reproducibility
 
-**Active release policy: [promotion v2](docs/protocols/promotion_v2_20261123.md), owner-authorised D51.**
+**Versioned policy:** [v2](docs/protocols/promotion_v2_20261123.md) remains the default;
+[v3 review](docs/protocols/promotion_v3_20261123.md), authorised by D51, freezes fresh confirmation
+after the known r2 v2 failure. V3 keeps27 proper-score bounds and25 coverage diagnostics, and reports17
+cohort-bias bounds separately. All numerical margins, learned primary benefits and invariants remain.
+The final result is preserved and never rerun; no release follows from retrospective reclassification alone.
 It distinguishes rule corrections, learned predictors and stored scenarios. The numerical CRPS/bias margins
 below remain; primary-improvement and coverage-blocking requirements are class-specific. Old results
 remain historical results under their original gate, not retroactively unseen confirmations.
@@ -177,12 +181,24 @@ before adding variation; event/minute/state randomness already creates covarianc
 [Shared-shooting/world/late-state methods](docs/protocols/a2_joint_late_20261123.md) extend these diagnostics.
 The [contextual late-clock screen](docs/protocols/a2_late_clock_20261123.md) freezes one prior-fitted candidate,
 clean bridge removal control, earlier-fold proper-score criteria and a separate 200-game F4 manifest before results.
-[Engine stages](docs/protocols/a2_clock_engine_20261123.md) freeze control reuse, sequential compatibility and survivor confirmation before clock-engine results.
+[Engine stages](docs/protocols/a2_clock_engine_20261123.md) freeze control reuse, sequential compatibility and survivor confirmation before clock-engine results;
+[D56 amendment](docs/protocols/a2_clock_independence_amendment_20261123.md) prospectively requires the qualified independent fitter in both arms and reserves r3 for clock.
 The fresh 200-game D51 confirmation pass captures accepted-control worlds once for both modules. A read-only
 observer reproduces 1,556 legacy pilot fields; an independent auditor checks scores, precise minutes, rule/team
 fouls and integrated discrete coverage. Stop/resume hashes match. Panel/stress/stream evidence is complete;
-the [rule-level final](docs/protocols/rule3_final_20261123.md) is frozen/running, with pre-origin medians in both arms.
+the [rule-level final](docs/protocols/rule3_final_20261123.md) completed once, with pre-origin medians in both arms.
 `analysis/rule3_scores.py` retains legacy PIT alongside integrated coverage. No model is promoted by node loss alone.
+
+D56's [independent-world contract](docs/protocols/world_independence_20261123.md),
+[prospective clarification](docs/protocols/world_independence_amendment_20261123.md) and
+[seed review](docs/protocols/world_independence_stream_review_20261123.md) are frozen v2 history:
+fixed200 F4 passed44/44; seed30 had six imprecise/ten unsupported bounds; three10k stresses passed;
+protected246 established42/44, all27 proper-score checks. Preserve this outcome, never repeat protected r2.
+D57's [v3 revision](docs/protocols/promotion_v3_20261123.md) follows an independent arithmetic/policy audit
+and returns to the previously reserved, unseen200 F4 IDs, with unchanged candidate and numerical margins.
+Fresh confirmation/source hashes are frozen in `20261123_rotation_policy_confirmation_manifest_v1.json`.
+No retrospective reclassification alone approves release. Original v2 contracts above remain v2 contracts;
+the v3 manifest explicitly selects the revised diagnostic classification for this new evidence.
 
 Namespaced factors stay fixed per game/world/player or team; zero strength consumes no new draws. Tilts
 preserve baseline marginal means without clipping. Unsupported/negative excess is not clamped into evidence.

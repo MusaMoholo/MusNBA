@@ -18,8 +18,11 @@ class BundleProfilesTests(unittest.TestCase):
             (api / 'slate').mkdir()
             logos = root / 'logos'
             logos.mkdir()
+            icons = root / 'player-icons'
+            icons.mkdir()
+            (icons / '1.png').write_bytes(b'retained-photo-fixture')
             files = {
-                api / 'meta.json': {'latest': '2026-11-22', 'snapshots': [{'date': '2026-11-22'}]},
+                api / 'meta.json': {'latest': '2026-11-22', 'snapshots': [{'date': '2026-11-22'}], 'player_icons': {'ids': ['1']}},
                 api / 'players.json': {'players': []},
                 api / 'game' / '123.json': {'worlds': True, 'minute_marginals': True},
                 api / 'game' / '123' / 'worlds.json': {'worlds': 2, 'players': ['1']},
@@ -29,7 +32,7 @@ class BundleProfilesTests(unittest.TestCase):
             for path, data in files.items():
                 path.write_text(json.dumps(data))
             results = {}
-            with patch.object(export_musnba, 'VIEWS', root / 'views'), patch.object(export_musnba, 'LOGOS', logos):
+            with patch.object(export_musnba, 'VIEWS', root / 'views'), patch.object(export_musnba, 'LOGOS', logos), patch.object(export_musnba, 'PLAYER_ICONS', icons), patch.object(export_musnba, 'player_icons', return_value={'ids': ['1']}):
                 for profile in ('phone', 'laptop'):
                     output = root / f'{profile}.musnba.gz'
                     export_musnba.export_bundle(output, profile=profile)
@@ -37,6 +40,10 @@ class BundleProfilesTests(unittest.TestCase):
                         rows = [json.loads(line) for line in stream]
                     results[profile] = (rows[0], {r['key']: r for r in rows[1:-1]})
             phone, laptop = results['phone'], results['laptop']
+            self.assertEqual(phone[0]['version'], 2)
+            self.assertIn('player-icons-v1', phone[0]['capabilities'])
+            self.assertTrue(phone[1]['/player-icons/1.png']['binary'])
+            self.assertEqual(phone[1]['/player-icons/1.png'], laptop[1]['/player-icons/1.png'])
             self.assertEqual(phone[0]['profile'], 'phone')
             self.assertEqual(laptop[0]['profile'], 'laptop')
             self.assertNotIn('/api/game/123/worlds', phone[1])

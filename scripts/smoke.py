@@ -98,7 +98,7 @@ def season_worlds(snaps: list[Path], season: dict, origin: str) -> dict:
     for path in snaps:
         if not (path / 'engine_worlds.npz').exists() or read_json(path / 'season.json').get('as_of') != origin:
             continue
-        with np.load(path / 'engine_worlds.npz', allow_pickle=False) as archive:
+        with np.load(path / ('season_engine_worlds.npz' if (path / 'season_engine_worlds.npz').exists() else 'engine_worlds.npz'), allow_pickle=False) as archive:
             for gid in expected.intersection(archive.files):
                 if gid in worlds:
                     raise ValueError(f'{gid}: engine worlds appear in multiple snapshots')
@@ -106,6 +106,34 @@ def season_worlds(snaps: list[Path], season: dict, origin: str) -> dict:
     if set(worlds) != expected:
         raise ValueError(f'season engine worlds missing: {sorted(expected - set(worlds))}')
     return worlds
+
+
+def replay_saved_chunk(folder: Path, node_models: str) -> bool:
+    """Replay one canonical complete chunk, using only locally retained private inputs and seeds."""
+    import pickle
+    import numpy as np
+    from basketball_common import sha256_file
+    from scripts import a1_lineup_branches, engine, lineup_forecast
+    plan = read_json(folder/'work-plan.json')
+    if sha256_file(folder/'inputs.pkl') != plan['provenance']['replay_input_sha256']:
+        raise ValueError('saved game replay input differs')
+    with (folder/'inputs.pkl').open('rb') as stream:
+        saved = pickle.load(stream)
+    batch = plan['batches'][0]
+    capture = folder/'branches/branch-000.npz' if plan['selected'] else folder/'capture.npz'
+    metadata = read_json(capture.with_suffix('.json'))
+    if sha256_file(capture) != metadata['capture_sha256']:
+        raise ValueError('saved complete branch capture differs')
+    first = metadata['execution']['chunks'][0]
+    g = saved['game']
+    if batch['assignments']:
+        g = a1_lineup_branches.prepare_branch(g,[tuple(a) for a in batch['assignments']])
+    eng = engine.Engine(node_models,runtime=saved['runtime'])
+    eng.m.median = saved['median']
+    raw = lineup_forecast.simulate(eng,g,first['stop']-first['start'],int(first['seed']))['raw']
+    with np.load(capture,allow_pickle=False) as z:
+        return set(raw)==set(z.files) and all(np.array_equal(raw[k],z[k] if k in ('player_ids','side')
+                    else z[k][first['start']:first['stop']]) for k in z.files)
 
 
 def lineup_accuracy_consistent(record: dict) -> bool:
@@ -428,6 +456,7 @@ def main():
                   origin <= day and meta['cutoff'] == day_shift(origin, -1) and season['as_of'] == origin)
         problems = []
         for gid, g in games.items():
+            W = g.get('probability_mass', g['sims'])
             if g.get('shooting_distribution_schema') not in (None, 1):
                 problems.append(f'{gid} unknown shooting distribution schema')
             for period, x in g['periods'].items():
@@ -477,7 +506,7 @@ def main():
                 seed_problems.append(f'{t} seeds sum {sum(f["seeds"]):.4f}')
             if not f['w'] <= f['mean_w'] <= f['w'] + f['remaining']:
                 seed_problems.append(f'{t} mean wins out of range')
-            if hist_total(f['wins']) != season['sims']:
+            if hist_total(f['wins']) != season.get('probability_mass', season['sims']):
                 seed_problems.append(f'{t} wins hist')
         check(f'{day}: season seeds partition and wins stay in range', not seed_problems, seed_problems[:3])
         if season.get('engine_games'):  # D25: universe k plays engine world k, so a game's season win % is the engine's
@@ -512,10 +541,30 @@ def main():
                 ('latest', engine_mod.features_dir(node_models) / 'latest.parquet'), ('team_latest', engine_mod.features_dir(node_models) / 'team_latest.parquet'),
                 ('stints', DERIVED / 'rotations' / 'stints.parquet'), ('on_court', DERIVED / 'rotations' / 'on_court.parquet'),
                 ('models', DERIVED.parent / 'models' / node_models / 'config.json')) if k in hashed)
-            if same:
+            if same and (latest/'lineups'/gid/'work-plan.json').exists():
+                equal = replay_saved_chunk(latest/'lineups'/gid,node_models)
+                check(f'{day}: first complete saved world chunk reproduces all raw arrays exactly',equal and not args.fault)
+                again = None
+            elif stored.get('lineups') and same:
+                import pickle
+                from scripts import a1_lineup_branches, lineup_forecast
+                folder = latest / 'lineups' / gid
+                payload = read_json(folder / 'worlds.json')
+                branch = payload['branches'][0]
+                with (folder / 'inputs.pkl').open('rb') as stream:
+                    replay = pickle.load(stream)
+                eng = engine_mod.Engine(node_models, runtime=replay['runtime'])
+                eng.m.median = replay['median']
+                prepared = a1_lineup_branches.prepare_branch(replay['game'], branch['assignments'])
+                raw = lineup_forecast.simulate(eng, prepared, branch['worlds']['worlds'], int(branch['seed']))['raw']
+                with np.load(folder / 'branches/branch-000.npz', allow_pickle=False) as z:
+                    equal = set(raw) == set(z.files) and all(np.array_equal(raw[k], z[k]) for k in z.files)
+                check(f'{day}: first saved lineup branch reproduces all raw arrays exactly', equal and not args.fault)
+                again = None
+            elif same:
                 g = engine_mod.inputs_for(by_id[gid], day, T, lg, P, registry, Q, priors,
                                           rotation=meta['model'].get('rotation', 'replay'), models=node_models, origin=origin)
-                again = engine_mod.Engine(node_models).simulate(g, meta['sims'], projection.seed_for(meta['model']['id'], day, gid))
+                again = engine_mod.Engine(node_models, runtime=meta['model']).simulate(g, meta['sims'], projection.seed_for(meta['model']['id'], day, gid))
                 again = json.loads(json.dumps(again))
             else:
                 again = None
@@ -546,8 +595,12 @@ def main():
         if meta['inputs']['master_sha256'] == __import__('basketball_common').sha256_file(MASTER_CSV):
             st = read_json(snap / 'stats.json')
             worlds = season_worlds(snaps, season, snap.name)
+            weights = None
+            if (snap / 'season_engine_worlds.npz').exists():
+                with np.load(snap / 'season_engine_worlds.npz', allow_pickle=False) as z:
+                    weights = z['weights']
             again = json.loads(json.dumps(projection.simulate_season(st['teams'], st['league'], master, snap.name, teams,
-                                                                     worlds or None, season['sims'], season['pathway'])))
+                                                                     worlds or None, season['sims'], season['pathway'], weights)))
             for tid, t in season['teams'].items():
                 if 'bottom3' not in t:
                     again['teams'][tid].pop('bottom3', None)
@@ -673,7 +726,7 @@ def main():
         ok = all(m['double'] >= m['triple'] >= m['quadruple'] >= m['quintuple'] >= 0 and m['five_by_five'] <= m['double'] + 1e-9 for m in multis)
         check(f'multi-doubles nested: double ≥ triple ≥ quadruple ≥ quintuple, 5×5 ≤ double ({len(multis)} players)', ok)
     st = read_json(sorted((VIEWS / 'api' / 'standings').glob('*.json'))[-1])
-    sims = st.get('sims')
+    sims = st.get('probability_mass', st.get('sims'))
     tot = [sum(t['forecast']['wins']['hist']) for t in st['teams'] if t.get('forecast', {}).get('wins')]
     if tot:
         if args.fault:

@@ -6,7 +6,7 @@ from unittest.mock import patch
 import numpy as np
 
 from basketball_common import read_json, write_json
-from scripts import nightly, pathway, projection, smoke, views
+from scripts import engine, nightly, pathway, projection, smoke, views
 
 
 class TodayOnlyTests(unittest.TestCase):
@@ -76,7 +76,7 @@ class TodayOnlyTests(unittest.TestCase):
                                          period_rows=[], engine_worlds=10000)
         self.assertEqual(part['games'], {})
         self.assertEqual(part['worlds'], {})
-        self.assertEqual(part['model']['id'], 'engine-v1.3')
+        self.assertEqual(part['model']['id'], engine.ENGINE['id'])
         self.assertEqual(part['sims'], 10000)
 
     def test_pre_tip_snapshot_cannot_be_replaced_after_tip_or_by_missing_game(self):
@@ -182,7 +182,7 @@ class TodayOnlyTests(unittest.TestCase):
                                             if full_key.startswith(gid + '__')
                                             for key in (full_key.split('__', 1)[1],)} for gid in ('a', 'b')},
                     'retained': retained}
-            season = {'model': 'pathway', 'as_of': '2026-11-22', 'pathway': {'label': 'test'}, 'sims': 2,
+            season = {'sims': part['season_sims'], 'model': 'pathway', 'as_of': '2026-11-22', 'pathway': {'label': 'test'},
                       'games': [{'game_id': gid, 'source': 'engine', 'p_home': .5, 'mu_home': .5, 'mu_away': .5}
                                 for gid in ('a', 'b')]}
             with patch.object(nightly, 'DERIVED', derived), patch.object(nightly, 'SNAPSHOTS', snapshots), \
@@ -307,9 +307,9 @@ class TodayOnlyTests(unittest.TestCase):
             part = {'day': '2026-11-22', 'origin': '2026-11-22', 'T': {}, 'lg': {'games': 1}, 'P': {},
                     'slate': [{'game_id': 'a', 'tip_utc': '2026-11-22T18:00:00Z', 'time_valid': '1', 'status': 'scheduled'}], 'prospective': True,
                     'generated': '2026-11-22T17:59:59Z', 'model': {'id': 'test'}, 'sims': 1,
-                    'season_sims': 1, 'engine_inputs': {}, 'games': {'a': {'marker': 'new'}},
+                    'season_sims': 1, 'engine_inputs': {}, 'games': {'a': {'sims': 1, 'marker': 'new'}},
                     'placeholder': {}, 'worlds': {}, 'started': 0}
-            season = {'model': 'pathway', 'as_of': '2026-11-22', 'pathway': {'label': 'test'}, 'games': []}
+            season = {'sims': part['season_sims'], 'model': 'pathway', 'as_of': '2026-11-22', 'pathway': {'label': 'test'}, 'games': []}
             with patch.object(nightly, 'DERIVED', derived), patch.object(nightly, 'SNAPSHOTS', snapshots), \
                     patch.object(nightly, 'MASTER_CSV', master), \
                     patch.object(nightly, 'utc_now', return_value='2026-11-22T18:00:01Z'):
@@ -334,9 +334,9 @@ class TodayOnlyTests(unittest.TestCase):
             part = {'day': '2026-11-22', 'origin': '2026-11-22', 'T': {}, 'lg': {'games': 1}, 'P': {},
                     'slate': [{'game_id': 'a', 'tip_utc': '2026-11-22T18:00:00Z', 'time_valid': '1', 'status': 'scheduled'}], 'prospective': True,
                     'generated': '2026-11-22T17:30:00Z', 'model': {'id': 'test'}, 'sims': 1,
-                    'season_sims': 1, 'engine_inputs': {}, 'games': {'a': 'replacement'},
+                    'season_sims': 1, 'engine_inputs': {}, 'games': {'a': {'sims': 1, 'marker': 'replacement'}},
                     'placeholder': {}, 'worlds': {}, 'started': 0}
-            season = {'model': 'pathway', 'as_of': '2026-11-22', 'pathway': {'label': 'test'}, 'games': []}
+            season = {'sims': part['season_sims'], 'model': 'pathway', 'as_of': '2026-11-22', 'pathway': {'label': 'test'}, 'games': []}
             original_rename = Path.rename
 
             def rename(path, destination):
@@ -351,7 +351,7 @@ class TodayOnlyTests(unittest.TestCase):
                 with self.assertRaisesRegex(OSError, 'injected publish failure'):
                     nightly.write_snapshot(part, season)
             self.assertEqual(read_json(target / 'games.json'), {'a': 'original'})
-            self.assertEqual(read_json(staging / 'games.json'), {'a': 'replacement'})
+            self.assertEqual(read_json(staging / 'games.json'), part['games'])
             self.assertFalse((snapshots / '.2026-11-22.previous').exists())
 
     def test_write_snapshot_keeps_original_when_tip_passes_during_archive(self):
@@ -371,9 +371,9 @@ class TodayOnlyTests(unittest.TestCase):
             part = {'day': '2026-11-22', 'origin': '2026-11-22', 'T': {}, 'lg': {'games': 1}, 'P': {},
                     'slate': [{'game_id': 'a', 'tip_utc': '2026-11-22T18:00:00Z', 'time_valid': '1', 'status': 'scheduled'}],
                     'prospective': True, 'generated': '2026-11-22T17:30:00Z', 'model': {'id': 'test'},
-                    'sims': 1, 'season_sims': 1, 'engine_inputs': {}, 'games': {'a': 'replacement'},
+                    'sims': 1, 'season_sims': 1, 'engine_inputs': {}, 'games': {'a': {'sims': 1, 'marker': 'replacement'}},
                     'placeholder': {}, 'worlds': {}, 'started': 0}
-            season = {'model': 'pathway', 'as_of': '2026-11-22', 'pathway': {'label': 'test'}, 'games': []}
+            season = {'sims': part['season_sims'], 'model': 'pathway', 'as_of': '2026-11-22', 'pathway': {'label': 'test'}, 'games': []}
             with patch.object(nightly, 'DERIVED', derived), patch.object(nightly, 'SNAPSHOTS', snapshots), \
                     patch.object(nightly, 'MASTER_CSV', master), \
                     patch.object(nightly, 'utc_now', side_effect=['2026-11-22T17:59:59Z', '2026-11-22T18:00:01Z']), \

@@ -8,7 +8,7 @@ Do not load historical archives routinely. Root documents describe the present; 
 | [AGENTS](../AGENTS.md) | Owner preferences, safeguards, compute, checkpoint/documentation rules. |
 | [HANDOFF](../HANDOFF_NEXT.md) | Current systems/delivery, blockers, jobs, exact next action and active progress ladders. |
 | [PLAN](../PLAN.md) | Scope, dependencies, milestone ledger, completion criteria and product backlog. |
-| [ENGINE_PLAN](../ENGINE_PLAN.md) | Current design, D1–D54 decision index, implemented/planned boundaries. |
+| [ENGINE_PLAN](../ENGINE_PLAN.md) | Current design, D1–D56 decision index, implemented/planned boundaries. |
 | [TRAINING_PLAN](../TRAINING_PLAN.md) | Folds, cutoffs, frozen numerical gates, confirmation/release requirements. |
 | [FINDINGS](../FINDINGS.md) | Concise measured conclusions and negative decisions, with population and report links. |
 | [DASHBOARD_PLAN](../DASHBOARD_PLAN.md) | Current shipped UI, definitions, constraints and pending product contracts. |
@@ -21,10 +21,13 @@ Do not load historical archives routinely. Root documents describe the present; 
 - [A1 no-release decision](research/a1_no_release_20261123.md): measured prior-roster rejection and every unpassed production gate.
 - [Active promotion v2](protocols/promotion_v2_20261123.md): D51 change classes, core margins, calibrated diagnostics and independent confirmation.
 - [Rule-level final](protocols/rule3_final_20261123.md): fixed current-season adapter, dated fills/minutes and one formal protected evaluation.
+- [Independent worlds](protocols/world_independence_20261123.md) and [qualification clarification](protocols/world_independence_amendment_20261123.md): canonical D29 correction, shared world queue and fixed compatibility evidence.
+- [Seed-diagnostic review](protocols/world_independence_stream_review_20261123.md) and [latency checks](protocols/world_chunk_latency_20261123.md): retained imprecision/confirmation boundary and bounded performance-only attempts.
 - [Historical promotion v1](protocols/promotion_v1_20261122.md): verbatim original S01 gate, retained for old experiment reproduction.
 - [Frozen A2 protocols](protocols/a2_form_20261122.md): verbatim preregistered residual/form methods.
 - [A2 contextual clock](protocols/a2_late_clock_20261123.md): earlier-fold learned-clock screen, component removal and confirmation boundaries.
 - [A2 engine stages](protocols/a2_clock_engine_20261123.md): matched compatibility, control reuse, broader folds, seeds/stress and protected-version boundary.
+- [A2 baseline amendment](protocols/a2_clock_independence_amendment_20261123.md): qualified independent fitter in both clock arms; unchanged panels and margins.
 - [Incremental delivery/catch-up](protocols/incremental_catchup.md): immediate successor priority and proposed historical reconstruction boundary.
 - [Cleanup audit](maintenance/2026-11-23-lean-docs.md): before/after counts, preservation checks and checkpoint validation.
 - Experiment JSON/text under `analysis/experiments/` contains exact configurations, outcomes, uncertainty and fingerprints;
@@ -58,3 +61,7 @@ the budgets. A justified budget change needs a recorded reason, not an automatic
 The local `.githooks/pre-commit` also runs it on every commit (enabled here via `core.hooksPath=.githooks`).
 Fresh clones must inspect existing hooks before enabling it. D52 removes repository CI workflows;
 checks stay local, while GitHub Pages continues serving the data-free `gh-pages` shell.
+
+D56 active method: [independent worlds and scheduling](protocols/world_independence_20261123.md).
+
+D51 acceptance revision: [v3 policy and fresh independent confirmation](protocols/promotion_v3_20261123.md).

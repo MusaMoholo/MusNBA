@@ -37,7 +37,7 @@ class NightlyOriginTests(unittest.TestCase):
                 patch.object(nightly, 'period_profiles', side_effect=lambda values, players, before, teams, blowout:
                              ({'dates': selected(values, before)}, {})) as periods, \
                 patch.object(nightly.projection, 'simulate_game',
-                             return_value={'home': {}, 'away': {}}) as simulate:
+                             return_value={'sims': 100, 'home': {}, 'away': {}}) as simulate:
             part = nightly.project_slate(target, {}, [game], rows, rows, {}, True, 100,
                                          period_rows=rows, origin=origin)
         self.assertEqual(part['origin'], origin)
@@ -66,11 +66,11 @@ class NightlyOriginTests(unittest.TestCase):
             with patch.object(nightly, 'team_table', return_value=({}, {'teams_gp': 20, 'games': 1})), \
                     patch.object(nightly, 'player_table', return_value={}), \
                     patch.object(nightly, 'period_profiles', return_value=({}, {})), \
-                    patch.object(nightly.projection, 'simulate_game', return_value={'home': {}, 'away': {}}):
+                    patch.object(nightly.projection, 'simulate_game', return_value={'sims': 100, 'home': {}, 'away': {}}):
                 part = nightly.project_slate('2026-11-22', {}, [game], [], [], {}, True, 100,
                                              period_rows=[], origin='2026-11-21')
             part['generated'] = '2026-11-22T23:59:59Z'
-            season = {'model': 'pathway', 'as_of': '2026-11-21', 'pathway': {'label': 'test'}, 'games': []}
+            season = {'sims': part['season_sims'], 'model': 'pathway', 'as_of': '2026-11-21', 'pathway': {'label': 'test'}, 'games': []}
             with patch.object(nightly, 'DERIVED', derived), patch.object(nightly, 'SNAPSHOTS', snapshots), \
                     patch.object(nightly, 'MASTER_CSV', master), \
                     patch.object(nightly, 'utc_now', return_value='2026-11-23T00:00:01Z'):

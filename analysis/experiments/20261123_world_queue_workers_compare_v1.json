@@ -1,0 +1,25 @@
+{
+ "kind": "D56 complete live queue worker determinism; fixed layout and inputs",
+ "all_game_branch_arrays_identical": true,
+ "workers": [
+  1,
+  2
+ ],
+ "worlds_per_branch": 1000,
+ "chunk_worlds": 500,
+ "games": [
+  "401910036",
+  "401910038"
+ ],
+ "branches": 3,
+ "independent_histograms": 9440,
+ "seconds": [
+  233.7971922919969,
+  119.88254179200158
+ ],
+ "evidence": {
+  "analysis/experiments/20261123_world_queue_1worker_probe_v2.json": "d4cbf0528ef02691880400647cf9b8ab9b1cb5d516eb2429818be437437bc215",
+  "analysis/experiments/20261123_world_queue_2worker_probe_v1.json": "55031b95280a1deb62cf209a4c8bf4189b5521731c533bf662c8b01fc09b363a"
+ },
+ "limitation": "Runs overlapped other compute. Correctness/worker determinism evidence, not an isolated speed comparison or full 10k slate."
+}

@@ -43,6 +43,9 @@ ENGINE = {'id': 'engine-v1.3', 'kind': 'engine', 'version': 'v1.3', 'models': 'v
                    'Starters are our own projection (D33). 10,000 simulated games per game (D36). Known gaps: team differences '
                    'compressed — real NBA matchups tested and not promoted (D37) — outcomes too tightly spread, minutes do not yet '
                    'react to the score (FINDINGS §3o, §3s–§3w)'}
+LEGACY_ENGINE = ENGINE.copy()
+ENGINE = {**ENGINE, 'id': 'engine-v1.3-r1', 'version': 'v1.3-r1', 'foul_policy': 'nba-rule3-v1',
+          'label': ENGINE['label'] + '. Rule revision r1: legal foul-out replacements and NBA roster-exhaustion penalties; unchanged v1.3 fitted nodes.'}
 MODELS = DERIVED.parent / 'models'
 # D29 rotation tables (used when players carry minutes states): tables per side shared by worlds, 10-second bins,
 # template shapes smoothed over ~60 s (6 bins), offset fit to within 0.4 min of each table's targets.
@@ -397,12 +400,18 @@ class RotationPolicy(Protocol):
 
 
 class Engine:
-    def __init__(self, version: str | None = None):
+    def __init__(self, version: str | None = None, *, runtime: dict | None = None):
+        self.runtime = dict(runtime if runtime is not None else LEGACY_ENGINE if version is not None else ENGINE)
         version = version or ENGINE.get('models', ENGINE['version'])  # the node models' version (v1.2 serves v1.1's models)
         self.m = Models(version)
         self.diag = None  # set to [] to record (start type, seconds to action, clock) per segment
         self.rotation_diag = None  # optional pre-foul-out scheduled rotation tables
         self.rotation_policy: RotationPolicy | None = None
+        if self.runtime.get('foul_policy') == 'nba-rule3-v1':
+            from scripts.foul_out import Rule3Policy
+            self.rotation_policy = Rule3Policy()
+        elif self.runtime.get('foul_policy') is not None:
+            raise ValueError('Unknown recorded foul policy')
 
     # ----------------------------------------------------------------------------- inputs
     def _context(self, g, st, A, L_off, L_def):
@@ -846,7 +855,7 @@ class Engine:
         exp = {'mu_home': float(pts['home'].sum(1).mean()), 'mu_away': float(pts['away'].sum(1).mean()),
                'pace': float(st.poss.mean())}
         self.last = st  # per-world state of the last game (scripts/backtest.py reads points, possessions and box scores)
-        out = projection.package(g.game, teams, pts, n_ot, W, exp, ENGINE['id'])
+        out = projection.package(g.game, teams, pts, n_ot, W, exp, self.runtime['id'])
         out['engine'] = {'fouled_out': int((st.box['pf'].sum(2) >= 6).sum()), 'pf_mean': {s: round(float(st.box['pf'][:, np.flatnonzero(g.side == i)].sum((1, 2)).mean()), 2)
                                                                                          for i, s in enumerate(g.sides)}}
         return out

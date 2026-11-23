@@ -1,0 +1,47 @@
+{
+ "kind": "D56 isolated single-game latency; different layouts are different explicit simulation streams",
+ "game": "401910038",
+ "worlds": 10000,
+ "workers": 10,
+ "selected_chunk_worlds": 1000,
+ "seconds_1000": [
+  74.4414929170016,
+  72.38132600000245
+ ],
+ "identical_1000_arrays_on_repeat": true,
+ "larger_layouts": [
+  {
+   "chunk_worlds": 2500,
+   "complete_within_limit": false,
+   "latency_lower_bound_seconds": 90
+  },
+  {
+   "chunk_worlds": 5000,
+   "complete_within_limit": false,
+   "latency_lower_bound_seconds": 90
+  }
+ ],
+ "evidence": {
+  "initial_1000": {
+   "path": "analysis/experiments/20261123_world_chunks_10x1000_v1.json",
+   "sha256": "2c1ccc11e8f9fc3b49cd738a6c2d720235b727dcda3e7cecd364e3d8411418ba"
+  },
+  "repeat_1000": {
+   "path": "analysis/experiments/20261123_world_chunks_10x1000_repeat_v1.json",
+   "sha256": "919e811f298481db548c39f4a0bf46b47d7b6d46a1cb465418c5b925b5f1e423"
+  },
+  "limit_2500": {
+   "path": "analysis/experiments/20261123_world_chunks_10x2500_limit90_v1.json",
+   "sha256": "947e0c27e2f476ed2cd632a0ea5b071bcc82ff51de2c2f9f6d1d8ea5fcae2bc3"
+  },
+  "limit_5000": {
+   "path": "analysis/experiments/20261123_world_chunks_10x5000_limit90_v1.json",
+   "sha256": "27da8f2c71964ea69f80e2cb1b86b980c57f33a7278cc4915650fd7f6afc1ff7"
+  }
+ },
+ "limits": [
+  "One ordinary game, not a universal optimum or full-slate throughput.",
+  "Larger-layout timing attempts stopped at the predeclared limit, without an accuracy claim.",
+  "Full accepted-system nightly remains required; fitter remains opt-in pending protected confirmation."
+ ]
+}

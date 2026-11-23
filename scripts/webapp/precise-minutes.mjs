@@ -10,11 +10,18 @@ export function decodeMinuteCdfs(raw) {
       || JSON.stringify(raw.periods) !== JSON.stringify(periods) || !Array.isArray(offsets)
       || offsets.length !== ids.length * periods.length + 1 || offsets[0] !== 0
       || offsets.some((n, i) => !Number.isSafeInteger(n) || (i && n <= offsets[i - 1]))
+      || (raw.byte_shuffle != null && raw.byte_shuffle !== 8)
       || typeof raw.minutes_f64_le !== 'string' || typeof raw.cumulative_f64_le !== 'string') throw new Error('Invalid minute-CDF metadata');
   const unpack = text => {
     const bytes = Uint8Array.from(atob(text), c => c.charCodeAt(0));
     if (bytes.length !== offsets.at(-1) * 8) throw new Error('Invalid minute-CDF dimensions');
-    const view = new DataView(bytes.buffer), values = new Float64Array(offsets.at(-1));
+    let linear = bytes;
+    if (raw.byte_shuffle === 8) {
+      linear = new Uint8Array(bytes.length);
+      const n = bytes.length / 8;
+      for (let lane = 0; lane < 8; lane++) for (let i = 0; i < n; i++) linear[i * 8 + lane] = bytes[lane * n + i];
+    }
+    const view = new DataView(linear.buffer), values = new Float64Array(offsets.at(-1));
     for (let i = 0; i < values.length; i++) values[i] = view.getFloat64(i * 8, true);
     return values;
   };

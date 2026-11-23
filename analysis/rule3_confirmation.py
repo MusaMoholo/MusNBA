@@ -145,14 +145,14 @@ def add_coverage(result, capture):
                 row[stat + '_coverage_expected'] = expected_coverage(values, observed)
 
 
-def paired_game(task):
+def paired_game(task, *, labels=('control', 'candidate'), corrected=(False, True), persist=True):
     gid, directory = task
     folder = Path(directory)
     eng = backtest._W['engine']
     original = eng.simulate
     result = {'game': gid, 'outputs': {}}
-    for label in ('control', 'candidate'):
-        observer = Observer(label == 'candidate')
+    for label in labels:
+        observer = Observer(corrected[('control', 'candidate').index(label)])
         eng.rotation_policy = observer
         saved = {}
         def run(g, worlds, seed):
@@ -181,7 +181,8 @@ def paired_game(task):
                                     'counts': dict(observer.policy.counts) if observer.policy else {}}
     result['worker_pid'] = os.getpid()
     result['worker_peak_rss_bytes'] = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss) * (1 if sys.platform == 'darwin' else 1024)
-    write_json(folder / f'{gid}.json', result, pretty=False)
+    if persist:
+        write_json(folder / f'{gid}.json', result, pretty=False)
     return result
 
 
@@ -250,7 +251,15 @@ def main():
             allowed.add(path)
             for label, entry in row['outputs'].items():
                 p = ROOT / entry['capture']
-                if label not in ('control', 'candidate') or p != root / f'{gid}-{label}.npz' or sha256_file(p) != entry['sha256']:
+                reused = row.get('reused_control') if label == 'control' else None
+                if reused:
+                    original = ROOT / reused['meta']
+                    if (sha256_file(original) != reused['sha256']
+                            or read_json(original)['outputs']['candidate'] != entry):
+                        raise ValueError('reused control differs from its qualified source')
+                elif p != root / f'{gid}-{label}.npz':
+                    raise ValueError('completed capture belongs to a different run')
+                if label not in ('control', 'candidate') or sha256_file(p) != entry['sha256']:
                     raise ValueError('completed capture differs')
                 allowed.add(p)
     if set(root.iterdir()) - allowed:

@@ -16,15 +16,15 @@ No fetching, fitting or simulation while browsing. Market lines are a diagnostic
 | Phase | State |
 |---|---|
 | Data, application shell and canonical history | Delivered; raw retention/reconciliation remain mandatory. |
-| Possession model | v1.3 accepted; D29 minutes, D30 defence, pool 0, 10k worlds. Accuracy gaps remain. |
+| Possession model | Rule3 r1/unchanged v1.3 nodes accepted; D29 minutes, D30 defence, pool 0, 10k worlds. Accuracy gaps remain. |
 | Feedback/evaluation | Node/fold/backtest harness and timing-aware result views exist; automatic refit/promotion is not built. |
 | Season | Pathway v1 delivered; calibration, future absences and complete postseason/Cup mechanics remain. |
-| Product | U1–U22 delivered; full lineup branches and View Centre remain open. Device acceptance is manual. |
+| Product | U1–U23, lineup branches and offline photos delivered; View Centre remains open. Device acceptance is manual. |
 
 ## 6. Original A1 milestone ledger
 
 This is the **14-task accuracy programme**, distinct from **Chunk A module A1** below. Original weights are
-unchanged and sum to 100%; **58.0% complete**. Do not credit D42 module progress twice. S13 remains deferred,
+unchanged and sum to 100%; **64.0% complete**. Do not credit D42 module progress twice. S13 remains deferred,
 so the completion ceiling without reauthorisation is 95%. Full original scopes/ladders remain in the
 [frozen PLAN](docs/archive/2026-11-23-before-lean/PLAN.md) and
 [frozen HANDOFF](docs/archive/2026-11-23-before-lean/HANDOFF_NEXT.md).
@@ -38,7 +38,7 @@ so the completion ceiling without reauthorisation is 95%. Full original scopes/l
 | S05 | Roles/membership/minutes | 8% | 100%; both screens failed pooled minute gate; retain D29. |
 | S06 | State-responsive substitutions | 12% | 100%; candidate failed 3 non-inferiority bounds; retain production. |
 | S07 | Availability/starts/future absences | 6% | 100%; fixed fallbacks, origin/report/timing corrections delivered; no fitted injury hazard. |
-| S08 | Branches/coherent Expected | 6% | 0% original acceptance; advanced research, production still blocked. |
+| S08 | Branches/coherent Expected | 6% | 100%; qualified r1 branches/Expected/season accounting and PWA delivery; assumptions labelled. |
 | S09 | Form/talent/end-game | 10% | 0% original acceptance; diagnostics/prototype exist. |
 | S10 | Season calibration | 8% | 0%; D42 B2. |
 | S11 | Integrated confirmation | 5% | 0%; D42 B3. |
@@ -58,7 +58,7 @@ Owner (23 Nov) now authorises completing A1 and A2, lifting the earlier A1 stop;
 
 | Module | Weight | Progress | Dependency and acceptance/fallback |
 |---|---:|---:|---|
-| A1 Lineups/Expected | 30% | 90% D51 review | Prior no-release fallback reopened by owner-authorised gate redesign; v2 separates mechanics/scenarios from learned accuracy changes. Production branches/S08 remain undelivered. |
+| A1 Lineups/Expected | 30% | 90% D51 review | Prior no-release fallback reopened by owner-authorised gate redesign; v2 separates mechanics/scenarios from learned accuracy changes. Qualified r1 branches/photos delivered; D56 fitter/queue decision and final checkpoint remain. |
 | A2 Form/late game | 35% | 60% | Contextual late clock passes earlier-fold and separate F4 analytical screens; engine compatibility remains. No calibrated form factor/promotion. |
 | A3 View Centre/delivery | 35% | 0% | A1/A2 decisions. Five labelled real worlds, reconciled event files, 2-D court/player, responsive/offline checks and fresh nightly. |
 
@@ -78,7 +78,7 @@ delivery is immediate successor work (D54); historical replay remains deferred. 
 
 ### 6b. What earns promotion
 
-[TRAINING_PLAN §8](TRAINING_PLAN.md#8-a1-acceptance-and-reproducibility) links the active D51/v2 release policy:
+[TRAINING_PLAN §8](TRAINING_PLAN.md#8-a1-acceptance-and-reproducibility) links versioned D51/v2 and explicit D57/v3 policies:
 pre-game player tiers first, then team/joint outcomes, frozen paired uncertainty/non-inferiority/noise,
 class-specific confirmation, simulation-resolution checks, stress and exact identities/cutoffs/runtime, then a frozen final evaluation where applicable. Legacy numerical margins remain; D51 permits redesigning inapplicable blocking requirements.
 Actual-participant diagnostics do not establish pre-game availability accuracy. Redesign requires a recorded
@@ -104,7 +104,7 @@ installation/import/memory acceptance remains an owner check; exporting to iClou
 
 | Work | Current boundary |
 |---|---|
-| Full lineup selector | A1; laptop/local saved branches, phone Expected-only. Later localhost lineup/minute editor uses a separate stored what-if runner. |
+| Full lineup selector | Delivered in A1; laptop/local saved branches, phone Expected-only. Later localhost lineup/minute editor uses a separate stored what-if runner. |
 | Five-game View Centre | A3; own-margin extreme and highest individual fantasy world per team, plus a real representative world. Source-neutral event replay; actual-game adapter later. |
 | Rotation map | B3/S12; stored probabilities sum to five. |
 | Deeper outcome visualisations | Extend existing conditional/joint distributions, percentile bands and exceedance views; extremes stay labelled. |
@@ -114,7 +114,8 @@ installation/import/memory acceptance remains an owner check; exporting to iClou
 | Advanced player stats | Actual +/−, six box-derived rates and dated action-share input exist. True simulated possession USG%, on-court ratings, simulated +/− and BPM need honest capture/definitions/validation. |
 | Code simplification (owner, 23 Nov) | After A1/A2, inventory production dependencies, duplicate logic and research-only files; target proven maintenance/runtime costs. Preserve reproducibility and View Centre scope; no line-count-driven wholesale rewrite or blind deletion. |
 | Shooting geography (owner hypothesis, 23 Nov) | Start from NBA source-defined basic/advanced zones; the owner's dunker/post/wing/slot examples are illustrative, not a required bespoke taxonomy. Fit shooter/defender attempts and makes by zone, pooling sparse cells to broader parents and retaining supported side/direction. Compare current five zones/21 bands, source-zone-only, then within-zone distance on folds. Preserve raw data; audit source units/orientation, labels/coverage and observed versus inferred defender attribution. Version derived mappings/unknowns; extend the existing zone-choice node only after evidence. No mapping/model chosen or collection started. |
-| House design/face cards | Keep key boxes first, secondary content expandable, state preserved; face cards remain future. Extend existing U3 role badges/U11 defence profiles. Lab polish is low priority. |
+| Player headshots — active (D55) | Shared offline icons from retained ESPN roster URLs, initials fallback; cover player-bearing pages and inspect 1440/960/390 in both themes. Include required PWA asset/bundle delivery with A1/A2. |
+| House design | Keep key boxes first, secondary content expandable, state preserved. Extend existing U3 role badges/U11 defence profiles. Lab polish is low priority. |
 
 Spatial displays must follow D43: zones/bands or validated source positions; no invented tracking. All dashboard copy
 reflects loaded data/configuration. These items do not authorise forecast-history backfill (D40).
@@ -123,7 +124,7 @@ reflects loaded data/configuration. These items do not authorise forecast-histor
 
 | Date | Result | Evidence |
 |---|---|---|
-| 23 Nov | Rule confirmation 44/44 core bounds; stress/stream audited; frozen 246-game final running. Contextual clock passes F1–F3/F4 analytical screens; no new model served. D54 prioritises per-game bundles next. | HANDOFF jobs/delivery; FINDINGS §7/§8. |
+| 23 Nov | Rule r1 final246 passes; S08 completes: r1 lineups/headshots,15×10k batches; hosted29/27, upgrade32, smoke108/fault exit1. D56 protected v2 establishes42/44 (all27 proper scores); bias-veto audit motivates frozen v3/fresh200 F4 confirmation. No r2 release. Clock engine tests await A1; D54 follows. | HANDOFF live work; FINDINGS §7/§8. |
 | 23 Nov | D52 removes unwanted CI workflows; local checks and branch-based Pages hosting retained. No model/app change. | AGENTS local-check rule; README hosting commands. |
 | 23 Nov | D51 reopens A1 release review; v2 compatibility/confirmation and retained defender-result audit. | [Active policy](docs/protocols/promotion_v2_20261123.md) |
 | 23 Nov | A1 no-release fallback: 28,530 memberships audited, 783/800 starter contexts supported; v1.3 retained. | [Decision](docs/research/a1_no_release_20261123.md) |

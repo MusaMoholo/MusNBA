@@ -1,0 +1,106 @@
+{
+ "kind": "unpublished full r1 lineup/headshot/CDF bundle preflight; no new accuracy claim",
+ "engine": "engine-v1.3-r1",
+ "snapshot": "2026-11-23",
+ "bundles": {
+  "phone": {
+   "bundle": "/tmp/MusNBA-a1-full-preflight-phone-20261123.musnba.gz",
+   "bytes": 101255032,
+   "header": {
+    "format": "musnba",
+    "version": 2,
+    "capabilities": [
+     "lineup-forecast-v1",
+     "minute-cdf-player-v2",
+     "player-icons-v1"
+    ],
+    "created": "2026-11-23T14:49:26+00:00",
+    "latest": "2026-11-23",
+    "snapshots": [
+     "2026-11-12",
+     "2026-11-13",
+     "2026-11-14",
+     "2026-11-15",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22",
+     "2026-11-23"
+    ],
+    "profile": "phone"
+   },
+   "log": "/tmp/musnba_a1_full_phone_pwa_20261123_v2.log",
+   "log_sha256": "552905b23ee577b8eae99ea49e5eae92e135dd3707735f3fd67d1cbc13da74ec",
+   "passed": 27,
+   "failures": []
+  },
+  "laptop": {
+   "bundle": "/tmp/MusNBA-a1-full-preflight-laptop-20261123.musnba.gz",
+   "bytes": 193451289,
+   "header": {
+    "format": "musnba",
+    "version": 2,
+    "capabilities": [
+     "lineup-forecast-v1",
+     "minute-cdf-player-v2",
+     "player-icons-v1"
+    ],
+    "created": "2026-11-23T14:50:02+00:00",
+    "latest": "2026-11-23",
+    "snapshots": [
+     "2026-11-12",
+     "2026-11-13",
+     "2026-11-14",
+     "2026-11-15",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22",
+     "2026-11-23"
+    ],
+    "profile": "laptop"
+   },
+   "log": "/tmp/musnba_a1_full_laptop_pwa_20261123_v1.log",
+   "log_sha256": "8ca32520e758d45a64a524f096777127aa61163f741b649eab5aeb3a2c03e235",
+   "passed": 29,
+   "failures": []
+  }
+ },
+ "shell": "/tmp/musnba-a1-full-preflight-shell-20261123",
+ "cache": "318fb2858f9d58651de0",
+ "browser": {
+  "passed": 24,
+  "report": "/tmp/musnba-a1-full-lineups-browser-20261123-v1/report.json",
+  "report_sha256": "b3a504cf295f298e2c1cac9eb63999dff5db7583b5f94b8b5bce116b18dd2d01",
+  "screenshots_inspected": [
+   "lineup-game",
+   "lineup-sits",
+   "lineup-scenario",
+   "lineup-sheet"
+  ],
+  "widths": [
+   1440,
+   960,
+   390
+  ],
+  "themes": [
+   "dark",
+   "light"
+  ]
+ },
+ "source_sha256": {
+  "analysis/pwa_import_check.mjs": "c4c04ffb4a73c4dbf0e1c595675d945f02b9795378f4254677dde178d8c6ccf0",
+  "analysis/browser_check.mjs": "75a42b65c5356a1efa060a829787fead93eb593764f200c3652158a31637f69a"
+ },
+ "limits": [
+  "Temporary exports only; public shell and iCloud unchanged.",
+  "Qualified Rule 3 r1; legacy batch fit retained while D56 independent fit is under qualification.",
+  "Real-device import/memory acceptance is still an owner check."
+ ]
+}

@@ -27,6 +27,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 from basketball_common import ARCHIVE_ROOT, LOGOS, VIEWS, WEB, archive_paths, packed  # noqa: E402
+from scripts.player_icons import ICONS as PLAYER_ICONS, catalogue as player_icons
 
 MODULES = ['app', 'ui', 'today', 'game', 'league', 'players', 'lab', 'season', 'about', 'spotlight', 'outcomes', 'scenario', 'pwa', 'pwa-storage', 'static-api', 'weighted-worlds', 'precise-minutes', 'lineup-worlds']
 ICONS = ['icon.svg', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png']
@@ -146,7 +147,7 @@ def phone_record(key: str, text: str) -> str | None:
 
 def view_inventory() -> dict:
     return {str(p): (p.stat().st_size, p.stat().st_mtime_ns)
-            for root in (VIEWS / 'api', LOGOS) for p in root.rglob('*') if p.is_file()}
+            for root in (VIEWS / 'api', LOGOS, PLAYER_ICONS) for p in root.rglob('*') if p.is_file()}
 
 
 def export_bundle(output: Path, archive_root=None, profile: str = 'phone') -> dict:
@@ -166,10 +167,16 @@ def export_bundle(output: Path, archive_root=None, profile: str = 'phone') -> di
         before = view_inventory()
         shutil.copytree(api, frozen / 'api')
         shutil.copytree(LOGOS, frozen / 'logos')
+        icons = player_icons()
+        (frozen / 'player-icons').mkdir()
+        for pid in icons['ids']:
+            shutil.copy2(PLAYER_ICONS / f'{pid}.png', frozen / 'player-icons' / f'{pid}.png')
         if view_inventory() != before:
             raise SystemExit('Views changed during export; retry after nightly finishes. The previous export is unchanged.')
         meta = json.loads((frozen / 'api' / 'meta.json').read_text())
-        header = {'format': 'musnba', 'version': 1, 'created': datetime.now(timezone.utc).isoformat(timespec='seconds'),
+        if meta.get('player_icons', {}).get('ids', []) != icons['ids']:
+            raise ValueError('Rebuild views after collecting player photos')
+        header = {'format': 'musnba', 'version': 2, 'capabilities': sorted(set(meta.get('required_capabilities', [])) | {'player-icons-v1'}), 'created': datetime.now(timezone.utc).isoformat(timespec='seconds'),
                   'latest': meta['latest'], 'snapshots': [s['date'] for s in meta['snapshots']], 'profile': profile}
         descriptor, staging = tempfile.mkstemp(prefix='MusNBA-export-', suffix='.partial', dir=output.parent)
         os.close(descriptor)
@@ -179,7 +186,7 @@ def export_bundle(output: Path, archive_root=None, profile: str = 'phone') -> di
                 stream.write(packed(header) + '\n')
                 for path in sorted((frozen / 'api').rglob('*.json')):
                     key = '/api/' + path.relative_to(frozen / 'api').with_suffix('').as_posix()
-                    if profile == 'laptop' and key.startswith('/api/game/') and key.endswith('/minute-marginals'):
+                    if profile == 'laptop' and key.startswith('/api/game/') and ('/minute-marginals' in key):
                         continue
                     text = path.read_text(encoding='utf-8')
                     body = phone_record(key, text) if profile == 'phone' else text
@@ -187,9 +194,10 @@ def export_bundle(output: Path, archive_root=None, profile: str = 'phone') -> di
                         continue
                     stream.write(packed(record(key, body)) + '\n')
                     count += 1
-                for path in sorted((frozen / 'logos').glob('*.png')):
-                    stream.write(packed(record('/logos/' + path.name, base64.b64encode(path.read_bytes()).decode(), 'image/png', True)) + '\n')
-                    count += 1
+                for folder in ('logos', 'player-icons'):
+                    for path in sorted((frozen / folder).glob('*.png')):
+                        stream.write(packed(record('/' + folder + '/' + path.name, base64.b64encode(path.read_bytes()).decode(), 'image/png', True)) + '\n')
+                        count += 1
                 stream.write(packed({'end': True, 'records': count}) + '\n')
             verify(Path(staging), header, count)
             if output.exists():

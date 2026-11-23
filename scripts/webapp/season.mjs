@@ -1,5 +1,5 @@
 // Season insights from retained season counts and cutoff-safe season statistics.
-import {api, dayLabel, esc, f1, heat, pct, seg, signed, standingsNav, store, team, teamLink} from './ui.mjs';
+import {playerFace, playerLabel, api, dayLabel, esc, f1, heat, pct, seg, signed, standingsNav, store, team, teamLink} from './ui.mjs';
 const state = {conf: store.get('season-conf', 'East')};
 export async function render(view, {meta, current, rest}) {
   const tab = ['races', 'movers', 'leaders'].includes(rest?.[0]) ? rest[0] : 'races';
@@ -54,7 +54,7 @@ function leaders(players, standings) {
   const value = (p, key) => shooting[key] ? p.tot[shooting[key][0]] / p.tot[shooting[key][1]] : p.tot[key] / p.gp;
   const cards = cats.map(([key, label]) => {
     const rows = eligible.filter(p => !shooting[key] || p.tot[shooting[key][1]] / p.gp >= shooting[key][2]).slice().sort((a, b) => value(b, key) - value(a, key) || b.gp - a.gp || a.id.localeCompare(b.id)).slice(0, 5);
-    return `<section class="panel"><h2>${label}</h2>${rows.length ? `<ol class="leader-list">${rows.map(p => `<li><a href="#/player/${p.id}"><span>${esc(p.name)}<small>${esc(team(p.team).abbr)} · ${p.gp} GP</small></span><b>${shooting[key] ? pct(value(p, key)) : f1(value(p, key))}</b></a></li>`).join('')}</ol>` : '<p class="note">No qualifying players yet.</p>'}${shooting[key] ? `<p class="note">At least ${shooting[key][2]} ${shooting[key][1].toUpperCase()} per game.</p>` : ''}</section>`;
+    return `<section class="panel"><h2>${label}</h2>${rows.length ? `<ol class="leader-list">${rows.map(p => `<li><a href="#/player/${p.id}"><span>${playerLabel(p.id, p.name)}<small>${esc(team(p.team).abbr)} · ${p.gp} GP</small></span><b>${shooting[key] ? pct(value(p, key)) : f1(value(p, key))}</b></a></li>`).join('')}</ol>` : '<p class="note">No qualifying players yet.</p>'}${shooting[key] ? `<p class="note">At least ${shooting[key][2]} ${shooting[key][1].toUpperCase()} per game.</p>` : ''}</section>`;
   }).join('');
   const teamCats = [['ortg', 'Offensive rating', -1], ['drtg', 'Defensive rating', 1], ['net', 'Net rating', -1], ['pace', 'Pace', -1], ['scoring', 'Points per game', -1], ['rebounding', 'Rebounds per game', -1]];
   const teamValue = (t, k) => k === 'scoring' ? t.per_game?.pts : k === 'rebounding' ? t.per_game?.reb : t[k];

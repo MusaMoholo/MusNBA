@@ -1,0 +1,19 @@
+{
+ "games": [
+  {
+   "game": "401809247",
+   "raw_world_parity": true,
+   "full_game_formatter_parity": true
+  },
+  {
+   "game": "401810357",
+   "raw_world_parity": true,
+   "full_game_formatter_parity": true
+  },
+  {
+   "game": "401810393",
+   "raw_world_parity": true,
+   "full_game_formatter_parity": true
+  }
+ ]
+}

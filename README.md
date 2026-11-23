@@ -2,8 +2,8 @@
 
 Local-first NBA player/game/season simulations: **10,000 possession worlds for today's ET games**, then
 **10,000 seasons** using each world's own evolving team ratings from tomorrow onward. Accepted engines:
-**v1.3 / team-pathway-v1**. The laptop PWA is primary; phone is stripped. Full lineup branches and the 2-D
-View Centre remain unshipped. See [HANDOFF](HANDOFF_NEXT.md) for current state and [docs index](docs/README.md)
+**engine-v1.3-r1 / team-pathway-v1** (unchanged v1.3 fitted nodes). The laptop PWA is primary; phone is stripped. Stored lineup branches are delivered on laptop; the 2-D
+View Centre remains future work. See [HANDOFF](HANDOFF_NEXT.md) for current state and [docs index](docs/README.md)
 for focused references/history; contributors start with [AGENTS](AGENTS.md).
 
 ## Setup and daily use
@@ -92,14 +92,19 @@ under `analysis/experiments/`, per-row arrays/captures stay ignored under `data/
 | `scripts/engine.py`, `backtest.py`, `backtest_compare.py`, `a1_compare.py` | Possession worlds, matched engine tests, legacy and strict A1 comparisons. |
 | `scripts/pathway.py`, `season_backtest.py`, `projection.py`, `season_stats.py` | Per-world team seasons, historical calibration, packaging/stats/placeholder. |
 | `scripts/nightly.py`, `nightly_musnba.py`, `views.py`, `serve.py`, `export_musnba.py` | Pipeline, snapshots, read-only app and PWA delivery. |
+| `scripts/live_forecast.py`, `lineup_forecast.py`, `forecast_output.py`, `world_mass.py` | Offline world queue, stored lineup cases and exact weighted summaries; independent-fit queue is runtime-gated. |
+| `scripts/player_worlds.py`, `lineup_minutes.py`, `player_icons.py` | Precise world/CDF storage and retained offline photo catalogue. |
 | `scripts/webapp/`, `analysis/*.mjs` | Native ES-module UI, browser/PWA checks; no build dependency. |
 | `scripts/a1_*.py`, `scripts/a2_*.py`, `analysis/a1_*` | Research/audits; [branch runbook](docs/research/a1_branches.md), frozen protocols and old full command map via docs index. |
 
-`scripts/foul_out.py:Rule3Policy` is the opt-in Rule 3 correction under independent confirmation, not
-the production default. `tests/test_foul_out.py` covers its isolated accounting/rule cases.
+`scripts/foul_out.py:Rule3Policy` passed its single protected confirmation; qualified r1 is configured locally
+and is delivered with lineup/headshot PWA bundles; HANDOFF owns current generation state.
+`tests/test_foul_out.py` covers isolated accounting/rule cases. D56's independent-world fitter and shared
+world queue remain candidates pending their own qualification, not an automatically shipped runtime.
 
 `scripts/release_gate.py` applies the current class-specific statistical compatibility gate; it never publishes
-or promotes a model. Active policy: [promotion v2](docs/protocols/promotion_v2_20261123.md).
+or promotes a model. Default policy: [v2](docs/protocols/promotion_v2_20261123.md); explicit
+[v3](docs/protocols/promotion_v3_20261123.md) requires fresh frozen confirmation after the documented audit.
 
 `scripts/a1_prior_roster_screen.py` and `analysis/a1_prior_roster_audit.py` census/reconstruct prior-box
 membership and required starter-position coverage without reading outcome columns or generating forecasts.
@@ -107,6 +112,8 @@ membership and required starter-position coverage without reading outcome column
 `analysis/rule3_confirmation.py` runs the frozen opt-in paired rule checks (`--pilot`, `--stress`,
 `--stream-check`, verified `--resume`). Set OMP/BLAS threads to one and budget its `--jobs` across all runs.
 `analysis/rule3_capture_audit.py` independently reconciles captures; `analysis/rule3_scores.py` reports v2 bounds.
+`analysis/rotation_confirmation.py` and `rotation_final.py` qualify D56 with reused controls and a frozen,
+once-only protected run; HANDOFF owns active namespaces, logs and stop conditions.
 `analysis/a2_{shared_shooting,world_diagnostics}.py` implement the frozen A2 diagnostics, without fitting factors.
 
 Use `--help` to inspect a runner before choosing controls. Heavy compute totals at most ten threads; actual

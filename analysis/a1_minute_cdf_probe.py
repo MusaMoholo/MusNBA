@@ -22,6 +22,7 @@ def main():
     parser.add_argument('report', type=Path)
     parser.add_argument('--output', required=True, type=Path)
     parser.add_argument('--cdf-output', required=True, type=Path)
+    parser.add_argument('--split', action='store_true')
     args = parser.parse_args()
     if args.output.exists() or args.cdf_output.exists():
         raise FileExistsError('fresh outputs required')
@@ -42,16 +43,29 @@ def main():
     masses = branch_masses([len(x) for x in minutes], weights)
     minutes = np.concatenate(minutes)
     started = time.monotonic()
-    result = lineup_minutes.encode(minutes, ids, masses)
+    if args.split:
+        result = lineup_minutes.encode_players(minutes, ids, masses, args.cdf_output, sha256_file(args.report))
+        records = {pid: read_json(args.cdf_output / f'{pid}.json') for pid in ids}
+    else:
+        result = lineup_minutes.encode(minutes, ids, masses)
+        records = {pid: result for pid in ids}
     elapsed = time.monotonic() - started
-    support = np.frombuffer(base64.b64decode(result['minutes_f64_le']), dtype='<f8')
-    cdf = np.frombuffer(base64.b64decode(result['cumulative_f64_le']), dtype='<f8')
-    offsets = result['offsets']
     checks = 0
+    support_count = 0
     for i, pid in enumerate(ids):
+        record = records[pid]
+        def unpack(key):
+            raw = np.frombuffer(base64.b64decode(record[key]), dtype=np.uint8)
+            return (raw.reshape(8, -1).T.copy() if record.get('byte_shuffle') == 8 else raw).view('<f8').ravel()
+        support, cdf, offsets = unpack('minutes_f64_le'), unpack('cumulative_f64_le'), record['offsets']
+        if args.split:
+            support_count += len(support)
+        elif i == 0:
+            support_count = len(support)
         for q, cols in enumerate(projection.SLICES.values()):
             values = minutes[:, i, cols].sum(1)
-            a, b = offsets[i * 7 + q:i * 7 + q + 2]
+            index = q if args.split else i * 7 + q
+            a, b = offsets[index:index + 2]
             x, c = support[a:b], cdf[a:b]
             for line in (0., .001, 5.5, 12., 29.999, 30., 30.001, 36., 48.):
                 for side, condition in (('left', values < line), ('right', values <= line)):
@@ -60,18 +74,20 @@ def main():
                     if actual != int(masses[condition].sum()):
                         raise ValueError((pid, q, line, side, 'CDF threshold differs from original weighted worlds'))
                     checks += 1
-    body = packed(result)
-    body = body.encode() if isinstance(body, str) else body
-    write_json(args.cdf_output, result, pretty=False)
+    bodies = [packed(records[pid]).encode() for pid in ids] if args.split else [packed(result).encode()]
+    if not args.split:
+        write_json(args.cdf_output, result, pretty=False)
     write_json(args.output, {'kind': 'new marginal codec accounting/size only; retained unpromoted research worlds',
                             'source_report_sha256': sha256_file(args.report), 'source_sha256': sha256_file(Path(__file__)),
                             'encoder_sha256': sha256_file(Path(lineup_minutes.__file__)), 'worlds': len(minutes), 'players': len(ids),
-                            'probability_mass': int(masses.sum()), 'unique_support_values': len(support), 'independent_threshold_checks': checks,
-                            'encode_seconds': elapsed, 'json_bytes': len(body), 'gzip_bytes': len(gzip.compress(body, mtime=0)),
+                            'probability_mass': int(masses.sum()), 'unique_support_values': support_count, 'independent_threshold_checks': checks,
+                            'encode_seconds': elapsed, 'json_bytes': sum(map(len,bodies)),
+                            'gzip_bytes': sum(len(gzip.compress(body,mtime=0)) for body in bodies),
+                            'largest_json_record': max(map(len,bodies)), 'records': len(bodies),
                             'process_peak_rss_bytes': resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * (1 if sys.platform == 'darwin' else 1024),
-                            'cdf_output': str(args.cdf_output), 'cdf_sha256': sha256_file(args.cdf_output),
+                            'cdf_output': str(args.cdf_output), 'cdf_sha256': {p.name: sha256_file(p) for p in sorted(args.cdf_output.glob('*.json'))} if args.split else sha256_file(args.cdf_output),
                             'status': 'pass; not engine qualification or device acceptance'}, pretty=True)
-    print(checks, 'threshold identities;', len(body), 'JSON bytes;', len(gzip.compress(body, mtime=0)), 'gzip bytes', flush=True)
+    print(checks, 'threshold identities;', sum(map(len,bodies)), 'JSON bytes;', sum(len(gzip.compress(body,mtime=0)) for body in bodies), 'gzip bytes;', max(map(len,bodies)), 'largest record', flush=True)
 
 
 if __name__ == '__main__':

@@ -47,6 +47,29 @@ class ReleaseGateTests(unittest.TestCase):
         self.assertEqual(result['decision'], 'material_harm')
         self.assertFalse(result['statistical_compatibility'])
 
+    def test_v3_reports_cohort_bias_without_vetoing_individual_improvement(self):
+        report=copy.deepcopy(self.repair)
+        # Two star/bench pairs: every player error falls and both team-minute sums stay fixed.
+        # Star errors [-2,+2] become [-1,0]: proper score improves but cohort bias grows by .5.
+        report['players']['star']['min']['crps'].update(control=2.,candidate=.5,change=-1.5,ci_95=[-1.5,-1.5])
+        report['players']['star']['min']['bias'].update(control=0.,candidate=-.5,change=.5,ci_95=[.5,.5])
+        self.assertEqual(release_gate.assess(report,'mechanics')['decision'],'material_harm')
+        result=release_gate.assess(report,'mechanics',policy='v3')
+        self.assertEqual(result['core']['checks'],27)
+        self.assertEqual(result['bias_diagnostics']['checks'],17)
+        self.assertEqual(result['decision'],'development_scores_compatible')
+        self.assertEqual(next(r for r in result['bias_diagnostics']['details'] if r['outcome']=='star min')['status'],'material_harm')
+
+    def test_v3_retains_proper_score_calibration_and_primary_requirements(self):
+        harmed=copy.deepcopy(self.repair)
+        harmed['players']['star']['pts']['crps'].update(change=.2,ci_95=[.15,.25])
+        self.assertEqual(release_gate.assess(harmed,'mechanics',policy='v3')['decision'],'material_harm')
+        harmed=copy.deepcopy(self.repair)
+        harmed['games']['q3_margin']['coverage'].update(change=.05,ci_95=[.04,.06])
+        self.assertEqual(release_gate.assess(harmed,'mechanics',policy='v3')['decision'],'material_harm')
+        self.assertEqual(release_gate.assess(self.repair,'learned','players/all/pts/crps',policy='v3')['decision'],
+                         'primary_benefit_not_established')
+
 
 if __name__ == '__main__':
     unittest.main()

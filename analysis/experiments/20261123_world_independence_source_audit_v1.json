@@ -1,0 +1,29 @@
+{
+ "kind": "D56 game-world preparation source audit; no model-accuracy inference",
+ "sources": {
+  "scripts/engine.py": "aa7b5c93bd7289bca5312d56d48137b3b3581bce729b16673df8f1b587955c8e",
+  "scripts/minutes.py": "94dd0ed25e536708c75cd4cf1f386bf2f9fa35f2c334d83cbdd031d4448ba2d0",
+  "scripts/foul_out.py": "32b51b7ad72bd3875d9f7c5301190b98545d347bf920be1d07b2d4e501c1da8c",
+  "scripts/rotation_fit.py": "46b9c7e301076531617793021425c2f08cdbeb1594638de1a851cba6ba66bfe6",
+  "tests/test_rotation_fit.py": "ec9e04cab068a0a8e01307b1ea2e291bf50955a4ebe10d1c64683f40b3ec4027"
+ },
+ "scope": [
+  "Availability: independent uniform draws per world/player from fixed pregame probabilities.",
+  "D29 targets: historical states shared as fixed inputs; redraw normalises/caps within each row, never across sampled worlds.",
+  "D29 fitting: legacy batch maximum is the identified coupling; independent fitter retains each row separately.",
+  "Pool 0: one independent table per sampled world; an independent random permutation of iid tables preserves their joint distribution.",
+  "Possession state: context, choices, clocks, fouls and legal-five replacement use each world own state; model/history fixed across worlds.",
+  "Runtime loop reductions over worlds only terminate iteration or format summaries; no sampled batch feedback found beyond the legacy fitter."
+ ],
+ "checks": {
+  "test_file": "tests/test_rotation_fit.py",
+  "passed": 3,
+  "log": "/tmp/musnba_rotation_independence_checks_20261123_v2.log"
+ },
+ "limits": [
+  "Code review and exact preparation checks, not a formal proof of PRNG statistical quality.",
+  "Fixed chunk layout is part of sampling identity; worker count/order preserves it, changing layout need not preserve individual draws.",
+  "Weighted cross-game season coupling is a separate contract; this does not establish iid season paths.",
+  "Independent fitter remains opt-in pending qualification."
+ ]
+}

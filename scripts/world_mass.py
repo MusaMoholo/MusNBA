@@ -38,7 +38,17 @@ class WorldMass:
         a = np.asarray(values)
         if not a.ndim or a.shape[0] != self.worlds or not np.isfinite(a).all():
             raise ValueError('finite values must match worlds')
-        return a.mean(axis=0) if self.weights is None else np.tensordot(self.weights / self.total, a, axes=(0, 0))
+        if self.weights is None:
+            return a.mean(axis=0)
+        if a.dtype.kind in 'biu':
+            bound = max(abs(int(a.min())), abs(int(a.max())))
+            if bound * self.total > np.iinfo(np.int64).max:
+                raise ValueError('integer weighted sum exceeds the supported exact range')
+            a = a.astype(np.int64)
+        result = np.tensordot(self.weights, a, axes=(0, 0)) / self.total
+        if not np.isfinite(result).all():
+            raise ValueError('non-finite weighted mean')
+        return result
 
     def counts(self, values, offset=False):
         a = np.asarray(values)

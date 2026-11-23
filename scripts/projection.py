@@ -358,79 +358,15 @@ def simulate_game(game: dict, T: dict, lg: dict, P: dict, registry: dict, day: s
     return result
 
 
-def package(game: dict, teams: dict, pts_by_period: dict, n_ot: np.ndarray, W: int, exp: dict, model_id: str) -> dict:
-    """Game output in the app contract from per-world arrays: pts_by_period[side] (W, 5 periods: Q1–Q4, OT),
-    teams[side] with tid, players (player_inputs), box[stat] (W, players, 5) and minutes (W, players, 5).
-    Shared by the placeholder and the possession engine (scripts/engine.py)."""
-    sides = ('home', 'away')
-    out = {'game_id': game['game_id'], 'model': model_id, 'sims': W, 'shooting_distribution_schema': 1,
-           'expectation': {k: round(v, 3) for k, v in exp.items()},
-           'ot': round(float((n_ot > 0).mean()), 4), 'ot_periods': np.bincount(n_ot).astype(int).tolist(), 'periods': {}}
-    for period, cols in SLICES.items():
-        ph, pa = pts_by_period['home'][:, cols].sum(1), pts_by_period['away'][:, cols].sum(1)
-        out['periods'][period] = {
-            'total': summary(ph + pa, offset=True), 'margin': summary(ph - pa, offset=True),
-            'home': {'pts': summary(ph, offset=True), 'win': round(float((ph > pa).mean()), 4), 'tie': round(float((ph == pa).mean()), 4)},
-            'away': {'pts': summary(pa, offset=True), 'win': round(float((pa > ph).mean()), 4), 'tie': round(float((ph == pa).mean()), 4)},
-        }
-    for side, team in teams.items():
-        box, minutes = team['box'], team['minutes']
-        players = []
-        fg = {k: box[k].sum(axis=2) for k in BOX}
-        tens = np.stack([fg['pts'] + 0 >= 10, (fg['oreb'] + fg['dreb']) >= 10, fg['ast'] >= 10, fg['stl'] >= 10, fg['blk'] >= 10]).sum(axis=0)
-        played_any = minutes.sum(axis=2) > 0
-        for i, x in enumerate(team['players']):
-            entry = {k: x[k] for k in ('id', 'name', 'pos', 'jersey', 'starter', 'status', 'injury')}
-            if x.get('availability_basis'):
-                entry['availability_basis'] = x['availability_basis']
-            if x.get('minutes'):  # D29: what the engine's minutes rest on (engine v1.2+)
-                mm = x['minutes']
-                entry['minutes_basis'] = {'healthy': round(mm['healthy'], 1), 'target': round(mm.get('target', 0.0), 1),
-                                          'rotation': round(mm.get('rotation', 1.0), 3), 'missed': int(mm['missed']), 'k_back': int(mm['k_back']),
-                                          'ramp': round(mm['ramp'], 3), 'start_share': round(mm['start_share'], 3)}
-            entry.update({'availability': round(x['availability'], 3), 'base_min': round(x['base_min'], 2),
-                          'played': round(float(played_any[:, i].mean()), 4),
-                          'double_double': round(float((tens[:, i] >= 2).mean()), 4),
-                          'triple_double': round(float((tens[:, i] >= 3).mean()), 4),
-                          'quadruple_double': round(float((tens[:, i] >= 4).mean()), 5),
-                          'quintuple_double': round(float((tens[:, i] >= 5).mean()), 5),
-                          'five_by_five': round(float(((fg['pts'][:, i] >= 5) & ((fg['oreb'] + fg['dreb'])[:, i] >= 5) & (fg['ast'][:, i] >= 5)
-                                                       & (fg['stl'][:, i] >= 5) & (fg['blk'][:, i] >= 5)).mean()), 5), 'periods': {}})
-            for period, cols in SLICES.items():
-                v = {k: box[k][:, i, cols].sum(axis=1) for k in BOX}
-                v['reb'] = v['oreb'] + v['dreb']
-                v['pra'], v['pr'], v['pa'], v['ra'] = v['pts'] + v['reb'] + v['ast'], v['pts'] + v['reb'], v['pts'] + v['ast'], v['reb'] + v['ast']
-                v['stocks'] = v['stl'] + v['blk']
-                mins_p = minutes[:, i, cols].sum(axis=1)
-                v['min'] = np.rint(mins_p).astype(np.int64)
-                dist = FG_DIST if period == 'fg' else PERIOD_DIST
-                entry['periods'][period] = {
-                    'sec': round(float(mins_p.mean() * 60), 1),
-                    'mean': {k: round(float(v[k].mean()), 3) for k in BOX + ('reb',)},
-                    'stats': {**{k: summary(v[k]) for k in dist}, **shooting_summaries(v)},
-                }
-            if not played_any[:, i].any():
-                del entry['periods']  # ruled out in every world: identity and status only
-                players.append(entry)
-                continue
-            if 0 < played_any[:, i].mean() < 0.999:
-                mask = played_any[:, i]
-                entry['if_plays'] = {'min': round(float(minutes[mask, i].sum(axis=1).mean()), 3),
-                                     **{k: round(float(fg[k][mask, i].mean()), 3) for k in ('pts', 'ast', 'fg3m')},
-                                     'reb': round(float((fg['oreb'] + fg['dreb'])[mask, i].mean()), 3)}
-            players.append(entry)
-        team_means = {period: {k: round(float(box[k][:, :, cols].sum(axis=(1, 2)).mean()), 3) for k in BOX}
-                      for period, cols in SLICES.items()}
-        for period in team_means:
-            team_means[period]['reb'] = round(team_means[period]['oreb'] + team_means[period]['dreb'], 3)
-        out[side] = {'team_id': team['tid'], 'mu': round(float(exp['mu_home'] if side == 'home' else exp['mu_away']), 3),
-                     'strength': round(float(np.mean(team.get('strength', 1.0))), 4), 'box': team_means, 'players': players}
-    return out
+def package(game: dict, teams: dict, pts_by_period: dict, n_ot: np.ndarray, W: int, exp: dict, model_id: str, weights=None) -> dict:
+    from scripts.forecast_output import game as format_game
+    return format_game(game, teams, pts_by_period, n_ot, W, exp, model_id, weights)
+
 
 # ---------------------------------------------------------------------------- season
 
 def simulate_season(T: dict, lg: dict, master: list[dict], day: str, teams: dict,
-                    engine_pts: dict | None = None, sims: int | None = None, params: dict | None = None) -> dict:
+                    engine_pts: dict | None = None, sims: int | None = None, params: dict | None = None, weights=None) -> dict:
     """The season from `day` on (D25, D26): every remaining game, in date order, through the team pathway
     (`scripts/pathway.py`) — universe k carries its own offensive and defensive ratings, takes engine world k mod W for
     the play-by-play engine's games (`engine_pts`: game_id → per-world, per-period points) and updates both teams after
@@ -444,60 +380,5 @@ def simulate_season(T: dict, lg: dict, master: list[dict], day: str, teams: dict
     unresolved = [r for r in master if r['date_et'] < day and r['status'] != 'final']
     G = len(remaining)
     played = pathway.play(T, lg, remaining, W, rng, engine_pts, params)
-    rows = []
-    for g, r in enumerate(remaining):
-        pts = played['points'][:, g]
-        source = 'engine' if engine_pts and r['game_id'] in engine_pts else 'pathway'
-        row = {'game_id': r['game_id'], 'p_home': round(float(played['home_win'][:, g].mean()), 4),
-               'mu_home': round(float(pts[:, 0].mean()), 2), 'mu_away': round(float(pts[:, 1].mean()), 2),
-               'source': source}
-        if source == 'pathway':
-            home, away = pts[:, 0], pts[:, 1]
-            row['regulation'] = {name: summary(values, offset=True) for name, values in (
-                ('home', home), ('away', away), ('total', home + away), ('margin', home - away))}
-        rows.append(row)
-    H = np.zeros((G, len(ids)), np.float32)
-    A = np.zeros((G, len(ids)), np.float32)
-    for g, r in enumerate(remaining):
-        H[g, index[r['home_id']]] = 1
-        A[g, index[r['away_id']]] = 1
-    home_wins = played['home_win'].astype(np.float32)
-    base_w = np.array([T[t]['w'] for t in ids], np.float32)
-    base_l = np.array([T[t]['l'] for t in ids], np.float32)
-    games_left = H.sum(0) + A.sum(0)
-    wins = np.rint(base_w + home_wins @ H + (1 - home_wins) @ A).astype(np.int64)
-    total_games = (base_w + base_l + games_left).astype(int)
-    tiebreak = rng.random((W, len(ids)))
-    seed = np.zeros((W, len(ids)), np.int64)
-    for conf in ('East', 'West'):
-        cols = np.array([index[t] for t in ids if teams[t]['conf'] == conf])
-        order = np.argsort(-(wins[:, cols] + 0.5 * tiebreak[:, cols]), axis=1, kind='stable')
-        ranks = np.empty_like(order)
-        ranks[np.arange(W)[:, None], order] = np.arange(1, len(cols) + 1)[None, :]
-        seed[:, cols] = ranks
-    league_key = wins + 0.5 * tiebreak
-    best, worst = np.argmax(league_key, axis=1), np.argmin(league_key, axis=1)
-    bottom3 = np.argsort(league_key, axis=1, kind='stable')[:, :3]
-    out = {}
-    for t in ids:
-        i = index[t]
-        s = seed[:, i]
-        seeds = np.bincount(s, minlength=16)[1:16] / W
-        out[t] = {'w': int(base_w[i]), 'l': int(base_l[i]), 'remaining': int(games_left[i]), 'scheduled': int(total_games[i]),
-                  'mean_w': round(float(wins[:, i].mean()), 3), 'mean_l': round(float(total_games[i] - wins[:, i].mean()), 3),
-                  'wins': summary(wins[:, i]), 'seed_mean': round(float(s.mean()), 3),
-                  'seeds': [round(float(x), 4) for x in seeds],
-                  'top6': round(float((s <= 6).mean()), 4), 'playin': round(float(((s >= 7) & (s <= 10)).mean()), 4),
-                  'out': round(float((s >= 11).mean()), 4), 'first': round(float((s == 1).mean()), 4),
-                  'bottom3': round(float((bottom3 == i).any(axis=1).mean()), 4),
-                  'best_record': round(float((best == i).mean()), 4), 'worst_record': round(float((worst == i).mean()), 4)}
-    params = {**pathway.PATHWAY, **(params or {})}
-    return {'model': pathway.PATHWAY['id'], 'pathway': params, 'as_of': day, 'sims': W, 'teams': out, 'games': rows,
-            'regulation_distribution_schema': 1,
-            'engine_games': sorted(engine_pts) if engine_pts else [],
-            'unresolved_before': [r['game_id'] for r in unresolved],
-            'notes': ['Team pathway (D25, D26): each universe carries its own offensive and defensive ratings, takes the '
-                      "possession engine's worlds for its games and updates both teams after every simulated game; its "
-                      'spread is calibrated walk-forward on 2022-26 (first cut, slightly wide in November).',
-                      'Ties broken at random; NBA tiebreakers arrive with phase 4.',
-                      'Only games the provider has scheduled are simulated; NBA Cup-determined games appear once scheduled.']}
+    from scripts.forecast_output import season as format_season
+    return format_season(T, master, day, teams, played, rng, engine_pts, params, weights)
