@@ -1,5 +1,5 @@
 // Standings (season simulation), Teams directory and team pages.
-import {api, dayLabel, esc, f1, heat, histogram, logo, pct, rate, record, seg, signed, statusTag, store, standingsNav, team, teamLink, tipTimes} from './ui.mjs';
+import {playerFace, playerLabel, api, dayLabel, esc, f1, heat, histogram, logo, pct, rate, record, seg, signed, statusTag, store, standingsNav, team, teamLink, tipTimes} from './ui.mjs';
 
 import * as season from './season.mjs';
 
@@ -32,11 +32,11 @@ async function standings(view, {meta, current, rest}) {
     let body;
     if (state.view === 'forecast') body = forecastTable(rows, state.conf === 'League');
     else if (state.view === 'picture') body = playoffPicture(rows);
-    else if (state.view === 'wins') body = winsTable(rows, data.sims);
+    else if (state.view === 'wins') body = winsTable(rows, data.sims, data.probability_mass != null);
     else if (state.view === 'seeds') body = state.conf === 'League' ? '<p class="note">Seeds are within a conference: choose East or West.</p>' : seedsTable(rows);
     else body = ratingsTable(rows);
     view.innerHTML = `<section class="panel"><div class="row" style="justify-content:space-between;margin-bottom:10px">
-        <div><h2 style="margin:0">Standings &amp; season forecast</h2><p class="note" style="margin:0">Through ${esc(dayLabel(data.date))} · ${data.sims.toLocaleString()} simulated seasons of every unplayed fixture</p></div>
+        <div><h2 style="margin:0">Standings &amp; season forecast</h2><p class="note" style="margin:0">Through ${esc(dayLabel(data.date))} · ${data.sims.toLocaleString()} ${data.probability_mass != null ? 'weighted season paths' : 'simulated seasons'} of every unplayed fixture</p></div>
         ${seasonPill(data.season_model)}</div>
       <div class="controls">${seg(confs, state.conf, 'data-conf')}${standingsNav(state.view)}
         ${state.view === 'seeds' && state.conf !== 'League' ? seg([['exact', 'Exactly'], ['atleast', 'At least']], state.seedMode, 'data-seed') : ''}
@@ -51,7 +51,7 @@ async function standings(view, {meta, current, rest}) {
       <details style="margin-top:12px"><summary class="note" style="cursor:pointer">How the forecast works</summary>
         <p class="note">${data.season_model && data.season_model.kind === 'team-pathway'
           ? `${Number.isInteger(data.season_model.engine_games) ? data.season_model.engine_games.toLocaleString() : 'Some'} games use saved possession-engine worlds. Every other game is played in date order with that season's own offensive and defensive rating for each team (pace and home court included), and after every game both teams' ratings move by how much they beat or missed that season's expectation — so a March game is played with ratings each season's own path produced, not today's.`
-          : 'Each unplayed game gets a home-win chance from shrunk team ratings (offence, defence, pace, home court); tonight\'s games use their full game simulation, including injuries.'} One simulated season settles every fixture once; standings come from ${data.sims.toLocaleString()} seasons. Top 6 = direct playoff seed; play-in = seeds 7–10. ${data.notes.map(esc).join(' ')}</p></details></section>`;
+          : 'Each unplayed game gets a home-win chance from shrunk team ratings (offence, defence, pace, home court); tonight\'s games use their full game simulation, including injuries.'} One simulated season settles every fixture once; standings come from ${data.sims.toLocaleString()} ${data.probability_mass != null ? 'weighted paths' : 'seasons'}. Top 6 = direct playoff seed; play-in = seeds 7–10. ${data.notes.map(esc).join(' ')}</p></details></section>`;
     view.querySelectorAll('[data-conf]').forEach(b => b.onclick = () => { state.conf = b.dataset.conf; store.set('conf', state.conf); paint(); });
     view.querySelectorAll('[data-view]').forEach(b => b.onclick = () => { state.view = b.dataset.view; store.set('standings-view', state.view); location.replace('#/standings/' + state.view); });
     view.querySelectorAll('[data-seed]').forEach(b => b.onclick = () => { state.seedMode = b.dataset.seed; paint(); });
@@ -85,7 +85,7 @@ function winsShare(w, lo, hi) {
 
 // Wins tab (owner, 20 Nov): the Seeds format for final wins — columns in steps of 5 from high to low; Exactly = that
 // 5-win band (top band open-ended, bottom band everything below), At least = that many wins or more.
-function winsTable(rows, sims) {
+function winsTable(rows, sims, weighted = false) {
   const maxWins = Math.max(1, ...rows.map(t => t.forecast.scheduled));
   const width = t => t.forecast.wins.q[4] - t.forecast.wins.q[0];
   const ordered = rows.slice().sort((a, b) => (state.winsSort === 'spread' ? width(b) - width(a) : 0) || b.forecast.mean_w - a.forecast.mean_w || a.abbr.localeCompare(b.abbr));
@@ -106,7 +106,7 @@ function winsTable(rows, sims) {
     return `<tr class="link" data-team="${t.id}"><td class="name">${teamLink(t.id)}</td><td class="dim">${f1(t.forecast.mean_w)}</td><td>${miniWins(w, maxWins)}</td><td>${w.q[2]}</td><td class="dim">${w.q[0]}–${w.q[4]}</td>${cells}</tr>`;
   }).join('');
   return `<div class="scroll"><table><thead>${head}</thead><tbody>${body}</tbody></table></div>
-    <p class="note">${exact ? 'Chance the final win total lands in each 5-win band.' : 'Chance of at least that many wins.'} Final wins over the ${ordered[0]?.forecast.scheduled ?? '—'} scheduled games, from the ${sims.toLocaleString()} simulated seasons; ordered by ${state.winsSort === 'spread' ? 'width of the 10–90% range' : 'average wins'}. Mini charts share a 0–${maxWins} win axis; accent marks the median.</p>`;
+    <p class="note">${exact ? 'Chance the final win total lands in each 5-win band.' : 'Chance of at least that many wins.'} Final wins over the ${ordered[0]?.forecast.scheduled ?? '—'} scheduled games, from the ${sims.toLocaleString()} ${weighted ? 'weighted season paths' : 'simulated seasons'}; ordered by ${state.winsSort === 'spread' ? 'width of the 10–90% range' : 'average wins'}. Mini charts share a 0–${maxWins} win axis; accent marks the median.</p>`;
 }
 
 function miniWins(w, maxWins) {
@@ -328,7 +328,7 @@ function roster(data, openGroups) {
     const heading = collapsible ? `<button class="roster-toggle" data-roster-group="${esc(label)}" aria-expanded="${open}">${esc(label)} · ${ps.length}<span>${open ? 'Hide' : 'Show'}</span></button>`
       : `${esc(label)} <span class="dim">· ${ps.length}</span>`;
     return `<tr class="grp"><td colspan="${cols}">${heading}</td></tr>` + ps.map(p =>
-    `<tr class="link"${collapsible ? ` data-roster-member="${esc(label)}"${open ? '' : ' hidden'}` : ''} data-pid="${p.id}"><td class="name">${esc(p.name)}${p.jersey ? ` <span class="tag">#${esc(p.jersey)}</span>` : ''} <span class="dim">${esc(p.pos || '')}</span>${statusTag(p.status)}${inj(p)}</td>
+    `<tr class="link"${collapsible ? ` data-roster-member="${esc(label)}"${open ? '' : ' hidden'}` : ''} data-pid="${p.id}"><td class="name">${playerLabel(p.id, p.name)}${p.jersey ? ` <span class="tag">#${esc(p.jersey)}</span>` : ''} <span class="dim">${esc(p.pos || '')}</span>${statusTag(p.status)}${inj(p)}</td>
       <td class="l">${bar(p)}</td>${T ? tn(p) : ''}<td>${p.gp}</td><td>${p.gs}</td><td>${pg(p, 'min')}</td><td><b>${pg(p, 'pts')}</b></td><td>${pg(p, 'reb')}</td><td>${pg(p, 'ast')}</td><td>${pg(p, 'fg3m')}</td><td>${pg(p, 'stl')}</td><td>${pg(p, 'blk')}</td><td>${pg(p, 'tov')}</td>
       <td>${pctOf(p.tot.fgm, p.tot.fga)}</td><td>${pctOf(p.tot.fg3m, p.tot.fg3a)}</td><td>${pctOf(p.tot.ftm, p.tot.fta)}</td></tr>`).join('');
   }).join('');

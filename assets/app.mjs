@@ -1,5 +1,5 @@
 // Application glue: boot, hash routes, theme, search and the model/data panel.
-import {api, esc, errorPanel, logo, meta, normalise, refreshLogos, setMeta, stamp, store, team, dayLabel} from './ui.mjs';
+import {playerFace, playerLabel, api, esc, errorPanel, logo, meta, normalise, refreshLogos, setMeta, stamp, store, team, dayLabel} from './ui.mjs';
 import * as today from './today.mjs';
 import * as game from './game.mjs';
 import * as league from './league.mjs';
@@ -116,7 +116,7 @@ function setupSearch() {
     if (!index) return;
     const q = normalise(input.value);
     const hits = q ? index.filter(x => x.key.includes(q)).sort((a, b) => (a.key.startsWith(q) ? 0 : 1) - (b.key.startsWith(q) ? 0 : 1) || (a.kind === 'team' ? -1 : 1) - (b.kind === 'team' ? -1 : 1) || (b.pts || 0) - (a.pts || 0)).slice(0, 25) : [];
-    list.innerHTML = hits.map(x => `<li><a href="${x.href}">${logo(x.team, 'sm')}<span>${esc(x.name)}</span><small>${esc(x.sub)}</small></a></li>`).join('') || (q ? '<li class="note">No matches</li>' : '<li class="note">Type a player or team name</li>');
+    list.innerHTML = hits.map(x => `<li><a href="${x.href}">${x.kind === 'player' ? playerFace(x.id, x.name) : logo(x.team, 'sm')}<span>${esc(x.name)}</span><small>${esc(x.sub)}</small></a></li>`).join('') || (q ? '<li class="note">No matches</li>' : '<li class="note">Type a player or team name</li>');
   };
   document.getElementById('search-open').onclick = open;
   document.getElementById('search-close').onclick = () => dialog.close();

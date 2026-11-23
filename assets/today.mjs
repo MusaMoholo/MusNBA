@@ -1,5 +1,5 @@
 // Today: the slate for one ET game date, each game a card that opens Game Centre.
-import {modelPill, api, esc, etToday, f1, forecastTiming, logo, longDay, pct, record, stamp, team, tipTimes, dayLabel} from './ui.mjs';
+import {playerFace, playerLabel, modelPill, api, esc, etToday, f1, forecastTiming, logo, longDay, pct, record, stamp, team, tipTimes, dayLabel} from './ui.mjs';
 import {slateSpotlight} from './spotlight.mjs';
 
 // Card surname with its suffix ("Michael Porter Jr." → "Porter Jr."): the last word that is not a suffix, then the suffixes.
@@ -95,7 +95,7 @@ function slateStrip(games, day) {
 // players furthest from their own projected points distribution
 function review(r) {
   if (!r) return '';
-  const who = p => `<a class="rv-p" href="#/game/${p.game_id}/player/${p.id}">${logo(p.team, 'sm')}<span>${esc(p.name)}</span><b>${p.actual}</b><small>proj ${f1(p.proj)} · ${Math.round(100 * p.pct)}th pct</small></a>`;
+  const who = p => `<a class="rv-p" href="#/game/${p.game_id}/player/${p.id}">${playerFace(p.id, p.name)}<span>${esc(p.name)}</span><b>${p.actual}</b><small>proj ${f1(p.proj)} · ${Math.round(100 * p.pct)}th pct</small></a>`;
   const tiles = [['Favourites won', `${r.fav_won} of ${r.games}`], ['Win % Brier · log loss', `${r.brier.toFixed(3)} · ${r.log_loss.toFixed(3)}`],
     ['Total error (avg · bias)', `${f1(r.total_mae)} · ${r.total_bias > 0 ? '+' : ''}${f1(r.total_bias)}`], ['Margin error (avg)', f1(r.margin_mae)],
     ['Players inside 10–90%', `${Math.round(100 * r.in_range_share)}% of ${r.players}`]].map(([l, v]) => `<div class="tile"><span>${l}</span><b>${v}</b></div>`).join('');
@@ -109,7 +109,7 @@ function modelNote(slate) {
   if (slate.snapshot) {
     const kind = slate.kind === 'prospective' ? '<span class="pill">Prospective snapshot</span>' : '<span class="pill warn" title="Rebuilt after the fact from box scores before this date; no injury news">Retrospective</span>';
     const timing = slate.completed_at ? `snapshot updated ${esc(stamp(slate.completed_at))}` : `snapshot started ${esc(stamp(slate.generated))} · completion unverified`;
-    return `<div class="model-note">${modelPill(slate.model)}${kind}<span>${slate.model.sims.toLocaleString()} sims per game · ${timing} · game forecast times may differ</span></div>`;
+    return `<div class="model-note">${modelPill(slate.model)}${kind}<span>${slate.model.sims.toLocaleString()} ${(slate.games || []).some(g => g.proj?.lineup_branches > 1) ? 'worlds per lineup branch; Expected uses all branches' : 'sims per game'} · ${timing} · game forecast times may differ</span></div>`;
   }
   if (slate.games.some(g => g.team_model)) return '<div class="model-note"><span class="pill">Team-strength estimate only</span><span>Game sims run on the morning of each slate.</span></div>';
   if (slate.games.length) return '<div class="model-note"><span class="pill">No projection retained for this date</span></div>';

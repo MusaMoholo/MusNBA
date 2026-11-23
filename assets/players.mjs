@@ -1,5 +1,5 @@
 // Players: sortable league table (per game / totals / per 36) and player pages with game logs.
-import {advancedPanel, api, barChart, dayLabel, esc, f1, logo, normalise, pct, seg, signed, statusTag, store, team, teamLink, tipTimes, usageProfilePanel} from './ui.mjs';
+import {playerFace, playerLabel, advancedPanel, api, barChart, dayLabel, esc, f1, logo, normalise, pct, seg, signed, statusTag, store, team, teamLink, tipTimes, usageProfilePanel} from './ui.mjs';
 
 const COLS = [['gp', 'GP'], ['min', 'MIN'], ['pts', 'PTS'], ['trend', 'L10 trend'], ['reb', 'REB'], ['ast', 'AST'], ['stl', 'STL'], ['blk', 'BLK'], ['tov', 'TOV'],
               ['fg3m', '3PM'], ['fg_pct', 'FG%'], ['fg3_pct', '3P%'], ['ft_pct', 'FT%'], ['ts_pct', 'TS%'], ['pm', '+/−']];
@@ -66,12 +66,12 @@ async function table(view, {meta, current}) {
     rows = rows.map(p => ({p, v: value(p, key, state.mode)})).sort((a, b) => (a.v == null) - (b.v == null) || dir * ((a.v ?? 0) - (b.v ?? 0)) || a.p.name.localeCompare(b.p.name)).map(x => x.p);
     const shown = rows.slice(0, state.limit);
     const movers = data.players.filter(p => p.gp >= 8 && p.l10 && p.tot.min / p.gp >= 15).map(p => ({p, d: p.l10.pts - p.tot.pts / p.gp})).sort((a, b) => b.d - a.d);
-    const mv = x => `<a class="mv" href="#/player/${x.p.id}">${logo(x.p.team, 'sm')}<span>${esc(x.p.name)}</span><em class="${x.d > 0 ? 'up' : 'down'}">${x.d > 0 ? '+' : ''}${x.d.toFixed(1)}</em><small>${(x.p.tot.pts / x.p.gp).toFixed(1)} → ${x.p.l10.pts.toFixed(1)}</small></a>`;
+    const mv = x => `<a class="mv" href="#/player/${x.p.id}">${logo(x.p.team, 'sm')}<span>${playerLabel(x.p.id, x.p.name)}</span><em class="${x.d > 0 ? 'up' : 'down'}">${x.d > 0 ? '+' : ''}${x.d.toFixed(1)}</em><small>${(x.p.tot.pts / x.p.gp).toFixed(1)} → ${x.p.l10.pts.toFixed(1)}</small></a>`;
     const moversHtml = movers.length > 10 ? `<details class="panel" id="player-movers"${moversOpen ? ' open' : ''}><summary><b>Heating up &amp; cooling off</b> · last 10 v season points</summary>
       <div class="movers"><div><span class="spot-kicker">Heating up</span>${movers.slice(0, 5).map(mv).join('')}</div>
       <div><span class="spot-kicker">Cooling off</span>${movers.slice(-5).reverse().map(mv).join('')}</div></div></details>` : '';
     view.querySelector('#ptable').innerHTML = `${moversHtml}<div class="scroll"><table><thead><tr><th>#</th><th class="name">Player</th><th class="l">Team</th>${COLS.map(([k, l]) => `<th data-sort="${k}" tabindex="0" aria-sort="${key === k ? (dir < 0 ? 'descending' : 'ascending') : 'none'}">${l}${key === k ? `<span class="arrow">${dir < 0 ? '▼' : '▲'}</span>` : ''}</th>`).join('')}</tr></thead><tbody>
-      ${shown.map((p, i) => `<tr class="link" data-pid="${p.id}"><td class="dim">${i + 1}</td><td class="name">${esc(p.name)} <span class="tag">${esc(p.pos || '')}</span>${statusTag(p.status)}</td><td class="l">${teamLink(p.team, {short: true})}</td>
+      ${shown.map((p, i) => `<tr class="link" data-pid="${p.id}"><td class="dim">${i + 1}</td><td class="name">${playerLabel(p.id, p.name)} <span class="tag">${esc(p.pos || '')}</span>${statusTag(p.status)}</td><td class="l">${teamLink(p.team, {short: true})}</td>
         ${COLS.map(([k]) => `<td${k === 'trend' ? ' class="trend-c"' : ''}>${k === 'trend' ? sparkCell(p) : fmt(k, value(p, k, state.mode), state.mode)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
       <div class="row" style="margin-top:10px"><span class="note" style="margin:0">${shown.length} of ${rows.length} players</span>${rows.length > shown.length ? '<button class="ghost" id="more">Show more</button>' : ''}</div>`;
     view.querySelectorAll('th[data-sort]').forEach(th => th.onclick = th.onkeydown = e => {
@@ -121,7 +121,7 @@ async function playerPage(view, {rest, current}) {
       ${vsOpp(next)}</section>`;
   }
   const items = log.slice(-20).map(r => ({v: r.dnp ? null : r.pts, label: r.date.slice(8), title: `${r.date} ${r.home ? 'vs' : '@'} ${team(r.opp).abbr}: ${r.dnp ? (r.reason || 'DNP') : r.pts + ' pts'}`}));
-  view.innerHTML = `<section class="panel"><div class="row">${p.team ? logo(p.team, 'lg') : ''}<div class="grow"><h2 style="margin:0;font-size:20px">${esc(p.name)}</h2>
+  view.innerHTML = `<section class="panel"><div class="row">${playerFace(p.id, p.name, 'lg')}<div class="grow"><h2 style="margin:0;font-size:20px">${esc(p.name)}</h2>
       <p class="note" style="margin:0">${p.team ? `<a href="#/team/${p.team}">${esc(team(p.team).name)}</a> · ` : ''}${esc(p.pos || '')}${p.jersey ? ' · #' + esc(p.jersey) : ''}${p.age ? ' · age ' + p.age : ''}${p.height ? ' · ' + esc(p.height) : ''}${p.on_roster === false ? ' · not on a current roster' : ''} ${statusTag(p.status)}</p>
       ${p.injury?.comment ? `<p class="note status-q" style="margin:4px 0 0">${esc(p.injury.comment)}</p>` : ''}</div></div>
       ${s ? `<div class="tiles" style="margin-top:12px">${tiles}</div><p class="note">${s.gp} games (${s.gs} starts) · ${shoot} · per-game season averages; L10 = last 10 games played, with the change v the season</p>` : '<p class="note">No games played this season.</p>'}</section>

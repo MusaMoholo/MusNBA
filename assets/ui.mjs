@@ -21,6 +21,13 @@ export function api(path) {
 let META = null;
 export const setMeta = meta => { META = meta; };
 export const meta = () => META;
+export function playerFace(id, name, size = '') {
+  const initials = String(name || '?').trim().split(/\s+/).filter(Boolean).slice(0, 2).map(s => [...s][0]).join('');
+  const image = META?.player_icons?.ids?.includes(String(id))
+    ? `<img src="${new URL(`player-icons/${id}.png`, BASE).href}" alt="" loading="lazy" decoding="async" width="96" height="96" onerror="this.remove()">` : '';
+  return `<span class="player-face ${esc(size)}" aria-hidden="true"><span>${esc(initials)}</span>${image}</span>`;
+}
+export const playerLabel = (id, name) => `<span class="player-label">${playerFace(id, name)}<span>${esc(name)}</span></span>`;
 export const team = id => META?.teams?.[id] || {id, abbr: '?', name: 'Unknown team', short: '?'};
 
 // ------------------------------------------------------------------ storage (per-device conveniences only)

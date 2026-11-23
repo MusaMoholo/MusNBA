@@ -1,7 +1,7 @@
 // Spotlight (owner, 20 Nov): the headliner, breakout watch, the six stat leaders and games to watch — for a slate (Today) or
 // one game (Game Centre). Read from views (`spotlight`, `watch`: stored projections, worlds and season averages); nothing is
 // computed here.
-import {esc, f1, logo, pct, team, tipTimes} from './ui.mjs';
+import {playerFace, playerLabel, esc, f1, logo, pct, team, tipTimes} from './ui.mjs';
 
 const STATS = [['pts', 'Points', 'PTS'], ['reb', 'Rebounds', 'REB'], ['ast', 'Assists', 'AST'], ['fg3m', 'Threes', '3PM'],
                ['stl', 'Steals', 'STL'], ['blk', 'Blocks', 'BLK']];
@@ -26,7 +26,7 @@ function headliner(h, slate) {
   // layout (owner, 20 Nov: consistent at every width): identity | sparkline + chances on top, then the six stats as one
   // fixed row of six (three-by-two on a phone) — never a ragged wrap
   return `<a class="spot wide head" href="${sheet(h)}">
-    <div class="spot-id"><span class="spot-kicker">${slate ? 'Headliner of the night' : 'Headliner'}</span><b class="spot-name">${esc(h.name)}</b>
+    <div class="spot-id"><span class="spot-kicker">${slate ? 'Headliner of the night' : 'Headliner'}</span><b class="spot-name">${playerLabel(h.id, h.name)}</b>
       <span class="spot-meta">${who(h, slate)}</span><span class="spot-meta">Top projected all-round line · ${f1(h.fp)} fantasy pts${h.played < 0.98 ? ` · plays ${Math.round(100 * h.played)}%` : ''}</span></div>
     <div class="spot-side">${spark(h.spark, h.mean.pts)}<div class="spot-chance">${chance('30+ pts', c.pts30)}${chance('40+ pts', c.pts40)}${chance('double-double', c.dd)}${chance('triple-double', c.td)}</div></div>
     <div class="spot-chips">${STATS.map(([k, , l]) => `<span><b>${f1(h.mean[k])}</b>${l}</span>`).join('')}</div></a>`;
@@ -44,7 +44,7 @@ function breakout(b, slate) {
       <span class="db-v">${f1(s)} → <b>${f1(t)}</b> <em class="${d > 0.05 ? 'up' : d < -0.05 ? 'down' : ''}">${signed(d)}</em></span></div>`;
   }).join('');
   return `<a class="spot wide" href="${sheet(b)}">
-    <div class="spot-id"><span class="spot-kicker">Breakout watch</span><b class="spot-name">${esc(b.name)}</b><span class="spot-meta">${who(b, slate)}</span>
+    <div class="spot-id"><span class="spot-kicker">Breakout watch</span><b class="spot-name">${playerLabel(b.id, b.name)}</b><span class="spot-meta">${who(b, slate)}</span>
       <span class="spot-meta">${f1(b.fp)} fantasy pts tonight v ${f1(b.fp_season)} on the season (${b.gp} games)</span>
       ${b.why ? `<span class="spot-why">Why: ${esc(b.why)}</span>` : ''}</div>
     <div class="spot-dumb" aria-label="His season average against tonight's projection">${dumb}<p class="db-key"><i class="db-s"></i> season <i class="db-t"></i> tonight</p></div></a>`;
@@ -56,9 +56,9 @@ function leaderCards(L, scope) {
     if (!first) return '';
     const lead = p => (p.lead == null ? '' : `<small class="ld-p" title="Chance he leads the ${scope} in ${label.toLowerCase()} (paired simulations)">${pct(p.lead, 0)}</small>`);
     return `<div class="spot lead"><span class="spot-kicker">${label}</span>
-      <a class="ld-top" href="${sheet(first)}" title="${esc(first.name)}">${logo(first.team, 'sm')}<b class="spot-name">${esc(short(first.name))}</b><b class="ld-v">${f1(first.value)}</b></a>
+      <a class="ld-top" href="${sheet(first)}" title="${esc(first.name)}">${playerFace(first.id, first.name)}<b class="spot-name">${esc(short(first.name))}</b><b class="ld-v">${f1(first.value)}</b></a>
       ${first.lead != null ? `<small class="ld-lead">Leads the ${scope} ${pct(first.lead, 0)}</small>` : ''}
-      ${rest.map((p, i) => `<a class="ld-row" href="${sheet(p)}" title="${esc(p.name)}"><span class="dim">${i + 2}</span>${logo(p.team, 'sm')}<span class="ld-n">${esc(short(p.name))}</span>${lead(p)}<b>${f1(p.value)}</b></a>`).join('')}</div>`;
+      ${rest.map((p, i) => `<a class="ld-row" href="${sheet(p)}" title="${esc(p.name)}"><span class="dim">${i + 2}</span>${playerFace(p.id, p.name)}<span class="ld-n">${esc(short(p.name))}</span>${lead(p)}<b>${f1(p.value)}</b></a>`).join('')}</div>`;
   }).join('');
 }
 

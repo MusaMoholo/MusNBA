@@ -2,8 +2,9 @@
 // visible only at commit (one 'active' pointer); failed imports leave the previous data intact.
 export const DB_NAME = 'musnba-data-v1';
 const LOCK = 'musnba-import';
+const CAPABILITIES = new Set(['player-icons-v1', 'minute-cdf-player-v2', 'lineup-forecast-v1']);
 export const REQUIRED = ['/api/meta', '/api/players'];
-const KEY = /^\/(api\/[a-z0-9_-]+(?:\/[A-Za-z0-9_.-]+)*|logos\/\d+(?:-dark)?\.png)$/;
+const KEY = /^\/(api\/[a-z0-9_-]+(?:\/[A-Za-z0-9_.-]+)*|logos\/\d+(?:-dark)?\.png|player-icons\/\d+\.png)$/;
 
 export function database() {
   return new Promise((resolve, reject) => {
@@ -127,7 +128,8 @@ async function importLocked(file, onProgress) {
         if (ended) throw Error('Unexpected content after the bundle footer.');
         const item = JSON.parse(line);
         if (!header) {
-          if (item.format !== 'musnba' || item.version !== 1 || !Array.isArray(item.snapshots) || !item.snapshots.length || !item.snapshots.includes(item.latest)) throw Error('Choose a MusNBA data bundle (.musnba.gz).');
+          if (item.format !== 'musnba' || ![1, 2].includes(item.version) || !Array.isArray(item.snapshots) || !item.snapshots.length || !item.snapshots.includes(item.latest)) throw Error('Choose a MusNBA data bundle (.musnba.gz).');
+          if (item.version === 2 && (!Array.isArray(item.capabilities) || item.capabilities.some(c => !CAPABILITIES.has(c)))) throw Error('Update the MusNBA app before importing this bundle.');
           header = item; continue;
         }
         if (item.end) { if (item.records !== count) throw Error('Incomplete data bundle.'); ended = true; continue; }
@@ -155,6 +157,8 @@ async function importLocked(file, onProgress) {
     for (const key of REQUIRED) if (!seen.has(key)) throw Error('The bundle is missing required data.');
     const meta = JSON.parse((await stored('/api/meta', generation)).body);
     if (meta.latest !== header.latest) throw Error('Bundle catalogue does not match its manifest.');
+    if ((meta.required_capabilities || []).some(c => !CAPABILITIES.has(c) || header.version !== 2 || !header.capabilities.includes(c))) throw Error('Bundle capabilities do not match its catalogue. Update the app and export again.');
+    if ((meta.player_icons?.ids || []).some(id => !seen.has('/player-icons/' + id + '.png'))) throw Error('Player photos are missing from this bundle. Export it again.');
     const result = {...header, count, added, reused, savedBytes: saved};
     await write('meta', generation, result);
     await write('meta', 'active', generation);
