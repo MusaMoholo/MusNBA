@@ -2,6 +2,15 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 ET — selected six-player S06 comparison:** replaying the **202** seeds rejected by D29
+repair in the deliberately selected synthetic-absence F4 case, the separate S06 selected-timeout and
+player-foul-penalty policy completed **202/202** attempts. It recorded **85** technical events in **46**
+worlds; four single-thread workers took **31.717s**. An independent saved-file audit reconciled **101,962**
+lineup fives and all seeds/technical records in **1.237s**. The two policies alter substitutions and
+random paths: **156/202** S06 worlds had no technical, so their game states are not matched to the D29
+failures. Selection of failed seeds and the oracle roster preclude league-rate, retry-bias or accuracy
+claims. Reports `analysis/experiments/20261122_a1_f4_six_roster_penalty_v1{,_audit}.json`.
+
 **22 Nov 2026 ET — selected six-player branch:** the sole home seven-participant game in the preceding F4
 screen (`401811022`) was deliberately selected and its top projected home-minute player synthetically sat.
 With the isolated D29 foul-out repair, **202 / 1,000** separately seeded first attempts ran out of eligible

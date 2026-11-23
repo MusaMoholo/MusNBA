@@ -1,0 +1,18 @@
+{
+ "kind": "selected six-player F4 rejected-seed S06 comparison; not an NBA rate or accuracy test",
+ "stress": "analysis/experiments/20261122_a1_f4_six_roster_v1.json",
+ "stress_sha256": "4b01ebec994a9c313cfb69a8d7c8736191686165265a50a5499ca241dd258f95",
+ "manifest": "data/derived/experiments/20261122_a1_f4_six_roster_penalty_v1/manifest.json",
+ "manifest_sha256": "ad2dd50296df2ef4fdc1b96f1f5ebbc6ced03f256e618eb8c4ed43bd388fc21b",
+ "worlds": 202,
+ "workers": 4,
+ "threads": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1",
+ "elapsed_seconds": 31.717,
+ "technical_events": 85,
+ "worlds_with_technical": 46,
+ "limitations": [
+  "One selected oracle-roster game with synthetic absence and D29-rejected seeds.",
+  "S06 changes substitutions and random paths; matching seeds are not matched states.",
+  "Not an NBA rate, retry-bias measurement, predictive test, or production policy."
+ ]
+}

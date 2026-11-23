@@ -1,0 +1,15 @@
+{
+ "kind": "independent selected six-player S06 saved-world accounting",
+ "report": "analysis/experiments/20261122_a1_f4_six_roster_penalty_v1.json",
+ "report_sha256": "4a2c9c4ef0e7da65c1fa89ad4c3d465125bb5355c496c68c6ca19e66fe147de2",
+ "audit_sha256": "2a879d5dde2ade0697b744cff7b352a19d599e82285fd2f1c1fc5112194b1dc0",
+ "worlds": 202,
+ "technical_events": 85,
+ "worlds_with_technical": 46,
+ "lineup_fives_checked": 101962,
+ "elapsed_seconds": 1.237,
+ "limitations": [
+  "Selected oracle-roster game with a synthetic absence and D29-rejected seeds.",
+  "Different policies and random paths; same seeds do not establish matched states or bias."
+ ]
+}

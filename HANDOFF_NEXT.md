@@ -1,10 +1,26 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 80%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **d3859c5** (fixed F4 exhaustion screen); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **c264e69** (six-player exhaustion stress); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
+- **A1 90% partial — six-player S06 comparison (23 Nov UTC):** the separate selected-timeout/foul-penalty
+  policy completed **202/202** single-world attempts using the exact seeds rejected by the D29 repair on the
+  selected synthetic-absence F4 case. **46** worlds had technicals, **85** technical events total; four
+  one-thread workers took **31.717s**. Independent saved-file audit reconciled all **202** seeds,
+  **101,962** lineup fives and all technical records in **1.237s**. The first audit invocation transiently
+  reported missing NumPy; a subsequent interpreter import and the repeat audit succeeded without installing
+  or changing dependencies. This is a deliberately selected extreme oracle roster, not a league rate or
+  predictive/retry-bias result: policies and random paths differ, and **156/202** S06 worlds had no
+  technical at all, so their states are not matched to D29's rejected states.
+  Reports `analysis/experiments/20261122_a1_f4_six_roster_penalty_v1{,_audit}.json`, ignored traces
+  `data/derived/experiments/20261122_a1_f4_six_roster_penalty_v1/`, log
+  `/tmp/musnba_a1_f4_six_roster_penalty_v1.log`. Focused tests **6/6**, smoke **107/107**, deliberate
+  fault **86/107** and exit 1 (`/tmp/musnba_a1_six_penalty_{smoke,fault}_v1.log`). HANDOFF, PLAN,
+  FINDINGS and README record the work; AGENTS, ENGINE_PLAN, TRAINING_PLAN and DASHBOARD_PLAN need no changes:
+  standing rules, accepted engine, evaluation gates and shipped UI remain unchanged. No protected-season
+  outcomes were scored; accepted model and bundles remain unchanged. A1 **80%**, Chunk A **34.5%**.
 - **A1 90% partial — targeted six-player exhaustion (23 Nov UTC):** after the F4 screen, deliberately
   selected its sole seven-home-participant game `401811022`, then synthetically sat the top projected
   home-minute player. Of **1,000** independent single-world attempts with the isolated D29 repair,
@@ -457,6 +473,14 @@ The preceding pushed checkpoint was **d3859c5** (fixed F4 exhaustion screen); us
   If any attempts exhaust, retain their seeds for a separately disclosed S06 penalty-policy comparison;
   that policy changes substitutions and random paths, so the comparison cannot by itself prove counterfactual
   retry bias. Unexpected input, cutoff, accounting and unknown errors must stop, not be retried.
+- **A1 90% six-player penalty comparison, frozen before its draws:** use exactly the **202** exhausted
+  draw/seed pairs from the independently audited six-player stress, same reconstructed input and selected
+  absence, with the frozen F4 S06 selected-timeout/foul-penalty candidate and no retries. Four one-thread
+  workers bound shared-machine load. Save each full trace, audit each at creation and again from saved files,
+  reconcile seeds, legal fives and technicals, and fingerprint sources and inputs. Count completions and
+  technicals only; this deliberately selects D29 failures, and changed policy/random paths prevent treating
+  same-seed results as matched states, estimating retry bias, league rates or predictive accuracy. Stop on
+  any unexpected error and retain partial records. No model or forecast promotion.
 - **A1 80% complete, injection-only:** a single shared research lineup control now drives selected player, team,
   sheet, scenario/Given/Joint and driver views; branch-unavailable metadata/cards are omitted. Available and
   positive-minute participation are distinct; shooting-defined mass is weighted. No normal route registers the
@@ -2941,9 +2965,9 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
    It does not persist the full captures and does not prove a 10k runtime or real failure rate. The branch
    10k deterministic captures, isolated 200-world clean-stop/resume comparison, 200-game F4 exhaustion
    screen and independent audits are listed above. The targeted six-player stress has now identified
-   **202** exhausted seeds in its selected F4 case. Run the predeclared S06 penalty-policy comparison
-   on those retained seeds, documenting its distinct substitution paths and avoiding counterfactual
-   claims; then F1–F3 and dated pre-game cohorts where available. The resume prototype
+   **202** exhausted seeds in its selected F4 case; the S06 comparison is complete and independently
+   audited, with different policies/paths and no bias conclusion. Continue F1–F3 and dated pre-game
+   cohorts where available. The resume prototype
    is single-operator only, and an orphaned partial batch fails for manual inspection. Source evidence and missing dated
    injury-report cohorts are documented there and in FINDINGS; do not score protected-season outcomes.
    The retry coordinator is deliberately unwired: prove world-local classification and survivor isolation,

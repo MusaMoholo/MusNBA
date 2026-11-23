@@ -9,8 +9,11 @@ import numpy as np
 
 from analysis import a1_f4_exhaustion_screen as screen
 from analysis import a1_f4_six_roster_audit as stress_audit
+from analysis import a1_f4_six_roster_penalty_audit as penalty_audit
+from analysis import a1_f4_six_roster_penalty_compare as penalty
 from analysis import a1_f4_six_roster_stress as stress
 from scripts.a1_branch_foul_out import ExhaustedEligiblePlayers
+from scripts.projection import seed_for
 
 
 class ExhaustionScreenTests(unittest.TestCase):
@@ -91,6 +94,40 @@ class ExhaustionScreenTests(unittest.TestCase):
             with patch.object(stress_audit.sys, 'argv', ['audit', str(summary), '--output', str(output)]):
                 with self.assertRaisesRegex(ValueError, 'detailed manifest differs'):
                     stress_audit.main()
+            self.assertFalse(output.exists())
+
+    def test_penalty_comparison_preserves_rejected_seed_and_fails_unknown_errors(self):
+        draw = 8
+        previous = {'draw': draw, 'seed': str(seed_for('a1-f4-six-roster-v1', stress.GAME, draw)),
+                    'status': 'exhausted', 'reason': 'fewer than five eligible players'}
+        calls = []
+        policy = SimpleNamespace(technical_events=[])
+        penalty._WORKER.update(engine=self.engine, branch=self.game, policy=policy,
+                               simulate=lambda game, worlds, seed: calls.append((game, worlds, seed)))
+        with tempfile.TemporaryDirectory() as tmp, \
+             patch.object(penalty.a1_substitution_world_capture, 'capture',
+                          return_value={'value': np.array([1])}), \
+             patch.object(penalty.a1_substitution_world_audit, 'audit_worlds',
+                          return_value={'worlds': 1}):
+            record = penalty.attempt(previous, tmp)
+            self.assertEqual(calls, [(self.game, 1, int(previous['seed']))])
+            self.assertEqual(record['original_rejection'], previous['reason'])
+            self.assertTrue(Path(record['capture']).is_file())
+            penalty._WORKER['simulate'] = lambda *_args: (_ for _ in ()).throw(RuntimeError('unknown'))
+            with self.assertRaisesRegex(RuntimeError, 'unknown'):
+                penalty.attempt(previous, tmp)
+
+    def test_penalty_audit_rejects_changed_source_without_output(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source = root / 'source.json'
+            source.write_text('{}')
+            report = root / 'report.json'
+            report.write_text(json.dumps({'stress': str(source), 'stress_sha256': 'wrong'}))
+            output = root / 'audit.json'
+            with patch.object(penalty_audit.sys, 'argv', ['audit', str(report), '--output', str(output)]):
+                with self.assertRaisesRegex(ValueError, 'stress summary differs'):
+                    penalty_audit.main()
             self.assertFalse(output.exists())
 
 

@@ -429,6 +429,11 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 ET · A1 six-player S06 comparison:** on the **202** D29-exhausted seeds from a selected
+  synthetic-absence F4 game, the separate S06 policy completed **202**, with **85** technical events in
+  **46** worlds. Independent accounting reconciled **101,962** lineup fives. Different substitutions
+  and random paths prevent a matched-state or retry-bias conclusion; **156** S06 worlds had no technical.
+  No production model/bundle change; A1 **80%**, Chunk A **34.5%**.
 - **22 Nov 2026 ET · A1 targeted six-player stress:** one deliberately selected F4 oracle-roster game,
   with a synthetic top-player absence, produced **202 / 1,000** typed exhausted-roster failures; the other
   **798** worlds and **195,435** lineup snapshots passed independent saved-file replay. Generation
