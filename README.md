@@ -96,6 +96,9 @@ under `analysis/experiments/`, per-row arrays/captures stay ignored under `data/
 | `scripts/webapp/`, `analysis/*.mjs` | Native ES-module UI, browser/PWA checks; no build dependency. |
 | `scripts/a1_*.py`, `scripts/a2_*.py`, `analysis/a1_*` | Research/audits; [branch runbook](docs/research/a1_branches.md), frozen protocols and old full command map via docs index. |
 
+`scripts/a1_prior_roster_screen.py` and `analysis/a1_prior_roster_audit.py` census/reconstruct prior-box
+membership and required starter-position coverage without reading outcome columns or generating forecasts.
+
 Use `--help` to inspect a runner before choosing controls. Heavy compute totals at most ten threads; actual
 `--jobs` × inner-thread settings matter (AGENTS §6). Examples after protocol/namespace freeze:
 

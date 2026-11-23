@@ -180,6 +180,9 @@ D48 retries require world-local classification, caps, preserved rejection record
 predictive effects; input/cutoff/accounting/unknown errors never qualify. Keep full D49 minute precision.
 Read the [branch runbook](docs/research/a1_branches.md) before implementation; full original protocols remain frozen.
 
+The 23 Nov prior-roster readiness route was rejected (783/800 supported); its no-release fallback
+does not change these production or numerical gates. See HANDOFF/decision record.
+
 ### 8.5 Current A2 protocols
 
 Read [the frozen A2 methods](docs/protocols/a2_form_20261122.md) before resuming. They preserve the exact

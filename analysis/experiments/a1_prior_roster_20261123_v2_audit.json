@@ -1,0 +1,44 @@
+{
+ "kind": "independent prior raw membership and starter-pool census audit",
+ "source": "analysis/experiments/a1_prior_roster_20261123_v2.json",
+ "source_sha256": "11e0c9f6aca4dfe5227c301c8fe86d37e6a1b0f3fdd40d14053c97361a7f4af2",
+ "auditor_sha256": "cf50a20043a493ace4ac9c24a2d71a5ca8d0a8fcdb321687ea9732a3ffa59cec",
+ "folds": [
+  {
+   "fold": "F1",
+   "raw_memberships_checked": 7423,
+   "team_pools_checked": 400,
+   "missing_roster_games": [],
+   "supported_games": 199
+  },
+  {
+   "fold": "F2",
+   "raw_memberships_checked": 7390,
+   "team_pools_checked": 400,
+   "missing_roster_games": [],
+   "supported_games": 200
+  },
+  {
+   "fold": "F3",
+   "raw_memberships_checked": 6400,
+   "team_pools_checked": 390,
+   "missing_roster_games": [
+    "401809244",
+    "401809933",
+    "401809937",
+    "401809939",
+    "401809941"
+   ],
+   "supported_games": 184
+  },
+  {
+   "fold": "F4",
+   "raw_memberships_checked": 7317,
+   "team_pools_checked": 400,
+   "missing_roster_games": [],
+   "supported_games": 200
+  }
+ ],
+ "status": "passed",
+ "no_accuracy_or_injury_calibration_claim": true
+}

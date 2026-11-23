@@ -1,6 +1,7 @@
 # A1 branches — research runbook
 
-Current status: **80%, production blocked**. Read [HANDOFF](../../HANDOFF_NEXT.md) for the next action and
+Current status: **100% no-release fallback; production branches unshipped**.
+[Completion decision](a1_no_release_20261123.md) records failed/unpassed gates. Read [HANDOFF](../../HANDOFF_NEXT.md) for the next action and
 [TRAINING](../../TRAINING_PLAN.md#8-a1-acceptance-and-reproducibility) for gates. This file locates work already
 done; it does not authorise repeating old candidates or promoting a partial implementation.
 

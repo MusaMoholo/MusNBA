@@ -1,0 +1,7 @@
+{
+ "kind": "input-census preflight failure; no simulation or output rows",
+ "reason": "F3 retained roster source covers 195/200 fixed games; initial code incorrectly required exact coverage instead of reporting missing contexts.",
+ "script_sha256": "ad2ba008cfc09baa93abd28a592673fe633bd26884d57b8055ae0710f938fc4e",
+ "log": "/tmp/musnba_a1_prior_roster_v1.log",
+ "action": "Count the five unsupported games in the fixed denominator; no replacement or imputation."
+}

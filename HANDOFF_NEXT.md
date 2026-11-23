@@ -1,6 +1,6 @@
 # Handoff — current state and next actions
 
-Updated **23 November 2026**. Previous pushed checkpoint: **e05edc7**; `git log -1` identifies this checkpoint.
+Updated **23 November 2026**. Previous pushed checkpoint: **d8ae76f**; `git log -1` identifies this checkpoint.
 Read [AGENTS](AGENTS.md), then this file and [PLAN](PLAN.md). Detailed history is indexed in
 [docs/README](docs/README.md); do not read archives as current instructions.
 
@@ -9,22 +9,21 @@ Read [AGENTS](AGENTS.md), then this file and [PLAN](PLAN.md). Detailed history i
 - **Accepted production:** possession **engine-v1.3**, D29 minutes, pool 0, **10,000 worlds/game**;
   **team-pathway-v1**, **10,000 seasons**. Today's ET games use possessions; tomorrow onward uses pathway.
 - **Scope:** original 14-task A1 programme **58.0%** (S01–S07 complete, S13 deferred). Separate D42
-  **Chunk A 34.5%** = A1 lineups **80%** × 30% + A2 form **30%** × 35% + A3 replay **0%** × 35%.
+  **Chunk A 40.5%** = A1 lineups **100% (no release)** × 30% + A2 form **30%** × 35% + A3 replay **0%** × 35%.
   Chunk B **0%**. Do not reset/double-credit the original ledger; see PLAN §6.
-- **A1 remains blocked, not complete.** Branch/Expected/weighted-season/browser mechanics exist only in research.
-  No normal route supplies branch worlds. Production exposes positive-/zero-minute participation slices,
-  not forced-availability scenarios. A1's 80% includes injection-only UI evidence, not a delivered selector.
-- **Why blocked:** representative pre-origin retry/bias evidence and applicable player-first gates remain open.
-  Dated development injury-report calibration is unavailable; labelled fixed scenario weights are permitted,
-  but cannot be called calibrated forecasts. Invalid-world retry is unwired and can select different outcomes.
-- **Latest candidate rejected:** vector matched-penalty repair, 200 fixed F4 oracle-roster games × 1,000 worlds:
-  pooled minute CRPS Δ **−0.001262 [−0.003540, +0.001033]**, below **0.026341** noise floor;
-  **67/69** non-inferiority bounds established (Q3/Q4 margin coverage inconclusive). Do not rerun unchanged.
+- **A1 fallback decision complete; full branches remain unshipped.** The new 800-game pre-origin
+  roster census supports 783 contexts; independent raw reconstruction checked 28,530 memberships.
+  The historical readiness route failed; the frozen representative simulation was not run. The earlier
+  vector repair still fails its primary accuracy gate. [Decision/unpassed gates](docs/research/a1_no_release_20261123.md).
+  No branch selector/Expected mixture or retry policy is enabled. Original S08 remains 0%/undelivered;
+  production keeps labelled participation slices. This is completion of the documented no-release fallback,
+  not a claim that blocked production requirements passed.
 - **A2:** residual-dependence diagnostics and a synthetic mean-preserving draw prototype exist. No fitted latent
   factor, engine wiring or accuracy gain; within-/cross-game residual evidence is inconclusive. No A2 promotion.
-- **No model/download jobs running at this checkpoint.** Documentation cleanup changes no models, snapshots,
-  bundle contract, app assets or progress. Baseline smoke **108/108**; final documentation audit is in
-  [the cleanup record](docs/maintenance/2026-11-23-lean-docs.md).
+- **Execution authorised:** owner requests completion of A1 and A2 (23 Nov), lifting the prior A1 stop.
+  A3/Chunk B are not part of this request. Startup smoke **108/108**, log
+  `/tmp/musnba_a1_a2_start_smoke_20261123.log`. A1 checks: 8/8 focused, smoke 108/108; deliberate fault 86/108 and exit 1. No jobs running; production unchanged.
+  Active A1 protocol: [prior-roster screen](docs/protocols/a1_prior_roster_20261123.md).
 - Local pre-commit documentation enforcement is enabled (`core.hooksPath=.githooks`). Hosted documentation CI
   could not start because GitHub reports an account billing lock; this does not invalidate local checks.
 
@@ -44,21 +43,18 @@ Log `/tmp/musnba_a1_availability_nightly_20261123.log`.
 
 ## Next actions
 
-1. **Resume A1 at its 90% gate only when execution resumes.** Read [the branch runbook](docs/research/a1_branches.md)
-   and [TRAINING §8](TRAINING_PLAN.md#8-a1-acceptance-and-reproducibility). Define representative historical
-   pre-origin evidence or a materially new candidate before more runs; record hypothesis, population, actual
-   versus inferred roster/report coverage, cutoffs, hashes, outcomes and stop rule. Reuse saved evidence;
-   do not repeat selected stress tests as a route to promotion. Done when the next falsifiable test is frozen.
-2. Measure representative failure/selection effects and independently audit legal fives, exact player/team/season
-   accounting, restart and runtime. Historical actual-participant tests stay labelled conditional. Missing
-   dated injury cohorts remain explicit; no protected-season outcome tuning. Keep current forecasts if a gate fails.
-3. If qualified, wire complete 10k branches, exact Expected/season consumption and coherent laptop views;
-   phone stays Expected-only. Validate precise minutes, selected/partial/empty conditions, origin provenance,
-   responsive screenshots, import/offline and runtime. Finish A1 only with actual acceptance or a resolved,
-   explicitly documented fallback. A blocked interim UI is not completion.
-4. Update affected docs and evidence, run required checks, commit/push and summarise. **Honour the owner's
-   stop at the A1 boundary; do not silently start A2/A3/Chunk B.** A fresh final nightly belongs at Chunk A end;
-   affected model/output/app deliveries still occur at their own checkpoints.
+1. **A2 40%:** freeze the shared-factor and accepted-control world-dependence/late-state estimands
+   before measurement, using [frozen A2 methods](docs/protocols/a2_form_20261122.md). Reuse retained
+   predictions/models; do not add uncalibrated variance or use the rejected A1 repair as the control.
+2. Test shared shooting/pace support on prior folds and measure dependence already produced by v1.3.
+   Audit late fouls, clock, shot mix and OT on matched historical states; report unsupported cases.
+   Only separately supported/fitted factors or corrections get a frozen candidate engine screen.
+3. Apply the unchanged player-first/noise/non-inferiority and confirmation gates to survivors, otherwise
+   retain v1.3 with a measured no-promotion decision. Ship a useful outcome-facing dashboard improvement
+   if no model qualifies, with responsive screenshots and required PWA checks/delivery.
+4. Finish A2 with a fresh accepted-system live nightly (today's 10k games and 10k seasons), independent
+   accounting, iCloud export and any changed data-free shell; update lean docs, commit/push and stop.
+   A3/Chunk B remain open. Construct the next authorised work in the existing weighted format.
 
 First commands (read-only setup; do not launch old candidates):
 
@@ -70,8 +66,7 @@ git --no-pager log --oneline -5
 ls -t analysis/experiments/ | head -15
 ```
 
-The baseline already passed for this docs-only checkpoint. No historical forecast backfill, extra provider,
-model run or new nightly is authorised merely by cleaning docs.
+Startup baseline passed. No historical forecast backfill, extra provider or A3/Chunk B work is authorised.
 
 ## Progress ladders — Chunk A
 
@@ -80,8 +75,8 @@ Dependencies/acceptance are in PLAN §6a; methods/gates belong to ENGINE/TRAININ
 100 includes evidence, necessary delivery, checks, docs and commit/push. Report every new 10% module/5% overall mark.
 
 ```text
-Chunk A  ███████░░░░░░░░░░░░░ 34.5%
-A1       ████████████████░░░░ 80%
+Chunk A  ████████░░░░░░░░░░░░ 40.5%
+A1       ████████████████████ 100% (no-release fallback)
 A2       ██████░░░░░░░░░░░░░░ 30%
 A3       ░░░░░░░░░░░░░░░░░░░░ 0%
 ```
@@ -96,10 +91,10 @@ A3       ░░░░░░░░░░░░░░░░░░░░ 0%
 | 60 | Weighted season identities; no duplicate near-term games. | Test supported state corrections against earlier-fold controls. | Independently reconcile event order, clocks, scores, boxes and legal fives. |
 | 70 | Label/fail missing reports, unsupported dependence, cold rosters. | Sequential player-first screens: CRPS, bias, coverage, joint metrics. | Ship stored-only court, overlays, box, event list and playback controls. |
 | 80 | Laptop branch/phone Expected compatibility (research injection only). | Test survivors together and under independent seeds. | Check seek/playback/accessibility, themes/widths, phone budget/offline. |
-| 90 | **Open:** representative accounting, restart, cutoff, runtime, responsive gates. | Freeze promote/reject decision under all applicable gates. | Fresh live 10k nightly; audit selections and iCloud/PWA delivery. |
+| 90 | **Rejected route:** input readiness failed; remaining production gates unpassed (decision linked above). | Freeze promote/reject decision under all applicable gates. | Fresh live 10k nightly; audit selections and iCloud/PWA delivery. |
 | 100 | Verify results/limitations, required delivery, commit/push. | Verify evidence/fallback/delivery, commit/push. | Publish shell; construct successor; checks, commit/push and summary. |
 
-A1 10–80 are retained research milestones, not evidence that production gates passed. A2 40–100 and A3 all remain
+A1 is closed on its documented no-release fallback; 10–80 remain research milestones, not production passes. A2 40–100 and A3 all remain
 open. Chunk B's full predeclared ladders and the original S01–S14 ladders are preserved in
 [the frozen planning record](docs/archive/2026-11-23-before-lean/HANDOFF_NEXT.md); open only the relevant section
 when preparing that chunk, and copy its current ladder here before execution.

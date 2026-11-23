@@ -52,13 +52,13 @@ remain the relevant accuracy/product milestones. A research rejection does not m
 
 ### 6a. Authorised D42 execution split
 
-**Chunk A: believable games and visible simulations — 34.5%.** Headliners: lineup-aware player/game outcomes;
+**Chunk A: believable games and visible simulations — 40.5%.** Headliners: lineup-aware player/game outcomes;
 form and late-game realism; five actual saved-world examples with a reusable 2-D View Centre. Depends on S01–S07.
-The owner requested a stop at the A1 boundary; HANDOFF preserves that execution limit.
+Owner (23 Nov) now authorises completing A1 and A2, lifting the earlier A1 stop; A3 and Chunk B remain outside this session.
 
 | Module | Weight | Progress | Dependency and acceptance/fallback |
 |---|---:|---:|---|
-| A1 Lineups/Expected | 30% | 80% | S05–S07. Exact branch/season identities, origin safety and applicable gates; otherwise explicit blocked limitation. |
+| A1 Lineups/Expected | 30% | 100% fallback | No-release decision: 783/800 prior-roster contexts supported; repair accuracy gate still failed. Original S08/production branches remain undelivered. |
 | A2 Form/late game | 35% | 30% | S04/S06 decisions, A1 for integration. Paired player/joint gates; retain v1.3 when unsupported. |
 | A3 View Centre/delivery | 35% | 0% | A1/A2 decisions. Five labelled real worlds, reconciled event files, 2-D court/player, responsive/offline checks and fresh nightly. |
 
@@ -119,6 +119,7 @@ reflects loaded data/configuration. These items do not authorise forecast-histor
 
 | Date | Result | Evidence |
 |---|---|---|
+| 23 Nov | A1 no-release fallback: 28,530 memberships audited, 783/800 starter contexts supported; v1.3 retained. | [Decision](docs/research/a1_no_release_20261123.md) |
 | 23 Nov | Lean documentation maintenance; no model/app/data/progress change. | [Maintenance record](docs/maintenance/2026-11-23-lean-docs.md) |
 | 23 Nov | Participation slices and 10-game/10k-season delivery; full branches blocked. | Commit `4d58ff9`; HANDOFF latest delivery; FINDINGS. |
 | 23 Nov | Vector penalty candidate failed fixed F4 screen; retain v1.3. | Commit `8dee45a`; FINDINGS §7. |

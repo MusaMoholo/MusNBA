@@ -74,6 +74,13 @@ assignment fit cannot be reused for F1–F3; corrected fold inputs need dated fi
 
 ## 7. A1 branch evidence and remaining gate
 
+- **23 Nov prior-roster readiness census:** on the fixed 800 F1–F4 games, inferred source rosters cover
+  795 and required starter pools are supported in **783/800** (199/200/184/200 by fold). **371/28,530**
+  candidates lack a prior profile/position; 19 required-pool positions affect 12 games, plus five missing
+  roster contexts. Independent raw-prior reconstruction checked all 28,530 memberships and 1,590 pools.
+  The frozen probe has 124/128 supported contexts and was not simulated after its readiness failure.
+  No outcomes were read or accuracy claimed. [Decision and unpassed gates](docs/research/a1_no_release_20261123.md).
+  Reports `analysis/experiments/a1_prior_roster_20261123_v2{,_audit}.json`; existing systems retained.
 - **Legal-five defect:** fixed F4 game 401810327, 32 worlds/branch, synthetic uncertainty/actual participants:
   original run had disqualified fives in **14/32 plays and 16/32 sits** worlds; isolated repair reconciled
   **16,130/16,336** fives. This is one diagnostic, not a population rate or promotion.

@@ -17,6 +17,7 @@ Do not load historical archives routinely. Root documents describe the present; 
 ## Focused references
 
 - [A1 branch runbook](research/a1_branches.md): current research components, retained outputs, remaining gate and safe reproduction.
+- [A1 no-release decision](research/a1_no_release_20261123.md): measured prior-roster rejection and every unpassed production gate.
 - [Frozen A2 protocols](protocols/a2_form_20261122.md): verbatim preregistered residual/form methods.
 - [Cleanup audit](maintenance/2026-11-23-lean-docs.md): before/after counts, preservation checks and checkpoint validation.
 - Experiment JSON/text under `analysis/experiments/` contains exact configurations, outcomes, uncertainty and fingerprints;
