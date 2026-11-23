@@ -1,0 +1,17 @@
+{
+ "kind": "selected-roster paired retry scale research; not a forecast",
+ "worlds": 1200,
+ "workers": 10,
+ "rejections": 277,
+ "manifest": "data/derived/experiments/20261123_a1_retry_scale_resume_pilot_v1/manifest.json",
+ "manifest_sha256": "3c41f76d8f83e3b407e98533959c7123b6b3434db6787893fbc8a90543033d53",
+ "resumed_new_batches": 1,
+ "elapsed_seconds": 35.864,
+ "elapsed_limitation": "This invocation includes resume replay but excludes earlier runs.",
+ "limitations": [
+  "Selected six-player synthetic oracle roster, not a population failure rate.",
+  "Continuation is an explicit assumption, not the no-exception counterfactual.",
+  "Neither a predictive comparison nor permission to promote or serve retries.",
+  "Not a full-slate runtime or production gate."
+ ]
+}

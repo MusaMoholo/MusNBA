@@ -429,6 +429,13 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **23 Nov 2026 ET · A1 real-retry 10k scale:** selected six-player synthetic F4 stress yielded **10,000**
+  valid worlds after **2,330** rejections; independent replay matched every rejection, accepted world
+  and first-failure continuation. Retry versus continuation total difference **−1.083 [−1.297, −0.873]**;
+  player `4431714` minutes difference **−0.591 [−0.663, −0.520]** (unadjusted paired 95% intervals).
+  Clean-stop/resume matched 200 new pilot slots; new 9,000-world generation **1,942.686s**, independent
+  10k replay/bootstrap **834.285s**, both at ten workers. This single synthetic case is not predictive,
+  representative or a promotion gate. A1 **80%**, Chunk A **34.5%**; production unchanged.
 - **22 Nov 2026 ET · A1 paired actual retries:** a selected six-player F4 stress yielded **1,000** accepted
   worlds after **230** genuine typed rejections; independent replay matched every rejection, accepted world
   and first-failure continuation. Retry versus matched-continuation total averaged **224.379 / 225.183**,

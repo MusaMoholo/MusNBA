@@ -1,0 +1,170 @@
+{
+ "kind": "independent replay of scaled paired real retries and continuation",
+ "report": "analysis/experiments/20261123_a1_retry_scale_resume_pilot_v1.json",
+ "report_sha256": "c9bc24cf2aae7024795913aa86655a800e3648b8657c34db4609cc914c626b15",
+ "worlds": 1200,
+ "rejections_replayed": 277,
+ "first_exhaustions": 228,
+ "retry_fives_checked": 586632,
+ "paired_fives_checked": 589074,
+ "technical_events": 395,
+ "metrics": {
+  "home_points": {
+   "retry_mean": 109.5475,
+   "continuation_mean": 109.885,
+   "difference": -0.3375,
+   "ci_95": [
+    -0.7216666666666667,
+    0.05252083333333303
+   ]
+  },
+  "away_points": {
+   "retry_mean": 114.80833333333334,
+   "continuation_mean": 115.18916666666667,
+   "difference": -0.38083333333333336,
+   "ci_95": [
+    -0.7850208333333334,
+    0.010833333333333334
+   ]
+  },
+  "total_points": {
+   "retry_mean": 224.35583333333332,
+   "continuation_mean": 225.07416666666666,
+   "difference": -0.7183333333333334,
+   "ci_95": [
+    -1.3158750000000001,
+    -0.12
+   ]
+  },
+  "home_margin": {
+   "retry_mean": -5.260833333333333,
+   "continuation_mean": -5.304166666666666,
+   "difference": 0.043333333333333335,
+   "ci_95": [
+    -0.4775208333333333,
+    0.5466666666666666
+   ]
+  },
+  "home_player_3934620_points": {
+   "retry_mean": 15.756666666666666,
+   "continuation_mean": 15.674166666666666,
+   "difference": 0.0825,
+   "ci_95": [
+    -0.1325,
+    0.2966874999999997
+   ]
+  },
+  "home_player_4397784_points": {
+   "retry_mean": 16.280833333333334,
+   "continuation_mean": 16.189166666666665,
+   "difference": 0.09166666666666666,
+   "ci_95": [
+    -0.13085416666666666,
+    0.3133541666666664
+   ]
+  },
+  "home_player_4431714_points": {
+   "retry_mean": 19.245,
+   "continuation_mean": 19.600833333333334,
+   "difference": -0.35583333333333333,
+   "ci_95": [
+    -0.6483333333333333,
+    -0.07910416666666757
+   ]
+  },
+  "home_player_4432821_points": {
+   "retry_mean": 16.045833333333334,
+   "continuation_mean": 16.11,
+   "difference": -0.06416666666666666,
+   "ci_95": [
+    -0.29670833333333335,
+    0.1716874999999997
+   ]
+  },
+  "home_player_4432887_points": {
+   "retry_mean": 19.034166666666668,
+   "continuation_mean": 19.045,
+   "difference": -0.010833333333333334,
+   "ci_95": [
+    -0.2733333333333333,
+    0.25416666666666665
+   ]
+  },
+  "home_player_5242502_points": {
+   "retry_mean": 23.185,
+   "continuation_mean": 23.265833333333333,
+   "difference": -0.08083333333333333,
+   "ci_95": [
+    -0.3516875,
+    0.19585416666666636
+   ]
+  },
+  "home_player_3934620_minutes": {
+   "retry_mean": 43.77955972177421,
+   "continuation_mean": 43.54332916597773,
+   "difference": 0.2362305557964783,
+   "ci_95": [
+    0.002918819834840265,
+    0.47873031247418035
+   ]
+  },
+  "home_player_4397784_minutes": {
+   "retry_mean": 44.51363333342928,
+   "continuation_mean": 44.45639722235656,
+   "difference": 0.0572361110727198,
+   "ci_95": [
+    -0.09985013905266926,
+    0.21506118038420105
+   ]
+  },
+  "home_player_4431714_minutes": {
+   "retry_mean": 37.18893749864317,
+   "continuation_mean": 37.717604165417654,
+   "difference": -0.5286666667744933,
+   "ci_95": [
+    -0.7352613888795286,
+    -0.3141326387464819
+   ]
+  },
+  "home_player_4432821_minutes": {
+   "retry_mean": 37.243772222150945,
+   "continuation_mean": 37.30838472219712,
+   "difference": -0.06461250004617311,
+   "ci_95": [
+    -0.3117019448140998,
+    0.17615624978523645
+   ]
+  },
+  "home_player_4432887_minutes": {
+   "retry_mean": 36.37984027930857,
+   "continuation_mean": 36.198662501700944,
+   "difference": 0.18117777760761467,
+   "ci_95": [
+    -0.003077361557606832,
+    0.3681315970384049
+   ]
+  },
+  "home_player_5242502_minutes": {
+   "retry_mean": 41.477590278027165,
+   "continuation_mean": 41.567288889016645,
+   "difference": -0.08969861098948034,
+   "ci_95": [
+    -0.26055802048416565,
+    0.08290184038792378
+   ]
+  }
+ },
+ "bootstrap": {
+  "replicates": 5000,
+  "seed": 20261123,
+  "unit": "slot",
+  "interval": "95% percentile, unadjusted"
+ },
+ "elapsed_seconds": 108.101,
+ "limitations": [
+  "Selected six-player synthetic oracle roster, not a population failure rate.",
+  "Continuation is an explicit assumption, not the no-exception counterfactual.",
+  "Neither a predictive comparison nor permission to promote or serve retries.",
+  "Not a full-slate runtime or production gate."
+ ]
+}

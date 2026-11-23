@@ -2,6 +2,22 @@
 
 Measured facts only. Each entry states its date and population.
 
+**23 Nov 2026 ET — 10,000 actual retries versus matched first-seed continuations:** the deliberately
+selected F4 six-player synthetic-absence oracle roster yielded **10,000** accepted slots after **2,330**
+typed rejections, of which **1,893** were first attempts. The population extends the prior audited
+1,000 slots with 9,000 new deterministic slots. Independent replay reproduced all accepted worlds,
+rejections and failed-first-seed continuations, checking **4,883,622 / 4,904,688** retry/continuation
+lineup fives and **3,235** continuation technicals. Retry versus continuation total was **223.897 /
+224.980**, difference **−1.083 [−1.297, −0.873]**; player `4431714` minutes **36.891 / 37.482**,
+difference **−0.591 [−0.663, −0.520]**. These intervals are unadjusted paired-slot percentile bootstrap
+95% (5,000 resamples); the audit records all prespecified player and team estimates. New generation took
+**1,942.686s** at ten workers, excluding the prior 1,000's **233.798s** at eight; replay/bootstrap took
+**834.285s** at ten. An independently replayed clean-stop pilot matched **200** new first and accepted
+worlds, seeds, failure states and rejection order to an uninterrupted run. This selected case and the
+specific foul-penalty continuation are not an NBA failure rate, true no-exception counterfactual,
+real-outcome prediction, representative runtime or permission to promote. Reports
+`analysis/experiments/20261123_a1_retry_scale_{full_v1,full_v1_audit,resume_compare_v1}.json`.
+
 **22 Nov 2026 ET — actual retries versus matched first-seed continuations:** in the deliberately selected
 F4 six-player synthetic-absence oracle roster, **1,000** isolated retry slots accepted **1,000** worlds
 after **230** typed exhaustions, including **190** failed first attempts. Each first failure was continued

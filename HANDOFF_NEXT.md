@@ -1,10 +1,46 @@
 # Handoff — state and next actions
 
-Updated **22 November 2026 — Chunk A A1 at 80%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **1620650** (complete-screen accounting); use `git log -1` for the current checkpoint.
+Updated **23 November 2026 — Chunk A A1 at 80%, A2 at 30%; S01–S07 remain complete**.
+The preceding pushed checkpoint was **0ed0cad** (paired actual retry comparison); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
+- **A1 90% partial — real-retry 10k scale (23 Nov ET):** the selected F4 six-player synthetic
+  oracle-roster run combined the previously audited **1,000** slots with **9,000** new slots, accepting
+  **10,000** worlds after **2,330** typed rejections (including **1,893** failed first attempts).
+  Independent replay checked all accepted and rejected attempts and all matched first-failure continuations:
+  **4,883,622 / 4,904,688** retry/continuation fives and **3,235** continuation technicals. Retry versus
+  continuation total averaged **223.897 / 224.980**, difference **−1.083 [−1.297, −0.873]**; player
+  `4431714` minutes **36.891 / 37.482**, difference **−0.591 [−0.663, −0.520]**. These are unadjusted
+  paired-slot 95% percentile bootstrap intervals (5,000 resamples). New generation took **1,942.686s**
+  at ten workers, excluding the previous 1,000, which took **233.798s** at eight workers; independent
+  full replay and bootstrap took **834.285s** at ten workers. Neither is a measured full-slate runtime.
+  The clean-stop/resume pilot matched **200** new first/accepted captures, failure states, seeds and
+  rejection order against an uninterrupted run; its resumed **1,200**-slot run was independently replayed.
+  Orphans and non-contiguous partial batches fail closed; this is a single-operator clean-stop protocol,
+  not a guarantee of resuming a hard-interrupted batch. Reports
+  `analysis/experiments/20261123_a1_retry_scale_{full_v1,full_v1_audit,resume_pilot_v1,resume_pilot_v1_audit,control_pilot_v1,resume_compare_v1}.json`;
+  ignored captures `data/derived/experiments/20261123_a1_retry_scale_{full_v1,resume_pilot_v1,control_pilot_v1}/`.
+  This is one selected stress case and one continuation assumption, not a population rate, prediction
+  test or production gate. It strengthens the evidence that blind retry can change distributions. Focused
+  tests **32/32**, smoke **107/107**, deliberate fault **86/107** and exit 1. No job remains; no production
+  model, forecast, bundle or shell changed. A1 **80%**, Chunk A **34.5%**. HANDOFF, PLAN, FINDINGS and
+  README updated; AGENTS (standing rules), ENGINE_PLAN (design), TRAINING_PLAN (gates) and DASHBOARD_PLAN
+  (shipped UI) require no change. Continue A1; the owner requested a stop only at its end.
+- **Next A1 90% real-retry scale protocol, frozen before implementation:** extend the independently audited
+  1,000-slot actual-retry F4 stress above to **10,000 accepted slots**, preserving the first 1,000 saved
+  outcomes and seed scheme. Generate slots in ordered 100-world batches with at most ten single-thread
+  workers. Keep the ten-attempt per-slot limit and cap total rejected attempts at **5,000**; a cap or
+  unclassified error fails explicitly, never returns a partial 10k result. Persist every first/accepted
+  capture and rejection, source hashes and complete per-batch records; a restart may use only an independently
+  replayed contiguous complete prefix and must reject orphan/partial files. Before the full run, compare an
+  uninterrupted two-new-batch run against a clean stop after one new batch and resume, with matching saved
+  captures, seeds, failure states and rejection order. Independently audit all final slots and replay accepted,
+  rejected and matched first-failure worlds; preserve per-slot identities and paired player/team metrics.
+  Report runtime, rejections and unadjusted 5,000 paired-slot bootstrap intervals; this remains a selected
+  synthetic six-player roster and one continuation assumption, not a population rate, accuracy test,
+  full-slate benchmark, production gate or permission to expose controls. Use fresh namespaces and never
+  overwrite partial files; no protected actual outcomes or historical forecasts.
 - **A1 actual retry pilot and full comparison (23 Nov UTC):** isolated paired retry implementation
   and auditor passed **34/34** focused tests. The 20-slot pilot produced **20** accepted worlds, **7**
   rejections and **4** first-seed exhaustions in **11.0s**; independent replay checked all **20** accepted
@@ -3232,6 +3268,12 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
    player-first differences and uncertainty are recorded above. Alternative continuation assumptions and
    comparisons against real outcomes on development folds remain open. The retry prototype remains
    unwired; no predictive or production gate has been passed.
+   The selected real-retry 10k run and replay above add scale, not representativeness. Reproduce in a fresh
+   namespace with `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -u analysis/a1_real_retry_scale.py --worlds-dir data/derived/experiments/<new-dir> --output analysis/experiments/<new-report>.json`,
+   then `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -u analysis/a1_real_retry_scale_audit.py analysis/experiments/<new-report>.json --output analysis/experiments/<new-audit>.json`.
+   A deliberate clean stop uses `--stop-after-batches N`; resume the same paths with `--resume` after
+   inspecting the directory. Resume independently replays the complete new-batch prefix; any orphan
+   fails closed and must be retained for inspection rather than overwritten.
    Genuinely dated
    pre-game report cohorts remain unavailable for fitting or calibrating an availability model; labelled
    fixed scenario weights themselves remain permitted. The resume prototype

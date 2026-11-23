@@ -8,6 +8,7 @@ import numpy as np
 
 from analysis import a1_real_retry_paired as run
 from analysis import a1_real_retry_paired_audit as audit
+from analysis import a1_real_retry_scale as scale
 from basketball_common import read_json, write_json
 from scripts import a1_branch_foul_out, a1_world_retry
 
@@ -65,6 +66,28 @@ class RealRetryPairedTest(unittest.TestCase):
             write_json(root / 'first-0000.json', first, pretty=True)
             with patch.object(audit, 'ROOT', root), self.assertRaisesRegex(ValueError, 'seed or ordering'):
                 audit.check(first, accepted, [], Path('.'), 20261123)
+
+    def test_scale_resume_accepts_only_complete_ordered_batches(self):
+        config = {'batches': 12}
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write_json(root / 'run.json', config, pretty=True)
+            first = [{'slot': slot, 'status': 'complete'} for slot in range(1000, 1100)]
+            accepted = [{'slot': slot} for slot in range(1000, 1100)]
+            for slot in range(1000, 1100):
+                (root / f'first-{slot:04d}.json').touch()
+                (root / f'accepted-{slot:04d}.npz').touch()
+            batch = {'batch': 10, 'first': first, 'accepted': accepted, 'rejections': []}
+            write_json(root / 'batch-010.json', batch, pretty=True)
+            self.assertEqual(scale.records(root, config), [batch])
+            (root / 'first-1100.json').touch()
+            with self.assertRaisesRegex(ValueError, 'orphaned'):
+                scale.records(root, config)
+            (root / 'first-1100.json').unlink()
+            batch['first'][1]['slot'] = 1000
+            write_json(root / 'batch-010.json', batch, pretty=True)
+            with self.assertRaisesRegex(ValueError, 'slot differs'):
+                scale.records(root, config)
 
 
 if __name__ == '__main__':

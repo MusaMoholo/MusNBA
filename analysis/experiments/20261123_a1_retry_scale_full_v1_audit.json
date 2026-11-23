@@ -1,0 +1,170 @@
+{
+ "kind": "independent replay of scaled paired real retries and continuation",
+ "report": "analysis/experiments/20261123_a1_retry_scale_full_v1.json",
+ "report_sha256": "af241e52cb7bd583ccd291f1e6f0258d537fbd1bd5e1824e1854ae00b860785a",
+ "worlds": 10000,
+ "rejections_replayed": 2330,
+ "first_exhaustions": 1893,
+ "retry_fives_checked": 4883622,
+ "paired_fives_checked": 4904688,
+ "technical_events": 3235,
+ "metrics": {
+  "home_points": {
+   "retry_mean": 109.2511,
+   "continuation_mean": 109.7361,
+   "difference": -0.485,
+   "ci_95": [
+    -0.6221075,
+    -0.3464925000000001
+   ]
+  },
+  "away_points": {
+   "retry_mean": 114.646,
+   "continuation_mean": 115.2438,
+   "difference": -0.5978,
+   "ci_95": [
+    -0.7344025000000001,
+    -0.46209750000000005
+   ]
+  },
+  "total_points": {
+   "retry_mean": 223.8971,
+   "continuation_mean": 224.9799,
+   "difference": -1.0828,
+   "ci_95": [
+    -1.29681,
+    -0.8730925
+   ]
+  },
+  "home_margin": {
+   "retry_mean": -5.3949,
+   "continuation_mean": -5.5077,
+   "difference": 0.1128,
+   "ci_95": [
+    -0.055205,
+    0.2866199999999997
+   ]
+  },
+  "home_player_3934620_points": {
+   "retry_mean": 15.7698,
+   "continuation_mean": 15.7322,
+   "difference": 0.0376,
+   "ci_95": [
+    -0.035902500000000004,
+    0.1116
+   ]
+  },
+  "home_player_4397784_points": {
+   "retry_mean": 16.2895,
+   "continuation_mean": 16.383,
+   "difference": -0.0935,
+   "ci_95": [
+    -0.168805,
+    -0.018087500000000183
+   ]
+  },
+  "home_player_4431714_points": {
+   "retry_mean": 19.2408,
+   "continuation_mean": 19.5955,
+   "difference": -0.3547,
+   "ci_95": [
+    -0.4421,
+    -0.26919750000000003
+   ]
+  },
+  "home_player_4432821_points": {
+   "retry_mean": 15.93,
+   "continuation_mean": 15.9412,
+   "difference": -0.0112,
+   "ci_95": [
+    -0.0922,
+    0.06800499999999993
+   ]
+  },
+  "home_player_4432887_points": {
+   "retry_mean": 18.9815,
+   "continuation_mean": 19.02,
+   "difference": -0.0385,
+   "ci_95": [
+    -0.12411,
+    0.05070249999999996
+   ]
+  },
+  "home_player_5242502_points": {
+   "retry_mean": 23.0395,
+   "continuation_mean": 23.0642,
+   "difference": -0.0247,
+   "ci_95": [
+    -0.12330500000000001,
+    0.0723
+   ]
+  },
+  "home_player_3934620_minutes": {
+   "retry_mean": 43.914501666215656,
+   "continuation_mean": 43.65761016616218,
+   "difference": 0.2568915000534802,
+   "ci_95": [
+    0.1764856167410366,
+    0.3391043125526742
+   ]
+  },
+  "home_player_4397784_minutes": {
+   "retry_mean": 44.49825533363343,
+   "continuation_mean": 44.47225433360685,
+   "difference": 0.026001000026576196,
+   "ci_95": [
+    -0.026578483258591103,
+    0.07802212088780539
+   ]
+  },
+  "home_player_4431714_minutes": {
+   "retry_mean": 36.89078583182749,
+   "continuation_mean": 37.482265998599686,
+   "difference": -0.5914801667721943,
+   "ci_95": [
+    -0.6633233125300296,
+    -0.5202243583725913
+   ]
+  },
+  "home_player_4432821_minutes": {
+   "retry_mean": 37.418641832780835,
+   "continuation_mean": 37.39992766607307,
+   "difference": 0.018714166707768976,
+   "ci_95": [
+    -0.058137937415868146,
+    0.09616591260139079
+   ]
+  },
+  "home_player_4432887_minutes": {
+   "retry_mean": 36.34128183522015,
+   "continuation_mean": 36.234059501940905,
+   "difference": 0.10722233327923963,
+   "ci_95": [
+    0.048709570825313006,
+    0.16391302912010297
+   ]
+  },
+  "home_player_5242502_minutes": {
+   "retry_mean": 41.53653350032244,
+   "continuation_mean": 41.50638233361731,
+   "difference": 0.030151166705129025,
+   "ci_95": [
+    -0.03752647914043699,
+    0.09793996675988356
+   ]
+  }
+ },
+ "bootstrap": {
+  "replicates": 5000,
+  "seed": 20261123,
+  "unit": "slot",
+  "interval": "95% percentile, unadjusted"
+ },
+ "elapsed_seconds": 834.285,
+ "limitations": [
+  "Selected six-player synthetic oracle roster, not a population failure rate.",
+  "Continuation is an explicit assumption, not the no-exception counterfactual.",
+  "Neither a predictive comparison nor permission to promote or serve retries.",
+  "Not a full-slate runtime or production gate."
+ ]
+}

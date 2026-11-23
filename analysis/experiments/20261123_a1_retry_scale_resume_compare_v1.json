@@ -1,0 +1,15 @@
+{
+ "kind": "clean-stop/resume versus uninterrupted paired retry pilot",
+ "uninterrupted": "analysis/experiments/20261123_a1_retry_scale_control_pilot_v1.json",
+ "uninterrupted_sha256": "261ad6522aea741618cc1760a0778641e4e983d24b1caf1892575b32b03b3daf",
+ "resumed": "analysis/experiments/20261123_a1_retry_scale_resume_pilot_v1.json",
+ "resumed_sha256": "c9bc24cf2aae7024795913aa86655a800e3648b8657c34db4609cc914c626b15",
+ "comparison_script_sha256": "034c698ae54075982aa556725c945398882bf216051bef96bd1be8c4eba17722",
+ "shared_audited_prefix": 1000,
+ "new_slots_compared": 200,
+ "rejections": 277,
+ "result": "first and accepted world contents, failure states, seeds and rejection order match",
+ "limitations": [
+  "Synthetic selected-roster diagnostic; not a predictive or full-slate benchmark."
+ ]
+}
