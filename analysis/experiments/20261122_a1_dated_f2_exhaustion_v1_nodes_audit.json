@@ -1,0 +1,221 @@
+{
+ "experiment": "a1_scheduled_node_cache_accounting",
+ "fold": "F2",
+ "population": "all retained historical node rows; training and validation counted separately",
+ "limits": "shape, date, labels, group accounting and hashes only; not a model-accuracy test",
+ "features": "data/derived/variants/a1_scheduled_F2_20261122_v3/features/pregame.parquet",
+ "cache": "data/derived/nodes/variant_edf6d83ed7a3",
+ "cutoff": "2024-12-31",
+ "validation_from": "2025-01-01",
+ "validation_to": "2025-04-30",
+ "nodes": {
+  "duration": {
+   "rows": 1200351,
+   "columns": 54,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "multiclass",
+   "train_rows": 705067,
+   "validation_rows": 180339,
+   "sha256": "65e5c7bf97ea41e57d93734560a94628b5117eaa4c3472cb70b555f6df10e9b7"
+  },
+  "event": {
+   "rows": 1234437,
+   "columns": 55,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "multiclass",
+   "train_rows": 724974,
+   "validation_rows": 185406,
+   "sha256": "bfda3cf8be9714f1df2f5e0acedebbe65d492a08543e3c1ecda5cab72cf2c102"
+  },
+  "who": {
+   "rows": 5742110,
+   "columns": 115,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "candidate",
+   "train_rows": 3379930,
+   "validation_rows": 863445,
+   "sha256": "37333c8c3e6a706258edd4ac16175433ef586da7651adcb71c73b2601f4fd68a",
+   "groups": 1148422,
+   "candidate_group_sizes": {
+    "5": 1148422
+   },
+   "zero_profile_groups": 0
+  },
+  "what": {
+   "rows": 1141111,
+   "columns": 115,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "multiclass",
+   "train_rows": 671415,
+   "validation_rows": 172057,
+   "sha256": "d255ac8460e801ab0ff3ddf17821c76085a154d6af02712fbc5b57da9ae57e59"
+  },
+  "location": {
+   "rows": 921103,
+   "columns": 117,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "multiclass",
+   "train_rows": 542847,
+   "validation_rows": 139660,
+   "sha256": "62407beeeede3c001a8e4d0e491bf83ce155350f701e157e41fd6bc4fe3a8c22"
+  },
+  "shot_result": {
+   "rows": 921103,
+   "columns": 120,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "multiclass",
+   "train_rows": 542847,
+   "validation_rows": 139660,
+   "sha256": "48ae5accaeaf11c3c9c7bc3c1158b1246783e3f76416c3a0d67f891259e2776d"
+  },
+  "assisted": {
+   "rows": 433884,
+   "columns": 120,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "binary",
+   "train_rows": 256412,
+   "validation_rows": 65463,
+   "sha256": "80dfa1831bc9747c2a4279cb47e429842c882fb84f66678a607baed93d6cfd18"
+  },
+  "assister": {
+   "rows": 1073403,
+   "columns": 111,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "candidate",
+   "train_rows": 628547,
+   "validation_rows": 164320,
+   "sha256": "3b51acf03d75f79f2ed6addb341508a6295a5a112abffc0d6e3a5e6efc4b4159",
+   "groups": 267718,
+   "candidate_group_sizes": {
+    "4": 265187,
+    "5": 2531
+   },
+   "zero_profile_groups": 0
+  },
+  "blocked": {
+   "rows": 487219,
+   "columns": 120,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "binary",
+   "train_rows": 286435,
+   "validation_rows": 74197,
+   "sha256": "c3f10ae4b16b46bf44d68e79d875fa972ad019c1639c6a8a9c63911b691bf2fa"
+  },
+  "blocker": {
+   "rows": 250540,
+   "columns": 108,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5192,
+   "kind": "candidate",
+   "train_rows": 149700,
+   "validation_rows": 36380,
+   "sha256": "97187342e0fd36e816560788a55aa12288fcd2dbe0dd6faaa1f0bf69befe5ea1",
+   "groups": 50108,
+   "candidate_group_sizes": {
+    "5": 50108
+   },
+   "zero_profile_groups": 0
+  },
+  "rebound": {
+   "rows": 515094,
+   "columns": 62,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "multiclass",
+   "train_rows": 302185,
+   "validation_rows": 78040,
+   "sha256": "3c8fa973fc181ff207937e32d01f3ebed159acf0b9aebd64b65124becc88211c"
+  },
+  "rebounder": {
+   "rows": 2229995,
+   "columns": 111,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "candidate",
+   "train_rows": 1314550,
+   "validation_rows": 339100,
+   "sha256": "95c1d49dee2403b7edd5185a8d3d2422d6200bd16b58f71bfe24d170f9dea60b",
+   "groups": 445999,
+   "candidate_group_sizes": {
+    "5": 445999
+   },
+   "zero_profile_groups": 0
+  },
+  "turnover_type": {
+   "rows": 138586,
+   "columns": 115,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "multiclass",
+   "train_rows": 81162,
+   "validation_rows": 20390,
+   "sha256": "2c063910a68964995f36d6cc9f826af55bc83927f0e145a5d0b7f36379de9333"
+  },
+  "stealer": {
+   "rows": 401505,
+   "columns": 107,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "candidate",
+   "train_rows": 227930,
+   "validation_rows": 61845,
+   "sha256": "55c2d3ed79a8768714328085466143d7dee7421acf1fdc4bdd45fe9581143104",
+   "groups": 80301,
+   "candidate_group_sizes": {
+    "5": 80301
+   },
+   "zero_profile_groups": 0
+  },
+  "fouler": {
+   "rows": 894450,
+   "columns": 108,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "candidate",
+   "train_rows": 523390,
+   "validation_rows": 129350,
+   "sha256": "c896043f263dcec652a905353062f07db970efe737adb543d22213ebb2745f32",
+   "groups": 178890,
+   "candidate_group_sizes": {
+    "5": 178890
+   },
+   "zero_profile_groups": 0
+  },
+  "free_throw": {
+   "rows": 229546,
+   "columns": 111,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "binary",
+   "train_rows": 134188,
+   "validation_rows": 32961,
+   "sha256": "60d0c46f31b7198e3df6ea8c57e28fe3cb2cb61d413115cf67477150bed95be0"
+  }
+ },
+ "audit_sha256": "8bd244d40aae93dd33273264349c6efb3fd3d1e7d8552dd48b98714c7bdb2077"
+}

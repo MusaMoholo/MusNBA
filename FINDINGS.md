@@ -2,6 +2,15 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 ET — dated earlier-fold diagnostic prerequisites:** S02-style body-free F1/F2/F3 engines
+were fitted through **2023-12-31 / 2024-12-31 / 2025-09-30**, each using its own previously built dated
+assignment schedule. All **16** node datasets per fold passed the saved-cache accounting and each engine
+has **18** fingerprinted model artifacts. Sequential preparation including cache/audit took **245.971 /
+283.903 / 336.321s**, with eight fitting threads and one BLAS thread; one F1 game constructed and ran
+both five-attempt branches. These engines are not the accepted v1.3 and are not an accuracy or historical
+pre-game availability result; original source publication timing remains unverified. Reports
+`analysis/experiments/20261122_a1_dated_f{1,2,3}_exhaustion_v1{,_nodes_audit}.json`.
+
 **22 Nov 2026 ET — halftime survivor selection in the selected six-player F4 stress:** all **1,000**
 original seeds were replayed; all **798** completed worlds reproduced their original full-world digest and all
 **202** failures reproduced their recorded reason. These failures occurred after halftime. Halftime home

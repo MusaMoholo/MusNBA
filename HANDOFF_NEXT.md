@@ -1,10 +1,24 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 80%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **b5d55bd** (six-player S06 comparison); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **2526ea1** (halftime survivor selection); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
+- **A1 90% partial — dated-fold preparation (23 Nov UTC):** F1/F2/F3 isolated S02-style body-free
+  engines are fitted through **2023-12-31 / 2024-12-31 / 2025-09-30**. Each has all **16** cached node
+  datasets independently accounted and **18** model artifacts fingerprinted. Preparation took
+  **245.971 / 283.903 / 336.321s**, including cache builds/audits, using eight fitting threads and one
+  BLAS thread, sequentially. A one-game F1 wiring check produced both five-attempt branches. Reports
+  `analysis/experiments/20261122_a1_dated_f{1,2,3}_exhaustion_v1{,_nodes_audit}.json`, logs
+  `/tmp/musnba_a1_dated_f{1,2,3}_exhaustion_v1.log`. No fold job remains running. Each namespace refuses
+  overwrite; interrupted files require inspection and a fresh name. The F1–F3 diagnostic engines differ
+  from accepted v1.3 and the genuinely dated injury-report gate remains unavailable. No protected-season
+  outcomes were scored. Focused tests **10/10**, smoke **107/107**, deliberate fault **86/107** and exit 1
+  (`/tmp/musnba_a1_dated_prepare_{smoke,fault}_v1.log`). HANDOFF, PLAN, FINDINGS and README record the work;
+  AGENTS, ENGINE_PLAN, TRAINING_PLAN and DASHBOARD_PLAN need no changes: rules, accepted engine, gates and
+  shipped UI remain unchanged. A1 **80%**, Chunk A **34.5%**. Next run the predeclared conditional-roster
+  screens and saved-file audits below, one fold at a time under the shared compute budget.
 - **A1 90% partial — halftime selection diagnostic (23 Nov UTC):** replayed all **1,000** original
   six-player D29 attempts, matching the **798** complete-world digests and **202** exact failure reasons.
   At halftime, the **798** eventual survivors averaged **9.391** home fouls versus **9.888** over all
@@ -510,6 +524,25 @@ The preceding pushed checkpoint was **b5d55bd** (six-player S06 comparison); use
   attempts and 95% percentile intervals. This can measure selection in the common pre-failure state of this
   selected synthetic case, not estimate missing final-game outcomes, production rates or general predictive
   accuracy. Unexpected errors or changed replay identities stop the run; retain partial files.
+- **A1 90% earlier-fold prerequisite, frozen before fitting:** prepare isolated F1–F3 engines using the
+  already-built S02 guarded dated/body-free assignment feature snapshots and the S02 diagnostic node
+  settings. Each fold uses its own assignment schedule and fits through its own training cutoff; build
+  missing node caches sequentially, independently audit each 16-node cache, then fit each 16-node engine
+  sequentially with at most eight compute threads and BLAS capped at one. Use fresh version namespaces and
+  record source, feature, schedule, node-cache and model fingerprints. These are research engines, not the
+  accepted v1.3 or comparable identical baselines; static source publication times remain unverified.
+  Their sole initial purpose is to enable earlier-fold conditional-roster exhaustion diagnostics, not
+  promote models or score the protected season. Preserve partial outputs on any failure.
+- **A1 90% earlier-fold conditional-roster screen, frozen before its draws:** once the corresponding dated
+  F1–F3 diagnostic engine is ready, use each fold's **200** predeclared confirmation games and actual
+  participant rosters. For each, construct top-projected-home-minute player plays/sits branches as in the
+  earlier F4 screen; record invalid initial allocations, then run **five** independently seeded single-world
+  attempts per feasible branch. Save and independently replay completed traces; record typed exhaustions,
+  stop on any other error, and fingerprint sources, dated models and inputs. Treat each game/branch as a
+  cluster when reporting uncertainty; ten attempts from one game are not independent game samples.
+  S02's body-free diagnostic differs from the accepted engine and its oracle participant roster is not
+  pre-game availability. Do not compare its raw failure rate to F4 as if the models were identical, infer a
+  league rate or claim the missing dated-availability or full-game retry-bias gates.
 - **A1 80% complete, injection-only:** a single shared research lineup control now drives selected player, team,
   sheet, scenario/Given/Joint and driver views; branch-unavailable metadata/cards are omitted. Available and
   positive-minute participation are distinct; shooting-defined mass is weighted. No normal route registers the
@@ -2997,7 +3030,10 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
    **202** exhausted seeds in its selected F4 case; the S06 comparison is complete and independently
    audited, with different policies/paths and no final-outcome bias conclusion. A matched replay now
    establishes selected pre-failure halftime states in this extreme case; full-game bias remains unknown.
-   Continue F1–F3 and dated pre-game cohorts where available. The resume prototype
+   F1–F3 diagnostic engines are now fitted; run the predeclared conditional-roster screens, e.g.
+   `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -u analysis/a1_dated_fold_exhaustion.py --preparation analysis/experiments/20261122_a1_dated_f1_exhaustion_v1.json --worlds-dir data/derived/experiments/20261122_a1_dated_f1_screen_v1 --output analysis/experiments/20261122_a1_dated_f1_screen_v1.json`
+   and then `.venv/bin/python analysis/a1_dated_fold_exhaustion_audit.py analysis/experiments/20261122_a1_dated_f1_screen_v1.json --output analysis/experiments/20261122_a1_dated_f1_screen_v1_audit.json`;
+   repeat F2/F3 sequentially with matching names. Dated pre-game cohorts remain unavailable. The resume prototype
    is single-operator only, and an orphaned partial batch fails for manual inspection. Source evidence and missing dated
    injury-report cohorts are documented there and in FINDINGS; do not score protected-season outcomes.
    The retry coordinator is deliberately unwired: prove world-local classification and survivor isolation,

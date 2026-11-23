@@ -1,0 +1,221 @@
+{
+ "experiment": "a1_scheduled_node_cache_accounting",
+ "fold": "F3",
+ "population": "all retained historical node rows; training and validation counted separately",
+ "limits": "shape, date, labels, group accounting and hashes only; not a model-accuracy test",
+ "features": "data/derived/variants/a1_scheduled_F3_20261122_v3/features/pregame.parquet",
+ "cache": "data/derived/nodes/variant_9d5aee5f8b7d",
+ "cutoff": "2025-09-30",
+ "validation_from": "2025-10-01",
+ "validation_to": "2025-12-31",
+ "nodes": {
+  "duration": {
+   "rows": 1200351,
+   "columns": 54,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "multiclass",
+   "train_rows": 896014,
+   "validation_rows": 116124,
+   "sha256": "b282192b618b93bf889224561af9328242d2e3fc04e9149e732828a229bda4b5"
+  },
+  "event": {
+   "rows": 1234437,
+   "columns": 55,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "multiclass",
+   "train_rows": 921319,
+   "validation_rows": 119620,
+   "sha256": "470c93b8100fe74d7b7025dc9167fd638f07ff5791d2f7bbfceceb5871fd7a32"
+  },
+  "who": {
+   "rows": 5742110,
+   "columns": 115,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "candidate",
+   "train_rows": 4293820,
+   "validation_rows": 552920,
+   "sha256": "b9794964b42ed312938d3f73637278f3428fb655ed3bf49d0696a0d03449330b",
+   "groups": 1148422,
+   "candidate_group_sizes": {
+    "5": 1148422
+   },
+   "zero_profile_groups": 0
+  },
+  "what": {
+   "rows": 1141111,
+   "columns": 115,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "multiclass",
+   "train_rows": 853426,
+   "validation_rows": 109745,
+   "sha256": "0e54969db0d99f0dd54cddd28508e3643f8533bd7588af0844b03fc1cd158e53"
+  },
+  "location": {
+   "rows": 921103,
+   "columns": 117,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "multiclass",
+   "train_rows": 690414,
+   "validation_rows": 87671,
+   "sha256": "b156aec03d20b7b0dd0a6929a4fdc0673c3ba20355d633af7a98c207383c69fa"
+  },
+  "shot_result": {
+   "rows": 921103,
+   "columns": 120,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "multiclass",
+   "train_rows": 690414,
+   "validation_rows": 87671,
+   "sha256": "67b1a0d4a91f2f29a5d66c8ca62fac9bb3af99789c7c20d5079a1724240e5be6"
+  },
+  "assisted": {
+   "rows": 433884,
+   "columns": 120,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "binary",
+   "train_rows": 325475,
+   "validation_rows": 41211,
+   "sha256": "07f80a15ff59dc84b0232db030a9aeb3fc1035a59884914277d1c71d3c593061"
+  },
+  "assister": {
+   "rows": 1073403,
+   "columns": 111,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "candidate",
+   "train_rows": 801112,
+   "validation_rows": 103195,
+   "sha256": "ae4020f02950862a49827e199cd2e018c8294f6d4607799beca8c65146770983",
+   "groups": 267718,
+   "candidate_group_sizes": {
+    "4": 265187,
+    "5": 2531
+   },
+   "zero_profile_groups": 0
+  },
+  "blocked": {
+   "rows": 487219,
+   "columns": 120,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "binary",
+   "train_rows": 364939,
+   "validation_rows": 46460,
+   "sha256": "7924538453b3f69e47fb4b36858db844540ae080739ed88bbecda7096caee596"
+  },
+  "blocker": {
+   "rows": 250540,
+   "columns": 108,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5192,
+   "kind": "candidate",
+   "train_rows": 188425,
+   "validation_rows": 23270,
+   "sha256": "1af0e453c6cfc89d3f7e17de13f7fa5bd4af00e65ff9c0ee3c63095d58da90e0",
+   "groups": 50108,
+   "candidate_group_sizes": {
+    "5": 50108
+   },
+   "zero_profile_groups": 0
+  },
+  "rebound": {
+   "rows": 515094,
+   "columns": 62,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "multiclass",
+   "train_rows": 384807,
+   "validation_rows": 49580,
+   "sha256": "7edc9696180300096d07683704d1f62ea58729903dc25b0eddc2eab43ce138dc"
+  },
+  "rebounder": {
+   "rows": 2229995,
+   "columns": 111,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "candidate",
+   "train_rows": 1672940,
+   "validation_rows": 212065,
+   "sha256": "cf4f005916f4dff9dddf06600615b5b38002b44cdaf2038864a954b227ce64a5",
+   "groups": 445999,
+   "candidate_group_sizes": {
+    "5": 445999
+   },
+   "zero_profile_groups": 0
+  },
+  "turnover_type": {
+   "rows": 138586,
+   "columns": 115,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "multiclass",
+   "train_rows": 102821,
+   "validation_rows": 13782,
+   "sha256": "7d70940b11e63bcb7ef6891b88acaf2024c60a4914574a2a9d063cd01ded0725"
+  },
+  "stealer": {
+   "rows": 401505,
+   "columns": 107,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "candidate",
+   "train_rows": 293575,
+   "validation_rows": 40855,
+   "sha256": "22945521a782006abc27f3f1d5a97907045bd965ecddb0188d2f70fc8f2b9e21",
+   "groups": 80301,
+   "candidate_group_sizes": {
+    "5": 80301
+   },
+   "zero_profile_groups": 0
+  },
+  "fouler": {
+   "rows": 894450,
+   "columns": 108,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "candidate",
+   "train_rows": 661625,
+   "validation_rows": 91050,
+   "sha256": "f9b1132e00a10c8537bb0f77ab866591981a4c9d378889a8aeb7cf1f23449cb7",
+   "groups": 178890,
+   "candidate_group_sizes": {
+    "5": 178890
+   },
+   "zero_profile_groups": 0
+  },
+  "free_throw": {
+   "rows": 229546,
+   "columns": 111,
+   "date_min": "2022-10-18",
+   "date_max": "2026-06-13",
+   "games": 5196,
+   "kind": "binary",
+   "train_rows": 169455,
+   "validation_rows": 23680,
+   "sha256": "51bf1125aa6fc6f5d0860e37c91a724207ccf8fbb4ea5f663cc819f8d3f3cdb1"
+  }
+ },
+ "audit_sha256": "8bd244d40aae93dd33273264349c6efb3fd3d1e7d8552dd48b98714c7bdb2077"
+}

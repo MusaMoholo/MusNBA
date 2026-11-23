@@ -429,6 +429,10 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 ET · A1 dated-fold prerequisites:** three isolated S02-style body-free engines and their
+  audited **16-node** datasets were prepared at their own F1/F2/F3 cutoffs in **245.971 / 283.903 /
+  336.321s**; one F1 game wired both branches. These are diagnostic models, not accepted v1.3 or a
+  dated-availability gate; the predeclared fold screens remain next. A1 **80%**, Chunk A **34.5%**.
 - **22 Nov 2026 ET · A1 retry-selection diagnostic:** on the selected six-player F4 stress, all **1,000**
   attempts were replayed with matching completed-world digests/failure reasons. Halftime home fouls were
   **9.391** among survivors versus **9.888** across attempts, difference **−0.497**, unadjusted 95%

@@ -7,6 +7,8 @@ from unittest.mock import patch
 
 import numpy as np
 
+from analysis import a1_dated_fold_exhaustion as dated_screen
+from analysis import a1_dated_fold_exhaustion_audit as dated_audit
 from analysis import a1_f4_exhaustion_screen as screen
 from analysis import a1_f4_six_roster_halftime_audit as halftime_audit
 from analysis import a1_f4_six_roster_audit as stress_audit
@@ -157,6 +159,34 @@ class ExhaustionScreenTests(unittest.TestCase):
         result = halftime_audit.summary(values, success)['home_score']
         self.assertAlmostEqual(result['survivor_minus_all'], -0.202)
         self.assertLess(result['bootstrap_95_percentile'][1], 0)
+
+    def test_dated_screen_checks_cutoff_and_records_only_classified_failures(self):
+        self.game.day = '2024-02-01'
+        dated_screen._WORKER.update(engine=self.engine, fold='F1')
+        self.engine.simulate = lambda *_args: (_ for _ in ()).throw(
+            ExhaustedEligiblePlayers('fewer than five eligible players'))
+        with tempfile.TemporaryDirectory() as tmp, \
+             patch.object(dated_screen.backtest, 'run_game',
+                          side_effect=lambda _gid: self.engine.simulate(self.game, 1, 0)), \
+             patch.object(dated_screen.a1_lineup_branches, 'one_player', return_value=self.game):
+            result = dated_screen.screen_game('123', tmp)
+            self.assertEqual(sum(a['status'] == 'exhausted' for b in result['branches'] for a in b['attempts']), 10)
+            self.assertIsNone(self.engine.rotation_policy)
+            self.game.day = '2025-02-01'
+            with self.assertRaisesRegex(ValueError, 'outside declared development fold'):
+                dated_screen.screen_game('124', tmp)
+            self.assertIsNone(self.engine.rotation_policy)
+
+    def test_dated_screen_reports_game_clustered_uncertainty(self):
+        games = [
+            {'branches': [{'status': 'simulated', 'attempts': [{'status': 'exhausted'}]}]},
+            {'branches': [{'status': 'simulated', 'attempts': [{'status': 'complete'}]}]},
+        ]
+        result = dated_audit.totals(games)
+        self.assertEqual(result['exhaustion_fraction'], 0.5)
+        self.assertEqual(result['game_cluster_bootstrap_95'], [0, 1])
+        games[0]['branches'][0]['attempts'][0]['status'] = 'complete'
+        self.assertIsNone(dated_audit.totals(games)['game_cluster_bootstrap_95'])
 
 
 if __name__ == '__main__':
