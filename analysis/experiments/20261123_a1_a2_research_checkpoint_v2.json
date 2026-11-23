@@ -1,0 +1,34 @@
+{
+ "at": "2026-11-23T12:09:02.908861+00:00",
+ "kind": "partial research checkpoint; active A1/A2 continue",
+ "production_model_unchanged": "engine-v1.3",
+ "served_pwa_unchanged": "9f09eb4 / fbf36cdfebb84d7e3865",
+ "research_only": true,
+ "progress": {
+  "chunk_a": 48.0,
+  "a1": 90,
+  "a2": 60,
+  "a3": 0
+ },
+ "running_final_manifest_sha256": "19adb5255d5d07b7aa6168833371526f2ce9891f49bd2d5b0bf3a161b9a7231f",
+ "docs_review": {
+  "AGENTS": "Standing rules unchanged; D54 planning belongs in ENGINE/PLAN.",
+  "HANDOFF_NEXT": "Current final job, analytical results, progress and next commands.",
+  "PLAN": "A2 rung60; immediate successor incremental delivery priority.",
+  "ENGINE_PLAN": "D54 and actual-participant reconstruction boundary.",
+  "TRAINING_PLAN": "Frozen clock/final protocols, no automatic promotion.",
+  "FINDINGS": "Complete stress/stream and conditional clock results.",
+  "DASHBOARD_PLAN": "No visible app behaviour change; newly shared decoders remain unwired.",
+  "README": "Daily commands unchanged; new research runners linked from HANDOFF and docs index."
+ },
+ "checks": {
+  "focused_python": "31/31 across v3 focus log plus ContextClock and WorldMass focused runs",
+  "clock_independent_audit": "600 empirical distributions; all saved means/eligible rows; max error 8.53e-15",
+  "smoke": "108/108 exit0; /tmp/musnba_a1_a2_research_smoke_20261123_v2.log",
+  "javascript": "4 focused suites: branch source, summary, Expected-only payload, selected game view",
+  "fault": "86/108 exit1 as required; /tmp/musnba_a1_a2_research_fault_20261123_v2.log",
+  "docs": "12,383 words;129 local links;8 immutable originals;zero errors"
+ },
+ "decoder_refactor": "Research import paths re-export app modules; original decimal availability weights supported; no normal route registers branches yet.",
+ "disconnected_helpers": "ContextClock sampler and WorldMass exact mass arithmetic tested; no engine hook/default selection or normal branch route yet."
+}

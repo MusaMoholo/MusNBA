@@ -95,6 +95,14 @@ assignment fit cannot be reused for F1–F3; corrected fold inputs need dated fi
   player-minute error **1.78e−15**. Stop/resume canonical arrays match uninterrupted execution exactly.
   No exhaustion exception occurred in these games; synthetic fixtures cover it. These are correctness checks,
   not population accuracy evidence. Reports `rule3_{pilot,resume}_20261123_v1_audit.json` in experiments.
+- **Fresh Rule 3 confirmation:** 200 previously excluded F4 games, **4,280 scored player-games** (five unknown
+  roles; four additional simulated players lack scored box labels), 1,000 worlds/arm. All **44 core v2 bounds**
+  established. Pooled MIN CRPS Δ **−0.004352 [−0.007927,−0.001058]**; PTS **+0.001703 [−0.001827,+0.005238]**.
+  Q3-total coverage is imprecise (harm CI −0.029234…+0.031471), not demonstrated harm. Independent audit:
+  **200k candidate worlds, 114,109,290 legal fives, 39 exhaustion penalties**, maximum replayed minute error
+  **3.55e−15**. Additional three 10k stress pairs audit **17,255,568** legal fives; separate stream's 30 games
+  establish **34/34 supported** core bounds (ten star bounds unsupported). Formal final pending; no promotion.
+  Reports `rule3_{confirmation,stress,stream}_20261123_v1_{compare,compare_gate,audit}.json` (stress audit only).
 - **23 Nov prior-roster readiness census:** on the fixed 800 F1–F4 games, inferred source rosters cover
   795 and required starter pools are supported in **783/800** (199/200/184/200 by fold). **371/28,530**
   candidates lack a prior profile/position; 19 required-pool positions affect 12 games, plus five missing
@@ -140,11 +148,15 @@ Frozen methods: [A2 protocols](docs/protocols/a2_form_20261122.md). No factor is
 | Within-player-game shot residuals: 595 fixed-panel F1–F3 games / 11,217 known-role player-games | Covariance 0.001368 [−0.000104,+0.002874]. Panel coverage 200/773, 200/782, 195/490 validation games. Pooled excess inconclusive and cannot separate talent/form/shared misspecification. |
 | Cross-game shot residuals: same 595 games / 10,977 player-games / 1,557 player-role-fold groups | −0.000066 [−0.002095,+0.001786], two-way player/game bootstrap. F3 stars unsupported at 29 groups against minimum 30. No identified talent posterior. |
 | Different-player shared shooting: 139,534 aligned eligible shots, fixed F1–F4 panels | Earlier F1–F3 teammate-minus-opponent residual product **+0.000540 [0.000211,0.000894]**; F4 **+0.000020 [−0.000509,+0.000589]**. Shot-weighted fold/cohort centres refit per game bootstrap. This association mixes talent/form/conditions/misspecification; it does not identify a factor strength. |
+| Fresh F4 accepted-control worlds: 200 games / 3,625 eligible player-games, 1k worlds/game | Observed-minus-world PTS covariance: teammates **−0.107 [−0.488,+0.272]**, opponents **+0.027 [−0.203,+0.240]**. No clear pooled missing scoring dependence. Stars/starters' MIN teammate gap **+7.487 [5.078,9.893]**; possession-error variance ~22.6–23.2 versus simulated ~15.4–15.5. This motivates earlier-fold pace/minute investigation, not arbitrary variance widening; mean/rotation misspecification remains possible. |
+| Late states: same 200 games, 2,333 actual opportunities / 16 excluded; eight of 21 clock/margin cells supported | Trailing 4–8 with ≤24s: actual action time **4.14s**, simulated **6.04s**, gap **+1.91 [1.37,2.41]s**; actual three share **68.6%**, simulated **57.0%**. State visitation differs. The existing ≤24s clock sampler pools periods/margins; test prior-fitted contextual timing before adding latent shooting variation. OT 4.0% actual / 2.72% simulated, difference interval crosses zero. |
+| Contextual late clock, frozen earlier-fold screen / separate F4 confirmation | F1–F3: **1,932 games / 5,382 opportunities**, joint time/no-action loss **0.19856→0.12849**, Δ −0.07007 [−0.07538,−0.06485]. F4: **199 games / 474**, **0.21633→0.13415**, Δ −0.08218 [−0.10119,−0.06556]. Also beats clean bridge; both components improve. Independent squared-CDF audit checks 600 distributions (max error 8.53e−15). Conditional node evidence, not simulated-game improvement. Reports `20261123_a2_late_clock_{screen,confirmation,audit}_v1.json`. |
 | Synthetic draw prototype | `p + s*z*p*(1-p)`, uniform z∈[−1,1], preserves mean/boundaries analytically; namespaced streams/zero-strength no-draw tests pass. Shape/strength arbitrary, no engine wiring or empirical calibration. |
 
 Reports: `analysis/experiments/20261122_a2_residual_dependence_f4.json`,
 `20261122_a2_shot_residuals_f1_f3_v2.json`, `20261122_a2_shot_persistence_f1_f3.json` in the same directory.
 Shared-shooting report: `analysis/experiments/20261123_a2_shared_shooting_v1.json`.
+Fresh-world report: `analysis/experiments/20261123_a2_world_diagnostics_v1.json`; captures pass independent accounting.
 All reported intervals are exploratory 95%; no protected final outcomes were used.
 
 ## 9. Latest storage/delivery facts

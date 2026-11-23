@@ -1,0 +1,1279 @@
+{
+ "kind": "D51 paired rule confirmation and raw diagnostic capture",
+ "run": "rule3_confirmation_20261123_v1",
+ "game_ids": [
+  "401809250",
+  "401810330",
+  "401810342",
+  "401810347",
+  "401810349",
+  "401810356",
+  "401810360",
+  "401810361",
+  "401810364",
+  "401810366",
+  "401810378",
+  "401810380",
+  "401810383",
+  "401810386",
+  "401810391",
+  "401810394",
+  "401810396",
+  "401810399",
+  "401810401",
+  "401810409",
+  "401810410",
+  "401810411",
+  "401810413",
+  "401810423",
+  "401810428",
+  "401810431",
+  "401810435",
+  "401810438",
+  "401810439",
+  "401810443",
+  "401810445",
+  "401810448",
+  "401810449",
+  "401810452",
+  "401810453",
+  "401810454",
+  "401810463",
+  "401810466",
+  "401810474",
+  "401810479",
+  "401810481",
+  "401810482",
+  "401810483",
+  "401810487",
+  "401810492",
+  "401810493",
+  "401810505",
+  "401810508",
+  "401810509",
+  "401810512",
+  "401810516",
+  "401810533",
+  "401810538",
+  "401810539",
+  "401810543",
+  "401810546",
+  "401810548",
+  "401810553",
+  "401810554",
+  "401810559",
+  "401810564",
+  "401810569",
+  "401810573",
+  "401810580",
+  "401810582",
+  "401810585",
+  "401810587",
+  "401810595",
+  "401810596",
+  "401810601",
+  "401810605",
+  "401810606",
+  "401810614",
+  "401810616",
+  "401810617",
+  "401810618",
+  "401810620",
+  "401810624",
+  "401810626",
+  "401810628",
+  "401810630",
+  "401810636",
+  "401810639",
+  "401810641",
+  "401810646",
+  "401810657",
+  "401810661",
+  "401810662",
+  "401810663",
+  "401810665",
+  "401810666",
+  "401810668",
+  "401810669",
+  "401810671",
+  "401810673",
+  "401810674",
+  "401810690",
+  "401810692",
+  "401810695",
+  "401810697",
+  "401810699",
+  "401810701",
+  "401810703",
+  "401810706",
+  "401810710",
+  "401810714",
+  "401810716",
+  "401810717",
+  "401810719",
+  "401810720",
+  "401810721",
+  "401810723",
+  "401810726",
+  "401810728",
+  "401810740",
+  "401810744",
+  "401810745",
+  "401810746",
+  "401810750",
+  "401810752",
+  "401810756",
+  "401810757",
+  "401810763",
+  "401810766",
+  "401810767",
+  "401810769",
+  "401810771",
+  "401810776",
+  "401810778",
+  "401810783",
+  "401810785",
+  "401810788",
+  "401810796",
+  "401810800",
+  "401810802",
+  "401810803",
+  "401810809",
+  "401810811",
+  "401810815",
+  "401810827",
+  "401810830",
+  "401810831",
+  "401810835",
+  "401810836",
+  "401810838",
+  "401810843",
+  "401810845",
+  "401810847",
+  "401810859",
+  "401810868",
+  "401810874",
+  "401810875",
+  "401810876",
+  "401810881",
+  "401810889",
+  "401810894",
+  "401810896",
+  "401810897",
+  "401810903",
+  "401810914",
+  "401810918",
+  "401810920",
+  "401810924",
+  "401810927",
+  "401810930",
+  "401810931",
+  "401810936",
+  "401810937",
+  "401810943",
+  "401810945",
+  "401810946",
+  "401810950",
+  "401810953",
+  "401810957",
+  "401810966",
+  "401810972",
+  "401810977",
+  "401810981",
+  "401810988",
+  "401810990",
+  "401810997",
+  "401811003",
+  "401811011",
+  "401811012",
+  "401811016",
+  "401811021",
+  "401811031",
+  "401811034",
+  "401811038",
+  "401811040",
+  "401811042",
+  "401811043",
+  "401811048",
+  "401811049",
+  "401811050",
+  "401811051",
+  "401811055",
+  "401857824",
+  "401858693",
+  "401858694"
+ ],
+ "worlds": 1000,
+ "stream": null,
+ "fingerprints": {
+  "analysis/experiments/20261123_rule3_confirmation_manifest_v1.json": "bec0366018854aea7612c94411f91cf981c2c8b40c708876e7486d34e8594609",
+  "analysis/rule3_capture_audit.py": "8ad4b8e1e21ae1c2318a72c89b554fb5b3063be7b6082237d19e32476569870b",
+  "analysis/rule3_confirmation.py": "716e610279c5ebb4d1c97dadecb4f6634daac6155fbb50486eafbe3c9226acda",
+  "basketball_common.py": "be2b0643eebb4e1cd51b3eb8214d13b8718fd820864d3df7f7ac8fc1dd5bb48a",
+  "data/derived/athletes.parquet": "3b8e24488790edca5289a2a52f30867243a69f6cab57032e1c839967bb65d5be",
+  "data/derived/history/2023/on_court.parquet": "ba9b4b13e16e5b839e5530905497d2d00d231413ea40f39ee46855f3ebce8c3b",
+  "data/derived/history/2023/player_periods.csv.gz": "d549a82d8704e95218379b945bef5ddb1bf4fa59db0e0b7e479e37f408281342",
+  "data/derived/history/2023/segments.parquet": "813b53edadf92f6e6c607211b1d4c64b312aa9fbe689851110e912419101a76e",
+  "data/derived/history/2023/stints.parquet": "f067fa85961f5792edba3bf6b1f3c3080b912c35bb06b0962615508ac16c3a5c",
+  "data/derived/history/2024/on_court.parquet": "5461947edb052ef9e62b4a70ba49e57a0f98d929f4a19167f03aad3972457f95",
+  "data/derived/history/2024/player_periods.csv.gz": "7f1bfaab40aceab115081cd2ae6db4b6e8694f69cc1f2c4585d2d2f10ee1bb90",
+  "data/derived/history/2024/segments.parquet": "4a7c3c2bce39580cc8e1092ffc215d11bbd49f7bf117b4551eee40337203d2c0",
+  "data/derived/history/2024/stints.parquet": "7555ba3a82f9e97b68f04aa2b24d26451b8ba54562976e20c66251fe021e068b",
+  "data/derived/history/2025/on_court.parquet": "5bbabab60114aa3f7fa096d7708be96f47177c541debcae88059da6b1adb77e9",
+  "data/derived/history/2025/player_periods.csv.gz": "8f513a5802292f4427f80022f4e57ae718a50ae880ef07f8ad2f9c06beebaf63",
+  "data/derived/history/2025/segments.parquet": "d9db732172894ed8d3c6e5e99e3cd1c197006da22799413034ce3ce18cc5aee2",
+  "data/derived/history/2025/stints.parquet": "e01c20cec0ac57a8146cab04b3483de62ee1db4c7bfb0702834f107c97afc95c",
+  "data/derived/history/2026/on_court.parquet": "1b0ffaf53490c3fda4edd28ac427766a0af3a1bfe86f1fece240cd63ed1e8410",
+  "data/derived/history/2026/player_periods.csv.gz": "ef35bb5c33c46e6a194cea30075d9974ead5d44be96c6074b60f6dac49e69c28",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+  "data/derived/history/2026/stints.parquet": "29de886d2afd2a5d9a55af2acb027fd3ee83a887584c71a9fe9951a9c2cc225f",
+  "data/derived/teams.json": "130aa5358d49b944c2b5bee7e9a163f1e53285e93dae57262f039ca1636b7ecc",
+  "data/derived/variants/matchup/features/features_report.json": "1b904943ea8837e236a9e73a85619c41f2711960db0cf107b6a9f111ce134edd",
+  "data/derived/variants/matchup/features/pregame.parquet": "49452d553a39049dfa7316d66f1e2e5507c29e55f963f2f87bb1f6ed055f4614",
+  "data/derived/variants/matchup/features/team_pregame.parquet": "11d11bb6484169b1955fb57b46e7d63bca591153c4880e66befe66038c8591a5",
+  "data/models/folds/v1.2d_F4_all/assisted.txt": "0a094b183b18b8d45a6e5cf047fb117f8aed62dc6941bb9b7944391c3afec690",
+  "data/models/folds/v1.2d_F4_all/assister.txt": "f32c49ac6c7ca5774aad414c5cf500d1b5fd1bbd8fa6c0ddd50ee1934b1d3961",
+  "data/models/folds/v1.2d_F4_all/blocked.txt": "e085efcacd0baea9568f27f7ee05dd43687e7762ba55015d7569cc1efe175c04",
+  "data/models/folds/v1.2d_F4_all/blocker.txt": "5975f284a6c41a013db80fb669230e64dda7167137554bba9051dd04fe4004f0",
+  "data/models/folds/v1.2d_F4_all/config.json": "1617769cb52f2c750e0f1276071b39fc21254ef53fc97ccc646869aaa50f5e71",
+  "data/models/folds/v1.2d_F4_all/duration.txt": "2603f8bf64f3bbef3146285638f79262446eb9a76572c4217f45e6df77dee72c",
+  "data/models/folds/v1.2d_F4_all/event.txt": "d62e1cac4c4fa1cbec0ba5fccc321bae6838202b17253c80a0e8f502395e7e36",
+  "data/models/folds/v1.2d_F4_all/fouler.txt": "70ee6709fcd1fae1ca43ea925babaeb9c9355eaf7e4edeeb601d0cb11c45d266",
+  "data/models/folds/v1.2d_F4_all/free_throw.txt": "ddd7ef48ede7de973c9967b01826f3c293ee824147ca2da772de17a1d781f612",
+  "data/models/folds/v1.2d_F4_all/location.txt": "8f12f8c3bb168ab94dfae313f7624e1ff43074764db665b03ba9511d69c12979",
+  "data/models/folds/v1.2d_F4_all/meta.json": "4a3dfcdff94a856f718fe7f30ea14a44255364cdc2977b62b524c081909139a7",
+  "data/models/folds/v1.2d_F4_all/rebound.txt": "b94d0f957b02d633ca751dff3ef921ffb7e9f57ce6bd206cbba41893ee6f34ff",
+  "data/models/folds/v1.2d_F4_all/rebounder.txt": "337225efb0be006b8889cb377254f6b03c39b356d73d366d3af153ab9133b094",
+  "data/models/folds/v1.2d_F4_all/shot_result.txt": "993fce9f6450e7f317c19e93cadf562db741efa7b58c05d32a8d561ff5f1bbfc",
+  "data/models/folds/v1.2d_F4_all/stealer.txt": "ceea8df151ace738c6181be7615f93fbbebc13cfc434cc371ff8f7566143c581",
+  "data/models/folds/v1.2d_F4_all/turnover_type.txt": "307defe709ae1a8639407d131e28bfabc8eda32bb291a4820113cf3a5b7001d0",
+  "data/models/folds/v1.2d_F4_all/what.txt": "d093989f161b78686804078c07a1d94a629719893085d399465a52314c0de231",
+  "data/models/folds/v1.2d_F4_all/who.txt": "c792950c30a7e7eecec20ab1d12681b0adc574838f2327bbc948213aa574150d",
+  "data/raw/hoopr/player_box_2023.parquet": "968d835cd04b10533c5b5af8c0e41bf0154a73782e9446c76f765109223e8679",
+  "data/raw/hoopr/player_box_2024.parquet": "1e500a538ec45ddbcb58d9789b5494f8db4f25658eafd01d90f2d09600921665",
+  "data/raw/hoopr/player_box_2025.parquet": "e89f7fbc1124092c715b722e6d72d9dd1b9d28776ca6888b508fd2831cd705e2",
+  "data/raw/hoopr/player_box_2026.parquet": "29a29dc9efd055a93e069a0382ac830d98a13274bee655beba69d95cff099713",
+  "docs/protocols/rule3_implementation_20261123.md": "22373ce32a4833133d4f5dcca69c1a3eb0367eb27107f7d29c2dddd4ed2e2ccb",
+  "models/matchup_2025-12-31.json": "176ce8a25f6fd5cc0cee99abca618a72380bac4ed8cabc6f86d2f6129203206c",
+  "models/v1.2d.json": "d0fded7eb9871494e0bc4a82a3627b0a3dc37c3c243d8c9378f151dec2789927",
+  "scripts/a1_compare.py": "435c1e0761f51ee9d218dfc462db8d219c0bc6f54dc8acd6bcae79968ddfcf68",
+  "scripts/a1_substitution_world_audit.py": "d1f1b34834ffe6c9d82b246cbbaed453c6a4eea224e47da020c6e0f02d3cdf4e",
+  "scripts/backtest.py": "2ff491455b5c1cac40b5c3502db97bcb4cdbc159e4f0fa494c09e7c5eb24533d",
+  "scripts/engine.py": "5431df17caac031eb051fc80968496366cb8d4d6915fc123db35f94ee9d9f339",
+  "scripts/foul_out.py": "32b51b7ad72bd3875d9f7c5301190b98545d347bf920be1d07b2d4e501c1da8c",
+  "scripts/matchups.py": "70bbb3f069e78477c83b63ab66e518c4148217b11c415ff1825856914861a153",
+  "scripts/minutes.py": "94dd0ed25e536708c75cd4cf1f386bf2f9fa35f2c334d83cbdd031d4448ba2d0",
+  "scripts/nodes.py": "78749b680b889993e83ba26baab51877cd7393ee0a5a3d9f4fdaf9123d3b161f",
+  "scripts/projection.py": "25309dfd609b041543520784e4c6dab5a0154e2db7b19b03899b3c5fdb996dad",
+  "scripts/rotations.py": "1abf8fd173f4ca96d608813f315df8b034436a4bb26060e55410e3710c7e9c3a"
+ },
+ "directory": "data/derived/experiments/rule3_confirmation_20261123_v1",
+ "pilot": false,
+ "stress": false,
+ "workers": 8,
+ "elapsed_this_invocation": 3556.050551583001,
+ "resumed_completed_games": 0,
+ "captures": [
+  {
+   "game": "401809250",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401809250.json",
+   "meta_sha256": "ee7a330a948ab8f2f854fadc0651e37a21e714eb6310adc7b8e4ccf1807bc41b"
+  },
+  {
+   "game": "401810330",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810330.json",
+   "meta_sha256": "c2f283ab0c1a436734a94be3b8c7d86779f91b771e761bc814a4f4f08424802c"
+  },
+  {
+   "game": "401810342",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810342.json",
+   "meta_sha256": "c127a0763c2764a459c0eff7b6081e4a159750c2be6199990da7fb1b0272ee1d"
+  },
+  {
+   "game": "401810347",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810347.json",
+   "meta_sha256": "d281408fd758d3f69a863ec5c9d8d9571b3b6b21336b4e9a4c4b274f0af42222"
+  },
+  {
+   "game": "401810349",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810349.json",
+   "meta_sha256": "52bda52423626603166d9209db39b710d32aa8fb91076a01dd5509d6d0c659b8"
+  },
+  {
+   "game": "401810356",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810356.json",
+   "meta_sha256": "2a742a8763fef85882fa97c892cf9b666755c7f50a33bb47b70439572e0ad28b"
+  },
+  {
+   "game": "401810360",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810360.json",
+   "meta_sha256": "c09d10010f6d60d1e8cb18d59775ef4af5c8c1b28df2ba8b68c78032e2d3c26c"
+  },
+  {
+   "game": "401810361",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810361.json",
+   "meta_sha256": "67d14c77c2a566c46a560ac8693d5b4056524973b7c023bb8540f34e88cbd684"
+  },
+  {
+   "game": "401810364",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810364.json",
+   "meta_sha256": "83ed9e403fa7fcfe3f8688e99702cc6f861d3eb00b087880fde2e0bc1f0659e0"
+  },
+  {
+   "game": "401810366",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810366.json",
+   "meta_sha256": "0ec61d4fa5099517c349d43ae8f399cf03caf189952c214765c9eed8bff544e9"
+  },
+  {
+   "game": "401810378",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810378.json",
+   "meta_sha256": "43b2a0127a2ae15b29d598e28dd339113e9b4cd1d02be1c957aa129ac281b69f"
+  },
+  {
+   "game": "401810380",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810380.json",
+   "meta_sha256": "166ae8e5f123f79a64652f5fa27b9ed9424e9dcc6c5239dac447a7b798f18810"
+  },
+  {
+   "game": "401810383",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810383.json",
+   "meta_sha256": "5b8a49923df08946ae773a4290e53791a0bd62fad07f2e9a9f44dee60532576e"
+  },
+  {
+   "game": "401810386",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810386.json",
+   "meta_sha256": "02dfca32934946a9346a1519302a997a15ae7d36a45810886220508651682ac6"
+  },
+  {
+   "game": "401810391",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810391.json",
+   "meta_sha256": "ca7dabc268436c64b0cdcbb89c0a79d4051ac808e8935654eabbf0e295b9f195"
+  },
+  {
+   "game": "401810394",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810394.json",
+   "meta_sha256": "619eb8ec26150e9e90c6a19efa464e02d78bd62dd45f445559f0e9920de92123"
+  },
+  {
+   "game": "401810396",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810396.json",
+   "meta_sha256": "b26b71dc748b30ff7cc2660cff3e40788dfe39280dd374769198f6eedec971ad"
+  },
+  {
+   "game": "401810399",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810399.json",
+   "meta_sha256": "53aca01006b34c69cefbaf3f541e0b106c5a65bce321a341001623901b2dc7e1"
+  },
+  {
+   "game": "401810401",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810401.json",
+   "meta_sha256": "b4c04f2a9e1019ffb6464abc67dcfd4c2d94ecd11c3048769a7a449e5476fd67"
+  },
+  {
+   "game": "401810409",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810409.json",
+   "meta_sha256": "414b260c7ba8cfbced44fc377f2ec0604c205c183771997dc2802909039bf348"
+  },
+  {
+   "game": "401810410",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810410.json",
+   "meta_sha256": "fdf83ef7f0ef4a675f2db0dfe2323cebd0d19fc75e6c366fa4f6dc05593d3dc8"
+  },
+  {
+   "game": "401810411",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810411.json",
+   "meta_sha256": "f0db247ec4977a089f9aed15b16b2f147743bd68fe601cc34ab8477548401149"
+  },
+  {
+   "game": "401810413",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810413.json",
+   "meta_sha256": "11b4195a7e1537307240536b33cce454c4bbc4b1b34ed1822d6e1fbd34f0bb41"
+  },
+  {
+   "game": "401810423",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810423.json",
+   "meta_sha256": "38e7fad6a861b7b3453f5d3273cd4df533d7db90e198bdb966daf02aa1f2df9c"
+  },
+  {
+   "game": "401810428",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810428.json",
+   "meta_sha256": "b4b0dcee18952b3b5db08a9db7396fbd3ffe91472ab38fef05bc39e7966bd92f"
+  },
+  {
+   "game": "401810431",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810431.json",
+   "meta_sha256": "81ba89a96389e7d14408edcdf9227f9c0e1c54640196e94d552c9e86832e63ea"
+  },
+  {
+   "game": "401810435",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810435.json",
+   "meta_sha256": "ef81fe0316b798ea0904f15a624c5e24ee8f221316e59ebfac8e72e40ab130ea"
+  },
+  {
+   "game": "401810438",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810438.json",
+   "meta_sha256": "5919b1fee2895b1438e4b49d2cffcdb9dddb555e373a4dcf66567922437e690e"
+  },
+  {
+   "game": "401810439",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810439.json",
+   "meta_sha256": "ae3ec063b00db5fa0ea401273a531ca4a972fd394b452bc4dad9335d092f3105"
+  },
+  {
+   "game": "401810443",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810443.json",
+   "meta_sha256": "961e3fbd8f81a6ab12d5b0ad5ede9afbe35bc8df57fbc2a52ab987dc9705d4a4"
+  },
+  {
+   "game": "401810445",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810445.json",
+   "meta_sha256": "28ca4a5029836aa8d7a43e47ab3376f245f4de688c487711c1e7610d1979d03e"
+  },
+  {
+   "game": "401810448",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810448.json",
+   "meta_sha256": "ed9f1c804a7df620ad63b77388211de2a6063e185c7c7e7df4a14882c00a8e50"
+  },
+  {
+   "game": "401810449",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810449.json",
+   "meta_sha256": "df52a36f67ea4d570852c888156a33a7fe7c44653a8c4a9c8c8500f4c7ca1d70"
+  },
+  {
+   "game": "401810452",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810452.json",
+   "meta_sha256": "f9e44fb9f4fa81cdf48a77a9473fed7ff5a9a360fa43a222c1a2837f7dae8376"
+  },
+  {
+   "game": "401810453",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810453.json",
+   "meta_sha256": "64cf26526018b3b37cd96fb107775552e33e6ba06fe110a6f25304b9ae693cd4"
+  },
+  {
+   "game": "401810454",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810454.json",
+   "meta_sha256": "1604813b618bccb1907ebe01d89e5db329ef0b7784d675219b59b4fe9a847d0e"
+  },
+  {
+   "game": "401810463",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810463.json",
+   "meta_sha256": "9ededd9ec578adc8a996617843e729b337c1ee9009b7ae8cb5760b3c1176b3e4"
+  },
+  {
+   "game": "401810466",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810466.json",
+   "meta_sha256": "1ea481f9979faf4dc652b4f51c14a284f45b79afd84c9354f9dee917e9e9dd09"
+  },
+  {
+   "game": "401810474",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810474.json",
+   "meta_sha256": "622e9fa68dad9791e87e333388b9160259d6b927ab9a90088697b70e678e9e89"
+  },
+  {
+   "game": "401810479",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810479.json",
+   "meta_sha256": "2084015f68b7b799686833e8efb100ea7a0b5352b8f51be610f72c7fae373b4d"
+  },
+  {
+   "game": "401810481",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810481.json",
+   "meta_sha256": "7e3fba95a24f86be9c73e2708e6049fbb19f687db1e183d39d93e32683b63159"
+  },
+  {
+   "game": "401810482",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810482.json",
+   "meta_sha256": "6964faca70f9234dfca23fd85a430d91ca701c91b7f6ff82c2c7d47f703977c6"
+  },
+  {
+   "game": "401810483",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810483.json",
+   "meta_sha256": "2f77fc604e12a23966ffe0f65b019c296d72925743e464bd59de48fa0f1e59b6"
+  },
+  {
+   "game": "401810487",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810487.json",
+   "meta_sha256": "d85005d36f56478b54986e9e4b2ba7061823da0e399535926b0b596038c303ab"
+  },
+  {
+   "game": "401810492",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810492.json",
+   "meta_sha256": "5fb6c5208fe9da4198cf6399148f49e3bc2844ac41407aeadebeafb07f644ca7"
+  },
+  {
+   "game": "401810493",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810493.json",
+   "meta_sha256": "f4bfb75463567e2bebb05a78cfdfd3e508a1378f4fb6db99d382b535d3686923"
+  },
+  {
+   "game": "401810505",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810505.json",
+   "meta_sha256": "8f02cb8743252df16458b1e781cffdfb347dc43fd30b31b156b4b19d81a7cacb"
+  },
+  {
+   "game": "401810508",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810508.json",
+   "meta_sha256": "2e4a3134fd3c69be270c6028135c5fc2361bf73df29d96bced88289f020b3338"
+  },
+  {
+   "game": "401810509",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810509.json",
+   "meta_sha256": "b5795077c3957d6325250f48fcdc5e0c6c518b0d1e6542aadf6056a34279a863"
+  },
+  {
+   "game": "401810512",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810512.json",
+   "meta_sha256": "a56a0cc194c35acaa3f6b42fd02b597868da87d754410d2a4d16e6ebcb70fb63"
+  },
+  {
+   "game": "401810516",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810516.json",
+   "meta_sha256": "d40723e907f57e72fff7523a29bce3836d316e7c63564213ad0e8066fb29e2d8"
+  },
+  {
+   "game": "401810533",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810533.json",
+   "meta_sha256": "fac626dcea667b34381f894703475a9b95189a68dee2bafeaab8f4731eb4277c"
+  },
+  {
+   "game": "401810538",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810538.json",
+   "meta_sha256": "afbeae103da3dd042d68fa6ea823cf7dad54bd9b8d2032232d4f411910db14c6"
+  },
+  {
+   "game": "401810539",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810539.json",
+   "meta_sha256": "8e22eeba0785f48f1b7de0c8d88182a4a36c5518340bf5cea551f087d9e308ad"
+  },
+  {
+   "game": "401810543",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810543.json",
+   "meta_sha256": "1060c79a62af1e7f64d9c8eb8ef62cf6306b3c33042b9bc0ccdf47a8765f34b5"
+  },
+  {
+   "game": "401810546",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810546.json",
+   "meta_sha256": "b0bfc3066f752406704a4c500f02b5a577563fb6dc72223ae2ac322f3a74ecf8"
+  },
+  {
+   "game": "401810548",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810548.json",
+   "meta_sha256": "487bed6395e25126fe0cd32a824d12bc279fb6e24d334c35e889033b4ea82687"
+  },
+  {
+   "game": "401810553",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810553.json",
+   "meta_sha256": "66a7345e2255c20519f029a20d661e6417e1344ff219a4520778538b70a96f05"
+  },
+  {
+   "game": "401810554",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810554.json",
+   "meta_sha256": "c68887311ef04bc91e3ef62dd44ac58f52a07aba5161f5ec3fd1b3486471e7d8"
+  },
+  {
+   "game": "401810559",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810559.json",
+   "meta_sha256": "23c1e493223849855016472af8cbb6859b46e3d86972e194dfcddb444a68e6fb"
+  },
+  {
+   "game": "401810564",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810564.json",
+   "meta_sha256": "f38e97b40c3d635b9a7ddb8ff021c943e5891f7e9f61504243ca570e8ebb733e"
+  },
+  {
+   "game": "401810569",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810569.json",
+   "meta_sha256": "5a3b189f49b0b2cbd644ffdd182bb4236f4de4b8d1796afe11c9ab2a87cdae24"
+  },
+  {
+   "game": "401810573",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810573.json",
+   "meta_sha256": "80dad7a528c516ae34e6465d3b931faf6312c5fbf757cedceb60d07db85ef060"
+  },
+  {
+   "game": "401810580",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810580.json",
+   "meta_sha256": "3431c5b1ef899c63a2c15a8d6372fe06eca73b5888ae68a021f27e5a61227749"
+  },
+  {
+   "game": "401810582",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810582.json",
+   "meta_sha256": "8b0e7d56186747a1e53e7ac28c196d49c6f6c95833106d1fcf3f0cdaf73b85ee"
+  },
+  {
+   "game": "401810585",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810585.json",
+   "meta_sha256": "4545bc0e27a38a25ab2806d2eade442ad22fde606f23efcc30898dd47337a0b7"
+  },
+  {
+   "game": "401810587",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810587.json",
+   "meta_sha256": "24022eb765e5978197774d0114e3478c1e50271c893750b24ad2b2a9d31c5941"
+  },
+  {
+   "game": "401810595",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810595.json",
+   "meta_sha256": "e7ed561573b28b71a2444fe2e7dc3756752a0c575130dcc954ec4ef01e91f65c"
+  },
+  {
+   "game": "401810596",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810596.json",
+   "meta_sha256": "16f6aae9b26e4fd1e9e6e22f1860fabaa5c47da6cb990e16a46d859b05583bb5"
+  },
+  {
+   "game": "401810601",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810601.json",
+   "meta_sha256": "186bbeb2314d3897e176b38cb1910c0c7adf40b6e3f7cbd95c8eef97fbee5cff"
+  },
+  {
+   "game": "401810605",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810605.json",
+   "meta_sha256": "2ffefe615db199151528e8a250961dbd2cec61506c66c518f61e2db1c7982006"
+  },
+  {
+   "game": "401810606",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810606.json",
+   "meta_sha256": "aa98f8809cdc25baea591d29a453cc668b19ef9f11b4ecad7e940f86e54d7610"
+  },
+  {
+   "game": "401810614",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810614.json",
+   "meta_sha256": "e3dea5774a6923d1d531d085170b0b413ec2219f238a769001e50752da26efc9"
+  },
+  {
+   "game": "401810616",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810616.json",
+   "meta_sha256": "46c43462d9c8b1f8a081a3d2684385862d15ddd4a371311ac119e7f710f4646a"
+  },
+  {
+   "game": "401810617",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810617.json",
+   "meta_sha256": "0707dee299725665b1aeb010db5f0b5195e0c4ab0a2fde76e712cf5ce946912d"
+  },
+  {
+   "game": "401810618",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810618.json",
+   "meta_sha256": "95ae63e886dd4c647dba210a93bcc2a5cf073dcb14ab39dca49cb8e4a6aec364"
+  },
+  {
+   "game": "401810620",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810620.json",
+   "meta_sha256": "1f01d9f688c02ae5ec6c4b9ff4eaaa0e13aa121be8c23f91a7dad46b3072af04"
+  },
+  {
+   "game": "401810624",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810624.json",
+   "meta_sha256": "de0521bee9a50d401773aed7fc2f927648011e54ab95bab53a739452e386a597"
+  },
+  {
+   "game": "401810626",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810626.json",
+   "meta_sha256": "da02352e690d01c29eb879aeca02cdb2b6f0b925f48d1747c287160c6f22ab66"
+  },
+  {
+   "game": "401810628",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810628.json",
+   "meta_sha256": "1c4ab540c61a791ee466b8f61b750b1dddae8d2f147aca95194370ed04ceed01"
+  },
+  {
+   "game": "401810630",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810630.json",
+   "meta_sha256": "7486cfe05c1dd557adfa3856ceba15fa15b297df6ddfb03528da8e91c0633a49"
+  },
+  {
+   "game": "401810636",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810636.json",
+   "meta_sha256": "53a84f4050910cbfce85f2fe3b4f56f1783d1033b5565fdd23a25187b534dd34"
+  },
+  {
+   "game": "401810639",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810639.json",
+   "meta_sha256": "5f38edb94798a117d2274359327057c713e648b44f61e4833285f40ded3ef655"
+  },
+  {
+   "game": "401810641",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810641.json",
+   "meta_sha256": "271da511f44d0268dd1d0f2ef99cd0c60bcac102037d77c6d6ce74aacaa0fb02"
+  },
+  {
+   "game": "401810646",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810646.json",
+   "meta_sha256": "5265eeaa296864f37a9eec58f2b55e942ddbf1ea8859f5e7cf2bb115c16ae362"
+  },
+  {
+   "game": "401810657",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810657.json",
+   "meta_sha256": "2bae525d7075900243c37b89e1fe115f6d9c4b22f9a82f88319337dfd1fe5fd1"
+  },
+  {
+   "game": "401810661",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810661.json",
+   "meta_sha256": "8fd6855fed04e44177bba9811e2d9ce1488e20e612c33a47e2808c67e22c14f1"
+  },
+  {
+   "game": "401810662",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810662.json",
+   "meta_sha256": "80aee927ec1ef6a9d8c103bbb1235ef91e77d56277be85c002725d824d1d445d"
+  },
+  {
+   "game": "401810663",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810663.json",
+   "meta_sha256": "c1fc17c291f859f0e42dad103d9edbd7fad7bb652924754be5a63c91d3df1b7b"
+  },
+  {
+   "game": "401810665",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810665.json",
+   "meta_sha256": "8d70a15840fd2b6c411fa89bb26563348764cf3646889081ee57ee30449c4d42"
+  },
+  {
+   "game": "401810666",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810666.json",
+   "meta_sha256": "fba89f7a745e730b4199147576e5062c6c64cf48bb374c78576e243c2bebaf1b"
+  },
+  {
+   "game": "401810668",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810668.json",
+   "meta_sha256": "474c30c2ca3f9f2c05202737b5b8ca8bb6f61a90ab5f4c6e67c6b3be2b5f8f59"
+  },
+  {
+   "game": "401810669",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810669.json",
+   "meta_sha256": "d1108e5be44b50bba8370b639f6db690ba9577d35eed2711177db6e6edfa0df8"
+  },
+  {
+   "game": "401810671",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810671.json",
+   "meta_sha256": "753fec9bdd1cb20b0640eb1ad1fef239ae82c57dc8613cd245b53941c51327b3"
+  },
+  {
+   "game": "401810673",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810673.json",
+   "meta_sha256": "d19fcfd21976f525e66ba90f5d798449a669f85401223576f977a08daae1b132"
+  },
+  {
+   "game": "401810674",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810674.json",
+   "meta_sha256": "59cbb0dc7354fde9cd9fd5878f6b7f5153751d4697334fb4ab7b02455cae9602"
+  },
+  {
+   "game": "401810690",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810690.json",
+   "meta_sha256": "83730315f15180f8cf0d34b985b5660f0ea156e54fe2e3e7d20f495bb3072038"
+  },
+  {
+   "game": "401810692",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810692.json",
+   "meta_sha256": "1ffb07eb2a8fb04a08801b0e0ac92f4dd23891847d073bce5abd0afe77ac8d94"
+  },
+  {
+   "game": "401810695",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810695.json",
+   "meta_sha256": "1911c72230c5bb316223c27062169f004ce9716ca06042192661880c9d0de493"
+  },
+  {
+   "game": "401810697",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810697.json",
+   "meta_sha256": "cd868617d7f7fb25f2d4f3033c49a95ffb2353488de74b5dd1fd8e04a550372b"
+  },
+  {
+   "game": "401810699",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810699.json",
+   "meta_sha256": "03a300a171c474783f16f23ef0bc927d67559b426b4b45917513c5156ab6ecbe"
+  },
+  {
+   "game": "401810701",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810701.json",
+   "meta_sha256": "aee28a79aa37b296c20f0b2da545bf2097587389f9a8d5d79c1d40e6a40a2be5"
+  },
+  {
+   "game": "401810703",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810703.json",
+   "meta_sha256": "bc35b8a402640fd01b8a6490a8a89b3f97a77642e7851d740e6658db7354235d"
+  },
+  {
+   "game": "401810706",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810706.json",
+   "meta_sha256": "79e7fa1d8eb5d0281f0073cfaa7198932d6d422f0cb562a62a3a8bf549eb2fbd"
+  },
+  {
+   "game": "401810710",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810710.json",
+   "meta_sha256": "09f048e5dfe9daa5dc04a589ce81a616b88c52d154f140efb94132c585401b62"
+  },
+  {
+   "game": "401810714",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810714.json",
+   "meta_sha256": "0840f644f135fd4013614615a3d7c4d9ceaaa1dc6d48a077de49c8fca19e4372"
+  },
+  {
+   "game": "401810716",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810716.json",
+   "meta_sha256": "530c244b4566b5e26c0430d217b97827ccac8bfda09e8860b6b6de4ed4be1401"
+  },
+  {
+   "game": "401810717",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810717.json",
+   "meta_sha256": "8cec6303e7f00dd3a5a337654f4f64859dbfca8cf4d46d924dc3e0e14ae641b5"
+  },
+  {
+   "game": "401810719",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810719.json",
+   "meta_sha256": "5c59ba16bcd6ce5a8cef49e8d35acd609dc2b1a7ea1eb4abae2b4d6a0af384b4"
+  },
+  {
+   "game": "401810720",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810720.json",
+   "meta_sha256": "6cf4c69a27628608069bf9962b2bab6a71c7b5f434cfea821811e0f851830f63"
+  },
+  {
+   "game": "401810721",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810721.json",
+   "meta_sha256": "0151f39e164a87fcf40378ca8ec6985da95600a042d6d3b2e1c3d7e2a33060ae"
+  },
+  {
+   "game": "401810723",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810723.json",
+   "meta_sha256": "cfdab1eba4fe71ab6dcedf2a2f179fba8e901c17ef29682a005ae34978d04744"
+  },
+  {
+   "game": "401810726",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810726.json",
+   "meta_sha256": "54d0461f918d6b464c7d83a602225c94e08d2e9df35cf071e5e6b065e666a280"
+  },
+  {
+   "game": "401810728",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810728.json",
+   "meta_sha256": "7557119a8f7867596745eafa77d398412b38ebed7df5f59e645922fbf68a2bf4"
+  },
+  {
+   "game": "401810740",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810740.json",
+   "meta_sha256": "d2e9d3090c7bdc8ecd994e2b0c2c60873f99b95327e1145e5d2cb37b78680eb6"
+  },
+  {
+   "game": "401810744",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810744.json",
+   "meta_sha256": "2e8a68dfbea0a57fb71d1c4eaa3e628700d7af6ea525211abf01d75882d9f5ca"
+  },
+  {
+   "game": "401810745",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810745.json",
+   "meta_sha256": "d19000f4a85ae6132398fe5d00f91a45264c81a37f268d2487b2126ae49041f7"
+  },
+  {
+   "game": "401810746",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810746.json",
+   "meta_sha256": "31ed51c78851e667ee844d20c11b3befab501cc1df333f22496485ebdac592eb"
+  },
+  {
+   "game": "401810750",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810750.json",
+   "meta_sha256": "80f619f9d27580fcd43c0db107a103b50e79fc7e45f0729fb9f028103b4975e5"
+  },
+  {
+   "game": "401810752",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810752.json",
+   "meta_sha256": "95f696f18e86007b3327e5642a39eb603b849932ec73a090ae00c9507d1228ee"
+  },
+  {
+   "game": "401810756",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810756.json",
+   "meta_sha256": "1e62c2dd56e4971aa78aac98812b8b2c571c980fdf864f84a76eb38ee9e42fa0"
+  },
+  {
+   "game": "401810757",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810757.json",
+   "meta_sha256": "d2146406396df9ccfb2e1a8801b176aaa73318e32cd54d29edc80b87612c6c46"
+  },
+  {
+   "game": "401810763",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810763.json",
+   "meta_sha256": "b945c4d07c9993165bc15594f5d05ace7f68b4648ddb6a59f42b83e69e05d285"
+  },
+  {
+   "game": "401810766",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810766.json",
+   "meta_sha256": "904d5e6e3aa1e00e911f5d1617a4a794563679c08fb04bf03753357e4346ae19"
+  },
+  {
+   "game": "401810767",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810767.json",
+   "meta_sha256": "e7131a18bd62b0f3c7ba8a4d0fbf3d0d681d9a630d748648fe297c6f5382bc9f"
+  },
+  {
+   "game": "401810769",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810769.json",
+   "meta_sha256": "80d961b444d3ca660cc44de7027d2b93ddc53b9099643c0ce07691ada51ecb82"
+  },
+  {
+   "game": "401810771",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810771.json",
+   "meta_sha256": "08a7ffee7473d14a809cd86c0aa6f682170c1ea0ee269325e47b4b8561434d38"
+  },
+  {
+   "game": "401810776",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810776.json",
+   "meta_sha256": "011f2cb619a8255cf091ca9d073def15ff475261a05b9d589af1725833f0f94e"
+  },
+  {
+   "game": "401810778",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810778.json",
+   "meta_sha256": "a3374f3599dba59c0e33e001aef322b6ba7093f63dee361ee1a3a8ff0af4fb6c"
+  },
+  {
+   "game": "401810783",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810783.json",
+   "meta_sha256": "384636094db8db3fb40e44bb44ed1b0240a7cc74b6be92c05b633d77af9d0b22"
+  },
+  {
+   "game": "401810785",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810785.json",
+   "meta_sha256": "e99704598bef2dfa373bc07741c780ea90048401fa924582e79541b3d710af57"
+  },
+  {
+   "game": "401810788",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810788.json",
+   "meta_sha256": "aaaf3e0f5f908d266214414c95a182e127553d2779c4449f1ddf4197556a803d"
+  },
+  {
+   "game": "401810796",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810796.json",
+   "meta_sha256": "2df91528820667f9111ea79f696a207d4b047ab8e7e086c244b147cb06937190"
+  },
+  {
+   "game": "401810800",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810800.json",
+   "meta_sha256": "16730843343107bb60bffe8587fe60ce3c4f45a6e019782b9b02fbd9224c1e72"
+  },
+  {
+   "game": "401810802",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810802.json",
+   "meta_sha256": "be1d212a89366fa43a2e2d6617e4db2a002758ffe5b017aaaa6a6dfdd81f2fb6"
+  },
+  {
+   "game": "401810803",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810803.json",
+   "meta_sha256": "2977930a26d22c9d9ad5bb57abb9e14dbba7afbc856b7f806dd7837f6231953a"
+  },
+  {
+   "game": "401810809",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810809.json",
+   "meta_sha256": "a6a045ec6c5b85574bef4dbd3428663c1652c03fde1fc2f4f45ee93fdcb02819"
+  },
+  {
+   "game": "401810811",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810811.json",
+   "meta_sha256": "2c3a390abc2dd44b690eb788f0b57a863404f43aa09a965a908320d14b2cf113"
+  },
+  {
+   "game": "401810815",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810815.json",
+   "meta_sha256": "1946863930bc66c5e1c2cb6679b30242c39266c11024cf9d828449e17e489f2a"
+  },
+  {
+   "game": "401810827",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810827.json",
+   "meta_sha256": "e2833fdef2f112a9308fbb43137f9d54fbef6746097ad282a47244652f45fee0"
+  },
+  {
+   "game": "401810830",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810830.json",
+   "meta_sha256": "3167586385781d8f01e1d52403d8bcf150a8bc8a7aa340dc0656ca2f0d024872"
+  },
+  {
+   "game": "401810831",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810831.json",
+   "meta_sha256": "d78123062cac0802976504089a8730876521d90a2a966d1f9bbf11d6dba8ce2d"
+  },
+  {
+   "game": "401810835",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810835.json",
+   "meta_sha256": "fabe51e3453358df5aaf3a50c8f396b93d009593a6a1746262d2275b0f3d9d4f"
+  },
+  {
+   "game": "401810836",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810836.json",
+   "meta_sha256": "a44fcfa612c89b1684af78a1fddfe02df488839cb7572b5d3fd91cdcadfe4cd2"
+  },
+  {
+   "game": "401810838",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810838.json",
+   "meta_sha256": "a539a18fd8fed635780bc35e6068057cb90d2bd478a82babbb3c79fbce7e566f"
+  },
+  {
+   "game": "401810843",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810843.json",
+   "meta_sha256": "3f33f4d05718917f333aaf15c0325247b7b91c5940ffd37d14f1b204f40177da"
+  },
+  {
+   "game": "401810845",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810845.json",
+   "meta_sha256": "a37a63f3e8f87b295018d1f23b32b36de46f7bcde190f5e9eadfaeab29422b15"
+  },
+  {
+   "game": "401810847",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810847.json",
+   "meta_sha256": "419f0ce9d7de1b00df901260e3f16765d237ccb04f638cb0651d24ccb9d5b253"
+  },
+  {
+   "game": "401810859",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810859.json",
+   "meta_sha256": "8a36156024c5a977d5a1e5075eec6f0005fa2003baed7bc736c7214c12266d76"
+  },
+  {
+   "game": "401810868",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810868.json",
+   "meta_sha256": "f59bd76b0b47d0572582c50abf715f656dd974cabaa6f72de630a8ea5aa61478"
+  },
+  {
+   "game": "401810874",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810874.json",
+   "meta_sha256": "7fe78134569ad8cbd03ecc196e381d0a32d07f820658c27002063d9df10ef5bb"
+  },
+  {
+   "game": "401810875",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810875.json",
+   "meta_sha256": "dbf3b36109d3debb2557ae2f3789c2842aa2c50de61069ee607b1de74ba817b2"
+  },
+  {
+   "game": "401810876",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810876.json",
+   "meta_sha256": "0aa0f1b026da1fb9f3fb3e7213c3d961ede52e9673b6fccb77c9533ba5e3cf62"
+  },
+  {
+   "game": "401810881",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810881.json",
+   "meta_sha256": "1eb3b514d43390bc0b0799dc1bb5b633693594abf2962c05a7d411642863c20f"
+  },
+  {
+   "game": "401810889",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810889.json",
+   "meta_sha256": "adb0b69e5862df3179559e2cf42ce1b1a343635a886abdaad59e3c9e9b9bde7f"
+  },
+  {
+   "game": "401810894",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810894.json",
+   "meta_sha256": "a9c74dba403b1d27669263975b90f44a2f740a4c9739de298a4ecfab50a11678"
+  },
+  {
+   "game": "401810896",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810896.json",
+   "meta_sha256": "e218ea90ce50c9fb9e92363ddc0a5fd0bccca43fc51df5542f4b87c7374aa617"
+  },
+  {
+   "game": "401810897",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810897.json",
+   "meta_sha256": "a26789f9716a5ff73e1dd06e5487db48ea3581187e524bb390c06dd22e544329"
+  },
+  {
+   "game": "401810903",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810903.json",
+   "meta_sha256": "a3ec606088fc51cba3ed2af8aff16ce7fe2c119222ffd933c9d140421e2ac4ee"
+  },
+  {
+   "game": "401810914",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810914.json",
+   "meta_sha256": "aec0886e7e5511564242a439d710b4d6180a806791076802b439ea91ba60f8cb"
+  },
+  {
+   "game": "401810918",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810918.json",
+   "meta_sha256": "a756f771f9cfc2dc1444f395f1a612e042bb99811e355dc935466ba2cd959d91"
+  },
+  {
+   "game": "401810920",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810920.json",
+   "meta_sha256": "26ec898612d48e2e95832df8ff902803fdce3e458b42f0289220301fc52dc914"
+  },
+  {
+   "game": "401810924",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810924.json",
+   "meta_sha256": "0d0d04b5c4a6476756271ebb48d99f490ac6d8aecab9ee9071aa7c006a59271b"
+  },
+  {
+   "game": "401810927",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810927.json",
+   "meta_sha256": "bf273d947f544f499352e8fb9fde5db3e9d017f1955774e23c19b4b731d5d6b4"
+  },
+  {
+   "game": "401810930",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810930.json",
+   "meta_sha256": "01bf162cfe2841f18519f4c74ef0460a0522bbb00429a8b1d3b1069d2815cd10"
+  },
+  {
+   "game": "401810931",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810931.json",
+   "meta_sha256": "fb4f6ec7df8f67e3e59e10bfccf67fbeec37df350e83e90b990687f023813497"
+  },
+  {
+   "game": "401810936",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810936.json",
+   "meta_sha256": "5a1849d42db75dc20f80adaa967016d20ef2ba626e28160184861948fdff74bb"
+  },
+  {
+   "game": "401810937",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810937.json",
+   "meta_sha256": "e9b906c509fe5695f0ae450f9dcb3072445beeacfa3df95b82d99bb4f5f1c052"
+  },
+  {
+   "game": "401810943",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810943.json",
+   "meta_sha256": "1217087f3caf195a7da75755ca5977203ba0fece226c6ae0de60a913b7ccdbfe"
+  },
+  {
+   "game": "401810945",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810945.json",
+   "meta_sha256": "fe59580032d132b1f55b74243aa68a9e6b4fabf8fa4d95bb30ffd7dff239f656"
+  },
+  {
+   "game": "401810946",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810946.json",
+   "meta_sha256": "068c0e31d72d5021cff80e72060444098d34bce48d51e0d85743ed47672040f6"
+  },
+  {
+   "game": "401810950",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810950.json",
+   "meta_sha256": "d7f98dd072641bd87decf5af13d4a6a6cad325b17511fdfd10d480a294beb1ef"
+  },
+  {
+   "game": "401810953",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810953.json",
+   "meta_sha256": "0c48174416e58d17fe36d27f4d137304255e92a246d9fbec3b877f9634de63a9"
+  },
+  {
+   "game": "401810957",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810957.json",
+   "meta_sha256": "f5f112fcad64d155273adb26691952a12256fc23125ab18c9d0a97e7b39de35e"
+  },
+  {
+   "game": "401810966",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810966.json",
+   "meta_sha256": "a3fd4e9d5e8b2cf3af6c5dd7f37586808afe4bdf6b2143dd52ebc634e13dd58e"
+  },
+  {
+   "game": "401810972",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810972.json",
+   "meta_sha256": "cd1e9da9311dee27d0648755b1135b24869200dc01c8e7b521303d2c38865355"
+  },
+  {
+   "game": "401810977",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810977.json",
+   "meta_sha256": "c5afffcb87ea34ff5ccad15338be21d02992ff432c01715a89f4fdb908807b9d"
+  },
+  {
+   "game": "401810981",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810981.json",
+   "meta_sha256": "86e74325dcc8eba04a80a73c9b26feddae8db983d2dca13dc9b3a94fe2a28be3"
+  },
+  {
+   "game": "401810988",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810988.json",
+   "meta_sha256": "18138a33e25f0bc08ee509919ce17a4e4e85b31fb3c84513f4da7d3fb8c1bfc9"
+  },
+  {
+   "game": "401810990",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810990.json",
+   "meta_sha256": "c94097d5a2e877dc0b56eb74b8554eb1d4410f53cc47ff7059cbb1c8daa16c18"
+  },
+  {
+   "game": "401810997",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401810997.json",
+   "meta_sha256": "bc5c3abe07feb320c2ed1ffd0c6230e467ad7edd4177d810f1a0ae54abd3d62f"
+  },
+  {
+   "game": "401811003",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401811003.json",
+   "meta_sha256": "1d122d1c3ce729ddaeabf851b00fbdedbe6a22edda8b91975f2ad59d831aee71"
+  },
+  {
+   "game": "401811011",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401811011.json",
+   "meta_sha256": "dcddc5ea50960fa4f4c68a58c1cedc5ade62c0986c0f5c346031e6e614b723cd"
+  },
+  {
+   "game": "401811012",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401811012.json",
+   "meta_sha256": "b8e2b370e51df02b5197484cbd1da6c26aac928f8b9262565f17c6659eaa7894"
+  },
+  {
+   "game": "401811016",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401811016.json",
+   "meta_sha256": "1c170101194fbb1e5a445c4ddbf4f20e8170480ad442fd8d0042b1d7db7255d8"
+  },
+  {
+   "game": "401811021",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401811021.json",
+   "meta_sha256": "bac769eb377d9a6a32877853dccd3fe9bf790898c5a74960699718b56f1ed17a"
+  },
+  {
+   "game": "401811031",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401811031.json",
+   "meta_sha256": "fd61c5c898a2aa0824ece8b8b99aa902d7a175404ed26f619f38b9bb29dbaa9a"
+  },
+  {
+   "game": "401811034",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401811034.json",
+   "meta_sha256": "5433983ddd780cb24ae59e170d7a7ed80fa67b8df2131eeae424f06d0dd453eb"
+  },
+  {
+   "game": "401811038",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401811038.json",
+   "meta_sha256": "61b1a1b254c8897c24fcbcc6351d6ef42beb2e582a5ee27964bddf750f7a423e"
+  },
+  {
+   "game": "401811040",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401811040.json",
+   "meta_sha256": "3691c7146b7f167c073381b1e9ba80e619a14d7dd75728eb42a091a0b8c409f0"
+  },
+  {
+   "game": "401811042",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401811042.json",
+   "meta_sha256": "b43d2e25bdf781953e1f05b7dfb4b50409862150089c3be0b4accedee84fde48"
+  },
+  {
+   "game": "401811043",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401811043.json",
+   "meta_sha256": "886aceddb6fddafca8b7d0468da6523f3eb80f50bc993d7c37fdc376751ca371"
+  },
+  {
+   "game": "401811048",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401811048.json",
+   "meta_sha256": "8c53922ba0705b90c442a0b596b4a4c9a82e8ad98411a92139c4aeaac5691133"
+  },
+  {
+   "game": "401811049",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401811049.json",
+   "meta_sha256": "4c3f1977508d3f195a6ee94d10e15b0092b21b61a62bf073afa580d4e2b22ce9"
+  },
+  {
+   "game": "401811050",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401811050.json",
+   "meta_sha256": "2b2c0a4804efcd3fc158f3afb328109bd31c4e40c61f7283850cd0dd84f20a4d"
+  },
+  {
+   "game": "401811051",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401811051.json",
+   "meta_sha256": "f50507ffc11a1a6269a9ff237ceb7d809549053913ff0b373418e84827d20562"
+  },
+  {
+   "game": "401811055",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401811055.json",
+   "meta_sha256": "08d7159e3e080d8788b7025a11db83961ee3bed0e301c6e934d9de4b4e448992"
+  },
+  {
+   "game": "401857824",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401857824.json",
+   "meta_sha256": "112d6fb064803845a000d42941051f615c99b2312dbedf4eecb5df5dd3338299"
+  },
+  {
+   "game": "401858693",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401858693.json",
+   "meta_sha256": "00f173d011ba36448e7705ad6ad1756f86b4e51e3496af6369b0c7df3ee19d79"
+  },
+  {
+   "game": "401858694",
+   "meta": "data/derived/experiments/rule3_confirmation_20261123_v1/401858694.json",
+   "meta_sha256": "1ee158bc1e0ac7c6f314ccaba700c46ed36eba371440e4616576f221dfc52166"
+  }
+ ],
+ "release": "not enabled; independent accounting/score/confirmation gates still apply"
+}

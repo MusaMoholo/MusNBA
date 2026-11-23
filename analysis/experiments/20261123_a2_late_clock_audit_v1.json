@@ -1,0 +1,8 @@
+{
+ "status": "pass; analytical score/accounting only, no engine promotion",
+ "empirical_distributions_checked": 600,
+ "max_score_error": 8.520961713998076e-15,
+ "method": "independent piecewise squared-CDF integration at 50 fixed rows/fold, all reported means and eligible-row census",
+ "screen_sha256": "5ad195f8aff6926f6e9e174c32788271c9e4c9561d75067cc977e7fb363ee5d3",
+ "confirmation_sha256": "d54bee37c2f06f7c50c5119ff6d41605e0269f1b95a7667ab260ed27389405b4"
+}

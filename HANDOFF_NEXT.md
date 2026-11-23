@@ -1,6 +1,6 @@
 # Handoff — current state and next actions
 
-Updated **23 November 2026**. Previous pushed checkpoint: **0eeebd5**; `git log -1` identifies this checkpoint.
+Updated **23 November 2026**. Previous pushed checkpoint: **a768454**; `git log -1` identifies this checkpoint.
 Read [AGENTS](AGENTS.md), then this file and [PLAN](PLAN.md). Detailed history is indexed in
 [docs/README](docs/README.md); do not read archives as current instructions.
 
@@ -9,7 +9,7 @@ Read [AGENTS](AGENTS.md), then this file and [PLAN](PLAN.md). Detailed history i
 - **Accepted production:** possession **engine-v1.3**, D29 minutes, pool 0, **10,000 worlds/game**;
   **team-pathway-v1**, **10,000 seasons**. Today's ET games use possessions; tomorrow onward uses pathway.
 - **Scope:** original 14-task A1 programme **58.0%** (S01–S07 complete, S13 deferred). Separate D42
-  **Chunk A 37.5%** = A1 lineups **90% (reopened D51)** × 30% + A2 form **30%** × 35% + A3 replay **0%** × 35%.
+  **Chunk A 48.0%** = A1 lineups **90% (reopened D51)** × 30% + A2 form **60%** × 35% + A3 replay **0%** × 35%.
   Chunk B **0%**. Do not reset/double-credit the original ledger; see PLAN §6.
 - **A1 release decision reopened under D51 (owner, 23 Nov).** The earlier no-release fallback at
   `f19d15e` remains a historical decision; the owner authorised redesigning potentially over-restrictive
@@ -21,9 +21,9 @@ Read [AGENTS](AGENTS.md), then this file and [PLAN](PLAN.md). Detailed history i
   in `analysis/experiments/20261123_rule3_confirmation_manifest_v1.json`. Rule correctness, independent
   confirmation and delivery remain required; no automatic resurrection of rejected model variants.
   The prior-roster census is now a coverage limitation of that historical pipeline, not a universal live gate.
-- **A2:** earlier player-form/persistence screens are inconclusive; shared-shot F1–F3 evidence is positive,
-  F4 teammate-minus-opponent excess is unresolved. Accepted-control world/late-state diagnostics are pending.
-  A synthetic mean-preserving prototype exists; no fitted factor, engine wiring or A2 promotion.
+- **A2 60%:** contextual late-clock candidate passed frozen F1–F3 and separate F4 analytical screens against
+  legacy and clean-bridge controls; 600 empirical distributions independently audited. No engine integration
+  yet. Shared shooting has no confirmed missing pooled scoring covariance; pace/minute gaps remain separate.
 - **Execution authorised:** owner requests completion of A1 and A2 (23 Nov), lifting the prior A1 stop.
   A3/Chunk B are not part of this request. Startup smoke **108/108**, log
   `/tmp/musnba_a1_a2_start_smoke_20261123.log`. Gate/rule/coverage/A2 preflight **19/19** focused checks.
@@ -56,30 +56,41 @@ Log `/tmp/musnba_a1_availability_nightly_20261123.log`.
 
 ## Next actions
 
-1. **Running:** `rule3_confirmation_20261123_v1`, eight one-thread workers, session **99485**, log
-   `/tmp/musnba_rule3_confirmation_20261123_v1.log`; per-game pairs and frozen 60-file identity in
-   `data/derived/experiments/rule3_confirmation_20261123_v1/plan.json`. Do not change fingerprinted engine/model/
-   input files or run the nightly until complete. Runner: `analysis/rule3_confirmation.py`; auditor:
-   `analysis/rule3_capture_audit.py`; scorecard: `analysis/rule3_scores.py`. All are opt-in; no release enabled.
-2. Resume pilot passed: all canonical world digests equal the uninterrupted pilot; **1,556 legacy fields** equal.
-   Stress `rule3_stress_20261123_v1` session **1015**, worker **65017**, log `/tmp/musnba_rule3_stress_20261123_v1.log`;
-   stream `rule3_stream_20261123_v1` session **35390**, worker **65027**, log `/tmp/musnba_rule3_stream_20261123_v1.log`.
-   Both workers resumed after smoke/export; no worker remains SIGSTOP'd. Normal total **8+1+1=10**.
-   Stress/stream wall times include this checkpoint pause; don't claim unpaused pace.
-   Reuse captured control dependence/late states for A2. Shared-shot report is `20261123_a2_shared_shooting_v1.json`;
-   no factor fitted. PWA delivery is complete above; export log `/tmp/musnba_a2_stories_export_20261123.log`.
+1. Fresh 200-game run, source/input verification, scorecard and independent audit all completed successfully:
+   `rule3_confirmation_20261123_v1{,_compare,_compare_gate,_audit}.json` in experiments. **44/44 core bounds**,
+   one imprecise coverage diagnostic, **114.1M legal fives / 39 exhaustion penalties**. Logs share that name in /tmp.
+   Stress finished/audited all **3 × 10k pairs / 17,255,568 legal fives**; stream finished/audited 30 pairs,
+   **34/34 supported core bounds**, ten star bounds unsupported. No demonstrated coverage harm. Reallocation
+   preserved all IDs/draws; archive/resume receipt `rule3_stream_20261123_reallocation_v1.json`.
+2. **Running:** formal rule-only final, `analysis/rule3_final.py run --jobs 8`, session **66878**, log
+   `/tmp/musnba_rule3_final_20261123_v1.log`; **246 fixed current-season games**, 1k worlds/arm, eight × OMP1/BLAS1.
+   [Frozen final contract](docs/protocols/rule3_final_20261123.md) and manifest
+   `analysis/experiments/20261123_rule3_final_manifest_v1.json`. **Do not change fingerprinted engine/model/input
+   files.** After completion run `analysis/rule3_capture_audit.py rule3_final_20261123_v1 --output
+   analysis/experiments/rule3_final_20261123_v1_audit.json`, then `analysis/rule3_final.py score` with OMP/BLAS1.
+   The final is one frozen evaluation, never selection/retuning. Latest smoke **108/108**, deliberate fault
+   **86/108**, exit 1; logs `/tmp/musnba_a1_a2_research_{smoke,fault}_20261123_v2.log`. Those sessions finished;
+   final worker parent **70969**, eight workers. Two compute slots are free for useful independent work.
+   PWA delivery remains above; export log `/tmp/musnba_a2_stories_export_20261123.log`.
    :8767 review session **58196**; static/upgrade servers :8768/**35424**, :8769/**18564**.
    Temporary retry-shell server :8770/**19954**. All eight root docs reviewed/updated; no CI workflows exist.
-3. Independently audit outputs; assess unchanged core harm margins and required rule/stress/stream evidence.
-   If compatible, freeze a rule-level final recipe before reading protected outcomes. A current-season adapter
-   is required (`backtest._init` is historical-only); non-fold `Models` medians need strict prior-origin filtering
-   in both arms. Retain the old node final score. Release only after all applicable v2 gates.
-   Wire structurally valid 10k branches/Expected/season views with
+3. Assess the frozen final under unchanged v2 mechanical margins; adapter filters both arms' medians strictly
+   before each game and fits minute auxiliaries before July 2026. Retain the old node final score.
+   Release only after all applicable v2 gates.
+   Follow the [delivery design](docs/protocols/lineup_delivery_20261123.md); wire structurally valid 10k branches/Expected/season views with
    explicit availability assumptions; unsupported individual games fail visibly. The common-interval season
    prototype's joint dependence remains unaccepted; inspect it before wiring. A1 checkpoints before A2.
-4. Complete A2 shared-factor/late-game evidence and any supported candidates with v2's learned-change gate.
+4. A2 clock: `20261123_a2_late_clock_{recipe,screen,confirmation,audit}_v1.json`; prototype
+   `analysis/a2_late_clock.py`, [contract](docs/protocols/a2_late_clock_20261123.md). Earlier 1,932 games / 5,382
+   opportunities: joint loss 0.19856→0.12849; F4 199 games / 474: 0.21633→0.13415. No model/clock change served.
+   After A1 decision, freeze optional hook and matched engine compatibility/component/stream tests before runs.
+   Disconnected `scripts/late_clock.py` sampler and `world_mass.py` exact-summary helper pass six new checks;
+   shared browser decoders/summary preserve original probabilities. Normal app routes remain unchanged.
    Finish with a fresh accepted-system nightly, independent accounting and required dashboard/PWA/iCloud
    delivery, commit/push and stop. A3 and repository-wide cleanup remain successor work; preserve View Centre scope.
+5. **D54 immediate successor:** per-game complete 10k bundle publication; [planned contract](docs/protocols/incremental_catchup.md).
+   Nightly collects missed finals but generates today's possession forecasts only. Actual-participant historical
+   reconstruction is proposed, remains deferred under D40, and must predict minutes with pre-origin inputs/fits.
 
 First commands (read-only setup; do not launch old candidates):
 
@@ -100,9 +111,9 @@ Dependencies/acceptance are in PLAN §6a; methods/gates belong to ENGINE/TRAININ
 100 includes evidence, necessary delivery, checks, docs and commit/push. Report every new 10% module/5% overall mark.
 
 ```text
-Chunk A  ████████░░░░░░░░░░░░ 37.5%
+Chunk A  ██████████░░░░░░░░░░ 48.0%
 A1       ██████████████████░░ 90% (D51 review)
-A2       ██████░░░░░░░░░░░░░░ 30%
+A2       ████████████░░░░░░░░ 60%
 A3       ░░░░░░░░░░░░░░░░░░░░ 0%
 ```
 
@@ -119,7 +130,7 @@ A3       ░░░░░░░░░░░░░░░░░░░░ 0%
 | 90 | **D51 reopened:** applicable rule/compatibility/confirmation gates under v2; prior fallback remains archived. | Freeze promote/reject decision under all applicable gates. | Fresh live 10k nightly; audit selections and iCloud/PWA delivery. |
 | 100 | Verify results/limitations, required delivery, commit/push. | Verify evidence/fallback/delivery, commit/push. | Publish shell; construct successor; checks, commit/push and summary. |
 
-A1's previous fallback was reopened by D51; 10–80 remain research milestones, not production passes. A2 40–100 and A3 all remain
+A1's previous fallback was reopened by D51; 10–80 remain research milestones, not production passes. A2 70–100 and A3 all remain
 open. Chunk B's full predeclared ladders and the original S01–S14 ladders are preserved in
 [the frozen planning record](docs/archive/2026-11-23-before-lean/HANDOFF_NEXT.md); open only the relevant section
 when preparing that chunk, and copy its current ladder here before execution.

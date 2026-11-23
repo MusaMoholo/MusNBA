@@ -175,13 +175,17 @@ separately from strictly prior/cross-fitted predictions. Compare observed AND ba
 before adding variation; event/minute/state randomness already creates covariance.
 
 [Shared-shooting/world/late-state methods](docs/protocols/a2_joint_late_20261123.md) extend these diagnostics.
+The [contextual late-clock screen](docs/protocols/a2_late_clock_20261123.md) freezes one prior-fitted candidate,
+clean bridge removal control, earlier-fold proper-score criteria and a separate 200-game F4 manifest before results.
 The fresh 200-game D51 confirmation pass captures accepted-control worlds once for both modules. A read-only
 observer reproduces 1,556 legacy pilot fields; an independent auditor checks scores, precise minutes, rule/team
-fouls and integrated discrete coverage. Stop/resume hashes match. The full panel/stress/seed evidence is pending;
-pilot agreement does not qualify a model. `analysis/rule3_scores.py` retains legacy PIT alongside integrated coverage.
+fouls and integrated discrete coverage. Stop/resume hashes match. Panel/stress/stream evidence is complete;
+the [rule-level final](docs/protocols/rule3_final_20261123.md) is frozen/running, with pre-origin medians in both arms.
+`analysis/rule3_scores.py` retains legacy PIT alongside integrated coverage. No model is promoted by node loss alone.
 
 Namespaced factors stay fixed per game/world/player or team; zero strength consumes no new draws. Tilts
 preserve baseline marginal means without clipping. Unsupported/negative excess is not clamped into evidence.
 Freeze strengths/cutoffs/joint estimands before an engine result; compare factors alone before combinations.
 Require pooled PTS and joint checks plus every registered non-inferiority/noise/confirmation rule, not wider
-intervals alone. A1 decisions precede integration. No calibrated draw or engine wiring has been delivered.
+intervals alone. A1 decisions precede integration. No calibrated form factor or production clock selection is delivered.
+`ContextClock` has focused sampler tests and remains disconnected from the engine.

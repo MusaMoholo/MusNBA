@@ -1,0 +1,308 @@
+{
+ "phase": "confirmation",
+ "source_sha256": "f667fbd6cd9acf40abc06b1c5a2201ded4e2c249439fd44cf93475396b151f6f",
+ "protocol_sha256": "20595973ec9504fcb86c306bd9e271316684c7ec1bc6822b65cf8f09dbea08dd",
+ "manifest_sha256": "ce7088c7f07c473b086521df197c75da6aecbdd9bc741e6505215c3aed2d10f7",
+ "inputs": {
+  "data/derived/history/2023/segments.parquet": "813b53edadf92f6e6c607211b1d4c64b312aa9fbe689851110e912419101a76e",
+  "data/derived/history/2024/segments.parquet": "4a7c3c2bce39580cc8e1092ffc215d11bbd49f7bf117b4551eee40337203d2c0",
+  "data/derived/history/2025/segments.parquet": "d9db732172894ed8d3c6e5e99e3cd1c197006da22799413034ce3ce18cc5aee2",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc"
+ },
+ "fitted_pools_sha256": {
+  "F4": "5bc9035e704b6396388c9131ddafb6832eb9e232e26fe2d1d0d30ca261bce70f"
+ },
+ "folds": {
+  "F4": {
+   "games": 199,
+   "opportunities": 474,
+   "supported": true,
+   "scores": {
+    "legacy_time": 0.1806491622307724,
+    "legacy_quiet": 0.25201432054729833,
+    "legacy_joint": 0.21633174138903535,
+    "bridge_time": 0.1804761549168367,
+    "bridge_quiet": 0.2535206581955046,
+    "bridge_joint": 0.21699840655617061,
+    "candidate_time": 0.12684166305247058,
+    "candidate_quiet": 0.1414581059651093,
+    "candidate_joint": 0.13414988450878998
+   },
+   "comparisons": {
+    "legacy": {
+     "time": {
+      "change": -0.053807499178301826,
+      "ci_95": [
+       -0.06575077264625728,
+       -0.04129530832147917
+      ]
+     },
+     "quiet": {
+      "change": -0.11055621458218903,
+      "ci_95": [
+       -0.14561041312176812,
+       -0.08125293778602727
+      ]
+     },
+     "joint": {
+      "change": -0.08218185688024537,
+      "ci_95": [
+       -0.10118822340728477,
+       -0.06555741662453836
+      ]
+     }
+    },
+    "bridge": {
+     "time": {
+      "change": -0.05363449186436611,
+      "ci_95": [
+       -0.06558770468746654,
+       -0.0411716239777019
+      ]
+     },
+     "quiet": {
+      "change": -0.11206255223039532,
+      "ci_95": [
+       -0.14748868348429428,
+       -0.0822456294849176
+      ]
+     },
+     "joint": {
+      "change": -0.08284852204738063,
+      "ci_95": [
+       -0.10221426725010972,
+       -0.06589764166914629
+      ]
+     }
+    }
+   },
+   "primary_pass": true,
+   "component_compatible": true,
+   "candidate_sources": {
+    "contextual": 474
+   },
+   "excluded_unknown_or_invalid": 12,
+   "training": {
+    "cutoff": "2025-12-31",
+    "latest_training_date": "2025-12-31",
+    "legacy_rows": 46777,
+    "clean_rows": 41659,
+    "excluded_unknown_or_invalid": 5118,
+    "cells": {
+     "0": {
+      "opportunities": 417,
+      "games": 396,
+      "supported": true
+     },
+     "1": {
+      "opportunities": 471,
+      "games": 401,
+      "supported": true
+     },
+     "2": {
+      "opportunities": 523,
+      "games": 396,
+      "supported": true
+     },
+     "3": {
+      "opportunities": 301,
+      "games": 216,
+      "supported": true
+     },
+     "4": {
+      "opportunities": 374,
+      "games": 345,
+      "supported": true
+     },
+     "5": {
+      "opportunities": 301,
+      "games": 297,
+      "supported": true
+     },
+     "6": {
+      "opportunities": 189,
+      "games": 184,
+      "supported": true
+     },
+     "7": {
+      "opportunities": 375,
+      "games": 369,
+      "supported": true
+     },
+     "8": {
+      "opportunities": 458,
+      "games": 431,
+      "supported": true
+     },
+     "9": {
+      "opportunities": 369,
+      "games": 322,
+      "supported": true
+     },
+     "10": {
+      "opportunities": 105,
+      "games": 97,
+      "supported": true
+     },
+     "11": {
+      "opportunities": 326,
+      "games": 290,
+      "supported": true
+     },
+     "12": {
+      "opportunities": 331,
+      "games": 322,
+      "supported": true
+     },
+     "13": {
+      "opportunities": 213,
+      "games": 211,
+      "supported": true
+     },
+     "14": {
+      "opportunities": 673,
+      "games": 662,
+      "supported": true
+     },
+     "15": {
+      "opportunities": 881,
+      "games": 731,
+      "supported": true
+     },
+     "16": {
+      "opportunities": 565,
+      "games": 454,
+      "supported": true
+     },
+     "17": {
+      "opportunities": 108,
+      "games": 103,
+      "supported": true
+     },
+     "18": {
+      "opportunities": 568,
+      "games": 462,
+      "supported": true
+     },
+     "19": {
+      "opportunities": 639,
+      "games": 580,
+      "supported": true
+     },
+     "20": {
+      "opportunities": 547,
+      "games": 543,
+      "supported": true
+     },
+     "21": {
+      "opportunities": 768,
+      "games": 733,
+      "supported": true
+     },
+     "22": {
+      "opportunities": 757,
+      "games": 657,
+      "supported": true
+     },
+     "23": {
+      "opportunities": 319,
+      "games": 290,
+      "supported": true
+     },
+     "24": {
+      "opportunities": 105,
+      "games": 91,
+      "supported": true
+     },
+     "25": {
+      "opportunities": 382,
+      "games": 343,
+      "supported": true
+     },
+     "26": {
+      "opportunities": 623,
+      "games": 562,
+      "supported": true
+     },
+     "27": {
+      "opportunities": 690,
+      "games": 680,
+      "supported": true
+     }
+    }
+   }
+  }
+ },
+ "pooled": {
+  "games": 199,
+  "opportunities": 474,
+  "supported": true,
+  "scores": {
+   "legacy_time": 0.1806491622307724,
+   "legacy_quiet": 0.25201432054729833,
+   "legacy_joint": 0.21633174138903535,
+   "bridge_time": 0.1804761549168367,
+   "bridge_quiet": 0.2535206581955046,
+   "bridge_joint": 0.21699840655617061,
+   "candidate_time": 0.12684166305247058,
+   "candidate_quiet": 0.1414581059651093,
+   "candidate_joint": 0.13414988450878998
+  },
+  "comparisons": {
+   "legacy": {
+    "time": {
+     "change": -0.053807499178301826,
+     "ci_95": [
+      -0.06575077264625728,
+      -0.04129530832147917
+     ]
+    },
+    "quiet": {
+     "change": -0.11055621458218903,
+     "ci_95": [
+      -0.14561041312176812,
+      -0.08125293778602727
+     ]
+    },
+    "joint": {
+     "change": -0.08218185688024537,
+     "ci_95": [
+      -0.10118822340728477,
+      -0.06555741662453836
+     ]
+    }
+   },
+   "bridge": {
+    "time": {
+     "change": -0.05363449186436611,
+     "ci_95": [
+      -0.06558770468746654,
+      -0.0411716239777019
+     ]
+    },
+    "quiet": {
+     "change": -0.11206255223039532,
+     "ci_95": [
+      -0.14748868348429428,
+      -0.0822456294849176
+     ]
+    },
+    "joint": {
+     "change": -0.08284852204738063,
+     "ci_95": [
+      -0.10221426725010972,
+      -0.06589764166914629
+     ]
+    }
+   }
+  },
+  "primary_pass": true,
+  "component_compatible": true,
+  "candidate_sources": {
+   "contextual": 474
+  }
+ },
+ "final_test_untouched_from": "2026-07-01",
+ "decision": "confirmation_pass",
+ "artifacts": "data/derived/experiments/20261123_a2_late_clock_confirmation_v1"
+}

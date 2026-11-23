@@ -42,6 +42,14 @@ for (const branch of fixture.branches) {
   raw.final_period = encode([5, 4]);
 }
 const source = branchWorldSource(fixture);
+// Original status assumptions must remain exact; they need no quarter-probability remapping.
+const originalProbability = structuredClone(fixture);
+originalProbability.selected_players[0].probability = .15;
+originalProbability.branches[0].weight = {numerator: '3', denominator: '20'};
+originalProbability.branches[1].weight = {numerator: '17', denominator: '20'};
+const originalSource = branchWorldSource(originalProbability);
+assert.equal(joint(originalSource.weights, [1, 1, 0, 0], [1, 1, 1, 1]).event, .15);
+assert.throws(() => branchWorldSource({...originalProbability, selected_players: [{...originalProbability.selected_players[0], probability: NaN}]}), /probability/);
 globalThis.location = {href: 'http://localhost/'};
 const {branchCalculations, branchWorldData, mask, minuteMarginalData, preciseCalculations, varOptions, worldData} = await import('../scripts/webapp/outcomes.mjs');
 const adapted = branchWorldData(source);

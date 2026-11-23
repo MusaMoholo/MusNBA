@@ -1,0 +1,13 @@
+{
+ "frozen_at": "2026-11-23T11:57:24.649617+00:00",
+ "stage": "before all candidate scores",
+ "files": {
+  "analysis/a2_late_clock.py": "f667fbd6cd9acf40abc06b1c5a2201ded4e2c249439fd44cf93475396b151f6f",
+  "tests/test_a2_late_clock.py": "d5512fac05d7729158b8026ec8071d3be9f84a5b46b201a53d9466d010fd8238",
+  "docs/protocols/a2_late_clock_20261123.md": "20595973ec9504fcb86c306bd9e271316684c7ec1bc6822b65cf8f09dbea08dd",
+  "analysis/experiments/20261123_a2_late_clock_manifest_v1.json": "ce7088c7f07c473b086521df197c75da6aecbdd9bc741e6505215c3aed2d10f7"
+ },
+ "clarification": "Original 200-game ID manifest unchanged; subsequent protocol implementation clarification specifies M9 regular-season validation population and equal-weight normalisation before any candidate score.",
+ "world_engine_unchanged": true,
+ "resources": "One small analytical process; no LightGBM fit or Monte Carlo simulation."
+}

@@ -1,0 +1,81 @@
+{
+ "run": "rule3_stress_20261123_v1",
+ "pairs": 3,
+ "worlds_per_branch_game": 10000,
+ "source_sha256": "8ad4b8e1e21ae1c2318a72c89b554fb5b3063be7b6082237d19e32476569870b",
+ "run_sha256": "a8f39a70e86dadd1df23715715f32fb1b2e1c9731c6230e9f482a3c0a3594c63",
+ "legacy_fields_equal_1e_12": null,
+ "same_worlds_as": null,
+ "audits": [
+  {
+   "game": "401809247",
+   "label": "control",
+   "max_team_period_minute_error": 4.263256414560601e-14,
+   "known_disqualified_control_fives": 123327,
+   "retained_offensive_fouls": 535
+  },
+  {
+   "game": "401809247",
+   "label": "candidate",
+   "game_id": "401809247",
+   "worlds": 10000,
+   "players": 19,
+   "lineup_snapshots": 2855910,
+   "post_foul_snapshots": 400121,
+   "lineup_fives_checked": 5711820,
+   "overtime_worlds": 347,
+   "max_replayed_player_minute_error": 1.7763568394002505e-15,
+   "foul_penalty_events": 0,
+   "foul_penalty_makes": 0,
+   "foul_penalty_lineups": 0,
+   "retained_offensive_fouls": 0
+  },
+  {
+   "game": "401810357",
+   "label": "control",
+   "max_team_period_minute_error": 3.552713678800501e-14,
+   "known_disqualified_control_fives": 143541,
+   "retained_offensive_fouls": 1007
+  },
+  {
+   "game": "401810357",
+   "label": "candidate",
+   "game_id": "401810357",
+   "worlds": 10000,
+   "players": 25,
+   "lineup_snapshots": 2919412,
+   "post_foul_snapshots": 457380,
+   "lineup_fives_checked": 5838824,
+   "overtime_worlds": 296,
+   "max_replayed_player_minute_error": 3.552713678800501e-15,
+   "foul_penalty_events": 0,
+   "foul_penalty_makes": 0,
+   "foul_penalty_lineups": 0,
+   "retained_offensive_fouls": 0
+  },
+  {
+   "game": "401810393",
+   "label": "control",
+   "max_team_period_minute_error": 4.263256414560601e-14,
+   "known_disqualified_control_fives": 125254,
+   "retained_offensive_fouls": 834
+  },
+  {
+   "game": "401810393",
+   "label": "candidate",
+   "game_id": "401810393",
+   "worlds": 10000,
+   "players": 20,
+   "lineup_snapshots": 2852462,
+   "post_foul_snapshots": 418381,
+   "lineup_fives_checked": 5704924,
+   "overtime_worlds": 295,
+   "max_replayed_player_minute_error": 1.7763568394002505e-15,
+   "foul_penalty_events": 0,
+   "foul_penalty_makes": 0,
+   "foul_penalty_lineups": 0,
+   "retained_offensive_fouls": 0
+  }
+ ],
+ "status": "pass; accounting only, no accuracy claim"
+}

@@ -52,14 +52,14 @@ remain the relevant accuracy/product milestones. A research rejection does not m
 
 ### 6a. Authorised D42 execution split
 
-**Chunk A: believable games and visible simulations — 37.5%.** Headliners: lineup-aware player/game outcomes;
+**Chunk A: believable games and visible simulations — 48.0%.** Headliners: lineup-aware player/game outcomes;
 form and late-game realism; five actual saved-world examples with a reusable 2-D View Centre. Depends on S01–S07.
 Owner (23 Nov) now authorises completing A1 and A2, lifting the earlier A1 stop; A3 and Chunk B remain outside this session.
 
 | Module | Weight | Progress | Dependency and acceptance/fallback |
 |---|---:|---:|---|
 | A1 Lineups/Expected | 30% | 90% D51 review | Prior no-release fallback reopened by owner-authorised gate redesign; v2 separates mechanics/scenarios from learned accuracy changes. Production branches/S08 remain undelivered. |
-| A2 Form/late game | 35% | 30% | S04/S06 decisions, A1 for integration. Paired player/joint gates; retain v1.3 when unsupported. |
+| A2 Form/late game | 35% | 60% | Contextual late clock passes earlier-fold and separate F4 analytical screens; engine compatibility remains. No calibrated form factor/promotion. |
 | A3 View Centre/delivery | 35% | 0% | A1/A2 decisions. Five labelled real worlds, reconciled event files, 2-D court/player, responsive/offline checks and fresh nightly. |
 
 **Chunk B: stronger defence and reliable season paths — 0%.** Depends on Chunk A decisions/delivery. Do not
@@ -73,8 +73,8 @@ activate and refresh them before execution, without changing their weights silen
 | B3 Integration/visibility/delivery | 40% | Combined/removal screens, eligible all-fold confirmation, seed/10k stress, final score only for qualifying frozen version; rotation map and final nightly. |
 
 Every completed module checkpoints before the next. Each chunk ends with a fresh live nightly on accepted systems,
-10k games/seasons, necessary PWA delivery and a useful dashboard improvement if no model promotes. No backfill or
-incremental iCloud delivery is implied. S11/S14 are not completed merely by an earlier module's delivery.
+10k games/seasons, necessary PWA delivery and a useful dashboard improvement if no model promotes. Incremental
+delivery is immediate successor work (D54); historical replay remains deferred. S11/S14 need their own acceptance.
 
 ### 6b. What earns promotion
 
@@ -109,7 +109,8 @@ installation/import/memory acceptance remains an owner check; exporting to iClou
 | Rotation map | B3/S12; stored probabilities sum to five. |
 | Deeper outcome visualisations | Extend existing conditional/joint distributions, percentile bands and exceedance views; extremes stay labelled. |
 | Competition tabs | Regular season/Cup/playoffs with per-world play-in/brackets; not currently a complete postseason simulation. |
-| Incremental iCloud export | Future separate contract: atomic per-game generations, resume/import/offline validation; current export remains end-of-nightly. |
+| Incremental iCloud export — next priority (D54) | Publish after each complete checked 10k game; safe per-game generations, coherent season freshness, resumable exports and PWA import/offline validation. Current export remains end-of-nightly. [Contract](docs/protocols/incremental_catchup.md). |
+| Missed-day reconstruction proposal | Nightly already collects missing finals; it does not regenerate missed possession forecasts. Future labelled actual-participant reconstruction needs pre-origin inputs AND fits, predicted minutes and immutable originals; D40 replay execution remains deferred. |
 | Advanced player stats | Actual +/−, six box-derived rates and dated action-share input exist. True simulated possession USG%, on-court ratings, simulated +/− and BPM need honest capture/definitions/validation. |
 | Code simplification (owner, 23 Nov) | After A1/A2, inventory production dependencies, duplicate logic and research-only files; target proven maintenance/runtime costs. Preserve reproducibility and View Centre scope; no line-count-driven wholesale rewrite or blind deletion. |
 | Shooting geography (owner hypothesis, 23 Nov) | Start from NBA source-defined basic/advanced zones; the owner's dunker/post/wing/slot examples are illustrative, not a required bespoke taxonomy. Fit shooter/defender attempts and makes by zone, pooling sparse cells to broader parents and retaining supported side/direction. Compare current five zones/21 bands, source-zone-only, then within-zone distance on folds. Preserve raw data; audit source units/orientation, labels/coverage and observed versus inferred defender attribution. Version derived mappings/unknowns; extend the existing zone-choice node only after evidence. No mapping/model chosen or collection started. |
@@ -122,7 +123,7 @@ reflects loaded data/configuration. These items do not authorise forecast-histor
 
 | Date | Result | Evidence |
 |---|---|---|
-| 23 Nov | Rule pilot/resume reconcile 1.73M fives and 1,556 unchanged fields; confirmation running. Shared-shot evidence measured; six saved-world cards shipped in PWA, smoke 108/108, fault exits 1. | HANDOFF running jobs/delivery; FINDINGS §7/§8. |
+| 23 Nov | Rule confirmation 44/44 core bounds; stress/stream audited; frozen 246-game final running. Contextual clock passes F1–F3/F4 analytical screens; no new model served. D54 prioritises per-game bundles next. | HANDOFF jobs/delivery; FINDINGS §7/§8. |
 | 23 Nov | D52 removes unwanted CI workflows; local checks and branch-based Pages hosting retained. No model/app change. | AGENTS local-check rule; README hosting commands. |
 | 23 Nov | D51 reopens A1 release review; v2 compatibility/confirmation and retained defender-result audit. | [Active policy](docs/protocols/promotion_v2_20261123.md) |
 | 23 Nov | A1 no-release fallback: 28,530 memberships audited, 783/800 starter contexts supported; v1.3 retained. | [Decision](docs/research/a1_no_release_20261123.md) |

@@ -77,6 +77,7 @@ behaviour follows the latest applicable decision, especially D45–D50.
 | D51 | Owner (23 Nov) authorises promotion-framework audit/redesign; v2 separates mechanics, learned changes and stored scenarios. Preserve old evidence; freeze new gates/confirmation before further results, never auto-ship. |
 | D52 | Owner (23 Nov): no repository CI pipelines. Run checks locally; retain data-free GitHub Pages hosting for laptop/phone PWA. |
 | D53 | Owner (23 Nov) uses the PWA exclusively. A dashboard change is incomplete until its PWA update is tested and published, with any required exports; localhost alone is never delivery. |
+| D54 | Owner (23 Nov): immediate successor work publishes checked, complete 10k game worlds to the device bundles as each game finishes. Historical actual-participant reconstruction is proposed separately; current nightly still collects missed results but forecasts today only. |
 
 ## 2. Possession chain
 
@@ -169,6 +170,10 @@ D40 defers S13. If reauthorised, preserve immutable original/old-version forecas
 require every input and fitted parameter before origin, freeze complete date coverage and validate resume/
 atomic activation without version splicing or repeated final-test selection. Full prospective contract is in
 the frozen engine plan §17; no runnable engine-history replay is implied.
+
+D54 prioritises [incremental delivery and catch-up](docs/protocols/incremental_catchup.md) after A1/A2.
+Actual-participant reconstruction conditions on hindsight availability; predict minutes/performance rather
+than supplying actual minutes/rotations. It cannot measure genuine pre-tip lineup prediction accuracy.
 
 A3 selects five real worlds: each team's maximum own margin; each team's maximum single-player NBA fantasy
 score (PTS + 1.2 REB + 1.5 AST + 3 STL + 3 BLK − TOV); one real representative world by a predeclared
