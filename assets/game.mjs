@@ -5,6 +5,7 @@ import {advancedPanel, api, atLeast, errorPanel, modelPill, barChart, dayLabel, 
 import * as S from './scenario.mjs';
 import * as O from './outcomes.mjs';
 import {gameSpotlight} from './spotlight.mjs';
+import {minuteBins, minuteDistribution, minuteThreshold} from './precise-minutes.mjs';
 
 export const PERIODS = [['q1', 'Q1', '1st quarter'], ['q2', 'Q2', '2nd quarter'], ['q3', 'Q3', '3rd quarter'], ['q4', 'Q4', '4th quarter'],
                         ['h1', 'H1', '1st half'], ['h2', 'H2', '2nd half'], ['fg', 'FG', 'Full game']];
@@ -178,7 +179,7 @@ function bezel(data, period, {matchup, scenario, mode, base}) {
     if (hasActual) {
       const mine = actual[side], theirs = actual[side === 'home' ? 'away' : 'home'];
       win = mine > theirs ? 'W' : mine < theirs ? 'L' : 'T';
-      winLabel = proj ? `Win · pre ${pct(proj.win, 0)}` : 'Result';
+      winLabel = proj ? `Win · ${data._research ? 'research' : 'pre'} ${pct(proj.win, 0)}` : 'Result';
     }
     const sub = hasActual ? (proj ? `proj ${f1(proj.pts.mean)}` : '') : proj ? `<span class="lbl">10–90%: </span>${proj.pts.q[0]}–${proj.pts.q[4]}` : '';
     return `<a class="bz-team ${side}" href="#/team/${s.id}" title="${esc(info.name)}">
@@ -415,13 +416,13 @@ function marginLadder(d, A, H) {
   return [1, 3, 5, 7, 10, 15].map(k => [`${H.abbr} by ${k}+`, atLeast(d, k)])
     .concat([1, 3, 5, 7, 10, 15].map(k => [`${A.abbr} by ${k}+`, probWhere(d, v => v <= -k)]));
 }
-function stepLadder(d, {suffix = '+', minStep = 1} = {}) {
+function stepLadder(d, {suffix = '+', minStep = 1, chance = k => atLeast(d, k)} = {}) {
   const span = Math.max(1, d.q[4] - d.q[0]);
   const step = Math.max(minStep, span > 60 ? 10 : span > 16 ? 5 : span > 8 ? 2 : 1);
   const lo = Math.max(1, d.q[0] - step), hi = d.q[4] + step;
   const out = [];
-  for (let k = Math.ceil(lo / step) * step; k <= hi && out.length < 10; k += step) out.push([`${k}${suffix}`, atLeast(d, k)]);
-  if (out.length < 3) for (let k = 1; out.length < 3; k++) if (!out.some(([l]) => l === k + suffix)) out.push([`${k}${suffix}`, atLeast(d, k)]);
+  for (let k = Math.ceil(lo / step) * step; k <= hi && out.length < 10; k += step) out.push([`${k}${suffix}`, chance(k)]);
+  if (out.length < 3) for (let k = 1; out.length < 3; k++) if (!out.some(([l]) => l === k + suffix)) out.push([`${k}${suffix}`, chance(k)]);
   return out.sort((a, b) => parseInt(a[0]) - parseInt(b[0]));
 }
 function distBlock(data, b) {
@@ -726,11 +727,11 @@ function multiRows(p, m) {
 // A tile holding several aligned lines (owner: stack related numbers rather than spreading them over many tiles)
 const stackTile = (title, rows, note = '') => `<div class="tile stack"><span>${esc(title)}</span><div class="lines">${rows.map(([k, v]) => `<em>${esc(k)}</em><b>${v}</b>`).join('')}</div>${note ? `<small>${esc(note)}</small>` : ''}</div>`;
 
-function actualValue(r, period, key) {
+function actualValue(r, period, key, precise = false) {
   const a = actualLine(r, period);
   if (!a) return null;
   const reb = a.reb ?? ((a.oreb || 0) + (a.dreb || 0));
-  if (key === 'min') return Math.round(a.sec / 60);
+  if (key === 'min') return precise ? a.sec / 60 : Math.round(a.sec / 60);
   if (PERCENT_STATS.has(key)) {
     const [made, attempts] = {fgpct: ['fgm', 'fga'], fg3pct: ['fg3m', 'fg3a'], ftpct: ['ftm', 'fta']}[key];
     return a[attempts] > 0 && a[made] != null ? Math.round(100 * a[made] / a[attempts]) : null;
@@ -742,6 +743,30 @@ function actualValue(r, period, key) {
   if (key === 'ra') return reb + a.ast;
   if (key === 'stocks') return a.stl + a.blk;
   return a[key] ?? null;
+}
+
+function minuteHistogram(d, line) {
+  const bins = minuteBins(d, line), first = bins[0].minute, last = bins.at(-1).minute;
+  const byMinute = new Map(bins.map(bin => [bin.minute, bin]));
+  const W = 640, H = 170, pad = {l: 6, r: 6, t: 10, b: 22};
+  const bw = (W - pad.l - pad.r) / (last - first + 1);
+  const max = Math.max(...bins.map(bin => bin.atOrBelow + bin.above), 1);
+  const x = value => pad.l + (value - first) * bw, y = mass => H - pad.b - (H - pad.t - pad.b) * mass / max;
+  let bars = '', hits = '', ticks = '';
+  for (let minute = first; minute <= last; minute++) {
+    const bin = byMinute.get(minute) || {atOrBelow: 0, above: 0};
+    const total = bin.atOrBelow + bin.above, bx = (x(minute) + 0.6).toFixed(1), width = Math.max(0.5, bw - 1.2).toFixed(1);
+    bars += `<rect class="b" x="${bx}" y="${y(bin.atOrBelow).toFixed(1)}" width="${width}" height="${(H - pad.b - y(bin.atOrBelow)).toFixed(1)}"></rect>`;
+    bars += `<rect class="b on" x="${bx}" y="${y(total).toFixed(1)}" width="${width}" height="${(y(bin.atOrBelow) - y(total)).toFixed(1)}"></rect>`;
+    hits += `<rect class="hit" data-v="${minute}" x="${x(minute).toFixed(1)}" y="${pad.t}" width="${bw.toFixed(1)}" height="${H - pad.t - pad.b}"><title>${minute}–&lt;${minute + 1} min: ${esc(pct(total / d.mass))}; ${esc(pct(bin.above / d.mass))} above the line</title></rect>`;
+  }
+  const step = Math.max(1, Math.ceil((last - first + 1) / 8 / 5) * 5);
+  for (let minute = Math.ceil(first / step) * step; minute <= last; minute += step) {
+    ticks += `<text x="${(x(minute) + bw / 2).toFixed(1)}" y="${H - 6}" text-anchor="middle">${minute}</text>`;
+  }
+  const marker = line >= first && line <= last + 1
+    ? `<line class="t" x1="${x(line).toFixed(1)}" x2="${x(line).toFixed(1)}" y1="${pad.t - 4}" y2="${H - pad.b}"></line>` : '';
+  return `<svg class="hist" viewBox="0 0 ${W} ${H}" role="img" aria-label="Distribution of simulated minutes"><line class="ax" x1="${pad.l}" x2="${W - pad.r}" y1="${H - pad.b}" y2="${H - pad.b}"></line>${bars}${marker}${hits}${ticks}</svg>`;
 }
 
 async function sheet(view, data, pid, current, rerender) {
@@ -760,30 +785,51 @@ async function sheet(view, data, pid, current, rerender) {
   const name = p?.name || actualRow.name;
   const period = state.period;
   const proj = p?.periods?.[period];
+  let preciseMinutes = null;
+  const getMinutes = () => {
+    if (!preciseMinutes && data._branchWorldData) {
+      const worlds = data._branchWorldData;
+      preciseMinutes = minuteDistribution(worlds.minuteValues(pid, period), worlds.weights, worlds.baseMask);
+      if (!preciseMinutes) throw new Error('No selected minute worlds');
+    }
+    return preciseMinutes;
+  };
+  const getLine = d => state.lines.has(key()) ? (d.support ? state.lines.get(key()) : halfLine(state.lines.get(key())))
+    : d.support ? Number(d.quantiles[2].toFixed(4)) : defaultLine(d);
   const choices = (period === 'fg' ? SHEET_FG : SHEET_PERIOD).filter(k => !proj || proj.stats?.[k]);
   if (!choices.includes(state.stat)) state.stat = 'pts';
   const key = () => `${data.game.id}|${pid}|${period}|${state.stat}`;
   const options = [['Quarters', ['q1', 'q2', 'q3', 'q4']], ['Halves', ['h1', 'h2']], ['Game', ['fg']]].map(([label, ids]) =>
     `<optgroup label="${label}">${ids.map(id => `<option value="${id}"${id === period ? ' selected' : ''}>${PERIODS.find(x => x[0] === id)[1]} · ${periodName(id)}</option>`).join('')}</optgroup>`).join('');
   const statBlock = () => {
-    const d = proj.stats[state.stat];
-    const act = actualValue(actualRow, period, state.stat);
+    const d = state.stat === 'min' && data._branchWorldData ? getMinutes() : proj.stats[state.stat];
+    const exactMinutes = Boolean(d.support);
+    const act = actualValue(actualRow, period, state.stat, exactMinutes);
     const isPercent = PERCENT_STATS.has(state.stat), unit = isPercent ? '%' : '';
     const shooting = SHOOTING_CONTEXT[state.stat], attempts = shooting && proj.stats[shooting[1]];
     const actualShooting = isPercent ? actualLine(actualRow, period) : null;
     const noAttempt = attempts ? probWhere(attempts, v => v === 0) : null;
-    const line = state.lines.has(key()) ? halfLine(state.lines.get(key())) : defaultLine(d);
-    const pOver = over(d, line);  // x.5 lines: no push
+    const line = getLine(d);
+    const pOver = exactMinutes ? minuteThreshold(d, line).above / d.mass : over(d, line);
+    const quantiles = exactMinutes ? d.quantiles : d.q;
+    const show = value => exactMinutes ? mmss(value * 60) : value + unit;
+    const ladder = exactMinutes ? stepLadder({q: quantiles},
+      {suffix: '+', chance: value => { const t = minuteThreshold(d, value); return (t.equal + t.above) / d.mass; }})
+      : stepLadder(d, {suffix: unit + '+'});
+    const percentile = act == null ? null : exactMinutes
+      ? (() => { const t = minuteThreshold(d, act); return (t.below + t.equal / 2) / d.mass; })()
+      : percentileOf(d, act);
     return `<section class="panel"><div class="row" style="justify-content:space-between"><h2 style="margin:0">${esc(NAME[state.stat] || LABEL[state.stat])} · ${esc(periodName(period))}</h2>
-      <span class="note" style="margin:0">mean ${f1(d.mean)}${unit} · median ${d.q[2]}${unit} · 10–90%: ${d.q[0]}${unit} to ${d.q[4]}${unit}</span></div>
+      <span class="note" style="margin:0">mean ${exactMinutes ? show(d.mean) : f1(d.mean) + unit} · median ${show(quantiles[2])} · 10–90%: ${show(quantiles[0])} to ${show(quantiles[4])}</span></div>
       ${shooting ? `<p class="note">${noAttempt == null ? `The ${shooting[0]} attempts distribution is not stored for this snapshot.` : `No ${shooting[0]} attempts in ${pct(noAttempt, 1)} of simulations; at least one in ${pct(1 - noAttempt, 1)}.`}
         ${isPercent ? `Below: ${data._research ? `${pct(d.defined_mass / d.total_mass, 1)} weighted chance of an attempt` : `only the ${d.defined.toLocaleString()} of ${d.total.toLocaleString()} simulations with an attempt`}. The distribution and all chances are conditional on an attempt; no attempts means no percentage, not 0%. Percentages are rounded to whole percentage points.` : 'Counting-stat distributions include all simulations.'}</p>` : ''}
-      <div class="dist" style="margin-top:8px"><div>${histogram(d, {line, actual: act, label: v => v + unit})}
-        <div class="lineinput"><label for="line-stat">Over</label><input id="line-stat" type="number" step="1" min="0.5" value="${line}" data-line="stat">
-          <output>Over${isPercent ? ' if attempted' : ''}: ${pct(pOver)}</output><span class="dim">Under${isPercent ? ' if attempted' : ''}: ${pct(1 - pOver)}</span></div>
-        ${act != null ? `<p class="note">Actual: <b>${act}${unit}</b> · ${ordinal(Math.round(100 * percentileOf(d, act)))} percentile of the ${isPercent ? 'simulations with an attempt' : 'simulations'}</p>` : actualShooting ? `<p class="note">${actualShooting[shooting[1]] === 0 ? 'Actual: no attempts; shooting percentage is undefined.' : 'Actual shooting percentage is unavailable.'}</p>` : ''}</div>
+      ${exactMinutes ? '<p class="note">Minute values and thresholds use full stored precision; displayed times round to seconds. Bars cover whole-minute intervals and split at the line.</p>' : data._research && state.stat === 'min' ? '<p class="note">This research payload has only whole-minute-rounded distributions; precise minute worlds are unavailable.</p>' : ''}
+      <div class="dist" style="margin-top:8px"><div>${exactMinutes ? minuteHistogram(d, line) : histogram(d, {line, actual: act, label: v => v + unit})}
+        <div class="lineinput"><label for="line-stat">Over</label><input id="line-stat" type="number" step="${exactMinutes ? 'any' : '1'}" min="${exactMinutes ? '0' : '0.5'}" value="${line}" data-line="stat">
+          <output>Over${isPercent ? ' if attempted' : ''}: ${pct(pOver)}</output><span class="dim">${exactMinutes ? 'At or below' : 'Under'}${isPercent ? ' if attempted' : ''}: ${pct(1 - pOver)}</span></div>
+        ${act != null ? `<p class="note">Actual: <b>${show(act)}</b> · ${ordinal(Math.round(100 * percentile))} percentile of the ${isPercent ? 'simulations with an attempt' : 'simulations'}</p>` : actualShooting ? `<p class="note">${actualShooting[shooting[1]] === 0 ? 'Actual: no attempts; shooting percentage is undefined.' : 'Actual shooting percentage is unavailable.'}</p>` : ''}</div>
         <div class="scroll"><table><thead><tr><th class="l">${esc(LABEL[state.stat])}</th><th>Chance</th></tr></thead><tbody>
-        ${stepLadder(d, {suffix: unit + '+'}).map(([label, pr]) => `<tr><td class="l">${esc(label)}</td>${heat(pr, {digits: 1})}</tr>`).join('')}</tbody></table></div></div></section>`;
+        ${ladder.map(([label, pr]) => `<tr><td class="l">${esc(label)}</td>${heat(pr, {digits: 1})}</tr>`).join('')}</tbody></table></div></div></section>`;
   };
   const tiles = proj ? `<div class="tiles" style="margin-top:12px">
       <div class="tile"><span>Minutes</span><b>${mmss(proj.sec)}</b></div>
@@ -822,13 +868,13 @@ async function sheet(view, data, pid, current, rerender) {
     view.querySelectorAll('[data-stat]').forEach(b => b.onclick = () => { state.stat = b.dataset.stat; store.set('stat', state.stat); paint(); });
     const block = view.querySelector('#stat-block');
     const input = block?.querySelector('input[data-line]');
-    if (input) input.onchange = () => { const v = Number(input.value); if (Number.isFinite(v)) { state.lines.set(key(), halfLine(Math.max(0, v))); paint(); } };
+    if (input) input.onchange = () => { const v = Number(input.value); if (Number.isFinite(v)) { state.lines.set(key(), state.stat === 'min' && data._branchWorldData ? Math.max(0, v) : halfLine(Math.max(0, v))); paint(); } };
     const svg = block?.querySelector('svg.hist');
-    if (svg) svg.onclick = e => { const v = e.target.closest('rect.hit')?.dataset.v; if (v != null) { state.lines.set(key(), Number(v) - 0.5); paint(); } };
+    if (svg) svg.onclick = e => { const v = e.target.closest('rect.hit')?.dataset.v; if (v != null) { state.lines.set(key(), Number(v) - (state.stat === 'min' && data._branchWorldData ? 0 : 0.5)); paint(); } };
     const whatIf = view.querySelector('#what-if');
     if (whatIf) {
-      const d = proj.stats[state.stat];
-      S.sheetPanels(whatIf, data, pid, state.stat, state.lines.has(key()) ? halfLine(state.lines.get(key())) : defaultLine(d));
+      const d = state.stat === 'min' && data._branchWorldData ? getMinutes() : proj.stats[state.stat];
+      S.sheetPanels(whatIf, data, pid, state.stat, getLine(d));
     }
   };
   paint();

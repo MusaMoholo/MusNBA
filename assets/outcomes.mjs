@@ -37,12 +37,14 @@ export async function load(gid) {
 /** Adapt a validated research source without changing the saved production-world path. */
 export function branchWorldData(source, choices = {}) {
   const raw = {worlds: source.worlds, players: source.players, side: source.side, stats: source.stats};
-  return worldData(raw, {
+  const result = worldData(raw, {
     weights: source.weights, baseMask: source.selection(choices),
     player: (id, stat) => source.playerValues(id, stat),
     team: (side, q) => source.teamPoints(side, ['q1', 'q2', 'q3', 'q4', 'ot'][q]),
     overtime: () => source.overtimePeriods(),
   });
+  result.minuteValues = (id, period) => source.playerValues(id, 'min', period);
+  return result;
 }
 
 function worldData(raw, source = null) {
@@ -176,10 +178,10 @@ export function branchCalculations(Wd) {
     if (mask.length !== Wd.W || mask.some(v => v !== 0 && v !== 1)) throw new Error('Invalid world mask');
     return Uint8Array.from(mask, (v, i) => v && Wd.baseMask[i] ? 1 : 0);
   };
-  const distribution = (values, mask = null) => {
+  const distribution = (values, mask = null, {minute = false} = {}) => {
     const m = selected(mask), exact = weightedDistribution(values, Wd.weights, m);
     if (!exact.defined) return null;
-    const rounded = weightedDistribution(values.map(v => Math.round(v)), Wd.weights, m);
+    const rounded = weightedDistribution(values.map(v => minute ? Math.floor(v) : Math.round(v)), Wd.weights, m);
     const lo = rounded.histogram[0][0], hi = rounded.histogram.at(-1)[0], hist = new Array(hi - lo + 1).fill(0);
     for (const [value, mass] of rounded.histogram) hist[value - lo] = mass;
     return {min: lo, hist, mean: exact.mean, q: exact.quantiles, n: exact.n, mass: exact.defined};
@@ -239,7 +241,7 @@ export function label(c, names, teams) {
 }
 
 /** Overlaid histogram: the conditional distribution as bars, the baseline as a step outline (both as shares). */
-export function overlay(base, cond, {line = null, height = 170} = {}) {
+export function overlay(base, cond, {line = null, height = 170, minute = false} = {}) {
   const lo = Math.min(base.min, cond ? cond.min : base.min);
   const hi = Math.max(base.min + base.hist.length - 1, cond ? cond.min + cond.hist.length - 1 : 0);
   const totB = base.hist.reduce((a, b) => a + b, 0), totC = cond ? cond.hist.reduce((a, b) => a + b, 0) : 1;
@@ -256,15 +258,15 @@ export function overlay(base, cond, {line = null, height = 170} = {}) {
   let bars = '', step = '', hits = '';
   for (let v = first; v <= last; v++) {
     const sc = shareOf(cond, totC, v), sb = shareOf(base, totB, v);
-    if (cond) bars += `<rect class="b${line != null && v > line ? ' on' : ''}" x="${(x(v) + 0.6).toFixed(1)}" y="${y(sc).toFixed(1)}" width="${Math.max(0.5, bw - 1.2).toFixed(1)}" height="${(H - pad.b - y(sc)).toFixed(1)}"></rect>`;
+    if (cond) bars += `<rect class="b${!minute && line != null && v > line ? ' on' : ''}" x="${(x(v) + 0.6).toFixed(1)}" y="${y(sc).toFixed(1)}" width="${Math.max(0.5, bw - 1.2).toFixed(1)}" height="${(H - pad.b - y(sc)).toFixed(1)}"></rect>`;
     step += `${v === first ? 'M' : 'L'}${x(v).toFixed(1)},${y(sb).toFixed(1)} L${(x(v) + bw).toFixed(1)},${y(sb).toFixed(1)} `;
-    hits += `<rect class="hit" data-v="${v}" x="${x(v).toFixed(1)}" y="${pad.t}" width="${bw.toFixed(1)}" height="${H - pad.t - pad.b}"><title>${v}: ${cond ? pct(sc) + ' given · ' : ''}${pct(sb)} all worlds</title></rect>`;
+    hits += `<rect class="hit" data-v="${v}" x="${x(v).toFixed(1)}" y="${pad.t}" width="${bw.toFixed(1)}" height="${H - pad.t - pad.b}"><title>${minute ? `${v}–&lt;${v + 1} min` : v}: ${cond ? pct(sc) + ' given · ' : ''}${pct(sb)} all worlds</title></rect>`;
   }
   const tick = Math.max(1, Math.ceil(n / 8 / 5) * 5 || 1);
   let ticks = '';
   for (let v = Math.ceil(first / tick) * tick; v <= last; v += tick) ticks += `<text x="${(x(v) + bw / 2).toFixed(1)}" y="${H - 6}" text-anchor="middle">${v}</text>`;
   const marker = line != null && line >= first - 1 && line <= last + 1
-    ? `<line class="t" x1="${(x(line) + bw / 2).toFixed(1)}" x2="${(x(line) + bw / 2).toFixed(1)}" y1="${pad.t - 4}" y2="${H - pad.b}"></line>` : '';
+    ? `<line class="t" x1="${(x(line) + (minute ? 0 : bw / 2)).toFixed(1)}" x2="${(x(line) + (minute ? 0 : bw / 2)).toFixed(1)}" y1="${pad.t - 4}" y2="${H - pad.b}"></line>` : '';
   return `<svg class="hist" viewBox="0 0 ${Wd} ${H}" role="img" aria-label="Conditional distribution against all simulations">
     <line class="ax" x1="${pad.l}" x2="${Wd - pad.r}" y1="${H - pad.b}" y2="${H - pad.b}"></line>${bars}
     <path class="base" d="${step}" fill="none"></path>${marker}${hits}${ticks}</svg>`;
