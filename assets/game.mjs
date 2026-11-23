@@ -121,6 +121,7 @@ export async function render(view, {rest, current}) {
   }
   if (scenario) return S.scenarioView(body, data, rest[2]);
   if (!sims(data) && !data.actual) {
+    if (data.team_model?.regulation) return pathwayView(body, data);
     body.innerHTML = '<section class="panel"><p class="note">Player and period projections appear when the game simulation runs on the morning of the slate.</p></section>';
     return;
   }
@@ -171,7 +172,7 @@ function bezel(data, period, {matchup, scenario, mode, base}) {
   const block = (side, info) => {
     const s = g[side];
     const proj = per?.[side];
-    const pts = hasActual ? actual[side] : proj ? f1(proj.pts.mean) : tm && period === 'fg' ? f1(side === 'home' ? tm.mu_home : tm.mu_away) : '—';
+    const pts = hasActual ? actual[side] : proj ? f1(proj.pts.mean) : tm && period === 'fg' ? f1(tm.regulation?.[side]?.mean ?? (side === 'home' ? tm.mu_home : tm.mu_away)) : '—';
     let win = proj ? pct(proj.win) : tm && period === 'fg' ? pct(side === 'home' ? tm.p_home : 1 - tm.p_home) : '—';
     let winLabel = 'Win';
     if (hasActual) {
@@ -182,7 +183,7 @@ function bezel(data, period, {matchup, scenario, mode, base}) {
     const sub = hasActual ? (proj ? `proj ${f1(proj.pts.mean)}` : '') : proj ? `<span class="lbl">10–90%: </span>${proj.pts.q[0]}–${proj.pts.q[4]}` : '';
     return `<a class="bz-team ${side}" href="#/team/${s.id}" title="${esc(info.name)}">
       <div class="bz-id">${logo(s.id)}<span><b><span class="long">${esc(info.short)}</span><span class="short">${esc(info.abbr)}</span></b><small>${record(s.record)}</small></span></div>
-      <div class="bz-stats"><div>${dlt(hasActual ? actual[side] : proj?.pts.mean, seasonPts(side), 'v season average')}<b>${pts}</b><span>Pts</span></div><div><b class="win">${win}</b><span>${winLabel}</span></div></div>
+      <div class="bz-stats"><div>${dlt(hasActual ? actual[side] : proj?.pts.mean, seasonPts(side), 'v season average')}<b>${pts}</b><span>${!hasActual && !proj && tm?.source === 'pathway' ? 'Reg. pts' : 'Pts'}</span></div><div><b class="win">${win}</b><span>${winLabel}</span></div></div>
       <div class="bz-sub">${sub}</div></a>`;
   };
   let total = '—', spr = '—', note = '';
@@ -195,9 +196,9 @@ function bezel(data, period, {matchup, scenario, mode, base}) {
     spr = spread(per.margin.mean, A, H);
     note = `<span class="lbl">10–90%: </span>${per.total.q[0]}–${per.total.q[4]} · ${period === 'fg' ? `OT ${pct(sim.ot)}` : `tie ${pct(per.home.tie)}`}`;
   } else if (tm && period === 'fg') {
-    total = f1(tm.mu_home + tm.mu_away);
-    spr = spread(tm.mu_home - tm.mu_away, A, H);
-    note = 'Team-strength estimate';
+    total = f1(tm.regulation?.total?.mean ?? (tm.mu_home + tm.mu_away));
+    spr = spread(tm.regulation?.margin?.mean ?? (tm.mu_home - tm.mu_away), A, H);
+    note = tm.source === 'pathway' ? 'Regulation points · team-strength estimate' : 'Team-strength estimate';
   }
   const status = final ? `Final${g.periods > 4 ? (g.periods > 5 ? `/${g.periods - 4}OT` : '/OT') : ''}` : g.status === 'live' ? esc(g.detail) : esc(t.uk) + ' UK';
   const options = groups => groups.map(([label, ids]) => `<optgroup label="${label}">${ids.map(id => `<option value="${id}"${id === period ? ' selected' : ''}>${PERIODS.find(p => p[0] === id)[1]} · ${periodName(id)}</option>`).join('')}</optgroup>`).join('');
@@ -219,7 +220,7 @@ function bezel(data, period, {matchup, scenario, mode, base}) {
         <div class="bz-sub">${note}</div></div>
       ${block('home', H)}</div>
     <div class="bz-controls">${select}
-      ${seg([['player', 'Player'], ['team', 'Team']], matchup || scenario ? '' : mode, 'data-view')}
+      ${sim || data.actual ? seg([['player', 'Player'], ['team', 'Team']], matchup || scenario ? '' : mode, 'data-view') : ''}
       <span class="spacer"></span>${data.worlds ? `<button type="button" class="ghost${scenario ? ' on' : ''}" data-view="scenario" aria-pressed="${scenario}">Scenarios</button>` : ''}<button type="button" class="ghost${matchup ? ' on' : ''}" data-view="matchup" aria-pressed="${matchup}">Matchup</button></div>
     ${chips}</section>`;
 }
@@ -410,6 +411,10 @@ const ordinal = n => n + ({1: 'st', 2: 'nd', 3: 'rd'}[n % 100 > 10 && n % 100 < 
 function marginText(line, A, H) {
   return line >= 0 ? `${H.abbr} by more than ${line}` : `${A.abbr} by fewer than ${-line}, or ${H.abbr} wins`;
 }
+function marginLadder(d, A, H) {
+  return [1, 3, 5, 7, 10, 15].map(k => [`${H.abbr} by ${k}+`, atLeast(d, k)])
+    .concat([1, 3, 5, 7, 10, 15].map(k => [`${A.abbr} by ${k}+`, probWhere(d, v => v <= -k)]));
+}
 function stepLadder(d, {suffix = '+', minStep = 1} = {}) {
   const span = Math.max(1, d.q[4] - d.q[0]);
   const step = Math.max(minStep, span > 60 ? 10 : span > 16 ? 5 : span > 8 ? 2 : 1);
@@ -429,7 +434,7 @@ function distBlock(data, b) {
     <div class="dist" style="margin-top:8px"><div>${histogram(b.d, {line: b.side ? null : line, side: b.side, actual: b.actual ?? null})}
         <div class="lineinput"><label for="line-${b.id}">${b.side ? 'Margin over' : 'Over'}</label>
           <input id="line-${b.id}" type="number" step="1" value="${line}" data-line="${b.id}">
-          <output>${b.side ? esc(marginText(line, b.A, b.H)) + ': ' : 'Over: '}${pct(pOver)}</output>
+          <output>${b.side ? esc(b.describe ? b.describe(line) : marginText(line, b.A, b.H)) + ': ' : 'Over: '}${pct(pOver)}</output>
           ${b.side ? '' : `<span class="dim">Under: ${pct(1 - pOver)}</span>`}</div>
         ${b.actual != null ? `<p class="note">Actual: <b>${b.actual}</b> · ${ordinal(Math.round(100 * percentileOf(b.d, b.actual)))} percentile of the simulations</p>` : ''}</div>
       <div class="scroll"><table><thead><tr><th class="l">${b.side ? 'Outcome' : 'Line'}</th><th>Chance</th></tr></thead><tbody>
@@ -444,6 +449,33 @@ function wireBlocks(el, data, paint) {
     const v = e.target.closest('rect.hit')?.dataset.v;
     if (v != null) { state.lines.set(lineKey(data, svg.closest('[data-block]').dataset.block), Number(v) - 0.5); paint(); }
   });
+}
+
+function pathwayView(el, data) {
+  const tm = data.team_model, dist = tm.regulation;
+  const A = team(data.game.away.id), H = team(data.game.home.id);
+  let metric = 'total';
+  const paint = () => {
+    const blocks = [
+      {id: 'pathway-away', title: `${A.short} regulation points`, d: dist.away, ladder: stepLadder},
+      {id: 'pathway-home', title: `${H.short} regulation points`, d: dist.home, ladder: stepLadder},
+      metric === 'total' ? {id: 'pathway-total', title: 'Regulation total', d: dist.total, ladder: stepLadder}
+        : {id: 'pathway-margin', title: `Regulation margin (${H.abbr} minus ${A.abbr})`, d: dist.margin,
+           side: true, A, H, ladder: d => marginLadder(d, A, H), describe: line => `${H.abbr} margin over ${line}`},
+    ];
+    el.innerHTML = `<section class="panel"><h2>Team-pathway distributions</h2>
+      <p class="note">${tm.sims.toLocaleString()} simulated seasons · regulation scores only. Ties are resolved for
+      season wins without simulating overtime points, so win chances can differ from the regulation margin.
+      Player and period projections arrive on the day of the game.</p>
+      ${seg([['total', 'Total'], ['margin', 'Margin']], metric, 'data-pathway-metric')}</section>
+      <div class="pathway-grid">${blocks.map(b => distBlock(data, b)).join('')}</div>`;
+    wireBlocks(el, data, paint);
+    el.querySelectorAll('[data-pathway-metric]').forEach(button => button.onclick = () => {
+      metric = button.dataset.pathwayMetric;
+      paint();
+    });
+  };
+  paint();
 }
 
 // U5 + U6: game flow — the home lead at each break as a fan (10–90 and 25–75 bands, median) and each side's points per
@@ -550,12 +582,11 @@ function teamView(el, data, period) {
       });
     }).join('');
   if (!per) { el.innerHTML = boxPanel; wireAdvancedPanels(el); return; }
-  const margins = d => [1, 3, 5, 7, 10, 15].map(k => [`${H.abbr} by ${k}+`, atLeast(d, k)]).concat([1, 3, 5, 7, 10, 15].map(k => [`${A.abbr} by ${k}+`, probWhere(d, v => v <= -k)]));
   const blocks = [
     {id: period + '-away', title: `${A.name} points`, d: per.away.pts, ladder: d => stepLadder(d), actual: has ? actual.away : null},
     {id: period + '-home', title: `${H.name} points`, d: per.home.pts, ladder: d => stepLadder(d), actual: has ? actual.home : null},
     {id: period + '-total', title: `Total points`, d: per.total, ladder: d => stepLadder(d), actual: has ? actual.away + actual.home : null},
-    {id: period + '-margin', title: `Margin (${H.abbr} minus ${A.abbr})`, d: per.margin, side: true, A, H, ladder: margins, actual: has ? actual.home - actual.away : null},
+    {id: period + '-margin', title: `Margin (${H.abbr} minus ${A.abbr})`, d: per.margin, side: true, A, H, ladder: d => marginLadder(d, A, H), actual: has ? actual.home - actual.away : null},
   ];
   let paintedTeam = false;
   const paint = () => {
