@@ -1,10 +1,19 @@
 # Handoff — state and next actions
 
 Updated **23 November 2026 — Chunk A A1 at 80%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **8dee45a** (rejected vector-penalty F4 screen); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **4d58ff9** (participation slices and audited live slate); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
+- **Compute-use clarification (owner, 23 Nov; documentation-only checkpoint):** actively use the existing
+  ten-process/thread allowance for every heavy workload, using measured process/inner-thread splits and
+  asynchronous independent work to reduce elapsed time. Keep the combined heavy-compute count within ten,
+  protect memory headroom and respect provider limits; see AGENTS §6 and TRAINING_PLAN. This is execution
+  guidance, not a new candidate or scope authorisation. Baseline smoke **108/108**; documentation links
+  and whitespace checked. No new experiment, model, forecast, bundle, shell or nightly was produced;
+  A1/A2 progress and the next actions below are unchanged. Eight-doc review: AGENTS, HANDOFF, PLAN and
+  TRAINING_PLAN updated; ENGINE_PLAN needs no design change, FINDINGS has no new experimental evidence,
+  DASHBOARD_PLAN has no shipped UI change and README has no command change.
 - **A1 blocked-fallback checkpoint (23 Nov ET; module NOT complete):** today's availability panel links
   eligible uncertain players to positive-/zero-minute slices of saved worlds. These are observational, not
   forced-availability branches, causal lineup forecasts or an Expected mixture. Phone bundles omit worlds

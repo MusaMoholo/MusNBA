@@ -186,6 +186,15 @@ the default `--jobs 4` implies 12 OpenMP threads. Also cap fitting with `--threa
 threads separately. Document any explicitly authorised brief above-budget comparison and do not run it
 alongside other heavy jobs. Respect existing model gates and deterministic-input requirements.
 
+**Use the budget actively (owner, 23 Nov):** make the most of the available cores: aim to keep the
+10-thread compute allowance occupied whenever useful independent work is ready. Parallelise heavy work
+across processes, within a job, or across independent jobs as measured throughput and memory permit;
+overlap independent I/O and checks asynchronously and keep long jobs detached with logs. This applies to
+all heavy compute, not only simulations. Benchmark new workloads briefly and reuse measured worker choices;
+do not leave work serial by default or assume ten processes beat fewer multithreaded workers. Keep the
+combined process-times-inner-thread count within ten, respect dependencies/provider limits and reduce
+concurrency for memory pressure or the owner's use. This does not authorise additional modelling scope.
+
 Long jobs run detached with a log, e.g. `nohup .venv/bin/python -u scripts/backtest.py … > /tmp/bt.log 2>&1 &`, and you read
 the log's progress lines (`game N/200 Ts`, `engine <id>: …`) to report measured pace. Measured on the owner's laptop
 (14 cores, 48 GB): a 200-game backtest alone ≈ 22–27 min (two at once oversubscribe the CPU — each worker predicts on every

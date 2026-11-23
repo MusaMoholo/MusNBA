@@ -11,6 +11,11 @@ threads/workers combined, with lower limits under load or memory pressure; see A
 training/backtest controls and scheduling caveat. This is an execution limit, not a change to model settings,
 validation gates, seeds or training populations.
 
+**Owner clarification, 23 Nov:** actively use that allowance for all heavy compute whenever useful work is
+ready. Choose process/inner-thread splits from measured throughput, overlap independent jobs and I/O
+asynchronously, and preserve the combined ten-thread cap, memory headroom and reproducibility. Avoid serial
+execution by default; reuse existing worker benchmarks where applicable. AGENTS.md §6 owns this standing rule.
+
 ## 1. What we are training (ENGINE_PLAN D20)
 
 One LightGBM model per decision, trained on every quarter and game type with period, clock, game state and

@@ -429,6 +429,11 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **23 Nov 2026 · Compute-use clarification (documentation only):** the owner requests active use of the
+  existing ten-process/thread allowance for all heavy compute, with measured worker/inner-thread splits,
+  parallel independent work and asynchronous I/O. AGENTS §6 and TRAINING_PLAN record the policy; memory,
+  provider, cutoff and promotion constraints remain. Baseline smoke **108/108**; no new experiment or
+  delivery. Chunk A remains **34.5%**, A1 **80%**, A2 **30%**, A3 **0%**; original A1 remains **58.0%**.
 - **23 Nov 2026 ET · A1 blocked fallback and fresh delivery:** the player-first F4 penalty candidate
   failed its primary screen, and representative retry bias/pre-origin availability remain unresolved;
   keep engine v1.3 and pathway v1. A1 **80%**, Chunk A **34.5%**; A2 **30%**, A3 **0%**, Chunk B not
