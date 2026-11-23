@@ -41,8 +41,11 @@ python3 -m venv .venv
   (runtime depends on retained inputs; `--no-rebuild` skips only when those inputs are already current). The season sim then plays every later game through the team pathway (D25);
   `--placeholder` uses the old box-score placeholder instead, and backfilled past dates always do. `nightly.py --offline` reuses retained data; `--views-only` only rebuilds what the app reads;
   the optional `--backfill-days N` is a legacy retrospective-placeholder mode and is not part of the current nightly (D40).
-  The nightly refuses to replace a retained verified pre-tip forecast with a post-tip, unknown-time or missing
-  forecast; see HANDOFF for the pending safe refresh and do not bypass the guard. If publication is interrupted,
+  The partial late-refresh implementation retains verified pre-tip game worlds and original per-game metadata,
+  requiring identical model and cutoff stats; it rejects a missing retained game or a replacement for a verified
+  pre-tip forecast that crosses tip during publication. Mixed live delivery and its independent origin-registry
+  audit remain pending (see HANDOFF); do not
+  bypass the guard. If publication is interrupted,
   the current-day nightly preflight restores an orphaned `.previous` snapshot when retained fixtures exist; if both
   old and active snapshots remain, the nightly and view rebuild stop for review rather than silently discarding either.
 - The server reads files from disk: front-end edits appear on refresh, rebuilt views appear

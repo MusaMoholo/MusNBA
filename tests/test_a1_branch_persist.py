@@ -45,6 +45,15 @@ class SnapshotGuardTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'box-score or master'):
             self.check()
 
+    def test_mixed_snapshot_uses_the_games_original_inputs(self):
+        source = self.meta
+        self.meta = {**source, 'inputs': {**source['inputs'], 'team_games_sha256': 'changed'},
+                     'game_provenance_schema': 1, 'game_provenance': {'123': source}}
+        self.assertEqual(self.check(), (source, self.fixture, self.registry))
+        source['inputs']['team_games_sha256'] = 'changed'
+        with self.assertRaisesRegex(ValueError, 'box-score or master'):
+            self.check()
+
     def test_rejects_changed_report_and_non_prior_model(self):
         self.saved['123']['availability_report'] = {'home': [{'id': '100'}], 'away': []}
         with self.assertRaisesRegex(ValueError, 'availability report'):

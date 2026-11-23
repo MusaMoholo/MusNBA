@@ -469,6 +469,9 @@ def main():
     day = latest.name
     meta = read_json(latest / 'meta.json')
     games = read_json(latest / 'games.json')
+    if games:
+        from basketball_common import forecast_meta
+        meta = forecast_meta(meta, sorted(games)[0])
     if games and meta['inputs']['player_games_sha256'] == __import__('basketball_common').sha256_file(DERIVED / 'player_games.csv') and meta['kind'] == 'prospective' and meta['inputs'].get('registry_run') == read_json(DERIVED / 'players.json')['run']:
         origin = meta.get('origin', day)
         T, lg = team_table(team_rows, origin, teams)

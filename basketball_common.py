@@ -76,7 +76,26 @@ def utc_now() -> str:
     return datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
 
 
+def forecast_meta(meta: dict, game_id: str) -> dict:
+    """Return a game's original metadata when a snapshot carries per-game provenance."""
+    schema = meta.get('game_provenance_schema')
+    if schema is None:
+        if 'game_provenance' in meta:
+            raise ValueError(f'{game_id}: game provenance has no schema')
+        return meta
+    if type(schema) is not int or schema != 1:
+        raise ValueError(f'unknown game provenance schema: {schema!r}')
+    records = meta.get('game_provenance')
+    if not isinstance(records, dict) or not isinstance(records.get(game_id), dict):
+        raise ValueError(f'{game_id}: missing game provenance')
+    record = records[game_id]
+    if 'game_provenance_schema' in record or 'game_provenance' in record:
+        raise ValueError(f'{game_id}: nested game provenance is invalid')
+    return record
+
+
 def verified_pre_tip(meta: dict, game_id: str) -> bool | None:
+    meta = forecast_meta(meta, game_id)
     flags = meta.get('pre_tip')
     if not meta.get('completed_at') or not isinstance(flags, dict):
         return None

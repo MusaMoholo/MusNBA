@@ -1,0 +1,34 @@
+{
+  "date_et": "2026-11-22",
+  "type": "isolated_snapshot_retention_rehearsal",
+  "published": false,
+  "model": "engine-v1.3",
+  "source_snapshot_sha256": {
+    "meta.json": "c3a329344b0e6c1471de47cb85223fa3039a79c8b9c29588a762253e186f1002",
+    "games.json": "a6c5692d44bc32463f7373cd54fb537c97bd8d011a289a399fad4327d55b6d2c",
+    "stats.json": "f830d64dea47665594cb2a940fd3ca29396cf857f978542581f5af0f5aec83fb",
+    "engine_worlds.npz": "cbe1f0131856cb4d863ee8a28f523fdb6a4a3e5bb4ff9bc60194f8f36ad989ce",
+    "engine_players.npz": "1ae85f0af8bf9804cfe332025bd65d1b475fed07e9de27a98c7860a4eda12d03"
+  },
+  "source_code_sha256": {
+    "scripts/nightly.py": "5c59ea86ba99f33f7ad61345e3c85a383f35bb3df47aae26e29c1931af9afbcc",
+    "scripts/projection.py": "25309dfd609b041543520784e4c6dab5a0154e2db7b19b03899b3c5fdb996dad",
+    "basketball_common.py": "be2b0643eebb4e1cd51b3eb8214d13b8718fd820864d3df7f7ac8fc1dd5bb48a"
+  },
+  "method": "Copy the existing snapshot to a temporary directory, use an artificial completion time after all seven tips, retain all game outputs, build and archive the temporary snapshot, and independently replay the season from the retained worlds.",
+  "retained_games": 7,
+  "retained_game_worlds": 70000,
+  "season_worlds": 10000,
+  "season_games": 959,
+  "checks": {
+    "player_team_points_per_world": true,
+    "game_team_means_and_home_win_probabilities": true,
+    "original_per_game_metadata": true,
+    "season_replay_bit_for_bit": true
+  },
+  "limitations": [
+    "No collection, live publication, bundle export or real-device import occurred.",
+    "All games were retained; this does not exercise a genuinely mixed retained and freshly generated slate.",
+    "This is accounting and reproducibility evidence, not predictive validation."
+  ]
+}

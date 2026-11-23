@@ -19,8 +19,23 @@ Aggregate accounting and source hashes: `analysis/experiments/20261122_a1_live_f
 **22 Nov 2026 — retained-context comparison:** before another collection, recomputing the 22 Nov cutoff
 team table, league table and player table from the currently retained box-score inputs produced exact
 dictionary equality with that day's stored `stats.json` in all three cases. This is specific to those inputs;
-it does not guarantee equality after collection or permit mixing different per-game provenance. Input hashes
+it does not guarantee equality after collection or establish per-game provenance. Input hashes
 and method: `analysis/experiments/20261122_a1_retained_context_comparison_v1.json`.
+
+**22 Nov 2026 — isolated retained-snapshot rehearsal:** the seven saved 22 Nov games contain **70,000**
+team/player worlds. Each world's player points equal its side's team points, and each game's full-game
+mean and home-win rate match its saved summary. In a temporary copy, all seven forecasts and their original
+per-game metadata were retained while a new **10,000**-world season of **959** games was produced and
+replayed bit-for-bit. This did not fetch new inputs, regenerate untipped games, publish a snapshot, verify
+availability against individual origin registries, or measure predictive accuracy. The unchanged cutoff
+stats and model were required, not assumed after collection. Source hashes and accounting:
+`analysis/experiments/20261122_d50_retained_snapshot_rehearsal_v1.json`.
+The original snapshot's recorded collection directory still contains **30** roster files, the injury report,
+the slate scoreboard and collection start/finish metadata. This inventories files only; their contents and
+per-game timing have not yet been independently reconciled against a mixed snapshot. A separate direct read of
+that original scoreboard found all **7/7** retained games, each with explicit valid tip and pre-event status;
+both collection finish and the saved snapshot completion precede its original listed tip in all seven cases.
+The metadata records staged completion, not independently verified publication.
 
 **22 Nov 2026 — tip-validity coverage:** all **2,400** observations of **1,200** unique events in the latest retained schedule and all
 **32** scoreboard observations in the 19–21 Nov S07 inventory carried `timeValid: true`. Previously the

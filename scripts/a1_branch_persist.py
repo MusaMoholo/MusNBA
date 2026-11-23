@@ -18,7 +18,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from basketball_common import DERIVED, MASTER_CSV, SNAPSHOTS, read_json, sha256_file, write_json  # noqa: E402
+from basketball_common import DERIVED, MASTER_CSV, SNAPSHOTS, forecast_meta, read_json, sha256_file, write_json  # noqa: E402
 from scripts import (a1_branch_world_probe, a1_lineup_branches, a1_substitution_world_audit,  # noqa: E402
                      box_scores, engine, master_fixtures, minutes, nightly, projection)
 from scripts.season_stats import period_profiles, player_table, team_table  # noqa: E402
@@ -100,7 +100,7 @@ def checked_snapshot(day: str, game_id: str) -> tuple[dict, dict, dict]:
     if not game_id.isascii() or not game_id.isdigit():
         raise ValueError('game ID must contain only ASCII digits')
     path = SNAPSHOTS / day
-    meta = read_json(path / 'meta.json')
+    meta = forecast_meta(read_json(path / 'meta.json'), game_id)
     if meta['slate_date'] != day or meta['kind'] != 'prospective' or meta['origin'] > day:
         raise ValueError('a matching prospective snapshot with a valid origin is required')
     if meta['model'].get('id') != engine.ENGINE['id'] or meta['model'].get('rotation') != 'targets':

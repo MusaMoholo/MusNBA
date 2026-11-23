@@ -110,6 +110,106 @@ class TodayOnlyTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'missing'):
                 nightly.retained_game_ids(snapshot, slate[1:], True, '2026-11-22T17:00:00Z')
 
+    def test_retained_snapshot_preserves_game_worlds_and_per_game_provenance(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            derived, snapshots, master = root / 'derived', root / 'snapshots', root / 'master.csv'
+            derived.mkdir()
+            master.write_text('fixture')
+            for name in ('player_games.csv', 'team_games.csv', 'player_periods.csv'):
+                (derived / name).write_text(name)
+            write_json(derived / 'players.json', {'run': 'run'})
+            target = snapshots / '2026-11-22'
+            model = {'id': 'engine-v1.3'}
+            old_meta = {'kind': 'prospective', 'slate_date': '2026-11-22', 'origin': '2026-11-22',
+                        'completed_at': '2026-11-22T17:00:00Z', 'model': model, 'sims': 2,
+                        'games': ['a', 'b'], 'pre_tip': {'a': True, 'b': True}}
+            fixtures = [{'game_id': gid, 'home_id': '1', 'away_id': '2', 'time_valid': '1',
+                         'tip_utc': tip} for gid, tip in (
+                             ('a', '2026-11-22T18:00:00Z'), ('b', '2026-11-22T20:00:00Z'))]
+            old_games = {gid: {'game_id': gid, 'model': model['id'], 'sims': 2,
+                               'home': {'team_id': '1'}, 'away': {'team_id': '2'},
+                               'periods': {'fg': {'home': {'pts': {'mean': .5}, 'win': .5},
+                                                  'away': {'pts': {'mean': .5}}}},
+                               'marker': f'old-{gid}'} for gid in ('a', 'b')}
+            scores = np.array([[[1, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+                               [[0, 0, 0, 0, 0], [1, 0, 0, 0, 0]]], dtype=np.int16)
+            player_arrays = {f'{gid}__{key}': value for gid in ('a', 'b') for key, value in {
+                'ids': np.array(['h', 'v']), 'side': np.array([0, 1], dtype=np.int8),
+                'lines': np.zeros((2, 2, 15), dtype=np.uint8)}.items()}
+            for gid in ('a', 'b'):
+                player_arrays[f'{gid}__lines'][:, :, 1] = scores.sum(axis=2)
+            write_json(target / 'meta.json', old_meta)
+            write_json(target / 'games.json', old_games)
+            write_json(target / 'games_placeholder.json', {'a': 'old-a', 'b': 'old-b'})
+            write_json(target / 'stats.json', {'teams': {}, 'league': {'games': 1}, 'players': {}})
+            np.savez_compressed(target / 'engine_worlds.npz', a=scores, b=scores)
+            np.savez_compressed(target / 'engine_players.npz', **player_arrays)
+            retained = nightly.load_retained(target, fixtures, '2026-11-22T18:30:00Z')
+            self.assertEqual(set(retained), {'a'})
+            part = {'day': '2026-11-22', 'origin': '2026-11-22', 'T': {}, 'lg': {'games': 1}, 'P': {},
+                    'slate': fixtures, 'prospective': True, 'generated': '2026-11-22T18:30:00Z',
+                    'model': model, 'sims': 2, 'season_sims': 2, 'engine_inputs': {}, 'started': 0,
+                    'games': {'a': old_games['a'], 'b': {**old_games['b'], 'marker': 'new-b'}},
+                    'placeholder': {'a': 'old-a', 'b': 'new-b'}, 'worlds': {'a': scores, 'b': scores},
+                    'player_worlds': {gid: {key: player_arrays[f'{gid}__{key}']
+                                           for key in ('ids', 'side', 'lines')} for gid in ('a', 'b')},
+                    'retained': retained}
+            season = {'model': 'pathway', 'as_of': '2026-11-22', 'pathway': {'label': 'test'}, 'sims': 2,
+                      'games': [{'game_id': gid, 'source': 'engine', 'p_home': .5, 'mu_home': .5, 'mu_away': .5}
+                                for gid in ('a', 'b')]}
+            with patch.object(nightly, 'DERIVED', derived), patch.object(nightly, 'SNAPSHOTS', snapshots), \
+                    patch.object(nightly, 'MASTER_CSV', master), \
+                    patch.object(nightly, 'utc_now', return_value='2026-11-22T18:31:00Z'), \
+                    patch.object(nightly, 'archive_paths', return_value='archive'):
+                with self.assertRaisesRegex(ValueError, 'statistics'):
+                    nightly.validate_retained({**part, 'P': {'different': {}}}, season, target,
+                                              '2026-11-22T18:31:00Z')
+                altered = {**part, 'worlds': {**part['worlds'], 'a': np.zeros_like(scores)}}
+                with self.assertRaisesRegex(ValueError, 'worlds changed'):
+                    nightly.validate_retained(altered, season, target, '2026-11-22T18:31:00Z')
+                with self.assertRaisesRegex(ValueError, 'season does not use'):
+                    nightly.validate_retained(part, {**season, 'games': []}, target, '2026-11-22T18:31:00Z')
+                with patch.object(nightly, 'utc_now', side_effect=['2026-11-22T19:59:59Z',
+                                                                  '2026-11-22T20:00:01Z']):
+                    with self.assertRaisesRegex(ValueError, 'refusing to replace'):
+                        nightly.write_snapshot(part, season)
+                self.assertEqual(read_json(target / 'games.json'), old_games)
+                meta = nightly.write_snapshot(part, season)
+            projected = views.load_projections({'2026-11-22': {'path': target, 'meta': meta}}, '2026-11-22')
+            self.assertEqual(projected['a']['meta'], old_meta)
+            self.assertEqual(projected['a']['sim'], old_games['a'])
+            self.assertEqual(projected['b']['meta']['completed_at'], '2026-11-22T18:31:00Z')
+            self.assertEqual(projected['b']['sim']['marker'], 'new-b')
+            with np.load(target / 'engine_worlds.npz') as saved:
+                np.testing.assert_array_equal(saved['a'], scores)
+            with np.load(target / 'engine_players.npz') as saved:
+                for key in ('ids', 'side', 'lines'):
+                    np.testing.assert_array_equal(saved[f'a__{key}'], player_arrays[f'a__{key}'])
+            later = nightly.load_retained(target, fixtures, '2026-11-22T20:01:00Z')
+            self.assertEqual(later['a']['meta'], old_meta)
+            self.assertEqual(later['b']['meta']['completed_at'], '2026-11-22T18:31:00Z')
+
+    def test_project_slate_does_not_resimulate_a_retained_game(self):
+        game = {'game_id': 'a', 'date_et': '2026-11-22'}
+        saved = {'game': {'marker': 'original'}, 'placeholder': {'marker': 'placeholder'},
+                 'worlds': np.zeros((2, 2, 5), dtype=np.int16),
+                 'players': {'ids': np.array(['h']), 'side': np.array([0]),
+                             'lines': np.zeros((2, 1, 15), dtype=np.uint8)}}
+        with patch.object(nightly, 'team_table', return_value=({}, {'teams_gp': 20, 'games': 1})), \
+                patch.object(nightly, 'player_table', return_value={}), \
+                patch.object(nightly, 'period_profiles', return_value=({}, {})), \
+                patch('scripts.engine.Engine', side_effect=AssertionError('retained games must not be simulated')), \
+                patch.object(nightly.projection, 'simulate_game',
+                             side_effect=AssertionError('retained placeholder must not be simulated')):
+            part = nightly.project_slate('2026-11-22', {}, [game], [], [], {}, True, 2, period_rows=[],
+                                         engine_worlds=2, retained={'a': saved})
+        self.assertEqual(part['games']['a'], saved['game'])
+        np.testing.assert_array_equal(part['worlds']['a'], saved['worlds'])
+        with self.assertRaisesRegex(ValueError, 'prospective engine'):
+            nightly.project_slate('2026-11-22', {}, [game], [], [], {}, False, 2, period_rows=[],
+                                  engine_worlds=2, retained={'a': saved})
+
     def test_write_snapshot_keeps_original_when_simulation_crosses_tip(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

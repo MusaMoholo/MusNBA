@@ -7,7 +7,7 @@ from unittest.mock import patch
 import numpy as np
 import pandas as pd
 
-from basketball_common import read_json, write_json
+from basketball_common import forecast_meta, read_json, verified_pre_tip, write_json
 from scripts import engine, master_fixtures, matchups, minutes, nightly, realmatch, views
 
 
@@ -98,6 +98,31 @@ class NightlyOriginTests(unittest.TestCase):
                                                 'pre_tip': {'g': True}}, 'g'))
         self.assertFalse(views.verified_pre_tip({'completed_at': '2026-11-21T23:00:00Z',
                                                  'pre_tip': {'g': False}}, 'g'))
+
+    def test_per_game_provenance_preserves_original_timing_and_model(self):
+        retained = {'kind': 'prospective', 'completed_at': '2026-11-22T17:00:00Z',
+                    'pre_tip': {'g': True}, 'model': {'id': 'old'}}
+        fresh = {'kind': 'prospective', 'completed_at': '2026-11-22T19:00:00Z',
+                 'pre_tip': {'h': False}, 'model': {'id': 'new'}}
+        meta = {**fresh, 'game_provenance_schema': 1, 'game_provenance': {'g': retained, 'h': fresh}}
+        self.assertTrue(verified_pre_tip(meta, 'g'))
+        self.assertFalse(verified_pre_tip(meta, 'h'))
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)
+            write_json(path / 'games.json', {'g': {}, 'h': {}})
+            records = views.load_projections({'2026-11-22': {'path': path, 'meta': meta}}, '2026-11-22')
+        self.assertEqual(records['g']['meta'], retained)
+        self.assertEqual(records['h']['meta'], fresh)
+        self.assertIs(forecast_meta(fresh, 'h'), fresh)
+
+    def test_malformed_per_game_provenance_fails_closed(self):
+        for meta in ({'game_provenance_schema': 2, 'game_provenance': {'g': {}}},
+                     {'game_provenance_schema': True, 'game_provenance': {'g': {}}},
+                     {'game_provenance': {'g': {}}},
+                     {'game_provenance_schema': 1, 'game_provenance': {}},
+                     {'game_provenance_schema': 1, 'game_provenance': {'g': {'game_provenance': {}}}}):
+            with self.subTest(meta=meta), self.assertRaises(ValueError):
+                verified_pre_tip(meta, 'g')
 
     def test_live_status_cannot_be_labelled_pre_tip_even_with_a_future_tip(self):
         game = {'game_id': 'g', 'tip_utc': '2026-11-23T00:00:00Z', 'time_valid': '1', 'status': 'live'}

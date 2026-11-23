@@ -60,6 +60,21 @@ class LineupTimingTests(unittest.TestCase):
         self.assertEqual(again, record)
         self.assertEqual(json.loads((self.root / 'accuracy.json').read_text()), record)
 
+    def test_mixed_forecast_timing_is_recorded_per_scored_game(self):
+        first = {**self.meta, 'pre_tip': {'before': True}}
+        second = {**self.meta, 'completed_at': '2026-11-22T19:00:00Z', 'pre_tip': {'after': True}}
+        unknown = {**self.meta, 'pre_tip': {}}
+        meta = {**self.meta, 'game_provenance_schema': 1,
+                'game_provenance': {'before': first, 'after': second, 'unknown': unknown}}
+        write_json(self.snap / 'meta.json', meta)
+        result = lineups.score_day(self.day, self.box)
+        assert result is not None
+        self.assertEqual(result['team_games'], 4)
+        self.assertIsNone(result['completed_at'])
+        self.assertEqual(result['game_provenance']['before']['completed_at'], first['completed_at'])
+        self.assertEqual(result['game_provenance']['after']['completed_at'], second['completed_at'])
+        self.assertNotIn('unknown', result['game_provenance'])
+
     def test_smoke_accepts_no_verified_scores_but_rejects_inconsistent_aggregates(self):
         write_json(self.snap / 'meta.json', {**self.meta, 'completed_at': None})
         with patch.object(lineups.pd, 'read_csv', return_value=self.box):

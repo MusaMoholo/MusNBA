@@ -372,16 +372,24 @@ the previous model stays as a fallback. A pre-tip refresh for late scratches is 
 
 ## 12. Two horizons and the season simulation (D13–D16)
 
-**Current two-engine flow (D24–D27):** the possession engine runs Today and Tomorrow from the same origin's
-pre-date inputs, or the next slate if neither has games. It does not carry simulated player form from Today into
-Tomorrow. Every later scheduled game uses the per-world team pathway, with no player/period forecast claimed there.
-The earlier seven-day design in D13/D18 is superseded, not an open choice.
+**Delivered two-engine flow (D24–D27):** the possession engine ran Today and Tomorrow from the same origin's
+pre-date inputs; every later scheduled game used the per-world team pathway. D50 supersedes that horizon with
+today-only possession forecasts, but its live output delivery remains pending. The earlier seven-day design in
+D13/D18 is also superseded, not an open choice.
 
 A delivered S07 correction makes that origin explicit in snapshot metadata and team/player/period inputs; the
 engine now guards profiles and uses pre-origin minutes, stints and pair history. Older previews without explicit
 origin are not certified cutoff-safe. Forecast completion,
 not simulation start, is needed for a pre-tip label. Older outputs without completion metadata remain timing-unverified;
 their original fields are preserved, not reinterpreted as proof of publication.
+
+For the in-progress D50 late refresh, snapshot schema 1 may carry `game_provenance_schema: 1` and an original
+metadata record per game. Consumers resolve the game's record rather than claiming the new season's completion
+time for an old forecast. Retained game summaries, placeholder and player/team worlds must match the old snapshot;
+their model and cutoff stats must equal the new season context. The season uses those same worlds. A replacement for
+an existing verified pre-tip forecast crossing tip while staged or archived stops publication; it is not
+automatically retried. Mixed live delivery,
+per-origin availability auditing and PWA validation remain pending.
 
 S06's selected-timeout substitution candidate is not promoted: its fixed player-first screen improved pooled minute
 CRPS but did not establish all registered non-inferiority bounds. v1.3's existing D29 path remains the control and

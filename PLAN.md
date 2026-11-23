@@ -429,6 +429,12 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 · D50 partial mixed-provenance safety:** retained original game summaries, worlds, placeholder
+  and per-game timing/model/input metadata can be carried into a fresh season, with identical cutoff stats/model
+  required and fail-closed checks for a crossing tip. A temporary copy of all **7** retained games /
+  **70,000** worlds supported a **10,000**-world season of **959** games that replayed bit-for-bit.
+  This is not a live nightly or a genuinely mixed old/new rehearsal; the independent availability audit
+  still needs per-origin registry support. D50 delivery and A1's actual dashboard controls remain unfinished.
 - **22 Nov 2026 · A1/D50 partial safety:** three isolated pinned-input captures finished and independently
   reconciled **80,000** branch worlds. They remain research, not verified published forecasts; whole-minute
   rounding causes material threshold differences (FINDINGS). Snapshot rollback, interrupted recovery, invalid

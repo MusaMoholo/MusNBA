@@ -16,7 +16,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from basketball_common import (APP_NAME, DERIVED, LINEUP_TIMING_POLICY, SEASON_LABEL, SNAPSHOTS, VIEWS, read_json,  # noqa: E402
+from basketball_common import (APP_NAME, DERIVED, LINEUP_TIMING_POLICY, SEASON_LABEL, SNAPSHOTS, VIEWS, forecast_meta, read_json,  # noqa: E402
                                today_et, utc_now, verified_pre_tip, write_json)
 from scripts import box_scores, master_fixtures, pbp  # noqa: E402
 from scripts.season_stats import period_profiles  # noqa: E402
@@ -97,7 +97,7 @@ def load_projections(snaps: dict, latest_day: str) -> dict:
         if day > latest_day or discarded_preview(day, snap['meta']):
             continue
         for gid, sim in read_json(snap['path'] / 'games.json').items():
-            projections[gid] = {'day': day, 'meta': snap['meta'], 'sim': sim}
+            projections[gid] = {'day': day, 'meta': forecast_meta(snap['meta'], gid), 'sim': sim}
     return projections
 
 

@@ -53,6 +53,8 @@ def audit_day(day: str, registry_doc: dict, fixtures: dict, expected_model: str,
               expected_origin: str) -> tuple[dict, list[Path]]:
     path = SNAPSHOTS / day
     meta = read_json(path / 'meta.json')
+    if meta.get('game_provenance_schema') is not None:
+        raise ValueError(f'{day}: mixed-provenance snapshots require per-game origin registries; this audit requires one registry')
     games = read_json(path / 'games.json')
     season = read_json(path / 'season.json')
     stats = read_json(path / 'stats.json')

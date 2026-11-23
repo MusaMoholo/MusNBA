@@ -31,7 +31,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 from basketball_common import (CONFERENCE_OF, DERIVED, DIVISION_OF, MASTER_CSV, SEASON_LABEL, SNAPSHOTS,  # noqa: E402
-                               archive_paths, day_shift, parse_utc, read_json, sha256_file, today_et, utc_now,
+                               archive_paths, day_shift, forecast_meta, parse_utc, read_json, sha256_file, today_et, utc_now,
                                verified_pre_tip, write_json)
 from scripts import box_scores, master_fixtures, pbp, projection, views  # noqa: E402
 from scripts.fetch_espn import collect, latest_run  # noqa: E402
@@ -73,7 +73,7 @@ def forecast_availability_report(game: dict, registry: dict) -> dict:
 
 def project_slate(day: str, teams: dict, master: list[dict], team_rows: list[dict], player_rows: list[dict],
                   registry: dict, prospective: bool, sims: int, period_rows=None, engine_worlds: int = 0,
-                  origin: str | None = None) -> dict:
+                  origin: str | None = None, retained: dict | None = None) -> dict:
     """One slate's games. engine_worlds > 0 (prospective slates only — the engine reads latest profiles, so past dates
     would leak): games come from the possession engine (D22, the default) and each game's per-world, per-period points
     are kept for the team pathway (D25: universe k plays engine world k); the placeholder's results are kept beside them
@@ -81,6 +81,8 @@ def project_slate(day: str, teams: dict, master: list[dict], team_rows: list[dic
     origin = day if origin is None else origin
     if origin > day:
         raise ValueError(f'forecast origin {origin} is after slate {day}')
+    if retained and (not prospective or not engine_worlds):
+        raise ValueError('retained engine forecasts require a prospective engine slate')
     started = time.time()
     T, lg = team_table(team_rows, origin, teams)
     if lg['teams_gp'] < 20:
@@ -93,9 +95,15 @@ def project_slate(day: str, teams: dict, master: list[dict], team_rows: list[dic
     eng = engine_mod = None
     if engine_worlds and prospective:
         from scripts import engine as engine_mod
-        if slate:
+        if any(game['game_id'] not in (retained or {}) for game in slate):
             eng = engine_mod.Engine()
     for game in slate:
+        gid = game['game_id']
+        if retained and gid in retained:
+            saved = retained[gid]
+            games[gid], placeholder[gid] = deepcopy(saved['game']), deepcopy(saved['placeholder'])
+            worlds[gid], player_worlds[gid] = saved['worlds'], saved['players']
+            continue
         result = projection.simulate_game(game, T, lg, P, registry, day, prospective, sims, Q, priors)
         if eng is not None:
             assert engine_mod is not None
@@ -128,7 +136,8 @@ def project_slate(day: str, teams: dict, master: list[dict], team_rows: list[dic
     return {'day': day, 'origin': origin, 'T': T, 'lg': lg, 'P': P, 'slate': slate, 'games': games, 'placeholder': placeholder, 'worlds': worlds,
             'player_worlds': player_worlds,
             'prospective': prospective, 'generated': generated, 'started': started, 'model': model,
-            'sims': engine_worlds if engine_mod is not None else sims, 'season_sims': sims, 'engine_inputs': engine_inputs}
+            'sims': engine_worlds if engine_mod is not None else sims, 'season_sims': sims, 'engine_inputs': engine_inputs,
+            'retained': retained or {}}
 
 
 def tip_is_future(game: dict, completed: str) -> bool | None:
@@ -174,11 +183,91 @@ def retained_game_ids(target: Path, slate: list[dict], prospective: bool, comple
     return retained
 
 
-def protect_pre_tip(target: Path, slate: list[dict], prospective: bool, completed: str) -> None:
+def protect_pre_tip(target: Path, slate: list[dict], prospective: bool, completed: str,
+                    retained: set[str] | None = None) -> None:
     """Do not replace a retained pre-tip forecast with a later or missing forecast."""
-    retained = retained_game_ids(target, slate, prospective, completed)
-    if retained:
-        raise ValueError(f'{", ".join(sorted(retained))}: refusing to replace a retained pre-tip forecast with a later or unknown forecast')
+    unsafe = retained_game_ids(target, slate, prospective, completed) - (retained or set())
+    if unsafe:
+        raise ValueError(f'{", ".join(sorted(unsafe))}: refusing to replace a retained pre-tip forecast with a later or unknown forecast')
+
+
+def load_retained(target: Path, slate: list[dict], completed: str) -> dict:
+    """Load complete original forecasts that cannot safely be regenerated after tip."""
+    ids = retained_game_ids(target, slate, True, completed)
+    if not ids:
+        return {}
+    meta = read_json(target / 'meta.json')
+    games = read_json(target / 'games.json')
+    placeholder = read_json(target / 'games_placeholder.json')
+    fixtures = {game['game_id']: game for game in slate}
+    out = {}
+    with np.load(target / 'engine_worlds.npz', allow_pickle=False) as worlds, \
+            np.load(target / 'engine_players.npz', allow_pickle=False) as players:
+        for gid in ids:
+            source_meta = forecast_meta(meta, gid)
+            game, base = games[gid], placeholder[gid]
+            team_worlds = worlds[gid]
+            player_worlds = {key: players[f'{gid}__{key}'] for key in ('ids', 'side', 'lines')}
+            n = source_meta['sims']
+            lines, player_ids, sides = player_worlds['lines'], player_worlds['ids'], player_worlds['side']
+            if (source_meta.get('kind') != 'prospective' or verified_pre_tip(source_meta, gid) is not True
+                    or source_meta.get('slate_date') != target.name or game.get('game_id') != gid
+                    or game.get('sims') != n or game.get('model') != source_meta.get('model', {}).get('id')
+                    or any(str(game[side]['team_id']) != str(fixtures[gid][f'{side}_id'])
+                           for side in ('home', 'away'))
+                    or team_worlds.shape != (n, 2, 5) or lines.ndim != 3 or lines.shape[:2] != (n, len(player_ids))
+                    or lines.shape[2] < 2 or player_ids.ndim != 1 or sides.shape != (len(player_ids),)
+                    or len(set(player_ids.tolist())) != len(player_ids) or not np.isin(sides, [0, 1]).all()
+                    or not all((sides == side).any() for side in (0, 1))
+                    or team_worlds.dtype.kind not in 'iu' or lines.dtype.kind not in 'iu'
+                    or (team_worlds < 0).any() or (lines < 0).any()):
+                raise ValueError(f'{gid}: retained forecast, fixture or world dimensions do not match')
+            scores = team_worlds.sum(axis=2)
+            for side, name in enumerate(('home', 'away')):
+                points = lines[:, sides == side, 1].astype(np.int64).sum(axis=1)
+                if not np.array_equal(points, scores[:, side]):
+                    raise ValueError(f'{gid}: retained player points do not sum to team worlds')
+                if abs(float(scores[:, side].mean()) - game['periods']['fg'][name]['pts']['mean']) > 0.00051:
+                    raise ValueError(f'{gid}: retained team mean does not match game worlds')
+            win = round(float((scores[:, 0] > scores[:, 1]).mean()), 4)
+            if game['periods']['fg']['home']['win'] != win:
+                raise ValueError(f'{gid}: retained win probability does not match game worlds')
+            out[gid] = {'game': game, 'placeholder': base, 'worlds': team_worlds,
+                        'players': player_worlds, 'meta': deepcopy(source_meta)}
+    return out
+
+
+def validate_retained(part: dict, season: dict, target: Path, completed: str) -> None:
+    retained = part.get('retained') or {}
+    protect_pre_tip(target, part['slate'], part['prospective'], completed, set(retained))
+    if not retained:
+        return
+    current = load_retained(target, part['slate'], completed)
+    if not set(retained) <= set(current):
+        raise ValueError('retained source forecasts changed during refresh')
+    if read_json(target / 'stats.json') != {'teams': part['T'], 'league': part['lg'], 'players': part['P']}:
+        raise ValueError('retained forecast statistics differ from the new season context')
+    season_rows = {row['game_id']: row for row in season['games']}
+    if season['sims'] != part['sims']:
+        raise ValueError('retained forecasts and season require the same world count')
+    for gid, saved in retained.items():
+        original = current[gid]
+        meta = original['meta']
+        if (meta.get('origin') != part['origin'] or meta.get('model') != part['model']
+                or saved['meta'] != meta or saved['game'] != original['game']
+                or saved['placeholder'] != original['placeholder'] or part['games'].get(gid) != original['game']
+                or part['placeholder'].get(gid) != original['placeholder']
+                or not np.array_equal(part['worlds'][gid], original['worlds'])
+                or any(not np.array_equal(part['player_worlds'][gid][key], original['players'][key])
+                       for key in ('ids', 'side', 'lines'))):
+            raise ValueError(f'{gid}: retained forecast, model, origin or worlds changed')
+        scores = original['worlds'].sum(axis=2)
+        expected = {'p_home': round(float((scores[:, 0] > scores[:, 1]).mean()), 4),
+                    'mu_home': round(float(scores[:, 0].mean()), 2),
+                    'mu_away': round(float(scores[:, 1].mean()), 2)}
+        if (gid not in season_rows or season_rows[gid].get('source') != 'engine'
+                or any(season_rows[gid].get(key) != value for key, value in expected.items())):
+            raise ValueError(f'{gid}: season does not use retained game worlds')
 
 
 def write_snapshot(part: dict, season: dict, archive_root=None) -> dict:
@@ -222,16 +311,30 @@ def write_snapshot(part: dict, season: dict, archive_root=None) -> dict:
     meta['generated'] = meta['completed_at'] = completed
     meta['pre_tip'] = {g['game_id']: tip_is_future(g, completed) for g in slate}
     meta['seconds'] = round(time.time() - part['started'], 2)
-    protect_pre_tip(target, slate, prospective, completed)
+    validate_retained(part, season, target, completed)
+    if part.get('retained'):
+        fresh = deepcopy(meta)
+        meta['game_provenance_schema'] = 1
+        meta['game_provenance'] = {
+            g['game_id']: deepcopy(part['retained'][g['game_id']]['meta'])
+            if g['game_id'] in part['retained'] else deepcopy(fresh)
+            for g in slate
+        }
     write_json(staging / 'meta.json', meta, pretty=True)
     if target.exists():
         saved = archive_paths([target], archive_root)
         print(f'archived previous snapshot {day} -> {saved}', flush=True)
         completed = utc_now()
-        protect_pre_tip(target, slate, prospective, completed)
+        validate_retained(part, season, target, completed)
         meta['generated'] = meta['completed_at'] = completed
         meta['pre_tip'] = {g['game_id']: tip_is_future(g, completed) for g in slate}
         meta['seconds'] = round(time.time() - part['started'], 2)
+        if part.get('retained'):
+            fresh = {key: value for key, value in meta.items()
+                     if key not in ('game_provenance', 'game_provenance_schema')}
+            for game in slate:
+                if game['game_id'] not in part['retained']:
+                    meta['game_provenance'][game['game_id']] = deepcopy(fresh)
         write_json(staging / 'meta.json', meta, pretty=True)
         previous = target.with_name(f'.{target.name}.previous')
         target.rename(previous)
@@ -354,7 +457,7 @@ def main():
         return 0
     if day == today_et() and MASTER_CSV.exists():
         existing_slate = [g for g in master_fixtures.load() if g['date_et'] == day]
-        protect_pre_tip(SNAPSHOTS / day, existing_slate, True, utc_now())
+        retained_game_ids(SNAPSHOTS / day, existing_slate, True, utc_now())
     if not args.offline:
         report = collect(day)
         if report['failures']:
@@ -386,8 +489,11 @@ def main():
     days = engine_days(day, slate_dates, args.ahead)
     if day not in slate_dates:
         print(f'No games scheduled on {day}; building the team-pathway season without game simulations.', flush=True)
+    retained = load_retained(SNAPSHOTS / day, [g for g in master if g['date_et'] == day], utc_now()) if prospective else {}
+    if retained and args.placeholder:
+        raise ValueError('cannot replace retained engine forecasts with placeholder forecasts')
     parts = [project_slate(d, teams, master, team_rows, player_rows, registry, prospective, args.sims, period_rows,
-                           engine_worlds=0 if args.placeholder else args.engine, origin=day)
+                           engine_worlds=0 if args.placeholder else args.engine, origin=day, retained=retained)
              for d in days]
     if parts:  # D25/D26: one season from today — universe k plays engine world k of every engine game, then the pathway
         T, lg = team_table(team_rows, day, teams)

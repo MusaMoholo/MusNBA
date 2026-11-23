@@ -49,6 +49,13 @@ class SnapshotAvailabilityAuditTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'points'):
             audit.check_worlds('g', periods, lines, np.array([0, 1]))
 
+    def test_single_registry_audit_refuses_mixed_provenance(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_json(root / '2026-11-22' / 'meta.json', {'game_provenance_schema': 1})
+            with patch.object(audit, 'SNAPSHOTS', root), self.assertRaisesRegex(ValueError, 'per-game origin registries'):
+                audit.audit_day('2026-11-22', {}, {}, 'engine', 2, '2026-11-22')
+
     def test_snapshot_audit_checks_view_and_season_against_saved_worlds(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
