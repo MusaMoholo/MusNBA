@@ -31,11 +31,32 @@ availability against individual origin registries, or measure predictive accurac
 stats and model were required, not assumed after collection. Source hashes and accounting:
 `analysis/experiments/20261122_d50_retained_snapshot_rehearsal_v1.json`.
 The original snapshot's recorded collection directory still contains **30** roster files, the injury report,
-the slate scoreboard and collection start/finish metadata. This inventories files only; their contents and
-per-game timing have not yet been independently reconciled against a mixed snapshot. A separate direct read of
+the slate scoreboard and collection start/finish metadata. This inventory alone does not establish their contents.
+A separate direct read of
 that original scoreboard found all **7/7** retained games, each with explicit valid tip and pre-event status;
 both collection finish and the saved snapshot completion precede its original listed tip in all seven cases.
 The metadata records staged completion, not independently verified publication.
+An independent raw-schedule/roster/injury parser matched all **246** saved availability entries across those
+seven games to their recorded collection, including source statuses, injury details and assumed probabilities;
+all seven source schedules had valid pre-tip timestamps. Report and source hashes:
+`analysis/experiments/20261122_a1_retained_raw_report_audit_v4.json`. The intermediate v1–v3 runs used
+earlier uncommitted parser revisions before additional malformed-ID, duplicate-game, competitor-count,
+unknown-status and cutoff/timing guards; all found the same totals. These runs score no real outcomes and do not establish
+independent publication time.
+
+**22 Nov 2026 — isolated mixed-slate rehearsal:** with a synthetic 00:55 UTC clock, **5** original games and
+**2** newly regenerated games were combined at **10,000** worlds apiece; saved player/team scores reconciled,
+per-game original provenance was retained, and the **959**-game season replayed bit-for-bit. The run used eight
+OpenMP threads and one BLAS thread, finishing in **309.67s** total, including simulation, temporary archive,
+checks and season replay. A prior one-thread attempt was stopped at **9m 22s** with no completed game; its
+temporary files were removed. The synthetic time is not proof of actual pre-tip publication; no live snapshot
+was written and no predictive outcomes were scored. The raw-origin audit was developed after this rehearsal,
+so it was not run against that output. Source hashes and detailed limits:
+`analysis/experiments/20261122_d50_mixed_retention_rehearsal_v1.json`. A subsequent integrated run took
+**349.13s**, reproduced the 5+2 combination and season replay, independently matched **246** availability
+entries and checked all **7** rendered game views (`analysis/experiments/20261122_d50_mixed_retention_rehearsal_v2.json`).
+Both old and new games used the same retained collection; distinct origins are covered by a synthetic test,
+not by this real-input rehearsal. It remains research-only and does not prove pre-tip publication.
 
 **22 Nov 2026 — tip-validity coverage:** all **2,400** observations of **1,200** unique events in the latest retained schedule and all
 **32** scoreboard observations in the 19–21 Nov S07 inventory carried `timeValid: true`. Previously the

@@ -62,7 +62,7 @@ class NightlyOriginTests(unittest.TestCase):
                 (derived / name).write_text(name)
             write_json(derived / 'players.json', {'run': 'run'})
             game: dict[str, str | None] = {'game_id': 'g', 'home_id': '1', 'away_id': '2', 'date_et': '2026-11-22',
-                                           'tip_utc': '2026-11-23T00:00:00Z', 'time_valid': '1'}
+                                           'tip_utc': '2026-11-23T00:00:00Z', 'time_valid': '1', 'status': 'scheduled'}
             with patch.object(nightly, 'team_table', return_value=({}, {'teams_gp': 20, 'games': 1})), \
                     patch.object(nightly, 'player_table', return_value={}), \
                     patch.object(nightly, 'period_profiles', return_value=({}, {})), \
@@ -129,6 +129,14 @@ class NightlyOriginTests(unittest.TestCase):
         self.assertFalse(nightly.tip_is_future(game, '2026-11-22T23:00:00Z'))
         game['time_valid'] = '0'
         self.assertIsNone(nightly.tip_is_future(game, '2026-11-22T23:00:00Z'))
+
+    def test_unknown_game_status_does_not_establish_pre_tip(self):
+        game = {'game_id': 'g', 'tip_utc': '2026-11-23T00:00:00Z', 'time_valid': '1'}
+        for status in (None, 'unknown', 'suspended', 'postponed', 'canceled', 'delayed'):
+            with self.subTest(status=status):
+                self.assertIsNone(nightly.tip_is_future({**game, 'status': status}, '2026-11-22T23:00:00Z'))
+        self.assertTrue(nightly.tip_is_future({**game, 'status': 'scheduled'}, '2026-11-22T23:00:00Z'))
+        self.assertFalse(nightly.tip_is_future({**game, 'status': 'final'}, '2026-11-22T23:00:00Z'))
 
     def test_engine_rejects_profiles_from_origin_date(self):
         for player_day, team_day in (('2026-11-21', '2026-11-20'), ('2026-11-20', '2026-11-21')):

@@ -67,12 +67,15 @@ class TodayOnlyTests(unittest.TestCase):
             meta = {'kind': 'prospective', 'completed_at': '2026-11-22T17:00:00Z',
                     'games': ['a', 'b'], 'pre_tip': {'a': True, 'b': True}}
             write_json(snapshot / 'meta.json', meta)
-            slate = [{'game_id': 'a', 'tip_utc': '2026-11-22T18:00:00Z', 'time_valid': '1'},
-                     {'game_id': 'b', 'tip_utc': '2026-11-22T20:00:00Z', 'time_valid': '1'}]
+            slate = [{'game_id': 'a', 'tip_utc': '2026-11-22T18:00:00Z', 'time_valid': '1', 'status': 'scheduled'},
+                     {'game_id': 'b', 'tip_utc': '2026-11-22T20:00:00Z', 'time_valid': '1', 'status': 'scheduled'}]
             nightly.protect_pre_tip(snapshot, slate, True, '2026-11-22T17:59:59Z')
             for games, prospective, completed in (
                     (slate, True, '2026-11-22T18:00:00Z'),
                     ([{**slate[0], 'status': 'live'}, slate[1]], True, '2026-11-22T17:00:00Z'),
+                    ([{**slate[0], 'status': 'suspended'}, slate[1]], True, '2026-11-22T17:00:00Z'),
+                    ([{k: v for k, v in slate[0].items() if k != 'status'}, slate[1]],
+                     True, '2026-11-22T17:00:00Z'),
                     ([{**slate[0], 'time_valid': '0'}, slate[1]], True, '2026-11-22T17:00:00Z'),
                     ([{k: v for k, v in slate[0].items() if k != 'time_valid'}, slate[1]],
                      True, '2026-11-22T17:00:00Z'),
@@ -101,8 +104,8 @@ class TodayOnlyTests(unittest.TestCase):
             write_json(snapshot / 'meta.json', {'kind': 'prospective', 'slate_date': '2026-11-22',
                        'origin': '2026-11-22', 'completed_at': '2026-11-22T17:00:00Z',
                        'games': ['a', 'b'], 'pre_tip': {'a': True, 'b': True}})
-            slate = [{'game_id': 'a', 'tip_utc': '2026-11-22T18:00:00Z', 'time_valid': '1'},
-                     {'game_id': 'b', 'tip_utc': '2026-11-22T20:00:00Z', 'time_valid': '1'}]
+            slate = [{'game_id': 'a', 'tip_utc': '2026-11-22T18:00:00Z', 'time_valid': '1', 'status': 'scheduled'},
+                     {'game_id': 'b', 'tip_utc': '2026-11-22T20:00:00Z', 'time_valid': '1', 'status': 'scheduled'}]
             self.assertEqual(nightly.retained_game_ids(snapshot, slate, True, '2026-11-22T17:59:59Z'), set())
             self.assertEqual(nightly.retained_game_ids(snapshot, slate, True, '2026-11-22T18:00:00Z'), {'a'})
             self.assertEqual(nightly.retained_game_ids(snapshot, [{**slate[0], 'time_valid': '0'}, slate[1]],
@@ -124,7 +127,7 @@ class TodayOnlyTests(unittest.TestCase):
             old_meta = {'kind': 'prospective', 'slate_date': '2026-11-22', 'origin': '2026-11-22',
                         'completed_at': '2026-11-22T17:00:00Z', 'model': model, 'sims': 2,
                         'games': ['a', 'b'], 'pre_tip': {'a': True, 'b': True}}
-            fixtures = [{'game_id': gid, 'home_id': '1', 'away_id': '2', 'time_valid': '1',
+            fixtures = [{'game_id': gid, 'home_id': '1', 'away_id': '2', 'time_valid': '1', 'status': 'scheduled',
                          'tip_utc': tip} for gid, tip in (
                              ('a', '2026-11-22T18:00:00Z'), ('b', '2026-11-22T20:00:00Z'))]
             old_games = {gid: {'game_id': gid, 'model': model['id'], 'sims': 2,
@@ -225,7 +228,7 @@ class TodayOnlyTests(unittest.TestCase):
             write_json(target / 'meta.json', original)
             write_json(target / 'games.json', {'a': {'marker': 'original'}})
             part = {'day': '2026-11-22', 'origin': '2026-11-22', 'T': {}, 'lg': {'games': 1}, 'P': {},
-                    'slate': [{'game_id': 'a', 'tip_utc': '2026-11-22T18:00:00Z', 'time_valid': '1'}], 'prospective': True,
+                    'slate': [{'game_id': 'a', 'tip_utc': '2026-11-22T18:00:00Z', 'time_valid': '1', 'status': 'scheduled'}], 'prospective': True,
                     'generated': '2026-11-22T17:59:59Z', 'model': {'id': 'test'}, 'sims': 1,
                     'season_sims': 1, 'engine_inputs': {}, 'games': {'a': {'marker': 'new'}},
                     'placeholder': {}, 'worlds': {}, 'started': 0}
@@ -252,7 +255,7 @@ class TodayOnlyTests(unittest.TestCase):
                                               'games': ['a'], 'pre_tip': {'a': True}})
             write_json(target / 'games.json', {'a': 'original'})
             part = {'day': '2026-11-22', 'origin': '2026-11-22', 'T': {}, 'lg': {'games': 1}, 'P': {},
-                    'slate': [{'game_id': 'a', 'tip_utc': '2026-11-22T18:00:00Z', 'time_valid': '1'}], 'prospective': True,
+                    'slate': [{'game_id': 'a', 'tip_utc': '2026-11-22T18:00:00Z', 'time_valid': '1', 'status': 'scheduled'}], 'prospective': True,
                     'generated': '2026-11-22T17:30:00Z', 'model': {'id': 'test'}, 'sims': 1,
                     'season_sims': 1, 'engine_inputs': {}, 'games': {'a': 'replacement'},
                     'placeholder': {}, 'worlds': {}, 'started': 0}
@@ -289,7 +292,7 @@ class TodayOnlyTests(unittest.TestCase):
             write_json(target / 'meta.json', original)
             write_json(target / 'games.json', {'a': 'original'})
             part = {'day': '2026-11-22', 'origin': '2026-11-22', 'T': {}, 'lg': {'games': 1}, 'P': {},
-                    'slate': [{'game_id': 'a', 'tip_utc': '2026-11-22T18:00:00Z', 'time_valid': '1'}],
+                    'slate': [{'game_id': 'a', 'tip_utc': '2026-11-22T18:00:00Z', 'time_valid': '1', 'status': 'scheduled'}],
                     'prospective': True, 'generated': '2026-11-22T17:30:00Z', 'model': {'id': 'test'},
                     'sims': 1, 'season_sims': 1, 'engine_inputs': {}, 'games': {'a': 'replacement'},
                     'placeholder': {}, 'worlds': {}, 'started': 0}
@@ -310,7 +313,7 @@ class TodayOnlyTests(unittest.TestCase):
             write_json(previous / 'meta.json', {'kind': 'prospective', 'completed_at': '2026-11-22T17:00:00Z',
                                                 'games': ['a'], 'pre_tip': {'a': True}})
             write_json(previous / 'games.json', {'a': 'original'})
-            slate = [{'game_id': 'a', 'tip_utc': '2026-11-22T18:00:00Z', 'time_valid': '1'}]
+            slate = [{'game_id': 'a', 'tip_utc': '2026-11-22T18:00:00Z', 'time_valid': '1', 'status': 'scheduled'}]
             with self.assertRaisesRegex(ValueError, 'refusing to replace'):
                 nightly.protect_pre_tip(snapshot, slate, True, '2026-11-22T19:00:00Z')
             self.assertEqual(read_json(snapshot / 'games.json'), {'a': 'original'})

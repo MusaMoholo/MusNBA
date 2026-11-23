@@ -429,6 +429,13 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 · D50 mixed rehearsal:** an isolated synthetic-clock run combined **5** retained and **2**
+  regenerated 10,000-world games; its **959**-game season replayed exactly in **309.67s** with eight OpenMP
+  threads. An independent raw-origin audit matched **246** report entries for all seven originals. Missing,
+  unknown, suspended, postponed, cancelled and delayed game statuses now remain timing-unknown instead of
+  being labelled pre-tip; **50/50** focused tests pass. A second integrated rehearsal in **349.13s**
+  audited **246** raw entries and **7** rendered games and replayed the season; it used one collection and
+  a synthetic clock. No live nightly, PWA export or model promotion occurred.
 - **22 Nov 2026 · D50 partial mixed-provenance safety:** retained original game summaries, worlds, placeholder
   and per-game timing/model/input metadata can be carried into a fresh season, with identical cutoff stats/model
   required and fail-closed checks for a crossing tip. A temporary copy of all **7** retained games /

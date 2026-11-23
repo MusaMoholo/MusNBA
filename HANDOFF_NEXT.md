@@ -1,7 +1,7 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 80%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **4ee71e0** (snapshot recovery, conservative tip validity and capture accounting); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **18ebb1e** (partial mixed-provenance safety and all-retained rehearsal); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
@@ -47,30 +47,48 @@ The preceding pushed checkpoint was **4ee71e0** (snapshot recovery, conservative
   retained, and a **10,000**-world season of **959** games replayed bit-for-bit. This rehearsal did not run
   collection, regenerate untipped games, publish, or verify PWA delivery. On the real retained snapshot,
   all 7 player/team-world point totals, score means and win rates reconciled independently. The single-registry
-  `a1_snapshot_availability_audit.py` explicitly rejects mixed snapshots: extend or replace it with an independent
-  per-game origin-registry audit before live delivery, and rehearse a genuinely mixed old/new run. If a tip
+  `a1_snapshot_availability_audit.py` explicitly rejects mixed snapshots. The separate
+  `analysis/a1_mixed_availability_audit.py` independently parses raw source rosters, injuries and schedules per
+  game's recorded origin; it reconciled **246** report entries and seven source-timing records from the original
+  collection. A synthetic test covers two distinct collection origins and mismatches. The integrated mixed
+  rehearsal passed the raw audit and seven rendered-view checks; both retained and regenerated games used
+  the **same** retained collection, so it did not test a newly fetched collection. If a tip
   crosses, the run fails safely and needs a retry; old/new cutoff stats must be checked again after collection.
   The original 22 Nov `registry_run` directory exists with **30** roster files, an injury report, the origin
   scoreboard and collection start/finish metadata; existence alone does not establish report correctness or
   publication timing. A direct raw-scoreboard read found **7/7** games with valid tip, pre-event status, and
   collection finish and staged snapshot completion before the original listed tip. This does not independently
   establish publication time or verify every availability entry.
-  Final-source focused retention, branch provenance, lineup timing and audit tests **47/47**; Pylance found
+  The earlier checkpoint's focused retention, branch provenance, lineup timing and audit tests were **47/47**; Pylance found
   all **9** `project_slate` callers signature-compatible. Aggregate all-retained rehearsal and source hashes:
   `analysis/experiments/20261122_d50_retained_snapshot_rehearsal_v1.json`.
-  Final-source smoke **108/108**, deliberate fault **86/108**, underlying exit 1:
+  Earlier-checkpoint smoke **108/108**, deliberate fault **86/108**, underlying exit 1:
   `/tmp/musnba_a1_retention_final_{smoke,fault}.log`.
-  A temporary mixed-slate rehearsal is running in this session with an explicitly artificial
-  `2026-11-23T00:55:00Z` clock, five retained and two regenerated 10,000-world games; one numerical thread,
-  log `/tmp/musnba_d50_mixed_rehearsal_v1.log`. At the last process check it had finished **0/2** regenerated games
-  after **8m 14s**, and its Python worker was active. Its temporary snapshot is not a live forecast; check the
-  log and process before restarting, and do not claim a pre-tip publication from the synthetic clock.
+  A mixed-slate rehearsal with an explicitly artificial `2026-11-23T00:55:00Z` clock completed: **5** retained
+  and **2** regenerated games, **10,000** worlds per game; its **959**-game season replayed bit-for-bit.
+  `OMP_NUM_THREADS=8 OPENBLAS_NUM_THREADS=1` took **309.67s** total; log
+  `/tmp/musnba_d50_mixed_rehearsal_v2.log`, report
+  `analysis/experiments/20261122_d50_mixed_retention_rehearsal_v1.json`. The earlier single-thread attempt
+  was stopped after **9m 22s** with **0/2** completed games; its identified temporary directory was removed.
+  Reproduce with `OMP_NUM_THREADS=8 OPENBLAS_NUM_THREADS=1 .venv/bin/python -u analysis/a1_mixed_retention_rehearsal.py --day 2026-11-22 --synthetic-completed 2026-11-23T00:55:00Z --output analysis/experiments/<new-report>.json`.
+  The temporary snapshot was not a live forecast, the synthetic clock is not proof of pre-tip publication,
+  and the new raw-origin audit was not run on this now-deleted temporary output.
+  The integrated replacement passed with the same artificial clock and eight-thread budget in **349.13s**:
+  five retained and two regenerated games, **246** raw-report entries, **7** rendered game views, and exact
+  959-game season replay. Log `/tmp/musnba_d50_mixed_rehearsal_v3.log`, report
+  `analysis/experiments/20261122_d50_mixed_retention_rehearsal_v2.json`. It used one retained collection
+  and did not publish live data or establish actual publication time.
+  A regression reproduced six false pre-tip labels for missing, unknown, suspended, postponed, cancelled and
+  delayed statuses. The nightly now returns unknown for all six; only scheduled can be pre-tip, and live/final
+  remain non-pre-tip. **50/50** focused tests and final-source smoke **108/108** pass. Deliberate fault
+  returned **86/108** and exit 1, as required; logs `/tmp/musnba_a1_mixed_final_{smoke,fault}.log`.
+  Pylance syntax checks passed for the nightly, both new analysis scripts and the new audit test.
   Documentation review: HANDOFF, PLAN, ENGINE_PLAN, FINDINGS and README describe this partial implementation;
   AGENTS, TRAINING_PLAN and DASHBOARD_PLAN need no change because standing rules, predictive gates and shipped UI
   have not changed. No live nightly, model promotion, iCloud export or Pages update has occurred.
-  The current slate's guard was exercised and refused game `401910029` before modifying data; focused
-  horizon/origin/timing tests **22/22**. This safeguard does not itself produce a fresh nightly, update
-  the dashboard, or solve mixed old/new per-game provenance. Design safe delivery before proceeding.
+  The earlier fail-closed guard refused game `401910029` before modifying data; focused
+  horizon/origin/timing tests were **22/22**. That guard alone did not produce a fresh nightly, update
+  the dashboard, or support mixed provenance; the later partial implementation above addresses the last issue.
   Temporary-directory regressions exposed and now verify fixes for failed staged-directory publication,
   interruption after moving the previous directory, tip passing during archival, and invalid or missing tip
   validity. Failed publication restores the previous snapshot; restart restores an orphaned `.previous`, while
@@ -2659,8 +2677,9 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
    The existing today snapshot's seven pre-tip forecasts must not be replaced by post-tip forecasts: two games
    had already tipped when D50 began. Preserve their original timing/provenance when delivering.
    The partial implementation now preserves affected games, checks identical model/stats and fails on tip
-   crossing, but the all-retained rehearsal is not a genuinely mixed old/new run. Test mixed real games and
-   independent per-game origin-registry accounting, failure and rollback before touching the retained snapshot.
+   crossing. An artificial-clock mixed real-game rehearsal passed independent per-game origin-registry and
+   rendered-view checks, but used only one collection; failure and rollback have focused tests. Recheck the
+   cutoff stats after collection and audit each game's own origin before touching the retained snapshot.
    The new 10k season must use the *same* displayed worlds; distinguish per-game and season timestamps.
    Alternatively wait for the next ET-origin nightly, preserving the
    22 Nov forecast and doing no backfill; do not call the isolated preview a fresh nightly. After delivery,

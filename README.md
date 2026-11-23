@@ -48,6 +48,9 @@ python3 -m venv .venv
   bypass the guard. If publication is interrupted,
   the current-day nightly preflight restores an orphaned `.previous` snapshot when retained fixtures exist; if both
   old and active snapshots remain, the nightly and view rebuild stop for review rather than silently discarding either.
+  `analysis/a1_mixed_availability_audit.py` checks game reports against their individual raw collection origins;
+  `analysis/a1_mixed_retention_rehearsal.py` exercises a temporary mixed snapshot with a synthetic clock. Neither
+  publishes a forecast or proves its pre-tip publication time.
 - The server reads files from disk: front-end edits appear on refresh, rebuilt views appear
   immediately; no restart needed. `serve.py --host 0.0.0.0` lets a phone on the same Wi-Fi in.
 - Slates are US Eastern game dates; tip-offs show UK time with ET.

@@ -150,7 +150,10 @@ def tip_is_future(game: dict, completed: str) -> bool | None:
             raise ValueError('tip time needs a timezone')
     except (AttributeError, KeyError, TypeError, ValueError) as exc:
         raise ValueError(f"{game['game_id']}: invalid valid tip time") from exc
-    return game.get('status') not in ('live', 'final') and completion < tip
+    status = game.get('status')
+    if status not in ('scheduled', 'live', 'final'):
+        return None
+    return status == 'scheduled' and completion < tip
 
 
 def retained_game_ids(target: Path, slate: list[dict], prospective: bool, completed: str) -> set[str]:
