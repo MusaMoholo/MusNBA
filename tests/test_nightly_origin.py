@@ -8,10 +8,22 @@ import numpy as np
 import pandas as pd
 
 from basketball_common import read_json, write_json
-from scripts import engine, matchups, minutes, nightly, realmatch, views
+from scripts import engine, master_fixtures, matchups, minutes, nightly, realmatch, views
 
 
 class NightlyOriginTests(unittest.TestCase):
+    def test_schedule_missing_tip_validity_does_not_invent_a_known_time(self):
+        competition: dict[str, object] = {'competitors': [
+            {'homeAway': 'home', 'team': {'id': '1', 'abbreviation': 'H'}},
+            {'homeAway': 'away', 'team': {'id': '2', 'abbreviation': 'A'}},
+        ]}
+        event = {'id': 'g', 'date': '2026-11-23T00:00:00Z', 'competitions': [competition]}
+        self.assertEqual(master_fixtures.row_from_event(event)['time_valid'], 0)
+        competition['timeValid'] = True
+        self.assertEqual(master_fixtures.row_from_event(event)['time_valid'], 1)
+        competition['timeValid'] = False
+        self.assertEqual(master_fixtures.row_from_event(event)['time_valid'], 0)
+
     def test_preview_uses_origin_for_inputs_and_target_for_game(self):
         origin, target = '2026-11-21', '2026-11-22'
         game = {'game_id': 'g', 'home_id': '1', 'away_id': '2', 'date_et': target,
@@ -49,8 +61,8 @@ class NightlyOriginTests(unittest.TestCase):
             for name in ('player_games.csv', 'team_games.csv', 'player_periods.csv'):
                 (derived / name).write_text(name)
             write_json(derived / 'players.json', {'run': 'run'})
-            game = {'game_id': 'g', 'home_id': '1', 'away_id': '2', 'date_et': '2026-11-22',
-                    'tip_utc': '2026-11-23T00:00:00Z'}
+            game: dict[str, str | None] = {'game_id': 'g', 'home_id': '1', 'away_id': '2', 'date_et': '2026-11-22',
+                                           'tip_utc': '2026-11-23T00:00:00Z', 'time_valid': '1'}
             with patch.object(nightly, 'team_table', return_value=({}, {'teams_gp': 20, 'games': 1})), \
                     patch.object(nightly, 'player_table', return_value={}), \
                     patch.object(nightly, 'period_profiles', return_value=({}, {})), \
@@ -70,6 +82,14 @@ class NightlyOriginTests(unittest.TestCase):
                 self.assertEqual(read_json(snapshots / '2026-11-22' / 'meta.json')['origin'], '2026-11-21')
                 with self.assertRaisesRegex(ValueError, 'origin'):
                     nightly.write_snapshot(part, {**season, 'as_of': '2026-11-22'})
+                for flag in ('0', None):
+                    game['time_valid'] = flag
+                    with self.subTest(time_valid=flag), \
+                            patch.object(nightly, 'utc_now', return_value='2026-11-22T23:59:59Z'), \
+                            patch.object(nightly, 'archive_paths', return_value='archive'):
+                        unknown = nightly.write_snapshot(part, season)
+                    self.assertIsNone(unknown['pre_tip']['g'])
+                    self.assertIsNone(views.verified_pre_tip(unknown, 'g'))
 
     def test_legacy_or_incomplete_timing_is_not_treated_as_pre_tip(self):
         self.assertIsNone(views.verified_pre_tip({'pre_tip': {'g': True}}, 'g'))
@@ -78,6 +98,12 @@ class NightlyOriginTests(unittest.TestCase):
                                                 'pre_tip': {'g': True}}, 'g'))
         self.assertFalse(views.verified_pre_tip({'completed_at': '2026-11-21T23:00:00Z',
                                                  'pre_tip': {'g': False}}, 'g'))
+
+    def test_live_status_cannot_be_labelled_pre_tip_even_with_a_future_tip(self):
+        game = {'game_id': 'g', 'tip_utc': '2026-11-23T00:00:00Z', 'time_valid': '1', 'status': 'live'}
+        self.assertFalse(nightly.tip_is_future(game, '2026-11-22T23:00:00Z'))
+        game['time_valid'] = '0'
+        self.assertIsNone(nightly.tip_is_future(game, '2026-11-22T23:00:00Z'))
 
     def test_engine_rejects_profiles_from_origin_date(self):
         for player_day, team_day in (('2026-11-21', '2026-11-20'), ('2026-11-20', '2026-11-21')):

@@ -429,6 +429,15 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 · A1/D50 partial safety:** three isolated pinned-input captures finished and independently
+  reconciled **80,000** branch worlds. They remain research, not verified published forecasts; whole-minute
+  rounding causes material threshold differences (FINDINGS). Snapshot rollback, interrupted recovery, invalid
+  tip timing, live status and an archive-crosses-tip case now have focused regressions; missing raw validity
+  is no longer assumed true. **38/38** today-only/origin/availability/report-audit tests pass; all **32**
+  19–21 Nov S07 scoreboard observations had explicit true validity. Final-source smoke **108/108**;
+  deliberate fault **86/108**, exit 1. Views fail closed on interrupted publication.
+  Mixed-provenance late refresh, live nightly, iCloud
+  delivery and the actual A1 dashboard controls remain unfinished; the accepted models are unchanged.
 - **22 Nov 2026 · team-pathway overtime:** owner suggested a possible 2% blanket time/score inflation. It would
   affect every world, including regulation finishes, and is not adopted. The existing pathway draws regulation
   scores and resolves tied-game winners separately; D50 distributions must be labelled regulation. Test genuine

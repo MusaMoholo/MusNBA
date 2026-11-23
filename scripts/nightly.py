@@ -23,6 +23,7 @@ import shutil
 import sys
 import time
 from copy import deepcopy
+from datetime import datetime
 from pathlib import Path
 
 import numpy as np
@@ -130,26 +131,58 @@ def project_slate(day: str, teams: dict, master: list[dict], team_rows: list[dic
             'sims': engine_worlds if engine_mod is not None else sims, 'season_sims': sims, 'engine_inputs': engine_inputs}
 
 
-def protect_pre_tip(target: Path, slate: list[dict], prospective: bool, completed: str) -> None:
-    """Do not replace a retained pre-tip forecast with a later or missing forecast."""
+def tip_is_future(game: dict, completed: str) -> bool | None:
+    if game.get('time_valid') not in (True, 1, '1'):
+        return None
+    completion = parse_utc(completed)
+    try:
+        tip = datetime.fromisoformat(game['tip_utc'].replace('Z', '+00:00'))
+        if tip.utcoffset() is None:
+            raise ValueError('tip time needs a timezone')
+    except (AttributeError, KeyError, TypeError, ValueError) as exc:
+        raise ValueError(f"{game['game_id']}: invalid valid tip time") from exc
+    return game.get('status') not in ('live', 'final') and completion < tip
+
+
+def retained_game_ids(target: Path, slate: list[dict], prospective: bool, completed: str) -> set[str]:
+    """Identify verified pre-tip games that cannot safely be replaced."""
+    previous = target.with_name(f'.{target.name}.previous')
+    if previous.exists():
+        if target.exists():
+            raise ValueError(f'{previous}: previous and active snapshots both exist; review interrupted publication')
+        previous.rename(target)
     meta_path = target / 'meta.json'
     if not meta_path.exists():
-        return
+        return set()
     old = read_json(meta_path)
     if old.get('kind') != 'prospective' or views.discarded_preview(old.get('slate_date', target.name), old):
-        return
+        return set()
     games = {game['game_id']: game for game in slate}
+    retained = set()
     for gid in old.get('games', []):
         if verified_pre_tip(old, gid) is not True:
             continue
         game = games.get(gid)
-        if (not prospective or game is None or game.get('status') in ('live', 'final')
-                or parse_utc(completed) >= parse_utc(game['tip_utc'])):
-            raise ValueError(f'{gid}: refusing to replace a retained pre-tip forecast with a later or missing forecast')
+        if not prospective or game is None:
+            raise ValueError(f'{gid}: refusing to replace a retained pre-tip forecast with a missing or retrospective forecast')
+        try:
+            pre_tip = tip_is_future(game, completed)
+        except ValueError as exc:
+            raise ValueError(f'{gid}: refusing to replace a retained pre-tip forecast: {exc}') from exc
+        if pre_tip is not True:
+            retained.add(gid)
+    return retained
+
+
+def protect_pre_tip(target: Path, slate: list[dict], prospective: bool, completed: str) -> None:
+    """Do not replace a retained pre-tip forecast with a later or missing forecast."""
+    retained = retained_game_ids(target, slate, prospective, completed)
+    if retained:
+        raise ValueError(f'{", ".join(sorted(retained))}: refusing to replace a retained pre-tip forecast with a later or unknown forecast')
 
 
 def write_snapshot(part: dict, season: dict, archive_root=None) -> dict:
-    """Write one slate's snapshot atomically (staging folder, then rename); an existing one is archived first."""
+    """Stage a slate, archive the previous snapshot, and retain it for rollback during publication."""
     day, T, lg, slate, prospective = part['day'], part['T'], part['lg'], part['slate'], part['prospective']
     origin = part['origin']
     if season['as_of'] != origin:
@@ -187,15 +220,29 @@ def write_snapshot(part: dict, season: dict, archive_root=None) -> dict:
     write_json(staging / 'stats.json', {'teams': T, 'league': lg, 'players': part['P']})
     completed = utc_now()
     meta['generated'] = meta['completed_at'] = completed
-    meta['pre_tip'] = {g['game_id']: parse_utc(completed) < parse_utc(g['tip_utc']) for g in slate}
+    meta['pre_tip'] = {g['game_id']: tip_is_future(g, completed) for g in slate}
     meta['seconds'] = round(time.time() - part['started'], 2)
     protect_pre_tip(target, slate, prospective, completed)
     write_json(staging / 'meta.json', meta, pretty=True)
     if target.exists():
         saved = archive_paths([target], archive_root)
         print(f'archived previous snapshot {day} -> {saved}', flush=True)
-        shutil.rmtree(target)
-    staging.rename(target)
+        completed = utc_now()
+        protect_pre_tip(target, slate, prospective, completed)
+        meta['generated'] = meta['completed_at'] = completed
+        meta['pre_tip'] = {g['game_id']: tip_is_future(g, completed) for g in slate}
+        meta['seconds'] = round(time.time() - part['started'], 2)
+        write_json(staging / 'meta.json', meta, pretty=True)
+        previous = target.with_name(f'.{target.name}.previous')
+        target.rename(previous)
+        try:
+            staging.rename(target)
+        finally:
+            if not target.exists():
+                previous.rename(target)
+        shutil.rmtree(previous)
+    else:
+        staging.rename(target)
     print(f'snapshot {day} ({meta["kind"]}, {meta["model"]["id"]}): {len(slate)} games, {meta["sims"]:,} sims each, '
           f'season {len(season["games"])} games as of {season["as_of"]} ({season["model"]}) · {meta["seconds"]}s', flush=True)
     return meta

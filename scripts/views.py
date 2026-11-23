@@ -59,6 +59,9 @@ def rounded(value, digits=4):
 def load_snapshots() -> dict:
     out = {}
     if SNAPSHOTS.exists():
+        interrupted = sorted(SNAPSHOTS.glob('.*.previous'))
+        if interrupted:
+            raise ValueError(f'interrupted snapshot publication requires recovery or review: {interrupted[0]}')
         for folder in sorted(p for p in SNAPSHOTS.iterdir() if p.is_dir() and not p.name.startswith('.')):
             if (folder / 'meta.json').exists():
                 out[folder.name] = {'meta': read_json(folder / 'meta.json'), 'path': folder}

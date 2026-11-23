@@ -100,7 +100,7 @@ def check_run(item: dict) -> tuple[dict, list[tuple[str, str, str, str]]]:
             game_ids.add(gid)
             comp = event['competitions'][0]
             date = event.get('date')
-            if not date or comp.get('timeValid', True) is False:
+            if not date or comp.get('timeValid') is not True:
                 origins['unknown_tip'] += 1
                 continue
             tip = stamp(date)

@@ -2,6 +2,37 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 — minute precision:** in one retained 10,000-world D47 conditional branch (25 players,
+five period slots), **527,727/1,250,000** player-period-world minute values were not integer seconds
+at tolerance 1e-8; maximum distance from a whole second was **0.5 s**. The source retains float64
+minutes, but the research game-summary histograms currently round to whole minutes. This is a storage
+and presentation observation, not an accuracy result or a shipped fix. Reproduction and source hash:
+`analysis/experiments/20261122_a1_minute_precision_v1.json`.
+Three additional independent browser-fixture audits, covering two, four and two branches respectively
+(**20,000 / 40,000 / 20,000** saved worlds), found **301 / 831 / 444** differences respectively between
+exact and whole-minute-rounded values at one selected player's 30-minute threshold. They found
+**6,178 / 15,532 / 6,225** positive player-world minutes rounded to zero among **600,000 / 1,200,000 /
+600,000** player-world cells. These are isolated research worlds, not real-game accuracy measures.
+The detailed player-level reports remain ignored in `data/derived/experiments/`.
+Aggregate accounting and source hashes: `analysis/experiments/20261122_a1_live_fixture_accounting_v1.json`.
+
+**22 Nov 2026 — retained-context comparison:** before another collection, recomputing the 22 Nov cutoff
+team table, league table and player table from the currently retained box-score inputs produced exact
+dictionary equality with that day's stored `stats.json` in all three cases. This is specific to those inputs;
+it does not guarantee equality after collection or permit mixing different per-game provenance. Input hashes
+and method: `analysis/experiments/20261122_a1_retained_context_comparison_v1.json`.
+
+**22 Nov 2026 — tip-validity coverage:** all **2,400** observations of **1,200** unique events in the latest retained schedule and all
+**32** scoreboard observations in the 19–21 Nov S07 inventory carried `timeValid: true`. Previously the
+fixture and coverage producers treated a missing flag as true; they now keep it unknown. The measured coverage
+above does not establish how future source responses will represent unknown tip times. Source hashes:
+`analysis/experiments/20261122_a1_tip_validity_inventory_v1.json`. With the fix, a fresh coverage-only
+regression on all seven retained archives independently reconciled **1,585** roster snapshots and **880**
+unique player-games; it did not score protected-season outcomes. Of the original five run inventories, four
+matched exactly. The fifth had previously lacked final-box coverage for **175** roster snapshots; retained
+final-box files now list **125** and omit **50**. Its origin/tip classifications are unchanged. Listing is
+coverage only, not a play/DNP outcome.
+
 **22 Nov 2026 — isolated D50 horizon preview:** using seven retained, verified pre-tip engine-world sets
 from the 22 November origin, a separate 10,000-season rebuild used the team pathway for **952** future
 games. An independent replay matched **3,808** home, away, total and margin distributions, plus their

@@ -1,7 +1,7 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 80%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **c19a57d** (A1 persisted 10k audit); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **2adb409** (partial D50 safety and isolated preview); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
@@ -37,11 +37,37 @@ The preceding pushed checkpoint was **c19a57d** (A1 persisted 10k audit); use `g
   At 23:46 UTC two games had already tipped: preserve the prior seven verified pre-tip forecasts and their
   individual timing when deciding how to deliver; a standard late nightly would archive and replace them.
 - **Late-nightly safety:** `nightly.py` now fails before collection if replacing a retained verified pre-tip
-  forecast would be post-tip or omit the game; it checks again after staging a snapshot, so a simulation that
-  runs past tip cannot replace the original. Completion time is when all forecast files have been staged.
+  forecast would be post-tip or omit the game; it checks after staging and after archival, so a simulation or
+  archive that runs past tip cannot replace the original. Completion is the staged-file time, refreshed after
+  archival, not proof of publication before tip.
   The current slate's guard was exercised and refused game `401910029` before modifying data; focused
   horizon/origin/timing tests **22/22**. This safeguard does not itself produce a fresh nightly, update
   the dashboard, or solve mixed old/new per-game provenance. Design safe delivery before proceeding.
+  Temporary-directory regressions exposed and now verify fixes for failed staged-directory publication,
+  interruption after moving the previous directory, tip passing during archival, and invalid or missing tip
+  validity. Failed publication restores the previous snapshot; restart restores an orphaned `.previous`, while
+  simultaneous active and `.previous` directories fail closed for review. Views fail rather than silently fall
+  back to an older snapshot if any `.previous` is present. Unknown timing remains unknown and a game
+  marked live/final cannot be labelled pre-tip just because its listed tip is later. Missing ESPN `timeValid`
+  now stays unknown in master-fixture generation and the S07 coverage audit and independent checker, rather
+  than being assumed valid. All **32** retained 19–21 Nov scoreboard observations used by S07 had an
+  explicit true flag, so that correction does not change those inventoried origins. A fresh coverage-only
+  regression on all **7** retained archives independently reconciled **1,585** roster snapshots and **880**
+  unique player-games; no protected outcomes were scored. Detailed reports are ignored under
+  `data/derived/experiments/20261122_a1_s07_validity_regression{,_check}_v1.json`. The checker requires an
+  absolute `--report` path. Four of the original five archive inventories match exactly; the fifth's
+  previously missing **175** roster final-box coverage records now split into **125** listed and **50**
+  unlisted as additional final boxes became available. Its origin classifications are unchanged; listing
+  is not a play/DNP outcome. **38/38** focused
+  today-only/origin/availability/report-audit tests pass. A hard interruption between directory renames can still leave
+  the active path absent until the next recovery, and a late mixed-provenance refresh remains unimplemented.
+  Final-source smoke passed **108/108**; deliberate fault produced **86/108** and exit 1, logs
+  `/tmp/musnba_a1_snapshot_recovery_current_{smoke,fault}.log`.
+  Before another collection, the 22 Nov snapshot's team, league and player stats each exactly matched a
+  cutoff-safe recomputation from the current retained box-score inputs. Recheck after collection; this observation
+  does not establish mixed provenance or justify replacing any retained game.
+  Documentation review: AGENTS standing rules, ENGINE_PLAN decisions/design and DASHBOARD_PLAN shipped
+  behaviour need no change for this safety/research checkpoint; no model, dashboard or bundle was promoted.
 - The first D50 smoke run exposed a **legacy schema mismatch**, not a changed forecast: the saved season
   has no regulation distributions while a fresh replay does. New seasons now identify the distribution
   schema; smoke strips added fields only when comparing a completely legacy season, while new/mixed
@@ -66,6 +92,45 @@ The preceding pushed checkpoint was **c19a57d** (A1 persisted 10k audit); use `g
   and `data/derived/experiments/20261122_a1_origin_inventory_<game>_v1/`. They assess which
   pinned games have qualifying uncertainties, not predictive performance, realistic distributions, promotion,
   production or a pre-tip publication time. These captures are far too small for dashboard distributions.
+- **Pinned-input captures completed:** three isolated research
+  jobs captured 10,000 worlds per branch for games `401910033`, `401910034` and `401910035`, respectively
+  2, 4 and 2 branches. Each used `OMP_NUM_THREADS=3 OPENBLAS_NUM_THREADS=1` (nine heavy threads total);
+  logs `/tmp/musnba_a1_live_branch_{033,034,035}_v1.log`, captures and manifests
+  `data/derived/experiments/20261122_a1_live_branch_{033,034,035}_v1[.json]`. All exited successfully.
+  `033` and `035` completed and independently reconciled
+  **20,000 worlds each**, with **4,932,579 / 4,857,339** lineup snapshots and weights exactly one.
+  Their full-mixture research summaries independently reconciled **3,958 distributions each** and
+  **3,709 / 3,714 means** against the captures using the current whole-minute histogram convention;
+  that agreement does not resolve the minute-precision blocker below.
+  Separate browser decoding checks reconciled **21 weighted period means and 60 opening-lineup counts**
+  per game, plus all **4 / 5** overtime-period masses.
+  `034` completed **4/4 branches**, independently reconciled **40,000 worlds** and **9,647,518** lineup
+  snapshots, with weights exactly one. Its browser fixture reconciled 18m player-stat values, 84m player-period
+  stats and 6m exact player-period minutes; the full-mixture summary reconciled 3,958 distributions and
+  3,719 means using the current rounded-minute convention. The separate period-decoding check reconciled
+  21 weighted means, 120 opening-lineup counts and all five overtime-period masses.
+  At least one began post-tip; none is a verified published pre-tip forecast, and all are research only.
+  Their fingerprint covers **all** `scripts/*.py` and origin inputs: no such input changed during capture.
+  Subsequent snapshot-safety edits change the current source hash, not the completed captures' stored fingerprint.
+  The two other qualifying games already have D47 10k branch captures.
+- **Minute-precision blocker:** the branch source preserves float64 per-world and period minutes, and weighted
+  Given conditions use those values, but `analysis/a1_branch_game_summary.mjs` still rounds minute histograms to
+  whole minutes. Do not ship that inconsistency as the owner's requested seconds-sensitive dashboard. Reconcile
+  stored-minute precision, histogram/line units, the Given/Joint consumers and their independent accounting;
+  the production `engine_players.npz` still rounds to whole minutes as well.
+  One isolated 10k branch had **527,727/1,250,000** player-period cells at fractional seconds (maximum
+  deviation **0.5 s** from an integer second); report `analysis/experiments/20261122_a1_minute_precision_v1.json`.
+  The `033` and `035` browser fixtures each independently reconcile 20k worlds, 9m player-stat values,
+  42m player-period stats and 3m exact player-period minutes; detailed audits remain under ignored
+  `data/derived/experiments/20261122_a1_live_branch_{033,035}_fixture_audit_v1.json`. Their selected-player
+  30-minute exact-versus-rounded thresholds disagree in **301 / 444** worlds respectively, and positive
+  player-world minutes round to zero in **6,178 / 6,225** cells. No production precision change has shipped.
+  The existing byte-packed production `lines` schema cannot hold seconds: introduce a versioned, separately
+  packed precise-minute array rather than silently changing the meaning of its `min` column; keep an explicit
+  legacy decoder for older snapshots. Audit player-world values and participation against original engine
+  minutes, then reconcile sheet histograms, threshold inputs and Given/Joint with the same units. Research
+  summaries currently round minutes before building their integer histograms, even though their source and
+  weighted Given conditions retain float64 values. Do not solve only the display or only the stored worlds.
 - **Compute budget (owner, 22 Nov):** on this 14-core Mac, cap simultaneous heavy work at **10 total compute
   threads/workers**, including nested threads; leave at least four cores' worth of aggregate capacity for normal
   use, and reduce when busy or memory pressure rises. This is not a guaranteed affinity/responsiveness reservation.

@@ -1,0 +1,40 @@
+{
+  "kind": "retained source flag inventory; not an outcome or forecast",
+  "schedule": {
+    "run": "20261122T164220Z",
+    "files": 30,
+    "unique_events_by_id": 1200,
+    "event_observations": 2400,
+    "timeValid_true": 2400,
+    "timeValid_false_or_missing": 0,
+    "filename_and_sha256_digest": "7152f9f4cfa0de9a3d8edb2c34df31994e25d9431962475c0b4a32e21a37aacd",
+    "digest_method": "SHA256 of sorted schedule filename:SHA256(file) lines including newline"
+  },
+  "scoreboards": {
+    "date_range": "2026-11-19 through 2026-11-21",
+    "event_observations": 32,
+    "timeValid_true": 32,
+    "timeValid_false_or_missing": 0,
+    "input_sha256": {
+      "runs/20261119T145907Z/scoreboard_2026-11-19.json.gz": "7e2dab32070a98c1a7f8c1a27bb5612f2729d2497185de359e998b7fa73a3adf",
+      "runs/20261119T235714Z/scoreboard_2026-11-19.json.gz": "e2bc3170660d92794f5a8c7314ad0ace8b5219fc3962c69216273e9ec0f8ecba",
+      "runs/20261120T092255Z/scoreboard_2026-11-20.json.gz": "dc0350c6486a834581dafd777590d3e19d5879db3a6e4396625df2d2f602227d",
+      "runs/20261120T163017Z/scoreboard_2026-11-20.json.gz": "a13ec16230b9e070370163a60d1d5efd87ebcbb59728618aacf955d7d48b85b5",
+      "runs/20261121T225637Z/scoreboard_2026-11-21.json.gz": "95efbfb781da3712e7ae3bdb6ddb57a1dd2eeb341010d8a5604a87731c39a352"
+    }
+  },
+  "coverage_regression": {
+    "archives": 7,
+    "roster_snapshots": 1585,
+    "unique_player_games": 880,
+    "original_run_inventories_exactly_unchanged": 4,
+    "original_run_inventories_compared": 5,
+    "remaining_original_run_difference": "175 final-box-missing roster snapshots became 125 listed and 50 unlisted after additional final files were retained; origin classifications are unchanged",
+    "report": "data/derived/experiments/20261122_a1_s07_validity_regression_v1.json",
+    "independent_check": "data/derived/experiments/20261122_a1_s07_validity_regression_check_v1.json"
+  },
+  "limitations": [
+    "Only flag presence and values were examined; no protected-season outcomes were scored.",
+    "The result does not predict whether future responses will contain a validity flag."
+  ]
+}

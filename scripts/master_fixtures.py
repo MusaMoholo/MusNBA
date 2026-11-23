@@ -52,7 +52,7 @@ def row_from_event(event: dict) -> dict:
     notes = '|'.join(n.get('headline', '') for n in c.get('notes') or [] if n.get('headline'))
     return {
         'game_id': event['id'], 'season': SEASON_LABEL, 'date_et': slate_date(event['date']),
-        'tip_utc': event['date'], 'time_valid': int(bool(c.get('timeValid', True))),
+        'tip_utc': event['date'], 'time_valid': int(c.get('timeValid') is True),
         'status': STATUS.get(status.get('name'), (status.get('name') or 'unknown').replace('STATUS_', '').lower()),
         'status_detail': status.get('shortDetail') or status.get('detail') or '',
         'away_id': side['away']['team']['id'], 'away_abbr': side['away']['team']['abbreviation'],

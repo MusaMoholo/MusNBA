@@ -677,7 +677,8 @@ confirmation and the protected final test were not run for this non-passing cand
 
 For S07's initial report-coverage audit, inventory every retained ESPN collection run without fetching a new source.
 Treat each collection's `finished` UTC timestamp as the conservative latest capture time; a dated tip is usable only
-when the entire run finished strictly before that tip. Audit missing rosters, injury files, status counts, unmatched
+when its source explicitly marks the time valid and the entire run finished strictly before that tip. Missing or
+invalid `timeValid` is unknown, not evidence of a valid tip. Audit missing rosters, injury files, status counts, unmatched
 injury IDs and final-box **coverage** separately. Absence of an injury entry is not proof of health. Because retained
 2026-27 snapshots belong to the protected final season, count whether a final box contains a rostered player but do
 not compare status with play/start outcomes, estimate calibration or use those outcomes for selection. Development

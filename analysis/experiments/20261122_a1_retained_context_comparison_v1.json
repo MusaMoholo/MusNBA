@@ -1,0 +1,20 @@
+{
+  "kind": "retained cutoff context equality; not a forecast",
+  "origin": "2026-11-22",
+  "method": "Recompute scripts.season_stats.team_table and player_table from retained box-score inputs with before=origin; compare dictionaries exactly to snapshot stats.json.",
+  "equal": {
+    "teams": true,
+    "league": true,
+    "players": true
+  },
+  "input_sha256": {
+    "data/snapshots/2026-11-22/stats.json": "f830d64dea47665594cb2a940fd3ca29396cf857f978542581f5af0f5aec83fb",
+    "data/derived/team_games.csv": "35e195b73a15ee762bc436fe438a69366588cc3c4fe941390b928a91613a2c7e",
+    "data/derived/player_games.csv": "53d322b8b5659a71a5e8ff34c0b3df801801e9dd760ad9e7b19a7cdeb4d280b9",
+    "data/derived/teams.json": "130aa5358d49b944c2b5bee7e9a163f1e53285e93dae57262f039ca1636b7ecc"
+  },
+  "limitations": [
+    "Equality is specific to these retained inputs and must be checked again after collection.",
+    "It does not establish per-game model, completion-time, or world provenance."
+  ]
+}

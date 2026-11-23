@@ -1,0 +1,14 @@
+{
+  "kind": "isolated minute precision inventory; not a prediction or promotion",
+  "source": "data/derived/experiments/20261122_chunk_a_a1_d47_10000_one/branch-000.npz",
+  "source_sha256": "35e268731f0e25d9e8af721fea15e2362976d8fa0336e228ea11abd27478cebd",
+  "population": "one conditional branch, 10000 worlds, 25 players and five period slots",
+  "period_player_world_cells": 1250000,
+  "noninteger_second_cells_tolerance_1e-8": 527727,
+  "max_distance_from_nearest_second": 0.5,
+  "method": "seconds = minutes * 60; count abs(seconds - rint(seconds)) > 1e-8; maximum of that absolute difference",
+  "limitations": [
+    "This measures stored simulated times, not real-game accuracy.",
+    "It does not establish a production precision fix."
+  ]
+}

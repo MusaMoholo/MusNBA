@@ -29,7 +29,7 @@ def utc(value: str) -> datetime:
 def game_origin(event: dict, finished: datetime) -> tuple[str, str | None]:
     competition = event['competitions'][0]
     stamp = event.get('date')
-    if not stamp or competition.get('timeValid', True) is False:
+    if not stamp or competition.get('timeValid') is not True:
         return 'unknown_tip', None
     tip = utc(str(stamp))
     day = slate_date(str(stamp))

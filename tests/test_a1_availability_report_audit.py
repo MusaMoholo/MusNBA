@@ -14,6 +14,8 @@ class ReportCoverageTests(unittest.TestCase):
         self.assertEqual(audit.game_origin(event, at_tip), ('at_or_after_tip', '2026-11-19'))
         event['competitions'][0]['timeValid'] = False
         self.assertEqual(audit.game_origin(event, before), ('unknown_tip', None))
+        del event['competitions'][0]['timeValid']
+        self.assertEqual(audit.game_origin(event, before), ('unknown_tip', None))
         with self.assertRaisesRegex(ValueError, 'lacks a UTC offset'):
             audit.utc('2026-11-20T01:00:00')
 

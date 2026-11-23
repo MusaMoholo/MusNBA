@@ -67,12 +67,18 @@ class TodayOnlyTests(unittest.TestCase):
             meta = {'kind': 'prospective', 'completed_at': '2026-11-22T17:00:00Z',
                     'games': ['a', 'b'], 'pre_tip': {'a': True, 'b': True}}
             write_json(snapshot / 'meta.json', meta)
-            slate = [{'game_id': 'a', 'tip_utc': '2026-11-22T18:00:00Z'},
-                     {'game_id': 'b', 'tip_utc': '2026-11-22T20:00:00Z'}]
+            slate = [{'game_id': 'a', 'tip_utc': '2026-11-22T18:00:00Z', 'time_valid': '1'},
+                     {'game_id': 'b', 'tip_utc': '2026-11-22T20:00:00Z', 'time_valid': '1'}]
             nightly.protect_pre_tip(snapshot, slate, True, '2026-11-22T17:59:59Z')
             for games, prospective, completed in (
                     (slate, True, '2026-11-22T18:00:00Z'),
                     ([{**slate[0], 'status': 'live'}, slate[1]], True, '2026-11-22T17:00:00Z'),
+                    ([{**slate[0], 'time_valid': '0'}, slate[1]], True, '2026-11-22T17:00:00Z'),
+                    ([{k: v for k, v in slate[0].items() if k != 'time_valid'}, slate[1]],
+                     True, '2026-11-22T17:00:00Z'),
+                    ([{**slate[0], 'tip_utc': None}, slate[1]], True, '2026-11-22T17:00:00Z'),
+                    ([{**slate[0], 'tip_utc': '2026-11-22T18:00:00'}, slate[1]],
+                     True, '2026-11-22T17:00:00Z'),
                     (slate[1:], True, '2026-11-22T17:00:00Z'),
                     (slate, False, '2026-11-22T17:00:00Z')):
                 with self.subTest(games=games, prospective=prospective), \
@@ -89,6 +95,21 @@ class TodayOnlyTests(unittest.TestCase):
             nightly.protect_pre_tip(snapshot, [{'game_id': 'a', 'tip_utc': '2026-11-23T18:00:00Z'}],
                                     True, '2026-11-23T19:00:00Z')
 
+    def test_retention_selects_only_old_pre_tip_games_that_can_no_longer_be_replaced(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            snapshot = Path(tmp) / '2026-11-22'
+            write_json(snapshot / 'meta.json', {'kind': 'prospective', 'slate_date': '2026-11-22',
+                       'origin': '2026-11-22', 'completed_at': '2026-11-22T17:00:00Z',
+                       'games': ['a', 'b'], 'pre_tip': {'a': True, 'b': True}})
+            slate = [{'game_id': 'a', 'tip_utc': '2026-11-22T18:00:00Z', 'time_valid': '1'},
+                     {'game_id': 'b', 'tip_utc': '2026-11-22T20:00:00Z', 'time_valid': '1'}]
+            self.assertEqual(nightly.retained_game_ids(snapshot, slate, True, '2026-11-22T17:59:59Z'), set())
+            self.assertEqual(nightly.retained_game_ids(snapshot, slate, True, '2026-11-22T18:00:00Z'), {'a'})
+            self.assertEqual(nightly.retained_game_ids(snapshot, [{**slate[0], 'time_valid': '0'}, slate[1]],
+                                                       True, '2026-11-22T17:59:59Z'), {'a'})
+            with self.assertRaisesRegex(ValueError, 'missing'):
+                nightly.retained_game_ids(snapshot, slate[1:], True, '2026-11-22T17:00:00Z')
+
     def test_write_snapshot_keeps_original_when_simulation_crosses_tip(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -104,7 +125,7 @@ class TodayOnlyTests(unittest.TestCase):
             write_json(target / 'meta.json', original)
             write_json(target / 'games.json', {'a': {'marker': 'original'}})
             part = {'day': '2026-11-22', 'origin': '2026-11-22', 'T': {}, 'lg': {'games': 1}, 'P': {},
-                    'slate': [{'game_id': 'a', 'tip_utc': '2026-11-22T18:00:00Z'}], 'prospective': True,
+                    'slate': [{'game_id': 'a', 'tip_utc': '2026-11-22T18:00:00Z', 'time_valid': '1'}], 'prospective': True,
                     'generated': '2026-11-22T17:59:59Z', 'model': {'id': 'test'}, 'sims': 1,
                     'season_sims': 1, 'engine_inputs': {}, 'games': {'a': {'marker': 'new'}},
                     'placeholder': {}, 'worlds': {}, 'started': 0}
@@ -116,6 +137,103 @@ class TodayOnlyTests(unittest.TestCase):
                     nightly.write_snapshot(part, season)
             self.assertEqual(read_json(target / 'meta.json'), original)
             self.assertEqual(read_json(target / 'games.json'), {'a': {'marker': 'original'}})
+
+    def test_snapshot_publish_rolls_back_if_staged_rename_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            derived, snapshots, master = root / 'derived', root / 'snapshots', root / 'master.csv'
+            derived.mkdir()
+            master.write_text('fixture')
+            for name in ('player_games.csv', 'team_games.csv', 'player_periods.csv'):
+                (derived / name).write_text(name)
+            write_json(derived / 'players.json', {'run': 'run'})
+            target, staging = snapshots / '2026-11-22', snapshots / '.2026-11-22.partial'
+            write_json(target / 'meta.json', {'kind': 'prospective', 'completed_at': '2026-11-22T17:00:00Z',
+                                              'games': ['a'], 'pre_tip': {'a': True}})
+            write_json(target / 'games.json', {'a': 'original'})
+            part = {'day': '2026-11-22', 'origin': '2026-11-22', 'T': {}, 'lg': {'games': 1}, 'P': {},
+                    'slate': [{'game_id': 'a', 'tip_utc': '2026-11-22T18:00:00Z', 'time_valid': '1'}], 'prospective': True,
+                    'generated': '2026-11-22T17:30:00Z', 'model': {'id': 'test'}, 'sims': 1,
+                    'season_sims': 1, 'engine_inputs': {}, 'games': {'a': 'replacement'},
+                    'placeholder': {}, 'worlds': {}, 'started': 0}
+            season = {'model': 'pathway', 'as_of': '2026-11-22', 'pathway': {'label': 'test'}, 'games': []}
+            original_rename = Path.rename
+
+            def rename(path, destination):
+                if path == staging:
+                    raise OSError('injected publish failure')
+                return original_rename(path, destination)
+
+            with patch.object(nightly, 'DERIVED', derived), patch.object(nightly, 'SNAPSHOTS', snapshots), \
+                    patch.object(nightly, 'MASTER_CSV', master), \
+                    patch.object(nightly, 'utc_now', return_value='2026-11-22T17:45:00Z'), \
+                    patch.object(nightly, 'archive_paths', return_value='archive'), patch.object(Path, 'rename', rename):
+                with self.assertRaisesRegex(OSError, 'injected publish failure'):
+                    nightly.write_snapshot(part, season)
+            self.assertEqual(read_json(target / 'games.json'), {'a': 'original'})
+            self.assertEqual(read_json(staging / 'games.json'), {'a': 'replacement'})
+            self.assertFalse((snapshots / '.2026-11-22.previous').exists())
+
+    def test_write_snapshot_keeps_original_when_tip_passes_during_archive(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            derived, snapshots, master = root / 'derived', root / 'snapshots', root / 'master.csv'
+            derived.mkdir()
+            master.write_text('fixture')
+            for name in ('player_games.csv', 'team_games.csv', 'player_periods.csv'):
+                (derived / name).write_text(name)
+            write_json(derived / 'players.json', {'run': 'run'})
+            target = snapshots / '2026-11-22'
+            original = {'kind': 'prospective', 'completed_at': '2026-11-22T17:00:00Z',
+                        'games': ['a'], 'pre_tip': {'a': True}}
+            write_json(target / 'meta.json', original)
+            write_json(target / 'games.json', {'a': 'original'})
+            part = {'day': '2026-11-22', 'origin': '2026-11-22', 'T': {}, 'lg': {'games': 1}, 'P': {},
+                    'slate': [{'game_id': 'a', 'tip_utc': '2026-11-22T18:00:00Z', 'time_valid': '1'}],
+                    'prospective': True, 'generated': '2026-11-22T17:30:00Z', 'model': {'id': 'test'},
+                    'sims': 1, 'season_sims': 1, 'engine_inputs': {}, 'games': {'a': 'replacement'},
+                    'placeholder': {}, 'worlds': {}, 'started': 0}
+            season = {'model': 'pathway', 'as_of': '2026-11-22', 'pathway': {'label': 'test'}, 'games': []}
+            with patch.object(nightly, 'DERIVED', derived), patch.object(nightly, 'SNAPSHOTS', snapshots), \
+                    patch.object(nightly, 'MASTER_CSV', master), \
+                    patch.object(nightly, 'utc_now', side_effect=['2026-11-22T17:59:59Z', '2026-11-22T18:00:01Z']), \
+                    patch.object(nightly, 'archive_paths', return_value='archive'):
+                with self.assertRaisesRegex(ValueError, 'refusing to replace'):
+                    nightly.write_snapshot(part, season)
+            self.assertEqual(read_json(target / 'meta.json'), original)
+            self.assertEqual(read_json(target / 'games.json'), {'a': 'original'})
+
+    def test_interrupted_publish_recovers_previous_before_checking_protection(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            snapshot = Path(tmp) / '2026-11-22'
+            previous = Path(tmp) / '.2026-11-22.previous'
+            write_json(previous / 'meta.json', {'kind': 'prospective', 'completed_at': '2026-11-22T17:00:00Z',
+                                                'games': ['a'], 'pre_tip': {'a': True}})
+            write_json(previous / 'games.json', {'a': 'original'})
+            slate = [{'game_id': 'a', 'tip_utc': '2026-11-22T18:00:00Z', 'time_valid': '1'}]
+            with self.assertRaisesRegex(ValueError, 'refusing to replace'):
+                nightly.protect_pre_tip(snapshot, slate, True, '2026-11-22T19:00:00Z')
+            self.assertEqual(read_json(snapshot / 'games.json'), {'a': 'original'})
+            self.assertFalse(previous.exists())
+
+    def test_interrupted_publish_with_two_snapshots_requires_review(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            snapshot = Path(tmp) / '2026-11-22'
+            previous = Path(tmp) / '.2026-11-22.previous'
+            write_json(snapshot / 'meta.json', {'marker': 'new'})
+            write_json(previous / 'meta.json', {'marker': 'old'})
+            with self.assertRaisesRegex(ValueError, 'previous'):
+                nightly.protect_pre_tip(snapshot, [], True, '2026-11-22T19:00:00Z')
+            self.assertEqual(read_json(snapshot / 'meta.json')['marker'], 'new')
+            self.assertEqual(read_json(previous / 'meta.json')['marker'], 'old')
+
+    def test_view_builder_rejects_an_interrupted_snapshot_publish(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write_json(root / '2026-11-21' / 'meta.json', {'origin': '2026-11-21'})
+            write_json(root / '.2026-11-22.previous' / 'meta.json', {'origin': '2026-11-22'})
+            with patch.object(views, 'SNAPSHOTS', root), self.assertRaisesRegex(ValueError, 'previous'):
+                views.load_snapshots()
 
     def test_future_regulation_distributions_use_season_worlds(self):
         teams = {'1': {'conf': 'East'}, '2': {'conf': 'West'}}

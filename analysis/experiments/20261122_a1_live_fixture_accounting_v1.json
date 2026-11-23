@@ -1,0 +1,56 @@
+{
+  "kind": "isolated research fixture accounting; not a forecast",
+  "origin": "2026-11-22",
+  "auditor": "analysis/a1_branch_browser_fixture_audit.py",
+  "auditor_sha256": "a94be8eca84740cf53d6eaee956adda6304bde25551e066a27093853bb7d366e",
+  "fixture_reports": [
+    {
+      "source": "data/derived/experiments/20261122_a1_live_branch_033_v1.json",
+      "source_sha256": "d80723bcd9228dcd7bf263bdf8178694981b817590848ac4a8cd02a4f36687a1",
+      "fixture_sha256": "cc5211b4640a8381923fadc8a81ef03fd84bfc557d22c38b115f1d2a3a415fa3",
+      "branches": 2,
+      "worlds": 20000,
+      "player_stat_values": 9000000,
+      "player_period_stat_values": 42000000,
+      "player_period_exact_minute_values": 3000000,
+      "summary_distributions": 3958,
+      "summary_means": 3709,
+      "exact_vs_whole_minute_threshold_disagreements_at_30_min": 301,
+      "positive_minutes_rounded_to_zero": 6178
+    },
+    {
+      "source": "data/derived/experiments/20261122_a1_live_branch_034_v1.json",
+      "source_sha256": "6111ca22d0981ff3cc14bda9bb8cdaa77f9cf90b88e243583c3d98223a72c3ed",
+      "fixture_sha256": "d190d0f903e11971c545eb174b52dc5dccb906c354d493a3e17f49ad35508f8b",
+      "branches": 4,
+      "worlds": 40000,
+      "player_stat_values": 18000000,
+      "player_period_stat_values": 84000000,
+      "player_period_exact_minute_values": 6000000,
+      "summary_distributions": 3958,
+      "summary_means": 3719,
+      "exact_vs_whole_minute_threshold_disagreements_at_30_min": 831,
+      "positive_minutes_rounded_to_zero": 15532
+    },
+    {
+      "source": "data/derived/experiments/20261122_a1_live_branch_035_v1.json",
+      "source_sha256": "6f2d44ba00a8e47a242887c357d188931b5632546d5306705f2063bb9bf5a748",
+      "fixture_sha256": "9ba744da9e8fbc6693dade068925cc8d3d374bf4646de19dc32e7ee64216f9e1",
+      "branches": 2,
+      "worlds": 20000,
+      "player_stat_values": 9000000,
+      "player_period_stat_values": 42000000,
+      "player_period_exact_minute_values": 3000000,
+      "summary_distributions": 3958,
+      "summary_means": 3714,
+      "exact_vs_whole_minute_threshold_disagreements_at_30_min": 444,
+      "positive_minutes_rounded_to_zero": 6225
+    }
+  ],
+  "limitations": [
+    "Accounting checks do not establish predictive accuracy or calibration.",
+    "The audited research-summary minute histograms still use whole-minute rounding.",
+    "Captures are not verified published pre-tip forecasts and are not integrated in production.",
+    "Detailed player-level reports and fixtures are retained under ignored data/derived/experiments."
+  ]
+}
