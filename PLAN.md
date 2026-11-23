@@ -429,6 +429,11 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 ET · A1 restart research:** a fixed-F4 clean-stop/resume capture matched the uninterrupted
+  **200** world hashes, seeds and injected rejection; each independent audit checked **50,817** lineup
+  snapshots. Corrupt/incomplete prefixes fail closed. Control took **20.235s**; the second resumed invocation
+  took **12.414s**, excluding its first part and prefix audit. This is single-operator, not a hard-kill,
+  production, cross-fold or bias test. No forecast, bundle or model changed. A1 **80%**, Chunk A **34.5%**.
 - **22 Nov 2026 ET · A1 precise-minute delivery:** schema 1 retains float64 period minutes for future
   worlds; laptop sheets and conditional outcomes use world identity, while phone receives independent sorted
   marginals. Three isolated 10,000-world captures each independently reconciled **2.1 million** values per

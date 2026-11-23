@@ -2,6 +2,16 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 ET — isolated restart:** one fixed F4 game with synthetic selected availability was
+generated twice for **200** independently seeded worlds. An uninterrupted run and a clean stop after 100
+followed by resume matched all **200** capture hashes, accepted seeds and the one deliberately injected
+rejection. Separate independent audits each reconciled **50,817** lineup snapshots; a corrupted temporary
+copy was rejected before any further simulation. Control generation took **20.235s**; resumed generation's
+second invocation took **12.414s**, excluding the first invocation and prefix audit. This is not a hard-kill
+test, a real rejection rate, cross-fold bias comparison or full-slate benchmark. Earlier pilot reuse failed
+because `scripts/projection.py` changed under D50; the pilot was regenerated with new fingerprints.
+Comparison and source hashes: `analysis/experiments/20261122_a1_restart_compare_v1.json`.
+
 **22 Nov 2026 ET — production-format minute accounting:** independent audits of three isolated research
 captures, each **10,000 worlds × 30 players**, bitwise reconciled **2.1 million** laptop period values
 and **2.1 million** sorted phone marginal values across **210** player-period distributions per capture.

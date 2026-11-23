@@ -5,8 +5,9 @@ from pathlib import Path
 import numpy as np
 
 from analysis.a1_parallel_capture_audit import extract_world
-from analysis.a1_parallel_capture_scale import merge_captures
+from analysis.a1_parallel_capture_scale import merge_captures, resume_records
 from analysis.a1_parallel_world_probe import capture_digest
+from basketball_common import write_json
 
 
 def fixture(dtype):
@@ -46,6 +47,34 @@ class ParallelCaptureTests(unittest.TestCase):
         second['trace_world'][0] = 1
         with self.assertRaisesRegex(ValueError, 'single-world traces'):
             merge_captures([first, second])
+
+    def test_resume_requires_matching_configuration_and_complete_contiguous_pairs(self):
+        config = {'batches': 3, 'fingerprints': {'engine': 'abc'}}
+        with tempfile.TemporaryDirectory() as tmp:
+            directory = Path(tmp)
+            write_json(directory / 'run.json', config)
+            record = {'path': str(directory / 'batch_000.npz')}
+            write_json(directory / 'batch_000.json', record)
+            with self.assertRaisesRegex(ValueError, 'incomplete saved pair'):
+                resume_records(directory, config)
+            (directory / 'batch_000.npz').touch()
+            self.assertEqual(resume_records(directory, config), [record])
+            with self.assertRaisesRegex(ValueError, 'configuration or fingerprints changed'):
+                resume_records(directory, {'batches': 3, 'fingerprints': {'engine': 'different'}})
+            (directory / 'batch_002.npz').touch()
+            with self.assertRaisesRegex(ValueError, 'non-contiguous'):
+                resume_records(directory, config)
+            self.assertTrue((directory / 'batch_002.npz').exists())
+
+    def test_resume_rejects_capture_path_outside_run_directory(self):
+        config = {'batches': 1}
+        with tempfile.TemporaryDirectory() as tmp:
+            directory = Path(tmp)
+            write_json(directory / 'run.json', config)
+            write_json(directory / 'batch_000.json', {'path': '/elsewhere/batch_000.npz'})
+            (directory / 'batch_000.npz').touch()
+            with self.assertRaisesRegex(ValueError, 'capture path differs'):
+                resume_records(directory, config)
 
 
 if __name__ == '__main__':

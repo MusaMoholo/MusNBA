@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import argparse
 import os
+import subprocess
 import sys
+import tempfile
 import time
 from concurrent.futures import ProcessPoolExecutor
 from functools import partial
@@ -21,6 +23,12 @@ from scripts import a1_branch_world_probe, a1_substitution_world_audit, a1_world
 from scripts.projection import seed_for  # noqa: E402
 
 STATIC = ('game_id', 'player_ids', 'side')
+LIMITATIONS = [
+    'One rejection is injected; remaining rejections are not representative of NBA games.',
+    'This is one synthetic-availability F4 game, not a fold comparison or calibrated forecast.',
+    'Per-world seeds differ from production vectorized streams.',
+    'This is not a full-slate or nightly runtime.',
+]
 
 
 def capture_world(world: int, attempt: int, seed: int, *, inject: bool) -> dict:
@@ -53,17 +61,62 @@ def merge_captures(captures: list[dict[str, np.ndarray]]) -> dict[str, np.ndarra
     return merged
 
 
+def resume_records(directory: Path, config: dict) -> list[dict]:
+    if read_json(directory / 'run.json') != config:
+        raise ValueError('resume configuration or fingerprints changed')
+    names = {path.name for path in directory.iterdir()}
+    records = []
+    for batch in range(config['batches']):
+        json_name, npz_name = f'batch_{batch:03d}.json', f'batch_{batch:03d}.npz'
+        if json_name not in names and npz_name not in names:
+            break
+        if json_name not in names or npz_name not in names:
+            raise ValueError(f'batch {batch}: incomplete saved pair')
+        record = read_json(directory / json_name)
+        if record.get('path') != str(directory / npz_name):
+            raise ValueError(f'batch {batch}: capture path differs from run directory')
+        records.append(record)
+        names.remove(json_name)
+        names.remove(npz_name)
+    if names != {'run.json'}:
+        raise ValueError('unexpected or non-contiguous saved files')
+    return records
+
+
+def audit_prefix(records: list[dict], config: dict) -> None:
+    if not records:
+        return
+    report = {
+        'pilot': config['pilot'], 'fingerprints': config['fingerprints'],
+        'worlds': 100 * len(records), 'base_seed': config['base_seed'], 'batches': records,
+        'rejection_count': sum(len(record['rejections']) for record in records),
+        'limitations': LIMITATIONS,
+    }
+    with tempfile.TemporaryDirectory(prefix='musnba-a1-resume-audit-') as tmp:
+        report_path, output_path = Path(tmp) / 'prefix.json', Path(tmp) / 'audit.json'
+        write_json(report_path, report, pretty=True)
+        subprocess.run([sys.executable, str(ROOT / 'analysis/a1_parallel_capture_audit.py'),
+                        str(report_path), '--output', str(output_path)], check=True)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--pilot', type=Path, required=True)
     parser.add_argument('--worlds-dir', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--batches', type=int, default=100)
+    parser.add_argument('--resume', action='store_true')
+    parser.add_argument('--stop-after-batches', type=int,
+                        help='Stop cleanly after this many batches for a restart experiment.')
     args = parser.parse_args()
-    if args.output.exists() or args.worlds_dir.exists():
-        raise FileExistsError('refusing to overwrite an experiment or its captures')
+    if args.output.exists():
+        raise FileExistsError('refusing to overwrite an experiment')
+    if args.worlds_dir.exists() != args.resume:
+        raise FileExistsError('new captures require a new directory; resume requires an existing directory')
     if not 1 <= args.batches <= 100:
         raise ValueError('batches must be between 1 and 100')
+    if args.stop_after_batches is not None and not 1 <= args.stop_after_batches < args.batches:
+        raise ValueError('stop-after-batches must leave at least one batch unfinished')
     if any(os.environ.get(name) != '1' for name in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS')):
         raise ValueError('set OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1')
     pilot = read_json(args.pilot)
@@ -82,12 +135,24 @@ def main() -> None:
             raise ValueError('pilot provenance changed')
 
     verify_inputs()
-    args.worlds_dir.mkdir(parents=True)
     base_seed = int(pilot['seed'])
-    records, rejection_count = [], 0
+    config = {'pilot': str(args.pilot), 'output': str(args.output), 'batches': args.batches,
+              'base_seed': str(base_seed), 'fingerprints': fingerprints}
+    if args.resume:
+        records = resume_records(args.worlds_dir, config)
+        audit_prefix(records, config)
+        verify_inputs()
+    else:
+        args.worlds_dir.mkdir(parents=True)
+        write_json(args.worlds_dir / 'run.json', config, pretty=True)
+        records = []
+    if args.stop_after_batches is not None and len(records) >= args.stop_after_batches:
+        raise ValueError('stop-after-batches must exceed the completed prefix')
+    rejection_count = sum(len(record['rejections']) for record in records)
+    resumed_batches = len(records)
     started = time.monotonic()
     with ProcessPoolExecutor(max_workers=10, initializer=init_worker, initargs=(pilot['game'],)) as pool:
-        for batch in range(args.batches):
+        for batch in range(len(records), args.batches):
             batch_seed = base_seed if batch == 0 else seed_for('a1-scale-batch-v1', base_seed, batch)
             result = simulate_parallel(partial(capture_world, inject=batch == 0), pool, worlds=100,
                                        seed=batch_seed, attempts_per_world=3,
@@ -121,20 +186,22 @@ def main() -> None:
             if (batch + 1) % 10 == 0:
                 elapsed = time.monotonic() - started
                 print(f'{(batch + 1) * 100}/{args.batches * 100} worlds in {elapsed:.1f}s; '
-                      f'{(batch + 1) * 100 / elapsed:.2f} worlds/s; {rejection_count} rejections', flush=True)
+                      f'{(batch + 1 - resumed_batches) * 100 / elapsed:.2f} new worlds/s; '
+                      f'{rejection_count} rejections', flush=True)
+            if batch + 1 == args.stop_after_batches:
+                verify_inputs()
+                print(f'Stopped after {batch + 1} complete batches; resume with --resume', flush=True)
+                return
     verify_inputs()
     write_json(args.output, {
         'kind': 'synthetic-injection isolated-world scale research; not a forecast or promotion',
         'game': pilot['game'], 'model': pilot['model'], 'worlds': args.batches * 100, 'workers': 10,
         'threads': 'OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1', 'base_seed': str(base_seed),
         'pilot': str(args.pilot), 'fingerprints': fingerprints, 'batches': records,
-        'elapsed_seconds': round(time.monotonic() - started, 3), 'rejection_count': rejection_count,
-        'limitations': [
-            'One rejection is injected; remaining rejections are not representative of NBA games.',
-            'This is one synthetic-availability F4 game, not a fold comparison or calibrated forecast.',
-            'Per-world seeds differ from production vectorized streams.',
-            'This is not a full-slate or nightly runtime.',
-        ],
+        'elapsed_seconds': round(time.monotonic() - started, 3), 'resumed_batches': resumed_batches,
+        'elapsed_limitation': 'Elapsed time covers this invocation only, excluding any earlier batches and prefix audit.',
+        'rejection_count': rejection_count,
+        'limitations': LIMITATIONS,
     }, pretty=True)
 
 

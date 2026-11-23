@@ -1,0 +1,21 @@
+{
+ "kind": "independently audited clean-stop/resume comparison; not a forecast or promotion",
+ "control": "analysis/experiments/20261122_a1_restart_control_v1.json",
+ "control_sha256": "83509569e04c5e3544ac952f7414634f02bb5a2ad202af148d4cbd73224e7cea",
+ "resumed": "analysis/experiments/20261122_a1_restart_resume_v1.json",
+ "resumed_sha256": "ab966b4a3682ddcf38f38dd827aba03e114c880aace2f80d4f5047382ec430f4",
+ "control_audit": "analysis/experiments/20261122_a1_restart_control_v1_audit.json",
+ "control_audit_sha256": "f721070b7a54c5e1fb6973faf19dc621176ae1f8e3694aee826bfc1b738a4aa2",
+ "resumed_audit": "analysis/experiments/20261122_a1_restart_resume_v1_audit.json",
+ "resumed_audit_sha256": "678d046f7b6862ec4a6cfebe5148052875ff625a8f31cf9faee75db19d385dfc",
+ "worlds": 200,
+ "batches": 2,
+ "resumed_batches": 1,
+ "rejections": 1,
+ "lineup_snapshots_per_run": 50817,
+ "limitations": [
+  "Clean stop at a completed batch, not a hard interruption during a write.",
+  "One fixed F4 game with synthetic availability and one injected rejection.",
+  "This does not validate production, predictive accuracy or bias."
+ ]
+}

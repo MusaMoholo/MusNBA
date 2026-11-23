@@ -1,0 +1,17 @@
+{
+ "kind": "independent saved-trace accounting and identity audit",
+ "report": "analysis/experiments/20261122_a1_restart_resume_v1.json",
+ "report_sha256": "ab966b4a3682ddcf38f38dd827aba03e114c880aace2f80d4f5047382ec430f4",
+ "worlds": 200,
+ "batches": 2,
+ "lineup_snapshots": 50817,
+ "rejections": 1,
+ "serial_pilot_worlds_checked": 20,
+ "elapsed_seconds": 0.399,
+ "limitations": [
+  "One rejection is injected; remaining rejections are not representative of NBA games.",
+  "This is one synthetic-availability F4 game, not a fold comparison or calibrated forecast.",
+  "Per-world seeds differ from production vectorized streams.",
+  "This is not a full-slate or nightly runtime."
+ ]
+}

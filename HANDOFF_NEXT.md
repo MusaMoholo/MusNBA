@@ -5,6 +5,31 @@ The preceding pushed checkpoint was **715625f** (exact-minute research view); us
 
 ## Read this first — live handoff
 
+- **A1 90% partial — isolated restart (23 Nov UTC):** an opt-in fixed-game capture now resumes only a
+  contiguous complete batch prefix after checking run configuration/source fingerprints and independently
+  auditing all saved seeds, retries, player/lineup accounting and hashes. An uninterrupted and clean-stopped
+  then resumed **200-world** F4 run matched all hashes, seeds and the one injected rejection; each audited
+  **50,817** lineup snapshots. Control generation took **20.235s**, resumed second invocation **12.414s**
+  (excluding the first invocation and prefix audit), not a 10k or slate estimate. A deliberately corrupted
+  temporary batch was rejected before further simulation; incomplete/gapped/config-changed prefixes fail in
+  focused tests. This was a clean stop after a whole batch, not a hard kill mid-write. Partial files fail closed
+  for manual inspection; concurrent resume operators are not coordinated and must not run. The prior pilot's
+  `scripts/projection.py` hash changed under D50, so the first attempted reuse failed safely; fresh
+  fingerprinted provenance and pilot were generated rather than relaxing that check.
+  Reports `analysis/experiments/20261122_a1_restart_{provenance,pilot20,control,resume,compare}_v1.json`
+  and `{control,resume}_v1_audit.json`; captures remain ignored under
+  `data/derived/experiments/20261122_a1_restart_{control,resume}_v1/`.
+  To repeat with fresh names: `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -u
+  analysis/a1_parallel_capture_scale.py --pilot analysis/experiments/20261122_a1_restart_pilot20_v1.json
+  --worlds-dir data/derived/experiments/<new-dir> --output analysis/experiments/<new-report>.json
+  --batches 2 --stop-after-batches 1`; run the same command with `--resume` replacing
+  `--stop-after-batches 1`, then audit and compare both outputs with the scripts listed in README.
+  This is research only, not a representative failure/bias rate, production integration or model promotion.
+  Focused retry/capture tests **11/11**, smoke **107/107**, deliberate fault **86/107** and exit 1
+  (`/tmp/musnba_a1_restart_{smoke,fault}_v1.log`). HANDOFF, PLAN, FINDINGS and README record the work;
+  AGENTS, ENGINE_PLAN, TRAINING_PLAN and DASHBOARD_PLAN need no changes because standing rules, accepted
+  engine, evaluation gates and shipped UI did not change.
+  A1 stays **80%**, Chunk A **34.5%**; remaining 90% and actual dashboard controls still need the gates below.
 - **A1 production-minute format checkpoint (23 Nov UTC; still 22 Nov ET):** new simulations now retain
   five float64 period-minute values per player/world in versioned snapshot schema 1; older snapshots decode
   as rounded and cannot acquire lost precision. The laptop retains world identity for precise sheets,
@@ -330,6 +355,15 @@ The preceding pushed checkpoint was **715625f** (exact-minute research view); us
   reports are absent. Do not equate wiring tests with predictive promotion. **Owner's latest stop:
   stop at the end of A1**, checkpoint/push and report gains and limitations; do not start A2, A3 or Chunk B in
   this run. The earlier dashboard house pass was already delivered; no nightly merely for this research checkpoint.
+- **A1 90% restart experiment, frozen before implementation:** add explicit opt-in resume to the isolated
+  fixed-F4 batched capture, not the nightly. Persist the requested run configuration and input/source hashes;
+  accept only a contiguous prefix of complete batch pairs. Before scheduling further worlds, independently
+  replay and audit the entire prefix, its hashes, seeds, rejection order, pilot identities and lineup/score
+  accounting. Reject missing/extra/partial files, changed configuration or source, output collisions and all
+  unclassified failures without deleting or overwriting them. Preserve deterministic per-batch seeds and the
+  global retry cap. Compare uninterrupted and interrupted/resumed captures and independent audit results;
+  test interrupted/invalid prefixes and changed inputs. This is a fixed-game restart check, not a fold, runtime,
+  unbiased-retry or promotion gate, and it must not change accepted forecasts.
 - **A1 80% complete, injection-only:** a single shared research lineup control now drives selected player, team,
   sheet, scenario/Given/Joint and driver views; branch-unavailable metadata/cards are omitted. Available and
   positive-minute participation are distinct; shooting-defined mass is weighted. No normal route registers the
@@ -2812,7 +2846,9 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
    20-world synthetic-rejection pilot is reproducible with
    `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -u analysis/a1_world_retry_probe.py --game 401810327 --worlds 20 --seed 20261122 --output analysis/experiments/<new-retry-report>.json`.
    It does not persist the full captures and does not prove a 10k runtime or real failure rate. The branch
-   10k deterministic captures and independent audits are listed in State. Source evidence and missing dated
+   10k deterministic captures, isolated 200-world clean-stop/resume comparison and independent audits are
+   listed above. The resume prototype is single-operator only, and an orphaned partial batch fails for manual
+   inspection. Source evidence and missing dated
    injury-report cohorts are documented there and in FINDINGS; do not score protected-season outcomes.
    The retry coordinator is deliberately unwired: prove world-local classification and survivor isolation,
    audit persisted outputs, cap and record retries, compare predictive effects to the distinct S06 penalty
