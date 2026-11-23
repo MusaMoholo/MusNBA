@@ -147,7 +147,7 @@ export async function scenarioView(el, data, encoded) {
         <div class="scroll" style="margin-top:10px"><table><thead><tr><th class="l">Team</th><th>Points (Δ)</th><th>Win given</th><th>Win, all</th></tr></thead><tbody>${teamRows}${game}</tbody></table></div></section>${flow}<div id="duel-slot"></div>${boxes}`;
     }
     el.innerHTML = `<section class="panel"><h2 style="margin-top:0">Scenarios</h2>
-        <p class="note" style="margin-top:0">Pick conditions to filter the ${C.count(base).toLocaleString()} saved simulated games to those where every condition happens${Wd.weights ? ', using their branch weights' : ''}. Small grey numbers: change from all selected simulations.</p>
+        <p class="note" style="margin-top:0">Pick conditions to filter the ${C.count(base).toLocaleString()} saved simulated games to those where every condition happens${Wd.weights ? ', using their branch weights' : ''}. Small grey numbers: change from all selected simulations. Plays and sits filter positive and zero saved minutes; they do not force availability and their differences are not causal lineup what-ifs. Older saved minutes may be rounded.</p>
         <div class="chips left">${chips || '<span class="note" style="margin:0">No conditions — all simulations.</span>'}${conds.length ? '<button type="button" class="ghost sm" data-clear>Clear</button>' : ''}</div>
         ${builder(data, Wd, 'scn')}
         <details style="margin-top:8px"><summary class="note" style="cursor:pointer">Quick scenarios</summary>${pre}</details></section>${body}`;
