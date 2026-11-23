@@ -30,7 +30,7 @@ const send = (method, params = {}, sessionId) => new Promise((resolve, reject) =
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const {targetId} = await send('Target.createTarget', {url: 'about:blank'});
 const {sessionId: s} = await send('Target.attachToTarget', {targetId, flatten: true});
-for (const d of ['Page', 'Runtime', 'DOM', 'Network']) await send(d + '.enable', {}, s);
+for (const d of ['Page', 'Runtime', 'DOM', 'Network', 'Performance']) await send(d + '.enable', {}, s);
 if (args['bypass-service-worker']) await send('Network.setBypassServiceWorker', {bypass: true}, s);
 await send('Emulation.setDeviceMetricsOverride', {width: 390, height: 844, deviceScaleFactor: 2, mobile: true}, s);
 const evaluate = async expression => (await send('Runtime.evaluate', {expression, returnByValue: true, awaitPromise: true}, s)).result.value;
@@ -313,6 +313,56 @@ if (args.profile) {
     await send('Page.navigate', {url: args.url + '#/game/' + shootingTarget.game + '/scenario'}, s);
     check('laptop scenarios render from saved worlds offline', await waitFor(`!!document.querySelector('[data-builder="scn"]') && document.querySelector('#view').textContent.includes(${JSON.stringify('of ' + shootingTarget.total.toLocaleString() + ' saved worlds')})`, 30000));
   }
+}
+if (args['availability-game']) {
+  const gid = args['availability-game'];
+  await send('Page.navigate', {url: args.url + '#/game/' + encodeURIComponent(gid) + '/fg'}, s);
+  const availabilityReady = await waitFor(`(async () => {
+    const ui = await import('./assets/ui.mjs'), game = await ui.api('game/' + ${JSON.stringify(gid)});
+    return !!document.querySelector('details[data-player-availability]') && document.querySelector('#period-select')?.value === 'fg'
+      && ['away', 'home'].every(side => document.querySelector('.bz-team.' + side)?.getAttribute('href') === '#/team/' + game.game[side].id);
+  })()`);
+  check('fresh game labels match imported origin and model', availabilityReady && await evaluate(`(async () => {
+    const ui = await import('./assets/ui.mjs'), game = await ui.api('game/' + ${JSON.stringify(gid)});
+    const projection = game.projection, text = document.querySelector('.bezel').textContent;
+    return projection.snapshot === game.game.date && projection.snapshot === ui.meta().latest
+      && text.includes('Engine ' + projection.model.version)
+      && text.includes(projection.sim.sims.toLocaleString() + ' sims')
+      && text.includes(ui.forecastTiming(projection.kind, projection.pre_tip, projection.completed_at));
+  })()`));
+  const availabilityOK = availabilityReady && await evaluate(`(async () => {
+    const ui = await import('./assets/ui.mjs'), game = await ui.api('game/' + ${JSON.stringify(gid)});
+    const eligible = ['away', 'home'].flatMap(side => (game.availability?.[side] || []).filter(r =>
+      r.assumed_availability > 0 && r.assumed_availability < 1
+      && game.projection?.sim?.[side].players.some(p => String(p.id) === String(r.id) && p.periods)));
+    if (game.game.date !== ui.etToday() || !eligible.length) return false;
+    const links = [...document.querySelectorAll('.av-slices a')];
+    if (${JSON.stringify(args.profile)} === 'phone') return !game.worlds && links.length === 0
+      && document.querySelector('details[data-player-availability]').textContent.includes('Saved worlds are unavailable for this game on this device');
+    if (!game.worlds || links.length !== 2 * eligible.length) return false;
+    const condition = [{subj: 'p:' + eligible[0].id, v: 'plays'}];
+    const href = '#/game/' + encodeURIComponent(game.game.id) + '/scenario/' + encodeURIComponent(JSON.stringify(condition));
+    if (!links.some(a => a.getAttribute('href') === href)) return false;
+    const O = await import('./assets/outcomes.mjs'), Wd = await O.load(game.game.id), n = O.count(O.mask(Wd, condition));
+    location.hash = href;
+    for (let i = 0; i < 100 && !document.querySelector('#game-body .chip'); i++) await new Promise(r => setTimeout(r, 100));
+    const text = document.querySelector('#game-body')?.textContent || '';
+    return text.includes('not causal lineup what-ifs') && (n
+      ? text.includes(n.toLocaleString() + ' of ' + Wd.W.toLocaleString() + ' saved worlds')
+      : text.includes('No simulated game matches'));
+  })()`);
+  const availabilityDetail = availabilityOK ? '' : JSON.stringify(await evaluate(`(async () => {
+    const ui = await import('./assets/ui.mjs'), game = await ui.api('game/' + ${JSON.stringify(gid)});
+    const panel = document.querySelector('details[data-player-availability]');
+    return {hash: location.hash, today: ui.etToday(), gameDate: game.game.date, worlds: game.worlds,
+      panel: panel?.textContent.slice(0, 1000), links: document.querySelectorAll('.av-slices a').length,
+      view: document.querySelector('#view')?.textContent.slice(0, 1200)};
+  })()`));
+  check('offline uncertainty participation links match bundle capabilities', availabilityOK, availabilityDetail);
+  const metrics = (await send('Performance.getMetrics', {}, s)).metrics;
+  const heap = metrics.find(metric => metric.name === 'JSHeapUsedSize');
+  console.log(heap ? `METRIC  current renderer JS heap ${(heap.value / 1048576).toFixed(1)} MiB (not whole-browser or device memory)`
+    : 'METRIC  current renderer JS heap unavailable');
 }
 if (args['research-game']) {
   const gid = args['research-game'];

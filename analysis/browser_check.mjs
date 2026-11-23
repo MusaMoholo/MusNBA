@@ -60,6 +60,8 @@ const CASES = [
   ['player-house', '#/player/3032977', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['today-house', '#/today/2026-11-22', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['game-house', '#/game/401910029', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['availability-slices', '#/game/401910034', ['desktop', 'half', 'phone'], ['dark', 'light']],
+  ['availability-archived', '#/game/401910034', ['desktop'], ['light']],
   ['game-final-house', '#/game/401910009', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['team-house', '#/team/14', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['team-no-proj-house', '#/team/20', ['desktop', 'half', 'phone'], ['dark', 'light']],
@@ -113,6 +115,13 @@ for (const [name, hash, sizes, themes] of CASES) {
     await send('Emulation.setDeviceMetricsOverride', {width, height, deviceScaleFactor: scale, mobile}, sessionId);
     if (mobile) await send('Emulation.setTouchEmulationEnabled', {enabled: true, maxTouchPoints: 5}, sessionId);
     await send('Emulation.setEmulatedMedia', {features: [{name: 'prefers-color-scheme', value: theme}]}, sessionId);
+    if (name === 'availability-slices' || name === 'availability-archived') await send('Page.addScriptToEvaluateOnNewDocument', {source: `{
+      const RealDate = Date, fixed = RealDate.parse(${JSON.stringify(name === 'availability-slices' ? '2026-11-22T18:00:00Z' : '2026-11-23T18:00:00Z')});
+      globalThis.Date = class extends RealDate {
+        constructor(...args) { super(...(args.length ? args : [fixed])); }
+        static now() { return fixed; }
+      };
+    }`}, sessionId);
     await send('Page.navigate', {url: BASE + '/' + hash}, sessionId);
     let ready = false;
     for (let i = 0; i < 60 && !ready; i++) {
@@ -121,6 +130,42 @@ for (const [name, hash, sizes, themes] of CASES) {
       ready = result.value === true;
     }
     let interaction = true;
+    if (name === 'availability-slices' || name === 'availability-archived') {
+      interaction = (await send('Runtime.evaluate', {expression: `(async () => {
+        const panel = document.querySelector('details[data-player-availability]');
+        if (!panel) return false;
+        panel.open = true;
+        const links = [...panel.querySelectorAll('.av-slices a')];
+        if (${JSON.stringify(name)} === 'availability-archived') return links.length === 0;
+        const ui = await import('./assets/ui.mjs'), O = await import('./assets/outcomes.mjs');
+        const data = await ui.api('game/401910034'), Wd = await O.load('401910034');
+        const eligible = ['away', 'home'].flatMap(side => data.availability[side].filter(r =>
+          r.assumed_availability > 0 && r.assumed_availability < 1
+          && data.projection.sim[side].players.some(p => String(p.id) === String(r.id) && p.periods)));
+        if (!eligible.length || links.length !== 2 * eligible.length) return false;
+        const player = eligible.find(r => r.id === '3149673');
+        if (!player) return false;
+        for (const v of ['plays', 'sits']) {
+          const href = '#/game/401910034/scenario/' + encodeURIComponent(JSON.stringify([{subj: 'p:' + player.id, v}]));
+          const link = links.find(a => a.getAttribute('href') === href);
+          if (!link || !link.getAttribute('aria-label').includes(player.name)) return false;
+          const n = O.count(O.mask(Wd, [{subj: 'p:' + player.id, v}]));
+          location.hash = href;
+          for (let i = 0; i < 80 && !document.querySelector('#game-body .chip'); i++) await new Promise(r => setTimeout(r, 100));
+          const body = document.querySelector('#game-body');
+          if (!body?.textContent.includes(player.name) || !body.textContent.includes('not causal lineup what-ifs')
+              || (n ? !body.textContent.includes(n.toLocaleString() + ' of ' + Wd.W.toLocaleString() + ' saved worlds')
+                    : !body.textContent.includes('No simulated game matches'))) return false;
+          location.hash = '#/game/401910034';
+          for (let i = 0; i < 80 && !document.querySelector('details[data-player-availability]'); i++) await new Promise(r => setTimeout(r, 100));
+        }
+        const restored = document.querySelector('details[data-player-availability]');
+        if (!restored) return false;
+        restored.open = true;
+        restored.scrollIntoView();
+        return true;
+      })()`, returnByValue: true, awaitPromise: true}, sessionId)).result.value === true;
+    }
     if (name === 'future-game') {
       interaction = (await send('Runtime.evaluate', {expression: `(async () => {
         const ui = await import('./assets/ui.mjs');

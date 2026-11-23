@@ -1,6 +1,6 @@
 // Game Centre. One period selector (Q1–Q4, H1, H2, FG) drives the bezel and both views:
 // Player = per-period box scores, Team = per-period team lines and distributions. Matchup is separate.
-import {advancedPanel, api, atLeast, errorPanel, modelPill, barChart, dayLabel, defaultLine, esc, f1, forecastTiming, halfLine, heat, histogram, logo, over, pct, percentileOf,
+import {advancedPanel, api, atLeast, errorPanel, modelPill, barChart, dayLabel, defaultLine, esc, etToday, f1, forecastTiming, halfLine, heat, histogram, logo, over, pct, percentileOf,
         probWhere, rate, record, seg, segGroups, signed, stamp, statusTag, store, team, tipTimes, usageProfilePanel, wireAdvancedPanels} from './ui.mjs';
 import * as S from './scenario.mjs';
 import * as O from './outcomes.mjs';
@@ -261,13 +261,21 @@ function availPanel(data, open = false) {
   if (!(av.away?.length || av.home?.length) && !legacy) return '';
   const unknown = ['away', 'home'].some(k => (av[k] || []).some(r => r.status?.toLowerCase() === 'unknown'));
   const tone = st => (/out/i.test(st) ? 'down' : /doubt|question|day/i.test(st) ? 'warn' : 'dim');
+  const canSlice = (r, side) => data.worlds && data.game.date === etToday()
+    && r.assumed_availability > 0 && r.assumed_availability < 1
+    && data.projection.sim[side].players.some(p => String(p.id) === String(r.id) && p.periods);
+  const sliceLinks = r => ['plays', 'sits'].map(v => {
+    const condition = S.encode([{subj: 'p:' + r.id, v}]);
+    return `<a class="btn ghost sm" href="#/game/${encodeURIComponent(data.game.id)}/scenario/${condition}" aria-label="${v === 'plays' ? 'Played' : 'No-minute'} worlds for ${esc(r.name)}">${v === 'plays' ? 'Played worlds' : 'No-minute worlds'}</a>`;
+  }).join('');
   const side = k => {
     const rows = av[k] || [];
     return `<div><h4>${logo(data.game[k].id, 'sm')} ${esc(team(data.game[k].id).name)}</h4>${rows.length ? rows.map(r => `<div class="av-row" title="${esc(r.comment || '')}">
       <span class="av-name">${esc(r.name)}</span><span class="pill ${tone(r.status)}">${esc(r.basis === 'recent_inactivity' ? 'Recent inactivity' : r.status)}</span>
       <span class="av-num">${r.simulated === false ? 'not simulated' : r.simulated || r.plays > 0 ? `plays ${pct(r.plays, 0)}` : 'not simulated'}</span>
       <span class="av-num dim">${[r.min_if_plays ? `${f1(r.min_if_plays)} min if he plays` : '', r.season_min != null ? `season ${f1(r.season_min)} min` : '',
-        r.return ? `back ~${esc(dayLabel(r.return.slice(0, 10)))}` : '', r.assumed_availability != null ? `assumed available ${pct(r.assumed_availability, 0)}` : ''].filter(Boolean).join(' · ')}</span></div>`).join('') : '<p class="note">No recorded entries.</p>'}</div>`;
+        r.return ? `back ~${esc(dayLabel(r.return.slice(0, 10)))}` : '', r.assumed_availability != null ? `assumed available ${pct(r.assumed_availability, 0)}` : ''].filter(Boolean).join(' · ')}</span>
+      ${canSlice(r, k) ? `<div class="av-slices">${sliceLinks(r)}</div>` : ''}</div>`).join('') : '<p class="note">No recorded entries.</p>'}</div>`;
   };
   const source = av.source === 'partial-legacy'
     ? 'Older forecast: only saved player statuses are shown; ruled-out or omitted players may be missing.'
@@ -276,7 +284,7 @@ function availPanel(data, open = false) {
   const count = (av.away?.length || 0) + (av.home?.length || 0);
   return `<details class="panel" data-player-availability${open ? ' open' : ''}><summary><b>Availability</b> · ${count} recorded ${count === 1 ? 'entry' : 'entries'}</summary><div class="av-grid">${side('away')}${side('home')}</div>
     <p class="note">${source} ${unknown ? 'Unknown means no reliable status. ' : ''}Availability percentages are uncalibrated assumptions. Players not listed default to available if a report exists (unless recent inactivity); this is not proof of health.
-      "Plays" = share of simulated games he appears in.</p></details>`;
+      "Plays" = share of simulated games he appears in. Saved-world slices filter observed simulated minutes, not forced availability or causal lineup what-ifs; other factors can differ. Older saved minutes may be rounded.${data.worlds ? '' : ' Saved worlds are unavailable for this game on this device.'}</p></details>`;
 }
 
 function playerView(el, data, period) {

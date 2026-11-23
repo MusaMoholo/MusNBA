@@ -1,10 +1,37 @@
 # Handoff — state and next actions
 
 Updated **23 November 2026 — Chunk A A1 at 80%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **0307784** (vector candidate scaling); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **8dee45a** (rejected vector-penalty F4 screen); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
+- **A1 blocked-fallback checkpoint (23 Nov ET; module NOT complete):** today's availability panel links
+  eligible uncertain players to positive-/zero-minute slices of saved worlds. These are observational, not
+  forced-availability branches, causal lineup forecasts or an Expected mixture. Phone bundles omit worlds
+  and show the limitation. Production branches remain blocked by the unresolved representative retry/bias
+  and dated-availability gates; the vector penalty candidate failed its F4 screen below. A1 remains **80%**,
+  Chunk A **34.5%**, A2 **30%**, A3 **0%**. This is a safe interim dashboard improvement, not completion of
+  A1 or all requested uncertainties. The owner asked to stop at the end of A1; do not silently advance to
+  A2/A3 or Chunk B while its 90% gate is open. If continuing A1, define a materially new candidate or
+  representative pre-origin evidence before running more experiments; do not rerun the rejected candidate.
+- **Fresh live delivery:** the today-only nightly exited **0** after 68 requests, five new finals and
+  zero collection failures; inputs rebuilt through 22 Nov in **228.7s**. The 23 Nov snapshot used
+  **engine-v1.3**, 10 games × 10,000 worlds, and **team-pathway-v1**, 10,000 season worlds over 952 games;
+  snapshot stage **1,415.78s**. Log `/tmp/musnba_a1_availability_nightly_20261123.log`. Independent
+  `analysis/experiments/20261123_a1_live_slate_minutes_audit_v1.json` checked **14,700,000** minute
+  values, **20,580,000** phone marginals and **200,000** team scores; 2,822/100,000 worlds had OT.
+  Maximum team-quarter minute error **4.26e−14**, overtime error **2.84e−14**, marginal error **0**.
+  This is accounting, not an accuracy or OT-calibration test.
+- **Delivery verification:** iCloud laptop and phone bundles are **111,413,527 / 86,886,931 bytes**.
+  Hosted fresh-import/offline checks passed **24/24 laptop / 23/23 phone**, including today’s model/origin
+  and uncertainty limitations; measured renderer JS heap at that check **15.9 / 5.5 MiB**, not peak,
+  whole-browser or device memory. Responsive interaction checks **13/13**, screenshots inspected in both
+  themes/three widths; installed-shell upgrade **24/24**. Data-free Pages shell `fd367b9`, cache
+  `d9ebff876348239a7a58`, is pushed and its hosted asset hash matches source. The 111/87 MB bundle sizes
+  require a real phone import/memory acceptance check; iCloud export is not proof of phone import.
+  Smoke **108/108**; deliberate fault **86/108** and exit 1. No per-game iCloud streaming is implemented.
+  Checkpoint doc review: HANDOFF, PLAN, FINDINGS, DASHBOARD_PLAN and README changed; AGENTS standing
+  rules, ENGINE_PLAN accepted design and TRAINING_PLAN cutoff/promotion rules need no change.
 - **A1 90% partial — vector matched-penalty F4 screen (23 Nov ET):** the predeclared isolated candidate
   completed the fixed **200 games × 1,000 worlds** with actual-participant oracle rosters in **1,756.325s**
   at eight single-thread workers. The sum of worker peak RSS was **13.39 GB**, excluding parent, OS and
@@ -3330,10 +3357,13 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
 
 ## Next actions — Chunk A in progress
 
-0. **A1 precision follow-through:** schema 1 is delivered for new simulations but today's retained forecasts
-   are legacy-rounded, and no normal route supplies precise branch worlds. Evaluate full-slate bundle size,
-   import/rendering and memory on real new outputs and physical devices; do not infer them from the isolated
-   per-game size or synthetic bundle. Do not recover invented precision from retained legacy worlds. To repeat the
+0. **A1 blocked fallback, before any A2/A3 or Chunk B:** the live 23 Nov slate now carries schema-1
+   precise minutes and has passed independent accounting and hosted import/offline checks above. A real phone
+   import and memory acceptance check remains manual. No normal route supplies precise *branch* worlds.
+   Do not recover invented precision from retained legacy worlds. Reassess the failed 90% gate only with a
+   materially new, preregistered candidate or representative pre-origin evidence, preserving cutoff,
+   player-first fold and promotion rules. The owner requested a stop at the A1 boundary; this checkpoint is
+   an explicitly blocked fallback, not a claim that the module or chunk has completed. To repeat the
    existing two-player probe, use
    `node --max-old-space-size=4096 analysis/a1_precise_minutes_probe.mjs data/derived/experiments/20261122_a1_live_branch_034_fixture_v1.json '{}' data/derived/experiments/<new-output>.json analysis/experiments/<new-probe>.json`
    then `.venv/bin/python analysis/a1_precise_minutes_audit.py analysis/experiments/<new-probe>.json --output analysis/experiments/<new-audit>.json`;
@@ -3375,10 +3405,10 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
    The separate vector continuation's three-game real-outcome preflight is complete above. Reproduce with
    `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -u analysis/a1_vector_penalty_backtest.py --pilot --name <fresh-name>`,
    then `.venv/bin/python analysis/a1_vector_penalty_backtest_audit.py analysis/experiments/<fresh-name>.json --output analysis/experiments/<fresh-audit>.json`.
-   The preflight used four workers; before the 200-game screen, measure safe concurrency without exceeding
-   ten total compute threads and refreeze/revalidate any changed source under new names. Run candidate and
-   control on exactly the fixed games and same initial seeds; audit all candidate worlds and compare using
-   `scripts/a1_compare.py` and the existing registered player-first gate. A clean pilot is not promotion.
+   The measured eight-worker 200-game screen has already failed the primary gate; do not repeat it unchanged.
+   For a materially new candidate, refreeze/revalidate any changed source under new names, never exceed ten
+   total compute threads, and compare on exactly matched games and initial seeds using the registered
+   player-first gate. A clean pilot is not promotion.
    Genuinely dated
    pre-game report cohorts remain unavailable for fitting or calibrating an availability model; labelled
    fixed scenario weights themselves remain permitted. The resume prototype

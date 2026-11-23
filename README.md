@@ -112,6 +112,10 @@ box estimates, not counted possessions. The latest action-share input is not con
 Before rebuilding views directly with `.venv/bin/python scripts/views.py`, archive `data/views` outside the repo;
 `--help` only prints usage and does not rebuild.
 Audit retained advanced distributions with `.venv/bin/python -m analysis.advanced_world_audit`.
+For today's games with saved worlds, the Game Centre's availability panel also links uncertain players to
+positive-/zero-minute participation slices. These are not forced-availability forecasts or causal lineup
+what-ifs; phone bundles do not include the saved worlds. Audit a completed precise-minute slate with
+`.venv/bin/python analysis/a1_slate_minutes_audit.py data/snapshots/<date> --output analysis/experiments/<new-report>.json`.
 
 ### Historical forecasts: deferred
 

@@ -1,0 +1,16 @@
+{
+  "kind": "independent live slate minute and score accounting; not a predictive test",
+  "origin": "2026-11-23",
+  "model": "engine-v1.3",
+  "games": 10,
+  "worlds_per_game": 10000,
+  "season_worlds": 10000,
+  "simulated_overtime_worlds": 2822,
+  "world_minute_values_checked": 14700000,
+  "phone_marginal_values_checked": 20580000,
+  "team_scores_checked": 200000,
+  "max_team_quarter_minute_error": 4.263256414560601e-14,
+  "max_overtime_team_minute_error": 2.842170943040401e-14,
+  "max_phone_marginal_error": 0.0,
+  "elapsed_seconds": 1.475
+}

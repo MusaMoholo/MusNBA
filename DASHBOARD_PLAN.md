@@ -1,5 +1,16 @@
 # App — shipped behaviour
 
+**A1 participation visibility (23 Nov, partial):** the Game Centre's availability panel links eligible
+uncertain players on today's slate to positive-/zero-minute slices of the saved simulations when worlds are
+available. These are observational slices, **not forced-availability branches, validated lineup what-ifs or
+an Expected mixture**; their results may reflect other differences, and older saved minutes may be rounded.
+The phone bundle has no saved worlds and explicitly says so. Small or empty selections use the existing
+scenario warnings. The data-free shell is `gh-pages` **fd367b9**, cache **d9ebff876348239a7a58**;
+responsive interaction checks **13/13**, with screenshots inspected in both themes and three widths, and
+installed-shell upgrade **24/24**. The fresh 23 Nov today-only nightly produced 10 games × 10,000
+worlds; hosted fresh-bundle import/offline checks passed **23/23 phone / 24/24 laptop**, including model,
+origin and uncertainty limitations. iCloud exports were delivered; actual device import remains manual.
+
 **A1 precise-minute storage/display (22–23 Nov):** new schema-1 snapshots retain original float64
 period minutes. Laptop player sheets and Given/Joint use exact values and world identity; phone sheets use
 independently sorted period marginals without world identities or world-based conditions. Displayed times round

@@ -2,6 +2,18 @@
 
 Measured facts only. Each entry states its date and population.
 
+**23 Nov 2026 ET — live slate precision/accounting and delivery:** in today's **10** simulated games,
+**10,000** worlds each, the independent saved-world audit reconciled **14,700,000** float64 minute values,
+**20,580,000** phone marginal values and **200,000** team scores. Team quarter minutes differed from
+60 by at most **4.27e−14**, overtime minutes by **2.85e−14**, phone marginals by **0**; **2,822/100,000**
+worlds reached overtime after tied regulation. This is the current simulation's OT frequency, not an
+observed NBA rate or an overtime-calibration test. The snapshot stage took **1,415.78s** for 10 games and
+10,000 pathway seasons (952 remaining games); inputs had rebuilt in **228.7s**. The iCloud laptop/phone
+bundles were **111,413,527 / 86,886,931 bytes**; hosted fresh-profile import/offline checks completed in
+**4.2 / 3.3s**, with one renderer JS-heap reading of **15.9 / 5.5 MiB** during the uncertainty check.
+Those are not peak, full-browser or physical-device memory measurements; actual phone import is unverified.
+Audit report `analysis/experiments/20261123_a1_live_slate_minutes_audit_v1.json`.
+
 **23 Nov 2026 ET — vector matched-penalty F4 player-first screen:** the isolated candidate completed
 **200** fixed development-fold games × **1,000** worlds with actual-participant oracle rosters. Independent
 accounting reconciled **98,276,074** lineup fives, **50** technicals and **21,730** player means/CRPS

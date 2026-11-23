@@ -429,6 +429,14 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **23 Nov 2026 ET · A1 blocked fallback and fresh delivery:** the player-first F4 penalty candidate
+  failed its primary screen, and representative retry bias/pre-origin availability remain unresolved;
+  keep engine v1.3 and pathway v1. A1 **80%**, Chunk A **34.5%**; A2 **30%**, A3 **0%**, Chunk B not
+  started. Today's saved-world participation slices are visible on laptop/local, explicitly non-causal;
+  phone shows that worlds are unavailable. The live nightly completed 10 games × 10k plus 10k seasons.
+  Independent minute/score accounting passed; hosted fresh-bundle offline checks **24/24 laptop, 23/23
+  phone**, smoke **108/108** and deliberate fault exited 1. iCloud bundles delivered; phone import remains
+  manual. This is not the validated branch/Expected UI and does not complete A1 or the chunk.
 - **23 Nov 2026 ET · A1 vector matched-penalty F4 screen:** **200** fixed oracle-roster games /
   **200,000** worlds independently reconciled; pooled minute CRPS changed **−0.001262
   [−0.003540, +0.001033]**, below the **0.026341** seed-noise floor, and **67/69** non-inferiority
