@@ -40,7 +40,7 @@ Shell updates and data imports are separate. iCloud export is not proof of impor
 .venv/bin/python scripts/export_musnba.py --shell exports/MusNBA-web --base-path /MusNBA/
 ```
 
-Export-only reuses completed outputs. Current publication is end-of-nightly, not game-by-game; D54 is planned next.
+Export-only reuses completed outputs. Current publication is end-of-nightly, not game-by-game; D54 is C1 of the next integrated chunk; HANDOFF owns execution.
 Each file is atomic, the pair is not: retry both after partial export. `--output PATH` sets the phone destination; laptop adds `-laptop`.
 Replacements archive to `~/Basketball_archive_ops`. Visible staging/hidden-flag clearing keeps files selectable.
 Only the data-free shell plus `.nojekyll` goes to `gh-pages` (branch source `/`), never models/data/bundles.

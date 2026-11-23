@@ -92,25 +92,18 @@ Asynchronous vector worlds can consume RNG differently after divergence; clock-o
 - **Data:** use rebound-at-miss clock across sources. In 2,677 reconciled F1–F4 games, player-period points and 21,702 explicit period-end
   scoreboards reconcile; segment sums can differ by 2 points. Same-clock substitutions need sequence-aware pre-event state.
   NBA tracking latest-team labels are wrong historically in 8,637/113,089 rows; use dated logs. Missing source publication times remain unknown.
-- **Baseline:** legacy 200F4×1k: total/margin CRPS 11.723/9.415, total bias+1.81,80%coverage 69%/75.5%.
-  Same-game team benchmark 11.353/9.322. Teacher-forced defence signal loss already exists; rotations are not proved irrelevant.
 - **Earlier candidates:** S04 rim expression did not beat training noise; tracking increment worsened held-out loss.
   v1.4c/e/f pooled PTS changes+.0062–.0075 had intervals spanning 0. Their rejection does not disprove richer defence.
   NBA-only minutes had Δ−.00416[−.02699,+.01913]. S06 substitution MIN gain−.03529[−.04462,−.02609] was blocked by
   three old coverage-imprecision checks. Development-only v3 review clears 27/27 proper bounds: **revisit, not promoted**;
   current-baseline/seed/coverage provenance and independent confirmation remain necessary.
-- **A1/r2:** original protected v2 remains 42/44(all 27 proper), with two cohort-bias bounds unresolved.
-  Fresh independent 200F4/4,297 player-games under prospective v3 passes 27 proper/17 bias/25 coverage;
-  MINΔ−.02345[−.04275,−.00640], PTS−.00806[−.01540,−.00129]. Raw replay, queue/resume and 227.8M legal fives pass.
-  Conditional actual-participant accuracy does not validate availability probabilities.
+- **A1/r2:** independent fitting passed fresh 200-game confirmation under prospective v3. The original protected v2 result
+  remains 42/44; do not repeat or relabel it. Conditional participant tests do not validate availability probabilities.
 - **A2 form:** residual/shot/persistence screens do not identify a stable pooled missing shooting factor beyond existing
   minute/event/state variance. Mean-preserving synthetic draws are tested, not calibrated or shipped. Unsupported form stays zero.
-- **A2 clock:** contextual prior Q4/OT 0<clock≤24s pools use 4 clock×7 margin cells, minimum 100 opportunities/30 games;
-  fallback clean whole-second bridge then legacy. No extra fitted node family or shared form factor.
-  Earlier 1,932 games/5,382 opportunities joint timing loss .19856→.12849; independent F4 199/474 .21633→.13415,
-  also beating the clean bridge. Engine development 200, supported earlier 300 and independent F4 200 each clear 27/27 proper bounds.
-  Seed 30 clears 21/27 with five unsupported star cells/one imprecise Q4 score, no demonstrated harm under its frozen diagnostic rule.
-  Three 10k stresses:34,679,026 legal fives; resume preserves 41 files; six raw wiring comparisons match.
+- **A2 clock:** prior Q4/OT≤24s pools use 4 clock×7 margin cells, minimum 100 opportunities/30 games, fallback bridge then legacy.
+  Prior-fold/independent node evidence, engine panels, seed/stress/resume and raw parity support the timing revision;
+  its once-only protected result and remaining limits follow. Frozen recipe/sources retain exact counts and reproduction.
 - **Limits:** trailing 4–8/≤24s development 113 opportunities: action time 6.04→4.26s versus 4.14 actual;
   defensive foul share 9.00→13.36% versus 6.19%,3PA share 57.11→56.55% versus 68.61%.
   Independent corresponding 78 opportunities is unsupported. Better clock timing is not proof of better foul/shot choice or universal accuracy.
@@ -129,19 +122,60 @@ Clock source snapshot: `data/derived/experiments/a2_clock_final_20261123_v1_sour
 D1–D21 establish segments, shared nodes, investigated form, NBA priors, player-first chain, no market fitting,
 five-world playback, runtime/refit goals and pathway identity. D22–D37 establish possession floor, miss-clock rebounds,
 two engines, D29 minutes/D30 defence, branches, permitted NBA source and unchanged v1.3 after failed matchup variants.
-D38–D43 establish weighted/checkpointed chunks, cutoff-safe history (deferredD 40), A/B scope and source-honest 2-D replay.
+D38–D43 establish weighted/checkpointed chunks, cutoff-safe history (deferred D40), A/B scope and source-honest 2-D replay.
 D44–D50 establish shooting distributions, laptop/phone, top-three branch selection, unpromoted availability/retries,
 full minute precision and today-only possession boundary. D51–D57 establish audited release policy, noCI, PWA delivery,
 incremental-export successor, photos, independent-world queue and cohort-bias correction. Full exact decisions remain archived.
 
-Future zone work: start with NBA source-defined zones; audit units/orientation/labels/coverage and observed versus inferred defender
-attribution. Estimate shooter/defender **attempts and makes**, shrink sparse cells to broader parents; retain supported side/direction.
-Compare current bands, zone-only and within-zone distance. Player→zone versus zone→player are alternative joint factorisations;
-test identical folds after selecting a shot branch. Zone form must separate opportunity/mix, conversion luck and defensive lineup,
-without double-counting player/team variance. These are hypotheses, not approved representations or A2 additions.
+## Chunk C model and capture contract
 
-A3 saves each team's maximum margin and maximum individual NBA fantasy world, plus a real representative world selected by
-frozen multi-stat distance. Preserve actual draws; no isolated-world replay assumption. Reconcile event/box/clock/lineups before
-one stored-only 2-D renderer, labelled spatial precision and local-file validation. Actual-game adapter follows later.
-D39 history, if reauthorised, needs pre-origin inputs **and fits**, labelled actual-participant reconstructions, immutable originals,
-explicit versions/coverage and safe atomic resume. Never silently mix recipes or supply actual minutes as predictions.
+D58 (owner planning request, 23 Nov): the next execution chunk combines D54 early exports, court-aware shots,
+one S06 retest and A3 View Centre. HANDOFF owns the weighted ladder; no execution/promotion is implied by this plan.
+
+**Zones:** start with [NBA basic/advanced shooting areas](https://jr.nba.com/how-to-read-a-shot-chart/), not a bespoke taxonomy.
+Inspect native labels in the permitted NBA source before adding a resumable adapter; the current adapter does not collect shot charts.
+Reconcile NBA/ESPN identities, units/orientation, period/clock and event joins; never assume event IDs match across providers.
+Retain raw data; date filtering does not prove original publication/revision timing. A versioned derived mapping from retained coordinates is an explicitly labelled fallback, independently checked against
+available native labels; missing locations remain unknown. Preserve left/right only with support; keep rare heaves separate.
+
+Build strictly prior shooter and defender/on-court **opportunities, attempts and makes**, separating shot frequency from conversion.
+Use exposure-aware shrinkage to broader parents, fitted before each origin. Audit sums/denominators and assignment weights.
+Distinguish recorded defenders, soft inferred assignments and on-court exposure: shot charts alone do not identify the nearest defender.
+Compare a matched current-representation control and at most three declared node variants: zone-only; zones plus within-zone distance;
+then supported defender-zone frequency/conversion. Select on F1–F3 only, without changing hyperparameters/decay opportunistically.
+Keep player-before-zone ordering. Version/retrain affected node interfaces together, with prior-fit clock/matchup/role artifacts per fold.
+Different zone label spaces make raw categorical losses incomparable: aggregate to an identical partition where valid; otherwise use
+common make/miss rows and end-to-end proper scores, not a false node rejection. If inputs/parser eligibility change, isolate that bridge and require matched rows/source identity;
+do not compare a new dataset to incompatible cached losses or silently drop unmatched outcomes.
+
+**Rotations:** recover the exact S06 substitution recipe and pre-event score/clock/foul inputs, then port it to r3 without losing
+independent per-world fitting or legal foul-outs. One candidate only, with prior-fit parameters and causal substitution labels.
+Current conditional participation evidence does not justify blanket bench cuts or a fitted availability model.
+`lineup_forecast.simulate` currently replaces `rotation_policy` with LegalCapture: compose the selected policy with auditing and prove
+production-path parity, rather than qualifying a research hook that publication ignores.
+
+**Finite qualification:** freeze fresh namespaces, IDs/input-only exclusions, all auxiliary cutoffs, explicit learned/v3 and benefit
+multiplicity before candidate outcomes. Reuse controls only after raw parity; no protected r3 rescoring. Each family gets a three-game
+wiring pilot and one 200-game F4 engine screen: shots primary pooled player PTS CRPS; rotations primary pooled player MIN CRPS.
+No rescue grid or replacement family. Source/accounting repairs may repeat an unchanged development recipe, documented separately.
+Research checkpoints do not promote; freeze at most one survivor/family for C4 combined/removal checks on the development panel.
+
+Reserve 200 disjoint F4 games before selection; their candidate node/engine outcomes remain uninspected until recipes freeze.
+Require independent primary benefit there and unchanged proper-score/coverage safeguards. Broader confirmation covers all input-eligible
+F4 games plus fixed 200 each F1–F3, reusing exact overlaps; distinguish development/consistency checks from independent confirmation.
+Freeze one 200-game independent-stream diagnostic and 20-game×10k stress panel before results; stress selection is diagnostic, not population proof.
+Use game-cluster uncertainty, required role support and policy-adjusted benefit claims; disclose unresolved diagnostics, veto applicable harm.
+Stop at the frozen endpoint: retain r3 for failed/unsupported components. One formal protected evaluation of the qualifying frozen recipe;
+never rename a failure, tune from the final test or widen margins. Final manifests explain player/team/coverage trade-offs honestly.
+
+**Visible worlds:** save compact zone attempt/make counters with exact box/period/weighted identities; observed versus predicted maps
+show sample support/unknowns and remain useful on r3 if no model promotes. Select five positive-mass Expected worlds/game: each team's
+maximum own margin; each team's maximum individual NBA fantasy score (PTS+1.2REB+1.5AST+3STL+3BLK−TOV); one real representative
+using frozen multi-stat normalisation/distance/ties. Record branch/chunk/world IDs and weights; labels may share a world.
+Capture by replaying each selected world's **original full canonical chunk** with read-only observers and exact raw parity, never by
+simulating that world alone. Bound/benchmark extra replay cost. Reconcile event clocks, scores, player boxes, minutes and legal fives.
+Use known zones/events and a lineup/rotation strip, not invented tracking positions, pass sequences or trajectories.
+Lineup filters must respect each example's source branch. Browsing only reads saved events; missing geometry permits event-list/box playback.
+
+Zone-form factors, alternative chain ordering, talent uncertainty, new substitution families and pathway calibration remain separate work.
+D39 replay stays deferred: any future reconstruction needs pre-origin inputs **and fits**, predicted minutes, immutable originals and explicit versions.

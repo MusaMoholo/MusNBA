@@ -36,21 +36,33 @@ extract the relevant PLAN/HANDOFF section before activating a remaining task. A 
 | S13 historical forecasts | 5% | Deferred D40; preserve originals. |
 | S14 final programme delivery | 5% | 0%; requires remaining integration, not just this checkpoint's nightly. |
 
-## D42 modules and present stop
+## Next modular chunk — C: believable player games you can inspect
 
-Chunk A: **65%**; A1(30%) complete, A2(35%) 100%, A3(35%)0%.
-Authorised session finishes A1/A2 and stops before A3/Chunk B. A1 delivered lineup-aware distributions and independent
-minutes/world scheduling; A2 concludes the frozen form/clock investigation, scorer audit and final accepted-engine delivery.
-Completed rung evidence is archived; no repeated A1 controls or new A2 tuning loop.
+**D58, 23 November 2026:** the owner requests a next chunk with substantial model and dashboard improvements, ready for
+“go with the next chunk.” That trigger executes C1–C4 in HANDOFF; this checkpoint is planning-only.
+Two headliners: better player shot/minute outcomes; saved games that arrive early and can be explored on court.
+Improvement is an objective; model promotion still depends on independent evidence.
 
-Chunk B remains 0%: B1 defence/foul-outs 30%, B2 season pathway 30%, B3 integration/visibility/delivery 40%.
-Depends on Chunk A decisions; restore/refine original ten-rung contracts before execution. Rule 3 is already delivered,
-so B1 must target a remaining measured gap. B2 tests 16 origins/per-date calibration and exact near-term identities.
-B3 requires combined/removal tests, class-appropriate confirmation/seed/stress, rotation map and final nightly.
+| Module | Weight | Concrete outcome |
+|---|---:|---|
+| C1 early PWA delivery | 15% | D54: checked complete 10k games/branches reach both bundles before the slate finishes; safe resume and honest season freshness. |
+| C2 court-aware shooting | 35% | Source-defined zones, pooled attacker/defender attempts/makes; one supported shot-choice/conversion candidate against r3. |
+| C3 realistic rotations | 20% | Fair current-r3 retest of the promising S06 policy; realistic state/minute decisions, not arbitrary bench cuts. |
+| C4 View Centre/integration | 30% | Five reconciled saved-game examples, court/event/box/rotation playback, useful zone maps and final qualified-engine PWA delivery. |
 
-**Immediate successor D54**, planned 0% in HANDOFF: checked complete-game publication 40%, device bundles/freshness 35%,
-integrated delivery 25%. Publish a checked game's full 10k worlds while other games continue, within the ten-thread budget.
-This interlude precedes A3/B and does not authorise historical replay. No successor execution in the present session.
+**C 0%**; HANDOFF has every ten-rung ladder, commands, dependencies, fixed attempt limits and acceptance/fallback.
+C1 comes first. Model research checkpoints freeze candidates without early promotion; C4 confirms single/combined/removal effects,
+then delivers one accepted recipe. C1 and C4 each require their prescribed live nightly; research-only checkpoints do not repeat it.
+UI can progress alongside independent compute under the ten-thread cap. Failed model attempts still end with useful UX on r3.
+This replaces the standalone D54 interlude and pulls A3/targeted B1 work forward; no existing progress is reset.
+
+## Original D42 ledger
+
+Chunk A remains 65%: A1(30%) complete, A2(35%) complete, A3(35%)0%. Full A3 credit requires C4's replay acceptance,
+not just a court mockup. Chunk B remains 0%: B1 defence 30%, B2 pathway 30%, B3 integration/visibility 40%.
+C2 contributes defence evidence; B1 completes only against its full original scope. S11/S12/S14 receive no automatic credit
+from this integrated chunk; season calibration, remaining visibility and whole-programme delivery remain open.
+Original ladders/scopes survive in the verified archive. D54 is complete only if real early publication passes, not if a progress label ships.
 
 ## Acceptance
 
@@ -62,24 +74,15 @@ Every completed module checkpoints independently. Each development chunk ends wi
 both necessary PWA exports/checks and a useful player-facing improvement if no model promotes. Current A2 already delivered U23 outcome stories
 and startup recovery. At closure construct the next chunk with weights/ten rungs/commands/acceptance/fallback/final nightly.
 
-## Future investigations
+## Deferred work
 
-- **Recognised court zones:** source-derived shooter/defender attempts/makes, sparse-cell pooling, supported direction;
-  compare current bands, zone-only and distance-within-zone. Test player→zone versus zone→player on identical folds.
-  Separate zone opportunity/mix, conversion luck and defensive-lineup form without duplicated uncertainty. MODEL owns details.
-- **Distribution/participation gaps:** use the closing 400-game audit before fitting more variance or cutting bench minutes.
-  Oracle participant rosters cannot grade DNP forecasting. Revisit S06 only with current-baseline and independent evidence.
-- **Simplification:** inventory production dependencies and duplicated logic, then remove proven maintenance/runtime costs.
-  Preserve reproducible research. Executor draining after worker errors is a measured runner defect to fix prospectively.
-- **A3 playback:** five real selected worlds, exact event reconciliation and source-honest 2-D court; actual adapter later.
-  B3 rotation map sums to five. No invented tracking or simulations during browsing.
-- Full competition/Cup/play-in/brackets, actual-participant historical reconstruction and advanced simulated on-court stats remain separate work.
-  D40 replay needs explicit reauthorisation, pre-origin inputs **and fits**, predicted minutes and immutable original forecasts.
-
-No product decision currently blocks the recorded successor. New providers need sign-off; real-device import/memory checks remain the owner's.
+Zone-form/chain-order searches, new variance factors, new substitution families, pathway calibration, full competitions and
+historical forecast reconstruction remain outside C. Do not turn negative results into another unbounded queue.
+Targeted simplification/fail-fast repairs ride implementation; no full-repository rewrite. Future model priorities come from C's evidence.
+New providers need owner sign-off; real-device import/memory acceptance remains manual. D40 still defers forecast backfill.
 
 ## Latest checkpoint
 
 23 November 2026: A1 complete on r2; A2 contextual timing qualified/delivered on r3; unsupported form stays zero. Closing scorer repairs preserve frozen results, current diagnostics are recorded in MODEL,
 and docs consolidate 35 live files into eight including policy contracts. Final delivery/checks/commit are recorded once in HANDOFF.
-Older logs and exact D1–D57 decisions are archived rather than repeated here.
+D58 records the integrated next-chunk scope above; older logs/decisions remain archived.
