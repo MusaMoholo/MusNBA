@@ -1,5 +1,14 @@
 # App — shipped behaviour
 
+**A1 precision research shell (22–23 Nov):** the data-free shell now caches the exact-minute helper
+(`gh-pages` **5144f35**, cache **52fb655ed8e21314249a**); existing iCloud bundles passed hosted import/offline
+**23/23 phone / 24/24 laptop**, with no new bundle or confirmed device import. Normal routes remain unchanged.
+Only an explicitly injected research branch sheet uses float64 minute thresholds, split one-minute bars and the
+same Given line; Expected-only research labels its older histogram as rounded. Final-game research probabilities
+are labelled research rather than pre-tip. Six research viewport/theme screenshots were inspected; **30/30**
+normal touched-route browser cases passed. This does not deliver the normal lineup control or precise production
+minutes.
+
 **D50 delivered (22–23 Nov):** the dashboard hides discarded future
 possession previews and shows team-pathway home, away, total and margin regulation distributions instead;
 the third card switches between total and margin, keeping three comparable cards.

@@ -53,9 +53,11 @@ python3 -m venv .venv
   publishes a forecast or proves its pre-tip publication time.
   `analysis/a1_minute_encoding_probe.py` compares candidate encodings against saved research-world minutes
   without scoring actual outcomes or changing forecasts.
-  `analysis/a1_precise_minutes.mjs` prototypes exact weighted minute thresholds and split display bins;
+  `scripts/webapp/precise-minutes.mjs` implements exact weighted minute thresholds and split display bins for
+  the explicitly injected research view (`analysis/a1_precise_minutes.mjs` re-exports it);
   `analysis/a1_precise_minutes_probe.mjs` and `analysis/a1_precise_minutes_audit.py` measure and independently
-  check it against original captures. This is not a production or browser route.
+  check it against original captures. `analysis/a1_minute_payload_probe.py` sizes minute-only storage options.
+  No normal route supplies precise branch worlds.
 - The server reads files from disk: front-end edits appear on refresh, rebuilt views appear
   immediately; no restart needed. `serve.py --host 0.0.0.0` lets a phone on the same Wi-Fi in.
 - Slates are US Eastern game dates; tip-offs show UK time with ET.

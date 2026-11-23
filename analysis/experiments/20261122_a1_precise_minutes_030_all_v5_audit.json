@@ -1,0 +1,12 @@
+{
+ "kind": "independent exact-minute accounting; not a forecast or predictive test",
+ "probe": "analysis/experiments/20261122_a1_precise_minutes_030_all_v4_probe.json",
+ "probe_sha256": "52b4d218ed8dd2a4147aaaa422b53da5a369bab7c77875a918ee720ffa66e85b",
+ "audit_sha256": "6063dc52800cb7f295c801bb91e296cfd3d0f45e69ba53168004c609c62bd5bd",
+ "distributions": 196,
+ "selected_worlds": 40000,
+ "selected_mass": 160000,
+ "thresholds_per_distribution": 7,
+ "minute_bins_split_at": 30.25,
+ "conditional_win_thresholds": 196
+}

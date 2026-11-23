@@ -7,7 +7,8 @@ import {spawn} from 'node:child_process';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 
-const [base, fixturePath, payloadPath, fullPath, partialPath, fullAuditPath, partialAuditPath, output] = process.argv.slice(2);
+const [base, fixturePath, payloadPath, fullPath, partialPath, fullAuditPath, partialAuditPath, output,
+  precisionPath, precisionAuditPath] = process.argv.slice(2);
 if (!/^http:\/\/127\.0\.0\.1:\d+$/.test(base || '') || !output || !partialAuditPath) {
   throw new Error('Provide local URL, fixture, payload, full/partial summaries and audits, and new report path');
 }
@@ -15,6 +16,17 @@ const hash = path => createHash('sha256').update(readFileSync(path)).digest('hex
 const read = path => JSON.parse(readFileSync(path));
 const payload = read(payloadPath), full = read(fullPath), partial = read(partialPath);
 const fullAudit = read(fullAuditPath), partialAudit = read(partialAuditPath);
+let precision = null;
+if (precisionPath || precisionAuditPath) {
+  if (!precisionPath || !precisionAuditPath) throw new Error('Provide both the precision output and its audit');
+  const audit = read(precisionAuditPath), probe = read(audit.probe);
+  precision = read(precisionPath);
+  if (hash(audit.probe) !== audit.probe_sha256 || probe.output !== precisionPath
+      || hash(precisionPath) !== probe.output_sha256 || probe.fixture !== fixturePath
+      || probe.fixture_sha256 !== hash(fixturePath) || Object.keys(precision.choices).length) {
+    throw new Error('Precision accounting does not match the fixture');
+  }
+}
 if (hash(fixturePath) !== payload.fixture_sha256 || full.fixture_sha256 !== payload.fixture_sha256
     || partial.fixture_sha256 !== payload.fixture_sha256 || hash(fullPath) !== fullAudit.summary_sha256
     || hash(partialPath) !== partialAudit.summary_sha256 || Object.keys(full.result.choices).length
@@ -106,7 +118,9 @@ try {
   await evaluate(`(${initialise})(${JSON.stringify(fixtureOrigin)},${JSON.stringify(game)})`);
   const snapshot = () => ({
     selected: document.querySelector('[data-lineup]')?.value,
-    home: document.querySelector('.bz-team.home .bz-stats b')?.textContent,
+    home: document.querySelector('.bz-team.home .bz-sub')?.textContent.trim().startsWith('proj ')
+      ? document.querySelector('.bz-team.home .bz-sub').textContent.trim().slice(5)
+      : document.querySelector('.bz-team.home .bz-stats b')?.textContent,
     research: document.querySelector('[data-research-lineups]')?.innerText,
     body: document.querySelector('#view')?.innerText,
     overflow: document.documentElement.scrollWidth > innerWidth,
@@ -125,6 +139,7 @@ try {
     }
   };
   const initial = await evaluate(`(${snapshot})()`);
+  if (initial.body.includes('WIN · PRE')) throw new Error('Research probability was labelled as a pre-tip forecast');
   if (initial.home !== expectedHome(full.result) || !initial.research?.toLowerCase().includes('not a forecast')
       || !initial.body.toLowerCase().includes('top five by simulated opening-five chance')) {
     throw new Error(`Full-mixture game differs: ${JSON.stringify({home: initial.home, expected: expectedHome(full.result),
@@ -155,16 +170,72 @@ try {
       || !sheet.body.toLowerCase().includes('given…') || !sheet.body.toLowerCase().includes('joint outcomes')) {
     throw new Error(`Selected sheet differs: ${JSON.stringify({research: sheet.research, body: sheet.body.slice(0, 2500), errors})}`);
   }
+  if (precision) {
+    await evaluate(`(() => {const e=document.querySelector('[data-lineup="${id}"]'); e.value='either'; e.dispatchEvent(new Event('change'));})()`);
+    for (let n = 0; n < 400; n++) {
+      if (await evaluate(`document.querySelector('[data-lineup="${id}"]')?.value === 'either' && !document.querySelector('[data-lineup="${id}"]')?.disabled`)) break;
+      await new Promise(resolve => setTimeout(resolve, 100));
+      if (n === 399) throw new Error('Full-mixture player sheet did not render');
+    }
+    await evaluate("document.querySelector('[data-stat=\"min\"]').click()");
+    const checkMinute = async (period, line) => {
+      const expected = precision.rows.find(row => row.player === id && row.period === period);
+      if (!expected || !expected.thresholds[String(line)]) throw new Error('Audited minute threshold unavailable');
+      await evaluate(`(() => {const e=document.querySelector('#line-stat');e.value=${JSON.stringify(String(line))};e.dispatchEvent(new Event('change'));})()`);
+      if (period === 'fg') for (let n = 0; n < 100; n++) {
+        if (await evaluate("!!document.querySelector('#what-if [data-builder=\"joint\"]')")) break;
+        await new Promise(resolve => setTimeout(resolve, 100));
+        if (n === 99) throw new Error('Minute Given/Joint panels did not render');
+      }
+      const observed = await evaluate(`(() => ({line: document.querySelector('#line-stat').value,
+        output: document.querySelector('#stat-block output').textContent,
+        note: document.querySelector('#stat-block').innerText,
+        given: [...document.querySelectorAll('#what-if section:first-child table tbody tr')].at(-1)?.children[1]?.textContent,
+        all: [...document.querySelectorAll('#what-if section:first-child table tbody tr')].at(-1)?.lastElementChild?.textContent,
+        bin: document.querySelector('#stat-block rect.hit[data-v="30"] title')?.textContent}))()`);
+      const probability = expected.thresholds[String(line)].above / expected.mass;
+      const asPct = p => p <= 0 ? '0%' : p >= 1 ? '100%' : p < 0.001 ? '<0.1%' : p > 0.999 ? '>99.9%' : (100 * p).toFixed(1) + '%';
+      const heat = p => p <= 0 ? '–' : p < 0.005 ? '<1%' : p > 0.995 && p < 1 ? '>99%' : (100 * p).toFixed(1) + '%';
+      if (Number(observed.line) !== line || observed.output !== `Over: ${asPct(probability)}`
+          || !observed.note.includes('full stored precision') || (period === 'fg' && observed.all !== heat(probability))) {
+        throw new Error(`Exact minute sheet differs for ${period}: ${JSON.stringify({observed, probability})}`);
+      }
+      if (line === 30.25) {
+        if (!expected.win || observed.given !== heat(expected.win.above / expected.win.mass)) {
+          throw new Error('Given-win minute chance differs from original captures');
+        }
+        const bin = expected.bins.find(value => value.minute === 30);
+        const title = bin && `30–<31 min: ${asPct((bin.atOrBelow + bin.above) / expected.mass)}; ${asPct(bin.above / expected.mass)} above the line`;
+        if (observed.bin !== title) throw new Error(`Split minute bin differs: ${JSON.stringify({observed: observed.bin, expected: title})}`);
+      }
+    };
+    await checkMinute('fg', 30.25);
+    await evaluate(`location.hash=${JSON.stringify(`#/game/${game}/player/${id}/h1`)}`);
+    for (let n = 0; n < 200; n++) {
+      if (await evaluate("document.querySelector('#sheet-period')?.value === 'h1' && !!document.querySelector('#line-stat')")) break;
+      await new Promise(resolve => setTimeout(resolve, 100));
+      if (n === 199) throw new Error('Half-time minute sheet did not render');
+    }
+    await checkMinute('h1', 10);
+  }
   const sizes = [];
   for (const [width, height] of [[1440, 1000], [960, 1000], [390, 844]]) for (const theme of ['dark', 'light']) {
     await send('Emulation.setDeviceMetricsOverride', {width, height, deviceScaleFactor: 1, mobile: width === 390}, sessionId);
-    const result = await evaluate(`(() => {document.documentElement.dataset.theme=${JSON.stringify(theme)}; return (${snapshot})();})()`);
+    const result = await evaluate(`(() => {document.documentElement.dataset.theme=${JSON.stringify(theme)}; document.querySelector('#stat-block').scrollIntoView(); return (${snapshot})();})()`);
     const shot = await send('Page.captureScreenshot', {format: 'png'}, sessionId);
-    writeFileSync(join(tmpdir(), `musnba-a1-selected-${width}-${theme}.png`), Buffer.from(shot.data, 'base64'));
+    writeFileSync(join(tmpdir(), `musnba-a1-precision-selected-${width}-${theme}.png`), Buffer.from(shot.data, 'base64'));
     if (result.overflow) throw new Error(`Research sheet overflows ${width} ${theme}`);
     sizes.push({width, theme});
   }
   await send('Emulation.setDeviceMetricsOverride', {width: 1440, height: 1000, deviceScaleFactor: 1, mobile: false}, sessionId);
+  if (precision) {
+    await evaluate(`(() => {const e=document.querySelector('[data-lineup="${id}"]'); e.value='unavailable'; e.dispatchEvent(new Event('change'));})()`);
+    for (let n = 0; n < 400; n++) {
+      if (await evaluate(`document.querySelector('[data-lineup="${id}"]')?.value === 'unavailable' && !document.querySelector('[data-lineup="${id}"]')?.disabled`)) break;
+      await new Promise(resolve => setTimeout(resolve, 100));
+      if (n === 399) throw new Error('Fixed lineup did not render after minute checks');
+    }
+  }
   await evaluate(`location.hash=${JSON.stringify(`#/game/${game}/fg/team`)}`);
   for (let n = 0; n < 200; n++) {
     if (await evaluate("!!document.querySelector('#game-body table.box') && !!document.querySelector('#drivers table')")) break;
@@ -202,16 +273,29 @@ try {
     throw new Error('Expected-only research view exposes branches or differs from the audited full mixture');
   }
   compareRows(await evaluate(`(${rows})()`), full.result);
+  if (precision) {
+    await evaluate(`(async () => {
+      const {game: g, G} = window.__a1;
+      await G.render(document.querySelector('#view'), {rest: [g.id, 'player', ${JSON.stringify(id)}, 'fg'], current: () => true});
+      document.querySelector('[data-stat="min"]').click();
+    })()`);
+    const note = await evaluate("document.querySelector('#stat-block')?.innerText");
+    if (!note?.includes('whole-minute-rounded distributions') || note.includes('full stored precision')) {
+      throw new Error('Expected-only legacy minutes were not labelled as rounded');
+    }
+  }
   if (errors.length) throw new Error(`Browser errors: ${errors.join('; ')}`);
   const paths = [fixturePath, payloadPath, fullPath, partialPath, fullAuditPath, partialAuditPath,
+    ...(precision ? [precisionPath, precisionAuditPath] : []),
     'analysis/a1_game_view_browser_check.mjs', 'analysis/a1_game_view_contract.mjs', 'analysis/a1_branch_game_summary.mjs',
     'analysis/a1_branch_world_source.mjs', 'scripts/webapp/game.mjs', 'scripts/webapp/scenario.mjs',
-    'scripts/webapp/outcomes.mjs', 'scripts/webapp/weighted-worlds.mjs'];
+    'scripts/webapp/outcomes.mjs', 'scripts/webapp/weighted-worlds.mjs', 'scripts/webapp/precise-minutes.mjs'];
   writeFileSync(output, JSON.stringify({
     kind: 'isolated injected research Game Centre browser check; not a forecast or phone import',
     source_sha256: Object.fromEntries(paths.map(path => [path, hash(path)])), game, player: id, team: side,
     full_home_points: initial.home, selected_home_points: fixed.home, selected_worlds: partial.result.selected_worlds,
-    sizes, expected_only_without_worlds: true, limitations: ['Research source was injected explicitly, not served to users.',
+    sizes, precise_minute_checks: precision ? ['fg over 30.25', 'split 30-minute bin', 'h1 over 10', 'Given and all-world chances'] : [],
+    expected_only_without_worlds: true, limitations: ['Research source was injected explicitly, not served to users.',
       'Phone viewport emulation is not a phone bundle import or real-device acceptance.'],
   }, null, 2) + '\n', {flag: 'wx'});
   console.log(`Full and fixed selections, team, sheet, empty scenario, Expected-only and ${sizes.length} viewport/theme cases passed`);

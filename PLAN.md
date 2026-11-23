@@ -429,6 +429,12 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 ET · A1 precise-minute research view:** injected branch sheets now share exact fractional
+  minute thresholds with Given and split their display bins correctly; an independent capture audit checked
+  **196** player-period distributions and conditional win thresholds. **6/6** research and **30/30** normal
+  viewport/theme checks passed. A data-free shell update (`gh-pages` **5144f35**) passed hosted existing-bundle
+  import/offline **23/23 phone / 24/24 laptop**. No normal lineup route, production-minute format, model,
+  forecast or iCloud bundle changed; manual device import remains unconfirmed. A1 **80%**, Chunk A **34.5%**.
 - **22 Nov 2026 ET · A1 minute encoding research:** across **40,000** saved worlds from four branches,
   float32 changed **21** 30-minute classifications, and rounded seconds changed **227** and erased **126**
   positive-minute cells. Float64 preserved all inputs and compressed to **4.82 MB** for these full-game

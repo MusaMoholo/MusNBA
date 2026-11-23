@@ -15,12 +15,17 @@ const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const start = performance.now(), bytes = readFileSync(fixturePath), fixture = JSON.parse(bytes);
 const source = branchWorldSource(fixture), decoded = performance.now();
 const choices = JSON.parse(choicesText), mask = source.selection(choices), rows = [];
+const home = source.teamPoints('home', 'fg'), away = source.teamPoints('away', 'fg');
 for (const player of source.players) for (const period of ['q1', 'q2', 'q3', 'q4', 'h1', 'h2', 'fg']) {
-  const d = minuteDistribution(source.playerValues(player, 'min', period), source.weights, mask);
+  const values = source.playerValues(player, 'min', period);
+  const d = minuteDistribution(values, source.weights, mask);
   if (!d) throw new Error('No selected worlds');
+  const side = source.side[source.players.indexOf(player)];
+  const winMask = mask.map((yes, i) => Number(yes && (side === 0 ? home[i] > away[i] : away[i] > home[i])));
+  const win = minuteDistribution(values, source.weights, winMask);
   rows.push({player, period, mass: d.mass, worlds: d.worlds, mean: d.mean, quantiles: d.quantiles,
-    thresholds: Object.fromEntries([0, 10, 20, 30, 40, 48].map(line => [line, minuteThreshold(d, line)])),
-    bins: minuteBins(d, 30)});
+    thresholds: Object.fromEntries([0, 10, 20, 30, 30.25, 40, 48].map(line => [line, minuteThreshold(d, line)])),
+    bins: minuteBins(d, 30.25), win: win ? {mass: win.mass, above: minuteThreshold(win, 30.25).above} : null});
 }
 const done = performance.now();
 const output = JSON.stringify({fixture: fixturePath, fixture_sha256: hash(bytes), choices, rows});
@@ -30,7 +35,7 @@ writeFileSync(reportPath, JSON.stringify({
   fixture: fixturePath, fixture_sha256: hash(bytes), choices, output: outputPath, output_sha256: hash(output),
   source_sha256: hash(readFileSync('analysis/a1_branch_world_source.mjs')),
   arithmetic_sha256: hash(readFileSync('scripts/webapp/weighted-worlds.mjs')),
-  algorithm_sha256: hash(readFileSync('analysis/a1_precise_minutes.mjs')),
+  algorithm_sha256: hash(readFileSync('scripts/webapp/precise-minutes.mjs')),
   probe_sha256: hash(readFileSync('analysis/a1_precise_minutes_probe.mjs')),
   distributions: rows.length, selected_worlds: rows[0].worlds, selected_mass: rows[0].mass,
   decode_seconds: (decoded - start) / 1000, distribution_seconds: (done - decoded) / 1000,

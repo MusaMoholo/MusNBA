@@ -1,7 +1,7 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 80%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **bc9cfb6** (D50 live today-only delivery); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **79c02b2** (exact-minute research accounting); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
@@ -220,13 +220,44 @@ The preceding pushed checkpoint was **bc9cfb6** (D50 live today-only delivery); 
   207 MB fixture and is not a browser or phone measurement. The outputs were aggregate-only and did not store
   full support; this is not a bundle-size or predictive test. Reports and independent audits:
   `analysis/experiments/20261122_a1_precise_minutes_034_{all,available}_v1_{probe,audit}.json`.
-  This helper is **not wired into the research view or production**; the old rounded summary still exists.
+  At that checkpoint the helper was not wired into the research view or production; the old rounded summary
+  still exists. Those earlier probes pinned the original helper location and can be reproduced at checkpoint
+  **79c02b2**. The helper is now shared as `scripts/webapp/precise-minutes.mjs`.
   Focused JS distribution, weighted-arithmetic and source tests plus **2/2** Python encoding tests passed;
   final-source smoke **107/107**, deliberate fault **86/107** and exit 1, logs
   `/tmp/musnba_a1_precision_checkpoint_{smoke,fault}.log`. Pylance found no syntax errors in the new Python
   analysis scripts. Documentation review: HANDOFF, PLAN, FINDINGS and README record the research; AGENTS,
   ENGINE_PLAN, TRAINING_PLAN and DASHBOARD_PLAN need no changes because standing rules, accepted design,
   predictive gates and shipped UI did not change.
+  **Further research-only integration:** an explicitly injected branch player sheet now calculates exact selected
+  period-minute distributions on demand, with fractional line input, exact split-bin mass and the same threshold
+  in Given. Its legacy Expected-only fallback explicitly says its minute histogram is rounded. Research results
+  shown alongside a final game are labelled research, not pre-tip. Independent reconstruction of the second
+  fixture (`401910030`, **40,000** worlds, 28 players) checked **196** player-period distributions, seven
+  thresholds, split bins and **196** team-win conditional thresholds; reports
+  `analysis/experiments/20261122_a1_precise_minutes_030_all_v4_probe.json` and
+  `analysis/experiments/20261122_a1_precise_minutes_030_all_v5_audit.json`.
+  The injected browser check reconciled full-game over 30.25 minutes, its split bin and Given against that
+  audit, plus first-half over 10 minutes and the rounded Expected-only label. **6/6** viewport/theme cases
+  passed with screenshots inspected; **30/30** normal Game Centre/scenario checks passed. Report
+  `analysis/experiments/20261122_a1_precise_game_browser_v4.json`. No normal route registers this provider,
+  production snapshots still round player worlds, and legacy minutes cannot be recovered.
+  Four-branch, 30-player **minute-only** JSON/gzip sizing from game `401910034` measured **18,713,888 bytes**
+  for five per-world periods and **26,348,197 bytes** for sorted seven-period marginals. The latter discards
+  world identities, so it cannot support Given or Joint. These are not full bundle sizes or phone benchmarks;
+  both byte counts were independently reconstructed. Report
+  `analysis/experiments/20261122_a1_minute_payload_034_v1.json`.
+  The changed data-free shell is `gh-pages` **5144f35**, cache **52fb655ed8e21314249a**; its five hosted
+  changed files match the locally tested shell. Existing actual iCloud bundles passed hosted import/offline
+  checks **23/23 phone / 24/24 laptop**; no bundle was regenerated, and manual device import remains unconfirmed.
+  Previous shell archive: `~/Basketball_archive_ops/gh-pages-before-a1-precision-1b4cc6c.tar`.
+  Focused JS arithmetic/source/summary/view tests and **8/8** Python PWA/precision tests passed; Pylance
+  syntax checks passed for the new/changed Python scripts. Final-source smoke **107/107**, deliberate fault
+  **86/107** and exit 1 (`/tmp/musnba_a1_precise_view_{smoke,fault}.log`). The private shell server and the
+  task's clean Pages worktree were stopped/removed; the other user's worktree and :8766 were untouched.
+  Documentation review: HANDOFF, PLAN, FINDINGS, DASHBOARD_PLAN and README cover the change; AGENTS,
+  ENGINE_PLAN and TRAINING_PLAN need no changes because standing rules, accepted model design and predictive
+  gates are unchanged.
   One isolated 10k branch had **527,727/1,250,000** player-period cells at fractional seconds (maximum
   deviation **0.5 s** from an integer second); report `analysis/experiments/20261122_a1_minute_precision_v1.json`.
   The `033` and `035` browser fixtures each independently reconcile 20k worlds, 9m player-stat values,
@@ -2732,10 +2763,10 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
 
 ## Next actions — Chunk A in progress
 
-0. **A1 precision, still open:** use `analysis/a1_precise_minutes.mjs` as isolated arithmetic groundwork;
-   integrate exact support, threshold mass and split display bins coherently across branch/player sheets,
-   Given/Joint and participation, and add versioned period-minute storage with explicit legacy decoding.
-   The current helper is not connected to any route. Do not recover invented precision from retained legacy
+0. **A1 precision, still open:** the explicitly injected branch sheet now uses exact minute thresholds, split
+   bins and Given, but no normal route supplies those worlds. Complete versioned period-minute storage with
+   explicit legacy decoding and integrate the exact arithmetic across production and branch summaries,
+   player sheets, Given/Joint and participation. Do not recover invented precision from retained legacy
    worlds. Measure real laptop/phone bundle and browser/rendering costs before any delivery. To repeat the
    existing two-player probe, use
    `node --max-old-space-size=4096 analysis/a1_precise_minutes_probe.mjs data/derived/experiments/20261122_a1_live_branch_034_fixture_v1.json '{}' data/derived/experiments/<new-output>.json analysis/experiments/<new-probe>.json`

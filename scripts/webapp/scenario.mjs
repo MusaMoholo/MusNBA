@@ -266,7 +266,9 @@ export async function sheetPanels(el, data, pid, stat, line) {
   const paint = () => {
     const m = O.mask(Wd, [given]), n = C.count(m), total = C.mass ? C.mass(null) : Wd.W;
     const mass = C.mass ? C.mass(m) : n;
-    const all = C.dist(xVals), cond = n ? C.dist(xVals, m) : null;
+    const minute = Boolean(Wd.weights && stat === 'min');
+    const all = minute ? C.dist(xVals, null, {minute: true}) : C.dist(xVals);
+    const cond = n ? (minute ? C.dist(xVals, m, {minute: true}) : C.dist(xVals, m)) : null;
     const pAll = C.share(xVals, null, v => v > line), pCond = n ? C.share(xVals, m, v => v > line) : null;
     const yVals = Wd.values(other.subj, other.v);
     const r = yVals ? C.corr(xVals, yVals) : null;
@@ -280,14 +282,14 @@ export async function sheetPanels(el, data, pid, stat, line) {
     el.innerHTML = `<section class="panel"><h3 style="margin-top:0">Given…</h3>
         ${builder(data, Wd, 'given', {...given, button: ''})}
         <p class="note">${n ? `${esc(O.label(given, N, A))}: ${pct(mass / total, 1)}${Wd.weights ? ' weighted chance' : ' of simulations'} (${n.toLocaleString()} saved worlds).` : 'No simulation matches.'}</p>
-        ${cond ? `<div class="dist" style="margin-top:6px"><div>${O.overlay(all, cond, {line})}
+        ${cond ? `<div class="dist" style="margin-top:6px"><div>${O.overlay(all, cond, {line, minute})}
           <p class="note"><span class="legend-bar"></span> given the condition · <span class="legend-line"></span> all simulations</p></div>
           <div class="scroll"><table><thead><tr><th class="l"></th><th>Given</th><th>All</th></tr></thead><tbody>
             <tr><td class="l">Mean</td><td><b>${f1(cond.mean)}</b></td><td>${f1(all.mean)}</td></tr>
             <tr><td class="l">Median</td><td>${quantile(cond.q[2])}</td><td>${quantile(all.q[2])}</td></tr>
             <tr><td class="l">10–90%</td><td>${quantile(cond.q[0])}–${quantile(cond.q[4])}</td><td>${quantile(all.q[0])}–${quantile(all.q[4])}</td></tr>
             <tr><td class="l">Over ${line}</td>${heat(pCond, {digits: 1})}${heat(pAll, {digits: 1})}</tr></tbody></table></div></div>
-          ${Wd.weights && stat === 'min' ? '<p class="note">Minute quantiles are shown as MM:SS; conditions use full stored precision.</p>' : ''}` : ''}</section>
+          ${minute ? '<p class="note">Minute quantiles are shown as MM:SS; conditions use full stored precision. Each chart bar spans one minute, inclusive of its lower bound and exclusive of its upper bound.</p>' : ''}` : ''}</section>
       <section class="panel"><h3 style="margin-top:0">Joint outcomes</h3>
         <p class="note" style="margin-top:0">${esc(xName)} (across) against:</p>
         ${builder(data, Wd, 'joint', {subj: other.subj, v: other.v, button: '', variableOnly: true})}

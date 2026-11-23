@@ -28,7 +28,7 @@ def main() -> None:
     probe = json.loads(args.probe.read_text())
     for path, key in (('analysis/a1_branch_world_source.mjs', 'source_sha256'),
                       ('scripts/webapp/weighted-worlds.mjs', 'arithmetic_sha256'),
-                      ('analysis/a1_precise_minutes.mjs', 'algorithm_sha256'),
+                      ('scripts/webapp/precise-minutes.mjs', 'algorithm_sha256'),
                       ('analysis/a1_precise_minutes_probe.mjs', 'probe_sha256')):
         if sha256_file(ROOT / path) != probe[key]:
             raise ValueError(f'{path}: algorithm hash differs')
@@ -55,9 +55,11 @@ def main() -> None:
         if sha256_file(path) != branch['capture_sha256']:
             raise ValueError('capture hash differs')
         with np.load(path, allow_pickle=False) as data:
-            loaded.append((data['player_ids'], data['minutes']))
+            loaded.append((data['player_ids'], data['minutes'], data['side'], data['team_points']))
         if not np.array_equal(loaded[0][0], loaded[-1][0]):
             raise ValueError('capture rosters differ')
+        if not np.array_equal(loaded[0][2], loaded[-1][2]):
+            raise ValueError('capture sides differ')
         unit = weight * denominator / branch['worlds']
         if unit.denominator != 1:
             raise ValueError('non-integral world mass')
@@ -67,11 +69,11 @@ def main() -> None:
     rows = output['rows']
     if len(rows) != len(expected_keys) or {(r['player'], r['period']) for r in rows} != expected_keys:
         raise ValueError('missing or duplicate player-period distribution')
-    mass = sum(a.shape[0] * u for (_, a), u in zip(loaded, units, strict=True))
-    worlds = sum(a.shape[0] for _, a in loaded)
+    mass = sum(a.shape[0] * u for (_, a, _, _), u in zip(loaded, units, strict=True))
+    worlds = sum(a.shape[0] for _, a, _, _ in loaded)
     for row in rows:
         index, cols = players.index(row['player']), projection.SLICES[row['period']]
-        arrays = [a[:, index, cols].sum(axis=1) for _, a in loaded]
+        arrays = [a[:, index, cols].sum(axis=1) for _, a, _, _ in loaded]
         if row['mass'] != mass or row['worlds'] != worlds:
             raise ValueError('selected mass or world count differs')
         mean = sum(float(a.sum()) * u for a, u in zip(arrays, units, strict=True)) / mass
@@ -87,15 +89,24 @@ def main() -> None:
             expected = ordered[np.searchsorted(cumulative, target)]
             if not math.isclose(actual, expected, rel_tol=1e-10, abs_tol=1e-9):
                 raise ValueError('quantile differs')
+        if set(row['thresholds']) != {'0', '10', '20', '30', '30.25', '40', '48'}:
+            raise ValueError('minute thresholds missing or unexpected')
         for text, counts in row['thresholds'].items():
-            line = int(text)
+            line = float(text)
             expected = {'below': int(weights[values < line].sum()), 'equal': int(weights[values == line].sum()),
                         'above': int(weights[values > line].sum())}
             if counts != expected:
                 raise ValueError(f'{row["player"]} {row["period"]}: threshold {line} differs')
+        side = int(loaded[0][2][index])
+        won = np.concatenate([scores[:, side, :].sum(axis=1) > scores[:, 1 - side, :].sum(axis=1)
+                              for _, _, _, scores in loaded])
+        win_mass = int(weights[won].sum())
+        expected_win = {'mass': win_mass, 'above': int(weights[won & (values > 30.25)].sum())} if win_mass else None
+        if row['win'] != expected_win:
+            raise ValueError(f'{row["player"]} {row["period"]}: given-win threshold differs')
         bins: dict[int, list[int]] = defaultdict(lambda: [0, 0])
         for value, weight in zip(values, weights, strict=True):
-            bins[math.floor(value)][int(value > 30)] += int(weight)
+            bins[math.floor(value)][int(value > 30.25)] += int(weight)
         expected_bins = [{'minute': minute, 'atOrBelow': pair[0], 'above': pair[1]}
                          for minute, pair in sorted(bins.items())]
         if row['bins'] != expected_bins:
@@ -104,7 +115,8 @@ def main() -> None:
                              'probe': str(args.probe), 'probe_sha256': sha256_file(args.probe),
                              'audit_sha256': sha256_file(Path(__file__)), 'distributions': len(rows),
                              'selected_worlds': worlds, 'selected_mass': mass,
-                             'thresholds_per_distribution': 6, 'minute_bins_split_at': 30}, pretty=True)
+                             'thresholds_per_distribution': 7, 'minute_bins_split_at': 30.25,
+                             'conditional_win_thresholds': len(rows)}, pretty=True)
     print(f'Audited {len(rows)} exact-minute distributions from {worlds:,} selected worlds')
 
 

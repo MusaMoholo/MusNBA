@@ -43,8 +43,21 @@ and again in a **20,000**-world partial selection. Means, five quantiles, six th
 counts split at 30 minutes matched; each bin represents `[minute, minute + 1)`. Node computation took **2.14 s /
 1.25 s**, plus **0.72 s / 0.70 s** to decode the fixture; peak process RSS was **909,920 / 843,600 KiB** including
 the entire 207 MB fixture. These are desktop Node figures, not browser/phone benchmarks or bundle sizes. Outputs
-do not include exact supports, and the prototype is not yet wired to any view or production. Reports:
+do not include exact supports; at checkpoint `79c02b2` the prototype was not wired to a view or production. Reports:
 `analysis/experiments/20261122_a1_precise_minutes_034_{all,available}_v1_{probe,audit}.json`.
+After sharing the helper with the injected research sheet, a separate `401910030` fixture independently
+reconciled **196** distributions for **40,000** worlds across 28 players and seven periods, including seven
+thresholds, bins split at **30.25** minutes and **196** conditional-on-own-team-win thresholds. The browser
+matched the audited full-game threshold and Given probability and a first-half threshold; six viewport/theme
+screenshots were inspected. This remains research injection, not a delivered forecast. The old research
+summary remains whole-minute-rounded and production snapshots have not gained precise world minutes.
+Four branches of `401910034`, 30 players, produce **18,713,888 gzip bytes** for base64 JSON float64
+five-period per-world minutes, versus **26,348,197 bytes** for independently sorted seven-period marginals;
+both sizes were independently reconstructed with zlib. These are minute-only layouts, not bundle sizes.
+Sorted marginals discard world identity and cannot support joint or conditional outcomes. Reports:
+`analysis/experiments/20261122_a1_minute_payload_034_v1.json`,
+`analysis/experiments/20261122_a1_precise_minutes_030_all_v5_audit.json` and
+`analysis/experiments/20261122_a1_precise_game_browser_v4.json`.
 
 **22 Nov 2026 — retained-context comparison:** before another collection, recomputing the 22 Nov cutoff
 team table, league table and player table from the currently retained box-score inputs produced exact

@@ -1,0 +1,48 @@
+{
+ "kind": "isolated minute payload sizing; not a PWA bundle or predictive test",
+ "manifest": "data/derived/experiments/20261122_a1_live_branch_034_v1.json",
+ "manifest_sha256": "6111ca22d0981ff3cc14bda9bb8cdaa77f9cf90b88e243583c3d98223a72c3ed",
+ "algorithm_sha256": "23fb29bb6cc29e19eb872f014568d5f672728c336724307b1d4a7a5e24bbf1aa",
+ "captures": [
+  {
+   "capture": "data/derived/experiments/20261122_a1_live_branch_034_v1/branch-000.npz",
+   "capture_sha256": "b460a7f8b87158fe507fe583eaf11ac2b35c65e87bc9caa8ac5ac355ed134bc8",
+   "worlds": 10000,
+   "players": 30
+  },
+  {
+   "capture": "data/derived/experiments/20261122_a1_live_branch_034_v1/branch-001.npz",
+   "capture_sha256": "dcc6a159e8a80049c47447a8a6428e28e8c331fe3b7e2742db4185cff971629b",
+   "worlds": 10000,
+   "players": 30
+  },
+  {
+   "capture": "data/derived/experiments/20261122_a1_live_branch_034_v1/branch-002.npz",
+   "capture_sha256": "45f2990bf2d5285749cc8e135f930702afb2da915b32a63cc5249c229f5414e1",
+   "worlds": 10000,
+   "players": 30
+  },
+  {
+   "capture": "data/derived/experiments/20261122_a1_live_branch_034_v1/branch-003.npz",
+   "capture_sha256": "281536e05213851e0804b95e9f587f3c678e6eee477dfcacbc946d351df02ac2",
+   "worlds": 10000,
+   "players": 30
+  }
+ ],
+ "layouts": {
+  "period_worlds": {
+   "json_bytes": 64000345,
+   "gzip_bytes": 18713888
+  },
+  "sorted_marginals": {
+   "json_bytes": 89600385,
+   "gzip_bytes": 26348197
+  }
+ },
+ "seconds": 3.193,
+ "limitations": [
+  "One game only; JSON includes minute arrays and shape metadata, not other game data.",
+  "Sorted period marginals discard world identity and cannot support joint conditions.",
+  "No phone or browser benchmark; not a proposed production format."
+ ]
+}
