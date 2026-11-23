@@ -429,6 +429,12 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 ET · D50 live refresh:** retained all **7** original game forecasts and their worlds, rebuilt
+  a **959-game / 10,000-world** season, independently reconciled **3,808** future distributions and replayed
+  the season exactly. iCloud laptop/phone bundles were exported and passed hosted offline **25/25 / 24/24**;
+  Pages shell `1b4cc6c`, cache `871e52f6e7a2ca20b58b`. Responsive checks **36/36** plus timing **6/6**;
+  device import remains manual. The post-delivery smoke exposed and now tests corrected assumptions about
+  discarded previews. A1 lineup controls and minute precision remain open.
 - **22 Nov 2026 · D50 mixed rehearsal:** an isolated synthetic-clock run combined **5** retained and **2**
   regenerated 10,000-world games; its **959**-game season replayed exactly in **309.67s** with eight OpenMP
   threads. An independent raw-origin audit matched **246** report entries for all seven originals. Missing,

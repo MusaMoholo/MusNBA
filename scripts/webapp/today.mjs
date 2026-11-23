@@ -108,8 +108,8 @@ function review(r) {
 function modelNote(slate) {
   if (slate.snapshot) {
     const kind = slate.kind === 'prospective' ? '<span class="pill">Prospective snapshot</span>' : '<span class="pill warn" title="Rebuilt after the fact from box scores before this date; no injury news">Retrospective</span>';
-    const timing = slate.completed_at ? `built ${esc(stamp(slate.completed_at))}` : `started ${esc(stamp(slate.generated))} · completion unverified`;
-    return `<div class="model-note">${modelPill(slate.model)}${kind}<span>${slate.model.sims.toLocaleString()} sims per game · ${timing}</span></div>`;
+    const timing = slate.completed_at ? `snapshot updated ${esc(stamp(slate.completed_at))}` : `snapshot started ${esc(stamp(slate.generated))} · completion unverified`;
+    return `<div class="model-note">${modelPill(slate.model)}${kind}<span>${slate.model.sims.toLocaleString()} sims per game · ${timing} · game forecast times may differ</span></div>`;
   }
   if (slate.games.some(g => g.team_model)) return '<div class="model-note"><span class="pill">Team-strength estimate only</span><span>Game sims run on the morning of each slate.</span></div>';
   if (slate.games.length) return '<div class="model-note"><span class="pill">No projection retained for this date</span></div>';

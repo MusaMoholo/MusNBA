@@ -49,6 +49,24 @@ class TodayOnlyTests(unittest.TestCase):
             self.assertEqual(set(result), {'old-review', 'origin', 'new'})
             self.assertTrue((snaps['2026-11-23']['path'] / 'games.json').exists())
 
+    def test_season_replay_uses_only_its_declared_engine_worlds(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            snaps = [Path(tmp) / day for day in ('today', 'discarded')]
+            for path, games in ((snaps[0], {'a': np.array([1])}),
+                                (snaps[1], {'b': np.array([2])})):
+                write_json(path / 'season.json', {'as_of': '2026-11-22'})
+                np.savez(path / 'engine_worlds.npz', **games)
+            worlds = smoke.season_worlds(snaps, {'engine_games': ['a']}, '2026-11-22')
+            self.assertEqual(list(worlds), ['a'])
+            np.testing.assert_array_equal(worlds['a'], [1])
+            with self.assertRaisesRegex(ValueError, 'missing'):
+                smoke.season_worlds(snaps, {'engine_games': ['a', 'missing']}, '2026-11-22')
+            with self.assertRaisesRegex(ValueError, 'duplicate'):
+                smoke.season_worlds(snaps, {'engine_games': ['a', 'a']}, '2026-11-22')
+            np.savez(snaps[1] / 'engine_worlds.npz', a=np.array([1]))
+            with self.assertRaisesRegex(ValueError, 'multiple snapshots'):
+                smoke.season_worlds(snaps, {'engine_games': ['a']}, '2026-11-22')
+
     def test_empty_today_builds_a_team_season_without_loading_engine_models(self):
         with patch.object(nightly, 'team_table', return_value=({}, {'teams_gp': 20, 'games': 1})), \
                 patch.object(nightly, 'player_table', return_value={}), \

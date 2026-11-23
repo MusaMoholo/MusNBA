@@ -2,6 +2,18 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 ET — D50 live delivery:** after all seven scheduled tips, a live collection made **65**
+requests with **0** failures and two new final summaries. Rebuilding inputs through 21 Nov took **230.1s**.
+The retained and post-collection team, league and player cutoff tables matched exactly. The new
+**10,000-world** season used all **7** original game-world sets and **952** future team-pathway games.
+The independently regenerated season exactly matched the saved season and **3,808** future regulation
+distributions reconciled; report `analysis/experiments/20261122_d50_live_audit_v1.json`. The original
+seven game summaries, placeholder forecasts, per-game provenance and every player/team world matched the
+archived snapshot exactly. The raw origin audit matched **246** entries across seven games before and after
+the refresh (`analysis/experiments/20261122_a1_retained_raw_report_audit_v{5,6}.json`). This was an
+all-retained live refresh, not a live mixed-collection test, and staged completion is not independent proof
+of pre-tip publication. No model was promoted.
+
 **22 Nov 2026 — minute precision:** in one retained 10,000-world D47 conditional branch (25 players,
 five period slots), **527,727/1,250,000** player-period-world minute values were not integer seconds
 at tolerance 1e-8; maximum distance from a whole second was **0.5 s**. The source retains float64

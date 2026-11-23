@@ -88,6 +88,26 @@ def align_legacy_season_schema(stored: dict, replay: dict) -> None:
             row.pop('regulation', None)
 
 
+def season_worlds(snaps: list[Path], season: dict, origin: str) -> dict:
+    import numpy as np
+    expected = season.get('engine_games', [])
+    if len(expected) != len(set(expected)):
+        raise ValueError('season lists duplicate engine games')
+    expected = set(expected)
+    worlds = {}
+    for path in snaps:
+        if not (path / 'engine_worlds.npz').exists() or read_json(path / 'season.json').get('as_of') != origin:
+            continue
+        with np.load(path / 'engine_worlds.npz', allow_pickle=False) as archive:
+            for gid in expected.intersection(archive.files):
+                if gid in worlds:
+                    raise ValueError(f'{gid}: engine worlds appear in multiple snapshots')
+                worlds[gid] = archive[gid]
+    if set(worlds) != expected:
+        raise ValueError(f'season engine worlds missing: {sorted(expected - set(worlds))}')
+    return worlds
+
+
 def lineup_accuracy_consistent(record: dict) -> bool:
     slates = list(record['slates'].values())
     overall = record.get('overall')
@@ -465,7 +485,8 @@ def main():
             off = [g for g in season['engine_games'] if g in games and abs(rows[g]['p_home'] - games[g]['periods']['fg']['home']['win']) > 5e-5]
             check(f'{day}: season plays the engine\'s worlds ({len(season["engine_games"])} games, win % identical)', not off, off[:3])
 
-    latest = snaps[-1]
+    from scripts.views import current_snapshot, load_snapshots
+    latest = SNAPSHOTS / current_snapshot(load_snapshots())
     day = latest.name
     meta = read_json(latest / 'meta.json')
     games = read_json(latest / 'games.json')
@@ -523,13 +544,8 @@ def main():
         snap = pathway_snaps[-1]
         meta, season = read_json(snap / 'meta.json'), read_json(snap / 'season.json')
         if meta['inputs']['master_sha256'] == __import__('basketball_common').sha256_file(MASTER_CSV):
-            import numpy as np
             st = read_json(snap / 'stats.json')
-            worlds = {}
-            for p in snaps:  # every snapshot written with this season carries its own slate's engine worlds
-                if (p / 'engine_worlds.npz').exists() and read_json(p / 'season.json').get('as_of') == snap.name:
-                    with np.load(p / 'engine_worlds.npz') as z:
-                        worlds.update({k: z[k] for k in z.files})
+            worlds = season_worlds(snaps, season, snap.name)
             again = json.loads(json.dumps(projection.simulate_season(st['teams'], st['league'], master, snap.name, teams,
                                                                      worlds or None, season['sims'], season['pathway'])))
             for tid, t in season['teams'].items():
@@ -548,7 +564,6 @@ def main():
     missing = [d for d in {r['date_et'] for r in master} if not (api / 'slate' / f'{d}.json').exists()]
     check('views: every slate date has a view', not missing, missing[:3])
     check('views: every game has a view', all((api / 'game' / f'{g}.json').exists() for g in ids))
-    from scripts.views import current_snapshot, load_snapshots
     check('views: meta latest = newest same-origin snapshot dated today (ET) or earlier',
           view_meta['latest'] == current_snapshot(load_snapshots()))
     g0 = sorted(games)[0] if games else None

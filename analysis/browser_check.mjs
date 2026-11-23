@@ -223,6 +223,10 @@ for (const [name, hash, sizes, themes] of CASES) {
     }
     if (name === 'today-house') {
       interaction = (await send('Runtime.evaluate', {expression: `(async () => {
+        const ui = await import('./assets/ui.mjs'), slate = await ui.api('slate/2026-11-22');
+        const note = document.querySelector('#view .model-note')?.textContent || '';
+        if (slate.completed_at && (!note.includes('snapshot updated ' + ui.stamp(slate.completed_at))
+            || !note.includes('game forecast times may differ'))) return false;
         const games = document.querySelector('#view .games:not(.spot-grid)'), insights = document.querySelector('#view .spot-grid');
         const jump = document.querySelector('[data-insights]');
         if (!jump) return false;

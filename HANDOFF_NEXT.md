@@ -1,26 +1,65 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 80%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **18ebb1e** (partial mixed-provenance safety and all-retained rehearsal); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **33cddc8** (mixed-provenance audit and timing safety); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
-- **Owner's latest horizon change (22 Nov; implementation pending):** stop possession-engine forecasts for
+- **Owner's latest horizon change (22 Nov; delivered):** stop possession-engine forecasts for
   tomorrow and later: simulate today's ET games only; tomorrow onward belongs to the season team engine.
   Exclude tomorrow's old possession forecasts and future player/possession sensitivities from the active dashboard
-  while preserving original forecasts/archives; expose future team-level score distributions from season worlds,
+  while preserving original forecasts/archives; future team-level score distributions come from season worlds,
   labelled regulation because pathway ties are resolved separately without overtime points. Still produce a
   fresh season on days with no games. Existing pre-tip-only "How we did"
   retrospective summaries should remain available where forecasts were actually retained; do not invent older
-  forecasts or backfill. Update affected app copy and dynamic labels, tests, docs, nightly output and
-  iCloud/PWA delivery after this contract change. This owner's request supersedes D24/D26's two-day horizon.
+  forecasts or backfill. A fresh season, updated app, iCloud exports and data-free Pages shell were delivered;
+  physical device import remains manual. This owner's request supersedes D24/D26's two-day horizon.
 - **A1 dashboard acceptance clarification (owner, 22 Nov):** complete and deliver the uncertainty/lineup
   experience in the actual dashboard as A1 closes, not merely in injection-only research. Do not pass off
   fixed research fixtures as today's live data; enforce origin provenance, keep assumptions explicitly
   uncalibrated and all affected views coherent, validate fresh outputs, bundles and normal routes, and keep
   the accepted model unless its promotion gates pass. Existing current availability panels and
   participation-based Given/Joint are not the full plays/sits control.
-- **D50 delivery ladder (supplemental, no change to Chunk A weights):** 10% freeze today's-only and archive
+- **Live D50 refresh (23 Nov 01:30 UTC, still 22 Nov ET):** after the last listed tip, all
+  **7/7** original pre-tip games were selected for retention. Immediately before collection, the independent
+  audit again matched **246** availability entries and all seven source-timing records:
+  `analysis/experiments/20261122_a1_retained_raw_report_audit_v5.json`. Existing views were copied and verified
+  at `~/Basketball_archive_ops/archive_20261123T012536Z_99705/data/views`. Started
+  `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=8 .venv/bin/python -u scripts/nightly_musnba.py` with log
+  `/tmp/musnba_d50_live_20261122_v1.log`; check that process and log before any restart. Its collection,
+  Collection finished:
+  **30/30** schedules and rosters, **65** requests, **2** new finals and **0** failures; input rebuilding
+  completed in **230.1s** through 21 Nov. After collection, an independent cutoff recomputation matched the
+  retained snapshot's team, league and player tables exactly. The new snapshot contains **7** retained games
+  and a **959-game / 10,000-world** season; it archived the original at
+  `~/Basketball_archive_ops/archive_20261123T013445Z_121`. An independent post-publication comparison found
+  all seven original summaries, placeholders, provenance, player and team worlds identical, and another raw
+  audit matched **246** entries (`analysis/experiments/20261122_a1_retained_raw_report_audit_v6.json`).
+  Views were rebuilt (**1,960** files); both bundles were exported to iCloud (**42.9 / 12.6 MB** laptop/phone).
+  Independent full-season/view replay succeeded using `analysis/d50_today_only_probe.py`, scratch
+  `data/derived/experiments/20261122_d50_live_audit_v1`, report
+  `analysis/experiments/20261122_d50_live_audit_v1.json`, log `/tmp/musnba_d50_live_audit_v1.log`;
+  the replayed season exactly equals the live `season.json`, with **952** future games and **3,808**
+  independently checked regulation distributions. Browser checks passed **36/36** and screenshots were
+  inspected. The previous private shell passed actual-bundle offline tests, but a
+  slate timing-label fix was then needed: snapshot refresh time is no longer presented as game forecast time.
+  The corrected private shell is `/tmp/musnba-d50-public-shell-timing-33cddc8`, cache `871e52f6e7a2ca20b58b`,
+  previously served privately at :18871; actual-bundle local offline checks passed **22/22 phone, 23/23 laptop**. The data-free
+  shell is now published as `gh-pages` **1b4cc6c** and hosted actual-bundle import/offline checks passed
+  **24/24 phone, 25/25 laptop**, logs `/tmp/musnba_d50_hosted_{phone,laptop}_pwa.log`.
+  All six changed hosted files match the reviewed local shell. The :8767 review server remains up; the
+  task's temporary :18870 / :18871 servers and detached Pages worktree have been stopped/removed. The old
+  Pages tree is archived at `~/Basketball_archive_ops/gh-pages-before-d50-0c0447a.tar`. Do not touch the
+  owner's :8766 or any other user's jobs.
+  Post-delivery smoke initially caught two obsolete assumptions: replay was including discarded preview
+  worlds and checking a hidden preview game view. Corrected smoke selects the active same-origin snapshot and
+  only the season's declared worlds; missing or duplicate world sets fail explicitly. Focused tests **33/33**,
+  corrected full smoke **107/107**, deliberate fault **86/107** and exit 1; logs
+  `/tmp/musnba_d50_live_fixed_{smoke,fault}.log`. The count is one lower than before because changed input
+  hashes correctly skip re-simulating a retained old game. **D50 100% complete after this checkpoint.**
+  Documentation review: HANDOFF, PLAN, ENGINE_PLAN, FINDINGS, DASHBOARD_PLAN and README reflect the delivery;
+  AGENTS and TRAINING_PLAN need no changes because standing rules and model/promotion gates remain unchanged.
+- **D50 delivery ladder (supplemental, no change to Chunk A weights; complete):** 10% freeze today's-only and archive
   contract; 20% trace stale previews and existing pre-tip reviews; 30% implement today's/no-game nightly;
   40% exclude future possession sensitivities and expose honest team distributions; 50% update app copy and preserve past reviews;
   60% pass focused cutoff, archive and no-game tests; 70% pass responsive/browser tests and inspect screenshots;
@@ -2670,21 +2709,7 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
 
 ## Next actions — Chunk A in progress
 
-1. **D50 first:** finish the pending today-only horizon, future regulation team distributions and delivery
-   ladder in State without exposing old future possession previews. The completed isolated preview has
-   report `analysis/experiments/20261122_d50_today_only_preview_v4.json`, scratch
-   `data/derived/experiments/20261122_d50_preview_v4/`; the independent audit and responsive checks passed.
-   The existing today snapshot's seven pre-tip forecasts must not be replaced by post-tip forecasts: two games
-   had already tipped when D50 began. Preserve their original timing/provenance when delivering.
-   The partial implementation now preserves affected games, checks identical model/stats and fails on tip
-   crossing. An artificial-clock mixed real-game rehearsal passed independent per-game origin-registry and
-   rendered-view checks, but used only one collection; failure and rollback have focused tests. Recheck the
-   cutoff stats after collection and audit each game's own origin before touching the retained snapshot.
-   The new 10k season must use the *same* displayed worlds; distinguish per-game and season timestamps.
-   Alternatively wait for the next ET-origin nightly, preserving the
-   22 Nov forecast and doing no backfill; do not call the isolated preview a fresh nightly. After delivery,
-   archive/refresh views and bundles, verify both PWA profiles and publish only the data-free shell.
-2. **A1 90%:** continue from the audited 10k isolated-retry test in State. Independently verify representative
+1. **A1 90%:** continue from the audited 10k isolated-retry test in State. Independently verify representative
    branch accounting, source cutoff provenance and restart behavior; quantify runtime and rejection/selection
    bias on earlier folds. Do not equate its synthetic fixed-game benchmark with a
    representative development-fold failure-rate, a full-slate budget or a successful production gate. The completed scaling probe
@@ -2702,7 +2727,7 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
    forecast if those gates cannot be met. The two retained research contexts now pass the independent snapshot
    check above; enforce equivalent origin-safe provenance for any future view before enabling the research path.
    Reproduce with `.venv/bin/python analysis/a1_game_context_audit.py data/snapshots/2026-11-22/meta.json data/master_fixtures.csv data/derived/experiments/20261122_chunk_a_a1_d47_game_view_one_full_v2.json data/derived/experiments/20261122_chunk_a_a1_d47_game_view_two_full_v2.json --payloads data/derived/experiments/20261122_chunk_a_a1_d47_expected_payload_one_shared_v1.json data/derived/experiments/20261122_chunk_a_a1_d47_expected_payload_two_shared_v1.json --output analysis/experiments/<new-context-audit>.json`.
-3. Finish A1 only after the actual rung requirements or the explicitly documented blocked fallback are resolved,
+2. Finish A1 only after the actual rung requirements or the explicitly documented blocked fallback are resolved,
    review all root docs, smoke/fault, commit and push. Stop at the owner's A1 boundary; leave A2/A3 and Chunk B
    unchanged. A new full nightly belongs at the end of Chunk A, not this isolated research checkpoint.
 
