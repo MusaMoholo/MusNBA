@@ -429,6 +429,11 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **23 Nov 2026 ET · A1 vector matched-penalty F4 screen:** **200** fixed oracle-roster games /
+  **200,000** worlds independently reconciled; pooled minute CRPS changed **−0.001262
+  [−0.003540, +0.001033]**, below the **0.026341** seed-noise floor, and **67/69** non-inferiority
+  bounds were established. The primary screen failed; retain the current model. One-fold oracle
+  rosters do not validate actual availability or production retries. A1 **80%**, Chunk A **34.5%**.
 - **23 Nov 2026 ET · A1 vector candidate scaling:** **10** fixed F4 games × **1,000** worlds took
   **204.265 / 138.004s** at four/eight workers, with identical audited worlds and outputs. Summed
   worker peak RSS **5.80 / 11.72 GB**, excluding other processes. Use eight for the frozen 200-game

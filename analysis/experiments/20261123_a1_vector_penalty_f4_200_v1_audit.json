@@ -1,0 +1,17 @@
+{
+ "kind": "independent fixed-panel vector-penalty accounting; not a promotion",
+ "report": "analysis/experiments/20261123_a1_vector_penalty_f4_200_v1.json",
+ "report_sha256": "9d94b328fe779a4ecf6d58e6266d01ece9a56dff6fc035181d5cda9bfaecdccf",
+ "games": 200,
+ "worlds_per_game": 1000,
+ "players": 4346,
+ "player_metrics_checked": 21730,
+ "lineup_fives_checked": 98276074,
+ "technical_events": 50,
+ "elapsed_seconds": 35.092,
+ "limitations": [
+  "Actual-participant oracle rosters are not pre-game availability forecasts.",
+  "Vectorized world draws share engine RNG; equal starting seeds are not paired paths.",
+  "F4 diagnostic only; not a promotion or protected-season evaluation."
+ ]
+}

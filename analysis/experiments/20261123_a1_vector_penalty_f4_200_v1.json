@@ -1,0 +1,1704 @@
+{
+ "experiment": "isolated F4 matched-penalty backtest; not a forecast or promotion",
+ "run": "20261123_a1_vector_penalty_f4_200_v1",
+ "config": "models/v1.2d.json",
+ "fold": "F4",
+ "models": "folds/v1.2d_F4_all",
+ "games": 200,
+ "worlds": 1000,
+ "rotation": "targets",
+ "known_starters": false,
+ "pool": 0,
+ "simulation_stream": null,
+ "seed_key": null,
+ "game_ids": [
+  "401809247",
+  "401810327",
+  "401810328",
+  "401810333",
+  "401810337",
+  "401810338",
+  "401810339",
+  "401810340",
+  "401810343",
+  "401810344",
+  "401810346",
+  "401810348",
+  "401810350",
+  "401810351",
+  "401810352",
+  "401810353",
+  "401810354",
+  "401810357",
+  "401810359",
+  "401810368",
+  "401810369",
+  "401810370",
+  "401810376",
+  "401810385",
+  "401810390",
+  "401810393",
+  "401810397",
+  "401810398",
+  "401810402",
+  "401810403",
+  "401810407",
+  "401810421",
+  "401810422",
+  "401810425",
+  "401810427",
+  "401810433",
+  "401810440",
+  "401810442",
+  "401810446",
+  "401810447",
+  "401810451",
+  "401810459",
+  "401810467",
+  "401810468",
+  "401810472",
+  "401810477",
+  "401810484",
+  "401810486",
+  "401810488",
+  "401810489",
+  "401810491",
+  "401810498",
+  "401810500",
+  "401810501",
+  "401810503",
+  "401810511",
+  "401810514",
+  "401810521",
+  "401810524",
+  "401810525",
+  "401810529",
+  "401810530",
+  "401810531",
+  "401810532",
+  "401810537",
+  "401810540",
+  "401810541",
+  "401810542",
+  "401810544",
+  "401810549",
+  "401810552",
+  "401810557",
+  "401810567",
+  "401810572",
+  "401810574",
+  "401810576",
+  "401810584",
+  "401810586",
+  "401810589",
+  "401810590",
+  "401810594",
+  "401810597",
+  "401810602",
+  "401810604",
+  "401810611",
+  "401810612",
+  "401810613",
+  "401810622",
+  "401810625",
+  "401810629",
+  "401810632",
+  "401810635",
+  "401810638",
+  "401810645",
+  "401810651",
+  "401810652",
+  "401810655",
+  "401810658",
+  "401810670",
+  "401810677",
+  "401810679",
+  "401810684",
+  "401810691",
+  "401810693",
+  "401810694",
+  "401810702",
+  "401810704",
+  "401810708",
+  "401810713",
+  "401810715",
+  "401810722",
+  "401810727",
+  "401810730",
+  "401810733",
+  "401810734",
+  "401810735",
+  "401810742",
+  "401810747",
+  "401810748",
+  "401810749",
+  "401810753",
+  "401810761",
+  "401810762",
+  "401810764",
+  "401810768",
+  "401810772",
+  "401810773",
+  "401810779",
+  "401810780",
+  "401810784",
+  "401810786",
+  "401810787",
+  "401810791",
+  "401810792",
+  "401810793",
+  "401810797",
+  "401810804",
+  "401810813",
+  "401810820",
+  "401810823",
+  "401810825",
+  "401810826",
+  "401810832",
+  "401810834",
+  "401810840",
+  "401810841",
+  "401810846",
+  "401810851",
+  "401810855",
+  "401810857",
+  "401810865",
+  "401810866",
+  "401810873",
+  "401810877",
+  "401810878",
+  "401810879",
+  "401810882",
+  "401810885",
+  "401810890",
+  "401810891",
+  "401810892",
+  "401810893",
+  "401810895",
+  "401810902",
+  "401810904",
+  "401810908",
+  "401810910",
+  "401810911",
+  "401810915",
+  "401810928",
+  "401810929",
+  "401810933",
+  "401810939",
+  "401810941",
+  "401810944",
+  "401810949",
+  "401810954",
+  "401810955",
+  "401810960",
+  "401810961",
+  "401810964",
+  "401810971",
+  "401810974",
+  "401810976",
+  "401810984",
+  "401810985",
+  "401810996",
+  "401811001",
+  "401811002",
+  "401811005",
+  "401811008",
+  "401811013",
+  "401811019",
+  "401811022",
+  "401811025",
+  "401811027",
+  "401811032",
+  "401811045",
+  "401811046",
+  "401850920"
+ ],
+ "control": "20261122T022323Z_a1_s01_control",
+ "pilot": false,
+ "scaling": false,
+ "workers": 8,
+ "workers_observed": 8,
+ "sum_worker_peak_rss_upper_bound_bytes": 13385121792,
+ "memory_limitation": "Sum of per-worker high-water RSS; excludes parent, OS and other processes.",
+ "game_rows_sha256": "207a7b2190b1740f8bc595a11c44d86f2870415978eee4aad4d14b4826fd892b",
+ "player_rows_sha256": "2a3b310d497a254c7ebc9b20b448e2a0e3b3c4232e2c7f327a4ef0892c302039",
+ "captures": [
+  {
+   "game": "401809247",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401809247.npz",
+   "sha256": "4f459f5b65c2fe30910593fe9f1c9f824a0d3d7cdfcab5adf01988e8ba1a1d9e",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1457455104
+  },
+  {
+   "game": "401810327",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810327.npz",
+   "sha256": "e2f42e8c0609f8c1f764ad8addcbef3e2986bb43788c7e54bbe8e1b304a841aa",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1453916160
+  },
+  {
+   "game": "401810328",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810328.npz",
+   "sha256": "4850be2dd6f8cc49ee575de39c8c6ab74bec4fe0e533e76c0a2ce586320e91b8",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1461518336
+  },
+  {
+   "game": "401810333",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810333.npz",
+   "sha256": "61bfb99b5f3dbbec26138debb01153b003acf3acc1990b9c56310c763ff2cefb",
+   "technical_events": 1,
+   "worker_peak_rss_bytes": 1468170240
+  },
+  {
+   "game": "401810337",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810337.npz",
+   "sha256": "63b83e232df55675a9de5bd89ddae0323823001f77e6de5b8e255553dc692bda",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1454637056
+  },
+  {
+   "game": "401810338",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810338.npz",
+   "sha256": "138d6b36f8054b1aec9399329abf48fe26d70a3d5c1846eb870ab99b2912d699",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1469071360
+  },
+  {
+   "game": "401810339",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810339.npz",
+   "sha256": "42f5663226b0ef71a8be7100b29ca7899b029b98ed7cff79dc1511b596af1ac5",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1485963264
+  },
+  {
+   "game": "401810340",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810340.npz",
+   "sha256": "bb406c55191370cb682fd5ed81bce0f29ca88ba2e3ac57704d8c19b889e94bf9",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1501052928
+  },
+  {
+   "game": "401810343",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810343.npz",
+   "sha256": "f01dcc6698ec78b9799d09702e2e6bf9f78aa208c3837fdfa42fd0bdcad09294",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1457455104
+  },
+  {
+   "game": "401810344",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810344.npz",
+   "sha256": "8b8c27ca7604a7b7a47efdb20eadb5da2c0f6bc65379f86c6b5482b2a7642598",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1485963264
+  },
+  {
+   "game": "401810346",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810346.npz",
+   "sha256": "7ac5afb9192d9850c73b2c35e7e778f77f5389b649d8ba52e5781b25703bd4cc",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1501052928
+  },
+  {
+   "game": "401810348",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810348.npz",
+   "sha256": "a4a1dfa622ea65315ba0fc244302e46bb72c48aadc0c86f33b24bb372639368f",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1461518336
+  },
+  {
+   "game": "401810350",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810350.npz",
+   "sha256": "3669322a7e76b549cb907758b4e21add5825b848241dd01a132a1e2f21ba66bd",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1468170240
+  },
+  {
+   "game": "401810351",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810351.npz",
+   "sha256": "f0b10ae3c20aaa16f7f104210c2930fd8f7a8622ef879423a0ca4449b01623c5",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1469071360
+  },
+  {
+   "game": "401810352",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810352.npz",
+   "sha256": "f107bd4485c80b0db12357e5b03dd2e24ab4d60275faffe1e4f89295d8031e53",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1453916160
+  },
+  {
+   "game": "401810353",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810353.npz",
+   "sha256": "78cbda47701275b31b16827249f728e9a8734e170783cff13eae2fa43a1d6de2",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1454637056
+  },
+  {
+   "game": "401810354",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810354.npz",
+   "sha256": "f688210d7a994887c1269b89ddd2df381488cadeb9d8f5a52a1014b894a4226f",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1461518336
+  },
+  {
+   "game": "401810357",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810357.npz",
+   "sha256": "6c4200bf7cfa3d5d4e6d9370d2706f037c1dfb0e40b5d8679fac542da873057c",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1471365120
+  },
+  {
+   "game": "401810359",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810359.npz",
+   "sha256": "199b9bc60e5c797dee10f1b4319225ed12b2cd41774e6ca53a9b5ec9802df066",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1501052928
+  },
+  {
+   "game": "401810368",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810368.npz",
+   "sha256": "14aee1c36ebb9c0c938d0e96390fd84eb2884a360630139774d066d104985fc6",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1457455104
+  },
+  {
+   "game": "401810369",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810369.npz",
+   "sha256": "4244ec4af5140666b60f279c2e61babcfb8b1d811c2e745806a25565f79073cb",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1485963264
+  },
+  {
+   "game": "401810370",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810370.npz",
+   "sha256": "55282a5af57847e3f609e6d1ef089d170eacec299fb59ecf016bd984d1e942f8",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1454637056
+  },
+  {
+   "game": "401810376",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810376.npz",
+   "sha256": "7f0c498e19fe35b4f180a87c0be3da3a36d17be169b6baf7cca96f4f0dc4cc1c",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1453916160
+  },
+  {
+   "game": "401810385",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810385.npz",
+   "sha256": "3082923988addadf3422c28045392128c8546bf048a5c1d623c43a779c0d0267",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1468170240
+  },
+  {
+   "game": "401810390",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810390.npz",
+   "sha256": "e5988c45f505d41e8ed7a1b6443eed8c7a7cea15b3a971d38d47f9894a2a9be8",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1503002624
+  },
+  {
+   "game": "401810393",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810393.npz",
+   "sha256": "f278c49fb90399145163091821b70f1adc2e202ee5ce29327fff7c6e4401ab7b",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1501052928
+  },
+  {
+   "game": "401810397",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810397.npz",
+   "sha256": "d8f719a328cefa27c4f4d80d8fd73720968606beaf9893041a2367c7a404d13a",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1550876672
+  },
+  {
+   "game": "401810398",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810398.npz",
+   "sha256": "12a81456f3d2d6ee143c3a1924411bd431dcff44957f0323011a074b97bc36a9",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1599848448
+  },
+  {
+   "game": "401810402",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810402.npz",
+   "sha256": "d227b5513aa08bee3b0f4b0ff787ac27d58c7fb8f02e3302f8878d01c6e65e35",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1485963264
+  },
+  {
+   "game": "401810403",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810403.npz",
+   "sha256": "8258713796885550142fcc35aebe5fb44f27564c609aa16e9aa625b33b5cc5e7",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1453916160
+  },
+  {
+   "game": "401810407",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810407.npz",
+   "sha256": "81679cb4bb75b9c798c5e1b6938f203e05e2be023f4c7469ef8359e7b8c04e92",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1454637056
+  },
+  {
+   "game": "401810421",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810421.npz",
+   "sha256": "aaab35f000c782c33d4b46107b521d0b4c990d4c374a1d9a5262c9654ec22c17",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1468170240
+  },
+  {
+   "game": "401810422",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810422.npz",
+   "sha256": "9984314083ba34004b9570a693da0d559bc31f08a8fd2ce0a374be837b098a1c",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1503002624
+  },
+  {
+   "game": "401810425",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810425.npz",
+   "sha256": "b050b62258c253efdfd4ec14a70a23815f5296bf91d0e975877cd817ac81ee79",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1501052928
+  },
+  {
+   "game": "401810427",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810427.npz",
+   "sha256": "a9d4362746cf38a07142a522b36bba6f6ac097beea41594735b048ae5b927718",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1550876672
+  },
+  {
+   "game": "401810433",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810433.npz",
+   "sha256": "3c14d9895876f9481b8b968542992c1eabd57befc02209eda3b1a7a92c800bf5",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1599848448
+  },
+  {
+   "game": "401810440",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810440.npz",
+   "sha256": "3f7c978ac70b11bdd61350fe3ebaa5e03fe2b80259844443d2786a3dbbe5bcf8",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1454637056
+  },
+  {
+   "game": "401810442",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810442.npz",
+   "sha256": "09bb33c7c0f08574d6dfb42a06d2dd095cc933b8c3f7e81df9630240022a4ab8",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1453916160
+  },
+  {
+   "game": "401810446",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810446.npz",
+   "sha256": "d574c9f7c6dff7d05f4d9f7ea25bfa1ce04a8e5c8a703a6c1a79be4991b69474",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1485963264
+  },
+  {
+   "game": "401810447",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810447.npz",
+   "sha256": "7b0f266b63dbf108cfa3fa68e6449284d0a30173446fd44eaca6ff399db9acb3",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1520943104
+  },
+  {
+   "game": "401810451",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810451.npz",
+   "sha256": "21a6db81a27ada8b6dabfd60bc0626c47ac238d708933af6bfdba259afc1695a",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1503002624
+  },
+  {
+   "game": "401810459",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810459.npz",
+   "sha256": "61e50dc87b9ce678d4fea149243797e1571110cd5eddf72fb9d54ef272061739",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1501052928
+  },
+  {
+   "game": "401810467",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810467.npz",
+   "sha256": "86c624b48f140e0aec5b255cb695a66c4e66a9aa204e60a1aa205ad1545bf2f6",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1485963264
+  },
+  {
+   "game": "401810468",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810468.npz",
+   "sha256": "ec3b663d4fe263903c7f77e1114896b44623abafc6ce014935f3d40fa060f62c",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1599848448
+  },
+  {
+   "game": "401810472",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810472.npz",
+   "sha256": "3ebf97874a9780871349b6daae280517bf440b81f736c374e7992be31859d915",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1453916160
+  },
+  {
+   "game": "401810477",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810477.npz",
+   "sha256": "031ac731e2785bc40bcefb99a8235ab2d937b25cb0d5ef16cea005f7090f3f7b",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1550876672
+  },
+  {
+   "game": "401810484",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810484.npz",
+   "sha256": "a18131fbeb3041c73ae2195fda786fd9392eede164a28a0c3422473ed69e7fc7",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1454637056
+  },
+  {
+   "game": "401810486",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810486.npz",
+   "sha256": "a059546072223508a56a01e86c292af54fd07b113eca374c49aff515056530ed",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1520943104
+  },
+  {
+   "game": "401810488",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810488.npz",
+   "sha256": "5b43cf033ca8fe121b5cc72ea17015cf6e8c4e136b04f268df45181ed2be2f2a",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1505050624
+  },
+  {
+   "game": "401810489",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810489.npz",
+   "sha256": "1720c22c84c7a532d6ac1468f75ab3394becf07287f9a8488675cf544a1cd356",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1501052928
+  },
+  {
+   "game": "401810491",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810491.npz",
+   "sha256": "2d5b3c2142615d6a0aaa22e2c55e7d43dc3549530d5efeef62a49c71aed1bbe0",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1453916160
+  },
+  {
+   "game": "401810498",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810498.npz",
+   "sha256": "a6a19ac520ff4d2d01fbebc5a585c09ef4867e7e32eed7266ea22a44f0c6ce17",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1458028544
+  },
+  {
+   "game": "401810500",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810500.npz",
+   "sha256": "7162023922a38e3ca9f7d3eec46e6a6597e37a819a8a10f71b1e154bf9fc322b",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1599848448
+  },
+  {
+   "game": "401810501",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810501.npz",
+   "sha256": "fc6d2a480bc3a40b90999bc6323193e92c5e3d1b38b8cff5123b09fc55c0b356",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1550876672
+  },
+  {
+   "game": "401810503",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810503.npz",
+   "sha256": "dc622500b46640353163f8575163786c29e918bd08915898140b29e2beaa71d0",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1485963264
+  },
+  {
+   "game": "401810511",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810511.npz",
+   "sha256": "41e53fb169060e5e325a5d86bb8b830de116f5e7ec3803bd6203fa7b7ee31514",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1520943104
+  },
+  {
+   "game": "401810514",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810514.npz",
+   "sha256": "0434ad0856b4265bfe42018bec64442c40595abe4de0de76b8fec82f321d6f54",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1598619648
+  },
+  {
+   "game": "401810521",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810521.npz",
+   "sha256": "cb393a38de1a4f0cde777181feb0a9d2355d22dacac69072201941b6007e8a9d",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1558003712
+  },
+  {
+   "game": "401810524",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810524.npz",
+   "sha256": "e069620feb37aa4681181427284a93a21782f83234ddc7005117dedb03dcb28f",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1453916160
+  },
+  {
+   "game": "401810525",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810525.npz",
+   "sha256": "14fa00f859ec1d02e242bdd05283ec55ae4d05e2aee4323cbbe4f33b667bc734",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1569964032
+  },
+  {
+   "game": "401810529",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810529.npz",
+   "sha256": "b28ea16580a529bdbfd4dad4007f22ac3646cba8ed14b858f0305954fb9ac147",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1599848448
+  },
+  {
+   "game": "401810530",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810530.npz",
+   "sha256": "2191bc29888614939a5a7f3df1751ff720b867db9c398863bf770d40bc98a242",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1550876672
+  },
+  {
+   "game": "401810531",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810531.npz",
+   "sha256": "4be21fe39a9472041f109a37ae67341414afb14e4ab8235a66f29974d2e4de76",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1564622848
+  },
+  {
+   "game": "401810532",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810532.npz",
+   "sha256": "c9f4a346312f197afb210a38e509c7cd4c71098bed8602ea74c4eaf7734015d7",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1485963264
+  },
+  {
+   "game": "401810537",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810537.npz",
+   "sha256": "70d797bd1a9540c6bf007770b56e8722beded6a18b06c221abfd5dea42ddb3b6",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1598619648
+  },
+  {
+   "game": "401810540",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810540.npz",
+   "sha256": "89591faa43b9397180150bc81ce63c556c0d4062e95e6d9d2ec1fb3b881612c8",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1500643328
+  },
+  {
+   "game": "401810541",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810541.npz",
+   "sha256": "f638e85ec8a1e2d2f7f6e57095b5676ac482aefd13c4a2ef2f81d3800d45f42e",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1558003712
+  },
+  {
+   "game": "401810542",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810542.npz",
+   "sha256": "ff22057ed4d6c1143ad13433f7b2fbe141d17593c9f352f230e715825429840a",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1569964032
+  },
+  {
+   "game": "401810544",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810544.npz",
+   "sha256": "9b133626c245c247d014ffa4b91bfa24c9dbfa5af16f19a8fb588ee251369728",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1634828288
+  },
+  {
+   "game": "401810549",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810549.npz",
+   "sha256": "b4b8f236e7f1d186108c8860f8da1ec21bb7014443dc93386cce07b99a2af0c1",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1550876672
+  },
+  {
+   "game": "401810552",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810552.npz",
+   "sha256": "071cbb0eca5a154f8c7189555007e13fae4690a3f6bc46938ed09a77b4bbc9df",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1485963264
+  },
+  {
+   "game": "401810557",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810557.npz",
+   "sha256": "96cac771680ba67bb9438215cc3477679e9db90484765303c92ba4fadc628dd7",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1564622848
+  },
+  {
+   "game": "401810567",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810567.npz",
+   "sha256": "909ee284d6ce208aa55fd876c1eee15df99407b80a8a493fd56a5efa764fa8df",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1598619648
+  },
+  {
+   "game": "401810572",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810572.npz",
+   "sha256": "8964f1d586cfcb0076bf6c3a25c3f42cacede051a183d47152869d82b7f844e9",
+   "technical_events": 15,
+   "worker_peak_rss_bytes": 1500643328
+  },
+  {
+   "game": "401810574",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810574.npz",
+   "sha256": "b2cdfafef534838f414e508c67b9cbf463774aa46f0aa22a896e4b14f5ed2bc7",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1616658432
+  },
+  {
+   "game": "401810576",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810576.npz",
+   "sha256": "a6f676bb6b2aec6935fdea3e9af06cd3da48bf50393479eb3be72e32c1f88437",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1558003712
+  },
+  {
+   "game": "401810584",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810584.npz",
+   "sha256": "51250006e92b3d184bc23ff37ab9065e0208eb1b2b62850243d02e949afa3657",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1634828288
+  },
+  {
+   "game": "401810586",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810586.npz",
+   "sha256": "d1288e146a54ccd270398b41051fa3f74d0a2d3c6e130b93e35ceff0177a9385",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1550876672
+  },
+  {
+   "game": "401810589",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810589.npz",
+   "sha256": "c13e7dc6355e22a2abaf4d3874f9bc63731bc5938d3262676bbe998e1e0d544b",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1564622848
+  },
+  {
+   "game": "401810590",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810590.npz",
+   "sha256": "c981781ddfafeca2a53fa2814b3a82ca2b06a11d955bc9026fcd90cf1b4ea510",
+   "technical_events": 2,
+   "worker_peak_rss_bytes": 1485963264
+  },
+  {
+   "game": "401810594",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810594.npz",
+   "sha256": "403eb88bb5d8a0a6145c9116ce043defe35cb5bf0fece0b6b7c3afbb5963e442",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1598619648
+  },
+  {
+   "game": "401810597",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810597.npz",
+   "sha256": "412ee98019a750afd2f430b949cfa83cf11a1f42941d8c19a7e19fefd7736cf3",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1824374784
+  },
+  {
+   "game": "401810602",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810602.npz",
+   "sha256": "113345be6a3527faabb23bad56fd0b2d2fb43bbf82b8fed43a584cb12c99328c",
+   "technical_events": 2,
+   "worker_peak_rss_bytes": 1616658432
+  },
+  {
+   "game": "401810604",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810604.npz",
+   "sha256": "ad796f7c9654d2087590f22c9fa5f946ad49cfa8fca9d117c5b84c82fbe3502e",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1558003712
+  },
+  {
+   "game": "401810611",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810611.npz",
+   "sha256": "ded51dd5f3b6b5a7ffc8e0e0856fdf060e22306eee6c1d221bf21d38d261b6da",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1634828288
+  },
+  {
+   "game": "401810612",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810612.npz",
+   "sha256": "e7b69c5ca6abbac34d11d1049e650a266253b102e252bd727054db25c6e19fe7",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1596211200
+  },
+  {
+   "game": "401810613",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810613.npz",
+   "sha256": "2dc9e702e3c1fc9da00168db8b274c1ff8abed9c4454253b66a3d3adbd40d0a0",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1584037888
+  },
+  {
+   "game": "401810622",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810622.npz",
+   "sha256": "0fb6c66b473de6b8d5f46a8fac5ea20ff4247e1f5f48553ae29125373d48a7aa",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1586724864
+  },
+  {
+   "game": "401810625",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810625.npz",
+   "sha256": "ddae029cb9984e25a8c7f304eccf4eb8a99af96f2871cf0d30887e22d71740d3",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1616658432
+  },
+  {
+   "game": "401810629",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810629.npz",
+   "sha256": "03cddcd28697e619e7a974150dcad898fbc061acf29b515c4da2d1b5c6ebe433",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1598619648
+  },
+  {
+   "game": "401810632",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810632.npz",
+   "sha256": "df89ca93158c1dcac4f46aa0cde7dc775322554e705fc743f39dbebe7efef961",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1824374784
+  },
+  {
+   "game": "401810635",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810635.npz",
+   "sha256": "7e4a5958d8d051e14cc4d8f47dc155431a11c993ca7a70d472ed4e9e4e44f6f3",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1709244416
+  },
+  {
+   "game": "401810638",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810638.npz",
+   "sha256": "61377b9f719f42d24b8da697d421b494bdcd78ee6bcef2ce068354bec2a6bf48",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1596211200
+  },
+  {
+   "game": "401810645",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810645.npz",
+   "sha256": "b3ef950dab894fc45ae8ac3fc6417f406354ad5283976f5eaf00240cd5787e95",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1568768000
+  },
+  {
+   "game": "401810651",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810651.npz",
+   "sha256": "d41141b1e2b953563afff33bd0f8a8c463a52b24f3004ef40771142c31bad656",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1584037888
+  },
+  {
+   "game": "401810652",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810652.npz",
+   "sha256": "a5e4b706ba06d717e8419d3be141a30d52ea112d58ed1b72674b4ab605598ef0",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1586724864
+  },
+  {
+   "game": "401810655",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810655.npz",
+   "sha256": "4c50361e74c461440f6a0ef766c919453260a01b451a6e9c0e7881a72dcefd55",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1824374784
+  },
+  {
+   "game": "401810658",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810658.npz",
+   "sha256": "d0adae5602c71c4208b3ab679335c9baa5ddc1a3a9c02ae2145108750ba94781",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1598619648
+  },
+  {
+   "game": "401810670",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810670.npz",
+   "sha256": "e33987c2d9dda67adbc5b047f3439bbb360379788bdaf39ccc9c1addf9476e18",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1616658432
+  },
+  {
+   "game": "401810677",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810677.npz",
+   "sha256": "52315e277e8ca002fb7cc0b86a99e13698d43b2cd367207cfa804642ece226c1",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1709244416
+  },
+  {
+   "game": "401810679",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810679.npz",
+   "sha256": "f51aac61726fde2b11057c07df8bb76c210727796bd2c8deb18fe130126d580f",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1568768000
+  },
+  {
+   "game": "401810684",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810684.npz",
+   "sha256": "d6daff1c9a68328be44832a0fd8e6d52a3f36d3b3260e84f5cd7f3fa1d3cd196",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1596211200
+  },
+  {
+   "game": "401810691",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810691.npz",
+   "sha256": "a02100a9e471f15d38d1f5b2150dc595eb072e6e09cd0a6b341059219e55646f",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1610645504
+  },
+  {
+   "game": "401810693",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810693.npz",
+   "sha256": "5db393be3ea13b114317098b85730c12056f4a32fb0e3c5ff363ba9179b7aa59",
+   "technical_events": 1,
+   "worker_peak_rss_bytes": 1586724864
+  },
+  {
+   "game": "401810694",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810694.npz",
+   "sha256": "521541d8f4a6f2bb1b986547bf57a184db182c4580fc75a59f252497f29529cd",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1824374784
+  },
+  {
+   "game": "401810702",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810702.npz",
+   "sha256": "db6b4417e75f75ea797e67ec66be90546fbfe4276b2129b7dbdd6f01b11316f0",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1598619648
+  },
+  {
+   "game": "401810704",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810704.npz",
+   "sha256": "24183e6b968f6255190008c01081470e6233719a529033e7012b8d95e3786908",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1616658432
+  },
+  {
+   "game": "401810708",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810708.npz",
+   "sha256": "3cb8b661301031b88320d829ed093cd717a15db654cbf79b130679a3c22c430a",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1709244416
+  },
+  {
+   "game": "401810713",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810713.npz",
+   "sha256": "bd5514b749efc496d2e83eda88ca5cb2af90f6eae524548d4f1b71826ab87e25",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1568768000
+  },
+  {
+   "game": "401810715",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810715.npz",
+   "sha256": "36d6d3e0722c5e96e144e9b43c45fcf1061cba2161592f7f9b475679f9ec8da5",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1596211200
+  },
+  {
+   "game": "401810722",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810722.npz",
+   "sha256": "1b9e2db8e214816d15b058371b96021a97081259f2c5af28e3877a11ce7e8c85",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1619329024
+  },
+  {
+   "game": "401810727",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810727.npz",
+   "sha256": "7f48e876cb42120f6f6c6d0890b68d6c50c4bf618a93a343b627bfb46e4853ae",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1586724864
+  },
+  {
+   "game": "401810730",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810730.npz",
+   "sha256": "cb0dd26f60b3c2110a51616dc1056063ffafe2fc9a1d5bbc5f24125e1b5d3cf0",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1824374784
+  },
+  {
+   "game": "401810733",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810733.npz",
+   "sha256": "d789b132a7ec9df099e96c374c3bb474cdf2865638ec32d05485e54db2b94110",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1598619648
+  },
+  {
+   "game": "401810734",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810734.npz",
+   "sha256": "b2d964c6ad96d44cac8d174af1543f67ce03dc6894c0682d6c4b85f4a4a4f9e6",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1616658432
+  },
+  {
+   "game": "401810735",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810735.npz",
+   "sha256": "cfd8b67b98a1f8eead3d5145e7b7bd9f48710874026f1e077a9ad36ebf891c6e",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1709244416
+  },
+  {
+   "game": "401810742",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810742.npz",
+   "sha256": "a163f691f78d1f47a386ad39699a200d8ec63e5a8be96f7a0310591b958d1c4e",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1596211200
+  },
+  {
+   "game": "401810747",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810747.npz",
+   "sha256": "2d39c1bd86978e341761871dc44a836fd325aada71d9d2277bb09b5db60f45d1",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1568768000
+  },
+  {
+   "game": "401810748",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810748.npz",
+   "sha256": "c2d5f203d1ea4bdd022d6f901cee6217da4a7d127bc0b32267980a53d7573bbb",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1619329024
+  },
+  {
+   "game": "401810749",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810749.npz",
+   "sha256": "f05c52cd6f69fed4cb2c3de6bdac388e29f31b5f2dbd225414f3d663d1cb62e1",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1651965952
+  },
+  {
+   "game": "401810753",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810753.npz",
+   "sha256": "c06599cea0adfc056716ea905a71ac4ef3dd55daf9abd8f8de801dd40e76e042",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1824374784
+  },
+  {
+   "game": "401810761",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810761.npz",
+   "sha256": "f5202b52bd703150097615f2529dd68923b69e9241dc58681966a059492080e4",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1598619648
+  },
+  {
+   "game": "401810762",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810762.npz",
+   "sha256": "fa554befd355c4966b36c459dfee2ea9f62b2e8892750128a80a701ff2053549",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1616658432
+  },
+  {
+   "game": "401810764",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810764.npz",
+   "sha256": "245ce38e7b4676dfd9704895dc688147d07a489ac1357bce7590d6fffaafe7ba",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1709244416
+  },
+  {
+   "game": "401810768",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810768.npz",
+   "sha256": "ae99c723ea1946aa293ce994b15715b2bcd32ce3d493f410dc703cce69e456ba",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1568768000
+  },
+  {
+   "game": "401810772",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810772.npz",
+   "sha256": "0c4b6bf88e43d27ba6cb29ca3253fff0fa7abe7e97d15749a3b63ffce36e92ed",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1596211200
+  },
+  {
+   "game": "401810773",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810773.npz",
+   "sha256": "a2da47e1d61c5bd204d12703a8411c56b814cd49e4cc5835421ab73b7f28d72e",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1619329024
+  },
+  {
+   "game": "401810779",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810779.npz",
+   "sha256": "ab9b795117505e41aafe7694c4bd1286a3ca7483bc44553ee9b443ba0b42c362",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1651965952
+  },
+  {
+   "game": "401810780",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810780.npz",
+   "sha256": "09167c7b3e1b5442b922a4ac162fbc77c3daae9f57a033243876e939a9b41b06",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1598619648
+  },
+  {
+   "game": "401810784",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810784.npz",
+   "sha256": "a0c081dd46eca353f0dadc2ed7f72ab062c5b336db4b0bd9d343a274d1e6a92d",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1824374784
+  },
+  {
+   "game": "401810786",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810786.npz",
+   "sha256": "20ef45fff03d4566d3f2e0bbda7b7e16b7f0957e047ad459cfa1cffd43a28b60",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1709244416
+  },
+  {
+   "game": "401810787",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810787.npz",
+   "sha256": "dd806d48b101c030e5de95447e29df76c0c4a847e8de0a6722cb8e0b4031c0bf",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1616658432
+  },
+  {
+   "game": "401810791",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810791.npz",
+   "sha256": "cdf082c7bc632a77dea371d50ea264b0ac9f1d005dc02c8d1b70504619efd4fa",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1568768000
+  },
+  {
+   "game": "401810792",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810792.npz",
+   "sha256": "c655d40a86a06faff962a1b42e60efbf3a8aeb5e016e83b0f9adf035e979d188",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1596211200
+  },
+  {
+   "game": "401810793",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810793.npz",
+   "sha256": "3ec1295b5d7114ffd88463b6575bedd536cabbc42d4581c4330f2249f82907f4",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1619329024
+  },
+  {
+   "game": "401810797",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810797.npz",
+   "sha256": "0c4a211815c67eaa1a3a827286ec447d1839a8c241edcc73bf5f228281af2330",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1658273792
+  },
+  {
+   "game": "401810804",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810804.npz",
+   "sha256": "68f132142c2de4de7c93ea0dbcb1d81599c2a791ee897d4a42394887902e258d",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1616920576
+  },
+  {
+   "game": "401810813",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810813.npz",
+   "sha256": "0f1548048f39e4dbaa3f28f2306e4adba7e4d1e409b92b66d29984a1c32f9977",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1598619648
+  },
+  {
+   "game": "401810820",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810820.npz",
+   "sha256": "7890e6c3d74c48613bb7feeac17bb230a22df3577b5760fa7d447c76eb966eda",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1628487680
+  },
+  {
+   "game": "401810823",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810823.npz",
+   "sha256": "49d8c4850d67b8526edd85ef3e916a8ef3fc13b0317f1e411063769f776723b4",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1824374784
+  },
+  {
+   "game": "401810825",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810825.npz",
+   "sha256": "11b541dc8677efa3597949f36a56dcd23bcb8f1d56ef59a9877790e35f2e90b9",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1709244416
+  },
+  {
+   "game": "401810826",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810826.npz",
+   "sha256": "024c061e550dd94b9e564c50edab3161697359224dc828d1d615e70b776bd64d",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1596211200
+  },
+  {
+   "game": "401810832",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810832.npz",
+   "sha256": "145298b7f3146c41d5687a9578c50cb7bcb020cdb1560f3fd5eea0ed1807aed1",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1619329024
+  },
+  {
+   "game": "401810834",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810834.npz",
+   "sha256": "eddc80f46bb32be29608e0eb65e8867026980b1e2c28a44831bed99f5c7876ca",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1658273792
+  },
+  {
+   "game": "401810840",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810840.npz",
+   "sha256": "338576374900c106e90fe984ee9a86959afa3813de11107b01fa5a1fd2e70ebc",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1598619648
+  },
+  {
+   "game": "401810841",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810841.npz",
+   "sha256": "d4f34a76d7c1226661bf9bc3d71ebe05d118680c51f4ecdbdafe3ed962691aed",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1616920576
+  },
+  {
+   "game": "401810846",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810846.npz",
+   "sha256": "003bc5544e619d392aef20ae42ce7528b8cfc0d6641144f96b185cc093cb6c8a",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1824374784
+  },
+  {
+   "game": "401810851",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810851.npz",
+   "sha256": "34e92772290cf0832fee524310fb9a1e839c256e734b65fe83fc0e604929b5cf",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1709244416
+  },
+  {
+   "game": "401810855",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810855.npz",
+   "sha256": "23e1bcce7edeb39a96c9b1a4ae945be85030d552b3219b7a0a1fb73086cf8dfa",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1628487680
+  },
+  {
+   "game": "401810857",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810857.npz",
+   "sha256": "e5bc500493b628567784c8c105fec61525f7622edd1911cb69cada3067b7b255",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1643184128
+  },
+  {
+   "game": "401810865",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810865.npz",
+   "sha256": "2d2d4bf236c63e87595dcc74cb91ffa5a46f8e1a99e90928f16982467f68fcac",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1619329024
+  },
+  {
+   "game": "401810866",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810866.npz",
+   "sha256": "a7af2553cefea743b42a3452c4aba5b1e0b03dfd3fc7fe05a01d11486db3fbe4",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1658273792
+  },
+  {
+   "game": "401810873",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810873.npz",
+   "sha256": "b30832858d32c858c09cdcab95711d6b43d80fb460b0508fdf462c74bf4f5bef",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1627996160
+  },
+  {
+   "game": "401810877",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810877.npz",
+   "sha256": "19047f04a8b1666a6f2a4af883803af642058a0515e1fb1cc80ac56de32c11c0",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1598619648
+  },
+  {
+   "game": "401810878",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810878.npz",
+   "sha256": "d4aa8e8938fb3439130c2c9f9d8d067aaee53ac4eb2d47f929a0abd910054d51",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1709244416
+  },
+  {
+   "game": "401810879",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810879.npz",
+   "sha256": "add85f3fdf7739c96f0eb71164715db8fcdd1179b21d8882e08201c9b6d55cc1",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1628487680
+  },
+  {
+   "game": "401810882",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810882.npz",
+   "sha256": "2fa55363638048b638a828622e355ec1ab17b0a5e795ca08269cda8be668ddae",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1824374784
+  },
+  {
+   "game": "401810885",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810885.npz",
+   "sha256": "3f8eaf045579aa80adae233bae03282e1124fbfc4b5bd8ac4f38158b91d7eb33",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1643184128
+  },
+  {
+   "game": "401810890",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810890.npz",
+   "sha256": "2a2091f0c09f46ef20c7613eab53cf3f27a6f94fe2995230373ee20633e8a7a3",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1625931776
+  },
+  {
+   "game": "401810891",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810891.npz",
+   "sha256": "ddf3bd22851d02a91ffcdf1841053f75f7ea2d3840d967bfecc8cab07b95f56d",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1666334720
+  },
+  {
+   "game": "401810892",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810892.npz",
+   "sha256": "bf6641c373908562100ce3b3f0a70503265b27ee34c658d3ad1c072802c94a82",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1627996160
+  },
+  {
+   "game": "401810893",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810893.npz",
+   "sha256": "c8d8673a0eeca3f9adbd154d9ddd9d1eb0080e08455d06cbac061e2723243a61",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1628487680
+  },
+  {
+   "game": "401810895",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810895.npz",
+   "sha256": "08b507c05b358f19630222229f5c761f734a7fe8e3e518ce27808026b120051c",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1612660736
+  },
+  {
+   "game": "401810902",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810902.npz",
+   "sha256": "5c01090afa3f6e8513be2c055e96478da313f37f90727ea90a0fdddf9bea34a6",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1709244416
+  },
+  {
+   "game": "401810904",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810904.npz",
+   "sha256": "db366d613436c844bdd5369a1f271d0ebfffbe350c71de3344d5dfce16388f61",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1824374784
+  },
+  {
+   "game": "401810908",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810908.npz",
+   "sha256": "4f70dc077eae66d6d690fdbd49732586ee26326f8706a4ec3795d0eae0e2450d",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1643184128
+  },
+  {
+   "game": "401810910",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810910.npz",
+   "sha256": "fae20f13ab9a1c2892582663a424082a54ce9c0d9bea7e997fa72356adb9048e",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1625931776
+  },
+  {
+   "game": "401810911",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810911.npz",
+   "sha256": "ef2ea9ecc35c48d89b4c3bbcf780850611c09863e3389564044318a908043b2f",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1666334720
+  },
+  {
+   "game": "401810915",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810915.npz",
+   "sha256": "33cf057a191d675e6e0db7193a91f77d99ee9d0938404307fee2ced524a643f3",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1628487680
+  },
+  {
+   "game": "401810928",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810928.npz",
+   "sha256": "1ce07a357c608c2d3fffdeefb564a7acddcd3adb8ecd06f6dc12162dc387d798",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1627996160
+  },
+  {
+   "game": "401810929",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810929.npz",
+   "sha256": "d6a061b4bf485a911154a5bb3b9bbf7345d5505fc6f229cc5c8986e06c9b3a5d",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1709244416
+  },
+  {
+   "game": "401810933",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810933.npz",
+   "sha256": "700ca4f7d2a9ea76fbb4ac50094b1e312943ebc52dff73c80ebe8586eae6431b",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1824374784
+  },
+  {
+   "game": "401810939",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810939.npz",
+   "sha256": "bf914feaebad75ad3b35084f6b169497894d4956de0a217687dd7f22e6b0fafc",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1612660736
+  },
+  {
+   "game": "401810941",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810941.npz",
+   "sha256": "1e0b01ad45f843518bec14e3816a94565af0747a86309e237db54a8af99b4935",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1643184128
+  },
+  {
+   "game": "401810944",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810944.npz",
+   "sha256": "995453df396ae7e3b4d5c563070fe9eefd066bdfa96bc6186ddcee88ff8f86c8",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1625931776
+  },
+  {
+   "game": "401810949",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810949.npz",
+   "sha256": "332988ea86adbc3fbd3c3d5dc4c413ec1bd315c89b51c443e931ac7ac235da4d",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1666334720
+  },
+  {
+   "game": "401810954",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810954.npz",
+   "sha256": "08154c69bca7e57d53ca615a108a63ebb0a965f73678fd96b7310fa7657fc3bb",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1628487680
+  },
+  {
+   "game": "401810955",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810955.npz",
+   "sha256": "a888c1055ad77571393433bc9af1161b464278de187279ba3f4ce132711a46db",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1674903552
+  },
+  {
+   "game": "401810960",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810960.npz",
+   "sha256": "29c61d84aa49422c3fa06d4bd26ebd335761f1711a759c0ca6544319a4f84317",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1612660736
+  },
+  {
+   "game": "401810961",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810961.npz",
+   "sha256": "18cb4bb484c629052f892b3865c3a23a8c1df3fb91dd8a8d14db3965524eb724",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1709244416
+  },
+  {
+   "game": "401810964",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810964.npz",
+   "sha256": "394c6071c9c3f15f3b0e9c7f1c6258619c6a4d7dc0beeceaa9dead47b3bfb873",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1824374784
+  },
+  {
+   "game": "401810971",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810971.npz",
+   "sha256": "df7e3a681d4be0766ef859008adeb1c25d656136243f8b3444e992973574a8ea",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1643184128
+  },
+  {
+   "game": "401810974",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810974.npz",
+   "sha256": "b36398907afe5b690e809de107035b7c04d0b48ffe0e7240bebf363549d07df4",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1625931776
+  },
+  {
+   "game": "401810976",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810976.npz",
+   "sha256": "6e5527612611ee7779dd3e400a60250d737ed14a471346edbc339eaf91ee64ac",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1666334720
+  },
+  {
+   "game": "401810984",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810984.npz",
+   "sha256": "b20d675fbb7da4d0af7399946973b7c5362c05e57d104b43135543c115a127c4",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1628487680
+  },
+  {
+   "game": "401810985",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810985.npz",
+   "sha256": "22b8b074f87a89221f3e923c5272a096a8035a0f9fae91b45fe5bb5741147d75",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1674903552
+  },
+  {
+   "game": "401810996",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401810996.npz",
+   "sha256": "8e8fa36862ab7cee0b27c41aff4da785ab04ceb6c72bcd9f08397fd279c8492e",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1709244416
+  },
+  {
+   "game": "401811001",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401811001.npz",
+   "sha256": "71849186539a975116b2d332defbdd852065d52a4937910f4c6f04e288936443",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1612660736
+  },
+  {
+   "game": "401811002",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401811002.npz",
+   "sha256": "026245a64c839889251b6b0f125344a5a95397845ef6c34c2298a3535035f9f9",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1824374784
+  },
+  {
+   "game": "401811005",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401811005.npz",
+   "sha256": "eb7b19bd33ca22c552cbd9ea5c83485908405934d5205021f127d01f4a5291ec",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1643184128
+  },
+  {
+   "game": "401811008",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401811008.npz",
+   "sha256": "8e16311adf1ecfe32b2b745bce7d05a3eea4965a9d9702605603548ef7ab41e7",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1625931776
+  },
+  {
+   "game": "401811013",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401811013.npz",
+   "sha256": "b77d4c2065bf4685b3a6fd64268da4f502afa1b4460f86787b6eb563138f2de0",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1666334720
+  },
+  {
+   "game": "401811019",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401811019.npz",
+   "sha256": "92dd197f96ed272b2a3be70e89644af264bfe7867a4bc1a91a641dcfe2658358",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1628487680
+  },
+  {
+   "game": "401811022",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401811022.npz",
+   "sha256": "92ec36c3b68e564ffe65e3030dc4d0e544ee19a39ae742d50d18d2f14656ed3b",
+   "technical_events": 20,
+   "worker_peak_rss_bytes": 1709244416
+  },
+  {
+   "game": "401811025",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401811025.npz",
+   "sha256": "f7dfcbd27366a3663516223b253b0e56d86416700a4a5e9f761b46b68bdae699",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1674903552
+  },
+  {
+   "game": "401811027",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401811027.npz",
+   "sha256": "7d50aef751c402aed7c5f946dc2fd410f39f4aff1d8ea81f9dad87c408758dbb",
+   "technical_events": 5,
+   "worker_peak_rss_bytes": 1612660736
+  },
+  {
+   "game": "401811032",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401811032.npz",
+   "sha256": "554df44480dc06d2ef811e4528401b6ede951d418eb6a73971c830c8b9f7b62c",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1824374784
+  },
+  {
+   "game": "401811045",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401811045.npz",
+   "sha256": "d9f3f5704693af1e53e6bb4b1246187268ba4a497a922eb91d72b50833816069",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1643184128
+  },
+  {
+   "game": "401811046",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401811046.npz",
+   "sha256": "a89f132d81286878332a3861ba04124bbf8736d1882fa67b94b8a8ba6313155b",
+   "technical_events": 4,
+   "worker_peak_rss_bytes": 1625931776
+  },
+  {
+   "game": "401850920",
+   "capture": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1_worlds/401850920.npz",
+   "sha256": "978345ab392630b320de91b764218e081efd01da498b64bfe4509a05cd496fa1",
+   "technical_events": 0,
+   "worker_peak_rss_bytes": 1666334720
+  }
+ ],
+ "fingerprints": {
+  "data/derived/experiments/20261122_a1_s03_f4_game_ids.json": "5d1285db46b129de9da954d9a44c93e03a281d0bc76bfa82ac4a97619da7bcc7",
+  "models/v1.2d.json": "d0fded7eb9871494e0bc4a82a3627b0a3dc37c3c243d8c9378f151dec2789927",
+  "data/derived/variants/matchup/features/pregame.parquet": "499c6151c493152ef6483ac7f4b282ac775b4e30ce1879fec202a0f0f7ceac11",
+  "data/derived/variants/matchup/features/team_pregame.parquet": "3298c6b2ae6d5a6dab44290b9de3629056e88c7404d9ce7be966bd54442dcaac",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+  "data/derived/history/2026/stints.parquet": "29de886d2afd2a5d9a55af2acb027fd3ee83a887584c71a9fe9951a9c2cc225f",
+  "data/derived/history/2026/player_periods.csv.gz": "ef35bb5c33c46e6a194cea30075d9974ead5d44be96c6074b60f6dac49e69c28",
+  "data/derived/teams.json": "130aa5358d49b944c2b5bee7e9a163f1e53285e93dae57262f039ca1636b7ecc",
+  "data/models/folds/v1.2d_F4_all/config.json": "1617769cb52f2c750e0f1276071b39fc21254ef53fc97ccc646869aaa50f5e71",
+  "data/derived/history/2023/on_court.parquet": "ba9b4b13e16e5b839e5530905497d2d00d231413ea40f39ee46855f3ebce8c3b",
+  "data/derived/history/2024/on_court.parquet": "5461947edb052ef9e62b4a70ba49e57a0f98d929f4a19167f03aad3972457f95",
+  "data/derived/history/2025/on_court.parquet": "5bbabab60114aa3f7fa096d7708be96f47177c541debcae88059da6b1adb77e9",
+  "data/derived/history/2026/on_court.parquet": "1b0ffaf53490c3fda4edd28ac427766a0af3a1bfe86f1fece240cd63ed1e8410",
+  "data/raw/hoopr/player_box_2023.parquet": "968d835cd04b10533c5b5af8c0e41bf0154a73782e9446c76f765109223e8679",
+  "data/raw/hoopr/player_box_2024.parquet": "1e500a538ec45ddbcb58d9789b5494f8db4f25658eafd01d90f2d09600921665",
+  "data/raw/hoopr/player_box_2025.parquet": "e89f7fbc1124092c715b722e6d72d9dd1b9d28776ca6888b508fd2831cd705e2",
+  "data/raw/hoopr/player_box_2026.parquet": "29a29dc9efd055a93e069a0382ac830d98a13274bee655beba69d95cff099713",
+  "data/models/folds/v1.2d_F4_all/assisted.txt": "0a094b183b18b8d45a6e5cf047fb117f8aed62dc6941bb9b7944391c3afec690",
+  "data/models/folds/v1.2d_F4_all/assister.txt": "f32c49ac6c7ca5774aad414c5cf500d1b5fd1bbd8fa6c0ddd50ee1934b1d3961",
+  "data/models/folds/v1.2d_F4_all/blocked.txt": "e085efcacd0baea9568f27f7ee05dd43687e7762ba55015d7569cc1efe175c04",
+  "data/models/folds/v1.2d_F4_all/blocker.txt": "5975f284a6c41a013db80fb669230e64dda7167137554bba9051dd04fe4004f0",
+  "data/models/folds/v1.2d_F4_all/duration.txt": "2603f8bf64f3bbef3146285638f79262446eb9a76572c4217f45e6df77dee72c",
+  "data/models/folds/v1.2d_F4_all/event.txt": "d62e1cac4c4fa1cbec0ba5fccc321bae6838202b17253c80a0e8f502395e7e36",
+  "data/models/folds/v1.2d_F4_all/fouler.txt": "70ee6709fcd1fae1ca43ea925babaeb9c9355eaf7e4edeeb601d0cb11c45d266",
+  "data/models/folds/v1.2d_F4_all/free_throw.txt": "ddd7ef48ede7de973c9967b01826f3c293ee824147ca2da772de17a1d781f612",
+  "data/models/folds/v1.2d_F4_all/location.txt": "8f12f8c3bb168ab94dfae313f7624e1ff43074764db665b03ba9511d69c12979",
+  "data/models/folds/v1.2d_F4_all/rebound.txt": "b94d0f957b02d633ca751dff3ef921ffb7e9f57ce6bd206cbba41893ee6f34ff",
+  "data/models/folds/v1.2d_F4_all/rebounder.txt": "337225efb0be006b8889cb377254f6b03c39b356d73d366d3af153ab9133b094",
+  "data/models/folds/v1.2d_F4_all/shot_result.txt": "993fce9f6450e7f317c19e93cadf562db741efa7b58c05d32a8d561ff5f1bbfc",
+  "data/models/folds/v1.2d_F4_all/stealer.txt": "ceea8df151ace738c6181be7615f93fbbebc13cfc434cc371ff8f7566143c581",
+  "data/models/folds/v1.2d_F4_all/turnover_type.txt": "307defe709ae1a8639407d131e28bfabc8eda32bb291a4820113cf3a5b7001d0",
+  "data/models/folds/v1.2d_F4_all/what.txt": "d093989f161b78686804078c07a1d94a629719893085d399465a52314c0de231",
+  "data/models/folds/v1.2d_F4_all/who.txt": "c792950c30a7e7eecec20ab1d12681b0adc574838f2327bbc948213aa574150d",
+  "analysis/a1_world_retry_probe.py": "f23477ae2242bc28c547ccc5a954a5017f4ab3d79aa36967a3365fac36a0f2c5",
+  "scripts/a1_world_retry.py": "7e19b90fa63a5f67168d43f5834c97d486b490ff2bc5c2093ff44c1d366604ba",
+  "scripts/a1_branch_world_probe.py": "25c7820498beaafa7f71c4b349955f2c4cf4e41441ffd47e44ae361aca187b31",
+  "scripts/a1_branch_foul_out.py": "ee501eab70755921771a0888e7ee5820ce64c821f4283c87f33618a0b400eca5",
+  "scripts/a1_lineup_branches.py": "1b2c3ea7ff3172566d664c7fcc6b7fd5cb0f421c4d5453ff84a609311c23c76c",
+  "scripts/engine.py": "5431df17caac031eb051fc80968496366cb8d4d6915fc123db35f94ee9d9f339",
+  "scripts/backtest.py": "2ff491455b5c1cac40b5c3502db97bcb4cdbc159e4f0fa494c09e7c5eb24533d",
+  "scripts/minutes.py": "94dd0ed25e536708c75cd4cf1f386bf2f9fa35f2c334d83cbdd031d4448ba2d0",
+  "scripts/projection.py": "25309dfd609b041543520784e4c6dab5a0154e2db7b19b03899b3c5fdb996dad",
+  "scripts/a1_substitution_world_audit.py": "d1f1b34834ffe6c9d82b246cbbaed453c6a4eea224e47da020c6e0f02d3cdf4e",
+  "analysis/experiments/20261122_a1_restart_provenance_v1.json": "de7d42f6cf00fab0556205299d78a99407686aea094076e7c33042b187f67878",
+  "analysis/a1_f4_exhaustion_screen.py": "c59077dfeb88f82620ffdd77e02c7e3b8fb0128e0cdb3740d8faf10369d445ae",
+  "analysis/a1_parallel_world_probe.py": "27493bdc2b52a538d20c43f12f84ba06789b0824371525ff4b3b47d7c231eabd",
+  "analysis/a1_f4_exhaustion_audit.py": "1904558414ef3d9eb874fea4dcbda1d8d75cc2ba26845a2cc5b67b93a67398cd",
+  "analysis/experiments/20261122_a1_f4_exhaustion_v1.json": "3c8772fc006af606d605054923caf9f7d10411aefd961c74d22f10fa53a79ad7",
+  "data/derived/experiments/20261122_a1_f4_exhaustion_v1/panel_manifest.json": "841a357a2ffb9681b9c796e95ff074395d53c0988b7af0b23ebb134688ad2d20",
+  "analysis/a1_f4_six_roster_stress.py": "1133a0ad4817456216eb54ff7b076b1fd3af1757db9158db35bdc63906d40feb",
+  "analysis/a1_f4_six_roster_audit.py": "8efb06ed5d9ad57b75bd412b77b7c535ac5be39ba789f5dd667f70289a43aa75",
+  "analysis/experiments/20261122_a1_f4_six_roster_v1.json": "4b01ebec994a9c313cfb69a8d7c8736191686165265a50a5499ca241dd258f95",
+  "analysis/experiments/20261122_a1_f4_six_roster_v1_audit.json": "cb5291a928e09a1a5d26580f4d33f3e5521597ad44c162e5e28558b142d0670e",
+  "analysis/a1_real_retry_paired.py": "19e6ee8b3ba96747124cb8c7188c5e11564b6c383cc6690824f8716627657cee",
+  "analysis/a1_real_retry_paired_audit.py": "5055fdeaafc3b5d6d7c0813a22dd439c3ca4557e30307dd39e22f7e0f18aa3ff",
+  "analysis/a1_parallel_world_retry.py": "6a2c8e51b0dbf25f75cead2bc30fc36694f6a9ed2787856e583a2ae92fae7d80",
+  "analysis/a1_matched_penalty_run.py": "85033156839106d5640fa32b79906339ad5cb6104801f79b341556392181e263",
+  "analysis/a1_matched_penalty_repair.py": "f3f6ead8820cbd011032de60d2e0eee1b734373bdeee81976818de4727fc52c2",
+  "analysis/experiments/20261123_a1_real_retry_paired_full_v1.json": "6f9deccee7e61790404f063e0cdf9d958132595e7d262f1e1c5b241f450e3181",
+  "analysis/experiments/20261123_a1_real_retry_paired_full_v1_audit.json": "8e12bd75254c4315d5065c562edd4ad6bf190fba783e4591bc61bf668c868234",
+  "analysis/a1_vector_matched_penalty_probe.py": "53b22c98fc6ce6e13f5508603d1492be7fa6e187f9d8c3f6e0ff4b5d5ab5ab88",
+  "analysis/a1_vector_matched_penalty.py": "8b93981a9390b3fc89d2fe6d771038699803eccf7670e7c7248482b205510b7d",
+  "analysis/experiments/20261123_a1_vector_matched_penalty_probe_v1.json": "d3358ad03191c202fc48e75ec47b70fdfc7c7e7cab2fd802a3fe536f3d273737",
+  "analysis/experiments/20261122_a1_reproduction_games.json": "7cbed26ff17d980ed6ef3e789fb7491c50e24479ae47f5ca5f70c1d51c1c06b3",
+  "analysis/experiments/20261122T022323Z_a1_s01_control.json": "1d7a456ff018aba2916d38105f67d524b9b5005cfe35a072e17b01d2780090dc",
+  "data/derived/experiments/20261122T022323Z_a1_s01_control.parquet": "d3f2956e335490cca5b77fa877faacf8494f99ce04ab79c447debb5329776d4e",
+  "data/derived/experiments/20261122T022323Z_a1_s01_control_players.parquet": "d5e4618be5e146c62372b57b54b9a6528b7c75e9b1b2dd86f86e9279835bc09e",
+  "analysis/a1_vector_penalty_backtest.py": "8692c58cb0d298935c4de9f592117e7d0436d93002744422df0dba247d0b8d83",
+  "analysis/a1_vector_penalty_backtest_audit.py": "4dca9c305e223d488cec8b70e504aa46efc0dbd4e3fab0858caeba51a5d48f61"
+ },
+ "elapsed_seconds": 1756.325,
+ "limitations": [
+  "Actual-participant oracle rosters are not pre-game availability forecasts.",
+  "Vectorized world draws share engine RNG; equal starting seeds are not paired paths.",
+  "F4 diagnostic only; not a promotion or protected-season evaluation."
+ ]
+}

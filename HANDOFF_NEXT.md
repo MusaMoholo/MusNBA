@@ -1,10 +1,32 @@
 # Handoff — state and next actions
 
 Updated **23 November 2026 — Chunk A A1 at 80%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **fd9091e** (vector penalty preflight); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **0307784** (vector candidate scaling); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
+- **A1 90% partial — vector matched-penalty F4 screen (23 Nov ET):** the predeclared isolated candidate
+  completed the fixed **200 games × 1,000 worlds** with actual-participant oracle rosters in **1,756.325s**
+  at eight single-thread workers. The sum of worker peak RSS was **13.39 GB**, excluding parent, OS and
+  other processes; a spot memory-pressure check during the run showed zero swap activity, not a continuous
+  monitor. Independent capture accounting reconciled **98,276,074** lineup fives, **50** technicals and
+  **21,730** player sample means/CRPS values across **4,346** scored player-games. Independent
+  game-cluster bootstrap reconstruction matched **15** pooled metrics (maximum error **1.75e−15**) and
+  established **10/10** pooled bias/coverage bounds. Against the frozen S01 control, pooled minute CRPS
+  **3.566159 → 3.564896**, change **−0.001262 [−0.003540, +0.001033]**, below the **0.026341**
+  seed-noise floor: the uncorrected primary screen **failed**. **67/69** non-inferiority bounds were
+  established; Q3 and Q4 margin coverage were not. Pooled point CRPS change **+0.000691
+  [−0.002957, +0.004274]**; team margin CRPS change **−0.041181 [−0.093283, +0.010238]**.
+  Intervals are unadjusted 95% paired game-cluster bootstrap, not Holm-adjusted. Retain the current
+  model: this is an F4-only oracle-roster screen, not proof either continuation is more accurate under
+  actual pre-game availability. It does not show production retries are safe or complete A1's 90% rung.
+  Reports `analysis/experiments/20261123_a1_vector_penalty_f4_200_v1{,_audit,_compare,_gate,_pooled_audit}.json`;
+  ignored player/game rows and captures `data/derived/experiments/20261123_a1_vector_penalty_f4_200_v1*`.
+  Focused tests **50/50**, smoke **107/107**, deliberate fault **86/107** and exit 1. No job remains;
+  no production model, forecast, bundle or shell changed. A1 **80%**, Chunk A **34.5%**. HANDOFF, PLAN
+  and FINDINGS updated; README already maps the commands, AGENTS the standing rules, ENGINE_PLAN the
+  accepted design, TRAINING_PLAN the unchanged gates and DASHBOARD_PLAN the unchanged UI. Continue A1;
+  the owner requested a stop only at its end.
 - **A1 90% partial — candidate concurrency measurement (23 Nov ET):** after revalidating the three-game
   preflight with the worker-aware source, the same fixed **10-game × 1,000-world** F4 oracle-roster sample
   ran sequentially at four and eight single-thread workers. Elapsed times were **204.265 / 138.004s**
@@ -53,7 +75,9 @@ The preceding pushed checkpoint was **fd9091e** (vector penalty preflight); use 
   DASHBOARD_PLAN (shipped UI) require no change. Next: measure safe worker/memory scaling and then run the
   frozen 200-game F4 candidate only with a fresh source/output namespace; independently audit and compare
   to the retained S01 control. Reject or retain based on the frozen player-first gates, not this pilot.
-  The measured worker choice is **8**. Full command, using a fresh name:
+  The measured worker choice is **8**. The first fixed 200-game candidate screen is complete and failed
+  the registered primary screen above; do not rerun it unchanged as a route to promotion. Its command,
+  using a fresh name if reproduction is necessary:
   `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 .venv/bin/python -u analysis/a1_vector_penalty_backtest.py --jobs 8 --name <fresh-200-game-name>`.
   It is not resumable: preserve an interrupted world directory and use a new name after inspection.
   Independently audit the complete report with `analysis/a1_vector_penalty_backtest_audit.py`, then run

@@ -2,6 +2,21 @@
 
 Measured facts only. Each entry states its date and population.
 
+**23 Nov 2026 ET — vector matched-penalty F4 player-first screen:** the isolated candidate completed
+**200** fixed development-fold games × **1,000** worlds with actual-participant oracle rosters. Independent
+accounting reconciled **98,276,074** lineup fives, **50** technicals and **21,730** player means/CRPS
+values for **4,346** scored player-games. Compared with S01, pooled minute CRPS changed **−0.001262**
+[**−0.003540, +0.001033**], smaller than the **0.026341** seed-noise floor and not passing the registered
+uncorrected primary screen. Point CRPS changed **+0.000691 [−0.002957, +0.004274]**, and team margin
+CRPS **−0.041181 [−0.093283, +0.010238]**. **67/69** registered non-inferiority bounds were
+established; Q3 and Q4 margin coverage were inconclusive. The independent game-cluster bootstrap
+reconstruction matched **15** pooled metrics to **1.75e−15**, with **10/10** pooled bias/coverage
+bounds established. Intervals are unadjusted 95%, not Holm-adjusted. Generation took **1,756.325s**
+with eight single-thread workers and **13.39 GB** summed worker peak RSS, excluding other processes;
+accounting took **35.092s**. Retain the accepted model: this one-fold oracle-roster result is not
+proof of accuracy under actual pre-game availability or a promotion test. Reports
+`analysis/experiments/20261123_a1_vector_penalty_f4_200_v1{,_audit,_compare,_gate,_pooled_audit}.json`.
+
 **23 Nov 2026 ET — vector-candidate worker scaling:** the same first **10** fixed F4 oracle-roster
 games, **1,000** worlds/game, ran at four then eight single-thread workers in **204.265 / 138.004s**.
 Eight reduced elapsed time **32.4%** for this sample; summed per-worker peak resident sets were
