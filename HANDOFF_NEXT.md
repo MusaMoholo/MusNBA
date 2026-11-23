@@ -5,6 +5,18 @@ The preceding pushed checkpoint was **715625f** (exact-minute research view); us
 
 ## Read this first — live handoff
 
+- **A1 90% partial — short-roster evidence (23 Nov UTC):** across the three saved research games'
+  **80,000** completed branch worlds, every team started with at least **12** available players and finished
+  with at least **9** eligible after six-foul disqualifications. In each branch/team cell, **842–2,021 / 10,000**
+  worlds had at least one simulated six-foul player. Thus those captures do **not** stress the fewer-than-five
+  failure motivating retry; completed batches alone cannot count failed attempts. Branch-specific uncalibrated
+  weights and full counts are retained in `analysis/experiments/20261122_a1_branch_roster_pressure_v1.json`.
+  This is simulation accounting, not an NBA injury/foul-out rate or predictive gate; no protected actual
+  outcomes were scored, and no forecast or model changed. Continue representative earlier-fold and bias work.
+  Focused branch tests **9/9**, smoke **107/107**, deliberate fault **86/107** and exit 1
+  (`/tmp/musnba_a1_pressure_{smoke,fault}_v1.log`). HANDOFF, PLAN, FINDINGS and README record the audit;
+  AGENTS, ENGINE_PLAN, TRAINING_PLAN and DASHBOARD_PLAN need no changes because standing rules, accepted
+  engine, evaluation gates and shipped UI did not change.
 - **A1 90% partial — multi-game branch runtime/accounting (23 Nov UTC):** independent manifest/box
   accounting rechecked **80,000** research worlds across **3** games and **8** branches, including unavailable
   players and exact weights; **19,437,436** recorded lineup snapshots. Branch-time sums were
@@ -384,6 +396,13 @@ The preceding pushed checkpoint was **715625f** (exact-minute research view); us
   nine numerical threads; startup, full-slate duration, serial/parallel scheduling and unobserved rejection
   rates are not established by branch-time sums. Never publish these post-tip research captures as forecasts
   or use protected-season outcomes.
+- **A1 90% roster/foul pressure diagnostic, frozen before measurement:** for those same three research
+  games, independently count each team-world by initial available players and final six-foul players, plus
+  how many finish with exactly five eligible. Verify player/foul/availability dimensions, capture hashes,
+  unavailable-player fouls, nonnegative counts and every world's two team records. Stratify by branch rather
+  than pool branches as equally likely; preserve exact mixture weights. These are simulated outcomes, not
+  protected real-game outcome scores. Completed vectorised batches cannot reveal rejected or missing attempts,
+  so they do not establish a retry rate, unbiasedness or representative development-fold gate.
 - **A1 80% complete, injection-only:** a single shared research lineup control now drives selected player, team,
   sheet, scenario/Given/Joint and driver views; branch-unavailable metadata/cards are omitted. Available and
   positive-minute participation are distinct; shooting-defined mass is weighted. No normal route registers the

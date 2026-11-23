@@ -2,6 +2,14 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 ET — simulated roster pressure:** across **80,000** completed research branch worlds from
+three games, minimum initial available-team size was **12** and minimum post-disqualification eligible-team
+size **9**. Each of the 16 branch/team cells included **842–2,021 / 10,000** worlds with at least one
+six-foul player. Counts are stratified by branch and include exact assumed branch weights in
+`analysis/experiments/20261122_a1_branch_roster_pressure_v1.json`; they are not pooled as equally probable.
+These captures do not probe near-five-player exhaustion, cannot count discarded attempts, and say nothing
+about real injury frequency or predictive performance. No protected-season actual outcomes were scored.
+
 **22 Nov 2026 ET — observed branch runtime:** three same-origin research games with **2 / 4 / 2** branches
 of **10,000** worlds apiece were run concurrently with three numerical threads per job. Their logged branch
 times summed to **626.4 / 1,201.5 / 616.1s** respectively, excluding setup. The independent recheck

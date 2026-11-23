@@ -429,6 +429,10 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 ET · A1 short-roster diagnostic:** in **80,000** completed research branch worlds,
+  team-world initial availability was at least **12**, and final eligibility at least **9**; **842–2,021**
+  per 10,000 worlds in each branch/team cell contained a six-foul player. These games do not stress
+  short-roster retry failures, and completed batches cannot estimate a rejection rate. A1 **80%**, Chunk A **34.5%**.
 - **22 Nov 2026 ET · A1 branch-runtime accounting:** three concurrently run, 3-thread research jobs recorded
   **626.4 / 1,201.5 / 616.1s** in their individual 10k branch loops. An independent recheck covered
   **80,000** saved worlds, **19,437,436** lineup snapshots, branch weights and player/team boxes. Startup,

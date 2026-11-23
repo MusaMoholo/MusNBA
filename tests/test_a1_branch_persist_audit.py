@@ -5,11 +5,29 @@ from pathlib import Path
 
 import numpy as np
 
-from analysis import a1_branch_persist_audit
+from analysis import a1_branch_persist_audit, a1_branch_roster_pressure
 from basketball_common import sha256_file
 
 
 class BranchAuditTests(unittest.TestCase):
+    def test_roster_pressure_counts_and_rejects_illegal_worlds(self):
+        sides = np.array([0] * 6 + [1] * 6)
+        available = np.ones((2, 12), dtype=bool)
+        available[1, 11] = False
+        fouls = np.zeros((2, 12, 5))
+        fouls[0, 0, 0] = 6
+        result = a1_branch_roster_pressure.pressure(available, fouls, sides)
+        self.assertEqual(result['sides'][0]['exactly_five_final_eligible'], 1)
+        self.assertEqual(result['sides'][0]['any_six_foul_player'], 1)
+        self.assertEqual(result['sides'][1]['exactly_five_initial'], 1)
+        fouls[1, 11, 0] = 1
+        with self.assertRaisesRegex(ValueError, 'availability or foul'):
+            a1_branch_roster_pressure.pressure(available, fouls, sides)
+        fouls[1, 11, 0] = 0
+        fouls[1, 6, 0] = 6
+        with self.assertRaisesRegex(ValueError, 'fewer than five'):
+            a1_branch_roster_pressure.pressure(available, fouls, sides)
+
     def test_exact_weights_and_unavailable_player_accounting(self):
         with tempfile.TemporaryDirectory() as directory:
             selected = [{'team_id': '1', 'player_id': '100', 'probability': 0.3,

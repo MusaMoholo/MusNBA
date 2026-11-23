@@ -1,0 +1,1158 @@
+{
+ "kind": "completed research-branch roster pressure; not a forecast or failure-rate estimate",
+ "script_sha256": "ac5b9d7a2581ea53de48a15c413f3f261fbf0ff699b40896058efd8e07de8be4",
+ "manifest_auditor_sha256": "62503c2f37021626cee2beade7e930039eb65d5e9b8582c2fb2420e8f8278a67",
+ "games": [
+  {
+   "game": "401910033",
+   "origin": "2026-11-22",
+   "manifest": "data/derived/experiments/20261122_a1_live_branch_033_v1.json",
+   "manifest_sha256": "d80723bcd9228dcd7bf263bdf8178694981b817590848ac4a8cd02a4f36687a1",
+   "branches": [
+    {
+     "index": 0,
+     "weight": {
+      "numerator": "3",
+      "denominator": "4"
+     },
+     "capture_sha256": "090efdb7885920542218fb79d287795595a450f5018cdc8713e4523257f63da3",
+     "worlds": 10000,
+     "sides": [
+      {
+       "side": "home",
+       "team_worlds": 10000,
+       "exactly_five_initial": 0,
+       "exactly_five_final_eligible": 0,
+       "any_six_foul_player": 1646,
+       "counts_by_initial_and_six_fouls": [
+        {
+         "initial": 12,
+         "six_foul_players": 0,
+         "worlds": 1024
+        },
+        {
+         "initial": 12,
+         "six_foul_players": 1,
+         "worlds": 215
+        },
+        {
+         "initial": 12,
+         "six_foul_players": 2,
+         "worlds": 18
+        },
+        {
+         "initial": 12,
+         "six_foul_players": 3,
+         "worlds": 1
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 0,
+         "worlds": 3166
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 1,
+         "worlds": 552
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 2,
+         "worlds": 48
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 3,
+         "worlds": 2
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 0,
+         "worlds": 3134
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 1,
+         "worlds": 546
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 2,
+         "worlds": 45
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 3,
+         "worlds": 4
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 0,
+         "worlds": 1030
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 1,
+         "worlds": 207
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 2,
+         "worlds": 8
+        }
+       ]
+      },
+      {
+       "side": "away",
+       "team_worlds": 10000,
+       "exactly_five_initial": 0,
+       "exactly_five_final_eligible": 0,
+       "any_six_foul_player": 1056,
+       "counts_by_initial_and_six_fouls": [
+        {
+         "initial": 14,
+         "six_foul_players": 0,
+         "worlds": 2302
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 1,
+         "worlds": 260
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 2,
+         "worlds": 12
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 3,
+         "worlds": 1
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 4,
+         "worlds": 1
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 0,
+         "worlds": 6642
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 1,
+         "worlds": 740
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 2,
+         "worlds": 41
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 3,
+         "worlds": 1
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "index": 1,
+     "weight": {
+      "numerator": "1",
+      "denominator": "4"
+     },
+     "capture_sha256": "dd272cc07277dc8d7c854abdbff37b22b2eb0ac507a516dc5ad8dd92e4eb4fa3",
+     "worlds": 10000,
+     "sides": [
+      {
+       "side": "home",
+       "team_worlds": 10000,
+       "exactly_five_initial": 0,
+       "exactly_five_final_eligible": 0,
+       "any_six_foul_player": 1648,
+       "counts_by_initial_and_six_fouls": [
+        {
+         "initial": 12,
+         "six_foul_players": 0,
+         "worlds": 1058
+        },
+        {
+         "initial": 12,
+         "six_foul_players": 1,
+         "worlds": 189
+        },
+        {
+         "initial": 12,
+         "six_foul_players": 2,
+         "worlds": 16
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 0,
+         "worlds": 3123
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 1,
+         "worlds": 585
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 2,
+         "worlds": 55
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 3,
+         "worlds": 5
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 0,
+         "worlds": 3097
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 1,
+         "worlds": 551
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 2,
+         "worlds": 64
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 3,
+         "worlds": 1
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 0,
+         "worlds": 1074
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 1,
+         "worlds": 173
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 2,
+         "worlds": 9
+        }
+       ]
+      },
+      {
+       "side": "away",
+       "team_worlds": 10000,
+       "exactly_five_initial": 0,
+       "exactly_five_final_eligible": 0,
+       "any_six_foul_player": 1469,
+       "counts_by_initial_and_six_fouls": [
+        {
+         "initial": 13,
+         "six_foul_players": 0,
+         "worlds": 2162
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 1,
+         "worlds": 372
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 2,
+         "worlds": 27
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 3,
+         "worlds": 3
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 0,
+         "worlds": 6369
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 1,
+         "worlds": 1009
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 2,
+         "worlds": 57
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 3,
+         "worlds": 1
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "game": "401910034",
+   "origin": "2026-11-22",
+   "manifest": "data/derived/experiments/20261122_a1_live_branch_034_v1.json",
+   "manifest_sha256": "6111ca22d0981ff3cc14bda9bb8cdaa77f9cf90b88e243583c3d98223a72c3ed",
+   "branches": [
+    {
+     "index": 0,
+     "weight": {
+      "numerator": "9",
+      "denominator": "16"
+     },
+     "capture_sha256": "b460a7f8b87158fe507fe583eaf11ac2b35c65e87bc9caa8ac5ac355ed134bc8",
+     "worlds": 10000,
+     "sides": [
+      {
+       "side": "home",
+       "team_worlds": 10000,
+       "exactly_five_initial": 0,
+       "exactly_five_final_eligible": 0,
+       "any_six_foul_player": 1868,
+       "counts_by_initial_and_six_fouls": [
+        {
+         "initial": 13,
+         "six_foul_players": 0,
+         "worlds": 123
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 1,
+         "worlds": 32
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 2,
+         "worlds": 4
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 0,
+         "worlds": 1060
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 1,
+         "worlds": 209
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 2,
+         "worlds": 15
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 0,
+         "worlds": 2867
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 1,
+         "worlds": 533
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 2,
+         "worlds": 59
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 3,
+         "worlds": 4
+        },
+        {
+         "initial": 16,
+         "six_foul_players": 0,
+         "worlds": 2919
+        },
+        {
+         "initial": 16,
+         "six_foul_players": 1,
+         "worlds": 684
+        },
+        {
+         "initial": 16,
+         "six_foul_players": 2,
+         "worlds": 71
+        },
+        {
+         "initial": 16,
+         "six_foul_players": 3,
+         "worlds": 3
+        },
+        {
+         "initial": 16,
+         "six_foul_players": 4,
+         "worlds": 1
+        },
+        {
+         "initial": 17,
+         "six_foul_players": 0,
+         "worlds": 1163
+        },
+        {
+         "initial": 17,
+         "six_foul_players": 1,
+         "worlds": 227
+        },
+        {
+         "initial": 17,
+         "six_foul_players": 2,
+         "worlds": 25
+        },
+        {
+         "initial": 17,
+         "six_foul_players": 4,
+         "worlds": 1
+        }
+       ]
+      },
+      {
+       "side": "away",
+       "team_worlds": 10000,
+       "exactly_five_initial": 0,
+       "exactly_five_final_eligible": 0,
+       "any_six_foul_player": 1059,
+       "counts_by_initial_and_six_fouls": [
+        {
+         "initial": 13,
+         "six_foul_players": 0,
+         "worlds": 8941
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 1,
+         "worlds": 982
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 2,
+         "worlds": 74
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 3,
+         "worlds": 2
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 4,
+         "worlds": 1
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "index": 1,
+     "weight": {
+      "numerator": "3",
+      "denominator": "16"
+     },
+     "capture_sha256": "dcc6a159e8a80049c47447a8a6428e28e8c331fe3b7e2742db4185cff971629b",
+     "worlds": 10000,
+     "sides": [
+      {
+       "side": "home",
+       "team_worlds": 10000,
+       "exactly_five_initial": 0,
+       "exactly_five_final_eligible": 0,
+       "any_six_foul_player": 2021,
+       "counts_by_initial_and_six_fouls": [
+        {
+         "initial": 12,
+         "six_foul_players": 0,
+         "worlds": 108
+        },
+        {
+         "initial": 12,
+         "six_foul_players": 1,
+         "worlds": 21
+        },
+        {
+         "initial": 12,
+         "six_foul_players": 2,
+         "worlds": 8
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 0,
+         "worlds": 949
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 1,
+         "worlds": 189
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 2,
+         "worlds": 29
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 3,
+         "worlds": 2
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 0,
+         "worlds": 2709
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 1,
+         "worlds": 607
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 2,
+         "worlds": 75
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 3,
+         "worlds": 7
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 0,
+         "worlds": 3142
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 1,
+         "worlds": 667
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 2,
+         "worlds": 54
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 3,
+         "worlds": 2
+        },
+        {
+         "initial": 16,
+         "six_foul_players": 0,
+         "worlds": 1071
+        },
+        {
+         "initial": 16,
+         "six_foul_players": 1,
+         "worlds": 321
+        },
+        {
+         "initial": 16,
+         "six_foul_players": 2,
+         "worlds": 34
+        },
+        {
+         "initial": 16,
+         "six_foul_players": 3,
+         "worlds": 5
+        }
+       ]
+      },
+      {
+       "side": "away",
+       "team_worlds": 10000,
+       "exactly_five_initial": 0,
+       "exactly_five_final_eligible": 0,
+       "any_six_foul_player": 842,
+       "counts_by_initial_and_six_fouls": [
+        {
+         "initial": 13,
+         "six_foul_players": 0,
+         "worlds": 9158
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 1,
+         "worlds": 790
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 2,
+         "worlds": 49
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 3,
+         "worlds": 2
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 4,
+         "worlds": 1
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "index": 2,
+     "weight": {
+      "numerator": "3",
+      "denominator": "16"
+     },
+     "capture_sha256": "45f2990bf2d5285749cc8e135f930702afb2da915b32a63cc5249c229f5414e1",
+     "worlds": 10000,
+     "sides": [
+      {
+       "side": "home",
+       "team_worlds": 10000,
+       "exactly_five_initial": 0,
+       "exactly_five_final_eligible": 0,
+       "any_six_foul_player": 1408,
+       "counts_by_initial_and_six_fouls": [
+        {
+         "initial": 13,
+         "six_foul_players": 0,
+         "worlds": 141
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 1,
+         "worlds": 22
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 3,
+         "worlds": 1
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 0,
+         "worlds": 1100
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 1,
+         "worlds": 154
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 2,
+         "worlds": 15
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 0,
+         "worlds": 3017
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 1,
+         "worlds": 477
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 2,
+         "worlds": 30
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 3,
+         "worlds": 1
+        },
+        {
+         "initial": 16,
+         "six_foul_players": 0,
+         "worlds": 3172
+        },
+        {
+         "initial": 16,
+         "six_foul_players": 1,
+         "worlds": 474
+        },
+        {
+         "initial": 16,
+         "six_foul_players": 2,
+         "worlds": 39
+        },
+        {
+         "initial": 16,
+         "six_foul_players": 3,
+         "worlds": 1
+        },
+        {
+         "initial": 17,
+         "six_foul_players": 0,
+         "worlds": 1162
+        },
+        {
+         "initial": 17,
+         "six_foul_players": 1,
+         "worlds": 177
+        },
+        {
+         "initial": 17,
+         "six_foul_players": 2,
+         "worlds": 17
+        }
+       ]
+      },
+      {
+       "side": "away",
+       "team_worlds": 10000,
+       "exactly_five_initial": 0,
+       "exactly_five_final_eligible": 0,
+       "any_six_foul_player": 1210,
+       "counts_by_initial_and_six_fouls": [
+        {
+         "initial": 12,
+         "six_foul_players": 0,
+         "worlds": 8790
+        },
+        {
+         "initial": 12,
+         "six_foul_players": 1,
+         "worlds": 1108
+        },
+        {
+         "initial": 12,
+         "six_foul_players": 2,
+         "worlds": 97
+        },
+        {
+         "initial": 12,
+         "six_foul_players": 3,
+         "worlds": 5
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "index": 3,
+     "weight": {
+      "numerator": "1",
+      "denominator": "16"
+     },
+     "capture_sha256": "281536e05213851e0804b95e9f587f3c678e6eee477dfcacbc946d351df02ac2",
+     "worlds": 10000,
+     "sides": [
+      {
+       "side": "home",
+       "team_worlds": 10000,
+       "exactly_five_initial": 0,
+       "exactly_five_final_eligible": 0,
+       "any_six_foul_player": 1479,
+       "counts_by_initial_and_six_fouls": [
+        {
+         "initial": 12,
+         "six_foul_players": 0,
+         "worlds": 133
+        },
+        {
+         "initial": 12,
+         "six_foul_players": 1,
+         "worlds": 22
+        },
+        {
+         "initial": 12,
+         "six_foul_players": 2,
+         "worlds": 2
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 0,
+         "worlds": 1101
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 1,
+         "worlds": 176
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 2,
+         "worlds": 13
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 0,
+         "worlds": 2933
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 1,
+         "worlds": 454
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 2,
+         "worlds": 26
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 3,
+         "worlds": 1
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 4,
+         "worlds": 1
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 0,
+         "worlds": 3195
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 1,
+         "worlds": 499
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 2,
+         "worlds": 41
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 3,
+         "worlds": 3
+        },
+        {
+         "initial": 16,
+         "six_foul_players": 0,
+         "worlds": 1159
+        },
+        {
+         "initial": 16,
+         "six_foul_players": 1,
+         "worlds": 217
+        },
+        {
+         "initial": 16,
+         "six_foul_players": 2,
+         "worlds": 21
+        },
+        {
+         "initial": 16,
+         "six_foul_players": 3,
+         "worlds": 3
+        }
+       ]
+      },
+      {
+       "side": "away",
+       "team_worlds": 10000,
+       "exactly_five_initial": 0,
+       "exactly_five_final_eligible": 0,
+       "any_six_foul_player": 1032,
+       "counts_by_initial_and_six_fouls": [
+        {
+         "initial": 12,
+         "six_foul_players": 0,
+         "worlds": 8968
+        },
+        {
+         "initial": 12,
+         "six_foul_players": 1,
+         "worlds": 958
+        },
+        {
+         "initial": 12,
+         "six_foul_players": 2,
+         "worlds": 71
+        },
+        {
+         "initial": 12,
+         "six_foul_players": 3,
+         "worlds": 3
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "game": "401910035",
+   "origin": "2026-11-22",
+   "manifest": "data/derived/experiments/20261122_a1_live_branch_035_v1.json",
+   "manifest_sha256": "6f2d44ba00a8e47a242887c357d188931b5632546d5306705f2063bb9bf5a748",
+   "branches": [
+    {
+     "index": 0,
+     "weight": {
+      "numerator": "3",
+      "denominator": "4"
+     },
+     "capture_sha256": "8686fc9d84279496739e80cde3603b2a178e472ad1b9231b81fc7b233d042d42",
+     "worlds": 10000,
+     "sides": [
+      {
+       "side": "home",
+       "team_worlds": 10000,
+       "exactly_five_initial": 0,
+       "exactly_five_final_eligible": 0,
+       "any_six_foul_player": 1064,
+       "counts_by_initial_and_six_fouls": [
+        {
+         "initial": 13,
+         "six_foul_players": 0,
+         "worlds": 8936
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 1,
+         "worlds": 1008
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 2,
+         "worlds": 52
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 3,
+         "worlds": 4
+        }
+       ]
+      },
+      {
+       "side": "away",
+       "team_worlds": 10000,
+       "exactly_five_initial": 0,
+       "exactly_five_final_eligible": 0,
+       "any_six_foul_player": 909,
+       "counts_by_initial_and_six_fouls": [
+        {
+         "initial": 13,
+         "six_foul_players": 0,
+         "worlds": 135
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 1,
+         "worlds": 13
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 2,
+         "worlds": 3
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 0,
+         "worlds": 1135
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 1,
+         "worlds": 155
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 2,
+         "worlds": 7
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 3,
+         "worlds": 1
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 0,
+         "worlds": 3138
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 1,
+         "worlds": 274
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 2,
+         "worlds": 14
+        },
+        {
+         "initial": 16,
+         "six_foul_players": 0,
+         "worlds": 3433
+        },
+        {
+         "initial": 16,
+         "six_foul_players": 1,
+         "worlds": 298
+        },
+        {
+         "initial": 16,
+         "six_foul_players": 2,
+         "worlds": 19
+        },
+        {
+         "initial": 17,
+         "six_foul_players": 0,
+         "worlds": 1250
+        },
+        {
+         "initial": 17,
+         "six_foul_players": 1,
+         "worlds": 121
+        },
+        {
+         "initial": 17,
+         "six_foul_players": 2,
+         "worlds": 4
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "index": 1,
+     "weight": {
+      "numerator": "1",
+      "denominator": "4"
+     },
+     "capture_sha256": "6504611c72529cfa6e2af9f7352af0c52edc3f48002490621a83592b76f4614e",
+     "worlds": 10000,
+     "sides": [
+      {
+       "side": "home",
+       "team_worlds": 10000,
+       "exactly_five_initial": 0,
+       "exactly_five_final_eligible": 0,
+       "any_six_foul_player": 894,
+       "counts_by_initial_and_six_fouls": [
+        {
+         "initial": 13,
+         "six_foul_players": 0,
+         "worlds": 9106
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 1,
+         "worlds": 857
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 2,
+         "worlds": 35
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 3,
+         "worlds": 2
+        }
+       ]
+      },
+      {
+       "side": "away",
+       "team_worlds": 10000,
+       "exactly_five_initial": 0,
+       "exactly_five_final_eligible": 0,
+       "any_six_foul_player": 1161,
+       "counts_by_initial_and_six_fouls": [
+        {
+         "initial": 12,
+         "six_foul_players": 0,
+         "worlds": 118
+        },
+        {
+         "initial": 12,
+         "six_foul_players": 1,
+         "worlds": 24
+        },
+        {
+         "initial": 12,
+         "six_foul_players": 2,
+         "worlds": 1
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 0,
+         "worlds": 1182
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 1,
+         "worlds": 131
+        },
+        {
+         "initial": 13,
+         "six_foul_players": 2,
+         "worlds": 10
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 0,
+         "worlds": 3087
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 1,
+         "worlds": 394
+        },
+        {
+         "initial": 14,
+         "six_foul_players": 2,
+         "worlds": 26
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 0,
+         "worlds": 3200
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 1,
+         "worlds": 383
+        },
+        {
+         "initial": 15,
+         "six_foul_players": 2,
+         "worlds": 16
+        },
+        {
+         "initial": 16,
+         "six_foul_players": 0,
+         "worlds": 1252
+        },
+        {
+         "initial": 16,
+         "six_foul_players": 1,
+         "worlds": 170
+        },
+        {
+         "initial": 16,
+         "six_foul_players": 2,
+         "worlds": 5
+        },
+        {
+         "initial": 16,
+         "six_foul_players": 3,
+         "worlds": 1
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "limitations": [
+  "Completed batches only; failed or missing attempts cannot be counted.",
+  "Branch probabilities are uncalibrated assumptions, not actual injury rates.",
+  "Three selected games are not representative development folds or NBA outcomes."
+ ]
+}
