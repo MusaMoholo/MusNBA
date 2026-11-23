@@ -1,4 +1,7 @@
-# A1 completion decision — no production branch release
+# Historical A1 no-release decision — reopened by D51
+
+**Superseded as the active release decision:** the owner subsequently authorised a promotion-framework
+audit/redesign (D51). Metrics below remain valid; current work follows HANDOFF and promotion v2.
 
 The module's documented **fallback** is selected. This completes the bounded release decision, not the full
 lineup feature: original S08 stays 0%/undelivered, no selector/Expected mixture is enabled, and accepted

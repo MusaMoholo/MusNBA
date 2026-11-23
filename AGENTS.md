@@ -54,7 +54,8 @@ Estimate durations only from measured logs, naming the population/rate.
 
 - Use `.venv/bin/python`. Existing dependencies: NumPy, pandas, pyarrow, LightGBM; Node for browser checks.
 - **Accepted floor:** possession engine v1.3, 10,000 worlds, D29 targets, rotation pool 0; team pathway v1.
-  Change production models/settings/rules only through the frozen paired player-first gates in TRAINING_PLAN.
+  Change production models/settings/rules through the current versioned player-first policy in TRAINING_PLAN
+  (D51 permits its audited redesign; preserve old evidence and freeze new requirements before confirmation).
 - **Serving never computes:** `serve.py`, `views.py` and PWA never fetch, fit or simulate; conditions slice saved worlds.
 - Inputs and fitted auxiliary parameters for origin D precede ET D. Never silently use later reports/profiles.
 - Final test is 2026–27 from 2026-07-01: once per frozen version at promotion, never for selection/tuning.

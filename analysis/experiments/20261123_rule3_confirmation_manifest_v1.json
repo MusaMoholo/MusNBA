@@ -1,0 +1,1463 @@
+{
+ "kind": "frozen D51 rule-only independent development confirmation plan",
+ "fold": "F4",
+ "fitted_nodes": "folds/v1.2d_F4_all",
+ "config": "models/v1.2d.json",
+ "training_through": "2025-12-31",
+ "worlds": 1000,
+ "game_ids": [
+  "401810859",
+  "401810630",
+  "401811011",
+  "401810548",
+  "401810943",
+  "401810876",
+  "401811003",
+  "401810356",
+  "401810894",
+  "401810663",
+  "401810438",
+  "401810614",
+  "401810945",
+  "401810516",
+  "401810706",
+  "401810361",
+  "401810752",
+  "401810394",
+  "401810721",
+  "401811021",
+  "401810896",
+  "401810889",
+  "401810636",
+  "401810920",
+  "401810836",
+  "401810445",
+  "401810661",
+  "401810347",
+  "401810463",
+  "401810543",
+  "401811031",
+  "401857824",
+  "401810342",
+  "401810606",
+  "401810449",
+  "401810596",
+  "401810617",
+  "401810701",
+  "401810618",
+  "401810564",
+  "401810997",
+  "401810746",
+  "401810847",
+  "401810601",
+  "401810554",
+  "401810695",
+  "401810569",
+  "401810553",
+  "401810587",
+  "401810766",
+  "401810396",
+  "401811034",
+  "401810800",
+  "401810835",
+  "401810809",
+  "401810838",
+  "401810380",
+  "401810778",
+  "401810573",
+  "401810785",
+  "401810616",
+  "401810483",
+  "401810874",
+  "401810881",
+  "401810815",
+  "401810435",
+  "401810699",
+  "401810508",
+  "401810690",
+  "401810757",
+  "401810771",
+  "401810827",
+  "401810401",
+  "401810875",
+  "401810937",
+  "401810605",
+  "401810744",
+  "401810745",
+  "401810843",
+  "401810914",
+  "401810988",
+  "401810366",
+  "401810391",
+  "401810776",
+  "401810714",
+  "401810410",
+  "401810539",
+  "401810641",
+  "401810512",
+  "401810763",
+  "401810723",
+  "401810802",
+  "401811051",
+  "401810957",
+  "401810474",
+  "401810811",
+  "401810710",
+  "401810903",
+  "401810626",
+  "401810487",
+  "401810360",
+  "401810673",
+  "401811016",
+  "401811049",
+  "401810897",
+  "401810493",
+  "401810716",
+  "401810972",
+  "401810666",
+  "401811012",
+  "401810671",
+  "401810559",
+  "401810719",
+  "401810946",
+  "401810439",
+  "401810409",
+  "401810349",
+  "401810624",
+  "401810423",
+  "401810703",
+  "401810924",
+  "401810453",
+  "401811050",
+  "401810595",
+  "401810950",
+  "401810330",
+  "401810692",
+  "401810936",
+  "401810428",
+  "401810546",
+  "401810717",
+  "401811038",
+  "401810431",
+  "401810657",
+  "401811040",
+  "401810662",
+  "401810479",
+  "401810505",
+  "401809250",
+  "401810726",
+  "401810830",
+  "401810668",
+  "401810443",
+  "401810628",
+  "401810582",
+  "401810783",
+  "401811042",
+  "401810720",
+  "401810796",
+  "401810580",
+  "401810966",
+  "401810990",
+  "401810411",
+  "401810364",
+  "401810740",
+  "401810769",
+  "401810868",
+  "401810728",
+  "401810845",
+  "401810674",
+  "401810538",
+  "401810918",
+  "401810386",
+  "401810399",
+  "401810767",
+  "401810533",
+  "401810509",
+  "401810831",
+  "401810481",
+  "401810454",
+  "401810448",
+  "401810482",
+  "401811043",
+  "401810669",
+  "401810620",
+  "401810665",
+  "401810788",
+  "401858693",
+  "401810927",
+  "401810413",
+  "401810756",
+  "401810383",
+  "401810466",
+  "401810977",
+  "401810378",
+  "401810452",
+  "401810646",
+  "401810953",
+  "401858694",
+  "401810931",
+  "401810639",
+  "401810750",
+  "401810803",
+  "401810697",
+  "401811055",
+  "401810492",
+  "401810930",
+  "401810585",
+  "401811048",
+  "401810981"
+ ],
+ "games": [
+  {
+   "game_id": "401810859",
+   "date_et": "2026-03-18",
+   "simulation_seed_stream_0": "10270588320517270261",
+   "simulation_seed_stream_1": "858558750208667173"
+  },
+  {
+   "game_id": "401810630",
+   "date_et": "2026-02-11",
+   "simulation_seed_stream_0": "262000694535055142",
+   "simulation_seed_stream_1": "4998011200101289894"
+  },
+  {
+   "game_id": "401811011",
+   "date_et": "2026-04-07",
+   "simulation_seed_stream_0": "14516286684634866580",
+   "simulation_seed_stream_1": "8980973884043541564"
+  },
+  {
+   "game_id": "401810548",
+   "date_et": "2026-01-30",
+   "simulation_seed_stream_0": "8965322510421518899",
+   "simulation_seed_stream_1": "8807576813035099219"
+  },
+  {
+   "game_id": "401810943",
+   "date_et": "2026-03-29",
+   "simulation_seed_stream_0": "7748536064652493229",
+   "simulation_seed_stream_1": "13377410757213463127"
+  },
+  {
+   "game_id": "401810876",
+   "date_et": "2026-03-20",
+   "simulation_seed_stream_0": "10524928742955565130",
+   "simulation_seed_stream_1": "13778660874908976265"
+  },
+  {
+   "game_id": "401811003",
+   "date_et": "2026-04-07",
+   "simulation_seed_stream_0": "6150382049325152358",
+   "simulation_seed_stream_1": "13557872993185276934"
+  },
+  {
+   "game_id": "401810356",
+   "date_et": "2026-01-04",
+   "simulation_seed_stream_0": "16188831045199880943",
+   "simulation_seed_stream_1": "18417403315675491843"
+  },
+  {
+   "game_id": "401810894",
+   "date_et": "2026-03-23",
+   "simulation_seed_stream_0": "16285686646162561413",
+   "simulation_seed_stream_1": "13605898797142859169"
+  },
+  {
+   "game_id": "401810663",
+   "date_et": "2026-02-20",
+   "simulation_seed_stream_0": "4695306593916646741",
+   "simulation_seed_stream_1": "13109672482351255007"
+  },
+  {
+   "game_id": "401810438",
+   "date_et": "2026-01-15",
+   "simulation_seed_stream_0": "1761468819906840384",
+   "simulation_seed_stream_1": "7036421478001129188"
+  },
+  {
+   "game_id": "401810614",
+   "date_et": "2026-02-08",
+   "simulation_seed_stream_0": "13641240170081669486",
+   "simulation_seed_stream_1": "9336495996104435594"
+  },
+  {
+   "game_id": "401810945",
+   "date_et": "2026-03-29",
+   "simulation_seed_stream_0": "11993572233834417558",
+   "simulation_seed_stream_1": "9566308941388338139"
+  },
+  {
+   "game_id": "401810516",
+   "date_et": "2026-01-26",
+   "simulation_seed_stream_0": "2039421308263888013",
+   "simulation_seed_stream_1": "13489637597925675342"
+  },
+  {
+   "game_id": "401810706",
+   "date_et": "2026-02-26",
+   "simulation_seed_stream_0": "17377397939921099727",
+   "simulation_seed_stream_1": "2730995724784866344"
+  },
+  {
+   "game_id": "401810361",
+   "date_et": "2026-01-05",
+   "simulation_seed_stream_0": "3931898640685762316",
+   "simulation_seed_stream_1": "12104802809644114128"
+  },
+  {
+   "game_id": "401810752",
+   "date_et": "2026-03-04",
+   "simulation_seed_stream_0": "13088647036024651067",
+   "simulation_seed_stream_1": "6191822611897474331"
+  },
+  {
+   "game_id": "401810394",
+   "date_et": "2026-01-09",
+   "simulation_seed_stream_0": "11430073893236482081",
+   "simulation_seed_stream_1": "10081247204560356513"
+  },
+  {
+   "game_id": "401810721",
+   "date_et": "2026-02-28",
+   "simulation_seed_stream_0": "16082128749861818441",
+   "simulation_seed_stream_1": "10148497905254669337"
+  },
+  {
+   "game_id": "401811021",
+   "date_et": "2026-04-09",
+   "simulation_seed_stream_0": "13296926343155086324",
+   "simulation_seed_stream_1": "7569929225748608304"
+  },
+  {
+   "game_id": "401810896",
+   "date_et": "2026-03-23",
+   "simulation_seed_stream_0": "16309808146531225976",
+   "simulation_seed_stream_1": "1521609508933981806"
+  },
+  {
+   "game_id": "401810889",
+   "date_et": "2026-03-22",
+   "simulation_seed_stream_0": "344723088761665890",
+   "simulation_seed_stream_1": "3544882584809627293"
+  },
+  {
+   "game_id": "401810636",
+   "date_et": "2026-02-11",
+   "simulation_seed_stream_0": "17524056015212059380",
+   "simulation_seed_stream_1": "15668748120934359994"
+  },
+  {
+   "game_id": "401810920",
+   "date_et": "2026-03-26",
+   "simulation_seed_stream_0": "7964278496958685148",
+   "simulation_seed_stream_1": "13266089756675833540"
+  },
+  {
+   "game_id": "401810836",
+   "date_et": "2026-03-15",
+   "simulation_seed_stream_0": "14785630983065163856",
+   "simulation_seed_stream_1": "4472203558325367855"
+  },
+  {
+   "game_id": "401810445",
+   "date_et": "2026-01-16",
+   "simulation_seed_stream_0": "12747987997728109667",
+   "simulation_seed_stream_1": "10126223028511057004"
+  },
+  {
+   "game_id": "401810661",
+   "date_et": "2026-02-20",
+   "simulation_seed_stream_0": "296369928597743270",
+   "simulation_seed_stream_1": "13781958958920278323"
+  },
+  {
+   "game_id": "401810347",
+   "date_et": "2026-01-03",
+   "simulation_seed_stream_0": "17217450983723748477",
+   "simulation_seed_stream_1": "7432375560789036803"
+  },
+  {
+   "game_id": "401810463",
+   "date_et": "2026-01-19",
+   "simulation_seed_stream_0": "3120849396530431000",
+   "simulation_seed_stream_1": "9077104971043261641"
+  },
+  {
+   "game_id": "401810543",
+   "date_et": "2026-01-30",
+   "simulation_seed_stream_0": "17531706604506905217",
+   "simulation_seed_stream_1": "3228213472464933524"
+  },
+  {
+   "game_id": "401811031",
+   "date_et": "2026-04-10",
+   "simulation_seed_stream_0": "15314085010087692575",
+   "simulation_seed_stream_1": "3862988824013234322"
+  },
+  {
+   "game_id": "401857824",
+   "date_et": "2026-01-25",
+   "simulation_seed_stream_0": "12108190047757063962",
+   "simulation_seed_stream_1": "17341112235932015061"
+  },
+  {
+   "game_id": "401810342",
+   "date_et": "2026-01-03",
+   "simulation_seed_stream_0": "987603170281133450",
+   "simulation_seed_stream_1": "4021874842949965749"
+  },
+  {
+   "game_id": "401810606",
+   "date_et": "2026-02-07",
+   "simulation_seed_stream_0": "12430373079590599998",
+   "simulation_seed_stream_1": "16022371677119712366"
+  },
+  {
+   "game_id": "401810449",
+   "date_et": "2026-01-17",
+   "simulation_seed_stream_0": "7905587761831626833",
+   "simulation_seed_stream_1": "3473867864239398675"
+  },
+  {
+   "game_id": "401810596",
+   "date_et": "2026-02-06",
+   "simulation_seed_stream_0": "15320118062958334403",
+   "simulation_seed_stream_1": "9521461723555146521"
+  },
+  {
+   "game_id": "401810617",
+   "date_et": "2026-02-09",
+   "simulation_seed_stream_0": "9087964425210019237",
+   "simulation_seed_stream_1": "9191535953958950749"
+  },
+  {
+   "game_id": "401810701",
+   "date_et": "2026-02-25",
+   "simulation_seed_stream_0": "8779025737071955199",
+   "simulation_seed_stream_1": "24330415449540925"
+  },
+  {
+   "game_id": "401810618",
+   "date_et": "2026-02-09",
+   "simulation_seed_stream_0": "1853871099034542856",
+   "simulation_seed_stream_1": "3262556897766048744"
+  },
+  {
+   "game_id": "401810564",
+   "date_et": "2026-02-01",
+   "simulation_seed_stream_0": "2713053710713846425",
+   "simulation_seed_stream_1": "15809969044462926032"
+  },
+  {
+   "game_id": "401810997",
+   "date_et": "2026-04-05",
+   "simulation_seed_stream_0": "844770161088692634",
+   "simulation_seed_stream_1": "2067577716816469838"
+  },
+  {
+   "game_id": "401810746",
+   "date_et": "2026-03-03",
+   "simulation_seed_stream_0": "3648600575471608032",
+   "simulation_seed_stream_1": "6460165020217823893"
+  },
+  {
+   "game_id": "401810847",
+   "date_et": "2026-03-17",
+   "simulation_seed_stream_0": "7054452911111013400",
+   "simulation_seed_stream_1": "11886686717206174581"
+  },
+  {
+   "game_id": "401810601",
+   "date_et": "2026-02-06",
+   "simulation_seed_stream_0": "1743854750357352390",
+   "simulation_seed_stream_1": "14259906003847656405"
+  },
+  {
+   "game_id": "401810554",
+   "date_et": "2026-01-31",
+   "simulation_seed_stream_0": "10264669145850865628",
+   "simulation_seed_stream_1": "3868289782093392318"
+  },
+  {
+   "game_id": "401810695",
+   "date_et": "2026-02-24",
+   "simulation_seed_stream_0": "15263333779102304617",
+   "simulation_seed_stream_1": "15888665666831177498"
+  },
+  {
+   "game_id": "401810569",
+   "date_et": "2026-02-02",
+   "simulation_seed_stream_0": "10523749483856968801",
+   "simulation_seed_stream_1": "3278125556608701296"
+  },
+  {
+   "game_id": "401810553",
+   "date_et": "2026-01-31",
+   "simulation_seed_stream_0": "788523491302992991",
+   "simulation_seed_stream_1": "4933787135636531742"
+  },
+  {
+   "game_id": "401810587",
+   "date_et": "2026-02-04",
+   "simulation_seed_stream_0": "11892112819337582745",
+   "simulation_seed_stream_1": "17816244945891742705"
+  },
+  {
+   "game_id": "401810766",
+   "date_et": "2026-03-06",
+   "simulation_seed_stream_0": "18248709236479418584",
+   "simulation_seed_stream_1": "14950995632120569249"
+  },
+  {
+   "game_id": "401810396",
+   "date_et": "2026-01-09",
+   "simulation_seed_stream_0": "17212775369328297149",
+   "simulation_seed_stream_1": "17721514236275783939"
+  },
+  {
+   "game_id": "401811034",
+   "date_et": "2026-04-10",
+   "simulation_seed_stream_0": "4685616609941698538",
+   "simulation_seed_stream_1": "4790286271812463587"
+  },
+  {
+   "game_id": "401810800",
+   "date_et": "2026-03-10",
+   "simulation_seed_stream_0": "9310586448278069225",
+   "simulation_seed_stream_1": "9904121194537864702"
+  },
+  {
+   "game_id": "401810835",
+   "date_et": "2026-03-15",
+   "simulation_seed_stream_0": "14724788362913389365",
+   "simulation_seed_stream_1": "5929010359620298815"
+  },
+  {
+   "game_id": "401810809",
+   "date_et": "2026-03-12",
+   "simulation_seed_stream_0": "3976802252111196606",
+   "simulation_seed_stream_1": "14183515521808918899"
+  },
+  {
+   "game_id": "401810838",
+   "date_et": "2026-03-16",
+   "simulation_seed_stream_0": "15148084785013146592",
+   "simulation_seed_stream_1": "15756830025504417135"
+  },
+  {
+   "game_id": "401810380",
+   "date_et": "2026-01-07",
+   "simulation_seed_stream_0": "7137493135790424001",
+   "simulation_seed_stream_1": "2385375826098666833"
+  },
+  {
+   "game_id": "401810778",
+   "date_et": "2026-03-08",
+   "simulation_seed_stream_0": "16465140188672048299",
+   "simulation_seed_stream_1": "6567569961024261724"
+  },
+  {
+   "game_id": "401810573",
+   "date_et": "2026-02-03",
+   "simulation_seed_stream_0": "5830990277329025292",
+   "simulation_seed_stream_1": "15430357947949379840"
+  },
+  {
+   "game_id": "401810785",
+   "date_et": "2026-03-08",
+   "simulation_seed_stream_0": "15618807280037459079",
+   "simulation_seed_stream_1": "2669131973683976803"
+  },
+  {
+   "game_id": "401810616",
+   "date_et": "2026-02-09",
+   "simulation_seed_stream_0": "1319947641062391750",
+   "simulation_seed_stream_1": "16291541866373230455"
+  },
+  {
+   "game_id": "401810483",
+   "date_et": "2026-01-22",
+   "simulation_seed_stream_0": "5824203538398012157",
+   "simulation_seed_stream_1": "16393390576946325406"
+  },
+  {
+   "game_id": "401810874",
+   "date_et": "2026-03-20",
+   "simulation_seed_stream_0": "10534167582824019390",
+   "simulation_seed_stream_1": "15017306269218179945"
+  },
+  {
+   "game_id": "401810881",
+   "date_et": "2026-03-21",
+   "simulation_seed_stream_0": "11394587918532088410",
+   "simulation_seed_stream_1": "10849291601331464054"
+  },
+  {
+   "game_id": "401810815",
+   "date_et": "2026-03-12",
+   "simulation_seed_stream_0": "6073646584385144756",
+   "simulation_seed_stream_1": "10676926895897233034"
+  },
+  {
+   "game_id": "401810435",
+   "date_et": "2026-01-15",
+   "simulation_seed_stream_0": "12009755138139634320",
+   "simulation_seed_stream_1": "14919169410131266766"
+  },
+  {
+   "game_id": "401810699",
+   "date_et": "2026-02-25",
+   "simulation_seed_stream_0": "1438389466866058115",
+   "simulation_seed_stream_1": "11089638302026369984"
+  },
+  {
+   "game_id": "401810508",
+   "date_et": "2026-01-25",
+   "simulation_seed_stream_0": "5933589215148907020",
+   "simulation_seed_stream_1": "12713923586044411262"
+  },
+  {
+   "game_id": "401810690",
+   "date_et": "2026-02-24",
+   "simulation_seed_stream_0": "16593189052892174471",
+   "simulation_seed_stream_1": "3101581776082458193"
+  },
+  {
+   "game_id": "401810757",
+   "date_et": "2026-03-05",
+   "simulation_seed_stream_0": "8244864972896081595",
+   "simulation_seed_stream_1": "2859545898265131278"
+  },
+  {
+   "game_id": "401810771",
+   "date_et": "2026-03-07",
+   "simulation_seed_stream_0": "14219614362816585927",
+   "simulation_seed_stream_1": "6612085972866784908"
+  },
+  {
+   "game_id": "401810827",
+   "date_et": "2026-03-14",
+   "simulation_seed_stream_0": "16826237129153727680",
+   "simulation_seed_stream_1": "5029302440772541615"
+  },
+  {
+   "game_id": "401810401",
+   "date_et": "2026-01-10",
+   "simulation_seed_stream_0": "4466822944607747651",
+   "simulation_seed_stream_1": "18348996311040690228"
+  },
+  {
+   "game_id": "401810875",
+   "date_et": "2026-03-20",
+   "simulation_seed_stream_0": "1370730449507191910",
+   "simulation_seed_stream_1": "1837111648697536494"
+  },
+  {
+   "game_id": "401810937",
+   "date_et": "2026-03-29",
+   "simulation_seed_stream_0": "6515932594463070754",
+   "simulation_seed_stream_1": "3132016279407053389"
+  },
+  {
+   "game_id": "401810605",
+   "date_et": "2026-02-07",
+   "simulation_seed_stream_0": "17638450620186246847",
+   "simulation_seed_stream_1": "10457394163712742774"
+  },
+  {
+   "game_id": "401810744",
+   "date_et": "2026-03-03",
+   "simulation_seed_stream_0": "12165037384687192653",
+   "simulation_seed_stream_1": "9100132445570512167"
+  },
+  {
+   "game_id": "401810745",
+   "date_et": "2026-03-03",
+   "simulation_seed_stream_0": "15116657389783854129",
+   "simulation_seed_stream_1": "1542281184640931922"
+  },
+  {
+   "game_id": "401810843",
+   "date_et": "2026-03-16",
+   "simulation_seed_stream_0": "1388516455810026648",
+   "simulation_seed_stream_1": "510114347857681104"
+  },
+  {
+   "game_id": "401810914",
+   "date_et": "2026-03-25",
+   "simulation_seed_stream_0": "9075074315030085681",
+   "simulation_seed_stream_1": "12863037881138129113"
+  },
+  {
+   "game_id": "401810988",
+   "date_et": "2026-04-05",
+   "simulation_seed_stream_0": "13058413623417586422",
+   "simulation_seed_stream_1": "16410879636140411539"
+  },
+  {
+   "game_id": "401810366",
+   "date_et": "2026-01-06",
+   "simulation_seed_stream_0": "18342540166577395952",
+   "simulation_seed_stream_1": "6525379577395966251"
+  },
+  {
+   "game_id": "401810391",
+   "date_et": "2026-01-09",
+   "simulation_seed_stream_0": "2993169073643341775",
+   "simulation_seed_stream_1": "1370081404926253629"
+  },
+  {
+   "game_id": "401810776",
+   "date_et": "2026-03-08",
+   "simulation_seed_stream_0": "926029493619837308",
+   "simulation_seed_stream_1": "15718697991886455461"
+  },
+  {
+   "game_id": "401810714",
+   "date_et": "2026-02-27",
+   "simulation_seed_stream_0": "1576984632160210777",
+   "simulation_seed_stream_1": "9653481131163688543"
+  },
+  {
+   "game_id": "401810410",
+   "date_et": "2026-01-11",
+   "simulation_seed_stream_0": "11382118453763824043",
+   "simulation_seed_stream_1": "2698087930315159069"
+  },
+  {
+   "game_id": "401810539",
+   "date_et": "2026-01-29",
+   "simulation_seed_stream_0": "6316268310781392798",
+   "simulation_seed_stream_1": "14594080628901183209"
+  },
+  {
+   "game_id": "401810641",
+   "date_et": "2026-02-11",
+   "simulation_seed_stream_0": "6677371577507947091",
+   "simulation_seed_stream_1": "4302208839635163607"
+  },
+  {
+   "game_id": "401810512",
+   "date_et": "2026-01-26",
+   "simulation_seed_stream_0": "12092371661885822572",
+   "simulation_seed_stream_1": "18339038994716686383"
+  },
+  {
+   "game_id": "401810763",
+   "date_et": "2026-03-06",
+   "simulation_seed_stream_0": "9888235802854115027",
+   "simulation_seed_stream_1": "17429710314046700363"
+  },
+  {
+   "game_id": "401810723",
+   "date_et": "2026-03-01",
+   "simulation_seed_stream_0": "17291325234898285584",
+   "simulation_seed_stream_1": "9406841844071179774"
+  },
+  {
+   "game_id": "401810802",
+   "date_et": "2026-03-11",
+   "simulation_seed_stream_0": "12686474125411907897",
+   "simulation_seed_stream_1": "13355432401062116968"
+  },
+  {
+   "game_id": "401811051",
+   "date_et": "2026-04-12",
+   "simulation_seed_stream_0": "3101145134032473103",
+   "simulation_seed_stream_1": "3972596584960898225"
+  },
+  {
+   "game_id": "401810957",
+   "date_et": "2026-03-31",
+   "simulation_seed_stream_0": "225550188607336938",
+   "simulation_seed_stream_1": "11350642142140450737"
+  },
+  {
+   "game_id": "401810474",
+   "date_et": "2026-01-20",
+   "simulation_seed_stream_0": "16074029365122410316",
+   "simulation_seed_stream_1": "6887009414007699796"
+  },
+  {
+   "game_id": "401810811",
+   "date_et": "2026-03-12",
+   "simulation_seed_stream_0": "6897298624353574454",
+   "simulation_seed_stream_1": "13726172461155538969"
+  },
+  {
+   "game_id": "401810710",
+   "date_et": "2026-02-26",
+   "simulation_seed_stream_0": "927603993327952437",
+   "simulation_seed_stream_1": "3671484020089156923"
+  },
+  {
+   "game_id": "401810903",
+   "date_et": "2026-03-24",
+   "simulation_seed_stream_0": "17638292433190855988",
+   "simulation_seed_stream_1": "8523389711380264074"
+  },
+  {
+   "game_id": "401810626",
+   "date_et": "2026-02-10",
+   "simulation_seed_stream_0": "3778060428393828832",
+   "simulation_seed_stream_1": "3032186241521358360"
+  },
+  {
+   "game_id": "401810487",
+   "date_et": "2026-01-22",
+   "simulation_seed_stream_0": "6434089997103232372",
+   "simulation_seed_stream_1": "10720422437122910997"
+  },
+  {
+   "game_id": "401810360",
+   "date_et": "2026-01-05",
+   "simulation_seed_stream_0": "13434606646674587943",
+   "simulation_seed_stream_1": "11533316314035369583"
+  },
+  {
+   "game_id": "401810673",
+   "date_et": "2026-02-22",
+   "simulation_seed_stream_0": "11238483004352832621",
+   "simulation_seed_stream_1": "6775088802949898343"
+  },
+  {
+   "game_id": "401811016",
+   "date_et": "2026-04-08",
+   "simulation_seed_stream_0": "15220405952917548855",
+   "simulation_seed_stream_1": "8891972684775669453"
+  },
+  {
+   "game_id": "401811049",
+   "date_et": "2026-04-12",
+   "simulation_seed_stream_0": "13448933297222450935",
+   "simulation_seed_stream_1": "7123286391005608831"
+  },
+  {
+   "game_id": "401810897",
+   "date_et": "2026-03-23",
+   "simulation_seed_stream_0": "1426378037672248010",
+   "simulation_seed_stream_1": "3456732070026406503"
+  },
+  {
+   "game_id": "401810493",
+   "date_et": "2026-01-23",
+   "simulation_seed_stream_0": "11558917793363829101",
+   "simulation_seed_stream_1": "12445770553506798927"
+  },
+  {
+   "game_id": "401810716",
+   "date_et": "2026-02-27",
+   "simulation_seed_stream_0": "10306617564198078843",
+   "simulation_seed_stream_1": "3808640936997188871"
+  },
+  {
+   "game_id": "401810972",
+   "date_et": "2026-04-02",
+   "simulation_seed_stream_0": "16189890276172509583",
+   "simulation_seed_stream_1": "4225102010554756343"
+  },
+  {
+   "game_id": "401810666",
+   "date_et": "2026-02-21",
+   "simulation_seed_stream_0": "2338371227296637956",
+   "simulation_seed_stream_1": "15610883777739314961"
+  },
+  {
+   "game_id": "401811012",
+   "date_et": "2026-04-07",
+   "simulation_seed_stream_0": "16456310994313045051",
+   "simulation_seed_stream_1": "2212668978174734154"
+  },
+  {
+   "game_id": "401810671",
+   "date_et": "2026-02-21",
+   "simulation_seed_stream_0": "3672772148573466816",
+   "simulation_seed_stream_1": "15965821543891326026"
+  },
+  {
+   "game_id": "401810559",
+   "date_et": "2026-02-01",
+   "simulation_seed_stream_0": "11562096723082805414",
+   "simulation_seed_stream_1": "16683414539606849727"
+  },
+  {
+   "game_id": "401810719",
+   "date_et": "2026-02-28",
+   "simulation_seed_stream_0": "6619557178334663465",
+   "simulation_seed_stream_1": "1968883026256469232"
+  },
+  {
+   "game_id": "401810946",
+   "date_et": "2026-03-30",
+   "simulation_seed_stream_0": "2653751798851719264",
+   "simulation_seed_stream_1": "12633070941735503575"
+  },
+  {
+   "game_id": "401810439",
+   "date_et": "2026-01-15",
+   "simulation_seed_stream_0": "9145947530162287898",
+   "simulation_seed_stream_1": "12150405497236481655"
+  },
+  {
+   "game_id": "401810409",
+   "date_et": "2026-01-11",
+   "simulation_seed_stream_0": "2566400114920404021",
+   "simulation_seed_stream_1": "6032358902134329509"
+  },
+  {
+   "game_id": "401810349",
+   "date_et": "2026-01-04",
+   "simulation_seed_stream_0": "386441837381707679",
+   "simulation_seed_stream_1": "14624565994002263786"
+  },
+  {
+   "game_id": "401810624",
+   "date_et": "2026-02-09",
+   "simulation_seed_stream_0": "7200766865299120893",
+   "simulation_seed_stream_1": "5862738511727610526"
+  },
+  {
+   "game_id": "401810423",
+   "date_et": "2026-01-13",
+   "simulation_seed_stream_0": "8618052617360343617",
+   "simulation_seed_stream_1": "1866735409634230542"
+  },
+  {
+   "game_id": "401810703",
+   "date_et": "2026-02-26",
+   "simulation_seed_stream_0": "11046888577791276788",
+   "simulation_seed_stream_1": "16462968025881498299"
+  },
+  {
+   "game_id": "401810924",
+   "date_et": "2026-03-27",
+   "simulation_seed_stream_0": "8898186027730790128",
+   "simulation_seed_stream_1": "13887740267349832710"
+  },
+  {
+   "game_id": "401810453",
+   "date_et": "2026-01-17",
+   "simulation_seed_stream_0": "240248751276286560",
+   "simulation_seed_stream_1": "10507490405283282472"
+  },
+  {
+   "game_id": "401811050",
+   "date_et": "2026-04-12",
+   "simulation_seed_stream_0": "7561604199812042589",
+   "simulation_seed_stream_1": "7144861456397984305"
+  },
+  {
+   "game_id": "401810595",
+   "date_et": "2026-02-05",
+   "simulation_seed_stream_0": "12353761208905310730",
+   "simulation_seed_stream_1": "863693727922099192"
+  },
+  {
+   "game_id": "401810950",
+   "date_et": "2026-03-30",
+   "simulation_seed_stream_0": "9358940283320612728",
+   "simulation_seed_stream_1": "17096991951507631487"
+  },
+  {
+   "game_id": "401810330",
+   "date_et": "2026-01-01",
+   "simulation_seed_stream_0": "8931701581385484617",
+   "simulation_seed_stream_1": "16486103083752284869"
+  },
+  {
+   "game_id": "401810692",
+   "date_et": "2026-02-24",
+   "simulation_seed_stream_0": "17108833391757741253",
+   "simulation_seed_stream_1": "15416067088089509650"
+  },
+  {
+   "game_id": "401810936",
+   "date_et": "2026-03-28",
+   "simulation_seed_stream_0": "7082887749874241546",
+   "simulation_seed_stream_1": "13796364850826013561"
+  },
+  {
+   "game_id": "401810428",
+   "date_et": "2026-01-14",
+   "simulation_seed_stream_0": "17995463733369886263",
+   "simulation_seed_stream_1": "12858788569345726511"
+  },
+  {
+   "game_id": "401810546",
+   "date_et": "2026-01-30",
+   "simulation_seed_stream_0": "14962084337500436270",
+   "simulation_seed_stream_1": "5542167216355355674"
+  },
+  {
+   "game_id": "401810717",
+   "date_et": "2026-02-27",
+   "simulation_seed_stream_0": "6726205737699412319",
+   "simulation_seed_stream_1": "8111900260706149480"
+  },
+  {
+   "game_id": "401811038",
+   "date_et": "2026-04-10",
+   "simulation_seed_stream_0": "18407232256103263063",
+   "simulation_seed_stream_1": "17133375021204471641"
+  },
+  {
+   "game_id": "401810431",
+   "date_et": "2026-01-14",
+   "simulation_seed_stream_0": "17422804571825963326",
+   "simulation_seed_stream_1": "8534132395647422785"
+  },
+  {
+   "game_id": "401810657",
+   "date_et": "2026-02-20",
+   "simulation_seed_stream_0": "13016300134972848098",
+   "simulation_seed_stream_1": "2712644465394829981"
+  },
+  {
+   "game_id": "401811040",
+   "date_et": "2026-04-10",
+   "simulation_seed_stream_0": "12089906413456736981",
+   "simulation_seed_stream_1": "15754486093119821126"
+  },
+  {
+   "game_id": "401810662",
+   "date_et": "2026-02-20",
+   "simulation_seed_stream_0": "11619226712139197526",
+   "simulation_seed_stream_1": "13986408620286755878"
+  },
+  {
+   "game_id": "401810479",
+   "date_et": "2026-01-21",
+   "simulation_seed_stream_0": "8317996939959519359",
+   "simulation_seed_stream_1": "13321968785899406958"
+  },
+  {
+   "game_id": "401810505",
+   "date_et": "2026-01-25",
+   "simulation_seed_stream_0": "11530754288255313333",
+   "simulation_seed_stream_1": "14130010873744002323"
+  },
+  {
+   "game_id": "401809250",
+   "date_et": "2026-01-19",
+   "simulation_seed_stream_0": "7510235080772297666",
+   "simulation_seed_stream_1": "15041007460075541676"
+  },
+  {
+   "game_id": "401810726",
+   "date_et": "2026-03-01",
+   "simulation_seed_stream_0": "18247270812107603470",
+   "simulation_seed_stream_1": "3076284244568958031"
+  },
+  {
+   "game_id": "401810830",
+   "date_et": "2026-03-14",
+   "simulation_seed_stream_0": "16057092161023721597",
+   "simulation_seed_stream_1": "5664426889481768894"
+  },
+  {
+   "game_id": "401810668",
+   "date_et": "2026-02-21",
+   "simulation_seed_stream_0": "8008628000607710519",
+   "simulation_seed_stream_1": "2271893455434021195"
+  },
+  {
+   "game_id": "401810443",
+   "date_et": "2026-01-16",
+   "simulation_seed_stream_0": "2225993147888229608",
+   "simulation_seed_stream_1": "17962507387873387902"
+  },
+  {
+   "game_id": "401810628",
+   "date_et": "2026-02-10",
+   "simulation_seed_stream_0": "16112819049871512165",
+   "simulation_seed_stream_1": "548839817034059049"
+  },
+  {
+   "game_id": "401810582",
+   "date_et": "2026-02-04",
+   "simulation_seed_stream_0": "11344830659460645122",
+   "simulation_seed_stream_1": "3043538857349388828"
+  },
+  {
+   "game_id": "401810783",
+   "date_et": "2026-03-08",
+   "simulation_seed_stream_0": "18286917038289347766",
+   "simulation_seed_stream_1": "15765075170393280395"
+  },
+  {
+   "game_id": "401811042",
+   "date_et": "2026-04-12",
+   "simulation_seed_stream_0": "6859047963850392442",
+   "simulation_seed_stream_1": "1533809536291681561"
+  },
+  {
+   "game_id": "401810720",
+   "date_et": "2026-02-28",
+   "simulation_seed_stream_0": "5535804816125643546",
+   "simulation_seed_stream_1": "18341788168222159029"
+  },
+  {
+   "game_id": "401810796",
+   "date_et": "2026-03-10",
+   "simulation_seed_stream_0": "14334359924330834170",
+   "simulation_seed_stream_1": "1273526642848053828"
+  },
+  {
+   "game_id": "401810580",
+   "date_et": "2026-02-03",
+   "simulation_seed_stream_0": "9470084840003183786",
+   "simulation_seed_stream_1": "3216718274976731520"
+  },
+  {
+   "game_id": "401810966",
+   "date_et": "2026-03-12",
+   "simulation_seed_stream_0": "10020574760928649949",
+   "simulation_seed_stream_1": "13687335706930534105"
+  },
+  {
+   "game_id": "401810990",
+   "date_et": "2026-04-05",
+   "simulation_seed_stream_0": "270195520458360747",
+   "simulation_seed_stream_1": "9417980826756923945"
+  },
+  {
+   "game_id": "401810411",
+   "date_et": "2026-01-11",
+   "simulation_seed_stream_0": "13624677007683373206",
+   "simulation_seed_stream_1": "11935475588369034160"
+  },
+  {
+   "game_id": "401810364",
+   "date_et": "2026-01-05",
+   "simulation_seed_stream_0": "3979663864600022350",
+   "simulation_seed_stream_1": "14898255556498378139"
+  },
+  {
+   "game_id": "401810740",
+   "date_et": "2026-03-03",
+   "simulation_seed_stream_0": "18400929361094037794",
+   "simulation_seed_stream_1": "8280131839601402522"
+  },
+  {
+   "game_id": "401810769",
+   "date_et": "2026-03-06",
+   "simulation_seed_stream_0": "8506144987853084007",
+   "simulation_seed_stream_1": "645418743813095"
+  },
+  {
+   "game_id": "401810868",
+   "date_et": "2026-03-19",
+   "simulation_seed_stream_0": "7532746184919714986",
+   "simulation_seed_stream_1": "12146455129828779477"
+  },
+  {
+   "game_id": "401810728",
+   "date_et": "2026-03-01",
+   "simulation_seed_stream_0": "11136832503380281052",
+   "simulation_seed_stream_1": "11515511848312549746"
+  },
+  {
+   "game_id": "401810845",
+   "date_et": "2026-03-16",
+   "simulation_seed_stream_0": "11870984062038816317",
+   "simulation_seed_stream_1": "781196019575532213"
+  },
+  {
+   "game_id": "401810674",
+   "date_et": "2026-02-22",
+   "simulation_seed_stream_0": "14742161168115403544",
+   "simulation_seed_stream_1": "16920925260359201946"
+  },
+  {
+   "game_id": "401810538",
+   "date_et": "2026-01-29",
+   "simulation_seed_stream_0": "11236119281027916468",
+   "simulation_seed_stream_1": "342187165297712327"
+  },
+  {
+   "game_id": "401810918",
+   "date_et": "2026-03-26",
+   "simulation_seed_stream_0": "10862281371454987397",
+   "simulation_seed_stream_1": "2400286464137985917"
+  },
+  {
+   "game_id": "401810386",
+   "date_et": "2026-01-08",
+   "simulation_seed_stream_0": "1520095501865649306",
+   "simulation_seed_stream_1": "4146211817820644519"
+  },
+  {
+   "game_id": "401810399",
+   "date_et": "2026-01-10",
+   "simulation_seed_stream_0": "18026015892989717926",
+   "simulation_seed_stream_1": "2343989561374460205"
+  },
+  {
+   "game_id": "401810767",
+   "date_et": "2026-03-06",
+   "simulation_seed_stream_0": "1891632934229387558",
+   "simulation_seed_stream_1": "17675098552376276342"
+  },
+  {
+   "game_id": "401810533",
+   "date_et": "2026-01-28",
+   "simulation_seed_stream_0": "6961219154645066971",
+   "simulation_seed_stream_1": "5248012622951704250"
+  },
+  {
+   "game_id": "401810509",
+   "date_et": "2026-01-25",
+   "simulation_seed_stream_0": "10551018460540843055",
+   "simulation_seed_stream_1": "7574824796294694378"
+  },
+  {
+   "game_id": "401810831",
+   "date_et": "2026-03-15",
+   "simulation_seed_stream_0": "7094671133774657115",
+   "simulation_seed_stream_1": "13349057410573169012"
+  },
+  {
+   "game_id": "401810481",
+   "date_et": "2026-01-21",
+   "simulation_seed_stream_0": "17863051636798149883",
+   "simulation_seed_stream_1": "15971578120588737837"
+  },
+  {
+   "game_id": "401810454",
+   "date_et": "2026-01-17",
+   "simulation_seed_stream_0": "1379917902205212552",
+   "simulation_seed_stream_1": "13342742755947607897"
+  },
+  {
+   "game_id": "401810448",
+   "date_et": "2026-01-17",
+   "simulation_seed_stream_0": "6172427972647153469",
+   "simulation_seed_stream_1": "9055584689021820844"
+  },
+  {
+   "game_id": "401810482",
+   "date_et": "2026-01-22",
+   "simulation_seed_stream_0": "4587579082499521216",
+   "simulation_seed_stream_1": "757194694968324288"
+  },
+  {
+   "game_id": "401811043",
+   "date_et": "2026-04-12",
+   "simulation_seed_stream_0": "16107949879524628578",
+   "simulation_seed_stream_1": "8791580945232020828"
+  },
+  {
+   "game_id": "401810669",
+   "date_et": "2026-02-21",
+   "simulation_seed_stream_0": "9696373942752374647",
+   "simulation_seed_stream_1": "11884682269057524319"
+  },
+  {
+   "game_id": "401810620",
+   "date_et": "2026-02-09",
+   "simulation_seed_stream_0": "135205032265580154",
+   "simulation_seed_stream_1": "9818189651917989230"
+  },
+  {
+   "game_id": "401810665",
+   "date_et": "2026-02-20",
+   "simulation_seed_stream_0": "476928531573236045",
+   "simulation_seed_stream_1": "1297538969356252837"
+  },
+  {
+   "game_id": "401810788",
+   "date_et": "2026-03-09",
+   "simulation_seed_stream_0": "9303348927037547994",
+   "simulation_seed_stream_1": "11696438443541244569"
+  },
+  {
+   "game_id": "401858693",
+   "date_et": "2026-03-18",
+   "simulation_seed_stream_0": "10794718144506212441",
+   "simulation_seed_stream_1": "1864687052436036971"
+  },
+  {
+   "game_id": "401810927",
+   "date_et": "2026-03-27",
+   "simulation_seed_stream_0": "7451061071315228901",
+   "simulation_seed_stream_1": "4262599729460572384"
+  },
+  {
+   "game_id": "401810413",
+   "date_et": "2026-01-12",
+   "simulation_seed_stream_0": "9623769256247651302",
+   "simulation_seed_stream_1": "16392775400009647854"
+  },
+  {
+   "game_id": "401810756",
+   "date_et": "2026-03-05",
+   "simulation_seed_stream_0": "106961098900427184",
+   "simulation_seed_stream_1": "11675843592463587609"
+  },
+  {
+   "game_id": "401810383",
+   "date_et": "2026-01-08",
+   "simulation_seed_stream_0": "4130177332144452579",
+   "simulation_seed_stream_1": "7565350644380896842"
+  },
+  {
+   "game_id": "401810466",
+   "date_et": "2026-01-19",
+   "simulation_seed_stream_0": "3105029870465609570",
+   "simulation_seed_stream_1": "7755829817562203179"
+  },
+  {
+   "game_id": "401810977",
+   "date_et": "2026-04-03",
+   "simulation_seed_stream_0": "4117634022748325057",
+   "simulation_seed_stream_1": "5506734021230835994"
+  },
+  {
+   "game_id": "401810378",
+   "date_et": "2026-01-07",
+   "simulation_seed_stream_0": "10588123605385807895",
+   "simulation_seed_stream_1": "2021757479184612314"
+  },
+  {
+   "game_id": "401810452",
+   "date_et": "2026-01-17",
+   "simulation_seed_stream_0": "203055609800430525",
+   "simulation_seed_stream_1": "1982631684707353562"
+  },
+  {
+   "game_id": "401810646",
+   "date_et": "2026-02-12",
+   "simulation_seed_stream_0": "9374248419982509839",
+   "simulation_seed_stream_1": "11110425820774596488"
+  },
+  {
+   "game_id": "401810953",
+   "date_et": "2026-03-30",
+   "simulation_seed_stream_0": "9029127544096457374",
+   "simulation_seed_stream_1": "12323091067305759429"
+  },
+  {
+   "game_id": "401858694",
+   "date_et": "2026-03-31",
+   "simulation_seed_stream_0": "3442529079965056918",
+   "simulation_seed_stream_1": "17758798192600356323"
+  },
+  {
+   "game_id": "401810931",
+   "date_et": "2026-03-28",
+   "simulation_seed_stream_0": "8249635816258596015",
+   "simulation_seed_stream_1": "1743931380162603556"
+  },
+  {
+   "game_id": "401810639",
+   "date_et": "2026-02-11",
+   "simulation_seed_stream_0": "6902102008177155707",
+   "simulation_seed_stream_1": "15004538920734164535"
+  },
+  {
+   "game_id": "401810750",
+   "date_et": "2026-03-04",
+   "simulation_seed_stream_0": "9491575996601107922",
+   "simulation_seed_stream_1": "7790612413897336006"
+  },
+  {
+   "game_id": "401810803",
+   "date_et": "2026-03-11",
+   "simulation_seed_stream_0": "10780152143419687720",
+   "simulation_seed_stream_1": "7683463618734142408"
+  },
+  {
+   "game_id": "401810697",
+   "date_et": "2026-02-25",
+   "simulation_seed_stream_0": "4079956003883477616",
+   "simulation_seed_stream_1": "12634975538134582966"
+  },
+  {
+   "game_id": "401811055",
+   "date_et": "2026-04-12",
+   "simulation_seed_stream_0": "15150755761123328407",
+   "simulation_seed_stream_1": "2552419779000213942"
+  },
+  {
+   "game_id": "401810492",
+   "date_et": "2026-01-23",
+   "simulation_seed_stream_0": "6584105702783418867",
+   "simulation_seed_stream_1": "8552014968280346894"
+  },
+  {
+   "game_id": "401810930",
+   "date_et": "2026-03-27",
+   "simulation_seed_stream_0": "6808572332255734235",
+   "simulation_seed_stream_1": "730128799760168232"
+  },
+  {
+   "game_id": "401810585",
+   "date_et": "2026-02-04",
+   "simulation_seed_stream_0": "5493941398972424377",
+   "simulation_seed_stream_1": "14061302944561179280"
+  },
+  {
+   "game_id": "401811048",
+   "date_et": "2026-04-12",
+   "simulation_seed_stream_0": "15334982104456668936",
+   "simulation_seed_stream_1": "7407432403392728408"
+  },
+  {
+   "game_id": "401810981",
+   "date_et": "2026-04-03",
+   "simulation_seed_stream_0": "9000915144142065699",
+   "simulation_seed_stream_1": "18204447823938241989"
+  }
+ ],
+ "excluded_old_panel_games": 200,
+ "selection": "ascending SHA-256 promotion-v2-rule3|game_id from original 718 minus old panel",
+ "independent_stream_games": [
+  "401810859",
+  "401810630",
+  "401811011",
+  "401810548",
+  "401810943",
+  "401810876",
+  "401811003",
+  "401810356",
+  "401810894",
+  "401810663",
+  "401810438",
+  "401810614",
+  "401810945",
+  "401810516",
+  "401810706",
+  "401810361",
+  "401810752",
+  "401810394",
+  "401810721",
+  "401811021",
+  "401810896",
+  "401810889",
+  "401810636",
+  "401810920",
+  "401810836",
+  "401810445",
+  "401810661",
+  "401810347",
+  "401810463",
+  "401810543"
+ ],
+ "independent_stream": 1,
+ "stress_10000_games": [
+  "401809247",
+  "401810357",
+  "401810393"
+ ],
+ "pilot_games": [
+  "401809247",
+  "401810357",
+  "401810393"
+ ],
+ "stress_note": "Original three wiring games at 10k plus separately enumerated five/six-player rule-state fixtures; diagnostic, not independent real-game confirmation.",
+ "control": "unchanged engine rule policy; same original initial seed namespace",
+ "candidate": "new rule-conformant sixth-foul policy, source identity frozen separately before execution",
+ "policy_sha256": "d5e1776c3cfcd114b09fa9f937d264ea4ce6f4fcb427c804d4fc07daca7d928d",
+ "original_manifest_sha256": "195b4ddaf748e4f3520a02f813b5763736fe4fbfbe653e896161532d6d9c7e6b",
+ "final_test": "not read or selected from; no protected outcomes before a frozen qualifying recipe"
+}

@@ -74,6 +74,7 @@ behaviour follows the latest applicable decision, especially D45–D50.
 | D48 | Proposed capped, classified world-local retries; audit rejection/selection bias; unwired. |
 | D49 | Preserve full simulated minute precision; conditions use exact values, display may round. |
 | D50 | Today-only possession slate; tomorrow onward uses pathway regulation distributions; preserve originals. |
+| D51 | Owner (23 Nov) authorises promotion-framework audit/redesign; v2 separates mechanics, learned changes and stored scenarios. Preserve old evidence; freeze new gates/confirmation before further results, never auto-ship. |
 
 ## 2. Possession chain
 

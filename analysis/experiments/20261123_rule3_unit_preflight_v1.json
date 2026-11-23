@@ -1,0 +1,27 @@
+{
+ "kind": "opt-in Rule 3 and v2 gate controlled preflight, no fitted models or forecasts changed",
+ "focused_tests": 12,
+ "rule_tests": 7,
+ "gate_tests": 5,
+ "status": "passed",
+ "scope": [
+  "sixth/subsequent offensive and defensive fouls",
+  "no double team-foul increment",
+  "retained player versus legal replacement",
+  "unavailable/invalid roster failure",
+  "world-local lineup/score isolation",
+  "technical FT/points accounting",
+  "unchanged-state preservation",
+  "harm detection and no automatic promotion"
+ ],
+ "production_default_changed": false,
+ "real_outcome_promotion_test": false,
+ "input_sha256": {
+  "scripts/foul_out.py": "32b51b7ad72bd3875d9f7c5301190b98545d347bf920be1d07b2d4e501c1da8c",
+  "scripts/release_gate.py": "0a3f95c3c8b29b87ced61ca427bf68d4505d84b03f2ca926c77bb4b1e7d0ccfa",
+  "scripts/engine.py": "5431df17caac031eb051fc80968496366cb8d4d6915fc123db35f94ee9d9f339",
+  "tests/test_foul_out.py": "f3b6d007a3422fd1d2738c8e92e79b1836660c258cc4eea5fb27df86969a472a",
+  "tests/test_release_gate.py": "bcfe563378a098d28b396d1f4d6721e2d88d6fc39f8d0574c44d9d0a352e19f6",
+  "docs/protocols/rule3_implementation_20261123.md": "22373ce32a4833133d4f5dcca69c1a3eb0367eb27107f7d29c2dddd4ed2e2ccb"
+ }
+}

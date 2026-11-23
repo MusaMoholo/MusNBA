@@ -8,7 +8,7 @@ Do not load historical archives routinely. Root documents describe the present; 
 | [AGENTS](../AGENTS.md) | Owner preferences, safeguards, compute, checkpoint/documentation rules. |
 | [HANDOFF](../HANDOFF_NEXT.md) | Current systems/delivery, blockers, jobs, exact next action and active progress ladders. |
 | [PLAN](../PLAN.md) | Scope, dependencies, milestone ledger, completion criteria and product backlog. |
-| [ENGINE_PLAN](../ENGINE_PLAN.md) | Current design, D1–D50 decision index, implemented/planned boundaries. |
+| [ENGINE_PLAN](../ENGINE_PLAN.md) | Current design, D1–D51 decision index, implemented/planned boundaries. |
 | [TRAINING_PLAN](../TRAINING_PLAN.md) | Folds, cutoffs, frozen numerical gates, confirmation/release requirements. |
 | [FINDINGS](../FINDINGS.md) | Concise measured conclusions and negative decisions, with population and report links. |
 | [DASHBOARD_PLAN](../DASHBOARD_PLAN.md) | Current shipped UI, definitions, constraints and pending product contracts. |
@@ -18,6 +18,8 @@ Do not load historical archives routinely. Root documents describe the present; 
 
 - [A1 branch runbook](research/a1_branches.md): current research components, retained outputs, remaining gate and safe reproduction.
 - [A1 no-release decision](research/a1_no_release_20261123.md): measured prior-roster rejection and every unpassed production gate.
+- [Active promotion v2](protocols/promotion_v2_20261123.md): D51 change classes, core margins, calibrated diagnostics and independent confirmation.
+- [Historical promotion v1](protocols/promotion_v1_20261122.md): verbatim original S01 gate, retained for old experiment reproduction.
 - [Frozen A2 protocols](protocols/a2_form_20261122.md): verbatim preregistered residual/form methods.
 - [Cleanup audit](maintenance/2026-11-23-lean-docs.md): before/after counts, preservation checks and checkpoint validation.
 - Experiment JSON/text under `analysis/experiments/` contains exact configurations, outcomes, uncertainty and fingerprints;

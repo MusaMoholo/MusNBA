@@ -74,6 +74,21 @@ assignment fit cannot be reused for F1–F3; corrected fold inputs need dated fi
 
 ## 7. A1 branch evidence and remaining gate
 
+- **D51 framework audit (23 Nov):** the unchanged model's independent simulation stream establishes
+  only **61/69** legacy non-inferiority bounds (one score and seven coverage bounds unresolved), without
+  demonstrated material harm. This is a precision/power warning, not proof that confidence intervals are
+  mathematically wrong. The prior mechanical repair establishes **44/44** core score/bias bounds; two
+  quarter-coverage diagnostics remain unresolved. V2 removes the inapplicable primary-gain requirement
+  for mechanical fixes, retains core margins and requires correctness plus fresh confirmation. It does
+  not auto-promote the old repair. Report `analysis/experiments/20261123_gate_framework_audit_v1.json`.
+  The NBA rule audit also identifies an additional issue to test: retained offenders' offensive fouls
+  must charge a team foul under Rule 3-I/Rule 12-VII's exception; the old continuation omits that increment.
+- **D51 old-defender reanalysis:** same 200 F4 games / 4,346 scored player-games, pre-game tiers;
+  v1.4c/e/f pooled PTS CRPS changes **+0.007504 [−0.004064,+0.018665]**, **+0.006684
+  [−0.003903,+0.017161]**, **+0.006195 [−0.004761,+0.017297]** (unadjusted 95% game-bootstrap).
+  None establishes a pooled scoring improvement; these are not proof of pooled harm. Original model
+  version streams differ, old rows omit quarter/3PM outputs, and this is no new promotion confirmation.
+  Reports `analysis/experiments/20261123_gate_review_v14{c,e,f}.json`; no simulation reruns or final-test use.
 - **23 Nov prior-roster readiness census:** on the fixed 800 F1–F4 games, inferred source rosters cover
   795 and required starter pools are supported in **783/800** (199/200/184/200 by fold). **371/28,530**
   candidates lack a prior profile/position; 19 required-pool positions affect 12 games, plus five missing

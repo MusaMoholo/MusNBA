@@ -96,6 +96,12 @@ under `analysis/experiments/`, per-row arrays/captures stay ignored under `data/
 | `scripts/webapp/`, `analysis/*.mjs` | Native ES-module UI, browser/PWA checks; no build dependency. |
 | `scripts/a1_*.py`, `scripts/a2_*.py`, `analysis/a1_*` | Research/audits; [branch runbook](docs/research/a1_branches.md), frozen protocols and old full command map via docs index. |
 
+`scripts/foul_out.py:Rule3Policy` is the opt-in Rule 3 correction under independent confirmation, not
+the production default. `tests/test_foul_out.py` covers its isolated accounting/rule cases.
+
+`scripts/release_gate.py` applies the current class-specific statistical compatibility gate; it never publishes
+or promotes a model. Active policy: [promotion v2](docs/protocols/promotion_v2_20261123.md).
+
 `scripts/a1_prior_roster_screen.py` and `analysis/a1_prior_roster_audit.py` census/reconstruct prior-box
 membership and required starter-position coverage without reading outcome columns or generating forecasts.
 

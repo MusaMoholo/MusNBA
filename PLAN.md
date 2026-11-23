@@ -52,13 +52,13 @@ remain the relevant accuracy/product milestones. A research rejection does not m
 
 ### 6a. Authorised D42 execution split
 
-**Chunk A: believable games and visible simulations — 40.5%.** Headliners: lineup-aware player/game outcomes;
+**Chunk A: believable games and visible simulations — 37.5%.** Headliners: lineup-aware player/game outcomes;
 form and late-game realism; five actual saved-world examples with a reusable 2-D View Centre. Depends on S01–S07.
 Owner (23 Nov) now authorises completing A1 and A2, lifting the earlier A1 stop; A3 and Chunk B remain outside this session.
 
 | Module | Weight | Progress | Dependency and acceptance/fallback |
 |---|---:|---:|---|
-| A1 Lineups/Expected | 30% | 100% fallback | No-release decision: 783/800 prior-roster contexts supported; repair accuracy gate still failed. Original S08/production branches remain undelivered. |
+| A1 Lineups/Expected | 30% | 90% D51 review | Prior no-release fallback reopened by owner-authorised gate redesign; v2 separates mechanics/scenarios from learned accuracy changes. Production branches/S08 remain undelivered. |
 | A2 Form/late game | 35% | 30% | S04/S06 decisions, A1 for integration. Paired player/joint gates; retain v1.3 when unsupported. |
 | A3 View Centre/delivery | 35% | 0% | A1/A2 decisions. Five labelled real worlds, reconciled event files, 2-D court/player, responsive/offline checks and fresh nightly. |
 
@@ -78,10 +78,11 @@ incremental iCloud delivery is implied. S11/S14 are not completed merely by an e
 
 ### 6b. What earns promotion
 
-[TRAINING_PLAN §8](TRAINING_PLAN.md#8-a1-acceptance-and-reproducibility) is the canonical numerical gate:
+[TRAINING_PLAN §8](TRAINING_PLAN.md#8-a1-acceptance-and-reproducibility) links the active D51/v2 release policy:
 pre-game player tiers first, then team/joint outcomes, frozen paired uncertainty/non-inferiority/noise,
-all-fold confirmation, second seed, 10k stress, exact identities/cutoffs/runtime, then final test once.
-Actual-participant diagnostics do not establish pre-game availability accuracy. Never relax a gate to ship a candidate.
+class-specific confirmation, simulation-resolution checks, stress and exact identities/cutoffs/runtime, then a frozen final evaluation where applicable. Legacy numerical margins remain; D51 permits redesigning inapplicable blocking requirements.
+Actual-participant diagnostics do not establish pre-game availability accuracy. Redesign requires a recorded
+methodological reason and frozen independent confirmation; do not move thresholds merely to pass a known candidate.
 
 Ambitions: ≥5% better minute CRPS, ≥2% better PTS/REB/AST in affected supported tiers, beat the team benchmark,
 coverage toward 80%, and better season calibration at every start date. These are aims, not promises or substitute gates.
@@ -110,6 +111,7 @@ installation/import/memory acceptance remains an owner check; exporting to iClou
 | Competition tabs | Regular season/Cup/playoffs with per-world play-in/brackets; not currently a complete postseason simulation. |
 | Incremental iCloud export | Future separate contract: atomic per-game generations, resume/import/offline validation; current export remains end-of-nightly. |
 | Advanced player stats | Actual +/−, six box-derived rates and dated action-share input exist. True simulated possession USG%, on-court ratings, simulated +/− and BPM need honest capture/definitions/validation. |
+| Code simplification (owner, 23 Nov) | After A1/A2, inventory production dependencies, duplicate logic and research-only files; target proven maintenance/runtime costs. Preserve reproducibility and View Centre scope; no line-count-driven wholesale rewrite or blind deletion. |
 | House design/face cards | Keep key boxes first, secondary content expandable, state preserved; face cards remain future. Extend existing U3 role badges/U11 defence profiles. Lab polish is low priority. |
 
 Spatial displays must follow D43: zones/bands or validated source positions; no invented tracking. All dashboard copy
@@ -119,6 +121,7 @@ reflects loaded data/configuration. These items do not authorise forecast-histor
 
 | Date | Result | Evidence |
 |---|---|---|
+| 23 Nov | D51 reopens A1 release review; v2 compatibility/confirmation and retained defender-result audit. | [Active policy](docs/protocols/promotion_v2_20261123.md) |
 | 23 Nov | A1 no-release fallback: 28,530 memberships audited, 783/800 starter contexts supported; v1.3 retained. | [Decision](docs/research/a1_no_release_20261123.md) |
 | 23 Nov | Lean documentation maintenance; no model/app/data/progress change. | [Maintenance record](docs/maintenance/2026-11-23-lean-docs.md) |
 | 23 Nov | Participation slices and 10-game/10k-season delivery; full branches blocked. | Commit `4d58ff9`; HANDOFF latest delivery; FINDINGS. |
