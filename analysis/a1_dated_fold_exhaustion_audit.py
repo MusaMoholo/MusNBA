@@ -21,10 +21,11 @@ MANIFEST = ROOT / 'analysis/experiments/20261122_a1_pre_candidate_manifest.json'
 
 def totals(games: list[dict]) -> dict:
     clusters = []
-    invalid = 0
+    invalid = unsupported = 0
     for game in games:
         branches = game['branches']
-        invalid += sum(b['status'] != 'simulated' for b in branches)
+        invalid += sum(b['status'] == 'invalid initial roster or allocation' for b in branches)
+        unsupported += sum(b['status'] == 'unsupported missing position' for b in branches)
         attempts = [a for branch in branches for a in branch['attempts']]
         clusters.append((len(attempts), sum(a['status'] == 'exhausted' for a in attempts)))
     rows = np.asarray(clusters, dtype=int)
@@ -40,7 +41,7 @@ def totals(games: list[dict]) -> dict:
             rates.append(sampled[1] / sampled[0])
         interval = np.quantile(rates, [0.025, 0.975]).tolist()
     return {'games': len(games), 'attempts': int(attempts), 'exhausted': int(exhausted),
-            'invalid_initial_branches': int(invalid),
+            'invalid_initial_branches': int(invalid), 'unsupported_missing_position_branches': int(unsupported),
             'exhaustion_fraction': float(exhausted / attempts) if attempts else None,
             'game_cluster_bootstrap_95': interval,
             'interval_note': '5000 game-cluster bootstrap replicates, seed 20261122; '
@@ -79,7 +80,7 @@ def main() -> None:
         if [b['branch'] for b in game['branches']] != ['plays', 'sits']:
             raise ValueError('branch coverage differs')
         for branch in game['branches']:
-            if branch['status'] == 'invalid initial roster or allocation':
+            if branch['status'] in ('invalid initial roster or allocation', 'unsupported missing position'):
                 if branch['attempts'] or not branch['reason']:
                     raise ValueError('invalid branch has attempts or no reason')
                 continue

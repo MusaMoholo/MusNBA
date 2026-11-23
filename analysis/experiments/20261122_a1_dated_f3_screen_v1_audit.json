@@ -1,0 +1,22 @@
+{
+ "kind": "independent fixed earlier-fold saved-world accounting",
+ "summary": "analysis/experiments/20261122_a1_dated_f3_screen_v1.json",
+ "summary_sha256": "b2b0ae301dbf6e01ac822721ae8e5353087b82eef1107f9e584ac4c1aa06f2ab",
+ "audit_sha256": "864cd0b2eafd6a4a2f24747b5f77b6e034a5768f222325f3a59b87dc29e66acf",
+ "games": 200,
+ "attempts": 1790,
+ "exhausted": 0,
+ "invalid_initial_branches": 0,
+ "unsupported_missing_position_branches": 42,
+ "exhaustion_fraction": 0.0,
+ "game_cluster_bootstrap_95": null,
+ "interval_note": "5000 game-cluster bootstrap replicates, seed 20261122; not calculated for zero observed exhaustions",
+ "completed_worlds": 1790,
+ "lineup_snapshots": 439772,
+ "elapsed_seconds": 3.441,
+ "limitations": [
+  "Dated body-free diagnostic engine differs from accepted v1.3 and F4 screen.",
+  "Actual participant rosters and synthetic statuses are not dated pre-game availability.",
+  "Does not estimate league rate, retry bias, accuracy or promote a model."
+ ]
+}

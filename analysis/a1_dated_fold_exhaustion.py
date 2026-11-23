@@ -54,6 +54,23 @@ def screen_game(gid: str, directory: str) -> dict:
         branches = []
         for plays in (True, False):
             label = 'plays' if plays else 'sits'
+            availability = g.avail.copy()
+            availability[index] = float(plays)
+            missing = []
+            for side_number, side_name in enumerate(g.sides):
+                indices = np.flatnonzero(g.side == side_number)
+                eligible = [int(j) for j in indices if availability[j] > 0]
+                sure = [j for j in eligible if availability[j] >= 0.9]
+                pool = sure if len(sure) >= 5 else eligible
+                offset = int(indices[0])
+                if any(not isinstance(g.players[side_name][j - offset]['pos'], str)
+                       or not g.players[side_name][j - offset]['pos'].strip() for j in pool):
+                    missing.append(side_name)
+            if missing:
+                branches.append({'branch': label, 'status': 'unsupported missing position',
+                                 'reason': f"projected-starter pool lacks position: {', '.join(missing)}",
+                                 'attempts': []})
+                continue
             try:
                 branch = a1_lineup_branches.one_player(g, team, player, plays)
             except ValueError as exc:
@@ -148,7 +165,8 @@ def main() -> None:
     args.worlds_dir.mkdir(parents=True)
     started = time.monotonic()
     records = {}
-    with ProcessPoolExecutor(max_workers=8, initializer=init_worker, initargs=(preparation,)) as pool:
+    pool = ProcessPoolExecutor(max_workers=8, initializer=init_worker, initargs=(preparation,))
+    try:
         futures = {pool.submit(screen_game, gid, str(args.worlds_dir)): gid for gid in ids}
         for future in as_completed(futures):
             gid = futures[future]
@@ -157,6 +175,8 @@ def main() -> None:
                 elapsed = time.monotonic() - started
                 print(f'{len(records)}/200 games in {elapsed:.1f}s ({len(records) / elapsed:.3f} games/s)',
                       flush=True)
+    finally:
+        pool.shutdown(wait=True, cancel_futures=True)
     ordered = [records[gid] for gid in ids]
     aggregate = auditor.totals(ordered)
     verify_inputs()

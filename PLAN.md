@@ -429,6 +429,12 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 ET · A1 earlier-fold exhaustion screens:** the fixed **200** games per F1/F2/F3 produced
+  **1 / 0 / 0** typed exhaustions in **1,900 / 1,900 / 1,790** attempts, with **20 / 20 / 42**
+  missing-position branches explicitly unsupported. Independent audits reconciled **5,589** completed
+  worlds and **1,355,971** lineup snapshots. These are body-free diagnostic engines on oracle participant
+  rosters, not a league rate or a dated availability/predictive gate. F1's first run failed on missing
+  position and was retained; the corrected run did not invent positions. A1 **80%**, Chunk A **34.5%**.
 - **22 Nov 2026 ET · A1 dated-fold prerequisites:** three isolated S02-style body-free engines and their
   audited **16-node** datasets were prepared at their own F1/F2/F3 cutoffs in **245.971 / 283.903 /
   336.321s**; one F1 game wired both branches. These are diagnostic models, not accepted v1.3 or a

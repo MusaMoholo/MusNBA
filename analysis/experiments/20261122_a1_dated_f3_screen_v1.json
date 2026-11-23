@@ -1,0 +1,24 @@
+{
+ "kind": "fixed earlier-fold oracle-roster synthetic-branch exhaustion screen",
+ "fold": "F3",
+ "preparation": "analysis/experiments/20261122_a1_dated_f3_exhaustion_v1.json",
+ "preparation_sha256": "82faef1326bbfdbc2436f6b0b6f1f7497a275ec3ffcfee919f40263bbe23335d",
+ "details": "data/derived/experiments/20261122_a1_dated_f3_screen_v1/manifest.json",
+ "details_sha256": "b70969b51d4dcc7f3d405b27db1f8ff2f1d7a73b3fdccbe29851ab08371b6bc6",
+ "games": 200,
+ "attempts": 1790,
+ "exhausted": 0,
+ "invalid_initial_branches": 0,
+ "unsupported_missing_position_branches": 42,
+ "exhaustion_fraction": 0.0,
+ "game_cluster_bootstrap_95": null,
+ "interval_note": "5000 game-cluster bootstrap replicates, seed 20261122; not calculated for zero observed exhaustions",
+ "workers": 8,
+ "threads": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1",
+ "elapsed_seconds": 161.707,
+ "limitations": [
+  "Dated body-free diagnostic engine differs from accepted v1.3 and F4 screen.",
+  "Actual participant rosters and synthetic statuses are not dated pre-game availability.",
+  "Does not estimate league rate, retry bias, accuracy or promote a model."
+ ]
+}

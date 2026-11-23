@@ -1,10 +1,29 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 80%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **2526ea1** (halftime survivor selection); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **9d5aa10** (dated-fold preparation); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
+- **A1 90% partial — earlier-fold screens complete (23 Nov UTC):** fixed **200**-game F1/F2/F3 panels
+  respectively had **1 / 0 / 0** exhausted attempts out of **1,900 / 1,900 / 1,790**, **0 / 0 / 0**
+  invalid allocations and **20 / 20 / 42** unsupported missing-position branches. F1's game-cluster
+  95% bootstrap interval for its attempt fraction is **[0, 0.001667]** (5,000 resamples); zero observed
+  in F2/F3 does not prove zero risk. The dated body-free diagnostic engines differ from v1.3 and F4,
+  actual-participant rosters are oracle inputs, and five draws per feasible branch are not a league rate,
+  availability calibration or full-game retry-bias gate. Eight one-thread workers per fold took
+  **170.774 / 165.973 / 161.707s** sequentially. Separate audits checked **1,899 / 1,900 / 1,790** saved
+  worlds and **458,247 / 457,952 / 439,772** lineup snapshots. Reports
+  `analysis/experiments/20261122_a1_dated_f1_screen_v2{,_audit}.json` and
+  `analysis/experiments/20261122_a1_dated_f{2,3}_screen_v1{,_audit}.json`; corresponding logs
+  `/tmp/musnba_a1_dated_f1_screen_v2.log` and `/tmp/musnba_a1_dated_f{2,3}_screen_v1.log`, captures
+  in matching ignored `data/derived/experiments/` folders. No screen job remains running.
+  F1 v1 failed on missing positions and remains partial; see frozen correction below. Focused tests
+  **11/11**, smoke **107/107**, deliberate fault **86/107** and exit 1
+  (`/tmp/musnba_a1_dated_screens_{smoke,fault}_v1.log`). HANDOFF, PLAN, FINDINGS and README record the
+  work; AGENTS, ENGINE_PLAN, TRAINING_PLAN and DASHBOARD_PLAN need no changes: rules, accepted engine,
+  evaluation gates and shipped UI remain unchanged. No protected-season outcomes were scored; production
+  model, forecasts and bundles unchanged. A1 **80%**, Chunk A **34.5%**.
 - **A1 90% partial — dated-fold preparation (23 Nov UTC):** F1/F2/F3 isolated S02-style body-free
   engines are fitted through **2023-12-31 / 2024-12-31 / 2025-09-30**. Each has all **16** cached node
   datasets independently accounted and **18** model artifacts fingerprinted. Preparation took
@@ -543,6 +562,14 @@ The preceding pushed checkpoint was **2526ea1** (halftime survivor selection); u
   S02's body-free diagnostic differs from the accepted engine and its oracle participant roster is not
   pre-game availability. Do not compare its raw failure rate to F4 as if the models were identical, infer a
   league rate or claim the missing dated-availability or full-game retry-bias gates.
+- **Earlier-fold F1 screen correction (before rerun):** the first screen stopped with an `AttributeError`
+  on a missing historical position used by projected-starter selection. Its pool shut down only after
+  queued jobs finished, leaving **190** complete game records and **1,899** partial capture files in
+  `data/derived/experiments/20261122_a1_dated_f1_screen_v1/`; no summary or valid aggregate was emitted.
+  Keep those files. Before a fresh run, mark a branch explicitly unsupported when its projected-starter
+  candidate pool contains a missing/empty position, rather than inventing a position, and cancel queued
+  work immediately on unexpected failures. The screen must separately count these unsupported branches.
+  Test both cases and rerun into a new `_v2` namespace; do not score or silently omit unsupported cases.
 - **A1 80% complete, injection-only:** a single shared research lineup control now drives selected player, team,
   sheet, scenario/Given/Joint and driver views; branch-unavailable metadata/cards are omitted. Available and
   positive-minute participation are distinct; shooting-defined mass is weighted. No normal route registers the
@@ -3031,9 +3058,8 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
    audited, with different policies/paths and no final-outcome bias conclusion. A matched replay now
    establishes selected pre-failure halftime states in this extreme case; full-game bias remains unknown.
    F1–F3 diagnostic engines are now fitted; run the predeclared conditional-roster screens, e.g.
-   `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -u analysis/a1_dated_fold_exhaustion.py --preparation analysis/experiments/20261122_a1_dated_f1_exhaustion_v1.json --worlds-dir data/derived/experiments/20261122_a1_dated_f1_screen_v1 --output analysis/experiments/20261122_a1_dated_f1_screen_v1.json`
-   and then `.venv/bin/python analysis/a1_dated_fold_exhaustion_audit.py analysis/experiments/20261122_a1_dated_f1_screen_v1.json --output analysis/experiments/20261122_a1_dated_f1_screen_v1_audit.json`;
-   repeat F2/F3 sequentially with matching names. Dated pre-game cohorts remain unavailable. The resume prototype
+   All three earlier-fold conditional-roster screens and audits are complete, but dated pre-game cohorts
+   remain unavailable and full-game retry bias is unresolved. The resume prototype
    is single-operator only, and an orphaned partial batch fails for manual inspection. Source evidence and missing dated
    injury-report cohorts are documented there and in FINDINGS; do not score protected-season outcomes.
    The retry coordinator is deliberately unwired: prove world-local classification and survivor isolation,

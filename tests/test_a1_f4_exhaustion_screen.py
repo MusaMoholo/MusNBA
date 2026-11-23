@@ -25,7 +25,9 @@ class ExhaustionScreenTests(unittest.TestCase):
             day='2026-02-01', side=np.array([0] * 6 + [1] * 6),
             expected=np.array([30.] * 12), ids=[str(i + 1) for i in range(12)],
             game={'home_id': '1'}, avail=np.ones(12),
-            players={'home': [{'availability': 1.0} for _ in range(6)]},
+            sides=('home', 'away'),
+            players={side: [{'availability': 1.0, 'pos': 'G'} for _ in range(6)]
+                     for side in ('home', 'away')},
         )
         self.engine = SimpleNamespace(rotation_policy=None, last=None)
         screen._WORKER['engine'] = self.engine
@@ -187,6 +189,22 @@ class ExhaustionScreenTests(unittest.TestCase):
         self.assertEqual(result['game_cluster_bootstrap_95'], [0, 1])
         games[0]['branches'][0]['attempts'][0]['status'] = 'complete'
         self.assertIsNone(dated_audit.totals(games)['game_cluster_bootstrap_95'])
+
+    def test_dated_screen_marks_missing_position_without_inventing_one(self):
+        self.game.day = '2024-02-01'
+        self.game.players['home'][0]['pos'] = float('nan')
+        dated_screen._WORKER.update(engine=self.engine, fold='F1')
+        self.engine.simulate = lambda *_args: (_ for _ in ()).throw(
+            ExhaustedEligiblePlayers('fewer than five eligible players'))
+        with tempfile.TemporaryDirectory() as tmp, \
+             patch.object(dated_screen.backtest, 'run_game',
+                          side_effect=lambda _gid: self.engine.simulate(self.game, 1, 0)), \
+             patch.object(dated_screen.a1_lineup_branches, 'one_player', return_value=self.game):
+            result = dated_screen.screen_game('123', tmp)
+            self.assertEqual(result['branches'][0]['status'], 'unsupported missing position')
+            self.assertEqual(result['branches'][0]['attempts'], [])
+            self.assertEqual(len(result['branches'][1]['attempts']), 5)
+            self.assertEqual(dated_audit.totals([result])['unsupported_missing_position_branches'], 1)
 
 
 if __name__ == '__main__':

@@ -2,6 +2,22 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 ET — fixed earlier-fold branch exhaustion screens:** 200 predeclared games per F1/F2/F3,
+using dated body-free S02 diagnostic models and oracle actual participants, with synthetic top-home-player
+plays/sits branches and five seeds per feasible branch. F1/F2/F3 had **1 / 0 / 0** typed exhaustion
+among **1,900 / 1,900 / 1,790** attempts, **0 / 0 / 0** invalid allocations, and **20 / 20 / 42**
+branches unsupported because a projected-starter pool lacked a position. F1's game-cluster bootstrap 95%
+attempt-rate interval is **[0, 0.001667]** (5,000 resamples, seed 20261122); no bootstrap interval was
+reported for zero observed failures, which does not establish zero risk. Sequential runtimes with eight
+one-thread workers were **170.774 / 165.973 / 161.707s**. Independent saved-file replays checked
+**1,899 / 1,900 / 1,790** completed worlds and **458,247 / 457,952 / 439,772** lineup snapshots.
+F1's first run failed on a missing position; **190** complete game records and **1,899** captures were
+retained but are not an aggregate result. A corrected fresh rerun explicitly excludes unsupported branches
+instead of imputing a position, and cancels queued jobs on unexpected errors. These diagnostic engines differ
+from v1.3/F4, participant rosters are not pre-game availability and five draws per branch cannot establish a
+production failure rate, retry bias or accuracy. Reports `analysis/experiments/20261122_a1_dated_f1_screen_v2{,_audit}.json`
+and `analysis/experiments/20261122_a1_dated_f{2,3}_screen_v1{,_audit}.json`.
+
 **22 Nov 2026 ET — dated earlier-fold diagnostic prerequisites:** S02-style body-free F1/F2/F3 engines
 were fitted through **2023-12-31 / 2024-12-31 / 2025-09-30**, each using its own previously built dated
 assignment schedule. All **16** node datasets per fold passed the saved-cache accounting and each engine
