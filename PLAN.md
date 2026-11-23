@@ -429,6 +429,11 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 ET · A1 fixed-F4 exhaustion screen:** on **200** fixed development games with oracle
+  participants and synthetic top-home-player plays/sits branches, **2,000 / 2,000** single-world attempts
+  completed, with **0** initial allocation failures and **0** recorded exhaustion. Independent replay checked
+  **491,500** lineup snapshots. Ten one-thread workers took **134.686s**. Only five attempts per branch;
+  not a pre-game failure rate, unbiased-retry proof, F1–F3 comparison or promotion. A1 **80%**, Chunk A **34.5%**.
 - **22 Nov 2026 ET · A1 short-roster diagnostic:** in **80,000** completed research branch worlds,
   team-world initial availability was at least **12**, and final eligibility at least **9**; **842–2,021**
   per 10,000 worlds in each branch/team cell contained a six-foul player. These games do not stress

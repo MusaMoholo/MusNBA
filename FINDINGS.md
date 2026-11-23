@@ -2,6 +2,16 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 ET — fixed-F4 exhaustion screen:** the 200 predeclared F4 games supplied oracle actual
+participants, with synthetic plays/sits of the top projected home-minute player. All **400** branches had
+valid initial D29 allocations; **2,000 / 2,000** separately seeded single-world attempts completed without
+the typed post-foul-out exhausted-roster error. Independent saved-file replay checked **2,000** worlds and
+**491,500** lineup snapshots. Home actual-participant counts were **7–15**, away **7–14**. The ten-worker
+generation took **134.686s** and replay **3.488s**. Five draws per branch and oracle rosters make this a
+descriptive F4 screen, not an NBA/pre-game rejection rate, a paired penalty-policy bias test or a promotion
+result. No protected-season actual outcomes were scored. Reports and fingerprints:
+`analysis/experiments/20261122_a1_f4_exhaustion_v1{,_audit}.json`.
+
 **22 Nov 2026 ET — simulated roster pressure:** across **80,000** completed research branch worlds from
 three games, minimum initial available-team size was **12** and minimum post-disqualification eligible-team
 size **9**. Each of the 16 branch/team cells included **842–2,021 / 10,000** worlds with at least one

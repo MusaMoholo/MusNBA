@@ -1,0 +1,19 @@
+{
+ "kind": "independent fixed-F4 saved-world and attempt accounting; not a forecast",
+ "summary": "analysis/experiments/20261122_a1_f4_exhaustion_v1.json",
+ "summary_sha256": "3c8772fc006af606d605054923caf9f7d10411aefd961c74d22f10fa53a79ad7",
+ "details_sha256": "841a357a2ffb9681b9c796e95ff074395d53c0988b7af0b23ebb134688ad2d20",
+ "audit_sha256": "1904558414ef3d9eb874fea4dcbda1d8d75cc2ba26845a2cc5b67b93a67398cd",
+ "games": 200,
+ "attempts": 2000,
+ "completed_worlds": 2000,
+ "exhausted": 0,
+ "invalid_initial_branches": 0,
+ "lineup_snapshots": 491500,
+ "elapsed_seconds": 3.488,
+ "limitations": [
+  "Successful traces independently replayed; rejected trajectories were not retained.",
+  "Oracle F4 rosters and synthetic status are not pre-game availability forecasts.",
+  "This does not compare policies, estimate retry bias or score protected outcomes."
+ ]
+}
