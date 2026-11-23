@@ -1,0 +1,10 @@
+{
+ "all_three_branch_arrays_equal_retained_reference": true,
+ "independent_histograms": 9440,
+ "source_sha256": {
+  "analysis/experiments/20261123_world_queue_1worker_probe_v2.json": "d4cbf0528ef02691880400647cf9b8ab9b1cb5d516eb2429818be437437bc215",
+  "analysis/experiments/20261123_world_queue_runtime_hook_v1.json": "ed223faef1ad682dba0770155f2216656201cdccb87e5376fd0acec6fc426e80",
+  "data/derived/experiments/r2_hook_queue_harness_20261123_v1.py": "1537d8389e5b9cbca2a8acd874d2aaede6e340c1f1b983b7364084553fbcd65e"
+ },
+ "scope": "Same retained g/median/selection, runtime candidate namespace and500-world layout. Integrated Engine fitter replaces old queue-only override; four workers versus original one."
+}

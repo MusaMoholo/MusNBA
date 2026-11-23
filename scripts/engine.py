@@ -44,8 +44,9 @@ ENGINE = {'id': 'engine-v1.3', 'kind': 'engine', 'version': 'v1.3', 'models': 'v
                    'compressed — real NBA matchups tested and not promoted (D37) — outcomes too tightly spread, minutes do not yet '
                    'react to the score (FINDINGS §3o, §3s–§3w)'}
 LEGACY_ENGINE = ENGINE.copy()
-ENGINE = {**ENGINE, 'id': 'engine-v1.3-r1', 'version': 'v1.3-r1', 'foul_policy': 'nba-rule3-v1',
-          'label': ENGINE['label'] + '. Rule revision r1: legal foul-out replacements and NBA roster-exhaustion penalties; unchanged v1.3 fitted nodes.'}
+ENGINE = {**ENGINE, 'id': 'engine-v1.3-r2', 'version': 'v1.3-r2', 'foul_policy': 'nba-rule3-v1',
+          'rotation_fit': 'independent-v1', 'chunk_worlds': 1000,
+          'label': ENGINE['label'] + '. Rule revision r1: legal foul-out replacements and NBA roster-exhaustion penalties; unchanged v1.3 fitted nodes. Revision r2: each world\'s rotation is fitted independently.'}
 MODELS = DERIVED.parent / 'models'
 # D29 rotation tables (used when players carry minutes states): tables per side shared by worlds, 10-second bins,
 # template shapes smoothed over ~60 s (6 bins), offset fit to within 0.4 min of each table's targets.
@@ -219,10 +220,10 @@ class Game:
             for j, p in enumerate(flat):  # the mean target if everyone listed plays (shown in the app)
                 p['minutes']['target'] = float(self.expected[j])
 
-    def lineup_tables(self, avail_world: np.ndarray, rng):
+    def lineup_tables(self, avail_world: np.ndarray, rng, *, fit_offsets=None):
         """Per world a combination (template per side, availability pattern) → table (2880 s, 5) of player indices."""
         if self.mstate is not None:
-            return self._target_tables(avail_world, rng)
+            return self._target_tables(avail_world, rng, fit_offsets=fit_offsets)
         W = avail_world.shape[0]
         combos, combo_of = {}, np.zeros((W, 2), dtype=np.int64)
         tables = []
@@ -255,7 +256,7 @@ class Game:
         return idx[top]
 
     # ------------------------------------------------------------- D29: replayed shapes rescaled to minutes targets
-    def _target_tables(self, avail_world: np.ndarray, rng):
+    def _target_tables(self, avail_world: np.ndarray, rng, *, fit_offsets=None):
         """Rotation tables whose minutes follow D29's targets. Worlds sharing an availability pattern share a pool of
         tables (ROTATION['pool'] over all worlds); each table: a replayed template's shape (when each slot is on court,
         smoothed) mapped to tonight's players by priority — starters to the starting slots — and a per-player offset fitted
@@ -292,7 +293,7 @@ class Game:
                 starters = given if len(given) == 5 else _minutes.projected_starters(states, groups)
                 choice = rng.choice(len(temps), size=E, p=(q := np.linspace(1, 2, len(temps))) / q.sum()) if temps else np.zeros(E, int)
                 curves = np.stack([self._curves(temps[c] if temps else None, av, states, groups, starters) for c in range(max(1, len(temps)))])
-                top = self._fit_offsets(curves[choice], X)  # (E, 5, bins) positions in av
+                top = (self._fit_offsets if fit_offsets is None else fit_offsets)(curves[choice], X)  # (E, 5, bins) positions in av
                 local = av[top]
                 tab = np.repeat(np.sort(idx[local], axis=1), R['bin'], axis=2).transpose(0, 2, 1)[:, :2880]
                 base = len(tables)
@@ -402,6 +403,8 @@ class RotationPolicy(Protocol):
 class Engine:
     def __init__(self, version: str | None = None, *, runtime: dict | None = None):
         self.runtime = dict(runtime if runtime is not None else LEGACY_ENGINE if version is not None else ENGINE)
+        if self.runtime.get('rotation_fit') not in (None, 'independent-v1'):
+            raise ValueError('Unknown recorded rotation fitter')
         version = version or ENGINE.get('models', ENGINE['version'])  # the node models' version (v1.2 serves v1.1's models)
         self.m = Models(version)
         self.diag = None  # set to [] to record (start type, seconds to action, clock) per segment
@@ -518,7 +521,12 @@ class Engine:
         rng = np.random.default_rng(seed)
         st = Worlds(g, W, rng)
         avail_world = rng.random((W, g.n)) < g.avail[None, :]
-        tables, combo = g.lineup_tables(avail_world, rng)
+        if self.runtime.get('rotation_fit') == 'independent-v1':
+            from functools import partial
+            from scripts.rotation_fit import independent
+            tables, combo = g.lineup_tables(avail_world, rng, fit_offsets=partial(independent, settings=ROTATION))
+        else:
+            tables, combo = g.lineup_tables(avail_world, rng)
         policy = getattr(self, 'rotation_policy', None)
         if policy is not None:
             policy.begin(g, W, avail_world, int(seed))

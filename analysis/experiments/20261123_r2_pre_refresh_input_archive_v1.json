@@ -1,0 +1,18 @@
+{
+ "purpose": "Retain exact qualified control inputs before advanced-profile refresh; no input replacement in this step.",
+ "archive": "/Users/moholom/Basketball_archive_ops/archive_20261123T174020Z_91228",
+ "files": {
+  "data/derived/features/features_report.json": "807296be5996d732168dd5554ed13ec59f15863b5abaa1890b273f19de33de1c",
+  "data/derived/features/latest.parquet": "25e565341b738a6ee6214cb97a186c59b9c5577ee19bf4d1afa4e37b690e6cb8",
+  "data/derived/features/pregame.parquet": "d2c7dea85d5602984326bf6e5ff6ee3402fb9f888c403082d250781e02ab6177",
+  "data/derived/features/team_latest.parquet": "a256554c29a0d0ef54704c87d063c33d18b25b0f77d564a61c93632d26d18dda",
+  "data/derived/features/team_pregame.parquet": "11d11bb6484169b1955fb57b46e7d63bca591153c4880e66befe66038c8591a5",
+  "data/derived/variants/matchup/features/features_report.json": "1b904943ea8837e236a9e73a85619c41f2711960db0cf107b6a9f111ce134edd",
+  "data/derived/variants/matchup/features/latest.parquet": "eb61e684db9af45c4612ab4226016b184521187c4a577fd697aa1afc6ee965a1",
+  "data/derived/variants/matchup/features/pregame.parquet": "49452d553a39049dfa7316d66f1e2e5507c29e55f963f2f87bb1f6ed055f4614",
+  "data/derived/variants/matchup/features/team_latest.parquet": "a256554c29a0d0ef54704c87d063c33d18b25b0f77d564a61c93632d26d18dda",
+  "data/derived/variants/matchup/features/team_pregame.parquet": "11d11bb6484169b1955fb57b46e7d63bca591153c4880e66befe66038c8591a5",
+  "data/derived/athletes.parquet": "3b8e24488790edca5289a2a52f30867243a69f6cab57032e1c839967bb65d5be",
+  "data/derived/teams.json": "130aa5358d49b944c2b5bee7e9a163f1e53285e93dae57262f039ca1636b7ecc"
+ }
+}

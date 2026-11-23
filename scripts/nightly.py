@@ -442,14 +442,14 @@ def rebuild_engine_inputs(day: str) -> dict:
     """D26: the engine plays with inputs that carry every final before `day` — current-season segments
     (possessions.py), rotations (rotations.py, the replay templates) and profiles (features.py: latest.parquet,
     team_latest.parquet). Games dated `day` or later are left out (cutoff safety), even if already final."""
-    from scripts import features, possessions, rotations
+    from scripts import engine as engine_mod, features, possessions, rotations
     started = time.time()
+    # Runtime revisions keep the fitted nodes' feature recipe; fail before rebuilding if it is missing.
+    spec_path = ROOT / 'models' / f"{engine_mod.ENGINE.get('models', engine_mod.ENGINE['version'])}.json"
+    variant = json.loads(spec_path.read_text()).get('features_variant')
     seg = possessions.build_current(before=day)
     rot = rotations.build(possessions.current_games(before=day), DERIVED / 'rotations')
     feat = features.build()
-    from scripts import engine as engine_mod  # the serving engine's profile variant (v1.3: defence + shot types, D30)
-    spec_path = ROOT / 'models' / f"{engine_mod.ENGINE['version']}.json"
-    variant = json.loads(spec_path.read_text()).get('features_variant') if spec_path.exists() else None
     real = None
     if (DERIVED.parent / 'raw' / 'nbastats' / 'boxscorematchupsv3').exists():  # D32/D37: matchups → ESPN ids, pair history
         try:  # (the Matchup view's who-guards-whom and the engine variants that use them; games before `day` only)

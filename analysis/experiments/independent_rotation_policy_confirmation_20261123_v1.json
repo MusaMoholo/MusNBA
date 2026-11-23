@@ -1,0 +1,1294 @@
+{
+ "kind": "D51 paired rule confirmation and raw diagnostic capture",
+ "run": "independent_rotation_policy_confirmation_20261123_v1",
+ "game_ids": [
+  "401809248",
+  "401810326",
+  "401810334",
+  "401810335",
+  "401810336",
+  "401810358",
+  "401810363",
+  "401810365",
+  "401810367",
+  "401810371",
+  "401810373",
+  "401810375",
+  "401810377",
+  "401810379",
+  "401810381",
+  "401810382",
+  "401810387",
+  "401810389",
+  "401810392",
+  "401810395",
+  "401810404",
+  "401810412",
+  "401810415",
+  "401810417",
+  "401810418",
+  "401810420",
+  "401810426",
+  "401810429",
+  "401810430",
+  "401810434",
+  "401810436",
+  "401810437",
+  "401810457",
+  "401810458",
+  "401810460",
+  "401810462",
+  "401810464",
+  "401810465",
+  "401810471",
+  "401810473",
+  "401810475",
+  "401810476",
+  "401810478",
+  "401810494",
+  "401810496",
+  "401810497",
+  "401810502",
+  "401810510",
+  "401810515",
+  "401810520",
+  "401810522",
+  "401810523",
+  "401810526",
+  "401810528",
+  "401810534",
+  "401810536",
+  "401810545",
+  "401810555",
+  "401810556",
+  "401810558",
+  "401810563",
+  "401810565",
+  "401810570",
+  "401810578",
+  "401810581",
+  "401810583",
+  "401810588",
+  "401810591",
+  "401810592",
+  "401810593",
+  "401810598",
+  "401810599",
+  "401810600",
+  "401810607",
+  "401810609",
+  "401810610",
+  "401810615",
+  "401810619",
+  "401810621",
+  "401810623",
+  "401810627",
+  "401810631",
+  "401810634",
+  "401810637",
+  "401810640",
+  "401810648",
+  "401810650",
+  "401810654",
+  "401810664",
+  "401810667",
+  "401810672",
+  "401810675",
+  "401810681",
+  "401810682",
+  "401810687",
+  "401810688",
+  "401810709",
+  "401810711",
+  "401810712",
+  "401810718",
+  "401810724",
+  "401810725",
+  "401810729",
+  "401810737",
+  "401810738",
+  "401810743",
+  "401810751",
+  "401810755",
+  "401810759",
+  "401810765",
+  "401810770",
+  "401810774",
+  "401810777",
+  "401810790",
+  "401810794",
+  "401810795",
+  "401810798",
+  "401810806",
+  "401810808",
+  "401810812",
+  "401810814",
+  "401810816",
+  "401810817",
+  "401810818",
+  "401810819",
+  "401810822",
+  "401810828",
+  "401810829",
+  "401810833",
+  "401810837",
+  "401810842",
+  "401810844",
+  "401810848",
+  "401810849",
+  "401810852",
+  "401810853",
+  "401810856",
+  "401810858",
+  "401810862",
+  "401810864",
+  "401810869",
+  "401810871",
+  "401810880",
+  "401810884",
+  "401810888",
+  "401810899",
+  "401810901",
+  "401810909",
+  "401810912",
+  "401810917",
+  "401810923",
+  "401810925",
+  "401810926",
+  "401810934",
+  "401810935",
+  "401810938",
+  "401810940",
+  "401810947",
+  "401810948",
+  "401810952",
+  "401810958",
+  "401810959",
+  "401810963",
+  "401810967",
+  "401810969",
+  "401810970",
+  "401810975",
+  "401810979",
+  "401810980",
+  "401810982",
+  "401810983",
+  "401810986",
+  "401810987",
+  "401810989",
+  "401810991",
+  "401810993",
+  "401810995",
+  "401810998",
+  "401810999",
+  "401811000",
+  "401811004",
+  "401811006",
+  "401811009",
+  "401811010",
+  "401811014",
+  "401811015",
+  "401811017",
+  "401811018",
+  "401811020",
+  "401811023",
+  "401811026",
+  "401811028",
+  "401811029",
+  "401811030",
+  "401811036",
+  "401811037",
+  "401811041",
+  "401811052",
+  "401811053",
+  "401811054"
+ ],
+ "worlds": 1000,
+ "stream": null,
+ "fingerprints": {
+  "analysis/experiments/20261123_independent_rotation_panels_v2.json": "0f02051ebf28ec732e046d6635adc45e66ebea06167e404cca8f8e18df87c7d9",
+  "analysis/rule3_capture_audit.py": "8ad4b8e1e21ae1c2318a72c89b554fb5b3063be7b6082237d19e32476569870b",
+  "analysis/rule3_confirmation.py": "aa5f13e9a12e874f71cf878cb673c829152612fbf9df29b138e53bcdd77fc639",
+  "basketball_common.py": "be2b0643eebb4e1cd51b3eb8214d13b8718fd820864d3df7f7ac8fc1dd5bb48a",
+  "data/derived/athletes.parquet": "3b8e24488790edca5289a2a52f30867243a69f6cab57032e1c839967bb65d5be",
+  "data/derived/history/2023/on_court.parquet": "ba9b4b13e16e5b839e5530905497d2d00d231413ea40f39ee46855f3ebce8c3b",
+  "data/derived/history/2023/player_periods.csv.gz": "d549a82d8704e95218379b945bef5ddb1bf4fa59db0e0b7e479e37f408281342",
+  "data/derived/history/2023/segments.parquet": "813b53edadf92f6e6c607211b1d4c64b312aa9fbe689851110e912419101a76e",
+  "data/derived/history/2023/stints.parquet": "f067fa85961f5792edba3bf6b1f3c3080b912c35bb06b0962615508ac16c3a5c",
+  "data/derived/history/2024/on_court.parquet": "5461947edb052ef9e62b4a70ba49e57a0f98d929f4a19167f03aad3972457f95",
+  "data/derived/history/2024/player_periods.csv.gz": "7f1bfaab40aceab115081cd2ae6db4b6e8694f69cc1f2c4585d2d2f10ee1bb90",
+  "data/derived/history/2024/segments.parquet": "4a7c3c2bce39580cc8e1092ffc215d11bbd49f7bf117b4551eee40337203d2c0",
+  "data/derived/history/2024/stints.parquet": "7555ba3a82f9e97b68f04aa2b24d26451b8ba54562976e20c66251fe021e068b",
+  "data/derived/history/2025/on_court.parquet": "5bbabab60114aa3f7fa096d7708be96f47177c541debcae88059da6b1adb77e9",
+  "data/derived/history/2025/player_periods.csv.gz": "8f513a5802292f4427f80022f4e57ae718a50ae880ef07f8ad2f9c06beebaf63",
+  "data/derived/history/2025/segments.parquet": "d9db732172894ed8d3c6e5e99e3cd1c197006da22799413034ce3ce18cc5aee2",
+  "data/derived/history/2025/stints.parquet": "e01c20cec0ac57a8146cab04b3483de62ee1db4c7bfb0702834f107c97afc95c",
+  "data/derived/history/2026/on_court.parquet": "1b0ffaf53490c3fda4edd28ac427766a0af3a1bfe86f1fece240cd63ed1e8410",
+  "data/derived/history/2026/player_periods.csv.gz": "ef35bb5c33c46e6a194cea30075d9974ead5d44be96c6074b60f6dac49e69c28",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+  "data/derived/history/2026/stints.parquet": "29de886d2afd2a5d9a55af2acb027fd3ee83a887584c71a9fe9951a9c2cc225f",
+  "data/derived/teams.json": "130aa5358d49b944c2b5bee7e9a163f1e53285e93dae57262f039ca1636b7ecc",
+  "data/derived/variants/matchup/features/features_report.json": "1b904943ea8837e236a9e73a85619c41f2711960db0cf107b6a9f111ce134edd",
+  "data/derived/variants/matchup/features/pregame.parquet": "49452d553a39049dfa7316d66f1e2e5507c29e55f963f2f87bb1f6ed055f4614",
+  "data/derived/variants/matchup/features/team_pregame.parquet": "11d11bb6484169b1955fb57b46e7d63bca591153c4880e66befe66038c8591a5",
+  "data/models/folds/v1.2d_F4_all/assisted.txt": "0a094b183b18b8d45a6e5cf047fb117f8aed62dc6941bb9b7944391c3afec690",
+  "data/models/folds/v1.2d_F4_all/assister.txt": "f32c49ac6c7ca5774aad414c5cf500d1b5fd1bbd8fa6c0ddd50ee1934b1d3961",
+  "data/models/folds/v1.2d_F4_all/blocked.txt": "e085efcacd0baea9568f27f7ee05dd43687e7762ba55015d7569cc1efe175c04",
+  "data/models/folds/v1.2d_F4_all/blocker.txt": "5975f284a6c41a013db80fb669230e64dda7167137554bba9051dd04fe4004f0",
+  "data/models/folds/v1.2d_F4_all/config.json": "1617769cb52f2c750e0f1276071b39fc21254ef53fc97ccc646869aaa50f5e71",
+  "data/models/folds/v1.2d_F4_all/duration.txt": "2603f8bf64f3bbef3146285638f79262446eb9a76572c4217f45e6df77dee72c",
+  "data/models/folds/v1.2d_F4_all/event.txt": "d62e1cac4c4fa1cbec0ba5fccc321bae6838202b17253c80a0e8f502395e7e36",
+  "data/models/folds/v1.2d_F4_all/fouler.txt": "70ee6709fcd1fae1ca43ea925babaeb9c9355eaf7e4edeeb601d0cb11c45d266",
+  "data/models/folds/v1.2d_F4_all/free_throw.txt": "ddd7ef48ede7de973c9967b01826f3c293ee824147ca2da772de17a1d781f612",
+  "data/models/folds/v1.2d_F4_all/location.txt": "8f12f8c3bb168ab94dfae313f7624e1ff43074764db665b03ba9511d69c12979",
+  "data/models/folds/v1.2d_F4_all/meta.json": "4a3dfcdff94a856f718fe7f30ea14a44255364cdc2977b62b524c081909139a7",
+  "data/models/folds/v1.2d_F4_all/rebound.txt": "b94d0f957b02d633ca751dff3ef921ffb7e9f57ce6bd206cbba41893ee6f34ff",
+  "data/models/folds/v1.2d_F4_all/rebounder.txt": "337225efb0be006b8889cb377254f6b03c39b356d73d366d3af153ab9133b094",
+  "data/models/folds/v1.2d_F4_all/shot_result.txt": "993fce9f6450e7f317c19e93cadf562db741efa7b58c05d32a8d561ff5f1bbfc",
+  "data/models/folds/v1.2d_F4_all/stealer.txt": "ceea8df151ace738c6181be7615f93fbbebc13cfc434cc371ff8f7566143c581",
+  "data/models/folds/v1.2d_F4_all/turnover_type.txt": "307defe709ae1a8639407d131e28bfabc8eda32bb291a4820113cf3a5b7001d0",
+  "data/models/folds/v1.2d_F4_all/what.txt": "d093989f161b78686804078c07a1d94a629719893085d399465a52314c0de231",
+  "data/models/folds/v1.2d_F4_all/who.txt": "c792950c30a7e7eecec20ab1d12681b0adc574838f2327bbc948213aa574150d",
+  "data/raw/hoopr/player_box_2023.parquet": "968d835cd04b10533c5b5af8c0e41bf0154a73782e9446c76f765109223e8679",
+  "data/raw/hoopr/player_box_2024.parquet": "1e500a538ec45ddbcb58d9789b5494f8db4f25658eafd01d90f2d09600921665",
+  "data/raw/hoopr/player_box_2025.parquet": "e89f7fbc1124092c715b722e6d72d9dd1b9d28776ca6888b508fd2831cd705e2",
+  "data/raw/hoopr/player_box_2026.parquet": "29a29dc9efd055a93e069a0382ac830d98a13274bee655beba69d95cff099713",
+  "docs/protocols/rule3_implementation_20261123.md": "22373ce32a4833133d4f5dcca69c1a3eb0367eb27107f7d29c2dddd4ed2e2ccb",
+  "models/matchup_2025-12-31.json": "176ce8a25f6fd5cc0cee99abca618a72380bac4ed8cabc6f86d2f6129203206c",
+  "models/v1.2d.json": "d0fded7eb9871494e0bc4a82a3627b0a3dc37c3c243d8c9378f151dec2789927",
+  "scripts/a1_compare.py": "435c1e0761f51ee9d218dfc462db8d219c0bc6f54dc8acd6bcae79968ddfcf68",
+  "scripts/a1_substitution_world_audit.py": "d1f1b34834ffe6c9d82b246cbbaed453c6a4eea224e47da020c6e0f02d3cdf4e",
+  "scripts/backtest.py": "2ff491455b5c1cac40b5c3502db97bcb4cdbc159e4f0fa494c09e7c5eb24533d",
+  "scripts/engine.py": "aa7b5c93bd7289bca5312d56d48137b3b3581bce729b16673df8f1b587955c8e",
+  "scripts/foul_out.py": "32b51b7ad72bd3875d9f7c5301190b98545d347bf920be1d07b2d4e501c1da8c",
+  "scripts/matchups.py": "70bbb3f069e78477c83b63ab66e518c4148217b11c415ff1825856914861a153",
+  "scripts/minutes.py": "94dd0ed25e536708c75cd4cf1f386bf2f9fa35f2c334d83cbdd031d4448ba2d0",
+  "scripts/nodes.py": "78749b680b889993e83ba26baab51877cd7393ee0a5a3d9f4fdaf9123d3b161f",
+  "scripts/projection.py": "90ac118a4944ee5a57d0c9784feee4692741295f2b633a0b4291e088af1a688e",
+  "scripts/rotations.py": "1abf8fd173f4ca96d608813f315df8b034436a4bb26060e55410e3710c7e9c3a",
+  "analysis/rotation_confirmation.py": "d95c9c8635a291586513520e8da5faae2198219ad9c84f392d5499146d542d92",
+  "scripts/rotation_fit.py": "46b9c7e301076531617793021425c2f08cdbeb1594638de1a851cba6ba66bfe6",
+  "scripts/forecast_output.py": "e5ace444bb7901d240cac9f606b565a5f875a40239a15e3a1150d35be1d26ca6",
+  "scripts/world_mass.py": "8a4c7c06bf83a21527866f7704aa7f20da99e1816a46721734969785080072cb",
+  "docs/protocols/world_independence_20261123.md": "2faaa121335b8377a26504035692ae3ca1a85c0468d4948f84030ae2ce38963f",
+  "docs/protocols/world_independence_amendment_20261123.md": "cc2d64f1ec9c5078113bcc8023f5d349b23776b34a1adbd6d7a9a5bbd1c99277",
+  "analysis/rotation_policy_confirmation.py": "3cc628a8eff961c9bc9e990bd4c67443fd6b60acfb61adf19dbc06e5bfbc24d8",
+  "docs/protocols/promotion_v3_20261123.md": "d50e26dcf523fad05bfc203ea3c5ceaab73a41aa906f1e9164cbffcb2a40cfeb",
+  "analysis/rule3_pipeline_audit.py": "58f4bff447979cb5a8c2f352e583932a99ce1115ccdeda02e6e589fdb3ec9440",
+  "scripts/release_gate.py": "5521abe5552a63f277adefcf05624b6121ef21a3003c4e58fcf1a30c40f2e287",
+  "analysis/rule3_scores.py": "5d7dbcc8361fe65974e9a227029ce9ccb6673a1465aa95d0370765da4ec490c7",
+  "scripts/a1_minutes_gate.py": "f5bf1130023ef8c57e90dd66562bcb21775f35581019e25b265dedcdcbed1d4b",
+  "analysis/experiments/20261123_independent_rotation_gate_sanity_v1.json": "1d2c1e8f34da2d3ce91f088168b1c509d776cbbb256285cd21fce6bde0f50762",
+  "analysis/experiments/independent_rotation_final_20261123_v1_compare_gate.json": "d29d4879cb3dba7331ef02f031483e3fa4949aacab8974b3e45aea4bacc303ee",
+  "analysis/experiments/20261123_rotation_policy_confirmation_manifest_v1.json": "20144bfc762cb8b89bf06ce2aa2bdac6105d4580d0a9497340fcc20e7da1fd15"
+ },
+ "directory": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1",
+ "pilot": false,
+ "stress": false,
+ "workers": 10,
+ "elapsed_this_invocation": 2050.6945930000074,
+ "resumed_completed_games": 52,
+ "captures": [
+  {
+   "game": "401809248",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401809248.json",
+   "meta_sha256": "a28f6511f663fa3aa65ab8b8c2eedb014829f22b6ccbcdf3a8987cde5165d225"
+  },
+  {
+   "game": "401810326",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810326.json",
+   "meta_sha256": "070063e8c3809f20186e0060a9f85ffd93cbdf71ec917e5f3f327ad0e2c35478"
+  },
+  {
+   "game": "401810334",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810334.json",
+   "meta_sha256": "db4a03c6f7c761502229aac46b39dd897f2fc0633418a25e7be860534eea9ee7"
+  },
+  {
+   "game": "401810335",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810335.json",
+   "meta_sha256": "066dad2e89b8a849c94543db35fa827ca8d494c3499a9cfba7e8d7a6bf8f4011"
+  },
+  {
+   "game": "401810336",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810336.json",
+   "meta_sha256": "0c2b953ca61bb67b28729fbcddca61282d6c3523b57b41c91a395980e6743c15"
+  },
+  {
+   "game": "401810358",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810358.json",
+   "meta_sha256": "83588250e2cfef34e10f856279f3d4f9cf768c6ecd3b87e985c8ac7acb942aaa"
+  },
+  {
+   "game": "401810363",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810363.json",
+   "meta_sha256": "9de5090cf9a4779dfd57951bb30500ed02d1a58d5105dc9b3ccc72211b55a5aa"
+  },
+  {
+   "game": "401810365",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810365.json",
+   "meta_sha256": "7c002c8d94a162f625ca9bc6b7399d9cf258c4d7986b1012e8060eaad71985a6"
+  },
+  {
+   "game": "401810367",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810367.json",
+   "meta_sha256": "d52aeee39856f52d243388f43a4039e944d9b6e098b5f69a9671f415e27a3ac5"
+  },
+  {
+   "game": "401810371",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810371.json",
+   "meta_sha256": "e407acb2d099344dc73c3575cd3eddfd6db373a3ee9e7d60ba81c1d7200ea5f9"
+  },
+  {
+   "game": "401810373",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810373.json",
+   "meta_sha256": "eeeb67079c1894e1b4a425b8ef5defe61aee0bbe647e04673d947c158b5f541c"
+  },
+  {
+   "game": "401810375",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810375.json",
+   "meta_sha256": "29f6b5bda748b8fde975b97ad70d0e083528c0a5add49762b6fb2347397be5f9"
+  },
+  {
+   "game": "401810377",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810377.json",
+   "meta_sha256": "7be4424b59b0089d6c4d167402f97af6a3e484ece195af93e02d3ffc05799bc4"
+  },
+  {
+   "game": "401810379",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810379.json",
+   "meta_sha256": "a82f741a8c43068d3e7a0d77d1391093220055864342b2fbf3edb9de4a0f4795"
+  },
+  {
+   "game": "401810381",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810381.json",
+   "meta_sha256": "635e49611ecfc123463b5fb99b14d47c8234af94936c62905fbaf1070d00ce91"
+  },
+  {
+   "game": "401810382",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810382.json",
+   "meta_sha256": "e022b31ee1a2f5b5ebacf6b943af3ad3a325be5bc45750b90674505d46a3eb09"
+  },
+  {
+   "game": "401810387",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810387.json",
+   "meta_sha256": "a885a55689af9473c03668e37af315f2d0e21efc5463279678281cbb6cf6e76d"
+  },
+  {
+   "game": "401810389",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810389.json",
+   "meta_sha256": "eef47c018ff41132b26ba6199872205a677fb2be22861e63177938bbafb43c0f"
+  },
+  {
+   "game": "401810392",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810392.json",
+   "meta_sha256": "dd670a2b6f6881ac9c55b626cef075de36174249304bf1da6e4331cebf1d9c07"
+  },
+  {
+   "game": "401810395",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810395.json",
+   "meta_sha256": "d1acde8ff672c32118433ab02fed26190745275c3c9e0dc1ea4a8ccb3fda41f3"
+  },
+  {
+   "game": "401810404",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810404.json",
+   "meta_sha256": "958765e63f93e47784c6cf34c0dd03e5c2d9ac63f07660d7aef96d000bc5e8fd"
+  },
+  {
+   "game": "401810412",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810412.json",
+   "meta_sha256": "1e3d76c1daf1fe67dfa8ddd8fcc8952dc0820de0b043600f0ae9e78f39956810"
+  },
+  {
+   "game": "401810415",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810415.json",
+   "meta_sha256": "798495c5e4fa343392d600b87ebf33f353e7f51983a97a46a514069f2f8ecf01"
+  },
+  {
+   "game": "401810417",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810417.json",
+   "meta_sha256": "5ab112d8709681376ebc60640cc66753c2f2fc040a23fbe5cf92352cacda9d9a"
+  },
+  {
+   "game": "401810418",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810418.json",
+   "meta_sha256": "ddbebc497be0328599b62054421e4d4de2e09049b300cb5b4f47f1a7e41894ce"
+  },
+  {
+   "game": "401810420",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810420.json",
+   "meta_sha256": "7c3968ecce58c8e5ebc4659afd5d65d8a305b7cfc1443cf1e02a61a09b2b12c5"
+  },
+  {
+   "game": "401810426",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810426.json",
+   "meta_sha256": "0b15d1e3b1190e0416b40eaac237c7e73056201bdf5f4fde94cc9962e4b27cc8"
+  },
+  {
+   "game": "401810429",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810429.json",
+   "meta_sha256": "4525dcdf65f978a873e9b77867fc544c0003c416cd18e7fb804ddc4a0c30c670"
+  },
+  {
+   "game": "401810430",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810430.json",
+   "meta_sha256": "6465554f565c2daef7d82ea2105d40c5a70c24c1dcb48e1bd25daf231bc59179"
+  },
+  {
+   "game": "401810434",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810434.json",
+   "meta_sha256": "d779771a2fb78828b94ae5700bbf60ce9b456f858cfd9610ee2375831239dff7"
+  },
+  {
+   "game": "401810436",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810436.json",
+   "meta_sha256": "9bbb10057d3bc5ccbca417c29729bf550ec61fd49ddcf89cda491c81f6507e10"
+  },
+  {
+   "game": "401810437",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810437.json",
+   "meta_sha256": "79d1eefcf3f8c704ce9b14287e3b75e55f290adbfc63f78d2fb78036be8c59fd"
+  },
+  {
+   "game": "401810457",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810457.json",
+   "meta_sha256": "4b36040033943bb133a46c917e84df7816529b30645886cec448143ecb72d1f4"
+  },
+  {
+   "game": "401810458",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810458.json",
+   "meta_sha256": "b408884d7a4812c6f6b4aa4e49f3fc2e61458214aab3621896cda53773e5b51a"
+  },
+  {
+   "game": "401810460",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810460.json",
+   "meta_sha256": "176138223829f76e0cc09351bc8336c4dd711699a86726421dfeb7e9235d89b4"
+  },
+  {
+   "game": "401810462",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810462.json",
+   "meta_sha256": "ed3309bd2223f9d6f69eedcdbe3b8903c9d190c9c1309bc0f1ba41d250ee4d34"
+  },
+  {
+   "game": "401810464",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810464.json",
+   "meta_sha256": "2d2fc07723fed67cc60e5d02ce8e6b1f51ce5a8cec0ec70157335212e9aa5fa4"
+  },
+  {
+   "game": "401810465",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810465.json",
+   "meta_sha256": "11359247ddff3e43d39639fbc07be92f8f125c051375cda0d4e4acaebafe1a6d"
+  },
+  {
+   "game": "401810471",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810471.json",
+   "meta_sha256": "68d8b34bafe47d2ba0933a6d43095313074c8b26ae36cc82d21fdd2b59ba7f71"
+  },
+  {
+   "game": "401810473",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810473.json",
+   "meta_sha256": "bdfc7fd6b59c33c9d6789ecf564e3cda61d916ec30af863920ef14f21f05a384"
+  },
+  {
+   "game": "401810475",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810475.json",
+   "meta_sha256": "ed80d0d22d8b0303f344de7f26f4056326c546fea8cf4f0576d9f9588f96a728"
+  },
+  {
+   "game": "401810476",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810476.json",
+   "meta_sha256": "e9a04ffd68c73db870e94617b7740051328a92b4d0f1d9c116cb6aeabc4c9445"
+  },
+  {
+   "game": "401810478",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810478.json",
+   "meta_sha256": "1cc15bbfc574168ac5b981ae6a060633d799d67a65e96e3611936d867ea65f7b"
+  },
+  {
+   "game": "401810494",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810494.json",
+   "meta_sha256": "a91794abdaefec9427d99f607c0607b97678006d9c8178a3b353da2933f3dd80"
+  },
+  {
+   "game": "401810496",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810496.json",
+   "meta_sha256": "d42d65c2732829f0be561f3df08db2ca9107d47513afe7cd417e0f8002b5942b"
+  },
+  {
+   "game": "401810497",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810497.json",
+   "meta_sha256": "ca7ea89d733be0bc59a3d72e6907a19f6bb2980fce9d1221a7f2e9944c65fc44"
+  },
+  {
+   "game": "401810502",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810502.json",
+   "meta_sha256": "9f39494595aff6d0fec0adf068552547307eea0b129456df6673b6adc2e09e17"
+  },
+  {
+   "game": "401810510",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810510.json",
+   "meta_sha256": "faff85dc73ac079a98d5179c2e3ea11e594759eb0e2bb0c565ac302b01ae5ce9"
+  },
+  {
+   "game": "401810515",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810515.json",
+   "meta_sha256": "143da2f27b0b6004e3082cfe5e1081f7d229915beb921f6b18e09a57e345d0ac"
+  },
+  {
+   "game": "401810520",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810520.json",
+   "meta_sha256": "8bdf55eebf3fa840b6d74d1275913988b9fe01fdb949b5b5f5c3217e87f00964"
+  },
+  {
+   "game": "401810522",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810522.json",
+   "meta_sha256": "645b90a3f636a23f9435b74abf8b493e10efca6970cd142241901d0b66e09346"
+  },
+  {
+   "game": "401810523",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810523.json",
+   "meta_sha256": "ea50484a495b181f78a28907e691a0e7aed08a5d3fe2bf6ed056606002a35892"
+  },
+  {
+   "game": "401810526",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810526.json",
+   "meta_sha256": "437dd66fba30f3948d567102f165f2ae12b170e61bcc48ebde8dc09c590be60c"
+  },
+  {
+   "game": "401810528",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810528.json",
+   "meta_sha256": "3a62cfa778feaaad88d9ea0ad03a2ebdcae500557153257686db8e6fe3b829b9"
+  },
+  {
+   "game": "401810534",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810534.json",
+   "meta_sha256": "cd40c15a07f32c58bf9d9880cdaab84d37d5bba332e05f54daad09c24a9db6a6"
+  },
+  {
+   "game": "401810536",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810536.json",
+   "meta_sha256": "19e8b16629cb0f1b1e3320f6a51d2f4e9779c6e13ec3b77fdc0ef43a8bce6b15"
+  },
+  {
+   "game": "401810545",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810545.json",
+   "meta_sha256": "86d2d68ad2d3b4d492efb470ac334336ac08ccc9f42ebf21f9dbfa240e585c03"
+  },
+  {
+   "game": "401810555",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810555.json",
+   "meta_sha256": "9a37c6c4f97d469f2d546543db8caa661d24f4f3cb4bf0ea333258acdb623bd5"
+  },
+  {
+   "game": "401810556",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810556.json",
+   "meta_sha256": "9cf4d089111ad7a301f25b202cecef2040f2d59daa506c9c4e823772d49dee51"
+  },
+  {
+   "game": "401810558",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810558.json",
+   "meta_sha256": "e1a1cc6dec604b061f5746c3d5da7094ef55313ea420d469050d60f29dd9f951"
+  },
+  {
+   "game": "401810563",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810563.json",
+   "meta_sha256": "44f8bd9a543a37e3a58820af75ad50fb2f58f2d1fab3fc653186519a740a3dc4"
+  },
+  {
+   "game": "401810565",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810565.json",
+   "meta_sha256": "be87cc2708b1808a0fbe8c425b79fc70fba0f73d9eac68a6f70442119e3d8e2d"
+  },
+  {
+   "game": "401810570",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810570.json",
+   "meta_sha256": "df256dbc3d517e7c2db5d0175ad5a480f5d13a856c82e5994ffdae70705c3c81"
+  },
+  {
+   "game": "401810578",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810578.json",
+   "meta_sha256": "0d1501137cd0bd227fe6ce2964c8b54b9986c08d34d0f0e856e67a5ff680c3c8"
+  },
+  {
+   "game": "401810581",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810581.json",
+   "meta_sha256": "e4e1af91a19c45de4f27e274ecfa7fe06842ea2ad0c798f855bfa23306adc5d7"
+  },
+  {
+   "game": "401810583",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810583.json",
+   "meta_sha256": "97958a7fe5061b3c4dd80b49774e98d7f9e2e87436239efff361da389e7c01ed"
+  },
+  {
+   "game": "401810588",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810588.json",
+   "meta_sha256": "e11bec8d227dac7cc1f7d588061c05e648a444de0e5263922b45d623fc84ff9d"
+  },
+  {
+   "game": "401810591",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810591.json",
+   "meta_sha256": "de785d781fe022bccd77a1e03de1d7830140fbb69077a6425ff32c35fd464d93"
+  },
+  {
+   "game": "401810592",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810592.json",
+   "meta_sha256": "106d3ca2706f1152d1f2b0ef158790ca1db151e4ea9a779422e3b49ed00577ac"
+  },
+  {
+   "game": "401810593",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810593.json",
+   "meta_sha256": "2cae2ee0ed776b4a4b937544803a42c60222356bd18758ad0a8179f5ca2780a2"
+  },
+  {
+   "game": "401810598",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810598.json",
+   "meta_sha256": "eb3a46ecd06a0a9e5bac4c23061950245a59042567551c0981ffa2156ae1f58e"
+  },
+  {
+   "game": "401810599",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810599.json",
+   "meta_sha256": "223880e99944d9c8ae6b2d4d9ec24cee8b86646abb6dd14fed478292009a81c3"
+  },
+  {
+   "game": "401810600",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810600.json",
+   "meta_sha256": "6247156e7a7d85d9940c3129766e4509fdc4226d85df70e3b15cfde4e3619170"
+  },
+  {
+   "game": "401810607",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810607.json",
+   "meta_sha256": "9dcb67091f0fc08afa330d9ac2094163361e4d3f6826643d00151093eee3e038"
+  },
+  {
+   "game": "401810609",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810609.json",
+   "meta_sha256": "05949c70c8c73da61d25373bd3597754804a89c0cc7a5c77d5a78293750c38dc"
+  },
+  {
+   "game": "401810610",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810610.json",
+   "meta_sha256": "afd76246775b096642ccd11ee3da27476e4e4a202551551641d3b19f64579d84"
+  },
+  {
+   "game": "401810615",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810615.json",
+   "meta_sha256": "d4f531b41e34b83b3ec73ef1b1e5794bbc6fd8613c2f86303d952ca805b5c275"
+  },
+  {
+   "game": "401810619",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810619.json",
+   "meta_sha256": "c2607874eb92fbf2468bba6804c6cb9c66c582ab3860a8f17b0fbfcab5a24708"
+  },
+  {
+   "game": "401810621",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810621.json",
+   "meta_sha256": "34024a56fee0ec6faed5dd4adc73f86a919ecc98a1c46696b81dbb47f577314a"
+  },
+  {
+   "game": "401810623",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810623.json",
+   "meta_sha256": "261b9cebbe4baf93f9e60339013eed5d6d2a9b5da7399e0c61a6de4befeda6b2"
+  },
+  {
+   "game": "401810627",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810627.json",
+   "meta_sha256": "c85bf008dcf15f4a7359e1bd0d52cd2f1bf5e0149f429b6bb133f2c7fa86663c"
+  },
+  {
+   "game": "401810631",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810631.json",
+   "meta_sha256": "c79536de006ff175451823f6bd2339982d112173a86cee6db2a667afacac5add"
+  },
+  {
+   "game": "401810634",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810634.json",
+   "meta_sha256": "a660d059aa51a12e3c02a24ec86ec3ce3b8873c3936a9266b4d593b890099530"
+  },
+  {
+   "game": "401810637",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810637.json",
+   "meta_sha256": "a7289111e6fb14d8bf422641916e1202edff03e3e39d72f2057fdfe495c24f02"
+  },
+  {
+   "game": "401810640",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810640.json",
+   "meta_sha256": "c71b55b80820925047cdb021770bfe7e641664493305a16f0fa5e24ce52eb78f"
+  },
+  {
+   "game": "401810648",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810648.json",
+   "meta_sha256": "34bd12b06b277d3b9fbc98cbfff12ce06ae1d9ceac32b678203a7f1d57938a37"
+  },
+  {
+   "game": "401810650",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810650.json",
+   "meta_sha256": "47f51cb8565f0a06a6bddc33b81df29e387f6625ae2c7294243443b89849f0e6"
+  },
+  {
+   "game": "401810654",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810654.json",
+   "meta_sha256": "5b129806059bbaea259e739ebec8fd72555a84025182734addd79d15107c9450"
+  },
+  {
+   "game": "401810664",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810664.json",
+   "meta_sha256": "27e4d294932ecf28cfa3667ee78b773f24f6d4498ff074ebf6df90d0d9685834"
+  },
+  {
+   "game": "401810667",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810667.json",
+   "meta_sha256": "36b6ec457adbd708ac3181f4ab6f3f259cc46f7a5b6314ae0e67166444905fbe"
+  },
+  {
+   "game": "401810672",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810672.json",
+   "meta_sha256": "6186057651e5fd313ebd824a6f8142244701a02e48216426f47dbf7e5a631d7c"
+  },
+  {
+   "game": "401810675",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810675.json",
+   "meta_sha256": "c5f57ae11c8cc7fbbbdb2804e803e186ee2f42b5ee14200eb8ed9bbb71d62e6a"
+  },
+  {
+   "game": "401810681",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810681.json",
+   "meta_sha256": "4a74d3a8dea004e52b2e4e70c0c639aac95d448b961fad51e2d6a20c29b61a9f"
+  },
+  {
+   "game": "401810682",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810682.json",
+   "meta_sha256": "25ac0213c29cac676648c0465bc62f6a94317b7cb3c4207f58cf89eec4fd69ec"
+  },
+  {
+   "game": "401810687",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810687.json",
+   "meta_sha256": "76e063d875fbdcaf18107625af4ba7309bc2e4351391d7806d231a5f1ada9e5b"
+  },
+  {
+   "game": "401810688",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810688.json",
+   "meta_sha256": "6f83d19c572b0eb134b08856f8955595a692f77ec62d400b8f53a3f6b9790673"
+  },
+  {
+   "game": "401810709",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810709.json",
+   "meta_sha256": "49c29c7874660346760d4af4f1d57ade8277ce9605a2a9538953d3a7249d5f82"
+  },
+  {
+   "game": "401810711",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810711.json",
+   "meta_sha256": "36136b571b6d03ea4b8fa9e16a15f2d982cda6733299ea79898fd8a380d5e107"
+  },
+  {
+   "game": "401810712",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810712.json",
+   "meta_sha256": "4bd319b8634600e5715b3414c54d78c1c7e011270b93c2a4787dd05c9d886bb4"
+  },
+  {
+   "game": "401810718",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810718.json",
+   "meta_sha256": "0e938dcf4830812b21b2c47f5f4c409fe19b9be85758408c710a075b7f5695e6"
+  },
+  {
+   "game": "401810724",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810724.json",
+   "meta_sha256": "05fe040c433ae68d43d6e86674affe57e62998eeff59c240c68a1043051b86e6"
+  },
+  {
+   "game": "401810725",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810725.json",
+   "meta_sha256": "86b3e04c03fa09a6515b53999677ad29ba92093686764a736d6a162adc4fbde0"
+  },
+  {
+   "game": "401810729",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810729.json",
+   "meta_sha256": "283e4aa3faa9b15fbc1d661d6b3b64b3fb70d95d302f5c5b7ae498b554399c42"
+  },
+  {
+   "game": "401810737",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810737.json",
+   "meta_sha256": "4b70a7e8767cac9b6a48be3b5b3b3ced4c597fa060b5cbe588837b5a089a2d9b"
+  },
+  {
+   "game": "401810738",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810738.json",
+   "meta_sha256": "4898af124005b4d252c65ef16c7efb89aff0fe853e5b9aed5e9e661821e320a8"
+  },
+  {
+   "game": "401810743",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810743.json",
+   "meta_sha256": "bdcba45144d6ad8ecd81a04204607709f143de7ce46d9474526022b5e91be128"
+  },
+  {
+   "game": "401810751",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810751.json",
+   "meta_sha256": "edc3ff1bcf94cb434f77733050ce7871772b3b88cbd7f531cb8488982d31cfef"
+  },
+  {
+   "game": "401810755",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810755.json",
+   "meta_sha256": "67b41391a5ded2d5f41ba96242d34520feeaa4868ac07b03c472f7e153a06ba7"
+  },
+  {
+   "game": "401810759",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810759.json",
+   "meta_sha256": "154259972f4327addd33b1e223fa3705ac90dd82393bc0ca38618af88d0c38db"
+  },
+  {
+   "game": "401810765",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810765.json",
+   "meta_sha256": "c9167a43c601ee2b609004e654aba2754e33b89047321014a6adac44ce181a4f"
+  },
+  {
+   "game": "401810770",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810770.json",
+   "meta_sha256": "7d176a3d01bc4f9b9b1ff34cd723f9e3945e6d8d925bdd5a76cfc7047e7c0999"
+  },
+  {
+   "game": "401810774",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810774.json",
+   "meta_sha256": "71c09ba6ae432efa8e778814554c4b0d83b5928bc5f52964476f2d8df67ed3f0"
+  },
+  {
+   "game": "401810777",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810777.json",
+   "meta_sha256": "304e6ab4ac5b7b4dad6f1284fa7aca53440225c63cba887c4cc96463e5ca5ebf"
+  },
+  {
+   "game": "401810790",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810790.json",
+   "meta_sha256": "0ee8e04e00722a4732b524127c2461a93ec5cad465d9e07a13475e09d34d6985"
+  },
+  {
+   "game": "401810794",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810794.json",
+   "meta_sha256": "9e538114cf2fd944ebdceaf3cab11b3b56fa73cca402767d8de572746f3aa73c"
+  },
+  {
+   "game": "401810795",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810795.json",
+   "meta_sha256": "f377daa51b8cc68335c0ac72af8a743517b3c26837deb157bbf9416c04f03182"
+  },
+  {
+   "game": "401810798",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810798.json",
+   "meta_sha256": "ef893822b30fdfd6f16bd6cfc064c31944e4c189d73a3e78dee67e4f899a0944"
+  },
+  {
+   "game": "401810806",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810806.json",
+   "meta_sha256": "e5985be178e5c62f4dbf32db24b617c3547d9a6a1facaad111f54d262cd0888c"
+  },
+  {
+   "game": "401810808",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810808.json",
+   "meta_sha256": "d007df76c622b491315202a92d220344c0f8a8b05adf162641b841a46f2f6915"
+  },
+  {
+   "game": "401810812",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810812.json",
+   "meta_sha256": "cbbeb4dea766f4cd2742cf5e2b0b1110c4e32dde8771fe017ea72a2400bcffe9"
+  },
+  {
+   "game": "401810814",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810814.json",
+   "meta_sha256": "3ff5898680ff1913b9867cc3a06060ff1aa43805d590a7eb735a78f1419b2852"
+  },
+  {
+   "game": "401810816",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810816.json",
+   "meta_sha256": "8a896f9791eb987ec42e05449d4eaf34fbfd26079f65f923eb2d5833e87485cc"
+  },
+  {
+   "game": "401810817",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810817.json",
+   "meta_sha256": "a9d60bb9f2cfe33dfa520f8e8d6abb397774770304cffa0280d3a4bbf315bd7b"
+  },
+  {
+   "game": "401810818",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810818.json",
+   "meta_sha256": "6827da3cdcacf9e2b50d1a457446040e5c25807bb4b39e2931273ed0820f5e36"
+  },
+  {
+   "game": "401810819",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810819.json",
+   "meta_sha256": "a56a954a3f4ab9b7c41b3934a721fd13bd996e591f6bdef27b4bf08fd8069219"
+  },
+  {
+   "game": "401810822",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810822.json",
+   "meta_sha256": "0dd85e624e7dd3d3c2b0cebd739c0c15ede6ba8bd1339c68c2d0189afec0f90b"
+  },
+  {
+   "game": "401810828",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810828.json",
+   "meta_sha256": "0964c956551c91540dce4f4f13ed4a39ae033c8b388ab35fc1bb8879b7fe6789"
+  },
+  {
+   "game": "401810829",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810829.json",
+   "meta_sha256": "c364662ead251cfe0733dca3111d111dd86d10d114e42bb2d04f86363e98aa72"
+  },
+  {
+   "game": "401810833",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810833.json",
+   "meta_sha256": "b5c1853abbfc21e8a8308785799215ff73c1729e1ed86cd2ac6b3550216f454d"
+  },
+  {
+   "game": "401810837",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810837.json",
+   "meta_sha256": "fad9195b80cd5e6ad85eb492a3c93aaf5c11768f48fc01fc2a652b063e4614ca"
+  },
+  {
+   "game": "401810842",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810842.json",
+   "meta_sha256": "e57a191d388a0b2f6128837beacaaed986d32808abdc7076abca49b695fcc84f"
+  },
+  {
+   "game": "401810844",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810844.json",
+   "meta_sha256": "4bd53793d7d23d5b4373b8b52358aad1d920bc01191076fb601e41c5c3365fd3"
+  },
+  {
+   "game": "401810848",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810848.json",
+   "meta_sha256": "fd2497cbb4d1d5b845fdddfde2d5d8a054c9a47c42caae10e98e1c95e8c87a09"
+  },
+  {
+   "game": "401810849",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810849.json",
+   "meta_sha256": "954a30b5ebdae60f365cb7d1d87f54bd9df62739c6a882eb45e2223783bd801b"
+  },
+  {
+   "game": "401810852",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810852.json",
+   "meta_sha256": "a1c3db27b4cce0776fd9094f82ac35baa6bd361091921d82dacd8774ecc88c00"
+  },
+  {
+   "game": "401810853",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810853.json",
+   "meta_sha256": "242878a1207309b2f9dbdec00a03e26e36e80167ca9b91ae8e304aa65e56a7db"
+  },
+  {
+   "game": "401810856",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810856.json",
+   "meta_sha256": "b28fb61f1b93497936e595c17cd1fbf98f8351bf3bbac66030e0d9b59459911d"
+  },
+  {
+   "game": "401810858",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810858.json",
+   "meta_sha256": "38291d060d2e8e617f137a1e44961f2465eb4f080468f8ded57a0370d9479a08"
+  },
+  {
+   "game": "401810862",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810862.json",
+   "meta_sha256": "6943643877dc83a29b87fbadaaa2a450a97bcc806199d6e6839d4c60a3cb292a"
+  },
+  {
+   "game": "401810864",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810864.json",
+   "meta_sha256": "56392120aa5f1aa4f2209d9364b83a5a278d225f7889c59b45180da8cee344e1"
+  },
+  {
+   "game": "401810869",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810869.json",
+   "meta_sha256": "bb812f0dd52d98cb8f09a8d7df884f9ad9b826761fe1d3cfa3e9be72d3317686"
+  },
+  {
+   "game": "401810871",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810871.json",
+   "meta_sha256": "03dd7f73605db41aa7c9be50336c6ef19b45ea251854bbbdccceca2f4cb02505"
+  },
+  {
+   "game": "401810880",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810880.json",
+   "meta_sha256": "a020bba419df5fb0c23ed1c0d1dc8d5be9fc3ccc934ccae71ff18bad474bb151"
+  },
+  {
+   "game": "401810884",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810884.json",
+   "meta_sha256": "f7744dad17c4fd00a58d2e891494eddbc63af8b414456fde358cfe109f75ca3e"
+  },
+  {
+   "game": "401810888",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810888.json",
+   "meta_sha256": "54c3768059a8e66d1b79032a68c959f0be2c1df468d92ff6f0fed102413f6130"
+  },
+  {
+   "game": "401810899",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810899.json",
+   "meta_sha256": "1feb83135eb7b43408b7486cb2b6e88636f46a062e16d79d59212dfcd5a8f57f"
+  },
+  {
+   "game": "401810901",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810901.json",
+   "meta_sha256": "1e73f17a26fe1b39cd92cc02cd73e607a8cd6bb76daa5faea753ae0c494b7a53"
+  },
+  {
+   "game": "401810909",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810909.json",
+   "meta_sha256": "7ef02c44b3f517d4fe56ca094e1c8e47e19d76adc90d1580d0578206c0d2dcbf"
+  },
+  {
+   "game": "401810912",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810912.json",
+   "meta_sha256": "5d5f290f884b80cff82fadf4de254596f4579f7cb47b7cffb44b8458c7c47f1b"
+  },
+  {
+   "game": "401810917",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810917.json",
+   "meta_sha256": "1c7af76c8164dc7d6409ad2186c8774d412ecea666a426c24ca0858f89da9e01"
+  },
+  {
+   "game": "401810923",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810923.json",
+   "meta_sha256": "d05ac8faac1cf0679d3290da75d2705ce33a9c5b8a63f465a778c8bf60341eb6"
+  },
+  {
+   "game": "401810925",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810925.json",
+   "meta_sha256": "ae70906ccf93a5e5971cfcdff360f1ad35a8406b63b56ed6cb034032eed8474f"
+  },
+  {
+   "game": "401810926",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810926.json",
+   "meta_sha256": "d8cc2282264a9d0a0f41d23899198ba44e3c5a926ca8f225a7950ac8394b0144"
+  },
+  {
+   "game": "401810934",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810934.json",
+   "meta_sha256": "c64ec4c70083b5004671fc2924332edb898084acf18f4d15885dabffa5eb4543"
+  },
+  {
+   "game": "401810935",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810935.json",
+   "meta_sha256": "78ed73fbe2db574406b534a5f41f235f9054ff1440699f1cf8b8ae48e6b3237b"
+  },
+  {
+   "game": "401810938",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810938.json",
+   "meta_sha256": "facd06b57e0be5531a68eb75e72aec848e13724d5851fa5b6cafd9f02552e086"
+  },
+  {
+   "game": "401810940",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810940.json",
+   "meta_sha256": "6a2f465f116f9f3b63eb6d52faf4fed3c575e6a81f467aa8dcd4467d7eeee378"
+  },
+  {
+   "game": "401810947",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810947.json",
+   "meta_sha256": "f1e217902a9a728cf57770e69357c0da5c06405483a794a7dc61e59b88235218"
+  },
+  {
+   "game": "401810948",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810948.json",
+   "meta_sha256": "f455a442667080565de7070352a12b8e48e4928b0bbc9bc808b289098a27cebf"
+  },
+  {
+   "game": "401810952",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810952.json",
+   "meta_sha256": "dca107b30980646b2717ca6c235f3f66faef9dd475e2db36f18a0dd881a5d539"
+  },
+  {
+   "game": "401810958",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810958.json",
+   "meta_sha256": "0335a90b6ae3035037328f66e27e94950db4e8546909cefcf5eb31f103470a11"
+  },
+  {
+   "game": "401810959",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810959.json",
+   "meta_sha256": "0336cd8a5015829a3bc3b475bc7dbcc4edc0a210e066d823790c2f75466ba2a8"
+  },
+  {
+   "game": "401810963",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810963.json",
+   "meta_sha256": "b946bba65b7a4fcf0d0bb595046a9a805281915354e151ecbd845850f3d19a67"
+  },
+  {
+   "game": "401810967",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810967.json",
+   "meta_sha256": "a0c6950814070cd148e35e0c28e9694d5be8255755d54e94c06c9a10605cbef8"
+  },
+  {
+   "game": "401810969",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810969.json",
+   "meta_sha256": "4dc91cb97e9b0707ec4a7eb3e11d72485b9bca6e1919891b238d839b4b4b3bea"
+  },
+  {
+   "game": "401810970",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810970.json",
+   "meta_sha256": "52efe865683dfc663e88f256e37f5430cc75ff1ce3bb7eb2a9f22249d28604eb"
+  },
+  {
+   "game": "401810975",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810975.json",
+   "meta_sha256": "d73f871e80f904e1e2ecc26610490b7797762afe9410aab2c0381e8d03d326d4"
+  },
+  {
+   "game": "401810979",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810979.json",
+   "meta_sha256": "63ca941bcf24b0aee53ace6ad923351488c647f0698fb493c522ffb75132050a"
+  },
+  {
+   "game": "401810980",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810980.json",
+   "meta_sha256": "5aa63275dd71ec64b35cab618fd4372a857e6086982dff5c0fd490242d90a0c8"
+  },
+  {
+   "game": "401810982",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810982.json",
+   "meta_sha256": "f3c30b8647b5387b7320f9f0218047391e41526698281e8e09a36202a49f8f7c"
+  },
+  {
+   "game": "401810983",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810983.json",
+   "meta_sha256": "833633ff64df2211893bf1eb2edd0530c5f95ffe9dffc11700677f4f91b54757"
+  },
+  {
+   "game": "401810986",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810986.json",
+   "meta_sha256": "99f77bd26269846f799dfaa9ec14b4c16e254beb06f5ee65e000e2c2681136bf"
+  },
+  {
+   "game": "401810987",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810987.json",
+   "meta_sha256": "703e26d4e3969eaa8d0af9f4d546b86eea73f949d88da10616f64afe81912175"
+  },
+  {
+   "game": "401810989",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810989.json",
+   "meta_sha256": "d3f777d50f9bed557c5a982c945dda5d9fa30dd2628c774e4fdfdfae7f1c25b5"
+  },
+  {
+   "game": "401810991",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810991.json",
+   "meta_sha256": "3e2c5586f2e083aec13d37f05f1fa0fecf635a6a07725e1a9f153b3dd25a22bb"
+  },
+  {
+   "game": "401810993",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810993.json",
+   "meta_sha256": "b32b1435b8e9c5f9a3d4987dd81227a528fe1656698d5d7f4a399102dba14723"
+  },
+  {
+   "game": "401810995",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810995.json",
+   "meta_sha256": "2d47ac3fa62f24c53993344c6824e5d022fabf95aa611ba7761a0d2a8a4d1f7a"
+  },
+  {
+   "game": "401810998",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810998.json",
+   "meta_sha256": "b7d8396bd061edeb4f66355badad99553c00eba1b941d5d237153f18bc82e939"
+  },
+  {
+   "game": "401810999",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401810999.json",
+   "meta_sha256": "8cb42f2fa8793db97c0fde80ef711f0702bf81b9fbb310672d31fe7b7426c167"
+  },
+  {
+   "game": "401811000",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401811000.json",
+   "meta_sha256": "bdf7605f0e831cfd6b72fcff29224958c6fe44455079648851c116e6d1182691"
+  },
+  {
+   "game": "401811004",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401811004.json",
+   "meta_sha256": "bf4b837464c6649a2b07b850ee0b750ad06427602cba089f2096fa64d334b607"
+  },
+  {
+   "game": "401811006",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401811006.json",
+   "meta_sha256": "64f15a63f03a98ad88df356ebcdc9df1021d353ca6371e8b27c135c49d835c10"
+  },
+  {
+   "game": "401811009",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401811009.json",
+   "meta_sha256": "4b5b60709041ea3af4cd812e43e255e7dff08223abb6f3925eea36a386ef0ed7"
+  },
+  {
+   "game": "401811010",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401811010.json",
+   "meta_sha256": "f266199eda9a5e4e84f4a422ed1c1d522816bd98ea87842db87585cc726681d0"
+  },
+  {
+   "game": "401811014",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401811014.json",
+   "meta_sha256": "fdd9eda691779a3eee8ddaec45424ff640478cda5962dbbc5ae9c195a1e62cd9"
+  },
+  {
+   "game": "401811015",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401811015.json",
+   "meta_sha256": "1e9be5cdff58f40a4cd17ed60a7f976d4c8e58f8e5296c0582f89bd21b520f9c"
+  },
+  {
+   "game": "401811017",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401811017.json",
+   "meta_sha256": "16f4536f5bf67e10017c724c17f9208ad9e66bc40a4f6d8e0ddf0e40cd940542"
+  },
+  {
+   "game": "401811018",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401811018.json",
+   "meta_sha256": "c0719134cb322f50992c3de1edeea4682a3fe5b28b06115fab7e35d686a5a905"
+  },
+  {
+   "game": "401811020",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401811020.json",
+   "meta_sha256": "29c0e867044ff21f3123c795a45b944df1789ccb3a1188db21b13604e27dd400"
+  },
+  {
+   "game": "401811023",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401811023.json",
+   "meta_sha256": "085b0af4a0ca52e349273f9904b802d5d1d93acf93798ff58952b683946f0b99"
+  },
+  {
+   "game": "401811026",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401811026.json",
+   "meta_sha256": "35af4567d3fc876ee6b209d5f60323863d3af9d6c936cd73133ed32bf41f70e3"
+  },
+  {
+   "game": "401811028",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401811028.json",
+   "meta_sha256": "9625e6258e83a3d5fb14ca78f22a7f4b21f578c3771cc61670cde6ac1818a9f6"
+  },
+  {
+   "game": "401811029",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401811029.json",
+   "meta_sha256": "cc2e8c9557bcb1f04b62d382d622986d60fa059a5b14f3132bca4e5fb5fa24d2"
+  },
+  {
+   "game": "401811030",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401811030.json",
+   "meta_sha256": "04d5bf58ec7b01e2c5d17bada67a120561ab0784246296c810894f7c1518fb3b"
+  },
+  {
+   "game": "401811036",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401811036.json",
+   "meta_sha256": "57a06654219b0882d85b359b8bd92c70c2a7486aae60f04528b289a6d0ad8eee"
+  },
+  {
+   "game": "401811037",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401811037.json",
+   "meta_sha256": "68ed37ea2c949d06638ab7dbf1dd02b4d971c0ceb5153209767691a5111dedc3"
+  },
+  {
+   "game": "401811041",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401811041.json",
+   "meta_sha256": "901aaee6de9b5b4b5f998be3f31e97f154f9c688c5c2172cfa3089b21db5172e"
+  },
+  {
+   "game": "401811052",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401811052.json",
+   "meta_sha256": "dd89209507466e1af6300441773af7bf30cd293b3726653e2337f58ada1a7ef1"
+  },
+  {
+   "game": "401811053",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401811053.json",
+   "meta_sha256": "e53b886bbd996695674c60e5a8089319372b06508ab1d8b28c2b618c5947016d"
+  },
+  {
+   "game": "401811054",
+   "meta": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1/401811054.json",
+   "meta_sha256": "f5a3a64577cbc1890b0aef79fd7432bb0d25c5b3eead749d70eb13ec7f5f564f"
+  }
+ ],
+ "release": "not enabled; independent accounting/score/confirmation gates still apply"
+}

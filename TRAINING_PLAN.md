@@ -1,6 +1,6 @@
 # Training and validation contract
 
-Updated **23 November 2026**. Accepted systems: Rule3 engine-v1.3-r1 (unchanged nodes) and team pathway v1.
+Updated **23 November 2026**. Accepted systems: Rule3/independent-fit engine-v1.3-r2 (unchanged nodes) and team pathway v1.
 [HANDOFF](HANDOFF_NEXT.md) owns current work; [FINDINGS](FINDINGS.md) owns outcomes. Frozen detailed protocols
 are indexed in [docs/README](docs/README.md). D51 redesigns release classification prospectively; historical
 results and numerical harm margins remain preserved.
@@ -196,7 +196,10 @@ fixed200 F4 passed44/44; seed30 had six imprecise/ten unsupported bounds; three1
 protected246 established42/44, all27 proper-score checks. Preserve this outcome, never repeat protected r2.
 D57's [v3 revision](docs/protocols/promotion_v3_20261123.md) follows an independent arithmetic/policy audit
 and returns to the previously reserved, unseen200 F4 IDs, with unchanged candidate and numerical margins.
-Fresh confirmation/source hashes are frozen in `20261123_rotation_policy_confirmation_manifest_v1.json`.
+Fresh confirmation/source hashes are frozen in `20261123_rotation_policy_confirmation_manifest_v1.json`;
+its200-game run now establishes all27 proper bounds and all17 bias/25 coverage diagnostics.
+`20261123_independent_rotation_qualification_v3.json` permits integration; six raw replays, three retained queue branches and the fresh full nightly/PWA delivery
+now pass (`20261123_r2_release_v1.json`). Original protected limitations remain; no rescoring.
 No retrospective reclassification alone approves release. Original v2 contracts above remain v2 contracts;
 the v3 manifest explicitly selects the revised diagnostic classification for this new evidence.
 

@@ -1,0 +1,128 @@
+{
+ "runtime": {
+  "id": "engine-v1.3-r2",
+  "kind": "engine",
+  "version": "v1.3-r2",
+  "models": "v1.3",
+  "rotation": "targets",
+  "sims": 10000,
+  "pool": 0,
+  "label": "Possession engine v1.3 — the default projection and the floor every change must beat (D22): each game simulated possession by possession; defence now enters every shot (D30: each shooter's likely defenders by size and position, their shooting allowed by zone, help at the rim; backtest: the opponent's defence expressed at 41% of its real effect, up from 26%; margin CRPS 9.67 → 9.37); minutes from healthy roles shared to exactly 240 per team by priority, with a return ramp and per-world ranges (D29: stars' minutes +6.5% → −1%). Starters are our own projection (D33). 10,000 simulated games per game (D36). Known gaps: team differences compressed — real NBA matchups tested and not promoted (D37) — outcomes too tightly spread, minutes do not yet react to the score (FINDINGS §3o, §3s–§3w). Rule revision r1: legal foul-out replacements and NBA roster-exhaustion penalties; unchanged v1.3 fitted nodes. Revision r2: each world's rotation is fitted independently.",
+  "foul_policy": "nba-rule3-v1",
+  "rotation_fit": "independent-v1",
+  "chunk_worlds": 1000,
+  "season_sims": 10000
+ },
+ "generated": "2026-11-23T18:06:16Z",
+ "snapshot_seconds": 1184.0,
+ "live_games": 10,
+ "complete_10k_batches": 15,
+ "saved_worlds": 150000,
+ "checks": {
+  "smoke": {
+   "log": "/tmp/musnba_r2_delivery_smoke_20261123_v1.log",
+   "sha256": "cf328242cd6e19937e0646f6479ba38d65653f9921a6470fa9789436765835a5"
+  },
+  "fault": {
+   "log": "/tmp/musnba_r2_delivery_fault_20261123_v1.log",
+   "sha256": "c64c0f3da449d09f8d1c2ebb466a3b36dcbbf35e54b210edb8e0178eca5f8982"
+  },
+  "phone": {
+   "log": "/tmp/musnba_r2_delivery_pwa_phone_20261123_v1.log",
+   "sha256": "6654c2613153f4b7e7e0bda5202769d1d41d684e21d4b56be72a92aa59d40825"
+  },
+  "laptop": {
+   "log": "/tmp/musnba_r2_delivery_pwa_laptop_20261123_v1.log",
+   "sha256": "73d830fab5ce1c2f4860afcaadb559a01bd5c41b9a7f2575a28aae70b285c1a3"
+  },
+  "smoke_counts": {
+   "smoke": [
+    108,
+    108
+   ],
+   "fault": [
+    86,
+    108
+   ]
+  },
+  "smoke_exit": 0,
+  "fault_exit": 1
+ },
+ "accounting_sha256": {
+  "analysis/experiments/20261123_r2_live_accounting_v1.json": "c055083f22e3589627e872d118d1e880d17b2b5fe807473a855d94c9660fc466",
+  "analysis/experiments/20261123_r2_season_accounting_v1.json": "9847e6aec38b00bb43ffc48a32752fe8caf6b9f72cc756ff84227cf9c437a566"
+ },
+ "bundles": {
+  "phone": {
+   "header": {
+    "format": "musnba",
+    "version": 2,
+    "capabilities": [
+     "lineup-forecast-v1",
+     "minute-cdf-player-v2",
+     "player-icons-v1"
+    ],
+    "created": "2026-11-23T18:08:02+00:00",
+    "latest": "2026-11-23",
+    "snapshots": [
+     "2026-11-12",
+     "2026-11-13",
+     "2026-11-14",
+     "2026-11-15",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22",
+     "2026-11-23"
+    ],
+    "profile": "phone"
+   },
+   "bytes": 110224058,
+   "sha256": "d85a24a3f8a2c2608d21ebd83187143cc036a4c68cf323dfa068471ffe3432a4"
+  },
+  "laptop": {
+   "header": {
+    "format": "musnba",
+    "version": 2,
+    "capabilities": [
+     "lineup-forecast-v1",
+     "minute-cdf-player-v2",
+     "player-icons-v1"
+    ],
+    "created": "2026-11-23T18:07:19+00:00",
+    "latest": "2026-11-23",
+    "snapshots": [
+     "2026-11-12",
+     "2026-11-13",
+     "2026-11-14",
+     "2026-11-15",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22",
+     "2026-11-23"
+    ],
+    "profile": "laptop"
+   },
+   "bytes": 215095062,
+   "sha256": "14f2b9b20ad743a4e08eb906d37c127e3d1d6f7a8eab8313707a8b51908838b3"
+  }
+ },
+ "existing_public_shell": "31317f88cec02d4ee61fe3a0cae3c4eb9bc3eb49",
+ "shell_assets_changed": false,
+ "controller_source_sha256": "c265ade75fca993c3d4b5b3b85e7236aa0d76b293f49ef081ec163bf17840f28",
+ "checks_seconds": 79.78591775000677,
+ "limits": [
+  "Both devices still need manual bundle import; real-device acceptance is unverified.",
+  "Conditional historical qualification does not validate availability probabilities.",
+  "Original protected v2 result remains unchanged; no protected rerun.",
+  "Exact weighted season coupling is not certified iid season paths."
+ ],
+ "controller_source": "data/derived/experiments/r2_delivery_checks_20261123_v1.py"
+}

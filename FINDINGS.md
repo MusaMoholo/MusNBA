@@ -111,12 +111,11 @@ assignment fit cannot be reused for F1–F3; corrected fold inputs need dated fi
   remains imprecise, no demonstrated harm. Independent audit **142,218,382 legal fives / 455 exhaustion
   penalties**, maximum replayed minute error 3.56e−15. Unchanged fitted nodes; no availability-skill claim.
   Reports `rule3_{confirmation,final}_20261123_v1{,_compare,_compare_gate,_audit}.json` in experiments; r1 PWA delivery is complete (HANDOFF).
-- **Mixture/storage accounting:** latest23Nov r1 nightly:10games/15×10k batches,80,337 weighted
-  season paths/mass100k, every atom exact,53,732 histogram checks. Max cross-game correlation.02001
-  versus32 independent references.00876–.01369: descriptive benchmark, not a calibrated coupling-null
-  test or validated dependence model. Reports `20261123_a1_r1_delivery_{live_accounting,season_audit}_v2.json`.
-  Earlier14-batch generation/evidence retained. Precise-minute codec:3,780 exact threshold checks;
-  per-player byte shuffling reduces gzip29.1→18.2MB, maxrecord4.01MB
+- **Mixture/storage accounting:** current23Nov r2:10games/15×10k batches,80,337 weighted season
+  paths/mass100k, every atom exact,53,732 histogram checks. Max cross-game correlation.02283 versus
+  32 naive independent references.00868–.01897: descriptive, not a calibrated coupling-null/dependence
+  test. Reports `20261123_r2_{live,season}_accounting_v1.json`. Earlier generations retained. Minute
+  codec:3,780 exact threshold checks; byte shuffling gzip29.1→18.2MB, maxrecord4.01MB
   (`20261123_a1_minute_cdf_probe_v{1,2}.json`). Not real-device acceptance.
 - **Representative gap:** fixed 200-game F4 oracle-roster screen had **0/2,000** typed exhaustion attempts;
   five draws/branch and known participants do not estimate actual pre-game risk. Earlier-fold screens are also
@@ -142,12 +141,19 @@ assignment fit cannot be reused for F1–F3; corrected fold inputs need dated fi
   [+.02442,+.44989]/+.24087PTS[−.25976,+.31726], margins.30. No demonstrated material harm;
   one imprecise star-minute coverage diagnostic. Audit284,432,368 legal fives. Preserved reports
   `independent_rotation_{f4,stream,stress,final}_20261123_v1*`; protected score never repeated.
-- **D57 gate sanity:** independent complete-game reconstruction reproduces both protected bias estimates
-  and10k-bootstrap intervals to1e−12. A labelled synthetic example improves every individual's error
-  while breaching the cohort-mean bias margin through reduced cancellation. Arithmetic is correct; the
-  universal veto conflicts with individual accuracy. A/A v2 establishes43/44, a precision warning.
-  [Audit](analysis/experiments/20261123_independent_rotation_gate_sanity_v1.json);
-  [v3 policy](docs/protocols/promotion_v3_20261123.md) requires fresh unseen confirmation, not automatic release.
+- **D57:** independent reconstruction reproduces protected bias/10k-bootstrap intervals to1e−12.
+  A synthetic all-player improvement breaches the old cohort-bias margin through reduced cancellation;
+  arithmetic is correct, universal veto conflicts with individual accuracy. A/A v2 establishes43/44.
+  [Audit](analysis/experiments/20261123_independent_rotation_gate_sanity_v1.json),
+  [prospective v3](docs/protocols/promotion_v3_20261123.md). Fresh200 F4/4,297 scored player-games:
+  all27 proper,17 bias and25 coverage bounds established; audit227,809,516 legal fives. MIN/PTS CRPS∆
+  −.02345[−.04275,−.00640]/−.00806[−.01540,−.00129], conditional actual participants,5 missing-box
+  player-games excluded. Reports `independent_rotation_policy_confirmation_20261123_v1*`. Qualified
+  for integration, not universal accuracy improvement; original protected result preserved.
+
+- **Runtime recipe lookup:** r1/r2 aliases skipped advanced-profile rebuilds. Resolve fitted-node config;
+  missing recipes now fail. Both935-row current tables reach22Nov (no date gap). Regression2/2 passes;
+  exact old code fails3 subcases. Report `20261123_nightly_runtime_recipe_audit_v1.json`.
 
 ## 8. A2 form evidence
 
@@ -178,8 +184,9 @@ OT error **2.85e−14**, phone marginal error zero. **2,822/100k** worlds reache
 not a real NBA rate or calibration test. [Audit](analysis/experiments/20261123_a1_live_slate_minutes_audit_v1.json).
 Legacy rounded minutes cannot be recovered; availability, positive participation and rounded minutes are distinct.
 
-Hosted fresh imports: **24/24 laptop, 23/23 phone**; measured renderer heaps **15.9/5.5 MiB** were single
-readings, not peak/browser/device memory. Bundles ~111/87 MB require manual device import/acceptance; exact
-current generation/shell/bytes live in HANDOFF. Finder-hidden export flags were fixed with non-dot staging and
-flag clearing; preserve that behaviour. Service-worker precaching uses reload to avoid stale HTTP-cache assets.
-No new delivery or predictive measurement occurred during documentation cleanup.
+Historical delivery/hidden-flag/cache evidence remains in the archived findings and original delivery
+reports. Current r2 snapshot1184.0s versus r1's1465.33s (observed19.2% shorter); required advanced
+rebuild231.9s, all12 prior input files byte-identical. Six raw runtime replays and three queue branches
+match retained references; live53,732 checks, smoke108/108, deliberate fault86/108 exit1, hosted29/27.
+Receipts `20261123_r2_{release,integrated_delivery,profile_refresh_identity}_v1.json`; manual imports
+remain required. Existing shell assets unchanged; no iid-season or universal accuracy claim.

@@ -1,0 +1,43 @@
+{
+ "at": "2026-11-23T17:36:07.347907+00:00",
+ "class": "mechanical independence correction",
+ "candidate": "engine-v1.3-r2",
+ "policy": "promotion-v3-20261123",
+ "decision": "qualified for runtime integration; production default not yet changed",
+ "fresh_panel": {
+  "games": 200,
+  "player_games": 4297,
+  "proper_bounds": 27,
+  "bias_diagnostics": 17,
+  "coverage": 25,
+  "all_established": true,
+  "legal_fives_independently_checked": 227809516
+ },
+ "known_original_result": "Protected r2 v2:42/44, all27 proper scores; star MIN/PTS cohort bias unresolved. Never rescored or relabelled.",
+ "limitations": [
+  "Fresh F4 pooled improvements are not a universal player-accuracy claim.",
+  "Protected star-bias/coverage uncertainty remains reported.",
+  "Conditional actual-participant panels do not establish pre-game availability skill.",
+  "Exact weighted season coupling is separate from per-game row-local fitting."
+ ],
+ "still_required": [
+  "Integrated r1/r2 raw parity",
+  "Default/runtime consistency",
+  "Fresh full nightly and required profile rebuild",
+  "Complete live/season accounting, replay smoke/fault and PWA/iCloud delivery"
+ ],
+ "evidence_sha256": {
+  "analysis/experiments/independent_rotation_policy_confirmation_20261123_v1.json": "347f7d2036e1914a07b2eb3301a61b13b2ddc1e05a2d5c4c19bcba85626dfc63",
+  "analysis/experiments/independent_rotation_policy_confirmation_20261123_v1_audit.json": "ac1732aeea0981113382676fafb25a8ec2e0880163e58e645a99b7d09ed32bb0",
+  "analysis/experiments/independent_rotation_policy_confirmation_20261123_v1_compare.json": "a8ad6c8a739a6b6b48c3660e3a1212cd04214cfb333b85bfd5a5131dd2592fac",
+  "analysis/experiments/independent_rotation_policy_confirmation_20261123_v1_compare_gate.json": "4db559da5a7a71b9f4553d7118ed5d52eabbf20b35bb10f0057901714707c972",
+  "analysis/experiments/independent_rotation_policy_confirmation_20261123_v1_compare_gate_v3.json": "8b59914191e10e5bf85f75a2aabbc27e84a4742a3978fa8d012aea4a6c461ab7",
+  "analysis/experiments/20261123_rotation_policy_confirmation_manifest_v1.json": "20144bfc762cb8b89bf06ce2aa2bdac6105d4580d0a9497340fcc20e7da1fd15",
+  "docs/protocols/promotion_v3_20261123.md": "d50e26dcf523fad05bfc203ea3c5ceaab73a41aa906f1e9164cbffcb2a40cfeb",
+  "analysis/experiments/independent_rotation_f4_20261123_v1_audit.json": "ef154c8414f763d26553db62b6edf6d90c7a87121abfc42d76bf37acf6d25489",
+  "analysis/experiments/independent_rotation_stream_20261123_v1_audit.json": "a947658dcf7da5cd0a155984123e16768a4039f5f0e3f26d39e42a400b15a2b1",
+  "analysis/experiments/independent_rotation_stress_20261123_v1_audit.json": "7a474b606062fbd3cf2c40ae3ae6ad6be07b5d394079c82adc502dad292cbee6",
+  "analysis/experiments/independent_rotation_final_20261123_v1_audit.json": "7c2de4d293b17fab96e9305d07f03201ca292db246cc9ca83925a1840364381a"
+ },
+ "frozen_source_archive": "data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1_sources"
+}

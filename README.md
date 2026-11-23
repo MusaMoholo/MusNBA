@@ -2,7 +2,7 @@
 
 Local-first NBA player/game/season simulations: **10,000 possession worlds for today's ET games**, then
 **10,000 seasons** using each world's own evolving team ratings from tomorrow onward. Accepted engines:
-**engine-v1.3-r1 / team-pathway-v1** (unchanged v1.3 fitted nodes). The laptop PWA is primary; phone is stripped. Stored lineup branches are delivered on laptop; the 2-D
+**engine-v1.3-r2 / team-pathway-v1** (unchanged v1.3 fitted nodes). The laptop PWA is primary; phone is stripped. Stored lineup branches are delivered on laptop; the 2-D
 View Centre remains future work. See [HANDOFF](HANDOFF_NEXT.md) for current state and [docs index](docs/README.md)
 for focused references/history; contributors start with [AGENTS](AGENTS.md).
 
@@ -97,10 +97,10 @@ under `analysis/experiments/`, per-row arrays/captures stay ignored under `data/
 | `scripts/webapp/`, `analysis/*.mjs` | Native ES-module UI, browser/PWA checks; no build dependency. |
 | `scripts/a1_*.py`, `scripts/a2_*.py`, `analysis/a1_*` | Research/audits; [branch runbook](docs/research/a1_branches.md), frozen protocols and old full command map via docs index. |
 
-`scripts/foul_out.py:Rule3Policy` passed its single protected confirmation; qualified r1 is configured locally
-and is delivered with lineup/headshot PWA bundles; HANDOFF owns current generation state.
-`tests/test_foul_out.py` covers isolated accounting/rule cases. D56's independent-world fitter and shared
-world queue remain candidates pending their own qualification, not an automatically shipped runtime.
+`scripts/foul_out.py:Rule3Policy` passed its single protected confirmation; qualified r2 is delivered
+with lineup/headshot PWA bundles; HANDOFF owns current generation state.
+`tests/test_foul_out.py` covers isolated accounting/rule cases. D56's per-world fitter and shared ten-worker
+world queue are qualified/default r2; recorded older runtimes retain their original fitting behaviour.
 
 `scripts/release_gate.py` applies the current class-specific statistical compatibility gate; it never publishes
 or promotes a model. Default policy: [v2](docs/protocols/promotion_v2_20261123.md); explicit

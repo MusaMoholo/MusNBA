@@ -1,0 +1,33 @@
+{
+ "kind": "runtime alias input-rebuild regression; no models, forecasts or bundles changed",
+ "prior_commit": "22238f2",
+ "defect": "Feature recipe selected by runtime version; r1/r2 have no alias JSON so advanced rebuild silently skipped.",
+ "correction": "Use fitted-node models version, with legacy version fallback; missing recipe fails before rebuilding.",
+ "runtime_aliases_checked": [
+  "v1.3-r1",
+  "v1.3-r2"
+ ],
+ "fitted_recipe": "models/v1.3.json",
+ "current_input_inventory": {
+  "base_latest_rows": 935,
+  "advanced_latest_rows": 935,
+  "both_latest_date": "2026-11-22",
+  "forecast_origin": "2026-11-23",
+  "date_gap_observed": false
+ },
+ "regression": {
+  "tests": 2,
+  "passed": 2,
+  "old_expected_failures": 3,
+  "old_errors": 0,
+  "note": "Two alias subtests plus the missing-recipe case fail against the exact retained pre-fix function."
+ },
+ "source_sha256": {
+  "scripts/nightly.py": "e83a129f4afd3f8940b2f9fb9ecc739993d7843f53d0997efc076c3ad23744c4",
+  "tests/test_nightly_feature_recipe.py": "94c7c295988f05a949fa44ed8fc0432a9a8478871daf12c51018782c5e38f412"
+ },
+ "log_sha256": {
+  "/tmp/musnba_nightly_recipe_alias_20261123_v2.log": "d88a5fa3e7cf5f630dacaafb02c7233128e67d16d9f3f2f7f376edc94be45b21"
+ },
+ "delivery": "Existing r1 inputs already reach22Nov; current iCloud/PWA generation unchanged. Next full nightly exercises corrected advanced rebuild; never rebuild frozen research inputs mid-run."
+}

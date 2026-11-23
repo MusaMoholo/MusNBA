@@ -3,7 +3,6 @@ from fractions import Fraction
 from collections import deque
 from concurrent.futures import ProcessPoolExecutor, wait, FIRST_COMPLETED
 from dataclasses import asdict
-from functools import partial
 from types import SimpleNamespace
 import base64
 import hashlib
@@ -93,15 +92,13 @@ def pieces(folder, points):
 
 
 def _working_game(plan):
-    from scripts import a1_lineup_branches, rotation_fit
+    from scripts import a1_lineup_branches
     with Path(plan['inputs']).open('rb') as stream:
         saved = pickle.load(stream)
     _ENGINE.m.median = saved['median']
     g = saved['game']
     if plan.get('assignments'):
         g = a1_lineup_branches.prepare_branch(g, [tuple(a) for a in plan['assignments']])
-    # Local to this working game. Legacy Engine instances and retained replays are untouched.
-    g._fit_offsets = partial(rotation_fit.independent, settings=engine.ROTATION)
     return g
 
 

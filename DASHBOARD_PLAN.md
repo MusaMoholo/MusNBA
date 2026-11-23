@@ -14,7 +14,7 @@ checks and delivery; [PLAN §9b](PLAN.md#9b-product-backlog) owns backlog. Full 
 - Today's games use possession projections. Tomorrow onward has team-pathway home/away/total/margin regulation
   distributions, with a separately resolved winner for ties, no simulated OT points and no player projections.
   Future cards come in three, with total/margin switching in the third.
-- **Stored lineup branches/Expected mixture are shipped on qualified r1.** Legacy imports' availability panel can link an eligible
+- **Stored lineup branches/Expected mixture are shipped on qualified r2.** Legacy imports' availability panel can link an eligible
   uncertain player to positive-/zero-minute slices of saved worlds. These are observational participation
   conditions, not a forced-lineup forecast or causal effect. Phone explains the absence of saved worlds.
 - Schema-1 snapshots preserve original float64 period minutes. Laptop sheets/Given/Joint use exact world values;
@@ -70,7 +70,7 @@ Routes are hash-based: `#/game/<id>/<period>[/team]`, `#/game/<id>/matchup`,
 initials fallback and retained ESPN roster-source images in both offline bundles. Sweep player-bearing slate,
 game/sheet, roster/list/profile, leaders and scenario surfaces at 1440/960/390 in both themes; inspect screenshots.
 The shared component and retained collection are implemented; full final bundles pass hosted import/offline29/29 laptop and27/27 phone, with installed upgrade32/32.
-Icons are published and included in both offline bundles (526/528 retained; missing uses initials). Current evidence and sizes are in HANDOFF.
+Icons are published and included in both offline bundles (526/528 retained source URLs; missing uses initials). Current evidence and sizes are in HANDOFF.
 
 U23 and startup recovery are published in the PWA: **30/30** browser checks (18 regression, six card
 probability/link, six retry-screen cases), hosted import/offline **24/24 laptop / 23/23 phone**, installed
@@ -84,7 +84,7 @@ Expected is default; “either status” exactly marginalises remaining branch w
 selected weighted worlds and exact numerator/denominator; zero-mass conditions are unavailable. No branch control
 appears without supported stored branches. Avoid retaining incompatible unconditional cards/targets after selection.
 Normal routes now load source-bound stored branches, share selection with Scenarios and use precomputed
-weighted summaries; this is published on r1. Phone retains Expected only. The schema-2 minute CDFs are
+weighted summaries; this is published on r2. Phone retains Expected only. The schema-2 minute CDFs are
 split per player and compressed losslessly; full current-data laptop/phone imports pass locally. Final
 accepted-runtime refresh/export and public shell are delivered; owner device import remains required.
 

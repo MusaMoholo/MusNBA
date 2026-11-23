@@ -65,3 +65,5 @@ checks stay local, while GitHub Pages continues serving the data-free `gh-pages`
 D56 active method: [independent worlds and scheduling](protocols/world_independence_20261123.md).
 
 D51 acceptance revision: [v3 policy and fresh independent confirmation](protocols/promotion_v3_20261123.md).
+
+Completed A1/r2: [outcome, acceptance ladder and delivery](checkpoints/2026-11-23-a1.md).

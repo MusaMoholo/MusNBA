@@ -55,7 +55,7 @@ Estimate durations only from measured logs, naming the population/rate.
 ## 4. Non-negotiable safeguards
 
 - Use `.venv/bin/python`. Existing dependencies: NumPy, pandas, pyarrow, LightGBM; Node for browser checks.
-- **Accepted floor:** engine-v1.3-r1 (Rule3, unchanged v1.3 nodes), 10,000 worlds/branch, D29 targets/pool0; team pathway v1.
+- **Accepted floor:** engine-v1.3-r2 (Rule3/independent rotations, unchanged v1.3 nodes), 10,000 worlds/branch, D29 targets/pool0; team pathway v1.
   Change production models/settings/rules through the current versioned player-first policy in TRAINING_PLAN
   (D51 permits its audited redesign; preserve old evidence and freeze new requirements before confirmation).
 - **Serving never computes:** `serve.py`, `views.py` and PWA never fetch, fit or simulate; conditions slice saved worlds.

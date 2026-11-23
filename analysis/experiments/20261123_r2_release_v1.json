@@ -1,0 +1,15 @@
+{
+ "status": "released after source-frozen confirmation, runtime parity and integrated delivery",
+ "runtime": "engine-v1.3-r2",
+ "nodes": "v1.3",
+ "policy": "promotion-v3-20261123",
+ "evidence_sha256": {
+  "analysis/experiments/20261123_independent_rotation_qualification_v3.json": "0c26199073061d3d01fef1d8609c85ca87432063849f85d6fbdc50747aafe0cc",
+  "analysis/experiments/20261123_r2_runtime_recipe_v1.json": "eb9bdbb507310dc1ab9f6679f6b483321ade43b4bcea798a17a7d77e94409a94",
+  "analysis/experiments/20261123_r2_integrated_delivery_v1.json": "44c9e639dde51ce7e64a102cf644ef1150e92bd5828a5afb7a024b7e82a3db60",
+  "analysis/experiments/20261123_r2_profile_refresh_identity_v1.json": "4315ae1c89e6b066cd33d9d5be588ce4d1fe2df0cc7bcf825bc090ddf7a65b37"
+ },
+ "public_shell_unchanged": "31317f88cec02d4ee61fe3a0cae3c4eb9bc3eb49",
+ "original_protected_result": "v2 42/44 retained, all27 proper scores; no repeat/relabel. Post-result policy revision plus fresh200 F4 confirmation is explicit.",
+ "device_import": "Manual import still required on both devices; not proven by export/desktop checks."
+}

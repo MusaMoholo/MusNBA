@@ -1,0 +1,7 @@
+{
+ "prior_archive": "/Users/moholom/Basketball_archive_ops/archive_20261123T174020Z_91228",
+ "files_checked": 12,
+ "changed": {},
+ "all_parquet_inputs_identical": true,
+ "meaning": "Refresh exercised fitted-model recipe; distinguish build metadata from numerical input changes before control reuse."
+}

@@ -8,13 +8,13 @@ Later decisions override earlier horizons/delivery assumptions; do not reopen se
 ## Current architecture
 
 For ET origin D, result games before D and rebuild pre-origin profiles, rotations, minutes, pair history and
-team ratings. **Possession engine-v1.3-r1** (unchanged v1.3 nodes) plays today's games only (10k worlds/game); **team pathway v1** plays
+team ratings. **Possession engine-v1.3-r2** (unchanged v1.3 nodes) plays today's games only (10k worlds/branch); **team pathway v1** plays
 tomorrow onward (10k seasons), including a fresh season on game-free days. Each season consumes its own stored
 near-term outcomes, then updates its own team ratings after every later result. No per-world player carry-over
 is needed inside the possession horizon. Views/PWA only read stored outputs.
 
 `models/v1.3.json` defines production; fitted nodes are in `data/models/v1.3/`. `scripts/engine.py:ENGINE`
-uses target rotations, 10,000 worlds and pool 0 (one target rotation table/world). Rule3 foul-out/exhaustion mechanics and stored lineup mixtures are delivered. Richer real-matchup
+uses target rotations, 10,000 worlds and pool 0 (one target rotation table/world). Rule3, per-world D29 offset fitting and stored lineup mixtures are delivered; canonical1k chunks use ten workers. Richer real-matchup
 candidates, responsive substitutions, D47 scaling and latent form remain unpromoted.
 
 ## Decisions so far
@@ -140,8 +140,8 @@ wired. Frozen hypotheses/methods are linked in TRAINING; inconclusive components
 D10's whole live-nightly budget remains ≤60 minutes. Use AGENTS §6's ten-thread total cap. D56 schedules
 canonical world chunks, then branch/game finalisation, in one bounded pool; worker assignment/order does not
 change their seeds. Parent large-array loading follows pool shutdown. The route remains gated on qualified
-independent fitting. Single-game timing and its limits are in FINDINGS §7; full accepted nightly throughput
-is recorded in HANDOFF. Never infer sample count from worker count or treat a partial game as complete.
+independent fitting (default r2; old runtimes replay legacy fitting). Independent/raw queue parity and full
+accepted-nightly timing are recorded in FINDINGS §7/HANDOFF. Never infer sample count from worker count or treat a partial game as complete.
 
 ## 12. Branches and season coherence
 
