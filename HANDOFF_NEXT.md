@@ -1,6 +1,6 @@
 # Handoff — current state and next actions
 
-Updated **23 November 2026**. Previous pushed checkpoint: **22238f2**; `git log -1` identifies this checkpoint.
+Updated **23 November 2026**. Previous pushed checkpoint: **880c0de**; `git log -1` identifies this checkpoint.
 Read [AGENTS](AGENTS.md), then this file and [PLAN](PLAN.md). Detailed history is indexed in
 [docs/README](docs/README.md); do not read archives as current instructions.
 
@@ -9,14 +9,16 @@ Read [AGENTS](AGENTS.md), then this file and [PLAN](PLAN.md). Detailed history i
 - **Delivered:** engine-v1.3-r2 (unchanged v1.3 nodes), Rule3, D29 targets/pool0, row-local rotation fit;
   10k worlds/branch through canonical1k chunks on ten workers. Team-pathway-v1 starts tomorrow.
 - **Scope/progress:** original14-task programme64% (S01–S08 complete; S13 deferred). D42 Chunk A
-  **51%** = A1 **100%**×30% + A2 **60%**×35% + A3 **0%**×35%; B0. Finish A2 only, then stop.
+  **54.5%** = A1 **100%**×30% + A2 **70%**×35% + A3 **0%**×35%; B0. Finish A2 only, then stop.
 - A1 outcomes/ten-rung ledger: [completed checkpoint](docs/checkpoints/2026-11-23-a1.md).
   [Release receipt](analysis/experiments/20261123_r2_release_v1.json). Fresh200 F4 establishes27/27
   proper bounds plus all bias/coverage diagnostics; original protected v2 42/44 preserved, never repeated.
   Post-result v3 revision is explicit; no universal player-accuracy or learned availability claim.
-- **A2:** analytical contextual-clock screens/confirmation passed; no clock engine outcome yet. Shared
+- **A2:** analytical contextual-clock screens/confirmation and200-game engine development passed. Shared
   shooting has no confirmed pooled missing PTS covariance, so no calibrated form factor was added.
-- **No running compute jobs.** Last full nightly and final controller exited0; exact commands/logs below.
+- **A2 F4/F1/F2 complete:**200/100/100 pairs establish27/27 proper bounds each. F1 total coverage
+  is imprecise; no material harm. Independent600-game readiness audit and smoke108 pass. F3 is next.
+  Production remains r2, no clock selected.
   Do not repeat completed A1 simulations. Review server:8767; never stop owner:8766. D52: no CI workflows.
 
 ## Latest published PWA delivery
@@ -38,29 +40,47 @@ Read [AGENTS](AGENTS.md), then this file and [PLAN](PLAN.md). Detailed history i
 ## Next actions
 
 1. **A2 headliner:** test the frozen contextual late-clock correction in the engine against real outcomes.
+   Hook-off three raw r2 pilots pass; sampler3/3. Runtime manifest
+   `20261123_a2_clock_engine_runtime_manifest_v1.json` freezes current sources, unchanged pools/IDs/primary
+   and r2 baseline. Earlier-fold planned config aliases resolve via retained preparation records; model
+   identities/IDs/seeds are unchanged. Engine hook is opt-in only; production r2 timing remains legacy.
    Use qualified r2 in both arms, reserve r3 for clock; no new form/variance factor or feature selection.
    Read [original engine stages](docs/protocols/a2_clock_engine_20261123.md) and the prospective
    [v3 development plan](docs/protocols/a2_clock_v3_development_20261123.md). Pools are already frozen
    under `data/derived/experiments/20261123_a2_late_clock_{screen,confirmation}_v1/F*_pools.json`;
    IDs in `20261123_a2_clock_engine_panels_v1.json`. Freeze driver/source/input/seed identities before results.
-2. Add the optional hook after legacy last24s draws, using `ContextClock`; None must consume no draws.
-   Prove hook-off parity on the three retained independent-fit pilots before a candidate. Reuse r2
-   development controls from `independent_rotation_f4_20261123_v1`; simulate only the clock arm first.
-   Conditional joint time/no-action loss is the frozen learned primary benefit, not an invented pooled
-   PTS target. Explicit v3 engine compatibility:27 proper bounds; report17 bias/25 coverage, block
-   demonstrated material coverage harm. All counts/uncertainty/unsupported groups remain explicit.
-3. Only a survivor runs original100-per-fold F1–F3 dated/body-free controls, separate200 F4 confirmation,
-   independent-stream30 and three10k stresses. Candidate/control share exact fitter/models/priors/seeds.
-   Fresh r2 confirmation captures already supply the independent F4 baseline:
-   `independent_rotation_policy_confirmation_20261123_v1` candidate outputs. Never regenerate matching
-   controls for convenience. Use ten total compute threads, independent accounting inside that budget.
-   No protected r3 evaluation until all required stages qualify; only once, no threshold/recipe rescue.
+2. **Research checkpoint complete:** [A2 engine evidence](docs/research/a2_clock_evidence_20261123.md)
+   owns populations/effects/accounting. Receipt `20261123_a2_research_checkpoint_v1.json`: smoke108/108,
+   deliberate fault86/108 exit1, sampler/recipe5/5. Independent raw-table audit reproduces all600 input
+   decisions/300 selected IDs,12,950 roster and127,610 template position cells. Production/PWA unchanged;
+   no repeated nightly at this research-only checkpoint. No heavy jobs running; F2/logs completed.
+3. **Next F3:** all inner OMP/OPENBLAS/VECLIB/MKL/NUMEXPR limits1, then
+   `analysis/a2_clock_ready_panels.py run --fold F3 --name a2_clock_earlier_f3_supported_20261123_v1 --jobs 10`,
+   log `/tmp/musnba_a2_clock_earlier_f3_supported_20261123_v1.log`. Start sleeping scorer
+   `/tmp/musnba_a2_score_when_audited.py a2_clock_earlier_f3_supported_20261123_v1 F3 earlier_ready`
+   with the same limits; it waits for complete100/audit and scores once. Inspect supported-fold compatibility.
+   Do not edit frozen engine/driver/scorer/auditor/models/inputs or repeat completed runs.
+   Then `analysis/a2_clock_pool.py score` must establish all27 on pooled300; manifestv2 uses each fold's
+   dated roles/raw game rows. Only survivors run unchanged200 F4 confirmation (`analysis/a2_clock_engine.py
+   run --phase confirmation --name a2_clock_confirmation_20261123_v1 --jobs 10`), stream30 and three10k
+   stresses. Reuse r2 `independent_rotation_policy_confirmation_20261123_v1` controls. Stress adapter still
+   needs implementation: ten deterministic1k chunks/game/arm, namespace `a2-clock-stress-chunk-v1`;
+   three real games, never30. Freeze adapters before outcomes. Protected r3 only after all stages qualify,
+   once; production clock loader/final adapter are not built. No recipe/threshold rescue or arbitrary variance.
+   [Readiness amendment](docs/protocols/a2_clock_readiness_amendment_20261123.md): original F1 setup
+   failed on missing position before aggregate scoring. All original partial files remain; ten complete
+   pairs reused/re-audited. Input-only replacement4/5/15 keeps100/fold, same hash order/recipe/seeds/gates.
+   Missing positions remain missing; excluded games stay unqualified. IDs `20261123_a2_clock_ready_panels_v1.json`.
+   Source copies: `data/derived/experiments/a2_clock_{engine,ready_panels}_20261123_v1_sources/`;
+   original pooled-v1 unused adapter copy also retained. [Execution semantics](docs/protocols/a2_clock_execution_review_20261123.md):
+   periods asynchronous, off-hook raw parity mandatory; explicit shot-clock state is absent.
 4. All12 archived/current input files are byte-identical after the rebuild; report
    `20261123_r2_profile_refresh_identity_v1.json`. Exact controls remain reusable after parity. Archive
    `/Users/moholom/Basketball_archive_ops/archive_20261123T174020Z_91228` remains backup; never restore
    over production. Frozen r2 confirmation source31-file archive is under
    `data/derived/experiments/independent_rotation_policy_confirmation_20261123_v1_sources/`.
-5. Finish A2 with a measured accept/reject decision and limitations; required fresh full nightly on accepted
+5. Finish A2 with a measured accept/reject decision and limitations; review the original S09 ladder before
+   crediting its10% (diagnostics alone do not automatically complete it). Required fresh full nightly on accepted
    engines, PWA/iCloud verification, eight-doc review, commit/push. If clock fails, retain accepted timing;
    do not add arbitrary variance. U23 outcome stories already provide A2's delivered player-facing improvement.
    Construct the D54 successor fully (weights/ten rungs/acceptance/commands/final nightly), then stop before
@@ -83,8 +103,8 @@ Dependencies/acceptance are in PLAN §6a; methods/gates belong to ENGINE/TRAININ
 100 includes evidence, necessary delivery, checks, docs and commit/push. Report every new 10% module/5% overall mark.
 
 ```text
-Chunk A  ██████████░░░░░░░░░░ 51.0%
-A2       ████████████░░░░░░░░ 60%
+Chunk A  ███████████░░░░░░░░░ 54.5%
+A2       ██████████████░░░░░░ 70%
 A3       ░░░░░░░░░░░░░░░░░░░░ 0%
 ```
 
@@ -101,6 +121,6 @@ A3       ░░░░░░░░░░░░░░░░░░░░ 0%
 | 90 | Freeze promote/reject decision under all applicable gates. | Fresh live 10k nightly; audit selections and iCloud/PWA delivery. |
 | 100 | Verify evidence/fallback/delivery, commit/push. | Publish shell; construct successor; checks, commit/push and summary. |
 
-A1 is complete; its ladder/outcome is archived above. A2 70–100 and A3 all remain open. Chunk B's full predeclared ladders and the original S01–S14 ladders are preserved in
+A1 is complete; its ladder/outcome is archived above. A2 80–100 and A3 all remain open. Chunk B's full predeclared ladders and the original S01–S14 ladders are preserved in
 [the frozen planning record](docs/archive/2026-11-23-before-lean/HANDOFF_NEXT.md); open only the relevant section
 when preparing that chunk, and copy its current ladder here before execution.

@@ -1,0 +1,784 @@
+{
+ "kind": "D51 paired rule confirmation and raw diagnostic capture",
+ "run": "a2_clock_earlier_f2_supported_20261123_v1",
+ "game_ids": [
+  "401705023",
+  "401705030",
+  "401705034",
+  "401705053",
+  "401705060",
+  "401705062",
+  "401705067",
+  "401705072",
+  "401705087",
+  "401705114",
+  "401705115",
+  "401705118",
+  "401705121",
+  "401705124",
+  "401705141",
+  "401705144",
+  "401705148",
+  "401705154",
+  "401705167",
+  "401705185",
+  "401705188",
+  "401705193",
+  "401705200",
+  "401705202",
+  "401705208",
+  "401705218",
+  "401705233",
+  "401705249",
+  "401705256",
+  "401705258",
+  "401705267",
+  "401705270",
+  "401705287",
+  "401705289",
+  "401705297",
+  "401705303",
+  "401705305",
+  "401705312",
+  "401705315",
+  "401705320",
+  "401705325",
+  "401705337",
+  "401705346",
+  "401705348",
+  "401705350",
+  "401705351",
+  "401705366",
+  "401705374",
+  "401705375",
+  "401705381",
+  "401705388",
+  "401705389",
+  "401705390",
+  "401705392",
+  "401705400",
+  "401705401",
+  "401705404",
+  "401705419",
+  "401705434",
+  "401705449",
+  "401705477",
+  "401705479",
+  "401705486",
+  "401705487",
+  "401705488",
+  "401705496",
+  "401705502",
+  "401705510",
+  "401705513",
+  "401705519",
+  "401705525",
+  "401705527",
+  "401705533",
+  "401705538",
+  "401705545",
+  "401705563",
+  "401705566",
+  "401705574",
+  "401705578",
+  "401705583",
+  "401705585",
+  "401705592",
+  "401705593",
+  "401705600",
+  "401705627",
+  "401705649",
+  "401705658",
+  "401705659",
+  "401705661",
+  "401705666",
+  "401705670",
+  "401705678",
+  "401705679",
+  "401705686",
+  "401705693",
+  "401705705",
+  "401705715",
+  "401705724",
+  "401705738",
+  "401754705"
+ ],
+ "worlds": 1000,
+ "stream": null,
+ "fingerprints": {
+  "analysis/a2_clock_engine.py": "2e63d24f0143b811c353df6426538698ac2c9a7e78e3aeb71f80e653fc1cf30c",
+  "analysis/a2_clock_scores.py": "c70de02f511c4fc7a55e8549f491ee109963051b1e7209b5a06f22dedd72927a",
+  "analysis/experiments/20261122_a1_dated_f1_exhaustion_v1.json": "385b43fc2e5d789196063b043ac5dd3246c6d03803056ec7624b75618170058b",
+  "analysis/experiments/20261122_a1_dated_f2_exhaustion_v1.json": "8c99032258ee59724b2257c2afb6f28059ba0f9ded6d15c01cd52b35b82d0482",
+  "analysis/experiments/20261122_a1_dated_f3_exhaustion_v1.json": "82faef1326bbfdbc2436f6b0b6f1f7497a275ec3ffcfee919f40263bbe23335d",
+  "analysis/experiments/20261123_a2_clock_engine_panels_v1.json": "ae8fc1e4bc7dd1c448f14c47dc8891e4e131db1aff315bae0cf624add04c2044",
+  "analysis/experiments/20261123_a2_clock_off_parity_v1.json": "7a2ed99202b76509bd5612e81b166774d81bda29b2eb7c997de9b4b57b923ac7",
+  "analysis/experiments/20261123_a2_late_clock_confirmation_v1.json": "d54bee37c2f06f7c50c5119ff6d41605e0269f1b95a7667ab260ed27389405b4",
+  "analysis/experiments/20261123_a2_late_clock_screen_v1.json": "5ad195f8aff6926f6e9e174c32788271c9e4c9561d75067cc977e7fb363ee5d3",
+  "analysis/experiments/20261123_independent_rotation_gate_sanity_v1.json": "1d2c1e8f34da2d3ce91f088168b1c509d776cbbb256285cd21fce6bde0f50762",
+  "analysis/experiments/20261123_independent_rotation_panels_v2.json": "0f02051ebf28ec732e046d6635adc45e66ebea06167e404cca8f8e18df87c7d9",
+  "analysis/experiments/20261123_r2_release_v1.json": "b486f62917256421d8999780d809aed8f65ba52e83bcb9958996965e1a23b293",
+  "analysis/experiments/independent_rotation_final_20261123_v1_compare_gate.json": "d29d4879cb3dba7331ef02f031483e3fa4949aacab8974b3e45aea4bacc303ee",
+  "analysis/rotation_confirmation.py": "d95c9c8635a291586513520e8da5faae2198219ad9c84f392d5499146d542d92",
+  "analysis/rotation_policy_confirmation.py": "3cc628a8eff961c9bc9e990bd4c67443fd6b60acfb61adf19dbc06e5bfbc24d8",
+  "analysis/rule3_capture_audit.py": "8ad4b8e1e21ae1c2318a72c89b554fb5b3063be7b6082237d19e32476569870b",
+  "analysis/rule3_confirmation.py": "f1f84bbb51ecb8b18bd82def765fc77e222d6ce61acd6432be2cd6818b639959",
+  "analysis/rule3_pipeline_audit.py": "58f4bff447979cb5a8c2f352e583932a99ce1115ccdeda02e6e589fdb3ec9440",
+  "analysis/rule3_scores.py": "5d7dbcc8361fe65974e9a227029ce9ccb6673a1465aa95d0370765da4ec490c7",
+  "basketball_common.py": "be2b0643eebb4e1cd51b3eb8214d13b8718fd820864d3df7f7ac8fc1dd5bb48a",
+  "data/derived/athletes.parquet": "3b8e24488790edca5289a2a52f30867243a69f6cab57032e1c839967bb65d5be",
+  "data/derived/experiments/20261123_a2_late_clock_confirmation_v1/F4_pools.json": "5bc9035e704b6396388c9131ddafb6832eb9e232e26fe2d1d0d30ca261bce70f",
+  "data/derived/experiments/20261123_a2_late_clock_screen_v1/F1_pools.json": "9cae3d45c1b6e5f47951928b813b1db178999f347d2a3f332a507c4eb18934eb",
+  "data/derived/experiments/20261123_a2_late_clock_screen_v1/F2_pools.json": "7d44686f93ba9144afbb74ba6e8ea1ea46206ad830603d7863411f758d190b5e",
+  "data/derived/experiments/20261123_a2_late_clock_screen_v1/F3_pools.json": "c18c0f8ca8b85f04cc4558146e87abe50d5b78dce60fb19dfd2037baa8b74a53",
+  "data/derived/experiments/a1_dated_f1_exhaustion_v1/config.json": "0020c5a124bb4fcf3ad9a90f12abeb9992448994f1b550062c37bc2a962e20bc",
+  "data/derived/experiments/a1_dated_f2_exhaustion_v1/config.json": "514e59f435849fbc44eafa9153bf4304d76858f509321b3861dd344ca41060b9",
+  "data/derived/experiments/a1_dated_f3_exhaustion_v1/config.json": "887239b11c786d558d6952ef7c57780008d01eb1de088503f9d5b281c90f8465",
+  "data/derived/history/2023/on_court.parquet": "ba9b4b13e16e5b839e5530905497d2d00d231413ea40f39ee46855f3ebce8c3b",
+  "data/derived/history/2023/player_periods.csv.gz": "d549a82d8704e95218379b945bef5ddb1bf4fa59db0e0b7e479e37f408281342",
+  "data/derived/history/2023/segments.parquet": "813b53edadf92f6e6c607211b1d4c64b312aa9fbe689851110e912419101a76e",
+  "data/derived/history/2023/stints.parquet": "f067fa85961f5792edba3bf6b1f3c3080b912c35bb06b0962615508ac16c3a5c",
+  "data/derived/history/2024/on_court.parquet": "5461947edb052ef9e62b4a70ba49e57a0f98d929f4a19167f03aad3972457f95",
+  "data/derived/history/2024/player_periods.csv.gz": "7f1bfaab40aceab115081cd2ae6db4b6e8694f69cc1f2c4585d2d2f10ee1bb90",
+  "data/derived/history/2024/segments.parquet": "4a7c3c2bce39580cc8e1092ffc215d11bbd49f7bf117b4551eee40337203d2c0",
+  "data/derived/history/2024/stints.parquet": "7555ba3a82f9e97b68f04aa2b24d26451b8ba54562976e20c66251fe021e068b",
+  "data/derived/history/2025/on_court.parquet": "5bbabab60114aa3f7fa096d7708be96f47177c541debcae88059da6b1adb77e9",
+  "data/derived/history/2025/player_periods.csv.gz": "8f513a5802292f4427f80022f4e57ae718a50ae880ef07f8ad2f9c06beebaf63",
+  "data/derived/history/2025/segments.parquet": "d9db732172894ed8d3c6e5e99e3cd1c197006da22799413034ce3ce18cc5aee2",
+  "data/derived/history/2025/stints.parquet": "e01c20cec0ac57a8146cab04b3483de62ee1db4c7bfb0702834f107c97afc95c",
+  "data/derived/history/2026/on_court.parquet": "1b0ffaf53490c3fda4edd28ac427766a0af3a1bfe86f1fece240cd63ed1e8410",
+  "data/derived/history/2026/player_periods.csv.gz": "ef35bb5c33c46e6a194cea30075d9974ead5d44be96c6074b60f6dac49e69c28",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+  "data/derived/history/2026/stints.parquet": "29de886d2afd2a5d9a55af2acb027fd3ee83a887584c71a9fe9951a9c2cc225f",
+  "data/derived/teams.json": "130aa5358d49b944c2b5bee7e9a163f1e53285e93dae57262f039ca1636b7ecc",
+  "data/derived/variants/a1_assignment_schedule_20261122_v3/F1.json": "9d185131dfe56e94757b96160182d2c40abe0cb8eeaa9fbe5c91dee74a58ad6b",
+  "data/derived/variants/a1_assignment_schedule_20261122_v3/F2.json": "36cc687b4fdc7a3d0580eff696a7e189f240cc44f46d88c8a644b542a2b188cd",
+  "data/derived/variants/a1_assignment_schedule_20261122_v3/F3.json": "002ae0964b6a65fc87c51393f1d4050e80d5207339d7cdad0b7c59074b1f16b3",
+  "data/derived/variants/a1_scheduled_F1_20261122_v3/features/features_report.json": "c1f29a7477e1137bddbbcde88e3261d0272c4c7d10c5e19a5e1caeacaf2272e7",
+  "data/derived/variants/a1_scheduled_F1_20261122_v3/features/pregame.parquet": "623183c962783dbbcc714e5b59809abb083bc598afb36ce2ab511879a7d9c7b0",
+  "data/derived/variants/a1_scheduled_F1_20261122_v3/features/team_pregame.parquet": "ebb3f3205e75d68a868a2a98c7ea804865143ca3d623147d92b4b2156b358bb9",
+  "data/derived/variants/a1_scheduled_F2_20261122_v3/features/features_report.json": "52a3fd8a44bf6fe7ff06aa19e06293441717546dce254a181ab706f067a3d999",
+  "data/derived/variants/a1_scheduled_F2_20261122_v3/features/pregame.parquet": "7b66c3389b746adc72e98aea0bd73ffd8492bcf7a9475382111fce68bc1d723f",
+  "data/derived/variants/a1_scheduled_F2_20261122_v3/features/team_pregame.parquet": "ebb3f3205e75d68a868a2a98c7ea804865143ca3d623147d92b4b2156b358bb9",
+  "data/derived/variants/a1_scheduled_F3_20261122_v3/features/features_report.json": "73defca4e0d4edcd265ab8c3b7f9df345ae1940972a461bd876c1be4744efbd7",
+  "data/derived/variants/a1_scheduled_F3_20261122_v3/features/pregame.parquet": "46ccbd20f55400b385af4b95930abda631268100d8a973002e66f5aa9c1dad49",
+  "data/derived/variants/a1_scheduled_F3_20261122_v3/features/team_pregame.parquet": "ebb3f3205e75d68a868a2a98c7ea804865143ca3d623147d92b4b2156b358bb9",
+  "data/derived/variants/matchup/features/features_report.json": "1b904943ea8837e236a9e73a85619c41f2711960db0cf107b6a9f111ce134edd",
+  "data/derived/variants/matchup/features/pregame.parquet": "49452d553a39049dfa7316d66f1e2e5507c29e55f963f2f87bb1f6ed055f4614",
+  "data/derived/variants/matchup/features/team_pregame.parquet": "11d11bb6484169b1955fb57b46e7d63bca591153c4880e66befe66038c8591a5",
+  "data/models/folds/a1_dated_f1_exhaustion_v1_F1_all/assisted.txt": "7cc2341eb35d64b055078f35f52d8dfc1c60e8585301305356f949a1a42a9b2c",
+  "data/models/folds/a1_dated_f1_exhaustion_v1_F1_all/assister.txt": "e9827dbe37e578058aa1eadcff789682cb5c0d94949c19ceb2e8e7cc98e43cf1",
+  "data/models/folds/a1_dated_f1_exhaustion_v1_F1_all/blocked.txt": "b5b388a83e8e7a56acac713f4590298756c883acfee969b09244256b816b7a95",
+  "data/models/folds/a1_dated_f1_exhaustion_v1_F1_all/blocker.txt": "7d1d7523104e0bca50fc1ba0d8d51cb25ef6a7b5434d5ad5696cb270a4c567a2",
+  "data/models/folds/a1_dated_f1_exhaustion_v1_F1_all/config.json": "5ba61a1df30db1634c7137d2a0655be6b519036de923ab9a4ff2f91f56734783",
+  "data/models/folds/a1_dated_f1_exhaustion_v1_F1_all/duration.txt": "0b7e77b7dd9fe82da797bf9817f1b437b5d16d49ad1a1ec72a236fefcbd188b7",
+  "data/models/folds/a1_dated_f1_exhaustion_v1_F1_all/event.txt": "aa19cbaf4165b8e43d70bc0d94d1a029bea19bbaad86d2e3085cf047e43ea6ed",
+  "data/models/folds/a1_dated_f1_exhaustion_v1_F1_all/fouler.txt": "e386f5e2260e37e497a1bf3b140d63f3a16bcd8cfd9959ac8696e25dc23cc496",
+  "data/models/folds/a1_dated_f1_exhaustion_v1_F1_all/free_throw.txt": "ae783bd818ccc33e9c07ae6e8388eb717b5e42f4f59045222ffc11804d69e751",
+  "data/models/folds/a1_dated_f1_exhaustion_v1_F1_all/location.txt": "a34b1d9d6286daa7ceef3a9c973e09b9ebf3d63bc4bdfd3eae539eaa5735dba6",
+  "data/models/folds/a1_dated_f1_exhaustion_v1_F1_all/meta.json": "87624e1c03f8640b9271e1e01cf348236c1a6e63db8a7b1f6f42d70b82d70515",
+  "data/models/folds/a1_dated_f1_exhaustion_v1_F1_all/rebound.txt": "8a3344fc1b24a81a187127e83e3c758eaf8a64a361c1349dfd77705b85c6f993",
+  "data/models/folds/a1_dated_f1_exhaustion_v1_F1_all/rebounder.txt": "3ccc108006512374f0c3acc530b3d410c29f71c5c13969eb8e9eb15bf34681be",
+  "data/models/folds/a1_dated_f1_exhaustion_v1_F1_all/shot_result.txt": "d13d832d880ff4db4cf67fa7ad182dbd068b1af74e4dba4a2a34e333a0b5777d",
+  "data/models/folds/a1_dated_f1_exhaustion_v1_F1_all/stealer.txt": "7fdabebd5e720ec1409b753e7fe7cb59710252d42c6f2aaa6a4e173b2fbf3240",
+  "data/models/folds/a1_dated_f1_exhaustion_v1_F1_all/turnover_type.txt": "f3a957483b0893c6d737b47f94f5c98222dfa25f376fc7faf6451c43dd91cfa7",
+  "data/models/folds/a1_dated_f1_exhaustion_v1_F1_all/what.txt": "be67926d36b863cce3491d63a61717f92273f65cedaa42f1213961b6a8570744",
+  "data/models/folds/a1_dated_f1_exhaustion_v1_F1_all/who.txt": "23b2bbe178e2d8285d64a2e2d70261782edf5fafd1dbf2b8b36ae4cdfaabe271",
+  "data/models/folds/a1_dated_f2_exhaustion_v1_F2_all/assisted.txt": "6e92e495d5b2deba42afabe0533ce3bae268949f08964afc17676298d869e8c7",
+  "data/models/folds/a1_dated_f2_exhaustion_v1_F2_all/assister.txt": "1193178b7f6be1208fde8e6263fc4d2eeeaf0135dae0dd758ee3c4ff91b2537f",
+  "data/models/folds/a1_dated_f2_exhaustion_v1_F2_all/blocked.txt": "22162e8e6f5c5081e02a0bc1db640d0e601ce0094903fa043a258734016936bf",
+  "data/models/folds/a1_dated_f2_exhaustion_v1_F2_all/blocker.txt": "a3ec7272bbe90c2664ee3c5ad9dd50edd8c91e7468d735f224af3b41d4895398",
+  "data/models/folds/a1_dated_f2_exhaustion_v1_F2_all/config.json": "647ede1109ba4bc522ace2a7e8d03e3c5179cfd164cb23a1ad221627885f2bfd",
+  "data/models/folds/a1_dated_f2_exhaustion_v1_F2_all/duration.txt": "06995b240db45fad87f2fe16523cfe29180d0ae32f51e30dfa5ba7ed7db7ecd9",
+  "data/models/folds/a1_dated_f2_exhaustion_v1_F2_all/event.txt": "c4668646c2c8c7ba3e310d760ace2079875998bdaa6d8b3eaf8500f4ca4137a1",
+  "data/models/folds/a1_dated_f2_exhaustion_v1_F2_all/fouler.txt": "381193e144e7a5993f9db718c010561f8550488f95f04a7219c72201d28fe6b6",
+  "data/models/folds/a1_dated_f2_exhaustion_v1_F2_all/free_throw.txt": "73e366ee4fbbe947faf8174ae69fa9c2bd36f48b8f1b1bf28d2ae2e23473cee6",
+  "data/models/folds/a1_dated_f2_exhaustion_v1_F2_all/location.txt": "2cdbca2c9848bbea938a43fbff5a8bc863ca90877c6c03df5e0e89289f1caa72",
+  "data/models/folds/a1_dated_f2_exhaustion_v1_F2_all/meta.json": "16b6cd110319ed76a810a2506830c8a5512ea940cd7320db8d4544e0c07b03e2",
+  "data/models/folds/a1_dated_f2_exhaustion_v1_F2_all/rebound.txt": "5a2d06957dab6981d92bc3411315061f154e9be8c906a93a18b828a6383c02c0",
+  "data/models/folds/a1_dated_f2_exhaustion_v1_F2_all/rebounder.txt": "6cd77e88c51e4aaf05754cb2171291c6bca075234dc07741e6e5bd520f1b39d9",
+  "data/models/folds/a1_dated_f2_exhaustion_v1_F2_all/shot_result.txt": "7136a1eb8e6f55594bdd47f43fa466990c8e2df58d397edc7cb3fdb810a59ca3",
+  "data/models/folds/a1_dated_f2_exhaustion_v1_F2_all/stealer.txt": "7c8268ae9ca3ecae0d7b6fabb4cf1ded0b26afe6c7e1bf4adda694b45e1f73cd",
+  "data/models/folds/a1_dated_f2_exhaustion_v1_F2_all/turnover_type.txt": "25fb8e43cff64fac2e1089daf5fef8685dbbec392620ce82d4d3d9da19542dce",
+  "data/models/folds/a1_dated_f2_exhaustion_v1_F2_all/what.txt": "8f9981cd1e53ad62bc50c7c5a16fc038bedead7f8594d3add6367be46d8f017c",
+  "data/models/folds/a1_dated_f2_exhaustion_v1_F2_all/who.txt": "057718b0f776985fe0e7b036cdbe1544f3c6c02dc7282b74c2eac94eb0dca849",
+  "data/models/folds/a1_dated_f3_exhaustion_v1_F3_all/assisted.txt": "26812be4ffba4a8c274bfe1ae170d287cd77242ddf37e287393330583e72a22c",
+  "data/models/folds/a1_dated_f3_exhaustion_v1_F3_all/assister.txt": "f28c5eed9fc88780e06584c69e8e83b386a9d4aed3e42ddf76862374d57ff43c",
+  "data/models/folds/a1_dated_f3_exhaustion_v1_F3_all/blocked.txt": "c8f248130b58b39fbd76f11ea2c1ed5ea56a8eb572460e9ec0224813dbd31e4d",
+  "data/models/folds/a1_dated_f3_exhaustion_v1_F3_all/blocker.txt": "dfd96cc8c2a8b120f47f54c07335f359dea171e674ad82e4c48709aeb5863992",
+  "data/models/folds/a1_dated_f3_exhaustion_v1_F3_all/config.json": "9f075ec3ee5d07484ae7b1987427db11d9a2a94a96ccbf2e348226fdba09cdb5",
+  "data/models/folds/a1_dated_f3_exhaustion_v1_F3_all/duration.txt": "83d56bf50b7cb9da2bcaa1900cae34eb7ec31fbb120dc6785ae6e0363b1604ec",
+  "data/models/folds/a1_dated_f3_exhaustion_v1_F3_all/event.txt": "6ff321dd6b60ff2c17b910aab79a41a7c82669a827acef4d8c80d357ad70e6de",
+  "data/models/folds/a1_dated_f3_exhaustion_v1_F3_all/fouler.txt": "2b9c8b7b48cb64d462219ac1a50b5298b0b36a6d97003bfc6b92fbde92fd2966",
+  "data/models/folds/a1_dated_f3_exhaustion_v1_F3_all/free_throw.txt": "dc9daaaad9484d33225d59b11e0b1575eec411004b96f18a34a70f3cc0524a89",
+  "data/models/folds/a1_dated_f3_exhaustion_v1_F3_all/location.txt": "74c33cc128f8cb41b6fd05ec07d11fdb48f81e8f9d058c6af7479405ae54b80e",
+  "data/models/folds/a1_dated_f3_exhaustion_v1_F3_all/meta.json": "a9fb761bf1c225e2d44fed5b7a8af45a88a1b2e42e88e9bc8fce15b69b9157e5",
+  "data/models/folds/a1_dated_f3_exhaustion_v1_F3_all/rebound.txt": "0389fa1392ed45287405e7d3a0edf12683f73bf961ce7c38dc6e82edf6b2eb58",
+  "data/models/folds/a1_dated_f3_exhaustion_v1_F3_all/rebounder.txt": "83953c34c18d28117f2d8ee6f90484deb3a7d7c5519ea0389b4414bbaed2295e",
+  "data/models/folds/a1_dated_f3_exhaustion_v1_F3_all/shot_result.txt": "034ad5503657c69a41022c8c0da13e6078f9ca4dea5de2424f373a81d8166b5d",
+  "data/models/folds/a1_dated_f3_exhaustion_v1_F3_all/stealer.txt": "22c33eb2f6db215c0211d4e8b961685c985c9f64c7d70a2d2e8642e68df29f33",
+  "data/models/folds/a1_dated_f3_exhaustion_v1_F3_all/turnover_type.txt": "a9d071631f593f1c36e4bee887b980a2319576d7fe707555e3bcaf85c595220b",
+  "data/models/folds/a1_dated_f3_exhaustion_v1_F3_all/what.txt": "f31449debadca5e769d05ba9bf6970ffb6dde1e6a6f12a4efa5fe90c9724e8d1",
+  "data/models/folds/a1_dated_f3_exhaustion_v1_F3_all/who.txt": "1195971bd374a8b0684ff27e8985b1793bd975886bf5b4caa4e0a6ce6f379360",
+  "data/models/folds/v1.2d_F4_all/assisted.txt": "0a094b183b18b8d45a6e5cf047fb117f8aed62dc6941bb9b7944391c3afec690",
+  "data/models/folds/v1.2d_F4_all/assister.txt": "f32c49ac6c7ca5774aad414c5cf500d1b5fd1bbd8fa6c0ddd50ee1934b1d3961",
+  "data/models/folds/v1.2d_F4_all/blocked.txt": "e085efcacd0baea9568f27f7ee05dd43687e7762ba55015d7569cc1efe175c04",
+  "data/models/folds/v1.2d_F4_all/blocker.txt": "5975f284a6c41a013db80fb669230e64dda7167137554bba9051dd04fe4004f0",
+  "data/models/folds/v1.2d_F4_all/config.json": "1617769cb52f2c750e0f1276071b39fc21254ef53fc97ccc646869aaa50f5e71",
+  "data/models/folds/v1.2d_F4_all/duration.txt": "2603f8bf64f3bbef3146285638f79262446eb9a76572c4217f45e6df77dee72c",
+  "data/models/folds/v1.2d_F4_all/event.txt": "d62e1cac4c4fa1cbec0ba5fccc321bae6838202b17253c80a0e8f502395e7e36",
+  "data/models/folds/v1.2d_F4_all/fouler.txt": "70ee6709fcd1fae1ca43ea925babaeb9c9355eaf7e4edeeb601d0cb11c45d266",
+  "data/models/folds/v1.2d_F4_all/free_throw.txt": "ddd7ef48ede7de973c9967b01826f3c293ee824147ca2da772de17a1d781f612",
+  "data/models/folds/v1.2d_F4_all/location.txt": "8f12f8c3bb168ab94dfae313f7624e1ff43074764db665b03ba9511d69c12979",
+  "data/models/folds/v1.2d_F4_all/meta.json": "4a3dfcdff94a856f718fe7f30ea14a44255364cdc2977b62b524c081909139a7",
+  "data/models/folds/v1.2d_F4_all/rebound.txt": "b94d0f957b02d633ca751dff3ef921ffb7e9f57ce6bd206cbba41893ee6f34ff",
+  "data/models/folds/v1.2d_F4_all/rebounder.txt": "337225efb0be006b8889cb377254f6b03c39b356d73d366d3af153ab9133b094",
+  "data/models/folds/v1.2d_F4_all/shot_result.txt": "993fce9f6450e7f317c19e93cadf562db741efa7b58c05d32a8d561ff5f1bbfc",
+  "data/models/folds/v1.2d_F4_all/stealer.txt": "ceea8df151ace738c6181be7615f93fbbebc13cfc434cc371ff8f7566143c581",
+  "data/models/folds/v1.2d_F4_all/turnover_type.txt": "307defe709ae1a8639407d131e28bfabc8eda32bb291a4820113cf3a5b7001d0",
+  "data/models/folds/v1.2d_F4_all/what.txt": "d093989f161b78686804078c07a1d94a629719893085d399465a52314c0de231",
+  "data/models/folds/v1.2d_F4_all/who.txt": "c792950c30a7e7eecec20ab1d12681b0adc574838f2327bbc948213aa574150d",
+  "data/raw/hoopr/player_box_2023.parquet": "968d835cd04b10533c5b5af8c0e41bf0154a73782e9446c76f765109223e8679",
+  "data/raw/hoopr/player_box_2024.parquet": "1e500a538ec45ddbcb58d9789b5494f8db4f25658eafd01d90f2d09600921665",
+  "data/raw/hoopr/player_box_2025.parquet": "e89f7fbc1124092c715b722e6d72d9dd1b9d28776ca6888b508fd2831cd705e2",
+  "data/raw/hoopr/player_box_2026.parquet": "29a29dc9efd055a93e069a0382ac830d98a13274bee655beba69d95cff099713",
+  "docs/protocols/a2_clock_engine_20261123.md": "93b7cb6d197c11595971bc626be76fb362a579f0c34394bdbc67c28a93a70428",
+  "docs/protocols/a2_clock_v3_development_20261123.md": "475d9eb297a992f0865703bf255fb46db5afecd2a13e5121f4ad8f7fc49afc7f",
+  "docs/protocols/promotion_v3_20261123.md": "d50e26dcf523fad05bfc203ea3c5ceaab73a41aa906f1e9164cbffcb2a40cfeb",
+  "docs/protocols/rule3_implementation_20261123.md": "22373ce32a4833133d4f5dcca69c1a3eb0367eb27107f7d29c2dddd4ed2e2ccb",
+  "docs/protocols/world_independence_20261123.md": "2faaa121335b8377a26504035692ae3ca1a85c0468d4948f84030ae2ce38963f",
+  "docs/protocols/world_independence_amendment_20261123.md": "cc2d64f1ec9c5078113bcc8023f5d349b23776b34a1adbd6d7a9a5bbd1c99277",
+  "models/matchup_2025-12-31.json": "176ce8a25f6fd5cc0cee99abca618a72380bac4ed8cabc6f86d2f6129203206c",
+  "models/v1.2d.json": "d0fded7eb9871494e0bc4a82a3627b0a3dc37c3c243d8c9378f151dec2789927",
+  "scripts/a1_compare.py": "435c1e0761f51ee9d218dfc462db8d219c0bc6f54dc8acd6bcae79968ddfcf68",
+  "scripts/a1_minutes_gate.py": "f5bf1130023ef8c57e90dd66562bcb21775f35581019e25b265dedcdcbed1d4b",
+  "scripts/a1_substitution_world_audit.py": "d1f1b34834ffe6c9d82b246cbbaed453c6a4eea224e47da020c6e0f02d3cdf4e",
+  "scripts/backtest.py": "2ff491455b5c1cac40b5c3502db97bcb4cdbc159e4f0fa494c09e7c5eb24533d",
+  "scripts/engine.py": "40519f56d87dc1889520c952c396e519a85654831f8d1c6c74b7cea56ff4849e",
+  "scripts/forecast_output.py": "e5ace444bb7901d240cac9f606b565a5f875a40239a15e3a1150d35be1d26ca6",
+  "scripts/foul_out.py": "32b51b7ad72bd3875d9f7c5301190b98545d347bf920be1d07b2d4e501c1da8c",
+  "scripts/late_clock.py": "56d1ba362b1780c11857e670ff55e5ad82198805d3e4ab61b7c1716b5be4fa83",
+  "scripts/matchups.py": "70bbb3f069e78477c83b63ab66e518c4148217b11c415ff1825856914861a153",
+  "scripts/minutes.py": "94dd0ed25e536708c75cd4cf1f386bf2f9fa35f2c334d83cbdd031d4448ba2d0",
+  "scripts/nodes.py": "78749b680b889993e83ba26baab51877cd7393ee0a5a3d9f4fdaf9123d3b161f",
+  "scripts/projection.py": "90ac118a4944ee5a57d0c9784feee4692741295f2b633a0b4291e088af1a688e",
+  "scripts/release_gate.py": "5521abe5552a63f277adefcf05624b6121ef21a3003c4e58fcf1a30c40f2e287",
+  "scripts/rotation_fit.py": "46b9c7e301076531617793021425c2f08cdbeb1594638de1a851cba6ba66bfe6",
+  "scripts/rotations.py": "1abf8fd173f4ca96d608813f315df8b034436a4bb26060e55410e3710c7e9c3a",
+  "scripts/world_mass.py": "8a4c7c06bf83a21527866f7704aa7f20da99e1816a46721734969785080072cb",
+  "analysis/experiments/20261123_a2_clock_engine_runtime_manifest_v1.json": "c7947e42496980c50f5bb03c1b6764e946be307e1186a0043d33d7c40efb322e",
+  "analysis/a2_clock_ready_panels.py": "6f4d338db474ab00a088b53daf6b40db731c6606a9015c2068f6af44f8351cc9",
+  "analysis/experiments/20261123_a2_clock_ready_panels_v1.json": "0848468337ebdad1df7c6738029a2eb47470dbc56d0afb119279524445b7b506",
+  "analysis/experiments/20261122_a1_pre_candidate_manifest.json": "195b4ddaf748e4f3520a02f813b5763736fe4fbfbe653e896161532d6d9c7e6b",
+  "docs/protocols/a2_clock_readiness_amendment_20261123.md": "c0d471f304a1aa3e3906ac9dea7971532342c7a1ff9fc5289bcb0d365dcba907"
+ },
+ "directory": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1",
+ "pilot": false,
+ "stress": false,
+ "workers": 10,
+ "elapsed_this_invocation": 1208.4608675420022,
+ "resumed_completed_games": 0,
+ "captures": [
+  {
+   "game": "401705023",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705023.json",
+   "meta_sha256": "7a402f4caf350dcea983c37770c8d005649ce9d2b3bf7efc6c273cf695582883"
+  },
+  {
+   "game": "401705030",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705030.json",
+   "meta_sha256": "c4c035a3b6e4c2451708a21cb200d6d86c42df9384ab37b5c17edc4b7f8236b2"
+  },
+  {
+   "game": "401705034",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705034.json",
+   "meta_sha256": "ce9bee71449a0b153d66779c989819a5928c681de759b5efaf4da4da4278ae82"
+  },
+  {
+   "game": "401705053",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705053.json",
+   "meta_sha256": "c0aa21e3e268e089db88bc625395229f86ba3f5e156f00008688023afeb099d7"
+  },
+  {
+   "game": "401705060",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705060.json",
+   "meta_sha256": "44b8b25d4a9d8fa2c09c0eb9bb9fc28e5fc8bb9aba00c6da37a17ef6d2dc5cae"
+  },
+  {
+   "game": "401705062",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705062.json",
+   "meta_sha256": "69a82b6e368a52dc1cca257691c7369e9363f12f5ce8a83881c18588dcdd3565"
+  },
+  {
+   "game": "401705067",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705067.json",
+   "meta_sha256": "bcdb941ac1caefb17a0c6c9c24b84a3e106a5f9ac89c7df39022e64348430be8"
+  },
+  {
+   "game": "401705072",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705072.json",
+   "meta_sha256": "038e01f33c7f4109d44043fe33bdacc7a88bdc8dd551b4af2a1fb077913a2e0d"
+  },
+  {
+   "game": "401705087",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705087.json",
+   "meta_sha256": "67c9c283e77c3e8ec55cf1cbe239ecb7229e20f952f5df67f29af8e9c74047dd"
+  },
+  {
+   "game": "401705114",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705114.json",
+   "meta_sha256": "950492d6bc2569d37eb3f8869f626745d79f3a0c386bf359ad8213ca7c19e518"
+  },
+  {
+   "game": "401705115",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705115.json",
+   "meta_sha256": "e2686a2e910b102da75971f860d8d95ca82d017dfa91f3d581a8feedbe20ef7e"
+  },
+  {
+   "game": "401705118",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705118.json",
+   "meta_sha256": "e0018a5740c0f4a4d1e21505d1bbe8219145d07a4173f99a83868f8beb4a9f8f"
+  },
+  {
+   "game": "401705121",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705121.json",
+   "meta_sha256": "dc0e221c2105b2c7d05f28c96628db0e314530ef6fbaa525189ed2a5643337b1"
+  },
+  {
+   "game": "401705124",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705124.json",
+   "meta_sha256": "d2ef6b36c9611e5f4531e75a230d69dac8aa2464c60c067d326d90cfecfd5282"
+  },
+  {
+   "game": "401705141",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705141.json",
+   "meta_sha256": "9dab2d7c23030a5f22bfd62419f51d3ca3bed755dd74557e6199e0f141773d75"
+  },
+  {
+   "game": "401705144",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705144.json",
+   "meta_sha256": "67b596d9d4f74303b393f9185c05a19bffd87c9f1ff8323e3ead494f903cc62f"
+  },
+  {
+   "game": "401705148",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705148.json",
+   "meta_sha256": "c6354e1b59063989a4b8119cde28dd2c23888fb2959e7cb2ded853675d738919"
+  },
+  {
+   "game": "401705154",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705154.json",
+   "meta_sha256": "d9af0afa2bbaff1858f4943039b857cfd1236f8f6ff2e551bbe843c927762de5"
+  },
+  {
+   "game": "401705167",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705167.json",
+   "meta_sha256": "ecd856ceee5ff37a05c11cea532fbdc6f14b7805aac69b39dbb5b7cf1e9a67bd"
+  },
+  {
+   "game": "401705185",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705185.json",
+   "meta_sha256": "89aa2fbadbe5fdf33856ea8e10b40114b8357c83d8f8999c6f8abb97eef6a730"
+  },
+  {
+   "game": "401705188",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705188.json",
+   "meta_sha256": "bf6e3a79f24a3a5057c662aac626d5af3f01efdc4bbce1d4a01a9f4327073d94"
+  },
+  {
+   "game": "401705193",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705193.json",
+   "meta_sha256": "527aeb946d983824f1eb66ca701dbbbb343933bd23e92968eeb0f82a6cdbc5e3"
+  },
+  {
+   "game": "401705200",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705200.json",
+   "meta_sha256": "b661c7d8ace68c1146f5ff9f61a4235b65a3c15e7141d249f66c9f831eb90257"
+  },
+  {
+   "game": "401705202",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705202.json",
+   "meta_sha256": "d01172f048febff4ca7be6c74057a75b21ad51026f202b0d4e723a7bf2b10d7c"
+  },
+  {
+   "game": "401705208",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705208.json",
+   "meta_sha256": "ec148cadb5542eb84874f757bd46bd096825588a6611252ae6dc1e718ccc5016"
+  },
+  {
+   "game": "401705218",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705218.json",
+   "meta_sha256": "3d588c47c98e609cf894154bc134ca9ea156abc2f12069fd94b1df3a8e7e0775"
+  },
+  {
+   "game": "401705233",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705233.json",
+   "meta_sha256": "d97b9d55e2655b1682d17b70033a9ceec6dfc7be110dbb3e6a4d1bdfbc43b0c3"
+  },
+  {
+   "game": "401705249",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705249.json",
+   "meta_sha256": "17293eac293c802dfd14094e73eac0468c216f73990e175f02f99fb74c9a86e3"
+  },
+  {
+   "game": "401705256",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705256.json",
+   "meta_sha256": "6f99d0cee4ffd69e6ba51cded7ef66c426ca2521b66f71885fb94a13e0a08323"
+  },
+  {
+   "game": "401705258",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705258.json",
+   "meta_sha256": "b84f36fcfe2e1c20ebbaee1438bb7b6a94a42fa36040ff49e83701809bd4e463"
+  },
+  {
+   "game": "401705267",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705267.json",
+   "meta_sha256": "0512b68f8c1185a1677b11293cea5f551fd86c32131635991d1280b0a99819a6"
+  },
+  {
+   "game": "401705270",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705270.json",
+   "meta_sha256": "f6cca9d570a46c24ad86095db930052e998cd195698ba5eb5fb6a5ca3b7a4edd"
+  },
+  {
+   "game": "401705287",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705287.json",
+   "meta_sha256": "bbb85d1004c455d17065a2bb731dd9f5005334dfb3cf8b8453e967bd9a777e3f"
+  },
+  {
+   "game": "401705289",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705289.json",
+   "meta_sha256": "1cc45a983fa207d3aa8429660acfc86b83ec4663b79ee670126d2e2ef1918d35"
+  },
+  {
+   "game": "401705297",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705297.json",
+   "meta_sha256": "a2c54f0e56605b9c4ce9c7a91688e2d9caa8b87cda13dac597de3f1c4b43ccc5"
+  },
+  {
+   "game": "401705303",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705303.json",
+   "meta_sha256": "ed580c2a8f4f1bfe037fd074844138dd0b140df085b85c87b7b4f5e8507c9825"
+  },
+  {
+   "game": "401705305",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705305.json",
+   "meta_sha256": "f34b009e5ea9db8d00b9b87df65456e7b505e1e44d65b552fa042819b3590f26"
+  },
+  {
+   "game": "401705312",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705312.json",
+   "meta_sha256": "a591f5770275d29daccce1ff36b44d891f3fa7eae0aaaed79455a1c9daeac71b"
+  },
+  {
+   "game": "401705315",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705315.json",
+   "meta_sha256": "ae5fef30dc6a8b91f6201fd0ff93d9c3c0beff76ea0bc116b4fd326c79a735a1"
+  },
+  {
+   "game": "401705320",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705320.json",
+   "meta_sha256": "bf87832b0642f914cb414397a393ad343cc91198c94368452b664293a8abbf2d"
+  },
+  {
+   "game": "401705325",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705325.json",
+   "meta_sha256": "53df5a734a69a57aa1e0043f0cd908c03e2b40dfa1a7966576c85c64e9a8d7c8"
+  },
+  {
+   "game": "401705337",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705337.json",
+   "meta_sha256": "f84b3d1c63f5f5ac59727088753196ff1690824c894f311fe84d8f5a009ae572"
+  },
+  {
+   "game": "401705346",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705346.json",
+   "meta_sha256": "da0c443832f6175f3de3d949f1921f5ba3a0451bf557d1bc47e86fe36b600fa2"
+  },
+  {
+   "game": "401705348",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705348.json",
+   "meta_sha256": "db312b044ec26c343ecfd231be76b12802cab4929952a32cf0014c1cf1de8166"
+  },
+  {
+   "game": "401705350",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705350.json",
+   "meta_sha256": "179922eee77a3066c8e5580e041f63e1fc09541cf8c15f62e50ccef71cc12217"
+  },
+  {
+   "game": "401705351",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705351.json",
+   "meta_sha256": "4ba19e7bba28ee7827fa18d75876ed39eaeb2e400640e9d133dd305329f8dba5"
+  },
+  {
+   "game": "401705366",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705366.json",
+   "meta_sha256": "98e640db9acf6151d20dd9180662eed134c994ecc841de6ad47e3f672c629e8e"
+  },
+  {
+   "game": "401705374",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705374.json",
+   "meta_sha256": "1cf06a4abb6eda5c3f8b87cf9e63bf7cffe136e20b89817db5f7392ef9877582"
+  },
+  {
+   "game": "401705375",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705375.json",
+   "meta_sha256": "01f1dedbd61e0634cf98881535d7b3ebe3cf20034bd2f9e46524ebe355d8aad7"
+  },
+  {
+   "game": "401705381",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705381.json",
+   "meta_sha256": "624b2d893e98e5694e9265c7c084696f58ab2180c7ec184c4681b13bb045934a"
+  },
+  {
+   "game": "401705388",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705388.json",
+   "meta_sha256": "859dbeb542ae215f789f280ce01d9f96e2e92fe4a74d18c826800e32447786b4"
+  },
+  {
+   "game": "401705389",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705389.json",
+   "meta_sha256": "0eb7a00dc2bbea75981aaee9b2534a7f234916adb8fc09fe910dc21eb20d26e2"
+  },
+  {
+   "game": "401705390",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705390.json",
+   "meta_sha256": "006b691ed2baba6331d0dcc75545d6a82759a664106d5ab266f87348aae02afc"
+  },
+  {
+   "game": "401705392",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705392.json",
+   "meta_sha256": "3d50255083b68555bf2f7e91e59a5c1f4caf74dbe0bcd6d6c04ebd52b9399332"
+  },
+  {
+   "game": "401705400",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705400.json",
+   "meta_sha256": "77bd2de2d5a1813c3d457243193fba137ed6ec6a3c90ccbb35a7c785cf64ad24"
+  },
+  {
+   "game": "401705401",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705401.json",
+   "meta_sha256": "84263f42bdf9a76625a833fc880e1d558dbbbf8c77c17b4a13ed74c05b560add"
+  },
+  {
+   "game": "401705404",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705404.json",
+   "meta_sha256": "3dde4a1e1b550d3900c18961ce05644f6a5b3f5b96dbbdaf94b650d9d4b6a946"
+  },
+  {
+   "game": "401705419",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705419.json",
+   "meta_sha256": "cb096972dde0a8bc0a61c758737b3bcaaf4bd98e3fe3ef37e1352f04ad9095d4"
+  },
+  {
+   "game": "401705434",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705434.json",
+   "meta_sha256": "630921844e730b50c0757fb0c109194053d9605947037c695df3a024fba45d23"
+  },
+  {
+   "game": "401705449",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705449.json",
+   "meta_sha256": "3b48663f0a62a1d8802427a154eba6cd7ccc37314dd518bef0f63035fb6c10f2"
+  },
+  {
+   "game": "401705477",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705477.json",
+   "meta_sha256": "a31a2f489691d89a44bb6b42b8d8362a9b9c3b310f3e44830798e16c892f89be"
+  },
+  {
+   "game": "401705479",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705479.json",
+   "meta_sha256": "73d67f2e879c9c9de9ae2bbc7ba7ce0c0135dc451e51a9fce8c66a2535f449cf"
+  },
+  {
+   "game": "401705486",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705486.json",
+   "meta_sha256": "b628beb484a05650aeae9bcea6cffbe94a5149c389bd5eb137834c0c84cc3934"
+  },
+  {
+   "game": "401705487",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705487.json",
+   "meta_sha256": "f108f26f832d1164b2708da6bc782badea7a3881f3e8fa1a483585c4be96ad59"
+  },
+  {
+   "game": "401705488",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705488.json",
+   "meta_sha256": "4714884eeef991729dacf3a60b917c50e7159c4139afc3000436d00b88358769"
+  },
+  {
+   "game": "401705496",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705496.json",
+   "meta_sha256": "62215bbfcc01bb1903d9860e8f7f1014aad57efb1daf7bf884d04541288b51f8"
+  },
+  {
+   "game": "401705502",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705502.json",
+   "meta_sha256": "b34a698acd2529a19408a71f648a3e7cf6a007695f0b12d86544145342fb4d65"
+  },
+  {
+   "game": "401705510",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705510.json",
+   "meta_sha256": "23aff445f3eeb65be5cc1f0e60df628f8364e7e85070aeff74a248c35a2bdcbd"
+  },
+  {
+   "game": "401705513",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705513.json",
+   "meta_sha256": "a2b571d66df56cb49e424be9a3d72334cca760e4c9cb3978a3d6e1ac5677d0ac"
+  },
+  {
+   "game": "401705519",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705519.json",
+   "meta_sha256": "d48447eda39a70a7a9d315836a41a5a3413eebd7f8110f57981e84628664c44f"
+  },
+  {
+   "game": "401705525",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705525.json",
+   "meta_sha256": "d1bc691562c3287d21779392cb8d6a5035f8a396dee9b556fa6c96887e93f464"
+  },
+  {
+   "game": "401705527",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705527.json",
+   "meta_sha256": "0fa55eb6fa6e532bb1d5d79df71bfe42b5915c8c194473d64a8cc2864fe9a8e8"
+  },
+  {
+   "game": "401705533",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705533.json",
+   "meta_sha256": "8c3a47371fc20886249e679fbbfe121c5c7ccf37300ed846cc7876c3b5e0baca"
+  },
+  {
+   "game": "401705538",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705538.json",
+   "meta_sha256": "81ce47f19e3a188c297371dca199856170b6aee31f6e6fbc361a6ffe39ed6aa8"
+  },
+  {
+   "game": "401705545",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705545.json",
+   "meta_sha256": "f594d9e0e8503e8db373a280cae4c718376925e0c10086f350edeec9a1eff776"
+  },
+  {
+   "game": "401705563",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705563.json",
+   "meta_sha256": "80d364c3484f2b47d21435cd02d1cb233644debbd92f683b87de56681ff2d5d0"
+  },
+  {
+   "game": "401705566",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705566.json",
+   "meta_sha256": "91857fd753fda288e543cd72621202a8d4c52ed4020ee05e2a445b4e85b64ce8"
+  },
+  {
+   "game": "401705574",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705574.json",
+   "meta_sha256": "f2f52ddf0c5d88a7d33c7b1fe1cb500d0a74562db8e0109435ad806afaf6648a"
+  },
+  {
+   "game": "401705578",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705578.json",
+   "meta_sha256": "3087e6aac7bfe72764927d62d8a6e6eb75a884a36637839abd27c4149e4f402f"
+  },
+  {
+   "game": "401705583",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705583.json",
+   "meta_sha256": "0b65fa1ecac832e1133755ae33fb52b210b80c8e77d9ee7b5a6abd8889914646"
+  },
+  {
+   "game": "401705585",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705585.json",
+   "meta_sha256": "48c557445c86b7ee6dedf91ab39424d36b4741bf6b7db7b846e5d378cc2cc7ff"
+  },
+  {
+   "game": "401705592",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705592.json",
+   "meta_sha256": "a3fdf834f0382611c1cf9a31435a02a283fe4766d2896b2c0d990ad529a09aaa"
+  },
+  {
+   "game": "401705593",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705593.json",
+   "meta_sha256": "7429525b1885038c188058aa20fe7f766e3f50c8de25fcb242bfe98b8c487038"
+  },
+  {
+   "game": "401705600",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705600.json",
+   "meta_sha256": "18cb2e12449b6058335d79934b5dcf2de20bc4f0a47a9d1ae80e3d9cfab07bb0"
+  },
+  {
+   "game": "401705627",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705627.json",
+   "meta_sha256": "a50949c21f32391e049eb37ba0205cc89ecde2d088544254969795afe8271077"
+  },
+  {
+   "game": "401705649",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705649.json",
+   "meta_sha256": "6f6d76f9b037662e1cbe1b7998b81ece2d87618b7c18f86fb3f360b378034ed3"
+  },
+  {
+   "game": "401705658",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705658.json",
+   "meta_sha256": "63c92f8fdc60ccb60d1adf5b024344c126cd37fbffc1987b4b0bc3db01b6837f"
+  },
+  {
+   "game": "401705659",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705659.json",
+   "meta_sha256": "8ffb9cf99120b58571486e16a23ca5553cd0895c67ba295a725ff1ed35781fa0"
+  },
+  {
+   "game": "401705661",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705661.json",
+   "meta_sha256": "6082ea4ae37434ed1d007e7fa718a59eac707e994f8c4a075a90cc3254f5d7a3"
+  },
+  {
+   "game": "401705666",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705666.json",
+   "meta_sha256": "70cfbb52d423363ecdb65accb5e0b1a0aa25e0b7d3cf22451b91a9364d0168e2"
+  },
+  {
+   "game": "401705670",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705670.json",
+   "meta_sha256": "b6926e382b44aa3d15b558acd7bc140791f92bae8cef31a7606a3c52b89b7927"
+  },
+  {
+   "game": "401705678",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705678.json",
+   "meta_sha256": "19424b760de79c13e2875d58887485163645cbe123fd52072431afba0852075a"
+  },
+  {
+   "game": "401705679",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705679.json",
+   "meta_sha256": "14ff1aab12a67c585e32b47229a831c2b81da9fde8bfb24b0da7bb4e4683500d"
+  },
+  {
+   "game": "401705686",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705686.json",
+   "meta_sha256": "cc207df2507801ca5f2df14b2e61a5420f94310727f0eddc5addbf48c84e669e"
+  },
+  {
+   "game": "401705693",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705693.json",
+   "meta_sha256": "ec502b872fcf7b35618512f5612183581042dccd8e009576d3be00c6da67fe16"
+  },
+  {
+   "game": "401705705",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705705.json",
+   "meta_sha256": "2423963cdbfdde24b1e644c824b4610886fdde4722debf1df0557c1e25285f35"
+  },
+  {
+   "game": "401705715",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705715.json",
+   "meta_sha256": "8d9f262f7ab3fdc5255a574a0e680969ea66abb9179e5bd8e6dbf65cb522de8d"
+  },
+  {
+   "game": "401705724",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705724.json",
+   "meta_sha256": "bad2272718d7a79aed1761b360c97fb6eb00d1aae8e18a619f40a063f9c9aee1"
+  },
+  {
+   "game": "401705738",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401705738.json",
+   "meta_sha256": "7e0ad777fba396bd4ecf758fc15fd8bf28f294d2a8564f1909bd37cd1c7f91e8"
+  },
+  {
+   "game": "401754705",
+   "meta": "data/derived/experiments/a2_clock_earlier_f2_supported_20261123_v1/401754705.json",
+   "meta_sha256": "645a7848371052d24af5a012f94a7f1728aaddcc2b497f29363ead32eaff0eed"
+  }
+ ],
+ "release": "not enabled; independent accounting/score/confirmation gates still apply"
+}

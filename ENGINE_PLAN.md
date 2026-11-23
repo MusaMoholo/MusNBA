@@ -24,7 +24,7 @@ behaviour follows the latest applicable decision, especially D45–D50.
 
 | ID | Decision |
 |---|---|
-| D1 | Possessions consist of segments; offensive rebounds continue with 14-second shot clock. |
+| D1 | Possessions consist of segments; intended offensive-rebound reset is14s. Explicit shot-clock state is not implemented. |
 | D2 | Shared node models across quarters, with period/clock/state inputs; variants must earn their place. |
 | D3 | Test player/world efficiency, aggressiveness and shot-selection form plus heat response; not assumed validated. |
 | D4 | ESPN/sportsdataverse history from 2022–23; NumPy/pandas/pyarrow/LightGBM stack. |
@@ -88,9 +88,11 @@ Sixteen LightGBM nodes: duration, event, who, what, location, shot result, assis
 turnover type, stealer, fouler, free throw, rebound, rebounder. Candidate nodes score players on the five and
 softmax within the segment, with training-tail temperature. Team turnovers/rebounds credit no player where appropriate.
 
-Rules govern 24/14-second clocks, period ends, free-throw counts, bonus, five-player lineups and foul-outs.
+Rules govern period ends, free-throw counts, bonus, five-player lineups and foul-outs. Segment duration is
+learned from source timestamps; `Worlds` tracks period time, with no separate possession-shot-clock state.
+The earlier claim of explicit24/14 enforcement was inaccurate. Do not infer or clamp an unobserved clock.
 Regulation periods are 720 seconds, OT 300; quarters/halves exclude OT, full game includes it. Offensive rebounds
-and non-shooting defensive fouls can continue a possession. Worlds advance quarter-synchronously in vector batches.
+and non-shooting defensive fouls can continue a possession. Worlds advance their periods separately in vector batches.
 
 **Legacy defect / qualified repair:** v1.3 leaves disqualified players on court. Rule revision r1 passed
 frozen development, stress and final compatibility/accounting checks and is published with PWA bundles. It replaces fouled-out players and applies the NBA exhaustion exception/technical without rejection.

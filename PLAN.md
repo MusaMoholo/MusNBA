@@ -52,14 +52,14 @@ remain the relevant accuracy/product milestones. A research rejection does not m
 
 ### 6a. Authorised D42 execution split
 
-**Chunk A: believable games and visible simulations — 51.0%.** Headliners: lineup-aware player/game outcomes;
+**Chunk A: believable games and visible simulations — 54.5%.** Headliners: lineup-aware player/game outcomes;
 form and late-game realism; five actual saved-world examples with a reusable 2-D View Centre. Depends on S01–S07.
 Owner (23 Nov) now authorises completing A1 and A2, lifting the earlier A1 stop; A3 and Chunk B remain outside this session.
 
 | Module | Weight | Progress | Dependency and acceptance/fallback |
 |---|---:|---:|---|
 | A1 Lineups/Expected | 30% | 100% | Stored lineups/Expected delivered on r2; independent fitter and ten-worker queue qualified, final nightly/PWA checks pass. Original protected v2 limits retained. |
-| A2 Form/late game | 35% | 60% | Contextual late clock passes earlier-fold and separate F4 analytical screens; engine compatibility remains. No calibrated form factor/promotion. |
+| A2 Form/late game | 35% | 70% | Contextual late clock passes analytical screens and200-game F4 engine development; earlier-fold compatibility is running. No calibrated form factor/promotion. |
 | A3 View Centre/delivery | 35% | 0% | A1/A2 decisions. Five labelled real worlds, reconciled event files, 2-D court/player, responsive/offline checks and fresh nightly. |
 
 **Chunk B: stronger defence and reliable season paths — 0%.** Depends on Chunk A decisions/delivery. Do not
@@ -112,9 +112,10 @@ installation/import/memory acceptance remains an owner check; exporting to iClou
 | Incremental iCloud export — next priority (D54) | Publish after each complete checked 10k game; safe per-game generations, coherent season freshness, resumable exports and PWA import/offline validation. Current export remains end-of-nightly. [Contract](docs/protocols/incremental_catchup.md). |
 | Missed-day reconstruction proposal | Nightly already collects missing finals; it does not regenerate missed possession forecasts. Future labelled actual-participant reconstruction needs pre-origin inputs AND fits, predicted minutes and immutable originals; D40 replay execution remains deferred. |
 | Advanced player stats | Actual +/−, six box-derived rates and dated action-share input exist. True simulated possession USG%, on-court ratings, simulated +/− and BPM need honest capture/definitions/validation. |
-| Code simplification (owner, 23 Nov) | After A1/A2, inventory production dependencies, duplicate logic and research-only files; target proven maintenance/runtime costs. Preserve reproducibility and View Centre scope; no line-count-driven wholesale rewrite or blind deletion. |
+| Code simplification (owner, 23 Nov) | After A1/A2, inventory production dependencies, duplicate logic and research-only files; target proven maintenance/runtime costs. Preserve reproducibility and View Centre scope; no line-count-driven wholesale rewrite or blind deletion. Measured runner flaw: executor drains queued tasks after a worker exception instead of surfacing it promptly. |
 | Shooting geography (owner hypothesis, 23 Nov) | Start from NBA source-defined basic/advanced zones; the owner's dunker/post/wing/slot examples are illustrative, not a required bespoke taxonomy. Fit shooter/defender attempts and makes by zone, pooling sparse cells to broader parents and retaining supported side/direction. Compare current five zones/21 bands, source-zone-only, then within-zone distance on folds. Preserve raw data; audit source units/orientation, labels/coverage and observed versus inferred defender attribution. Version derived mappings/unknowns; extend the existing zone-choice node only after evidence. No mapping/model chosen or collection started. |
-| Player headshots — active (D55) | Shared offline icons from retained ESPN roster URLs, initials fallback; cover player-bearing pages and inspect 1440/960/390 in both themes. Include required PWA asset/bundle delivery with A1/A2. |
+| Player headshots (D55) | Delivered offline526/528 with initials fallback and responsive/PWA checks; real-device acceptance remains manual. |
+| Explicit shot clock | Source inspection: period clock only. Future possession-clock/reset reconstruction needs a source/timing audit; no blind duration cap. |
 | House design | Keep key boxes first, secondary content expandable, state preserved. Extend existing U3 role badges/U11 defence profiles. Lab polish is low priority. |
 
 Spatial displays must follow D43: zones/bands or validated source positions; no invented tracking. All dashboard copy
@@ -124,7 +125,7 @@ reflects loaded data/configuration. These items do not authorise forecast-histor
 
 | Date | Result | Evidence |
 |---|---|---|
-| 23 Nov | Rule r1 final246 passes; S08 completes: r1 lineups/headshots,15×10k batches; hosted29/27, upgrade32, smoke108/fault exit1. D56 protected v2 establishes42/44 (all27 proper scores); bias-veto audit motivates frozen v3/fresh200 F4 confirmation. R2 fresh200 passes; six raw replays/three queue arrays match. Final15×10k nightly1184s, hosted29/27 and smoke108 pass; A1 complete. A2 clock engine stages next; D54 follows. | HANDOFF live work; FINDINGS §7/§8. |
+| 23 Nov | Rule r1 final246 passes; S08 completes: r1 lineups/headshots,15×10k batches; hosted29/27, upgrade32, smoke108/fault exit1. D56 protected v2 establishes42/44 (all27 proper scores); bias-veto audit motivates frozen v3/fresh200 F4 confirmation. R2 fresh200 passes; six raw replays/three queue arrays match. Final15×10k nightly1184s, hosted29/27 and smoke108 pass; A1 complete. A2 clock F4/F1/F2 establish27/27 each; independent600-game input-readiness audit and smoke108 pass. F3/confirmation next; D54 follows. | HANDOFF live work; FINDINGS §7/§8. |
 | 23 Nov | D52 removes unwanted CI workflows; local checks and branch-based Pages hosting retained. No model/app change. | AGENTS local-check rule; README hosting commands. |
 | 23 Nov | D51 reopens A1 release review; v2 compatibility/confirmation and retained defender-result audit. | [Active policy](docs/protocols/promotion_v2_20261123.md) |
 | 23 Nov | A1 no-release fallback: 28,530 memberships audited, 783/800 starter contexts supported; v1.3 retained. | [Decision](docs/research/a1_no_release_20261123.md) |

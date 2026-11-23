@@ -285,8 +285,9 @@ def main():
         players = [r for game in games for r in game.pop('players')]
         pd.DataFrame(games).to_parquet(ROOT / f'data/derived/experiments/{name}.parquet', index=False)
         pd.DataFrame(players).to_parquet(ROOT / f'data/derived/experiments/{name}_players.parquet', index=False)
-        write_json(ROOT / f'analysis/experiments/{name}.json', {'run': name, 'fold': 'F4', 'config': 'models/v1.2d.json',
-                   'models': 'folds/v1.2d_F4_all', 'games': len(ids), 'worlds': worlds, 'rotation': 'targets',
+        write_json(ROOT / f'analysis/experiments/{name}.json', {'run': name,
+                   **declared.get('runner_metadata', {'fold':'F4', 'config':'models/v1.2d.json', 'models':'folds/v1.2d_F4_all'}),
+                   'games': len(ids), 'worlds': worlds, 'rotation': 'targets',
                    'pool': 0, 'known_starters': False, 'simulation_stream': stream, 'seed_key': None,
                    'game_ids': ids, 'kind': 'conditional paired rule confirmation; no pre-game injury calibration'}, pretty=True)
     write_json(output, {'kind': 'D51 paired rule confirmation and raw diagnostic capture', 'run': args.name,

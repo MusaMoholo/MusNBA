@@ -8,7 +8,7 @@ Do not load historical archives routinely. Root documents describe the present; 
 | [AGENTS](../AGENTS.md) | Owner preferences, safeguards, compute, checkpoint/documentation rules. |
 | [HANDOFF](../HANDOFF_NEXT.md) | Current systems/delivery, blockers, jobs, exact next action and active progress ladders. |
 | [PLAN](../PLAN.md) | Scope, dependencies, milestone ledger, completion criteria and product backlog. |
-| [ENGINE_PLAN](../ENGINE_PLAN.md) | Current design, D1–D56 decision index, implemented/planned boundaries. |
+| [ENGINE_PLAN](../ENGINE_PLAN.md) | Current design, D1–D57 decision index, implemented/planned boundaries. |
 | [TRAINING_PLAN](../TRAINING_PLAN.md) | Folds, cutoffs, frozen numerical gates, confirmation/release requirements. |
 | [FINDINGS](../FINDINGS.md) | Concise measured conclusions and negative decisions, with population and report links. |
 | [DASHBOARD_PLAN](../DASHBOARD_PLAN.md) | Current shipped UI, definitions, constraints and pending product contracts. |
@@ -27,8 +27,10 @@ Do not load historical archives routinely. Root documents describe the present; 
 - [Frozen A2 protocols](protocols/a2_form_20261122.md): verbatim preregistered residual/form methods.
 - [A2 contextual clock](protocols/a2_late_clock_20261123.md): earlier-fold learned-clock screen, component removal and confirmation boundaries.
 - [A2 engine stages](protocols/a2_clock_engine_20261123.md): matched compatibility, control reuse, broader folds, seeds/stress and protected-version boundary.
+- [A2 engine evidence](research/a2_clock_evidence_20261123.md): completed stage populations/bounds/accounting and remaining qualification.
+- [A2 input readiness](protocols/a2_clock_readiness_amendment_20261123.md): missing-position setup failure, deterministic supported100/fold before quality scores; no model/gate change.
 - [A2 baseline amendment](protocols/a2_clock_independence_amendment_20261123.md): qualified independent fitter in both clock arms; unchanged panels and margins.
-- [Incremental delivery/catch-up](protocols/incremental_catchup.md): immediate successor priority and proposed historical reconstruction boundary.
+- [Incremental delivery/catch-up](protocols/incremental_catchup.md) and [D54 successor ladder](protocols/incremental_delivery_chunk_20261123.md): planned complete-game publication and deferred reconstruction boundary.
 - [Cleanup audit](maintenance/2026-11-23-lean-docs.md): before/after counts, preservation checks and checkpoint validation.
 - Experiment JSON/text under `analysis/experiments/` contains exact configurations, outcomes, uncertainty and fingerprints;
   arrays/captures remain ignored under `data/derived/experiments/`.
@@ -67,3 +69,5 @@ D56 active method: [independent worlds and scheduling](protocols/world_independe
 D51 acceptance revision: [v3 policy and fresh independent confirmation](protocols/promotion_v3_20261123.md).
 
 Completed A1/r2: [outcome, acceptance ladder and delivery](checkpoints/2026-11-23-a1.md).
+
+A2 runtime: [asynchronous periods and RNG comparison semantics](protocols/a2_clock_execution_review_20261123.md).

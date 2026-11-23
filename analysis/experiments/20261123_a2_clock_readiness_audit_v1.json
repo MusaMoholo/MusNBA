@@ -1,0 +1,35 @@
+{
+ "status": "pass; independently reconstructed input readiness, not forecast accuracy",
+ "folds": [
+  {
+   "fold": "F1",
+   "games_independently_checked": 200,
+   "supported": 190,
+   "selected": 100,
+   "replacements": 4,
+   "roster_position_cells": 4389,
+   "prior_template_position_cells": 42948
+  },
+  {
+   "fold": "F2",
+   "games_independently_checked": 200,
+   "supported": 190,
+   "selected": 100,
+   "replacements": 5,
+   "roster_position_cells": 4231,
+   "prior_template_position_cells": 42536
+  },
+  {
+   "fold": "F3",
+   "games_independently_checked": 200,
+   "supported": 179,
+   "selected": 100,
+   "replacements": 15,
+   "roster_position_cells": 4330,
+   "prior_template_position_cells": 42126
+  }
+ ],
+ "manifest_sha256": "0848468337ebdad1df7c6738029a2eb47470dbc56d0afb119279524445b7b506",
+ "auditor_sha256": "9ce54a7349979bce9ba532145dfd54846dd9a081109e979892d74bdcc57f6818",
+ "method": "Read only game/date/team/player/position and prior-template time columns; reconstruct most-recent10 games independently without rotations.templates_for or ready-panel helper. Never inspect candidate predictions or errors."
+}

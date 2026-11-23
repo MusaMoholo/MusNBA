@@ -1,0 +1,30 @@
+{
+ "games": [
+  {
+   "game": "401809247",
+   "node_models": "folds/v1.2d_F4_all",
+   "raw_world_parity": true,
+   "formatter_delegation_consistent": true
+  },
+  {
+   "game": "401810357",
+   "node_models": "folds/v1.2d_F4_all",
+   "raw_world_parity": true,
+   "formatter_delegation_consistent": true
+  },
+  {
+   "game": "401810393",
+   "node_models": "folds/v1.2d_F4_all",
+   "raw_world_parity": true,
+   "formatter_delegation_consistent": true
+  }
+ ],
+ "independent_fit": true,
+ "source_sha256": {
+  "analysis/a1_runtime_parity.py": "d7cd2b726dcd042c8f9749ff601e336005ff9e0a7fd03c1098ab16624cb40964",
+  "scripts/engine.py": "40519f56d87dc1889520c952c396e519a85654831f8d1c6c74b7cea56ff4849e",
+  "scripts/rotation_fit.py": "46b9c7e301076531617793021425c2f08cdbeb1594638de1a851cba6ba66bfe6",
+  "scripts/forecast_output.py": "e5ace444bb7901d240cac9f606b565a5f875a40239a15e3a1150d35be1d26ca6"
+ },
+ "limitation": "Formatter check covers delegation consistency; retained raw worlds are the independent reference."
+}

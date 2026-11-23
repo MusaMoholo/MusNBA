@@ -129,18 +129,12 @@ assignment fit cannot be reused for F1–F3; corrected fold inputs need dated fi
   inconclusive, primary screen failed. No multi-fold/final promotion. Independent accounting passed.
   [Gate](analysis/experiments/20261123_a1_vector_penalty_f4_200_v1_gate.json),
   [audit](analysis/experiments/20261123_a1_vector_penalty_f4_200_v1_audit.json). Do not rerun unchanged.
-- **D56 independence/performance:** legacy D29 chooses one fit iteration from batch-maximum error;
-  another world can affect retained rotations. No histogram steps were observed. Canonical row-local
-  correction matches separate one-world fits/regrouping; three preparation checks pass. One10k game/1k
-  chunks took74.441s at10 versus134.063s at8 workers, identical arrays; repeat72.381s. Queue probe
-  (one ordinary/one branched,1k each) passes9,440 histogram checks across worker counts. Reports
-  `20261123_world_{chunk_workers_compare,queue_workers_compare}_v1.json`; candidate remains off.
-  Development200 F4 pairs:44/44 core,25/25 coverage; MIN/PTS CRPS∆−.02876/−.00854. Stream30:
-  28 established/six imprecise/ten unsupported. Stress3×10k:34,512,482 independently checked fives.
-  Protected246:42/44, all27 proper scores; unresolved star MIN/PTS cohort-bias increases+.34253min
-  [+.02442,+.44989]/+.24087PTS[−.25976,+.31726], margins.30. No demonstrated material harm;
-  one imprecise star-minute coverage diagnostic. Audit284,432,368 legal fives. Preserved reports
-  `independent_rotation_{f4,stream,stress,final}_20261123_v1*`; protected score never repeated.
+- **D56 independence/performance:** legacy D29's batch-maximum stopping rule couples rotation fits;
+  no histogram steps were observed. Row-local fits match one-world regrouping. One10k/1k-chunk game
+  took74.441s at10 versus134.063s at8 workers, identical arrays; repeat72.381s. Qualified r2 now uses
+  ten-worker world scheduling. Original protected42/44/all27 proper-score result is preserved, not repeated.
+  [Completed evidence](docs/checkpoints/2026-11-23-a1.md); reports
+  `independent_rotation_{f4,stream,stress,final}_20261123_v1*` and `20261123_world_*_compare_v1.json`.
 - **D57:** independent reconstruction reproduces protected bias/10k-bootstrap intervals to1e−12.
   A synthetic all-player improvement breaches the old cohort-bias margin through reduced cancellation;
   arithmetic is correct, universal veto conflicts with individual accuracy. A/A v2 establishes43/44.
@@ -168,13 +162,15 @@ Frozen methods: [A2 protocols](docs/protocols/a2_form_20261122.md). No factor is
 | Fresh F4 accepted-control worlds: 200 games / 3,625 eligible player-games, 1k worlds/game | Observed-minus-world PTS covariance: teammates **−0.107 [−0.488,+0.272]**, opponents **+0.027 [−0.203,+0.240]**. No clear pooled missing scoring dependence. Stars/starters' MIN teammate gap **+7.487 [5.078,9.893]**; possession-error variance ~22.6–23.2 versus simulated ~15.4–15.5. This motivates earlier-fold pace/minute investigation, not arbitrary variance widening; mean/rotation misspecification remains possible. |
 | Late states: same 200 games, 2,333 actual opportunities / 16 excluded; eight of 21 clock/margin cells supported | Trailing 4–8 with ≤24s: actual action time **4.14s**, simulated **6.04s**, gap **+1.91 [1.37,2.41]s**; actual three share **68.6%**, simulated **57.0%**. State visitation differs. The existing ≤24s clock sampler pools periods/margins; test prior-fitted contextual timing before adding latent shooting variation. OT 4.0% actual / 2.72% simulated, difference interval crosses zero. |
 | Contextual late clock, frozen earlier-fold screen / separate F4 confirmation | F1–F3: **1,932 games / 5,382 opportunities**, joint time/no-action loss **0.19856→0.12849**, Δ −0.07007 [−0.07538,−0.06485]. F4: **199 games / 474**, **0.21633→0.13415**, Δ −0.08218 [−0.10119,−0.06556]. Also beats clean bridge; both components improve. Independent squared-CDF audit checks 600 distributions (max error 8.53e−15). Conditional node evidence, not simulated-game improvement. Reports `20261123_a2_late_clock_{screen,confirmation,audit}_v1.json`. |
+| Contextual-clock engine compatibility | F4/F1/F2 panels (200/100/100 games) establish27/27 proper bounds each. F1 total-coverage diagnostic is imprecise; no material harm. All other coverage/bias bounds establish. Supported-input qualification only; no production change or broad accuracy claim. [Populations, effects, independent accounting and remaining stages](docs/research/a2_clock_evidence_20261123.md). |
 | Synthetic draw prototype | `p + s*z*p*(1-p)`, uniform z∈[−1,1], preserves mean/boundaries analytically; namespaced streams/zero-strength no-draw tests pass. Shape/strength arbitrary, no engine wiring or empirical calibration. |
 
 Reports: `analysis/experiments/20261122_a2_residual_dependence_f4.json`,
 `20261122_a2_shot_residuals_f1_f3_v2.json`, `20261122_a2_shot_persistence_f1_f3.json` in the same directory.
 Shared-shooting report: `analysis/experiments/20261123_a2_shared_shooting_v1.json`.
 Fresh-world report: `analysis/experiments/20261123_a2_world_diagnostics_v1.json`; captures pass independent accounting.
-All reported intervals are exploratory 95%; no protected final outcomes were used.
+All intervals are exploratory95%; no protected final outcomes used. Input-only readiness replaces4/5/15
+unsupported F1/F2/F3 IDs before aggregate earlier-fold scoring ([amendment](docs/protocols/a2_clock_readiness_amendment_20261123.md)); no clock-harm claim.
 
 ## 9. Legacy v1.3 storage/delivery facts
 

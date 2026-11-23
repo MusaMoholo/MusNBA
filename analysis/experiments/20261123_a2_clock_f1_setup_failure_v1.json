@@ -1,0 +1,14 @@
+{
+ "kind": "input/runner setup failure; no aggregate comparison/gate generated or inspected",
+ "error": "rotations.group calls .upper() on floating missing position",
+ "first_failed_game": "401585098",
+ "completed_pairs": 10,
+ "saved_npz": 30,
+ "partial_files": 0,
+ "log": "/tmp/musnba_a2_clock_earlier_f1_20261123_v1.log",
+ "log_sha256": "c0601e247d42f5116a092ba46d02b2b13870f521f4356085aef53d1f86ff1738",
+ "status": "interrupted to avoid draining queued compute after worker exception; retained unchanged",
+ "superseded_by": "20261123_a2_clock_ready_panels_v1.json",
+ "limitations": "No evidence of clock harm or benefit on earlier folds. Only complete verified pairs may be reused.",
+ "per_game_metadata": "Ten completed pairs contain automatically computed per-game metrics; these were not inspected for readiness or selection."
+}

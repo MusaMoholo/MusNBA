@@ -1,0 +1,60 @@
+{
+ "kind": "A2 research checkpoint; continue to F3, not a release",
+ "accepted_model_unchanged": "engine-v1.3-r2",
+ "pwa_generation_unchanged": "2026-11-23T18:06:16Z",
+ "completed_panels": [
+  "a2_clock_development_20261123_v1",
+  "a2_clock_earlier_f1_supported_20261123_v1",
+  "a2_clock_earlier_f2_supported_20261123_v1"
+ ],
+ "proper_bounds": "27/27 in every completed panel; F1 total-coverage diagnostic imprecise, no material harm",
+ "source_evidence_sha256": {
+  "analysis/experiments/a2_clock_development_20261123_v1.json": "b94e035aacb74c0d4a1482a17bd335b093e091d71179bcf3812503e6e7487337",
+  "analysis/experiments/a2_clock_development_20261123_v1_audit.json": "9a93b2cbd01ca4655034496da4e149fad51b7870a5a41126bfa1eae7fb87e3a9",
+  "analysis/experiments/a2_clock_development_20261123_v1_compare.json": "1429495af91b7395bf6bfedc4fb17dbc9d253302b8ec6570ed22ca9320d648be",
+  "analysis/experiments/a2_clock_development_20261123_v1_compare_gate.json": "0d6eee194a8ee7e7bd91c842c0426653f760c60919147811d883012f686765a3",
+  "analysis/experiments/a2_clock_earlier_f1_supported_20261123_v1.json": "cc173f0cb501ddad142371479ec550c4d8f172a15604a681bbf15cda9b704f71",
+  "analysis/experiments/a2_clock_earlier_f1_supported_20261123_v1_audit.json": "a45ad39c49c9adab61180b9f445686921f00778a22c53859d36476590fd3d75e",
+  "analysis/experiments/a2_clock_earlier_f1_supported_20261123_v1_compare.json": "c43e92df356676f730e316ffffc0dacf7990ed5e267e41e77a511d5485e3f9ad",
+  "analysis/experiments/a2_clock_earlier_f1_supported_20261123_v1_compare_gate.json": "f54641eb5ba69421623373d1e7df88dce6b466639da93dfd101364fba1ab5aae",
+  "analysis/experiments/a2_clock_earlier_f2_supported_20261123_v1.json": "3db04cae8abb35bbfccd5754f32e4d27b2d8ce397171871a8bb13554d93d6228",
+  "analysis/experiments/a2_clock_earlier_f2_supported_20261123_v1_audit.json": "7d8f7d2c2dfefcbc8666942cd14e04453f997e1a3005273efb9ba67b9567d835",
+  "analysis/experiments/a2_clock_earlier_f2_supported_20261123_v1_compare.json": "2dfdef1fc05d2817a9d408febcb859a4b0c4ed68bd36c1ef3a19eb4d721a8084",
+  "analysis/experiments/a2_clock_earlier_f2_supported_20261123_v1_compare_gate.json": "c72695f8d4f89ba57b3cc09a87a3f09164355d84fa9c95a972817b18e4aba661"
+ },
+ "checks": {
+  "smoke": {
+   "passed": 108,
+   "total": 108,
+   "exit": 0,
+   "log": "/tmp/musnba_a2_research_smoke_20261123_v1.log",
+   "sha256": "cf328242cd6e19937e0646f6479ba38d65653f9921a6470fa9789436765835a5"
+  },
+  "fault": {
+   "passed": 86,
+   "total": 108,
+   "exit": 1,
+   "log": "/tmp/musnba_a2_research_fault_20261123_v1.log",
+   "sha256": "c64c0f3da449d09f8d1c2ebb466a3b36dcbbf35e54b210edb8e0178eca5f8982"
+  },
+  "focused": {
+   "passed": 5,
+   "total": 5,
+   "log": "/tmp/musnba_a2_research_focused_20261123_v1.log",
+   "sha256": "aa505a531c0e0058b8db232b7bf87d62e999ae5223b0c003f66a81b279152c41"
+  },
+  "readiness": {
+   "independent_games": 600,
+   "roster_position_cells": 12950,
+   "prior_template_position_cells": 127610,
+   "report_sha256": "713a3cd105fa6c381adac57147e5aa284ea5637260dc16c32a5fccc33afaf789"
+  }
+ },
+ "raw_hook_off_parity_sha256": "7a2ed99202b76509bd5612e81b166774d81bda29b2eb7c997de9b4b57b923ac7",
+ "limits": [
+  "Supported dated-input population only; original F1 setup failure preserved.",
+  "No protected r3 score, calibrated form factor, clock promotion or new PWA output.",
+  "F3/pooled earlier folds, independent F4, stream/stress and final remain required.",
+  "No repeated nightly at research-only checkpoint; final A2 nightly remains mandatory."
+ ]
+}

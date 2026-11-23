@@ -206,6 +206,14 @@ the v3 manifest explicitly selects the revised diagnostic classification for thi
 Namespaced factors stay fixed per game/world/player or team; zero strength consumes no new draws. Tilts
 preserve baseline marginal means without clipping. Unsupported/negative excess is not clamped into evidence.
 Freeze strengths/cutoffs/joint estimands before an engine result; compare factors alone before combinations.
-Require pooled PTS and joint checks plus every registered non-inferiority/noise/confirmation rule, not wider
-intervals alone. A1 decisions precede integration. No calibrated form factor or production clock selection is delivered.
-`ContextClock` has focused sampler tests and remains disconnected from the engine.
+Latent form factors require pooled PTS and joint checks plus their registered compatibility/confirmation
+requirements; the clock keeps its distinct conditional-loss primary and engine compatibility gates. A1 decisions precede integration. No calibrated form factor or production clock selection is delivered.
+`ContextClock` now has an opt-in hook; default r2 timing remains legacy. Hook-off raw parity3/3 and
+sampler3/3 pass;200-game F4 development establishes27/27 proper and all25 coverage/17 bias bounds.
+The [input-readiness amendment](docs/protocols/a2_clock_readiness_amendment_20261123.md) precedes any
+aggregate earlier-fold quality score: audit all600 original inputs, replace4/5/15 unsupported IDs in unchanged hash
+order to retain100 per fold. Missing positions stay missing; no model/margin/seed change. Original F1
+setup failure and partial captures are retained, never called clock harm. See the
+[execution clarification](docs/protocols/a2_clock_execution_review_20261123.md): asynchronous periods
+and later PRNG draw reassignment do not imply bit-identical clock-on earlier-quarter samples.
+Clock identities cover represented period time; no explicit possession-shot-clock state exists yet.

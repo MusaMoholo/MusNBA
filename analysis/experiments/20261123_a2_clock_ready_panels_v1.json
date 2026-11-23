@@ -1,0 +1,5092 @@
+{
+ "frozen_at": "2026-11-23T18:56:13.497403+00:00",
+ "kind": "input-only replacement before any earlier-fold quality score; F4 development is known",
+ "selection": "first100 supported in unchanged SHA256(a2-clock-engine-{fold}|game_id) order within original200",
+ "earlier": {
+  "F1": {
+   "game_ids": [
+    "401585732",
+    "401585314",
+    "401585402",
+    "401585803",
+    "401585678",
+    "401585443",
+    "401585275",
+    "401585249",
+    "401585336",
+    "401585265",
+    "401585601",
+    "401585211",
+    "401585297",
+    "401585246",
+    "401585545",
+    "401585123",
+    "401585083",
+    "401585811",
+    "401585510",
+    "401585547",
+    "401585684",
+    "401585127",
+    "401585119",
+    "401585430",
+    "401585730",
+    "401585384",
+    "401585358",
+    "401585334",
+    "401585193",
+    "401585758",
+    "401585111",
+    "401585257",
+    "401585571",
+    "401585415",
+    "401585674",
+    "401585729",
+    "401585477",
+    "401585141",
+    "401585611",
+    "401585399",
+    "401585326",
+    "401585727",
+    "401585209",
+    "401585494",
+    "401585186",
+    "401585398",
+    "401585096",
+    "401585192",
+    "401585491",
+    "401585375",
+    "401585532",
+    "401585728",
+    "401585760",
+    "401585121",
+    "401585661",
+    "401585337",
+    "401585576",
+    "401585166",
+    "401585230",
+    "401585416",
+    "401585660",
+    "401585595",
+    "401585582",
+    "401585160",
+    "401585153",
+    "401585621",
+    "401585557",
+    "401585640",
+    "401585169",
+    "401585084",
+    "401585672",
+    "401585804",
+    "401585190",
+    "401585434",
+    "401585394",
+    "401585569",
+    "401585195",
+    "401585274",
+    "401585318",
+    "401585331",
+    "401585682",
+    "401585544",
+    "401585647",
+    "401585775",
+    "401585583",
+    "401585444",
+    "401585768",
+    "401585561",
+    "401585552",
+    "401585469",
+    "401585385",
+    "401585819",
+    "401585445",
+    "401585405",
+    "401585527",
+    "401585572",
+    "401585189",
+    "401585355",
+    "401585767",
+    "401585361"
+   ],
+   "original_ids": [
+    "401585732",
+    "401585314",
+    "401585402",
+    "401585803",
+    "401585678",
+    "401585443",
+    "401585275",
+    "401585249",
+    "401585336",
+    "401585265",
+    "401585601",
+    "401585211",
+    "401585297",
+    "401585246",
+    "401585545",
+    "401585123",
+    "401585083",
+    "401585811",
+    "401585510",
+    "401585547",
+    "401585684",
+    "401585127",
+    "401585119",
+    "401585430",
+    "401585730",
+    "401585384",
+    "401585358",
+    "401585334",
+    "401585193",
+    "401585758",
+    "401585111",
+    "401585257",
+    "401585571",
+    "401585415",
+    "401585674",
+    "401585321",
+    "401585729",
+    "401585477",
+    "401585141",
+    "401585611",
+    "401585399",
+    "401585326",
+    "401585727",
+    "401585209",
+    "401585494",
+    "401585186",
+    "401585398",
+    "401585096",
+    "401585192",
+    "401585491",
+    "401585375",
+    "401585532",
+    "401585728",
+    "401585760",
+    "401585121",
+    "401585661",
+    "401585337",
+    "401585576",
+    "401585166",
+    "401585230",
+    "401585416",
+    "401585660",
+    "401585595",
+    "401585582",
+    "401585098",
+    "401585160",
+    "401585153",
+    "401585621",
+    "401585557",
+    "401585640",
+    "401585656",
+    "401585169",
+    "401585084",
+    "401585672",
+    "401585804",
+    "401585190",
+    "401585434",
+    "401585213",
+    "401585394",
+    "401585569",
+    "401585195",
+    "401585274",
+    "401585318",
+    "401585331",
+    "401585682",
+    "401585544",
+    "401585647",
+    "401585775",
+    "401585583",
+    "401585444",
+    "401585768",
+    "401585561",
+    "401585552",
+    "401585469",
+    "401585385",
+    "401585819",
+    "401585445",
+    "401585405",
+    "401585527",
+    "401585572"
+   ],
+   "excluded_original_ids": [
+    "401585098",
+    "401585213",
+    "401585321",
+    "401585656"
+   ],
+   "replacement_ids": [
+    "401585189",
+    "401585355",
+    "401585361",
+    "401585767"
+   ],
+   "readiness": [
+    {
+     "game_id": "401585732",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585314",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585402",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585803",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585678",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585443",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585275",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585249",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585336",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585265",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585601",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585211",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585297",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585246",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585545",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585123",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585083",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585811",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585510",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585547",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585684",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585127",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585119",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585430",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585730",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585384",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585358",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585334",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585193",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585758",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585111",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585257",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585571",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585415",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585674",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585321",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4597865"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585729",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585477",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585141",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585611",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585399",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585326",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585727",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585209",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585494",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585186",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585398",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585096",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585192",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585491",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585375",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585532",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585728",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585760",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585121",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585661",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585337",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585576",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585166",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585230",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585416",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585660",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585595",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585582",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585098",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4278103"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585160",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585153",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585621",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585557",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585640",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585656",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "3136491"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585169",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585084",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585672",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585804",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585190",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585434",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585213",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4683940"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585394",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585569",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585195",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585274",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585318",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585331",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585682",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585544",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585647",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585775",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585583",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585444",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585768",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585561",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585552",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585469",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585385",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585819",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585445",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585405",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585527",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585572",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585189",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585355",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585767",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585361",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585276",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585517",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585335",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585368",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585207",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585501",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585120",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585212",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585441",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585302",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585470",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585267",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585442",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585650",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4997537"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585380",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585509",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585105",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585205",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585649",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585575",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585568",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4066796"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585789",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585641",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585495",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585323",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585741",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585448",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585091",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585538",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585338",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585475",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4395704"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585529",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585346",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585717",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585719",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585374",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585528",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585126",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585558",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585726",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585658",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585634",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585087",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4701234"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585742",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585733",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585259",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585543",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585147",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585816",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585628",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585401",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585185",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585327",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585812",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585480",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585382",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585573",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585150",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585709",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585471",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585713",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585199",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4683689"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585258",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585777",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585747",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585554",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585437",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4397654"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585631",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585606",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585400",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585659",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585721",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585625",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585161",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585100",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585817",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585806",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585745",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585303",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585146",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585466",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585379",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585522",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585500",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585138",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585820",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585357",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585142",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585148",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585519",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585367",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585288",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585542",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585463",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585108",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401585325",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    }
+   ],
+   "input_sha256": {
+    "data/derived/experiments/a1_dated_f1_exhaustion_v1/config.json": "0020c5a124bb4fcf3ad9a90f12abeb9992448994f1b550062c37bc2a962e20bc",
+    "data/derived/variants/a1_scheduled_F1_20261122_v3/features/pregame.parquet": "623183c962783dbbcc714e5b59809abb083bc598afb36ce2ab511879a7d9c7b0",
+    "data/derived/history/2024/stints.parquet": "7555ba3a82f9e97b68f04aa2b24d26451b8ba54562976e20c66251fe021e068b"
+   }
+  },
+  "F2": {
+   "game_ids": [
+    "401705185",
+    "401705658",
+    "401705487",
+    "401705325",
+    "401705124",
+    "401705401",
+    "401705400",
+    "401705366",
+    "401705188",
+    "401705072",
+    "401705404",
+    "401705346",
+    "401705337",
+    "401705148",
+    "401705208",
+    "401705502",
+    "401705525",
+    "401705200",
+    "401705141",
+    "401705583",
+    "401705486",
+    "401705193",
+    "401705388",
+    "401705270",
+    "401705034",
+    "401754705",
+    "401705233",
+    "401705297",
+    "401705392",
+    "401705305",
+    "401705479",
+    "401705563",
+    "401705053",
+    "401705686",
+    "401705578",
+    "401705115",
+    "401705202",
+    "401705496",
+    "401705693",
+    "401705592",
+    "401705154",
+    "401705121",
+    "401705267",
+    "401705477",
+    "401705419",
+    "401705738",
+    "401705510",
+    "401705627",
+    "401705666",
+    "401705678",
+    "401705114",
+    "401705060",
+    "401705661",
+    "401705585",
+    "401705312",
+    "401705023",
+    "401705374",
+    "401705705",
+    "401705659",
+    "401705258",
+    "401705062",
+    "401705390",
+    "401705287",
+    "401705381",
+    "401705218",
+    "401705350",
+    "401705067",
+    "401705320",
+    "401705249",
+    "401705315",
+    "401705289",
+    "401705449",
+    "401705087",
+    "401705375",
+    "401705545",
+    "401705533",
+    "401705303",
+    "401705670",
+    "401705649",
+    "401705348",
+    "401705513",
+    "401705144",
+    "401705715",
+    "401705566",
+    "401705724",
+    "401705679",
+    "401705574",
+    "401705434",
+    "401705519",
+    "401705488",
+    "401705527",
+    "401705389",
+    "401705118",
+    "401705030",
+    "401705600",
+    "401705351",
+    "401705256",
+    "401705593",
+    "401705538",
+    "401705167"
+   ],
+   "original_ids": [
+    "401705185",
+    "401705658",
+    "401705487",
+    "401705325",
+    "401705124",
+    "401705401",
+    "401705400",
+    "401705366",
+    "401705188",
+    "401705072",
+    "401705404",
+    "401705346",
+    "401705337",
+    "401705148",
+    "401705208",
+    "401705502",
+    "401705091",
+    "401705525",
+    "401705200",
+    "401705141",
+    "401705583",
+    "401705486",
+    "401705193",
+    "401705388",
+    "401705270",
+    "401705269",
+    "401705034",
+    "401754705",
+    "401705233",
+    "401705297",
+    "401705392",
+    "401705305",
+    "401705479",
+    "401705563",
+    "401705053",
+    "401705686",
+    "401705578",
+    "401705505",
+    "401705115",
+    "401705202",
+    "401705496",
+    "401705693",
+    "401705592",
+    "401705154",
+    "401705121",
+    "401705267",
+    "401705477",
+    "401705619",
+    "401705419",
+    "401705738",
+    "401705510",
+    "401705627",
+    "401705666",
+    "401705678",
+    "401705114",
+    "401705060",
+    "401705661",
+    "401705585",
+    "401705312",
+    "401705023",
+    "401705374",
+    "401705705",
+    "401705659",
+    "401705258",
+    "401705062",
+    "401705390",
+    "401705287",
+    "401705381",
+    "401705218",
+    "401705350",
+    "401705067",
+    "401705320",
+    "401705249",
+    "401705315",
+    "401705289",
+    "401705449",
+    "401705087",
+    "401705375",
+    "401705545",
+    "401705533",
+    "401705303",
+    "401705670",
+    "401705649",
+    "401705348",
+    "401705513",
+    "401705144",
+    "401705715",
+    "401705566",
+    "401705129",
+    "401705724",
+    "401705679",
+    "401705574",
+    "401705434",
+    "401705519",
+    "401705488",
+    "401705527",
+    "401705389",
+    "401705118",
+    "401705030",
+    "401705600"
+   ],
+   "excluded_original_ids": [
+    "401705091",
+    "401705129",
+    "401705269",
+    "401705505",
+    "401705619"
+   ],
+   "replacement_ids": [
+    "401705167",
+    "401705256",
+    "401705351",
+    "401705538",
+    "401705593"
+   ],
+   "readiness": [
+    {
+     "game_id": "401705185",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705658",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705487",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705325",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705124",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705401",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705400",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705366",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705188",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705072",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705404",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705346",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705337",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705148",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705208",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705502",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705091",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4431941"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705525",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705200",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705141",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705583",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705486",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705193",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705388",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705270",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705269",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4592979"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705034",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401754705",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705233",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705297",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705392",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705305",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705479",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705563",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705053",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705686",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705578",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705505",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4431705"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705115",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705202",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705496",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705693",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705592",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705154",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705121",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705267",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705477",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705619",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4909710"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705419",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705738",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705510",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705627",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705666",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705678",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705114",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705060",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705661",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705585",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705312",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705023",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705374",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705705",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705659",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705258",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705062",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705390",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705287",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705381",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705218",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705350",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705067",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705320",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705249",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705315",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705289",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705449",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705087",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705375",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705545",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705533",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705303",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705670",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705649",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705348",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705513",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705144",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705715",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705566",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705129",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4279318"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705724",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705679",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705574",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705434",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705519",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705488",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705527",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705389",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705118",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705030",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705600",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705351",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705256",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705593",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705538",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705167",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705143",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705039",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705184",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705093",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705743",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705429",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705159",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705610",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705212",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705207",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705292",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4431689"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705577",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705523",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705473",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705152",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705656",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705687",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705466",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4397104"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705221",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705253",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705173",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705380",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705414",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705435",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705163",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705618",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705597",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705501",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705376",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705322",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705701",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705022",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705116",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705517",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705672",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705421",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705447",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705746",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705149",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705537",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705735",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705708",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705718",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705503",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705257",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705508",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705238",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705280",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705498",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705236",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705688",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705514",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705403",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705640",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705529",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705329",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705160",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705573",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705158",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705252",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705223",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "3950760"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705024",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705571",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705042",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4433188"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705395",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705608",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705634",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4431695",
+      "4432887"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705448",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705247",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705196",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705399",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705541",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705205",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705643",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705070",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705333",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705319",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705460",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705153",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705210",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705489",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705562",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705170",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705080",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705386",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705457",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705367",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705557",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705673",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705657",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705543",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705341",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705313",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705393",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401705584",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    }
+   ],
+   "input_sha256": {
+    "data/derived/experiments/a1_dated_f2_exhaustion_v1/config.json": "514e59f435849fbc44eafa9153bf4304d76858f509321b3861dd344ca41060b9",
+    "data/derived/variants/a1_scheduled_F2_20261122_v3/features/pregame.parquet": "7b66c3389b746adc72e98aea0bd73ffd8492bcf7a9475382111fce68bc1d723f",
+    "data/derived/history/2025/stints.parquet": "e01c20cec0ac57a8146cab04b3483de62ee1db4c7bfb0702834f107c97afc95c"
+   }
+  },
+  "F3": {
+   "game_ids": [
+    "401810091",
+    "401810131",
+    "401810143",
+    "401810159",
+    "401810324",
+    "401809815",
+    "401809240",
+    "401810100",
+    "401809997",
+    "401836747",
+    "401810267",
+    "401809792",
+    "401809794",
+    "401810211",
+    "401810185",
+    "401810251",
+    "401836751",
+    "401836798",
+    "401836746",
+    "401810205",
+    "401810067",
+    "401810298",
+    "401809791",
+    "401809506",
+    "401836802",
+    "401809837",
+    "401809504",
+    "401810249",
+    "401810182",
+    "401809799",
+    "401810260",
+    "401810265",
+    "401810237",
+    "401810000",
+    "401810047",
+    "401810316",
+    "401810253",
+    "401810095",
+    "401839699",
+    "401810325",
+    "401810075",
+    "401810123",
+    "401809787",
+    "401810117",
+    "401810278",
+    "401810297",
+    "401810099",
+    "401810136",
+    "401809960",
+    "401810318",
+    "401810244",
+    "401810282",
+    "401809784",
+    "401810015",
+    "401810060",
+    "401810209",
+    "401810173",
+    "401810309",
+    "401810041",
+    "401809993",
+    "401810261",
+    "401809798",
+    "401810233",
+    "401810003",
+    "401809509",
+    "401810178",
+    "401810290",
+    "401810199",
+    "401810225",
+    "401836754",
+    "401810162",
+    "401809953",
+    "401810228",
+    "401809775",
+    "401836807",
+    "401839023",
+    "401809811",
+    "401809800",
+    "401810254",
+    "401810287",
+    "401810155",
+    "401810051",
+    "401810114",
+    "401809963",
+    "401809508",
+    "401810059",
+    "401809952",
+    "401810229",
+    "401810193",
+    "401809804",
+    "401810141",
+    "401809817",
+    "401809797",
+    "401809975",
+    "401810214",
+    "401809780",
+    "401810153",
+    "401809944",
+    "401810066",
+    "401810312"
+   ],
+   "original_ids": [
+    "401810091",
+    "401810131",
+    "401810143",
+    "401810011",
+    "401810159",
+    "401810324",
+    "401809815",
+    "401809240",
+    "401810100",
+    "401809997",
+    "401836747",
+    "401809945",
+    "401810267",
+    "401809792",
+    "401809794",
+    "401809969",
+    "401809939",
+    "401809947",
+    "401810211",
+    "401810185",
+    "401810251",
+    "401836751",
+    "401810154",
+    "401836798",
+    "401836746",
+    "401810205",
+    "401810067",
+    "401809951",
+    "401810126",
+    "401810298",
+    "401809791",
+    "401809506",
+    "401809964",
+    "401836802",
+    "401809837",
+    "401809504",
+    "401809980",
+    "401810249",
+    "401810182",
+    "401809799",
+    "401810165",
+    "401810260",
+    "401810265",
+    "401810237",
+    "401810038",
+    "401810000",
+    "401810047",
+    "401810316",
+    "401810253",
+    "401810095",
+    "401839699",
+    "401810325",
+    "401810075",
+    "401810123",
+    "401809787",
+    "401810117",
+    "401810278",
+    "401810297",
+    "401810099",
+    "401810136",
+    "401809960",
+    "401810318",
+    "401809954",
+    "401810169",
+    "401810244",
+    "401810282",
+    "401809784",
+    "401810015",
+    "401810060",
+    "401810209",
+    "401810173",
+    "401810309",
+    "401810041",
+    "401809993",
+    "401810261",
+    "401809798",
+    "401810233",
+    "401810003",
+    "401809509",
+    "401810178",
+    "401810290",
+    "401810199",
+    "401810225",
+    "401836754",
+    "401810162",
+    "401809953",
+    "401810228",
+    "401809775",
+    "401836807",
+    "401809933",
+    "401839023",
+    "401809811",
+    "401809800",
+    "401810254",
+    "401810287",
+    "401810155",
+    "401810051",
+    "401810114",
+    "401809963",
+    "401809508"
+   ],
+   "excluded_original_ids": [
+    "401809933",
+    "401809939",
+    "401809945",
+    "401809947",
+    "401809951",
+    "401809954",
+    "401809964",
+    "401809969",
+    "401809980",
+    "401810011",
+    "401810038",
+    "401810126",
+    "401810154",
+    "401810165",
+    "401810169"
+   ],
+   "replacement_ids": [
+    "401809780",
+    "401809797",
+    "401809804",
+    "401809817",
+    "401809944",
+    "401809952",
+    "401809975",
+    "401810059",
+    "401810066",
+    "401810141",
+    "401810153",
+    "401810193",
+    "401810214",
+    "401810229",
+    "401810312"
+   ],
+   "readiness": [
+    {
+     "game_id": "401810091",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810131",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810143",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810011",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "5107173"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810159",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810324",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809815",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809240",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810100",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809997",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401836747",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809945",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4702745",
+      "5175647"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810267",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809792",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809794",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809969",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4433281",
+      "5214637"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809939",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4432173",
+      "5144126",
+      "5238230"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809947",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4700852"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810211",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810185",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810251",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401836751",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810154",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4898369"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401836798",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401836746",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810205",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810067",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809951",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "5279133"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810126",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "5242496"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810298",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809791",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809506",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809964",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "5239590"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401836802",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809837",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809504",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809980",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "5289900"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810249",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810182",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809799",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810165",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4278516"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810260",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810265",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810237",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810038",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4606840"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810000",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810047",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810316",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810253",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810095",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401839699",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810325",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810075",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810123",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809787",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810117",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810278",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810297",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810099",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810136",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809960",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810318",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809954",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "5105977",
+      "5203685"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810169",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "5107156"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810244",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810282",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809784",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810015",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810060",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810209",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810173",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810309",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810041",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809993",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810261",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809798",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810233",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810003",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809509",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810178",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810290",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810199",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810225",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401836754",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810162",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809953",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810228",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809775",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401836807",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809933",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4576060",
+      "4602025",
+      "5037873",
+      "5061575",
+      "5175643",
+      "5242502",
+      "5279130"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401839023",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809811",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809800",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810254",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810287",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810155",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810051",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810114",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809963",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809508",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810059",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809952",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810229",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810193",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809804",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810141",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809817",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809797",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809975",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810214",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810168",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "5214640"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809780",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810086",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "5060631"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810153",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809944",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810066",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810312",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809991",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810311",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809946",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809806",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810166",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809958",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809950",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809838",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810296",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809941",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "3059409",
+      "4433174",
+      "4702384",
+      "4898371"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810129",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809937",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810245",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810140",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810322",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809793",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810269",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809987",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810056",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810227",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810279",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810005",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809957",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810009",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4591259"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810006",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401836796",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810013",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809795",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810036",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810088",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810283",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810264",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401836750",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810307",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809783",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810152",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810148",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809781",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810071",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810246",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809241",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810236",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4700818"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810107",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810197",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810142",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810122",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810145",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810032",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810081",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810024",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809990",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810121",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810124",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810286",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810323",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810144",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810186",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810149",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810198",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809239",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810255",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810023",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810218",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809510",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809244",
+     "supported": false,
+     "reasons": [
+      "missing dated player position"
+     ],
+     "missing_player_ids": [
+      "4897262"
+     ],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810183",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401836800",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810042",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810127",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810280",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810027",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810306",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810111",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810314",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401836748",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810295",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810289",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810223",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810110",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810010",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809813",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401809974",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    },
+    {
+     "game_id": "401810097",
+     "supported": true,
+     "reasons": [],
+     "missing_player_ids": [],
+     "unknown_template_games": []
+    }
+   ],
+   "input_sha256": {
+    "data/derived/experiments/a1_dated_f3_exhaustion_v1/config.json": "887239b11c786d558d6952ef7c57780008d01eb1de088503f9d5b281c90f8465",
+    "data/derived/variants/a1_scheduled_F3_20261122_v3/features/pregame.parquet": "46ccbd20f55400b385af4b95930abda631268100d8a973002e66f5aa9c1dad49",
+    "data/derived/history/2025/stints.parquet": "e01c20cec0ac57a8146cab04b3483de62ee1db4c7bfb0702834f107c97afc95c"
+   }
+  }
+ },
+ "source_sha256": {
+  "analysis/a2_clock_ready_panels.py": "6f4d338db474ab00a088b53daf6b40db731c6606a9015c2068f6af44f8351cc9",
+  "analysis/experiments/20261122_a1_pre_candidate_manifest.json": "195b4ddaf748e4f3520a02f813b5763736fe4fbfbe653e896161532d6d9c7e6b",
+  "docs/protocols/a2_clock_readiness_amendment_20261123.md": "c0d471f304a1aa3e3906ac9dea7971532342c7a1ff9fc5289bcb0d365dcba907",
+  "analysis/experiments/20261123_a2_clock_engine_runtime_manifest_v1.json": "c7947e42496980c50f5bb03c1b6764e946be307e1186a0043d33d7c40efb322e"
+ },
+ "limits": "Conditional on usable dated positions; excluded inputs are unsupported, never evidence of clock harm. No new roster, position fill, fit, seed, threshold or final-season use."
+}

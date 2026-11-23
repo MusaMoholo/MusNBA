@@ -1,0 +1,25 @@
+{
+ "frozen_at": "2026-11-23T18:57:20.932618+00:00",
+ "source_sha256": {
+  "analysis/a2_clock_pool.py": "be410dde2a1f594e6b670b18c5d8ae6f141f11721cbe558d8bad6b4c2da68986",
+  "analysis/experiments/20261123_a2_clock_engine_runtime_manifest_v1.json": "c7947e42496980c50f5bb03c1b6764e946be307e1186a0043d33d7c40efb322e",
+  "analysis/experiments/20261123_a2_clock_ready_panels_v1.json": "0848468337ebdad1df7c6738029a2eb47470dbc56d0afb119279524445b7b506",
+  "analysis/a2_clock_scores.py": "c70de02f511c4fc7a55e8549f491ee109963051b1e7209b5a06f22dedd72927a",
+  "scripts/a1_compare.py": "435c1e0761f51ee9d218dfc462db8d219c0bc6f54dc8acd6bcae79968ddfcf68",
+  "analysis/rule3_scores.py": "5d7dbcc8361fe65974e9a227029ce9ccb6673a1465aa95d0370765da4ec490c7",
+  "scripts/release_gate.py": "5521abe5552a63f277adefcf05624b6121ef21a3003c4e58fcf1a30c40f2e287",
+  "data/derived/experiments/a1_dated_f1_exhaustion_v1/config.json": "0020c5a124bb4fcf3ad9a90f12abeb9992448994f1b550062c37bc2a962e20bc",
+  "data/derived/variants/a1_scheduled_F1_20261122_v3/features/pregame.parquet": "623183c962783dbbcc714e5b59809abb083bc598afb36ce2ab511879a7d9c7b0",
+  "data/derived/experiments/a1_dated_f2_exhaustion_v1/config.json": "514e59f435849fbc44eafa9153bf4304d76858f509321b3861dd344ca41060b9",
+  "data/derived/variants/a1_scheduled_F2_20261122_v3/features/pregame.parquet": "7b66c3389b746adc72e98aea0bd73ffd8492bcf7a9475382111fce68bc1d723f",
+  "data/derived/experiments/a1_dated_f3_exhaustion_v1/config.json": "887239b11c786d558d6952ef7c57780008d01eb1de088503f9d5b281c90f8465",
+  "data/derived/variants/a1_scheduled_F3_20261122_v3/features/pregame.parquet": "46ccbd20f55400b385af4b95930abda631268100d8a973002e66f5aa9c1dad49"
+ },
+ "folds": [
+  "F1",
+  "F2",
+  "F3"
+ ],
+ "method": "Concatenate original game/player rows, attach each game to its own dated pregame roles, then unchanged complete-game bootstrap; never average confidence intervals.",
+ "acceptance": "All supported proper bounds in every fold, no material coverage harm; all27 proper bounds in pooled300. No recipe, margin, panel or primary changes."
+}

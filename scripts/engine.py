@@ -1,18 +1,10 @@
 #!/usr/bin/env python3
-"""Possession engine — the default projection (D22; ENGINE_PLAN §2–§3; M6 brought forward); serves v1.1 (D23).
+"""Possession worlds from fixed dated nodes and an explicit recorded runtime.
 
-Plays a game forward, segment by segment on the game clock, in W worlds at once, with the persisted v1 node models
-(data/models/<ENGINE version>/): duration → event → who → what → location → shot result → assisted/assister, blocked/blocker →
-rebound/rebounder; turnover type → stealer; fouler; free throws; penalty from the team-foul state. Every world carries
-its own score, team fouls, personal fouls (foul-outs), in-game counts and minutes. Rotations are replayed from the
-team's last ten games (M3 replay v0: a template per world, mapped to tonight's available players; overtime keeps the
-closing five). Output is the app's game contract (projection.package), so the app needs no change.
-
-Known limits (in the app's label; FINDINGS §3j–§3k): not yet backtested (M9; scripts/backtest.py is written, not yet
-run); rotations are replay v0 (M7 will be target-aware); no heave rule, timeouts or technical free throws. The clock
-rules come from the segments the version was trained on (its config's "segments"; v1: the feed's rebound clocks, kept in
-data/derived/variants/rebound_feed; v1.1: the 2026-27 convention, D23). Owner (19 Nov, D22): this engine is the
-dashboard's default and the floor — a change replaces it only if it does better; D24: today's and tomorrow's slates.
+Each world carries its own score, fouls, lineup, minutes and game clock. Runtime policies select
+qualified rule/rotation corrections while preserving legacy replay. Node artifacts and runtime versions
+are separate; ENGINE selects production. Optional research policies consume no draws when disabled.
+ENGINE_PLAN, TRAINING_PLAN and FINDINGS hold current design, acceptance and measured limitations.
 
   .venv/bin/python scripts/engine.py --game <game_id> [--worlds 2000]     one game from the master fixtures (today's inputs)
 """
@@ -409,6 +401,7 @@ class Engine:
         self.m = Models(version)
         self.diag = None  # set to [] to record (start type, seconds to action, clock) per segment
         self.rotation_diag = None  # optional pre-foul-out scheduled rotation tables
+        self.clock_policy = None  # opt-in research sampler; accepted runtime retains legacy timing
         self.rotation_policy: RotationPolicy | None = None
         if self.runtime.get('foul_policy') == 'nba-rule3-v1':
             from scripts.foul_out import Rule3Policy
@@ -530,6 +523,9 @@ class Engine:
         policy = getattr(self, 'rotation_policy', None)
         if policy is not None:
             policy.begin(g, W, avail_world, int(seed))
+        clock_policy = self.clock_policy
+        if clock_policy is not None:
+            clock_policy.begin(int(seed))
         if self.rotation_diag is not None:
             self.rotation_diag.append((tables, combo))
         fouled_out = np.zeros((W, g.n), bool)
@@ -572,6 +568,9 @@ class Engine:
                 pick = rng.integers(0, len(vals), size=sel.size)
                 secs[sel], quiet[sel] = vals[pick], none[pick]
             secs = np.where(quiet, st.clock[A], np.minimum(secs, st.clock[A]))  # no action: the period runs out
+            if clock_policy is not None:
+                secs, quiet = clock_policy.sample(st.period[A], st.clock[A],
+                    st.score[A, off] - st.score[A, 1 - off], secs, quiet)
             ctx['shot_time'] = secs.astype(np.float32)
             if self.diag is not None:
                 self.diag.append((st.start[A].copy(), secs.copy(), st.clock[A].copy() + 0))

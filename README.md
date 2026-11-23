@@ -114,7 +114,11 @@ membership and required starter-position coverage without reading outcome column
 `analysis/rule3_capture_audit.py` independently reconciles captures; `analysis/rule3_scores.py` reports v2 bounds.
 `analysis/rotation_confirmation.py` and `rotation_final.py` qualify D56 with reused controls and a frozen,
 once-only protected run; HANDOFF owns active namespaces, logs and stop conditions.
-`analysis/a2_{shared_shooting,world_diagnostics}.py` implement the frozen A2 diagnostics, without fitting factors.
+`analysis/a2_{shared_shooting,world_diagnostics}.py` implement A2 diagnostics without fitting factors.
+`analysis/a2_clock_engine.py` runs frozen clock panels; `a2_clock_ready_panels.py` adds the input-only
+earlier-fold readiness amendment. `a2_clock_scores.py` applies learned/v3 compatibility and
+`a2_clock_pool.py` pools original per-game rows with dated roles. HANDOFF owns active commands/namespaces;
+never restart a completed score or alter frozen sources during execution.
 
 Use `--help` to inspect a runner before choosing controls. Heavy compute totals at most ten threads; actual
 `--jobs` × inner-thread settings matter (AGENTS §6). Examples after protocol/namespace freeze:
