@@ -320,15 +320,31 @@ export async function driversPanel(el, data) {
       const wb = C.count(big) ? C.mean(win, big) : null, wq = C.count(quiet) ? C.mean(win, quiet) : null;
       const ws = sitShare > 0.01 ? C.mean(win, sitMask) : null;
       return `<tr><td class="name">${esc(p.name)}</td><td class="dim">${bx}+ / ${qx ? '≤' + qx : '0'}</td>${heat(wb, {digits: 0})}${heat(wq, {digits: 0})}
-        <td>${ws == null ? '<span class="dim">—</span>' : `${pct(ws, 0)} <span class="dim">(${pct(sitShare, 0)})</span>`}</td><td>${(C.corr(pts, margin) ?? 0).toFixed(2)}</td></tr>`;
+        <td>${ws == null ? '<span class="dim">—</span>' : `${pct(ws, 0)} <span class="dim">(${pct(sitShare, 0)})</span>`}</td><td>${C.corr(pts, margin)?.toFixed(2) ?? '—'}</td></tr>`;
     }).join('');
     // teammates' points: correlation matrix (top six by projected points)
     const top = data.projection.sim[side].players.filter(p => p.periods).slice().sort((a, b) => b.periods.fg.mean.pts - a.periods.fg.mean.pts).slice(0, 6);
+    const pair = top.slice(0, 2).map(p => ({subj: 'p:' + p.id, v: 'pts', op: 'ge', x: Math.floor(C.mean(Wd.values('p:' + p.id, 'pts'))) + 1}));
+    const together = O.mask(Wd, pair), independent = pair.reduce((p, c) => p * C.mean(O.mask(Wd, [c])), 1);
+    const card = (title, chance, description, detail, conditions) => `<a class="tile story-card" href="#/game/${encodeURIComponent(data.game.id)}/scenario/${encode(conditions)}">
+      <span>${title}</span><b>${pct(chance, 1)}</b><p>${description}</p><small>${detail}</small><small>Explore these worlds →</small></a>`;
+    const stories = [pair.length === 2 ? card('Both above their averages', C.mean(together),
+      pair.map((c, i) => `${esc(top[i].name)} ${c.x}+ points`).join('<br>'),
+      `${pct(independent, 1)} if independent · ${C.count(together).toLocaleString()} matching worlds`, pair)
+      : '<div class="tile"><span>Both above their averages</span><p>Two saved player forecasts are needed.</p></div>',
+      ...[[-1, 'le', 'Trailing after Q3'], [1, 'ge', 'Leading after Q3']].map(([x, op, title]) => {
+        const conditions = [{subj: 't:' + side, v: 'q3m', op, x}], selected = O.mask(Wd, conditions), n = C.count(selected);
+        const chance = n ? C.mean(win, selected) : null;
+        return card(title, chance, 'Chance to win from this position', n
+          ? `${pct(C.mean(selected), 1)} reach this position · ${n.toLocaleString()} matching worlds · overall win ${pct(base, 1)}`
+          : 'No saved worlds reach this position.', conditions);
+      })].join('');
     const cols = top.map(p => Wd.values('p:' + p.id, 'pts'));
     const short = p => p.name.split(' ').slice(-1)[0];
     const mat = top.map((p, i) => `<tr><td class="l">${esc(short(p))}</td>${top.map((q, j) => {
       if (i === j) return '<td class="dim">·</td>';
-      const r = C.corr(cols[i], cols[j]) ?? 0;
+      const r = C.corr(cols[i], cols[j]);
+      if (r == null) return '<td class="dim">—</td>';
       return `<td class="corr" style="--r:${Math.abs(r).toFixed(3)}" data-sign="${r < 0 ? 'neg' : 'pos'}">${r.toFixed(2)}</td>`;
     }).join('')}</tr>`).join('');
     // who gains when a maybe sits
@@ -341,6 +357,8 @@ export async function driversPanel(el, data) {
       return `<p class="note"><b>If ${esc(p.name)} sits</b> (${pct(C.mean(Wd.values('p:' + p.id, 'sits')), 0)} of simulations): ${mates.map(x => `${esc(x.q.name)} ${signed(x.dm)} min, ${signed(x.dp)} pts`).join(' · ')}.</p>`;
     }).join('');
     return `<section class="panel"><h3 style="margin-top:0">${esc(team(data.game[side].id).name)} — who drives the result</h3>
+      <div class="advanced-grid" data-game-stories="${side}">${stories}</div>
+      <p class="note">Simulated associations, using this forecast's player averages and the score after Q3.</p>
       <div class="scroll"><table><thead><tr><th class="name">Player</th><th>Big / quiet night (pts)</th><th>Win if big</th><th>Win if quiet</th><th>Win if he does not play (share)</th><th>r with margin</th></tr></thead><tbody>${rows}</tbody></table></div>
       <p class="note">Team win chance overall ${pct(base, 1)}. Big night = his top quarter of simulated points, quiet = bottom quarter. "Does not play" counts every simulated game without him — injury availability and nights the rotation leaves him out.</p>
       <h3>Teammates' points — correlation</h3><div class="scroll" style="max-width:560px"><table class="grid"><thead><tr><th class="l"></th>${top.map(p => `<th>${esc(short(p))}</th>`).join('')}</tr></thead><tbody>${mat}</tbody></table></div>
