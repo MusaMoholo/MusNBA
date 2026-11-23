@@ -58,7 +58,8 @@ Standings collapses threshold controls. Lab is accessible through About, outside
 Compare lineup cases shows win chances/totals. Advanced panels separate raw saved-world counts from weighted probability support,
 with nine player/eighteen team box-derived metrics, quantiles, histograms and player-rate scenario links. Phone retains Expected only.
 Scenarios offers attempts, combined totals and rates, exact/strict/inclusive comparisons and Core/Shooting/Efficiency/Combined tables.
-Heatmaps show league rank or conditional changes with explicit legends; no invented court tracking. Zero denominators stay undefined.
+Current colour is table shading: **Standings → Ratings** shows ranked columns; laptop **Game → Scenarios**, after a condition, shows player deltas.
+Court shooting maps are planned in C4. Zero denominators stay undefined.
 Participation filters mean simulated minutes, not availability or causal effects. Report-band semantics/version live in MODEL.
 Advanced links and phone sortable headers have 44px targets. Sortable columns support click/keyboard, direction markers, missing-last order and preserved roster groups. Player directory name/team/stat
 sorting covers the full filtered population; other enhanced tables sort displayed rows. Shooting pairs sort by percentage; charts/period axes retain order.

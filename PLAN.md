@@ -15,8 +15,8 @@ lineup branches and offline photos. Availability calibration, richer defence, se
 ## Latest checkpoint — U24 delivered,23 November
 
 Owner23 November: ship current-data dashboard fixes **before** Chunk C. Headliners: truthful counts/shared lineup context;
-richer scenarios, advanced distributions, heatmaps, sortable tables and simpler navigation. D60 adds game-specific report interpretation
-into explicit 0/25/50/75/100% branch-weight assumptions; no learned-model accuracy claim. HANDOFF owns its ten-rung ledger and delivery.
+richer scenarios, advanced distributions, table shading, sortable tables and simpler navigation. D60 adds game-specific report interpretation
+into explicit 0/25/50/75/100% branch-weight assumptions; no learned-model accuracy claim. HANDOFF records delivery and next actions.
 Delivered:140k worlds/14branches in25m14s, refreshed iCloud bundles and published/tested shell;114 responsive checks,108/108 smoke.
 Exact evidence and device-import requirement are in HANDOFF. **Stop before C1.**
 
@@ -41,7 +41,7 @@ heavy threads. Negative research still ships useful UX on accepted engines. Full
 
 Product northstar: every meaningful derived/predicted quantity should be discoverable with definitions, support and useful interactives.
 Conditions, advanced stats, heatmaps and court views are examples, not the breadth limit. One game owns all lineup cases.
-Regular season/Cup/Playoffs are core competition areas; Players/Teams remain shared. Keep secondary detail collapsible and Lab peripheral.
+Planned core areas are Regular season/Cup/Playoffs; Players/Teams remain shared. Keep secondary detail collapsible and Lab peripheral.
 Competition dependencies/source rules, canonical events and required accounting are in MODEL; no empty or fabricated probabilities.
 
 ## Original programme — unchanged74%

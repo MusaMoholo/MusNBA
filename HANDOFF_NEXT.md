@@ -1,6 +1,6 @@
 # Handoff — next executable Chunk C
 
-Updated 23 November 2026. Previous checkpoint **f4cba64**; `git log -1` identifies U24's checkpoint.
+Updated 23 November 2026. U24 release **41b479a**; `git log -1` identifies the latest documentation checkpoint.
 Read [AGENTS](AGENTS.md), this file, [PLAN](PLAN.md), then relevant [MODEL](MODEL.md)/[README](README.md) sections.
 
 ## State
@@ -8,7 +8,7 @@ Read [AGENTS](AGENTS.md), this file, [PLAN](PLAN.md), then relevant [MODEL](MODE
 - **A1/A2 and U24 complete.** Accepted engine-v1.3-r3 nodes/timing/independent rotations/Rule3 remain; D60 adds
   explicit **report-bands-v1** availability assumptions. No learned accuracy/calibration claim or protected rescoring.
 - U24: truthful raw counts versus probability mass; selected-lineup advanced summaries/comparisons; attempts/combos/rates,
-  richer scenarios/heatmaps; sortable tables; simpler Teams/Standings/navigation. README owns exact app behaviour.
+  richer scenarios/table shading; sortable tables; simpler Teams/Standings/navigation. README owns exact app behaviour.
 - Fresh generation **2026-11-23T23:07:37Z**: **10 games,14×10k branches,140,000 worlds**,40,000 weighted season paths.
   Full nightly **1,514.01s**; input rebuild232.1s, snapshot1,114.85s. Ten workers observed at992.3% CPU. No compute jobs remain.
 - Smoke108/108; deliberate fault86/108/exit1;63 focused Python/19 Node tests;114 final responsive checks with visual inspection.
