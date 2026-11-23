@@ -2,6 +2,23 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 ET — selected earlier-fold matched continuations:** three deliberately selected F1/F2/F3
+synthetic-absence cases each started with seven available home players and used dated body-free diagnostic
+engines, not the serving engine. F1 was selected because its screen exhausted; F2/F3 were minimum-roster
+feasible cases. Among **1,000** original attempts per case, **22 / 2 / 7** exhausted. Generation matched
+the complete original failure state and trace before applying the explicit penalty continuation; all
+**978 / 998 / 993** survivors reproduced their original trajectories. Independent original replay and
+saved-capture accounting checked **491,390 / 475,010 / 478,362** lineup fives and **27 / 2 / 8** technical
+events. Survivor versus all-continuation mean total points differed **−0.240 / −0.049 / −0.004** with
+unadjusted paired-seed percentile 95% intervals **[−0.432, −0.070] / [−0.147, 0.000] /
+[−0.078, 0.075]** (5,000 resamples). The largest absolute home-player minute-mean shifts were
+**−0.171 / +0.010 / −0.028** minutes; all player/score intervals are in the audit files. Generation took
+**172.860 / 165.957 / 178.206s** and audits **89.038 / 88.598 / 89.825s**, sequentially with eight
+one-thread workers. These are selected oracle rosters and one continuation assumption: not representative
+failure rates, a real-world bias estimate, a predictive comparison, or a retry/promotion gate. Small
+failure counts make the intervals especially fragile; they are not multiplicity-adjusted. No protected-season
+actual outcomes were scored. Reports `analysis/experiments/20261122_a1_dated_matched_f{1,2,3}_full_v1{,_audit}.json`.
+
 **22 Nov 2026 ET — matched D29 continuation and selection:** on the previously selected F4 six-player
 synthetic-absence case, a separate diagnostic retains D29's existing decisions until an exhausted-roster
 state, then applies the S06-specified five-player foul-penalty assumption and independent technical-FT

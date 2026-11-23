@@ -1,0 +1,16 @@
+{
+ "kind": "selected earlier-fold matched D29 continuation; diagnostic only",
+ "fold": "F3",
+ "game": "401810091",
+ "pilot": false,
+ "worlds": 1000,
+ "manifest": "data/derived/experiments/20261122_a1_dated_matched_f3_full_v1/manifest.json",
+ "manifest_sha256": "613012e57381fd352c721b1bf5f071b81dffb993f980f53c619bb796008557a6",
+ "workers": 8,
+ "elapsed_seconds": 178.206,
+ "limitations": [
+  "Selected synthetic oracle-roster case and dated diagnostic engine.",
+  "Continuation is an explicit assumption, not the no-exception counterfactual.",
+  "Not a league rate, predictive test, or production gate."
+ ]
+}

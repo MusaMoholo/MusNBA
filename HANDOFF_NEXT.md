@@ -1,10 +1,28 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 80%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **22ff6bd** (different-policy comparison); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **83cf34f** (matched-state selection); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
+- **A1 90% partial — earlier-fold matched continuations (23 Nov UTC):** on the three frozen selected
+  seven-home-player synthetic branches below, F1/F2/F3 generated and audited **1,000** attempts each.
+  Original D29 exhausted **22 / 2 / 7** times; generation matched each full failure state/trace before
+  continuation and reproduced all **978 / 998 / 993** survivor trajectories. Independent replay and
+  saved-world accounting checked **491,390 / 475,010 / 478,362** fives and **27 / 2 / 8** technicals.
+  Survivor-minus-all total means were **−0.240 / −0.049 / −0.004** points; unadjusted 95% paired-seed
+  intervals **[−0.432, −0.070] / [−0.147, 0.000] / [−0.078, 0.075]**. Player estimates and intervals
+  are in the audits. Generation **172.860 / 165.957 / 178.206s**, audit **89.038 / 88.598 / 89.825s**;
+  eight one-thread workers, folds sequential. These selected oracle cases and one continuation assumption
+  do not establish population failure rates, real-world forecast bias or a predictive/promotion gate.
+  Reports `analysis/experiments/20261122_a1_dated_matched_f{1,2,3}_{pilot,full}_v1{,_audit}.json`;
+  ignored captures `data/derived/experiments/20261122_a1_dated_matched_f{1,2,3}_{pilot,full}_v1/`;
+  full logs `/tmp/musnba_a1_dated_matched_f{1,2,3}_full_v1.log`. Focused tests **47/47**, smoke
+  **107/107**, deliberate fault **86/107** and exit 1 (`/tmp/musnba_a1_dated_matched_{smoke,fault}_v1.log`).
+  No job remains running; no protected-season outcomes were scored; production model, forecasts and bundles
+  unchanged. A1 **80%**, Chunk A **34.5%**. Documentation review: HANDOFF, PLAN, FINDINGS and README
+  updated; AGENTS (standing rules), ENGINE_PLAN (design), TRAINING_PLAN (gates) and DASHBOARD_PLAN (shipped
+  UI) require no change. Continue A1; the owner requested a stop only at its end.
 - **A1 90% partial — matched-state continuation (23 Nov UTC):** an isolated D29 policy now uses the existing
   five-player foul-penalty assumption only after D29 would exhaust, with an independent technical-FT stream.
   On the same selected synthetic F4 six-player case, **798/798** previously successful saved trajectories
@@ -38,6 +56,10 @@ The preceding pushed checkpoint was **22ff6bd** (different-policy comparison); u
   `data/derived/experiments/20261122_a1_f4_six_roster_full_v2/`. The preserved `_v1` generation completed
   798 worlds but its audit failed on absolute/relative path comparison; the corrected auditor changed the
   frozen source hash, so `_v1` is invalid and `_v2` was generated afresh. Focused tests **13/13**, smoke
+  **107/107**, intentional fault **86/107** and exit 1. No protected-season outcomes were scored, no
+  accepted model or served bundle changed. A1 **80%**, Chunk A **34.5%**. Documentation review: HANDOFF,
+  PLAN, FINDINGS and README updated; AGENTS (standing rules), ENGINE_PLAN (design and decisions),
+  TRAINING_PLAN (evaluation gates) and DASHBOARD_PLAN (shipped behaviour) need no changes.
 - **A1 90% matched-state diagnostic, frozen before implementation:** test a separate research-only D29
   continuation which is identical to `BranchFoulOutPolicy` until the first fewer-than-five-eligible state,
   then applies the previously specified S06 five-player foul-penalty exception without S06's substitution
@@ -49,11 +71,20 @@ The preceding pushed checkpoint was **22ff6bd** (different-policy comparison); u
   all 1,000 continuation worlds for the same prespecified score and six-player outcomes with seed-cluster
   bootstrap intervals. This continuation is a candidate assumption, not the unknowable no-exception
   counterfactual, real availability, a predictive result or permission to promote. If exact survivor/failure
-  identity or accounting fails, stop and retain the evidence. Use no protected-season results. Focused tests **13/13**, smoke
-  **107/107**, intentional fault **86/107** and exit 1. No protected-season outcomes were scored, no
-  accepted model or served bundle changed. A1 **80%**, Chunk A **34.5%**. Documentation review: HANDOFF,
-  PLAN, FINDINGS and README updated; AGENTS (standing rules), ENGINE_PLAN (design and decisions),
-  TRAINING_PLAN (evaluation gates) and DASHBOARD_PLAN (shipped behaviour) need no changes.
+  identity or accounting fails, stop and retain the evidence. Use no protected-season results.
+- **A1 90% earlier-fold matched-state cases, frozen before new draws:** take F1's sole observed exhausted
+  branch `401585382/sits` (selected because it failed), and in F2/F3 take the lowest game ID among feasible
+  sits branches having the smallest observed home participant count (`401705024/sits`, `401810091/sits`).
+  Each starts with seven available home players after the synthetic absence. Use their audited dated
+  body-free diagnostic engines, source fingerprints and original single-world seed scheme; draws 0–4
+  must reproduce the existing screen, then extend the same scheme through draw 999. Independently run
+  ordinary D29 and the matched penalty continuation for each seed; check survivor capture identities and
+  full state/trace at each failure, persist all continuations and audit their fives, technicals and scores.
+  Compare survivors with all continuations for home/away/total/margin and each available home player's
+  points and minutes, with 5,000 unadjusted seed-bootstrap intervals. Run one fold at a time with at most
+  eight single-thread workers and fail on unclassified errors. These are three deliberately selected
+  synthetic oracle-roster cases with different dated diagnostic models, not representative fold estimates
+  or a production/promotion gate. Zero failures gives zero observed selection, not zero population risk.
 - **A1 90% partial — earlier-fold screens complete (23 Nov UTC):** fixed **200**-game F1/F2/F3 panels
   respectively had **1 / 0 / 0** exhausted attempts out of **1,900 / 1,900 / 1,790**, **0 / 0 / 0**
   invalid allocations and **20 / 20 / 42** unsupported missing-position branches. F1's game-cluster
@@ -3121,7 +3152,9 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
    establishes selected pre-failure halftime states in this extreme case; full-game bias remains unknown.
    All three earlier-fold conditional-roster screens and audits are complete. The selected full-game
    F4 comparison against S06 has different policies; the matched D29 continuation additionally quantifies
-   selection under one explicit penalty assumption in that selected case, not a population-wide gate.
+   selection under one explicit penalty assumption in that case and three selected earlier-fold cases, not a
+   population-wide gate. A full-screen continuation, alternative-assumption sensitivity and player-first
+   comparisons remain open; determine a prespecified design using these diagnostics before implementation.
    Genuinely dated
    pre-game report cohorts remain unavailable for fitting or calibrating an availability model; labelled
    fixed scenario weights themselves remain permitted. The resume prototype
@@ -3138,7 +3171,11 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
    To repeat the matched-state run under fresh names:
    `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -u analysis/a1_matched_penalty_run.py --worlds-dir data/derived/experiments/<new-dir> --output analysis/experiments/<new-report>.json`
    and `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -u analysis/a1_matched_penalty_audit.py analysis/experiments/<new-report>.json --output analysis/experiments/<new-audit>.json`;
-   use `--pilot` for the fixed ten-seed wiring check. A full-screen continuation on earlier folds, alternative
+   use `--pilot` for the fixed ten-seed wiring check. To reproduce a selected earlier-fold run use
+   `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -u analysis/a1_dated_matched_penalty.py --fold F1 --worlds-dir data/derived/experiments/<new-dir> --output analysis/experiments/<new-report>.json`
+   and `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -u analysis/a1_dated_matched_penalty_audit.py analysis/experiments/<new-report>.json --output analysis/experiments/<new-audit>.json`;
+   change `--fold` to F2 or F3, run folds sequentially, and use `--pilot` to replay the first five draws.
+   A full-screen continuation on earlier folds, alternative
    continuation sensitivity and the player-first/promotion and live-slate checks remain unresolved.
    Reproduce with `.venv/bin/python analysis/a1_game_context_audit.py data/snapshots/2026-11-22/meta.json data/master_fixtures.csv data/derived/experiments/20261122_chunk_a_a1_d47_game_view_one_full_v2.json data/derived/experiments/20261122_chunk_a_a1_d47_game_view_two_full_v2.json --payloads data/derived/experiments/20261122_chunk_a_a1_d47_expected_payload_one_shared_v1.json data/derived/experiments/20261122_chunk_a_a1_d47_expected_payload_two_shared_v1.json --output analysis/experiments/<new-context-audit>.json`.
 2. Finish A1 only after the actual rung requirements or the explicitly documented blocked fallback are resolved,

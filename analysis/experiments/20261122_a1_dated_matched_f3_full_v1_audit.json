@@ -1,0 +1,189 @@
+{
+ "kind": "independent selected earlier-fold matched continuation accounting",
+ "report": "analysis/experiments/20261122_a1_dated_matched_f3_full_v1.json",
+ "report_sha256": "393427c86e3d3c79151aa2f89d78709e20dd08b4c002b7a907097f0b4faaa569",
+ "audit_sha256": "7b1a8a58182e65b2a6cd16c633cbc15820b40914770c029e21b542711e2c4c22",
+ "fold": "F3",
+ "game": "401810091",
+ "pilot": false,
+ "worlds": 1000,
+ "exhausted": 7,
+ "lineup_fives_checked": 478362,
+ "technical_events": 8,
+ "metrics": {
+  "home_points": {
+   "d29_survivor_mean": 109.46827794561933,
+   "continuation_mean": 109.473,
+   "difference": -0.004722054380664531,
+   "ci_95": [
+    -0.050265972492943685,
+    0.03363126419808961
+   ]
+  },
+  "away_points": {
+   "d29_survivor_mean": 106.3655589123867,
+   "continuation_mean": 106.365,
+   "difference": 0.0005589123867082435,
+   "ci_95": [
+    -0.05163569294555117,
+    0.05718138038759828
+   ]
+  },
+  "total_points": {
+   "d29_survivor_mean": 215.83383685800604,
+   "continuation_mean": 215.838,
+   "difference": -0.0041631419939562875,
+   "ci_95": [
+    -0.07798536375907118,
+    0.07516631069732746
+   ]
+  },
+  "home_margin": {
+   "d29_survivor_mean": 3.102719033232628,
+   "continuation_mean": 3.108,
+   "difference": -0.005280966767371886,
+   "ci_95": [
+    -0.06567372423237715,
+    0.04551864240475828
+   ]
+  },
+  "home_player_2991235_points": {
+   "d29_survivor_mean": 7.769385699899295,
+   "continuation_mean": 7.788,
+   "difference": -0.018614300100705528,
+   "ci_95": [
+    -0.0532729941111519,
+    0.009414062927412979
+   ]
+  },
+  "home_player_3202_points": {
+   "d29_survivor_mean": 28.88418932527694,
+   "continuation_mean": 28.921,
+   "difference": -0.036810674723060544,
+   "ci_95": [
+    -0.0971374442785912,
+    0.009160509812264994
+   ]
+  },
+  "home_player_3922230_points": {
+   "d29_survivor_mean": 10.535750251762336,
+   "continuation_mean": 10.507,
+   "difference": 0.02875025176233592,
+   "ci_95": [
+    0.0006428327696655246,
+    0.06490676008317264
+   ]
+  },
+  "home_player_4065663_points": {
+   "d29_survivor_mean": 10.110775427995971,
+   "continuation_mean": 10.107,
+   "difference": 0.0037754279959720805,
+   "ci_95": [
+    -0.013020250846837333,
+    0.022627013497992926
+   ]
+  },
+  "home_player_4432639_points": {
+   "d29_survivor_mean": 15.615307150050352,
+   "continuation_mean": 15.61,
+   "difference": 0.00530715005035276,
+   "ci_95": [
+    -0.02490009953769019,
+    0.034002123672320236
+   ]
+  },
+  "home_player_4711272_points": {
+   "d29_survivor_mean": 14.612286002014098,
+   "continuation_mean": 14.61,
+   "difference": 0.002286002014098898,
+   "ci_95": [
+    -0.027775419861262175,
+    0.034436843737756934
+   ]
+  },
+  "home_player_4871144_points": {
+   "d29_survivor_mean": 21.94058408862034,
+   "continuation_mean": 21.93,
+   "difference": 0.010584088620340992,
+   "ci_95": [
+    -0.0067181151447352145,
+    0.030684232165480014
+   ]
+  },
+  "home_player_2991235_minutes": {
+   "d29_survivor_mean": 27.345881166934372,
+   "continuation_mean": 27.374084998751552,
+   "difference": -0.028203831817183556,
+   "ci_95": [
+    -0.06391631648634552,
+    0.00043387129953797245
+   ]
+  },
+  "home_player_3202_minutes": {
+   "d29_survivor_mean": 40.27346089237969,
+   "continuation_mean": 40.274614999447266,
+   "difference": -0.0011541070675562537,
+   "ci_95": [
+    -0.011009101069746485,
+    0.008294744012886211
+   ]
+  },
+  "home_player_3922230_minutes": {
+   "d29_survivor_mean": 31.28137798114121,
+   "continuation_mean": 31.26052666865066,
+   "difference": 0.02085131249054939,
+   "ci_95": [
+    -0.014238926989415202,
+    0.06989074665298815
+   ]
+  },
+  "home_player_4065663_minutes": {
+   "d29_survivor_mean": 28.766711983806353,
+   "continuation_mean": 28.758554999939975,
+   "difference": 0.00815698386638175,
+   "ci_95": [
+    -0.01974767351880775,
+    0.0451863914806192
+   ]
+  },
+  "home_player_4432639_minutes": {
+   "d29_survivor_mean": 37.69587613138483,
+   "continuation_mean": 37.683741665074976,
+   "difference": 0.012134466309852598,
+   "ci_95": [
+    -0.010707256008749156,
+    0.038163210925979546
+   ]
+  },
+  "home_player_4711272_minutes": {
+   "d29_survivor_mean": 36.653398792458795,
+   "continuation_mean": 36.65674166759216,
+   "difference": -0.003342875133370171,
+   "ci_95": [
+    -0.03528396149549699,
+    0.02928450333112166
+   ]
+  },
+  "home_player_4871144_minutes": {
+   "d29_survivor_mean": 38.43646525733283,
+   "continuation_mean": 38.44173500054342,
+   "difference": -0.00526974321059015,
+   "ci_95": [
+    -0.028726041472566344,
+    0.01495827841990794
+   ]
+  }
+ },
+ "bootstrap": {
+  "replicates": 5000,
+  "seed": 20261122,
+  "unit": "original seed",
+  "interval": "95% percentile, unadjusted"
+ },
+ "elapsed_seconds": 89.825,
+ "limitations": [
+  "Selected synthetic oracle-roster case and dated diagnostic engine.",
+  "Continuation is an explicit assumption, not the no-exception counterfactual.",
+  "Not a league rate, predictive test, or production gate."
+ ]
+}

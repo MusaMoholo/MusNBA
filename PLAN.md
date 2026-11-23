@@ -429,6 +429,12 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 ET · A1 earlier-fold matched selection:** three deliberately selected seven-player
+  F1/F2/F3 synthetic branches had **22 / 2 / 7** exhaustions in **1,000** attempts each; independently
+  replayed/accounted continuation captures yielded survivor-minus-all total means **−0.240 / −0.049 /
+  −0.004** (unadjusted 95% seed intervals **[−0.432, −0.070] / [−0.147, 0.000] / [−0.078, 0.075]**).
+  These selected oracle-roster cases and one exception assumption are not representative rates or a
+  predictive gate. A1 **80%**, Chunk A **34.5%**; production model and bundle unchanged. See FINDINGS.
 - **22 Nov 2026 ET · A1 matched-state selection:** an isolated foul-penalty continuation reproduced all
   **798** surviving D29 trajectories and matched all **202** first-failure engine states before continuing.
   All **1,000** completed; independent replay checked **492,616** fives and **371** technicals. Survivors

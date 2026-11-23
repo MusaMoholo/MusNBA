@@ -1,0 +1,21 @@
+{
+ "kind": "independent selected earlier-fold matched continuation accounting",
+ "report": "analysis/experiments/20261122_a1_dated_matched_f1_pilot_v1.json",
+ "report_sha256": "bb2b105e2d3d9195a17f7105536973681fb92f4786769e3d8ed8de65388212bc",
+ "audit_sha256": "7b1a8a58182e65b2a6cd16c633cbc15820b40914770c029e21b542711e2c4c22",
+ "fold": "F1",
+ "game": "401585382",
+ "pilot": true,
+ "worlds": 5,
+ "exhausted": 1,
+ "lineup_fives_checked": 2524,
+ "technical_events": 1,
+ "metrics": null,
+ "bootstrap": null,
+ "elapsed_seconds": 5.684,
+ "limitations": [
+  "Selected synthetic oracle-roster case and dated diagnostic engine.",
+  "Continuation is an explicit assumption, not the no-exception counterfactual.",
+  "Not a league rate, predictive test, or production gate."
+ ]
+}
