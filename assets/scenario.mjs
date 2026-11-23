@@ -26,13 +26,14 @@ export function decode(text) {
 /** Condition builder: subject → variable → (≥ / ≤ value). `prefix` keeps several builders on one page apart. */
 function builder(data, Wd, prefix, {subj = 't:home', v = 'win', op = 'ge', x = null, button = 'Add', variableOnly = false} = {}) {
   const vals = O.isFlag(v) ? null : Wd.values(subj, v);
-  const d = vals ? calculations(Wd).dist(vals) : null;
-  const value = x ?? (d ? Wd.weights && v === 'min' ? Number(d.q[3].toFixed(4)) : d.q[3] : 0);
+  const exactMinute = v === 'min' && (Wd.weights || Wd.preciseMinutes);
+  const d = vals ? (Wd.preciseMinutes && exactMinute ? O.preciseCalculations(Wd) : calculations(Wd)).dist(vals) : null;
+  const value = x ?? (d ? exactMinute ? Number(d.q[3].toFixed(4)) : d.q[3] : 0);
   return `<div class="builder" data-builder="${prefix}"${variableOnly ? ' data-only="1"' : ''}>
     <select data-b="subj" aria-label="Who">${O.subjectOptions(data, subj)}</select>
     <select data-b="v" aria-label="What">${O.varOptions(subj, v, Wd)}</select>
     <select data-b="op" aria-label="Comparison"${O.isFlag(v) || variableOnly ? ' hidden' : ''}><option value="ge"${op === 'ge' ? ' selected' : ''}>at least</option><option value="le"${op === 'le' ? ' selected' : ''}>at most</option></select>
-    <input data-b="x" type="number" step="${Wd.weights && v === 'min' ? 'any' : '1'}" value="${value}" aria-label="Value"${O.isFlag(v) || variableOnly ? ' hidden' : ''}>
+    <input data-b="x" type="number" step="${exactMinute ? 'any' : '1'}" value="${value}" aria-label="Value"${O.isFlag(v) || variableOnly ? ' hidden' : ''}>
     ${button ? `<button type="button" data-b="add">${esc(button)}</button>` : ''}</div>`;
 }
 function readBuilder(root) {
@@ -49,8 +50,9 @@ function wireBuilder(root, data, Wd, onChange, onAdd) {
     root.querySelector('[data-b="op"]').hidden = flag;
     const input = root.querySelector('[data-b="x"]');
     input.hidden = flag;
-    input.step = Wd.weights && v.value === 'min' ? 'any' : '1';
-    if (!flag) { const values = Wd.values(subj.value, v.value), d = values ? calculations(Wd).dist(values) : null; if (d) input.value = Wd.weights && v.value === 'min' ? Number(d.q[3].toFixed(4)) : d.q[3]; }
+    const exactMinute = v.value === 'min' && (Wd.weights || Wd.preciseMinutes);
+    input.step = exactMinute ? 'any' : '1';
+    if (!flag) { const values = Wd.values(subj.value, v.value), d = values ? (Wd.preciseMinutes && exactMinute ? O.preciseCalculations(Wd) : calculations(Wd)).dist(values) : null; if (d) input.value = exactMinute ? Number(d.q[3].toFixed(4)) : d.q[3]; }
   };
   subj.onchange = () => { v.innerHTML = O.varOptions(subj.value, subj.value.startsWith('p:') ? 'pts' : subj.value === 'g' ? 'total' : variableOnly ? 'pts' : 'win', Wd); refreshValue(); onChange?.(readBuilder(root)); };
   v.onchange = () => { refreshValue(); onChange?.(readBuilder(root)); };
@@ -190,7 +192,9 @@ function duelPanel(el, data, Wd, m, base, scenario) {
     const sa = sideOf(st.a), sb = sideOf(st.b);
     const winA = diff ? O.mask(Wd, []).map((x, w) => (m[w] && diff[w] > 0 ? 1 : 0)) : null;
     const tw = (side, mk) => (side && C.count(mk) ? C.mean(Wd.values('t:' + side, 'win'), mk) : null);
-    const dAll = diff ? C.dist(diff) : null, dCond = diff && scenario ? C.dist(diff, m) : null;
+    const minute = (Wd.weights || Wd.preciseMinutes) && (st.a.v === 'min' || st.b.v === 'min');
+    const D = Wd.preciseMinutes && minute ? O.preciseCalculations(Wd) : C;
+    const dAll = diff ? D.dist(diff, null, {minute}) : null, dCond = diff && scenario ? D.dist(diff, m, {minute}) : null;
     const btn = ([l], i) => `<button type="button" class="ghost sm" data-duel="${i}">${esc(l)}</button>`;
     const pre = `<div class="preset-groups"><span class="seg-label">Players</span><div class="chips left">${pres.map(btn).filter((_, i) => pres[i][1].a.subj.startsWith('p:')).join('')}</div>
       <span class="seg-label">Teams</span><div class="chips left">${pres.map(btn).filter((_, i) => pres[i][1].a.subj.startsWith('t:')).join('')}</div></div>`;
@@ -202,7 +206,7 @@ function duelPanel(el, data, Wd, m, base, scenario) {
           <div class="tile"><span>${esc(name(st.a))} more</span><b>${pct(r.gt, 1)}</b><small>${scenario ? `all ${pct(r0.gt, 1)}` : `mean ${f1(r.ma)}`}</small></div>
           <div class="tile"><span>Level</span><b>${pct(r.eq, 1)}</b><small>${scenario ? `all ${pct(r0.eq, 1)}` : ''}</small></div>
           <div class="tile"><span>${esc(name(st.b))} more</span><b>${pct(r.lt, 1)}</b><small>${scenario ? `all ${pct(r0.lt, 1)}` : `mean ${f1(r.mb)}`}</small></div></div>
-        <div class="dist" style="margin-top:8px"><div>${O.overlay(dAll, dCond, {line: 0})}
+        <div class="dist" style="margin-top:8px"><div>${O.overlay(dAll, dCond, {line: 0, minute})}
           <p class="note">A − B in every simulation${scenario ? ': <span class="legend-bar"></span> under the scenario · <span class="legend-line"></span> all simulations' : ''} · right of the line: A more.</p></div>
           <div class="scroll"><table><thead><tr><th class="l"></th><th>${scenario ? 'Given' : 'Mean'}</th>${scenario ? '<th>All</th>' : ''}</tr></thead><tbody>
             <tr><td class="l">${esc(name(st.a))}</td><td><b>${f1(r.ma)}</b></td>${scenario ? `<td>${f1(r0.ma)}</td>` : ''}</tr>
@@ -257,7 +261,7 @@ export function averagesPanel(data, pid, proj) {
 export async function sheetPanels(el, data, pid, stat, line) {
   let Wd;
   try { Wd = await worldData(data); } catch (error) { if (data._branchWorldData) throw error; return; }
-  const C = calculations(Wd);
+  const C = Wd.preciseMinutes && stat === 'min' ? O.preciseCalculations(Wd) : calculations(Wd);
   const subj = 'p:' + pid, xVals = Wd.values(subj, stat);
   if (!xVals) { el.innerHTML = ''; return; }
   const N = names(data), A = abbrs(data), side = played(data).find(p => p.id === pid)?.side || 'home';
@@ -266,7 +270,7 @@ export async function sheetPanels(el, data, pid, stat, line) {
   const paint = () => {
     const m = O.mask(Wd, [given]), n = C.count(m), total = C.mass ? C.mass(null) : Wd.W;
     const mass = C.mass ? C.mass(m) : n;
-    const minute = Boolean(Wd.weights && stat === 'min');
+    const minute = Boolean((Wd.weights || Wd.preciseMinutes) && stat === 'min');
     const all = minute ? C.dist(xVals, null, {minute: true}) : C.dist(xVals);
     const cond = n ? (minute ? C.dist(xVals, m, {minute: true}) : C.dist(xVals, m)) : null;
     const pAll = C.share(xVals, null, v => v > line), pCond = n ? C.share(xVals, m, v => v > line) : null;
@@ -275,7 +279,7 @@ export async function sheetPanels(el, data, pid, stat, line) {
     const yName = O.label({...other, op: 'ge', x: ''}, N, A).replace(/ ≥ $/, '');
     const xName = (O.PLAYER_VARS.find(([k]) => k === stat) || [stat, stat.toUpperCase()])[1];
     const quantile = value => {
-      if (!Wd.weights || stat !== 'min') return value;
+      if (!minute) return value;
       const seconds = Math.round(value * 60);
       return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
     };
@@ -293,7 +297,7 @@ export async function sheetPanels(el, data, pid, stat, line) {
       <section class="panel"><h3 style="margin-top:0">Joint outcomes</h3>
         <p class="note" style="margin-top:0">${esc(xName)} (across) against:</p>
         ${builder(data, Wd, 'joint', {subj: other.subj, v: other.v, button: '', variableOnly: true})}
-        ${yVals ? `${C.grid(xVals, yVals, null, {xName, yName})}<p class="note">Each cell: share of all selected simulations with both${Wd.weights ? ', weighted by branch' : ''}. Correlation ${r == null ? '—' : r.toFixed(2)}${r != null ? (Math.abs(r) < 0.1 ? ' (little link)' : r > 0 ? ' (they rise together)' : ' (one rises as the other falls)') : ''}.</p>` : '<p class="note">Choose a numeric outcome (not a yes/no) to see the grid.</p>'}</section>`;
+        ${yVals ? `${(Wd.preciseMinutes && (stat === 'min' || other.v === 'min') ? O.preciseCalculations(Wd) : C).grid(xVals, yVals, null, {xName, yName})}<p class="note">Each cell: share of all selected simulations with both${Wd.weights ? ', weighted by branch' : ''}. Correlation ${r == null ? '—' : r.toFixed(2)}${r != null ? (Math.abs(r) < 0.1 ? ' (little link)' : r > 0 ? ' (they rise together)' : ' (one rises as the other falls)') : ''}.</p>` : '<p class="note">Choose a numeric outcome (not a yes/no) to see the grid.</p>'}</section>`;
     wireBuilder(el.querySelector('[data-builder="given"]'), data, Wd, c => { given = c; paint(); });
     wireBuilder(el.querySelector('[data-builder="joint"]'), data, Wd, c => { if (!O.isFlag(c.v)) { other = c; paint(); } });
   };
