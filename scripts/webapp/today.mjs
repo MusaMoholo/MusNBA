@@ -138,7 +138,7 @@ function card(g, closestId) {
   } else if (pr) {
     const m = pr.margin_mean ?? pr.margin_median, fav = m >= 0 ? g.home : g.away;
     foot = `<span>Total ${f1(pr.total)}</span><span>${Math.abs(m) < 0.05 ? 'PK' : `${esc(team(fav.id).abbr)} −${Math.abs(m).toFixed(1)}`}</span><span>OT ${pct(pr.ot, 0)}</span>`;
-  } else if (tm) foot = '<span>Team-strength estimate</span>';
+  } else if (tm) foot = `<span>${tm.source === 'pathway' ? 'Regulation points · ' : ''}Team-strength estimate</span>`;
   else foot = '<span>No projection</span>';
   const right = live ? `<span class="pill bad">${esc(g.detail)}</span>` : final ? '' :
     `${g.id === closestId ? '<span class="pill accent" title="Highest chance of a finish within 5 on this slate">Closest</span> ' : ''}${esc(g.tv[0] || '')}`;

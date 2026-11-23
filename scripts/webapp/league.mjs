@@ -50,7 +50,7 @@ async function standings(view, {meta, current, rest}) {
       ${body}
       <details style="margin-top:12px"><summary class="note" style="cursor:pointer">How the forecast works</summary>
         <p class="note">${data.season_model && data.season_model.kind === 'team-pathway'
-          ? "Today's and tomorrow's games come from the possession engine: each simulated season takes one of its simulated games. Every later game is played in date order with that season's own offensive and defensive rating for each team (pace and home court included), and after every game both teams' ratings move by how much they beat or missed that season's expectation — so a March game is played with ratings each season's own path produced, not today's."
+          ? `${Number.isInteger(data.season_model.engine_games) ? data.season_model.engine_games.toLocaleString() : 'Some'} games use saved possession-engine worlds. Every other game is played in date order with that season's own offensive and defensive rating for each team (pace and home court included), and after every game both teams' ratings move by how much they beat or missed that season's expectation — so a March game is played with ratings each season's own path produced, not today's.`
           : 'Each unplayed game gets a home-win chance from shrunk team ratings (offence, defence, pace, home court); tonight\'s games use their full game simulation, including injuries.'} One simulated season settles every fixture once; standings come from ${data.sims.toLocaleString()} seasons. Top 6 = direct playoff seed; play-in = seeds 7–10. ${data.notes.map(esc).join(' ')}</p></details></section>`;
     view.querySelectorAll('[data-conf]').forEach(b => b.onclick = () => { state.conf = b.dataset.conf; store.set('conf', state.conf); paint(); });
     view.querySelectorAll('[data-view]').forEach(b => b.onclick = () => { state.view = b.dataset.view; store.set('standings-view', state.view); location.replace('#/standings/' + state.view); });
@@ -252,7 +252,7 @@ function formPanel(data) {
   const fx = next.length ? `<div><h4>Coming up</h4><div class="fx">${next.map(g => `<a class="fx-g" href="#/game/${g.game_id}">
       <span class="fx-d">${esc(dayLabel(g.date))}${b2b(g) ? ' <span class="pill warn" title="Second night of a back-to-back">B2B</span>' : ''}</span>
       <span class="fx-o">${g.home ? 'vs' : '@'} ${logo(g.opp, 'sm')} ${esc(team(g.opp).abbr)}</span>${g.p_win != null ? heatSpan(g.p_win) : '<span class="dim">—</span>'}</a>`).join('')}</div>
-      <p class="note">Win chance from the game simulation for today/tomorrow, else the season simulation's team estimate.</p></div>` : '';
+      <p class="note">Win chance from a retained game simulation when available, otherwise the season simulation's team estimate.</p></div>` : '';
   return chart || fx ? `<section class="panel"><div class="form-grid">${chart}${fx}</div></section>` : '';
 }
 const heatSpan = p => `<span class="fx-p" style="--a:${Math.abs(p - 0.5) * 2}" data-side="${p >= 0.5 ? 'w' : 'l'}">${pct(p, 0)}</span>`;

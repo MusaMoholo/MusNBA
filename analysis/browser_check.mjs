@@ -33,7 +33,7 @@ const CASES = [
   ['sheet', '#/game/401910009/player/3032977', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['sheet-shooting', '#/game/' + (args.shootGame || '401910030') + '/player/' + (args.shootPlayer || '4278053') + '/fg', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['sheet-q1', '#/game/401910019/player/5041935/q1', ['phone'], ['dark']],
-  ['future-game', '#/game/' + (args.future || ''), ['phone'], ['dark']],
+  ['future-game', '#/game/' + (args.future || ''), ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['standings', '#/standings/forecast', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['standings-seeds', '#/standings/seeds', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['standings-ratings', '#/standings/ratings', ['desktop', 'half', 'phone'], ['dark', 'light']],
@@ -121,6 +121,30 @@ for (const [name, hash, sizes, themes] of CASES) {
       ready = result.value === true;
     }
     let interaction = true;
+    if (name === 'future-game') {
+      interaction = (await send('Runtime.evaluate', {expression: `(async () => {
+        const ui = await import('./assets/ui.mjs');
+        const game = await ui.api('game/' + ${JSON.stringify(args.future || '')});
+        const dist = game.team_model?.regulation;
+        const blocks = [...document.querySelectorAll('.pathway-grid [data-block]')];
+        const awayPoints = document.querySelector('.bz-team.away .bz-stats b')?.textContent;
+        const homePoints = document.querySelector('.bz-team.home .bz-stats b')?.textContent;
+        const input = document.querySelector('[data-line="pathway-total"]');
+        if (game.projection || !dist || blocks.length !== 3 || !input
+            || awayPoints !== ui.f1(dist.away.mean) || homePoints !== ui.f1(dist.home.mean)
+            || document.querySelector('[data-view="player"], [data-view="team"], [data-view="scenario"]')
+            || !document.querySelector('#game-body').textContent.includes('without simulating overtime points')) return false;
+        input.value = '200.5';
+        input.dispatchEvent(new Event('change', {bubbles: true}));
+        if (document.querySelector('[data-block="pathway-total"] output')?.textContent !== 'Over: ' + ui.pct(ui.over(dist.total, 200.5))) return false;
+        document.querySelector('[data-pathway-metric="margin"]').click();
+        const margin = document.querySelector('[data-line="pathway-margin"]');
+        if (!margin || document.querySelectorAll('.pathway-grid [data-block]').length !== 3) return false;
+        margin.value = '-1.5';
+        margin.dispatchEvent(new Event('change', {bubbles: true}));
+        return document.querySelector('[data-block="pathway-margin"] output')?.textContent.endsWith(': ' + ui.pct(ui.over(dist.margin, -1.5)));
+      })()`, returnByValue: true, awaitPromise: true}, sessionId)).result.value === true;
+    }
     if (name === 'sheet-shooting') {
       interaction = (await send('Runtime.evaluate', {expression: `(async () => {
         const button = document.querySelector('[data-stat="fgpct"]');

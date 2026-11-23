@@ -1,0 +1,25 @@
+{
+ "kind": "isolated today-only season and dashboard accounting; not production delivery",
+ "origin": "2026-11-22",
+ "today_engine_games": 7,
+ "future_games": 952,
+ "distribution_checks": 3808,
+ "season_sims": 10000,
+ "generation_seconds": 0.745,
+ "total_seconds": 51.147,
+ "view_files": 1960,
+ "source_sha256": {
+  "analysis/d50_today_only_probe.py": "a7fa561d09c541f0f3c665e5819d482c343f90d49ca07da4564e9b778e7ecff8",
+  "scripts/projection.py": "25309dfd609b041543520784e4c6dab5a0154e2db7b19b03899b3c5fdb996dad",
+  "scripts/pathway.py": "97afe9b90396fb7f27f999f38e3f192dcd13cd928fc8f6fbce41825890d92857",
+  "scripts/views.py": "95126814e7fef62fd22c9e106eced1bf1b10bc1c885d08e2a98a2ab94eb7ae8c"
+ },
+ "snapshot_meta_sha256": "c3a329344b0e6c1471de47cb85223fa3039a79c8b9c29588a762253e186f1002",
+ "master_sha256": "0e34e44e1e1edcf1089d2e844796940b5bf879be50d16fba2c9c0929554035c8",
+ "worlds_sha256": "cbe1f0131856cb4d863ee8a28f523fdb6a4a3e5bb4ff9bc60194f8f36ad989ce",
+ "scratch": "data/derived/experiments/20261122_d50_preview_v3",
+ "limitations": [
+  "Retained inputs only; no live collection or new possession forecasts.",
+  "Team pathway scores are regulation scores; ties resolve without overtime points."
+ ]
+}

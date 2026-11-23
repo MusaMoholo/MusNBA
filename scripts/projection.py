@@ -447,9 +447,15 @@ def simulate_season(T: dict, lg: dict, master: list[dict], day: str, teams: dict
     rows = []
     for g, r in enumerate(remaining):
         pts = played['points'][:, g]
-        rows.append({'game_id': r['game_id'], 'p_home': round(float(played['home_win'][:, g].mean()), 4),
-                     'mu_home': round(float(pts[:, 0].mean()), 2), 'mu_away': round(float(pts[:, 1].mean()), 2),
-                     'source': 'engine' if engine_pts and r['game_id'] in engine_pts else 'pathway'})
+        source = 'engine' if engine_pts and r['game_id'] in engine_pts else 'pathway'
+        row = {'game_id': r['game_id'], 'p_home': round(float(played['home_win'][:, g].mean()), 4),
+               'mu_home': round(float(pts[:, 0].mean()), 2), 'mu_away': round(float(pts[:, 1].mean()), 2),
+               'source': source}
+        if source == 'pathway':
+            home, away = pts[:, 0], pts[:, 1]
+            row['regulation'] = {name: summary(values, offset=True) for name, values in (
+                ('home', home), ('away', away), ('total', home + away), ('margin', home - away))}
+        rows.append(row)
     H = np.zeros((G, len(ids)), np.float32)
     A = np.zeros((G, len(ids)), np.float32)
     for g, r in enumerate(remaining):
@@ -487,6 +493,7 @@ def simulate_season(T: dict, lg: dict, master: list[dict], day: str, teams: dict
                   'best_record': round(float((best == i).mean()), 4), 'worst_record': round(float((worst == i).mean()), 4)}
     params = {**pathway.PATHWAY, **(params or {})}
     return {'model': pathway.PATHWAY['id'], 'pathway': params, 'as_of': day, 'sims': W, 'teams': out, 'games': rows,
+            'regulation_distribution_schema': 1,
             'engine_games': sorted(engine_pts) if engine_pts else [],
             'unresolved_before': [r['game_id'] for r in unresolved],
             'notes': ['Team pathway (D25, D26): each universe carries its own offensive and defensive ratings, takes the '

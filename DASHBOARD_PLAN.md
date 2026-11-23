@@ -1,5 +1,14 @@
 # App — shipped behaviour
 
+**D50 implementation under validation, not delivered (22 Nov):** the candidate hides discarded future
+possession previews and shows team-pathway home, away, total and margin regulation distributions instead;
+the third card switches between total and margin, keeping three comparable cards.
+It labels ties as resolved without overtime points, removes unavailable player/team controls, and uses the
+same precision for the bezel and distributions. An isolated retained-input preview passed the responsive
+checks (including six margin screenshots); isolated phone/laptop offline tests passed 22/22 and 23/23.
+The served data and iCloud bundles are unchanged. Retained pre-tip forecasts must not be overwritten
+by a late nightly; see HANDOFF for the guarded refresh and remaining delivery work.
+
 **Isolated lineup view research (22 Nov):** the updated shell contains an explicit test-only provider hook; no
 normal app route registers one, and no branch selector or Expected forecast is shipped. When injected privately,
 one selection follows player/team/sheet/scenario views, with weighted Given/Joint, separately labelled availability

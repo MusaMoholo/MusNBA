@@ -1,0 +1,18 @@
+{
+  "kind": "origin-pinned uncertainty inventory; not a forecast or promotion",
+  "origin": "2026-11-22",
+  "population": "seven retained same-origin games",
+  "games": 7,
+  "games_with_selected_uncertainty": 5,
+  "selected_players": 7,
+  "branches": 14,
+  "worlds_per_branch": 1,
+  "threads": 1,
+  "policy": "D46 top-three offensive proxy with D47 quarter availability",
+  "local_detail": "data/derived/experiments/20261122_a1_inventory_reports_v1/",
+  "limitations": [
+    "One world per branch cannot estimate a distribution.",
+    "Availability probabilities and predictive performance are not validated.",
+    "These are isolated research outputs, generated after some games tipped."
+  ]
+}

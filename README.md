@@ -5,14 +5,16 @@ pipeline collects box scores and play-by-play, simulates every game 10,000 times
 remaining season 10,000 times, and a static, offline-capable app shows the results on a laptop
 or phone.
 
-> The app is live on localhost and as a static PWA. Two engines, one daily flow (D26): today's and tomorrow's games come
+> The app is live on localhost and as a static PWA. Two engines, one daily flow (D26/D50): today's games come
 > from the **possession engine v1.3** (every possession simulated from 16 LightGBM decision models, inputs rebuilt nightly
-> from games before the origin; 10,000 worlds per game, one rotation table per world; the floor for later improvements, D22–D24); every later game from the **team pathway v1**, where
+> from games before the origin; 10,000 worlds per game, one rotation table per world; the floor for later improvements, D22); tomorrow onward uses the **team pathway v1**, where
 > each simulated season carries its own team ratings and updates them after every game (D25). Past dates rebuilt after the
 > fact currently use a labelled placeholder. U1–U22 and public Pages/iCloud delivery are complete. Accuracy chunk
 > **A1 (14 tasks)** has completed S01–S07; S06's audited candidate did not clear its frozen gate. The 22 November
 > ET nightly is delivered and historical forecast backfill is deferred. The owner has authorised two remaining chunks
-> in order; Chunk A has started by freezing its lineup-branch contract. The 2-D selected-world View Centre, designed
+> in order; Chunk A has started by freezing its lineup-branch contract. D50 delivery is pending: the retained
+> 22 November data still reflects the earlier two-day horizon until the safe refresh described in HANDOFF.
+> The 2-D selected-world View Centre, designed
 > for later resulted-game playback, remains unimplemented.
 > See [PLAN.md](PLAN.md) and [HANDOFF_NEXT.md](HANDOFF_NEXT.md).
 
@@ -33,12 +35,14 @@ python3 -m venv .venv
 .venv/bin/python scripts/serve.py            # browse at http://127.0.0.1:8766
 ```
 
-- Today's and tomorrow's slates are projected by the possession engine v1.3 (D34/D36; 10,000 worlds, measured ~130–150 s/game on the
-  21 Nov run; `--ahead N` sets how many days after today; no games in that window → the next slate, D26). Before the
+- Today's slate is projected by the possession engine v1.3 (D34/D36/D50; 10,000 worlds, measured ~130–150 s/game on the
+  21 Nov run). `--ahead` must be zero; a game-free day still produces a fresh team-pathway season. Before the
   engine runs, its inputs (current-season segments, rotations, profiles) are rebuilt from every final before today
   (runtime depends on retained inputs; `--no-rebuild` skips only when those inputs are already current). The season sim then plays every later game through the team pathway (D25);
   `--placeholder` uses the old box-score placeholder instead, and backfilled past dates always do. `nightly.py --offline` reuses retained data; `--views-only` only rebuilds what the app reads;
   the optional `--backfill-days N` is a legacy retrospective-placeholder mode and is not part of the current nightly (D40).
+  The nightly refuses to replace a retained verified pre-tip forecast with a post-tip or missing forecast; see HANDOFF
+  for the pending safe refresh and do not bypass the guard.
 - The server reads files from disk: front-end edits appear on refresh, rebuilt views appear
   immediately; no restart needed. `serve.py --host 0.0.0.0` lets a phone on the same Wi-Fi in.
 - Slates are US Eastern game dates; tip-offs show UK time with ET.
@@ -95,7 +99,7 @@ Audit retained advanced distributions with `.venv/bin/python -m analysis.advance
 
 Currently `nightly.py --backfill-days N` creates **retrospective placeholder** forecasts; it is not an engine replay.
 The owner deferred S13 and historical forecast backfill for the current A1 run (D40); the nightly instead projects
-today and tomorrow relative to its ET origin, or the next slate. Existing forecasts and archives are retained.
+today relative to its ET origin (D50). Existing forecasts and archives are retained.
 If historical replay is reauthorised later, all historical inputs and fitted artifacts must precede each origin,
 reconstructed predictions must be labelled retrospective, and versions must not be mixed silently. No new
 engine-replay CLI exists. See ENGINE_PLAN §17 and TRAINING_PLAN §8.
@@ -166,6 +170,7 @@ Dashboard routes: `#/standings/{forecast,seeds,wins,ratings,picture,races,movers
 | `scripts/a1_world_retry.py`, `analysis/a1_world_retry_{probe,bias,stress}.py` | Research-only isolated retry coordinator, synthetic-injection/selection-bias and artificial short-roster probes; not connected to nightly |
 | `analysis/a1_parallel_world_{retry,probe,scaling}.py` | Research-only bounded process coordinator and fixed-game identity/scaling probes; not connected to nightly |
 | `analysis/a1_parallel_capture_{scale,audit}.py` | Persist isolated fixed-game worlds in audited batches and independently replay their hashes, seeds, lineups, points and minutes; not a forecast |
+| `analysis/d50_today_only_probe.py` | Isolated retained-input season/view rebuild and independent future regulation-distribution audit; never publishes or replaces snapshots |
 | `analysis/a1_retry_penalty_stress_compare.py`, `analysis/a1_retry_penalty_stress_audit.py` | Artificial five-player retry/S06 seed comparison and independent saved-trace accounting; policies and streams differ |
 | `analysis/a1_branch_browser_fixture.py`, `analysis/a1_branch_browser_fixture_audit.py` | Research-only full-game and player-period branch fixture with exact minutes, simulated opening fives and independent capture decoder; no serving or bundle integration |
 | `analysis/a1_branch_world_source.mjs`, `analysis/a1_branch_period_browser_audit.mjs`, `analysis/a1_branch_source_benchmark.mjs` | Isolated fail-closed weighted branch source, independent period and opening-five comparison and Node-only load benchmark; not a shipped UI |

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Nightly pipeline: collect → master fixtures → box scores → snapshot(s) → views.
 
-  .venv/bin/python scripts/nightly.py                 collect, project today and tomorrow (ET; D24), rebuild views
+  .venv/bin/python scripts/nightly.py                 collect, project today (ET; D50), rebuild views
   .venv/bin/python scripts/nightly.py --offline       reuse retained raw data
   .venv/bin/python scripts/nightly.py --backfill-days 7
         also build retrospective snapshots for the previous seven slate dates (cutoff-safe stats,
@@ -11,8 +11,8 @@
 A snapshot for slate date D reads only games final before D. Replacing an existing snapshot
 archives it outside the repo first.
 
-Engine horizon (D24, D26): the possession engine projects today's and tomorrow's slates; when neither has games, the
-next slate with games. Before it runs, the engine's inputs are rebuilt from every final before today — current-season
+Engine horizon (D50): the possession engine projects today's games only; later games use the team pathway.
+Before it runs, the engine's inputs are rebuilt from every final before today — current-season
 segments → rotations → player and team profiles — so form and roles carry over from the last game (`--no-rebuild` skips).
 """
 from __future__ import annotations
@@ -31,7 +31,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 from basketball_common import (CONFERENCE_OF, DERIVED, DIVISION_OF, MASTER_CSV, SEASON_LABEL, SNAPSHOTS,  # noqa: E402
                                archive_paths, day_shift, parse_utc, read_json, sha256_file, today_et, utc_now,
-                               write_json)
+                               verified_pre_tip, write_json)
 from scripts import box_scores, master_fixtures, pbp, projection, views  # noqa: E402
 from scripts.fetch_espn import collect, latest_run  # noqa: E402
 from scripts.season_stats import period_profiles, player_table, team_table  # noqa: E402
@@ -90,9 +90,10 @@ def project_slate(day: str, teams: dict, master: list[dict], team_rows: list[dic
     generated = utc_now()
     games, placeholder, worlds, player_worlds = {}, {}, {}, {}
     eng = engine_mod = None
-    if engine_worlds and prospective and slate:
+    if engine_worlds and prospective:
         from scripts import engine as engine_mod
-        eng = engine_mod.Engine()
+        if slate:
+            eng = engine_mod.Engine()
     for game in slate:
         result = projection.simulate_game(game, T, lg, P, registry, day, prospective, sims, Q, priors)
         if eng is not None:
@@ -113,19 +114,38 @@ def project_slate(day: str, teams: dict, master: list[dict], team_rows: list[dic
         if prospective:
             result['availability_report'] = forecast_availability_report(game, registry)
         games[game['game_id']] = result
-    if eng is not None:
+    if engine_mod is not None:
         assert engine_mod is not None
         model = {**engine_mod.ENGINE, 'sims': engine_worlds, 'season_sims': sims}
-        engine_inputs = {'engine_inputs_sha256': {n: sha256_file(f) for n, f in (
+        engine_inputs = ({'engine_inputs_sha256': {n: sha256_file(f) for n, f in (
             ('latest', engine_mod.features_dir() / 'latest.parquet'), ('team_latest', engine_mod.features_dir() / 'team_latest.parquet'),
             ('stints', DERIVED / 'rotations' / 'stints.parquet'), ('on_court', DERIVED / 'rotations' / 'on_court.parquet'),
             ('models', DERIVED.parent / 'models' / engine_mod.ENGINE.get('models', engine_mod.ENGINE['version']) / 'config.json'))}}
+            if eng is not None else {})
     else:
         model, engine_inputs = projection.MODEL, {}
     return {'day': day, 'origin': origin, 'T': T, 'lg': lg, 'P': P, 'slate': slate, 'games': games, 'placeholder': placeholder, 'worlds': worlds,
             'player_worlds': player_worlds,
             'prospective': prospective, 'generated': generated, 'started': started, 'model': model,
-            'sims': engine_worlds if eng is not None else sims, 'season_sims': sims, 'engine_inputs': engine_inputs}
+            'sims': engine_worlds if engine_mod is not None else sims, 'season_sims': sims, 'engine_inputs': engine_inputs}
+
+
+def protect_pre_tip(target: Path, slate: list[dict], prospective: bool, completed: str) -> None:
+    """Do not replace a retained pre-tip forecast with a later or missing forecast."""
+    meta_path = target / 'meta.json'
+    if not meta_path.exists():
+        return
+    old = read_json(meta_path)
+    if old.get('kind') != 'prospective' or views.discarded_preview(old.get('slate_date', target.name), old):
+        return
+    games = {game['game_id']: game for game in slate}
+    for gid in old.get('games', []):
+        if verified_pre_tip(old, gid) is not True:
+            continue
+        game = games.get(gid)
+        if (not prospective or game is None or game.get('status') in ('live', 'final')
+                or parse_utc(completed) >= parse_utc(game['tip_utc'])):
+            raise ValueError(f'{gid}: refusing to replace a retained pre-tip forecast with a later or missing forecast')
 
 
 def write_snapshot(part: dict, season: dict, archive_root=None) -> dict:
@@ -153,10 +173,6 @@ def write_snapshot(part: dict, season: dict, archive_root=None) -> dict:
                                           'injury news from that date was not retained.']),
         'seconds': None,
     }
-    if target.exists():
-        saved = archive_paths([target], archive_root)
-        print(f'archived previous snapshot {day} -> {saved}', flush=True)
-        shutil.rmtree(target)
     staging = SNAPSHOTS / f'.{day}.partial'
     if staging.exists():
         shutil.rmtree(staging)
@@ -169,13 +185,17 @@ def write_snapshot(part: dict, season: dict, archive_root=None) -> dict:
         np.savez_compressed(staging / 'engine_players.npz', **{f'{gid}__{k}': v for gid, d in part['player_worlds'].items() for k, v in d.items()})
     write_json(staging / 'season.json', season)
     write_json(staging / 'stats.json', {'teams': T, 'league': lg, 'players': part['P']})
-    meta['seconds'] = round(time.time() - part['started'], 2)
-    write_json(staging / 'meta.json', meta, pretty=True)
-    staging.rename(target)
     completed = utc_now()
     meta['generated'] = meta['completed_at'] = completed
     meta['pre_tip'] = {g['game_id']: parse_utc(completed) < parse_utc(g['tip_utc']) for g in slate}
-    write_json(target / 'meta.json', meta, pretty=True)
+    meta['seconds'] = round(time.time() - part['started'], 2)
+    protect_pre_tip(target, slate, prospective, completed)
+    write_json(staging / 'meta.json', meta, pretty=True)
+    if target.exists():
+        saved = archive_paths([target], archive_root)
+        print(f'archived previous snapshot {day} -> {saved}', flush=True)
+        shutil.rmtree(target)
+    staging.rename(target)
     print(f'snapshot {day} ({meta["kind"]}, {meta["model"]["id"]}): {len(slate)} games, {meta["sims"]:,} sims each, '
           f'season {len(season["games"])} games as of {season["as_of"]} ({season["model"]}) · {meta["seconds"]}s', flush=True)
     return meta
@@ -255,13 +275,10 @@ def refresh_real_matchups() -> dict:
 
 
 def engine_days(day: str, slate_dates, ahead: int) -> list[str]:
-    """D24 + D26: today and the next `ahead` days that have games; if none of them has games, the next slate."""
-    window = [day_shift(day, k) for k in range(ahead + 1)]
-    days = [d for d in window if d in slate_dates]
-    if not days:
-        later = sorted(d for d in slate_dates if d > window[-1])
-        days = later[:1]
-    return days
+    """D50: write today's snapshot even when no games are scheduled."""
+    if ahead != 0:
+        raise ValueError('possession forecasts are limited to today; --ahead must be 0')
+    return [day]
 
 
 def main():
@@ -279,13 +296,18 @@ def main():
     parser.add_argument('--archive-root', type=Path)
     parser.add_argument('--no-rebuild', action='store_true',
                         help="skip rebuilding the engine's inputs (segments, rotations, profiles) from today's finals")
-    parser.add_argument('--ahead', type=int, default=1, metavar='DAYS',
-                        help='also project the next DAYS ET dates with the engine (D24, owner: today and tomorrow; default 1)')
+    parser.add_argument('--ahead', type=int, default=0, metavar='DAYS',
+                        help='must be 0: possession forecasts are limited to today (D50)')
     args = parser.parse_args()
+    if args.ahead != 0:
+        parser.error('possession forecasts are limited to today; --ahead must be 0')
     day = args.date or today_et()
     if args.views_only:
         views.build()
         return 0
+    if day == today_et() and MASTER_CSV.exists():
+        existing_slate = [g for g in master_fixtures.load() if g['date_et'] == day]
+        protect_pre_tip(SNAPSHOTS / day, existing_slate, True, utc_now())
     if not args.offline:
         report = collect(day)
         if report['failures']:
@@ -314,12 +336,12 @@ def main():
     prospective = day == today_et()
     if prospective and not args.placeholder and not args.no_rebuild:
         rebuild_engine_inputs(day)
-    days = engine_days(day, slate_dates, args.ahead)  # D24: today and tomorrow; D26: else the next slate
+    days = engine_days(day, slate_dates, args.ahead)
     if day not in slate_dates:
-        print(f'No games scheduled on {day}; engine slates: {", ".join(days) or "none"}.', flush=True)
+        print(f'No games scheduled on {day}; building the team-pathway season without game simulations.', flush=True)
     parts = [project_slate(d, teams, master, team_rows, player_rows, registry, prospective, args.sims, period_rows,
                            engine_worlds=0 if args.placeholder else args.engine, origin=day)
-             for d in days]  # later slates are projected from what is known today and rebuilt the next night
+             for d in days]
     if parts:  # D25/D26: one season from today — universe k plays engine world k of every engine game, then the pathway
         T, lg = team_table(team_rows, day, teams)
         worlds = {gid: w for part in parts for gid, w in part['worlds'].items()}

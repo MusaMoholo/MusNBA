@@ -2,6 +2,25 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 — isolated D50 horizon preview:** using seven retained, verified pre-tip engine-world sets
+from the 22 November origin, a separate 10,000-season rebuild used the team pathway for **952** future
+games. An independent replay matched **3,808** home, away, total and margin distributions, plus their
+season win probabilities; all seven current game views remained present. Team-pathway ties still have
+no simulated overtime points. Building and auditing the final-source preview took **48.921 s** including
+**0.727 s** for season generation. Report `20261122_d50_today_only_preview_v4.json`; retained inputs only, not a
+fresh nightly, a predictive validation or a production delivery.
+An additional synthetic no-game-day run removed the origin's seven fixtures and produced **952** pathway games,
+**3,808** histograms of 10,000 seasons each and zero engine games; it does not represent a real slate.
+
+**22 Nov 2026 — current-slate uncertainty inventory:** all seven retained origin-pinned games passed the
+branch-input checks. D46 selected at least one player in **5/7** games, **7** players total and **14**
+conditional branches (one world per branch). This inventories the fixed top-three offensive proxy, not actual
+injury probabilities, representative distributions, out-of-sample predictive performance or a live forecast.
+Aggregate report `20261122_a1_origin_inventory_summary_v1.json`; player-level reports stay in ignored local data.
+The uncommitted `scripts/views.py` used by the run
+predated the slate label's added `'source': tm.get('source'),` field; removing that one field from the final
+source reproduces the report's views SHA-256. No simulated branch code changed after the inventory.
+
 **22 Nov 2026 — persisted isolated-world scale:** on fixed F4 game `401810327`, synthetic selected-player
 availability and ten single-thread workers, **10,000** accepted plays-branch worlds took **676.162 s**
 including startup and compressed capture writing. There was one deliberately injected rejection and no

@@ -17,11 +17,11 @@ A local-first NBA simulator PWA, sibling to the owner's MusSim football app (`..
   model changes require the measured gate. A season-to-date forecast replay is not implemented and is deferred (D40).
 - Lineup-sensitive and game-state-aware; coaching tendencies learned from data, not hand-labelled.
 
-**The daily flow — two engines (owner, 20 Nov; ENGINE_PLAN D26).** On any date D:
+**The daily flow — two engines (owner, 20 Nov; ENGINE_PLAN D26, amended D50).** On any date D:
 1. **Result** every game played before D.
-2. **Play-by-play engine** — today's and tomorrow's games (if neither day has games, the next slate), possession by
+2. **Play-by-play engine** — today's games only, possession by
    possession, with player profiles, form, roles, rotations and injuries carried over from every game before D.
-3. **Team engine** — every later game, as MusSim: each world carries its own offensive and defensive rating per team,
+3. **Team engine** — tomorrow onward, as MusSim: each world carries its own offensive and defensive rating per team,
    starting from today's estimate (plus its uncertainty), taking in that world's play-by-play results first, then
    updating after every simulated game in date order. March games use the ratings each world's own path produced —
    never today's ratings frozen.
@@ -429,6 +429,10 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 · team-pathway overtime:** owner suggested a possible 2% blanket time/score inflation. It would
+  affect every world, including regulation finishes, and is not adopted. The existing pathway draws regulation
+  scores and resolves tied-game winners separately; D50 distributions must be labelled regulation. Test genuine
+  tied-world overtime scoring, repeated ties and season calibration on development data before promotion.
 - **22 Nov 2026 · A1 persisted-world research:** **10,000** isolated F4 worlds on ten single-thread workers
   generated in **676.162 s**; independent replay in **18.013 s** verified **2,546,803** lineup snapshots,
   each seed and hash, minutes/points, and 20 serial-pilot identities. One rejection was injected; no others
@@ -438,7 +442,11 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 - **22 Nov 2026 · D50, implementation pending:** owner changed the daily flow to possession-engine forecasts
   for today only, with the team engine starting tomorrow. Preserve retained pre-game forecasts and existing
   result comparisons, without historical backfill; handle no-game days and stale future snapshots, then deliver
-  the changed output/PWA contract. This supersedes the two-day horizon in D24/D26.
+  the changed output/PWA contract. An isolated retained-input preview audited **952** future games and **3,808**
+  score distributions; total and margin controls passed **6/6** viewport/theme checks, and private
+  phone/laptop import/offline checks passed **22/22 / 23/23**. This is not a
+  live nightly or iCloud delivery. A fail-closed guard currently prevents the late nightly from overwriting
+  the retained pre-tip forecasts; safe refresh is still required. This supersedes the two-day horizon in D24/D26.
 - **22 Nov 2026 · forecast reuse question:** owner proposed using yesterday's tomorrow projections as today's
   forecast to reduce nightly work. Investigate a selective-refresh hybrid only after defining material input
   invalidation, availability/roster coverage, cutoff safety, player-first stale-versus-fresh fold tests,

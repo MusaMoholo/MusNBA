@@ -17,7 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 from basketball_common import (APP_NAME, DERIVED, LINEUP_TIMING_POLICY, SEASON_LABEL, SNAPSHOTS, VIEWS, read_json,  # noqa: E402
-                               utc_now, verified_pre_tip, write_json)
+                               today_et, utc_now, verified_pre_tip, write_json)
 from scripts import box_scores, master_fixtures, pbp  # noqa: E402
 from scripts.season_stats import period_profiles  # noqa: E402
 
@@ -73,13 +73,29 @@ def team_slice(T: dict, tid: str) -> dict:
     return rounded(row)
 
 
-def current_snapshot(days) -> str:
-    """The snapshot the app treats as current: the newest dated today (ET) or earlier — tomorrow's slate is projected a
-    day ahead (D24) without becoming the as-of date for standings, rosters and team schedules."""
-    from basketball_common import today_et
-    days = sorted(days)
+def current_snapshot(snapshots: dict) -> str:
+    """Use a same-origin snapshot, never a previous day's preview of a future slate."""
+    days = sorted(d for d, snap in snapshots.items() if snap['meta'].get('origin', d) == d)
     past = [d for d in days if d <= today_et()]
-    return past[-1] if past else days[-1]
+    if not past:
+        raise ValueError('no same-origin snapshot dated today or earlier')
+    return past[-1]
+
+
+def discarded_preview(day: str, meta: dict) -> bool:
+    # D50 took effect on 22 November 2026; older retained reviews remain available.
+    return day > '2026-11-22' and meta.get('origin', day) < day
+
+
+def load_projections(snaps: dict, latest_day: str) -> dict:
+    """Keep older historical forecasts, but never reactivate a discarded D50 preview."""
+    projections = {}
+    for day, snap in snaps.items():
+        if day > latest_day or discarded_preview(day, snap['meta']):
+            continue
+        for gid, sim in read_json(snap['path'] / 'games.json').items():
+            projections[gid] = {'day': day, 'meta': snap['meta'], 'sim': sim}
+    return projections
 
 
 WORLD_STATS = ('min', 'pts', 'reb', 'ast', 'fg3m', 'stl', 'blk', 'tov', 'fgm', 'fga', 'fg3a', 'fta', 'oreb', 'dreb', 'ftm')  # nightly.project_slate's order (older snapshots: first 12)
@@ -783,12 +799,13 @@ def build(views_root: Path = VIEWS) -> dict:
     snaps = load_snapshots()
     if not snaps:
         raise SystemExit('No snapshots yet: run scripts/nightly.py')
+    snaps = {day: snap for day, snap in snaps.items() if not discarded_preview(day, snap['meta'])}
     latest_day = current_snapshot(snaps)
     latest = snaps[latest_day]
     usage_profiles = usage_profile_table(latest_day)
     L = read_json(latest['path'] / 'stats.json')
     season_latest = read_json(latest['path'] / 'season.json')
-    team_model = {g['game_id']: g for g in season_latest['games']}
+    team_model = {g['game_id']: g for g in season_latest['games'] if g.get('source') != 'engine'}
 
     # Records before each game: a running tally over results in tip order.
     record = defaultdict(lambda: [0, 0])
@@ -828,11 +845,7 @@ def build(views_root: Path = VIEWS) -> dict:
                 'away': side('away'), 'home': side('home')}
 
     # Snapshot projections, loaded once.
-    projections = {}
-    for day, snap in snaps.items():
-        games = read_json(snap['path'] / 'games.json')
-        for gid, sim in games.items():
-            projections[gid] = {'day': day, 'meta': snap['meta'], 'sim': sim}
+    projections = load_projections(snaps, latest_day)
 
     def proj_summary(gid):
         p = projections.get(gid)
@@ -874,7 +887,7 @@ def build(views_root: Path = VIEWS) -> dict:
             spot_stats[day_] = lambda pid: averages(P_, [pid]).get(pid)
         return spot_stats[day_]
     for day in slate_dates:
-        snap = snaps.get(day)
+        snap = snaps.get(day) if day <= latest_day else None
         games = []
         entries, watch, done = [], [], []
         for r in sorted(by_date.get(day, []), key=lambda r: (r['tip_utc'], r['game_id'])):
@@ -889,7 +902,7 @@ def build(views_root: Path = VIEWS) -> dict:
             g['proj'] = with_duel(r['game_id'], proj_summary(r['game_id']))
             tm = team_model.get(r['game_id'])
             g['team_model'] = ({'p_home': tm['p_home'], 'mu_home': tm.get('mu_home'), 'mu_away': tm.get('mu_away'),
-                                'snapshot': latest_day} if tm and not g['proj'] else None)
+                                'source': tm.get('source'), 'snapshot': latest_day} if tm and not g['proj'] else None)
             games.append(g)
         write_json(api / 'slate' / f'{day}.json', {
             'date': day, 'snapshot': day if snap else None,
@@ -965,11 +978,13 @@ def build(views_root: Path = VIEWS) -> dict:
                             'completed_at': p['meta'].get('completed_at'), 'pre_tip': verified_pre_tip(p['meta'], gid),
                             'model': p['meta']['model'], 'notes': p['meta']['notes'],
                             'cutoff': p['meta']['cutoff'], 'sim': p['sim']} if p else None),
-            'team_model': ({'snapshot': latest_day, **tm} if tm and not p else None),
+            'team_model': ({'snapshot': latest_day, 'sims': season_latest['sims'], **tm} if tm and not p else None),
             'actual': actual, 'comparison': comparison, 'comparison_as_of': as_of, 'averages': avg,
             'worlds': bool(p and (api / 'game' / gid / 'worlds.json').exists())})
 
     for day, snap in snaps.items():
+        if day > latest_day:
+            continue
         stats = read_json(snap['path'] / 'stats.json')
         season = read_json(snap['path'] / 'season.json')
         rows = []
@@ -1100,7 +1115,8 @@ def build(views_root: Path = VIEWS) -> dict:
     write_json(api / 'lab.json', lab(latest['meta']['model']))
 
     snapshot_rows = [{'date': d, 'kind': s['meta']['kind'], 'cutoff': s['meta']['cutoff'], 'generated': s['meta']['generated'],
-                      'model': s['meta']['model']['id'], 'games': len(s['meta']['games'])} for d, s in sorted(snaps.items())]
+                      'model': s['meta']['model']['id'], 'games': len(s['meta']['games'])}
+                     for d, s in sorted(snaps.items()) if d <= latest_day]
     finals = [r for r in master if r['status'] == 'final']
     write_json(api / 'meta.json', {
         'app': APP_NAME, 'season': SEASON_LABEL, 'built': utc_now(), 'latest': latest_day,

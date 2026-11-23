@@ -142,6 +142,24 @@ if (args['upgrade-shell'] && args['upgrade-target'] && args['upgrade-version']) 
 await send('Network.emulateNetworkConditions', {offline: true, latency: 0, downloadThroughput: -1, uploadThroughput: -1}, s);
 await send('Page.navigate', {url: args.url + '#/standings'}, s);
 check('offline reload renders standings', await waitFor(`document.body.textContent.includes('Standings & season forecast') && !!document.querySelector('td.heat')`));
+if (args.future) {
+  await send('Page.navigate', {url: args.url + '#/game/' + encodeURIComponent(args.future)}, s);
+  const ready = await waitFor(`document.querySelectorAll('.pathway-grid [data-block]').length === 3`);
+  check('future team distributions work offline without player projections', ready && await evaluate(`(async () => {
+    const ui = await import('./assets/ui.mjs'), game = await ui.api('game/' + ${JSON.stringify(args.future)});
+    const d = game.team_model?.regulation, input = document.querySelector('[data-line="pathway-total"]');
+    if (game.projection || !d || !input || document.querySelector('[data-view="player"], [data-view="scenario"]')
+        || document.querySelector('.bz-team.away .bz-stats b')?.textContent !== ui.f1(d.away.mean)
+        || !document.querySelector('#game-body').textContent.includes('without simulating overtime points')) return false;
+    input.value = '200.5'; input.dispatchEvent(new Event('change', {bubbles: true}));
+    if (document.querySelector('[data-block="pathway-total"] output')?.textContent !== 'Over: ' + ui.pct(ui.over(d.total, 200.5))) return false;
+    document.querySelector('[data-pathway-metric="margin"]').click();
+    const margin = document.querySelector('[data-line="pathway-margin"]');
+    if (!margin || document.querySelectorAll('.pathway-grid [data-block]').length !== 3) return false;
+    margin.value = '-1.5'; margin.dispatchEvent(new Event('change', {bubbles: true}));
+    return document.querySelector('[data-block="pathway-margin"] output')?.textContent.endsWith(': ' + ui.pct(ui.over(d.margin, -1.5)));
+  })()`));
+}
 await send('Page.navigate', {url: args.url + '#/standings/races'}, s);
 check('offline races render their own forecast content', await waitFor(`!!document.querySelector('.race-row') && document.body.textContent.includes('Season races')`));
 await send('Page.navigate', {url: args.url + '#/standings/leaders'}, s);

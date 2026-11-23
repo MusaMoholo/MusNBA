@@ -79,6 +79,15 @@ def align_legacy_shooting_schema(stored: dict, replay: dict) -> None:
                         line['stats'].pop(key, None)
 
 
+def align_legacy_season_schema(stored: dict, replay: dict) -> None:
+    if 'regulation_distribution_schema' in stored:
+        return
+    replay.pop('regulation_distribution_schema', None)
+    if not any('regulation' in row for row in stored['games']):
+        for row in replay['games']:
+            row.pop('regulation', None)
+
+
 def lineup_accuracy_consistent(record: dict) -> bool:
     slates = list(record['slates'].values())
     overall = record.get('overall')
@@ -385,7 +394,7 @@ def main():
         games = read_json(snap / 'games.json')
         season = read_json(snap / 'season.json')
         stats = read_json(snap / 'stats.json')
-        if args.fault and snap == snaps[-1]:
+        if args.fault and snap == snaps[-1] and games:
             first = next(iter(games.values()))
             first['periods']['fg']['home']['win'] = round(first['periods']['fg']['home']['win'] + 0.02, 4)
         W = meta['sims']
@@ -523,7 +532,8 @@ def main():
             for tid, t in season['teams'].items():
                 if 'bottom3' not in t:
                     again['teams'][tid].pop('bottom3', None)
-            if args.fault:
+            align_legacy_season_schema(season, again)
+            if args.fault and season['games']:
                 season['games'][0]['p_home'] += 1e-4
             check(f'{snap.name}: season re-simulates bit-for-bit ({season["model"]}, {len(worlds)} engine games)',
                   json.dumps(again, sort_keys=True) == json.dumps(season, sort_keys=True))
@@ -535,8 +545,9 @@ def main():
     missing = [d for d in {r['date_et'] for r in master} if not (api / 'slate' / f'{d}.json').exists()]
     check('views: every slate date has a view', not missing, missing[:3])
     check('views: every game has a view', all((api / 'game' / f'{g}.json').exists() for g in ids))
-    from scripts.views import current_snapshot
-    check('views: meta latest = newest snapshot dated today (ET) or earlier', view_meta['latest'] == current_snapshot([p.name for p in snaps]))
+    from scripts.views import current_snapshot, load_snapshots
+    check('views: meta latest = newest same-origin snapshot dated today (ET) or earlier',
+          view_meta['latest'] == current_snapshot(load_snapshots()))
     g0 = sorted(games)[0] if games else None
     if g0:
         view = read_json(api / 'game' / f'{g0}.json')

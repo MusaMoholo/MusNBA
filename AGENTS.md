@@ -49,14 +49,14 @@ Read-only/docs work needs no review server; start :8767 when inspecting or chang
   perform; a team's results are the aggregation of its players. Get minutes and per-possession performance (against the
   defenders actually faced) right and team results, short and long term, follow. Judge engine work on player outcomes
   first, then on the team sums.
-- **The product is two engines in one daily flow (ENGINE_PLAN D26, PLAN §1):** the play-by-play engine for today's and
-  tomorrow's games (or the next slate), with inputs carried over from every game before the date, then a MusSim-style
-  team engine for every later game — per-world offensive/defensive ratings updated after each simulated game, so
+- **The product is two engines in one daily flow (ENGINE_PLAN D26, D50):** the play-by-play engine for today's games
+  only, with inputs carried over from every game before the date, then a MusSim-style team engine from tomorrow onward
+  — per-world offensive/defensive ratings updated after each simulated game, so
   March is played from each world's own path, never today's ratings. **Every chunk of work has one or two headliners**
   that move these engines toward a state he trusts against real outcomes, each with clear ideas of what comes next;
   smoke, docs and plumbing ride along. Open each chunk by stating your understanding and the headliners.
-- **Every chunk ends with the dashboard on the newest, best systems** (owner, 20 Nov): rerun the nightly so today's and
-  tomorrow's games and a fresh 10,000-world season come from the latest engines that passed their tests. A chunk always
+- **Every chunk ends with the dashboard on the newest, best systems** (owner, 20 Nov): rerun the nightly so today's
+  games and a fresh 10,000-world season come from the latest engines that passed their tests. A chunk always
   brings new findings; when it cannot improve an engine (negative results happen), its headliner is a dashboard
   improvement from the owner's UX backlog (PLAN §9b) instead.
 - **Larger modular chunks (owner, 22 Nov, D38):** A1 replaces the old four tasks with 14 weighted subtasks. Each
@@ -67,7 +67,7 @@ Read-only/docs work needs no review server; start :8767 when inspecting or chang
   ten concrete rungs per subtask, acceptance/fallback, first commands and a final live nightly. Docs are the source
   of truth for any next agent; no important knowledge lives only in chat or private memory.
 - **History deferred (owner, 22 Nov, D40):** do not backfill historical forecasts or build a season-to-date replay
-  for this A1 run; focus the nightly on today and tomorrow relative to its ET origin (or the next slate). Rebuilding
+  for this A1 run; focus the nightly on today relative to its ET origin (D50). Rebuilding
   model inputs from completed games before the origin is still required and is not a forecast backfill. Preserve
   existing forecasts and archives. D39/ENGINE_PLAN §17 remains the safety contract if replay is reauthorised:
   historical inputs **and fitted parameters** must precede the origin, reconstructions must be labelled, versions
@@ -110,7 +110,7 @@ Read-only/docs work needs no review server; start :8767 when inspecting or chang
 ## 4. Rules
 
 - Use `.venv/bin/python`. Dependencies: NumPy, pandas, pyarrow, LightGBM. Node is optional (browser checks only).
-- **The engine is the floor (D22)**: today's and tomorrow's projections (D24) come from the possession engine — model
+- **The engine is the floor (D22)**: today's projections (D50) come from the possession engine — model
   **v1.3** since D34 (`ENGINE` in `scripts/engine.py`: `version`, node `models`, `rotation`, `sims` 10,000, `pool` 0 — D36;
   `models/v1.3.json`; real-matchup candidates v1.4c/e/f not promoted, D37). Replace it
   (new nodes, settings, rules or model version) only when the measured tests say the change is better — paired fold
@@ -159,7 +159,7 @@ next. Do not defer those updates to the end of the chunk or report an unfinished
    the affected forecasts/views and export with `scripts/nightly_musnba.py` (or `--export-only` for already-current
    completed outputs). Validate the PWA bundle/model labels and publish a changed data-free shell; record generation,
    version, checks and phone import requirement. At the end of actual development always run a new full nightly:
-   today/tomorrow/next slate and 10k seasons on the latest accepted engines. `--offline --no-rebuild` is only for
+   today and 10k seasons on the latest accepted engines. `--offline --no-rebuild` is only for
    current, unchanged retained inputs, with the reason recorded; never bypass required feature rebuilds. Browser
    checks use :8767. Research-only subtasks need no repeated live nightly; the planning-only session starts none.
 8. **Commit and push**: `git add -A && git status` (review: no `data/`, no secrets), then
