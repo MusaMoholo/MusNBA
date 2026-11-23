@@ -2,6 +2,15 @@
 
 Measured facts only. Each entry states its date and population.
 
+**22 Nov 2026 ET — observed branch runtime:** three same-origin research games with **2 / 4 / 2** branches
+of **10,000** worlds apiece were run concurrently with three numerical threads per job. Their logged branch
+times summed to **626.4 / 1,201.5 / 616.1s** respectively, excluding setup. The independent recheck
+validated **80,000** saved-world branch assignments, exact weights, shooting/points identities and
+unavailable-player stats, and counted **19,437,436** saved lineup snapshots. Those counts do not independently
+prove every lineup legal; previous fixture/lineup audits are separate. These are three games, not a full
+nightly benchmark or rejection-rate/accuracy estimate; some captures began post-tip. Original logs and
+fingerprints: `analysis/experiments/20261122_a1_branch_runtime_audit_v2.json`.
+
 **22 Nov 2026 ET — isolated restart:** one fixed F4 game with synthetic selected availability was
 generated twice for **200** independently seeded worlds. An uninterrupted run and a clean stop after 100
 followed by resume matched all **200** capture hashes, accepted seeds and the one deliberately injected

@@ -429,6 +429,11 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 ET · A1 branch-runtime accounting:** three concurrently run, 3-thread research jobs recorded
+  **626.4 / 1,201.5 / 616.1s** in their individual 10k branch loops. An independent recheck covered
+  **80,000** saved worlds, **19,437,436** lineup snapshots, branch weights and player/team boxes. Startup,
+  complete-slate latency, retry bias and predictive accuracy are not measured; some captures began post-tip.
+  No model or bundle changed; A1 **80%**, Chunk A **34.5%**.
 - **22 Nov 2026 ET · A1 restart research:** a fixed-F4 clean-stop/resume capture matched the uninterrupted
   **200** world hashes, seeds and injected rejection; each independent audit checked **50,817** lineup
   snapshots. Corrupt/incomplete prefixes fail closed. Control took **20.235s**; the second resumed invocation

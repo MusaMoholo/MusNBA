@@ -1,0 +1,4 @@
+branch 1/4: 10000 worlds, 307.2s
+branch 2/4: 10000 worlds, 310.5s
+branch 3/4: 10000 worlds, 292.9s
+branch 4/4: 10000 worlds, 290.9s

@@ -1,0 +1,72 @@
+{
+ "kind": "isolated observed branch runtime and saved-box accounting; not a forecast",
+ "audit_sha256": "57871f0ddbb82b8163c723f26fbf1a45a17556ee6d37bea82fdbedac3eebcd97",
+ "accounting_sha256": "62503c2f37021626cee2beade7e930039eb65d5e9b8582c2fb2420e8f8278a67",
+ "games": [
+  {
+   "game": "401910033",
+   "origin": "2026-11-22",
+   "manifest": "data/derived/experiments/20261122_a1_live_branch_033_v1.json",
+   "manifest_sha256": "d80723bcd9228dcd7bf263bdf8178694981b817590848ac4a8cd02a4f36687a1",
+   "log": "/tmp/musnba_a1_live_branch_033_v1.log",
+   "log_sha256": "5eb8214a6ad1728a1ea1425aa440b72f9164599ff7f8f9f8969b4b81553b288a",
+   "accounting": {
+    "branches": 2,
+    "worlds": 20000,
+    "lineup_snapshots": 4932579,
+    "weight_total": "1"
+   },
+   "branch_seconds": [
+    310.4,
+    316.0
+   ],
+   "branch_seconds_sum": 626.4
+  },
+  {
+   "game": "401910034",
+   "origin": "2026-11-22",
+   "manifest": "data/derived/experiments/20261122_a1_live_branch_034_v1.json",
+   "manifest_sha256": "6111ca22d0981ff3cc14bda9bb8cdaa77f9cf90b88e243583c3d98223a72c3ed",
+   "log": "/tmp/musnba_a1_live_branch_034_v1.log",
+   "log_sha256": "5e68f4d9206137b4d6491f87d33e0e12cd4356023b7d75fed5a8284ce5250bbd",
+   "accounting": {
+    "branches": 4,
+    "worlds": 40000,
+    "lineup_snapshots": 9647518,
+    "weight_total": "1"
+   },
+   "branch_seconds": [
+    307.2,
+    310.5,
+    292.9,
+    290.9
+   ],
+   "branch_seconds_sum": 1201.5
+  },
+  {
+   "game": "401910035",
+   "origin": "2026-11-22",
+   "manifest": "data/derived/experiments/20261122_a1_live_branch_035_v1.json",
+   "manifest_sha256": "6f2d44ba00a8e47a242887c357d188931b5632546d5306705f2063bb9bf5a748",
+   "log": "/tmp/musnba_a1_live_branch_035_v1.log",
+   "log_sha256": "ef000cdecff5ab3d1a942dd0deb40707ccc8074e0da4a3f35752154cb9a481b2",
+   "accounting": {
+    "branches": 2,
+    "worlds": 20000,
+    "lineup_snapshots": 4857339,
+    "weight_total": "1"
+   },
+   "branch_seconds": [
+    308.0,
+    308.1
+   ],
+   "branch_seconds_sum": 616.1
+  }
+ ],
+ "limitations": [
+  "Per-branch timings exclude startup and do not measure a complete slate or nightly.",
+  "Concurrency and thread allocation are not established by the individual log lines.",
+  "Some captures began after tip; none is a verified published pre-tip forecast.",
+  "Weights are uncalibrated assumptions; no predictive performance or retry rate is measured."
+ ]
+}

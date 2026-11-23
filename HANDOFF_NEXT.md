@@ -5,6 +5,19 @@ The preceding pushed checkpoint was **715625f** (exact-minute research view); us
 
 ## Read this first — live handoff
 
+- **A1 90% partial — multi-game branch runtime/accounting (23 Nov UTC):** independent manifest/box
+  accounting rechecked **80,000** research worlds across **3** games and **8** branches, including unavailable
+  players and exact weights; **19,437,436** recorded lineup snapshots. Branch-time sums were
+  **626.4 / 1,201.5 / 616.1s** for the three jobs, excluding startup; the jobs were run concurrently with
+  three numerical threads each. Original logs and hashes are preserved in
+  `analysis/experiments/20261122_a1_branch_{033,034,035}_runtime_v1.txt`; independent report
+  `analysis/experiments/20261122_a1_branch_runtime_audit_v2.json`. A malformed copied log failed without
+  writing an output. These timings do not establish full-slate elapsed time, memory, retry rates or accuracy;
+  some captures began post-tip and are not publishable forecasts. No model or bundle changed.
+  Existing branch regressions **8/8**, smoke **107/107**, deliberate fault **86/107** and exit 1
+  (`/tmp/musnba_a1_branch_runtime_{smoke,fault}_v1.log`). HANDOFF, PLAN, FINDINGS and README record the audit;
+  AGENTS, ENGINE_PLAN, TRAINING_PLAN and DASHBOARD_PLAN need no changes because standing rules, accepted
+  engine, evaluation gates and shipped UI did not change.
 - **A1 90% partial — isolated restart (23 Nov UTC):** an opt-in fixed-game capture now resumes only a
   contiguous complete batch prefix after checking run configuration/source fingerprints and independently
   auditing all saved seeds, retries, player/lineup accounting and hashes. An uninterrupted and clean-stopped
@@ -364,6 +377,13 @@ The preceding pushed checkpoint was **715625f** (exact-minute research view); us
   global retry cap. Compare uninterrupted and interrupted/resumed captures and independent audit results;
   test interrupted/invalid prefixes and changed inputs. This is a fixed-game restart check, not a fold, runtime,
   unbiased-retry or promotion gate, and it must not change accepted forecasts.
+- **A1 90% observed branch-runtime audit, frozen before measurement:** re-read the existing three independent
+  10k-per-branch current-origin research captures and their original logs. Validate capture hashes, assignments,
+  exact weights, saved box scores and unavailable players using the independent manifest auditor, then extract
+  per-branch elapsed times and report each game's sum of recorded branch times. These three captures shared
+  nine numerical threads; startup, full-slate duration, serial/parallel scheduling and unobserved rejection
+  rates are not established by branch-time sums. Never publish these post-tip research captures as forecasts
+  or use protected-season outcomes.
 - **A1 80% complete, injection-only:** a single shared research lineup control now drives selected player, team,
   sheet, scenario/Given/Joint and driver views; branch-unavailable metadata/cards are omitted. Available and
   positive-minute participation are distinct; shooting-defined mass is weighted. No normal route registers the
