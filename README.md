@@ -51,6 +51,11 @@ python3 -m venv .venv
   `analysis/a1_mixed_availability_audit.py` checks game reports against their individual raw collection origins;
   `analysis/a1_mixed_retention_rehearsal.py` exercises a temporary mixed snapshot with a synthetic clock. Neither
   publishes a forecast or proves its pre-tip publication time.
+  `analysis/a1_minute_encoding_probe.py` compares candidate encodings against saved research-world minutes
+  without scoring actual outcomes or changing forecasts.
+  `analysis/a1_precise_minutes.mjs` prototypes exact weighted minute thresholds and split display bins;
+  `analysis/a1_precise_minutes_probe.mjs` and `analysis/a1_precise_minutes_audit.py` measure and independently
+  check it against original captures. This is not a production or browser route.
 - The server reads files from disk: front-end edits appear on refresh, rebuilt views appear
   immediately; no restart needed. `serve.py --host 0.0.0.0` lets a phone on the same Wi-Fi in.
 - Slates are US Eastern game dates; tip-offs show UK time with ET.

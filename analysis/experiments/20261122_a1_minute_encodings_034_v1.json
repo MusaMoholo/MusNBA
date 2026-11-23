@@ -1,0 +1,260 @@
+{
+ "kind": "isolated minute encoding accounting; not a forecast or predictive test",
+ "manifest": "data/derived/experiments/20261122_a1_live_branch_034_v1.json",
+ "manifest_sha256": "6111ca22d0981ff3cc14bda9bb8cdaa77f9cf90b88e243583c3d98223a72c3ed",
+ "algorithm_sha256": "7ab8cc520fe70db84c9ac7543768fb6887a67a3b2d53fcba34536c4ceff62ada",
+ "branches": [
+  {
+   "capture": "data/derived/experiments/20261122_a1_live_branch_034_v1/branch-000.npz",
+   "capture_sha256": "b460a7f8b87158fe507fe583eaf11ac2b35c65e87bc9caa8ac5ac355ed134bc8",
+   "worlds": 10000,
+   "players": 30,
+   "distinct_full_game_values_per_player_median": 9443.0,
+   "distinct_full_game_values_per_player_max": 9841,
+   "encodings": {
+    "float64_minutes": {
+     "raw_bytes": 2400000,
+     "gzip_bytes": 1197806,
+     "max_error_seconds": 0.0,
+     "positive_minutes_lost": 0,
+     "integer_minute_threshold_disagreements": {
+      "10": 0,
+      "20": 0,
+      "30": 0,
+      "40": 0,
+      "48": 0
+     }
+    },
+    "float32_minutes": {
+     "raw_bytes": 1200000,
+     "gzip_bytes": 754359,
+     "max_error_seconds": 0.00011444091796875,
+     "positive_minutes_lost": 0,
+     "integer_minute_threshold_disagreements": {
+      "10": 5,
+      "20": 4,
+      "30": 2,
+      "40": 0,
+      "48": 2
+     }
+    },
+    "rounded_seconds": {
+     "raw_bytes": 600000,
+     "gzip_bytes": 439107,
+     "max_error_seconds": 0.5000000000003979,
+     "positive_minutes_lost": 43,
+     "integer_minute_threshold_disagreements": {
+      "10": 51,
+      "20": 56,
+      "30": 57,
+      "40": 7,
+      "48": 2
+     }
+    },
+    "floored_seconds": {
+     "raw_bytes": 600000,
+     "gzip_bytes": 438971,
+     "max_error_seconds": 0.9999999999999998,
+     "positive_minutes_lost": 80,
+     "integer_minute_threshold_disagreements": {
+      "10": 0,
+      "20": 0,
+      "30": 0,
+      "40": 0,
+      "48": 0
+     }
+    }
+   }
+  },
+  {
+   "capture": "data/derived/experiments/20261122_a1_live_branch_034_v1/branch-001.npz",
+   "capture_sha256": "dcc6a159e8a80049c47447a8a6428e28e8c331fe3b7e2742db4185cff971629b",
+   "worlds": 10000,
+   "players": 30,
+   "distinct_full_game_values_per_player_median": 9430.0,
+   "distinct_full_game_values_per_player_max": 9822,
+   "encodings": {
+    "float64_minutes": {
+     "raw_bytes": 2400000,
+     "gzip_bytes": 1215662,
+     "max_error_seconds": 0.0,
+     "positive_minutes_lost": 0,
+     "integer_minute_threshold_disagreements": {
+      "10": 0,
+      "20": 0,
+      "30": 0,
+      "40": 0,
+      "48": 0
+     }
+    },
+    "float32_minutes": {
+     "raw_bytes": 1200000,
+     "gzip_bytes": 767365,
+     "max_error_seconds": 0.00011444091796875,
+     "positive_minutes_lost": 0,
+     "integer_minute_threshold_disagreements": {
+      "10": 5,
+      "20": 4,
+      "30": 6,
+      "40": 0,
+      "48": 10
+     }
+    },
+    "rounded_seconds": {
+     "raw_bytes": 600000,
+     "gzip_bytes": 449161,
+     "max_error_seconds": 0.5000000000003979,
+     "positive_minutes_lost": 38,
+     "integer_minute_threshold_disagreements": {
+      "10": 44,
+      "20": 54,
+      "30": 69,
+      "40": 3,
+      "48": 10
+     }
+    },
+    "floored_seconds": {
+     "raw_bytes": 600000,
+     "gzip_bytes": 449265,
+     "max_error_seconds": 0.9999999999999998,
+     "positive_minutes_lost": 62,
+     "integer_minute_threshold_disagreements": {
+      "10": 0,
+      "20": 0,
+      "30": 0,
+      "40": 0,
+      "48": 0
+     }
+    }
+   }
+  },
+  {
+   "capture": "data/derived/experiments/20261122_a1_live_branch_034_v1/branch-002.npz",
+   "capture_sha256": "45f2990bf2d5285749cc8e135f930702afb2da915b32a63cc5249c229f5414e1",
+   "worlds": 10000,
+   "players": 30,
+   "distinct_full_game_values_per_player_median": 9437.5,
+   "distinct_full_game_values_per_player_max": 9856,
+   "encodings": {
+    "float64_minutes": {
+     "raw_bytes": 2400000,
+     "gzip_bytes": 1195499,
+     "max_error_seconds": 0.0,
+     "positive_minutes_lost": 0,
+     "integer_minute_threshold_disagreements": {
+      "10": 0,
+      "20": 0,
+      "30": 0,
+      "40": 0,
+      "48": 0
+     }
+    },
+    "float32_minutes": {
+     "raw_bytes": 1200000,
+     "gzip_bytes": 749004,
+     "max_error_seconds": 0.00011444091796875,
+     "positive_minutes_lost": 0,
+     "integer_minute_threshold_disagreements": {
+      "10": 6,
+      "20": 6,
+      "30": 5,
+      "40": 0,
+      "48": 0
+     }
+    },
+    "rounded_seconds": {
+     "raw_bytes": 600000,
+     "gzip_bytes": 438766,
+     "max_error_seconds": 0.5000000000003979,
+     "positive_minutes_lost": 26,
+     "integer_minute_threshold_disagreements": {
+      "10": 59,
+      "20": 59,
+      "30": 34,
+      "40": 4,
+      "48": 0
+     }
+    },
+    "floored_seconds": {
+     "raw_bytes": 600000,
+     "gzip_bytes": 438783,
+     "max_error_seconds": 0.9999999999999998,
+     "positive_minutes_lost": 41,
+     "integer_minute_threshold_disagreements": {
+      "10": 0,
+      "20": 0,
+      "30": 0,
+      "40": 0,
+      "48": 0
+     }
+    }
+   }
+  },
+  {
+   "capture": "data/derived/experiments/20261122_a1_live_branch_034_v1/branch-003.npz",
+   "capture_sha256": "281536e05213851e0804b95e9f587f3c678e6eee477dfcacbc946d351df02ac2",
+   "worlds": 10000,
+   "players": 30,
+   "distinct_full_game_values_per_player_median": 9359.5,
+   "distinct_full_game_values_per_player_max": 9851,
+   "encodings": {
+    "float64_minutes": {
+     "raw_bytes": 2400000,
+     "gzip_bytes": 1215890,
+     "max_error_seconds": 0.0,
+     "positive_minutes_lost": 0,
+     "integer_minute_threshold_disagreements": {
+      "10": 0,
+      "20": 0,
+      "30": 0,
+      "40": 0,
+      "48": 0
+     }
+    },
+    "float32_minutes": {
+     "raw_bytes": 1200000,
+     "gzip_bytes": 762483,
+     "max_error_seconds": 0.00011444091796875,
+     "positive_minutes_lost": 0,
+     "integer_minute_threshold_disagreements": {
+      "10": 9,
+      "20": 4,
+      "30": 8,
+      "40": 0,
+      "48": 8
+     }
+    },
+    "rounded_seconds": {
+     "raw_bytes": 600000,
+     "gzip_bytes": 448608,
+     "max_error_seconds": 0.5000000000003979,
+     "positive_minutes_lost": 19,
+     "integer_minute_threshold_disagreements": {
+      "10": 62,
+      "20": 61,
+      "30": 67,
+      "40": 9,
+      "48": 8
+     }
+    },
+    "floored_seconds": {
+     "raw_bytes": 600000,
+     "gzip_bytes": 448616,
+     "max_error_seconds": 0.9999999999999998,
+     "positive_minutes_lost": 31,
+     "integer_minute_threshold_disagreements": {
+      "10": 0,
+      "20": 0,
+      "30": 0,
+      "40": 0,
+      "48": 0
+     }
+    }
+   }
+  }
+ ],
+ "limitations": [
+  "One game and four saved research branches; no real outcomes scored.",
+  "Compressed sizes cover full-game minute arrays only, not a PWA bundle."
+ ]
+}

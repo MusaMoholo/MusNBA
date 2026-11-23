@@ -1,0 +1,19 @@
+{
+  "kind": "isolated precise-minute distribution probe; not a forecast or browser/phone benchmark",
+  "fixture": "data/derived/experiments/20261122_a1_live_branch_034_fixture_v1.json",
+  "fixture_sha256": "d190d0f903e11971c545eb174b52dc5dccb906c354d493a3e17f49ad35508f8b",
+  "choices": {},
+  "output": "data/derived/experiments/20261122_a1_precise_minutes_034_all_v1.json",
+  "output_sha256": "a69366ba9fd6a514d30263141afa20668f23d8492dafd364e939ff4e629ba93d",
+  "source_sha256": "deff0b48ee2f50fd29fe52add91f06591ba0e333c11adeece636a78cd485e4a5",
+  "arithmetic_sha256": "8e8fe7dcdfda9105295364531db86aa08243ad3475292fbfeb96acd298de7e5d",
+  "algorithm_sha256": "08995d38c920c4e7f594c3414eb858ed9025f450b482bc74d8fca699f6e10230",
+  "probe_sha256": "148b4abd88997b01092b4a537262a434ac43791f539dd63dfb28ee420035dfe0",
+  "distributions": 210,
+  "selected_worlds": 40000,
+  "selected_mass": 160000,
+  "decode_seconds": 0.724873958,
+  "distribution_seconds": 2.137212709,
+  "output_bytes": 269971,
+  "max_rss_kib": 909920
+}

@@ -1,7 +1,7 @@
 # Handoff — state and next actions
 
 Updated **22 November 2026 — Chunk A A1 at 80%, A2 at 30%; S01–S07 remain complete**.
-The preceding pushed checkpoint was **33cddc8** (mixed-provenance audit and timing safety); use `git log -1` for the current checkpoint.
+The preceding pushed checkpoint was **bc9cfb6** (D50 live today-only delivery); use `git log -1` for the current checkpoint.
 
 ## Read this first — live handoff
 
@@ -204,6 +204,29 @@ The preceding pushed checkpoint was **33cddc8** (mixed-provenance audit and timi
   whole minutes. Do not ship that inconsistency as the owner's requested seconds-sensitive dashboard. Reconcile
   stored-minute precision, histogram/line units, the Given/Joint consumers and their independent accounting;
   the production `engine_players.npz` still rounds to whole minutes as well.
+  A new encoding probe on four saved branches of game `401910034` (**40,000** worlds, 30 players) measured
+  **21** 30-minute classification changes from float32, **227** from rounded whole seconds and **126**
+  positive cells rounded to zero. Float64 preserved the exact values. Its gzip-compressed full-game minute
+  arrays totalled **4,824,857 bytes** across all four branches; this is not the final bundle size.
+  Independently checked counts and per-branch source hashes:
+  `analysis/experiments/20261122_a1_minute_encodings_034_v1.json`. The separate research probe is
+  `analysis/a1_minute_encoding_probe.py`; it does not change forecasts or score real outcomes.
+  An isolated on-demand exact weighted distribution now retains float64 support and integer cumulative mass;
+  one-minute display bins are half-open and split at the actual line, so a bin cannot silently assign all of
+  its mass to one side. Independent NumPy reconstruction from the original captures checked **210**
+  player-period distributions and six thresholds each for the full **40,000**-world mixture and again for a
+  **20,000**-world selected mixture. Node measured **2.14 s / 1.25 s** distribution calculation, respectively,
+  after **0.72 s / 0.70 s** fixture decode; peak process RSS **909,920 / 843,600 KiB** includes the entire
+  207 MB fixture and is not a browser or phone measurement. The outputs were aggregate-only and did not store
+  full support; this is not a bundle-size or predictive test. Reports and independent audits:
+  `analysis/experiments/20261122_a1_precise_minutes_034_{all,available}_v1_{probe,audit}.json`.
+  This helper is **not wired into the research view or production**; the old rounded summary still exists.
+  Focused JS distribution, weighted-arithmetic and source tests plus **2/2** Python encoding tests passed;
+  final-source smoke **107/107**, deliberate fault **86/107** and exit 1, logs
+  `/tmp/musnba_a1_precision_checkpoint_{smoke,fault}.log`. Pylance found no syntax errors in the new Python
+  analysis scripts. Documentation review: HANDOFF, PLAN, FINDINGS and README record the research; AGENTS,
+  ENGINE_PLAN, TRAINING_PLAN and DASHBOARD_PLAN need no changes because standing rules, accepted design,
+  predictive gates and shipped UI did not change.
   One isolated 10k branch had **527,727/1,250,000** player-period cells at fractional seconds (maximum
   deviation **0.5 s** from an integer second); report `analysis/experiments/20261122_a1_minute_precision_v1.json`.
   The `033` and `035` browser fixtures each independently reconcile 20k worlds, 9m player-stat values,
@@ -242,7 +265,7 @@ The preceding pushed checkpoint was **33cddc8** (mixed-provenance audit and timi
   charts must say regulation. Later test a candidate that simulates overtime only in tied worlds, including
   repeated ties, against prior-fold overtime/score and season-path calibration; preserve the current pathway
   until the established gates pass.
-- **Current action:** finish D50's safe refresh first, then continue A1 90%: finish representative accounting,
+- **Current action:** D50 is delivered; continue A1 90%: finish representative accounting,
   restart, cutoff and runtime gates; the isolated retry passed a synthetic single-game 10k audit but is not
   integrated or validated as a representative production policy, and dated development injury
   reports are absent. Do not equate wiring tests with predictive promotion. **Owner's latest stop:
@@ -2709,6 +2732,16 @@ simulation" for tomorrow's games; phone bundle stripped back (D36).
 
 ## Next actions — Chunk A in progress
 
+0. **A1 precision, still open:** use `analysis/a1_precise_minutes.mjs` as isolated arithmetic groundwork;
+   integrate exact support, threshold mass and split display bins coherently across branch/player sheets,
+   Given/Joint and participation, and add versioned period-minute storage with explicit legacy decoding.
+   The current helper is not connected to any route. Do not recover invented precision from retained legacy
+   worlds. Measure real laptop/phone bundle and browser/rendering costs before any delivery. To repeat the
+   existing two-player probe, use
+   `node --max-old-space-size=4096 analysis/a1_precise_minutes_probe.mjs data/derived/experiments/20261122_a1_live_branch_034_fixture_v1.json '{}' data/derived/experiments/<new-output>.json analysis/experiments/<new-probe>.json`
+   then `.venv/bin/python analysis/a1_precise_minutes_audit.py analysis/experiments/<new-probe>.json --output analysis/experiments/<new-audit>.json`;
+   use `'{"3149673":true}'` for the previously tested partial selection. Run
+   `node tests/test_a1_precise_minutes.mjs` and `.venv/bin/python -m unittest tests.test_a1_minute_encoding_probe`.
 1. **A1 90%:** continue from the audited 10k isolated-retry test in State. Independently verify representative
    branch accounting, source cutoff provenance and restart behavior; quantify runtime and rejection/selection
    bias on earlier folds. Do not equate its synthetic fixed-game benchmark with a

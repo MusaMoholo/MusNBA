@@ -429,6 +429,13 @@ deltas; DASHBOARD_PLAN). Owner: the Lab page is not a dashboard-user priority.
 
 ## 10. Log
 
+- **22 Nov 2026 ET · A1 minute encoding research:** across **40,000** saved worlds from four branches,
+  float32 changed **21** 30-minute classifications, and rounded seconds changed **227** and erased **126**
+  positive-minute cells. Float64 preserved all inputs and compressed to **4.82 MB** for these full-game
+  minute arrays only. Exact-support research arithmetic was independently checked across **210** player-period
+  distributions in both the **40,000**-world full mixture and a **20,000**-world selection; each check included
+  six exact thresholds and split one-minute display bins. The prototype is not connected to a view. No predictive
+  outcome, model or served bundle changed; A1 remains **80%**, Chunk A **34.5%**.
 - **22 Nov 2026 ET · D50 live refresh:** retained all **7** original game forecasts and their worlds, rebuilt
   a **959-game / 10,000-world** season, independently reconciled **3,808** future distributions and replayed
   the season exactly. iCloud laptop/phone bundles were exported and passed hosted offline **25/25 / 24/24**;

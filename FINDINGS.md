@@ -27,6 +27,24 @@ exact and whole-minute-rounded values at one selected player's 30-minute thresho
 600,000** player-world cells. These are isolated research worlds, not real-game accuracy measures.
 The detailed player-level reports remain ignored in `data/derived/experiments/`.
 Aggregate accounting and source hashes: `analysis/experiments/20261122_a1_live_fixture_accounting_v1.json`.
+On four saved branches of game `401910034` (**40,000** worlds, 30 players), float32 full-game minutes
+changed **21** player-world classifications at 30 minutes despite a maximum error of only **0.000115 s**.
+Rounding seconds changed **227** classifications and erased **126** positive-minute cells; flooring seconds
+erased **214**. Float64 preserved every measured value. Across the four branches, gzip-compressed full-game
+float64 minute arrays totalled **4,824,857 bytes** versus **3,033,211** for float32 and **1,775,642**
+for rounded uint16 seconds; these are array-only, not bundle sizes. Per-player distinct full-game values
+had branch medians **9,359.5–9,443** out of 10,000. An independent direct threshold/participation
+calculation confirmed the 30-minute and lost-participation counts. This is representation accounting,
+not predictive validation. Source hashes and all five tested thresholds:
+`analysis/experiments/20261122_a1_minute_encodings_034_v1.json`.
+On the same game's research fixture, an exact float64 support / cumulative integer-mass prototype was independently
+reconstructed from original captures for **210 player-period distributions** in the full **40,000**-world mixture
+and again in a **20,000**-world partial selection. Means, five quantiles, six threshold comparisons and display-bin
+counts split at 30 minutes matched; each bin represents `[minute, minute + 1)`. Node computation took **2.14 s /
+1.25 s**, plus **0.72 s / 0.70 s** to decode the fixture; peak process RSS was **909,920 / 843,600 KiB** including
+the entire 207 MB fixture. These are desktop Node figures, not browser/phone benchmarks or bundle sizes. Outputs
+do not include exact supports, and the prototype is not yet wired to any view or production. Reports:
+`analysis/experiments/20261122_a1_precise_minutes_034_{all,available}_v1_{probe,audit}.json`.
 
 **22 Nov 2026 — retained-context comparison:** before another collection, recomputing the 22 Nov cutoff
 team table, league table and player table from the currently retained box-score inputs produced exact
