@@ -1,0 +1,13 @@
+{
+ "kind": "Independent B1 real-score reconciliation; development only",
+ "games": 200,
+ "team_games": 400,
+ "residual_technical_points": 143,
+ "mismatches": 0,
+ "conclusion": "Every box-minus-segment residual is an explicitly recorded technical free throw; box truth and regulation/OT player periods are used for grading. No missing points were fabricated.",
+ "source_sha256": {
+  "data/raw/hoopr/play_by_play_2026.parquet": "f7051c5c0c5b605419fcc0e0c13dd90df7803f96dab290554c1ef737433a98b2",
+  "analysis/experiments/20261124_b1_source_audit_v2.json": "c46ccb40e0585517fd3b842fd709ed68437199c548d9b5e92bf16f45177a61a6"
+ },
+ "confirmation_outcomes_opened": false
+}

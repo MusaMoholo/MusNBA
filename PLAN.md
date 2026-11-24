@@ -15,9 +15,11 @@ C2 shooting and C3/C4 S06 attempts closed without promotion; no qualifier or pro
 The owner requested a full **PWA-only** interaction/visual sweep before B: clean selection/navigation and rich truthful visual analysis.
 U25 changed no models or B progress. App shell, both imports/offline/upgrades and lean0% successor handoff are delivered.
 
-## Next chunk — D42 B0%
+## Active chunk — D42 B30%
 
 `20261124_chunk_b_successor_v4.json` is the refined bounded plan; HANDOFF gives executable rungs/dependencies/commands/fallback.
+B1=100%,B2=B3=0%: fixed200-game buzzer recipe rejected; owner accuracy targets did not pass despite27 proper safeguards.
+`20261124_b1_completion_v1.json` owns research and fresh nightly/PWA delivery. Team-score objective remains unmet; next B2 calendar audit.
 
 |Module|Weight|Outcome|
 |---|---:|---|
@@ -51,5 +53,5 @@ S13 deferred; authorised ceiling95%. Separate ledgers grant no automatic S11/S12
 |S13 past forecasts|5%|Deferred D40|
 |S14 final delivery|5%|0%; remaining integration|
 
-D42A: A1(30%)/A2(35%)/A3(35%) complete. B=.30B1+.30B2+.40B3, initially0%.
+D42A: A1(30%)/A2(35%)/A3(35%) complete. B=.30B1+.30B2+.40B3, currently30%.
 Each module checkpoints before dependent work; every development chunk ends with full fresh nightly, tested PWA and fully specified successor.

@@ -1,0 +1,1289 @@
+{
+ "recipe_sha256": "a8e71d84b7f33f48e004363ba53cd3438256bcadde7f64192289a09c7b2e9971",
+ "source_sha256": {
+  "analysis/b1_engine_runner.py": "e1999e247925ce6cce0647ffacf3e3d1f7a11a4a12090657e52e7c569209bf82",
+  "analysis/experiments/20261123_a2_late_clock_confirmation_v1.json": "d54bee37c2f06f7c50c5119ff6d41605e0269f1b95a7667ab260ed27389405b4",
+  "analysis/experiments/20261124_b1_frozen_recipe_v2.json": "a8e71d84b7f33f48e004363ba53cd3438256bcadde7f64192289a09c7b2e9971",
+  "analysis/experiments/20261124_b1_source_audit_v2.json": "c46ccb40e0585517fd3b842fd709ed68437199c548d9b5e92bf16f45177a61a6",
+  "analysis/experiments/20261124_c3_engine_development_v3.json": "0b4d4a3cc961601df966ce1e38300c096a8bc99e56f47a1aa2453085356f5e39",
+  "analysis/experiments/a2_clock_development_20261123_v1.json": "b94e035aacb74c0d4a1482a17bd335b093e091d71179bcf3812503e6e7487337",
+  "analysis/rule3_capture_audit.py": "8ad4b8e1e21ae1c2318a72c89b554fb5b3063be7b6082237d19e32476569870b",
+  "analysis/rule3_confirmation.py": "b0562b9679b482d7a31dc4e9624cc1203da0f513be73b406fc02ba5999fa10a4",
+  "basketball_common.py": "be2b0643eebb4e1cd51b3eb8214d13b8718fd820864d3df7f7ac8fc1dd5bb48a",
+  "data/derived/athletes.parquet": "3b8e24488790edca5289a2a52f30867243a69f6cab57032e1c839967bb65d5be",
+  "data/derived/experiments/20261123_a2_late_clock_confirmation_v1/F4_pools.json": "5bc9035e704b6396388c9131ddafb6832eb9e232e26fe2d1d0d30ca261bce70f",
+  "data/derived/experiments/d42_b1_buzzer_v2/F4.json": "4f49b5131ed560c693ec1404f28d709bc681770df721b17195711704ae83a7c2",
+  "data/derived/history/2023/on_court.parquet": "ba9b4b13e16e5b839e5530905497d2d00d231413ea40f39ee46855f3ebce8c3b",
+  "data/derived/history/2023/player_periods.csv.gz": "d549a82d8704e95218379b945bef5ddb1bf4fa59db0e0b7e479e37f408281342",
+  "data/derived/history/2023/segments.parquet": "813b53edadf92f6e6c607211b1d4c64b312aa9fbe689851110e912419101a76e",
+  "data/derived/history/2023/stints.parquet": "f067fa85961f5792edba3bf6b1f3c3080b912c35bb06b0962615508ac16c3a5c",
+  "data/derived/history/2024/on_court.parquet": "5461947edb052ef9e62b4a70ba49e57a0f98d929f4a19167f03aad3972457f95",
+  "data/derived/history/2024/player_periods.csv.gz": "7f1bfaab40aceab115081cd2ae6db4b6e8694f69cc1f2c4585d2d2f10ee1bb90",
+  "data/derived/history/2024/segments.parquet": "4a7c3c2bce39580cc8e1092ffc215d11bbd49f7bf117b4551eee40337203d2c0",
+  "data/derived/history/2024/stints.parquet": "7555ba3a82f9e97b68f04aa2b24d26451b8ba54562976e20c66251fe021e068b",
+  "data/derived/history/2025/on_court.parquet": "5bbabab60114aa3f7fa096d7708be96f47177c541debcae88059da6b1adb77e9",
+  "data/derived/history/2025/player_periods.csv.gz": "8f513a5802292f4427f80022f4e57ae718a50ae880ef07f8ad2f9c06beebaf63",
+  "data/derived/history/2025/segments.parquet": "d9db732172894ed8d3c6e5e99e3cd1c197006da22799413034ce3ce18cc5aee2",
+  "data/derived/history/2025/stints.parquet": "e01c20cec0ac57a8146cab04b3483de62ee1db4c7bfb0702834f107c97afc95c",
+  "data/derived/history/2026/on_court.parquet": "1b0ffaf53490c3fda4edd28ac427766a0af3a1bfe86f1fece240cd63ed1e8410",
+  "data/derived/history/2026/player_periods.csv.gz": "ef35bb5c33c46e6a194cea30075d9974ead5d44be96c6074b60f6dac49e69c28",
+  "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+  "data/derived/history/2026/stints.parquet": "29de886d2afd2a5d9a55af2acb027fd3ee83a887584c71a9fe9951a9c2cc225f",
+  "data/derived/teams.json": "130aa5358d49b944c2b5bee7e9a163f1e53285e93dae57262f039ca1636b7ecc",
+  "data/derived/variants/a1_assignment_schedule_20261122_v3/F4.json": "57a2870e6e9e0f633c7b37d2a6d470676d16011fac3cb35405c9a0f295b0235a",
+  "data/derived/variants/a1_scheduled_F4_20261122_v3/features/features_report.json": "efb949a36c96a708c8613ffaac90723d24e0a180b9a8dd111e8e06d838175e8a",
+  "data/derived/variants/a1_scheduled_F4_20261122_v3/features/pregame.parquet": "bfd9ed61727c7f288764b87a5f9d517bcb7b4581664ad23a20e2c5606edf619a",
+  "data/derived/variants/a1_scheduled_F4_20261122_v3/features/team_pregame.parquet": "ebb3f3205e75d68a868a2a98c7ea804865143ca3d623147d92b4b2156b358bb9",
+  "data/derived/variants/matchup/features/features_report.json": "480f4c8aa933e654135beeb1e538fba1842c5f14da5c4a58d33e54abab2d230b",
+  "data/derived/variants/matchup/features/pregame.parquet": "9a04f502b93f703789ee4bbb47324f6e33e8d9cefcb684ada0deacb800a37664",
+  "data/derived/variants/matchup/features/team_pregame.parquet": "411c9fde03ab0ccd60ef7acf40e52433c6300cda6aae84b578e36a80d56595b8",
+  "data/models/folds/v1.2d_F4_all/assisted.txt": "0a094b183b18b8d45a6e5cf047fb117f8aed62dc6941bb9b7944391c3afec690",
+  "data/models/folds/v1.2d_F4_all/assister.txt": "f32c49ac6c7ca5774aad414c5cf500d1b5fd1bbd8fa6c0ddd50ee1934b1d3961",
+  "data/models/folds/v1.2d_F4_all/blocked.txt": "e085efcacd0baea9568f27f7ee05dd43687e7762ba55015d7569cc1efe175c04",
+  "data/models/folds/v1.2d_F4_all/blocker.txt": "5975f284a6c41a013db80fb669230e64dda7167137554bba9051dd04fe4004f0",
+  "data/models/folds/v1.2d_F4_all/config.json": "1617769cb52f2c750e0f1276071b39fc21254ef53fc97ccc646869aaa50f5e71",
+  "data/models/folds/v1.2d_F4_all/duration.txt": "2603f8bf64f3bbef3146285638f79262446eb9a76572c4217f45e6df77dee72c",
+  "data/models/folds/v1.2d_F4_all/event.txt": "d62e1cac4c4fa1cbec0ba5fccc321bae6838202b17253c80a0e8f502395e7e36",
+  "data/models/folds/v1.2d_F4_all/fouler.txt": "70ee6709fcd1fae1ca43ea925babaeb9c9355eaf7e4edeeb601d0cb11c45d266",
+  "data/models/folds/v1.2d_F4_all/free_throw.txt": "ddd7ef48ede7de973c9967b01826f3c293ee824147ca2da772de17a1d781f612",
+  "data/models/folds/v1.2d_F4_all/location.txt": "8f12f8c3bb168ab94dfae313f7624e1ff43074764db665b03ba9511d69c12979",
+  "data/models/folds/v1.2d_F4_all/rebound.txt": "b94d0f957b02d633ca751dff3ef921ffb7e9f57ce6bd206cbba41893ee6f34ff",
+  "data/models/folds/v1.2d_F4_all/rebounder.txt": "337225efb0be006b8889cb377254f6b03c39b356d73d366d3af153ab9133b094",
+  "data/models/folds/v1.2d_F4_all/shot_result.txt": "993fce9f6450e7f317c19e93cadf562db741efa7b58c05d32a8d561ff5f1bbfc",
+  "data/models/folds/v1.2d_F4_all/stealer.txt": "ceea8df151ace738c6181be7615f93fbbebc13cfc434cc371ff8f7566143c581",
+  "data/models/folds/v1.2d_F4_all/turnover_type.txt": "307defe709ae1a8639407d131e28bfabc8eda32bb291a4820113cf3a5b7001d0",
+  "data/models/folds/v1.2d_F4_all/what.txt": "d093989f161b78686804078c07a1d94a629719893085d399465a52314c0de231",
+  "data/models/folds/v1.2d_F4_all/who.txt": "c792950c30a7e7eecec20ab1d12681b0adc574838f2327bbc948213aa574150d",
+  "data/raw/hoopr/player_box_2023.parquet": "968d835cd04b10533c5b5af8c0e41bf0154a73782e9446c76f765109223e8679",
+  "data/raw/hoopr/player_box_2024.parquet": "1e500a538ec45ddbcb58d9789b5494f8db4f25658eafd01d90f2d09600921665",
+  "data/raw/hoopr/player_box_2025.parquet": "e89f7fbc1124092c715b722e6d72d9dd1b9d28776ca6888b508fd2831cd705e2",
+  "data/raw/hoopr/player_box_2026.parquet": "29a29dc9efd055a93e069a0382ac830d98a13274bee655beba69d95cff099713",
+  "docs/protocols/promotion_v3_20261123.md": "d50e26dcf523fad05bfc203ea3c5ceaab73a41aa906f1e9164cbffcb2a40cfeb",
+  "models/matchup_2025-12-31.json": "176ce8a25f6fd5cc0cee99abca618a72380bac4ed8cabc6f86d2f6129203206c",
+  "scripts/a1_compare.py": "435c1e0761f51ee9d218dfc462db8d219c0bc6f54dc8acd6bcae79968ddfcf68",
+  "scripts/backtest.py": "59b205f8624431fb274eec749df91ebbea17fb90bc57114c7b85ea8950a66a8c",
+  "scripts/buzzer_shots.py": "3ab48d26e40aa8cecf5054e1b8388c228e03a6d9cec223f1cbe4aed9cfd8afba",
+  "scripts/court_profiles.py": "c84e9c785c1b5598d6b6a6bc52a5211d2198fecea3c6cee0bc475038c952ea8a",
+  "scripts/court_runtime.py": "93fa7f8a02bf0dfa4c5d2b98ae7c1dab7e9d4d542ccca81a016ccbb26dc07ce4",
+  "scripts/court_zones.py": "b2c981812977bfc760a131bc719850d3f81393ffc0061e80ea7a39fd068e2101",
+  "scripts/engine.py": "19793e9cf2ab06d06226d4043938417cbbec58013f400245b8873859bdc7937f",
+  "scripts/foul_out.py": "32b51b7ad72bd3875d9f7c5301190b98545d347bf920be1d07b2d4e501c1da8c",
+  "scripts/late_clock.py": "e47120968221ed0a22829d7ba3991c6b35f7e88f82079219f3aec05fae4d397d",
+  "scripts/matchups.py": "70bbb3f069e78477c83b63ab66e518c4148217b11c415ff1825856914861a153",
+  "scripts/minutes.py": "94dd0ed25e536708c75cd4cf1f386bf2f9fa35f2c334d83cbdd031d4448ba2d0",
+  "scripts/nodes.py": "78749b680b889993e83ba26baab51877cd7393ee0a5a3d9f4fdaf9123d3b161f",
+  "scripts/projection.py": "5dc538ac2c7614cfdeb56da2b27a1218bec4e6ceffce16dc929d5f6accf2e878",
+  "scripts/release_gate.py": "2766fa72665708e3caad38b7d12424e6d9218faad65479b930c384ac434833a1",
+  "scripts/rotations.py": "1abf8fd173f4ca96d608813f315df8b034436a4bb26060e55410e3710c7e9c3a"
+ },
+ "reference_descriptors": {
+  "401809250": {
+   "game": "401809250",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_wiring_v1/401809250/reference/receipt.json",
+   "sha256": "1fd73d3f3d31ea00883f5b3d8d5751493d66eaa1e0db20e569bcd3b7ecda762e"
+  },
+  "401810330": {
+   "game": "401810330",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_wiring_v1/401810330/reference/receipt.json",
+   "sha256": "5235455ebef1400d1fbe8f1e8b271bd821b09f78957da0dc0b0aff323667b25a"
+  },
+  "401810342": {
+   "game": "401810342",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_wiring_v1/401810342/reference/receipt.json",
+   "sha256": "8601ae26ae61d8e6b7d899565642600defeffbc276f1ee7d4bc6c43a59f6f233"
+  },
+  "401810347": {
+   "game": "401810347",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810347/reference/receipt.json",
+   "sha256": "5d9ee49ab13d6b435e2aa2956afd6a566ad225e9d7ff6874b99e15fa8e7a7f7d"
+  },
+  "401810349": {
+   "game": "401810349",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810349/reference/receipt.json",
+   "sha256": "34521fa9771324876ce78f5929960beaa8a885898ff54edf19181522375cff1a"
+  },
+  "401810356": {
+   "game": "401810356",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810356/reference/receipt.json",
+   "sha256": "436cdab5736816f8e8b6dfb00f00b8f9275ddc283a467ab71cfdb47ff281af5c"
+  },
+  "401810360": {
+   "game": "401810360",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810360/reference/receipt.json",
+   "sha256": "670a64ab55670c6145ffb8706e8efea25ddd8c3b0e45547bba47820edec86b2c"
+  },
+  "401810361": {
+   "game": "401810361",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810361/reference/receipt.json",
+   "sha256": "59c6fa39a2e70cba9fb9105f46a1147f0736306209002a5f7dfe8c07dfdc2f60"
+  },
+  "401810364": {
+   "game": "401810364",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810364/reference/receipt.json",
+   "sha256": "84229b4c94cafc90d722a89e4c35331d87d3e5f0eac8c0603ad675d283d32bba"
+  },
+  "401810366": {
+   "game": "401810366",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810366/reference/receipt.json",
+   "sha256": "43a6f02db7006347ed16292dfdb8b812a1212fe98c5a94bae50677e782bae424"
+  },
+  "401810378": {
+   "game": "401810378",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810378/reference/receipt.json",
+   "sha256": "c9474e82b0ed187a28ecbaa641205bef98e5bec8307d0c974145cc475b083366"
+  },
+  "401810380": {
+   "game": "401810380",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810380/reference/receipt.json",
+   "sha256": "e0f8f52c229a5234e21dc7f73500cffb4de5b8720726e5fd719e146c4e8fea0e"
+  },
+  "401810383": {
+   "game": "401810383",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810383/reference/receipt.json",
+   "sha256": "5bdd09003ae3661e516b679f8a76ad40d5daea66eef9e37e75ba5a4648ec51d0"
+  },
+  "401810386": {
+   "game": "401810386",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810386/reference/receipt.json",
+   "sha256": "cd7319bf9f0b276bc469cadc1a9b7e4de023c3a2b358a722f5529828cc00b187"
+  },
+  "401810391": {
+   "game": "401810391",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810391/reference/receipt.json",
+   "sha256": "df924056ee7eadba1bfd793373e2e508d33ae9caecc75873386bb8c310c7ddd6"
+  },
+  "401810394": {
+   "game": "401810394",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810394/reference/receipt.json",
+   "sha256": "aeecd7db5e22bad7e5726ec1dd47ad18ea44b7bbe65988411c7a2b288c62ac47"
+  },
+  "401810396": {
+   "game": "401810396",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810396/reference/receipt.json",
+   "sha256": "bdc97d73e565cac72fda6b2347d154d83ade65d68f9128bdc92a691ecfe73a48"
+  },
+  "401810399": {
+   "game": "401810399",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810399/reference/receipt.json",
+   "sha256": "a2b2dbf2c51438d20255c0ab62f8bfe1c176683bb3a2ab9cfb6596da545de6e6"
+  },
+  "401810409": {
+   "game": "401810409",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810409/reference/receipt.json",
+   "sha256": "3bd13fcb8a829c4ae06a54e245b60b25a215392a71ef3b591953bc3a4a1b4078"
+  },
+  "401810410": {
+   "game": "401810410",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810410/reference/receipt.json",
+   "sha256": "f8469abe2a5183f4e46cf269d3b2fba398c472f768d0d8b61ec10e304a0143a0"
+  },
+  "401810411": {
+   "game": "401810411",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810411/reference/receipt.json",
+   "sha256": "9a2210037fdfe8b8420a46f0467a16e54a6c518d5a6bdc80063d1ab5c1963e45"
+  },
+  "401810413": {
+   "game": "401810413",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810413/reference/receipt.json",
+   "sha256": "be49bce429c6135107ae2ee854ee1d33635372bcba61b6c18f02c26a07b48266"
+  },
+  "401810423": {
+   "game": "401810423",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810423/reference/receipt.json",
+   "sha256": "d3f03125b985c7f0407ba996f48873d9935dd64528e9e3f14b180016971737d3"
+  },
+  "401810431": {
+   "game": "401810431",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810431/reference/receipt.json",
+   "sha256": "9ad9b56074d4f8dfdddb44938aa8db00bfa65977cee59ee182de4485129b6adc"
+  },
+  "401810435": {
+   "game": "401810435",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810435/reference/receipt.json",
+   "sha256": "b2866b635e5aa2961892feb6411407c1fd81a2f81b341479d95c744028f1a9de"
+  },
+  "401810438": {
+   "game": "401810438",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810438/reference/receipt.json",
+   "sha256": "463686646ac8a5994d775150a79799509f82f4f01719c10229dcb67c112f34bf"
+  },
+  "401810439": {
+   "game": "401810439",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810439/reference/receipt.json",
+   "sha256": "49838307f94c7422f0cb9a34b5be208e2820934a8cb82194e9e03b9e09d7eef2"
+  },
+  "401810443": {
+   "game": "401810443",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810443/reference/receipt.json",
+   "sha256": "0e046211aaf1aad7eeea25adad65ef30684f1ba089750dfb5c82b79911da62d5"
+  },
+  "401810445": {
+   "game": "401810445",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810445/reference/receipt.json",
+   "sha256": "6a715eaadb1eb16451af1dee8c266e33db564762d5d17011f66ef64447fc592b"
+  },
+  "401810448": {
+   "game": "401810448",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810448/reference/receipt.json",
+   "sha256": "b9d03196f5b018aaa574131c79596ac7744fad182f3f27d9920c144b046cea3f"
+  },
+  "401810449": {
+   "game": "401810449",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810449/reference/receipt.json",
+   "sha256": "e7b49d0561c4c3049e6bc167e3c43e04c8d91c34e8da86385b6c00959c95150d"
+  },
+  "401810452": {
+   "game": "401810452",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810452/reference/receipt.json",
+   "sha256": "2e464dea6f89be0d0d1f8861a94c9d089cf7e10bb2377ecdf63434824b7a9294"
+  },
+  "401810453": {
+   "game": "401810453",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810453/reference/receipt.json",
+   "sha256": "bd56a4a3851bafaf9c80643e2d7d9365da1c5e213469b8cda38bbbc30f6c8c77"
+  },
+  "401810454": {
+   "game": "401810454",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810454/reference/receipt.json",
+   "sha256": "f9d7ef1393413010640a9bd23067c4e6f6425f9fcbae8c3622e7d41e63b6db08"
+  },
+  "401810463": {
+   "game": "401810463",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810463/reference/receipt.json",
+   "sha256": "b38a65aac001c22c848afdd11e74cfd3508f2b9e4bc4b8eba259f17077043271"
+  },
+  "401810466": {
+   "game": "401810466",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810466/reference/receipt.json",
+   "sha256": "76cb137a71da57f3f51acad9102bc73ccd2a50600aaa60c112d1fb0dcb883169"
+  },
+  "401810474": {
+   "game": "401810474",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810474/reference/receipt.json",
+   "sha256": "b7a2f2d4a9fbc1305353c6fd4bd91de3a40862bcbaa472bf12917029852c37b3"
+  },
+  "401810479": {
+   "game": "401810479",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810479/reference/receipt.json",
+   "sha256": "0d51c427cc66ede9575df024aa13ab7cc258432c48eaa0e0ac07c76c9b4f88cd"
+  },
+  "401810481": {
+   "game": "401810481",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810481/reference/receipt.json",
+   "sha256": "d2a2b252a7a8d79100d4f53e54f57ba195cbe80fdb25a8795135c8f0d8708866"
+  },
+  "401810482": {
+   "game": "401810482",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810482/reference/receipt.json",
+   "sha256": "b5a39eb00884894c19288920ca110aecfc850524db9f1e6bde5f15e27846cd17"
+  },
+  "401810483": {
+   "game": "401810483",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810483/reference/receipt.json",
+   "sha256": "71d45bf6a0de910176fdc4ddf78816ce6758c25e0550084e72ff8eb7b443ae70"
+  },
+  "401810487": {
+   "game": "401810487",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810487/reference/receipt.json",
+   "sha256": "19b71b4dc4361ba4e0562aed7914c43000287a74c89598d4e87b86a06e85a19d"
+  },
+  "401810492": {
+   "game": "401810492",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810492/reference/receipt.json",
+   "sha256": "4e11d45860f68199c31fe29a7aca9e13f33e187d7b702a49fd7a8934643cf90d"
+  },
+  "401810493": {
+   "game": "401810493",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810493/reference/receipt.json",
+   "sha256": "03f8cb878bb48a3f1630ad3a6d8fb363d93f92464aa0d1d32a5b759112e69ae7"
+  },
+  "401810505": {
+   "game": "401810505",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810505/reference/receipt.json",
+   "sha256": "be7bb2b3a7448e5b5f15fe61531e75ee2f89583e01f22c50653e724810256328"
+  },
+  "401810508": {
+   "game": "401810508",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810508/reference/receipt.json",
+   "sha256": "c583d17b40162314ab4a37b392242154aed34aa704f797c16841329b60b86a23"
+  },
+  "401810509": {
+   "game": "401810509",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810509/reference/receipt.json",
+   "sha256": "95d52cd090c0c1054bfeda577c793cf55a712cad250fde28a1dd34e575ca5819"
+  },
+  "401810512": {
+   "game": "401810512",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810512/reference/receipt.json",
+   "sha256": "d87b99c06363af94b8c51dfdf908e8211f0203bd5e5e37a02550fc2ebc904b04"
+  },
+  "401810533": {
+   "game": "401810533",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810533/reference/receipt.json",
+   "sha256": "1e7bf8fad158b0bdc294a22ba7b0a04445fb92ba02f00683f508baef52b978b8"
+  },
+  "401810538": {
+   "game": "401810538",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810538/reference/receipt.json",
+   "sha256": "4a8c6cf360abe517206b94718f747c82a1572bb07c1a118d36b6c0cb8af7e3de"
+  },
+  "401810539": {
+   "game": "401810539",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810539/reference/receipt.json",
+   "sha256": "da35ef8aa692f29b764011660d25987ed6c10ebc3f0f31b52e602188ce401d84"
+  },
+  "401810543": {
+   "game": "401810543",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810543/reference/receipt.json",
+   "sha256": "b9f13ef0a1f39d255e61f660710dc9a8f434a558974444b6e40537b5d5597d13"
+  },
+  "401810546": {
+   "game": "401810546",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810546/reference/receipt.json",
+   "sha256": "7d587e44a00ae22353336967702c18c35c363eaffc9ee0a44a3a2ce6ef07c6cd"
+  },
+  "401810548": {
+   "game": "401810548",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810548/reference/receipt.json",
+   "sha256": "6a62d4f1ee1c382e072ea4b51ec98e53580224e2cfd5adff70c88444a140544c"
+  },
+  "401810553": {
+   "game": "401810553",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810553/reference/receipt.json",
+   "sha256": "e375d747e71f515c98cce2d996f776c7483ff569c060f0b8474a8b2208d6318b"
+  },
+  "401810554": {
+   "game": "401810554",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810554/reference/receipt.json",
+   "sha256": "ed8148922f6083e2a0b06f372b087b493b401363d904d3e98bd2c1ac376f0946"
+  },
+  "401810559": {
+   "game": "401810559",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810559/reference/receipt.json",
+   "sha256": "e1365763cb3f40155e29fe708463e0b5a3acd07f19fd1b5a9f268c4157b6b28c"
+  },
+  "401810564": {
+   "game": "401810564",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810564/reference/receipt.json",
+   "sha256": "16f83cc86cff56913275cc6ba5390dd6d1d9fcf5ea1383ece4107df12f0dc134"
+  },
+  "401810569": {
+   "game": "401810569",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810569/reference/receipt.json",
+   "sha256": "b9c215d05202f258720fabaa145861dfbf26ecd5ee8deadcd78ec522565c7ef2"
+  },
+  "401810573": {
+   "game": "401810573",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810573/reference/receipt.json",
+   "sha256": "484d1c11f90cac344f82c823c3db4422b437534bdf81aeedfeae7126eee88748"
+  },
+  "401810580": {
+   "game": "401810580",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810580/reference/receipt.json",
+   "sha256": "59be79f4c69b4bf738d50a860b9d776a81e5495adfa16224c7f3c09fdb05a7ab"
+  },
+  "401810582": {
+   "game": "401810582",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810582/reference/receipt.json",
+   "sha256": "9ba90b2859511577d549c01cfc4b7dd4332ca29cab5d0eb8356539711e4c38fb"
+  },
+  "401810585": {
+   "game": "401810585",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810585/reference/receipt.json",
+   "sha256": "29228dc8e04861d28ce1b998efe376396bfeb36af39e4a53601b6ce73a6f394f"
+  },
+  "401810587": {
+   "game": "401810587",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810587/reference/receipt.json",
+   "sha256": "994a21a455dd8dfba1ea553d98b724c235c0681a2a64ad2de475d1cbcc610c7b"
+  },
+  "401810595": {
+   "game": "401810595",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810595/reference/receipt.json",
+   "sha256": "6181af7043cdb7524e9c5b50668f3a1b5e81eb073d6f8fde2ece60c5821c64f8"
+  },
+  "401810596": {
+   "game": "401810596",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810596/reference/receipt.json",
+   "sha256": "91ac72a412374af65bcabe643837407d75757b3f2073a24340644215d30b2949"
+  },
+  "401810601": {
+   "game": "401810601",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810601/reference/receipt.json",
+   "sha256": "8584b16352978d1eeefba8abd533eadf01ba87ceb59bacb42440aa7ec62e01fc"
+  },
+  "401810605": {
+   "game": "401810605",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810605/reference/receipt.json",
+   "sha256": "ddec98a1735ee546e4ff21b8bd7477bc59639f46eb74dcd166581e9bf9971e5a"
+  },
+  "401810606": {
+   "game": "401810606",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810606/reference/receipt.json",
+   "sha256": "45467167d42449ebdc322969abefc3ac6a5e87f49ea5eb25e56896073d4aae98"
+  },
+  "401810614": {
+   "game": "401810614",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810614/reference/receipt.json",
+   "sha256": "70bdc8cef732b4cdd707282b6750d6746e366db44dcf46097355f4598bfaa861"
+  },
+  "401810616": {
+   "game": "401810616",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810616/reference/receipt.json",
+   "sha256": "585f558411f697ceee61accd5125be9e4e1ec383e6f8b0b465023e9e400f03f9"
+  },
+  "401810618": {
+   "game": "401810618",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810618/reference/receipt.json",
+   "sha256": "33159131a051a835999c973738b676b7ce9a6b11419120b405a59ec558ab5342"
+  },
+  "401810620": {
+   "game": "401810620",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810620/reference/receipt.json",
+   "sha256": "11414d3b702625eb20b6e2a0f82590f6645186828dffb2b38353182dc9ef9647"
+  },
+  "401810624": {
+   "game": "401810624",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810624/reference/receipt.json",
+   "sha256": "d022da46dc5c7e78706a8365ad482777c8b58d686530533bc99b230841a472c4"
+  },
+  "401810626": {
+   "game": "401810626",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810626/reference/receipt.json",
+   "sha256": "095096464ef7bd6d8a46eb00c06b16b532f6d44979310cf62ccaff660e679bbd"
+  },
+  "401810628": {
+   "game": "401810628",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810628/reference/receipt.json",
+   "sha256": "1687da15cb1995fd45cf6deecce31a3a5d90c429e3ff3dddeed6244cf3fcd444"
+  },
+  "401810630": {
+   "game": "401810630",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810630/reference/receipt.json",
+   "sha256": "f2146bb45bd67bf12a81b3479775aa86e934ed6c26640318b5d62c679000ab90"
+  },
+  "401810636": {
+   "game": "401810636",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810636/reference/receipt.json",
+   "sha256": "695f1357a53eed000e9b9fc4e2b469cdbb4b0187723422326df97d9627722dda"
+  },
+  "401810639": {
+   "game": "401810639",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810639/reference/receipt.json",
+   "sha256": "8dca2c17185b130c70d627b4c8af2530f63cf4d15318616705b6be05807cf7a6"
+  },
+  "401810641": {
+   "game": "401810641",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810641/reference/receipt.json",
+   "sha256": "32416ee4434bedde8edc0bf283b2c8d33a01d1fa559f0576af18fc2cb9448f30"
+  },
+  "401810646": {
+   "game": "401810646",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810646/reference/receipt.json",
+   "sha256": "a520e4e1a321c4d2549a6e0a0692d89d74749bb05f76fc2221d6d69446c905f4"
+  },
+  "401810657": {
+   "game": "401810657",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810657/reference/receipt.json",
+   "sha256": "d4128da7336699cb223ab87f48378aa2aad9206927c03a69326684691ddccb81"
+  },
+  "401810661": {
+   "game": "401810661",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810661/reference/receipt.json",
+   "sha256": "720153f5b53ad62e2f4b92471d46b1832037911f9b7bf8ee285bd8e8edfbd1aa"
+  },
+  "401810662": {
+   "game": "401810662",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810662/reference/receipt.json",
+   "sha256": "18fccf8d9154f862aff1516a7ffbc547fd21d13804e4cf6073c8c5c1b7779cff"
+  },
+  "401810663": {
+   "game": "401810663",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810663/reference/receipt.json",
+   "sha256": "c3e1d04f5c3d27c0007d7b484511a8383b09bf9fa836135574b16260202c3dfa"
+  },
+  "401810665": {
+   "game": "401810665",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810665/reference/receipt.json",
+   "sha256": "9551ade0e91785fa98ab8cc7b6daf8dae5751dc68949ab446ad79666868c4f0a"
+  },
+  "401810666": {
+   "game": "401810666",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810666/reference/receipt.json",
+   "sha256": "789229a1c3760732ca26dafb2080917b7f5950338bb94357d0e53090d81b28d8"
+  },
+  "401810668": {
+   "game": "401810668",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810668/reference/receipt.json",
+   "sha256": "48c3f8023088e0c5f340ad3b48d2ff47b20cac511ff77e7873a3c935ccfb1530"
+  },
+  "401810671": {
+   "game": "401810671",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810671/reference/receipt.json",
+   "sha256": "2551b2017941f368bd49868edfa887113432efa2b5bce84778b879a78f610f46"
+  },
+  "401810673": {
+   "game": "401810673",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810673/reference/receipt.json",
+   "sha256": "23086c3e287cdc2a41fbbb7534f409009b461efcdcd4d7456f49ff777d2ee824"
+  },
+  "401810674": {
+   "game": "401810674",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810674/reference/receipt.json",
+   "sha256": "cb3cb2ce78b16a2dcc2b0d3f4154838168d7702feefa1ecfc97194868f53ca2a"
+  },
+  "401810692": {
+   "game": "401810692",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810692/reference/receipt.json",
+   "sha256": "6536192f30a2ef33579deac4b670d14289ea97138f11de45093d78c72cec495e"
+  },
+  "401810695": {
+   "game": "401810695",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810695/reference/receipt.json",
+   "sha256": "881aefa5da55ed6fdfb60387b3293fcf6772681a6e52cdcc98f6619bdde5306f"
+  },
+  "401810697": {
+   "game": "401810697",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810697/reference/receipt.json",
+   "sha256": "aeb81fd00c79080394cb090dd42269f50b2dba9adb529b14d3e707f5812e3a7c"
+  },
+  "401810699": {
+   "game": "401810699",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810699/reference/receipt.json",
+   "sha256": "87c2868fd9977f6e7fdbb7ae83d0fdbed95a4312c87e625274d15db11c57e03f"
+  },
+  "401810701": {
+   "game": "401810701",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810701/reference/receipt.json",
+   "sha256": "76ae0783c5e594ac318eea0c581804c880eace799091a960b2f8277773b3a26b"
+  },
+  "401810703": {
+   "game": "401810703",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810703/reference/receipt.json",
+   "sha256": "622cc9872995df51f1043240a19411efc96edf65d844045aef9572d29540bada"
+  },
+  "401810706": {
+   "game": "401810706",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810706/reference/receipt.json",
+   "sha256": "33400bf8a8e435b7231962831e49b8505e6fa59c776077bb11acbce0af3620e3"
+  },
+  "401810710": {
+   "game": "401810710",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810710/reference/receipt.json",
+   "sha256": "7b8c9965e7e7bac3aaa9624f5914c1ad3f302273ec6b235b3127c7b62b65089b"
+  },
+  "401810716": {
+   "game": "401810716",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810716/reference/receipt.json",
+   "sha256": "e11a4b1c0dc0cc5b1391374975ce90587cb01222494e20e2ff47a6000e8e59bc"
+  },
+  "401810717": {
+   "game": "401810717",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810717/reference/receipt.json",
+   "sha256": "a13f0e9dfd062377f8109adc966afae7d054f6643c47aceb41481ed67b42bd37"
+  },
+  "401810719": {
+   "game": "401810719",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810719/reference/receipt.json",
+   "sha256": "bf2220eaf36afebc895236b39c5dd45bd89fce081acf1f445574d83ad27bf1f0"
+  },
+  "401810720": {
+   "game": "401810720",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810720/reference/receipt.json",
+   "sha256": "16c9f690a4abd375d21e0a43e565e04bd995f14dac132a97c6d3af54da473458"
+  },
+  "401810721": {
+   "game": "401810721",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810721/reference/receipt.json",
+   "sha256": "ec1a35c65f790cad7638f485bd5bf76165679da56085e60348ff49cf2a2f242d"
+  },
+  "401810723": {
+   "game": "401810723",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810723/reference/receipt.json",
+   "sha256": "78bc07f64a09291493b2ce30de14f91c1ad74cc764744abbd284bbe5973a3e74"
+  },
+  "401810726": {
+   "game": "401810726",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810726/reference/receipt.json",
+   "sha256": "034b85915e5fa12bdd2dbbc2b393e5de2800c27921ccc1fd536ea54df8512e6e"
+  },
+  "401810728": {
+   "game": "401810728",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810728/reference/receipt.json",
+   "sha256": "9bf7ae92656211a1f55aa7563162c700e35767040876986e8d329372de9a70f6"
+  },
+  "401810740": {
+   "game": "401810740",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810740/reference/receipt.json",
+   "sha256": "7492426b6898b9c4e82ac13939383f34033964eda5362dfb3ae176a4857ca935"
+  },
+  "401810745": {
+   "game": "401810745",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810745/reference/receipt.json",
+   "sha256": "41563b87f86a0b739749ddfa998b981fe67ef1c1a07ac3c1885ceef4e862d7a6"
+  },
+  "401810746": {
+   "game": "401810746",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810746/reference/receipt.json",
+   "sha256": "fa5d99e9814af5936b4c65f414d547b9e17cf37b85634478409fed30dce42e4f"
+  },
+  "401810750": {
+   "game": "401810750",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810750/reference/receipt.json",
+   "sha256": "dc2ee5648beaa55f58a8bec79addb9ba5174454f2b15af7346d040ff3bb083d5"
+  },
+  "401810752": {
+   "game": "401810752",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810752/reference/receipt.json",
+   "sha256": "d62015fdcda731a794f20399585e15d8d990314703e5b06d7c6aa3e114d0c595"
+  },
+  "401810756": {
+   "game": "401810756",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810756/reference/receipt.json",
+   "sha256": "9222231ae7495630c36081ac5492e56391bd686f3737a53dd79bdb483ba4399a"
+  },
+  "401810757": {
+   "game": "401810757",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810757/reference/receipt.json",
+   "sha256": "18bde29047654d9ab622d910d981dcef0cf2e99ecacb3fdf610899cf21e7eed6"
+  },
+  "401810763": {
+   "game": "401810763",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810763/reference/receipt.json",
+   "sha256": "bd9b4a3fbf81d59f587e8b56fa47c966eb760dae9a27f13d6e0cf9c89a20096a"
+  },
+  "401810766": {
+   "game": "401810766",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810766/reference/receipt.json",
+   "sha256": "2288504943a7f076ed84d6dfeba278c695b08cf428c10b19b1fa1183c2b9600f"
+  },
+  "401810767": {
+   "game": "401810767",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810767/reference/receipt.json",
+   "sha256": "bffec7811dc2cc533cf252a7c035ec0fc7eb6f51ec51b2227a4b05c60a9423fa"
+  },
+  "401810769": {
+   "game": "401810769",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810769/reference/receipt.json",
+   "sha256": "97603dd562ee9960ea9f5a35317eb80e44d8675ecade5e428dd412f00842a4d7"
+  },
+  "401810771": {
+   "game": "401810771",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810771/reference/receipt.json",
+   "sha256": "9be0cde128f37c16171dcd574731f57ee8a7c5d20d913af4418b19659dc17159"
+  },
+  "401810776": {
+   "game": "401810776",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810776/reference/receipt.json",
+   "sha256": "6aea77fb1d258e0500d09bb2383103fa5ee49929e2aaf8a9ecc0d9c0be3d017d"
+  },
+  "401810778": {
+   "game": "401810778",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810778/reference/receipt.json",
+   "sha256": "c18aab1a35dd76a3484603f79cd7d2a5c485809a403b4f20d8369d5bc9549f77"
+  },
+  "401810783": {
+   "game": "401810783",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810783/reference/receipt.json",
+   "sha256": "8784a0f32fbd63edd1f27dca7a2aee7d3110289c8002824d10220081a7738a45"
+  },
+  "401810788": {
+   "game": "401810788",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810788/reference/receipt.json",
+   "sha256": "187b09d7d84a75e36a65dcbf5c96ca5b2f3d510f120cecf267f9f9e4823bc357"
+  },
+  "401810796": {
+   "game": "401810796",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810796/reference/receipt.json",
+   "sha256": "2fd62eae3c3af9ec07f00b6ce2ba0a06a0995ec041274272ac76ac305fe05426"
+  },
+  "401810800": {
+   "game": "401810800",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810800/reference/receipt.json",
+   "sha256": "0d2e97fbd866eb661036da7b7ac3b995a689cb35724fbc89887e936055d28be5"
+  },
+  "401810802": {
+   "game": "401810802",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810802/reference/receipt.json",
+   "sha256": "1054989a5b25efe70b78dfeb1ca50509a979214a6f2ff165ba21a6645dfd110d"
+  },
+  "401810803": {
+   "game": "401810803",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810803/reference/receipt.json",
+   "sha256": "d6941025ac236337f0b446df947a23e886072b80db1be51d9de89d7ef0223efb"
+  },
+  "401810809": {
+   "game": "401810809",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810809/reference/receipt.json",
+   "sha256": "2d344088f6972c5613358951568f5de2dc0574544516e61519adf92217ec9654"
+  },
+  "401810811": {
+   "game": "401810811",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810811/reference/receipt.json",
+   "sha256": "0e5725f96df29b39a3455ed2952448d56fd501672fac24c167d7d60556e71070"
+  },
+  "401810827": {
+   "game": "401810827",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810827/reference/receipt.json",
+   "sha256": "769207fa3f19b1d298532d779211ab0ba3d42be1c2fc9a9e47027de6ad064ec9"
+  },
+  "401810830": {
+   "game": "401810830",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810830/reference/receipt.json",
+   "sha256": "c7d6b2bbda6e109de406ccd2ef0e2594db5ee2eec7a55f1f84e28107a3224be4"
+  },
+  "401810831": {
+   "game": "401810831",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810831/reference/receipt.json",
+   "sha256": "8ba8079fa654eb31f1f206367404da122395b10de2d49f8f471800168f16fdb2"
+  },
+  "401810835": {
+   "game": "401810835",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810835/reference/receipt.json",
+   "sha256": "062b78c50ea288588d9b16278cee555dd45aca5393d6f63481bc7353331aad18"
+  },
+  "401810836": {
+   "game": "401810836",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810836/reference/receipt.json",
+   "sha256": "786d373bcc4545cc18e4cb07953211d9ae5f797101b646a2dceda50b89e136ab"
+  },
+  "401810838": {
+   "game": "401810838",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810838/reference/receipt.json",
+   "sha256": "e2891bb72b4f12358a5fdce7385175489bd78a6afad6bd672aa4ac0e71917bfc"
+  },
+  "401810843": {
+   "game": "401810843",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810843/reference/receipt.json",
+   "sha256": "0e632f6a827e791a3fc14f30385da657073c3d4a23242db57123bd2366a0c30f"
+  },
+  "401810845": {
+   "game": "401810845",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810845/reference/receipt.json",
+   "sha256": "8ade46b8d741d7a9fc25d9dbe8da1c15e0e2734756784ca539e59a88ac7d2c36"
+  },
+  "401810847": {
+   "game": "401810847",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810847/reference/receipt.json",
+   "sha256": "fe3450d1264ac66e54fda73a888bbfa410a897351cfe732f2af24122902455a1"
+  },
+  "401810859": {
+   "game": "401810859",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810859/reference/receipt.json",
+   "sha256": "48d76d6c661a76b2fc7205060ca9f1ec6b89d17cf99bdb4b572b6df024f8f6f0"
+  },
+  "401810868": {
+   "game": "401810868",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810868/reference/receipt.json",
+   "sha256": "db778050f9c37a2f482335e55362cb21264052f9b4da9c7f6bcb569175b7ef2b"
+  },
+  "401810874": {
+   "game": "401810874",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810874/reference/receipt.json",
+   "sha256": "41166592c551bf88d836653afacb866de58135ea228d14c499ba450a1b509fef"
+  },
+  "401810875": {
+   "game": "401810875",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810875/reference/receipt.json",
+   "sha256": "5ef1d51d176cd5c3f960080f3ca1ce7c74b74a76a440937ca318d69d20dea1d1"
+  },
+  "401810876": {
+   "game": "401810876",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810876/reference/receipt.json",
+   "sha256": "0518f3f3f683d719fe50837c9ce51673344f0f25bfe8565d413850e1eab5438f"
+  },
+  "401810881": {
+   "game": "401810881",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810881/reference/receipt.json",
+   "sha256": "037dfdf64d5ea1b8616a549eeb0be4f491d67326d55f8317523db1c5a11bc134"
+  },
+  "401810889": {
+   "game": "401810889",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810889/reference/receipt.json",
+   "sha256": "518277cdb4fee38f5b38cdeaebdf1e6556ed66319810c55ae18c73da1377b047"
+  },
+  "401810894": {
+   "game": "401810894",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810894/reference/receipt.json",
+   "sha256": "879f7d1cfd1ef7d2c10778ef9c847ad597604af151f57d67303646e9f4376f76"
+  },
+  "401810896": {
+   "game": "401810896",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810896/reference/receipt.json",
+   "sha256": "de0800b690047c0f8086af158dba35bf0d9b3d69eaa4fc491ce08a8dbab6164e"
+  },
+  "401810903": {
+   "game": "401810903",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810903/reference/receipt.json",
+   "sha256": "5a7747488d1cebcfb99762503538c53143a473e247c45b04b245cbcc37dce278"
+  },
+  "401810914": {
+   "game": "401810914",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810914/reference/receipt.json",
+   "sha256": "6cb29c80fac37c31d4ccdccf618ecc9b34e913d9bec8296925268db941c4b857"
+  },
+  "401810918": {
+   "game": "401810918",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810918/reference/receipt.json",
+   "sha256": "c1d00e354aee6e4f1770daa73051c8d92b1c4d6c0c8c71232ecb3cd95ecb2d9b"
+  },
+  "401810920": {
+   "game": "401810920",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810920/reference/receipt.json",
+   "sha256": "4a6421224679a79bc0c3f364773d50088e617a5b5ec005e325a619debeb68233"
+  },
+  "401810924": {
+   "game": "401810924",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810924/reference/receipt.json",
+   "sha256": "988a5e849dc48077a28b092ee43affe2d5b940b37056f4b9e3a4de934600254e"
+  },
+  "401810927": {
+   "game": "401810927",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810927/reference/receipt.json",
+   "sha256": "96692e8b9712f831da7377e4f010b1bb74e8b818a7162972162fd299befa2939"
+  },
+  "401810930": {
+   "game": "401810930",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810930/reference/receipt.json",
+   "sha256": "63b142fe6788a69635d607726e30e63f32f726485bb30a75bbe97c3283ab156f"
+  },
+  "401810931": {
+   "game": "401810931",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810931/reference/receipt.json",
+   "sha256": "463ff4d303a2471362e167b88ee4aba862230261d23086ee777c72b5b46dbbf7"
+  },
+  "401810936": {
+   "game": "401810936",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810936/reference/receipt.json",
+   "sha256": "bef41b41f0a66971076924b24d616644673b52cd224d578bc68c601d021da606"
+  },
+  "401810937": {
+   "game": "401810937",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810937/reference/receipt.json",
+   "sha256": "8d19b20ab9e5c734a86f289e54774114469114b472647f6871740dc41bdbb5d7"
+  },
+  "401810943": {
+   "game": "401810943",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810943/reference/receipt.json",
+   "sha256": "58e334aef7ba1bcef84253681a6c201bd4331d260320c23b58bb37de9d4eca76"
+  },
+  "401810945": {
+   "game": "401810945",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810945/reference/receipt.json",
+   "sha256": "98eb6fce36329d00665d90653d6f7497f3c90fbb74dabb20a8999c3cb9006d4e"
+  },
+  "401810946": {
+   "game": "401810946",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810946/reference/receipt.json",
+   "sha256": "dfa6a1967ebc0cb8806d632dff11aa9f510e25315907bb49088f758417a8eeb9"
+  },
+  "401810950": {
+   "game": "401810950",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810950/reference/receipt.json",
+   "sha256": "4c613e309e59e3a4fb2b7f505e08c279d096a706cd5b17ac78606c8e9808eefb"
+  },
+  "401810953": {
+   "game": "401810953",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810953/reference/receipt.json",
+   "sha256": "8d910c2a35b3ef339a1070c97dd8cc9c5cf60f59d79ee3cf2ec4a93242e3d750"
+  },
+  "401810957": {
+   "game": "401810957",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810957/reference/receipt.json",
+   "sha256": "e7619aa37f15f6aac75f0d3f7266585b28814f34668a82ce0ea16165e801bc95"
+  },
+  "401810972": {
+   "game": "401810972",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810972/reference/receipt.json",
+   "sha256": "441e20e33aac21a0e0b79e1e0182ffc690748977a806a81f35f21eeeeadcb230"
+  },
+  "401810981": {
+   "game": "401810981",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810981/reference/receipt.json",
+   "sha256": "403afa1f39afc328555aaa98de3779703c9c8d1dd7e24488044ca262c9e51e9b"
+  },
+  "401810988": {
+   "game": "401810988",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810988/reference/receipt.json",
+   "sha256": "9ef21dd7ee0e2df95caeba2ee4ed513f4512b2c6b8f3caa4bd54dcf339ef0980"
+  },
+  "401810990": {
+   "game": "401810990",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810990/reference/receipt.json",
+   "sha256": "bd9e10a5ce3f93b4691b695deba3ab7727cfcfdb5cd3b35b9e9fbb36c89e6a8d"
+  },
+  "401810997": {
+   "game": "401810997",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810997/reference/receipt.json",
+   "sha256": "d2be96e3319a47e53be65fdfd95bb0037e89dc692cb5c09102fb983130ec94d3"
+  },
+  "401811003": {
+   "game": "401811003",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811003/reference/receipt.json",
+   "sha256": "a0f25e212bd1bcca3e3fa7e3816ab14eb4fb8411ca40e2c9f2c4354d0d79af5a"
+  },
+  "401811011": {
+   "game": "401811011",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811011/reference/receipt.json",
+   "sha256": "980a4d62061c9cd45f8eb80d0b28a003d76ac38b7035591bcf3e932007325507"
+  },
+  "401811012": {
+   "game": "401811012",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811012/reference/receipt.json",
+   "sha256": "f348fe0b9feffb37029ded1c99d44e8b699089b46012348e0981f00eaf004877"
+  },
+  "401811016": {
+   "game": "401811016",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811016/reference/receipt.json",
+   "sha256": "3c5d291fc6389d48c1cb470b90ba296eb39d16ca6dbeaed6e70c6825835e2bb2"
+  },
+  "401811021": {
+   "game": "401811021",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811021/reference/receipt.json",
+   "sha256": "7b91e635c04a71c7b154c3740133f722987b4371b303c72887ff585a076c6997"
+  },
+  "401811031": {
+   "game": "401811031",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811031/reference/receipt.json",
+   "sha256": "d8d41ebb45c023453fcbafe582a7f5f1d05f8eb907cda0c9ba3153f991f860fe"
+  },
+  "401811034": {
+   "game": "401811034",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811034/reference/receipt.json",
+   "sha256": "58885bdaad93ff67ecdc991123664df9d6debf998ee75a21afe30ae6cbfa66e6"
+  },
+  "401811038": {
+   "game": "401811038",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811038/reference/receipt.json",
+   "sha256": "30691ea327a5d262fa13673d8b76b13ae1fe3337318b8be40431c25bfe4535f5"
+  },
+  "401811040": {
+   "game": "401811040",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811040/reference/receipt.json",
+   "sha256": "0fb2f3d2fb58f17b18330e415684c3aa29d762729759d5e628d6ceed83fad7e1"
+  },
+  "401811042": {
+   "game": "401811042",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811042/reference/receipt.json",
+   "sha256": "c49f1be42dc8ee3d97eeb43a5f9f208e9e21734ee845ce01fce41d93d11b82a0"
+  },
+  "401811043": {
+   "game": "401811043",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811043/reference/receipt.json",
+   "sha256": "531166f1ab2fced2b8e4d0ed7f234eb04f4ee3ec462915ee5768021166327d45"
+  },
+  "401811048": {
+   "game": "401811048",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811048/reference/receipt.json",
+   "sha256": "f9a50938339ad7a2eace5f27a649b4e484369b7f8fe3b00f3d680094849d2387"
+  },
+  "401811049": {
+   "game": "401811049",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811049/reference/receipt.json",
+   "sha256": "4c52aa8b7f4170ef8f8377858a83fa09f9ed990747ede9ad68d6f76007256a9d"
+  },
+  "401811050": {
+   "game": "401811050",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811050/reference/receipt.json",
+   "sha256": "9dcd89e439ba4fa2f953922ec7ee86d6a4a157fe8de89415d9fca5a2f8bfae65"
+  },
+  "401811051": {
+   "game": "401811051",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811051/reference/receipt.json",
+   "sha256": "7e6f3dfeae2b2823398eabd1781960723891db247ca747f58b43a281636ba033"
+  },
+  "401811055": {
+   "game": "401811055",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811055/reference/receipt.json",
+   "sha256": "0ba955728ffee2769ad34948bfb1ed50c0b240eb6e9ea970f7a77100b6480c73"
+  },
+  "401857824": {
+   "game": "401857824",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401857824/reference/receipt.json",
+   "sha256": "28014fed5d87d7255d66f0b7b85ce357ea6b07a385ba8d6c0cc9ada5e1703f4a"
+  },
+  "401858693": {
+   "game": "401858693",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401858693/reference/receipt.json",
+   "sha256": "2750c150f828dad268c95e31555a90194874d560137232b1942b2202a8144561"
+  },
+  "401810566": {
+   "game": "401810566",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810566/reference/receipt.json",
+   "sha256": "f5cde2161bba1dea9fa5711e0084f253078fbb247e3c02ac1dd8ca49faa1697b"
+  },
+  "401810910": {
+   "game": "401810910",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810910/reference/receipt.json",
+   "sha256": "4a150e693a7a7df067e0cf497b1ba1d670e1e1834ea5b5b7a6ccb6572c31feb1"
+  },
+  "401810722": {
+   "game": "401810722",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810722/reference/receipt.json",
+   "sha256": "3d87d3d4418e9b77279ee8af11651e6e73fe0ea4fd999372a7cf4d65fec2e323"
+  },
+  "401810851": {
+   "game": "401810851",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810851/reference/receipt.json",
+   "sha256": "be730f6c745b747a35631fc3cecdb3fd8cdc1a6b38e900222cfcbe5000aa3359"
+  },
+  "401810346": {
+   "game": "401810346",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810346/reference/receipt.json",
+   "sha256": "805ea75cd986216d85335fc962516cc55bce64b7c8cf281d0b6f6c0e4e5f7809"
+  },
+  "401810368": {
+   "game": "401810368",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810368/reference/receipt.json",
+   "sha256": "845374872f75d7965911032715a6fc602fbb92d18d465bf6195237a70ba0c71f"
+  },
+  "401810597": {
+   "game": "401810597",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810597/reference/receipt.json",
+   "sha256": "d1cd8cf90d6a6db682f0180c50ab7c68113732f9e6d1bb203cde9e14fa1f3d25"
+  },
+  "401811019": {
+   "game": "401811019",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811019/reference/receipt.json",
+   "sha256": "44e4eff7d08f53516cf119e44dfcf575618dd42946efd7c6e11cb1c50e1342c2"
+  },
+  "401810589": {
+   "game": "401810589",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810589/reference/receipt.json",
+   "sha256": "6844fc31c7fb9608b3f01e0d63534c3096ca8db544f85c37a7f99299b6393f7c"
+  },
+  "401810984": {
+   "game": "401810984",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810984/reference/receipt.json",
+   "sha256": "e50022f80dd5d0d4be4cc6d9268f6b62b2888ab96b0f792739b7d57dd7b2010d"
+  },
+  "401810544": {
+   "game": "401810544",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810544/reference/receipt.json",
+   "sha256": "0b0e521b51d891934b086d96a6a5120fa4a0ff4092b8b138445932b1be6cccbb"
+  },
+  "401810890": {
+   "game": "401810890",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810890/reference/receipt.json",
+   "sha256": "6adb7c324cd3285f080a24e290b68b7f2885ec4bfda5816eb3cdeaef335a7635"
+  },
+  "401810792": {
+   "game": "401810792",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810792/reference/receipt.json",
+   "sha256": "c2a8aa60f44b17d225e402fb92f92cf064d1ceef9bc9357d82f6e022d7034ffa"
+  },
+  "401810996": {
+   "game": "401810996",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810996/reference/receipt.json",
+   "sha256": "dfc5aa258694d45705c458c54c7e824b63867af227dc2530629e49c54f5b88ac"
+  }
+ },
+ "wiring": [
+  "401809250",
+  "401810330",
+  "401810342"
+ ],
+ "worlds": 1000,
+ "seed_key": "v1.2d_F4",
+ "confirmation_outcomes_opened": false
+}

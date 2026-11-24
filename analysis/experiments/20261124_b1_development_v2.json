@@ -1,0 +1,2626 @@
+{
+ "kind": "B1 frozen end-of-period long-shot screen; no promotion",
+ "phase": "development",
+ "game_ids": [
+  "401809250",
+  "401810330",
+  "401810342",
+  "401810347",
+  "401810349",
+  "401810356",
+  "401810360",
+  "401810361",
+  "401810364",
+  "401810366",
+  "401810378",
+  "401810380",
+  "401810383",
+  "401810386",
+  "401810391",
+  "401810394",
+  "401810396",
+  "401810399",
+  "401810409",
+  "401810410",
+  "401810411",
+  "401810413",
+  "401810423",
+  "401810431",
+  "401810435",
+  "401810438",
+  "401810439",
+  "401810443",
+  "401810445",
+  "401810448",
+  "401810449",
+  "401810452",
+  "401810453",
+  "401810454",
+  "401810463",
+  "401810466",
+  "401810474",
+  "401810479",
+  "401810481",
+  "401810482",
+  "401810483",
+  "401810487",
+  "401810492",
+  "401810493",
+  "401810505",
+  "401810508",
+  "401810509",
+  "401810512",
+  "401810533",
+  "401810538",
+  "401810539",
+  "401810543",
+  "401810546",
+  "401810548",
+  "401810553",
+  "401810554",
+  "401810559",
+  "401810564",
+  "401810569",
+  "401810573",
+  "401810580",
+  "401810582",
+  "401810585",
+  "401810587",
+  "401810595",
+  "401810596",
+  "401810601",
+  "401810605",
+  "401810606",
+  "401810614",
+  "401810616",
+  "401810618",
+  "401810620",
+  "401810624",
+  "401810626",
+  "401810628",
+  "401810630",
+  "401810636",
+  "401810639",
+  "401810641",
+  "401810646",
+  "401810657",
+  "401810661",
+  "401810662",
+  "401810663",
+  "401810665",
+  "401810666",
+  "401810668",
+  "401810671",
+  "401810673",
+  "401810674",
+  "401810692",
+  "401810695",
+  "401810697",
+  "401810699",
+  "401810701",
+  "401810703",
+  "401810706",
+  "401810710",
+  "401810716",
+  "401810717",
+  "401810719",
+  "401810720",
+  "401810721",
+  "401810723",
+  "401810726",
+  "401810728",
+  "401810740",
+  "401810745",
+  "401810746",
+  "401810750",
+  "401810752",
+  "401810756",
+  "401810757",
+  "401810763",
+  "401810766",
+  "401810767",
+  "401810769",
+  "401810771",
+  "401810776",
+  "401810778",
+  "401810783",
+  "401810788",
+  "401810796",
+  "401810800",
+  "401810802",
+  "401810803",
+  "401810809",
+  "401810811",
+  "401810827",
+  "401810830",
+  "401810831",
+  "401810835",
+  "401810836",
+  "401810838",
+  "401810843",
+  "401810845",
+  "401810847",
+  "401810859",
+  "401810868",
+  "401810874",
+  "401810875",
+  "401810876",
+  "401810881",
+  "401810889",
+  "401810894",
+  "401810896",
+  "401810903",
+  "401810914",
+  "401810918",
+  "401810920",
+  "401810924",
+  "401810927",
+  "401810930",
+  "401810931",
+  "401810936",
+  "401810937",
+  "401810943",
+  "401810945",
+  "401810946",
+  "401810950",
+  "401810953",
+  "401810957",
+  "401810972",
+  "401810981",
+  "401810988",
+  "401810990",
+  "401810997",
+  "401811003",
+  "401811011",
+  "401811012",
+  "401811016",
+  "401811021",
+  "401811031",
+  "401811034",
+  "401811038",
+  "401811040",
+  "401811042",
+  "401811043",
+  "401811048",
+  "401811049",
+  "401811050",
+  "401811051",
+  "401811055",
+  "401857824",
+  "401858693",
+  "401810566",
+  "401810910",
+  "401810722",
+  "401810851",
+  "401810346",
+  "401810368",
+  "401810597",
+  "401811019",
+  "401810589",
+  "401810984",
+  "401810544",
+  "401810890",
+  "401810792",
+  "401810996"
+ ],
+ "worlds": 1000,
+ "manifest_sha256": "64cb8ed7cf7a8a4f19d21dfd789d7d4b7a6d6e59b7a5025b02150f87695750b2",
+ "reference_raw_parity": [],
+ "receipts": [
+  {
+   "game": "401809250",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_wiring_v1/401809250/reference/receipt.json",
+   "sha256": "1fd73d3f3d31ea00883f5b3d8d5751493d66eaa1e0db20e569bcd3b7ecda762e"
+  },
+  {
+   "game": "401809250",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/wiring/401809250/candidate/receipt.json",
+   "sha256": "307324b1de273d4bec8e92c3b6fa7d6e5dc648a7a9c822733b2d73d43e52995e"
+  },
+  {
+   "game": "401810330",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_wiring_v1/401810330/reference/receipt.json",
+   "sha256": "5235455ebef1400d1fbe8f1e8b271bd821b09f78957da0dc0b0aff323667b25a"
+  },
+  {
+   "game": "401810330",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/wiring/401810330/candidate/receipt.json",
+   "sha256": "d7611116cff9a587c618d747c51cd1e1c1b08b22a1abdcff11218a961e031f53"
+  },
+  {
+   "game": "401810342",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_wiring_v1/401810342/reference/receipt.json",
+   "sha256": "8601ae26ae61d8e6b7d899565642600defeffbc276f1ee7d4bc6c43a59f6f233"
+  },
+  {
+   "game": "401810342",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/wiring/401810342/candidate/receipt.json",
+   "sha256": "4a87831f227fea9fe3b9d414d1963004c35e93e9a4c900bc5a39f6b840b8b9c8"
+  },
+  {
+   "game": "401810347",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810347/reference/receipt.json",
+   "sha256": "5d9ee49ab13d6b435e2aa2956afd6a566ad225e9d7ff6874b99e15fa8e7a7f7d"
+  },
+  {
+   "game": "401810347",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810347/candidate/receipt.json",
+   "sha256": "05b31b3b0c6eec705a9fe69cdfa3dfa5bb8decb8a018ed3fbea1cc2abe2531d7"
+  },
+  {
+   "game": "401810349",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810349/reference/receipt.json",
+   "sha256": "34521fa9771324876ce78f5929960beaa8a885898ff54edf19181522375cff1a"
+  },
+  {
+   "game": "401810349",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810349/candidate/receipt.json",
+   "sha256": "0cacb03139e94356ab6cadd34c391db0a681fdfc303794ef63b4c5606343d15b"
+  },
+  {
+   "game": "401810356",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810356/reference/receipt.json",
+   "sha256": "436cdab5736816f8e8b6dfb00f00b8f9275ddc283a467ab71cfdb47ff281af5c"
+  },
+  {
+   "game": "401810356",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810356/candidate/receipt.json",
+   "sha256": "e031bb5741d90666ea72a9bf343e33961d18bbd9aff23a3e6b60244d95c95694"
+  },
+  {
+   "game": "401810360",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810360/reference/receipt.json",
+   "sha256": "670a64ab55670c6145ffb8706e8efea25ddd8c3b0e45547bba47820edec86b2c"
+  },
+  {
+   "game": "401810360",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810360/candidate/receipt.json",
+   "sha256": "dbf3655e14f1ea0c55ca5327e56752fba1eb92c8a0b8f1c8a07460b9f248408b"
+  },
+  {
+   "game": "401810361",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810361/reference/receipt.json",
+   "sha256": "59c6fa39a2e70cba9fb9105f46a1147f0736306209002a5f7dfe8c07dfdc2f60"
+  },
+  {
+   "game": "401810361",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810361/candidate/receipt.json",
+   "sha256": "f8ea0a9009b7abe80e4b578afaa3f6e2588cfd2d2e24b162fe475540b24352cb"
+  },
+  {
+   "game": "401810364",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810364/reference/receipt.json",
+   "sha256": "84229b4c94cafc90d722a89e4c35331d87d3e5f0eac8c0603ad675d283d32bba"
+  },
+  {
+   "game": "401810364",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810364/candidate/receipt.json",
+   "sha256": "c06078e3b10a0c8e8fa863ea2d324dda96fa60d67fbf9ecfb74797bcd3a60051"
+  },
+  {
+   "game": "401810366",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810366/reference/receipt.json",
+   "sha256": "43a6f02db7006347ed16292dfdb8b812a1212fe98c5a94bae50677e782bae424"
+  },
+  {
+   "game": "401810366",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810366/candidate/receipt.json",
+   "sha256": "8d12d1bebe2bd9129439bab8b41f3c288cb20cd71a04d2c16775a9dcb72f4d5d"
+  },
+  {
+   "game": "401810378",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810378/reference/receipt.json",
+   "sha256": "c9474e82b0ed187a28ecbaa641205bef98e5bec8307d0c974145cc475b083366"
+  },
+  {
+   "game": "401810378",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810378/candidate/receipt.json",
+   "sha256": "367e5b362c43b61661491819b67dfa3d32a3a808845b367115476979d5bd4623"
+  },
+  {
+   "game": "401810380",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810380/reference/receipt.json",
+   "sha256": "e0f8f52c229a5234e21dc7f73500cffb4de5b8720726e5fd719e146c4e8fea0e"
+  },
+  {
+   "game": "401810380",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810380/candidate/receipt.json",
+   "sha256": "e3903618f916001cd2509fe962bb7baae4d1c54a766eac8992e91f17137fd3cb"
+  },
+  {
+   "game": "401810383",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810383/reference/receipt.json",
+   "sha256": "5bdd09003ae3661e516b679f8a76ad40d5daea66eef9e37e75ba5a4648ec51d0"
+  },
+  {
+   "game": "401810383",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810383/candidate/receipt.json",
+   "sha256": "49772cc3c7242d21ba5ecb28e0c05208a32bed10a72cbcdab23d3a50f71d5fbc"
+  },
+  {
+   "game": "401810386",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810386/reference/receipt.json",
+   "sha256": "cd7319bf9f0b276bc469cadc1a9b7e4de023c3a2b358a722f5529828cc00b187"
+  },
+  {
+   "game": "401810386",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810386/candidate/receipt.json",
+   "sha256": "042546df3835b941da708aab75af779ab83518b26c5876ec10af06ae3b73efca"
+  },
+  {
+   "game": "401810391",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810391/reference/receipt.json",
+   "sha256": "df924056ee7eadba1bfd793373e2e508d33ae9caecc75873386bb8c310c7ddd6"
+  },
+  {
+   "game": "401810391",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810391/candidate/receipt.json",
+   "sha256": "43f2265c1bb46a08f062ae4332525e79e0ed147f18ad63982bccb9683d4e99e5"
+  },
+  {
+   "game": "401810394",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810394/reference/receipt.json",
+   "sha256": "aeecd7db5e22bad7e5726ec1dd47ad18ea44b7bbe65988411c7a2b288c62ac47"
+  },
+  {
+   "game": "401810394",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810394/candidate/receipt.json",
+   "sha256": "f485508e6291ce286b482dbf85d3d881631628af5b93e34b78ad919eea6592ae"
+  },
+  {
+   "game": "401810396",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810396/reference/receipt.json",
+   "sha256": "bdc97d73e565cac72fda6b2347d154d83ade65d68f9128bdc92a691ecfe73a48"
+  },
+  {
+   "game": "401810396",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810396/candidate/receipt.json",
+   "sha256": "fc37d95c3ebfd367abb7729f0cebf7c2b44f1693d2b01db30a5fbd07680b5220"
+  },
+  {
+   "game": "401810399",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810399/reference/receipt.json",
+   "sha256": "a2b2dbf2c51438d20255c0ab62f8bfe1c176683bb3a2ab9cfb6596da545de6e6"
+  },
+  {
+   "game": "401810399",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810399/candidate/receipt.json",
+   "sha256": "a83930cbfdc1cafb51ac133a5cf9763b8ae5291dca6edb2b58bf16d75ddf0036"
+  },
+  {
+   "game": "401810409",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810409/reference/receipt.json",
+   "sha256": "3bd13fcb8a829c4ae06a54e245b60b25a215392a71ef3b591953bc3a4a1b4078"
+  },
+  {
+   "game": "401810409",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810409/candidate/receipt.json",
+   "sha256": "3071adf7024df048f6416f5a3ef89c77c9d0ac415e9dc2d9c1121ee43196a557"
+  },
+  {
+   "game": "401810410",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810410/reference/receipt.json",
+   "sha256": "f8469abe2a5183f4e46cf269d3b2fba398c472f768d0d8b61ec10e304a0143a0"
+  },
+  {
+   "game": "401810410",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810410/candidate/receipt.json",
+   "sha256": "a652d36debcc87e22e39e1a9c42e277fd08b8b3860f04cb80d53af6091fa6638"
+  },
+  {
+   "game": "401810411",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810411/reference/receipt.json",
+   "sha256": "9a2210037fdfe8b8420a46f0467a16e54a6c518d5a6bdc80063d1ab5c1963e45"
+  },
+  {
+   "game": "401810411",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810411/candidate/receipt.json",
+   "sha256": "56491e76e1db36bb678be7b0143c58fb72611c03dde32d9e7cc097a6554f46d4"
+  },
+  {
+   "game": "401810413",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810413/reference/receipt.json",
+   "sha256": "be49bce429c6135107ae2ee854ee1d33635372bcba61b6c18f02c26a07b48266"
+  },
+  {
+   "game": "401810413",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810413/candidate/receipt.json",
+   "sha256": "7fb8731a9db800b1faeaf5d3f05ba2433d7fffd21ad0de0cd01058c2ff34239e"
+  },
+  {
+   "game": "401810423",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810423/reference/receipt.json",
+   "sha256": "d3f03125b985c7f0407ba996f48873d9935dd64528e9e3f14b180016971737d3"
+  },
+  {
+   "game": "401810423",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810423/candidate/receipt.json",
+   "sha256": "c5f269c12674fe1c657588fdab826414709c93e1a667bce9a841d4c35c2da1b2"
+  },
+  {
+   "game": "401810431",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810431/reference/receipt.json",
+   "sha256": "9ad9b56074d4f8dfdddb44938aa8db00bfa65977cee59ee182de4485129b6adc"
+  },
+  {
+   "game": "401810431",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810431/candidate/receipt.json",
+   "sha256": "cfa52fa4d1e83d18d36c468c2c00724d8fe9c69382b0c03c391bf9a55f9bf62b"
+  },
+  {
+   "game": "401810435",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810435/reference/receipt.json",
+   "sha256": "b2866b635e5aa2961892feb6411407c1fd81a2f81b341479d95c744028f1a9de"
+  },
+  {
+   "game": "401810435",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810435/candidate/receipt.json",
+   "sha256": "f552d6445eafeb738f2e0266c3d152d83cf95946163ea2345b236e79b45fe23c"
+  },
+  {
+   "game": "401810438",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810438/reference/receipt.json",
+   "sha256": "463686646ac8a5994d775150a79799509f82f4f01719c10229dcb67c112f34bf"
+  },
+  {
+   "game": "401810438",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810438/candidate/receipt.json",
+   "sha256": "be9e431567df602dfdb4b1344e8f14ab76483a34cff0c901480390d5c67f57ce"
+  },
+  {
+   "game": "401810439",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810439/reference/receipt.json",
+   "sha256": "49838307f94c7422f0cb9a34b5be208e2820934a8cb82194e9e03b9e09d7eef2"
+  },
+  {
+   "game": "401810439",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810439/candidate/receipt.json",
+   "sha256": "fa3c39281f783cda6e65639ab54ebb5bd61fab1422f22c4d178fc013c9c85635"
+  },
+  {
+   "game": "401810443",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810443/reference/receipt.json",
+   "sha256": "0e046211aaf1aad7eeea25adad65ef30684f1ba089750dfb5c82b79911da62d5"
+  },
+  {
+   "game": "401810443",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810443/candidate/receipt.json",
+   "sha256": "f36fb951d92735e6e6c9a57c4bc290aef3dfcfe8670c28280e186b2980e62c33"
+  },
+  {
+   "game": "401810445",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810445/reference/receipt.json",
+   "sha256": "6a715eaadb1eb16451af1dee8c266e33db564762d5d17011f66ef64447fc592b"
+  },
+  {
+   "game": "401810445",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810445/candidate/receipt.json",
+   "sha256": "50733295e5d21f09e1ff859beb597efa648c72ed53156f42a7366e9938c4ce0b"
+  },
+  {
+   "game": "401810448",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810448/reference/receipt.json",
+   "sha256": "b9d03196f5b018aaa574131c79596ac7744fad182f3f27d9920c144b046cea3f"
+  },
+  {
+   "game": "401810448",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810448/candidate/receipt.json",
+   "sha256": "e1f3c493f19253a13154ae247e045c7e74791e8faecf16cc0f1c4cf3d9f9f7f9"
+  },
+  {
+   "game": "401810449",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810449/reference/receipt.json",
+   "sha256": "e7b49d0561c4c3049e6bc167e3c43e04c8d91c34e8da86385b6c00959c95150d"
+  },
+  {
+   "game": "401810449",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810449/candidate/receipt.json",
+   "sha256": "9f444c2abe11dbc00aa57982055f880975ff013e1eecc526e7e8765e60208425"
+  },
+  {
+   "game": "401810452",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810452/reference/receipt.json",
+   "sha256": "2e464dea6f89be0d0d1f8861a94c9d089cf7e10bb2377ecdf63434824b7a9294"
+  },
+  {
+   "game": "401810452",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810452/candidate/receipt.json",
+   "sha256": "9ddef3588294d08df6d55a4b8c8e881912e0ea059d18d080ee904cccb874be31"
+  },
+  {
+   "game": "401810453",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810453/reference/receipt.json",
+   "sha256": "bd56a4a3851bafaf9c80643e2d7d9365da1c5e213469b8cda38bbbc30f6c8c77"
+  },
+  {
+   "game": "401810453",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810453/candidate/receipt.json",
+   "sha256": "bf22719607156fa91b14c70182fc5002bcdcb06a9efdb2df7e7fc4ddb1be17ae"
+  },
+  {
+   "game": "401810454",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810454/reference/receipt.json",
+   "sha256": "f9d7ef1393413010640a9bd23067c4e6f6425f9fcbae8c3622e7d41e63b6db08"
+  },
+  {
+   "game": "401810454",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810454/candidate/receipt.json",
+   "sha256": "ea1978ad6b2f788a942ce5809120447eca69b8288474bff22e34eb023d23bc62"
+  },
+  {
+   "game": "401810463",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810463/reference/receipt.json",
+   "sha256": "b38a65aac001c22c848afdd11e74cfd3508f2b9e4bc4b8eba259f17077043271"
+  },
+  {
+   "game": "401810463",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810463/candidate/receipt.json",
+   "sha256": "01eda11880e3da4c2165909acbc51e2414786fd127bd5bc94d5887ea05d75f4b"
+  },
+  {
+   "game": "401810466",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810466/reference/receipt.json",
+   "sha256": "76cb137a71da57f3f51acad9102bc73ccd2a50600aaa60c112d1fb0dcb883169"
+  },
+  {
+   "game": "401810466",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810466/candidate/receipt.json",
+   "sha256": "02fbbc0f6c11337488da20d97facbfb0626248b31306bdddd4ec3c3f65c5d15b"
+  },
+  {
+   "game": "401810474",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810474/reference/receipt.json",
+   "sha256": "b7a2f2d4a9fbc1305353c6fd4bd91de3a40862bcbaa472bf12917029852c37b3"
+  },
+  {
+   "game": "401810474",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810474/candidate/receipt.json",
+   "sha256": "c4476e018bfbca259a1289db8ab36a901e32d7eb3fd5d55b20e4252138015216"
+  },
+  {
+   "game": "401810479",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810479/reference/receipt.json",
+   "sha256": "0d51c427cc66ede9575df024aa13ab7cc258432c48eaa0e0ac07c76c9b4f88cd"
+  },
+  {
+   "game": "401810479",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810479/candidate/receipt.json",
+   "sha256": "cfe5f7e4fb6298dcc4a8da41e77b6812205d5f8e38b2adc314fa7ce1aeea97da"
+  },
+  {
+   "game": "401810481",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810481/reference/receipt.json",
+   "sha256": "d2a2b252a7a8d79100d4f53e54f57ba195cbe80fdb25a8795135c8f0d8708866"
+  },
+  {
+   "game": "401810481",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810481/candidate/receipt.json",
+   "sha256": "9a0378634520a745eb89d90fc1a9809c4c1a251864d4b79876018fef7946727c"
+  },
+  {
+   "game": "401810482",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810482/reference/receipt.json",
+   "sha256": "b5a39eb00884894c19288920ca110aecfc850524db9f1e6bde5f15e27846cd17"
+  },
+  {
+   "game": "401810482",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810482/candidate/receipt.json",
+   "sha256": "59beb2f8e01f24b57926111c7eef8a53200b23a6516f4732896766a5b8ad7523"
+  },
+  {
+   "game": "401810483",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810483/reference/receipt.json",
+   "sha256": "71d45bf6a0de910176fdc4ddf78816ce6758c25e0550084e72ff8eb7b443ae70"
+  },
+  {
+   "game": "401810483",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810483/candidate/receipt.json",
+   "sha256": "779993609938e9c243f7dc35e956f1ce33c270b49281bd054ca8ed9edb589b27"
+  },
+  {
+   "game": "401810487",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810487/reference/receipt.json",
+   "sha256": "19b71b4dc4361ba4e0562aed7914c43000287a74c89598d4e87b86a06e85a19d"
+  },
+  {
+   "game": "401810487",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810487/candidate/receipt.json",
+   "sha256": "b8ab01f9358ff5a3d324932a13438308f18ab26df504dc5bd9994d500c593367"
+  },
+  {
+   "game": "401810492",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810492/reference/receipt.json",
+   "sha256": "4e11d45860f68199c31fe29a7aca9e13f33e187d7b702a49fd7a8934643cf90d"
+  },
+  {
+   "game": "401810492",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810492/candidate/receipt.json",
+   "sha256": "1c3c7c1cea274649bbcc671b2878d670834d234d58848b1c41222cac8fb30102"
+  },
+  {
+   "game": "401810493",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810493/reference/receipt.json",
+   "sha256": "03f8cb878bb48a3f1630ad3a6d8fb363d93f92464aa0d1d32a5b759112e69ae7"
+  },
+  {
+   "game": "401810493",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810493/candidate/receipt.json",
+   "sha256": "85bfa5dac4cb818f9a726c44f5b4c0503c873f0f61d8e48e5a4b826b3297f986"
+  },
+  {
+   "game": "401810505",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810505/reference/receipt.json",
+   "sha256": "be7bb2b3a7448e5b5f15fe61531e75ee2f89583e01f22c50653e724810256328"
+  },
+  {
+   "game": "401810505",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810505/candidate/receipt.json",
+   "sha256": "4273e5fde79145a0a5583290ba7c0938bfa31c34a98d5dd287ddf4893563356e"
+  },
+  {
+   "game": "401810508",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810508/reference/receipt.json",
+   "sha256": "c583d17b40162314ab4a37b392242154aed34aa704f797c16841329b60b86a23"
+  },
+  {
+   "game": "401810508",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810508/candidate/receipt.json",
+   "sha256": "da74923161ab5a31b429a88035fab748627081810c39be38a27a717ba39df73d"
+  },
+  {
+   "game": "401810509",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810509/reference/receipt.json",
+   "sha256": "95d52cd090c0c1054bfeda577c793cf55a712cad250fde28a1dd34e575ca5819"
+  },
+  {
+   "game": "401810509",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810509/candidate/receipt.json",
+   "sha256": "e3e88b4ce02f23c200c085e3aed7155e79065d862aed9d416ed333852f0620d0"
+  },
+  {
+   "game": "401810512",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810512/reference/receipt.json",
+   "sha256": "d87b99c06363af94b8c51dfdf908e8211f0203bd5e5e37a02550fc2ebc904b04"
+  },
+  {
+   "game": "401810512",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810512/candidate/receipt.json",
+   "sha256": "9fef4ab4d4e000eb234245ec19fa7c2d840aafc7e1e63ee0a92f9d4a1ae87207"
+  },
+  {
+   "game": "401810533",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810533/reference/receipt.json",
+   "sha256": "1e7bf8fad158b0bdc294a22ba7b0a04445fb92ba02f00683f508baef52b978b8"
+  },
+  {
+   "game": "401810533",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810533/candidate/receipt.json",
+   "sha256": "12bf30ffe72d67769f3a741a2682cde72171062f5056be715e76a134e9796f5c"
+  },
+  {
+   "game": "401810538",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810538/reference/receipt.json",
+   "sha256": "4a8c6cf360abe517206b94718f747c82a1572bb07c1a118d36b6c0cb8af7e3de"
+  },
+  {
+   "game": "401810538",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810538/candidate/receipt.json",
+   "sha256": "806d71d6e42ad8831fd445f6c8d191394dcd6a15ba79fe84db9e9c1f4b859c10"
+  },
+  {
+   "game": "401810539",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810539/reference/receipt.json",
+   "sha256": "da35ef8aa692f29b764011660d25987ed6c10ebc3f0f31b52e602188ce401d84"
+  },
+  {
+   "game": "401810539",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810539/candidate/receipt.json",
+   "sha256": "fa9699c677749f72136f8228b66eea46c77548a2d4cbadebfe3de520cc81cf40"
+  },
+  {
+   "game": "401810543",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810543/reference/receipt.json",
+   "sha256": "b9f13ef0a1f39d255e61f660710dc9a8f434a558974444b6e40537b5d5597d13"
+  },
+  {
+   "game": "401810543",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810543/candidate/receipt.json",
+   "sha256": "f121e5307e27796ce413b130e8bdf12f348b241c688a3a650848506684e6672e"
+  },
+  {
+   "game": "401810546",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810546/reference/receipt.json",
+   "sha256": "7d587e44a00ae22353336967702c18c35c363eaffc9ee0a44a3a2ce6ef07c6cd"
+  },
+  {
+   "game": "401810546",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810546/candidate/receipt.json",
+   "sha256": "3007bcce715d53418a55d2f9199862e5c069376aa9df8f0b0951c39b87a2d499"
+  },
+  {
+   "game": "401810548",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810548/reference/receipt.json",
+   "sha256": "6a62d4f1ee1c382e072ea4b51ec98e53580224e2cfd5adff70c88444a140544c"
+  },
+  {
+   "game": "401810548",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810548/candidate/receipt.json",
+   "sha256": "1a6df51fbed3c75daac46ccf8d791353f8c29ddf2b1e211dd26ec53229701a1d"
+  },
+  {
+   "game": "401810553",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810553/reference/receipt.json",
+   "sha256": "e375d747e71f515c98cce2d996f776c7483ff569c060f0b8474a8b2208d6318b"
+  },
+  {
+   "game": "401810553",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810553/candidate/receipt.json",
+   "sha256": "5ec31069a4f6fef288dc9f6f5e8470cd88279317019e8accfc452fdf424ba35a"
+  },
+  {
+   "game": "401810554",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810554/reference/receipt.json",
+   "sha256": "ed8148922f6083e2a0b06f372b087b493b401363d904d3e98bd2c1ac376f0946"
+  },
+  {
+   "game": "401810554",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810554/candidate/receipt.json",
+   "sha256": "8a32f678c7f227728959c959a7eb35f90e01a24805e719027e5228a0d85f1066"
+  },
+  {
+   "game": "401810559",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810559/reference/receipt.json",
+   "sha256": "e1365763cb3f40155e29fe708463e0b5a3acd07f19fd1b5a9f268c4157b6b28c"
+  },
+  {
+   "game": "401810559",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810559/candidate/receipt.json",
+   "sha256": "64a7aec86f103af0f97309fc06c208d8f3e44fd30de0979f699f978f9b6eab23"
+  },
+  {
+   "game": "401810564",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810564/reference/receipt.json",
+   "sha256": "16f83cc86cff56913275cc6ba5390dd6d1d9fcf5ea1383ece4107df12f0dc134"
+  },
+  {
+   "game": "401810564",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810564/candidate/receipt.json",
+   "sha256": "d6cbb5fb81eca17840ada26434116c4fd7416f9884d41dcbeca96984b6fce22e"
+  },
+  {
+   "game": "401810569",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810569/reference/receipt.json",
+   "sha256": "b9c215d05202f258720fabaa145861dfbf26ecd5ee8deadcd78ec522565c7ef2"
+  },
+  {
+   "game": "401810569",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810569/candidate/receipt.json",
+   "sha256": "6c8975721d04f759966a47258e66f8d6a1affb095903ae64627a643d04fcc913"
+  },
+  {
+   "game": "401810573",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810573/reference/receipt.json",
+   "sha256": "484d1c11f90cac344f82c823c3db4422b437534bdf81aeedfeae7126eee88748"
+  },
+  {
+   "game": "401810573",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810573/candidate/receipt.json",
+   "sha256": "2c137df48a5f2e05e881868682ae2b4c30fdd8f02d0f1b7d173f8dc06f5efaf4"
+  },
+  {
+   "game": "401810580",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810580/reference/receipt.json",
+   "sha256": "59be79f4c69b4bf738d50a860b9d776a81e5495adfa16224c7f3c09fdb05a7ab"
+  },
+  {
+   "game": "401810580",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810580/candidate/receipt.json",
+   "sha256": "e19492af0bb04153a39ca1a5102f2e50534b3361e812094c428ae8404be01707"
+  },
+  {
+   "game": "401810582",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810582/reference/receipt.json",
+   "sha256": "9ba90b2859511577d549c01cfc4b7dd4332ca29cab5d0eb8356539711e4c38fb"
+  },
+  {
+   "game": "401810582",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810582/candidate/receipt.json",
+   "sha256": "e794716985aa7e5f00cab2087a0990ae2de5e9b2f866062a262f370ff4c55173"
+  },
+  {
+   "game": "401810585",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810585/reference/receipt.json",
+   "sha256": "29228dc8e04861d28ce1b998efe376396bfeb36af39e4a53601b6ce73a6f394f"
+  },
+  {
+   "game": "401810585",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810585/candidate/receipt.json",
+   "sha256": "29585cdc6717bfe0a0580662e47e707714d351b872706f5c07bd408cc7bfbcf4"
+  },
+  {
+   "game": "401810587",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810587/reference/receipt.json",
+   "sha256": "994a21a455dd8dfba1ea553d98b724c235c0681a2a64ad2de475d1cbcc610c7b"
+  },
+  {
+   "game": "401810587",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810587/candidate/receipt.json",
+   "sha256": "e598bdb25f3943240a01b10ed3df104f7bbf681f53181e9646747d7fd79e4184"
+  },
+  {
+   "game": "401810595",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810595/reference/receipt.json",
+   "sha256": "6181af7043cdb7524e9c5b50668f3a1b5e81eb073d6f8fde2ece60c5821c64f8"
+  },
+  {
+   "game": "401810595",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810595/candidate/receipt.json",
+   "sha256": "edf9b92a36b27d6c24a038dfe0087e6592ccf5b3c9da4077fa871fb527242538"
+  },
+  {
+   "game": "401810596",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810596/reference/receipt.json",
+   "sha256": "91ac72a412374af65bcabe643837407d75757b3f2073a24340644215d30b2949"
+  },
+  {
+   "game": "401810596",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810596/candidate/receipt.json",
+   "sha256": "a72c7fd694a89fee8e363c7367409671f8aff81f044e71ad2356540b93a5a61c"
+  },
+  {
+   "game": "401810601",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810601/reference/receipt.json",
+   "sha256": "8584b16352978d1eeefba8abd533eadf01ba87ceb59bacb42440aa7ec62e01fc"
+  },
+  {
+   "game": "401810601",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810601/candidate/receipt.json",
+   "sha256": "7b69259a9b8e998bc7139ad9249889252a33a4e22b326365204d51416d02c188"
+  },
+  {
+   "game": "401810605",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810605/reference/receipt.json",
+   "sha256": "ddec98a1735ee546e4ff21b8bd7477bc59639f46eb74dcd166581e9bf9971e5a"
+  },
+  {
+   "game": "401810605",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810605/candidate/receipt.json",
+   "sha256": "90727ff423e7e41e0b8ac6acb84ef6d5a2e1a3dad456a57a684f71edfeede218"
+  },
+  {
+   "game": "401810606",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810606/reference/receipt.json",
+   "sha256": "45467167d42449ebdc322969abefc3ac6a5e87f49ea5eb25e56896073d4aae98"
+  },
+  {
+   "game": "401810606",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810606/candidate/receipt.json",
+   "sha256": "e5fbca7b37394fb0790acf63883fa1b5171b9cf946e3b31aa726d41f33a86212"
+  },
+  {
+   "game": "401810614",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810614/reference/receipt.json",
+   "sha256": "70bdc8cef732b4cdd707282b6750d6746e366db44dcf46097355f4598bfaa861"
+  },
+  {
+   "game": "401810614",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810614/candidate/receipt.json",
+   "sha256": "b106c0f5ce1520c62ea3090aef6daa96f57dda3fde468fc37ac3977975c75bc7"
+  },
+  {
+   "game": "401810616",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810616/reference/receipt.json",
+   "sha256": "585f558411f697ceee61accd5125be9e4e1ec383e6f8b0b465023e9e400f03f9"
+  },
+  {
+   "game": "401810616",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810616/candidate/receipt.json",
+   "sha256": "a7d619abc28141ff2e41b7fc6410f29fc53cbc239c658aff5d55fd402da386de"
+  },
+  {
+   "game": "401810618",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810618/reference/receipt.json",
+   "sha256": "33159131a051a835999c973738b676b7ce9a6b11419120b405a59ec558ab5342"
+  },
+  {
+   "game": "401810618",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810618/candidate/receipt.json",
+   "sha256": "77f194f06475f8775be5f8b0034ccd73624b67e2d04a79e696e95f3fe6fd7ca7"
+  },
+  {
+   "game": "401810620",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810620/reference/receipt.json",
+   "sha256": "11414d3b702625eb20b6e2a0f82590f6645186828dffb2b38353182dc9ef9647"
+  },
+  {
+   "game": "401810620",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810620/candidate/receipt.json",
+   "sha256": "dfb77f51e8f13c8497432d0f94e2250d444a17d9f403af364a9b6d71aa34e9bb"
+  },
+  {
+   "game": "401810624",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810624/reference/receipt.json",
+   "sha256": "d022da46dc5c7e78706a8365ad482777c8b58d686530533bc99b230841a472c4"
+  },
+  {
+   "game": "401810624",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810624/candidate/receipt.json",
+   "sha256": "c6df1c1e683808dcc28a1284c84206339ca45231db7ae2250021b9c26e728ddd"
+  },
+  {
+   "game": "401810626",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810626/reference/receipt.json",
+   "sha256": "095096464ef7bd6d8a46eb00c06b16b532f6d44979310cf62ccaff660e679bbd"
+  },
+  {
+   "game": "401810626",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810626/candidate/receipt.json",
+   "sha256": "7adef74a8677f330b4052a62743a06e98386466eb199adea063972cf63a622a9"
+  },
+  {
+   "game": "401810628",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810628/reference/receipt.json",
+   "sha256": "1687da15cb1995fd45cf6deecce31a3a5d90c429e3ff3dddeed6244cf3fcd444"
+  },
+  {
+   "game": "401810628",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810628/candidate/receipt.json",
+   "sha256": "221c9887c8500efbb3863fa6611baf7cfdee0711f7d66f23e85975def4bb2f5e"
+  },
+  {
+   "game": "401810630",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810630/reference/receipt.json",
+   "sha256": "f2146bb45bd67bf12a81b3479775aa86e934ed6c26640318b5d62c679000ab90"
+  },
+  {
+   "game": "401810630",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810630/candidate/receipt.json",
+   "sha256": "469764cded658b5b5d0053b40151805455071deac4353f686bbf6d4275636767"
+  },
+  {
+   "game": "401810636",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810636/reference/receipt.json",
+   "sha256": "695f1357a53eed000e9b9fc4e2b469cdbb4b0187723422326df97d9627722dda"
+  },
+  {
+   "game": "401810636",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810636/candidate/receipt.json",
+   "sha256": "d75bc91bf8cb9f1c25a4f36e7b01079f6c9c6e1a0d7c889bd67cbb0bc13161a3"
+  },
+  {
+   "game": "401810639",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810639/reference/receipt.json",
+   "sha256": "8dca2c17185b130c70d627b4c8af2530f63cf4d15318616705b6be05807cf7a6"
+  },
+  {
+   "game": "401810639",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810639/candidate/receipt.json",
+   "sha256": "d2f1c35c123c2619702a7dddbb581592d66cfc26edfd938225e196b3b704d150"
+  },
+  {
+   "game": "401810641",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810641/reference/receipt.json",
+   "sha256": "32416ee4434bedde8edc0bf283b2c8d33a01d1fa559f0576af18fc2cb9448f30"
+  },
+  {
+   "game": "401810641",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810641/candidate/receipt.json",
+   "sha256": "f81178bfec2c52145e50f87a5074c190396ea577daa1f6147fcc20fcfc53a358"
+  },
+  {
+   "game": "401810646",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810646/reference/receipt.json",
+   "sha256": "a520e4e1a321c4d2549a6e0a0692d89d74749bb05f76fc2221d6d69446c905f4"
+  },
+  {
+   "game": "401810646",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810646/candidate/receipt.json",
+   "sha256": "5d86514b4c42fad80f3b843873d8efffcdf7fb6d42a8fab5238e75ff4f9f0666"
+  },
+  {
+   "game": "401810657",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810657/reference/receipt.json",
+   "sha256": "d4128da7336699cb223ab87f48378aa2aad9206927c03a69326684691ddccb81"
+  },
+  {
+   "game": "401810657",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810657/candidate/receipt.json",
+   "sha256": "cfbadaac7d57a61eee78d74da9e58bfdfd87f8cd72da415137768906e7c09e32"
+  },
+  {
+   "game": "401810661",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810661/reference/receipt.json",
+   "sha256": "720153f5b53ad62e2f4b92471d46b1832037911f9b7bf8ee285bd8e8edfbd1aa"
+  },
+  {
+   "game": "401810661",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810661/candidate/receipt.json",
+   "sha256": "ac6874112d1854f05b568dce62cbf721246b4259efc2057edae51fbe8b97fcd5"
+  },
+  {
+   "game": "401810662",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810662/reference/receipt.json",
+   "sha256": "18fccf8d9154f862aff1516a7ffbc547fd21d13804e4cf6073c8c5c1b7779cff"
+  },
+  {
+   "game": "401810662",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810662/candidate/receipt.json",
+   "sha256": "e89dea7b4b3a80dfc2983e1988cbbf27df63e84d8e1f0da42df72f6f9e7695a5"
+  },
+  {
+   "game": "401810663",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810663/reference/receipt.json",
+   "sha256": "c3e1d04f5c3d27c0007d7b484511a8383b09bf9fa836135574b16260202c3dfa"
+  },
+  {
+   "game": "401810663",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810663/candidate/receipt.json",
+   "sha256": "3c8728ea9b6eb834c848a980684fb3d8dfce29d41250b9fbd03daa2b28eb2669"
+  },
+  {
+   "game": "401810665",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810665/reference/receipt.json",
+   "sha256": "9551ade0e91785fa98ab8cc7b6daf8dae5751dc68949ab446ad79666868c4f0a"
+  },
+  {
+   "game": "401810665",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810665/candidate/receipt.json",
+   "sha256": "168b4d8dd03e12563ede5d237187ed7178095b25fc3b6c71d727d1429cac0956"
+  },
+  {
+   "game": "401810666",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810666/reference/receipt.json",
+   "sha256": "789229a1c3760732ca26dafb2080917b7f5950338bb94357d0e53090d81b28d8"
+  },
+  {
+   "game": "401810666",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810666/candidate/receipt.json",
+   "sha256": "43e8a5c7698d7f1d243f4e67562cfdb491fffd9ec1880126d54518261750e810"
+  },
+  {
+   "game": "401810668",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810668/reference/receipt.json",
+   "sha256": "48c3f8023088e0c5f340ad3b48d2ff47b20cac511ff77e7873a3c935ccfb1530"
+  },
+  {
+   "game": "401810668",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810668/candidate/receipt.json",
+   "sha256": "afa87a36f8d61d87f86859a0f71e166abeccaf808b0e2b0df635580dd34d4f82"
+  },
+  {
+   "game": "401810671",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810671/reference/receipt.json",
+   "sha256": "2551b2017941f368bd49868edfa887113432efa2b5bce84778b879a78f610f46"
+  },
+  {
+   "game": "401810671",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810671/candidate/receipt.json",
+   "sha256": "82ba6576d3472c82aa97e8f69ff1283e05aacc2b066cd515869ccffb81b90d71"
+  },
+  {
+   "game": "401810673",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810673/reference/receipt.json",
+   "sha256": "23086c3e287cdc2a41fbbb7534f409009b461efcdcd4d7456f49ff777d2ee824"
+  },
+  {
+   "game": "401810673",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810673/candidate/receipt.json",
+   "sha256": "32d38cd113a3bf3a62382ece9d58f6a10866d591ecca7b92fafcbf6f7eaf4201"
+  },
+  {
+   "game": "401810674",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810674/reference/receipt.json",
+   "sha256": "cb3cb2ce78b16a2dcc2b0d3f4154838168d7702feefa1ecfc97194868f53ca2a"
+  },
+  {
+   "game": "401810674",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810674/candidate/receipt.json",
+   "sha256": "d6987d8cd3f59513dc9ebc28476ca8125e40cb12c221f0579907b81b138d23ba"
+  },
+  {
+   "game": "401810692",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810692/reference/receipt.json",
+   "sha256": "6536192f30a2ef33579deac4b670d14289ea97138f11de45093d78c72cec495e"
+  },
+  {
+   "game": "401810692",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810692/candidate/receipt.json",
+   "sha256": "ee9aee0a3e5d943bda5373f5ac0b244605016ccccaa071ba772a7a2df0f38f5f"
+  },
+  {
+   "game": "401810695",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810695/reference/receipt.json",
+   "sha256": "881aefa5da55ed6fdfb60387b3293fcf6772681a6e52cdcc98f6619bdde5306f"
+  },
+  {
+   "game": "401810695",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810695/candidate/receipt.json",
+   "sha256": "a5b7dbf61312a7b361aa8f568df66d23d842d581535cbccea8073106651a407b"
+  },
+  {
+   "game": "401810697",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810697/reference/receipt.json",
+   "sha256": "aeb81fd00c79080394cb090dd42269f50b2dba9adb529b14d3e707f5812e3a7c"
+  },
+  {
+   "game": "401810697",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810697/candidate/receipt.json",
+   "sha256": "c58c32fdf38f02fc065bf386c9bb863252be3d3ae649ef1257c5dd3e2e1e87e7"
+  },
+  {
+   "game": "401810699",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810699/reference/receipt.json",
+   "sha256": "87c2868fd9977f6e7fdbb7ae83d0fdbed95a4312c87e625274d15db11c57e03f"
+  },
+  {
+   "game": "401810699",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810699/candidate/receipt.json",
+   "sha256": "20db4f89c4d65163be8315b2af29174cbbfbdd9770b292f39ad0f7026916c2b4"
+  },
+  {
+   "game": "401810701",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810701/reference/receipt.json",
+   "sha256": "76ae0783c5e594ac318eea0c581804c880eace799091a960b2f8277773b3a26b"
+  },
+  {
+   "game": "401810701",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810701/candidate/receipt.json",
+   "sha256": "e722eb4ae7e26b2f5febe8b4bf8958a6ab8501656325837db9ce144ec07250ce"
+  },
+  {
+   "game": "401810703",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810703/reference/receipt.json",
+   "sha256": "622cc9872995df51f1043240a19411efc96edf65d844045aef9572d29540bada"
+  },
+  {
+   "game": "401810703",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810703/candidate/receipt.json",
+   "sha256": "3bfa46754860cd43a922e21e6c35d228e5a51f7ff6081b07ae406fce4ee772f0"
+  },
+  {
+   "game": "401810706",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810706/reference/receipt.json",
+   "sha256": "33400bf8a8e435b7231962831e49b8505e6fa59c776077bb11acbce0af3620e3"
+  },
+  {
+   "game": "401810706",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810706/candidate/receipt.json",
+   "sha256": "d2d257bb5108d5c5e82039048924489933dad6bf4615f1e37ec21d83055fcc12"
+  },
+  {
+   "game": "401810710",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810710/reference/receipt.json",
+   "sha256": "7b8c9965e7e7bac3aaa9624f5914c1ad3f302273ec6b235b3127c7b62b65089b"
+  },
+  {
+   "game": "401810710",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810710/candidate/receipt.json",
+   "sha256": "60dfadc49e2ab80dbf60731f249d292c4f96e5bf2f53d8ea5dfec0939fd5724f"
+  },
+  {
+   "game": "401810716",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810716/reference/receipt.json",
+   "sha256": "e11a4b1c0dc0cc5b1391374975ce90587cb01222494e20e2ff47a6000e8e59bc"
+  },
+  {
+   "game": "401810716",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810716/candidate/receipt.json",
+   "sha256": "ea6b44296737f5e070b06917249c1ccf1daba7936b9bdc0f4cf3c9bce3cdc022"
+  },
+  {
+   "game": "401810717",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810717/reference/receipt.json",
+   "sha256": "a13f0e9dfd062377f8109adc966afae7d054f6643c47aceb41481ed67b42bd37"
+  },
+  {
+   "game": "401810717",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810717/candidate/receipt.json",
+   "sha256": "8a537e530e34378ac28e383cc2aa636c1ffe74cba533ad9de7588df350e17476"
+  },
+  {
+   "game": "401810719",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810719/reference/receipt.json",
+   "sha256": "bf2220eaf36afebc895236b39c5dd45bd89fce081acf1f445574d83ad27bf1f0"
+  },
+  {
+   "game": "401810719",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810719/candidate/receipt.json",
+   "sha256": "82b9f96067b3faa527194616eb49266ed0f802cd4085c05259bf23bdd1129a8b"
+  },
+  {
+   "game": "401810720",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810720/reference/receipt.json",
+   "sha256": "16c9f690a4abd375d21e0a43e565e04bd995f14dac132a97c6d3af54da473458"
+  },
+  {
+   "game": "401810720",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810720/candidate/receipt.json",
+   "sha256": "28ab72473835369b74002f7c1a9153b94d3e4326968e645a571225327470be3c"
+  },
+  {
+   "game": "401810721",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810721/reference/receipt.json",
+   "sha256": "ec1a35c65f790cad7638f485bd5bf76165679da56085e60348ff49cf2a2f242d"
+  },
+  {
+   "game": "401810721",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810721/candidate/receipt.json",
+   "sha256": "265fd5ca42e189b69de86376fecafb433e6142006f5ecc2e0e7d3d8029c02337"
+  },
+  {
+   "game": "401810723",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810723/reference/receipt.json",
+   "sha256": "78bc07f64a09291493b2ce30de14f91c1ad74cc764744abbd284bbe5973a3e74"
+  },
+  {
+   "game": "401810723",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810723/candidate/receipt.json",
+   "sha256": "244d0bd111db274765ad1e74f162470ba61c9f8d1ed9c07974fe995c8743ef8f"
+  },
+  {
+   "game": "401810726",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810726/reference/receipt.json",
+   "sha256": "034b85915e5fa12bdd2dbbc2b393e5de2800c27921ccc1fd536ea54df8512e6e"
+  },
+  {
+   "game": "401810726",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810726/candidate/receipt.json",
+   "sha256": "2b73e2a90d4993f229f09aa4c6f4e2254add52d80dfa5b9380dfc5edcf10f612"
+  },
+  {
+   "game": "401810728",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810728/reference/receipt.json",
+   "sha256": "9bf7ae92656211a1f55aa7563162c700e35767040876986e8d329372de9a70f6"
+  },
+  {
+   "game": "401810728",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810728/candidate/receipt.json",
+   "sha256": "db16e4dbb65b43dd8b6f9971307e84f43922bf508bdd14dde1d8c5a35db1b465"
+  },
+  {
+   "game": "401810740",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810740/reference/receipt.json",
+   "sha256": "7492426b6898b9c4e82ac13939383f34033964eda5362dfb3ae176a4857ca935"
+  },
+  {
+   "game": "401810740",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810740/candidate/receipt.json",
+   "sha256": "1b958b4e7123f9a71d016e2dd4dc2eefa3fdaaa0cfe171edec1bb4f7296db9a2"
+  },
+  {
+   "game": "401810745",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810745/reference/receipt.json",
+   "sha256": "41563b87f86a0b739749ddfa998b981fe67ef1c1a07ac3c1885ceef4e862d7a6"
+  },
+  {
+   "game": "401810745",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810745/candidate/receipt.json",
+   "sha256": "b46f39488cea95cd6cf7fad367d222ff300c9128cccf1b247c224c5abeeaef95"
+  },
+  {
+   "game": "401810746",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810746/reference/receipt.json",
+   "sha256": "fa5d99e9814af5936b4c65f414d547b9e17cf37b85634478409fed30dce42e4f"
+  },
+  {
+   "game": "401810746",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810746/candidate/receipt.json",
+   "sha256": "6350bb9d6ed7a038caf6e3c176b7d4c4a1f54f21b3280aa3f141c62f264512ab"
+  },
+  {
+   "game": "401810750",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810750/reference/receipt.json",
+   "sha256": "dc2ee5648beaa55f58a8bec79addb9ba5174454f2b15af7346d040ff3bb083d5"
+  },
+  {
+   "game": "401810750",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810750/candidate/receipt.json",
+   "sha256": "dd5e53b34afe56911a40320b5ff2c4cdf0e09853a1a1020351dd644a57ca63ef"
+  },
+  {
+   "game": "401810752",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810752/reference/receipt.json",
+   "sha256": "d62015fdcda731a794f20399585e15d8d990314703e5b06d7c6aa3e114d0c595"
+  },
+  {
+   "game": "401810752",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810752/candidate/receipt.json",
+   "sha256": "42f5230dc4d06f3f0066bd05104ebde83ec1c20dc062bf5159886d9745158b56"
+  },
+  {
+   "game": "401810756",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810756/reference/receipt.json",
+   "sha256": "9222231ae7495630c36081ac5492e56391bd686f3737a53dd79bdb483ba4399a"
+  },
+  {
+   "game": "401810756",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810756/candidate/receipt.json",
+   "sha256": "c896f1cc885f6fade1258c70dbbfb4ee2f20fcf10823b9622f10fa86f65de665"
+  },
+  {
+   "game": "401810757",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810757/reference/receipt.json",
+   "sha256": "18bde29047654d9ab622d910d981dcef0cf2e99ecacb3fdf610899cf21e7eed6"
+  },
+  {
+   "game": "401810757",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810757/candidate/receipt.json",
+   "sha256": "396a68bb0cbb150d0935813ff2ef7088c954d7f2d05ba5bf2e69c4819972d42f"
+  },
+  {
+   "game": "401810763",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810763/reference/receipt.json",
+   "sha256": "bd9b4a3fbf81d59f587e8b56fa47c966eb760dae9a27f13d6e0cf9c89a20096a"
+  },
+  {
+   "game": "401810763",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810763/candidate/receipt.json",
+   "sha256": "2f3189ad7ac931303381c253825ed0b14d80213ab8afca52fcc5ee02ce8c3718"
+  },
+  {
+   "game": "401810766",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810766/reference/receipt.json",
+   "sha256": "2288504943a7f076ed84d6dfeba278c695b08cf428c10b19b1fa1183c2b9600f"
+  },
+  {
+   "game": "401810766",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810766/candidate/receipt.json",
+   "sha256": "349f39751971ddc88fa8bb3282d004de9735c9392fa48a3248419ec5a5bd3b1f"
+  },
+  {
+   "game": "401810767",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810767/reference/receipt.json",
+   "sha256": "bffec7811dc2cc533cf252a7c035ec0fc7eb6f51ec51b2227a4b05c60a9423fa"
+  },
+  {
+   "game": "401810767",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810767/candidate/receipt.json",
+   "sha256": "3b4d25df3a96718b16a28a2720e5fd6177ae096da7b4af4c8697ecbeb64205d6"
+  },
+  {
+   "game": "401810769",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810769/reference/receipt.json",
+   "sha256": "97603dd562ee9960ea9f5a35317eb80e44d8675ecade5e428dd412f00842a4d7"
+  },
+  {
+   "game": "401810769",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810769/candidate/receipt.json",
+   "sha256": "33e13808c3858fc3b749661146b916b098db8ce330ceab36ba48c1c0b052911f"
+  },
+  {
+   "game": "401810771",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810771/reference/receipt.json",
+   "sha256": "9be0cde128f37c16171dcd574731f57ee8a7c5d20d913af4418b19659dc17159"
+  },
+  {
+   "game": "401810771",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810771/candidate/receipt.json",
+   "sha256": "23efa3a4fd30e3c5f50ab4f27a8b57b14a00b8706bbca51a126986acb879682d"
+  },
+  {
+   "game": "401810776",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810776/reference/receipt.json",
+   "sha256": "6aea77fb1d258e0500d09bb2383103fa5ee49929e2aaf8a9ecc0d9c0be3d017d"
+  },
+  {
+   "game": "401810776",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810776/candidate/receipt.json",
+   "sha256": "1aa13c819744a16756cac9a9d645853debb7aae12c5d8e40493ff2204c6394ea"
+  },
+  {
+   "game": "401810778",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810778/reference/receipt.json",
+   "sha256": "c18aab1a35dd76a3484603f79cd7d2a5c485809a403b4f20d8369d5bc9549f77"
+  },
+  {
+   "game": "401810778",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810778/candidate/receipt.json",
+   "sha256": "a23f272adf79edb8a582e183835c31347ac8eba8dcd2ae0a32a98882dfd37e79"
+  },
+  {
+   "game": "401810783",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810783/reference/receipt.json",
+   "sha256": "8784a0f32fbd63edd1f27dca7a2aee7d3110289c8002824d10220081a7738a45"
+  },
+  {
+   "game": "401810783",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810783/candidate/receipt.json",
+   "sha256": "2e819c6274ec8f2de38b3fd09534523fe6e3e671df9d008ef4b33b32d31649d1"
+  },
+  {
+   "game": "401810788",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810788/reference/receipt.json",
+   "sha256": "187b09d7d84a75e36a65dcbf5c96ca5b2f3d510f120cecf267f9f9e4823bc357"
+  },
+  {
+   "game": "401810788",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810788/candidate/receipt.json",
+   "sha256": "08809a439204c0ec4f466dfb31843f999b5b00cd360eaf8387ca785e3f4fa6a4"
+  },
+  {
+   "game": "401810796",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810796/reference/receipt.json",
+   "sha256": "2fd62eae3c3af9ec07f00b6ce2ba0a06a0995ec041274272ac76ac305fe05426"
+  },
+  {
+   "game": "401810796",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810796/candidate/receipt.json",
+   "sha256": "0f9e3443956ae3d6d7145e67a14b53f4ab849e94be803f9d51315cfd94fd5003"
+  },
+  {
+   "game": "401810800",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810800/reference/receipt.json",
+   "sha256": "0d2e97fbd866eb661036da7b7ac3b995a689cb35724fbc89887e936055d28be5"
+  },
+  {
+   "game": "401810800",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810800/candidate/receipt.json",
+   "sha256": "4a43c67e788a52ab9ac3ad052ea6262b18e33d08f3bfabc6a0f7e413673ac896"
+  },
+  {
+   "game": "401810802",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810802/reference/receipt.json",
+   "sha256": "1054989a5b25efe70b78dfeb1ca50509a979214a6f2ff165ba21a6645dfd110d"
+  },
+  {
+   "game": "401810802",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810802/candidate/receipt.json",
+   "sha256": "15a880a2c17ddd5a7b70d33df9e3a13c2b0ace2d11ec3276953c841508aa3ff2"
+  },
+  {
+   "game": "401810803",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810803/reference/receipt.json",
+   "sha256": "d6941025ac236337f0b446df947a23e886072b80db1be51d9de89d7ef0223efb"
+  },
+  {
+   "game": "401810803",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810803/candidate/receipt.json",
+   "sha256": "c7f7830a89cd6d4e3f53874072a544e29f3df23cc764f195b9bc7b2ac6c193ff"
+  },
+  {
+   "game": "401810809",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810809/reference/receipt.json",
+   "sha256": "2d344088f6972c5613358951568f5de2dc0574544516e61519adf92217ec9654"
+  },
+  {
+   "game": "401810809",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810809/candidate/receipt.json",
+   "sha256": "60e2e5aaa8871d7a9f1e6ccb5fafe3d2eddf314a3f2870952f5f1057d06a1d22"
+  },
+  {
+   "game": "401810811",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810811/reference/receipt.json",
+   "sha256": "0e5725f96df29b39a3455ed2952448d56fd501672fac24c167d7d60556e71070"
+  },
+  {
+   "game": "401810811",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810811/candidate/receipt.json",
+   "sha256": "d5a808f81dd2509d7c5bd35b8035d07cc0cf8761c09a026c3e6792fb912e3aed"
+  },
+  {
+   "game": "401810827",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810827/reference/receipt.json",
+   "sha256": "769207fa3f19b1d298532d779211ab0ba3d42be1c2fc9a9e47027de6ad064ec9"
+  },
+  {
+   "game": "401810827",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810827/candidate/receipt.json",
+   "sha256": "37b3cf9b42b8e945732bd772e5dd2f7fd74311f2bb3622e625e9348391c06d3c"
+  },
+  {
+   "game": "401810830",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810830/reference/receipt.json",
+   "sha256": "c7d6b2bbda6e109de406ccd2ef0e2594db5ee2eec7a55f1f84e28107a3224be4"
+  },
+  {
+   "game": "401810830",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810830/candidate/receipt.json",
+   "sha256": "0773344879744318af524428aef422692974a210eb1494a27349805a91cd1977"
+  },
+  {
+   "game": "401810831",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810831/reference/receipt.json",
+   "sha256": "8ba8079fa654eb31f1f206367404da122395b10de2d49f8f471800168f16fdb2"
+  },
+  {
+   "game": "401810831",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810831/candidate/receipt.json",
+   "sha256": "4f90609d882f430e5ed1eb1d6803581fd6b5bc81b864645567ece395286839c8"
+  },
+  {
+   "game": "401810835",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810835/reference/receipt.json",
+   "sha256": "062b78c50ea288588d9b16278cee555dd45aca5393d6f63481bc7353331aad18"
+  },
+  {
+   "game": "401810835",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810835/candidate/receipt.json",
+   "sha256": "f5790b41c93b291d6cb22938f5bff24fd059df3e28f406b089a82799f5a11e90"
+  },
+  {
+   "game": "401810836",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810836/reference/receipt.json",
+   "sha256": "786d373bcc4545cc18e4cb07953211d9ae5f797101b646a2dceda50b89e136ab"
+  },
+  {
+   "game": "401810836",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810836/candidate/receipt.json",
+   "sha256": "a5d134a3a34861749b5df1d7e22d1441475ec4fed748e11ac4e195f737f325e8"
+  },
+  {
+   "game": "401810838",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810838/reference/receipt.json",
+   "sha256": "e2891bb72b4f12358a5fdce7385175489bd78a6afad6bd672aa4ac0e71917bfc"
+  },
+  {
+   "game": "401810838",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810838/candidate/receipt.json",
+   "sha256": "bce3e160b711176e5d2587028db4a57b4939b2c4ebe55074444b2f6153714236"
+  },
+  {
+   "game": "401810843",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810843/reference/receipt.json",
+   "sha256": "0e632f6a827e791a3fc14f30385da657073c3d4a23242db57123bd2366a0c30f"
+  },
+  {
+   "game": "401810843",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810843/candidate/receipt.json",
+   "sha256": "5b77ecc30effe1eb438e91a142c7ff82187bd61875f8132b45947b98b7c1f727"
+  },
+  {
+   "game": "401810845",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810845/reference/receipt.json",
+   "sha256": "8ade46b8d741d7a9fc25d9dbe8da1c15e0e2734756784ca539e59a88ac7d2c36"
+  },
+  {
+   "game": "401810845",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810845/candidate/receipt.json",
+   "sha256": "94321d0d04feae5de5303314071b3d6d1c90c4e314c0b5eec29154970a00475d"
+  },
+  {
+   "game": "401810847",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810847/reference/receipt.json",
+   "sha256": "fe3450d1264ac66e54fda73a888bbfa410a897351cfe732f2af24122902455a1"
+  },
+  {
+   "game": "401810847",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810847/candidate/receipt.json",
+   "sha256": "1ccfd95d66a5e2a78b61cdc8a5b75aafce57fd03d37fd4c4b99bce89d8f75a51"
+  },
+  {
+   "game": "401810859",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810859/reference/receipt.json",
+   "sha256": "48d76d6c661a76b2fc7205060ca9f1ec6b89d17cf99bdb4b572b6df024f8f6f0"
+  },
+  {
+   "game": "401810859",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810859/candidate/receipt.json",
+   "sha256": "322d0e2ce25c1d8245204fe03daed2bac8a1f67e45211f987ab28ea9b015c54a"
+  },
+  {
+   "game": "401810868",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810868/reference/receipt.json",
+   "sha256": "db778050f9c37a2f482335e55362cb21264052f9b4da9c7f6bcb569175b7ef2b"
+  },
+  {
+   "game": "401810868",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810868/candidate/receipt.json",
+   "sha256": "e1c591aeb1801f8e93ff4f22d1a3320636d0f9cbea5be771bc143b332133025d"
+  },
+  {
+   "game": "401810874",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810874/reference/receipt.json",
+   "sha256": "41166592c551bf88d836653afacb866de58135ea228d14c499ba450a1b509fef"
+  },
+  {
+   "game": "401810874",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810874/candidate/receipt.json",
+   "sha256": "f4464cd18147bfe67ada3a4347bc9d35ca5d0b183a036bca433946c245e8b4d9"
+  },
+  {
+   "game": "401810875",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810875/reference/receipt.json",
+   "sha256": "5ef1d51d176cd5c3f960080f3ca1ce7c74b74a76a440937ca318d69d20dea1d1"
+  },
+  {
+   "game": "401810875",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810875/candidate/receipt.json",
+   "sha256": "a179f17cfc212d5128220298bda44af60f85b86df000f78422dfaa829e621e10"
+  },
+  {
+   "game": "401810876",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810876/reference/receipt.json",
+   "sha256": "0518f3f3f683d719fe50837c9ce51673344f0f25bfe8565d413850e1eab5438f"
+  },
+  {
+   "game": "401810876",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810876/candidate/receipt.json",
+   "sha256": "f1afeabf70f4d32ad00e55c49aa0aeefb908817dfae523bdfbe9981b6020f67e"
+  },
+  {
+   "game": "401810881",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810881/reference/receipt.json",
+   "sha256": "037dfdf64d5ea1b8616a549eeb0be4f491d67326d55f8317523db1c5a11bc134"
+  },
+  {
+   "game": "401810881",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810881/candidate/receipt.json",
+   "sha256": "f3300272a925de21bda89023477aa53562bc7935f3bbbbef7b5212f12d649958"
+  },
+  {
+   "game": "401810889",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810889/reference/receipt.json",
+   "sha256": "518277cdb4fee38f5b38cdeaebdf1e6556ed66319810c55ae18c73da1377b047"
+  },
+  {
+   "game": "401810889",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810889/candidate/receipt.json",
+   "sha256": "3c71e45e1b546acabb3d23bef3552343edfc049b9db797622a4ee66e9f038c32"
+  },
+  {
+   "game": "401810894",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810894/reference/receipt.json",
+   "sha256": "879f7d1cfd1ef7d2c10778ef9c847ad597604af151f57d67303646e9f4376f76"
+  },
+  {
+   "game": "401810894",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810894/candidate/receipt.json",
+   "sha256": "0a37f504fb3c6a8d261b4edf9c8ee4071e776973862d4fa10b5049007c452224"
+  },
+  {
+   "game": "401810896",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810896/reference/receipt.json",
+   "sha256": "de0800b690047c0f8086af158dba35bf0d9b3d69eaa4fc491ce08a8dbab6164e"
+  },
+  {
+   "game": "401810896",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810896/candidate/receipt.json",
+   "sha256": "c7d18de8693504c2539e2caff6d4e6434967b1ca73c4cdc976792d282a81ab15"
+  },
+  {
+   "game": "401810903",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810903/reference/receipt.json",
+   "sha256": "5a7747488d1cebcfb99762503538c53143a473e247c45b04b245cbcc37dce278"
+  },
+  {
+   "game": "401810903",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810903/candidate/receipt.json",
+   "sha256": "01dd0585b5f576a89a6ba70808df08e82f4e02fc956f4100afee9e197417ce9b"
+  },
+  {
+   "game": "401810914",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810914/reference/receipt.json",
+   "sha256": "6cb29c80fac37c31d4ccdccf618ecc9b34e913d9bec8296925268db941c4b857"
+  },
+  {
+   "game": "401810914",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810914/candidate/receipt.json",
+   "sha256": "75fbb14bf5a3e9114921e3dd7407ffbda70593929e772c984127ea509d375e33"
+  },
+  {
+   "game": "401810918",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810918/reference/receipt.json",
+   "sha256": "c1d00e354aee6e4f1770daa73051c8d92b1c4d6c0c8c71232ecb3cd95ecb2d9b"
+  },
+  {
+   "game": "401810918",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810918/candidate/receipt.json",
+   "sha256": "acdb585ba66977de22b03fa10c9b8f4b07ea79d5566028a7656dd924c24b6b6d"
+  },
+  {
+   "game": "401810920",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810920/reference/receipt.json",
+   "sha256": "4a6421224679a79bc0c3f364773d50088e617a5b5ec005e325a619debeb68233"
+  },
+  {
+   "game": "401810920",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810920/candidate/receipt.json",
+   "sha256": "653d1245f63e8c933e95fb5b57dbb66e821868f0320f61ec4a96c836fc9c9e6d"
+  },
+  {
+   "game": "401810924",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810924/reference/receipt.json",
+   "sha256": "988a5e849dc48077a28b092ee43affe2d5b940b37056f4b9e3a4de934600254e"
+  },
+  {
+   "game": "401810924",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810924/candidate/receipt.json",
+   "sha256": "14ddf0e4cbc81900583ff4afba4a631d8b13c4e611afbc93ba7b35b4ab6350a9"
+  },
+  {
+   "game": "401810927",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810927/reference/receipt.json",
+   "sha256": "96692e8b9712f831da7377e4f010b1bb74e8b818a7162972162fd299befa2939"
+  },
+  {
+   "game": "401810927",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810927/candidate/receipt.json",
+   "sha256": "b306bd3a3a80daf95f6d8d9644750619634172fb13d46ebf1d3b1ee766e47574"
+  },
+  {
+   "game": "401810930",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810930/reference/receipt.json",
+   "sha256": "63b142fe6788a69635d607726e30e63f32f726485bb30a75bbe97c3283ab156f"
+  },
+  {
+   "game": "401810930",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810930/candidate/receipt.json",
+   "sha256": "2adfd5c5b2fa43386b4642847c080bed40c4f06c8077fff8ea0d333adb816028"
+  },
+  {
+   "game": "401810931",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810931/reference/receipt.json",
+   "sha256": "463ff4d303a2471362e167b88ee4aba862230261d23086ee777c72b5b46dbbf7"
+  },
+  {
+   "game": "401810931",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810931/candidate/receipt.json",
+   "sha256": "f57bf6bfe3a97bf02e4c747889e88ee81b3c1edfca87840c45e10a55a7cf95fa"
+  },
+  {
+   "game": "401810936",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810936/reference/receipt.json",
+   "sha256": "bef41b41f0a66971076924b24d616644673b52cd224d578bc68c601d021da606"
+  },
+  {
+   "game": "401810936",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810936/candidate/receipt.json",
+   "sha256": "1c4cd27415bcbc94b0b6d72dd37c1538c67b69cdef404f9d392030430693ab7e"
+  },
+  {
+   "game": "401810937",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810937/reference/receipt.json",
+   "sha256": "8d19b20ab9e5c734a86f289e54774114469114b472647f6871740dc41bdbb5d7"
+  },
+  {
+   "game": "401810937",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810937/candidate/receipt.json",
+   "sha256": "5411cb9cc3ca40c87686a7cba1db64df3674e1c3f62f617e0378514cee780029"
+  },
+  {
+   "game": "401810943",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810943/reference/receipt.json",
+   "sha256": "58e334aef7ba1bcef84253681a6c201bd4331d260320c23b58bb37de9d4eca76"
+  },
+  {
+   "game": "401810943",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810943/candidate/receipt.json",
+   "sha256": "3c67eb1c41ed0287137332efe6b01958a337de9112fb051f271070865226e640"
+  },
+  {
+   "game": "401810945",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810945/reference/receipt.json",
+   "sha256": "98eb6fce36329d00665d90653d6f7497f3c90fbb74dabb20a8999c3cb9006d4e"
+  },
+  {
+   "game": "401810945",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810945/candidate/receipt.json",
+   "sha256": "824ab954e58e9e28e66453e17581a184737470d3f2d78c048560e53d712a272c"
+  },
+  {
+   "game": "401810946",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810946/reference/receipt.json",
+   "sha256": "dfa6a1967ebc0cb8806d632dff11aa9f510e25315907bb49088f758417a8eeb9"
+  },
+  {
+   "game": "401810946",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810946/candidate/receipt.json",
+   "sha256": "5f2a65a5b6189280aa09bde66c3eb252b2b58d2846933372fabb0a9e08c794cb"
+  },
+  {
+   "game": "401810950",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810950/reference/receipt.json",
+   "sha256": "4c613e309e59e3a4fb2b7f505e08c279d096a706cd5b17ac78606c8e9808eefb"
+  },
+  {
+   "game": "401810950",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810950/candidate/receipt.json",
+   "sha256": "c2076e4e421e4e98d58191ace45c09e04da30cb2d7dfebb69e546157456dac4e"
+  },
+  {
+   "game": "401810953",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810953/reference/receipt.json",
+   "sha256": "8d910c2a35b3ef339a1070c97dd8cc9c5cf60f59d79ee3cf2ec4a93242e3d750"
+  },
+  {
+   "game": "401810953",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810953/candidate/receipt.json",
+   "sha256": "22ab863cc9b0ceec6717116f2c52a1c5e5237f81d5b0de24b6e4a6afd23b901e"
+  },
+  {
+   "game": "401810957",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810957/reference/receipt.json",
+   "sha256": "e7619aa37f15f6aac75f0d3f7266585b28814f34668a82ce0ea16165e801bc95"
+  },
+  {
+   "game": "401810957",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810957/candidate/receipt.json",
+   "sha256": "f9bb68fc08d6ad3fa3b82e30d1f992b49edf8cd57a8b6303fee1b47430c0446e"
+  },
+  {
+   "game": "401810972",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810972/reference/receipt.json",
+   "sha256": "441e20e33aac21a0e0b79e1e0182ffc690748977a806a81f35f21eeeeadcb230"
+  },
+  {
+   "game": "401810972",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810972/candidate/receipt.json",
+   "sha256": "e9c8f29574bfffab2e239f4a84fe215600acc7e6d0bc3bc38a595616a37912f2"
+  },
+  {
+   "game": "401810981",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810981/reference/receipt.json",
+   "sha256": "403afa1f39afc328555aaa98de3779703c9c8d1dd7e24488044ca262c9e51e9b"
+  },
+  {
+   "game": "401810981",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810981/candidate/receipt.json",
+   "sha256": "4bc99e2efa56e0e8ff43b3e44d62352265f75ba6b4dd672e9b34f497d36a0dec"
+  },
+  {
+   "game": "401810988",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810988/reference/receipt.json",
+   "sha256": "9ef21dd7ee0e2df95caeba2ee4ed513f4512b2c6b8f3caa4bd54dcf339ef0980"
+  },
+  {
+   "game": "401810988",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810988/candidate/receipt.json",
+   "sha256": "d3ab3ab0f6808ecc5a5825c197f84ddda45eed7a673140b6f49d67ad69953009"
+  },
+  {
+   "game": "401810990",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810990/reference/receipt.json",
+   "sha256": "bd9e10a5ce3f93b4691b695deba3ab7727cfcfdb5cd3b35b9e9fbb36c89e6a8d"
+  },
+  {
+   "game": "401810990",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810990/candidate/receipt.json",
+   "sha256": "fe8dd8d996d3dd453ec2ce9af25c2a776333309798534a212c8168a70b23a5c8"
+  },
+  {
+   "game": "401810997",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810997/reference/receipt.json",
+   "sha256": "d2be96e3319a47e53be65fdfd95bb0037e89dc692cb5c09102fb983130ec94d3"
+  },
+  {
+   "game": "401810997",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810997/candidate/receipt.json",
+   "sha256": "4d3e89a158bad0a80afca4b1ddea6b85cd9731f33b4ed4cd1b7f4d3958798403"
+  },
+  {
+   "game": "401811003",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811003/reference/receipt.json",
+   "sha256": "a0f25e212bd1bcca3e3fa7e3816ab14eb4fb8411ca40e2c9f2c4354d0d79af5a"
+  },
+  {
+   "game": "401811003",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401811003/candidate/receipt.json",
+   "sha256": "a7961fb1982864e33c6ead126c669f08d304faaa80a84782eeaa839a14de96df"
+  },
+  {
+   "game": "401811011",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811011/reference/receipt.json",
+   "sha256": "980a4d62061c9cd45f8eb80d0b28a003d76ac38b7035591bcf3e932007325507"
+  },
+  {
+   "game": "401811011",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401811011/candidate/receipt.json",
+   "sha256": "e1f4c866c0944e824ec541f5214449df378896a2daa8fe188116a81367d4e4c1"
+  },
+  {
+   "game": "401811012",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811012/reference/receipt.json",
+   "sha256": "f348fe0b9feffb37029ded1c99d44e8b699089b46012348e0981f00eaf004877"
+  },
+  {
+   "game": "401811012",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401811012/candidate/receipt.json",
+   "sha256": "06b0d1a61748edb7631996a85ee331f00ea5f1d3db46266760feeb770e6027e3"
+  },
+  {
+   "game": "401811016",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811016/reference/receipt.json",
+   "sha256": "3c5d291fc6389d48c1cb470b90ba296eb39d16ca6dbeaed6e70c6825835e2bb2"
+  },
+  {
+   "game": "401811016",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401811016/candidate/receipt.json",
+   "sha256": "cf3c5c8e8075154ce83a5aa2ee442adc155514ccbc206eb0af6730b5612453c5"
+  },
+  {
+   "game": "401811021",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811021/reference/receipt.json",
+   "sha256": "7b91e635c04a71c7b154c3740133f722987b4371b303c72887ff585a076c6997"
+  },
+  {
+   "game": "401811021",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401811021/candidate/receipt.json",
+   "sha256": "d0c6f26e8951ca245f65de4a8e7e63c64cd2a0e52ced61524278ae4b8a3943a7"
+  },
+  {
+   "game": "401811031",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811031/reference/receipt.json",
+   "sha256": "d8d41ebb45c023453fcbafe582a7f5f1d05f8eb907cda0c9ba3153f991f860fe"
+  },
+  {
+   "game": "401811031",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401811031/candidate/receipt.json",
+   "sha256": "9da9668d9a66028f48359c1a63317a5a4adcc9e2cd7386d4efc6496ab933a8fa"
+  },
+  {
+   "game": "401811034",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811034/reference/receipt.json",
+   "sha256": "58885bdaad93ff67ecdc991123664df9d6debf998ee75a21afe30ae6cbfa66e6"
+  },
+  {
+   "game": "401811034",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401811034/candidate/receipt.json",
+   "sha256": "f3d1c58cf93ee881692e8e9f7356908c75ba7a2774b3160151083735d656f822"
+  },
+  {
+   "game": "401811038",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811038/reference/receipt.json",
+   "sha256": "30691ea327a5d262fa13673d8b76b13ae1fe3337318b8be40431c25bfe4535f5"
+  },
+  {
+   "game": "401811038",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401811038/candidate/receipt.json",
+   "sha256": "49799ccfb951f1271180c05c4a62c76009633546121cb3bdce7895228334c073"
+  },
+  {
+   "game": "401811040",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811040/reference/receipt.json",
+   "sha256": "0fb2f3d2fb58f17b18330e415684c3aa29d762729759d5e628d6ceed83fad7e1"
+  },
+  {
+   "game": "401811040",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401811040/candidate/receipt.json",
+   "sha256": "83face8ba9602e8e3d2084435bbcf57dc20e293e18900ae0f4f9afb6d41cd965"
+  },
+  {
+   "game": "401811042",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811042/reference/receipt.json",
+   "sha256": "c49f1be42dc8ee3d97eeb43a5f9f208e9e21734ee845ce01fce41d93d11b82a0"
+  },
+  {
+   "game": "401811042",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401811042/candidate/receipt.json",
+   "sha256": "500866929f8a956a798e02b77360a09b5f583e84be4d05cd63c3212edf6690aa"
+  },
+  {
+   "game": "401811043",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811043/reference/receipt.json",
+   "sha256": "531166f1ab2fced2b8e4d0ed7f234eb04f4ee3ec462915ee5768021166327d45"
+  },
+  {
+   "game": "401811043",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401811043/candidate/receipt.json",
+   "sha256": "6655509db7625fce683a6e60f874daae0012303278f533d936f49ede6894e263"
+  },
+  {
+   "game": "401811048",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811048/reference/receipt.json",
+   "sha256": "f9a50938339ad7a2eace5f27a649b4e484369b7f8fe3b00f3d680094849d2387"
+  },
+  {
+   "game": "401811048",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401811048/candidate/receipt.json",
+   "sha256": "48924112219bb44c7988b41a56fd8cf32880a342c6c7ce6b635ec82c23c4a6cc"
+  },
+  {
+   "game": "401811049",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811049/reference/receipt.json",
+   "sha256": "4c52aa8b7f4170ef8f8377858a83fa09f9ed990747ede9ad68d6f76007256a9d"
+  },
+  {
+   "game": "401811049",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401811049/candidate/receipt.json",
+   "sha256": "cd169399edab1b1c450ecc791ea59eb1ecf39f09e736e503623aa4b4bae1cbe7"
+  },
+  {
+   "game": "401811050",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811050/reference/receipt.json",
+   "sha256": "9dcd89e439ba4fa2f953922ec7ee86d6a4a157fe8de89415d9fca5a2f8bfae65"
+  },
+  {
+   "game": "401811050",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401811050/candidate/receipt.json",
+   "sha256": "0d562b2aaa54f3c9161357966a3808a03a0b1340d8ce7f873dd05fdf89b5e735"
+  },
+  {
+   "game": "401811051",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811051/reference/receipt.json",
+   "sha256": "7e6f3dfeae2b2823398eabd1781960723891db247ca747f58b43a281636ba033"
+  },
+  {
+   "game": "401811051",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401811051/candidate/receipt.json",
+   "sha256": "accb34383d8dae5d0a3b81ed8c26a014db6b27e90c721e45370f2528f63caa4f"
+  },
+  {
+   "game": "401811055",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811055/reference/receipt.json",
+   "sha256": "0ba955728ffee2769ad34948bfb1ed50c0b240eb6e9ea970f7a77100b6480c73"
+  },
+  {
+   "game": "401811055",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401811055/candidate/receipt.json",
+   "sha256": "6583d6f2f2da149ddf09463e68c139d7b202b47927d027e667a4f9167a8a8cdd"
+  },
+  {
+   "game": "401857824",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401857824/reference/receipt.json",
+   "sha256": "28014fed5d87d7255d66f0b7b85ce357ea6b07a385ba8d6c0cc9ada5e1703f4a"
+  },
+  {
+   "game": "401857824",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401857824/candidate/receipt.json",
+   "sha256": "e73098436ee0e5e8939ec4bc1992bbcf0ac2aed380991b1ea0f688609009ced4"
+  },
+  {
+   "game": "401858693",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401858693/reference/receipt.json",
+   "sha256": "2750c150f828dad268c95e31555a90194874d560137232b1942b2202a8144561"
+  },
+  {
+   "game": "401858693",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401858693/candidate/receipt.json",
+   "sha256": "7502388e1ccb419f457586ab8f1e8ba0212736959a6960a2bfe29317cf8c4aa8"
+  },
+  {
+   "game": "401810566",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810566/reference/receipt.json",
+   "sha256": "f5cde2161bba1dea9fa5711e0084f253078fbb247e3c02ac1dd8ca49faa1697b"
+  },
+  {
+   "game": "401810566",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810566/candidate/receipt.json",
+   "sha256": "7590c5b4b7bc5c6a688602676623f98f1cea7150df73dac53cc09f6916f6c592"
+  },
+  {
+   "game": "401810910",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810910/reference/receipt.json",
+   "sha256": "4a150e693a7a7df067e0cf497b1ba1d670e1e1834ea5b5b7a6ccb6572c31feb1"
+  },
+  {
+   "game": "401810910",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810910/candidate/receipt.json",
+   "sha256": "6e6d8049d53cd458b66bfc59fbf8a45e88dc82893323cdc75b78e8e2d94b6fca"
+  },
+  {
+   "game": "401810722",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810722/reference/receipt.json",
+   "sha256": "3d87d3d4418e9b77279ee8af11651e6e73fe0ea4fd999372a7cf4d65fec2e323"
+  },
+  {
+   "game": "401810722",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810722/candidate/receipt.json",
+   "sha256": "93503def2de934cdf12281a6d348a8401cf4e60ac9deb073c9574d664a2c1c86"
+  },
+  {
+   "game": "401810851",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810851/reference/receipt.json",
+   "sha256": "be730f6c745b747a35631fc3cecdb3fd8cdc1a6b38e900222cfcbe5000aa3359"
+  },
+  {
+   "game": "401810851",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810851/candidate/receipt.json",
+   "sha256": "915da1c8ffb3477fa2b7d0d4c3e6f3dd8e2cd87d4299902cbde3500319f7577d"
+  },
+  {
+   "game": "401810346",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810346/reference/receipt.json",
+   "sha256": "805ea75cd986216d85335fc962516cc55bce64b7c8cf281d0b6f6c0e4e5f7809"
+  },
+  {
+   "game": "401810346",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810346/candidate/receipt.json",
+   "sha256": "f8471b549014a5230e1335341f4096fea44999464b84dd0417e405ca704a805b"
+  },
+  {
+   "game": "401810368",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810368/reference/receipt.json",
+   "sha256": "845374872f75d7965911032715a6fc602fbb92d18d465bf6195237a70ba0c71f"
+  },
+  {
+   "game": "401810368",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810368/candidate/receipt.json",
+   "sha256": "6d72775cdace26f5f9dc53d15c60eabaa168ca301d956a7df219b07955f3c927"
+  },
+  {
+   "game": "401810597",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810597/reference/receipt.json",
+   "sha256": "d1cd8cf90d6a6db682f0180c50ab7c68113732f9e6d1bb203cde9e14fa1f3d25"
+  },
+  {
+   "game": "401810597",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810597/candidate/receipt.json",
+   "sha256": "9f092e0c957380e321c127d163ecfec7accf0c7e4dcfa2bbab546a82e842c788"
+  },
+  {
+   "game": "401811019",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401811019/reference/receipt.json",
+   "sha256": "44e4eff7d08f53516cf119e44dfcf575618dd42946efd7c6e11cb1c50e1342c2"
+  },
+  {
+   "game": "401811019",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401811019/candidate/receipt.json",
+   "sha256": "581656b38a988aaf0fd7095f3789f35093ccf1bc006bec8e7e961be7b2e9d9ba"
+  },
+  {
+   "game": "401810589",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810589/reference/receipt.json",
+   "sha256": "6844fc31c7fb9608b3f01e0d63534c3096ca8db544f85c37a7f99299b6393f7c"
+  },
+  {
+   "game": "401810589",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810589/candidate/receipt.json",
+   "sha256": "a498f9ffcfe767eccfc1ce05ad5456f47ea35da56c0093c9df29b1c61da9cc76"
+  },
+  {
+   "game": "401810984",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810984/reference/receipt.json",
+   "sha256": "e50022f80dd5d0d4be4cc6d9268f6b62b2888ab96b0f792739b7d57dd7b2010d"
+  },
+  {
+   "game": "401810984",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810984/candidate/receipt.json",
+   "sha256": "25448b47ad448394e044876418b4fa439094ee87b95e7a4257f0b4bfbf361703"
+  },
+  {
+   "game": "401810544",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810544/reference/receipt.json",
+   "sha256": "0b0e521b51d891934b086d96a6a5120fa4a0ff4092b8b138445932b1be6cccbb"
+  },
+  {
+   "game": "401810544",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810544/candidate/receipt.json",
+   "sha256": "996a6524e1e6ae1bd74bd4048d59b100b15b9d7c3ec05ba01083a5a32a851280"
+  },
+  {
+   "game": "401810890",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810890/reference/receipt.json",
+   "sha256": "6adb7c324cd3285f080a24e290b68b7f2885ec4bfda5816eb3cdeaef335a7635"
+  },
+  {
+   "game": "401810890",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810890/candidate/receipt.json",
+   "sha256": "dbaf3341b9634cc4a719c9e1f5c397323274d9f3ae3aee574cc9dd581deb5e83"
+  },
+  {
+   "game": "401810792",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810792/reference/receipt.json",
+   "sha256": "c2a8aa60f44b17d225e402fb92f92cf064d1ceef9bc9357d82f6e022d7034ffa"
+  },
+  {
+   "game": "401810792",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810792/candidate/receipt.json",
+   "sha256": "2e07802361831e3e5c19d8cd1ab78137fd8a842364ce4c6fe893fa1c008650cb"
+  },
+  {
+   "game": "401810996",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c2_engine_development_v1/401810996/reference/receipt.json",
+   "sha256": "dfc5aa258694d45705c458c54c7e824b63867af227dc2530629e49c54f5b88ac"
+  },
+  {
+   "game": "401810996",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/development/401810996/candidate/receipt.json",
+   "sha256": "5b16ef09f96051577cb7fb7757bd9e08099729379e33837483bf3cab69c4412e"
+  }
+ ],
+ "derived_outputs": {
+  "data/derived/experiments/b1_development_v2_reference.parquet": "2f49432ce5ed1ca17f235a68d289f1b6f07a0b05e528f41b71119d6cba550358",
+  "data/derived/experiments/b1_development_v2_reference_players.parquet": "e6f0f58e8971d22cd6923334ff3d72490ecbc73063727cbd5ac6d35385f86ede",
+  "data/derived/experiments/b1_development_v2_candidate.parquet": "26f9690b1779b2a2faecac8bd4313b6c5e4e62ba6294c40572ab9fca5cbe092b",
+  "data/derived/experiments/b1_development_v2_candidate_players.parquet": "e3d3fc0ca1386b2c967d147e2220e221f20711becde2d05150b62fb49e1c59f2"
+ },
+ "mechanism_counts": {
+  "eligible_shots": 101090,
+  "routed_long_shots": 54158,
+  "long_makes": 1678
+ },
+ "fresh_jobs": 197,
+ "seconds": 1312.4054964589996,
+ "production_changed": false,
+ "protected_scoring": false
+}

@@ -409,6 +409,7 @@ class Engine:
             from scripts.late_clock import load_recipe
             self.clock_policy = load_recipe(ROOT / self.runtime['clock_recipe'], self.m.cfg['train_through'])
         self.world_observer = None  # optional read-only zones/selected-segment capture
+        self.buzzer_policy = None  # explicit research-only end-of-period long-shot mechanism
         self.rotation_policy: RotationPolicy | None = None
         if self.runtime.get('foul_policy') == 'nba-rule3-v1':
             from scripts.foul_out import Rule3Policy
@@ -540,6 +541,9 @@ class Engine:
         clock_policy = self.clock_policy
         if clock_policy is not None:
             clock_policy.begin(int(seed))
+        buzzer_policy = getattr(self, 'buzzer_policy', None)
+        if buzzer_policy is not None:
+            buzzer_policy.begin(g.input_before, seed)
         if self.rotation_diag is not None:
             self.rotation_diag.append((tables, combo))
         fouled_out = np.zeros((W, g.n), bool)
@@ -625,10 +629,14 @@ class Engine:
             what = np.full(n, -1)
             if act.size:
                 what[act] = draw(m.predict('what', wctx(act), act.size), rng)
+            if buzzer_policy is not None:
+                what[buzzer_policy.select(ctx, what)] = ZONES.index('above3')
             shot = act[what[act] < 5]
             zone = np.where(what < 5, what, 0)
             band = np.zeros(n, int)
             res = np.zeros(n, int)
+            shot_distance = np.zeros(n, dtype=np.float32)
+            shot_lateral = np.zeros(n, dtype=np.float32)
             shot_keys = [k for k in nodes.MU_SHOT if k in m.mu]  # the defenders' FG% allowed at the shot's zone (blend, top-1, top-2)
             mu_shot = {k: np.full(n, np.nan, np.float32) for k in shot_keys}
             if shot.size:
@@ -642,10 +650,16 @@ class Engine:
                 court_loc = {}
                 if getattr(m, 'court', None) is not None:
                     band[shot], court_loc = m.court.decode(band[shot], wctx(shot), rng)
-                loc = {'zone': zone[shot].astype(np.float32), 'distance': m.band_d[band[shot]], 'lateral': m.band_l[band[shot]], **at_zone, **court_loc}
+                shot_distance[shot], shot_lateral[shot] = m.band_d[band[shot]], m.band_l[band[shot]]
+                if buzzer_policy is not None:
+                    band[shot], shot_distance[shot], shot_lateral[shot] = buzzer_policy.locations(
+                        shot, band[shot], shot_distance[shot], shot_lateral[shot])
+                loc = {'zone': zone[shot].astype(np.float32), 'distance': shot_distance[shot], 'lateral': shot_lateral[shot], **at_zone, **court_loc}
                 for k in shot_keys:
                     mu_shot[k][shot] = at_zone[k]
                 res[shot] = draw(m.predict('shot_result', wctx(shot, loc), shot.size), rng)
+                if buzzer_policy is not None:
+                    res[shot] = buzzer_policy.results(shot, res[shot])
             made = shot[res[shot] >= 1]
             and1 = shot[res[shot] == 2]
             miss = shot[res[shot] == 0]
@@ -661,12 +675,12 @@ class Engine:
             st.ingame['uses_so_far'][A[act], a_glob[act]] += 1
             # assists
             if made.size:
-                loc = {'zone': zone[made].astype(np.float32), 'distance': m.band_d[band[made]], 'lateral': m.band_l[band[made]], **{k: v[made] for k, v in mu_shot.items()}}
+                loc = {'zone': zone[made].astype(np.float32), 'distance': shot_distance[made], 'lateral': shot_lateral[made], **{k: v[made] for k, v in mu_shot.items()}}
                 asst = made[rng.random(made.size) < m.predict('assisted', wctx(made, loc), made.size)]
                 if asst.size:
                     keep = (np.arange(5)[None, :] != actor[asst][:, None]).reshape(-1)
                     rows = self._flat({**{k: v[asst] for k, v in ctx.items()}, 'zone': zone[asst].astype(np.float32),
-                                       'distance': m.band_d[band[asst]]}, {k: v[asst] for k, v in off_five.items()}, keep)
+                                       'distance': shot_distance[asst]}, {k: v[asst] for k, v in off_five.items()}, keep)
                     pick = self._choose('assister', rows, 4, rng, asst.size)
                     others = np.array([[j for j in range(5) if j != a] for a in actor[asst]])
                     who_ast = L_off[asst, others[np.arange(asst.size), pick]]
@@ -674,11 +688,11 @@ class Engine:
                     st.ingame['ast_so_far'][A[asst], who_ast] += 1
             # misses: blocks and rebounds
             if miss.size:
-                loc = {'zone': zone[miss].astype(np.float32), 'distance': m.band_d[band[miss]], 'lateral': m.band_l[band[miss]], **{k: v[miss] for k, v in mu_shot.items()}}
+                loc = {'zone': zone[miss].astype(np.float32), 'distance': shot_distance[miss], 'lateral': shot_lateral[miss], **{k: v[miss] for k, v in mu_shot.items()}}
                 blocked = rng.random(miss.size) < m.predict('blocked', wctx(miss, loc), miss.size)
                 bl = miss[blocked]
                 if bl.size:
-                    rows = self._flat({**{k: v[bl] for k, v in ctx.items()}, 'zone': zone[bl].astype(np.float32), 'distance': m.band_d[band[bl]]},
+                    rows = self._flat({**{k: v[bl] for k, v in ctx.items()}, 'zone': zone[bl].astype(np.float32), 'distance': shot_distance[bl]},
                                       {k: v[bl] for k, v in def_five.items()})
                     blocker = L_def[bl, self._choose('blocker', rows, 5, rng, bl.size)]
                     self._add(st, 'blk', A[bl], blocker, pidx[bl])
@@ -776,8 +790,8 @@ class Engine:
                 if ftm_miss.size:
                     is_and1 = trip[ftm_miss] == 1
                     reb_extra = {'zone': np.where(is_and1, zone[ftm_miss], np.nan).astype(np.float32),
-                                 'distance': np.where(is_and1, m.band_d[band[ftm_miss]], np.nan).astype(np.float32),
-                                 'lateral': np.where(is_and1, m.band_l[band[ftm_miss]], np.nan).astype(np.float32),
+                                 'distance': np.where(is_and1, shot_distance[ftm_miss], np.nan).astype(np.float32),
+                                 'lateral': np.where(is_and1, shot_lateral[ftm_miss], np.nan).astype(np.float32),
                                  'value': np.where(is_and1, np.where(three[ftm_miss], 3.0, 2.0), np.nan).astype(np.float32),
                                  'fta': trip[ftm_miss].astype(np.float32), 'ft_miss': (~is_and1).astype(np.float32),
                                  'blocked': np.zeros(ftm_miss.size, np.float32)}

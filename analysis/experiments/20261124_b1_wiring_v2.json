@@ -1,0 +1,69 @@
+{
+ "kind": "B1 frozen end-of-period long-shot screen; no promotion",
+ "phase": "wiring",
+ "game_ids": [
+  "401809250",
+  "401810330",
+  "401810342"
+ ],
+ "worlds": 1000,
+ "manifest_sha256": "64cb8ed7cf7a8a4f19d21dfd789d7d4b7a6d6e59b7a5025b02150f87695750b2",
+ "reference_raw_parity": [
+  "401809250",
+  "401810330",
+  "401810342"
+ ],
+ "receipts": [
+  {
+   "game": "401809250",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/wiring/401809250/reference/receipt.json",
+   "sha256": "dbe24cc64bb737e4166c1b95c36a3d9f9084f01bdc96f4cc04e20f460732e9b5"
+  },
+  {
+   "game": "401809250",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/wiring/401809250/candidate/receipt.json",
+   "sha256": "307324b1de273d4bec8e92c3b6fa7d6e5dc648a7a9c822733b2d73d43e52995e"
+  },
+  {
+   "game": "401810330",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/wiring/401810330/reference/receipt.json",
+   "sha256": "d6487da679bdd10235848c195eba71f58f127ed6f954105c972ca3ec8ceee48d"
+  },
+  {
+   "game": "401810330",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/wiring/401810330/candidate/receipt.json",
+   "sha256": "d7611116cff9a587c618d747c51cd1e1c1b08b22a1abdcff11218a961e031f53"
+  },
+  {
+   "game": "401810342",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/wiring/401810342/reference/receipt.json",
+   "sha256": "aa79f73b24d6e99f17407e9373a8577afb239eabdbb742d10ece6d5a7185636c"
+  },
+  {
+   "game": "401810342",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/d42_b1_buzzer_v2/wiring/401810342/candidate/receipt.json",
+   "sha256": "4a87831f227fea9fe3b9d414d1963004c35e93e9a4c900bc5a39f6b840b8b9c8"
+  }
+ ],
+ "derived_outputs": {
+  "data/derived/experiments/b1_wiring_v2_reference.parquet": "da2c2aeac2f662875f709a58dcd70feb56f394171583bdda561ac85e893a761b",
+  "data/derived/experiments/b1_wiring_v2_reference_players.parquet": "4e6dfbaec7ca2cf3f9157336b2bd866c2ae89e11cbaec3ff32896a7e9c63e357",
+  "data/derived/experiments/b1_wiring_v2_candidate.parquet": "902f485aa8e90ac3a1a9295bccfc402bce1d0fa44c99b8bd44ab0b713ff63c8c",
+  "data/derived/experiments/b1_wiring_v2_candidate_players.parquet": "4c5011174b3c45221b12fbe6d5a087d7818e8970e332b34e3545abd41650d1ea"
+ },
+ "mechanism_counts": {
+  "eligible_shots": 1551,
+  "routed_long_shots": 859,
+  "long_makes": 39
+ },
+ "fresh_jobs": 6,
+ "seconds": 67.82162483400316,
+ "production_changed": false,
+ "protected_scoring": false
+}

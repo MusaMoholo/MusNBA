@@ -1,0 +1,11 @@
+{
+ "kind": "B1 checkpoint full online nightly measured result",
+ "ended": "2026-11-24T15:42:22.294991+00:00",
+ "exit_code": 0,
+ "seconds": 999.745315832999,
+ "limit_seconds": 3600,
+ "within_limit": true,
+ "source_exact": true,
+ "changed_sources": [],
+ "start_sha256": "962a45a0342571648df5662a92af31d8d565044eb541bba3bbe85eb6700d1217"
+}

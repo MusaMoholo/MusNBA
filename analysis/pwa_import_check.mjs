@@ -372,7 +372,9 @@ if (args['require-advanced'] && shootingTarget) {
     const text = document.querySelector('#view').textContent;
     return !!profile && text.includes(ui.rate(profile.rate)) && text.includes('not conventional')
       && !!dist?.defined && text.includes('Each projected value is calculated in each saved world')
-      && text.includes(ui.f1(dist.exact_q[2]) + '%') && text.includes('Defined in ' + dist.defined.toLocaleString())
+      && text.includes(ui.f1(dist.exact_q[2]) + '%')
+      && text.includes('Defined in ' + (dist.defined_worlds ?? dist.defined).toLocaleString())
+      && (!dist.weighted || text.includes(ui.pct(dist.defined / dist.total) + ' weighted probability has a positive denominator'))
       && !!chart.querySelector('svg.hist');
   })()`));
   await send('Page.navigate', {url: args.url + '#/game/' + shootingTarget.game + '/fg/team'}, s);

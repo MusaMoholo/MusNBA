@@ -1,0 +1,856 @@
+{
+ "kind": "B1 fixed team-score development/independent decision; no automatic promotion",
+ "phase": "development",
+ "policy": {
+  "version": "b1-team-score-v1-20261124",
+  "class": "learned",
+  "primary": "paired mean home/away team-points CRPS",
+  "bootstrap": {
+   "replicates": 10000,
+   "seed": 20261122,
+   "unit": "complete game; home/away together"
+  },
+  "benefit": "Control-minus-candidate CRPS CI95 lower>0; point gain>=.05. MAE and RMSE must not increase.",
+  "bias": "If independent control signed mean bias CI95 excludes0, require>=25% absolute bias reduction. Otherwise candidate absolute signed mean bias<=1.0point/team.",
+  "safeguards": "All27 proper-score bounds and25 coverage vetoes from promotion-v3-20261123; player tiers graded first;17 bias diagnostics retained.",
+  "development_qualification": "Same benefit/MAE/RMSE/bias target and v3 safeguards. No independent screen unless qualified; no treating a failed setup as mechanism rejection.",
+  "confirmation": "One disjoint200-game independent screen, same unchanged recipe and policy.",
+  "attribution": "One added mechanism; removing it is r3. At wiring, no-heave contexts and disabled mode must reproduce old raw worlds.",
+  "release": "Only a survivor receives seed/10k/earlier-fold/stress and prospective new protected recipe once; never r3 protected rescore."
+ },
+ "qualified": false,
+ "team_score_objective_met": false,
+ "team_metrics": {
+  "arms": {
+   "control": {
+    "bias": {
+     "mean": 1.0778325,
+     "ci95": [
+      -0.14699012499999983,
+      2.2896688125
+     ]
+    },
+    "mae": {
+     "mean": 8.9648175,
+     "ci95": [
+      8.305135937500001,
+      9.65392975
+     ]
+    },
+    "rmse": {
+     "mean": 11.478666367113386,
+     "ci95": [
+      10.652579949652365,
+      12.315469444989954
+     ]
+    },
+    "crps": {
+     "mean": 6.414921292500001,
+     "ci95": [
+      5.965698441124999,
+      6.889926873625
+     ]
+    }
+   },
+   "candidate": {
+    "bias": {
+     "mean": 1.0509125,
+     "ci95": [
+      -0.1801426874999997,
+      2.2686149374999998
+     ]
+    },
+    "mae": {
+     "mean": 9.0083025,
+     "ci95": [
+      8.3503670625,
+      9.6994344375
+     ]
+    },
+    "rmse": {
+     "mean": 11.51489843083733,
+     "ci95": [
+      10.680570324263643,
+      12.354144233461566
+     ]
+    },
+    "crps": {
+     "mean": 6.4309339575,
+     "ci95": [
+      5.979191844250001,
+      6.9116397236875
+     ]
+    }
+   }
+  },
+  "primary_gain": {
+   "mean": -0.016012665000000058,
+   "ci95": [
+    -0.041244085875000086,
+    0.008889635875000001
+   ]
+  },
+  "control_bias_detectable": false,
+  "checks": {
+   "primary_ci95_lower_above_zero": false,
+   "primary_mean_gain_at_least_point05": false,
+   "mae_not_increased": false,
+   "rmse_not_increased": false,
+   "owner_bias_target": false
+  }
+ },
+ "descriptive_strata": {
+  "control": {
+   "side": {
+    "away": {
+     "games": 200,
+     "team_games": 200,
+     "support": "supported",
+     "bias": 1.2160199999999997,
+     "mae": 9.34445,
+     "rmse": 11.812585699160026,
+     "crps": 6.598633259999999,
+     "coverage80": 0.7933957219251337
+    },
+    "home": {
+     "games": 200,
+     "team_games": 200,
+     "support": "supported",
+     "bias": 0.9396450000000004,
+     "mae": 8.585185000000001,
+     "rmse": 11.134737636558842,
+     "crps": 6.231209325,
+     "coverage80": 0.8083210784313725
+    }
+   },
+   "team": {
+    "1": {
+     "games": 12,
+     "team_games": 12,
+     "support": "small descriptive stratum",
+     "bias": 0.6672500000000016,
+     "mae": 7.1089166666666666,
+     "rmse": 8.527505462716906,
+     "crps": 5.024648583333334,
+     "coverage80": 0.9444444444444443
+    },
+    "10": {
+     "games": 12,
+     "team_games": 12,
+     "support": "small descriptive stratum",
+     "bias": -0.7247500000000002,
+     "mae": 6.891749999999999,
+     "rmse": 9.208449113902587,
+     "crps": 5.239084583333333,
+     "coverage80": 0.8333333333333334
+    },
+    "11": {
+     "games": 11,
+     "team_games": 11,
+     "support": "small descriptive stratum",
+     "bias": -1.6155454545454533,
+     "mae": 8.318818181818186,
+     "rmse": 9.413168141202275,
+     "crps": 5.449808818181818,
+     "coverage80": 0.9090909090909091
+    },
+    "12": {
+     "games": 13,
+     "team_games": 13,
+     "support": "small descriptive stratum",
+     "bias": 1.923999999999998,
+     "mae": 9.754153846153844,
+     "rmse": 11.626123072301775,
+     "crps": 6.660327384615385,
+     "coverage80": 0.6923076923076923
+    },
+    "13": {
+     "games": 15,
+     "team_games": 15,
+     "support": "small descriptive stratum",
+     "bias": 2.100333333333333,
+     "mae": 9.110066666666665,
+     "rmse": 11.360797316503215,
+     "crps": 6.388399533333333,
+     "coverage80": 0.8
+    },
+    "14": {
+     "games": 17,
+     "team_games": 17,
+     "support": "small descriptive stratum",
+     "bias": 0.19841176470588345,
+     "mae": 8.293941176470588,
+     "rmse": 10.882983298277557,
+     "crps": 6.100598882352941,
+     "coverage80": 0.8408304498269895
+    },
+    "15": {
+     "games": 13,
+     "team_games": 13,
+     "support": "small descriptive stratum",
+     "bias": -1.3759999999999972,
+     "mae": 11.26,
+     "rmse": 12.644842220021204,
+     "crps": 7.494619999999999,
+     "coverage80": 0.7692307692307693
+    },
+    "16": {
+     "games": 16,
+     "team_games": 16,
+     "support": "small descriptive stratum",
+     "bias": -0.5933125000000006,
+     "mae": 10.7495625,
+     "rmse": 14.560426747266028,
+     "crps": 7.9671515625,
+     "coverage80": 0.7578125
+    },
+    "17": {
+     "games": 14,
+     "team_games": 14,
+     "support": "small descriptive stratum",
+     "bias": 6.251142857142858,
+     "mae": 9.123142857142858,
+     "rmse": 12.114752058072481,
+     "crps": 6.659791571428572,
+     "coverage80": 0.8571428571428571
+    },
+    "18": {
+     "games": 15,
+     "team_games": 15,
+     "support": "small descriptive stratum",
+     "bias": 0.026200000000000046,
+     "mae": 10.935533333333334,
+     "rmse": 14.485666020817499,
+     "crps": 8.330956866666668,
+     "coverage80": 0.5666666666666667
+    },
+    "19": {
+     "games": 13,
+     "team_games": 13,
+     "support": "small descriptive stratum",
+     "bias": 1.1165384615384615,
+     "mae": 6.144692307692306,
+     "rmse": 7.777521431367746,
+     "crps": 4.560820230769232,
+     "coverage80": 0.9230769230769231
+    },
+    "2": {
+     "games": 11,
+     "team_games": 11,
+     "support": "small descriptive stratum",
+     "bias": 3.4385454545454546,
+     "mae": 11.509636363636364,
+     "rmse": 13.808790638904298,
+     "crps": 8.087555636363636,
+     "coverage80": 0.7272727272727273
+    },
+    "20": {
+     "games": 8,
+     "team_games": 8,
+     "support": "small descriptive stratum",
+     "bias": 1.8521249999999991,
+     "mae": 10.291875000000003,
+     "rmse": 12.10579021068018,
+     "crps": 7.175400874999999,
+     "coverage80": 0.75
+    },
+    "21": {
+     "games": 19,
+     "team_games": 19,
+     "support": "small descriptive stratum",
+     "bias": 1.9869473684210532,
+     "mae": 11.42157894736842,
+     "rmse": 15.114743837166342,
+     "crps": 8.41787852631579,
+     "coverage80": 0.7368421052631579
+    },
+    "22": {
+     "games": 9,
+     "team_games": 9,
+     "support": "small descriptive stratum",
+     "bias": 5.075333333333331,
+     "mae": 11.76377777777778,
+     "rmse": 12.81725454221769,
+     "crps": 7.6608891111111115,
+     "coverage80": 0.6339869281045751
+    },
+    "23": {
+     "games": 14,
+     "team_games": 14,
+     "support": "small descriptive stratum",
+     "bias": 1.7822142857142833,
+     "mae": 6.4125000000000005,
+     "rmse": 8.89045002476574,
+     "crps": 4.949145928571427,
+     "coverage80": 0.8571428571428571
+    },
+    "24": {
+     "games": 14,
+     "team_games": 14,
+     "support": "small descriptive stratum",
+     "bias": 4.888642857142857,
+     "mae": 10.2895,
+     "rmse": 13.100836524545183,
+     "crps": 7.4051195,
+     "coverage80": 0.6638655462184875
+    },
+    "25": {
+     "games": 16,
+     "team_games": 16,
+     "support": "small descriptive stratum",
+     "bias": 2.904749999999999,
+     "mae": 7.369624999999998,
+     "rmse": 10.541149960986228,
+     "crps": 5.687692999999999,
+     "coverage80": 0.875
+    },
+    "26": {
+     "games": 19,
+     "team_games": 19,
+     "support": "small descriptive stratum",
+     "bias": 0.8049473684210517,
+     "mae": 5.538315789473686,
+     "rmse": 7.019760687178956,
+     "crps": 4.233438210526316,
+     "coverage80": 1.0
+    },
+    "27": {
+     "games": 14,
+     "team_games": 14,
+     "support": "small descriptive stratum",
+     "bias": 1.215142857142857,
+     "mae": 10.225428571428571,
+     "rmse": 12.6420613599433,
+     "crps": 7.193055714285714,
+     "coverage80": 0.7857142857142857
+    },
+    "28": {
+     "games": 11,
+     "team_games": 11,
+     "support": "small descriptive stratum",
+     "bias": 2.8758181818181843,
+     "mae": 8.872727272727273,
+     "rmse": 10.596524207150535,
+     "crps": 6.051250363636364,
+     "coverage80": 0.8181818181818182
+    },
+    "29": {
+     "games": 13,
+     "team_games": 13,
+     "support": "small descriptive stratum",
+     "bias": -1.5667692307692305,
+     "mae": 5.47876923076923,
+     "rmse": 7.78089077360486,
+     "crps": 4.500854,
+     "coverage80": 0.9230769230769231
+    },
+    "3": {
+     "games": 15,
+     "team_games": 15,
+     "support": "small descriptive stratum",
+     "bias": 3.2839333333333345,
+     "mae": 6.475533333333336,
+     "rmse": 7.751530614444267,
+     "crps": 4.529550733333333,
+     "coverage80": 0.9333333333333333
+    },
+    "30": {
+     "games": 13,
+     "team_games": 13,
+     "support": "small descriptive stratum",
+     "bias": -2.4927692307692313,
+     "mae": 7.841076923076925,
+     "rmse": 9.126827791651467,
+     "crps": 5.329726461538462,
+     "coverage80": 0.8461538461538461
+    },
+    "4": {
+     "games": 3,
+     "team_games": 3,
+     "support": "small descriptive stratum",
+     "bias": -1.9809999999999992,
+     "mae": 6.077666666666663,
+     "rmse": 6.1430230071738,
+     "crps": 3.9571696666666667,
+     "coverage80": 1.0
+    },
+    "5": {
+     "games": 12,
+     "team_games": 12,
+     "support": "small descriptive stratum",
+     "bias": 5.690916666666664,
+     "mae": 9.103916666666665,
+     "rmse": 11.4273799526984,
+     "crps": 6.50590825,
+     "coverage80": 0.75
+    },
+    "6": {
+     "games": 16,
+     "team_games": 16,
+     "support": "small descriptive stratum",
+     "bias": 1.1598749999999978,
+     "mae": 12.103874999999999,
+     "rmse": 13.98920620514259,
+     "crps": 8.282300625000001,
+     "coverage80": 0.6875
+    },
+    "7": {
+     "games": 13,
+     "team_games": 13,
+     "support": "small descriptive stratum",
+     "bias": -3.2313076923076904,
+     "mae": 9.333769230769233,
+     "rmse": 13.012102032634553,
+     "crps": 6.906721461538461,
+     "coverage80": 0.8461538461538461
+    },
+    "8": {
+     "games": 14,
+     "team_games": 14,
+     "support": "small descriptive stratum",
+     "bias": -1.290071428571427,
+     "mae": 9.908785714285713,
+     "rmse": 11.403128715400873,
+     "crps": 6.595800214285715,
+     "coverage80": 0.7207792207792209
+    },
+    "9": {
+     "games": 15,
+     "team_games": 15,
+     "support": "small descriptive stratum",
+     "bias": -2.8360666666666647,
+     "mae": 10.060199999999998,
+     "rmse": 12.338691716169372,
+     "crps": 7.139435000000001,
+     "coverage80": 0.6666666666666666
+    }
+   },
+   "pace": {
+    "low": {
+     "games": 70,
+     "team_games": 140,
+     "support": "supported",
+     "bias": 3.7645285714285714,
+     "mae": 8.54777142857143,
+     "rmse": 11.243567613147908,
+     "crps": 6.224266685714285,
+     "coverage80": 0.8092436974789916
+    },
+    "middle": {
+     "games": 66,
+     "team_games": 132,
+     "support": "supported",
+     "bias": 1.690219696969697,
+     "mae": 8.722098484848486,
+     "rmse": 10.76051604210617,
+     "crps": 6.0558923712121215,
+     "coverage80": 0.8282828282828283
+    },
+    "high": {
+     "games": 64,
+     "team_games": 128,
+     "support": "supported",
+     "bias": -2.4922656250000004,
+     "mae": 9.671265625,
+     "rmse": 12.412603765930822,
+     "crps": 6.99369834375,
+     "coverage80": 0.7634055397727273
+    }
+   }
+  },
+  "candidate": {
+   "side": {
+    "away": {
+     "games": 200,
+     "team_games": 200,
+     "support": "supported",
+     "bias": 1.1585100000000006,
+     "mae": 9.36785,
+     "rmse": 11.849459785998686,
+     "crps": 6.624853599999999,
+     "coverage80": 0.7934019607843138
+    },
+    "home": {
+     "games": 200,
+     "team_games": 200,
+     "support": "supported",
+     "bias": 0.9433149999999995,
+     "mae": 8.648755,
+     "rmse": 11.170321146905312,
+     "crps": 6.237014314999999,
+     "coverage80": 0.8017047619047619
+    }
+   },
+   "team": {
+    "1": {
+     "games": 12,
+     "team_games": 12,
+     "support": "small descriptive stratum",
+     "bias": 0.6029166666666654,
+     "mae": 7.075749999999999,
+     "rmse": 8.509334164120402,
+     "crps": 4.976618916666667,
+     "coverage80": 0.9583333333333334
+    },
+    "10": {
+     "games": 12,
+     "team_games": 12,
+     "support": "small descriptive stratum",
+     "bias": -0.8398333333333312,
+     "mae": 6.880333333333335,
+     "rmse": 9.289776432544903,
+     "crps": 5.292024166666667,
+     "coverage80": 0.8333333333333334
+    },
+    "11": {
+     "games": 11,
+     "team_games": 11,
+     "support": "small descriptive stratum",
+     "bias": -1.5824545454545464,
+     "mae": 8.35609090909091,
+     "rmse": 9.40867393322875,
+     "crps": 5.398081909090909,
+     "coverage80": 0.9090909090909091
+    },
+    "12": {
+     "games": 13,
+     "team_games": 13,
+     "support": "small descriptive stratum",
+     "bias": 2.0419999999999994,
+     "mae": 9.95,
+     "rmse": 11.890549505319825,
+     "crps": 6.815651076923077,
+     "coverage80": 0.6923076923076923
+    },
+    "13": {
+     "games": 15,
+     "team_games": 15,
+     "support": "small descriptive stratum",
+     "bias": 2.0863333333333327,
+     "mae": 9.132066666666667,
+     "rmse": 11.430608811432574,
+     "crps": 6.3767261999999985,
+     "coverage80": 0.7866666666666667
+    },
+    "14": {
+     "games": 17,
+     "team_games": 17,
+     "support": "small descriptive stratum",
+     "bias": 0.18123529411764724,
+     "mae": 8.161235294117645,
+     "rmse": 10.774193407779315,
+     "crps": 6.005072411764706,
+     "coverage80": 0.8235294117647058
+    },
+    "15": {
+     "games": 13,
+     "team_games": 13,
+     "support": "small descriptive stratum",
+     "bias": -1.2698461538461525,
+     "mae": 11.363692307692306,
+     "rmse": 12.740713891361755,
+     "crps": 7.506915384615384,
+     "coverage80": 0.736117216117216
+    },
+    "16": {
+     "games": 16,
+     "team_games": 16,
+     "support": "small descriptive stratum",
+     "bias": -0.6551250000000017,
+     "mae": 10.830875,
+     "rmse": 14.694057889160504,
+     "crps": 8.036246375000001,
+     "coverage80": 0.7541666666666667
+    },
+    "17": {
+     "games": 14,
+     "team_games": 14,
+     "support": "small descriptive stratum",
+     "bias": 6.169428571428571,
+     "mae": 9.10557142857143,
+     "rmse": 11.983790003882033,
+     "crps": 6.647412428571427,
+     "coverage80": 0.8571428571428571
+    },
+    "18": {
+     "games": 15,
+     "team_games": 15,
+     "support": "small descriptive stratum",
+     "bias": 0.08100000000000022,
+     "mae": 10.982733333333336,
+     "rmse": 14.606232028372911,
+     "crps": 8.442287266666666,
+     "coverage80": 0.5722222222222223
+    },
+    "19": {
+     "games": 13,
+     "team_games": 13,
+     "support": "small descriptive stratum",
+     "bias": 1.1521538461538445,
+     "mae": 6.152153846153847,
+     "rmse": 7.725834841620676,
+     "crps": 4.486739384615385,
+     "coverage80": 0.9230769230769231
+    },
+    "2": {
+     "games": 11,
+     "team_games": 11,
+     "support": "small descriptive stratum",
+     "bias": 3.3140909090909076,
+     "mae": 11.482999999999999,
+     "rmse": 13.803724066023236,
+     "crps": 8.118411181818182,
+     "coverage80": 0.6818181818181818
+    },
+    "20": {
+     "games": 8,
+     "team_games": 8,
+     "support": "small descriptive stratum",
+     "bias": 1.9194999999999993,
+     "mae": 10.29625,
+     "rmse": 12.139710323973961,
+     "crps": 7.161364,
+     "coverage80": 0.75
+    },
+    "21": {
+     "games": 19,
+     "team_games": 19,
+     "support": "small descriptive stratum",
+     "bias": 1.9220526315789477,
+     "mae": 11.49794736842105,
+     "rmse": 15.107395458063436,
+     "crps": 8.45625552631579,
+     "coverage80": 0.7669172932330827
+    },
+    "22": {
+     "games": 9,
+     "team_games": 9,
+     "support": "small descriptive stratum",
+     "bias": 5.182222222222224,
+     "mae": 11.636666666666668,
+     "rmse": 12.72486147490634,
+     "crps": 7.611460444444443,
+     "coverage80": 0.5555555555555556
+    },
+    "23": {
+     "games": 14,
+     "team_games": 14,
+     "support": "small descriptive stratum",
+     "bias": 1.6920000000000022,
+     "mae": 6.499142857142856,
+     "rmse": 8.939250919400349,
+     "crps": 4.942399571428571,
+     "coverage80": 0.8571428571428571
+    },
+    "24": {
+     "games": 14,
+     "team_games": 14,
+     "support": "small descriptive stratum",
+     "bias": 4.9042142857142865,
+     "mae": 10.621357142857144,
+     "rmse": 13.39956221832852,
+     "crps": 7.665865785714286,
+     "coverage80": 0.6890756302521008
+    },
+    "25": {
+     "games": 16,
+     "team_games": 16,
+     "support": "small descriptive stratum",
+     "bias": 2.9435624999999996,
+     "mae": 7.303562499999999,
+     "rmse": 10.399548502819725,
+     "crps": 5.629765562499999,
+     "coverage80": 0.875
+    },
+    "26": {
+     "games": 19,
+     "team_games": 19,
+     "support": "small descriptive stratum",
+     "bias": 0.57921052631579,
+     "mae": 5.625526315789474,
+     "rmse": 6.972022311013008,
+     "crps": 4.212623105263158,
+     "coverage80": 1.0
+    },
+    "27": {
+     "games": 14,
+     "team_games": 14,
+     "support": "small descriptive stratum",
+     "bias": 1.1598571428571418,
+     "mae": 10.192285714285715,
+     "rmse": 12.593311881425677,
+     "crps": 7.2477284285714285,
+     "coverage80": 0.7857142857142857
+    },
+    "28": {
+     "games": 11,
+     "team_games": 11,
+     "support": "small descriptive stratum",
+     "bias": 2.9096363636363636,
+     "mae": 8.620000000000003,
+     "rmse": 10.412781167217704,
+     "crps": 5.965013818181819,
+     "coverage80": 0.8181818181818182
+    },
+    "29": {
+     "games": 13,
+     "team_games": 13,
+     "support": "small descriptive stratum",
+     "bias": -1.801461538461536,
+     "mae": 5.671307692307692,
+     "rmse": 7.959968752354593,
+     "crps": 4.556724230769231,
+     "coverage80": 0.9230769230769231
+    },
+    "3": {
+     "games": 15,
+     "team_games": 15,
+     "support": "small descriptive stratum",
+     "bias": 3.3361333333333345,
+     "mae": 6.364400000000002,
+     "rmse": 7.721623758424565,
+     "crps": 4.4939032,
+     "coverage80": 0.9333333333333333
+    },
+    "30": {
+     "games": 13,
+     "team_games": 13,
+     "support": "small descriptive stratum",
+     "bias": -2.5347692307692307,
+     "mae": 7.9315384615384605,
+     "rmse": 9.15738282228313,
+     "crps": 5.359234615384614,
+     "coverage80": 0.8461538461538461
+    },
+    "4": {
+     "games": 3,
+     "team_games": 3,
+     "support": "small descriptive stratum",
+     "bias": -2.3133333333333326,
+     "mae": 6.379333333333335,
+     "rmse": 6.45911350986599,
+     "crps": 4.169104666666667,
+     "coverage80": 1.0
+    },
+    "5": {
+     "games": 12,
+     "team_games": 12,
+     "support": "small descriptive stratum",
+     "bias": 5.588333333333335,
+     "mae": 9.166666666666668,
+     "rmse": 11.579986881109438,
+     "crps": 6.565616333333334,
+     "coverage80": 0.75
+    },
+    "6": {
+     "games": 16,
+     "team_games": 16,
+     "support": "small descriptive stratum",
+     "bias": 1.0664999999999996,
+     "mae": 12.116249999999999,
+     "rmse": 14.009477305559976,
+     "crps": 8.17380225,
+     "coverage80": 0.640625
+    },
+    "7": {
+     "games": 13,
+     "team_games": 13,
+     "support": "small descriptive stratum",
+     "bias": -3.269923076923076,
+     "mae": 9.665153846153846,
+     "rmse": 13.229985426470256,
+     "crps": 7.097802230769231,
+     "coverage80": 0.8461538461538461
+    },
+    "8": {
+     "games": 14,
+     "team_games": 14,
+     "support": "small descriptive stratum",
+     "bias": -1.2057857142857142,
+     "mae": 9.984214285714287,
+     "rmse": 11.39512980870086,
+     "crps": 6.589767642857143,
+     "coverage80": 0.7523809523809524
+    },
+    "9": {
+     "games": 15,
+     "team_games": 15,
+     "support": "small descriptive stratum",
+     "bias": -2.7340000000000013,
+     "mae": 10.139866666666665,
+     "rmse": 12.361103780272481,
+     "crps": 7.122301199999998,
+     "coverage80": 0.6666666666666666
+    }
+   },
+   "pace": {
+    "low": {
+     "games": 70,
+     "team_games": 140,
+     "support": "supported",
+     "bias": 3.7198571428571428,
+     "mae": 8.555285714285713,
+     "rmse": 11.227610779426126,
+     "crps": 6.208295471428571,
+     "coverage80": 0.8040680272108844
+    },
+    "middle": {
+     "games": 66,
+     "team_games": 132,
+     "support": "supported",
+     "bias": 1.709515151515152,
+     "mae": 8.800181818181818,
+     "rmse": 10.82216641757541,
+     "crps": 6.09681956060606,
+     "coverage80": 0.8295454545454546
+    },
+    "high": {
+     "games": 64,
+     "team_games": 128,
+     "support": "supported",
+     "bias": -2.5474296874999998,
+     "mae": 9.718414062499999,
+     "rmse": 12.477828608112771,
+     "crps": 7.0190002734375,
+     "coverage80": 0.757436099439776
+    }
+   }
+  }
+ },
+ "player_first_gate": {
+  "compatible": true,
+  "proper_established": 27,
+  "proper_checks": 27,
+  "coverage_harms": [],
+  "unresolved_proper": []
+ },
+ "mechanism_counts": {
+  "eligible_shots": 101090,
+  "routed_long_shots": 54158,
+  "long_makes": 1678
+ },
+ "independent_accounting": {
+  "worlds": 400000,
+  "players": 8584,
+  "lineup_snapshots": 114225732,
+  "post_foul_snapshots": 16165675,
+  "lineup_fives_checked": 228451464,
+  "overtime_worlds": 14460,
+  "max_replayed_player_minute_error": 1.0658141036401503e-14,
+  "foul_penalty_events": 91,
+  "foul_penalty_makes": 69,
+  "foul_penalty_lineups": 1190,
+  "retained_offensive_fouls": 2
+ },
+ "independent_fgm_component_checks": 800,
+ "next": "Retain r3; close this single recipe without rescue, independent or protected scoring. Owner team-score objective remains unmet.",
+ "production_changed": false,
+ "protected_scoring": false,
+ "source_sha256": {
+  "analysis/b1_grade.py": "229361cdda80b49b303d15b169ef82d4333e30738211aa3b70f824584cd64833",
+  "analysis/experiments/20261124_b1_frozen_recipe_v2.json": "a8e71d84b7f33f48e004363ba53cd3438256bcadde7f64192289a09c7b2e9971",
+  "analysis/experiments/20261124_b1_development_v2.json": "16c4bd92f9b3dd8c61d95e8a980170a1c2a44ba6ba954526859d3acdb8d12ec1",
+  "analysis/experiments/20261124_b1_development_compare_v2.json": "1c1d58d3fb0ce785e0f43778af5b57fb9913d13a4c55c9eaabedde4e9dca7f01",
+  "analysis/experiments/20261124_b1_development_gate_v2.json": "715595f003b3675c76760fe8973fb244c7b48c102f5e8f2768e6b9c09ad37ba2"
+ }
+}

@@ -100,6 +100,14 @@ small total CRPS regression+.04910[+.01256,+.08451] was accepted for supported t
 - A2 found no supported shooting-form factor; synthetic variance is not calibration. Prior closing400-game audit: total bias+2.75,
 PTS80%coverage76.3%,10.21 versus10.72 positive-minute players/team. No blanket bench cut follows. Earlier scoring neutrality/panel defects
 were repaired prospectively; no proof a real old candidate failed because of them. `20261123_closing_{scorer_precheck,controls,scorer_audit}_v1.json`.
+- B1 development200: team CRPS6.4149,MAE8.9648,bias+1.0778[-.1470,2.2897],80%coverage80.09%; player-first baseline is
+`20261124_b1_source_audit_v2.json`. All400 box/period scores reconcile;143 recorded technical FT explain segment residuals.
+One isolated buzzer-shot study routes supported short possessions to numeric40+ft3s with prior-only empirical frequency/geometry/conversion;
+feed heave text never selects shots/defenders. `20261124_b1_frozen_recipe_v2.json` freezes benefit/bias/v3 safeguards and disjoint200 panels.
+The200-game attempt did not qualify: CRPS gain−.01601[-.04124,.00889],MAE8.9648→9.0083,RMSE11.4787→11.5149;
+27/27 proper safeguards clear. `20261124_b1_development_decision_v2.json` owns the rejection; no independent/protected run.
+It is disabled in production. This conditional-on-selected-shots result does not reject wider end-of-period modelling;
+source and actual-participant limits remain, and the owner team-score objective is unmet.
 
 ## Saved analysis and competitions
 

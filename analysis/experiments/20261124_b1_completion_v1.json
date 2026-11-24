@@ -1,0 +1,293 @@
+{
+ "kind": "B1 fixed research rejection and verified delivery checkpoint",
+ "B1_percent": 100,
+ "D42_B_percent": 30,
+ "B2_percent": 0,
+ "B3_percent": 0,
+ "original_programme_percent": 74,
+ "automatic_S11_S12_S14_credit": false,
+ "decision": "retain_r3",
+ "team_score_objective_met": false,
+ "production_model_changed": false,
+ "protected_scoring": false,
+ "new_qualifier": null,
+ "study": {
+  "development_games": 200,
+  "worlds_per_arm_game": 1000,
+  "candidate_variants": 1,
+  "independent_candidate_games": 0,
+  "rejection": "All frozen owner team-score criteria failed;27/27 proper safeguards cleared. No rescue/retune or unqualified confirmation/stress/protected run.",
+  "limit": "Conditional-on-selected-shots recipe does not settle wider end-of-period modelling."
+ },
+ "rungs": {
+  "10": "Development baseline and input audit frozen",
+  "20": "All400 team scores/143 technical points reconciled",
+  "30": "One distinct buzzer mechanism selected",
+  "40": "Team-score-v1/v3 safeguards and prior-only auxiliary frozen",
+  "50": "Chronological mechanism support, tests and3/3 disabled raw replays",
+  "60": "200-game paired screen completed",
+  "70": "51 targeted tests and full world accounting passed; broader candidate stress gated off after rejection",
+  "80": "Player tiers, team CRPS/bias/MAE/RMSE/strata measured",
+  "90": "No survivor; independent panel stays unopened under frozen fallback",
+  "100": "Fresh full nightly/season, smoke/fault, accounting, PWA and docs accompany module checkpoint"
+ },
+ "nightly": {
+  "kind": "B1 checkpoint full online nightly measured result",
+  "ended": "2026-11-24T15:42:22.294991+00:00",
+  "exit_code": 0,
+  "seconds": 999.745315832999,
+  "limit_seconds": 3600,
+  "within_limit": true,
+  "source_exact": true,
+  "changed_sources": [],
+  "start_sha256": "962a45a0342571648df5662a92af31d8d565044eb541bba3bbe85eb6700d1217"
+ },
+ "live_run": "data/derived/live_runs/2026-11-24-1795534215245819000",
+ "fresh_season": {
+  "report": "20261124_b1_fresh_season_v1.json",
+  "fresh_chunks": 31,
+  "reused_chunks": 0
+ },
+ "accounting": {
+  "report": "20261124_b1_delivery_audit_v1.json",
+  "rate_distributions": 2664,
+  "games": 3,
+  "saved_examples": 15,
+  "live_worlds": 50000
+ },
+ "targeted_tests": 51,
+ "verification": {
+  "kind": "Real smoke and deliberate in-memory fault exit evidence",
+  "checks": [
+   {
+    "name": "smoke",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 72.76320549999946,
+    "summary": "112/112 checks passed",
+    "log": "/tmp/musnba_20261124_b1_smoke_v1.log",
+    "sha256": "f104bc58c339de8bb7fa34fda64537d6c514582e0d3f62d1aa25fa70ef54fd0f"
+   },
+   {
+    "name": "fault",
+    "exit_code": 1,
+    "expected_exit_code": 1,
+    "seconds": 72.52554716699888,
+    "summary": "91/112 checks passed",
+    "log": "/tmp/musnba_20261124_b1_fault_v1.log",
+    "sha256": "7b58d291dfec437f6bb5e18f9cee996a9d7406e735bba1982859e87e0ef1b619"
+   }
+  ],
+  "status": "pass"
+ },
+ "pwa": {
+  "phone": {
+   "checks": 44,
+   "log": "/tmp/musnba_b1_phone_v3.log",
+   "sha256": "d8c27423030200d5b53532d9f473a11f8bbde016e0ef511997e27adb6aa571ad",
+   "url": "https://musamoholo.github.io/MusNBA/",
+   "offline": true,
+   "legacy_saved_games": true
+  },
+  "laptop": {
+   "checks": 48,
+   "log": "/tmp/musnba_b1_laptop_v2.log",
+   "sha256": "3c8af3be991c9916ea99bc5c60b8253f8961619cd83ed4de6aeda4bf62c6e430",
+   "url": "https://musamoholo.github.io/MusNBA/",
+   "offline": true,
+   "legacy_saved_games": true
+  }
+ },
+ "bundles": {
+  "phone": {
+   "path": "/Users/moholom/Library/Mobile Documents/com~apple~CloudDocs/MusNBA/MusNBA.musnba.gz",
+   "bytes": 50903472,
+   "sha256": "31decdc21e9a5cf76aecac41037b4d9f96051a255e44a4b27aaac606b278fcc6",
+   "header": {
+    "format": "musnba",
+    "version": 2,
+    "capabilities": [
+     "competitions-2026-v1",
+     "lineup-forecast-v1",
+     "minute-cdf-player-v2",
+     "player-icons-v1",
+     "shot-zones-v1",
+     "visible-worlds-v1"
+    ],
+    "created": "2026-11-24T15:42:06+00:00",
+    "latest": "2026-11-24",
+    "snapshots": [
+     "2026-11-12",
+     "2026-11-13",
+     "2026-11-14",
+     "2026-11-15",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22",
+     "2026-11-23",
+     "2026-11-24"
+    ],
+    "profile": "phone"
+   }
+  },
+  "laptop": {
+   "path": "/Users/moholom/Library/Mobile Documents/com~apple~CloudDocs/MusNBA/MusNBA-laptop.musnba.gz",
+   "bytes": 262665676,
+   "sha256": "7ca920bb9c2c4f40f62c62a07f2082986341fec51e7bb9041d1884cf0cf2ac46",
+   "header": {
+    "format": "musnba",
+    "version": 2,
+    "capabilities": [
+     "competitions-2026-v1",
+     "lineup-forecast-v1",
+     "minute-cdf-player-v2",
+     "player-icons-v1",
+     "shot-zones-v1",
+     "visible-worlds-v1"
+    ],
+    "created": "2026-11-24T15:41:12+00:00",
+    "latest": "2026-11-24",
+    "snapshots": [
+     "2026-11-12",
+     "2026-11-13",
+     "2026-11-14",
+     "2026-11-15",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22",
+     "2026-11-23",
+     "2026-11-24"
+    ],
+    "profile": "laptop"
+   }
+  }
+ },
+ "shell": {
+  "changed": false,
+  "cache": "c9886c91a5e9bc0b926a",
+  "data_free": true,
+  "deployment_from": "20261124_u25_completion_v1.json",
+  "repository_CI_workflows_added": false
+ },
+ "screenshots": {
+  "root": "/tmp/musnba_b1_phone_v1",
+  "widths": [
+   1440,
+   960,
+   390
+  ],
+  "themes": [
+   "light",
+   "dark"
+  ],
+  "reviewed": 6,
+  "result": "Readable responsive installation and slate; three/two/one game cards, no horizontal overflow."
+ },
+ "manual_device_import_required": true,
+ "real_device_acceptance": false,
+ "preserved_attempts": [
+  "Source audit V1 corrected only private DNP count in V2; immutable V1/source retained.",
+  "Recipe V2 removes ambiguous source/engine other start before full screen; original wiring and source snapshots retained.",
+  "First archive stopped on relative/absolute duplicate paths before any replacement. Fresh normalised2505-file archive verified; partial archive retained.",
+  "Initial PWA runs hit optional final screenshot failure/stall and a stale advanced-metric assertion. Test now distinguishes20000 worlds/40000 mass and checks both support meanings; successful sequential runs are canonical."
+ ],
+ "successor_module": {
+  "id": "B2",
+  "progress": 0,
+  "parent_weights": {
+   "B1": 30,
+   "B2": 30,
+   "B3": 40
+  },
+  "dependencies": [
+   "C/A3 calendar decisions",
+   "prior-only fits and complete historical regular calendars",
+   "16 origins/four seasons",
+   "exact near-term mixture"
+  ],
+  "rungs": {
+   "10": "Reconcile pathway baseline, team-score starting levels, schedules and Cup accounting across all16 frozen historical origins; do not hide weak live possession forecasts with season tuning.",
+   "20": "Build strictly prior carry-over/opponent-adjusted starting-rating candidates.",
+   "30": "Screen start ratings by leave-one-season-out, including November cold starts.",
+   "40": "Test memory/gain/drift against persistence without biased per-world rating updates.",
+   "50": "Assess absence-path support; retain no-future-absence fallback when historical evidence is insufficient.",
+   "60": "Consume accepted near-term Expected worlds once per game with validated mixture accounting.",
+   "70": "Run eligible candidates on all 16 origin combinations at 10k worlds.",
+   "80": "Report team-score bias/CRPS/coverage as well as wins/season CRPS, dispersion and persistence by origin with paired uncertainty; no cancellation hidden by pooled means.",
+   "90": "Select or reject pathway candidates and freeze interactions for integrated confirmation.",
+   "100": "Results, limitations and any affected PWA delivery are checked, committed/pushed and summarised."
+  },
+  "origins": {
+   "season_ending_years": [
+    2023,
+    2024,
+    2025,
+    2026
+   ],
+   "seasons": [
+    "2022-23",
+    "2023-24",
+    "2024-25",
+    "2025-26"
+   ],
+   "origins": [
+    "2022-11-20",
+    "2022-12-25",
+    "2023-02-01",
+    "2023-03-10",
+    "2023-11-20",
+    "2023-12-25",
+    "2024-02-01",
+    "2024-03-10",
+    "2024-11-20",
+    "2024-12-25",
+    "2025-02-01",
+    "2025-03-10",
+    "2025-11-20",
+    "2025-12-25",
+    "2026-02-01",
+    "2026-03-10"
+   ],
+   "selection": "Leave one complete season out; origin and fitted auxiliaries strictly prior; no November/December2026 or later origin",
+   "early_support": "Audit November2022 cold-start/prior support before outcomes. Missing prior history uses the prospectively frozen common uninformative baseline; never future history or silent origin deletion."
+  },
+  "acceptance": "All16 origins, per-date paired CRPS/dispersion/coverage/persistence with cutoff-safe fitting and exact mixture accounting; qualified version or measured rejection retainspathway-v1.",
+  "fallback": "Measured rejection retains pathway-v1; no incomplete investigation closure. Team-score objective stays unmet without an independently qualified engine.",
+  "first_action": "Audit16 historical calendars/Cup finals and November2022 cold-start before any fitting or candidate selection.",
+  "namespace": "data/derived/experiments/d42_b2_calendar_audit_v1",
+  "report": "analysis/experiments/20261124_b2_calendar_audit_v1.json",
+  "max_heavy_threads": 10,
+  "final_nightly": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u scripts/nightly_musnba.py --engine 10000 --sims 10000; authorised online fetch/required rebuild, fresh10k worlds/branch/season and selected replay;≤3600s, independent accounting, both imports/offline/upgrades, inspected1440/960/390/themes, data-free shell only, docs/checkpoint/push and0% successor."
+ },
+ "checkpoint": "Included in module checkpoint; git log owns commit identity. B2 must not start before commit/push.",
+ "reports_sha256": {
+  "analysis/experiments/20261124_b1_archive_v1.json": "c39186bf25461ee1bff207ed73936806981464a5b48ea2f44960a1b5597098f3",
+  "analysis/experiments/20261124_b1_delivery_audit_v1.json": "735b235a99604c23f57926820dd35b34d8524eb62454bf09d11a7376fc748948",
+  "analysis/experiments/20261124_b1_development_compare_v2.json": "1c1d58d3fb0ce785e0f43778af5b57fb9913d13a4c55c9eaabedde4e9dca7f01",
+  "analysis/experiments/20261124_b1_development_decision_v2.json": "d69bde49edc7a9eb2dda9e60917768495d3fbcc99b2525dc2690960738825ff2",
+  "analysis/experiments/20261124_b1_development_gate_v2.json": "715595f003b3675c76760fe8973fb244c7b48c102f5e8f2768e6b9c09ad37ba2",
+  "analysis/experiments/20261124_b1_development_v2.json": "16c4bd92f9b3dd8c61d95e8a980170a1c2a44ba6ba954526859d3acdb8d12ec1",
+  "analysis/experiments/20261124_b1_fresh_capture_v1.json": "492e58feabf53f4a4e77a73c8a6ce828356578ec9b8b036ffb8041939ec5efc0",
+  "analysis/experiments/20261124_b1_fresh_season_v1.json": "5564b58d42548721f9c3fcea0919a72af8a0f7d9c8b657ac5d4d10549150622c",
+  "analysis/experiments/20261124_b1_frozen_recipe_v1.json": "ccf5a40464c2aeb53f2667dc2da384293c5851a0944d10e15c3d512fba8e360a",
+  "analysis/experiments/20261124_b1_frozen_recipe_v2.json": "a8e71d84b7f33f48e004363ba53cd3438256bcadde7f64192289a09c7b2e9971",
+  "analysis/experiments/20261124_b1_nightly_result_v1.json": "c33f5e274b5d8d3ad01df0647aeec362cc8dc7e182fb05bc4e3ed0fd7055de6b",
+  "analysis/experiments/20261124_b1_nightly_start_v1.json": "962a45a0342571648df5662a92af31d8d565044eb541bba3bbe85eb6700d1217",
+  "analysis/experiments/20261124_b1_runtime_v1.json": "7945006292ccbce99dc70fb5200f032e472f5f436e34a75e604c5e459f3f9519",
+  "analysis/experiments/20261124_b1_runtime_v2.json": "64cb8ed7cf7a8a4f19d21dfd789d7d4b7a6d6e59b7a5025b02150f87695750b2",
+  "analysis/experiments/20261124_b1_scoring_reconciliation_v1.json": "98c2f52ecaa79395c412751deb117ef8c81cd7afe7406c375517eba3cffb1185",
+  "analysis/experiments/20261124_b1_smoke_fault_v1.json": "82a22da300a43dc39e6810fec1168c5430e6cdf4ff47e0e7f973df5180c41fc4",
+  "analysis/experiments/20261124_b1_source_audit_v1.json": "6cb06ffd45b49f7d1e940b37236dece636d4259593a7bb29178baf257b4a32d5",
+  "analysis/experiments/20261124_b1_source_audit_v2.json": "c46ccb40e0585517fd3b842fd709ed68437199c548d9b5e92bf16f45177a61a6",
+  "analysis/experiments/20261124_b1_wiring_v1.json": "d1d9de7578cd788197c75c265a66d06a4fe3c366537cee853e1e659fcf759a9e",
+  "analysis/experiments/20261124_b1_wiring_v2.json": "3dc4b98110691379be9677d8560e4c9a062a03923e8144440f091b8b106d9a7b"
+ }
+}

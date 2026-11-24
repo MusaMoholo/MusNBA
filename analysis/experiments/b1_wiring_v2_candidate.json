@@ -1,0 +1,19 @@
+{
+ "run": "b1_wiring_v2_candidate",
+ "fold": "F4",
+ "games": 3,
+ "game_ids": [
+  "401809250",
+  "401810330",
+  "401810342"
+ ],
+ "worlds": 1000,
+ "models": "folds/v1.2d_F4_all",
+ "config": "models/v1.2d.json",
+ "rotation": "targets",
+ "pool": 0,
+ "known_starters": false,
+ "simulation_stream": null,
+ "seed_key": "v1.2d_F4",
+ "kind": "B1 research; actual-participant rosters"
+}
