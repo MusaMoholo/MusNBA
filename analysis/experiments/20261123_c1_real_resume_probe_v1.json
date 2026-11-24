@@ -1,0 +1,23 @@
+{
+ "status": "probe-pass",
+ "canonical_selection_probe_only": true,
+ "production_guard_unfixed_at_probe": true,
+ "run": "/Users/moholom/Repos/Sports/Basketball/data/derived/live_runs/2026-11-23-1795478154680636000",
+ "games": [
+  "401910042",
+  "401910045",
+  "401910036",
+  "401910037",
+  "401910038",
+  "401910039",
+  "401910040",
+  "401910041",
+  "401910043",
+  "401910044"
+ ],
+ "seconds": 15.483720499993069,
+ "same_input_reconstruction": "Actual nightly inputs rebuilt in memory from unchanged current files; exact pickle bytes, selected players, full execution plans and every 1k chunk revalidated.",
+ "new_workers": 0,
+ "new_worlds": 0,
+ "publication": false
+}

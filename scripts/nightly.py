@@ -27,6 +27,7 @@ import shutil
 import sys
 import time
 from copy import deepcopy
+from contextlib import closing
 from datetime import datetime
 from pathlib import Path
 
@@ -78,12 +79,12 @@ def forecast_availability_report(game: dict, registry: dict) -> dict:
     return report
 
 
-def completed_live_tasks(tasks, runtime, median):
+def completed_live_tasks(tasks, runtime, median, *, publishing=False, resume=False):
     """Keep all generation/finalisation in the worker budget; parent loads large arrays afterwards."""
     from scripts import live_forecast
     if runtime.get('rotation_fit') == 'independent-v1':
-        yield from live_forecast.run(tasks, runtime, median, workers=10,
-                                     chunk_worlds=runtime.get('chunk_worlds',1000))
+        yield from live_forecast.run(tasks, runtime, median, workers=9 if publishing else 10,
+                                     chunk_worlds=runtime.get('chunk_worlds',1000), resume=resume)
     else:
         with ProcessPoolExecutor(max_workers=min(8,len(tasks)), initializer=live_forecast.initialise,
                                  initargs=(runtime,)) as pool:
@@ -93,7 +94,8 @@ def completed_live_tasks(tasks, runtime, median):
 
 def project_slate(day: str, teams: dict, master: list[dict], team_rows: list[dict], player_rows: list[dict],
                   registry: dict, prospective: bool, sims: int, period_rows=None, engine_worlds: int = 0,
-                  origin: str | None = None, retained: dict | None = None) -> dict:
+                  origin: str | None = None, retained: dict | None = None, on_complete=None,
+                  resume_root: Path | None = None) -> dict:
     """One slate's games. engine_worlds > 0 (prospective slates only — the engine reads latest profiles, so past dates
     would leak): games come from the possession engine (D22, the default) and each game's per-world, per-period points
     are kept for the team pathway (D25: universe k plays engine world k); the placeholder's results are kept beside them
@@ -115,7 +117,7 @@ def project_slate(day: str, teams: dict, master: list[dict], team_rows: list[dic
     live_tasks, live_dirs = [], {}
     from scripts import live_forecast
     source_hashes = live_forecast.fingerprints() if engine_worlds and prospective else {}
-    live_root = DERIVED / "live_runs" / (day + "-" + str(time.time_ns()))
+    live_root = resume_root or DERIVED / "live_runs" / (day + "-" + str(time.time_ns()))
     eng = engine_mod = None
     if engine_worlds and prospective:
         from scripts import engine as engine_mod
@@ -148,11 +150,24 @@ def project_slate(day: str, teams: dict, master: list[dict], team_rows: list[dic
             raise ValueError('Nightly workers require OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1')
         live_tasks.sort(key=lambda task: (-2**len(task[1]), task[0].game['game_id']))
         completed_dirs = []
-        for directory in completed_live_tasks(live_tasks,engine_mod.ENGINE,eng.m.median):
-            folder = Path(directory)
-            completed_dirs.append(folder)
-            print(f"engine {len(completed_dirs)}/{len(live_tasks)} complete games; {folder.name} in {time.time()-started:.1f}s",flush=True)
-        # The pool has shut down: decompression here cannot become an eleventh compute worker.
+        with closing(completed_live_tasks(live_tasks,engine_mod.ENGINE,eng.m.median,
+                                          publishing=on_complete is not None,
+                                          resume=resume_root is not None)) as completions:
+            for directory in completions:
+                folder = Path(directory)
+                completed_dirs.append(folder)
+                print(f"engine {len(completed_dirs)}/{len(live_tasks)} complete games; {folder.name} in {time.time()-started:.1f}s",flush=True)
+                if on_complete is not None:
+                    if live_forecast.fingerprints() != source_hashes:
+                        raise ValueError('Live runtime/model sources changed before early publication')
+                    on_complete(folder, {'day': day, 'origin': origin, 'T': T, 'lg': lg, 'P': P,
+                                'slate': slate, 'placeholder': placeholder, 'prospective': prospective,
+                                'generated': generated, 'started': started,
+                                'model': {**engine_mod.ENGINE, 'sims': engine_worlds, 'season_sims': sims},
+                                'sims': engine_worlds, 'season_sims': sims,
+                                'engine_inputs': {'engine_sources_sha256': source_hashes},
+                                'retained': retained or {}})
+        # The pool has shut down: normal bulk loading uses no extra compute worker.
         for folder in completed_dirs:
             gid = folder.name
             result = read_json(folder/'game.json')
@@ -237,9 +252,11 @@ def protect_pre_tip(target: Path, slate: list[dict], prospective: bool, complete
         raise ValueError(f'{", ".join(sorted(unsafe))}: refusing to replace a retained pre-tip forecast with a later or unknown forecast')
 
 
-def load_retained(target: Path, slate: list[dict], completed: str) -> dict:
+def load_retained(target: Path, slate: list[dict], completed: str, *, preserve_all=False) -> dict:
     """Load complete original forecasts that cannot safely be regenerated after tip."""
     ids = retained_game_ids(target, slate, True, completed)
+    if preserve_all and (target / 'meta.json').exists():
+        ids |= set(read_json(target / 'meta.json')['games'])
     if not ids:
         return {}
     meta = read_json(target / 'meta.json')
@@ -257,7 +274,7 @@ def load_retained(target: Path, slate: list[dict], completed: str) -> dict:
             n = game['sims']
             mass = WorldMass(n, player_worlds.get('weights'))
             lines, player_ids, sides = player_worlds['lines'], player_worlds['ids'], player_worlds['side']
-            if (source_meta.get('kind') != 'prospective' or verified_pre_tip(source_meta, gid) is not True
+            if (source_meta.get('kind') != 'prospective' or (not preserve_all and verified_pre_tip(source_meta, gid) is not True)
                     or source_meta.get('slate_date') != target.name or game.get('game_id') != gid
                     or source_meta.get('saved_worlds', {}).get(gid, n) != n
                     or (not game.get('lineups') and n != source_meta['sims'])
@@ -296,13 +313,13 @@ def validate_retained(part: dict, season: dict, target: Path, completed: str) ->
     protect_pre_tip(target, part['slate'], part['prospective'], completed, set(retained))
     if not retained:
         return
-    current = load_retained(target, part['slate'], completed)
+    current = load_retained(target, part['slate'], completed, preserve_all=True)
     if not set(retained) <= set(current):
         raise ValueError('retained source forecasts changed during refresh')
     if read_json(target / 'stats.json') != {'teams': part['T'], 'league': part['lg'], 'players': part['P']}:
         raise ValueError('retained forecast statistics differ from the new season context')
     season_rows = {row['game_id']: row for row in season['games']}
-    if not part.get('season_worlds') and season['sims'] != part['sims']:
+    if not part.get('delivery') and not part.get('season_worlds') and season['sims'] != part['sims']:
         raise ValueError('retained forecasts and season require the same world count')
     for gid, saved in retained.items():
         original = current[gid]
@@ -316,6 +333,8 @@ def validate_retained(part: dict, season: dict, target: Path, completed: str) ->
                 or any(not np.array_equal(part['player_worlds'][gid][key], value)
                        for key, value in original['players'].items())):
             raise ValueError(f'{gid}: retained forecast, model, origin or worlds changed')
+        if part.get('delivery', {}).get('state') == 'partial':
+            continue  # Season is explicitly retained, and does not consume the new games yet.
         scores = original['worlds'].sum(axis=2)
         mass = WorldMass(len(scores), original['players'].get('weights'))
         if part.get('season_worlds'):
@@ -345,7 +364,7 @@ def write_snapshot(part: dict, season: dict, archive_root=None) -> dict:
     """Stage a slate, archive the previous snapshot, and retain it for rollback during publication."""
     day, T, lg, slate, prospective = part['day'], part['T'], part['lg'], part['slate'], part['prospective']
     origin = part['origin']
-    if season['as_of'] != origin:
+    if season['as_of'] != origin and part.get('delivery', {}).get('state') != 'partial':
         raise ValueError(f'season origin {season["as_of"]} differs from forecast origin {origin}')
     target = SNAPSHOTS / day
     meta = {
@@ -367,6 +386,8 @@ def write_snapshot(part: dict, season: dict, archive_root=None) -> dict:
                                           'injury news from that date was not retained.']),
         'seconds': None,
     }
+    if part.get('delivery'):
+        meta['delivery'] = part['delivery']
     staging = SNAPSHOTS / f'.{day}.partial'
     if staging.exists():
         shutil.rmtree(staging)
@@ -430,6 +451,70 @@ def write_snapshot(part: dict, season: dict, archive_root=None) -> dict:
     print(f'snapshot {day} ({meta["kind"]}, {meta["model"]["id"]}): {len(slate)} games, {meta["sims"]:,} sims each, '
           f'season {len(season["games"])} games as of {season["as_of"]} ({season["model"]}) · {meta["seconds"]}s', flush=True)
     return meta
+
+
+class EarlyDelivery:
+    """Publish one complete game while the bounded queue continues the slate.
+
+    Keep all prior same-day forecasts and their exact provenance. Season results
+    remain explicitly stale until final coupling; neither views nor export computes.
+    """
+    def __init__(self, registry, archive_root=None, output=None):
+        self.registry, self.archive_root, self.output = registry, archive_root, output
+        self.published = set()
+
+    def __call__(self, folder, context):
+        if self.published:
+            return
+        from scripts import live_forecast
+        if not live_forecast.verified_completion(folder):
+            raise ValueError('cannot publish an unverified game')
+        gid, day = folder.name, context['day']
+        snapshots = views.load_snapshots()
+        eligible = [d for d in snapshots if d <= day and not views.discarded_preview(d, snapshots[d]['meta'])]
+        if not eligible:
+            print('Early delivery deferred: no retained season; final nightly will publish.', flush=True)
+            return
+        season_source = snapshots[max(eligible)]
+        season = read_json(season_source['path'] / 'season.json')
+        target = SNAPSHOTS / day
+        old = load_retained(target, context['slate'], utc_now(), preserve_all=True) if target.exists() else {}
+        # Never replace a forecast whose tip passed during generation.
+        protected = retained_game_ids(target, context['slate'], True, utc_now())
+        if gid in protected:
+            print(f'Early delivery deferred: {gid} now has a protected pre-tip forecast.', flush=True)
+            return
+        kept = {key: value for key, value in old.items() if key != gid}
+        game = read_json(folder / 'game.json')
+        fixture = next(g for g in context['slate'] if g['game_id'] == gid)
+        game['availability_report'] = forecast_availability_report(fixture, self.registry)
+        with np.load(folder / 'points.npz', allow_pickle=False) as z:
+            points = z['points']
+        with np.load(folder / 'players.npz', allow_pickle=False) as z:
+            players = {key: z[key] for key in z.files}
+        part = {**context, 'retained': kept,
+                'games': {**{k: v['game'] for k, v in kept.items()}, gid: game},
+                'worlds': {**{k: v['worlds'] for k, v in kept.items()}, gid: points},
+                'player_worlds': {**{k: v['players'] for k, v in kept.items()}, gid: players},
+                'live_dirs': {**{k: v['live_dir'] for k, v in kept.items() if v['live_dir']}, gid: folder},
+                'placeholder': {**{k: v['placeholder'] for k, v in kept.items()}, gid: context['placeholder'][gid]}}
+        part['slate'] = [g for g in context['slate'] if g['game_id'] in part['games']]
+        part['delivery'] = {'schema': 1, 'state': 'partial', 'generation': context['generated'],
+                            'complete': [gid], 'pending': [g['game_id'] for g in context['slate'] if g['game_id'] != gid],
+                            'season_current': False, 'season_as_of': season['as_of'],
+                            'season_generated': season_source['meta']['generated']}
+        # Stats must match any preserved forecasts; never silently recontextualise them.
+        write_snapshot(part, season, self.archive_root)
+        from basketball_common import VIEWS
+        if VIEWS.exists():
+            archive_paths([VIEWS], self.archive_root)
+        views.build()
+        if self.output:
+            from scripts.nightly_musnba import export_pair
+            if export_pair(self.output):
+                raise RuntimeError('early bundle pair failed; retry export-only before activation')
+        self.published.add(gid)
+        print(f'Early delivery published {gid}; {len(part["delivery"]["pending"])} generation games pending; season retained.', flush=True)
 
 
 def build_snapshot(day: str, teams: dict, master: list[dict], team_rows: list[dict], player_rows: list[dict],
@@ -529,9 +614,17 @@ def main():
                         help="skip rebuilding the engine's inputs (segments, rotations, profiles) from today's finals")
     parser.add_argument('--ahead', type=int, default=0, metavar='DAYS',
                         help='must be 0: possession forecasts are limited to today (D50)')
+    parser.add_argument('--resume-live-run', type=Path,
+                        help='Resume an unchanged retained world queue; requires --offline --no-rebuild')
     args = parser.parse_args()
     if args.ahead != 0:
         parser.error('possession forecasts are limited to today; --ahead must be 0')
+    if args.resume_live_run and (not args.offline or not args.no_rebuild):
+        parser.error('resume requires --offline --no-rebuild; changed inputs are rejected')
+    if args.resume_live_run:
+        args.resume_live_run = args.resume_live_run.expanduser().resolve()
+        if not any(args.resume_live_run.glob('*/work-plan.json')):
+            parser.error('resume needs the logged live-run root containing game work-plans')
     day = args.date or today_et()
     if args.views_only:
         views.build()
@@ -573,9 +666,25 @@ def main():
     retained = load_retained(SNAPSHOTS / day, [g for g in master if g['date_et'] == day], utc_now()) if prospective else {}
     if retained and args.placeholder:
         raise ValueError('cannot replace retained engine forecasts with placeholder forecasts')
+    early = EarlyDelivery(registry, args.archive_root, os.environ.get('MUSNBA_EARLY_OUTPUT')) if prospective and not args.placeholder else None
     parts = [project_slate(d, teams, master, team_rows, player_rows, registry, prospective, args.sims, period_rows,
-                           engine_worlds=0 if args.placeholder else args.engine, origin=day, retained=retained)
+                           engine_worlds=0 if args.placeholder else args.engine, origin=day, retained=retained,
+                           on_complete=early, resume_root=args.resume_live_run)
              for d in days]
+    if prospective:
+        # Tips can pass while the queue runs. Freeze those original forecasts before
+        # season coupling rather than attempting a post-tip replacement at commit.
+        saved = load_retained(SNAPSHOTS / day, parts[0]['slate'], utc_now())
+        if early and early.published:
+            all_saved = load_retained(SNAPSHOTS / day, parts[0]['slate'], utc_now(), preserve_all=True)
+            saved.update({gid: all_saved[gid] for gid in early.published})
+        for part in parts:
+            part['retained'] = {**part['retained'], **saved}
+            for gid, original in saved.items():
+                part['games'][gid], part['placeholder'][gid] = original['game'], original['placeholder']
+                part['worlds'][gid], part['player_worlds'][gid] = original['worlds'], original['players']
+                if original['live_dir']:
+                    part['live_dirs'][gid] = original['live_dir']
     if parts:  # D25/D26: one season from today — universe k plays engine world k of every engine game, then the pathway
         T, lg = team_table(team_rows, day, teams)
         worlds = {gid: w for part in parts for gid, w in part['worlds'].items()}

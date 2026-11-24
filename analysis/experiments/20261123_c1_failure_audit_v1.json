@@ -1,0 +1,7 @@
+{
+ "fault": "intentional worker fault",
+ "parallel_running_job_seconds": 30,
+ "failure_return_seconds": 0.33765320898965,
+ "no_children_remain": true,
+ "test": "real two-process queue cancellation"
+}

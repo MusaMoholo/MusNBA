@@ -1,0 +1,98 @@
+{
+ "status": "pass",
+ "completed": "2026-11-24T00:03:30.145594+00:00",
+ "generation_complete_games_at_both_imports": 1,
+ "generation_total_games": 10,
+ "run": "data/derived/live_runs/2026-11-23-1795478154680636000",
+ "imports": {
+  "laptop": {
+   "checks": 44,
+   "log": "/tmp/musnba_c1_early_laptop_v1.log",
+   "sha256": "14f9d235d530fc3a0fbd931ccd06fb80bde502e3eeed527a908ebe3cafcc9700",
+   "bundle": {
+    "header": {
+     "format": "musnba",
+     "version": 2,
+     "capabilities": [
+      "early-delivery-v1",
+      "lineup-forecast-v1",
+      "minute-cdf-player-v2",
+      "player-icons-v1"
+     ],
+     "created": "2026-11-24T00:01:21+00:00",
+     "latest": "2026-11-23",
+     "snapshots": [
+      "2026-11-12",
+      "2026-11-13",
+      "2026-11-14",
+      "2026-11-15",
+      "2026-11-16",
+      "2026-11-17",
+      "2026-11-18",
+      "2026-11-19",
+      "2026-11-20",
+      "2026-11-21",
+      "2026-11-22",
+      "2026-11-23"
+     ],
+     "profile": "laptop"
+    },
+    "sha256": "5819408dad7a02bca60985042b1fdb65b20db081fe9ad1db9330b86f12bf9a49",
+    "bytes": 194968284
+   }
+  },
+  "phone": {
+   "checks": 37,
+   "log": "/tmp/musnba_c1_early_phone_v1.log",
+   "sha256": "f19519740220ad87ca86cd54f45938eea741a4b7456e4f80e67ef9af48f3f9bb",
+   "bundle": {
+    "header": {
+     "format": "musnba",
+     "version": 2,
+     "capabilities": [
+      "early-delivery-v1",
+      "lineup-forecast-v1",
+      "minute-cdf-player-v2",
+      "player-icons-v1"
+     ],
+     "created": "2026-11-24T00:02:01+00:00",
+     "latest": "2026-11-23",
+     "snapshots": [
+      "2026-11-12",
+      "2026-11-13",
+      "2026-11-14",
+      "2026-11-15",
+      "2026-11-16",
+      "2026-11-17",
+      "2026-11-18",
+      "2026-11-19",
+      "2026-11-20",
+      "2026-11-21",
+      "2026-11-22",
+      "2026-11-23"
+     ],
+     "profile": "phone"
+    },
+    "sha256": "68cfd06bc81089c62c3d26557d548508d891176f96d3d0d498077a25947a3215",
+    "bytes": 102685650
+   }
+  }
+ },
+ "laptop_import_completed": {
+  "checks": [
+   44,
+   44
+  ],
+  "completed": "2026-11-24T00:02:59.089773+00:00",
+  "completed_games": 1,
+  "log_sha256": "14f9d235d530fc3a0fbd931ccd06fb80bde502e3eeed527a908ebe3cafcc9700"
+ },
+ "legacy": {
+  "laptop": 35,
+  "phone": 28,
+  "upgrade": 30
+ },
+ "responsive": "Both profiles:1440/960/390, light/dark screenshots; laptop six manually inspected.",
+ "activation": "Injected failure after staged writes, abandoned-generation cleanup, unknown capabilities, offline reload all pass.",
+ "real_device_acceptance": false
+}

@@ -12,13 +12,12 @@ Laptop PWA is primary; phone is stripped. Browsing only reads stored results.
 Accepted: **engine-v1.3-r3**, D29 rotations, Rule 3 foul-outs, independent fitting, contextual late timing, pathway v1,
 lineup branches and offline photos. Availability calibration, richer defence, season calibration and View Centre remain open.
 
-## Latest checkpoint — U24 delivered,23 November
+## Latest checkpoint — C1 delivered,24 November
 
-Owner23 November: ship current-data dashboard fixes **before** Chunk C. Headliners: truthful counts/shared lineup context;
-richer scenarios, advanced distributions, table shading, sortable tables and simpler navigation. D60 adds game-specific report interpretation
-into explicit 0/25/50/75/100% branch-weight assumptions; no learned-model accuracy claim. HANDOFF records delivery and next actions.
-Delivered:140k worlds/14branches in25m14s, refreshed iCloud bundles and published/tested shell;114 responsive checks,108/108 smoke.
-Exact evidence and device-import requirement are in HANDOFF. **Stop before C1.**
+Early complete-game PWA publication, exact-input chunk resume and continuous bounded scheduling are delivered.
+Nine workers run beside one publication slot; same-input chunks remain byte-identical. Final source qualification took12m12s;
+fresh fetch/rebuild through qualification26m31s. Hosted early/final imports, interruption/offline/upgrade and independent accounting pass.
+Model and original ledgers are unchanged. HANDOFF owns exact evidence, current bundles and manual-import requirement.
 
 ## Next modular chunk — C
 
@@ -33,8 +32,8 @@ one comprehensive NBA analysis workspace. Better models are an objective; promot
 | C4 analysis/replay | 25% | Five reconciled saved-world examples, court/event/box/rotation playback, zone maps and deeper discoverable metrics/outcomes. |
 | C5 competitions/release | 25% | World-local Cup, regular82 completion, play-in/playoffs; three competition sections and integrated delivery. |
 
-**C0%**. HANDOFF has fifty concrete rungs, commands, dependencies, acceptance/fallback and fixed weights totalling100%.
-C1 precedes new contracts; C2/C3 compare separately against r3. C4 confirms/freezes survivors; C5 alone runs a qualifier's protected
+**C10%; C1=100%, remaining modules0%.** HANDOFF has fifty concrete rungs, commands, dependencies, acceptance/fallback and fixed weights totalling100%.
+C1 is complete; C2/C3 compare separately against r3. C4 confirms/freezes survivors; C5 alone runs a qualifier's protected
 possession test. Exactly two bounded learned families; no rescue search. Calendar correctness is separate from a ratings retune.
 C1 and C5 require fresh nightlies; intermediate affected releases refresh outputs/PWA as necessary. Independent work overlaps within ten
 heavy threads. Negative research still ships useful UX on accepted engines. Full rationale/rules: `20261123_chunk_c_plan_v2.json`.

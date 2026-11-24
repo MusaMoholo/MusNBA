@@ -75,6 +75,60 @@ if (!imported) {
   ws.close();
   process.exit(1);
 }
+if (args['require-complete']) {
+  check('complete update removes interim notice and refreshes season context', await evaluate(`(async () => {
+    const ui=await import('./assets/ui.mjs'), m=ui.meta(), season=await ui.api('standings/'+m.latest);
+    return !m.delivery && !document.body.textContent.includes('Games arriving') && !season.delivery
+      && season.season_model.as_of===m.latest && season.sims>0;
+  })()`));
+}
+if (args['require-early']) {
+  check('early complete-game update and retained season are explicit', await evaluate(`(async () => {
+    const ui = await import('./assets/ui.mjs'), d = ui.meta().delivery;
+    if (d?.state !== 'partial' || d.season_current !== false || !d.complete.length || !d.pending.length
+      || new Set([...d.complete, ...d.pending]).size !== d.complete.length + d.pending.length) return false;
+    const game = await ui.api('game/' + d.complete[0]);
+    const text = document.body.textContent;
+    return !!game.projection?.sim && text.includes('Games arriving') && text.includes('Season forecast retained from')
+      && text.includes('Import again') && text.includes(ui.stamp(d.season_generated));
+  })()`));
+  for (const [label, width, height, scale, mobile] of [['desktop',1440,1000,1,false],['half',960,1000,1,false],['phone',390,844,2,true]]) {
+    await send('Emulation.setDeviceMetricsOverride', {width,height,deviceScaleFactor:scale,mobile}, s);
+    for (const theme of ['light','dark']) {
+      await evaluate(`document.documentElement.dataset.theme=${JSON.stringify(theme)}`);
+      check(`early freshness notice fits ${label} ${theme}`, await evaluate(`document.documentElement.scrollWidth <= innerWidth`));
+      if (args.out) {
+        const shot = await send('Page.captureScreenshot', {format:'png'}, s);
+        writeFileSync(join(args.out, `early-${label}-${theme}.png`), Buffer.from(shot.data,'base64'));
+      }
+    }
+  }
+  check('interrupted staged import leaves previous active generation readable', await evaluate(`(async () => {
+    const storage = await import('./assets/pwa-storage.mjs'), before = await storage.read('meta','active');
+    const metaBefore = (await storage.stored('/api/meta')).body;
+    const header = {format:'musnba',version:2,capabilities:[],snapshots:['2026-11-23'],latest:'2026-11-23'};
+    const body = '{}', digest = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(body))),v=>v.toString(16).padStart(2,'0')).join('');
+    const rows = [header,...Array.from({length:300},(_,i)=>({key:'/api/interruption-'+i,status:200,type:'application/json',binary:false,body,sha256:digest}))];
+    const text=rows.map(r=>JSON.stringify(r)).join(String.fromCharCode(10))+String.fromCharCode(10);
+    const blob=await new Response(new Blob([text]).stream().pipeThrough(new CompressionStream('gzip'))).blob();
+    let staged=false;
+    try { await storage.importBundle(blob,()=>{staged=true;throw Error('intentional interruption');});return false; }
+    catch(error) {
+      await storage.cleanupInterruptedImport();
+      return staged && before===await storage.read('meta','active') && !await storage.read('meta','pending')
+        && metaBefore===(await storage.stored('/api/meta')).body;
+    }
+  })()`));
+  check('restart cleans an abandoned staging generation without activating it', await evaluate(`(async () => {
+    const storage=await import('./assets/pwa-storage.mjs'), active=await storage.read('meta','active');
+    const before=(await storage.stored('/api/meta')).body, abandoned=crypto.randomUUID();
+    await storage.write('meta','pending',abandoned);
+    await storage.write('records',abandoned+'|/api/meta',{body:'abandoned partial data'});
+    await storage.cleanupInterruptedImport();
+    return active===await storage.read('meta','active') && !await storage.read('meta','pending')
+      && !await storage.read('records',abandoned+'|/api/meta') && before===(await storage.stored('/api/meta')).body;
+  })()`));
+}
 if (args['bypass-service-worker']) {
   check('static API accepts URL, string and Request without service-worker control', await evaluate(`(async () => {
     const url = new URL('./api/meta', location.href);

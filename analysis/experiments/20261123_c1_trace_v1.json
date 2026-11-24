@@ -1,0 +1,50 @@
+{
+ "schema": 1,
+ "source_run": "data/derived/live_runs/2026-11-23-1795474142305562000",
+ "cases": [
+  {
+   "game": "401910036",
+   "branched": false,
+   "branches": 1,
+   "worlds_per_branch": 10000,
+   "chunks": 10,
+   "completion_files": {
+    "game.json": 564541,
+    "players.npz": 5651275,
+    "points.npz": 96636,
+    "provenance.json": 4261
+   },
+   "stat_seconds": 0.00121704199409578
+  },
+  {
+   "game": "401910037",
+   "branched": true,
+   "branches": 2,
+   "worlds_per_branch": 10000,
+   "chunks": 20,
+   "completion_files": {
+    "game.json": 621178,
+    "players.npz": 10766278,
+    "points.npz": 193277,
+    "provenance.json": 4295
+   },
+   "stat_seconds": 0.0007521250081481412
+  }
+ ],
+ "measured_prior_nightly": {
+  "first_complete_game_seconds": 172.8,
+  "last_complete_game_seconds": 1099.9,
+  "snapshot_seconds": 1114.85,
+  "full_nightly_seconds": 1514.01
+ },
+ "boundaries": {
+  "chunk": "npz then atomic JSON with sha256; orphan npz possible on interruption",
+  "game": "_store returns after players/points/game/provenance, no aggregate completion hash",
+  "queue": "bounded to workers submitted; pending jobs in memory",
+  "failure": "future.result propagates but ProcessPoolExecutor context waits for running jobs",
+  "resume": "folder.mkdir(exist_ok=False) rejects retained run",
+  "publication": "parent loads after pool shutdown; season then snapshot then views then wrapper exports",
+  "activation": "snapshot rename rollback plus .previous detection; export files individually atomic, pair may differ"
+ },
+ "decision": "Preserve canonical chunk RNG; add hash-verified resume and complete-game receipts before early publication; reserve a parent compute slot while publishing. Season freshness must be explicit; early publication must preserve existing forecasts."
+}

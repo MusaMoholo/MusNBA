@@ -10,7 +10,7 @@ wording are preserved in the verified [history archive](README.md#documentation-
 independent per-world rotation fitting and deterministic 1k chunks,10k worlds/branch. **Contextual late-clock timing is accepted and delivered.**
 For ET origin D, result games before D, rebuild dated profiles/minutes/rotations/matchups and team ratings.
 Possession worlds cover today's games only. Team pathway v1 consumes those exact outcomes and plays tomorrow onward,
-updating each world's offence/defence from its own score surprises. Serving only reads saved results.
+updating each world's offence/defence from its own score surprises. Serving only reads saved results. C1 `early-complete-game-v1` uses complete-game hashes, exact-input chunk resume, bounded cancellation and background scheduling beside publication. Partial bundles require `early-delivery-v1`; retained-season freshness stays explicit.
 
 Sixteen LightGBM decisions: duration, event, who, what, location, shot result, assisted, assister, blocked, blocker,
 turnover type, stealer, fouler, free throw, rebound, rebounder. Candidate-player nodes softmax the five on court;

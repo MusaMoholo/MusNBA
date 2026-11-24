@@ -1,0 +1,23 @@
+{
+ "status": "pass",
+ "run": "/Users/moholom/Repos/Sports/Basketball/data/derived/live_runs/2026-11-23-1795480373232797000",
+ "games": [
+  "401910042",
+  "401910045",
+  "401910041",
+  "401910043",
+  "401910044"
+ ],
+ "retained_outside_queue": [
+  "401910036",
+  "401910037",
+  "401910038",
+  "401910039",
+  "401910040"
+ ],
+ "seconds": 11.321517791002407,
+ "same_input_reconstruction": "Actual nightly inputs rebuilt in memory from unchanged current files; exact pickle bytes, JSON selection metadata, execution plans and every 1k chunk revalidated by unpatched production guards.",
+ "new_workers": 0,
+ "new_worlds": 0,
+ "publication": false
+}

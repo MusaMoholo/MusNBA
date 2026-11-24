@@ -1,0 +1,192 @@
+{
+ "status": "complete",
+ "updated": "2026-11-24T00:49:27.900716+00:00",
+ "module": "C1 early complete-game delivery and safe queue resume",
+ "runtime": "engine-v1.3-r3",
+ "model_accuracy_change": false,
+ "protected_rescoring": false,
+ "generation": "2026-11-24T00:42:52Z",
+ "qualification": {
+  "generated_worlds": 70000,
+  "generated_games": 5,
+  "generated_branches": 7,
+  "retained_pre_tip_games": 5,
+  "published_worlds": 130000,
+  "season_paths": 40000,
+  "run_seconds": 731.5069313749991,
+  "fresh_fetch_rebuild_to_final_seconds": 1591.199605,
+  "fetch_run": "20261124T001830Z",
+  "input_rebuild_seconds": 224.6,
+  "offline_no_rebuild_justification": "Fresh authorised fetch/rebuild completed in v2. Stop is deliberate to overlap queue scheduling with publication; no data/node/auxiliary-parameter change. Reuse these exact current inputs with --offline --no-rebuild, new namespace, fresh worlds/season. Verify hashes before launch and compare every common raw chunk against stopped v2.",
+  "unchanged_inputs_sha256": "38bb85fd0fe5bd9c89d3b183e616c8c4ddafdc0fea6ec4d3b632a457b186fce4",
+  "run": "data/derived/live_runs/2026-11-23-1795480373232797000",
+  "log": "/tmp/musnba_c1_nightly_20261123_v3.log"
+ },
+ "checks": {
+  "smoke": [
+   107,
+   107
+  ],
+  "smoke_fault": {
+   "checks": [
+    86,
+    107
+   ],
+   "exit": 1
+  },
+  "smoke_skip": "Earliest retained game keeps registry20261123T224442Z, different from latest collection. Its private replay and a new-game replay both pass all arrays exactly.",
+  "focused_python": 42,
+  "node": 19,
+  "real_reconstructed_resume_games": 5,
+  "new_resume_workers": 0,
+  "cross_schedule_identical_chunks": 30,
+  "independent_histograms": 43740,
+  "advanced_distributions": 5742,
+  "exact_season_atoms": true,
+  "responsive_baseline": 18,
+  "early_widths": [
+   1440,
+   960,
+   390
+  ],
+  "early_themes": [
+   "light",
+   "dark"
+  ],
+  "screenshots": "/tmp/musnba-c1-qualified-early-{laptop,phone}; six laptop combinations visually inspected; earlier same-shell inspection in /tmp/musnba-c1-early-laptop",
+  "pwa": {
+   "final_laptop": {
+    "checks": 36,
+    "log": "/tmp/musnba_c1_final_laptop_v1.log",
+    "sha256": "c4bb5426b8932af4e672726f50898d55861c681f7c23b2d6d982992af66b3b38"
+   },
+   "final_phone": {
+    "checks": 34,
+    "log": "/tmp/musnba_c1_final_phone_v1.log",
+    "sha256": "932ffc7a89e2e163ee7b068f94aad9aafd5abc2b09a17916a6fd6ca4ddbecf03"
+   },
+   "qualified_early_laptop": {
+    "checks": 44,
+    "log": "/tmp/musnba_c1_qualified_early_laptop_v1.log",
+    "sha256": "fbc3504d07f6d0e123962b56ca13b5e4d6522582d2ac84c65f9893d599c18a38"
+   },
+   "qualified_early_phone": {
+    "checks": 37,
+    "log": "/tmp/musnba_c1_qualified_early_phone_v1.log",
+    "sha256": "cc1f9f160a0e94d550a0e516699fc63ceff369080863083e075bd3ed40ad4581"
+   },
+   "upgrade": {
+    "checks": 30,
+    "log": "/tmp/musnba_c1_upgrade_v1.log",
+    "sha256": "861171424794c820f8fc0fc8c2d28ec0c46c8b93ffc46c7cc976217f17caa3e7"
+   }
+  }
+ },
+ "compute": {
+  "workers": 9,
+  "worker_cpu_percent": 896.0,
+  "parent_cpu_percent": 97.6,
+  "total_cpu_percent": 993.6,
+  "arrow_cpu_threads": 1
+ },
+ "early_imports_lead_seconds": 44.857708,
+ "bundles": {
+  "laptop": {
+   "bytes": 177743921,
+   "sha256": "0c95650b457838144e024ac30bb8bc4aba321effc0a89a76b09f1d57e215d0f4",
+   "header": {
+    "format": "musnba",
+    "version": 2,
+    "capabilities": [
+     "lineup-forecast-v1",
+     "minute-cdf-player-v2",
+     "player-icons-v1"
+    ],
+    "created": "2026-11-24T00:44:00+00:00",
+    "latest": "2026-11-23",
+    "snapshots": [
+     "2026-11-12",
+     "2026-11-13",
+     "2026-11-14",
+     "2026-11-15",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22",
+     "2026-11-23"
+    ],
+    "profile": "laptop"
+   }
+  },
+  "phone": {
+   "bytes": 98583573,
+   "sha256": "98424800fcd6f1097cc77adf1730070423dbe50316e4163738d2157cb27b24d3",
+   "header": {
+    "format": "musnba",
+    "version": 2,
+    "capabilities": [
+     "lineup-forecast-v1",
+     "minute-cdf-player-v2",
+     "player-icons-v1"
+    ],
+    "created": "2026-11-24T00:44:37+00:00",
+    "latest": "2026-11-23",
+    "snapshots": [
+     "2026-11-12",
+     "2026-11-13",
+     "2026-11-14",
+     "2026-11-15",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22",
+     "2026-11-23"
+    ],
+    "profile": "phone"
+   }
+  }
+ },
+ "shell": {
+  "commit": "6f555cc409f400df6ae2f55dfce64245d0111fbb",
+  "cache": "79a39706aff8c158075a",
+  "data_free": true,
+  "published": true
+ },
+ "attempts": {
+  "v1": "Functional full trial1534.42s, early import proof; branch tuple/list guard repaired before qualification.",
+  "v2": "Intentional stop after30k worlds and verified early pair to repair measured synchronous-publication starvation; exact raw chunks retained.",
+  "v3": "Final source qualification with unchanged current v2 inputs and fresh accepted-engine worlds/season; no further simulation source changes."
+ },
+ "receipts": {
+  "20261123_c1_contract_v1.json": "a2b2bc78e231b21e1cbc015b661e1df1a662a43feccf28b440afaafc4a9d4553",
+  "20261123_c1_trace_v1.json": "60357e6340e7f6432a235b23c76bac2efe9f49b3101ab74f044cc3df3945159a",
+  "20261123_c1_delivery_trial_v1.json": "fbce5eb2962c0468ede888358de4a04c08fa9fd64a6cebeac6abe1140c7ddcdb",
+  "20261123_c1_retained_audit_v1.json": "286687a5cdac4d6744d01289beb32f00c105bd39f818997d042696d0e35eec52",
+  "20261123_c1_resume_repair_v1.json": "be9e3bfe4070d1adfe0a63f3303497fee249c43b8d2b1436247eca4a8200427c",
+  "20261123_c1_resume_repair_v2.json": "e70bbb363e5a063774c25d25f34725102d2b12e7ed3553a70b5e0715436dc88f",
+  "20261123_c1_queue_lifecycle_v2.json": "515da24f2080a5932d607c647c0e16ff4e1cc0952864ea09f557c957e5cb6351",
+  "20261123_c1_queue_overlap_v1.json": "fd863e347b2e4be44df48d75e0df0eba81a87873d2d22a1fbb9114387436ada3",
+  "20261123_c1_chunk_identity_v1.json": "f7c82010b7e7731f8d372a62aec2727b89ac4b241ab4e8793bcad42de9aa6ed2",
+  "20261123_c1_early_imports_v1.json": "44a76aecb48d998ccc304b00604ccf35b5cf73ffdf0acbfad83a946021253672",
+  "20261123_c1_early_imports_v2.json": "d81dad66a28a7e248bce405807a56c0d191ffd9ae0c2ae26af41322b2ccee546",
+  "20261123_c1_real_resume_probe_v1.json": "368597fd27373937da404b533ddbb2d9e2da58bbbb09557ed400727be4890b79",
+  "20261123_c1_real_resume_v2.json": "2f110d2831a3c8a544a2e8c5bf7beff7d8996f01ac827c0d206c2e44fbbba79d",
+  "20261123_c1_accounting_v1.json": "170fa900493275a027a345fc47592f5a881ae05b8b871b204fc640c24bc0c5ad",
+  "20261123_c1_season_accounting_v1.json": "ba5f9d8535f19b49ba28064facd70162e47cd173b2248b6a388a181cb69cf687",
+  "20261123_c1_chunk_replay_401910036_v1.json": "aa256f206c9be1bd1791a9323aaa4a4a297904e2b67d37074ca0b513fc3bc36c",
+  "20261123_c1_chunk_replay_401910042_v1.json": "172ff82f06f2bede1d674bbda3a7b6ff5b0a631ec718bc355878c8c04413587b"
+ },
+ "limits": [
+  "One interim export per run; no retained season falls back to end-of-run publication.",
+  "Bundles individually atomic; interrupted pair requires retrying both.",
+  "Both devices require app update/manual import; real-device acceptance remains unverified.",
+  "Weighted season coupling preserves exact marginals and is not certified iid sampling.",
+  "Accepted engines/report assumptions unchanged; C2–C5 remain0%, original programme74%, D42A65%/B0%."
+ ]
+}

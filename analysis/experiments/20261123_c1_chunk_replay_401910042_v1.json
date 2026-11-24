@@ -1,0 +1,8 @@
+{
+ "status": "pass",
+ "game": "401910042",
+ "worlds": 1000,
+ "all_raw_arrays_identical": true,
+ "seconds": 63.41049795800063,
+ "scope": "Private input/median/runtime replay; no outcome scoring. Ordinary smoke skips retained earliest-game replay because its original registry differs from latest collection."
+}

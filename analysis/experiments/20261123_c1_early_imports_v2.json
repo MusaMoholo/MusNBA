@@ -1,0 +1,96 @@
+{
+ "status": "pass",
+ "supersedes": "20261123_c1_early_imports_v1.json",
+ "completed": "2026-11-24T00:41:52.142292+00:00",
+ "generation_complete_games_at_both_imports": 4,
+ "generation_queued_games": 5,
+ "pre_tip_retained_games": 5,
+ "run": "data/derived/live_runs/2026-11-23-1795480373232797000",
+ "imports": {
+  "laptop": {
+   "checks": 44,
+   "log": "/tmp/musnba_c1_qualified_early_laptop_v1.log",
+   "sha256": "fbc3504d07f6d0e123962b56ca13b5e4d6522582d2ac84c65f9893d599c18a38",
+   "bundle": {
+    "header": {
+     "format": "musnba",
+     "version": 2,
+     "capabilities": [
+      "early-delivery-v1",
+      "lineup-forecast-v1",
+      "minute-cdf-player-v2",
+      "player-icons-v1"
+     ],
+     "created": "2026-11-24T00:38:08+00:00",
+     "latest": "2026-11-23",
+     "snapshots": [
+      "2026-11-12",
+      "2026-11-13",
+      "2026-11-14",
+      "2026-11-15",
+      "2026-11-16",
+      "2026-11-17",
+      "2026-11-18",
+      "2026-11-19",
+      "2026-11-20",
+      "2026-11-21",
+      "2026-11-22",
+      "2026-11-23"
+     ],
+     "profile": "laptop"
+    },
+    "sha256": "06917f7b3d31a6bad2c6fdcf2698509a41a431b8e6aee53690f1335b01657305",
+    "bytes": 177743908
+   }
+  },
+  "phone": {
+   "checks": 37,
+   "log": "/tmp/musnba_c1_qualified_early_phone_v1.log",
+   "sha256": "cc1f9f160a0e94d550a0e516699fc63ceff369080863083e075bd3ed40ad4581",
+   "bundle": {
+    "header": {
+     "format": "musnba",
+     "version": 2,
+     "capabilities": [
+      "early-delivery-v1",
+      "lineup-forecast-v1",
+      "minute-cdf-player-v2",
+      "player-icons-v1"
+     ],
+     "created": "2026-11-24T00:38:44+00:00",
+     "latest": "2026-11-23",
+     "snapshots": [
+      "2026-11-12",
+      "2026-11-13",
+      "2026-11-14",
+      "2026-11-15",
+      "2026-11-16",
+      "2026-11-17",
+      "2026-11-18",
+      "2026-11-19",
+      "2026-11-20",
+      "2026-11-21",
+      "2026-11-22",
+      "2026-11-23"
+     ],
+     "profile": "phone"
+    },
+    "sha256": "e17ec307ae1d7432a60a75ac2e41d62cdae8444705420483773125127cd07f3d",
+    "bytes": 98584063
+   }
+  }
+ },
+ "laptop_import_completed": {
+  "checks": [
+   44,
+   44
+  ],
+  "completed": "2026-11-24T00:40:54.742943+00:00",
+  "completed_games": 3,
+  "queued_games": 5,
+  "log_sha256": "fbc3504d07f6d0e123962b56ca13b5e4d6522582d2ac84c65f9893d599c18a38"
+ },
+ "hosted_shell": "6f555cc409f400df6ae2f55dfce64245d0111fbb",
+ "cache": "79a39706aff8c158075a",
+ "real_device_acceptance": false
+}

@@ -1,0 +1,18 @@
+{
+ "status": "pass",
+ "executor": "real spawn processes, background queue manager",
+ "results": [
+  {
+   "kind": "worker_fault",
+   "total_seconds_including_spawn": 0.8016868340055225,
+   "parallel_job_seconds": 30,
+   "no_children_remain": true
+  },
+  {
+   "kind": "publication_fault",
+   "total_seconds_including_spawn": 0.9336993750039255,
+   "parallel_job_seconds": 30,
+   "no_children_remain": true
+  }
+ ]
+}

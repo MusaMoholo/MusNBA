@@ -1,0 +1,22 @@
+{
+ "issue": "JSON converts SelectedPlayer.missing tuple to a list; strict in-memory comparison falsely rejected unchanged branched resume. Relative versus absolute execution paths also differed.",
+ "repair": "Compare selected metadata in its stored JSON representation; resolve/expand task directories before planning. Keep exact serialised game/median/runtime identity and source fingerprints.",
+ "before_failure_log": "/tmp/musnba_c1_branch_guard_v1.log",
+ "real_input_probe": "20261123_c1_real_resume_probe_v1.json",
+ "real_input_probe_scope": "Staged canonical selection comparator, absolute paths; all10 rebuilt nightly inputs and120 chunks accepted with zero workers/worlds; production guard still unfixed during probe.",
+ "focused_tests": {
+  "checks": 40,
+  "log": "/tmp/musnba_c1_tests_v4.log",
+  "sha256": "b13229786ccfca71099016463b09ef15f2a1f923ed7aca4d5f316d58d3769333"
+ },
+ "unchanged_functions": [
+  "_chunk",
+  "_merge",
+  "_finish_game",
+  "_store"
+ ],
+ "old_runtime_sources": "data/derived/experiments/c1_delivery_v1_sources",
+ "new_source_sha256": "97f3b61d546638131c76b5419248debdd3e4954aa5950362e25e9bd3cec0d053",
+ "model_and_rng_change": false,
+ "fresh_final_nightly": "Required after repair; old namespace/source receipts remain immutable."
+}

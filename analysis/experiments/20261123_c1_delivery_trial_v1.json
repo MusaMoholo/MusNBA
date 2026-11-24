@@ -1,0 +1,24 @@
+{
+ "status": "functional-trial-complete-not-final-qualification",
+ "nightly": {
+  "exit": 0,
+  "seconds": 1534.4164209169976,
+  "completed": "2026-11-24T00:17:11.561683+00:00"
+ },
+ "generated_worlds": 120000,
+ "generated_branches": 12,
+ "completed_games": 10,
+ "published_worlds": 130000,
+ "season_paths": 40000,
+ "snapshot_generation": "2026-11-24T00:15:04Z",
+ "original_pre_tip_games_retained": [
+  "401910036",
+  "401910037"
+ ],
+ "early_game_retained_exactly": "401910042",
+ "both_early_imports_lead_seconds": 677.854406,
+ "runtime_sources": "data/derived/experiments/c1_delivery_v1_sources/manifest.json",
+ "log": "/tmp/musnba_c1_nightly_20261123_v1.log",
+ "log_sha256": "69b576115b3d19f2a49e6a6f062b5860cf2d27b1f6bd24b029b97cc92e509953",
+ "remaining": "Fresh full nightly and real-input resume qualification on repaired guard; independent final accounting and hosted final imports."
+}

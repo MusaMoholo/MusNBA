@@ -1,0 +1,13 @@
+{
+ "schema": 1,
+ "policy": "early-complete-game-v1",
+ "runtime": "engine-v1.3-r3",
+ "model_change": false,
+ "complete_game": "All branches including zero-weight branches, exact Expected mass, players/points/summary/provenance/replay input hashes in final atomic receipt; never expose a partial branch.",
+ "resume": "Explicit existing --resume-live-run with --offline --no-rebuild; exact serialised inputs/runtime/fitted median, source provenance, selected players, count and canonical grouping required for every task before queue startup. Verify all committed chunk hashes, dimensions and deterministic seeds. Orphan uncommitted files never count; completed aggregate receipt must verify.",
+ "failure": "At most worker-count submitted jobs. On worker/callback/interrupt failure cancel pending futures, terminate running workers and retain verified files; no synthetic completion.",
+ "publication": "First complete safe game only while other generation jobs remain. Nine single-thread workers plus one single-thread parent/export. Preserve every other same-day forecast with exact provenance; final coupling must consume early worlds exactly. Existing pre-tip guards remain. No retained season means defer until end-of-run.",
+ "freshness": "Partial generation metadata lists current complete/pending IDs and retained season as-of/generation. Common app notice labels partial update and manual reimport; legacy absent metadata means normal completed snapshot.",
+ "activation": "Each snapshot has staging/rollback plus .previous detection; views retain existing safety behaviour; bundle files atomic individually and pair mismatch detected/retryable. Test importer rejects truncated bundle without replacing active dataset; no assertion of pair atomicity.",
+ "qualification": "Retained ordinary and branched source audit; interruption/resume identity, input/receipt corruption rejection; fresh authorised full r3 nightly, 10k/branch and fresh season, both early-profile imports before last generation game, legacy/offline/upgrade, responsive themes/screenshots, independent mass/accounting and <=60min. No protected model rescore."
+}

@@ -1,0 +1,19 @@
+{
+ "supersedes": "20261123_c1_resume_repair_v1.json",
+ "scope": "Final guard-only qualification: canonical JSON selection metadata and absolute directories; duplicate game/directory rejection; CLI rejects missing/wrong run roots before collection.",
+ "focused_tests": {
+  "checks": 41,
+  "log": "/tmp/musnba_c1_tests_v5.log",
+  "sha256": "b9053e3cd3a3fcc3bfeb1570a16833c1d242b0f91413bade5d6f569e976a520e"
+ },
+ "bad_resume_root": {
+  "exit": 2,
+  "log": "/tmp/musnba_c1_bad_resume_root_v1.log"
+ },
+ "source_sha256": {
+  "scripts/live_forecast.py": "96e30f8c45d424bacee4d0eea9bf9de11de1dbd94cbd2e9b096bc6e29ad0f6bf",
+  "scripts/nightly.py": "4483a65799dd44f03a212ba481d81ec5f331c0b6e0193ddee13b66468af8d5ad"
+ },
+ "simulation_draws": "Unchanged; qualification run v2 had not started its world queue when these guards froze.",
+ "new_final_nightly": "/tmp/musnba_c1_nightly_20261123_v2.log"
+}

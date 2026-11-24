@@ -40,6 +40,23 @@ def laptop_output(phone_output: Path) -> Path:
     return phone_output.with_name(phone_output.name[:-len('.musnba.gz')] + '-laptop.musnba.gz')
 
 
+def export_pair(output: Path) -> int:
+    output = Path(output)
+    laptop = laptop_output(output)
+    before = view_inventory()
+    retry = shlex.join([sys.executable, str(ROOT / 'scripts/nightly_musnba.py'), '--export-only', '--output', str(output)])
+    for profile, destination in (('laptop', laptop), ('phone', output)):
+        status = subprocess.run([sys.executable, str(ROOT / 'scripts/export_musnba.py'), '--output', str(destination),
+                                 '--profile', profile], cwd=ROOT).returncode
+        if status:
+            print(f'{profile.capitalize()} export failed; the pair may differ. Retry both:\n' + retry, file=sys.stderr)
+            return status
+        if view_inventory() != before:
+            print('Views changed while exporting; retry both:\n' + retry, file=sys.stderr)
+            return 1
+    return 0
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--output', type=Path, default=DEFAULT_OUTPUT)
@@ -61,24 +78,12 @@ def main():
               'access in System Settings → Privacy & Security and make the file available locally in Finder.', file=sys.stderr)
         return 1
     if not args.export_only:
-        status = subprocess.run([sys.executable, str(ROOT / 'scripts/nightly.py'), *nightly_args], cwd=ROOT).returncode
+        env = {**os.environ, 'MUSNBA_EARLY_OUTPUT': str(output)}
+        status = subprocess.run([sys.executable, str(ROOT / 'scripts/nightly.py'), *nightly_args], cwd=ROOT, env=env).returncode
         if status:
-            print('Nightly did not succeed; the previous export is unchanged.', file=sys.stderr)
+            print('Nightly did not succeed; a verified early export may be available. Check its generation and season freshness.', file=sys.stderr)
             return status
-    before = view_inventory()
-    retry = shlex.join([sys.executable, str(ROOT / 'scripts/nightly_musnba.py'), '--export-only', '--output', str(output)])
-    for profile, destination in (('laptop', laptop), ('phone', output)):
-        status = subprocess.run([sys.executable, str(ROOT / 'scripts/export_musnba.py'), '--output', str(destination),
-                                 '--profile', profile], cwd=ROOT).returncode
-        if status:
-            print(f'{profile.capitalize()} export failed; a prior export may already have been updated. '
-                  'Snapshots remain on this Mac. Retry both exports with:\n' + retry, file=sys.stderr)
-            return status
-        if view_inventory() != before:
-            print('Views changed while exporting the bundle pair; the exports may differ. '
-                  'Retry both after the data job finishes:\n' + retry, file=sys.stderr)
-            return 1
-    return 0
+    return export_pair(output)
 
 
 if __name__ == '__main__':

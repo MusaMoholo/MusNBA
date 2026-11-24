@@ -18,8 +18,9 @@ python3 -m venv .venv
 The nightly collects authorised ESPN/NBA inputs, rebuilds prior-game features, simulates today and a fresh season,
 writes snapshots/views and exports both bundles. `nightly.py --ahead` must be 0. Game-free days still refresh the season.
 Missed finals are collected; missed possession forecasts are **not** reconstructed. `--offline --no-rebuild` needs recorded unchanged-input justification.
-Owner's:8766 server stays running; agent review uses `serve.py --port 8767`. Serving never computes.
+Owner:8766 stays running; review uses `serve.py --port 8767`. Serving never computes.
 Verified matching pre-tip forecasts may be retained with their original provenance; invalid/cross-tip replacements fail.
+Resume a logged run with `--offline --no-rebuild --resume-live-run PATH`; inputs, sources and grouping must match. Wrong roots/duplicates fail.
 Do not bypass guards. Archive existing views before standalone `scripts/views.py` rebuilds; `--help` is read-only.
 
 ## PWA and bundles
@@ -40,8 +41,8 @@ Shell updates and data imports are separate. iCloud export is not proof of impor
 .venv/bin/python scripts/export_musnba.py --shell exports/MusNBA-web --base-path /MusNBA/
 ```
 
-Export-only reuses completed outputs. Current publication is end-of-nightly, not game-by-game; D54 is C1 of the next integrated chunk; HANDOFF owns execution.
-Each file is atomic, the pair is not: retry both after partial export. `--output PATH` sets the phone destination; laptop adds `-laptop`.
+Export-only reuses saved outputs. With a retained season, nightly publishes one interim complete-game update: all branches/Expected, prior forecasts preserved, season labelled retained. Final export refreshes the season; import again after an interim update.
+Files are individually atomic; retry both after partial export. `--output PATH` sets the phone destination; laptop adds `-laptop`.
 Replacements archive to `~/Basketball_archive_ops`. Visible staging/hidden-flag clearing keeps files selectable.
 Only the data-free shell plus `.nojekyll` goes to `gh-pages` (branch source `/`), never models/data/bundles.
 No repository CI workflows; built-in Pages deployment provides hosting. Preserve local Git identity/helper.
@@ -90,7 +91,7 @@ Core path: `fetch_*`/`history` → `plays`/`possessions`/`rotations` → `featur
 `pathway.py` simulates seasons, `nightly*.py` orchestrates, `views.py`/`serve.py`/`webapp/` serve stored results.
 `compare.py` grades node runs; `a1_compare.py` grades matched engine distributions; `release_gate.py` requires explicit policy.
 Legacy `backtest_compare.py`/`a1_minutes_gate.py` are historical protocols, not generic promotion gates.
-Use runner `--help` and MODEL before launching. Fold backtests require `--clock-recipe` when the production pool cutoff differs from the fold nodes; freeze prior-fitted fold parameters first. Parent preflight rejects mismatched dates before worker startup. `train.py --threads 10` caps fitting; backtest uses `--jobs 10` plus BLAS caps.
+Use `--help` and MODEL before launching. Fold backtests require `--clock-recipe` when the production pool cutoff differs from the fold nodes; freeze prior-fitted fold parameters first. Parent preflight rejects mismatched dates before worker startup. `train.py --threads 10` caps fitting; backtest uses `--jobs 10` plus BLAS caps.
 Configurations/reports are committed in `models/`/`analysis/experiments/`; fits, raw inputs, per-row arrays/worlds and exports stay ignored under `data/`.
 Current experiment namespaces are immutable; do not restart completed protected runs. `analysis/a2_world_diagnostics.py --closing-controls`
 audits existing 400-game controls without new worlds (fresh output required).

@@ -1019,6 +1019,7 @@ def build(views_root: Path = VIEWS) -> dict:
             'kind': snap['meta']['kind'] if snap else None,
             'generated': snap['meta']['generated'] if snap else None,
             'completed_at': snap['meta'].get('completed_at') if snap else None,
+            'delivery': snap['meta'].get('delivery') if snap else None,
             'model': snap['meta']['model'] if snap else None, 'games': games,
             'spotlight': (spotlight(entries, season_lookup(projections[entries[0]['game_id']]['day']),
                                     snaps[projections[entries[0]['game_id']]['day']]['path']) if entries else None),
@@ -1132,6 +1133,7 @@ def build(views_root: Path = VIEWS) -> dict:
         write_json(api / 'standings' / f'{day}.json', {
             'date': day, 'kind': snap['meta']['kind'], 'generated': snap['meta']['generated'],
             'model': snap['meta']['model'], 'sims': season['sims'], 'notes': season['notes'],
+            'delivery': snap['meta'].get('delivery'),
             **({'probability_mass': season['probability_mass']} if 'probability_mass' in season else {}),
             'season_model': ({'id': season['model'], 'kind': season['pathway'].get('kind'), 'label': season['pathway'].get('label'),
                               'as_of': season.get('as_of'), 'engine_games': len(season.get('engine_games', []))}
@@ -1250,11 +1252,12 @@ def build(views_root: Path = VIEWS) -> dict:
     finals = [r for r in master if r['status'] == 'final']
     write_json(api / 'meta.json', {
         'app': APP_NAME, 'season': SEASON_LABEL, 'built': utc_now(), 'latest': latest_day,
+        'delivery': latest['meta'].get('delivery'),
         'snapshots': snapshot_rows, 'first_date': slate_dates[0], 'last_date': slate_dates[-1],
         'dates': {d: len(by_date.get(d, [])) for d in slate_dates},
         'teams': teams, 'model': latest['meta']['model'], 'availability_policy': latest['meta'].get('availability_policy'),
         'player_icons': player_icons(),
-        'required_capabilities': ['player-icons-v1'] + (['minute-cdf-player-v2', 'lineup-forecast-v1'] if any(p['sim'].get('lineups') for p in projections.values()) else []),
+        'required_capabilities': ['player-icons-v1'] + (['early-delivery-v1'] if latest['meta'].get('delivery', {}).get('state') == 'partial' else []) + (['minute-cdf-player-v2', 'lineup-forecast-v1'] if any(p['sim'].get('lineups') for p in projections.values()) else []),
         'data': {'finals': len(finals), 'last_final': max((r['date_et'] for r in finals), default=None),
                  'games': len(master), 'collected_run': registry and read_json(DERIVED / 'players.json')['run']}})
 

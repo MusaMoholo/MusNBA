@@ -1,0 +1,24 @@
+{
+ "source_run": "data/derived/live_runs/2026-11-23-1795474142305562000",
+ "checks": [
+  {
+   "game": "401910036",
+   "branches": 1,
+   "all_chunks_verified": true,
+   "all_merged_arrays_equal": true,
+   "seconds": 2.068069832996116
+  },
+  {
+   "game": "401910037",
+   "branches": 2,
+   "all_chunks_verified": true,
+   "all_merged_arrays_equal": true,
+   "seconds": 3.697776375003741
+  }
+ ],
+ "early_scratch": "/tmp/musnba-c1-retained-v1",
+ "early_snapshot_seconds": 24.655728417012142,
+ "prior_games_preserved": 9,
+ "season_unchanged_labelled_stale": true,
+ "production_unchanged": true
+}

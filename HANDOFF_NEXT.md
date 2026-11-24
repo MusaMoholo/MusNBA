@@ -1,32 +1,35 @@
 # Handoff — next executable Chunk C
 
-Updated 23 November 2026. U24 release **41b479a**; `git log -1` identifies the latest documentation checkpoint.
+Updated 24 November 2026. `git log -1` identifies the checkpoint; active work is below.
 Read [AGENTS](AGENTS.md), this file, [PLAN](PLAN.md), then relevant [MODEL](MODEL.md)/[README](README.md) sections.
 
 ## State
 
-- **A1/A2 and U24 complete.** Accepted engine-v1.3-r3 nodes/timing/independent rotations/Rule3 remain; D60 adds
-  explicit **report-bands-v1** availability assumptions. No learned accuracy/calibration claim or protected rescoring.
-- U24: truthful raw counts versus probability mass; selected-lineup advanced summaries/comparisons; attempts/combos/rates,
-  richer scenarios/table shading; sortable tables; simpler Teams/Standings/navigation. README owns exact app behaviour.
-- Fresh generation **2026-11-23T23:07:37Z**: **10 games,14×10k branches,140,000 worlds**,40,000 weighted season paths.
-  Full nightly **1,514.01s**; input rebuild232.1s, snapshot1,114.85s. Ten workers observed at992.3% CPU. No compute jobs remain.
-- Smoke108/108; deliberate fault86/108/exit1;63 focused Python/19 Node tests;114 final responsive checks with visual inspection.
-  Independent47,724 histograms/6,435 advanced distributions pass. Hosted PWA34/34 laptop,32/32 phone; old-shell upgrade36/36.
-- iCloud: `MusNBA-laptop.musnba.gz`194,967,756B; `MusNBA.musnba.gz`102,685,412B.
-  **Both devices need app update/manual import; real-device acceptance remains unverified.**
-  Data-free shell **36288c021e0af1d8e0e408cd9f098984f51e4eb2**, cache348f12dc782eaa5d92ed.
-- Canonical receipt: `analysis/experiments/20261123_u24_completion_v2.json`; accounting/input-policy receipts linked inside.
-  Nightly log `/tmp/musnba_u24_nightly_20261123_v1.log`; retained raw run `data/derived/live_runs/2026-11-23-1795474142305562000`.
-  Prior snapshots/views/bundles/shells archived externally. Failed checker assumptions and corrected checks are recorded, without rerunning worlds.
-- Original programme74%; D42 A65% (A1/A2 complete,A3 open),B0%; **successor C0%**. No existing ledger reset.
-  Review server8767; owner8766 untouched. Diagnostics are under About; noCI/data publication.
+- **C1 complete; C2 next.** Accepted engine-v1.3-r3/D29/Rule3 and report-bands-v1 remain; no learned promotion/protected rescoring.
+- Final generation **2026-11-24T00:42:52Z**:70k new worlds/7branches,5 preserved pre-tip games;130k saved worlds,40k weighted season paths.
+  Qualification731.51s; fresh fetch/rebuild through final1,591.20s. Nine workers plus parent publication observed993.6% CPU.
+- Early hosted imports44/44 laptop,37/37 phone passed44.86s before last queued game; final imports36/36,34/34; upgrade30/30.
+  Smoke107/107; fault86/107/exit1. Retained earliest registry causes one conditional skip; two explicit1k private replays pass exactly.
+  42 focused/19 Node tests;43,740 histograms/5,742 advanced distributions and exact season atoms pass.
+- Shell **6f555cc409f400df6ae2f55dfce64245d0111fbb**, cache79a39706aff8c158075a, published data-free.
+  Both devices need app update/manual import; real-device acceptance remains unverified.
+- Canonical receipt: `analysis/experiments/20261123_c1_completion_v1.json`; attempt/repair/source receipts linked inside.
+  Final run `data/derived/live_runs/2026-11-23-1795480373232797000`; log `/tmp/musnba_c1_nightly_20261123_v3.log`.
+  Fresh inputs/rebuild from v2 were hash-verified unchanged before/after offline qualification. Replacements archived externally.
+- Original programme74%; D42 A65%/B0%. **C10%: C1=100%; C2–C5=0%.** No ledger reset; no compute jobs remain.
+
+## Active C2 — 0%
+
+Owner authorised C1–C5 through delivery. Begin C2's input/source/zone/event-join audit using the commands below;
+then freeze MODEL's finite recipe/ID/cutoff/primary/independence/stream/stress manifest before candidate research.
+Retain raw sources/unknown coordinates; permitted NBA/ESPN only, one polite resumable NBA stream. No protected r3 rescore.
+C2 compares at most three declared node variants and one200-game engine screen against r3; checkpoint the measured decision without promotion.
+C3–C5 retain their existing0% scopes/dependencies/ladders below. Runtime/output changes still require the relevant evidence/release checks.
 
 ## Next actions
 
-1. Stop here until the owner says **“go with the next chunk.”** Then execute C1–C5 below, beginning C1.
-2. Run these baseline commands. C1 rung10 traces actual completion/export boundaries on retained ordinary/branched games;
-   done when interruption/failure behaviour and measured costs are recorded. No model/fetch job is needed for that first trace.
+1. Begin active C2; C1 has its own completed checkpoint.
+2. Recheck baseline, then audit only inputs/source joins; do not launch a learned fit before freezing the manifest.
 3. Before research, freeze MODEL's bounded recipe/data/ID/cutoff/primary/independence/stream/stress manifest. Do not restart protected r3.
 4. Each module checkpoints independently; C5 ends with the final full nightly, PWA delivery and a fully specified successor.
 
@@ -35,17 +38,17 @@ git status --short --branch
 git --no-pager log --oneline -3
 .venv/bin/python scripts/smoke.py
 .venv/bin/python scripts/check_docs.py
-rg -n 'completed|yield|export|snapshot' scripts/live_forecast.py scripts/nightly.py scripts/nightly_musnba.py scripts/export_musnba.py
+rg -n 'SHOT_ZONE|shot_zone|zone|shotchart' scripts/fetch_nbastats.py scripts/plays.py scripts/features.py scripts/nodes.py
 ```
 
-## Next trigger — Chunk C
+## Executable contract — Chunk C
 
-**“Go with the next chunk”** authorises all C1–C5 below through final delivery. Start with the baseline and trace above. Each module checkpoints before dependent work; preserve original ledgers.
+The owner authorised all C1–C5 through final delivery. Each module checkpoints before dependent work; preserve original ledgers.
 Headliners: believable player/season outcomes; one comprehensive NBA analysis workspace. Full scope/source rationale:
 `analysis/experiments/20261123_chunk_c_plan_v2.json`; v1 remains historical.
 
 Dependencies: accepted runtime/retained worlds, permitted sources, safe folds, exact branch mass, PWA/importer and≤10 total heavy threads.
-Weights: C1=10,C2=25,C3=15,C4=25,C5=25%; fixed sum .10C1+.25C2+.15C3+.25C4+.25C5. All start0%.
+Weights: C1=10,C2=25,C3=15,C4=25,C5=25%; fixed sum .10C1+.25C2+.15C3+.25C4+.25C5. Initial baseline0%.
 Report each10% module/5% chunk mark;100 includes evidence/docs/checks/commit/push. Independent UI/I/O may overlap compute within budget.
 
 | Rung | C1 Early delivery 10% | C2 Court-aware shots 25% | C3 Rotations 15% | C4 Analysis & replay 25% | C5 Competitions & release 25% |

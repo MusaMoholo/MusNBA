@@ -1,0 +1,25 @@
+{
+ "status": "mechanics-pass-awaiting-full-qualification",
+ "change": "Light background queue manager continues bounded 9-worker submission while the parent reserved slot publishes. Caller closes generator on publication failure; cancellation joins manager and terminates workers.",
+ "focused_tests": {
+  "checks": 42,
+  "log": "/tmp/musnba_c1_tests_v7.log"
+ },
+ "real_lifecycle": "20261123_c1_queue_lifecycle_v2.json",
+ "previous_run_stop": "intentional after both verified early exports",
+ "previous_run": "data/derived/live_runs/2026-11-23-1795479768441650000",
+ "committed_chunks_retained": 30,
+ "unchanged_generation_functions": [
+  "_chunk",
+  "_merge",
+  "_finish_game",
+  "_store"
+ ],
+ "unchanged_input_inventory": "data/derived/experiments/c1_qualification_current_inputs_v1.json",
+ "offline_no_rebuild_justification": "Fresh authorised fetch/rebuild completed in v2. Stop is deliberate to overlap queue scheduling with publication; no data/node/auxiliary-parameter change. Reuse these exact current inputs with --offline --no-rebuild, new namespace, fresh worlds/season. Verify hashes before launch and compare every common raw chunk against stopped v2.",
+ "arrow_cpu_threads": 1,
+ "source_hashes": {
+  "scripts/live_forecast.py": "91d83909f3822d6acc218c73cab7c005bdb12f96c6eccc92c0d3978f08a4595b",
+  "scripts/nightly.py": "f202163909db5f20a1eb962d538a879734946da946b176062586f76165bea15b"
+ }
+}

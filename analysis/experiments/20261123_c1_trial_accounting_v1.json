@@ -1,0 +1,178 @@
+{
+ "status": "pass",
+ "generation": "2026-11-24T00:15:04Z",
+ "runtime": {
+  "id": "engine-v1.3-r3",
+  "kind": "engine",
+  "version": "v1.3-r3",
+  "models": "v1.3",
+  "rotation": "targets",
+  "sims": 10000,
+  "pool": 0,
+  "label": "Possession engine: each world draws its own player minutes and rotations, with legal foul-out handling. Prior-fitted timing responds to the score and clock late in Q4/overtime. Lineup probabilities are assumptions; defender impact and late foul/shot choices still need improvement.",
+  "foul_policy": "nba-rule3-v1",
+  "rotation_fit": "independent-v1",
+  "chunk_worlds": 1000,
+  "clock_recipe": "data/models/v1.3-r3/clock.json",
+  "season_sims": 10000
+ },
+ "games": [
+  {
+   "game": "401910036",
+   "branches": 1,
+   "worlds": 10000,
+   "cases": 1,
+   "independent_histograms": 2498,
+   "status": "pass",
+   "advanced": {
+    "game": "401910036",
+    "cases_including_game_view": 1,
+    "rate_distributions_checked": 279,
+    "status": "pass"
+   },
+   "source_completed_at": "2026-11-23T23:07:37Z"
+  },
+  {
+   "game": "401910037",
+   "branches": 2,
+   "worlds": 20000,
+   "cases": 3,
+   "independent_histograms": 7678,
+   "status": "pass",
+   "advanced": {
+    "game": "401910037",
+    "cases_including_game_view": 4,
+    "rate_distributions_checked": 1143,
+    "status": "pass"
+   },
+   "source_completed_at": "2026-11-23T23:07:37Z"
+  },
+  {
+   "game": "401910038",
+   "branches": 1,
+   "worlds": 10000,
+   "cases": 1,
+   "independent_histograms": 2038,
+   "status": "pass",
+   "advanced": {
+    "game": "401910038",
+    "cases_including_game_view": 1,
+    "rate_distributions_checked": 234,
+    "status": "pass"
+   },
+   "source_completed_at": "2026-11-24T00:15:04Z"
+  },
+  {
+   "game": "401910039",
+   "branches": 1,
+   "worlds": 10000,
+   "cases": 1,
+   "independent_histograms": 2958,
+   "status": "pass",
+   "advanced": {
+    "game": "401910039",
+    "cases_including_game_view": 1,
+    "rate_distributions_checked": 324,
+    "status": "pass"
+   },
+   "source_completed_at": "2026-11-24T00:15:04Z"
+  },
+  {
+   "game": "401910040",
+   "branches": 1,
+   "worlds": 10000,
+   "cases": 1,
+   "independent_histograms": 2866,
+   "status": "pass",
+   "advanced": {
+    "game": "401910040",
+    "cases_including_game_view": 1,
+    "rate_distributions_checked": 315,
+    "status": "pass"
+   },
+   "source_completed_at": "2026-11-24T00:15:04Z"
+  },
+  {
+   "game": "401910041",
+   "branches": 1,
+   "worlds": 10000,
+   "cases": 1,
+   "independent_histograms": 2866,
+   "status": "pass",
+   "advanced": {
+    "game": "401910041",
+    "cases_including_game_view": 1,
+    "rate_distributions_checked": 315,
+    "status": "pass"
+   },
+   "source_completed_at": "2026-11-24T00:15:04Z"
+  },
+  {
+   "game": "401910042",
+   "branches": 2,
+   "worlds": 20000,
+   "cases": 3,
+   "independent_histograms": 8506,
+   "status": "pass",
+   "advanced": {
+    "game": "401910042",
+    "cases_including_game_view": 4,
+    "rate_distributions_checked": 1251,
+    "status": "pass"
+   },
+   "source_completed_at": "2026-11-24T00:00:04Z"
+  },
+  {
+   "game": "401910043",
+   "branches": 1,
+   "worlds": 10000,
+   "cases": 1,
+   "independent_histograms": 3142,
+   "status": "pass",
+   "advanced": {
+    "game": "401910043",
+    "cases_including_game_view": 1,
+    "rate_distributions_checked": 342,
+    "status": "pass"
+   },
+   "source_completed_at": "2026-11-24T00:15:04Z"
+  },
+  {
+   "game": "401910044",
+   "branches": 1,
+   "worlds": 10000,
+   "cases": 1,
+   "independent_histograms": 2958,
+   "status": "pass",
+   "advanced": {
+    "game": "401910044",
+    "cases_including_game_view": 1,
+    "rate_distributions_checked": 324,
+    "status": "pass"
+   },
+   "source_completed_at": "2026-11-24T00:15:04Z"
+  },
+  {
+   "game": "401910045",
+   "branches": 2,
+   "worlds": 20000,
+   "cases": 3,
+   "independent_histograms": 8230,
+   "status": "pass",
+   "advanced": {
+    "game": "401910045",
+    "cases_including_game_view": 4,
+    "rate_distributions_checked": 1215,
+    "status": "pass"
+   },
+   "source_completed_at": "2026-11-24T00:15:04Z"
+  }
+ ],
+ "seconds": 8.180581749998964,
+ "sources": {
+  "data/snapshots/2026-11-23/meta.json": "e13ad473b5d8a0ffac9222227f79f482b7d3bb15c4782f20e81e0695e4ad3856",
+  "data/snapshots/2026-11-23/games.json": "27342f8b6c5225fcc0a12692ea79706f574f448da5663d8aac2d98af7c3d7351",
+  "analysis/a1_delivery_audit.py": "0b7495609d99d0fb51b89625ee5efd6a7eb4c7fcdf97093bca135d4508a8e8b1"
+ },
+ "limits": "Preserved pre-tip game provenance remains original; no learned-model or availability calibration claim."
+}

@@ -1,0 +1,18 @@
+{
+ "status": "pass",
+ "old_run": "data/derived/live_runs/2026-11-23-1795479768441650000",
+ "qualification_run": "data/derived/live_runs/2026-11-23-1795480373232797000",
+ "common_committed_chunks": 30,
+ "worlds_per_chunk": 1000,
+ "all_npz_bytes_sha256_identical": true,
+ "last_game_completed": "2026-11-24T00:42:37Z",
+ "both_hosted_early_imports_lead_seconds": 44.857708,
+ "measured_publication_cpu": {
+  "workers": 9,
+  "worker_cpu_percent": 896.0,
+  "parent_cpu_percent": 97.6,
+  "total_cpu_percent": 993.6,
+  "arrow_cpu_threads": 1
+ },
+ "same_branched_input_pickle_bytes": true
+}

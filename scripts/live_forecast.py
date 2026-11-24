@@ -6,14 +6,17 @@ from dataclasses import asdict
 from types import SimpleNamespace
 import base64
 import hashlib
+import json
 import os
 import pickle
 import time
 from pathlib import Path
+from queue import Queue
+from threading import Event, Thread
 
 import numpy as np
 
-from basketball_common import packed, read_json, sha256_file, write_json
+from basketball_common import packed, read_json, sha256_file, utc_now, write_json
 from scripts import engine, lineup_forecast, player_worlds, projection
 
 _ENGINE = None
@@ -81,7 +84,44 @@ def _store(g, folder, raw, summary, weights, source_id, pieces, provenance, runt
     write_json(folder / 'game.json', summary)
     write_json(folder / 'provenance.json', {'source_id': source_id, 'inputs': provenance, 'pieces': pieces,
                                            'engine': runtime, 'selected': bool(selected)})
+    names = ['game.json', 'players.npz', 'points.npz', 'provenance.json', 'inputs.pkl']
+    if selected:
+        names.append('worlds.json')
+    write_json(folder / 'completion.json', {'schema': 1, 'completed_at': utc_now(),
+               'files': {name: sha256_file(folder / name) for name in names}})
     return str(folder)
+
+
+def verified_completion(folder):
+    """Only an aggregate receipt makes a game eligible for early publication."""
+    folder = Path(folder)
+    receipt = folder / 'completion.json'
+    if not receipt.exists():
+        return False
+    saved = read_json(receipt)
+    required = {'game.json', 'players.npz', 'points.npz', 'provenance.json', 'inputs.pkl'}
+    if read_json(folder / 'provenance.json')['selected']:
+        required.add('worlds.json')
+    if saved.get('schema') != 1 or set(saved.get('files', {})) != required:
+        raise ValueError('invalid complete-game receipt')
+    if any(not (folder / name).is_file() or sha256_file(folder / name) != digest
+           for name, digest in saved['files'].items()):
+        raise ValueError('changed complete-game output')
+    return True
+
+
+def verified_chunk(plan, start, stop):
+    path = Path(plan['chunks']) / f'{start:05d}-{stop:05d}.npz'
+    if not path.with_suffix('.json').exists():
+        return False
+    entry = read_json(path.with_suffix('.json'))
+    seed = projection.seed_for('world-chunk-v1', int(plan['seed']), start, stop)
+    if (entry['start'], entry['stop'], entry['seed']) != (start, stop, str(seed)) or not path.is_file() or entry['sha256'] != sha256_file(path):
+        raise ValueError('changed saved world chunk')
+    with np.load(path, allow_pickle=False) as z:
+        if len(z['minutes']) != stop - start:
+            raise ValueError('saved world chunk has incorrect dimensions')
+    return True
 
 
 def pieces(folder, points):
@@ -180,9 +220,13 @@ def _finish_game(job):
     return _store(g, folder, raw, summary, weights, source_id, season_pieces, plan['provenance'], _ENGINE.runtime, plan['selected'])
 
 
-def run(tasks, runtime, median, *, workers=10, chunk_worlds=1000):
+def run(tasks, runtime, median, *, workers=10, chunk_worlds=1000, resume=False):
     """Priority queue: complete world chunks, then branches, then games; never a fixed core assignment."""
     from scripts import a1_lineup_branches
+    tasks = [(g, selected, worlds, str(Path(directory).expanduser().resolve()), provenance)
+             for g, selected, worlds, directory, provenance in tasks]
+    if len({task[3] for task in tasks}) != len(tasks) or len({task[0].game['game_id'] for task in tasks}) != len(tasks):
+        raise ValueError('duplicate game or directory in world queue')
     if runtime.get('rotation_fit') != 'independent-v1':
         raise ValueError('chunk generation requires a qualified independent rotation recipe')
     if not 1 <= workers <= 10 or not 1 <= chunk_worlds <= 10000:
@@ -190,14 +234,32 @@ def run(tasks, runtime, median, *, workers=10, chunk_worlds=1000):
     if any(os.environ.get(key) != '1' for key in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS')):
         raise ValueError('world workers require OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1')
     pending, branch_left, game_left = deque(), {}, {}
+    finished = []
     started, completed, total = time.monotonic(), 0, 0
+    # Check every existing input before scheduling any work. Conservative byte identity
+    # includes fitted medians and game state, alongside explicit source fingerprints.
+    for g, selected, worlds, directory, provenance in tasks:
+        folder = Path(directory)
+        if folder.exists():
+            if not resume:
+                raise FileExistsError(folder)
+            saved = read_json(folder / 'work-plan.json')
+            expected = pickle.dumps({'game': g, 'median': median, 'runtime': runtime}, protocol=5)
+            if ((folder / 'inputs.pkl').read_bytes() != expected or saved['worlds'] != worlds
+                    or saved['selected'] != json.loads(packed([asdict(p) for p in selected]))
+                    or any(saved['provenance'].get(k) != v for k, v in provenance.items())
+                    or saved['provenance']['replay_input_sha256'] != sha256_file(folder / 'inputs.pkl')
+                    or saved['provenance']['execution']['chunk_worlds'] != chunk_worlds):
+                raise ValueError('changed inputs: refusing world resume')
     for g, selected, worlds, directory, provenance in tasks:
         if not isinstance(worlds, int) or worlds < 1:
             raise ValueError('positive complete-world count required')
         folder = Path(directory)
-        folder.mkdir(parents=True, exist_ok=False)
-        with (folder / 'inputs.pkl').open('xb') as stream:
-            pickle.dump({'game':g, 'median':median, 'runtime':runtime}, stream, protocol=5)
+        exists = folder.exists()
+        folder.mkdir(parents=True, exist_ok=resume)
+        if not exists:
+            with (folder / 'inputs.pkl').open('xb') as stream:
+                pickle.dump({'game':g, 'median':median, 'runtime':runtime}, stream, protocol=5)
         provenance = {**provenance, 'replay_input_sha256':sha256_file(folder/'inputs.pkl'),
                       'execution':{'schema':1,'namespace':'world-chunk-v1','chunk_worlds':chunk_worlds}}
         variants = a1_lineup_branches.enumerate_branches(g, [(p.team_id,p.player_id) for p in selected]) if selected else (None,)
@@ -205,7 +267,7 @@ def run(tasks, runtime, median, *, workers=10, chunk_worlds=1000):
         for i, variant in enumerate(variants):
             branch = variant.branch_id if variant else 'unconditional'
             chunks = folder / 'chunks' / str(i)
-            chunks.mkdir(parents=True)
+            chunks.mkdir(parents=True, exist_ok=resume)
             capture = folder / 'branches' / f'branch-{i:03d}.npz' if selected else folder/'capture.npz'
             capture.parent.mkdir(exist_ok=True)
             seed = (projection.seed_for('lineup-v1',runtime['id'],g.input_before,g.day,g.game['game_id'],branch)
@@ -217,36 +279,96 @@ def run(tasks, runtime, median, *, workers=10, chunk_worlds=1000):
             key = (str(folder),i)
             jobs = [{'kind':'chunk','key':key,'plan':batch,'start':start,'stop':min(worlds,start+chunk_worlds)}
                     for start in range(0,worlds,chunk_worlds)]
-            pending.extend(jobs)
+            missing = [job for job in jobs if not verified_chunk(batch, job['start'], job['stop'])]
+            pending.extend(missing)
             total += worlds
-            branch_left[key] = len(jobs)
+            completed += sum(job['stop'] - job['start'] for job in jobs if job not in missing)
+            branch_left[key] = len(missing)
+            if not missing:
+                pending.appendleft({'kind':'merge','key':key,'plan':batch})
             batches.append(batch)
         game_left[str(folder)] = len(batches)
-        write_json(folder/'work-plan.json', {'selected':[asdict(p) for p in selected],'worlds':worlds,
-                   'provenance':provenance,'batches':batches}, pretty=False)
+        plan = {'selected':[asdict(p) for p in selected],'worlds':worlds,
+                'provenance':provenance,'batches':batches}
+        if exists:
+            if read_json(folder/'work-plan.json') != json.loads(packed(plan)):
+                raise ValueError('changed execution plan: refusing world resume')
+        else:
+            write_json(folder/'work-plan.json', plan, pretty=False)
+        if verified_completion(folder):
+            pending = deque(job for job in pending if job['plan']['folder'] != str(folder))
+            finished.append(str(folder))
     functions = {'chunk':_chunk, 'merge':_merge, 'game':_finish_game}
-    with ProcessPoolExecutor(max_workers=workers, initializer=initialise, initargs=(runtime,)) as pool:
-        futures = {}
-        while pending or futures:
-            while pending and len(futures) < workers:
-                job = pending.popleft()
-                futures[pool.submit(functions[job['kind']],job)] = job
-            ready, _ = wait(futures,return_when=FIRST_COMPLETED)
-            for future in ready:
-                job = futures.pop(future)
-                result = future.result()
-                if job['kind'] == 'chunk':
-                    previous = completed * 10 // total
-                    completed += job['stop'] - job['start']
-                    if completed * 10 // total > previous:
-                        print(f'worlds {completed}/{total} complete in {time.monotonic()-started:.1f}s', flush=True)
-                    branch_left[job['key']] -= 1
-                    if branch_left[job['key']] == 0:
-                        pending.appendleft({'kind':'merge','key':job['key'],'plan':job['plan']})
-                elif job['kind'] == 'merge':
-                    folder = job['plan']['folder']
-                    game_left[folder] -= 1
-                    if game_left[folder] == 0:
-                        pending.appendleft({'kind':'game','folder':folder})
-                else:
-                    yield result
+    if not pending:
+        yield from finished
+        return
+    print(f'worlds {completed}/{total} verified on resume', flush=True)
+    # Scheduling is light I/O. Keep it moving while the caller uses its reserved
+    # compute slot to publish a completed game. At most one result per task,
+    # plus an error and terminator, can enter this bounded notification queue.
+    events, stopping = Queue(maxsize=len(tasks) + 2), Event()
+
+    def cancel(pool, futures):
+        processes = list((getattr(pool, '_processes', None) or {}).values())
+        for future in futures:
+            future.cancel()
+        pool.shutdown(wait=False, cancel_futures=True)
+        for process in processes:
+            if process.is_alive():
+                process.terminate()
+        for process in processes:
+            process.join(timeout=2)
+
+    def manage():
+        nonlocal completed
+        pool, futures = None, {}
+        try:
+            pool = ProcessPoolExecutor(max_workers=workers, initializer=initialise, initargs=(runtime,))
+            while (pending or futures) and not stopping.is_set():
+                while pending and len(futures) < workers and not stopping.is_set():
+                    job = pending.popleft()
+                    futures[pool.submit(functions[job['kind']], job)] = job
+                ready, _ = wait(futures, timeout=.25, return_when=FIRST_COMPLETED)
+                for future in ready:
+                    job = futures.pop(future)
+                    result = future.result()
+                    if job['kind'] == 'chunk':
+                        previous = completed * 10 // total
+                        completed += job['stop'] - job['start']
+                        if completed * 10 // total > previous:
+                            print(f'worlds {completed}/{total} complete in {time.monotonic()-started:.1f}s', flush=True)
+                        branch_left[job['key']] -= 1
+                        if branch_left[job['key']] == 0:
+                            pending.appendleft({'kind':'merge','key':job['key'],'plan':job['plan']})
+                    elif job['kind'] == 'merge':
+                        folder = job['plan']['folder']
+                        game_left[folder] -= 1
+                        if game_left[folder] == 0:
+                            pending.appendleft({'kind':'game','folder':folder})
+                    else:
+                        events.put(('game', result))
+            if stopping.is_set():
+                cancel(pool, futures)
+            else:
+                pool.shutdown(wait=True)
+        except BaseException as error:
+            if pool is not None:
+                cancel(pool, futures)
+            events.put(('error', error))
+        finally:
+            events.put(('done', None))
+
+    manager = Thread(target=manage, name='world-queue', daemon=True)
+    manager.start()
+    try:
+        yield from finished
+        while True:
+            kind, value = events.get()
+            if kind == 'done':
+                break
+            if kind == 'error':
+                raise value
+            yield value
+    finally:
+        stopping.set()
+        manager.join()

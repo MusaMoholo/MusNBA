@@ -176,7 +176,10 @@ def export_bundle(output: Path, archive_root=None, profile: str = 'phone') -> di
         meta = json.loads((frozen / 'api' / 'meta.json').read_text())
         if meta.get('player_icons', {}).get('ids', []) != icons['ids']:
             raise ValueError('Rebuild views after collecting player photos')
-        header = {'format': 'musnba', 'version': 2, 'capabilities': sorted(set(meta.get('required_capabilities', [])) | {'player-icons-v1'}), 'created': datetime.now(timezone.utc).isoformat(timespec='seconds'),
+        capabilities = set(meta.get('required_capabilities', [])) | {'player-icons-v1'}
+        if (meta.get('delivery') or {}).get('state') == 'partial':
+            capabilities.add('early-delivery-v1')
+        header = {'format': 'musnba', 'version': 2, 'capabilities': sorted(capabilities), 'created': datetime.now(timezone.utc).isoformat(timespec='seconds'),
                   'latest': meta['latest'], 'snapshots': [s['date'] for s in meta['snapshots']], 'profile': profile}
         descriptor, staging = tempfile.mkstemp(prefix='MusNBA-export-', suffix='.partial', dir=output.parent)
         os.close(descriptor)

@@ -10,6 +10,25 @@ from scripts import export_musnba, nightly_musnba
 
 
 class BundleProfilesTests(unittest.TestCase):
+    def test_early_bundle_requires_a_shell_that_labels_retained_season(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            api = root / 'views/api'
+            api.mkdir(parents=True)
+            logos, icons = root / 'logos', root / 'icons'
+            logos.mkdir()
+            icons.mkdir()
+            meta = {'latest': '2026-11-23', 'snapshots': [{'date': '2026-11-23'}],
+                    'player_icons': {'ids': []}, 'delivery': {'state': 'partial'}}
+            with patch.object(export_musnba, 'VIEWS', root / 'views'), patch.object(export_musnba, 'LOGOS', logos), \
+                    patch.object(export_musnba, 'PLAYER_ICONS', icons), patch.object(export_musnba, 'player_icons', return_value={'ids': []}):
+                for state, expected in (({'state': 'partial'}, True), (None, False)):
+                    meta['delivery'] = state
+                    (api / 'meta.json').write_text(json.dumps(meta))
+                    output = root / ('early.musnba.gz' if expected else 'full.musnba.gz')
+                    header = export_musnba.export_bundle(output)
+                    self.assertEqual('early-delivery-v1' in header['capabilities'], expected)
+
     def test_phone_and_laptop_preserve_their_world_contracts(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
