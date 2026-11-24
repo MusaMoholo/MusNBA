@@ -37,7 +37,7 @@ ENGINE = {'id': 'engine-v1.3', 'kind': 'engine', 'version': 'v1.3', 'models': 'v
                    'react to the score (FINDINGS §3o, §3s–§3w)'}
 LEGACY_ENGINE = ENGINE.copy()
 ENGINE = {**LEGACY_ENGINE, 'id': 'engine-v1.3-r3', 'version': 'v1.3-r3',
-          'foul_policy': 'nba-rule3-v1', 'rotation_fit': 'independent-v1', 'chunk_worlds': 1000,
+          'foul_policy': 'nba-rule3-v1', 'rotation_fit': 'independent-v1', 'chunk_worlds': 1000, 'world_details': 'visible-worlds-v1',
           'clock_recipe': 'data/models/v1.3-r3/clock.json',
           'label': 'Possession engine: each world draws its own player minutes and rotations, with legal foul-out handling. '
                    'Prior-fitted timing responds to the score and clock late in Q4/overtime. '
@@ -408,6 +408,7 @@ class Engine:
         if self.runtime.get('clock_recipe') is not None:
             from scripts.late_clock import load_recipe
             self.clock_policy = load_recipe(ROOT / self.runtime['clock_recipe'], self.m.cfg['train_through'])
+        self.world_observer = None  # optional read-only zones/selected-segment capture
         self.rotation_policy: RotationPolicy | None = None
         if self.runtime.get('foul_policy') == 'nba-rule3-v1':
             from scripts.foul_out import Rule3Policy
@@ -533,6 +534,9 @@ class Engine:
         policy = getattr(self, 'rotation_policy', None)
         if policy is not None:
             policy.begin(g, W, avail_world, int(seed))
+        observer = getattr(self, 'world_observer', None)
+        if observer is not None:
+            observer.begin(g, st)
         clock_policy = self.clock_policy
         if clock_policy is not None:
             clock_policy.begin(int(seed))
@@ -557,6 +561,8 @@ class Engine:
                         L[r, i, k] = side_idx[np.argmax(g.expected[side_idx])]
             if policy is not None:
                 L = policy.before_segment(g, st, A, L)
+            if observer is not None:
+                observer.before_segment(g, st, A, L)
             off = st.off[A]
             new_poss = ~np.isin(st.start[A], [S['oreb'], S['foul'], S['other']])
             np.add.at(st.poss, (A[new_poss], off[new_poss]), 1)
@@ -794,12 +800,19 @@ class Engine:
             nxt_off[viol], nxt_start[viol] = off[viol], S['other']
             ttov = np.flatnonzero(ev == 3)
             nxt_start[ttov] = S['dead_turnover']
+            if observer is not None:
+                observer.after_segment(g, st, A, {
+                    'shot': shot, 'zone': zone, 'band': band, 'res': res, 'actor': a_glob,
+                    'lineups': L, 'offense': L_off, 'defense': L_def, 'off': off, 'secs': secs,
+                    'event': ev, 'what': what})
             # carry the possession and handle period ends
             st.off[A], st.start[A] = nxt_off, nxt_start
             ended = A[(st.clock[A] <= 0.0) | quiet]
             self._period_end(st, ended, rng)
         if policy is not None:
             policy.finish(g, st)
+        if observer is not None:
+            observer.finish(g, st)
         return self._package(g, st, W)
 
     # ----------------------------------------------------------------------------- state updates

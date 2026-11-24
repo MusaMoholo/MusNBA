@@ -1,0 +1,94 @@
+{
+ "kind": "all full-game player/team advanced rates, exact supports, weighted means/quantiles/histograms and all lineup cases",
+ "games": [
+  {
+   "game": "401910036",
+   "cases_including_game_view": 1,
+   "rate_distributions_checked": 279,
+   "status": "pass"
+  },
+  {
+   "game": "401910037",
+   "cases_including_game_view": 4,
+   "rate_distributions_checked": 1143,
+   "status": "pass"
+  },
+  {
+   "game": "401910038",
+   "cases_including_game_view": 1,
+   "rate_distributions_checked": 234,
+   "status": "pass"
+  },
+  {
+   "game": "401910039",
+   "cases_including_game_view": 1,
+   "rate_distributions_checked": 324,
+   "status": "pass"
+  },
+  {
+   "game": "401910040",
+   "cases_including_game_view": 1,
+   "rate_distributions_checked": 315,
+   "status": "pass"
+  },
+  {
+   "game": "401910041",
+   "cases_including_game_view": 1,
+   "rate_distributions_checked": 315,
+   "status": "pass"
+  },
+  {
+   "game": "401910042",
+   "cases_including_game_view": 4,
+   "rate_distributions_checked": 1251,
+   "status": "pass"
+  },
+  {
+   "game": "401910043",
+   "cases_including_game_view": 1,
+   "rate_distributions_checked": 342,
+   "status": "pass"
+  },
+  {
+   "game": "401910044",
+   "cases_including_game_view": 1,
+   "rate_distributions_checked": 324,
+   "status": "pass"
+  },
+  {
+   "game": "401910045",
+   "cases_including_game_view": 4,
+   "rate_distributions_checked": 1215,
+   "status": "pass"
+  }
+ ],
+ "rate_distributions_checked": 5742,
+ "view_sha256": {
+  "data/views/api/game/401910036.json": "464e1b6e75ddf2b59069a567ddc2d9850d0fe5b2f288bf9623c00fa971226b6a",
+  "data/views/api/game/401910037.json": "45eec765f702fbc44b50ddf20d9439a6bc85bd8a9f9709c354e162e4aa504ff6",
+  "data/views/api/game/401910038.json": "b9ff6f53cb4d98e45484df326f600dbc606799a4283d187ef0177c0180e0416a",
+  "data/views/api/game/401910039.json": "15c04cb015d83eec7b3cc79784d322bfe143c8046d26b8ef5d33bef823ad5820",
+  "data/views/api/game/401910040.json": "14efdd2276d9a78f54f79a01bca5ce7ee3d76471faf55d6cb299f735c43cfb37",
+  "data/views/api/game/401910041.json": "97957a7af223ada633030de103150c7691e9f96cf8fdfb66e56a4a9cf3b52b31",
+  "data/views/api/game/401910042.json": "44f16f2aaec3efc7dda84eafaa8df34096bdf1d0c977cd0da81a9e4d7bbc2278",
+  "data/views/api/game/401910043.json": "b1a0c3caa803bb472fc619224357ffaee438647fe7825ceff4a602d430175343",
+  "data/views/api/game/401910044.json": "9a7955329706c5a4aa118b9fa4c2bb8d49491d1ff9dd07af2c8cd3dabd21c2f9",
+  "data/views/api/game/401910045.json": "f655c00e3a7067145ec57011667eb11d9dceb8f64974ff137e80a94736bca74f",
+  "data/views/api/game/401910036/worlds.json": "0179b9a6a63e8beb502d9255a41c4f45738b3067b06dccb771147a8f9b276d0f",
+  "data/views/api/game/401910037/worlds.json": "686130f1490b55835bc724cb282fcb120dd5749d9e39bbcf1b28afc1551b3d28",
+  "data/views/api/game/401910038/worlds.json": "82d69198d505957ac17f6433781b9b3f18c8007fa7f49ed41b1bd34c10d03c56",
+  "data/views/api/game/401910039/worlds.json": "3e460e9f739c08fab6663f36f4227ab5d64ecdbc5615dd54509470cbab0889e9",
+  "data/views/api/game/401910040/worlds.json": "cb2fe669c4ee4c927d48362e1cfdecea0f3cf90a7f13d5fae1e3cbf2204731bc",
+  "data/views/api/game/401910041/worlds.json": "608dca67938e2ce1e86118bd34418e79c3b6c539f50bf5ff54b445e37205c2fd",
+  "data/views/api/game/401910042/worlds.json": "b244e608dc254b03473b84cf44b040047388fd85b71f31216177ee4cff79fdf5",
+  "data/views/api/game/401910043/worlds.json": "17a832b9b72d4d135abdf33fd02414db9fd176d7f062e2005a2ec7181a93ae41",
+  "data/views/api/game/401910044/worlds.json": "cb591402c5d101cc189d81a6836c4ddfc6fbe34e7bb2b4500ab16a8155ddc8ea",
+  "data/views/api/game/401910045/worlds.json": "1d5ecf1ee7249da0857ad6b04aa5e066789328b1c4644f48f46efba6f8dfcbf6"
+ },
+ "auditor_sha256": "0b7495609d99d0fb51b89625ee5efd6a7eb4c7fcdf97093bca135d4508a8e8b1",
+ "workers": 9,
+ "omp_threads": 1,
+ "blas_threads": 1,
+ "accuracy_scored": false,
+ "status": "pass"
+}

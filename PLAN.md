@@ -10,13 +10,14 @@ lineup branch; Expected is their exact weighted mixture. Tomorrow onward follows
 Laptop PWA is primary; phone is stripped. Browsing only reads stored results.
 
 Accepted: **engine-v1.3-r3**, D29 rotations, Rule 3 foul-outs, independent fitting, contextual late timing, pathway v1,
-lineup branches and offline photos. Availability calibration, richer defence, season calibration and View Centre remain open.
+lineup branches and offline photos. Availability calibration, richer defence, season calibration remain open; replay UX is delivered, final integration pending.
 
-## Latest checkpoint — C3 research complete
+## Latest checkpoint — C4 delivered
 
-S06's current-r3 MIN CRPS improves0.02974;27/27 proper bounds clear, with lower minute coverage and two unresolved coverage diagnostics.
-The unchanged recipe advances to C4 independent confirmation; production remains r3. C2's PTS benefit was unsupported; no replacement search.
-C1 early publication remains delivered. HANDOFF owns evidence, checkpoint state, bundles and manual imports.
+Independent S06 improves MIN CRPS 0.03694 but clears 25/27 proper bounds; win Brier/log-loss safeguards remain unresolved.
+The frozen attempt closes without promotion, broader rescue or protected scoring. C2 also retains r3.
+C4 ships useful analysis/replay on accepted engines; HANDOFF owns capture, checks, publication and manual imports.
+C1 early publication remains delivered.
 
 ## Next modular chunk — C
 
@@ -31,7 +32,7 @@ one comprehensive NBA analysis workspace. Better models are an objective; promot
 | C4 analysis/replay | 25% | Five reconciled saved-world examples, court/event/box/rotation playback, zone maps and deeper discoverable metrics/outcomes. |
 | C5 competitions/release | 25% | World-local Cup, regular82 completion, play-in/playoffs; three competition sections and integrated delivery. |
 
-**C50%; C1=C2=C3=100%, C4=C5=0%.** HANDOFF has fifty concrete rungs, commands, dependencies, acceptance/fallback and fixed weights totalling100%.
+**C75%; C1–C4=100%, C5=0%.** HANDOFF has fifty concrete rungs, commands, dependencies, acceptance/fallback and fixed weights totalling100%.
 C1 is complete; C2/C3 compare separately against r3. C4 confirms/freezes survivors; C5 alone runs a qualifier's protected
 possession test. Exactly two bounded learned families; no rescue search. Calendar correctness is separate from a ratings retune.
 C1 and C5 require fresh nightlies; intermediate affected releases refresh outputs/PWA as necessary. Independent work overlaps within ten
@@ -64,7 +65,7 @@ Historical scopes/ladders survive in the verified archive; extract the relevant 
 | S13 historical forecasts | 5% | Deferred D40; preserve originals. |
 | S14 final programme delivery | 5% | 0%; remaining programme integration required. |
 
-D42 A remains65%: A1(30%) and A2(35%) complete, A3(35%)0%. A3 needs C4's actual replay acceptance.
+D42 A93%: A1(30%) and A2(35%) complete; A3(35%)80% against its original ten rungs. Fresh integrated nightly/final checkpoint remain.
 B remains0%: B1 defence30%, B2 pathway30%, B3 integration/visibility40%. C2 contributes evidence, not automatic B1 completion.
 C grants no automatic S11/S12/S14 credit. D54 completes only with real early publication.
 

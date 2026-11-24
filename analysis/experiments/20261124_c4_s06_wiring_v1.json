@@ -1,0 +1,83 @@
+{
+ "kind": "C4 independent S06 confirmation; no promotion",
+ "game_ids": [
+  "401810475",
+  "401810379",
+  "401810947"
+ ],
+ "worlds": 1000,
+ "arms": 2,
+ "publication_raw_parity": [
+  {
+   "game": "401810475",
+   "arm": "reference"
+  },
+  {
+   "game": "401810475",
+   "arm": "candidate"
+  },
+  {
+   "game": "401810379",
+   "arm": "reference"
+  },
+  {
+   "game": "401810379",
+   "arm": "candidate"
+  },
+  {
+   "game": "401810947",
+   "arm": "reference"
+  },
+  {
+   "game": "401810947",
+   "arm": "candidate"
+  }
+ ],
+ "receipts": [
+  {
+   "game": "401810475",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c4_s06_wiring_v1/401810475/reference/receipt.json",
+   "sha256": "b6d991842a64b7cf0bb51d0c3e15da1a697fc00c6713dd53084f370795747f7e"
+  },
+  {
+   "game": "401810475",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/c4_s06_wiring_v1/401810475/candidate/receipt.json",
+   "sha256": "392b92e1b762849402bad9970d62df87c1ddb17685502529d0e97edea8467244"
+  },
+  {
+   "game": "401810379",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c4_s06_wiring_v1/401810379/reference/receipt.json",
+   "sha256": "5fb61abc80a6f94d329648cb35351afd6517fe8597264da4c6c571ed317d8513"
+  },
+  {
+   "game": "401810379",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/c4_s06_wiring_v1/401810379/candidate/receipt.json",
+   "sha256": "7195dc523610d76e4021e9806f1b15e3f2900596af68696dec7a0cbf1048417b"
+  },
+  {
+   "game": "401810947",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c4_s06_wiring_v1/401810947/reference/receipt.json",
+   "sha256": "ed8b136459217480edee509fd1e2391e21e89f57791f9b9655e806bc7d074151"
+  },
+  {
+   "game": "401810947",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/c4_s06_wiring_v1/401810947/candidate/receipt.json",
+   "sha256": "498e39eea637faa7da3785fd2df2fa5f9f81b9f4d8eccd66ba529ae0c6a07eaf"
+  }
+ ],
+ "derived_outputs": {
+  "data/derived/experiments/c4_s06_wiring_v1_reference.parquet": "2e1fc3047b7315005e7054a87e6c6a093ada8736fa961935a9e3dd5f1260651c",
+  "data/derived/experiments/c4_s06_wiring_v1_reference_players.parquet": "92cca4b71be43015df7a87435d3b35e87a20c0a63bda19a1427e41ce06584073",
+  "data/derived/experiments/c4_s06_wiring_v1_candidate.parquet": "642a1a387c39a5c76daba4010e7ace148236b95a82466f9dfbf858f8a6b6bbcc",
+  "data/derived/experiments/c4_s06_wiring_v1_candidate_players.parquet": "521065c1156f16515de6b467d34ac884099a75e03c4faa0da76b60b728902654"
+ },
+ "seconds": 144.9391805419873,
+ "fresh_jobs": 6,
+ "production_model_changed": false
+}

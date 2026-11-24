@@ -655,6 +655,41 @@ if (args['require-u24']) {
     })()`));
   }
 }
+if (args['require-c4']) {
+  const gid=String(args['require-c4']);
+  check('C4 maps and profile-specific replay records cover every current engine game offline',await evaluate(`(async () => {
+    const ui=await import('./assets/ui.mjs'),slate=await ui.api('slate/'+ui.meta().latest);let checked=0;
+    for(const fixture of slate.games){const game=await ui.api('game/'+fixture.id);if(game.projection?.sim?.model!==ui.meta().model.id)continue;
+      if(!game.court)return false;const court=await ui.api(game.court.path);if(court.source_id!==game.court.source_id||!court.expected)return false;
+      if(${JSON.stringify(args.profile)}==='phone'){if(game.worlds||game.replay||court.cases)return false;}
+      else {if(!game.worlds||!game.replay||!court.cases)return false;const replay=await ui.api(game.replay.path);if(replay.examples.length!==5||replay.source_id!==game.replay.source_id)return false;}
+      checked++;
+    }return checked>0;
+  })()`));
+  await send('Page.navigate',{url:args.url+'#/game/'+gid+'/analysis'},s);
+  check('C4 source-bound shooting map and metric catalogue work offline',await waitFor(`!!document.querySelector('[data-court-body] svg')`) && await evaluate(`(async () => {
+    const ui=await import('./assets/ui.mjs'),game=await ui.api('game/'+${JSON.stringify(gid)}),court=await ui.api(game.court.path);
+    if(court.source_id!==game.court.source_id)return false;
+    document.querySelector('[data-analysis-tab="metrics"]').click();
+    const subject=document.querySelector('[data-metric-subject]');
+    if(document.querySelectorAll('[data-metric-cards] article').length!==18)return false;
+    subject.value=[...subject.options].find(o=>o.value.startsWith('p:')).value;subject.dispatchEvent(new Event('change'));
+    if(document.querySelectorAll('[data-metric-cards] article').length!==9)return false;
+    document.querySelector('[data-analysis-tab="shooting"]').click();
+    return !!document.querySelector('[data-court-body] svg') && ((${JSON.stringify(args.profile)}==='phone') ? !game.replay&&!game.worlds&&!court.cases : !!game.replay&&!!game.worlds&&!!court.cases);
+  })()`));
+  if(args.profile==='laptop') {
+    await send('Page.navigate',{url:args.url+'#/game/'+gid+'/replay'},s);
+    check('C4 reconciled original-world playback survives offline import',await waitFor(`!!document.querySelector('[data-replay-seek]')`) && await evaluate(`(async () => {
+      const ui=await import('./assets/ui.mjs'),game=await ui.api('game/'+${JSON.stringify(gid)}),payload=await ui.api(game.replay.path),R=await import('./assets/replay.mjs');
+      if(payload.examples.length!==5)return false;
+      for(const example of payload.examples){const end=R.replayState(example,example.events.length,payload.players);if(JSON.stringify(end.score)!==JSON.stringify(example.final_score))return false;for(const p of payload.players)if(Math.abs(end.lines[p.id].min-example.final_box[p.id].min)>1e-8)return false;}
+      document.querySelector('[data-replay-next]').click();return document.querySelector('[data-replay-seek]').value==='1';
+    })()`));
+    await send('Page.reload',{},s);
+    check('C4 playback persists across offline reload',await waitFor(`!!document.querySelector('[data-replay-seek]')`));
+  }
+}
 const repeat = await evaluate(`(async () => { const {importBundle} = await import('./assets/pwa-storage.mjs'); return 'ok'; })()`).catch(e => String(e));
 check('storage module loads offline', repeat === 'ok', repeat === 'ok' ? '' : repeat);
 if (args.out) { const shot = await send('Page.captureScreenshot', {format: 'png'}, s); writeFileSync(join(args.out, 'pwa-offline-standings.png'), Buffer.from(shot.data, 'base64')); }

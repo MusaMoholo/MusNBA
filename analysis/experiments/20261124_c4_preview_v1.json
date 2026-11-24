@@ -1,0 +1,20 @@
+{
+ "kind": "complete source-bound10k-world preview; broader capture still running",
+ "games": [
+  {
+   "game": "401910036",
+   "examples": 5,
+   "unique_chunks": 10,
+   "gzip_bytes": 96248,
+   "sha256": "38398ecdcc97997d77ed893e56a65ed73fd436bfb6d1689b73b4ae9bef9dd28b",
+   "replay": "data/derived/experiments/c4_preview_v1/401910036/replay.json",
+   "zone_worlds": {
+    "path": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/c4_preview_v1/401910036/zones.npz",
+    "sha256": "82d113061eabc05697b991713a38c83366292ce074b88b1c31e936cdccdb55f1",
+    "worlds": 10000,
+    "probability_mass": 10000
+   },
+   "court": "data/derived/experiments/c4_preview_v1/401910036/zones.json"
+  }
+ ]
+}

@@ -1,0 +1,70 @@
+{
+ "kind": "C4 frozen capture, selection, schemas and UX scope; no implementation acceptance yet",
+ "runtime": "accepted r3 initially; C3 survivor confirmation stays separate from visible-world capture",
+ "selection": "Five positive-mass real worlds: home/away maximum own final margin, home/away maximum individual fantasy10=10PTS+12REB+15AST+30STL+30BLK−10TOV, representative minimum squared standardized distance to weighted mean of both teams' PTS/OREB/DREB/AST/STL/BLK/TOV/3PM/FGA/FTA/possessions; weighted population variance, zero variance excluded; ties sorted branch ID then original world index. Labels may share a world.",
+ "capture": "Replay each selected original full canonical1000-world chunk once per unique branch/chunk. Read-only observer; no random draws. Every original raw array identical; extra zone arrays reconcile exactly. Selected segments retain before/action/after clocks, before/post-foul fives, all box credits and seconds; independently reconstruct final boxes, team scores, seconds and stints.",
+ "spatial": "Predictions retain r3's five pooled model zones. No native fine-region forecasts, exact coordinates, tracking positions, paths or inferred passes. Recorded ESPN coordinates may support separately labelled derived22-region observed maps; unknowns retain explicit2/3 bins, heaves/source coverage explicit. Do not compare incompatible geometry axes.",
+ "zones": "uint16 world/player/period/5-zone attempts and makes; per-player/period FGA/FGM/3PA/3PM exact; exact weighted branch/Expected summaries. Laptop full-game per-world zone counts support conditional counts, rates and scenario outcomes; phone retains Expected aggregate summaries. No zero denominator filling.",
+ "api": "visible-worlds-v1 replay descriptor binds same game/source; private inputs and per-row research captures never published. View build reads saved files only. Player-worlds zone schema1 uses full-game u16 little-endian bytes; no serving reconstruction/fetch/fit/simulation.",
+ "ux": "Game Centre Analysis and Saved worlds; boxes/insights first, grouped controls. Replay example, seek, step, speed, periods, exact cumulative box and full rotation timeline; lineup-incompatible examples hidden with clear Expected action. Searchable supported metric catalogue, shared subjects, definitions/support/quantiles/charts/scenario links; observed and forecast maps distinguish source resolution.",
+ "profiles": "Laptop full playback; phone Expected distributions/maps/catalogue, with explicit missing replay. New capability gates, legacy bundles remain readable, upgrade/interrupted import/offline checks. No API/model/data in Pages shell.",
+ "validation": "Meaningful accounting and worker/selection/replay parity tests; representative actual games/branches and zero/OT cases. Both themes at1440/960/390, screenshots, keyboard/touch44px, sortable meaningful columns preserving groups/axes/missing-last. Benchmark replay/zone size, CPU and memory; integrated nightly must remain<=60min.",
+ "release": "C4 checkpoint ships tested accepted-runtime app/shell/bundles; current-model labels from data. C4 independently confirms any unchanged C3 survivor under frozen existing v3 panels, then freezes qualifier for C5 only. No new learned family, C2 replacement or protected r3 rescore. C5 final fresh authorised fetch/rebuild/10k per branch/fresh10k season and regenerated examples remain required. Both devices update/import manually; real-device acceptance unverified.",
+ "integration_notes": {
+  "engine": "Engine.world_observer defaultsNone. begin after Worlds/availability; before_segment after rotation policy gives initialL; after_segment after gap but before st.off/start or _period_end, passing shot/zone/band/res/actor/initialL/post-Loff/Ldef/off/secs; finish before package. Zero random draws.",
+  "runtime": "ENGINE adds world_details=visible-worlds-v1 metadata. lineup_forecast.simulate automatically creates WorldDetail only for this capability, or uses an explicit observer supplied by original-chunk replay. Restore previous observer/policy in finally. Old saved runtimes without capability preserve old raw fields/default-off strict parity.",
+  "raw": "raw zone_fga/zone_fgm have W/player/period5/zone5 dimensions; no scalar schema in raw because merge concatenates world axis. _store players.npz includes both and scalar zone_schema1; read_player_worlds validates exact sums using WORLD_STATS and preserves extras. pack_capture adds full-game u16 little-endian fields and keys. Existing nightly copies all players.npz fields generically.",
+  "queue": "Do not replay five chunks serially in the game-finishing worker. _finish_game stores basic outputs without completion receipt and returns selected unique chunk jobs. Shared existing queue schedules replay-chunk jobs, then replay-finish; only final receipt emits game event/early publication. Resume verifies exact selection/input/raw hashes, skips complete replay chunks; never overwrite source captures. Completion requires replay.json for capability runtime.",
+  "old_source": "Original work-plan paths may point at an older live-run root; use snapshot-owned inputs.pkl and branch capture file name as authoritative. Verify input hash/workplan/branch capture receipt; derive saved original1k chunk seed from batch seed/start/stop, replay full chunk and compare every original field to corresponding branch capture slice. Extra zone arrays get separate accounting. Never simulate one selected world alone.",
+  "scenario": "TEAM_VARS currently lack box/advanced fields; add summed player-box columns and shared derivedMetric arithmetic, then expose valid supported fields. Raw team oreb/dreb stay counts; share variables use orebShare/drebShare. Catalogue maps stored advanced keys accordingly. Extend player/branch world source zone schema consistently, reject mixed schemas, legacy missing zones returns unavailable. New zone variables include per-zone fga/fgm/fgpct/share; hide when missing.",
+  "ui": "Scratch sources unintegrated. Export box-metrics ADVANCED_METRICS via ui.mjs and reuse in advancedPanel to remove duplicate defs. Add modules to exporter and SW, capability gates to PWA/importer; phone removes replay and raw worlds/cases, retains Expected maps/catalogue. Game routing and view descriptors still need integration; source ID and shared choices mandatory. Add sortable columns preserving teams. Browser screenshots/real data required."
+ },
+ "frozen_at": "2026-11-24T04:37:32.152696+00:00",
+ "metric_inventory": {
+  "player_box_fields": [
+   "min",
+   "pts",
+   "reb",
+   "ast",
+   "fg3m",
+   "stl",
+   "blk",
+   "tov",
+   "fgm",
+   "fga",
+   "fg3a",
+   "fta",
+   "oreb",
+   "dreb",
+   "ftm"
+  ],
+  "advanced_player": 9,
+  "advanced_team": 18,
+  "existing": "quantiles/distributions/core and rates/conditions, weighted branches, actual boxes and prior profiles",
+  "new": "searchable shared definitions, team box/rate conditions,5-zone per-world attempts/makes/rates/share, reconciled original-world replay, observed-source shooting maps",
+  "missing": "observed nearest defender/tracking/passes/trajectories; native fine-zone forecasts; legacy snapshots without new arrays"
+ },
+ "size_contract": {
+  "zone_raw_bytes": "4*worlds*players*5periods*5zones; u16 attempts+makes, no loss of counts",
+  "selected_worlds_per_game": 5,
+  "max_extra_worker_rss_bytes": 1073741824,
+  "max_replay_gzip_bytes_per_game": 2097152,
+  "phone": "Expected aggregates only; no playback or raw zone worlds",
+  "fallback": "Preserve exact data; if capture fails parity/size/runtime, period/rotation fallback with A3 replay incomplete; no fabricated playback or probability odds",
+  "full_nightly_limit_seconds": 3600
+ },
+ "draft_sha256": {
+  "test_zone_metrics.mjs": "4dff78d5c6b0015978d72344ad0f8b201587b741ea6a0d2cf7be96d5054678bb",
+  "visible_worlds.py": "88bf1a63b5ab70629c9f4d11f85d7f4f326fae96feae870327fe3077ab0e18e3",
+  "styles.css": "c2a219996d5c75d2c705e38ee683fe64bf315201cdd28d1fcb4e086064bb22df",
+  "shot_zones.py": "c29b5232d49a4401c91aa5b46d1ec7a234459133de05d469579db09ecf69461a",
+  "world_detail.py": "0ebbe6e8bd774a3421f95dd4c4f492500a601daa17d1e17b13fb73a1af4e3238",
+  "explore.mjs": "618d910614dee517242f9140f4931b5cf1197ed1e3fb461df3429bd248109ee3",
+  "court.mjs": "c1d5c44c2f8ebe52054314a10bc3b59a1e60a15cf855dde6b7b3edbe7f54255d",
+  "test_world_detail.py": "55c5c3ef6b25f7ac9c11114aefda99e08ed9e7462f763fa2c5b894f3c55e64fa",
+  "replay.mjs": "1526f56a5867dcbd541ab6ef08fc2c80770619f159fea97f650dab239b97a0d4",
+  "design.json": "b31054ad3603d6351301b82f2e32133fea275925ff118faa9d0f2485b6a6495b",
+  "box-metrics.mjs": "48c4bd1c6a6734a6ba867b9418eb952c486a3948c64c22b6e00a6837687c32b5",
+  "shot-zones.mjs": "dc9a30b84e7481e9dff4e2712014a03c30d272922eca19c017bb01aa3985a879"
+ }
+}

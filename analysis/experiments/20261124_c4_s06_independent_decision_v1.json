@@ -1,0 +1,30 @@
+{
+ "kind": "independent200 F4 S06 decision; no promotion",
+ "phase_sha256": "0c4ae8d1d74aac12cca6966036598e5f3556596a73f5a688c7f833078b204731",
+ "contract_sha256": "570b26b9ef727597f6af46384c5a0158bd126cdb4134e21af723bb5211880ef9",
+ "comparison_sha256": "dd2630c8a86c688def583f079c70e50ebc38e00c29c7a544a79858a98818ab9d",
+ "gate_sha256": "f2252c84421c55afe8378800806b06e4ade99ebe5e64a4230baf96072880c2ac",
+ "population": {
+  "fold": "F4",
+  "games": 200,
+  "player_games": 4287
+ },
+ "primary": {
+  "path": "players/all/min/crps",
+  "change": -0.03694429463072435,
+  "ci_95": [
+   -0.05002334266953308,
+   -0.025456316043030038
+  ],
+  "improvement_established": true,
+  "multiplicity": "uncorrected; only one frozen benefit claim can use this directly"
+ },
+ "decision": "more_precision_or_coverage_needed",
+ "proper_established": 25,
+ "proper_checks": 27,
+ "coverage_unresolved": 1,
+ "coverage_harms": [],
+ "next": "close fixed attempt; retain r3, no retune/replacement or protected scoring",
+ "production_changed": false,
+ "protected_test_run": false
+}

@@ -78,15 +78,24 @@ def simulate(eng, g, worlds, seed):
     previous = eng.rotation_policy
     policy = LegalCapture(previous)
     eng.rotation_policy = policy
+    previous_detail = getattr(eng, 'world_observer', None)
+    detail = previous_detail
+    if detail is None and eng.runtime.get('world_details') == 'visible-worlds-v1':
+        from scripts.world_detail import WorldDetail
+        detail = WorldDetail()
+    eng.world_observer = detail
     try:
         summary = eng.simulate(g, worlds, seed)
     finally:
         eng.rotation_policy = previous
+        eng.world_observer = previous_detail
     st = eng.last
     raw = {'player_ids': np.asarray(g.ids), 'side': g.side.copy(), 'available': policy.available,
            'opening_lineups': policy.opening, 'minutes': st.minutes, 'team_points': st.pts,
            'final_period': st.period, 'possessions': st.poss,
            **{'box_' + key: value for key, value in st.box.items()}}
+    if detail is not None:
+        raw.update(zone_fga=detail.attempts, zone_fgm=detail.makes)
     for side in (0, 1):
         if not np.array_equal(raw['box_pts'][:, g.side == side].sum(1), raw['team_points'][:, side]):
             raise ValueError('saved player/team points differ')

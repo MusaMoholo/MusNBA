@@ -1,0 +1,45 @@
+{
+ "kind": "C4 finite learned-family closure and C5 possession qualifier freeze",
+ "frozen_at": "2026-11-24T06:01:37Z",
+ "policy": "promotion-v3-20261123",
+ "learned_qualifier": null,
+ "accepted_possession_runtime": "engine-v1.3-r3",
+ "accepted_nodes": "v1.3",
+ "c2": {
+  "decision_sha256": "054ccd10f8c4fa34e8107ffff12b0eb8cf376324c942f2cc4ebbf5244cd48f26",
+  "result": "fixed PTS study unsupported; no survivor/replacement"
+ },
+ "s06": {
+  "decision_sha256": "8bb2cf2b171683b71c41bbb1245b2206e68b80c09787732c0b498bf52d6ed463",
+  "result": "independent MIN benefit established;25/27 proper bounds, win Brier/log-loss unresolved; fixed attempt closed",
+  "primary": {
+   "path": "players/all/min/crps",
+   "change": -0.03694429463072435,
+   "ci_95": [
+    -0.05002334266953308,
+    -0.025456316043030038
+   ],
+   "improvement_established": true,
+   "multiplicity": "uncorrected; only one frozen benefit claim can use this directly"
+  },
+  "no_material_coverage_harm": true,
+  "star_minute_coverage_unresolved": true
+ },
+ "later_instructions": "No broader rescue, replacement recipe or protected possession rescore. C5 retains unchanged r3 and validates mechanical calendar/pathway outputs under explicit rules/assumptions; final full nightly and PWA delivery remain required.",
+ "capture_class": "mechanical read-only observer/storage; all130 original1k chunks raw-exact, not a learned promotion or protected accuracy score",
+ "capture_accounting_sha256": "3824600bd4be818ae6b216a53a91e90ff52090d6c724ec0cc12768584aed0d77",
+ "source_sha256": {
+  "scripts/engine.py": "ec66341b1cacd6cc407d21f037b8b62c29f0a71ed408940279765f13a8211912",
+  "scripts/lineup_forecast.py": "3b4bb4991828a38aa4f82439e4b391342bb8d79f12b7bbd67b7f73f7c392604c",
+  "scripts/world_detail.py": "0ebbe6e8bd774a3421f95dd4c4f492500a601daa17d1e17b13fb73a1af4e3238",
+  "scripts/state_rotations.py": "dafbed8034bf0bd35c23910927de45ba83229e1ba6b1d4800143036958f524e7",
+  "models/v1.3.json": "f85ca77418990f702b8e6dbe3eb0be1c35b1830649517a760d000bd6b4c1d09e"
+ },
+ "production_predictive_change": false,
+ "protected_test_run": false,
+ "limits": [
+  "Conditional actual-participant validation does not establish live availability/DNP accuracy.",
+  "MIN80% coverage78.0033% to76.6503%; better CRPS does not establish universally better uncertainty.",
+  "C4 retained-capture walltime includes explicit worker pauses and supplementary disjoint workers; the<=60min full-nightly acceptance remains C5."
+ ]
+}

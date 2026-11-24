@@ -187,22 +187,28 @@ def world_lines(path: Path, gid: str, sims: int) -> dict | None:
         if f'{gid}__lines' not in z.files or gid not in t.files:
             return None
         players = player_worlds.read_player_worlds(z, gid)
+        from scripts import court_assets
+        players = court_assets.enrich_players(path, gid, players, list(WORLD_STATS)[:players['lines'].shape[2]])
         lines, ids, side = players['lines'], players['ids'], players['side']
         per = t[gid]  # (worlds, home/away, Q1–Q4 + OT)
     branch_file = path / 'lineups' / gid / 'worlds.json'
     if branch_file.exists():
         payload = read_json(branch_file)
         enrich_lineup_rates(payload, players)
+        court_assets.enrich_branches(payload, players)
         return payload
     stats = list(WORLD_STATS)[:lines.shape[2]]
     result = {'worlds': int(lines.shape[0]), 'stats': stats, 'players': [str(x) for x in ids], 'side': side.astype(int).tolist(),
               'lines': base64.b64encode(np.ascontiguousarray(lines).tobytes()).decode(),
               # team points per world and period: worlds × (home, away) × (Q1, Q2, Q3, Q4, OT), uint8
-              'team_periods': base64.b64encode(np.clip(per, 0, 255).astype(np.uint8).tobytes()).decode(), 'periods': ['q1', 'q2', 'q3', 'q4', 'ot']}
+              'team_periods': player_worlds.packed_bytes(per), 'periods': ['q1', 'q2', 'q3', 'q4', 'ot']}
     if 'minutes' in players:
         result['minutes_schema'] = int(players['minutes_schema'])
         result['period_minutes_f64_le'] = base64.b64encode(
             np.ascontiguousarray(players['minutes'], dtype='<f8').tobytes()).decode()
+    if 'zone_fga' in players:
+        from scripts.shot_zones import encode_arrays
+        result.update(encode_arrays(players['zone_fga'], players['zone_fgm']))
     return result
 
 
@@ -899,6 +905,9 @@ def lab(serving: dict) -> dict:
 
 
 def build(views_root: Path = VIEWS) -> dict:
+    import pyarrow as pa
+    pa.set_cpu_count(1)
+    pa.set_io_thread_count(1)
     teams = read_json(DERIVED / 'teams.json')
     registry = read_json(DERIVED / 'players.json')['players']
     master = master_fixtures.load()
@@ -1095,7 +1104,9 @@ def build(views_root: Path = VIEWS) -> dict:
                     sides[s_] = sorted(((x['id'], x['name'], x.get('pts', 0)) for x in actual[s_]['players'] if not x['dnp']), key=lambda t: -(t[2] or 0))
             duel_day = p['meta'].get('origin', r['date_et']) if p else r['date_et']
             duel = duels(M_real, gid, duel_day, sides, final=bool(actual))
-        write_json(api / 'game' / f'{gid}.json', {
+        from scripts import court_assets
+        exploration = court_assets.build(snaps[p['day']]['path'], gid, api, core, {side:p['sim'][side]['players'] for side in ('home','away')}) if p else {}
+        write_json(api / 'game' / f'{gid}.json', {**exploration,
             'game': core, 'duels': duel, 'multi': multi if p else None, 'lead_fan': lead_fan(snaps[p['day']]['path'], gid) if p else None,
             'usage_profiles': ({str(pid): usage_profiles[str(pid)] for pid in sim_ids if str(pid) in usage_profiles}
                                if p and p['meta'].get('origin') == latest_day else None),
@@ -1257,7 +1268,7 @@ def build(views_root: Path = VIEWS) -> dict:
         'dates': {d: len(by_date.get(d, [])) for d in slate_dates},
         'teams': teams, 'model': latest['meta']['model'], 'availability_policy': latest['meta'].get('availability_policy'),
         'player_icons': player_icons(),
-        'required_capabilities': ['player-icons-v1'] + (['early-delivery-v1'] if latest['meta'].get('delivery', {}).get('state') == 'partial' else []) + (['minute-cdf-player-v2', 'lineup-forecast-v1'] if any(p['sim'].get('lineups') for p in projections.values()) else []),
+        'required_capabilities': ['player-icons-v1'] + (['shot-zones-v1'] if any((api/'game').glob('*/court.json')) else []) + (['visible-worlds-v1'] if any((api/'game').glob('*/replay.json')) else []) + (['early-delivery-v1'] if latest['meta'].get('delivery', {}).get('state') == 'partial' else []) + (['minute-cdf-player-v2', 'lineup-forecast-v1'] if any(p['sim'].get('lineups') for p in projections.values()) else []),
         'data': {'finals': len(finals), 'last_final': max((r['date_et'] for r in finals), default=None),
                  'games': len(master), 'collected_run': registry and read_json(DERIVED / 'players.json')['run']}})
 

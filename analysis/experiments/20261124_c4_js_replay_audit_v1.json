@@ -1,0 +1,23 @@
+{
+  "kind": "shipped browser replay accumulator, all saved examples and zero/midpoint/final prefixes",
+  "games": 10,
+  "examples": 50,
+  "cutpoints": 150,
+  "player_boxes": 1490,
+  "overtime_examples": 5,
+  "max_minute_error": 0,
+  "view_sha256": {
+    "data/views/api/game/401910036/replay.json": "38398ecdcc97997d77ed893e56a65ed73fd436bfb6d1689b73b4ae9bef9dd28b",
+    "data/views/api/game/401910037/replay.json": "5d5e45a2ce66a64fbac39e55c53febdba4284fed4420c200c4617f0838d114a7",
+    "data/views/api/game/401910038/replay.json": "c7812a2fbcae0978f2eb7fd2cdbbcedef982ecec0c270d854dc91de5539ab708",
+    "data/views/api/game/401910039/replay.json": "db35d4790b55aaf9545ccdcd36f08c671a8e847bd16bd240add86400ced760c2",
+    "data/views/api/game/401910040/replay.json": "b0553214cf28ecaeb04237ff70ed2e00da4106ac70050da2ae1681e28ad5a675",
+    "data/views/api/game/401910041/replay.json": "6e56ac088ffa019a2e8c8c3a831a27c5cd3eb56ba148f09e16175163719f809c",
+    "data/views/api/game/401910042/replay.json": "db2006c3ed7a9b17b8e35e643d31d24665b1aaa652cbd4e90a209459ef217e30",
+    "data/views/api/game/401910043/replay.json": "741e0469c49776adeb3e77c77255bada4063aa1dd3c2738955ff79fcf2367d72",
+    "data/views/api/game/401910044/replay.json": "6361a4d8434e606142ca814a98005819ac6ced71de53decb728eb3f241d2dd32",
+    "data/views/api/game/401910045/replay.json": "178d782281d91ff9eb165f58221352bb75914c70f77451cadd1cb2c70b3e51b7"
+  },
+  "module_sha256": "f4062ea6f562494444b0dfb9dafe1f244a934b6036a8b28d34fa586f68666e6f",
+  "status": "pass"
+}

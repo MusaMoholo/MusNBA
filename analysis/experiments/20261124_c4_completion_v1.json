@@ -1,0 +1,278 @@
+{
+ "kind": "C4 analysis/replay delivery and finite learned-family closure",
+ "generated": "2026-11-24T06:18:14Z",
+ "checkpoint": "takes effect at the containing main-branch checkpoint; C5 remains0%",
+ "chunk_C_percent_after_checkpoint": 75,
+ "C4_percent_after_checkpoint": 100,
+ "production_predictive_change": false,
+ "accepted_engine": "engine-v1.3-r3",
+ "protected_scoring_run": false,
+ "qualifier_sha256": "ab3518ff237c8e6c8387ce629280105eee722b6cf2aaa02a92d3921d4c567ea5",
+ "capture": {
+  "games": 10,
+  "examples": 50,
+  "segments": 12571,
+  "legal_fives": 50284,
+  "worlds": 130000,
+  "cases": 16,
+  "max_minute_error": 4.263256414560601e-14,
+  "max_weighted_zone_error": 0.0,
+  "max_replay_gzip_bytes": 100279
+ },
+ "rate_distributions_checked": 5742,
+ "browser_accumulator": {
+  "kind": "shipped browser replay accumulator, all saved examples and zero/midpoint/final prefixes",
+  "games": 10,
+  "examples": 50,
+  "cutpoints": 150,
+  "player_boxes": 1490,
+  "overtime_examples": 5,
+  "max_minute_error": 0,
+  "status": "pass"
+ },
+ "checks": {
+  "smoke": {
+   "passed": 107,
+   "total": 107,
+   "fault_passed": 86,
+   "fault_total": 107,
+   "fault_exit": 1,
+   "optional_replay": "smoke skipped its optional source-fingerprint replay; explicit130 original chunks, real queue, browser accumulation and real replay-resume provide parity/accounting"
+  },
+  "python_tests": 57,
+  "node_suites": 13,
+  "browser": {
+   "routes": {
+    "checks": 30,
+    "report_sha256": "9ee1638255fe0f366f672f6210d31862e664bef9a9753029b61ddf22358455c4",
+    "screenshots": "/tmp/musnba_c4_browser_final_v1"
+   },
+   "rotation": {
+    "checks": 6,
+    "report_sha256": "2f846a1cba3ef60d1bca123c2d50fa74f84cc2de357f1ea1d953304ac7af9862",
+    "screenshots": "/tmp/musnba_c4_rotation_final_v1"
+   },
+   "header": {
+    "checks": 6,
+    "report_sha256": "0b4af7941ca32b2e62fc6e0747dd6ea00d0eec42f0dc793827895f6862b9abe4",
+    "screenshots": "/tmp/musnba_c4_header_final_v1"
+   }
+  },
+  "pwa": {
+   "phone": {
+    "file": "MusNBA.musnba.gz",
+    "bytes": 99141236,
+    "sha256": "2df5bd782f47d989943a26d94d26008f5e852752af00c8bd4e7c2bc59de63611",
+    "header": {
+     "format": "musnba",
+     "version": 2,
+     "capabilities": [
+      "lineup-forecast-v1",
+      "minute-cdf-player-v2",
+      "player-icons-v1",
+      "shot-zones-v1",
+      "visible-worlds-v1"
+     ],
+     "created": "2026-11-24T05:54:45+00:00",
+     "latest": "2026-11-23",
+     "snapshots": [
+      "2026-11-12",
+      "2026-11-13",
+      "2026-11-14",
+      "2026-11-15",
+      "2026-11-16",
+      "2026-11-17",
+      "2026-11-18",
+      "2026-11-19",
+      "2026-11-20",
+      "2026-11-21",
+      "2026-11-22",
+      "2026-11-23"
+     ],
+     "profile": "phone"
+    },
+    "final_import_checks": 35,
+    "direct_C1_upgrade_checks": 31,
+    "final_log_sha256": "ee00cb22dd65c8173fcbf7c69a1b420c344bbb83d34054f7ccb7cc2ba8ba37ec",
+    "upgrade_log_sha256": "67a0877a228457b99ed22bb9637569e2adc1bcd4958cba053df0285c6f893254"
+   },
+   "laptop": {
+    "file": "MusNBA-laptop.musnba.gz",
+    "bytes": 194331881,
+    "sha256": "df8b0f8f668b14c696eaf75e200ed91d2e6efc3407c1305b864374f286194881",
+    "header": {
+     "format": "musnba",
+     "version": 2,
+     "capabilities": [
+      "lineup-forecast-v1",
+      "minute-cdf-player-v2",
+      "player-icons-v1",
+      "shot-zones-v1",
+      "visible-worlds-v1"
+     ],
+     "created": "2026-11-24T05:54:06+00:00",
+     "latest": "2026-11-23",
+     "snapshots": [
+      "2026-11-12",
+      "2026-11-13",
+      "2026-11-14",
+      "2026-11-15",
+      "2026-11-16",
+      "2026-11-17",
+      "2026-11-18",
+      "2026-11-19",
+      "2026-11-20",
+      "2026-11-21",
+      "2026-11-22",
+      "2026-11-23"
+     ],
+     "profile": "laptop"
+    },
+    "final_import_checks": 39,
+    "direct_C1_upgrade_checks": 35,
+    "final_log_sha256": "ef96b62382eab87b84097563ccb0c02cdf36cd08bf70ad6a447b35532eb372b1",
+    "upgrade_log_sha256": "1aa942fdd955c162c3475706a0c36f1446217188185acf64b25890c7c71b0f2d"
+   }
+  },
+  "real_queue": {
+   "two_branches": true,
+   "worlds_per_branch": 1000,
+   "raw_original_identity": true,
+   "complete_resume_no_workers": true,
+   "changed_inputs_rejected": true
+  },
+  "replay_interruption": {
+   "actual_first_replays": 1,
+   "actual_resume_replays": 1,
+   "completed_receipt_preserved": true,
+   "partial_game_ineligible": true
+  }
+ },
+ "shell": {
+  "commit": "848fdb6ef475234e66ffc008d2a3071b87d7fc33",
+  "cache": "0e8109470f5d404dff7d",
+  "published": true,
+  "data_free": true,
+  "deploy": {
+   "conclusion": "success",
+   "headSha": "848fdb6ef475234e66ffc008d2a3071b87d7fc33",
+   "status": "completed",
+   "url": "https://github.com/MusaMoholo/MusNBA/actions/runs/45338485055"
+  },
+  "remote_sw_sha256": "3e900173122a003d67f9c752465d4be97ecb116baef4a93f5c6dc090eed82cdb"
+ },
+ "D42_A3_acceptance_audit": {
+  "original_contract_member": "HANDOFF_NEXT.md",
+  "original_contract_sha256": "13b6cbf4e85add64d357c227330093c79e87ee274cd99a7f549cb003c789269f",
+  "accepted_rungs": [
+   10,
+   20,
+   30,
+   40,
+   50,
+   60,
+   70,
+   80
+  ],
+  "evidence": "frozen selection/schema; persisted source-identified worlds and guards; original-batch raw parity; independent event/clock/box/five accounting; stored court/box/log/controls; responsive/accessible/offline PWA and profile budgets",
+  "pending_rungs": {
+   "90": "fresh live integrated10k nightly and regenerated examples in C5",
+   "100": "A3 final checkpoint/successor after that nightly"
+  },
+  "A3_percent": 80,
+  "D42_A_weighted_percent": 93,
+  "D42_B_percent": 0,
+  "original_programme_percent": 74,
+  "automatic_S11_S12_S14_credit": false
+ },
+ "reports_sha256": {
+  "analysis/experiments/20261124_c4_accounting_v1.json": "3824600bd4be818ae6b216a53a91e90ff52090d6c724ec0cc12768584aed0d77",
+  "analysis/experiments/20261124_c4_capture_benchmark_v1.json": "0bb1cdc3d850fe00518e73c6394098c56f3ef5248bacd884d2441ecaa7d655cf",
+  "analysis/experiments/20261124_c4_capture_design_v1.json": "4526ab25d6c023751c5a3cffc7e1493b6d3ac1fca8f6471baf2f99fbf717a2d1",
+  "analysis/experiments/20261124_c4_capture_tail_runtime_v1.json": "4123f46517f14b7edd0fe18aca17abe38821263cad2816e05613f47c20b8386f",
+  "analysis/experiments/20261124_c4_capture_tail_v1.json": "fa1c602ec2e81128e295f4ee3428bb6e94ff9696c035f47c75761ffa5e5b396e",
+  "analysis/experiments/20261124_c4_example_selection_v1.json": "2a12639f615c021a642bf5977b71340634eea2c34e3f53c3b53d2aaeb73c6393",
+  "analysis/experiments/20261124_c4_input_guard_after_v1.json": "4b1ebb7892267e8c4299c4eb90e280a6cafb5ded1f851cbcb7013e063794a9c0",
+  "analysis/experiments/20261124_c4_input_guard_before_v1.json": "32129e78fe66cdf6a654356a1daf2c3c9fd59aef4ed9698d1eee1e3a857c3413",
+  "analysis/experiments/20261124_c4_js_replay_audit_v1.json": "dbacadb26d724901c05c298cbb3fb9a4745fbf1ab6ae924a48e7f47af109a038",
+  "analysis/experiments/20261124_c4_preview_accounting_v1.json": "7fa60d68149187bc57f2d208ad6a6e37ef6f9af19e60b20a7622c48063fdab7a",
+  "analysis/experiments/20261124_c4_preview_branch_v1.json": "44aef636ef1b659f13b20ba3f3063240464bbe9d2047963ffbce8460c2e51fcc",
+  "analysis/experiments/20261124_c4_preview_v1.json": "2fe2f1292c7adffa072238dcbb2645cac220396786f9f445a1252fc3e8d63648",
+  "analysis/experiments/20261124_c4_qualifier_v1.json": "ab3518ff237c8e6c8387ce629280105eee722b6cf2aaa02a92d3921d4c567ea5",
+  "analysis/experiments/20261124_c4_queue_integration_v1.json": "8d5a68b721e6a4d22d1d64d077a33478b15a825a70f8f2b4bf064a12e90b3fa5",
+  "analysis/experiments/20261124_c4_queue_source_audit_v1.json": "2ea8d24c5f88b9f206baf78367bd81f794886752a4a39d589fc79b0ca14f0184",
+  "analysis/experiments/20261124_c4_rate_audit_v1.json": "3de00fe6e01d007fe61ce0ae61cb5c10cbd0bbdcbc9b388618b08d6b8110bd18",
+  "analysis/experiments/20261124_c4_replay_probe_v1.json": "6de09b3d3fe46e72fa101e7a40420398954cd0f024f6719bf2cf0987a8f7a9b1",
+  "analysis/experiments/20261124_c4_replay_resume_v1.json": "58eb2e935d2ed2bb423aa442f07444c90e8c7755705e49f53aae000e2117e6de",
+  "analysis/experiments/20261124_c4_retained_capture_v1.json": "243b6cc62e0bd52088f5784e74727b420495e7bec8b20c6da4b5e2a6cfd8446f",
+  "analysis/experiments/20261124_c4_retained_runtime_v1.json": "923cb905c1364f62cd7899a8fa1884878294be02e824feaae57fad9907566bd9",
+  "analysis/experiments/20261124_c4_s06_confirmation_v1.json": "0c4ae8d1d74aac12cca6966036598e5f3556596a73f5a688c7f833078b204731",
+  "analysis/experiments/20261124_c4_s06_independent_compare_v1.json": "dd2630c8a86c688def583f079c70e50ebc38e00c29c7a544a79858a98818ab9d",
+  "analysis/experiments/20261124_c4_s06_independent_decision_v1.json": "8bb2cf2b171683b71c41bbb1245b2206e68b80c09787732c0b498bf52d6ed463",
+  "analysis/experiments/20261124_c4_s06_independent_gate_v1.json": "f2252c84421c55afe8378800806b06e4ade99ebe5e64a4230baf96072880c2ac",
+  "analysis/experiments/20261124_c4_s06_runtime_v1.json": "1ee31037b513c4ab11d83763b51e3d79ca83112679a59ee0cd9fc83844cbe121",
+  "analysis/experiments/20261124_c4_s06_wiring_v1.json": "8a0685817fa7d21b2742e1fb356d265cb706263c8e669a8389972568ac8c7960",
+  "analysis/experiments/c4_s06_confirmation_v1_candidate.json": "2bbd4558775465aee1f952ef18dd438c302dd15197610f494ea5033c21c6b1f3",
+  "analysis/experiments/c4_s06_confirmation_v1_reference.json": "cde3fcc2162cc0f89c4ca89ab120ca2398727875e3a82271acea8a779e8d1101",
+  "analysis/experiments/c4_s06_wiring_v1_candidate.json": "73c517c964cd0367bbd2475ab1a08eb2bee5d737c561999565ffed07a5205fb2",
+  "analysis/experiments/c4_s06_wiring_v1_reference.json": "adf5412ae6b50e07e6736167dc20d4be78074b667b76c844d8c1f97f20ae20a9"
+ },
+ "implementation_sha256": {
+  "analysis/browser_check.mjs": "598279a083ceee551e15fb696340154430fd020ce6c98df7903b7b8dab731080",
+  "analysis/c4_accounting.py": "4c4bbba0dd3f42b735fb8daf32f61904afecf386c7402f82fa38cd74384c266d",
+  "analysis/c4_capture_accelerate.py": "69cdb49d3e5f83abdb0df062da3af306fff5565471c7c0d1d207604cfe0e838b",
+  "analysis/c4_capture_benchmark.py": "85356447182f3d982e5b92dfb47f9241266d9e9f6f4ac47bfeb6534281ad4772",
+  "analysis/c4_capture_retained.py": "360e29251bf3736bc708310c64f69498d99c32eac8426db44ebd10f365224332",
+  "analysis/c4_input_guard.py": "dae5471bf6dc50cbdd8687611f4305ec98d8e3e3d450ab754bc50e77fff9d68b",
+  "analysis/c4_js_replay_audit.mjs": "2be5cd314c76f918ea3d7e846bfd5db19d744dd7f27b324cfac70081a0113a37",
+  "analysis/c4_queue_integration.py": "3f567415ceb01bb04deb8594d4887816cbad4420f59216251032fa33e7265ab3",
+  "analysis/c4_rate_audit.py": "b4fd14003166b552fed8cb34d80324be860bf5d214d335de40c861ebec68dd2b",
+  "analysis/c4_replay_probe.py": "3e05d9f535e6dfa5f82d5d9daf846d7473de229a91446b9cec4205dade0e57fc",
+  "analysis/c4_replay_resume.py": "299d6d508794872d371db641a4f28681daae95938128456dec589f5c0953081b",
+  "analysis/c4_s06_grade.py": "eed13737a26b01e7dddba9d237dce8704c0318ae4ca3f3be17cff7238d6ca518",
+  "analysis/c4_s06_runner.py": "472996a5310f8cf43e7edd90e9037b479494b39f4c222a062a6c8273d625f029",
+  "analysis/c4_select_examples.py": "54b7e34da448e42eadc80b16f2bcaf1a609900b140f2832936f2c98d291ba807",
+  "analysis/pwa_import_check.mjs": "52d456bb09d8ccb7d320f8a8a5610c053d2a1484e2241647896a0aaa5dd0e0f0",
+  "scripts/court_assets.py": "e59a0af4fdc742e7ff2b8352dddbf12f395451e87144edcca865e9a98a22c212",
+  "scripts/court_observed.py": "f88bc3b73bb36eeef86aa34f5c9eb819047c1616fe8972728238b5db8ff50b9d",
+  "scripts/engine.py": "ec66341b1cacd6cc407d21f037b8b62c29f0a71ed408940279765f13a8211912",
+  "scripts/export_musnba.py": "fe672294b28b4fb62f2d7e3cfa334b7b7d02e8e27b0788770fe6157c7a149df2",
+  "scripts/lineup_forecast.py": "3b4bb4991828a38aa4f82439e4b391342bb8d79f12b7bbd67b7f73f7c392604c",
+  "scripts/live_forecast.py": "8970517e391dfad0f819757ff50363be58c6b9948a472dfe7c49d7c7c9588c88",
+  "scripts/player_worlds.py": "13356b4b2d0885190f3482958c4856ae5d70f48f12fdc357c2e45de911ed78b2",
+  "scripts/shot_zones.py": "20e407f3b55e25491e9ed0f702df2a0198cbb3542d1d7d5cbd3d743cbb6cdd20",
+  "scripts/views.py": "66ad2eda9ca2f892e2c7db8ad3e10baeb6d2d2ebe01287455955cf3d9fc4cc6b",
+  "scripts/visible_worlds.py": "3f0a694c9dd8c4090768feae4e6b156c14ac44f378eeb2abe9f405641fbcad16",
+  "scripts/webapp/box-metrics.mjs": "48c4bd1c6a6734a6ba867b9418eb952c486a3948c64c22b6e00a6837687c32b5",
+  "scripts/webapp/court.mjs": "3a2a8678ce047baf2cdf7c7052206e7af9e74ca246057bd43df96f5bdc7fa58c",
+  "scripts/webapp/explore.mjs": "4356f993301522c49f9f1b404f7efd777555909dba0d15089b1bbdaa12ec2bf3",
+  "scripts/webapp/game.mjs": "c1994fcb12ba80da4ecaf584f2e0b9022c485eedef9aec95b3d9b2bf35c8391a",
+  "scripts/webapp/index.html": "7eed9b077b600e54b735bea8bb95599fb0c9ce84175fe14502bc5e8dbfc90dda",
+  "scripts/webapp/lineup-worlds.mjs": "2e4d0e5c74261a388a10bbf4a29ece58c0a39230a095ca6a4a1b03d239d6e599",
+  "scripts/webapp/outcomes.mjs": "d5ea0354511adc0e07e46a8c5ff8f711516fb64330031e0ca7259f05840cdee1",
+  "scripts/webapp/pwa-storage.mjs": "d24b0f4b4e589e7a22d0844cd720f452ca7469450de7b23f80ade3b65ec3920c",
+  "scripts/webapp/replay.mjs": "f4062ea6f562494444b0dfb9dafe1f244a934b6036a8b28d34fa586f68666e6f",
+  "scripts/webapp/shot-zones.mjs": "dc9a30b84e7481e9dff4e2712014a03c30d272922eca19c017bb01aa3985a879",
+  "scripts/webapp/sw.js": "c305369b8178297715bd6ecc0da87f5295ed78e7f2dfcd8b375d2cff5367f9b7",
+  "scripts/webapp/ui.mjs": "73fb9d29c6090b3192908a4ff3fec27cba19688a50d1de91dd9aec2fb5f519a3",
+  "scripts/world_detail.py": "0ebbe6e8bd774a3421f95dd4c4f492500a601daa17d1e17b13fb73a1af4e3238",
+  "tests/test_court_observed.py": "75f6ce2838726f063a5ae6aba7ed2213ccf909d4d6db27e83864b1fe17b127e4",
+  "tests/test_pwa_bundle_profiles.py": "5b99e9cba875286c346bd91a497ef1f070d53efba91c09e1fd49eb676f5003d9",
+  "tests/test_replay_queue.py": "7dd9884ef6dc507a287a87d8a5e6e46e1f27d525683be5a87a58d2009f4da3af",
+  "tests/test_world_detail.py": "55c5c3ef6b25f7ac9c11114aefda99e08ed9e7462f763fa2c5b894f3c55e64fa",
+  "tests/test_zone_metrics.mjs": "4dff78d5c6b0015978d72344ad0f8b201587b741ea6a0d2cf7be96d5054678bb"
+ },
+ "limits": [
+  "No learned qualifier: S06 independently improves MIN but leaves win Brier/log-loss non-inferiority unresolved; fixed attempt closed without broader rescue or protected rescore.",
+  "Retained130k forecasts/40k weighted season paths are unchanged; C4 enriches original worlds. No fresh C4 nightly claim; C5 owns the mandatory fresh full fetch/rebuild/nightly<=60min.",
+  "Captured events/zones do not supply tracking/player locations/passes. Observed on-court exposure is not nearest-defender or causal attribution.",
+  "Phone keeps Expected maps/metrics; laptop keeps full worlds and five compatible saved examples. Legacy snapshots without capture remain unavailable.",
+  "Both devices require app update/manual import. Headless imports and iCloud exports do not prove real-device acceptance."
+ ],
+ "setup_repairs": [
+  "Initial original-chunk probe used legacy runtime before MC; explicit accepted runtime repaired, original setup retained.",
+  "Observed-map actor IDs/window/missingness and responsive hidden/control/grouping layouts repaired before acceptance.",
+  "Extra rotation display assertion initially ignored CSS percentage serialization; measured2.84e-7minute display error, per-bar display rounding bound added; raw timing criteria unchanged.",
+  "Final upgrade-fixture archive basename collision happened before reset; preserved logs, corrected per-profile archive roots, verified exact C1 bytes, then direct final upgradeV2 passed."
+ ]
+}

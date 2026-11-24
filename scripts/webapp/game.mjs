@@ -6,6 +6,8 @@ import * as S from './scenario.mjs';
 import * as O from './outcomes.mjs';
 import {gameSpotlight} from './spotlight.mjs';
 import {minuteBins, minuteDistribution, minuteThreshold} from './precise-minutes.mjs';
+import {exploreView} from './explore.mjs';
+import {replayView} from './replay.mjs';
 
 export const PERIODS = [['q1', 'Q1', '1st quarter'], ['q2', 'Q2', '2nd quarter'], ['q3', 'Q3', '3rd quarter'], ['q4', 'Q4', '4th quarter'],
                         ['h1', 'H1', '1st half'], ['h2', 'H2', '2nd half'], ['fg', 'FG', 'Full game']];
@@ -138,22 +140,25 @@ export async function render(view, {rest, current}) {
     state.period = PERIOD_IDS.includes(rest[3]) ? rest[3] : state.period;
     return sheet(view, data, rest[2], current, rerender);
   }
-  const matchup = rest[1] === 'matchup', scenario = rest[1] === 'scenario' && Boolean(data.worlds);
-  const period = scenario ? 'fg' : sims(data) && PERIOD_IDS.includes(rest[1]) ? rest[1] : (sims(data) ? state.period : 'fg');
+  const matchup = rest[1] === 'matchup', scenario = rest[1] === 'scenario' && Boolean(data.worlds),
+    analysis = rest[1] === 'analysis', replay = rest[1] === 'replay';
+  const period = scenario || analysis || replay ? 'fg' : sims(data) && PERIOD_IDS.includes(rest[1]) ? rest[1] : (sims(data) ? state.period : 'fg');
   const mode = rest[2] === 'team' ? 'team' : 'player';
   state.period = period;
   const base = `#/game/${gid}`;
   view.innerHTML = `<a class="crumb" href="#/today/${data.game.date}">‹ ${esc(dayLabel(data.game.date))} slate</a>
-    ${lineupControls(data)}${bezel(data, period, {matchup, scenario, mode, base})}<div id="game-body"></div>`;
+    ${lineupControls(data)}${bezel(data, period, {matchup, scenario, analysis, replay, mode, base})}<div id="game-body"></div>`;
   wireLineupControls(view, data, rerender, current);
   const body = view.querySelector('#game-body');
   const go = (p, m) => location.replace(`${base}/${p}${m === 'team' ? '/team' : ''}`);
   view.querySelector('select.period')?.addEventListener('change', e => go(e.target.value, matchup ? 'player' : mode));
-  view.querySelectorAll('[data-view]').forEach(b => b.onclick = () => ['matchup', 'scenario'].includes(b.dataset.view) ? location.replace(`${base}/${b.dataset.view}`) : go(period, b.dataset.view));
+  view.querySelectorAll('[data-view]').forEach(b => b.onclick = () => ['matchup', 'scenario', 'analysis', 'replay'].includes(b.dataset.view) ? location.replace(`${base}/${b.dataset.view}`) : go(period, b.dataset.view));
   if (matchup) {
     if (data._research) { body.innerHTML = '<section class="panel"><p class="note">Matchup context is not included in this research selection.</p></section>'; return; }
     return matchupView(body, data);
   }
+  if (analysis) return exploreView(body, data, current, rest[2]);
+  if (replay) return replayView(body, data, current);
   if (scenario) return S.scenarioView(body, data, rest[2]);
   if (!sims(data) && !data.actual) {
     if (data.team_model?.regulation) return pathwayView(body, data);
@@ -187,7 +192,7 @@ function actualPoints(data, side, period) {
   return {q1: l[0], q2: l[1], q3: l[2], q4: l[3], h1: l[0] + l[1], h2: l[2] + l[3]}[period];
 }
 
-function bezel(data, period, {matchup, scenario, mode, base}) {
+function bezel(data, period, {matchup, scenario, analysis = false, replay = false, mode, base}) {
   const g = data.game, P = data.projection, sim = sims(data), tm = data.team_model;
   const A = team(g.away.id), H = team(g.home.id);
   const t = tipTimes(g.tip_utc, g.date, g.time_valid);
@@ -238,7 +243,7 @@ function bezel(data, period, {matchup, scenario, mode, base}) {
   const status = final ? `Final${g.periods > 4 ? (g.periods > 5 ? `/${g.periods - 4}OT` : '/OT') : ''}` : g.status === 'live' ? esc(g.detail) : esc(t.uk) + ' UK';
   const options = groups => groups.map(([label, ids]) => `<optgroup label="${label}">${ids.map(id => `<option value="${id}"${id === period ? ' selected' : ''}>${PERIODS.find(p => p[0] === id)[1]} · ${periodName(id)}</option>`).join('')}</optgroup>`).join('');
   const select = sim
-    ? `<label class="sr" for="period-select">Period</label><select id="period-select" class="period"${matchup || scenario ? ' disabled' : ''}>${options([['Quarters', ['q1', 'q2', 'q3', 'q4']], ['Halves', ['h1', 'h2']], ['Game', ['fg']]])}</select>`
+    ? `<label class="sr" for="period-select">Period</label><select id="period-select" class="period"${matchup || scenario || analysis || replay ? ' disabled' : ''}>${options([['Quarters', ['q1', 'q2', 'q3', 'q4']], ['Halves', ['h1', 'h2']], ['Game', ['fg']]])}</select>`
     : '<span class="pill">Full game only until the game simulation runs</span>';
   const timing = forecastTiming(P?.kind, P?.pre_tip, P?.completed_at);
   const chips = data._research ? `<div class="chips"><span class="pill warn">Research · not a forecast</span>
@@ -255,8 +260,8 @@ function bezel(data, period, {matchup, scenario, mode, base}) {
         <div class="bz-sub">${note}</div></div>
       ${block('home', H)}</div>
     <div class="bz-controls">${select}
-      ${sim || data.actual ? seg([['player', 'Player'], ['team', 'Team']], matchup || scenario ? '' : mode, 'data-view') : ''}
-      <span class="spacer"></span>${data.worlds ? `<button type="button" class="ghost${scenario ? ' on' : ''}" data-view="scenario" aria-pressed="${scenario}">Scenarios</button>` : ''}<button type="button" class="ghost${matchup ? ' on' : ''}" data-view="matchup" aria-pressed="${matchup}">Matchup</button></div>
+      ${sim || data.actual ? seg([['player', 'Player'], ['team', 'Team']], matchup || scenario || analysis || replay ? '' : mode, 'data-view') : ''}
+      <span class="spacer"></span>${sim ? `<button type="button" class="ghost${analysis ? ' on' : ''}" data-view="analysis" aria-pressed="${analysis}">Analysis</button>` : ''}${data.worlds && data.replay ? `<button type="button" class="ghost${replay ? ' on' : ''}" data-view="replay" aria-pressed="${replay}">Saved worlds</button>` : ''}${data.worlds ? `<button type="button" class="ghost${scenario ? ' on' : ''}" data-view="scenario" aria-pressed="${scenario}">Scenarios</button>` : ''}<button type="button" class="ghost${matchup ? ' on' : ''}" data-view="matchup" aria-pressed="${matchup}">Matchup</button></div>
     ${chips}</section>`;
 }
 

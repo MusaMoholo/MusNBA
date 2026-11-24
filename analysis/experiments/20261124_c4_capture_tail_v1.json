@@ -1,0 +1,10 @@
+{
+ "kind": "original full-chunk source/seed unchanged, verified independent worker assignment",
+ "plan_sha256": "4123f46517f14b7edd0fe18aca17abe38821263cad2816e05613f47c20b8386f",
+ "chunks": 78,
+ "worlds": 78000,
+ "all_raw_exact": true,
+ "workers": 8,
+ "seconds": 721.297217541025,
+ "original_resume": "resume both original workers; they verify/reuse this tail without simulation"
+}

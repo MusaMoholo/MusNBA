@@ -1,0 +1,14 @@
+{
+ "kind": "real integration source audit; no learned qualification",
+ "verified_source_files": 39,
+ "changed_files": [
+  "scripts/court_assets.py"
+ ],
+ "only_change": "unused catalogue registration resolves court JSON against repository root instead of process cwd; executed store_zones AST unchanged",
+ "original_bytes_recovered": true,
+ "original_source_copy": "data/derived/experiments/c4_queue_integration_v1/source_court_assets.py",
+ "original_sha256": "7f801501648bef9f9e465d3192455151ebe825fb3b550c7721bb7fdaae760e82",
+ "current_sha256": "e59a0af4fdc742e7ff2b8352dddbf12f395451e87144edcca865e9a98a22c212",
+ "all_simulation_model_input_queue_sources_unchanged": true,
+ "nightly_source_guard": "Production nightly independently checks caller fingerprints before publication; this isolated fixture was never published."
+}

@@ -19,6 +19,11 @@ const only = args.only ? String(args.only).split(',') : null;
 
 // name, hash, sizes, themes
 const CASES = [
+  ['c4-analysis', '#/game/' + (args['lineup-game'] || '401910036') + '/analysis', ['desktop','half','phone'], ['dark','light']],
+  ['c4-projected', '#/game/' + (args['lineup-game'] || '401910036') + '/analysis', ['desktop','half','phone'], ['dark','light']],
+  ['c4-observed', '#/game/' + (args['lineup-game'] || '401910036') + '/analysis', ['desktop','half','phone'], ['dark','light']],
+  ['c4-lineup', '#/game/' + (args['lineup-game'] || '401910037') + '/analysis', ['desktop','half','phone'], ['dark','light']],
+  ['c4-replay', '#/game/' + (args['lineup-game'] || '401910036') + '/replay', ['desktop','half','phone'], ['dark','light']],
   ['u24-roster-sort', '#/team/14', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['u24-players-sort', '#/players', ['desktop', 'half', 'phone'], ['dark', 'light']],
   ['u24-scenario', '#/game/' + (args['lineup-game'] || '401910036') + '/scenario', ['desktop', 'half', 'phone'], ['dark', 'light']],
@@ -151,6 +156,107 @@ for (const [name, hash, sizes, themes] of CASES) {
       ready = result.value === true;
     }
     let interaction = true;
+    if (name.startsWith('c4-')) {
+      interaction = (await send('Runtime.evaluate', {expression: `(async () => {
+        const kind=${JSON.stringify(name)}, gid=${JSON.stringify(args['lineup-game'] || (name==='c4-lineup'?'401910037':'401910036'))};
+        const ui=await import('./assets/ui.mjs'), data=await ui.api('game/'+gid);
+        if([...document.querySelectorAll('[data-view="analysis"],[data-view="replay"],[data-analysis-tab]')].some(el=>el.getBoundingClientRect().height<44))return false;
+        if(kind==='c4-lineup') {
+          const O=await import('./assets/outcomes.mjs'),G=await import('./assets/game.mjs'),R=await import('./assets/replay.mjs');
+          const source=await ui.api(data.court.path),payload=await ui.api(data.replay.path),pid=data.projection.sim.lineups?.selected_players?.[0]?.player_id;
+          if(!pid)return false;
+          for(const choice of [false,true]) {
+            O.chooseLineup(gid,pid,choice);await G.render(document.querySelector('#view'),{rest:[gid,'analysis'],current:()=>true});
+            const subject=document.querySelector('[data-metric-subject]');subject.value='t:home';subject.dispatchEvent(new Event('change'));
+            const expected=Object.values(source.cases).find(c=>Object.keys(c.choices).length===1&&c.choices[pid]===choice);
+            const row=document.querySelector('[data-court-body] tbody tr'),shown=Number(row?.cells[2].textContent);
+            if(!expected||Math.abs(shown-expected.home.attempts[0])>.051)return false;
+            await G.render(document.querySelector('#view'),{rest:[gid,'replay'],current:()=>true});
+            const compatible=payload.examples.filter(e=>R.compatibleExample(e,{[pid]:choice})),select=document.querySelector('[data-replay-example]');
+            if(compatible.length ? select?.options.length!==compatible.length : !document.querySelector('#game-body').textContent.includes('other lineup cases'))return false;
+          }
+          O.chooseLineup(gid,pid,null);await G.render(document.querySelector('#view'),{rest:[gid,'analysis'],current:()=>true});return true;
+        }
+        if(kind==='c4-replay') {
+          const input=document.querySelector('[data-replay-seek]');if(!input)return false;
+          const payload=await ui.api(data.replay.path), helper=await import('./assets/replay.mjs');
+          if(payload.examples.length!==5)return false;
+          for(const example of payload.examples) {
+            const state=helper.replayState(example,example.events.length,payload.players);
+            if(JSON.stringify(state.score)!==JSON.stringify(example.final_score))return false;
+            for(const p of payload.players) {
+              const actual=state.lines[p.id],expected=example.final_box[p.id];
+              if(Math.abs(actual.min-expected.min)>1e-8)return false;
+              for(const key of helper.BOX)if(actual[key]!== (key==='reb'?expected.oreb+expected.dreb:expected[key]))return false;
+            }
+          }
+          document.querySelector('[data-replay-next]').click();if(Number(input.value)!==1)return false;
+          document.querySelector('[data-replay-back]').click();if(Number(input.value)!==0)return false;
+          input.value=input.max;input.dispatchEvent(new Event('input',{bubbles:true}));
+          const expected=payload.examples[0].final_score;
+          if(!document.querySelector('[data-replay-score]').textContent.includes(String(expected[0]))||!document.querySelector('[data-replay-score]').textContent.includes(String(expected[1])))return false;
+          const quarter=document.querySelector('[data-replay-quarter]');quarter.value='2';quarter.dispatchEvent(new Event('change',{bubbles:true}));
+          if(!document.querySelector('[data-replay-score]').textContent.includes('Q2'))return false;
+          document.querySelector('[data-replay-play]').click();await new Promise(r=>setTimeout(r,350));document.querySelector('[data-replay-play]').click();
+          const log=document.querySelector('[data-replay-log] table');if(!log||!log.hasAttribute('data-no-sort')||log.querySelector('th.sortable'))return false;
+          globalThis.__c4Audit={stage:'sort'};ui.wireSortableTables(document.querySelector('#game-body'));
+          const box=document.querySelector('[data-replay-box] table'),heads=[...box.tBodies[0].rows].filter(r=>r.classList.contains('group')).map(r=>r.textContent);
+          box.tHead.rows[0].cells[2].click();
+          let prior=Infinity,groups=0;
+          for(const row of box.tBodies[0].rows){if(row.classList.contains('group')){prior=Infinity;groups++;}else{const points=Number(row.cells[2].textContent);if(points>prior)return false;prior=points;}}
+          if(groups!==2||JSON.stringify(heads)!==JSON.stringify([...box.tBodies[0].rows].filter(r=>r.classList.contains('group')).map(r=>r.textContent)))return false;
+          globalThis.__c4Audit={stage:'timeline'};document.querySelector('[data-replay-timeline]').closest('details').open=true;
+          if(document.querySelectorAll('.replay-rotation-team').length!==2||document.querySelectorAll('.replay-rotation-axis>span').length<5)return false;
+          const tracks=[...document.querySelectorAll('.replay-rotation-track')];if(tracks.length!==payload.players.length)return false;
+          const example=payload.examples[0],last=example.events.at(-1),end=last.period<=4?last.period*720:2880+(last.period-4)*300;
+          for(let i=0;i<tracks.length;i++){const bars=[...tracks[i].querySelectorAll('i')],percent=bars.reduce((sum,bar)=>sum+Number.parseFloat(bar.style.width),0);const error=Math.abs(percent*end/6000-example.final_box[payload.players[i].id].min);// CSS percentages are serialized with finite decimal precision; raw event seconds are audited separately.
+            if(error>bars.length*1e-5*end/6000+1e-8){globalThis.__c4Audit={stage:'timeline',error,percent,end,player:payload.players[i].id};return false;}}
+          globalThis.__c4Audit={stage:'jump'};const jump=document.querySelector('[data-replay-jump="3"]');jump.click();if(Number(input.value)!==3)return false;
+          return [...document.querySelectorAll('.replay-controls button,.replay-controls select,[data-replay-seek]')].every(e=>e.getBoundingClientRect().height>=44);
+        }
+        document.querySelector('[data-analysis-tab="metrics"]')?.click();
+        const subject=document.querySelector('[data-metric-subject]');if(!subject)return false;
+        const query=document.querySelector('[data-metric-query]');query.value='true shooting';query.dispatchEvent(new Event('input',{bubbles:true}));
+        if(document.querySelectorAll('[data-metric-cards] article').length!==1)return false;
+        query.value='';query.dispatchEvent(new Event('input',{bubbles:true}));
+        const cols=getComputedStyle(document.querySelector('.metric-catalogue')).gridTemplateColumns.split(' ').length;
+        if(cols!==(innerWidth<=600?1:innerWidth<=1000?2:3))return false;
+        if(kind==='c4-projected') {
+          document.querySelector('[data-analysis-tab="shooting"]')?.click();
+          const body=document.querySelector('[data-court-body]');if(!body?.querySelector('svg'))return false;
+          const color=document.querySelector('[data-court-metric]');if(!color)return false;
+          color.value='fg';color.dispatchEvent(new Event('change',{bubbles:true}));
+          if(!body.querySelector('figcaption').textContent.includes('make percentage'))return false;
+          const button=body.querySelector('[data-zone-button="0"]');if(!button)return false;button.click();
+          return !!body.querySelector('[data-zone="0"].selected') && [...document.querySelectorAll('[data-court-analysis] select,[data-court-analysis] button')].filter(e=>e.getBoundingClientRect().width).every(e=>e.getBoundingClientRect().height>=44);
+        }
+        if(kind==='c4-observed') {
+          document.querySelector('[data-analysis-tab="shooting"]')?.click();
+          const display=document.querySelector('[data-court-display]');if(!display)return false;
+          display.value='defense';display.dispatchEvent(new Event('change',{bubbles:true}));
+          if(document.querySelectorAll('[data-court-body] tbody tr').length!==22||!document.querySelector('[data-court-body] svg'))return false;
+          document.querySelector('[data-court-analysis]').scrollIntoView();
+          return document.querySelector('[data-court-body]').textContent.includes('not nearest-defender');
+        }
+        const O=await import('./assets/outcomes.mjs'), Wd=await O.load(gid), court=await ui.api(data.court.path);
+        const averageOf=values=>Wd.weights?O.branchCalculations(Wd).mean(values):O.mean(values);
+        if(!Wd.hasZones)return false;
+        for(const side of ['home','away']) {
+          const fga=Wd.values('t:'+side,'fga'),all=['rim','paint','mid','corner3','above3'].map(z=>Wd.values('t:'+side,'zone_'+z+'_fga'));
+          for(let w=0;w<Wd.W;w++)if(all.reduce((a,c)=>a+c[w],0)!==fga[w])return false;
+          for(let z=0;z<5;z++)if(Math.abs(averageOf(all[z])-court.expected[side].attempts[z])>1e-10)return false;
+          for(const [metric,d] of Object.entries(data.projection.sim[side].advanced)) {
+            const key=metric==='two'?'twoPct':['oreb','dreb'].includes(metric)?metric+'Share':metric;
+            const values=Wd.values('t:'+side,key);if(!values)return false;
+            const average=averageOf(values);if(d.defined&&Math.abs(average-d.exact_mean)>.000501)return false;
+          }
+        }
+        document.querySelector('[data-metric-chart]')?.setAttribute('open','');
+        await new Promise(r=>setTimeout(r,100));
+        return !!document.querySelector('[data-metric-chart] svg');
+      })()`, returnByValue: true, awaitPromise: true}, sessionId)).result.value === true;
+    }
+    if(!interaction && name.startsWith('c4-')) console.log('C4 audit',JSON.stringify((await send('Runtime.evaluate',{expression:'globalThis.__c4Audit',returnByValue:true},sessionId)).result));
     if (name === 'boot-retry') interaction = (await send('Runtime.evaluate', {expression: `document.querySelector('#view [role="alert"]')?.textContent.includes('couldn’t load') && document.querySelector('#boot-retry')?.getBoundingClientRect().height >= 44`, returnByValue: true}, sessionId)).result.value === true;
     if (name === 'team-stories') {
       interaction = (await send('Runtime.evaluate', {expression: `(async () => {
@@ -493,7 +599,7 @@ for (const [name, hash, sizes, themes] of CASES) {
     })()`}, sessionId);
     const d = dims.value;
     const overflow = d.scrollWidth > d.innerWidth + 1;
-    const u24Focus = {'u24-roster-sort':'table.roster','u24-players-sort':'#ptable','u24-standings-controls':'[data-disclosure="forecast-controls"]','u24-advanced':'[data-advanced-panel]','u24-scenario':'[data-scenario-box]','u24-lineup-compare':'.lineup-compare'}[name];
+    const u24Focus = args.focus || {'c4-lineup':'[data-court-analysis]', 'c4-projected':'[data-court-analysis]', 'c4-observed':'[data-court-analysis]', 'c4-analysis':'[data-metric-cards]', 'c4-replay':'[data-replay-score]', 'u24-roster-sort':'table.roster','u24-players-sort':'#ptable','u24-standings-controls':'[data-disclosure="forecast-controls"]','u24-advanced':'[data-advanced-panel]','u24-scenario':'[data-scenario-box]','u24-lineup-compare':'.lineup-compare'}[name];
     const focusedTop = u24Focus ? (await send('Runtime.evaluate',{expression:`Math.max(0,document.querySelector(${JSON.stringify(u24Focus)})?.getBoundingClientRect().top + scrollY - 20 || 0)`,returnByValue:true},sessionId)).result.value : 0;
     const panelTop = u24Focus ? focusedTop : ['game-advanced', 'team-stories', 'today-headshots'].includes(name) ? (await send('Runtime.evaluate', {expression: `document.querySelector(${JSON.stringify(name === 'team-stories' ? '[data-game-stories]' : name === 'today-headshots' ? '#slate-insights' : '#view details.panel')})?.getBoundingClientRect().top + scrollY || 0`, returnByValue: true}, sessionId)).result.value : 0;
     const shot = await send('Page.captureScreenshot', {format: 'png', captureBeyondViewport: true,

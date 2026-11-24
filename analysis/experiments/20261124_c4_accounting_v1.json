@@ -1,0 +1,17 @@
+{
+ "kind": "independent stored-zone/event/box/clock/rotation/weighted-case accounting",
+ "source_sha256": "243b6cc62e0bd52088f5784e74727b420495e7bec8b20c6da4b5e2a6cfd8446f",
+ "counts": {
+  "games": 10,
+  "examples": 50,
+  "segments": 12571,
+  "legal_fives": 50284,
+  "worlds": 130000,
+  "cases": 16,
+  "max_minute_error": 4.263256414560601e-14,
+  "max_weighted_zone_error": 0.0,
+  "max_replay_gzip_bytes": 100279
+ },
+ "result": "all exact within declared floating minute/weighted tolerance",
+ "accuracy_scored": false
+}

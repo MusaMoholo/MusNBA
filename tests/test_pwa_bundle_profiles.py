@@ -43,8 +43,10 @@ class BundleProfilesTests(unittest.TestCase):
             files = {
                 api / 'meta.json': {'latest': '2026-11-22', 'snapshots': [{'date': '2026-11-22'}], 'player_icons': {'ids': ['1']}},
                 api / 'players.json': {'players': []},
-                api / 'game' / '123.json': {'worlds': True, 'minute_marginals': True},
+                api / 'game' / '123.json': {'worlds': True, 'minute_marginals': True, 'replay': {'path':'game/123/replay'}, 'court': {'path':'game/123/court'}},
                 api / 'game' / '123' / 'worlds.json': {'worlds': 2, 'players': ['1']},
+                api / 'game' / '123' / 'replay.json': {'examples': [{'world_index': 1}]},
+                api / 'game' / '123' / 'court.json': {'expected': {'home': {'attempts':[1,2,3,4,5]}}, 'cases': {'plays': {'choices': {'1':True}}}},
                 api / 'game' / '123' / 'minute-marginals.json': {'schema': 1},
                 api / 'slate' / '2026-11-22.json': {'games': [{'proj': {'duel': {'id': 1}}}]},
             }
@@ -66,6 +68,12 @@ class BundleProfilesTests(unittest.TestCase):
             self.assertEqual(phone[0]['profile'], 'phone')
             self.assertEqual(laptop[0]['profile'], 'laptop')
             self.assertNotIn('/api/game/123/worlds', phone[1])
+            self.assertNotIn('/api/game/123/replay', phone[1])
+            self.assertNotIn('replay', json.loads(phone[1]['/api/game/123']['body']))
+            self.assertNotIn('cases', json.loads(phone[1]['/api/game/123/court']['body']))
+            self.assertEqual(json.loads(phone[1]['/api/game/123/court']['body'])['expected'], files[api / 'game' / '123' / 'court.json']['expected'])
+            self.assertIn('/api/game/123/replay', laptop[1])
+            self.assertIn('cases', json.loads(laptop[1]['/api/game/123/court']['body']))
             self.assertEqual(json.loads(phone[1]['/api/game/123']['body'])['worlds'], False)
             self.assertTrue(json.loads(phone[1]['/api/game/123']['body'])['minute_marginals'])
             self.assertIn('/api/game/123/minute-marginals', phone[1])

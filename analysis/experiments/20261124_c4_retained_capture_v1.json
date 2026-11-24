@@ -1,0 +1,160 @@
+{
+ "kind": "retained original-world enrichment; no forecast/model/outcome changes",
+ "runtime_sha256": "923cb905c1364f62cd7899a8fa1884878294be02e824feaae57fad9907566bd9",
+ "games": [
+  {
+   "game": "401910036",
+   "examples": 5,
+   "unique_chunks": 10,
+   "gzip_bytes": 96248,
+   "sha256": "38398ecdcc97997d77ed893e56a65ed73fd436bfb6d1689b73b4ae9bef9dd28b",
+   "replay": "data/derived/experiments/c4_retained_capture_v1/401910036/replay.json",
+   "zone_worlds": {
+    "path": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/c4_retained_capture_v1/401910036/zones.npz",
+    "sha256": "82d113061eabc05697b991713a38c83366292ce074b88b1c31e936cdccdb55f1",
+    "worlds": 10000,
+    "probability_mass": 10000
+   },
+   "court": "data/derived/experiments/c4_retained_capture_v1/401910036/zones.json"
+  },
+  {
+   "game": "401910037",
+   "examples": 5,
+   "unique_chunks": 20,
+   "gzip_bytes": 90969,
+   "sha256": "5d5e45a2ce66a64fbac39e55c53febdba4284fed4420c200c4617f0838d114a7",
+   "replay": "data/derived/experiments/c4_retained_capture_v1/401910037/replay.json",
+   "zone_worlds": {
+    "path": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/c4_retained_capture_v1/401910037/zones.npz",
+    "sha256": "0286f865e9dfd13b48530e18f05c0c6cc88c1c664b776a4911220654336382fc",
+    "worlds": 20000,
+    "probability_mass": 40000
+   },
+   "court": "data/derived/experiments/c4_retained_capture_v1/401910037/zones.json"
+  },
+  {
+   "game": "401910038",
+   "examples": 5,
+   "unique_chunks": 10,
+   "gzip_bytes": 96191,
+   "sha256": "c7812a2fbcae0978f2eb7fd2cdbbcedef982ecec0c270d854dc91de5539ab708",
+   "replay": "data/derived/experiments/c4_retained_capture_v1/401910038/replay.json",
+   "zone_worlds": {
+    "path": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/c4_retained_capture_v1/401910038/zones.npz",
+    "sha256": "a93074c3a88e437210cdda85e847f751cf389008174fd7e3d11d2e57e7ea51ac",
+    "worlds": 10000,
+    "probability_mass": 10000
+   },
+   "court": "data/derived/experiments/c4_retained_capture_v1/401910038/zones.json"
+  },
+  {
+   "game": "401910039",
+   "examples": 5,
+   "unique_chunks": 10,
+   "gzip_bytes": 97061,
+   "sha256": "db35d4790b55aaf9545ccdcd36f08c671a8e847bd16bd240add86400ced760c2",
+   "replay": "data/derived/experiments/c4_retained_capture_v1/401910039/replay.json",
+   "zone_worlds": {
+    "path": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/c4_retained_capture_v1/401910039/zones.npz",
+    "sha256": "e57ada0ad51a56092ca0217241fe0601b9dd37cabec952c8a63a3cf136714026",
+    "worlds": 10000,
+    "probability_mass": 10000
+   },
+   "court": "data/derived/experiments/c4_retained_capture_v1/401910039/zones.json"
+  },
+  {
+   "game": "401910040",
+   "examples": 5,
+   "unique_chunks": 10,
+   "gzip_bytes": 96126,
+   "sha256": "b0553214cf28ecaeb04237ff70ed2e00da4106ac70050da2ae1681e28ad5a675",
+   "replay": "data/derived/experiments/c4_retained_capture_v1/401910040/replay.json",
+   "zone_worlds": {
+    "path": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/c4_retained_capture_v1/401910040/zones.npz",
+    "sha256": "cb0d5f6569bb066e5ae873510ba5660bec7399dc4d6eaa7069972228496a5243",
+    "worlds": 10000,
+    "probability_mass": 10000
+   },
+   "court": "data/derived/experiments/c4_retained_capture_v1/401910040/zones.json"
+  },
+  {
+   "game": "401910041",
+   "examples": 5,
+   "unique_chunks": 10,
+   "gzip_bytes": 100150,
+   "sha256": "6e56ac088ffa019a2e8c8c3a831a27c5cd3eb56ba148f09e16175163719f809c",
+   "replay": "data/derived/experiments/c4_retained_capture_v1/401910041/replay.json",
+   "zone_worlds": {
+    "path": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/c4_retained_capture_v1/401910041/zones.npz",
+    "sha256": "c4e149cd8daaf80307badd348bf0876890751e8e2aa6971e29b7ab1fd19dc36a",
+    "worlds": 10000,
+    "probability_mass": 10000
+   },
+   "court": "data/derived/experiments/c4_retained_capture_v1/401910041/zones.json"
+  },
+  {
+   "game": "401910042",
+   "examples": 5,
+   "unique_chunks": 20,
+   "gzip_bytes": 100262,
+   "sha256": "db2006c3ed7a9b17b8e35e643d31d24665b1aaa652cbd4e90a209459ef217e30",
+   "replay": "data/derived/experiments/c4_retained_capture_v1/401910042/replay.json",
+   "zone_worlds": {
+    "path": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/c4_retained_capture_v1/401910042/zones.npz",
+    "sha256": "5f8be68caf38de8e0a4bc3a732906a9e177c58dc7efb450e2c02e5c190e9f81f",
+    "worlds": 20000,
+    "probability_mass": 40000
+   },
+   "court": "data/derived/experiments/c4_retained_capture_v1/401910042/zones.json"
+  },
+  {
+   "game": "401910043",
+   "examples": 5,
+   "unique_chunks": 10,
+   "gzip_bytes": 93444,
+   "sha256": "741e0469c49776adeb3e77c77255bada4063aa1dd3c2738955ff79fcf2367d72",
+   "replay": "data/derived/experiments/c4_retained_capture_v1/401910043/replay.json",
+   "zone_worlds": {
+    "path": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/c4_retained_capture_v1/401910043/zones.npz",
+    "sha256": "e6f0358d8f20a11b2cd83c7b41bffdb907b67bbdc44b98c4bab0f0b49d727e48",
+    "worlds": 10000,
+    "probability_mass": 10000
+   },
+   "court": "data/derived/experiments/c4_retained_capture_v1/401910043/zones.json"
+  },
+  {
+   "game": "401910044",
+   "examples": 5,
+   "unique_chunks": 10,
+   "gzip_bytes": 93810,
+   "sha256": "6361a4d8434e606142ca814a98005819ac6ced71de53decb728eb3f241d2dd32",
+   "replay": "data/derived/experiments/c4_retained_capture_v1/401910044/replay.json",
+   "zone_worlds": {
+    "path": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/c4_retained_capture_v1/401910044/zones.npz",
+    "sha256": "2718c8f1abaf04b8a1b913bcdd8846ec832db1299c053c095b2d0092eb97d9a2",
+    "worlds": 10000,
+    "probability_mass": 10000
+   },
+   "court": "data/derived/experiments/c4_retained_capture_v1/401910044/zones.json"
+  },
+  {
+   "game": "401910045",
+   "examples": 5,
+   "unique_chunks": 20,
+   "gzip_bytes": 98670,
+   "sha256": "178d782281d91ff9eb165f58221352bb75914c70f77451cadd1cb2c70b3e51b7",
+   "replay": "data/derived/experiments/c4_retained_capture_v1/401910045/replay.json",
+   "zone_worlds": {
+    "path": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/c4_retained_capture_v1/401910045/zones.npz",
+    "sha256": "32bbc99c8d52a255fa902cad3f25044bc0aeab0e1ec46e79396d2fc9a8431455",
+    "worlds": 20000,
+    "probability_mass": 20000
+   },
+   "court": "data/derived/experiments/c4_retained_capture_v1/401910045/zones.json"
+  }
+ ],
+ "original_chunks": 130,
+ "worlds_replayed": 130000,
+ "examples": 50,
+ "seconds": 3924.8533805419866
+}

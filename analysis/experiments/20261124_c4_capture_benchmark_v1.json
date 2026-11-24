@@ -1,0 +1,28 @@
+{
+ "kind": "isolated paired original1k capture CPU/RSS benchmark; macOS ru_maxrss bytes",
+ "runs": [
+  {
+   "capture": false,
+   "seconds": 70.63546150000184,
+   "peak_rss_bytes": 1427193856,
+   "worlds": 1000,
+   "chunk_start": 9000,
+   "selected_examples": 0,
+   "raw_exact": true
+  },
+  {
+   "capture": true,
+   "seconds": 71.03398349997588,
+   "peak_rss_bytes": 1426505728,
+   "worlds": 1000,
+   "chunk_start": 9000,
+   "selected_examples": 2,
+   "raw_exact": true
+  }
+ ],
+ "extra_rss_bytes": -688128,
+ "extra_seconds": 0.3985219999740366,
+ "rss_limit_bytes": 1073741824,
+ "extra_rss_passed": true,
+ "limits": "One game/chunk under concurrent confirmation load; final full-nightly time acceptance remains separate."
+}

@@ -1,0 +1,52 @@
+{
+ "kind": "two original full1k source chunks, read-only exact zone/segment capture",
+ "receipts": [
+  {
+   "signature": {
+    "source_id": "91d81f955c104a0d870907b5c0f04b2407b02e1515819526ac923394d493913a",
+    "capture_sha256": "04406070e8674539f9a55ca9c75ed216b426186d57fb55c17bec61c450dfdb3b",
+    "input_sha256": "bdf8b1946c48e9a992a068fd4fe8206a090724ef99a53383207421529035a083",
+    "branch_id": "unconditional",
+    "start": 1000,
+    "stop": 2000,
+    "selected_worlds": [
+     837
+    ]
+   },
+   "output": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/c4_replay_probe_v1/401910036/01000-02000.json",
+   "sha256": "bb346cf7d52710f8679e8ea03e96a447812317caf66633c28cb4012947a88b83",
+   "raw_arrays_exact": true,
+   "worlds_replayed": 1000,
+   "worlds_recorded": 1,
+   "seconds": 70.52231324999593
+  },
+  {
+   "signature": {
+    "source_id": "4e28633789bc1cdd68d7503062e42972618c64b4241043873a358710a424dc1b",
+    "capture_sha256": "ccaf677cf278255c0bdeb5fa699841567e8388b0a5f2616e8a58a5890655ffd6",
+    "input_sha256": "e7960c912469425189d7b77a26157df552108dcb70cac682e51b83a3e582bfd9",
+    "branch_id": "lineup-v1:3/4395628=plays",
+    "start": 2000,
+    "stop": 3000,
+    "selected_worlds": [
+     344
+    ]
+   },
+   "output": "/Users/moholom/Repos/Sports/Basketball/data/derived/experiments/c4_replay_probe_v1/401910042/02000-03000.json",
+   "sha256": "7b413c53ccb1baf2c90c977a483e635de3ca46c77656abbe43a32522f75b134a",
+   "raw_arrays_exact": true,
+   "worlds_replayed": 1000,
+   "worlds_recorded": 1,
+   "seconds": 69.4468136250216
+  }
+ ],
+ "elapsed_seconds": 71.72788854199462,
+ "workers": 2,
+ "source_sha256": {
+  "scripts/engine.py": "ec66341b1cacd6cc407d21f037b8b62c29f0a71ed408940279765f13a8211912",
+  "scripts/world_detail.py": "0ebbe6e8bd774a3421f95dd4c4f492500a601daa17d1e17b13fb73a1af4e3238",
+  "scripts/visible_worlds.py": "4d18caa7e8e92e0ce2254bd4eafd6f7358184084f2dd270864160e53f6d3d080",
+  "scripts/lineup_forecast.py": "3b4bb4991828a38aa4f82439e4b391342bb8d79f12b7bbd67b7f73f7c392604c"
+ },
+ "source_accuracy_scored": false
+}

@@ -1,0 +1,20 @@
+{
+ "kind": "complete source-bound20k-world branch preview; no new simulation",
+ "games": [
+  {
+   "game": "401910037",
+   "examples": 5,
+   "unique_chunks": 20,
+   "gzip_bytes": 90969,
+   "sha256": "5d5e45a2ce66a64fbac39e55c53febdba4284fed4420c200c4617f0838d114a7",
+   "replay": "data/derived/experiments/c4_preview_branch_v1/replay.json",
+   "zone_worlds": {
+    "path": "data/derived/experiments/c4_preview_branch_v1/zones.npz",
+    "sha256": "0286f865e9dfd13b48530e18f05c0c6cc88c1c664b776a4911220654336382fc",
+    "worlds": 20000,
+    "probability_mass": 40000
+   },
+   "court": "data/derived/experiments/c4_preview_branch_v1/zones.json"
+  }
+ ]
+}

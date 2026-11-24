@@ -1,0 +1,15 @@
+{
+ "kind": "real two-branch1k queue, complete replay and unchanged-input resume",
+ "branches": 2,
+ "worlds_per_branch": 1000,
+ "examples": 5,
+ "cases": 3,
+ "original_full_chunk_raw_exact": true,
+ "complete_resume_no_worker": true,
+ "changed_input_rejected": true,
+ "all_saved_bytes_preserved": true,
+ "completion_sha256": "a88c60766befa423672414e2a1d8ab50af4a000ebe59923b0361e8e099a4951e",
+ "seconds": 283.9913778330083,
+ "workers": 1,
+ "published": false
+}

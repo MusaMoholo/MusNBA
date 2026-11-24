@@ -32,6 +32,22 @@ def read_player_worlds(archive, game_id: str) -> dict:
             or not np.array_equal(np.clip(np.rint(minutes.sum(axis=2)), 0, 255), lines[:, :, 0])):
         raise ValueError(f'{game_id}: invalid precise minute worlds or unsupported schema')
     result.update(minutes_schema=schema, minutes=minutes)
+    fields = ('zone_schema', 'zone_fga', 'zone_fgm')
+    if any(prefix + key in archive for key in fields):
+        if not all(prefix + key in archive for key in fields):
+            raise ValueError(f'{game_id}: incomplete zone worlds')
+        version, attempts, makes = (archive[prefix + key] for key in fields)
+        if (version.shape != () or version.dtype.kind not in 'iu' or int(version) != 1
+                or attempts.shape != minutes.shape + (5,) or makes.shape != attempts.shape
+                or attempts.dtype != np.uint16 or makes.dtype != np.uint16 or (makes > attempts).any()):
+            raise ValueError(f'{game_id}: invalid zone worlds')
+        from scripts.views import WORLD_STATS
+        for key, values in (('fga', attempts.sum((2, 3))), ('fgm', makes.sum((2, 3))),
+                            ('fg3a', attempts[:, :, :, 3:].sum((2, 3))), ('fg3m', makes[:, :, :, 3:].sum((2, 3)))):
+            column = WORLD_STATS.index(key)
+            if column >= lines.shape[2] or not np.array_equal(values, lines[:, :, column]):
+                raise ValueError(f'{game_id}: zone counts differ from player {key}')
+        result.update(zone_schema=version, zone_fga=attempts, zone_fgm=makes)
     return result
 
 
@@ -107,7 +123,7 @@ def pack_capture(data: dict[str, np.ndarray]) -> dict:
     for team in (0, 1):
         if not np.array_equal(period_box['pts'][:, side == team].sum(axis=1), periods[:, team]):
             raise ValueError('player and team scores do not reconcile')
-    return {
+    result = {
         'worlds': worlds, 'stats': list(views.WORLD_STATS), 'players': list(map(str, ids)),
         'side': side.astype(int).tolist(),
         'lines': packed_bytes(np.stack([lines[stat] for stat in views.WORLD_STATS], axis=2)),
@@ -122,3 +138,6 @@ def pack_capture(data: dict[str, np.ndarray]) -> dict:
         'opening_lineups': packed_bytes(opening),
         'periods': ['q1', 'q2', 'q3', 'q4', 'ot'],
     }
+    from scripts import shot_zones
+    result.update(shot_zones.encode(data))
+    return result

@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import {derivedMetric} from '../scripts/webapp/box-metrics.mjs';
+import {decodeZones,zoneValues,ZONE_KEYS} from '../scripts/webapp/shot-zones.mjs';
+const columns={pts:[0,25],fgm:[0,8],fg3m:[0,3],fga:[0,16],fg3a:[0,6],fta:[0,7],ftm:[0,6],oreb:[0,2],dreb:[0,4],reb:[0,6],ast:[0,5],stl:[0,2],blk:[0,1],tov:[0,3]};
+const get=k=>Object.hasOwn(columns,k)?Float64Array.from(columns[k]):derivedMetric(k,get);
+assert.ok(Number.isNaN(get('efg')[0]));assert.equal(get('efg')[1],59.375);
+assert.equal(get('fantasy')[1],25+1.2*6+1.5*5+3*2+3*1-3);
+assert.equal(get('twoMade')[1],5);assert.equal(get('twoAtt')[1],10);assert.equal(get('twoPct')[1],50);
+const attempts=[2,0,1,0,1],makes=[1,0,0,0,1];
+const u16=xs=>{const b=new Uint8Array(xs.length*2),v=new DataView(b.buffer);xs.forEach((x,i)=>v.setUint16(i*2,x,true));return Buffer.from(b).toString('base64');};
+const raw={zone_schema:1,zone_keys:ZONE_KEYS,zone_attempts_u16_le:u16(attempts),zone_makes_u16_le:u16(makes)};
+const counts=decodeZones(raw,1,1,{boxColumn:(w,p,k)=>({fga:4,fgm:2,fg3a:1,fg3m:1})[k]});
+assert.equal(zoneValues({zone:0,stat:'fgpct'},(z,k)=>counts.column(0,z,k),new Float64Array([4]))[0],50);
+assert.ok(Number.isNaN(zoneValues({zone:1,stat:'fgpct'},(z,k)=>counts.column(0,z,k),new Float64Array([4]))[0]));
+assert.equal(decodeZones({},1,1),null);
+assert.throws(()=>decodeZones({...raw,zone_makes_u16_le:u16([3,0,0,0,1])},1,1),/makes exceed/);
+assert.throws(()=>decodeZones(raw,1,1,{boxColumn:()=>0}),/do not match/);
+console.log('Zone bytes, exact boxes, weighted support and undefined rates verified');

@@ -1,4 +1,6 @@
 // Shared data access, formatters, small components and SVG charts. No framework, no build step.
+import {ADVANCED_METRICS} from './box-metrics.mjs';
+export {ADVANCED_METRICS};
 export const BASE = new URL('./', location.href);
 const TZ_UK = 'Europe/London', TZ_ET = 'America/New_York';
 
@@ -114,25 +116,10 @@ export function advancedPanel(line, actual, label, options = {}) {
   if (!line && !actual) return '';
   const projected = label === 'Projected';
   const values = projected ? {} : advancedRates(line), observed = advancedRates(actual);
-  const metrics = [['fgpct', 'Field-goal%', 'FGM / FGA', true], ['fg3pct', '3-point FG%', '3PM / 3PA', true],
-                   ['ftpct', 'Free-throw%', 'FTM / FTA', true], ['efg', 'Effective FG%', '(FGM + 0.5 × 3PM) / FGA', true],
-                   ['ts', 'True shooting%', 'PTS / (2 × (FGA + 0.44 × FTA))', true],
-                   ['two', '2-point FG%', '(FGM − 3PM) / (FGA − 3PA)', true],
-                   ['threeShare', '3-point attempt rate', '3PA / FGA', true],
-                   ['ftRate', 'Free-throw attempt rate', 'FTA / FGA', true],
-                   ['astTov', 'Assists per turnover', 'AST / TOV', false]];
+  const metrics = ADVANCED_METRICS.filter(m => !m[4] || options.team);
   if (options.team) {
     if (!projected) Object.assign(values, teamAdvancedRates(line, options.opponent));
     Object.assign(observed, teamAdvancedRates(actual, options.actualOpponent));
-    metrics.push(['poss', 'Estimated possessions', 'FGA − OREB + TOV + 0.44 × FTA', false],
-                 ['ortg', 'Offensive rating · estimate', 'PTS / estimated possessions × 100', false],
-                 ['drtg', 'Defensive rating · estimate', 'Opponent PTS / their estimated possessions × 100', false],
-                 ['net', 'Net rating · estimate', 'Offensive rating − defensive rating', false],
-                 ['oreb', 'Offensive rebound share', 'OREB / (OREB + opponent DREB)', true],
-                 ['dreb', 'Defensive rebound share', 'DREB / (DREB + opponent OREB)', true],
-                 ['assist', 'Assisted field goals', 'AST / FGM', true],
-                 ['turnover', 'Turnover rate · estimate', 'TOV / estimated possessions', true],
-                 ['steals', 'Steal rate · estimate', 'STL / opponent estimated possessions', true]);
   }
   const format = (v, percent) => percent ? rate(v) : f1(v);
   const distribution = (key, percent) => {
@@ -362,7 +349,7 @@ export function tableSortValue(cell, heading = '') {
 }
 export function wireSortableTables(root) {
   root.querySelectorAll('table').forEach((table, index) => {
-    if (table.dataset.sortWired || table.matches('.grid') || table.querySelector('th[data-sort], th[data-fsort]')) return;
+    if (table.dataset.sortWired || table.matches('.grid, [data-no-sort]') || table.querySelector('th[data-sort], th[data-fsort]')) return;
     const heads = [...(table.tHead?.rows || [])];
     if (heads.length !== 1 || !table.tBodies.length) return;
     const headers = [...heads[0].cells];

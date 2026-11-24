@@ -28,7 +28,7 @@ def fingerprints(runtime=None):
     root = Path(__file__).resolve().parents[1]
     paths += [root / 'basketball_common.py']
     paths += [root / f'scripts/{name}.py' for name in ('engine', 'projection', 'minutes', 'rotations', 'nodes', 'matchups',
-              'foul_out', 'lineup_forecast', 'a1_lineup_branches', 'player_worlds', 'forecast_output', 'world_mass', 'rotation_fit', 'late_clock', 'nightly')]
+              'foul_out', 'lineup_forecast', 'a1_lineup_branches', 'player_worlds', 'forecast_output', 'world_mass', 'rotation_fit', 'late_clock', 'nightly', 'world_detail', 'shot_zones', 'visible_worlds', 'court_assets')]
     paths += list((engine.MODELS / runtime['models']).glob('*'))
     if runtime.get('clock_recipe') is not None:
         recipe = root / runtime['clock_recipe']
@@ -44,6 +44,8 @@ def initialise(runtime):
 
 
 def project(task):
+    if _ENGINE.runtime.get('world_details') == 'visible-worlds-v1':
+        raise ValueError('visible worlds require the canonical chunk queue')
     g, selected, W, directory, provenance = task
     folder = Path(directory)
     folder.mkdir(parents=True, exist_ok=False)
@@ -72,11 +74,15 @@ def project(task):
     return _store(g, folder, raw, summary, weights, source_id, pieces, provenance, eng.runtime, selected)
 
 
-def _store(g, folder, raw, summary, weights, source_id, pieces, provenance, runtime, selected):
+def _store(g, folder, raw, summary, weights, source_id, pieces, provenance, runtime, selected, *, complete=True):
     encoded = player_worlds.pack_capture(raw)
     players = {'ids': raw['player_ids'], 'side': raw['side'],
                'lines': np.frombuffer(base64.b64decode(encoded['lines']), np.uint8).reshape(len(raw['minutes']), g.n, -1),
                'minutes_schema': np.array(1, np.uint8), 'minutes': raw['minutes']}
+    if 'zone_fga' in raw or 'zone_fgm' in raw:
+        from scripts import shot_zones
+        shot_zones.validate(raw)
+        players.update(zone_schema=np.array(1, np.uint8), zone_fga=raw['zone_fga'], zone_fgm=raw['zone_fgm'])
     if weights is not None:
         players['weights'] = weights
     np.savez_compressed(folder / 'players.npz', **players)
@@ -87,8 +93,15 @@ def _store(g, folder, raw, summary, weights, source_id, pieces, provenance, runt
     names = ['game.json', 'players.npz', 'points.npz', 'provenance.json', 'inputs.pkl']
     if selected:
         names.append('worlds.json')
-    write_json(folder / 'completion.json', {'schema': 1, 'completed_at': utc_now(),
-               'files': {name: sha256_file(folder / name) for name in names}})
+    if runtime.get('world_details') == 'visible-worlds-v1':
+        from scripts import court_assets
+        court_assets.store_zones(folder, source_id, raw, weights)
+        names.append('zones.json')
+        if complete:
+            raise ValueError('visible-world game cannot complete before its original-chunk replay jobs')
+    if complete:
+        write_json(folder / 'completion.json', {'schema': 1, 'completed_at': utc_now(),
+                   'files': {name: sha256_file(folder / name) for name in names}})
     return str(folder)
 
 
@@ -100,8 +113,11 @@ def verified_completion(folder):
         return False
     saved = read_json(receipt)
     required = {'game.json', 'players.npz', 'points.npz', 'provenance.json', 'inputs.pkl'}
-    if read_json(folder / 'provenance.json')['selected']:
+    provenance = read_json(folder / 'provenance.json')
+    if provenance['selected']:
         required.add('worlds.json')
+    if provenance.get('engine', {}).get('world_details') == 'visible-worlds-v1':
+        required.update(('zones.json', 'replay.json', 'replay-plan.json', 'replay-receipt.json'))
     if saved.get('schema') != 1 or set(saved.get('files', {})) != required:
         raise ValueError('invalid complete-game receipt')
     if any(not (folder / name).is_file() or sha256_file(folder / name) != digest
@@ -217,7 +233,60 @@ def _finish_game(job):
         summary = _ENGINE._package(g, state, plan['worlds'])
         source_id = hashlib.sha256(packed({'capture':records[0]['capture_sha256'], 'inputs':plan['provenance']}).encode()).hexdigest()
     season_pieces = [{'count':plan['worlds'], 'weight':item['weight']} for item in plan['batches']]
-    return _store(g, folder, raw, summary, weights, source_id, season_pieces, plan['provenance'], _ENGINE.runtime, plan['selected'])
+    detailed = _ENGINE.runtime.get('world_details') == 'visible-worlds-v1'
+    result = _store(g, folder, raw, summary, weights, source_id, season_pieces, plan['provenance'], _ENGINE.runtime, plan['selected'], complete=not detailed)
+    if not detailed:
+        return result
+    from scripts import visible_worlds
+    selection = visible_worlds.select(folder)
+    replay_plan = folder / 'replay-plan.json'
+    if replay_plan.exists():
+        if read_json(replay_plan) != json.loads(packed(selection)):
+            raise ValueError('changed selection: refusing replay resume')
+    else:
+        write_json(replay_plan, selection, pretty=False)
+    chunks = sorted({(e['branch_id'], e['chunk_start'], e['chunk_stop']) for e in selection['examples']})
+    jobs = [{'kind': 'replay', 'folder': str(folder), 'branch': branch, 'start': start, 'stop': stop}
+            for branch, start, stop in chunks]
+    return {'folder': str(folder), 'replay_jobs': jobs}
+
+
+def _replay_path(job):
+    name = hashlib.sha256(job['branch'].encode()).hexdigest()[:12]
+    return Path(job['folder']) / 'replay-chunks' / f"{name}-{job['start']:05d}-{job['stop']:05d}.json"
+
+
+def _replay(job):
+    from scripts import visible_worlds
+    folder = Path(job['folder'])
+    selection = read_json(folder / 'replay-plan.json')
+    return visible_worlds.replay_chunk(_ENGINE, folder, selection, job['branch'], job['start'], job['stop'], _replay_path(job))
+
+
+def _replay_finish(job):
+    from scripts import visible_worlds
+    folder = Path(job['folder'])
+    selection = read_json(folder / 'replay-plan.json')
+    chunks = sorted({(e['branch_id'], e['chunk_start'], e['chunk_stop']) for e in selection['examples']})
+    paths = [_replay_path({'folder': str(folder), 'branch': branch, 'start': start, 'stop': stop})
+             for branch, start, stop in chunks]
+    output, receipt = folder / 'replay.json', folder / 'replay-receipt.json'
+    if output.exists():
+        saved = read_json(receipt) if receipt.exists() else None
+        if not saved or saved['plan_sha256'] != sha256_file(folder / 'replay-plan.json') or saved['sha256'] != sha256_file(output):
+            raise ValueError('orphan or changed final replay; inspect before resume')
+    else:
+        result = visible_worlds.finish_replays(selection, paths, output, _ENGINE.runtime['models'], _ENGINE.runtime['id'])
+        write_json(receipt, {'plan_sha256': sha256_file(folder / 'replay-plan.json'), **result}, pretty=False)
+    names = ['game.json', 'players.npz', 'points.npz', 'provenance.json', 'inputs.pkl',
+             'zones.json', 'replay.json', 'replay-plan.json', 'replay-receipt.json']
+    if read_json(folder / 'provenance.json')['selected']:
+        names.append('worlds.json')
+    write_json(folder / 'completion.json', {'schema': 1, 'completed_at': utc_now(),
+               'files': {name: sha256_file(folder / name) for name in names}}, pretty=False)
+    if not verified_completion(folder):
+        raise ValueError('replay-complete game did not qualify for publication')
+    return str(folder)
 
 
 def run(tasks, runtime, median, *, workers=10, chunk_worlds=1000, resume=False):
@@ -298,7 +367,8 @@ def run(tasks, runtime, median, *, workers=10, chunk_worlds=1000, resume=False):
         if verified_completion(folder):
             pending = deque(job for job in pending if job['plan']['folder'] != str(folder))
             finished.append(str(folder))
-    functions = {'chunk':_chunk, 'merge':_merge, 'game':_finish_game}
+    functions = {'chunk':_chunk, 'merge':_merge, 'game':_finish_game, 'replay':_replay, 'replay_finish':_replay_finish}
+    replay_left = {}
     if not pending:
         yield from finished
         return
@@ -345,6 +415,15 @@ def run(tasks, runtime, median, *, workers=10, chunk_worlds=1000, resume=False):
                         game_left[folder] -= 1
                         if game_left[folder] == 0:
                             pending.appendleft({'kind':'game','folder':folder})
+                    elif job['kind'] == 'game' and isinstance(result, dict) and 'replay_jobs' in result:
+                        replay_left[result['folder']] = len(result['replay_jobs'])
+                        pending.extendleft(reversed(result['replay_jobs']))
+                        if not result['replay_jobs']:
+                            pending.appendleft({'kind': 'replay_finish', 'folder': result['folder']})
+                    elif job['kind'] == 'replay':
+                        replay_left[job['folder']] -= 1
+                        if replay_left[job['folder']] == 0:
+                            pending.appendleft({'kind': 'replay_finish', 'folder': job['folder']})
                     else:
                         events.put(('game', result))
             if stopping.is_set():

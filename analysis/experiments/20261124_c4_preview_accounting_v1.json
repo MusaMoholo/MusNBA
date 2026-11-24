@@ -1,0 +1,19 @@
+{
+ "kind": "independent complete preview accounting; broader130-chunk capture still pending",
+ "sources": {
+  "analysis/experiments/20261124_c4_preview_v1.json": "2fe2f1292c7adffa072238dcbb2645cac220396786f9f445a1252fc3e8d63648",
+  "analysis/experiments/20261124_c4_preview_branch_v1.json": "44aef636ef1b659f13b20ba3f3063240464bbe9d2047963ffbce8460c2e51fcc"
+ },
+ "counts": {
+  "games": 2,
+  "examples": 10,
+  "segments": 2430,
+  "legal_fives": 9720,
+  "worlds": 30000,
+  "cases": 4,
+  "max_minute_error": 3.552713678800501e-14,
+  "max_weighted_zone_error": 0.0,
+  "max_replay_gzip_bytes": 96267
+ },
+ "result": "passed"
+}

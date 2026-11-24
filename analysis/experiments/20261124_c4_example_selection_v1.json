@@ -1,0 +1,89 @@
+{
+ "kind": "five fixed source-identified real worlds per game; no capture or delivery acceptance yet",
+ "design_sha256": "4526ab25d6c023751c5a3cffc7e1493b6d3ac1fca8f6471baf2f99fbf717a2d1",
+ "selector_sha256": "88bf1a63b5ab70629c9f4d11f85d7f4f326fae96feae870327fe3077ab0e18e3",
+ "games": [
+  {
+   "game": "401910036",
+   "examples": 5,
+   "unique_worlds": 5,
+   "original_chunks": 4,
+   "private_selection": "data/derived/experiments/c4_visible_selection_v1/401910036.json",
+   "sha256": "27512d60871dcccde313d3dcc3bff5bcdbdbc1fb10d8e4a3db0f9bd8011e0f5f"
+  },
+  {
+   "game": "401910037",
+   "examples": 5,
+   "unique_worlds": 5,
+   "original_chunks": 5,
+   "private_selection": "data/derived/experiments/c4_visible_selection_v1/401910037.json",
+   "sha256": "936a82cdd25e61dfcaada5626c6910b0717e149fc10ea52c0d62b415844cb341"
+  },
+  {
+   "game": "401910038",
+   "examples": 5,
+   "unique_worlds": 5,
+   "original_chunks": 4,
+   "private_selection": "data/derived/experiments/c4_visible_selection_v1/401910038.json",
+   "sha256": "febfc779b71554b74a353efe3a88482e2ab40a97f6d0ac5995ed39209cc708f6"
+  },
+  {
+   "game": "401910039",
+   "examples": 5,
+   "unique_worlds": 5,
+   "original_chunks": 3,
+   "private_selection": "data/derived/experiments/c4_visible_selection_v1/401910039.json",
+   "sha256": "37ddd6b3d7067982e3878a32db34ab90444091e5befbebccabb1ba0d8830699a"
+  },
+  {
+   "game": "401910040",
+   "examples": 5,
+   "unique_worlds": 5,
+   "original_chunks": 5,
+   "private_selection": "data/derived/experiments/c4_visible_selection_v1/401910040.json",
+   "sha256": "4a47c6048a5ea0d1facaaf7162eb15927d4e7c82ad93ae886ad62fda7a3874bc"
+  },
+  {
+   "game": "401910041",
+   "examples": 5,
+   "unique_worlds": 5,
+   "original_chunks": 5,
+   "private_selection": "data/derived/experiments/c4_visible_selection_v1/401910041.json",
+   "sha256": "f37cd31fa405d39e71bb75982a79fc6619e31f32428165b3e15119ea7d5828ab"
+  },
+  {
+   "game": "401910042",
+   "examples": 5,
+   "unique_worlds": 5,
+   "original_chunks": 4,
+   "private_selection": "data/derived/experiments/c4_visible_selection_v1/401910042.json",
+   "sha256": "e09b6b8a20306f224f89858d85cff3d85c40d5ec066a59c40aa32c6cde09b059"
+  },
+  {
+   "game": "401910043",
+   "examples": 5,
+   "unique_worlds": 5,
+   "original_chunks": 3,
+   "private_selection": "data/derived/experiments/c4_visible_selection_v1/401910043.json",
+   "sha256": "8b9f8c6047373043b2b0365aabba6b2817ee60ad2820f3146d504a2f4252b8bf"
+  },
+  {
+   "game": "401910044",
+   "examples": 5,
+   "unique_worlds": 5,
+   "original_chunks": 3,
+   "private_selection": "data/derived/experiments/c4_visible_selection_v1/401910044.json",
+   "sha256": "3702774ca539bd22e5c911d2b8d3f32df2e13b7478aa63256e7075d16672bbff"
+  },
+  {
+   "game": "401910045",
+   "examples": 5,
+   "unique_worlds": 5,
+   "original_chunks": 4,
+   "private_selection": "data/derived/experiments/c4_visible_selection_v1/401910045.json",
+   "sha256": "cd70f53414bc5b59028c2a4ab6be5094875d3f6b0356d8f2f0803f4af0526e6c"
+  }
+ ],
+ "seconds": 1.1592904160206672,
+ "source_mutated": false
+}

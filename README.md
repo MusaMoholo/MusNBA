@@ -60,11 +60,14 @@ Compare lineup cases shows win chances/totals. Advanced panels separate raw save
 with nine player/eighteen team box-derived metrics, quantiles, histograms and player-rate scenario links. Phone retains Expected only.
 Scenarios offers attempts, combined totals and rates, exact/strict/inclusive comparisons and Core/Shooting/Efficiency/Combined tables.
 Current colour is table shading: **Standings → Ratings** shows ranked columns; laptop **Game → Scenarios**, after a condition, shows player deltas.
-Court shooting maps are planned in C4. Zero denominators stay undefined.
+Game → Analysis exposes 18 team and nine player metrics, distributions and conditions. Shooting zones separates five pooled forecast regions
+from recorded ESPN coordinates / 22 derived regions, with sample support and unknowns. Zero denominators stay undefined.
 Participation filters mean simulated minutes, not availability or causal effects. Report-band semantics/version live in MODEL.
 Advanced links and phone sortable headers have 44px targets. Sortable columns support click/keyboard, direction markers, missing-last order and preserved roster groups. Player directory name/team/stat
 sorting covers the full filtered population; other enhanced tables sort displayed rows. Shooting pairs sort by percentage; charts/period axes retain order.
-U23 joint-scorer/Q3 outcome stories, offline photos/initials fallback and startup Reload remain. Replay and competitions are next-chunk work.
+U23 joint-scorer/Q3 outcome stories, offline photos/initials fallback and startup Reload remain. Laptop Saved worlds plays five source-identified examples with seek/step/speed, cumulative boxes and rotations; lineup filters preserve
+branch identity. These are generated segments/zones, without tracking or invented passes. Phone retains Expected maps/metrics.
+Older snapshots lacking capture show unavailable detail. Competitions remain C5 work.
 
 Slates are ET; times show UK/ET. Spreads are projected mean margins. Exact float64 minutes drive conditions; display rounds to seconds.
 Over is strictly greater than x.5; shooting percentages condition on attempts and show no-attempt mass separately.

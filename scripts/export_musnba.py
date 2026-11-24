@@ -29,7 +29,7 @@ sys.path.insert(0, str(ROOT))
 from basketball_common import ARCHIVE_ROOT, LOGOS, VIEWS, WEB, archive_paths, packed  # noqa: E402
 from scripts.player_icons import ICONS as PLAYER_ICONS, catalogue as player_icons
 
-MODULES = ['app', 'ui', 'today', 'game', 'league', 'players', 'lab', 'season', 'about', 'spotlight', 'outcomes', 'scenario', 'pwa', 'pwa-storage', 'static-api', 'weighted-worlds', 'precise-minutes', 'lineup-worlds']
+MODULES = ['app', 'ui', 'today', 'game', 'league', 'players', 'lab', 'season', 'about', 'spotlight', 'outcomes', 'scenario', 'pwa', 'pwa-storage', 'static-api', 'weighted-worlds', 'precise-minutes', 'lineup-worlds', 'box-metrics', 'shot-zones', 'court', 'replay', 'explore']
 ICONS = ['icon.svg', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png']
 BOOT = "<script type=\"module\" id=\"boot\">import {boot} from './assets/app.mjs'; boot();</script>"
 STATIC_BOOT = ("<script type=\"module\" id=\"boot\">import {boot} from './assets/app.mjs'; "
@@ -130,11 +130,16 @@ def phone_record(key: str, text: str) -> str | None:
     and teams) only. No per-world files, so no Scenarios, Given…, joint grids, duels or lineup branches; no duel of the
     night on the slate. Returns the record body to export, or None to leave it out. Localhost and laptop keep everything."""
     parts = key.strip('/').split('/')
-    if parts[:2] == ['api', 'game'] and len(parts) == 4 and parts[3] == 'worlds':
+    if parts[:2] == ['api', 'game'] and len(parts) == 4 and parts[3] in ('worlds', 'replay'):
         return None
     if parts[:2] == ['api', 'game'] and len(parts) == 3:
         d = json.loads(text)
         d['worlds'] = False
+        d.pop('replay', None)
+        return json.dumps(d, separators=(',', ':'), ensure_ascii=False)
+    if parts[:2] == ['api', 'game'] and len(parts) == 4 and parts[3] == 'court':
+        d = json.loads(text)
+        d.pop('cases', None)
         return json.dumps(d, separators=(',', ':'), ensure_ascii=False)
     if parts[:2] == ['api', 'slate']:
         d = json.loads(text)

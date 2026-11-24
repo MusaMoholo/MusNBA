@@ -101,8 +101,8 @@ Asynchronous vector worlds can consume RNG differently after divergence; clock-o
   Use rebound-at-miss clocks and sequence-aware substitutions. NBA latest-team labels misattribute8,637/113,089 historical tracking rows;
   use dated logs. Missing publication times remain unknown.
 - **Earlier candidates:** S04 rim signal did not beat training noise; tracking worsened loss. v1.4c/e/f PTS changes+.0062–.0075 span0;
-  they do not disprove richer defence. NBA-only minutes Δ−.00416[−.02699,+.01913]. C3 S06 MIN gain−.02974[−.04519,−.01728] clears27/27
-  proper bounds;80% MIN coverage falls1.70pp. Independent confirmation remains required; no promotion.
+  they do not disprove richer defence. NBA-only minutes Δ−.00416[−.02699,+.01913]. Independent S06 MIN gain−.03694[−.05002,−.02546] clears25/27
+  proper bounds; win Brier/log-loss remain unresolved. Fixed attempt closed; retain r3.
 - **A1/A2:** r2 independent fitting passed fresh 200-game v3 confirmation. Original protected v2 remains42/44. A2 found no supported stable
   missing shooting-form factor; synthetic variance is not calibration and form stays zero. Conditional participant tests cannot validate availability.
 - **Clock:** prior Q4/OT≤24s pools,4clock×7margin cells, minimum 100 opportunities/30 games; bridge then legacy fallback. Development trailing4–8/≤24s:
@@ -151,8 +151,9 @@ do not compare a new dataset to incompatible cached losses or silently drop unma
 **Rotations:** [C3](analysis/experiments/20261124_c3_research_decision_v1.json) recovered the exact S06 out/in models and timeout templates.
 `StateRotations` keeps those pre-event score/clock/foul/target decisions, independent per-world r3 fitting and current Rule3 legality/penalties.
 Strictly prior proxies reproduce7,317 old rows exactly. Publication LegalCapture and backtest Observer now delegate the selected policy;
-three publication/research and three default-off full chunks match raw arrays. One candidate survives development, unchanged for independent
-C4 confirmation; star-minute/Q4-margin coverage remains unresolved. Conditional participation does not validate live DNP/availability.
+three publication/research and three default-off full chunks match raw arrays. Independent200-game/4,287-player-game
+confirmation improves MIN but leaves two win-score safeguards unresolved; no broader rescue/protected test. MIN80% coverage78.00→76.65%.
+Canonical: `20261124_c4_s06_independent_decision_v1.json`. Conditional participation does not validate live DNP/availability.
 
 **Finite qualification:** freeze namespaces, IDs/input-only exclusions, auxiliary cutoffs, learned/v3 and benefit multiplicity
 before outcomes. Reuse raw-parity controls; never rescore protected r3. Each family gets three-game wiring and one 200-game F4 screen:
