@@ -22,38 +22,41 @@ No automatic S11/S12/S14 credit.
 
 ## Fully specified successor — D42 B0%, planning only
 
-First open action for the next modelling chunk: B1 source/assignment audit, before fitting. B is fully planned and remains0%.
-Headliners: evidence-backed player/lineup defence; reliable season paths with visible uncertainty.
-Canonical bounded specification: `20261124_chunk_b_successor_v3.json`.
+First open action: B1 real-versus-simulated team-score and possession error audit, before choosing/fitting a mechanism. B is fully planned and remains0%.
+Headliners: materially closer real-life team scores through better possessions; reliable season paths with visible scoring/rotation evidence.
+Canonical bounded specification: `20261124_chunk_b_successor_v4.json`.
 Weights B1=30%,B2=30%,B3=40%; overall=.30B1+.30B2+.40B3, all initially0%.
 B1 depends on accepted C/A3/U25, existing soft-assignment/zone history, dated evidence and frozen policy. B2 depends on correct historical calendars,
 prior-only auxiliary fits,16 origins and exact near-term mixtures. B3 follows checkpointed B1/B2 decisions and stored rotation capture.
 Rotation probabilities must use all retained worlds with exact weights, never the five deliberately selected replay examples; missing capture stays explicit.
 
-| Rung | B1 defence/legal mechanics30% | B2 pathway30% | B3 integration/visibility40% |
+| Rung | B1 possession/team accuracy30% | B2 pathway30% | B3 integration/visibility40% |
 |---:|---|---|---|
-|10|Audit current assignment/zone history and Rule3.|Reconcile16 historical calendars/Cup finals.|Freeze candidate/control decisions/manifests.|
-|20|Validate source support for primary/help roles.|Build prior-only carry-over/opponent starts.|Fixed F4 combined/component removals.|
-|30|Freeze shot-context responsibility hypothesis.|Leave-one-season-out/cold-start screen.|Independent F4/F1–F3 confirmation or rejection.|
-|40|Audit fitted cutoffs, missingness and≤3 variants.|Test memory/gain/drift versus persistence.|Second-seed/10k/legal/cutoff/runtime gates.|
-|50|Held-out assignment checks; preserve uncertainty.|Check dated absence support; no-hazard fallback.|Only new qualified recipe protected once; retainr3 otherwise.|
-|60|Prior-only zone profiles; matched engine screen.|Consume each near-term Expected once.|Stored rotation probabilities sumfive; responsive map.|
-|70|Stress foul-outs/OT/short rosters and accounting.|10k worlds at all16 origins.|Inspect labels/legacy/offline/import/size/screenshots.|
-|80|Tier/defence/margin/non-inferiority uncertainty.|Per-origin CRPS/dispersion/coverage/persistence.|Fresh full nightly/accounting/bundles/shell.|
-|90|Confirm/reject unchanged gates; support/runtime.|Freeze pathway choice and interactions.|Docs and fully specified0% successor.|
+|10|Freeze r3 score/pace/efficiency baseline; source audit.|Reconcile16 historical calendars/Cup finals.|Freeze candidate/control decisions/manifests.|
+|20|Reconcile scoring causes; freeze target/panels.|Build prior-only carry-over/opponent starts.|Fixed F4 combined/component removals.|
+|30|Select one input/model/decision mechanism.|Leave-one-season-out/cold-start screen.|Independent F4/F1–F3 confirmation or rejection.|
+|40|Freeze cutoffs/policy and≤3 total variants.|Test memory/gain/drift versus persistence.|Second-seed/10k/legal/cutoff/runtime gates.|
+|50|Validate implicated mechanism; preserve uncertainty.|Check dated absence support; no-hazard fallback.|Only new qualified recipe protected once; retainr3 otherwise.|
+|60|Prior-only200-game development screen.|Consume each near-term Expected once.|Stored rotation probabilities sumfive; responsive map.|
+|70|Stress foul-outs/OT/short rosters and accounting.|10k worlds at all16 origins.|Stored score-error/rotation evidence; PWA checks.|
+|80|Player tiers then team-score error/coverage/strata.|Per-origin CRPS/dispersion/coverage/persistence.|Fresh full nightly/accounting/bundles/shell.|
+|90|Disjoint200-game team-score confirmation.|Freeze pathway choice and interactions.|Docs and fully specified0% successor.|
 |100|Evidence/fallback/checks/checkpoint/push.|Evidence/limits/affected delivery/checkpoint/push.|Smoke/fault/PWA/accounting/checkpoint/push.|
 
-Before B1 outcomes freeze one distinct mechanism, ≤3 node variants, one200-game development and one disjoint200-game independent screen.
-Existing broad inferred zone history is not new work; ranks are likelihood, not measured proximity. No C2/S06 rescue or repaired six-foul rerun. Broader confirmation/stress requires a frozen survivor.
+B1 diagnoses possession count/duration, shots/mix/conversion, FT/fouls, turnovers/rebounds and minutes/lineups before selecting a lever;
+defence is one supported option. Freeze one new mechanism/≤3 total variants, one200-game development and one disjoint200-game confirmation panel.
+Only development baseline is inspected before candidate freeze. Full target/metrics/closure are canonical in successor `owner_team_score_contract`:
+independent team-points CRPS benefit, materially reduced systematic bias (25% target when detectably biased), MAE/RMSE and strata,
+with existing player-tier/coverage/total/margin safeguards. No score shifting/scaling, market fitting, C2/S06 rescue or protectedr3 rescore.
 B2 first audits historical Cup-final labels/calendar leakage; ≤3 prospectively frozen start/memory candidates. Four completed seasons2022–23 through2025–26;
 Nov20/Dec25 in starting year, Feb1/Mar10 in ending year (16 exact dates in successor JSON), leave-one-season-out selection.
 Audit November2022 cold-start support; freeze common prior before outcomes. No future priors, dropped origins or Nov/Dec2026 tests. All auxiliary fits precede origin; missing absence evidence retains no hazard.
 Incomplete2026–27 truth cannot establish full-season/title calibration. No arbitrary variance multiplier or protectedr3 rescore.
 
-Acceptance: B1 independent player-first v3 proper-score/coverage benefit plus legal/cutoff invariants, or measured rejection retainsr3.
+Acceptance: B1 must pass the prospective owner team-score contract and existing player-first safeguards; otherwise retainr3 and record the objective unmet.
 B2 all16 origins with per-date paired uncertainty and exact mixtures under explicit pathway policy, or measured rejection retainspathway-v1.
 B3 applicable combined/removal/confirmation/seed/stress/runtime gates, useful rotation-map visibility, fresh full nightly and tested/published PWA.
-Fallback retains accepted engines and ships useful visibility; unfinished investigations cannot close. Each module checkpoints before the next.
+Failed research retains accepted engines and records the gap; visibility alone cannot satisfy the team-score objective. Unfinished investigations cannot close. Each module checkpoints before the next.
 Use ≤10 heavy threads including inner OMP/BLAS/compression; identify independent compute/I/O first. No agent delegation implied.
 
 First commands:

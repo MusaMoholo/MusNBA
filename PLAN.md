@@ -17,17 +17,18 @@ U25 changed no models or B progress. App shell, both imports/offline/upgrades an
 
 ## Next chunk — D42 B0%
 
-`20261124_chunk_b_successor_v3.json` is the refined bounded plan; HANDOFF gives executable rungs/dependencies/commands/fallback.
+`20261124_chunk_b_successor_v4.json` is the refined bounded plan; HANDOFF gives executable rungs/dependencies/commands/fallback.
 
 |Module|Weight|Outcome|
 |---|---:|---|
-|B1 defence|30%|Validate better estimates of shot responsibility and prior-only zone histories against the existing soft-assignment baseline.|
+|B1 possession accuracy|30%|Bring team scores materially closer to real results through diagnosed input/model/decision improvements; preserve accurate player distributions.|
 |B2 season|30%|Test starting strength/memory at16 historical origins; improve accuracy and realistic uncertainty only with evidence.|
-|B3 integration/visibility|40%|Independent combined confirmation where qualified; supported defensive explanations/rotation map; final PWA delivery.|
+|B3 integration/visibility|40%|Independently confirm team-score improvement; show scoring/rotation/defence evidence and deliver the PWA.|
 
+Owner priority: demonstrably closer real-world team scores from robust possessions. HANDOFF/current successor owns the target and metrics; UI-only work cannot fulfil it.
 Already inferred broad-zone history is not new work. “Nearest” requires actual positions we lack; primary/help roles remain unknown without support.
 New responsibility estimates must retain uncertainty and avoid outcome-based assignment. No C2/S06 rescue or r3 protected rescore.
-Measured rejection may close research; unfinished work cannot. Retain accepted models and deliver useful visibility if no model improves.
+Measured rejection may close research; unfinished work cannot. Retain accepted models on rejection, explicitly mark team-score objective unmet and carry it forward with evidence.
 
 ## Original programme — unchanged74%
 
