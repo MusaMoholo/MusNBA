@@ -1,0 +1,24 @@
+{
+ "kind": "single exact S06 current-r3 retest; frozen before candidate outcomes",
+ "recipe": "original SelectedTimeoutPolicy out/in models, conditional exits, Gumbel incoming and timeout templates; retain current r3 Rule3 for all legality/penalties",
+ "model_report": "analysis/experiments/20261122_a1_s06_engine_models_F4.json",
+ "training_through": "2025-12-31",
+ "auxiliary": "same original prior-box membership, prior roles/positions and D29 as-of player state; 1000 redraw mean, original a1_s05_unconditional seed; no outcomes in features",
+ "features": "data/derived/experiments/c3_inputs_v1/features.parquet",
+ "panels_from": "analysis/experiments/20261124_c2_ready_panels_v1.json",
+ "worlds": 1000,
+ "seed_key": "v1.2d_F4",
+ "reference": "folds/v1.2d_F4_all",
+ "primary": "players/all/min/crps",
+ "policy": "promotion-v3-20261123",
+ "multiplicity": "one rotation candidate; primary paired95 upper<0; 27 proper bounds and coverage veto unchanged; independent C4 confirmation required",
+ "budget": "3 wiring games; one200 development; no replacement/rescue/retune; no protected scoring",
+ "composition": "r3 independent-v1 rotation fitting unchanged; S06 determines desired state; Rule3 owns legal repairs/exemptions and technical scoring; capture delegates without RNG draws",
+ "source_sha256": {
+  "analysis/experiments/20261122_a1_s06_engine_models_F4.json": "794e1e06a193b097021e496a4d21d57ba61cf026b038bfb15d119991c6cde6d0",
+  "scripts/a1_substitution_engine.py": "51b5c4187fc9443e1842c646d635c94b5f1d9ead9b5519cb8793b3a216b69013",
+  "scripts/a1_foul_penalty_engine.py": "4c846fd479d67328e76626d343067a9c0ebf60aeb420af79d10bfcb5085b18d8",
+  "analysis/c3_prepare.py": "00622c0a46a83610e7e36fff9b9a3a248b966629383371dc6cce461385d9a24a",
+  "analysis/experiments/20261124_c2_ready_panels_v1.json": "c9fcbb31d23178c819308a46a2e8dff6b5d09ffcf6460d48370c3bf9267ce475"
+ }
+}

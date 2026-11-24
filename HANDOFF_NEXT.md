@@ -1,44 +1,48 @@
 # Handoff — next executable Chunk C
 
-Updated 24 November 2026. `git log -1` identifies the checkpoint; active work is below.
-Read [AGENTS](AGENTS.md), this file, [PLAN](PLAN.md), then relevant [MODEL](MODEL.md)/[README](README.md) sections.
+Updated24 November2026; checkpoint: `git log -1`.
 
 ## State
 
-- **C1/C2 complete; C3 next.** Accepted engine-v1.3-r3/D29/Rule3 and report-bands-v1 remain; no learned promotion/protected rescoring.
+- **C1–C3 complete; C4 next.** Accepted engine-v1.3-r3/D29/Rule3 and report-bands-v1 remain; no learned promotion/protected rescoring.
 - Current generation2026-11-24T00:42:52Z:130k saved game worlds,40k weighted season paths. C1 receipt:
   `analysis/experiments/20261123_c1_completion_v1.json`.
 - C1 commit e7fa807 pushed; data-free shell6f555cc409f400df6ae2f55dfce64245d0111fbb/cache79a39706aff8c158075a published.
   Both devices need app update/manual import; real-device acceptance remains unverified.
 - Retained run `data/derived/live_runs/2026-11-23-1795480373232797000`; log `/tmp/musnba_c1_nightly_20261123_v3.log`.
-  Source/replacement archives are linked in the receipt.
-- Original programme74%; D42 A65%/B0%. **C35%: C1=C2=100%; C3–C5=0%.** Original ledgers unchanged.
+- Original programme74%; D42 A65%/B0%. **C50%: C1=C2=C3=100%; C4=C5=0%.**
 
-## C2 complete — 100%
+## C3 complete
 
-Canonical decision: `analysis/experiments/20261124_c2_research_decision_v1.json`. Retain r3; no C2 independent confirmation/protected test or replacement search.
-Fixed200 games/4,292 player-games/three arms: PTS CRPSΔ+0.00475[−0.00371,+0.01311] versus r3;
-+0.00341[−0.00310,+0.01000] versus matched causal control. Benefit unsupported;26/27 and25/27 proper bounds established,
-remaining bounds unresolved, no material coverage harm. Bench tails persist across arms; no identified latent-variance correction.
-All600k worlds accounted;342,843,400 legal fives, max minute error1.07e−14.26 tests, smoke107/107, fault86/107/exit1.
+Canonical: `analysis/experiments/20261124_c3_research_decision_v1.json`.200 games/4,292 player-games,400k worlds:
+MIN CRPS3.58813→3.55839,Δ−.02974[−.04519,−.01728];27/27 proper bounds, no material coverage harm.
+Integrated80% MIN coverage78.47→76.77%; star MIN/Q4-margin coverage unresolved.
+Accounting/31 tests pass; smoke107/107, fault86/107/exit1. Nine full-chunk identities match; no promotion/protected scoring.
 
-No jobs running. Captures/fits under `data/derived/experiments/c2_court_v2`/`c2_engine_development_v1`; public v2 reports contain aggregates/hash links.
-Rich reports and original controller remain ignored; all96 dependencies backed up/verified at `~/Basketball_archive_ops/c2_output_format_20261124_v1`.
-Output placement correction changes no predictions; runtime v1 preserves actual execution, v2 fixes private report placement.
-Production forecasts/views/bundles/shell are unchanged; C1's separate update/import requirement remains.
+No jobs running. Completed root `data/derived/experiments/c3_engine_development_v3`, log `/tmp/musnba_c3_development_v3.log`.
+Completed-run guard rejects simulation. Old setup controllers/initial preparation recovered to exact frozen hashes and logs retained
+under `data/derived/experiments/c3_setup_sources_v1`. C2 checkpoint b0367bb retains r3; its fixed negative result is canonical in
+`analysis/experiments/20261124_c2_research_decision_v1.json`. Production/PWA/bundles unchanged; C1 imports still required.
 
-## Next actions — C3 successor0%
+## Next actions — C4 successor0%
 
-1. Recover exact S06 recipe from the targeted archive/source; freeze one unchanged policy and causal auxiliary cutoffs before outcomes.
-2. Reuse verified r3 controls where inputs/seeds match. Compose both publication LegalCapture and backtest Observer with the selected policy;
-   each currently replaces it. Prove independent fitting/default-off parity and legal state response before one200-game MIN-primary screen.
-3. C3's ten rungs/dependencies/fallback remain below; no rescue family/blanket bench cuts. C4 confirms survivors; C5 ends with fresh full nightly/PWA delivery.
+1. Follow `analysis/experiments/20261124_c3_survivor_v1.json`: one unchanged S06 recipe, reserved200 F4 MIN-primary/v3 first.
+   If passed: broader1,255 games, stream200,20×10k stress; frozen panels/cutoffs/stops/bounds;
+   no C2 confirmation/combination, rescue search or protected r3 rescore.
+2. Freeze confirmation runtime/inputs in an isolated checkout so independent app edits cannot change running sources.
+   Verify three-case raw controls before reuse; extend original prior proxies/fit recipe to earlier folds without retuning.
+   Cap total heavy threads10; use8 model workers when overlapping up to2 UI/test workers. Record commands/logs before launch.
+3. Independent unaccepted C4 drafts: `/tmp/musnba_c4_prepare/` (design JSON/integration notes, UI, exact selection/zone/capture prototypes
+   and tests). Freeze/review, integrate, then prove raw parity/accounting. Preserve C1 shared queue/early receipt;
+   unique original1k replay chunks must share the queue, not serialize all five inside one finishing worker.
+4. C5 owns competitions, new-qualifier protected test and final fresh nightly; construct0% successor at chunk closure.
 
 ```sh
 git status --short --branch
 .venv/bin/python scripts/check_docs.py
-rg -n 'S06|SelectedTimeoutPolicy|PlayerFoulPenaltyPolicy' scripts/a1_substitution_engine.py scripts/a1_foul_penalty_engine.py
-tar -xOf docs/archive/20261123_document_history.tar.gz ENGINE_PLAN.md | rg -n -C 8 'S06|substitution'
+# Read frozen survivor contract before any confirmation:
+cat analysis/experiments/20261124_c3_survivor_v1.json
+ls /tmp/musnba_c4_prepare/
 ```
 
 ## Executable contract — Chunk C

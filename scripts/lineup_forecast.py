@@ -18,8 +18,17 @@ from scripts.world_mass import WorldMass, branch_masses
 
 class LegalCapture(Rule3Policy):
     """Read-only opening capture and an independent five-player invariant around the accepted rule."""
+    def __init__(self, delegate=None):
+        super().__init__()
+        self.delegate = delegate
+
     def begin(self, g, worlds, available, seed):
-        super().begin(g, worlds, available, seed)
+        if self.delegate is None:
+            super().begin(g, worlds, available, seed)
+        else:
+            self.delegate.begin(g, worlds, available, seed)
+            self.available = self.delegate.available
+            self.counts = self.delegate.counts
         self.opening = np.full((worlds, 2, 5), -1, dtype=np.int16)
         self.checked = 0
 
@@ -37,14 +46,16 @@ class LegalCapture(Rule3Policy):
         self.checked += 2 * len(active)
 
     def before_segment(self, g, st, active, scheduled):
-        lineups = super().before_segment(g, st, active, scheduled)
+        lineups = (self.delegate.before_segment(g, st, active, scheduled) if self.delegate is not None
+                   else super().before_segment(g, st, active, scheduled))
         self.check(g, st, active, lineups)
         opening = (st.period[active] == 1) & (st.clock[active] == 720) & (self.opening[active, 0, 0] < 0)
         self.opening[active[opening]] = lineups[opening]
         return lineups
 
     def after_fouls(self, g, st, active, offense, defense):
-        changed = super().after_fouls(g, st, active, offense, defense)
+        changed = (self.delegate.after_fouls(g, st, active, offense, defense) if self.delegate is not None
+                   else super().after_fouls(g, st, active, offense, defense))
         lineups = np.empty((len(active), 2, 5), int)
         off = st.off[active]
         lineups[np.arange(len(active)), off] = offense
@@ -53,7 +64,10 @@ class LegalCapture(Rule3Policy):
         return changed
 
     def finish(self, g, st):
-        super().finish(g, st)
+        if self.delegate is None:
+            super().finish(g, st)
+        else:
+            self.delegate.finish(g, st)
         if (self.opening < 0).any():
             raise ValueError('missing saved opening five')
 
@@ -61,7 +75,8 @@ class LegalCapture(Rule3Policy):
 def simulate(eng, g, worlds, seed):
     if eng.runtime.get('foul_policy') != 'nba-rule3-v1':
         raise ValueError('lineup publication requires the qualified Rule 3 runtime')
-    policy, previous = LegalCapture(), eng.rotation_policy
+    previous = eng.rotation_policy
+    policy = LegalCapture(previous)
     eng.rotation_policy = policy
     try:
         summary = eng.simulate(g, worlds, seed)

@@ -35,8 +35,8 @@ def expected_coverage(samples, actual):
 
 class Observer:
     """Read-only capture around the optional rule policy; consumes no simulation draws."""
-    def __init__(self, corrected):
-        self.policy = foul_out.Rule3Policy(capture_events=True) if corrected else None
+    def __init__(self, corrected, policy=None):
+        self.policy = policy if policy is not None else foul_out.Rule3Policy(capture_events=True) if corrected else None
         self.counts = {}  # backtest's legacy policy-summary fields are not this observer's output.
 
     def begin(self, g, worlds, available, seed):
@@ -145,14 +145,16 @@ def add_coverage(result, capture):
                 row[stat + '_coverage_expected'] = expected_coverage(values, observed)
 
 
-def paired_game(task, *, labels=('control', 'candidate'), corrected=(False, True), persist=True):
+def paired_game(task, *, labels=('control', 'candidate'), corrected=(False, True), persist=True, policy_factory=None):
     gid, directory = task
     folder = Path(directory)
     eng = backtest._W['engine']
     original = eng.simulate
     result = {'game': gid, 'outputs': {}}
     for label in labels:
-        observer = Observer(corrected[('control', 'candidate').index(label)])
+        observer = Observer(corrected[('control', 'candidate').index(label)],
+                            policy_factory(label) if policy_factory else None)
+        previous = eng.rotation_policy
         eng.rotation_policy = observer
         saved = {}
         def run(g, worlds, seed):
@@ -167,7 +169,7 @@ def paired_game(task, *, labels=('control', 'candidate'), corrected=(False, True
             with patch.object(eng, 'simulate', side_effect=run):
                 values = backtest.run_game(gid)
         finally:
-            eng.rotation_policy = None
+            eng.rotation_policy = previous
         capture = saved['capture']
         add_coverage(values, capture)
         path = folder / f'{gid}-{label}.npz'

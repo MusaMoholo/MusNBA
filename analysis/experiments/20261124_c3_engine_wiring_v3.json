@@ -1,0 +1,67 @@
+{
+ "kind": "C3 exact S06 screen; no promotion",
+ "game_ids": [
+  "401809250",
+  "401810330",
+  "401810342"
+ ],
+ "worlds": 1000,
+ "arms": 2,
+ "reference_raw_parity": [
+  "401809250",
+  "401810330",
+  "401810342"
+ ],
+ "publication_raw_parity": [
+  "401809250",
+  "401810330",
+  "401810342"
+ ],
+ "receipts": [
+  {
+   "game": "401809250",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c3_engine_wiring_v3/401809250/reference/receipt.json",
+   "sha256": "a2bdca049174e139e1b8058399ba6ced199fa7cbc9dccd1c62ce368db95d7cb5"
+  },
+  {
+   "game": "401809250",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/c3_engine_wiring_v3/401809250/candidate/receipt.json",
+   "sha256": "1efc14b590b107d69e12b1ebeac7e8c66e134cd669892699122e091509cd54c3"
+  },
+  {
+   "game": "401810330",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c3_engine_wiring_v3/401810330/reference/receipt.json",
+   "sha256": "c8222860d172a1cd10d0065610c8428dc13c28fe44fe09f82217a2241d48973a"
+  },
+  {
+   "game": "401810330",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/c3_engine_wiring_v3/401810330/candidate/receipt.json",
+   "sha256": "0b07077bf2773d6922a985cc77fa9d78b2f1e590978b69aeee86d557281c98e0"
+  },
+  {
+   "game": "401810342",
+   "arm": "reference",
+   "receipt": "data/derived/experiments/c3_engine_wiring_v3/401810342/reference/receipt.json",
+   "sha256": "3d6c16e8165934d97db59cd85622e38615cd831f7195aa25b7b06d04bac12a83"
+  },
+  {
+   "game": "401810342",
+   "arm": "candidate",
+   "receipt": "data/derived/experiments/c3_engine_wiring_v3/401810342/candidate/receipt.json",
+   "sha256": "8ace0b27c84a5d3fa5f577f1c50a37cecac4511868b668c39e5bb27c708699b2"
+  }
+ ],
+ "derived_outputs": {
+  "data/derived/experiments/c3_engine_wiring_v3_reference.parquet": "da2c2aeac2f662875f709a58dcd70feb56f394171583bdda561ac85e893a761b",
+  "data/derived/experiments/c3_engine_wiring_v3_reference_players.parquet": "4e6dfbaec7ca2cf3f9157336b2bd866c2ae89e11cbaec3ff32896a7e9c63e357",
+  "data/derived/experiments/c3_engine_wiring_v3_candidate.parquet": "719e5bdc553352c4bd7edc733aa2b8d4de45a09a109076ec7dcacf27136b183b",
+  "data/derived/experiments/c3_engine_wiring_v3_candidate_players.parquet": "cec16b16fc63348a12c61921186b321e5b2ebb3487e76fb5c3af456a2e4a66d1"
+ },
+ "seconds": 136.96888433399727,
+ "fresh_jobs": 6,
+ "production_model_changed": false
+}

@@ -77,7 +77,7 @@ Both themes at 1440/960/390, grouped controls, three/two/one card rows and 44 px
 ```sh
 .venv/bin/python scripts/smoke.py
 .venv/bin/python scripts/smoke.py --fault
-.venv/bin/python -m unittest tests.test_release_gate tests.test_late_clock tests.test_late_clock_recipe tests.test_court_profiles tests.test_court_node_grade tests.test_court_runtime
+.venv/bin/python -m unittest tests.test_release_gate tests.test_late_clock tests.test_late_clock_recipe tests.test_court_profiles tests.test_court_node_grade tests.test_court_runtime tests.test_state_rotations
 .venv/bin/python scripts/check_docs.py
 node analysis/browser_check.mjs --base http://127.0.0.1:8767
 node analysis/pwa_import_check.mjs --url <shell-url> --bundle <bundle.musnba.gz> --profile laptop
@@ -93,7 +93,7 @@ Core path: `fetch_*`/`history` → `plays`/`possessions`/`rotations` → `featur
 Legacy `backtest_compare.py`/`a1_minutes_gate.py` are historical protocols, not generic promotion gates.
 Use `--help` and MODEL before launching. Fold backtests require `--clock-recipe` when the production pool cutoff differs from the fold nodes; freeze prior-fitted fold parameters first. Parent preflight rejects mismatched dates before worker startup. `train.py --threads 10` caps fitting; backtest uses `--jobs 10` plus BLAS caps.
 Configurations/reports are committed in `models/`/`analysis/experiments/`; fits, raw inputs, per-row arrays/worlds and exports stay ignored under `data/`.
-Court research uses `analysis/c2_*`; rich records/fits stay under ignored data; public reports contain aggregate evidence/hash links.
+Research uses `analysis/c2_*`/`c3_*`; rich records/fits stay ignored; public reports contain aggregate evidence/hash links.
 Current experiment namespaces are immutable; do not restart completed protected runs. `analysis/a2_world_diagnostics.py --closing-controls`
 audits existing 400-game controls without new worlds (fresh output required).
 

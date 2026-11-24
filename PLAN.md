@@ -12,11 +12,11 @@ Laptop PWA is primary; phone is stripped. Browsing only reads stored results.
 Accepted: **engine-v1.3-r3**, D29 rotations, Rule 3 foul-outs, independent fitting, contextual late timing, pathway v1,
 lineup branches and offline photos. Availability calibration, richer defence, season calibration and View Centre remain open.
 
-## Latest checkpoint — C2 research complete
+## Latest checkpoint — C3 research complete
 
-The fixed court study measured200 games/three arms; PTS benefit is unsupported versus r3 and matched causal controls.
-Retain r3; no C2 protected evaluation/confirmation or replacement search. Derived regions/causal exposure profiles remain for C4 exploration.
-C1 early publication remains delivered. HANDOFF owns exact evidence, current bundles, checkpoint state and manual-import requirement.
+S06's current-r3 MIN CRPS improves0.02974;27/27 proper bounds clear, with lower minute coverage and two unresolved coverage diagnostics.
+The unchanged recipe advances to C4 independent confirmation; production remains r3. C2's PTS benefit was unsupported; no replacement search.
+C1 early publication remains delivered. HANDOFF owns evidence, checkpoint state, bundles and manual imports.
 
 ## Next modular chunk — C
 
@@ -31,7 +31,7 @@ one comprehensive NBA analysis workspace. Better models are an objective; promot
 | C4 analysis/replay | 25% | Five reconciled saved-world examples, court/event/box/rotation playback, zone maps and deeper discoverable metrics/outcomes. |
 | C5 competitions/release | 25% | World-local Cup, regular82 completion, play-in/playoffs; three competition sections and integrated delivery. |
 
-**C35%; C1=C2=100%, C3–C5=0%.** HANDOFF has fifty concrete rungs, commands, dependencies, acceptance/fallback and fixed weights totalling100%.
+**C50%; C1=C2=C3=100%, C4=C5=0%.** HANDOFF has fifty concrete rungs, commands, dependencies, acceptance/fallback and fixed weights totalling100%.
 C1 is complete; C2/C3 compare separately against r3. C4 confirms/freezes survivors; C5 alone runs a qualifier's protected
 possession test. Exactly two bounded learned families; no rescue search. Calendar correctness is separate from a ratings retune.
 C1 and C5 require fresh nightlies; intermediate affected releases refresh outputs/PWA as necessary. Independent work overlaps within ten

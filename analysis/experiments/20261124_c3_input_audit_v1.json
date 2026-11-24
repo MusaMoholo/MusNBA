@@ -1,0 +1,11 @@
+{
+ "kind": "strict-prior exact original S06 proxy extension; no candidate evaluation",
+ "rows": 27008,
+ "games": 733,
+ "old_rows_reproduced": 7317,
+ "max_proxy_error": 0.0,
+ "development_games_covered": 200,
+ "features_sha256": "45b752f56ce9040e360ef71921a93aaeb7fffd6ef0b2406806572779719fd457",
+ "seconds": 146.59491120799794,
+ "fitted_auxiliary_cutoff": "2025-12-31"
+}

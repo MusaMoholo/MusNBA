@@ -1,0 +1,21 @@
+{
+ "kind": "exact failed setup source recovery verified against original frozen SHA; no simulation in failed wiring",
+ "preserved_sources_and_logs": {
+  "data/derived/experiments/c3_setup_sources_v1/c3_prepare_initial.py": "00622c0a46a83610e7e36fff9b9a3a248b966629383371dc6cce461385d9a24a",
+  "data/derived/experiments/c3_setup_sources_v1/c3_engine_runner_v1.py": "3f75be04c1a3b61cc8db5a46ed556c8638b38e102eaa7dbe3ab3a1fe44f46590",
+  "data/derived/experiments/c3_setup_sources_v1/c3_engine_runner_v2.py": "d34e700d131282a26e8c48a0b83daf55e34a3acf3b2a1e6f97bcc9d541a3534b",
+  "data/derived/experiments/c3_setup_sources_v1/musnba_c3_inputs_v1.log": "958c2d87ef4534e8e618817c3ae3d7cf9ca7fc09ba7b97ddf3a9a6c5d4677114",
+  "data/derived/experiments/c3_setup_sources_v1/musnba_c3_inputs_v1_retry.log": "d384348291f68687def55f938603ca607c2745b1f842ee7e72fe06cb2dc67e39",
+  "data/derived/experiments/c3_setup_sources_v1/musnba_c3_wiring_v1.log": "b8bacb18c07db4b604f42a21fe2007cde4eef2e75960612bc19f5baf39a6cabd",
+  "data/derived/experiments/c3_setup_sources_v1/musnba_c3_wiring_v2.log": "b2942d1ba657755a37757fb1017b4e9662f10d5c99f84ed7dbf9bd7546d686ec",
+  "data/derived/experiments/c3_setup_sources_v1/musnba_c3_default_parity_v1.log": "22fb5a0fc52a1d454a72d583b465d0e688408486a66d1f4bdeff4fda434e6330"
+ },
+ "repairs": [
+  "NBA regular-season filtering before any proxy output",
+  "C2 first-three receipts live in wiring folder",
+  "C2 public descriptors use captures/game/arms/reference",
+  "multiprocessing needs a named module on macOS; no parity workers completed in stdin attempt"
+ ],
+ "candidate_or_gate_changes": false,
+ "failed_run_worlds": 0
+}

@@ -1,0 +1,110 @@
+{
+ "kind": "C3 survivor and prospective C4 confirmation; no promotion",
+ "frozen_at": "2026-11-24T04:32:19.371766+00:00",
+ "candidate": "exact S06 selected-timeout out/in models/templates + current Rule3 and independent r3 rotation fitting; one unchanged recipe",
+ "source_sha256": {
+  "scripts/state_rotations.py": "dafbed8034bf0bd35c23910927de45ba83229e1ba6b1d4800143036958f524e7",
+  "scripts/a1_substitution_engine.py": "51b5c4187fc9443e1842c646d635c94b5f1d9ead9b5519cb8793b3a216b69013",
+  "scripts/foul_out.py": "32b51b7ad72bd3875d9f7c5301190b98545d347bf920be1d07b2d4e501c1da8c",
+  "scripts/lineup_forecast.py": "515b054e8eef3bbc741d1f9e0824d1460b33d296dd6acd7a310aea5c6ea7489e",
+  "analysis/rule3_confirmation.py": "b0562b9679b482d7a31dc4e9624cc1203da0f513be73b406fc02ba5999fa10a4",
+  "analysis/c3_prepare.py": "c3c30798cd5e57d0b48300938769cb94d50dd22d3e56a5473d9635a3ae02c2ae",
+  "scripts/a1_substitution_engine_models.py": "8d3d116fdca054c2eac96f95aa705a82d7923718571a59c3de87abf583508cac",
+  "scripts/a1_substitution_out_screen.py": "aa3771d9037bed7f1bad7d2dc093c9ebac98f56f091221b95dc31970df18a15b",
+  "scripts/a1_substitution_in_screen.py": "b63106d0866844dd1b1b5fa9006e84ff65e1a7c326f06120d35f3309e0634647",
+  "data/models/folds/a1_s06_selected_F4/outgoing.txt": "272bf308410ef505ca9d44c74b7ce65bdbdd4ae64c17531f5a94862db018bf8b",
+  "data/models/folds/a1_s06_selected_F4/incoming.txt": "99aeec61ba4f907d502565d312d16bc5fea16eef449967055c47e7422e5392b7",
+  "data/models/folds/a1_s06_selected_F4/templates.json": "f3e4804a1bad1a750dfef670d29f218993b353b8774c7a84330929c91d327241"
+ },
+ "development_gate_sha256": "969142b41cf1357f9850144779fa31f20479f12174c9bde241be42cee552ac29",
+ "panels_from": "analysis/experiments/20261124_c2_ready_panels_v1.json",
+ "panels_sha256": "c9fcbb31d23178c819308a46a2e8dff6b5d09ffcf6460d48370c3bf9267ce475",
+ "independent_primary": {
+  "panel_key": "reserved_confirmation_F4",
+  "games": 200,
+  "worlds": 1000,
+  "seed_key": "v1.2d_F4",
+  "stream": null,
+  "class": "learned",
+  "policy": "v3",
+  "primary": "players/all/min/crps",
+  "requirements": "paired95 primary upper<0, all27 proper-score upper bounds below original margins, no material coverage harm; unchanged bias diagnostics; no retune/replacement. A failed or unsupported independent screen closes this fixed attempt; setup/accounting faults must be repaired and do not reject the recipe."
+ },
+ "broader": {
+  "panel_keys": [
+   "all_eligible_F4",
+   "earlier_fixed200"
+  ],
+  "games_by_fold": {
+   "F1": 200,
+   "F2": 200,
+   "F3": 200,
+   "F4": 655
+  },
+  "total_games": 1255,
+  "worlds": 1000,
+  "requirements": "after independent screen passes: pooled learned/v3 primary and27 proper bounds; per-fold/role applicable material-harm veto and explicit unsupported/unresolved diagnostics. Development overlap stays labelled; broad evidence is not independent primary evidence."
+ },
+ "stream": {
+  "panel_key": "independent_stream200",
+  "games": 200,
+  "worlds": 1000,
+  "stream": 2026112401,
+  "requirements": "frozen diagnostic stream, no second benefit claim; unchanged applicable proper/coverage material-harm veto"
+ },
+ "stress": {
+  "panel_key": "stress20",
+  "games": 20,
+  "worlds": 10000,
+  "chunk_worlds": 1000,
+  "seed_namespace": "world-chunk-v1",
+  "requirements": "exact legal fives/player-period/team seconds/points/foul-outs/OT, identical worker/resume inputs and no retries/world rejection; preserved original full-chunk replay; runtime measured, full nightly limit remains60min"
+ },
+ "fold_artifacts": {
+  "F1": {
+   "fold": "F1",
+   "config": "data/derived/experiments/a1_dated_f1_exhaustion_v1/config.json",
+   "models": "folds/a1_dated_f1_exhaustion_v1_F1_all",
+   "fit_through": "2023-12-31",
+   "clock_pool": "data/derived/experiments/20261123_a2_late_clock_screen_v1/F1_pools.json",
+   "clock_report": "analysis/experiments/20261123_a2_late_clock_screen_v1.json",
+   "clock_pool_sha256": "9cae3d45c1b6e5f47951928b813b1db178999f347d2a3f332a507c4eb18934eb"
+  },
+  "F2": {
+   "fold": "F2",
+   "config": "data/derived/experiments/a1_dated_f2_exhaustion_v1/config.json",
+   "models": "folds/a1_dated_f2_exhaustion_v1_F2_all",
+   "fit_through": "2024-12-31",
+   "clock_pool": "data/derived/experiments/20261123_a2_late_clock_screen_v1/F2_pools.json",
+   "clock_report": "analysis/experiments/20261123_a2_late_clock_screen_v1.json",
+   "clock_pool_sha256": "7d44686f93ba9144afbb74ba6e8ea1ea46206ad830603d7863411f758d190b5e"
+  },
+  "F3": {
+   "fold": "F3",
+   "config": "data/derived/experiments/a1_dated_f3_exhaustion_v1/config.json",
+   "models": "folds/a1_dated_f3_exhaustion_v1_F3_all",
+   "fit_through": "2025-09-30",
+   "clock_pool": "data/derived/experiments/20261123_a2_late_clock_screen_v1/F3_pools.json",
+   "clock_report": "analysis/experiments/20261123_a2_late_clock_screen_v1.json",
+   "clock_pool_sha256": "c18c0f8ca8b85f04cc4558146e87abe50d5b78dce60fb19dfd2037baa8b74a53"
+  },
+  "F4": {
+   "fold": "F4",
+   "config": "models/v1.2d.json",
+   "models": "folds/v1.2d_F4_all",
+   "fit_through": "2025-12-31",
+   "clock_pool": "data/derived/experiments/20261123_a2_late_clock_confirmation_v1/F4_pools.json",
+   "clock_report": "analysis/experiments/20261123_a2_late_clock_confirmation_v1.json",
+   "clock_pool_sha256": "5bc9035e704b6396388c9131ddafb6832eb9e232e26fe2d1d0d30ca261bce70f"
+  }
+ },
+ "fits": "Original120-round/outgoing+incoming recipe, original seeds/params/timing templates at each fold cutoff; extend same prior-box1000-redraw target proxies, exact original-row parity required. No feature/hyperparameter/decay selection. F4 artifacts reused unchanged.",
+ "controls": "Reuse only source/model/input/seed-identical raw controls after three-game raw parity; otherwise fresh. C3 raw reference200 available; former A2 controls may qualify individually. Single remaining component: its comparison to r3 is also the removal test; no C2 combination/search.",
+ "later": "C4 freezes qualifier only after independent/broader/stream/stress evidence. C5 alone fits unchanged final pre-July artifacts and runs once-only protected test for a new qualifier. Never rescore protected r3. Failed evidence retains r3; useful analysis/replay still ships.",
+ "limits": [
+  "MIN coverage fell78.4716% to76.7707% in development despite better CRPS; uncertainty not universally improved.",
+  "Star MIN and Q4 margin coverage unresolved under fixed3pp bound; no applicable material harm.",
+  "Actual-participant tests do not establish live availability/DNP calibration.",
+  "23 candidate player-game inputs lack prior target/position; missing remains missing, not bench assignment."
+ ]
+}

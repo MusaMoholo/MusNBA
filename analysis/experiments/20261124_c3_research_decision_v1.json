@@ -1,0 +1,160 @@
+{
+ "kind": "C3 complete research decision; production unchanged",
+ "decision": "freeze unchanged S06 for independent C4 confirmation; no promotion",
+ "population": {
+  "fold": "F4",
+  "games": 200,
+  "player_games": 4292
+ },
+ "primary": {
+  "path": "players/all/min/crps",
+  "change": -0.029744074545555055,
+  "ci_95": [
+   -0.045188105721622754,
+   -0.01728019177339972
+  ],
+  "improvement_established": true,
+  "multiplicity": "uncorrected; only one frozen benefit claim can use this directly"
+ },
+ "min_crps": {
+  "control": 3.588132124135849,
+  "candidate": 3.558388049590294,
+  "change": -0.029744074545555055,
+  "ci_95": [
+   -0.045188105721622754,
+   -0.01728019177339972
+  ]
+ },
+ "min_coverage": {
+  "control": 0.7847157502329916,
+  "candidate": 0.7677073625349488,
+  "change": 0.017008387698042804,
+  "ci_95": [
+   0.010678544174374022,
+   0.022034951301314377
+  ]
+ },
+ "secondary_pts_crps": {
+  "description": "descriptive secondary outcome, not another promotion benefit claim",
+  "control": 3.178030923811743,
+  "candidate": 3.1674390307548927,
+  "change": -0.010591893056850044,
+  "ci_95": [
+   -0.01624734276846639,
+   -0.004994043920940474
+  ]
+ },
+ "proper_bounds": {
+  "established": 27,
+  "checks": 27
+ },
+ "unresolved_coverage": [
+  {
+   "outcome": "star min",
+   "metric": "coverage",
+   "margin": 0.03,
+   "change": 0.010344827586207028,
+   "ci_95": [
+    -0.03284671532846706,
+    0.03947605073835666
+   ],
+   "status": "unresolved"
+  },
+  {
+   "outcome": "q4_margin",
+   "metric": "coverage",
+   "margin": 0.03,
+   "change": 0.0050000000000000044,
+   "ci_95": [
+    -0.029999999999999916,
+    0.030000000000000027
+   ],
+   "status": "unresolved"
+  }
+ ],
+ "material_coverage_harm": [],
+ "accounting": {
+  "worlds": 400000,
+  "players": 8584,
+  "lineup_snapshots": 114227572,
+  "post_foul_snapshots": 16166963,
+  "lineup_fives_checked": 228455144,
+  "overtime_worlds": 14447,
+  "max_replayed_player_minute_error": 1.2434497875801753e-14,
+  "foul_penalty_events": 78,
+  "foul_penalty_makes": 57,
+  "foul_penalty_lineups": 958,
+  "retained_offensive_fouls": 4
+ },
+ "candidate_policy_counts": {
+  "worlds": 200000,
+  "missing_target_players": 23,
+  "unknown_position_players": 23,
+  "timeout_worlds": 1872681,
+  "timeout_team_windows": 3745362,
+  "timeout_outgoing": 2492122,
+  "coalesced_timeout_clocks": 20082,
+  "expired_timeout_clocks": 44476,
+  "plan_resets": 14516664,
+  "foul_out_replacements": 0,
+  "scheduled_disqualified_replacements": 0,
+  "overtime_timeout_worlds": 9346,
+  "rule3_scheduled_replacements": 1559105,
+  "rule3_foul_out_replacements": 73388,
+  "rule3_technical_attempts": 42,
+  "rule3_technical_makes": 31,
+  "rule3_retained_offensive_team_fouls": 3
+ },
+ "seconds": 1368.8474979159946,
+ "fresh_development_jobs": 197,
+ "reference_controls_reused": 200,
+ "wiring_candidates_reused": 3,
+ "checks": {
+  "distinct_tests": 31,
+  "smoke_passed": 107,
+  "smoke_checks": 107,
+  "fault_passed": 86,
+  "fault_checks": 107,
+  "fault_exit": 1,
+  "default_off_original_chunks_exact": 3,
+  "f4_reference_chunks_exact": 3,
+  "publication_candidate_chunks_exact": 3,
+  "completed_run_rejected": true
+ },
+ "production": {
+  "accepted_engine": "engine-v1.3-r3",
+  "learned_change_promoted": false,
+  "pwa_assets_changed": false,
+  "new_bundle_required": false,
+  "protected_test_run": false,
+  "manual_import": "C1 app update/manual imports remain required; real-device acceptance unverified"
+ },
+ "limits": [
+  "MIN CRPS improves0.83% but integrated80% minute coverage declines1.70pp; uncertainty is not universally improved.",
+  "Star MIN/Q4 margin coverage bounds remain unresolved, no applicable material harm established.",
+  "Bench high-minute tail remains above nominal5%; no identified latent variance correction.",
+  "23 player-game target/position inputs remain missing; actual-participant evidence does not grade availability/DNP forecasts."
+ ],
+ "next": "Follow20261124_c3_survivor_v1 prospective independent200 first; qualify only unchanged evidence, no rescue or replacement. C4 product ships on accepted runtime; C5 full fresh nightly remains required.",
+ "evidence_sha256": {
+  "analysis/experiments/20261124_c3_frozen_recipe_v1.json": "687e0510cff78445e8a9a0e97093163481ceaa36316f8f745bef9ca626aed29c",
+  "analysis/experiments/20261124_c3_input_audit_v1.json": "4ebd89e6e72305af87948b018672378e83bbbe75cdbee306305e2cb8d26d3d40",
+  "analysis/experiments/20261124_c3_default_off_parity_v1.json": "2e42cc101b8eb8e8f852e62dc7ebb8948a1a2e479b583b24a4f2f2e2a868c39b",
+  "analysis/experiments/20261124_c3_engine_runtime_v3.json": "a5cafc12d69318f9da051d340a2b072185f058242920c6e24c109e24cfa05cd8",
+  "analysis/experiments/20261124_c3_engine_wiring_v3.json": "e224dee58c82843fefdab080b727fe9f683c1e44e4e93244e6cd0a3871d30330",
+  "analysis/experiments/20261124_c3_engine_development_v3.json": "0b4d4a3cc961601df966ce1e38300c096a8bc99e56f47a1aa2453085356f5e39",
+  "analysis/experiments/20261124_c3_compare_v1.json": "acfcc5ec06f9f3f55426f2e02e147ee8115753355cb18914c3071daa72e15adc",
+  "analysis/experiments/20261124_c3_gate_v1.json": "969142b41cf1357f9850144779fa31f20479f12174c9bde241be42cee552ac29",
+  "analysis/experiments/20261124_c3_diagnostics_v1.json": "1dee06eda13fed70d7f3d59922bb7c8cfa1b1afd939e74a71e1e8f080a37c282",
+  "analysis/experiments/20261124_c3_survivor_v1.json": "570b26b9ef727597f6af46384c5a0158bd126cdb4134e21af723bb5211880ef9",
+  "analysis/experiments/20261124_c3_setup_recovery_v1.json": "199db6184baf690ef308b202ffa7363859aa77bfd1d4cf1b3e7e1a5b4d04a759"
+ },
+ "log_sha256": {
+  "/tmp/musnba_c3_development_v3.log": "4bad32b85c5fd36f877417300cb6c88a1f1ebfee7b3e59f3f7ba2592c96434b6",
+  "/tmp/musnba_c3_grade_v1.log": "98381b4b1f4aff4fc0d68c398d8fcb81b11242fb3747bc0024f0765274bb6034",
+  "/tmp/musnba_c3_diagnostics_v1.log": "a1a3e2adb91e9333b98e6709f43b45c6c2fb4f104244b70565983ee84e8b743b",
+  "/tmp/musnba_c3_smoke_final_v1.log": "2ec598e444d86fff52bc3bb04f171522acd79b3b978a7a55088dad6177a8f3f9",
+  "/tmp/musnba_c3_fault_final_v1.log": "cc0c11149aec3e8fac21436b5a24642446c85684d0ff64df91427007f7e048f6",
+  "/tmp/musnba_c3_tests_final_v1.log": "50ff20c0eee9e29d0773bc453eed751616597b4e3fc6a96a6d95f2eda485e64c"
+ }
+}

@@ -1,0 +1,53 @@
+{
+ "kind": "single S06 current-r3 development decision; no promotion",
+ "phase_sha256": "0b4d4a3cc961601df966ce1e38300c096a8bc99e56f47a1aa2453085356f5e39",
+ "comparison_sha256": "acfcc5ec06f9f3f55426f2e02e147ee8115753355cb18914c3071daa72e15adc",
+ "gate_sha256": "969142b41cf1357f9850144779fa31f20479f12174c9bde241be42cee552ac29",
+ "primary": {
+  "path": "players/all/min/crps",
+  "change": -0.029744074545555055,
+  "ci_95": [
+   -0.045188105721622754,
+   -0.01728019177339972
+  ],
+  "improvement_established": true,
+  "multiplicity": "uncorrected; only one frozen benefit claim can use this directly"
+ },
+ "decision": "development_scores_compatible",
+ "compatible": true,
+ "next": "freeze unchanged for C4 independent confirmation",
+ "candidate_policy_counts": {
+  "worlds": 200000,
+  "missing_target_players": 23,
+  "unknown_position_players": 23,
+  "timeout_worlds": 1872681,
+  "timeout_team_windows": 3745362,
+  "timeout_outgoing": 2492122,
+  "coalesced_timeout_clocks": 20082,
+  "expired_timeout_clocks": 44476,
+  "plan_resets": 14516664,
+  "foul_out_replacements": 0,
+  "scheduled_disqualified_replacements": 0,
+  "overtime_timeout_worlds": 9346,
+  "rule3_scheduled_replacements": 1559105,
+  "rule3_foul_out_replacements": 73388,
+  "rule3_technical_attempts": 42,
+  "rule3_technical_makes": 31,
+  "rule3_retained_offensive_team_fouls": 3
+ },
+ "independent_accounting": {
+  "worlds": 400000,
+  "players": 8584,
+  "lineup_snapshots": 114227572,
+  "post_foul_snapshots": 16166963,
+  "lineup_fives_checked": 228455144,
+  "overtime_worlds": 14447,
+  "max_replayed_player_minute_error": 1.2434497875801753e-14,
+  "foul_penalty_events": 78,
+  "foul_penalty_makes": 57,
+  "foul_penalty_lineups": 958,
+  "retained_offensive_fouls": 4
+ },
+ "protected_evaluation": false,
+ "production_model_changed": false
+}
