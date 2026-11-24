@@ -35,6 +35,13 @@ export async function boot() {
     return;
   }
   setMeta(info);
+  if (info.delivery?.state === 'partial') {
+    const d = info.delivery, notice = document.createElement('section');
+    notice.className = 'panel';
+    notice.setAttribute('role', 'status');
+    notice.innerHTML = `<h2>Games arriving</h2><p>${d.complete.length} of ${d.complete.length + d.pending.length} games complete in this update. Other forecasts keep their previous update.</p><p class="note">Season forecast retained from ${esc(stamp(d.season_generated))} · as of ${esc(dayLabel(d.season_as_of))}. It will refresh after the slate finishes. Import again for the complete update.</p>`;
+    document.getElementById('view').before(notice);
+  }
   renderDataPanel(info);
   addEventListener('hashchange', route);
   route();
