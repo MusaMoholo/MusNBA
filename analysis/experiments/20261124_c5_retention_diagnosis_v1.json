@@ -1,0 +1,24 @@
+{
+ "kind": "Read-only diagnosis of rejected full C5 join; retention gate unchanged",
+ "game": "401909314",
+ "retained_expected_full_scores": {
+  "p_home": 0.5511,
+  "mu_home": 109.31,
+  "mu_away": 107.48
+ },
+ "season_row": {
+  "game_id": "401909314",
+  "p_home": 0.5511,
+  "mu_home": 108.78,
+  "mu_away": 106.98,
+  "source": "engine"
+ },
+ "regulation_means": [
+  108.78,
+  106.98
+ ],
+ "retained_worlds_sha256": "6c70dd4227d8a2217167fd47a5f0ca844e22841c0ccd6372a11610879faab047",
+ "staging_season_sha256": "de3a5cddba22a200d284c2c6175e55ec6bf7f460024684ada8804cebc09b8f1e",
+ "cause": "C5 exported regulation means for possession-engine rows; retained contract requires exact full-game means. Winner/mass identities remain guarded separately.",
+ "fix": "Use full engine scores for engine summaries; keep pathway regulation distributions unchanged."
+}

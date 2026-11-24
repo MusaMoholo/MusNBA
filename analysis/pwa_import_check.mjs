@@ -252,7 +252,7 @@ if (args.future) {
     const d = game.team_model?.regulation, input = document.querySelector('[data-line="pathway-total"]');
     if (game.projection || !d || !input || document.querySelector('[data-view="player"], [data-view="scenario"]')
         || document.querySelector('.bz-team.away .bz-stats b')?.textContent !== ui.f1(d.away.mean)
-        || !document.querySelector('#game-body').textContent.includes('without simulating overtime points')) return false;
+        || !document.querySelector('#game-body').textContent.includes('the distributions shown here exclude overtime')) return false;
     input.value = '200.5'; input.dispatchEvent(new Event('change', {bubbles: true}));
     if (document.querySelector('[data-block="pathway-total"] output')?.textContent !== 'Over: ' + ui.pct(ui.over(d.total, 200.5))) return false;
     document.querySelector('[data-pathway-metric="margin"]').click();
@@ -274,7 +274,7 @@ check('leader qualification copy follows loaded games played', await evaluate(`(
   return document.querySelector('#view').textContent.includes('minimum 28 games') && document.querySelector('#view').textContent.includes('No qualifying players yet');
 })()`));
 await send('Page.navigate', {url: args.url + '#/standings/movers'}, s);
-check('offline movers read imported comparisons', await waitFor(`document.querySelector('#view').textContent.includes('Since the previous forecast')`));
+check('offline movers respect model/calendar compatibility', await waitFor(`(async()=>{const ui=await import('./assets/ui.mjs'),d=await ui.api('season_movers'),text=document.querySelector('#view').textContent;return d.from?text.includes('Since the previous forecast'):text.includes('A previous season forecast')&&!document.querySelector('.mover-card');})()`));
 await send('Page.navigate', {url: args.url + '#/players'}, s);
 check('offline player minutes filter follows the loaded season', await waitFor(`!!document.querySelector('#pg')`) && await evaluate(`(async () => {
   const ui = await import('./assets/ui.mjs'), players = await ui.api('players'), standings = await ui.api('standings/' + ui.meta().latest);
@@ -623,7 +623,7 @@ if (args['require-headshots']) {
 if (args['require-u24']) {
   check('U24 shell navigation and report-policy metadata work offline', await evaluate(`(async () => {
     const ui=await import('./assets/ui.mjs');
-    return !document.querySelector('[data-nav="lab"]') && document.querySelectorAll('.mainnav a').length===4
+    return !document.querySelector('[data-nav="lab"]') && document.querySelectorAll('.mainnav a').length===6
       && ui.meta().availability_policy==='report-bands-v1';
   })()`));
   await send('Page.navigate',{url:args.url+'#/players'},s);
@@ -691,6 +691,30 @@ if (args['require-c4']) {
   }
 }
 const repeat = await evaluate(`(async () => { const {importBundle} = await import('./assets/pwa-storage.mjs'); return 'ok'; })()`).catch(e => String(e));
+if(args['require-legacy-c5']) {
+  for(const route of ['cup','playoffs']) {
+    await send('Page.navigate',{url:args.url+'#/'+route},s);
+    check('legacy data honestly shows '+route+' unavailable offline',await waitFor(`document.querySelector('#view').textContent.includes('Competition paths are unavailable') && !document.querySelector('[data-competition-stages]')`));
+  }
+}
+if(args['require-c5']) {
+  for(const route of ['cup','playoffs']) {
+    await send('Page.navigate',{url:args.url+'#/'+route},s);
+    check('C5 '+route+' stage probabilities render offline',await waitFor(`document.querySelectorAll('[data-competition-stages] tbody tr').length===30`));
+  }
+  check('C5 exact paths and stripped phone aggregates match profile offline',await evaluate(`(async()=>{
+    const ui=await import('./assets/ui.mjs'),c=await ui.api('competitions/'+ui.meta().latest),h=await import('./assets/competition-paths.mjs');
+    if(c.schema!=='nba-competitions-2026-v1'||!ui.meta().required_capabilities.includes('competitions-2026-v1'))return false;
+    if(${JSON.stringify(args.profile)}==='phone')return !c.paths&&!c.weights&&!c.receipt&&!document.querySelector('[data-condition]');
+    const paths=h.decodePaths(c),all=h.stageSummary(paths);
+    for(const t of c.ids)for(const key of Object.keys(all.teams[t]))if(Math.abs(all.teams[t][key]-c.teams[t][key])>1e-12)return false;
+    const select=document.querySelector('[data-condition]');select.value='title';select.dispatchEvent(new Event('change'));
+    const t=document.querySelector('[data-condition-team]').value,expected=h.stageSummary(paths,h.conditionMask(paths,t,'title'));
+    return document.querySelector('.competition-support').textContent.includes(expected.count.toLocaleString()+' matching paths');
+  })()`));
+  await send('Page.reload',{},s);
+  check('C5 competitions survive offline reload',await waitFor(`document.querySelectorAll('[data-competition-stages] tbody tr').length===30`));
+}
 check('storage module loads offline', repeat === 'ok', repeat === 'ok' ? '' : repeat);
 if (args.out) { const shot = await send('Page.captureScreenshot', {format: 'png'}, s); writeFileSync(join(args.out, 'pwa-offline-standings.png'), Buffer.from(shot.data, 'base64')); }
 check('no uncaught exceptions', errors.length === 0, errors.slice(0, 2).join(' | '));

@@ -46,6 +46,9 @@ class ControlledEngine(engine.Engine):
         self.m = ControlledModels()
         self.diag = self.rotation_diag = None
         self.rotation_policy = None
+        self.runtime = dict(engine.LEGACY_ENGINE)
+        self.clock_policy = None
+        self.world_observer = None
         self.context_calls = []
         self.five_calls = []
         self.penalty_columns: dict[str, np.ndarray] | None = None

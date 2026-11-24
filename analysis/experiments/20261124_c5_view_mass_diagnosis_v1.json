@@ -1,0 +1,15 @@
+{
+  "kind": "C5 view-generation failure diagnosis and prospective repair",
+  "failed_attempt": "20261124_c5_nightly_result_v3.json",
+  "failure": "WorldMass rejected shape mismatch during slate spotlight after complete snapshot passed retention.",
+  "cause": "Path/gid cache survived early and final views.build calls. First early game retained10000 raw rows; newly loaded games had31000 coupled rows/weights. lead_chances truncated to minimum rows but passed the last games full weight vector.",
+  "repair": [
+    "Clear derived line cache per view build and key cached reads by both raw/coupling file identities",
+    "Use stored original branch masses without a coupling layout",
+    "Require a common exact world count and masses across games; unsupported legacy layouts return missing instead of truncation"
+  ],
+  "focused_regressions": "tests/test_slate_lead_mass.py",
+  "preflight": "analysis/c5_full_preflight.py exercises actual v3 complete snapshot in scratch, including early-to-final cache change and independent six-stat leader mass.",
+  "protected_scoring": false,
+  "model_parameter_change": false
+}

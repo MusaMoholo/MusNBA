@@ -5,8 +5,8 @@ globalThis.location=new URL('http://localhost/');
 const {replayState,BOX}=await import('../scripts/webapp/replay.mjs');
 const read=path=>JSON.parse(readFileSync(path,'utf8'));
 const digest=path=>createHash('sha256').update(readFileSync(path)).digest('hex');
-const out='analysis/experiments/20261124_c4_js_replay_audit_v1.json';if(existsSync(out))throw Error('immutable audit exists');
-const report=read('analysis/experiments/20261124_c4_retained_capture_v1.json');
+const out=process.argv[3]||'analysis/experiments/20261124_c4_js_replay_audit_v1.json';if(existsSync(out))throw Error('immutable audit exists');
+const report=read(process.argv[2]||'analysis/experiments/20261124_c4_retained_capture_v1.json');
 let examples=0,cutpoints=0,boxes=0,overtime=0,maxMinuteError=0;const sources={};
 for(const row of report.games){
  const file=`data/views/api/game/${row.game}/replay.json`,payload=read(file),game=read(`data/views/api/game/${row.game}.json`);

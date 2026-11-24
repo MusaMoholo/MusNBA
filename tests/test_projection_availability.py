@@ -64,15 +64,15 @@ class ProjectionAvailabilityTests(unittest.TestCase):
     def test_missing_status_is_unknown_and_uses_the_unvalidated_fallback(self):
         for status in (None, '', '  '):
             with self.subTest(status=status):
-                self.assertEqual(projection.availability(status), 0.6)
+                self.assertEqual(projection.availability(status), 0.5)
                 registry = {'10': {'team': '1', 'on_roster': True, 'status': status}}
                 players = projection.player_inputs('1', self.history, registry, self.league, self.teams, True)
                 self.assertEqual(players[0]['status'], 'Unknown')
-                self.assertEqual(players[0]['availability'], 0.6)
-                self.assertEqual(players[0]['availability_basis'], 'unknown_status')
+                self.assertEqual(players[0]['availability'], 0.5)
+                self.assertEqual(players[0]['availability_basis'], 'ambiguous_report')
 
     def test_known_status_probabilities_remain_unchanged(self):
-        for status, expected in (('Active', 1.0), ('Probable', 0.9), ('Questionable', 0.5), ('Out', 0.0)):
+        for status, expected in (('Active', 1.0), ('Probable', 0.75), ('Questionable', 0.5), ('Out', 0.0)):
             with self.subTest(status=status):
                 self.assertEqual(projection.availability(status), expected)
 
@@ -94,9 +94,9 @@ class ProjectionAvailabilityTests(unittest.TestCase):
         unknown = {'10': {'team': '1', 'on_roster': True, 'status': 'Not specified'}}
         player = projection.player_inputs('1', self.history, unknown, self.league, self.teams, True)[0]
         self.assertEqual((player['status'], player['availability'], player['availability_basis']),
-                         ('Not specified', 0.6, 'unknown_status'))
+                         ('Not specified', 0.5, 'ambiguous_report'))
         inactive = {'10': {**self.history['10'], 'recent_played': 0}}
-        active = {'10': {'team': '1', 'on_roster': True, 'status': 'Active'}}
+        active = {'10': {'team': '1', 'on_roster': True, 'status': 'Active', 'status_source': 'not_listed_assumption'}}
         player = projection.player_inputs('1', inactive, active, self.league, self.teams, True)[0]
         self.assertEqual((player['status'], player['availability'], player['availability_basis']),
                          ('Active', 0.5, 'recent_inactivity'))
@@ -114,7 +114,7 @@ class ProjectionAvailabilityTests(unittest.TestCase):
         rates = {'quarter_share': [0.25] * 4, 'share3': 0.3, 'shareft': 0.15, 'tov_pct': 0.13,
                  'opp_tov_pct': 0.13, 'oreb_pct': 0.25, 'dreb_pct': 0.75, 'ast_rate': 0.6,
                  'stl_share': 0.5, 'blk_per_miss': 0.1}
-        game = {'game_id': 'synthetic', 'home_id': '1', 'away_id': '2'}
+        game = {'game_id': 'synthetic', 'home_id': '1', 'away_id': '2', 'date_et': '2026-11-22'}
         return roster, rates, game
 
     def test_prospective_placeholder_rejects_short_availability_worlds(self):
@@ -206,7 +206,7 @@ class ProjectionAvailabilityTests(unittest.TestCase):
 
     def test_projected_starters_fill_from_uncertain_eligible_roster(self):
         day = '2026-11-22'
-        game = {'home_id': '1', 'away_id': '2'}
+        game = {'home_id': '1', 'away_id': '2', 'date_et': '2026-11-22'}
         home = [{'id': f'h{i}', 'pos': 'G', 'availability': 1.0 if i < 4 else 0.6} for i in range(7)]
         away = [{'id': f'a{i}', 'pos': 'G', 'availability': 1.0 if i < 5 else 0.6} for i in range(7)]
         state = {'healthy': 20, 'cap': 40, 'ramp': 1, 'rotation': 1, 'priority': 20,

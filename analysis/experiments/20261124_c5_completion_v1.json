@@ -1,0 +1,230 @@
+{
+ "kind": "Chunk C final integrated release and A3 original-acceptance closure",
+ "result": "complete",
+ "chunk_C_percent": 100,
+ "C_modules_percent": {
+  "C1": 100,
+  "C2": 100,
+  "C3": 100,
+  "C4": 100,
+  "C5": 100
+ },
+ "D42_A_percent": 100,
+ "D42_A3_original_rungs_percent": 100,
+ "D42_B_percent": 0,
+ "original_programme_percent": 74,
+ "automatic_S11_S12_S14_credit": false,
+ "accepted_engine": "engine-v1.3-r3",
+ "pathway_parameters": "pathway-v1 unchanged",
+ "competition_schema": "nba-competitions-2026-v1",
+ "learned_qualifier": null,
+ "protected_scoring": false,
+ "nightly": {
+  "kind": "C5 full online nightly measured result",
+  "ended": "2026-11-24T07:48:48.656895+00:00",
+  "exit_code": 0,
+  "seconds": 975.4962803329981,
+  "limit_seconds": 3600,
+  "within_limit": true,
+  "source_exact": true,
+  "changed_sources": [],
+  "start_report_sha256": "0aeb7832e4e13d79969b357108796b8969be2f95eb712a640cbd1a7ffe732402"
+ },
+ "capture_counts": {
+  "games": 3,
+  "examples": 15,
+  "segments": 3720,
+  "legal_fives": 14880,
+  "worlds": 50000,
+  "cases": 7,
+  "max_minute_error": 3.552713678800501e-14,
+  "max_weighted_zone_error": 0.0,
+  "max_replay_gzip_bytes": 94916
+ },
+ "rate_distributions": 2664,
+ "season_worlds": 30001,
+ "season_probability_mass": 40000,
+ "tests": {
+  "python": 485,
+  "node_suites": 14,
+  "smoke": "112/112",
+  "smoke_log_sha256": "f104bc58c339de8bb7fa34fda64537d6c514582e0d3f62d1aa25fa70ef54fd0f",
+  "fault_summary": "91/112 checks passed",
+  "fault_log_sha256": "7b58d291dfec437f6bb5e18f9cee996a9d7406e735bba1982859e87e0ef1b619",
+  "browser_width_theme_cases": 42,
+  "screenshots": "/tmp/musnba_c5_browser_final_v1",
+  "visually_reviewed": [
+   "18 competition screenshots/contact",
+   "24 affected-route screenshots/contact",
+   "full phone Playoffs page"
+  ],
+  "pwa": {
+   "phone_import": {
+    "checks": 32,
+    "log": "/tmp/musnba_c5_pwa_phone_final_v1.log",
+    "sha256": "c2af1eb2b7edaae472fc449195aea5dc86067d1e5f60f2b969a6f281803b5ee2"
+   },
+   "laptop_import": {
+    "checks": 35,
+    "log": "/tmp/musnba_c5_pwa_laptop_final_v2.log",
+    "sha256": "4e54a69733ecee67b27ec2e6eba658234eb64ff62f90ba584aa573d629ba62b1"
+   },
+   "phone_upgrade": {
+    "checks": 35,
+    "log": "/tmp/musnba_c5_upgrade_phone_final_v1.log",
+    "sha256": "1ff4ebb57330ae0c9bd775e80da79f974fa703994759160e485c70db936595c0"
+   },
+   "laptop_upgrade": {
+    "checks": 38,
+    "log": "/tmp/musnba_c5_upgrade_laptop_final_v1.log",
+    "sha256": "16778ac3a9e49c8d4ee7f7ef59bdca4bfe237c3a2cf212cdcabef9009d4ade0d"
+   }
+  },
+  "full_canonical_game_chunk_replay_exact": true,
+  "full_stored_season_replay_exact": true
+ },
+ "bundles": {
+  "phone": {
+   "path": "/Users/moholom/Library/Mobile Documents/com~apple~CloudDocs/MusNBA/MusNBA.musnba.gz",
+   "bytes": 50903316,
+   "sha256": "d875fc930e9ae3a607ade9b58577c61ddac9a283796cbf7ea7919647005dccf9",
+   "header": {
+    "format": "musnba",
+    "version": 2,
+    "capabilities": [
+     "competitions-2026-v1",
+     "lineup-forecast-v1",
+     "minute-cdf-player-v2",
+     "player-icons-v1",
+     "shot-zones-v1",
+     "visible-worlds-v1"
+    ],
+    "created": "2026-11-24T07:48:34+00:00",
+    "latest": "2026-11-24",
+    "snapshots": [
+     "2026-11-12",
+     "2026-11-13",
+     "2026-11-14",
+     "2026-11-15",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22",
+     "2026-11-23",
+     "2026-11-24"
+    ],
+    "profile": "phone"
+   }
+  },
+  "laptop": {
+   "path": "/Users/moholom/Library/Mobile Documents/com~apple~CloudDocs/MusNBA/MusNBA-laptop.musnba.gz",
+   "bytes": 262665406,
+   "sha256": "3c3cb3fd96a53452e3fb0a5a4fd9b02e233e5461f6b4506bb6a507a98a601fb3",
+   "header": {
+    "format": "musnba",
+    "version": 2,
+    "capabilities": [
+     "competitions-2026-v1",
+     "lineup-forecast-v1",
+     "minute-cdf-player-v2",
+     "player-icons-v1",
+     "shot-zones-v1",
+     "visible-worlds-v1"
+    ],
+    "created": "2026-11-24T07:47:43+00:00",
+    "latest": "2026-11-24",
+    "snapshots": [
+     "2026-11-12",
+     "2026-11-13",
+     "2026-11-14",
+     "2026-11-15",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22",
+     "2026-11-23",
+     "2026-11-24"
+    ],
+    "profile": "laptop"
+   }
+  }
+ },
+ "shell": {
+  "commit": "399d600deebc00196d713c6ecc6a1fe2d3dd9ce3",
+  "cache": "b53af8f45b272ed0f40f",
+  "data_free": true,
+  "published": true,
+  "deployment_id": 45351156364,
+  "deployment_conclusion": "success",
+  "deployment_url": "https://github.com/MusaMoholo/MusNBA/actions/runs/45351156364",
+  "remote_sw_sha256": "955e1da72aa478e973e194f3fc53080a5678cb0b86a0a911ca60b7fe5514284b",
+  "repository_CI_workflows_added": false
+ },
+ "post_nightly_verification_only_change": {
+  "paths": [
+   "scripts/smoke.py"
+  ],
+  "reason": "Smoke assumed legacy engine_inputs_sha256 after selecting complete-game provenance; now verifies all engine_sources_sha256 and retained replay-input hashes. Unsupported hashes still fail. No generated output/model/source used for simulation changed.",
+  "prior_failure_log": "/tmp/musnba_c5_smoke_final_v1.log"
+ },
+ "preserved_delivery_attempts": [
+  "nightlyv1 stopped during rebuild164.9s",
+  "nightlyv2 failed full-score mean retention827.8s; repaired OT summary without weakening gate",
+  "nightlyv3 failed view cache/mass813.3s; repaired source identity and compatibility",
+  "laptop importv1 completed functional checks then target detached on optional screenshot; full repeatv2 passes",
+  "scratch accounting first refused partial published meta; complete scratch context passed; final production accounting passes"
+ ],
+ "limits": [
+  "Initial postseason/auxiliary OT uncalibrated",
+  "Unpublished filler/postseason dates and matching are assumptions",
+  "Weighted season paths not certified iid",
+  "Combined engine OT period count remains missing",
+  "Both real devices unverified; each needs app update/manual iCloud import",
+  "No rescue/retune of rejected C2/S06; no protected r3 rescore"
+ ],
+ "successor": "20261124_chunk_b_successor_v1.json",
+ "successor_execution": false,
+ "reports_sha256": {
+  "analysis/experiments/20261124_c5_assigned_fixture_v1.json": "b5eb695e814d798756116cbfe1d79124792be9f9b8a692f1b37ddd73750d4615",
+  "analysis/experiments/20261124_c5_delivery_audit_v1.json": "d45249fac36a30ffd43e70fa014575ebbc78f7dfe77a2c2eb5ecd5e95bb05eb5",
+  "analysis/experiments/20261124_c5_design_v1.json": "a96b7cf60120fea12d175bb92fd194283ee12c5fd4e5f0c9f600d6e032e3c060",
+  "analysis/experiments/20261124_c5_fresh_capture_v1.json": "492e58feabf53f4a4e77a73c8a6ce828356578ec9b8b036ffb8041939ec5efc0",
+  "analysis/experiments/20261124_c5_full_preflight_v1.json": "e1209d7ab080e569c5cdb03a3942d88a289ee1055532b2e37e3d846ca4117c5e",
+  "analysis/experiments/20261124_c5_homecourt_clarification_v1.json": "830ff8d1abe6a71fde3ac98d85a84f7cc45cee9e547755e9e5f1873e7c7109d3",
+  "analysis/experiments/20261124_c5_js_replay_audit_v1.json": "6e8d95bb8a9580c30ab1a49fd907cbc0a378804b0112674cfbda8e94da60fa90",
+  "analysis/experiments/20261124_c5_mechanics_v1.json": "fe86febc2d1a146a90a9e6453043fe732ba3d34edd7a22b87690d3b372ff1de3",
+  "analysis/experiments/20261124_c5_mechanics_v2.json": "8a9e42819f481ba92850bda1e395186ea3128f022c47b450ed3543e0f17a30fe",
+  "analysis/experiments/20261124_c5_mechanics_v3.json": "8f3d609e5522026388a0fb3924fdfa04bcffaa70cf8f940962ecb32b6ec53e51",
+  "analysis/experiments/20261124_c5_mechanics_v4.json": "44a657127714b1af191dab88e0abf37cb9045b3f1688c723dd91ef6bf27eb06c",
+  "analysis/experiments/20261124_c5_mechanics_v5.json": "2c48c14942abf0d623be0342b3121f255a972efd40cb04a8981b02bedd5286fe",
+  "analysis/experiments/20261124_c5_mechanics_v6.json": "227a25bde56eb354cec44356c18b4c7e12479832a8b916e521d7e0126096ad3c",
+  "analysis/experiments/20261124_c5_nightly_result_v1.json": "a2963cd79af5cc0253b2719ae2d11e9148c2b96a7538bf09238ff43751f10ee6",
+  "analysis/experiments/20261124_c5_nightly_result_v2.json": "11ad2fe168fe01af7cbdfb35147150a3b6d2a83427932a1c74c5ad1c393c3fd1",
+  "analysis/experiments/20261124_c5_nightly_result_v3.json": "17e100b1c2f636bd1992ac402528d5a9a9aea30cf4b6f67038be7b4357dcbec8",
+  "analysis/experiments/20261124_c5_nightly_result_v4.json": "e08088a52fa43022ebed3c8faa96f2fb6301b2ba8023269ed12dffebd2c06d8f",
+  "analysis/experiments/20261124_c5_nightly_start_v1.json": "c19ed6a657d57caa2404deb9268d5783ef15288acb9917581d495a968cc6188c",
+  "analysis/experiments/20261124_c5_nightly_start_v2.json": "63cba46779d49dd39e14129bfb7bf2f4595621aae6e0935f94b2a8f3044ae802",
+  "analysis/experiments/20261124_c5_nightly_start_v3.json": "d0275c417f8e932acdfad05931f59b3b70aedc861ed057af78c2786aec29b181",
+  "analysis/experiments/20261124_c5_nightly_start_v4.json": "0aeb7832e4e13d79969b357108796b8969be2f95eb712a640cbd1a7ffe732402",
+  "analysis/experiments/20261124_c5_partial_draw_v1.json": "a842f2f77ca2ea01396c9453f57edc0b054c785be8234d6d8494e9ec4f776527",
+  "analysis/experiments/20261124_c5_partial_draw_v2.json": "e31655e02df7a373fafba826a63b9cfe3837d1e3d84a814178b64c8ff86fa68e",
+  "analysis/experiments/20261124_c5_pre_nightly_archive_v1.json": "5a2fe6dfa7d2ea60d6aee3b31d61d3a7d719ef058b0112ad1a1fde96b35c5b75",
+  "analysis/experiments/20261124_c5_pre_nightly_archive_v2.json": "53aee0a002788d0300767407d7129a9d1a2dcf1fa1e8ca331bd587ca535c6de7",
+  "analysis/experiments/20261124_c5_pre_nightly_archive_v3.json": "dbe74647aa2fc0013e3e25b57c6f93178c8ce7b2f29c83a59bbd0fc422aecad7",
+  "analysis/experiments/20261124_c5_pre_nightly_archive_v4.json": "9474fcd3e200793c52316c9829451e5d867deabd39cf2e7fafd5feff3e560957",
+  "analysis/experiments/20261124_c5_reproduction_v1.json": "af424ec53c9b217967b8ea0cbe6a03e0f753947321d247c1f05d772ff46c4a76",
+  "analysis/experiments/20261124_c5_reproduction_v2.json": "8733cb39b5786a870b8253deac0a60ccf82974535a7ddc48c8d059edc087f427",
+  "analysis/experiments/20261124_c5_reproduction_v3.json": "f88165960412aafaf01fb0bc5214cedc883dad58a69ab49c2eb386d5f979990e",
+  "analysis/experiments/20261124_c5_retention_diagnosis_v1.json": "0ac6b5042c2e92cff02a7d10c8b913cf70a873bc02ec41df7824ecba3afb1d80",
+  "analysis/experiments/20261124_c5_rules_clarification_v1.json": "bbf0445655ced13d62412cfcddc3b2a482b1730deaa88566d26bb2bb834fad2b",
+  "analysis/experiments/20261124_c5_shell_archive_v1.json": "a14c2fb0a1849205bda5d1ccc8c869a6f7faddffe91d8c668a91d9eeef02add8",
+  "analysis/experiments/20261124_c5_unassigned_parity_v1.json": "0c13286a3a360e1627ec7086ba44be66d99349e301902acc02c1acf6ab08399f",
+  "analysis/experiments/20261124_c5_view_mass_diagnosis_v1.json": "9bc79bee42ee109cd63be11fca91aae941bb694dee949c4793a0715a8f62ba76"
+ }
+}

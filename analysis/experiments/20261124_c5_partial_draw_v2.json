@@ -1,0 +1,126 @@
+{
+  "kind": "Staged assigned-fixture calendar probe",
+  "source_sha256": "912fbefaa6d36927c0f3f3635213d7ff2bf4f4c22f51d5fe3f12db8553d5f8ff",
+  "cases": {
+    "unassigned": {
+      "pass": true,
+      "assigned": 0,
+      "consumed_once": 0,
+      "audit": {
+        "worlds": 1,
+        "regular_games_per_world": 1230,
+        "regular_games_per_team": 82,
+        "cup_events_per_world": 67,
+        "playin_per_world": 6,
+        "playoff_teams_per_world": 16,
+        "series_per_world": 15,
+        "champions_per_world": 1,
+        "canonical_slots": 1342,
+        "negative_OT_proposals_rejected": 0
+      }
+    },
+    "nonqualifiers22": {
+      "pass": true,
+      "assigned": 22,
+      "consumed_once": 22,
+      "audit": {
+        "worlds": 1,
+        "regular_games_per_world": 1230,
+        "regular_games_per_team": 82,
+        "cup_events_per_world": 67,
+        "playin_per_world": 6,
+        "playoff_teams_per_world": 16,
+        "series_per_world": 15,
+        "champions_per_world": 1,
+        "canonical_slots": 1342,
+        "negative_OT_proposals_rejected": 0
+      }
+    },
+    "group_draw26": {
+      "pass": true,
+      "assigned": 26,
+      "consumed_once": 26,
+      "audit": {
+        "worlds": 1,
+        "regular_games_per_world": 1230,
+        "regular_games_per_team": 82,
+        "cup_events_per_world": 67,
+        "playin_per_world": 6,
+        "playoff_teams_per_world": 16,
+        "series_per_world": 15,
+        "champions_per_world": 1,
+        "canonical_slots": 1342,
+        "negative_OT_proposals_rejected": 0
+      }
+    },
+    "one_qf": {
+      "pass": true,
+      "assigned": 1,
+      "consumed_once": 1,
+      "audit": {
+        "worlds": 1,
+        "regular_games_per_world": 1230,
+        "regular_games_per_team": 82,
+        "cup_events_per_world": 67,
+        "playin_per_world": 6,
+        "playoff_teams_per_world": 16,
+        "series_per_world": 15,
+        "champions_per_world": 1,
+        "canonical_slots": 1342,
+        "negative_OT_proposals_rejected": 0
+      }
+    },
+    "one_semifinal_and_loser": {
+      "pass": true,
+      "assigned": 28,
+      "consumed_once": 28,
+      "audit": {
+        "worlds": 1,
+        "regular_games_per_world": 1230,
+        "regular_games_per_team": 82,
+        "cup_events_per_world": 67,
+        "playin_per_world": 6,
+        "playoff_teams_per_world": 16,
+        "series_per_world": 15,
+        "champions_per_world": 1,
+        "canonical_slots": 1342,
+        "negative_OT_proposals_rejected": 0
+      }
+    },
+    "full31": {
+      "pass": true,
+      "assigned": 31,
+      "consumed_once": 31,
+      "audit": {
+        "worlds": 1,
+        "regular_games_per_world": 1230,
+        "regular_games_per_team": 82,
+        "cup_events_per_world": 67,
+        "playin_per_world": 6,
+        "playoff_teams_per_world": 16,
+        "series_per_world": 15,
+        "champions_per_world": 1,
+        "canonical_slots": 1342,
+        "negative_OT_proposals_rejected": 0
+      }
+    },
+    "interleaved_qf_sf_dates": {
+      "pass": true,
+      "assigned": 31,
+      "consumed_once": 31,
+      "audit": {
+        "worlds": 1,
+        "regular_games_per_world": 1230,
+        "regular_games_per_team": 82,
+        "cup_events_per_world": 67,
+        "playin_per_world": 6,
+        "playoff_teams_per_world": 16,
+        "series_per_world": 15,
+        "champions_per_world": 1,
+        "canonical_slots": 1342,
+        "negative_OT_proposals_rejected": 0
+      }
+    }
+  },
+  "all_pass": true
+}

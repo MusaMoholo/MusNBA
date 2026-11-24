@@ -35,7 +35,7 @@ class RosterAvailabilityTests(unittest.TestCase):
         self.assertEqual(players['10']['status'], 'Unknown')
         self.assertIsNone(players['10']['reported_status'])
         self.assertEqual(players['10']['status_source'], 'missing_report')
-        self.assertEqual(projection.availability(players['10']['status']), 0.6)
+        self.assertEqual(projection.availability(players['10']['status']), 0.5)
         self.assertEqual(players['11']['status'], 'Questionable')
         self.assertEqual(players['11']['reported_status'], 'Questionable')
         self.assertEqual(players['11']['status_source'], 'roster_injury')

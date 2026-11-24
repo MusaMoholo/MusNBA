@@ -10,18 +10,18 @@ lineup branch; Expected is their exact weighted mixture. Tomorrow onward follows
 Laptop PWA is primary; phone is stripped. Browsing only reads stored results.
 
 Accepted: **engine-v1.3-r3**, D29 rotations, Rule 3 foul-outs, independent fitting, contextual late timing, pathway v1,
-lineup branches and offline photos. Availability calibration, richer defence, season calibration remain open; replay UX is delivered, final integration pending.
+lineup branches and offline photos. Availability calibration, richer defence, season calibration remain open; replay UX and integrated delivery are complete.
 
-## Latest checkpoint — C4 delivered
+## Latest checkpoint — Chunk C complete
 
 Independent S06 improves MIN CRPS 0.03694 but clears 25/27 proper bounds; win Brier/log-loss safeguards remain unresolved.
 The frozen attempt closes without promotion, broader rescue or protected scoring. C2 also retains r3.
 C4 ships useful analysis/replay on accepted engines; HANDOFF owns capture, checks, publication and manual imports.
 C1 early publication remains delivered.
 
-## Next modular chunk — C
+## Completed modular chunk — C
 
-D58/D59: **“go with the next chunk”** executes C1–C5 in HANDOFF. Two headliners: more believable player/season outcomes;
+D58/D59 authorised C1–C5 through final delivery. Two headliners: more believable player/season outcomes;
 one comprehensive NBA analysis workspace. Better models are an objective; promotion requires independent evidence.
 
 | Module | Weight | Outcome |
@@ -32,15 +32,14 @@ one comprehensive NBA analysis workspace. Better models are an objective; promot
 | C4 analysis/replay | 25% | Five reconciled saved-world examples, court/event/box/rotation playback, zone maps and deeper discoverable metrics/outcomes. |
 | C5 competitions/release | 25% | World-local Cup, regular82 completion, play-in/playoffs; three competition sections and integrated delivery. |
 
-**C75%; C1–C4=100%, C5=0%.** HANDOFF has fifty concrete rungs, commands, dependencies, acceptance/fallback and fixed weights totalling100%.
-C1 is complete; C2/C3 compare separately against r3. C4 confirms/freezes survivors; C5 alone runs a qualifier's protected
-possession test. Exactly two bounded learned families; no rescue search. Calendar correctness is separate from a ratings retune.
-C1 and C5 require fresh nightlies; intermediate affected releases refresh outputs/PWA as necessary. Independent work overlaps within ten
-heavy threads. Negative research still ships useful UX on accepted engines. Full rationale/rules: `20261123_chunk_c_plan_v2.json`.
+**C100%; C1–C5=100%.** HANDOFF owns the fully specified0% B successor; C ladders remain in Git.
+C2/C3 compared separately against r3; C4 froze no qualifier. C5 added calendar mechanics without ratings retuning or protected rescoring.
+Both bounded learned attempts closed; useful UX ships on accepted engines. C1/C5 fresh nightlies and affected PWA delivery are complete.
+Full rationale/rules: `20261123_chunk_c_plan_v2.json`.
 
 Product northstar: every meaningful derived/predicted quantity should be discoverable with definitions, support and useful interactives.
 Conditions, advanced stats, heatmaps and court views are examples, not the breadth limit. One game owns all lineup cases.
-Planned core areas are Regular season/Cup/Playoffs; Players/Teams remain shared. Keep secondary detail collapsible and Lab peripheral.
+Core areas are Regular season/Cup/Playoffs; Players/Teams remain shared. Keep secondary detail collapsible and Lab peripheral.
 Competition dependencies/source rules, canonical events and required accounting are in MODEL; no empty or fabricated probabilities.
 
 ## Original programme — unchanged74%
@@ -55,7 +54,7 @@ Historical scopes/ladders survive in the verified archive; extract the relevant 
 | S03 lost signal | 8% | Complete; conditional defence bottleneck. |
 | S04 defence/shot quality | 12% | Complete negative screens; richer defence still open. |
 | S05 membership/minutes | 8% | Complete; retain D29. |
-| S06 substitutions | 12% | Original attempt complete; revisit current-r3 evidence in C3. |
+| S06 substitutions | 12% | Original and current-r3 C3/C4 attempts complete; retainr3. |
 | S07 availability/starts | 6% | Complete fallback; no dated development reports for hazard fit. |
 | S08 lineups/Expected | 6% | Complete. |
 | S09 form/timing | 10% | Complete; unsupported form zero, contextual timing delivered. |
@@ -65,7 +64,7 @@ Historical scopes/ladders survive in the verified archive; extract the relevant 
 | S13 historical forecasts | 5% | Deferred D40; preserve originals. |
 | S14 final programme delivery | 5% | 0%; remaining programme integration required. |
 
-D42 A93%: A1(30%) and A2(35%) complete; A3(35%)80% against its original ten rungs. Fresh integrated nightly/final checkpoint remain.
+D42 A100%: A1(30%),A2(35%),A3(35%) complete against their original acceptance. C5 supplies the fresh integrated nightly/final checkpoint.
 B remains0%: B1 defence30%, B2 pathway30%, B3 integration/visibility40%. C2 contributes evidence, not automatic B1 completion.
 C grants no automatic S11/S12/S14 credit. D54 completes only with real early publication.
 

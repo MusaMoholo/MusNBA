@@ -355,6 +355,9 @@ class FoulReboundEngine(engine.Engine):
         self.m = FoulReboundModel()
         self.diag = self.rotation_diag = None
         self.rotation_policy = policy
+        self.runtime = dict(engine.LEGACY_ENGINE)
+        self.clock_policy = None
+        self.world_observer = None
 
     def _context(self, g, st, A, L_off, L_def):
         _ = g, st, L_off, L_def

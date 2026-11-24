@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {conditionMask,stageSummary,matchups,decodePaths} from '../scripts/webapp/competition-paths.mjs';
+const W=2,a={};
+for(const [k,n] of Object.entries({seed:30,wins:30,playoff_seed:30,reach:30,cup_rank:30,cup_group:30,cup_champion:1,champion:1,series:60,cup_matches:21}))a[k]=new Uint8Array(W*n);
+a.cup_rank.fill(15);a.seed.fill(15);a.cup_group.fill(5);a.cup_champion.set([0,1]);a.champion.set([0,1]);
+a.reach[0]=5;a.reach[31]=5;a.cup_rank[0]=1;a.cup_rank[31]=1;
+for(let w=0;w<W;w++)for(let j=0;j<15;j++)a.series.set([0,1,w,4+w],w*60+j*4);
+const data={schema:'nba-competitions-2026-v1',worlds:W,ids:Array.from({length:30},(_,i)=>String(i)),weights:[1,3],mass:4,paths:Object.fromEntries(Object.entries(a).map(([k,v])=>[k,Buffer.from(v).toString('base64')]))};
+const p=decodePaths(data);const s=stageSummary(p);assert.equal(s.teams['0'].title,.25);assert.equal(s.teams['1'].title,.75);
+const mask=conditionMask(p,'0','title');const q=stageSummary(p,mask);assert.equal(q.mass,1);assert.equal(q.count,1);assert.equal(q.teams['0'].title,1);
+const empty=stageSummary(p,conditionMask(p,'2','title'));assert.equal(empty.mass,0);assert.equal(empty.teams['0'].title,null);
+const m=matchups(p,'finals');assert.equal(m.rows[0].p,1);assert.equal(m.rows[0].pA,.25);assert.deepEqual(m.rows[0].length,[.25,.75,0,0]);
+assert.throws(()=>decodePaths({...data,mass:5}));assert.throws(()=>conditionMask(p,'bad','all'));
+console.log('competition paths: unequal mass, conditions, missing support, matchup and length accounting passed');

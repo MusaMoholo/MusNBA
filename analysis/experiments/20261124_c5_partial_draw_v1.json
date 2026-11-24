@@ -1,0 +1,66 @@
+{
+  "kind": "Staged assigned-fixture calendar probe",
+  "source_sha256": "87e8048a3b0ee001ec2bf241c9dc9b1a5505a3a86b1d91924a8f19f57d5fcbba",
+  "cases": {
+    "unassigned": {
+      "pass": true,
+      "assigned": 0,
+      "consumed_once": 0,
+      "audit": {
+        "worlds": 1,
+        "regular_games_per_world": 1230,
+        "regular_games_per_team": 82,
+        "cup_events_per_world": 67,
+        "playin_per_world": 6,
+        "playoff_teams_per_world": 16,
+        "series_per_world": 15,
+        "champions_per_world": 1,
+        "canonical_slots": 1342,
+        "negative_OT_proposals_rejected": 0
+      }
+    },
+    "nonqualifiers22": {
+      "pass": false,
+      "assigned": 22,
+      "error": "ValueError: Partial assigned filler draw; no unsafe completion"
+    },
+    "group_draw26": {
+      "pass": false,
+      "assigned": 26,
+      "error": "ValueError: Partial assigned filler draw; no unsafe completion"
+    },
+    "one_qf": {
+      "pass": false,
+      "assigned": 1,
+      "error": "ValueError: Assigned fixture does not match world-local slot; retain unavailable"
+    },
+    "one_semifinal_and_loser": {
+      "pass": false,
+      "assigned": 28,
+      "error": "ValueError: Partial assigned filler draw; no unsafe completion"
+    },
+    "full31": {
+      "pass": true,
+      "assigned": 31,
+      "consumed_once": 31,
+      "audit": {
+        "worlds": 1,
+        "regular_games_per_world": 1230,
+        "regular_games_per_team": 82,
+        "cup_events_per_world": 67,
+        "playin_per_world": 6,
+        "playoff_teams_per_world": 16,
+        "series_per_world": 15,
+        "champions_per_world": 1,
+        "canonical_slots": 1342,
+        "negative_OT_proposals_rejected": 0
+      }
+    },
+    "interleaved_qf_sf_dates": {
+      "pass": false,
+      "assigned": 31,
+      "error": "ValueError: Nonchronological event"
+    }
+  },
+  "all_pass": false
+}

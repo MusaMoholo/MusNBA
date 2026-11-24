@@ -1,0 +1,498 @@
+{
+  "kind": "C5 mechanical audit; no learned promotion/protected scoring",
+  "small_ledger_audit": {
+    "worlds": 40,
+    "regular_games_per_world": 1230,
+    "regular_games_per_team": 82,
+    "cup_events_per_world": 67,
+    "playin_per_world": 6,
+    "playoff_teams_per_world": 16,
+    "series_per_world": 15,
+    "champions_per_world": 1,
+    "canonical_slots": 1342,
+    "negative_OT_proposals_rejected": 4
+  },
+  "future_score_injection": "exact unchanged",
+  "engine_OT_final": "exact retained; combined period count remains missing",
+  "serial_parallel": "exact packed paths,2x1k chunks",
+  "resume": "all receipts reused; changed T rejected",
+  "primary10k_seconds": 3.6424164170166478,
+  "primary": {
+    "identity": "862a6b8835f78b1b9c7bb2608ee6bb93fdea9cc520791d16e83a269583199240",
+    "namespace": "data/derived/experiments/c5_validation_v3/primary10k",
+    "chunks": [
+      {
+        "path": "data/derived/experiments/c5_validation_v3/primary10k/chunk_00000.npz",
+        "audit": {
+          "worlds": 1000,
+          "regular_games_per_world": 1230,
+          "regular_games_per_team": 82,
+          "cup_events_per_world": 67,
+          "playin_per_world": 6,
+          "playoff_teams_per_world": 16,
+          "series_per_world": 15,
+          "champions_per_world": 1,
+          "canonical_slots": 1342,
+          "negative_OT_proposals_rejected": 57
+        }
+      },
+      {
+        "path": "data/derived/experiments/c5_validation_v3/primary10k/chunk_00001.npz",
+        "audit": {
+          "worlds": 1000,
+          "regular_games_per_world": 1230,
+          "regular_games_per_team": 82,
+          "cup_events_per_world": 67,
+          "playin_per_world": 6,
+          "playoff_teams_per_world": 16,
+          "series_per_world": 15,
+          "champions_per_world": 1,
+          "canonical_slots": 1342,
+          "negative_OT_proposals_rejected": 67
+        }
+      },
+      {
+        "path": "data/derived/experiments/c5_validation_v3/primary10k/chunk_00002.npz",
+        "audit": {
+          "worlds": 1000,
+          "regular_games_per_world": 1230,
+          "regular_games_per_team": 82,
+          "cup_events_per_world": 67,
+          "playin_per_world": 6,
+          "playoff_teams_per_world": 16,
+          "series_per_world": 15,
+          "champions_per_world": 1,
+          "canonical_slots": 1342,
+          "negative_OT_proposals_rejected": 52
+        }
+      },
+      {
+        "path": "data/derived/experiments/c5_validation_v3/primary10k/chunk_00003.npz",
+        "audit": {
+          "worlds": 1000,
+          "regular_games_per_world": 1230,
+          "regular_games_per_team": 82,
+          "cup_events_per_world": 67,
+          "playin_per_world": 6,
+          "playoff_teams_per_world": 16,
+          "series_per_world": 15,
+          "champions_per_world": 1,
+          "canonical_slots": 1342,
+          "negative_OT_proposals_rejected": 35
+        }
+      },
+      {
+        "path": "data/derived/experiments/c5_validation_v3/primary10k/chunk_00004.npz",
+        "audit": {
+          "worlds": 1000,
+          "regular_games_per_world": 1230,
+          "regular_games_per_team": 82,
+          "cup_events_per_world": 67,
+          "playin_per_world": 6,
+          "playoff_teams_per_world": 16,
+          "series_per_world": 15,
+          "champions_per_world": 1,
+          "canonical_slots": 1342,
+          "negative_OT_proposals_rejected": 50
+        }
+      },
+      {
+        "path": "data/derived/experiments/c5_validation_v3/primary10k/chunk_00005.npz",
+        "audit": {
+          "worlds": 1000,
+          "regular_games_per_world": 1230,
+          "regular_games_per_team": 82,
+          "cup_events_per_world": 67,
+          "playin_per_world": 6,
+          "playoff_teams_per_world": 16,
+          "series_per_world": 15,
+          "champions_per_world": 1,
+          "canonical_slots": 1342,
+          "negative_OT_proposals_rejected": 53
+        }
+      },
+      {
+        "path": "data/derived/experiments/c5_validation_v3/primary10k/chunk_00006.npz",
+        "audit": {
+          "worlds": 1000,
+          "regular_games_per_world": 1230,
+          "regular_games_per_team": 82,
+          "cup_events_per_world": 67,
+          "playin_per_world": 6,
+          "playoff_teams_per_world": 16,
+          "series_per_world": 15,
+          "champions_per_world": 1,
+          "canonical_slots": 1342,
+          "negative_OT_proposals_rejected": 44
+        }
+      },
+      {
+        "path": "data/derived/experiments/c5_validation_v3/primary10k/chunk_00007.npz",
+        "audit": {
+          "worlds": 1000,
+          "regular_games_per_world": 1230,
+          "regular_games_per_team": 82,
+          "cup_events_per_world": 67,
+          "playin_per_world": 6,
+          "playoff_teams_per_world": 16,
+          "series_per_world": 15,
+          "champions_per_world": 1,
+          "canonical_slots": 1342,
+          "negative_OT_proposals_rejected": 68
+        }
+      },
+      {
+        "path": "data/derived/experiments/c5_validation_v3/primary10k/chunk_00008.npz",
+        "audit": {
+          "worlds": 1000,
+          "regular_games_per_world": 1230,
+          "regular_games_per_team": 82,
+          "cup_events_per_world": 67,
+          "playin_per_world": 6,
+          "playoff_teams_per_world": 16,
+          "series_per_world": 15,
+          "champions_per_world": 1,
+          "canonical_slots": 1342,
+          "negative_OT_proposals_rejected": 55
+        }
+      },
+      {
+        "path": "data/derived/experiments/c5_validation_v3/primary10k/chunk_00009.npz",
+        "audit": {
+          "worlds": 1000,
+          "regular_games_per_world": 1230,
+          "regular_games_per_team": 82,
+          "cup_events_per_world": 67,
+          "playin_per_world": 6,
+          "playoff_teams_per_world": 16,
+          "series_per_world": 15,
+          "champions_per_world": 1,
+          "canonical_slots": 1342,
+          "negative_OT_proposals_rejected": 57
+        }
+      }
+    ],
+    "sources": {
+      "scripts/competitions.py": "8f42250adfe3209982ea983b56c9f1e7fe2cdf362090e897d91c827172bbb19e",
+      "scripts/competition_rules.py": "5d2827521f88fcc71af7387773aaaf4a75c92d396ca040518cb1703b4368e656",
+      "scripts/pathway.py": "97afe9b90396fb7f27f999f38e3f192dcd13cd928fc8f6fbce41825890d92857",
+      "models/competitions_2026.json": "c2a65afc6d6e38f14bb5fe9f4024ef58c9bf681a9f1048ee6b21a0c5a78faf4b"
+    }
+  },
+  "alternative": {
+    "identity": "b2ddd798854c739578ca5d0cf63b29c63e6920f1c0f23523254741bae0f45617",
+    "namespace": "data/derived/experiments/c5_validation_v3/alternative10k",
+    "chunks": [
+      {
+        "path": "data/derived/experiments/c5_validation_v3/alternative10k/chunk_00000.npz",
+        "audit": {
+          "worlds": 1000,
+          "regular_games_per_world": 1230,
+          "regular_games_per_team": 82,
+          "cup_events_per_world": 67,
+          "playin_per_world": 6,
+          "playoff_teams_per_world": 16,
+          "series_per_world": 15,
+          "champions_per_world": 1,
+          "canonical_slots": 1342,
+          "negative_OT_proposals_rejected": 62
+        }
+      },
+      {
+        "path": "data/derived/experiments/c5_validation_v3/alternative10k/chunk_00001.npz",
+        "audit": {
+          "worlds": 1000,
+          "regular_games_per_world": 1230,
+          "regular_games_per_team": 82,
+          "cup_events_per_world": 67,
+          "playin_per_world": 6,
+          "playoff_teams_per_world": 16,
+          "series_per_world": 15,
+          "champions_per_world": 1,
+          "canonical_slots": 1342,
+          "negative_OT_proposals_rejected": 65
+        }
+      },
+      {
+        "path": "data/derived/experiments/c5_validation_v3/alternative10k/chunk_00002.npz",
+        "audit": {
+          "worlds": 1000,
+          "regular_games_per_world": 1230,
+          "regular_games_per_team": 82,
+          "cup_events_per_world": 67,
+          "playin_per_world": 6,
+          "playoff_teams_per_world": 16,
+          "series_per_world": 15,
+          "champions_per_world": 1,
+          "canonical_slots": 1342,
+          "negative_OT_proposals_rejected": 53
+        }
+      },
+      {
+        "path": "data/derived/experiments/c5_validation_v3/alternative10k/chunk_00003.npz",
+        "audit": {
+          "worlds": 1000,
+          "regular_games_per_world": 1230,
+          "regular_games_per_team": 82,
+          "cup_events_per_world": 67,
+          "playin_per_world": 6,
+          "playoff_teams_per_world": 16,
+          "series_per_world": 15,
+          "champions_per_world": 1,
+          "canonical_slots": 1342,
+          "negative_OT_proposals_rejected": 43
+        }
+      },
+      {
+        "path": "data/derived/experiments/c5_validation_v3/alternative10k/chunk_00004.npz",
+        "audit": {
+          "worlds": 1000,
+          "regular_games_per_world": 1230,
+          "regular_games_per_team": 82,
+          "cup_events_per_world": 67,
+          "playin_per_world": 6,
+          "playoff_teams_per_world": 16,
+          "series_per_world": 15,
+          "champions_per_world": 1,
+          "canonical_slots": 1342,
+          "negative_OT_proposals_rejected": 46
+        }
+      },
+      {
+        "path": "data/derived/experiments/c5_validation_v3/alternative10k/chunk_00005.npz",
+        "audit": {
+          "worlds": 1000,
+          "regular_games_per_world": 1230,
+          "regular_games_per_team": 82,
+          "cup_events_per_world": 67,
+          "playin_per_world": 6,
+          "playoff_teams_per_world": 16,
+          "series_per_world": 15,
+          "champions_per_world": 1,
+          "canonical_slots": 1342,
+          "negative_OT_proposals_rejected": 58
+        }
+      },
+      {
+        "path": "data/derived/experiments/c5_validation_v3/alternative10k/chunk_00006.npz",
+        "audit": {
+          "worlds": 1000,
+          "regular_games_per_world": 1230,
+          "regular_games_per_team": 82,
+          "cup_events_per_world": 67,
+          "playin_per_world": 6,
+          "playoff_teams_per_world": 16,
+          "series_per_world": 15,
+          "champions_per_world": 1,
+          "canonical_slots": 1342,
+          "negative_OT_proposals_rejected": 47
+        }
+      },
+      {
+        "path": "data/derived/experiments/c5_validation_v3/alternative10k/chunk_00007.npz",
+        "audit": {
+          "worlds": 1000,
+          "regular_games_per_world": 1230,
+          "regular_games_per_team": 82,
+          "cup_events_per_world": 67,
+          "playin_per_world": 6,
+          "playoff_teams_per_world": 16,
+          "series_per_world": 15,
+          "champions_per_world": 1,
+          "canonical_slots": 1342,
+          "negative_OT_proposals_rejected": 57
+        }
+      },
+      {
+        "path": "data/derived/experiments/c5_validation_v3/alternative10k/chunk_00008.npz",
+        "audit": {
+          "worlds": 1000,
+          "regular_games_per_world": 1230,
+          "regular_games_per_team": 82,
+          "cup_events_per_world": 67,
+          "playin_per_world": 6,
+          "playoff_teams_per_world": 16,
+          "series_per_world": 15,
+          "champions_per_world": 1,
+          "canonical_slots": 1342,
+          "negative_OT_proposals_rejected": 60
+        }
+      },
+      {
+        "path": "data/derived/experiments/c5_validation_v3/alternative10k/chunk_00009.npz",
+        "audit": {
+          "worlds": 1000,
+          "regular_games_per_world": 1230,
+          "regular_games_per_team": 82,
+          "cup_events_per_world": 67,
+          "playin_per_world": 6,
+          "playoff_teams_per_world": 16,
+          "series_per_world": 15,
+          "champions_per_world": 1,
+          "canonical_slots": 1342,
+          "negative_OT_proposals_rejected": 54
+        }
+      }
+    ],
+    "sources": {
+      "scripts/competitions.py": "8f42250adfe3209982ea983b56c9f1e7fe2cdf362090e897d91c827172bbb19e",
+      "scripts/competition_rules.py": "5d2827521f88fcc71af7387773aaaf4a75c92d396ca040518cb1703b4368e656",
+      "scripts/pathway.py": "97afe9b90396fb7f27f999f38e3f192dcd13cd928fc8f6fbce41825890d92857",
+      "models/competitions_2026.json": "c2a65afc6d6e38f14bb5fe9f4024ef58c9bf681a9f1048ee6b21a0c5a78faf4b"
+    }
+  },
+  "matching_sensitivity_probability_delta": {
+    "1": {
+      "cup_title": 0.0,
+      "playoffs": -0.0036999999999999256,
+      "title": -0.0013999999999999985
+    },
+    "2": {
+      "cup_title": 0.0,
+      "playoffs": 0.0025999999999999357,
+      "title": 0.0005999999999999894
+    },
+    "3": {
+      "cup_title": 0.0,
+      "playoffs": 0.00010000000000000113,
+      "title": 0.0001
+    },
+    "4": {
+      "cup_title": 0.0,
+      "playoffs": -0.0013999999999999846,
+      "title": 0.0
+    },
+    "5": {
+      "cup_title": 0.0,
+      "playoffs": 0.00039999999999995595,
+      "title": 0.0007000000000000027
+    },
+    "6": {
+      "cup_title": 0.0,
+      "playoffs": 0.0038000000000000256,
+      "title": -0.00040000000000000105
+    },
+    "7": {
+      "cup_title": 0.0,
+      "playoffs": -0.0043999999999999595,
+      "title": -0.0017000000000000001
+    },
+    "8": {
+      "cup_title": 0.0,
+      "playoffs": -0.0029000000000000137,
+      "title": 0.0020000000000000018
+    },
+    "9": {
+      "cup_title": 0.0,
+      "playoffs": -0.005099999999999993,
+      "title": 0.0002999999999999999
+    },
+    "10": {
+      "cup_title": 0.0,
+      "playoffs": 0.0036000000000000476,
+      "title": -0.004400000000000001
+    },
+    "11": {
+      "cup_title": 0.0,
+      "playoffs": -0.0016999999999999793,
+      "title": 0.00020000000000000052
+    },
+    "12": {
+      "cup_title": 0.0,
+      "playoffs": 0.00010000000000000286,
+      "title": 0.0008000000000000001
+    },
+    "13": {
+      "cup_title": 0.0,
+      "playoffs": -0.0015000000000000568,
+      "title": 0.0011999999999999927
+    },
+    "14": {
+      "cup_title": 0.0,
+      "playoffs": 0.005199999999999982,
+      "title": 0.0023000000000000017
+    },
+    "15": {
+      "cup_title": 0.0,
+      "playoffs": -0.0008000000000000004,
+      "title": -9.999999999999996e-05
+    },
+    "16": {
+      "cup_title": 0.0,
+      "playoffs": -0.0022999999999999687,
+      "title": 0.00020000000000000573
+    },
+    "17": {
+      "cup_title": 0.0,
+      "playoffs": 0.000899999999999998,
+      "title": 9.999999999999994e-05
+    },
+    "18": {
+      "cup_title": 0.0,
+      "playoffs": 0.0032999999999999696,
+      "title": 0.0013000000000000025
+    },
+    "19": {
+      "cup_title": 0.0,
+      "playoffs": 0.0015999999999999903,
+      "title": 0.0002999999999999999
+    },
+    "20": {
+      "cup_title": 0.0,
+      "playoffs": -0.0007000000000000339,
+      "title": -0.0006000000000000033
+    },
+    "21": {
+      "cup_title": 0.0,
+      "playoffs": -0.010199999999999987,
+      "title": -0.00040000000000000105
+    },
+    "22": {
+      "cup_title": 0.0,
+      "playoffs": -0.0023999999999999577,
+      "title": 0.000899999999999998
+    },
+    "23": {
+      "cup_title": 0.0,
+      "playoffs": -0.00039999999999999996,
+      "title": 0.0
+    },
+    "24": {
+      "cup_title": 0.0,
+      "playoffs": 9.999999999998899e-05,
+      "title": 0.0010000000000000009
+    },
+    "25": {
+      "cup_title": 0.0,
+      "playoffs": 0.011299999999999977,
+      "title": 0.0022000000000000006
+    },
+    "26": {
+      "cup_title": 0.0,
+      "playoffs": 0.0011999999999999997,
+      "title": 0.0
+    },
+    "27": {
+      "cup_title": 0.0,
+      "playoffs": -0.00030000000000002247,
+      "title": -0.0005
+    },
+    "28": {
+      "cup_title": 0.0,
+      "playoffs": -0.0010000000000000009,
+      "title": -0.0008000000000000004
+    },
+    "29": {
+      "cup_title": 0.0,
+      "playoffs": 0.006099999999999994,
+      "title": -0.003699999999999995
+    },
+    "30": {
+      "cup_title": 0.0,
+      "playoffs": -0.0015000000000000013,
+      "title": -0.00019999999999999998
+    }
+  },
+  "protected_rescored": false,
+  "rating_parameters_changed": false
+}

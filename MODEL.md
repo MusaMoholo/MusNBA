@@ -44,7 +44,7 @@ Actual confirmed availability is not downgraded by that fallback. Preserve sourc
 older forecasts retain original semantics. Dated outcome evidence is needed before claiming calibration or replacing this policy empirically.
 
 Pathway v1: K8, initial uncertainty scale.4, update scale 1, memory cap 20 games; future score distributions are regulation,
-with tied-score winner resolved separately. No learned future injury/rest hazard or complete postseason simulation.
+with tied-score winner resolved separately in legacy snapshots. C5 adds versioned calendar/OT/postseason mechanics below; no learned injury/rest hazard.
 Weighted near-term coupling preserves every original atom; it is **not certified iid season sampling**.
 
 ## Validation and release
@@ -138,15 +138,9 @@ Fine regions match529/530 native-coordinate pairs and505/530 rounded-coordinate 
 Official value remains authoritative. Raw sources/unknowns persist; dates do not prove original publication/revision timing.
 C2's [fixed study](analysis/experiments/20261124_c2_research_decision_v1.json) found no PTS benefit versus either control; retain r3.
 
-Research profiles use strictly prior shooter and defender/on-court **opportunities, attempts and makes**, separating frequency from conversion.
-Use exposure-aware shrinkage to broader parents, fitted before each origin. Audit sums/denominators and assignment weights.
-Distinguish recorded defenders, soft inferred assignments and on-court exposure: shot charts alone do not identify the nearest defender.
-Compare a matched current-representation control and at most three declared node variants: zone-only; zones plus within-zone distance;
-then supported defender-zone frequency/conversion. Select on F1–F3 only, without changing hyperparameters/decay opportunistically.
-Keep player-before-zone ordering. Version/retrain affected node interfaces together, with prior-fit clock/matchup/role artifacts per fold.
-Different zone label spaces make raw categorical losses incomparable: aggregate to an identical partition where valid; otherwise use
-common make/miss rows and end-to-end proper scores, not a false node rejection. If inputs/parser eligibility change, isolate that bridge and require matched rows/source identity;
-do not compare a new dataset to incompatible cached losses or silently drop unmatched outcomes.
+C2 protocols/negative node and engine receipts remain frozen in Git3435c6a and experiment JSON. Future defence work must
+separate opportunity/frequency/conversion, actual versus inferred assignments and label-space compatibility; preserve matched rows,
+source identity and prior-fit artifacts. No replacement/rescue of the closed three-variant study is authorised by relabelling it.
 
 **Rotations:** [C3](analysis/experiments/20261124_c3_research_decision_v1.json) recovered the exact S06 out/in models and timeout templates.
 `StateRotations` keeps those pre-event score/clock/foul/target decisions, independent per-world r3 fitting and current Rule3 legality/penalties.
@@ -155,16 +149,9 @@ three publication/research and three default-off full chunks match raw arrays. I
 confirmation improves MIN but leaves two win-score safeguards unresolved; no broader rescue/protected test. MIN80% coverage78.00→76.65%.
 Canonical: `20261124_c4_s06_independent_decision_v1.json`. Conditional participation does not validate live DNP/availability.
 
-**Finite qualification:** freeze namespaces, IDs/input-only exclusions, auxiliary cutoffs, learned/v3 and benefit multiplicity
-before outcomes. Reuse raw-parity controls; never rescore protected r3. Each family gets three-game wiring and one 200-game F4 screen:
-shots primary pooled PTS CRPS, rotations primary MIN CRPS. No rescue/replacement family; unchanged development recipes may repeat after
-accounting/setup repairs. Freeze at most one survivor/family for combined/removal development tests; research checkpoints do not promote.
-
-Reserve 200 disjoint F4 games before selection; candidate outcomes stay unseen until recipes freeze. Require independent primary benefit
-and unchanged safeguards. Broader confirmation: all input-eligible F4 plus fixed200/F1–F3, reusing overlaps and distinguishing development
-from independence. Freeze one 200-game independent-stream diagnostic and20-game×10k stress panel prospectively. Apply game-cluster
-uncertainty, role support and multiplicity; disclose unresolved diagnostics and veto applicable harm. C4 freezes the qualifier; C5 runs
-one protected evaluation. Retain r3 on failed/unsupported components; never rename failures, tune from final results or widen margins.
+**Finite qualification closed:** C2/C3 each used fixed wiring/development/independent rules under v3. S06 failed the independent gate;
+`20261124_c4_qualifier_v1.json` records no learned qualifier. No broader rescue/removal/stress/protected possession run follows.
+Original frozen budgets/protocols remain in Git3435c6a and aggregate receipts; later evidence cannot rewrite their decision criteria.
 
 **Visible worlds:** save compact zone attempt/make counters with exact box/period/weighted identities; observed versus predicted maps
 show sample support/unknowns and remain useful on r3 if no model promotes. Select five positive-mass Expected worlds/game: each team's
@@ -185,22 +172,35 @@ Inventory available versus missing capture; extend advanced rates/conditional ou
 context, sortable tables and collapsible secondary tools continue U24. Use MusSim, MLB Savant and NFL Next Gen Stats for presentation
 ideas; this grants no ingestion permission. Regular season/Cup/Playoffs become core sections with shared Players/Teams/Game Centre.
 
-Retained2026–27 schedule:1200 games,30 teams×80 games,60 Cup-labelled; dynamic competitions are absent. Complete **82 regular games/team=1230 games**,
-not82+2. One canonical event with competition flags prevents double simulation: group/QF/SF count in regular82; Cup final does not.
-World-local Cup:6 group winners+2 wildcards, official regulation-only tiebreaks, correct hosts.22 nonqualifiers each get 2 games;
-4 QF losers each get 1;4 QFs+2 SFs complete the30 missing league fixtures. Unpublished pairing/travel algorithms require frozen feasible
-matching assumptions/sensitivity labels; actual draws replace slots. Prefer dated league announcements over stale FAQs/team pages:
-[2026–27 semifinals](https://pr.nba.com/nba-cup-semifinal-host-sites-coachs-challenge-rules/) are higher-seed home games;
-[final](https://pr.nba.com/hinkle-fieldhouse-emirates-nba-cup-2026-championship/) is neutral Indianapolis. Reverify season-versioned rules.
+**nba-competitions-2026-v1:** retained1200 fixtures/80 per team plus30 world-local regular fixtures yield1230/82.
+Canonical group/QF/SF events count in regular82; Cup final, play-in and playoffs do not. Provider-assigned fixtures replace slots once.
+Six verified groups; group wins, tied-team head-to-head, regulation differential/points, prior regular record, seeded drawing.
+Wildcard only among runners-up; omit head-to-head. Higher-seed QF/SF hosts, neutral Hinkle final:
+[2026 rules](https://www.nba.com/news/nba-cup-101), [SF announcement](https://pr.nba.com/nba-cup-semifinal-host-sites-coachs-challenge-rules/),
+[final announcement](https://pr.nba.com/hinkle-fieldhouse-emirates-nba-cup-2026-championship/).
 
-Play-in:7hosts8 for seed7;9hosts10, winner visits7/8loser for seed8. Fixed-bracket best-of-seven playoffs, no reseeding,
-2-2-1-1-1 homes, stop at 4 wins; chronological world-local rating updates continue. Define regulation/final/OT scores explicitly:
-current pathway has regulation scores plus separate tie winner, insufficient for every official standings tiebreak.
-No rating/calibration retune here. Initial postseason outputs make no historical-calibration claim.
+Filler assumption:22 nonqualifiers play twice, including exactly two bottom-finisher cross-conference games;20 games within conference.
+Two exact minimum-cost matchings prefer existing three-game pairings; cycle orientation gives each nonqualifier one home/away.
+Four QF losers pair within conference; hosts prefer prior QF-away team. No unpublished travel algorithm is claimed.
+Frozen alternative swaps cross pairs/reverses orientations; sensitivity is descriptive, never selection. Known slots replace independently, in actual date order; incomplete nonqualifier draws or contradictory assignments fail closed.
 
-Acceptance:82 regular games/team; one Cup champion/world;16 playoff teams,15 series,one NBA champion/world; no duplicate/eliminated-team games,
-correct hosts/counts and normalised weighted stage/matchup/series-length/title probabilities from the same paths. Scope accounting by
-competition: unequal postseason game counts are valid. Rule/source manifest and design references: `20261123_chunk_c_plan_v2.json`.
+[Official standings ties](https://www.nba.com/standings) restart recursively after partial splits; division winners first, eligible includes tied10th.
+Play-in7hosts8,9hosts10, latter winner visits7/8loser. Fixed bracket, no reseeding,2-2-1-1-1, stop at4wins. Conference hosts follow original regular rank, independently of play-in bracket seeds. Finals home: record/head-to-head/
+opposite-conference record/drawing; [NBA explanation](https://www.nba.com/news/playoff-race-breakdown-houston-rockets-and-golden-state-warriors)
+is older than the current statistical guide; no conflicting current procedure found.
+Unpublished postseason dates use ordered two-day slots/global round barriers; no rest/travel effect.
+
+Ratings, regulation means/SD/correlation, start uncertainty and gains remain pathway-v1. Conditional auxiliary OT sampling preserves its tied-regulation
+winner probability; final=regulation+nonnegative synthetic OT. Rejection samples, never clamps. Combined engine OT preserves exact totals but its period
+count stays unknown. Cup ties use regulation only; standings differential uses final scores. Ratings update chronologically from regulation surprises,
+including Cup final/postseason. Initial postseason/OT outputs are uncalibrated. Legacy saved schemas retain old semantics.
+
+Source/input-guarded1k chunks reproduce across workers/resume; exact availability mass survives stage/matchup/series-length conditions.
+Independent event accounting proves82/team,67Cup events,6play-in games,16playoff teams,15series,one champion, correct hosts/no after-elimination.
+Contracts: `20261124_c5_design_v1.json`, `20261124_c5_rules_clarification_v1.json`; mechanicsv6 and final `20261124_c5_completion_v1.json` own evidence.
+Home-court clarification preserves source precedence/quantified regression. Final accounting covers50k worlds,15 examples,2664 rate distributions
+and30001 weighted season paths/mass40000. Source-identity caches refresh between early/final publication; incompatible masses remain unavailable.
+2025–26 hoopR regular labels include Cup final401809839 (NY/SA83games). C5 prior records exclude it; audit historical Cup finals before B2 calibration.
 
 U24 evidence: Expected Ty Jerome's earlier20k-world game labelled100k probability units as worlds; arithmetic was weighted correctly.
 Views now record raw/defined counts separately and enrich every lineup case. Independent6,435 rate distributions pass.

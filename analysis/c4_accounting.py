@@ -9,7 +9,7 @@ import numpy as np
 from basketball_common import read_json,write_json,sha256_file
 from scripts.world_mass import WorldMass
 
-def audit(report):
+def audit(report,snapshot=None):
  totals={'games':0,'examples':0,'segments':0,'legal_fives':0,'worlds':0,'cases':0,'max_minute_error':0.,'max_weighted_zone_error':0.,'max_replay_gzip_bytes':0}
  for row in report['games']:
   replay=read_json(ROOT/row['replay']);court=read_json(ROOT/row['court']);players={p['id']:p for p in replay['players']};roster=list(players)
@@ -50,9 +50,9 @@ def audit(report):
   path=Path(row['zone_worlds']['path'])
   if sha256_file(path)!=row['zone_worlds']['sha256']:raise ValueError('zone digest differs')
   with np.load(path,allow_pickle=False) as z:
-   ids=list(map(str,z['player_ids']));sides=z['side'];a=z['zone_fga'];m=z['zone_fgm'];weights=z['weights']
+   ids=list(map(str,z['player_ids'] if 'player_ids' in z else z['ids']));sides=z['side'];a=z['zone_fga'];m=z['zone_fgm'];weights=z['weights'] if 'weights' in z else np.ones(len(a),np.int64)
   if a.dtype!=np.uint16 or m.dtype!=np.uint16 or a.shape!=m.shape or a.shape[2:]!=(5,5) or (m>a).any():raise ValueError('zone arrays differ')
-  folder=ROOT/f"data/snapshots/2026-11-23/lineups/{row['game']}";plan=read_json(folder/'work-plan.json');offset=0;spans=[]
+  folder=(Path(snapshot) if snapshot is not None else ROOT/"data/snapshots/2026-11-23")/"lineups"/str(row["game"]);plan=read_json(folder/'work-plan.json');offset=0;spans=[]
   for b in plan['batches']:
    end=offset+b['worlds'];original=folder/'capture.npz' if b['branch_id']=='unconditional' else folder/'branches'/Path(b['capture']).name
    with np.load(original,allow_pickle=False) as raw:

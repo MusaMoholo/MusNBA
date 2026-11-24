@@ -18,7 +18,7 @@ from scripts.fetch_espn import latest_run  # noqa: E402
 
 COLUMNS = ['game_id', 'season', 'date_et', 'tip_utc', 'time_valid', 'status', 'status_detail',
            'away_id', 'away_abbr', 'home_id', 'home_abbr', 'away_pts', 'home_pts', 'periods',
-           'neutral', 'venue', 'city', 'tv', 'notes', 'source']
+           'neutral', 'venue', 'city', 'tv', 'notes', 'source', 'competition', 'regular_season']
 
 STATUS = {'STATUS_SCHEDULED': 'scheduled', 'STATUS_FINAL': 'final', 'STATUS_IN_PROGRESS': 'live',
           'STATUS_HALFTIME': 'live', 'STATUS_END_PERIOD': 'live', 'STATUS_POSTPONED': 'postponed',
@@ -44,6 +44,16 @@ def broadcasts(competition):
     return '|'.join(dict.fromkeys(names))
 
 
+def competition_flags(notes, season_type=2):
+    text = notes.lower()
+    stage = ('cup_final' if 'cup' in text and 'championship' in text else
+             'cup_qf' if 'cup' in text and ('quarterfinal' in text or 'quarter-final' in text) else
+             'cup_sf' if 'cup' in text and ('semifinal' in text or 'semi-final' in text) else
+             'group' if 'cup' in text and 'group play' in text else
+             'playin' if season_type == 5 else 'playoffs' if season_type == 3 else 'regular')
+    return {'competition': stage, 'regular_season': int(stage not in ('cup_final', 'playin', 'playoffs'))}
+
+
 def row_from_event(event: dict) -> dict:
     c = event['competitions'][0]
     side = {t['homeAway']: t for t in c['competitors']}
@@ -61,6 +71,7 @@ def row_from_event(event: dict) -> dict:
         'periods': '', 'neutral': int(bool(c.get('neutralSite'))), 'venue': venue.get('fullName', ''),
         'city': ', '.join(x for x in ((venue.get('address') or {}).get('city'), (venue.get('address') or {}).get('state')) if x),
         'tv': broadcasts(c), 'notes': notes, 'source': 'schedule',
+        **competition_flags(notes, int((event.get('season') or {}).get('type', 2))),
     }
 
 

@@ -459,7 +459,7 @@
   }
   @media (max-width:640px){
     .wrap{padding:max(12px,env(safe-area-inset-top)) max(10px,env(safe-area-inset-right)) 40px max(10px,env(safe-area-inset-left))}
-    .mainnav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+    .mainnav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
     .mainnav a{padding:8px 4px;min-height:var(--tap);font-size:13px}
     .games{grid-template-columns:minmax(0,1fr)}
     .spot-leaders,.spot-leaders.compact{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
@@ -542,6 +542,8 @@
 .analysis-view summary,.replay-view summary{min-height:44px;padding-block:10px;box-sizing:border-box}
 .analysis-view [hidden],.replay-controls [hidden]{display:none!important}.metric-search>.seg{align-self:end}.replay-transport button{white-space:nowrap}
 @media(max-width:600px){.replay-transport{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));align-items:stretch}.replay-transport>button{grid-column:span 2;min-width:0}.replay-transport>label{grid-column:span 3;min-width:0}.replay-transport select{width:100%;min-width:0}}
+.competition-grid{margin-bottom:16px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.competition-grid>.panel{margin-bottom:0}.competition-value{font-size:30px}.competition-condition summary,.competition-condition select,.competition-condition button,.mainnav a,.competition-condition label{min-height:44px}.competition-condition summary{display:flex;align-items:center;cursor:pointer}.competition-grid article{min-width:0}.competition-grid table{min-width:0}@media(max-width:1000px){.competition-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){.competition-grid{grid-template-columns:minmax(0,1fr)}}
+.competition-details>summary{min-height:44px;padding-block:10px;box-sizing:border-box;cursor:pointer}.competition-controls select,.competition-controls button{min-height:44px}.competition-grid th,[data-competition-stages] th,[data-competition-matchups] th{height:44px}
 </style>
 </head>
 <body>
@@ -558,7 +560,9 @@
   </header>
   <nav class="mainnav" aria-label="Main navigation">
     <a href="#/" data-nav="today">Today</a>
-    <a href="#/standings" data-nav="standings">Standings</a>
+    <a href="#/standings" data-nav="standings">Regular season</a>
+    <a href="#/cup" data-nav="cup">Cup</a>
+    <a href="#/playoffs" data-nav="playoffs">Playoffs</a>
     <a href="#/teams" data-nav="teams">Teams</a>
     <a href="#/players" data-nav="players">Players</a>
   </nav>

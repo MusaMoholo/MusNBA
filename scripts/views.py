@@ -417,7 +417,11 @@ _LINES_CACHE: dict = {}
 def _game_lines(path: Path, gid: str):
     """(lines worlds × players × stats, ids) of one game's stored worlds, cached per run (views only read them)."""
     import numpy as np
-    key = (str(path), gid)
+    def stamp(file):
+        if not file.exists(): return None
+        st=file.stat();return (st.st_ino,st.st_mtime_ns,st.st_size)
+    pl=path/'engine_players.npz';coupled=path/'season_player_indices.npz'
+    key = (str(path), gid, stamp(pl), stamp(coupled))
     if key not in _LINES_CACHE:
         pl = path / 'engine_players.npz'
         out = None
@@ -425,7 +429,7 @@ def _game_lines(path: Path, gid: str):
             with np.load(pl) as z:
                 if f'{gid}__lines' in z.files:
                     lines = z[f'{gid}__lines']
-                    weights = None
+                    weights = z[f'{gid}__weights'] if f'{gid}__weights' in z else None
                     coupled = path / 'season_player_indices.npz'
                     if coupled.exists():
                         with np.load(coupled, allow_pickle=False) as layout:
@@ -439,7 +443,7 @@ def lead_chances(path: Path, gids: list, stat: str, pids: list) -> dict:
     """Chance each of `pids` leads all players of `gids` in `stat` (ties split), pairing world k across games — games are
     independent simulations, so world k of each game together is one simulated night. Read from stored worlds only."""
     import numpy as np
-    cols, ids = [], []
+    cols, ids, masses = [], [], []
     for gid in gids:
         got = _game_lines(path, gid)
         if got is None:
@@ -447,9 +451,18 @@ def lead_chances(path: Path, gids: list, stat: str, pids: list) -> dict:
         lines, gids_ids, weights = got
         j = list(WORLD_STATS).index(stat)
         cols.append(lines[:, :, j].astype(float))
+        masses.append(weights)
         ids += gids_ids
-    W = min(c.shape[0] for c in cols)
-    M = np.concatenate([c[:W] for c in cols], axis=1)
+    if not cols or len({len(c) for c in cols})!=1:
+        return {}  # No stored common world layout: probability stays unavailable.
+    W=len(cols[0])
+    from scripts.world_mass import WorldMass
+    for weights in masses: WorldMass(W,weights)
+    weights=masses[0]
+    expected=np.ones(W,np.int64) if weights is None else weights
+    if any(not np.array_equal(expected,np.ones(W,np.int64) if w is None else w) for w in masses[1:]):
+        return {}
+    M = np.concatenate(cols, axis=1)
     top = M.max(1, keepdims=True)
     lead = (M == top)
     from scripts.world_mass import WorldMass
@@ -785,7 +798,8 @@ def season_movers(snaps, latest_day, season, master):
     previous = None
     for day in sorted((d for d in snaps if d <= latest_day), reverse=True):
         old = read_json(snaps[day]['path'] / 'season.json')
-        if old.get('as_of', day) < cutoff and old.get('model') == season.get('model'):
+        if (old.get('as_of', day) < cutoff and old.get('model') == season.get('model')
+                and old.get('competition_schema') == season.get('competition_schema')):
             previous = (day, old)
             break
     if previous is None:
@@ -905,6 +919,7 @@ def lab(serving: dict) -> dict:
 
 
 def build(views_root: Path = VIEWS) -> dict:
+    _LINES_CACHE.clear()  # Early and final publication are separate stored generations.
     import pyarrow as pa
     pa.set_cpu_count(1)
     pa.set_io_thread_count(1)
@@ -1149,7 +1164,9 @@ def build(views_root: Path = VIEWS) -> dict:
             'season_model': ({'id': season['model'], 'kind': season['pathway'].get('kind'), 'label': season['pathway'].get('label'),
                               'as_of': season.get('as_of'), 'engine_games': len(season.get('engine_games', []))}
                              if season.get('pathway') else {'id': season['model'], 'kind': 'placeholder', 'label': snap['meta']['model'].get('label')}),
+            'competition_schema': season.get('competition_schema'),
             'unresolved_before': len(season['unresolved_before']), 'teams': rows})
+        write_json(api / 'competitions' / f'{day}.json', season.get('competitions') or {'schema': None, 'unavailable': 'This snapshot predates competition capture.'})
 
     P = L['players']
     Qall, _ = period_profiles(period_rows, player_rows, latest_day)
@@ -1268,7 +1285,7 @@ def build(views_root: Path = VIEWS) -> dict:
         'dates': {d: len(by_date.get(d, [])) for d in slate_dates},
         'teams': teams, 'model': latest['meta']['model'], 'availability_policy': latest['meta'].get('availability_policy'),
         'player_icons': player_icons(),
-        'required_capabilities': ['player-icons-v1'] + (['shot-zones-v1'] if any((api/'game').glob('*/court.json')) else []) + (['visible-worlds-v1'] if any((api/'game').glob('*/replay.json')) else []) + (['early-delivery-v1'] if latest['meta'].get('delivery', {}).get('state') == 'partial' else []) + (['minute-cdf-player-v2', 'lineup-forecast-v1'] if any(p['sim'].get('lineups') for p in projections.values()) else []),
+        'required_capabilities': (['competitions-2026-v1'] if season_latest.get('competitions') else []) + ['player-icons-v1'] + (['shot-zones-v1'] if any((api/'game').glob('*/court.json')) else []) + (['visible-worlds-v1'] if any((api/'game').glob('*/replay.json')) else []) + (['early-delivery-v1'] if latest['meta'].get('delivery', {}).get('state') == 'partial' else []) + (['minute-cdf-player-v2', 'lineup-forecast-v1'] if any(p['sim'].get('lineups') for p in projections.values()) else []),
         'data': {'finals': len(finals), 'last_final': max((r['date_et'] for r in finals), default=None),
                  'games': len(master), 'collected_run': registry and read_json(DERIVED / 'players.json')['run']}})
 

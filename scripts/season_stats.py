@@ -27,9 +27,19 @@ def ratio(a, b):
     return a / b if b else None
 
 
+def regular_rows(rows):
+    """Official regular totals exclude known Cup final/play-in/playoffs; raw boxes stay intact."""
+    from scripts import master_fixtures
+    from basketball_common import MASTER_CSV
+    if not MASTER_CSV.exists(): return rows
+    excluded = {g['game_id'] for g in master_fixtures.load()
+                if str(g.get('regular_season', master_fixtures.competition_flags(g.get('notes', ''))['regular_season'])) == '0'}
+    return [r for r in rows if r['game_id'] not in excluded]
+
+
 def team_table(team_rows: list[dict], day: str, teams: dict) -> tuple[dict, dict]:
     """teams: id -> {'abbr', 'conf', 'div'}. Returns (per-team stats, league averages)."""
-    rows = [r for r in team_rows if r['date_et'] < day]
+    rows = [r for r in regular_rows(team_rows) if r['date_et'] < day]
     by_game = defaultdict(dict)
     for r in rows:
         by_game[r['game_id']][r['team_id']] = r
@@ -145,13 +155,15 @@ def period_profiles(period_rows: list[dict], player_rows: list[dict], day: str,
 
     With `blowout`, games whose margin after three quarters exceeds it are left out: the simulation
     applies its own blowout rotation, so profiles should describe competitive games."""
-    skip = set()
+    player_rows = regular_rows(player_rows)
+    allowed = {r['game_id'] for r in player_rows}
+    skip = {r['game_id'] for r in period_rows if r['game_id'] not in allowed}
     if blowout is not None and team_rows:
         by_game = defaultdict(list)
         for r in team_rows:
             if r['date_et'] < day and r['q3'] not in ('', None):
                 by_game[r['game_id']].append(sum(num(r[q]) for q in ('q1', 'q2', 'q3')))
-        skip = {g for g, v in by_game.items() if len(v) == 2 and abs(v[0] - v[1]) > blowout}
+        skip |= {g for g, v in by_game.items() if len(v) == 2 and abs(v[0] - v[1]) > blowout}
     starter = {(r['game_id'], r['player_id']): r['starter'] == '1' for r in player_rows if r['date_et'] < day}
     out = defaultdict(lambda: {k: [0.0] * 5 for k in PERIOD_STATS})
     games = defaultdict(set)
@@ -174,7 +186,7 @@ def period_profiles(period_rows: list[dict], player_rows: list[dict], day: str,
 
 def player_table(player_rows: list[dict], day: str) -> dict:
     """Season aggregates and game logs per player through the cutoff (dnp rows retained)."""
-    rows = [r for r in player_rows if r['date_et'] < day]
+    rows = [r for r in regular_rows(player_rows) if r['date_et'] < day]
     by_player = defaultdict(list)
     for r in rows:
         by_player[r['player_id']].append(r)

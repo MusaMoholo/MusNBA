@@ -536,11 +536,19 @@ def main():
             from basketball_common import sha256_file
             from scripts import engine as engine_mod
             node_models = meta['model'].get('models', meta['model'].get('version', 'v1'))  # v1.2+: node models named separately
-            hashed = meta['inputs']['engine_inputs_sha256']
-            same = all(sha256_file(f) == hashed[k] for k, f in (
+            hashed = meta['inputs'].get('engine_inputs_sha256')
+            source_hashes = meta['inputs'].get('engine_sources_sha256')
+            if source_hashes:
+                # Complete-game provenance hashes all source/model files; private replay
+                # inputs are independently verified by replay_saved_chunk.
+                same = all(sha256_file(ROOT / f) == digest for f, digest in source_hashes.items())
+            elif hashed:
+                same = all(sha256_file(f) == hashed[k] for k, f in (
                 ('latest', engine_mod.features_dir(node_models) / 'latest.parquet'), ('team_latest', engine_mod.features_dir(node_models) / 'team_latest.parquet'),
                 ('stints', DERIVED / 'rotations' / 'stints.parquet'), ('on_court', DERIVED / 'rotations' / 'on_court.parquet'),
                 ('models', DERIVED.parent / 'models' / node_models / 'config.json')) if k in hashed)
+            else:
+                raise ValueError('saved engine replay has no supported input/source hashes')
             if same and (latest/'lineups'/gid/'work-plan.json').exists():
                 equal = replay_saved_chunk(latest/'lineups'/gid,node_models)
                 check(f'{day}: first complete saved world chunk reproduces all raw arrays exactly',equal and not args.fault)

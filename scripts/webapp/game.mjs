@@ -526,7 +526,7 @@ function pathwayView(el, data) {
     ];
     el.innerHTML = `<section class="panel"><h2>Team-pathway distributions</h2>
       <p class="note">${tm.sims.toLocaleString()} simulated seasons · regulation scores only. Ties are resolved for
-      season wins without simulating overtime points, so win chances can differ from the regulation margin.
+      season wins; the distributions shown here exclude overtime, so win chances can differ from the regulation margin.
       Player and period projections arrive on the day of the game.</p>
       ${seg([['total', 'Total'], ['margin', 'Margin']], metric, 'data-pathway-metric')}</section>
       <div class="pathway-grid">${blocks.map(b => distBlock(data, b)).join('')}</div>`;

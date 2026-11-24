@@ -1,0 +1,18 @@
+{
+  "kind": "Primary-source host clarification frozen before corrected outputs; mechanical only",
+  "sources": [
+    "https://pr.nba.com/nba-playoff-seeding-changes",
+    "https://www.nba.com/standings",
+    "https://cdn.nba.com/teams/uploads/sites/1610612760/2024/10/2024-25-Thunder-Media-Guide.pdf"
+  ],
+  "guide_sha256": "f36e8869bcc5bae3a5794f8e92b844d39a1c4c2e35f255a6bb55958cc6e6c76a",
+  "source_precedence": "The generic NBA FAQ still discusses2018-19 and predates permanent play-in. The team guide contains a stale division-top4 paragraph, which is not used; current standings and the later division-seeding announcement control regular ranks. Its separate host clause specifies regular-season record.",
+  "rule": "Within-conference home priority uses the original official regular-season rank (record and current regular tie procedures), while fixed bracket positions use post-play-in seeds. Cup seeds/hosts and Finals record/head-to-head/opposite-conference/drawing remain separate.",
+  "measured_pre_fix": {
+    "worlds": 10000,
+    "conference_series": 140000,
+    "home_priority_original_rank_inversions": 23,
+    "source": "data/derived/experiments/c5_validation_v5/primary10k"
+  },
+  "acceptance": "Corrected event accounting must show no conference host inversion, unchanged82/game-count invariants, exact score/mass/retention and production-format reproduction. No rating/SD/gain tuning or protected rescore. A full fresh corrected nightly must pass."
+}

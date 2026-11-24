@@ -28,7 +28,8 @@ def fingerprints(runtime=None):
     root = Path(__file__).resolve().parents[1]
     paths += [root / 'basketball_common.py']
     paths += [root / f'scripts/{name}.py' for name in ('engine', 'projection', 'minutes', 'rotations', 'nodes', 'matchups',
-              'foul_out', 'lineup_forecast', 'a1_lineup_branches', 'player_worlds', 'forecast_output', 'world_mass', 'rotation_fit', 'late_clock', 'nightly', 'world_detail', 'shot_zones', 'visible_worlds', 'court_assets')]
+              'foul_out', 'lineup_forecast', 'a1_lineup_branches', 'player_worlds', 'forecast_output', 'world_mass', 'rotation_fit', 'late_clock', 'nightly', 'world_detail', 'shot_zones', 'visible_worlds', 'court_assets', 'competitions', 'competition_rules', 'season_stats', 'master_fixtures')]
+    paths.append(root / 'models/competitions_2026.json')
     paths += list((engine.MODELS / runtime['models']).glob('*'))
     if runtime.get('clock_recipe') is not None:
         recipe = root / runtime['clock_recipe']

@@ -1,0 +1,10 @@
+{
+  "kind": "Source-led clarification; no parameter selection",
+  "design": "20261124_c5_design_v1.json",
+  "Finals_host": "Better regular record, head-to-head, OPPOSITE-conference record, seeded drawing. Corrects tentative own-conference wording before production.",
+  "primary_source": "https://www.nba.com/news/playoff-race-breakdown-houston-rockets-and-golden-state-warriors",
+  "source_date": "2018-02-22",
+  "limitation": "Current2026 guide contains historical/statistical pages, no replacement Finals tie procedure found. Primary NBA explanation retained; no contrary current rule found.",
+  "official_guide_sha256": "924efc17f538362800eead6600ebb12b1986b53f8fee2e595b05489be354ac05",
+  "matching": "Exact minimum-cost perfect matchings within each of two slates; orientations follow cycles for one home/away per nonqualifier. QF-loser hosts prefer prior QF away team, fixed slot tie. No travel optimisation; actual draw replaces assumptions."
+}

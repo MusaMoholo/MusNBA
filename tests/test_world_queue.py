@@ -57,7 +57,7 @@ class WorldQueueTests(unittest.TestCase):
             tasks = [(g, [], 13, folder, {})]
             result = list(live_forecast.run(tasks, {'rotation_fit':'independent-v1', 'id':'candidate'}, {},
                                             workers=10, chunk_worlds=1))
-            self.assertEqual(result, [folder])
+            self.assertEqual([str(Path(p).resolve()) for p in result], [str(Path(folder).resolve())])
             self.assertEqual(peak, 10)
             self.assertEqual(seen, {(i,i+1) for i in range(13)})
             self.assertEqual(read_json(Path(folder)/'work-plan.json')['worlds'], 13)

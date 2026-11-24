@@ -29,7 +29,7 @@ sys.path.insert(0, str(ROOT))
 from basketball_common import ARCHIVE_ROOT, LOGOS, VIEWS, WEB, archive_paths, packed  # noqa: E402
 from scripts.player_icons import ICONS as PLAYER_ICONS, catalogue as player_icons
 
-MODULES = ['app', 'ui', 'today', 'game', 'league', 'players', 'lab', 'season', 'about', 'spotlight', 'outcomes', 'scenario', 'pwa', 'pwa-storage', 'static-api', 'weighted-worlds', 'precise-minutes', 'lineup-worlds', 'box-metrics', 'shot-zones', 'court', 'replay', 'explore']
+MODULES = ['app', 'ui', 'today', 'game', 'league', 'players', 'lab', 'season', 'about', 'spotlight', 'outcomes', 'scenario', 'pwa', 'pwa-storage', 'static-api', 'weighted-worlds', 'precise-minutes', 'lineup-worlds', 'box-metrics', 'shot-zones', 'court', 'replay', 'explore', 'competitions', 'competition-paths']
 ICONS = ['icon.svg', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png']
 BOOT = "<script type=\"module\" id=\"boot\">import {boot} from './assets/app.mjs'; boot();</script>"
 STATIC_BOOT = ("<script type=\"module\" id=\"boot\">import {boot} from './assets/app.mjs'; "
@@ -140,6 +140,10 @@ def phone_record(key: str, text: str) -> str | None:
     if parts[:2] == ['api', 'game'] and len(parts) == 4 and parts[3] == 'court':
         d = json.loads(text)
         d.pop('cases', None)
+        return json.dumps(d, separators=(',', ':'), ensure_ascii=False)
+    if parts[:2] == ['api', 'competitions']:
+        d = json.loads(text)
+        for field in ('paths', 'weights', 'receipt'): d.pop(field, None)
         return json.dumps(d, separators=(',', ':'), ensure_ascii=False)
     if parts[:2] == ['api', 'slate']:
         d = json.loads(text)

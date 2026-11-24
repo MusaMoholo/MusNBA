@@ -1,0 +1,17 @@
+{
+  "assigned_slots": 31,
+  "all_consumed_once": true,
+  "regular_wins_exact": true,
+  "ledger_audit": {
+    "worlds": 1,
+    "regular_games_per_world": 1230,
+    "regular_games_per_team": 82,
+    "cup_events_per_world": 67,
+    "playin_per_world": 6,
+    "playoff_teams_per_world": 16,
+    "series_per_world": 15,
+    "champions_per_world": 1,
+    "canonical_slots": 1342,
+    "negative_OT_proposals_rejected": 0
+  }
+}

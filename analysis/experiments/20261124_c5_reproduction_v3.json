@@ -1,0 +1,9 @@
+{
+  "kind": "Production-format deterministic mechanical replay; no protected scoring",
+  "worlds": 40,
+  "probability_mass": 100,
+  "sha256": "599651473c17c7b8cb45f0c3e83c61b66de96743e382e2df35a9ddf79a69f738",
+  "exact": true,
+  "engine_full_game_summary_includes_OT": true,
+  "legacy_smoke_log": "/tmp/musnba_c5_preflight_smoke_v2.log"
+}

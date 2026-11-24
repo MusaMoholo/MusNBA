@@ -1,0 +1,11 @@
+{
+ "kind": "C5 full online nightly measured result",
+ "ended": "2026-11-24T06:42:34.806827+00:00",
+ "exit_code": 241,
+ "seconds": 164.9151333750051,
+ "limit_seconds": 3600,
+ "within_limit": true,
+ "source_exact": true,
+ "changed_sources": [],
+ "start_report_sha256": "c19ed6a657d57caa2404deb9268d5783ef15288acb9917581d495a968cc6188c"
+}

@@ -14,11 +14,14 @@ const BASE = args.base || 'http://127.0.0.1:8767';
 const OUT = args.out || join(tmpdir(), 'musnba-shots');
 const CHROME = args.chrome || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const SIZES = {desktop: [1440, 1000, 1, false], half: [960, 1000, 1, false], phone: [390, 844, 2, true]};
-const EXPECT = {'legacy-season': 'Season races', season: 'Season races', 'season-leaders': 'Season leaders · to date', 'season-movers': 'Since the previous forecast', about: 'About the model', 'standings-picture': 'playoff picture'};
+const EXPECT = {'legacy-season': 'Season races', season: 'Season races', 'season-leaders': 'Season leaders · to date',  about: 'About the model', 'standings-picture': 'playoff picture'};
 const only = args.only ? String(args.only).split(',') : null;
 
 // name, hash, sizes, themes
 const CASES = [
+  ['c5-cup', '#/cup', ['desktop','half','phone'], ['dark','light']],
+  ['c5-playoffs', '#/playoffs', ['desktop','half','phone'], ['dark','light']],
+  ['c5-regular', '#/standings/forecast', ['desktop','half','phone'], ['dark','light']],
   ['c4-analysis', '#/game/' + (args['lineup-game'] || '401910036') + '/analysis', ['desktop','half','phone'], ['dark','light']],
   ['c4-projected', '#/game/' + (args['lineup-game'] || '401910036') + '/analysis', ['desktop','half','phone'], ['dark','light']],
   ['c4-observed', '#/game/' + (args['lineup-game'] || '401910036') + '/analysis', ['desktop','half','phone'], ['dark','light']],
@@ -156,6 +159,29 @@ for (const [name, hash, sizes, themes] of CASES) {
       ready = result.value === true;
     }
     let interaction = true;
+    if(name==='season-movers') interaction=(await send('Runtime.evaluate',{expression:`(async()=>{const ui=await import('./assets/ui.mjs'),d=await ui.api('season_movers'),text=document.querySelector('#view').textContent;return d.from?text.includes('Since the previous forecast'):text.includes('A previous season forecast')&&!document.querySelector('.mover-card');})()`,awaitPromise:true,returnByValue:true},sessionId)).result.value===true;
+    if (name.startsWith('c5-')) {
+      interaction = (await send('Runtime.evaluate', {expression: `(async()=>{
+        const ui=await import('./assets/ui.mjs'),data=await ui.api('competitions/'+ui.meta().latest);
+        if(!data.schema)return false;
+        if(${JSON.stringify(name)}==='c5-regular')return [...document.querySelectorAll('a[data-nav]')].length===6 && document.querySelector('#view').textContent.includes('Top 6');
+        const helper=await import('./assets/competition-paths.mjs'),paths=helper.decodePaths(data);
+        if(!paths||document.querySelectorAll('[data-competition-stages] tbody tr').length!==30)return false;
+        document.querySelector('.competition-condition').open=true;
+        const select=document.querySelector('[data-condition]');select.value='title';select.dispatchEvent(new Event('change'));
+        const tid=document.querySelector('[data-condition-team]').value,expected=helper.stageSummary(paths,helper.conditionMask(paths,tid,'title'));
+        if(!document.querySelector('.competition-support').textContent.includes(expected.count.toLocaleString()+' matching paths'))return false;
+        const reset=document.querySelector('[data-reset]');reset.click();
+        const stage=document.querySelector('[data-stage]');stage.value=${JSON.stringify(name==='c5-cup'?'cup_final':'finals')};stage.dispatchEvent(new Event('change'));
+        const expectedMatches=helper.matchups(paths,stage.value);
+        if(document.querySelectorAll('[data-competition-matchups] tbody tr').length!==expectedMatches.rows.length)return false;
+        await Promise.resolve();
+        const th=document.querySelector('[data-competition-stages] th:nth-child(2)');th.click();
+        if(!th.hasAttribute('aria-sort'))return false;
+        const selector=${JSON.stringify(Boolean(args['all-c5-targets']))}?'.mainnav a,#view select,#view button,#view summary,#view th[role=button]':'.mainnav a,.competition-condition select,.competition-condition button,.competition-condition summary';
+        return [...document.querySelectorAll(selector)].filter(el=>el.getClientRects().length&&el.getBoundingClientRect().height>0).every(el=>el.getBoundingClientRect().height>=44);
+      })()`,awaitPromise:true,returnByValue:true},sessionId)).result.value===true;
+    }
     if (name.startsWith('c4-')) {
       interaction = (await send('Runtime.evaluate', {expression: `(async () => {
         const kind=${JSON.stringify(name)}, gid=${JSON.stringify(args['lineup-game'] || (name==='c4-lineup'?'401910037':'401910036'))};
@@ -339,7 +365,7 @@ for (const [name, hash, sizes, themes] of CASES) {
         if (game.projection || !dist || blocks.length !== 3 || !input
             || awayPoints !== ui.f1(dist.away.mean) || homePoints !== ui.f1(dist.home.mean)
             || document.querySelector('[data-view="player"], [data-view="team"], [data-view="scenario"]')
-            || !document.querySelector('#game-body').textContent.includes('without simulating overtime points')) return false;
+            || !document.querySelector('#game-body').textContent.includes('the distributions shown here exclude overtime')) return false;
         input.value = '200.5';
         input.dispatchEvent(new Event('change', {bubbles: true}));
         if (document.querySelector('[data-block="pathway-total"] output')?.textContent !== 'Over: ' + ui.pct(ui.over(dist.total, 200.5))) return false;

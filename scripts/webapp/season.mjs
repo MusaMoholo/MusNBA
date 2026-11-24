@@ -8,7 +8,7 @@ export async function render(view, {meta, current, rest}) {
   const leadersData = tab === 'leaders' ? await api('players') : null;
   if (!current()) return;
   const paint = () => {
-    view.innerHTML = `<section class="panel"><h2>Standings &amp; season forecast</h2><p class="note">As of ${esc(dayLabel(data.season_model?.as_of || data.date))} · ${data.sims.toLocaleString()} simulated seasons · only scheduled fixtures included</p>
+    view.innerHTML = `<section class="panel"><h2>Standings &amp; season forecast</h2><p class="note">As of ${esc(dayLabel(data.season_model?.as_of || data.date))} · ${data.sims.toLocaleString()} ${data.probability_mass != null ? 'weighted paths' : 'simulated seasons'} · ${data.competition_schema ? 'complete82-game paths' : 'only scheduled fixtures included'}</p>
       <div class="controls" style="margin-top:12px">${standingsNav(tab)}</div></section>
       ${tab === 'leaders' ? leaders(leadersData, data) : tab === 'movers' ? movers(moves) : `<section class="panel"><h2>Season races</h2><div class="controls">${seg([['East', 'East'], ['West', 'West'], ['League', 'League']], state.conf, 'data-season-conf')}</div>
       ${raceChart(data.teams.filter(t => state.conf === 'League' || t.conf === state.conf))}</section>
@@ -35,7 +35,7 @@ function probabilityRace(rows, key, title, bottom = false) {
 }
 
 function movers(data) {
-  if (!data?.from || !data.teams.length) return '<section class="panel"><h2>Movers</h2><p class="note">A previous season forecast with an earlier cutoff and the same model is needed. Tomorrow’s copy of today’s forecast is not a second observation.</p></section>';
+  if (!data?.from || !data.teams.length) return '<section class="panel"><h2>Movers</h2><p class="note">A previous season forecast with an earlier cutoff and the same model/calendar is needed. Tomorrow’s copy of today’s forecast is not a second observation.</p></section>';
   const changed = data.teams.slice().sort((a, b) => b.delta.mean_w - a.delta.mean_w);
   const card = (rows, title) => `<section class="panel"><h2>${title}</h2>${rows.slice(0, 5).map(t => `<div class="mover-card">${teamLink(t.id)}<b class="${t.delta.mean_w >= 0 ? 'up' : 'down'}">${signed(t.delta.mean_w)} wins</b></div>`).join('')}</section>`;
   return `<section class="panel"><h2>Since the previous forecast</h2><p class="note">${esc(dayLabel(data.from))} → ${esc(dayLabel(data.to))} · same season model · ${data.results.length} results in this interval${data.from_kind === 'retrospective' ? ' · previous forecast is retrospective' : ''}. Changes include results, updated inputs and simulation variation; no individual result is assigned a causal contribution.</p></section>

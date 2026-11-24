@@ -1,0 +1,65 @@
+{
+ "kind": "Full current stored-snapshot view preflight; no production replacement/possession simulation",
+ "source_day": "2026-11-24",
+ "scratch": "/tmp/musnba-c5-full-preflight-v1",
+ "snapshot_sha256": {
+  "engine_worlds.npz": "ffa35831a6d873b610e508ed191ab3c1e27e5cad72ae36329f5e0e57ee16224f",
+  "engine_players.npz": "413d0d616ab65deeece42d7274b9cf5d619d0b82915250bae0b28526fd043dcd",
+  "season_engine_worlds.npz": "1917eceed781b4a47d4c833ebe29d6b830601e0084245001a328a4c3d333057c",
+  "season_player_indices.npz": "2f2b10a12edc220becfda60f8bd4657256b906cace891dde83771e9ef885535c",
+  "meta.json": "2eef317613e1932adabfd8ae2c8be5bc76af24a242fccad447fd9cbb52f48cf0",
+  "stats.json": "ad732d0a1b2a28f367bae5d2095f94141b93702293cae930711c7a4d41ec10df",
+  "season.json": "78c2106d8ad6610b833a874f4b8e307c0f38bfb013d15bdd1b1d38294dc7f141"
+ },
+ "early_raw_worlds": 20000,
+ "final_coupled_worlds": 30001,
+ "probability_mass": 40000,
+ "cache_refresh_exact": true,
+ "independent_leader_checks": [
+  {
+   "stat": "pts",
+   "players": 88,
+   "max_rounding_error": 5.000000000000002e-05,
+   "unrounded_mass_sum": 1.0
+  },
+  {
+   "stat": "reb",
+   "players": 88,
+   "max_rounding_error": 5e-05,
+   "unrounded_mass_sum": 1.0000000000000009
+  },
+  {
+   "stat": "ast",
+   "players": 88,
+   "max_rounding_error": 5e-05,
+   "unrounded_mass_sum": 1.0000000000000004
+  },
+  {
+   "stat": "fg3m",
+   "players": 88,
+   "max_rounding_error": 5e-05,
+   "unrounded_mass_sum": 0.9999999999999999
+  },
+  {
+   "stat": "stl",
+   "players": 88,
+   "max_rounding_error": 4.9438547563543725e-05,
+   "unrounded_mass_sum": 1.0
+  },
+  {
+   "stat": "blk",
+   "players": 88,
+   "max_rounding_error": 4.975919186891303e-05,
+   "unrounded_mass_sum": 1.0000000000000013
+  }
+ ],
+ "view_build": {
+  "files": 2103,
+  "latest": "2026-11-24"
+ },
+ "seconds": 74.12359283299884,
+ "competition_identity": "e7bbf17b56187569b60f9873d4d2009ed62c0a96addb7dabb4e01df3a4c3732c",
+ "conference_host_inversions": 0,
+ "production_unchanged": true,
+ "status": "pass"
+}

@@ -51,7 +51,7 @@ No repository CI workflows; built-in Pages deployment provides hosting. Preserve
 
 Today prioritises games/player boxes and expandable slate insight. Game Centre shares Q1–Q4/H1/H2/FG selectors across player/team/sheet/scenarios;
 FG includes OT for possession games. Future pathway totals/margins are regulation with a separately resolved winner, no player forecasts.
-Standings contains forecast/seeds/wins/ratings, races/playoff picture; marginal seeds are not simulated playoff winners.
+Regular season contains standings/seeds/wins/ratings/races. Cup and Playoffs show coherent stage probabilities; laptop adds exact conditional paths, matchups and series lengths. Initial postseason odds are uncalibrated; calendar/OT assumptions remain expandable.
 Teams/Players lead with schedules/rosters/logs and expandable advanced detail. Teams has three headline cards, six expandable profile cards and collapsible form;
 Standings collapses threshold controls. Lab is accessible through About, outside primary navigation.
 
@@ -67,7 +67,7 @@ Advanced links and phone sortable headers have 44px targets. Sortable columns su
 sorting covers the full filtered population; other enhanced tables sort displayed rows. Shooting pairs sort by percentage; charts/period axes retain order.
 U23 joint-scorer/Q3 outcome stories, offline photos/initials fallback and startup Reload remain. Laptop Saved worlds plays five source-identified examples with seek/step/speed, cumulative boxes and rotations; lineup filters preserve
 branch identity. These are generated segments/zones, without tracking or invented passes. Phone retains Expected maps/metrics.
-Older snapshots lacking capture show unavailable detail. Competitions remain C5 work.
+Older snapshots lacking capture show unavailable detail. Phone keeps aggregate competition probabilities; conditional paths stay laptop-only.
 
 Slates are ET; times show UK/ET. Spreads are projected mean margins. Exact float64 minutes drive conditions; display rounds to seconds.
 Over is strictly greater than x.5; shooting percentages condition on attempts and show no-attempt mass separately.
@@ -91,7 +91,7 @@ Fresh clones: inspect existing hooks before `git config --local core.hooksPath .
 
 Core path: `fetch_*`/`history` → `plays`/`possessions`/`rotations` → `features`/`minutes`/`matchups` → `nodes`/`train`/`evaluate`.
 `engine.py` simulates, `live_forecast.py` queues canonical chunks, `lineup_forecast.py`/`world_mass.py` preserve exact mixtures,
-`pathway.py` simulates seasons, `nightly*.py` orchestrates, `views.py`/`serve.py`/`webapp/` serve stored results.
+`pathway.py` supplies ratings; `competitions.py`/`competition_rules.py` build versioned calendar/postseason paths, `nightly*.py` orchestrates, `views.py`/`serve.py`/`webapp/` serve stored results.
 `compare.py` grades node runs; `a1_compare.py` grades matched engine distributions; `release_gate.py` requires explicit policy.
 Legacy `backtest_compare.py`/`a1_minutes_gate.py` are historical protocols, not generic promotion gates.
 Use `--help` and MODEL before launching. Fold backtests require `--clock-recipe` when the production pool cutoff differs from the fold nodes; freeze prior-fitted fold parameters first. Parent preflight rejects mismatched dates before worker startup. `train.py --threads 10` caps fitting; backtest uses `--jobs 10` plus BLAS caps.

@@ -145,6 +145,9 @@ def season(T, master, day, teams, played, rng, engine_pts=None, params=None, wei
     base_l = np.array([T[t]['l'] for t in ids], np.float32)
     games_left = H.sum(0) + A.sum(0)
     wins = np.rint(base_w + home_wins @ H + (1 - home_wins) @ A).astype(np.int64)
+    if 'competition_wins' in played:
+        wins = played['competition_wins'].astype(np.int64)
+        games_left = 82 - base_w - base_l
     total_games = (base_w + base_l + games_left).astype(int)
     tiebreak = rng.random((W, len(ids)))
     seed = np.zeros((W, len(ids)), np.int64)
@@ -154,6 +157,8 @@ def season(T, master, day, teams, played, rng, engine_pts=None, params=None, wei
         ranks = np.empty_like(order)
         ranks[np.arange(W)[:, None], order] = np.arange(1, len(cols) + 1)[None, :]
         seed[:, cols] = ranks
+    if 'competition_seed' in played:
+        seed = played['competition_seed']
     league_key = wins + 0.5 * tiebreak
     best, worst = np.argmax(league_key, axis=1), np.argmin(league_key, axis=1)
     bottom3 = np.argsort(league_key, axis=1, kind='stable')[:, :3]
@@ -185,6 +190,11 @@ def season(T, master, day, teams, played, rng, engine_pts=None, params=None, wei
                       'spread is calibrated walk-forward on 2022-26 (first cut, slightly wide in November).',
                       'Ties broken at random; NBA tiebreakers arrive with phase 4.',
                       'Only games the provider has scheduled are simulated; NBA Cup-determined games appear once scheduled.']}
+    if 'competitions' in played:
+        result['competitions'] = played['competitions']
+        result['competition_schema'] = played['competitions']['schema']
+        result['pathway']['competition_schema'] = played['competitions']['schema']
+        result['notes'][1:] = played['competitions']['assumptions']
     if weights is not None:
         result.update(weighted_paths_schema=1, probability_mass=mass.total)
         result['notes'].append("Season paths carry the same availability assumptions as today's Expected games; paths are weighted.")

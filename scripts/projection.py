@@ -422,6 +422,10 @@ def simulate_season(T: dict, lg: dict, master: list[dict], day: str, teams: dict
     remaining = sorted((r for r in master if r['date_et'] >= day), key=lambda r: (r['date_et'], r['tip_utc'], r['game_id']))
     unresolved = [r for r in master if r['date_et'] < day and r['status'] != 'final']
     G = len(remaining)
-    played = pathway.play(T, lg, remaining, W, rng, engine_pts, params)
+    if master and all(r.get('season') == '2026-27' for r in master) and (params is None or params.get('competition_schema')):
+        from scripts import competitions
+        played = competitions.play(T, lg, master, day, teams, engine_pts, W, params, weights)
+    else:
+        played = pathway.play(T, lg, remaining, W, rng, engine_pts, params)
     from scripts.forecast_output import season as format_season
     return format_season(T, master, day, teams, played, rng, engine_pts, params, weights)
