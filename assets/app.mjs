@@ -6,9 +6,10 @@ import * as league from './league.mjs';
 import * as players from './players.mjs';
 import * as lab from './lab.mjs';
 import * as about from './about.mjs';
+import * as competitions from './competitions.mjs';
 
-const VIEWS = {today, game, standings: league, teams: league, team: league, players, player: players, lab, about, season: league};
-const NAV = {today: 'today', game: 'today', standings: 'standings', teams: 'teams', team: 'teams', players: 'players', player: 'players', lab: 'lab', season: 'standings'};
+const VIEWS = {today, game, cup: competitions, playoffs: competitions, standings: league, teams: league, team: league, players, player: players, lab, about, season: league};
+const NAV = {cup:'cup', playoffs:'playoffs', today: 'today', game: 'today', standings: 'standings', teams: 'teams', team: 'teams', players: 'players', player: 'players', lab: 'lab', season: 'standings'};
 let token = 0;
 const scrolls = new Map();
 let lastHash = location.hash;

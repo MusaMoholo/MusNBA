@@ -36,7 +36,7 @@ async function standings(view, {meta, current, rest}) {
     let rows = data.teams.filter(t => state.conf === 'League' || t.conf === state.conf);
     rows.sort((a, b) => (b.pct ?? 0) - (a.pct ?? 0) || (b.w - a.w) || (b.forecast.mean_w - a.forecast.mean_w) || a.abbr.localeCompare(b.abbr));
     let body;
-    if (state.view === 'forecast') body = forecastTable(rows, state.conf === 'League');
+    if (state.view === 'forecast') body = forecastTable(rows, state.conf === 'League', Boolean(data.competition_schema));
     else if (state.view === 'picture') body = playoffPicture(rows);
     else if (state.view === 'wins') body = winsTable(rows, data.sims, data.probability_mass != null);
     else if (state.view === 'seeds') body = state.conf === 'League' ? '<p class="note">Seeds are within a conference: choose East or West.</p>' : seedsTable(rows);
@@ -128,7 +128,7 @@ function miniWins(w, maxWins) {
 
 // Forecast table (owner, 20 Nov): current (W, L, W%, GB, L10, Strk, Net) and projected groups split by a dotted line;
 // Proj W and Proj L separate; every numeric column sortable (click again to reverse); seed lines only in standings order.
-function forecastTable(rows, league) {
+function forecastTable(rows, league, completeCalendar = false) {
   const wN = state.fWinsN, wEx = state.fWinsMode === 'exact', sN = state.fSeedN, sEx = state.fSeedMode === 'exact';
   const strk = t => { const m = String(t.streak || '').match(/^([WL])(\d+)/); return m ? (m[1] === 'W' ? 1 : -1) * Number(m[2]) : 0; };
   const winsCol = t => (wEx ? winsShare(t.forecast.wins, wN, wN) : winsShare(t.forecast.wins, wN, 999));
@@ -160,7 +160,7 @@ function forecastTable(rows, league) {
       cell ? `<td class="${cls}">${cell(t)}</td>` : heat(v(t), {digits: v === winsCol && wEx ? 1 : 0})).join('')}</tr>`;
   }).join('');
   return `<div class="scroll"><table class="forecast"><thead>${head}</thead><tbody>${body}</tbody></table></div>
-    <p class="note">Current record left of the dotted line, the simulated season right of it. Proj W and Proj L cover ${rows[0]?.forecast.scheduled ?? '—'} scheduled games per team; additional NBA Cup fixtures join when scheduled. Tap a header to sort (again to reverse); # is the standing${sort ? '' : '; lines mark seeds 6 and 10'}.</p>`;
+    <p class="note">Current record left of the dotted line, the simulated season right of it. Proj W and Proj L cover ${rows[0]?.forecast.scheduled ?? '—'} regular-season games per team. ${completeCalendar ? 'Cup-determined slots are included in82; the Cup final is excluded.' : 'This legacy forecast includes provider-scheduled fixtures only.'} Tap a header to sort (again to reverse); # is the standing${sort ? '' : '; lines mark seeds 6 and 10'}.</p>`;
 }
 
 function seedsTable(rows) {
