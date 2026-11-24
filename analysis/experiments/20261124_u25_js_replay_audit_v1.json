@@ -1,0 +1,16 @@
+{
+  "kind": "shipped browser replay accumulator, all saved examples and zero/midpoint/final prefixes",
+  "games": 3,
+  "examples": 15,
+  "cutpoints": 45,
+  "player_boxes": 440,
+  "overtime_examples": 1,
+  "max_minute_error": 1.1102230246251565e-16,
+  "view_sha256": {
+    "data/views/api/game/401909314/replay.json": "e4402c36403d6c4f78ae234da7de17998059b7d268969bfdd00d1dca7c5e28c7",
+    "data/views/api/game/401909315/replay.json": "ab5c2daaccb9febd13b024febf9f6e8615fcd849721b0deb9737a906ef6eeef9",
+    "data/views/api/game/401909316/replay.json": "9b63c13e4a59def7ae957c15229aff86c6a71f30d38a91aa1ac3c017c89175d5"
+  },
+  "module_sha256": "f4062ea6f562494444b0dfb9dafe1f244a934b6036a8b28d34fa586f68666e6f",
+  "status": "pass"
+}

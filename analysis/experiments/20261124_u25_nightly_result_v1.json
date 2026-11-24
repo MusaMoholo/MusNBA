@@ -1,0 +1,11 @@
+{
+ "kind": "U25 full nightly measured result",
+ "ended": "2026-11-24T11:02:11.452710+00:00",
+ "exit_code": 241,
+ "seconds": 356.1877978329994,
+ "limit_seconds": 3600,
+ "within_limit": true,
+ "source_exact": true,
+ "changed_sources": [],
+ "start_sha256": "eba08462cffa3fb4e34e38c35a961b946422a455738e70d46308ac2d9df14938"
+}

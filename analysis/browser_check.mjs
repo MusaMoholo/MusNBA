@@ -19,6 +19,11 @@ const only = args.only ? String(args.only).split(',') : null;
 
 // name, hash, sizes, themes
 const CASES = [
+  ['u25-today', '#/today/2026-11-24', ['desktop','half','phone'], ['dark','light']],
+  ['u25-box', '#/game/401909314', ['desktop','half','phone'], ['dark','light']],
+  ['u25-scenario', '#/game/401909314/scenario', ['desktop','half','phone'], ['dark','light']],
+  ['u25-sheet', '#/game/401909314/player/4566434/fg', ['desktop','half','phone'], ['dark','light']],
+  ['u25-analysis', '#/game/' + (args['lineup-game'] || '401909314') + '/analysis', ['desktop','half','phone'], ['dark','light']],
   ['c5-cup', '#/cup', ['desktop','half','phone'], ['dark','light']],
   ['c5-playoffs', '#/playoffs', ['desktop','half','phone'], ['dark','light']],
   ['c5-regular', '#/standings/forecast', ['desktop','half','phone'], ['dark','light']],
@@ -160,6 +165,34 @@ for (const [name, hash, sizes, themes] of CASES) {
     }
     let interaction = true;
     if(name==='season-movers') interaction=(await send('Runtime.evaluate',{expression:`(async()=>{const ui=await import('./assets/ui.mjs'),d=await ui.api('season_movers'),text=document.querySelector('#view').textContent;return d.from?text.includes('Since the previous forecast'):text.includes('A previous season forecast')&&!document.querySelector('.mover-card');})()`,awaitPromise:true,returnByValue:true},sessionId)).result.value===true;
+    if(name==='u25-analysis') {
+      interaction=(await send('Runtime.evaluate',{expression:`(async()=>{
+        const fail=reason=>{console.error('U25 check: '+reason);return false;};
+        const ui=await import('./assets/ui.mjs'),d=await ui.api('game/'+${JSON.stringify(args['lineup-game']||'401909314')});
+        const team=document.querySelector('[data-analysis-team]'),player=document.querySelector('[data-metric-subject]');
+        if(!team||!player||!document.querySelector('[data-player-picker]').hidden)return fail('stage1');
+        for(const side of ['home','away']){
+          team.value=side;team.dispatchEvent(new Event('change'));
+          if(document.querySelector('[data-court-name]').textContent!==ui.team(d.game[side].id).name)return fail('stage2');
+          document.querySelector('[data-subject-kind=player]').click();
+          if(document.querySelector('[data-player-picker]').hidden)return fail('stage3');
+          const options=[...player.options].filter(o=>o.value.startsWith('p:'));
+          if(options.length!==d.projection.sim[side].players.length||options.some(o=>!d.projection.sim[side].players.some(p=>'p:'+p.id===o.value)))return fail('stage4');
+          const last=options.find(o=>{const p=d.projection.sim[side].players.find(p=>'p:'+p.id===o.value);return Object.values(p.periods?.fg?.advanced||{}).some(d=>d.defined>0&&d.exact_q);});if(!last)return fail('no supported player');player.value=last.value;player.dispatchEvent(new Event('change'));
+          if(document.querySelector('[data-court-name]').textContent!==last.textContent)return fail('stage5');
+          document.querySelector('[data-analysis-tab=metrics]').click();
+          if(document.querySelectorAll('[data-metric-cards] article').length!==9||!document.querySelector('.quantile-strip'))return fail('stage6');
+          const shooting=document.querySelector('[data-analysis-tab=shooting]');shooting.click();
+          if(player.value!==last.value||!document.querySelector('.zone-profile'))return fail('stage7');
+          const zone=document.querySelector('g[data-zone="0"]');zone.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true}));
+          if(!zone.classList.contains('selected'))return fail('stage8');
+          shooting.focus();shooting.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true}));
+          if(document.querySelector('[data-analysis-metrics]').hidden)return fail('stage9');
+          shooting.click();document.querySelector('[data-subject-kind=team]').click();
+        }
+        return [...document.querySelectorAll('.analysis-picker select,.analysis-picker button,.analysis-tools button')].filter(e=>e.getClientRects().length).every(e=>e.getBoundingClientRect().height>=44);
+      })()`,awaitPromise:true,returnByValue:true},sessionId)).result.value===true;
+    }
     if (name.startsWith('c5-')) {
       interaction = (await send('Runtime.evaluate', {expression: `(async()=>{
         const ui=await import('./assets/ui.mjs'),data=await ui.api('competitions/'+ui.meta().latest);
@@ -193,7 +226,7 @@ for (const [name, hash, sizes, themes] of CASES) {
           if(!pid)return false;
           for(const choice of [false,true]) {
             O.chooseLineup(gid,pid,choice);await G.render(document.querySelector('#view'),{rest:[gid,'analysis'],current:()=>true});
-            const subject=document.querySelector('[data-metric-subject]');subject.value='t:home';subject.dispatchEvent(new Event('change'));
+            const subject=document.querySelector('[data-analysis-team]')||document.querySelector('[data-metric-subject]');subject.value=subject.matches('[data-analysis-team]')?'home':'t:home';subject.dispatchEvent(new Event('change'));
             const expected=Object.values(source.cases).find(c=>Object.keys(c.choices).length===1&&c.choices[pid]===choice);
             const row=document.querySelector('[data-court-body] tbody tr'),shown=Number(row?.cells[2].textContent);
             if(!expected||Math.abs(shown-expected.home.attempts[0])>.051)return false;
@@ -635,10 +668,11 @@ for (const [name, hash, sizes, themes] of CASES) {
     const expected = EXPECT[name];
     const content = !expected || (await send('Runtime.evaluate', {expression: `document.querySelector('#view').textContent.includes(${JSON.stringify(expected)})`, returnByValue: true}, sessionId)).result.value === true;
     const stacked = !(['team', 'team-no-proj'].includes(name) && size === 'phone') || (await send('Runtime.evaluate', {expression: `(() => { const items = [...document.querySelectorAll('.form-grid > div')]; return items.length < 2 || items[1].getBoundingClientRect().top >= items[0].getBoundingClientRect().bottom - 1; })()`, returnByValue: true}, sessionId)).result.value === true;
-    const ok = ready && interaction && content && stacked && !overflow && errors.length === 0;
+    const clippedControls=(await send('Runtime.evaluate',{expression:`[...document.querySelectorAll('.seg button,.seg a')].filter(e=>e.getClientRects().length&&e.scrollWidth>e.clientWidth+1).map(e=>({label:e.textContent.trim(),width:e.clientWidth,needed:e.scrollWidth}))`,returnByValue:true},sessionId)).result.value||[];
+    const ok = ready && interaction && content && stacked && !overflow && !clippedControls.length && errors.length === 0;
     if (!ok) failures++;
-    report.push({name, size, theme, ok, ready, interaction, content, stacked, overflow, scrollWidth: d.scrollWidth, wide: d.wide, errors});
-    console.log(`${ok ? 'PASS' : 'FAIL'}  ${name.padEnd(14)} ${size.padEnd(7)} ${theme.padEnd(5)} ${ready ? '' : 'not-ready '}${interaction ? '' : 'interaction-failed '}${content ? '' : 'wrong-content '}${stacked ? '' : 'not-stacked '}${overflow ? `overflow ${d.scrollWidth}>${d.innerWidth} ${d.wide.join(',')} ` : ''}${errors.length ? 'errors: ' + errors.slice(0, 2).join(' | ') : ''}`);
+    report.push({name, size, theme, ok, ready, interaction, content, stacked, clippedControls, overflow, scrollWidth: d.scrollWidth, wide: d.wide, errors});
+    console.log(`${ok ? 'PASS' : 'FAIL'}  ${name.padEnd(14)} ${size.padEnd(7)} ${theme.padEnd(5)} ${ready ? '' : 'not-ready '}${interaction ? '' : 'interaction-failed '}${content ? '' : 'wrong-content '}${stacked ? '' : 'not-stacked '}${clippedControls.length ? 'clipped-tabs '+JSON.stringify(clippedControls)+' ' : ''}${overflow ? `overflow ${d.scrollWidth}>${d.innerWidth} ${d.wide.join(',')} ` : ''}${errors.length ? 'errors: ' + errors.slice(0, 2).join(' | ') : ''}`);
     listeners.splice(listeners.indexOf(onMsg), 1);
     await send('Target.closeTarget', {targetId});
   }

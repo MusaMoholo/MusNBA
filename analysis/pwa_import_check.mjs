@@ -594,14 +594,15 @@ check('starter-score timing stays honest offline', await waitFor(`document.query
 await send('Page.navigate', {url: args.url + '#/about'}, s);
 check('model guide numbers follow loaded simulation counts', await evaluate(`(async () => {
   const ui = await import('./assets/ui.mjs'), page = await import('./assets/about.mjs');
-  ui.meta().model.sims = 1234;
-  (await ui.api('standings/' + ui.meta().latest)).sims = 4321;
-  await page.render(document.querySelector('#view'), {meta: ui.meta(), current: () => true});
-  const text = document.querySelector('#view').textContent;
-  const season=await ui.api('standings/'+ui.meta().latest);
-  return text.includes('1,234 worlds per lineup case') && text.includes('Each explicit lineup case is played 1,234 times')
-    && text.includes('4,321 '+(season.probability_mass!=null?'weighted season paths':'simulated seasons'))
-    && text.includes('60% of the probability weight');
+  const season=await ui.api('standings/'+ui.meta().latest),originalGame=ui.meta().model.sims,originalSeason=season.sims;
+  try {
+    ui.meta().model.sims = 1234;season.sims = 4321;
+    await page.render(document.querySelector('#view'), {meta: ui.meta(), current: () => true});
+    const text = document.querySelector('#view').textContent;
+    return text.includes('1,234 worlds per lineup case') && text.includes('Each explicit lineup case is played 1,234 times')
+      && text.includes('4,321 '+(season.probability_mass!=null?'weighted season paths':'simulated seasons'))
+      && text.includes('60% of the probability weight');
+  } finally { ui.meta().model.sims=originalGame;season.sims=originalSeason; }
 })()`));
 if (args['require-headshots']) {
   await send('Page.navigate', {url: args.url + '#/player/1966'}, s);
@@ -655,6 +656,25 @@ if (args['require-u24']) {
     })()`));
   }
 }
+if(args['require-u25']) {
+  const gid=String(args['require-u25']);
+  await send('Page.navigate',{url:args.url+'#/game/'+gid+'/analysis'},s);
+  check('U25 conditional roster, player forecasts and exact saved metrics work offline',await waitFor(`!!document.querySelector('[data-analysis-team]') && !!document.querySelector('[data-court-name]') && !!document.querySelector('.zone-profile')`) && await evaluate(`(async()=>{
+    const ui=await import('./assets/ui.mjs'),d=await ui.api('game/'+${JSON.stringify(gid)}),t=document.querySelector('[data-analysis-team]');
+    for(const side of ['home','away']){
+      t.value=side;t.dispatchEvent(new Event('change'));document.querySelector('[data-subject-kind=player]').click();
+      const select=document.querySelector('[data-metric-subject]'),p=d.projection.sim[side].players.find(p=>p.periods?.fg?.advanced?.ts?.defined>0);
+      if(!p||[...select.options].filter(o=>o.value.startsWith('p:')).length!==d.projection.sim[side].players.length)return false;
+      select.value='p:'+p.id;select.dispatchEvent(new Event('change'));
+      if(document.querySelector('[data-court-name]').textContent!==p.name)return false;
+      document.querySelector('[data-analysis-tab=metrics]').click();
+      const card=document.querySelector('[data-metric=ts]');if(!card?.querySelector('.quantile-strip')||!card.textContent.includes(p.periods.fg.advanced.ts.exact_mean.toFixed(1)))return false;
+      document.querySelector('[data-analysis-tab=shooting]').click();if(select.value!=='p:'+p.id||!document.querySelector('.zone-profile'))return false;
+      document.querySelector('[data-subject-kind=team]').click();
+    }
+    return !document.querySelector('[data-research-lineups]')||document.querySelector('.lineup-disclosure')?.open===false;
+  })()`));
+}
 if (args['require-c4']) {
   const gid=String(args['require-c4']);
   check('C4 maps and profile-specific replay records cover every current engine game offline',await evaluate(`(async () => {
@@ -688,6 +708,29 @@ if (args['require-c4']) {
     })()`));
     await send('Page.reload',{},s);
     check('C4 playback persists across offline reload',await waitFor(`!!document.querySelector('[data-replay-seek]')`));
+  }
+}
+if(args['polish-shots']) {
+  check('U25 imported metadata ready after reload',await waitFor(`(async()=>{const ui=await import('./assets/ui.mjs');return !!ui.meta()?.latest;})()`));
+  mkdirSync(args['polish-shots'],{recursive:true});
+  for(const [page,route] of [['analysis','game/'+String(args['require-u25'])+'/analysis'],['ratings','standings/ratings'],['cup','cup'],['search','today/'+await evaluate(`(async()=>{const ui=await import('./assets/ui.mjs');return ui.meta().latest;})()`) ],['installation','today/'+await evaluate(`(async()=>{const ui=await import('./assets/ui.mjs');return ui.meta().latest;})()`) ]]) {
+    await send('Page.navigate',{url:args.url+'#/'+route},s);await waitFor(`!document.querySelector('#view[aria-busy]')&&!document.querySelector('#view .loading')`);
+    await waitFor(page==='analysis'?`!!document.querySelector('[data-court-name]')`:page==='ratings'?`!!document.querySelector('.ratings-map')`:page==='cup'?`document.querySelectorAll('[data-competition-stages] tbody tr').length===30`:`!!document.querySelector('.game-card')`);
+    if(page==='search') {await evaluate(`document.querySelector('#search-open').click()`);await waitFor(`document.querySelector('#search-dialog').open`);await evaluate(`{const i=document.querySelector('#search-input');i.value='Wagner';i.dispatchEvent(new Event('input'));}`);await waitFor(`document.querySelectorAll('#search-results a').length>0`);}
+    if(page==='installation')await evaluate(`{const p=document.querySelector('#offline-panel');p.open=true;p.querySelector('details').open=true;}`);
+    for(const [size,width,height,mobile] of [['desktop',1440,1000,false],['half',960,1000,false],['phone',390,844,true]]){
+      await send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile},s);
+      for(const theme of ['dark','light']){
+        await evaluate(`document.documentElement.dataset.theme=${JSON.stringify(theme)}`);
+        if(page==='analysis')await evaluate(`document.querySelectorAll('.lineup-disclosure,.lineup-compare').forEach(e=>e.open=true);document.querySelector('.analysis-header').scrollIntoView()`);
+        else if(page==='installation')await evaluate(`document.querySelector('#offline-panel').scrollIntoView()`);
+        const layout=await evaluate(`({fits:document.documentElement.scrollWidth<=innerWidth,bad:[...document.querySelectorAll('#view select,#view button,#offline-panel button')].filter(e=>e.checkVisibility()&&!e.closest('svg')&&e.getBoundingClientRect().height<43.9).map(e=>({text:e.textContent.trim().slice(0,80),tag:e.tagName,cls:e.className,height:e.getBoundingClientRect().height,visible:e.checkVisibility?.(),closed:!!e.closest('details:not([open])')}))})`);
+        check('U25 offline '+page+' fits '+size+' '+theme,layout.fits&&!layout.bad.length,layout.bad.length?JSON.stringify(layout):'');
+        const shot=await send('Page.captureScreenshot',{format:'png'},s);writeFileSync(join(args['polish-shots'],page+'-'+size+'-'+theme+'.png'),Buffer.from(shot.data,'base64'));
+      }
+    }
+    if(page==='search')await evaluate(`document.querySelector('#search-close').click()`);
+    if(page==='installation')await evaluate(`document.querySelector('#offline-panel').open=false`);
   }
 }
 const repeat = await evaluate(`(async () => { const {importBundle} = await import('./assets/pwa-storage.mjs'); return 'ok'; })()`).catch(e => String(e));

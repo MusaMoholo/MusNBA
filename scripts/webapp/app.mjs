@@ -24,6 +24,14 @@ export async function boot() {
   matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => refreshLogos());
   setupSearch();
   const content = document.getElementById('view');
+  content.addEventListener('keydown',e=>{
+    if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;
+    const active=e.target.closest('.seg button,.seg a');if(!active)return;
+    const options=[...active.parentElement.querySelectorAll('button:not(:disabled),a')].filter(b=>b.getClientRects().length);
+    const i=options.indexOf(active);if(i<0)return;e.preventDefault();
+    const next=e.key==='Home'?0:e.key==='End'?options.length-1:(i+(e.key==='ArrowRight'?1:-1)+options.length)%options.length;
+    options[next].focus();options[next].click();
+  });
   new MutationObserver(changes => {
     if (changes.some(change => [...change.addedNodes].some(node => node.nodeType === 1 && (node.matches('table') || node.querySelector('table'))))) wireSortableTables(content);
   }).observe(content, {childList: true, subtree: true});

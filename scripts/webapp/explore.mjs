@@ -1,21 +1,23 @@
 // Discover every supported stored advanced distribution in the current lineup context.
-import {ADVANCED_METRICS, api, esc, f1, pct, histogram, team} from './ui.mjs';
+import {ADVANCED_METRICS, api, esc, f1, pct, histogram, team, quantileStrip} from './ui.mjs';
 import {courtMap, zoneTable, wireCourt, observedMap} from './court.mjs';
 import {scenarioMetricKey} from './box-metrics.mjs';
 export function metricSearch(metrics, text) {
   const terms = String(text || '').toLowerCase().split(/\s+/).filter(Boolean);
   return metrics.filter(m => terms.every(term => [m[0],m[1],m[2]].join(' ').toLowerCase().includes(term)));
 }
+const selectionMemory=new Map();
 export async function exploreView(root, data, current, initialSubject = null) {
   const sim = data.projection?.sim;
   if (!sim) {root.innerHTML='<section class="panel"><h2>Game analysis</h2><p class="note">Stored possession worlds are needed for player and team metric exploration.</p></section>';return;}
   const subjects = ['away','home'].flatMap(side => [
-    {id:`t:${side}`,name:team(data.game[side].id).name,kind:'team',values:sim[side].advanced},
-    ...sim[side].players.map(p=>({id:`p:${p.id}`,name:p.name,kind:'player',values:p.advanced})),
+    {id:`t:${side}`,name:team(data.game[side].id).name,side,kind:'team',values:sim[side].advanced},
+    ...sim[side].players.map(p=>({id:`p:${p.id}`,name:p.name,side,starter:p.starter,kind:'player',values:p.periods?.fg?.advanced})),
   ]);
-  let selected=subjects.find(s=>s.id===initialSubject)||subjects[0],query='',paintCourt=null;
+  let selected=subjects.find(s=>s.id===(initialSubject||selectionMemory.get(data.game.id)))||subjects[0],query='',paintCourt=null;
   root.classList.add('analysis-view');
-  root.innerHTML=`<section class="panel"><h2>Game analysis</h2><p class="note">Explore stored worlds and recorded shot support. The lineup selection above applies throughout.</p><div class="metric-search"><label>Team or player<select data-metric-subject aria-label="Metric subject">${subjects.map(s=>`<option value="${esc(s.id)}"${s.id===selected.id?' selected':''}>${esc(s.name)}</option>`).join('')}</select></label><div class="seg" role="group" aria-label="Analysis tool">${data.court?'<button data-analysis-tab="shooting">Shooting zones</button>':''}<button data-analysis-tab="metrics">Metrics</button></div></div></section><section class="panel" data-analysis-metrics><h3>Explore the numbers</h3><label class="metric-search">Find a metric<input type="search" data-metric-query placeholder="Try shooting, rebounds or rating" aria-label="Find a metric"></label><p class="note" data-metric-count></p><div class="metric-catalogue" data-metric-cards></div></section><div data-court-analysis></div>`;
+  const subjectOptions=()=>subjects.filter(s=>s.side===selected.side).map(s=>`<option value="${esc(s.id)}"${s.id===selected.id?' selected':''}>${esc(s.name)}</option>`).join('');
+  root.innerHTML=`<section class="panel analysis-header"><h2>Game analysis</h2><p class="note">Choose a team, then explore its overview or one player. Your lineup selection applies throughout.</p><div class="analysis-picker"><label>Team<select data-analysis-team>${['away','home'].map(side=>`<option value="${side}"${side===selected.side?' selected':''}>${esc(team(data.game[side].id).name)}</option>`).join('')}</select></label><div><span class="seg-label">Explore</span><div class="seg" role="group" aria-label="Analysis subject"><button data-subject-kind="team" aria-pressed="${selected.kind==='team'}">Team overview</button><button data-subject-kind="player" aria-pressed="${selected.kind==='player'}">Player</button></div></div><label data-player-picker>Player<select data-metric-subject aria-label="Player">${subjectOptions()}</select></label></div><div class="seg analysis-tools" role="group" aria-label="Analysis tool">${data.court?'<button data-analysis-tab="shooting">Shooting zones</button>':''}<button data-analysis-tab="metrics">Metrics</button></div></section><section class="panel" data-analysis-metrics><div class="metric-search"><h3 class="grow">Explore the numbers</h3><label>Find a metric<input type="search" data-metric-query placeholder="Shooting, rebounds, rating…" aria-label="Find a metric"></label></div><p class="note" data-metric-count></p><div class="metric-catalogue" data-metric-cards></div></section><div data-court-analysis></div>`;
   const get=s=>root.querySelector(s);
   function chooseTool(tool) {
     get('[data-analysis-metrics]').hidden=tool!=='metrics';get('[data-court-analysis]').hidden=tool!=='shooting';
@@ -31,7 +33,7 @@ export async function exploreView(root, data, current, initialSubject = null) {
       const d=selected.values?.[key],format=x=>Number.isFinite(x)?f1(x)+(percent?'%':''):'—';
       const supported=d&&Number.isFinite(d.defined_worlds??d.defined)&&(d.defined_worlds??d.defined)>0;
       const median=d?.exact_q?.[2];
-      return `<article data-metric="${esc(key)}"><h4>${esc(title)}</h4><p>${esc(formula)}</p>${supported?`<strong>${format(median)}</strong> median<p>10–90%: ${format(d.exact_q[0])}–${format(d.exact_q[4])}<br>Mean ${format(d.exact_mean)}</p><p>Defined in ${(d.defined_worlds??d.defined).toLocaleString()} / ${(d.worlds??d.total).toLocaleString()} saved worlds${d.weighted?` · ${pct(d.defined/d.total)} weighted probability`:''}.</p><details data-metric-chart="${esc(key)}"><summary>Show distribution</summary><div></div><p>Chart values are rounded; summaries use all defined worlds.</p></details>${data.worlds?`<a href="#/game/${encodeURIComponent(data.game.id)}/scenario/${encodeURIComponent(JSON.stringify([{subj:selected.id,v:scenarioMetricKey(key,selected.kind),op:'ge',x:median}]))}">Condition on ${format(median)} or more →</a>`:''}`:'<p>Distribution unavailable in this snapshot, or no defined denominator.</p>'}</article>`;
+      return `<article data-metric="${esc(key)}"><h4>${esc(title)}</h4><p>${esc(formula)}</p>${supported?`${quantileStrip(d,percent?'%':'')}<strong>${format(median)}</strong> median<p>10–90%: ${format(d.exact_q[0])}–${format(d.exact_q[4])}<br>Mean ${format(d.exact_mean)}</p><p>Defined in ${(d.defined_worlds??d.defined).toLocaleString()} / ${(d.worlds??d.total).toLocaleString()} saved worlds${d.weighted?` · ${pct(d.defined/d.total)} weighted probability`:''}.</p><details data-metric-chart="${esc(key)}"><summary>Show distribution</summary><div></div><p>Chart values are rounded; summaries use all defined worlds.</p></details>${data.worlds?`<a href="#/game/${encodeURIComponent(data.game.id)}/scenario/${encodeURIComponent(JSON.stringify([{subj:selected.id,v:scenarioMetricKey(key,selected.kind),op:'ge',x:median}]))}">Condition on ${format(median)} or more →</a>`:''}`:'<p>Distribution unavailable in this snapshot, or no defined denominator.</p>'}</article>`;
     }).join('')||'<p class="note">No metrics match. Try fewer search terms.</p>';
     root.querySelectorAll('[data-metric-chart]').forEach(el=>el.addEventListener('toggle',()=>{
       if(!el.open||el.dataset.ready)return;
@@ -40,7 +42,18 @@ export async function exploreView(root, data, current, initialSubject = null) {
     }));
   }
   get('[data-metric-query]').oninput=e=>{query=e.target.value;paint();};
-  get('[data-metric-subject]').onchange=e=>{selected=subjects.find(s=>s.id===e.target.value);paint();paintCourt?.();};paint();
+  const syncPicker=()=>{
+    get('[data-analysis-team]').value=selected.side;
+    const select=get('[data-metric-subject]'),players=subjects.filter(s=>s.side===selected.side&&s.kind==='player');
+    select.innerHTML=`<option value="t:${selected.side}" hidden>Team overview</option>`+[['Starters',true],['Bench / other players',false]].map(([label,start])=>`<optgroup label="${label}">${players.filter(p=>Boolean(p.starter)===start).map(p=>`<option value="${esc(p.id)}">${esc(p.name)}</option>`).join('')}</optgroup>`).join('');
+    select.value=selected.id;get('[data-player-picker]').hidden=selected.kind!=='player';
+    root.querySelectorAll('[data-subject-kind]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.subjectKind===selected.kind)));
+  };
+  const selectSubject=id=>{selected=subjects.find(s=>s.id===id)||subjects[0];selectionMemory.set(data.game.id,selected.id);syncPicker();paint();paintCourt?.();};
+  get('[data-metric-subject]').onchange=e=>selectSubject(e.target.value);
+  get('[data-analysis-team]').onchange=e=>selectSubject('t:'+e.target.value);
+  root.querySelectorAll('[data-subject-kind]').forEach(b=>b.onclick=()=>selectSubject(b.dataset.subjectKind==='team'?'t:'+selected.side:subjects.find(s=>s.side===selected.side&&s.kind==='player')?.id));
+  syncPicker();paint();
   if (data.court) {
     const court=await api(data.court.path||`game/${data.game.id}/court`);
     if(!current())return;

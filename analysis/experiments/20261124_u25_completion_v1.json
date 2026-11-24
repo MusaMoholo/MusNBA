@@ -1,0 +1,365 @@
+{
+ "kind": "U25 PWA-only polish completed; lean next-agent handoff; no B/model fitting",
+ "status": "complete",
+ "U25_percent": 100,
+ "C_percent": 100,
+ "D42_A_percent": 100,
+ "D42_B_percent": 0,
+ "original_programme_percent": 74,
+ "automatic_S11_S12_S14_credit": false,
+ "engine": "engine-v1.3-r3",
+ "learned_model_changes": false,
+ "protected_scoring": false,
+ "nightly": {
+  "kind": "U25 full nightly measured result",
+  "ended": "2026-11-24T11:42:20.746393+00:00",
+  "exit_code": 0,
+  "seconds": 1010.3675705420001,
+  "limit_seconds": 3600,
+  "within_limit": true,
+  "source_exact": true,
+  "changed_sources": [],
+  "start_sha256": "57d72b036b974aa6c596667063b4a07f6559a14842bda733a669b17cc0e836fb"
+ },
+ "fresh_season": {
+  "kind": "Fresh full accepted season generation, empty explicit namespace; no cache reuse or scoring",
+  "worlds": 30001,
+  "probability_mass": 40000,
+  "fresh_chunks": 31,
+  "reused_chunks": 0,
+  "jobs": 9,
+  "inner_threads": 1,
+  "seconds": 15.259555041000567,
+  "namespace": "data/derived/experiments/20261124_u25final_fresh_season_v1",
+  "identity": "e7bbf17b56187569b60f9873d4d2009ed62c0a96addb7dabb4e01df3a4c3732c",
+  "every_published_value_exact": true,
+  "input_sha256": {
+   "/Users/moholom/Repos/Sports/Basketball/data/snapshots/2026-11-24/season.json": "77e3c2eff2708aad6e3a74fcc420ab1154c6f2899d37c3bbb1f81dfb99af345f",
+   "/Users/moholom/Repos/Sports/Basketball/data/snapshots/2026-11-24/stats.json": "ad732d0a1b2a28f367bae5d2095f94141b93702293cae930711c7a4d41ec10df",
+   "/Users/moholom/Repos/Sports/Basketball/data/snapshots/2026-11-24/season_engine_worlds.npz": "1917eceed781b4a47d4c833ebe29d6b830601e0084245001a328a4c3d333057c"
+  },
+  "protected_scoring": false,
+  "result": "pass"
+ },
+ "live_run": "data/derived/live_runs/2026-11-24-1795519791320277000",
+ "accounting": {
+  "kind": "fresh C5 event/zone/box/minute/weighted-rate/path accounting",
+  "day": "2026-11-24",
+  "counts": {
+   "games": 3,
+   "examples": 15,
+   "segments": 3720,
+   "legal_fives": 14880,
+   "worlds": 50000,
+   "cases": 7,
+   "max_minute_error": 3.552713678800501e-14,
+   "max_weighted_zone_error": 0.0,
+   "max_replay_gzip_bytes": 94919
+  },
+  "rate_distributions": 2664,
+  "rate_reports": [
+   {
+    "game": "401909314",
+    "cases_including_game_view": 4,
+    "rate_distributions_checked": 1107,
+    "status": "pass"
+   },
+   {
+    "game": "401909315",
+    "cases_including_game_view": 1,
+    "rate_distributions_checked": 306,
+    "status": "pass"
+   },
+   {
+    "game": "401909316",
+    "cases_including_game_view": 4,
+    "rate_distributions_checked": 1251,
+    "status": "pass"
+   }
+  ],
+  "season_worlds": 30001,
+  "season_probability_mass": 40000,
+  "competition_schema": "nba-competitions-2026-v1",
+  "competition_identity": "e7bbf17b56187569b60f9873d4d2009ed62c0a96addb7dabb4e01df3a4c3732c",
+  "season_sha256": "77e3c2eff2708aad6e3a74fcc420ab1154c6f2899d37c3bbb1f81dfb99af345f",
+  "capture_manifest_sha256": "492e58feabf53f4a4e77a73c8a6ce828356578ec9b8b036ffb8041939ec5efc0",
+  "result": "pass",
+  "protected_scoring": false
+ },
+ "JS_replay": {
+  "kind": "shipped browser replay accumulator, all saved examples and zero/midpoint/final prefixes",
+  "games": 3,
+  "examples": 15,
+  "cutpoints": 45,
+  "player_boxes": 440,
+  "overtime_examples": 1,
+  "max_minute_error": 1.1102230246251565e-16,
+  "view_sha256": {
+   "data/views/api/game/401909314/replay.json": "2d2d740bbdeb54e6192a6221934723598297e3db818de1a3e9702bbbc2ec5bc8",
+   "data/views/api/game/401909315/replay.json": "dcb5d1221c0fc894abb85f124b8439458672b70e888f7be12258a9302f8c3507",
+   "data/views/api/game/401909316/replay.json": "053529357aaeb41d6c56186c42ae425833f8201d6cb9325185dcfd249eb5af55"
+  },
+  "module_sha256": "f4062ea6f562494444b0dfb9dafe1f244a934b6036a8b28d34fa586f68666e6f",
+  "status": "pass"
+ },
+ "verification": {
+  "kind": "Real smoke and deliberate in-memory fault exit evidence",
+  "checks": [
+   {
+    "name": "smoke",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 78.84049679099917,
+    "summary": "112/112 checks passed",
+    "log": "/tmp/musnba_20261124_u25final_smoke_v1.log",
+    "sha256": "f104bc58c339de8bb7fa34fda64537d6c514582e0d3f62d1aa25fa70ef54fd0f"
+   },
+   {
+    "name": "fault",
+    "exit_code": 1,
+    "expected_exit_code": 1,
+    "seconds": 75.58048087499992,
+    "summary": "91/112 checks passed",
+    "log": "/tmp/musnba_20261124_u25final_fault_v1.log",
+    "sha256": "7b58d291dfec437f6bb5e18f9cee996a9d7406e735bba1982859e87e0ef1b619"
+   }
+  ],
+  "status": "pass"
+ },
+ "Node_suite_files": 15,
+ "new_visual_helper_tests": 3,
+ "browser": [
+  {
+   "path": "/tmp/musnba_u25_final_a_v2/report.json",
+   "count": 84,
+   "sha256": "96c2106d6b98f256c0156f3185f47e916591ff7b63b297bd3a0ee1cb8b5db43f"
+  },
+  {
+   "path": "/tmp/musnba_u25_final_b_v2/report.json",
+   "count": 114,
+   "sha256": "29693790087abd00faf12743dbc7a403515b596966045d0f7f2122bc9bd82401"
+  },
+  {
+   "path": "/tmp/musnba_u25_touch_targets_v1/report.json",
+   "count": 24,
+   "sha256": "d1ee1a1a4d6a8d6439a7b3448e8621b0b11ab066b19bcf2512de84173069505e"
+  }
+ ],
+ "pwa": {
+  "phone": {
+   "checks": 70,
+   "log": "/tmp/musnba_u25_final_phone_v3.log",
+   "sha256": "de265ccaae318f75dcb7e7c3cda5202aef11de38cd95d4ef0fcfed4c8cc756b6"
+  },
+  "laptop": {
+   "checks": 74,
+   "log": "/tmp/musnba_u25_final_laptop_v3.log",
+   "sha256": "9c47c4ca5f0bce28973fffef6485e4437f22ed361479eb216f5359c4aea2b762"
+  },
+  "phone_upgrade": {
+   "checks": 42,
+   "log": "/tmp/musnba_u25_upgrade_phone_v2.log",
+   "sha256": "4c1e8bc31fe7fe1a55f718fc1c237917728f8389c60ed152065a7df5e84b4625"
+  },
+  "laptop_upgrade": {
+   "checks": 46,
+   "log": "/tmp/musnba_u25_upgrade_laptop_v2.log",
+   "sha256": "3ffa5ef2f59c12396d150a426884e2cf8812e359867add256111aed93feb4ba6"
+  }
+ },
+ "actual_PWA_screenshot_cases": 60,
+ "actual_PWA_screenshot_roots": [
+  "/tmp/musnba_u25_final_phone_shots_v3",
+  "/tmp/musnba_u25_final_laptop_shots_v3"
+ ],
+ "visual_review": [
+  "All initial198 route screenshots in11 contact sheets",
+  "Corrected30 mobile-tab width/theme cases and full phone standings",
+  "Final198 contact sheets, including corrected season/player/game controls",
+  "Imported PWA analysis/search/installation screenshots and final phone/laptop contact sheets"
+ ],
+ "bundles": {
+  "phone": {
+   "path": "/Users/moholom/Library/Mobile Documents/com~apple~CloudDocs/MusNBA/MusNBA.musnba.gz",
+   "bytes": 50903481,
+   "sha256": "045dfbf1a7f50ee92f595ac82bba5b3029278a868144732f9857348e94de1dcd",
+   "header": {
+    "format": "musnba",
+    "version": 2,
+    "capabilities": [
+     "competitions-2026-v1",
+     "lineup-forecast-v1",
+     "minute-cdf-player-v2",
+     "player-icons-v1",
+     "shot-zones-v1",
+     "visible-worlds-v1"
+    ],
+    "created": "2026-11-24T11:42:00+00:00",
+    "latest": "2026-11-24",
+    "snapshots": [
+     "2026-11-12",
+     "2026-11-13",
+     "2026-11-14",
+     "2026-11-15",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22",
+     "2026-11-23",
+     "2026-11-24"
+    ],
+    "profile": "phone"
+   }
+  },
+  "laptop": {
+   "path": "/Users/moholom/Library/Mobile Documents/com~apple~CloudDocs/MusNBA/MusNBA-laptop.musnba.gz",
+   "bytes": 262665271,
+   "sha256": "5288734bf72e0bd8f74faf55f701459ce682c7581bc222d9433aaeb11916c971",
+   "header": {
+    "format": "musnba",
+    "version": 2,
+    "capabilities": [
+     "competitions-2026-v1",
+     "lineup-forecast-v1",
+     "minute-cdf-player-v2",
+     "player-icons-v1",
+     "shot-zones-v1",
+     "visible-worlds-v1"
+    ],
+    "created": "2026-11-24T11:40:59+00:00",
+    "latest": "2026-11-24",
+    "snapshots": [
+     "2026-11-12",
+     "2026-11-13",
+     "2026-11-14",
+     "2026-11-15",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22",
+     "2026-11-23",
+     "2026-11-24"
+    ],
+    "profile": "laptop"
+   }
+  }
+ },
+ "shell": {
+  "commit": "d6bd2bf79eab153432182d6647c9ed2fa30fed9a",
+  "cache": "c9886c91a5e9bc0b926a",
+  "data_free": true,
+  "deployment": {
+   "conclusion": "success",
+   "head_sha": "d6bd2bf79eab153432182d6647c9ed2fa30fed9a",
+   "html_url": "https://github.com/MusaMoholo/MusNBA/actions/runs/45384484889",
+   "id": 45384484889,
+   "status": "completed"
+  },
+  "remote_sw_sha256": "b8a3d8a7ffdcb64c48f8b11fce2a0d1442678584e24c00c7b9fbfa15067ff298",
+  "repository_CI_workflows_added": false
+ },
+ "successor": "20261124_chunk_b_successor_v3.json",
+ "successor_sha256": "234e786ee6f38b28a355119f5d1c262a30836a73cca829353107df1b13cf65ff",
+ "B_execution": false,
+ "documentation": {
+  "before_live_words": 8494,
+  "target": "five core docs +three frozen policies; one canonical home per fact; final counts in docs check"
+ },
+ "limits": [
+  "Both real devices remain unverified and each needs app update/manual data import",
+  "No physical nearest-defender reconstruction or new forecasting model in U25",
+  "Cup/postseason/auxiliary OT remain initially uncalibrated; inherited C5 mechanical assumptions unchanged"
+ ],
+ "preserved_attempts": [
+  "Nightlyv1 stopped356.2s/5k worlds after visual mobile-label defect; v2 completed995.1s but final offline target audit required compact-button correction; v3 is accepted",
+  "New interaction tests exposed existing player metric binding to absent top-level field; corrected to periods.fg.advanced for all88 current players",
+  "Initial automatic198/198 passed despite squeezed phone tabs; visual inspection caught it and an explicit clipped-label gate was added",
+  "Phone PWA preflightv2 test raced the asynchronous stored court read; readiness wait corrected, v3 passes62/62",
+  "Final laptop layout test initially counted hidden32px buttons. Corrected compact buttons to44px, tests use actual visibility and explicitly open panels; preserved initial failure logs",
+  "Replay reload raced metadata in an extended screenshot test; added explicit metadata readiness before screenshots"
+ ],
+ "test_cleanup": "The dynamic-count assertion now restores its temporary1234/4321 values before screenshot capture; no production data or assets changed. Earlier passing v2 imports/upgrades remain retained. Final v3 screenshots use actual counts.",
+ "published_assets": {
+  "kind": "Published PWA shell independently fetched and byte-verified",
+  "deployment": {
+   "conclusion": "success",
+   "head_sha": "d6bd2bf79eab153432182d6647c9ed2fa30fed9a",
+   "html_url": "https://github.com/MusaMoholo/MusNBA/actions/runs/45384484889",
+   "id": 45384484889,
+   "status": "completed"
+  },
+  "cache": "c9886c91a5e9bc0b926a",
+  "files": {
+   "index.html": "b99ed04fd2c5c1b35050d1de75fb9e8e6e7f30fe63979b781504b20aa229c523",
+   "apple-touch-icon.png": "d5095a9f3fce31a20a657232d350a5c9661ec1f7a57cdcac5cd5d32d625b1980",
+   "icon-192.png": "936b32273a31605321225b1eb5d0fb10b1a627c3fbbef26da9af9becd54a8c4e",
+   "icon.svg": "ef026659abe0de129a2a5f80c85ffe002bdf4714f9c0e8527c8f96c7ef678628",
+   "manifest.webmanifest": "396aeba810ce0cc815d0d3e8e3dad797c533be40cfdf295a7f8cb25d6879fe52",
+   "sw.js": "b8a3d8a7ffdcb64c48f8b11fce2a0d1442678584e24c00c7b9fbfa15067ff298",
+   "icon-512.png": "de25a9ad23c6a075a2105dc54edc00f1c7b3a8d155835e0ed73c7f65247fa062",
+   "assets/pwa.mjs": "f87f5cfbcaee86d6d7b2cb7783fcaabf471efb27d6faf0df9d06d53ea87516d6",
+   "assets/league.mjs": "c1d12ed793c4d6d40d1144fd3a29140acfcb777291e7916ada0c3a7a292de7cd",
+   "assets/about.mjs": "6ee1883b80d5f1ce9e8569498c6d6ffd4a651313eebbec6f6cb27d5c0f57dcb5",
+   "assets/competition-paths.mjs": "79cb009b16254dafad9c2f326fb8cc742349204295dea0232f4ed2c8408876bd",
+   "assets/ui.mjs": "73122b9a372c71173821c94e81fed5744a1d002f5faee54dc4820d0114de300e",
+   "assets/static-api.mjs": "db8dc5874dc4326da665c5178c9df0b6d77631dd2cbbcadf2fcfd2328c6ef5e7",
+   "assets/competitions.mjs": "1e6eae65374aa2b9d51aede53dcbab6030c350d09cc5d990e444098ca4b1d7f7",
+   "assets/spotlight.mjs": "3f58c5e3987b2bd4d379a791e0d21c424920794a438bbce04fb4521fb38e3b29",
+   "assets/explore.mjs": "f2fee5f6dd5d45a7d5e936fd0a0182fb919414399402c8e15e5148bba8ea6e2c",
+   "assets/court.mjs": "5ef5aa9d904654726bb920a61a8523df812cd632836573169f476f0af6074f01",
+   "assets/lineup-worlds.mjs": "2e4d0e5c74261a388a10bbf4a29ece58c0a39230a095ca6a4a1b03d239d6e599",
+   "assets/season.mjs": "39914fbd9eedea6d39ce505851eb22a4922f9058c2a7531257315307ce703b46",
+   "assets/pwa-storage.mjs": "46f9ac6169f6ba611c627d1e1e7d75e1d37c1a935f5d8257c77682ff3895f1d5",
+   "assets/replay.mjs": "f4062ea6f562494444b0dfb9dafe1f244a934b6036a8b28d34fa586f68666e6f",
+   "assets/today.mjs": "3f9e9bf3b039619e91ac7e8bd225cc73d6b58c44e59f09a21178820678bdd4d4",
+   "assets/outcomes.mjs": "d5ea0354511adc0e07e46a8c5ff8f711516fb64330031e0ca7259f05840cdee1",
+   "assets/game.mjs": "5d7c22c6c0f328b6b0514cc100b115f917c2f16bd0bd110c13d56149eb3c19d2",
+   "assets/lab.mjs": "0c809cdc37565c3846e33270b9ecc5ca86b4099fee951081c0a3d684b3f4967e",
+   "assets/precise-minutes.mjs": "48697b27ed7fe1b7abd4b37707fd54f07d510a9bcb88a152e8086a2a590f765d",
+   "assets/app.mjs": "9d3ab9bd7af06376fed56050c3bc688c5ce394a05d03164eb793d8d2beac6e56",
+   "assets/weighted-worlds.mjs": "8e8fe7dcdfda9105295364531db86aa08243ad3475292fbfeb96acd298de7e5d",
+   "assets/scenario.mjs": "71e4c8b51babc9df9d5f77d43c13018f2f5f0fe2ba4332ea85bb1716d61300e0",
+   "assets/players.mjs": "dfac21f5dacf6001d181a5f8d9ef152a3db51011f299bacf1bb46ea743d5121c",
+   "assets/box-metrics.mjs": "48c4bd1c6a6734a6ba867b9418eb952c486a3948c64c22b6e00a6837687c32b5",
+   "assets/shot-zones.mjs": "dc9a30b84e7481e9dff4e2712014a03c30d272922eca19c017bb01aa3985a879"
+  },
+  "count": 32,
+  "data_free": true,
+  "repository_CI_workflows_added": false,
+  "result": "pass"
+ },
+ "reports_sha256": {
+  "analysis/experiments/20261124_u25_archive_v1.json": "a3759fa6698b127923eed079f8dc888279a3c766788010e4ee382bc4ecdf392c",
+  "analysis/experiments/20261124_u25_archive_v2.json": "6bb833333ea078c23f726e16a1124d9e5c598d1d18985c7f1caa9043bab43464",
+  "analysis/experiments/20261124_u25_archive_v3.json": "789db618187ee57925fdc8129e762e4537faee26c1d927002064a2eed854c98b",
+  "analysis/experiments/20261124_u25_delivery_audit_v1.json": "70ea59d451068819def5c46ca38eb31e8fccf48f619bdf47ec5e4c61a93ba681",
+  "analysis/experiments/20261124_u25_fresh_capture_v1.json": "492e58feabf53f4a4e77a73c8a6ce828356578ec9b8b036ffb8041939ec5efc0",
+  "analysis/experiments/20261124_u25_fresh_season_v1.json": "d8252901bcde463b435c0eb83cb7d210b7afb6c709479f6c75d488bb158942c4",
+  "analysis/experiments/20261124_u25_frontend_evidence_v1.json": "f74895b4439c35e5231c1feba61128c96cd05ba6431fb14ee4eb3fc1f064b334",
+  "analysis/experiments/20261124_u25_js_replay_audit_v1.json": "75f27fbcd9ebab88df08ffc270993812c01b0780191502c5901d42e270f0dc42",
+  "analysis/experiments/20261124_u25_nightly_result_v1.json": "29407ffee3c69aa40a8fd63b0b83debdee32c5c7bd19e99145bd2f2cef7f3e15",
+  "analysis/experiments/20261124_u25_nightly_result_v2.json": "481b2764926097cb0b64caf747ff3a5fcbaa804862dbd14439be26bb19e360b9",
+  "analysis/experiments/20261124_u25_nightly_result_v3.json": "c6a6c4e69320865766583a5641646025eb10dbc3f3cf3da736f5f16ff3e35843",
+  "analysis/experiments/20261124_u25_nightly_start_v1.json": "eba08462cffa3fb4e34e38c35a961b946422a455738e70d46308ac2d9df14938",
+  "analysis/experiments/20261124_u25_nightly_start_v2.json": "57c51eec23df03007a8e18587916265d3503ea152dc3bf74007fc1c4be686a5a",
+  "analysis/experiments/20261124_u25_nightly_start_v3.json": "57d72b036b974aa6c596667063b4a07f6559a14842bda733a669b17cc0e836fb",
+  "analysis/experiments/20261124_u25_plan_v1.json": "10e118151b76fd6b3d07f28d180a8f9bdc95836d7d1523d3866e4fd6cc5074ff",
+  "analysis/experiments/20261124_u25_published_shell_archive_v1.json": "65b5cb8a1d1709329a073a4ec25f4191a28ca773daab241b9cc1f2a22b7e4453",
+  "analysis/experiments/20261124_u25_published_shell_v1.json": "4f554758f02ab5daac15700d875235206321b508d3f3565e478face6e65c5438",
+  "analysis/experiments/20261124_u25_shell_build_v1.json": "4bc0c09085f572b5ee4eba27cb187845f61c467c2b48d88c2b1364ea49ca061f",
+  "analysis/experiments/20261124_u25_shell_build_v2.json": "731df2ce3ee2496997958044c2c57960739815129f8f202fb882bca5fbd416c0",
+  "analysis/experiments/20261124_u25_shell_build_v3.json": "31e01664708f5dc4763a0eb249a8f1e19c2f4fcdbec17b02e9daf760bb3b1c26",
+  "analysis/experiments/20261124_u25_smoke_fault_v1.json": "6b88ea044ce1bfce7a9fb3141fe619f1721dcf90ccd6d6de1284ff485c79f421",
+  "analysis/experiments/20261124_u25final_delivery_audit_v1.json": "5e8d63d13737bca77cf4dd5352a1634d46a4fda32f446c3813cafbfd1500655c",
+  "analysis/experiments/20261124_u25final_fresh_capture_v1.json": "492e58feabf53f4a4e77a73c8a6ce828356578ec9b8b036ffb8041939ec5efc0",
+  "analysis/experiments/20261124_u25final_fresh_season_v1.json": "e8e5d58102b7ea50f681d9bbcab087a77540874e242f8620c97d94e86c5a51e3",
+  "analysis/experiments/20261124_u25final_js_replay_audit_v1.json": "405968a88dbd2e7a6c91302169baff06d63bdcc6c4cd4fe715be6b16cefec999",
+  "analysis/experiments/20261124_u25final_smoke_fault_v1.json": "14528ba1f422b453a24526498b4d79eb44aa183b5d892968269282089e92dd83"
+ }
+}

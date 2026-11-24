@@ -14,7 +14,10 @@ def rates(task):
     return audit_view_rates(ROOT/f'data/snapshots/{day}/lineups/{gid}',ROOT/'data/views')
 
 if __name__=='__main__':
-    out=ROOT/'analysis/experiments/20261124_c5_delivery_audit_v1.json';assert not out.exists()
+    import argparse
+    parser=argparse.ArgumentParser();parser.add_argument('--prefix',default='20261124_c5');prefix=parser.parse_args().prefix
+    if not prefix.replace('_','').isalnum():raise ValueError('simple immutable report prefix required')
+    out=ROOT/f'analysis/experiments/{prefix}_delivery_audit_v1.json';assert not out.exists()
     meta=read_json(ROOT/'data/views/api/meta.json');day=meta['latest'];snapshot=ROOT/'data/snapshots'/day
     seasons=read_json(snapshot/'season.json');comp=seasons['competitions'];assert seasons['as_of']==day and not meta.get('delivery')
     slate=read_json(ROOT/f'data/views/api/slate/{day}.json');games=[]
@@ -26,7 +29,7 @@ if __name__=='__main__':
         games.append({'game':gid,'replay':str((folder/'replay.json').relative_to(ROOT)),'court':str((folder/'zones.json').relative_to(ROOT)),
                       'zone_worlds':{'path':str(zone.relative_to(ROOT)),'sha256':sha256_file(zone)}})
     assert games,'No newly generated games to audit'
-    manifest=ROOT/'analysis/experiments/20261124_c5_fresh_capture_v1.json';assert not manifest.exists()
+    manifest=ROOT/f'analysis/experiments/{prefix}_fresh_capture_v1.json';assert not manifest.exists()
     write_json(manifest,{'kind':'fresh nightly capture inventory; no enrichment or reconstruction','day':day,'games':games},pretty=True)
     counts=audit({'games':games},snapshot=snapshot)
     with ProcessPoolExecutor(max_workers=min(10,len(games))) as pool:rate_reports=list(pool.map(rates,[(day,g['game']) for g in games]))

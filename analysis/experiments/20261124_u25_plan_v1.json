@@ -1,0 +1,30 @@
+{
+  "kind": "U25 prospective dashboard polish contract",
+  "baseline_commit": "2c1488a",
+  "module_weights": {
+    "U25": 100
+  },
+  "progress": 0,
+  "headliners": [
+    "Clean consistent controls/navigation",
+    "Rich truthful visual analysis"
+  ],
+  "rungs": [
+    "|10|Inventory all routes/controls and freeze scoped visual/control design.|",
+    "|20|Ship team\u2192overview/player\u2192roster selection with correct source/lineup identity.|",
+    "|30|Unify accessible dropdowns, focus, hover, disclosure and keyboard segmented controls.|",
+    "|40|Polish navigation, responsive grouping, search and table interactions across routes.|",
+    "|50|Add truthful quantile, shooting, probability and team-strength visual comparisons.|",
+    "|60|Sweep Today/Game/Teams/Players/season/Cup/Playoffs/replay/scenarios/About/installation.|",
+    "|70|Meaningful interaction/data-parity checks and existing relevant tests pass.|",
+    "|80|Inspect all touched routes1440/960/390, both themes, including screenshots.|",
+    "|90|Fresh full online fetch/rebuild/10k nightly, independent accounting and smoke/fault pass.|",
+    "|100|Both final imports/offline/direct upgrades, published data-free shell, lean B plan/docs, commit/push.|"
+  ],
+  "no_model_change": true,
+  "no_B_execution": true,
+  "baseline_smoke": "112/112",
+  "baseline_log": "/tmp/musnba_ux_baseline_smoke_v1.log",
+  "acceptance": "All routes and controls swept; exact keys/mass/missingness; meaningful interactions, screenshots at1440/960/390 both themes; full online nightly/accounting/smoke/fault; both imports/offline/upgrades; data-free shell; lean successor/checkpoint/push",
+  "fallback": "Retain simpler accessible controls/old charts when a richer option fails evidence or usability"
+}

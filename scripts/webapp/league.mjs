@@ -1,5 +1,5 @@
 // Standings (season simulation), Teams directory and team pages.
-import {playerFace, playerLabel, api, dayLabel, esc, f1, heat, histogram, logo, pct, rate, record, seg, signed, statusTag, store, standingsNav, team, teamLink, tipTimes} from './ui.mjs';
+import {playerFace, playerLabel, api, dayLabel, esc, f1, heat, histogram, logo, pct, rate, record, ratingsPlot, seg, signed, statusTag, store, standingsNav, team, teamLink, tipTimes} from './ui.mjs';
 
 import * as season from './season.mjs';
 
@@ -219,7 +219,7 @@ function ratingsTable(rows) {
   const keys = [['ortg', 'ORtg', f1], ['drtg', 'DRtg', f1], ['net', 'Net', signed], ['pace', 'Pace', f1], ['efg', 'eFG%', rate], ['opp_efg', 'Opp eFG%', rate],
                 ['tov_pct', 'TOV%', rate], ['oreb_pct', 'OREB%', rate], ['ftr', 'FT rate', rate], ['fg3a_rate', '3PA rate', rate], ['fg3_pct', '3P%', rate]];
   const sorted = state.sort ? rows.slice().sort((a, b) => (state.sort.dir) * ((a[state.sort.key] ?? 0) - (b[state.sort.key] ?? 0))) : rows;
-  return `<div class="scroll"><table><thead><tr><th class="name">Team</th><th>W–L</th>${keys.map(([k, l]) => `<th>${l}</th>`).join('')}</tr></thead><tbody>
+  return `${ratingsPlot(rows)}<div class="scroll"><table><thead><tr><th class="name">Team</th><th>W–L</th>${keys.map(([k, l]) => `<th>${l}</th>`).join('')}</tr></thead><tbody>
     ${sorted.map(t => `<tr class="link" data-team="${t.id}"><td class="name">${teamLink(t.id)}</td><td>${t.w}-${t.l}</td>${keys.map(([k, , fmt]) => `<td data-sort-value="${t[k] ?? ''}" class="${t.ranks?.[k] ? 'heat' : ''}" style="--a:${t.ranks?.[k] ? (31 - t.ranks[k]) / 45 : 0}" title="${t.ranks?.[k] ? 'League rank ' + t.ranks[k] : 'Rank unavailable'}">${fmt(t[k])}${t.ranks?.[k] ? ` <span class="tag">${t.ranks[k]}</span>` : ''}</td>`).join('')}</tr>`).join('')}
     </tbody></table></div><p class="note">Per 100 possessions; possessions estimated as FGA − OREB + TOV + 0.44 × FTA. Small numbers are league ranks. Stronger shading marks a higher league ranking within that column; pace ranks speed, not quality.</p>`;
 }

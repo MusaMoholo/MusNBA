@@ -1,0 +1,33 @@
+{
+ "kind": "fresh nightly capture inventory; no enrichment or reconstruction",
+ "day": "2026-11-24",
+ "games": [
+  {
+   "game": "401909314",
+   "replay": "data/snapshots/2026-11-24/lineups/401909314/replay.json",
+   "court": "data/snapshots/2026-11-24/lineups/401909314/zones.json",
+   "zone_worlds": {
+    "path": "data/snapshots/2026-11-24/lineups/401909314/players.npz",
+    "sha256": "32f45f61acdfc0243115babfb0b51006e0d4298d9a30807698c7ccf7429d7756"
+   }
+  },
+  {
+   "game": "401909315",
+   "replay": "data/snapshots/2026-11-24/lineups/401909315/replay.json",
+   "court": "data/snapshots/2026-11-24/lineups/401909315/zones.json",
+   "zone_worlds": {
+    "path": "data/snapshots/2026-11-24/lineups/401909315/players.npz",
+    "sha256": "4e5b73baa25de7bb0f7566801032e3d590dbde0687f29b12365a2baed642ba0f"
+   }
+  },
+  {
+   "game": "401909316",
+   "replay": "data/snapshots/2026-11-24/lineups/401909316/replay.json",
+   "court": "data/snapshots/2026-11-24/lineups/401909316/zones.json",
+   "zone_worlds": {
+    "path": "data/snapshots/2026-11-24/lineups/401909316/players.npz",
+    "sha256": "8dc06e3a6cd296a5b7ca8f3466270f2d3bf8c9af96de55a302d1e44a961e8cc0"
+   }
+  }
+ ]
+}

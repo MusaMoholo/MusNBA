@@ -1,63 +1,53 @@
-# Handoff — Chunk C complete; successor B at0%
+# Handoff — U25 complete; next D42 B0%
 
-Updated24 November2026; checkpoint: `git log -1`.
+Updated24 November2026. Main checkpoint: `git log -1`; worktree clean after delivery.
 
-## Current delivery
+## Current state
 
-**C1–C5 complete100%.** D42 A100% (A3 original acceptance complete); B0%. Original programme remains74%.
-Accepted engine-v1.3-r3/D29/Rule3/report-bands-v1 and pathway-v1 parameters remain. No learned promotion or protected rescore.
-`analysis/experiments/20261124_c5_completion_v1.json` owns final measured evidence, hashes and publication.
-C2 fixed negative; independent S06 improves MIN CRPS0.03694 but clears25/27 proper bounds: win Brier/log-loss unresolved.
-`20261124_c4_qualifier_v1.json` freezes no learned qualifier. No rescue/replacement follows.
+U25 PWA polish100%; C100%; D42A100%/B0%; original programme74%. No B/model-fitting/protected job launched.
+Accepted engine-v1.3-r3/D29/Rule3/report-bands-v1 and pathway-v1 parameters remain. C2/S06 fixed attempts closed without promotion;
+no qualifier/rescue/r3 protected rescore. MODEL owns methods/limits; PLAN owns original ledger.
 
-C5 delivers official82-game completion, world-local Cup, play-in and fixed playoffs under `nba-competitions-2026-v1`.
-Regular season/Cup/Playoffs share exact weighted probabilities; laptop adds conditions, matchups and series lengths.
-Initial postseason/auxiliary OT are uncalibrated; matching and unpublished playoff dates are explicit assumptions.
-Phone keeps aggregate probabilities. Legacy bundles remain readable with unavailable new competition detail.
+`analysis/experiments/20261124_u25_completion_v1.json` owns release counts/hashes, exact iCloud bundles, test logs and shell deployment.
+PWA shell cachec9886c91a5e9bc0b926a published data-free. Conditional team/overview/player picker, compact lineup controls, shared accessible
+interaction styles and new stored-data charts are delivered. Player metric cards now correctly use `periods.fg.advanced`.
+Both devices require app update/manual iCloud import; real-device acceptance remains unverified. No separate website was created.
 
-Final full online v4: 975.5s/3600s, authorised fetch/required rebuild and source-exact;
-log `/tmp/musnba_c5_nightly_v4.log`, source/result receipts `20261124_c5_nightly_{start,result}_v4.json`.
-No model jobs remain. Retained namespace: `data/derived/live_runs/2026-11-24-1795505810000430000`.
-Owner8766/review8767 remain running; local final shell8875.
-Final shell cacheb53af8f45b272ed0f40f is published data-free; exact deployment/bundle hashes are in completion receipt.
-Both devices require app update and manual iCloud import; real-device acceptance remains unverified.
-
-V1 stopped164.9s; V2 failed827.8s (full engine means omitted OT); V3 failed813.3s (early cache survived coupling).
-All attempts remain immutable. Full-score repair retained the gate; source-identity cache/strict mass handling repaired the view defect.
-Original regular rank now controls conference home court independently of play-in seeds; quantified source clarification is retained.
-Mechanicsv6, partial-drawv2, reproductionv3 and full-preflightv1 precede final acceptance. Archivev4 preserves replaced inputs/views/snapshot;
-archivev1 preserves89 frozen research dependencies. No old failed-source run may resume into accepted output.
-
-C's original weights/ladders/dependencies/acceptance remain in Git3435c6a and `20261123_chunk_c_plan_v2.json`.
-C5 acceptance and A3 rungs90/100 now have fresh nightly, independent accounting, browser/PWA and checkpoint evidence.
-No automatic S11/S12/S14 credit. D54 early delivery remains supported by C1's measured completion evidence.
+Fresh full online nightly v3: 1010.4s/3600s, required rebuild,10k/branch and fresh season/capture, source-exact.
+Log `/tmp/musnba_u25_nightly_v3.log`; source/result `20261124_u25_nightly_{start,result}_v3.json`.
+Retained namespace `data/derived/live_runs/2026-11-24-1795519791320277000`. No model jobs remain; owner8766/review8767 remain running.
+The completion receipt preserves superseded attempts, external archives and test cleanup; only final accepted evidence counts.
+U25's completed ladder is in Git and `20261124_u25_plan_v1.json`; C evidence remains `20261124_c5_completion_v1.json`.
+No automatic S11/S12/S14 credit.
 
 ## Fully specified successor — D42 B0%, planning only
 
-Next action, when authorised: B1 source/legal-mechanics audit, before fitting. No B job has launched.
+First open action for the next modelling chunk: B1 source/assignment audit, before fitting. B is fully planned and remains0%.
 Headliners: evidence-backed player/lineup defence; reliable season paths with visible uncertainty.
-Canonical bounded specification: `20261124_chunk_b_successor_v1.json`.
+Canonical bounded specification: `20261124_chunk_b_successor_v3.json`.
 Weights B1=30%,B2=30%,B3=40%; overall=.30B1+.30B2+.40B3, all initially0%.
-B1 depends on accepted C/A3, prior evidence, permitted dated sources and frozen policy. B2 depends on correct historical calendars,
+B1 depends on accepted C/A3/U25, existing soft-assignment/zone history, dated evidence and frozen policy. B2 depends on correct historical calendars,
 prior-only auxiliary fits,16 origins and exact near-term mixtures. B3 follows checkpointed B1/B2 decisions and stored rotation capture.
+Rotation probabilities must use all retained worlds with exact weights, never the five deliberately selected replay examples; missing capture stays explicit.
 
 | Rung | B1 defence/legal mechanics30% | B2 pathway30% | B3 integration/visibility40% |
 |---:|---|---|---|
-|10|Audit Rule3/legal fives, freeze fingerprints.|Reconcile16 historical calendars/Cup finals.|Freeze candidate/control decisions/manifests.|
-|20|Reconcile penalties/exhaustion/OT; isolate real defects.|Build prior-only carry-over/opponent starts.|Fixed F4 combined/component removals.|
-|30|Freeze distinct defence hypothesis/fold data.|Leave-one-season-out/cold-start screen.|Independent F4/F1–F3 confirmation or rejection.|
-|40|Audit coverage/cutoffs/missingness/artifacts.|Test memory/gain/drift versus persistence.|Second-seed/10k/legal/cutoff/runtime gates.|
-|50|Frozen node/fold ablations; reject unsupported gains.|Check dated absence support; no-hazard fallback.|Only new qualified recipe protected once; retainr3 otherwise.|
-|60|Sequential matched player-first engine screens.|Consume each near-term Expected once.|Stored rotation probabilities sumfive; responsive map.|
+|10|Audit current assignment/zone history and Rule3.|Reconcile16 historical calendars/Cup finals.|Freeze candidate/control decisions/manifests.|
+|20|Validate source support for primary/help roles.|Build prior-only carry-over/opponent starts.|Fixed F4 combined/component removals.|
+|30|Freeze shot-context responsibility hypothesis.|Leave-one-season-out/cold-start screen.|Independent F4/F1–F3 confirmation or rejection.|
+|40|Audit fitted cutoffs, missingness and≤3 variants.|Test memory/gain/drift versus persistence.|Second-seed/10k/legal/cutoff/runtime gates.|
+|50|Held-out assignment checks; preserve uncertainty.|Check dated absence support; no-hazard fallback.|Only new qualified recipe protected once; retainr3 otherwise.|
+|60|Prior-only zone profiles; matched engine screen.|Consume each near-term Expected once.|Stored rotation probabilities sumfive; responsive map.|
 |70|Stress foul-outs/OT/short rosters and accounting.|10k worlds at all16 origins.|Inspect labels/legacy/offline/import/size/screenshots.|
 |80|Tier/defence/margin/non-inferiority uncertainty.|Per-origin CRPS/dispersion/coverage/persistence.|Fresh full nightly/accounting/bundles/shell.|
 |90|Confirm/reject unchanged gates; support/runtime.|Freeze pathway choice and interactions.|Docs and fully specified0% successor.|
 |100|Evidence/fallback/checks/checkpoint/push.|Evidence/limits/affected delivery/checkpoint/push.|Smoke/fault/PWA/accounting/checkpoint/push.|
 
 Before B1 outcomes freeze one distinct mechanism, ≤3 node variants, one200-game development and one disjoint200-game independent screen.
-Do not rescue/relabel closed C2/S06 or reopen repaired six-foul bugs. Broader confirmation/stress requires a frozen survivor.
-B2 first audits historical Cup-final labels/calendar leakage; ≤3 prospectively frozen start/memory candidates,2023–26 origins
-11-20/12-25/02-01/03-10, leave-one-season-out selection. All auxiliary fits precede origin; missing absence evidence retains no hazard.
+Existing broad inferred zone history is not new work; ranks are likelihood, not measured proximity. No C2/S06 rescue or repaired six-foul rerun. Broader confirmation/stress requires a frozen survivor.
+B2 first audits historical Cup-final labels/calendar leakage; ≤3 prospectively frozen start/memory candidates. Four completed seasons2022–23 through2025–26;
+Nov20/Dec25 in starting year, Feb1/Mar10 in ending year (16 exact dates in successor JSON), leave-one-season-out selection.
+Audit November2022 cold-start support; freeze common prior before outcomes. No future priors, dropped origins or Nov/Dec2026 tests. All auxiliary fits precede origin; missing absence evidence retains no hazard.
 Incomplete2026–27 truth cannot establish full-season/title calibration. No arbitrary variance multiplier or protectedr3 rescore.
 
 Acceptance: B1 independent player-first v3 proper-score/coverage benefit plus legal/cutoff invariants, or measured rejection retainsr3.

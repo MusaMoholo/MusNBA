@@ -1,0 +1,34 @@
+{
+ "kind": "U25 bounded frontend design/fixes; production engines unchanged",
+ "changes": [
+  "Conditional team/overview/player roster selection with grouped starters/bench",
+  "Per-game subject memory across compatible lineup rerenders",
+  "Player metrics bind to stored periods.fg.advanced instead of missing top-level advanced",
+  "Consistent native44px controls, focus/hover/disclosures, arrow/Home/End segmented keyboard handling",
+  "Compact lineup disclosure after summary, selected cases visibly open",
+  "Stored-quantile strips, zone volume/make bars, competition probability/progression bars, collision-separated linked team rating scatter",
+  "Cool comparison colours, warm active controls, crisp light/navy dark themes",
+  "Intrinsic mobile tab wrapping and explicit clipped-label gate"
+ ],
+ "player_metric_binding_audit": {
+  "players": 88,
+  "with_top_level_advanced": 0,
+  "with_full_game_advanced": 88
+ },
+ "Node_suite_files": 15,
+ "Node_log_sha256": "01cb4e5b65ce265a2ca8fb8c26e814e9f6a1cf927fb6113a342dfeccdb4a775c",
+ "new_visual_helper_tests": 3,
+ "visual_helper_log_sha256": "be0eb5e441f41c16c63324fb1bfd722c24557df269a8373aa7ae7d6aaefac7ba",
+ "baseline_smoke": "112/112",
+ "baseline_log_sha256": "f104bc58c339de8bb7fa34fda64537d6c514582e0d3f62d1aa25fa70ef54fd0f",
+ "preserved_test_attempts": {
+  "controls_v1_v2": "New assertion exposed existing missing player metric binding",
+  "controls_v3": "Verified source format and fixed actual periods.fg.advanced binding",
+  "controls_v4": "6/6 pass",
+  "first_full_sweeps": "198/198 automatic pass; visual review still found mobile label squeezing, corrected before release",
+  "mobile_tabs_v1": "30/30 explicit fit checks pass"
+ },
+ "no_simulation_or_model_changes": true,
+ "next_B_plan": "20261124_chunk_b_successor_v2.json",
+ "B_execution": false
+}

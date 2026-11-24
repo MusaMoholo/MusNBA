@@ -1,0 +1,20 @@
+{
+ "kind": "Fresh full accepted season generation, empty explicit namespace; no cache reuse or scoring",
+ "worlds": 30001,
+ "probability_mass": 40000,
+ "fresh_chunks": 31,
+ "reused_chunks": 0,
+ "jobs": 9,
+ "inner_threads": 1,
+ "seconds": 15.259555041000567,
+ "namespace": "data/derived/experiments/20261124_u25final_fresh_season_v1",
+ "identity": "e7bbf17b56187569b60f9873d4d2009ed62c0a96addb7dabb4e01df3a4c3732c",
+ "every_published_value_exact": true,
+ "input_sha256": {
+  "/Users/moholom/Repos/Sports/Basketball/data/snapshots/2026-11-24/season.json": "77e3c2eff2708aad6e3a74fcc420ab1154c6f2899d37c3bbb1f81dfb99af345f",
+  "/Users/moholom/Repos/Sports/Basketball/data/snapshots/2026-11-24/stats.json": "ad732d0a1b2a28f367bae5d2095f94141b93702293cae930711c7a4d41ec10df",
+  "/Users/moholom/Repos/Sports/Basketball/data/snapshots/2026-11-24/season_engine_worlds.npz": "1917eceed781b4a47d4c833ebe29d6b830601e0084245001a328a4c3d333057c"
+ },
+ "protected_scoring": false,
+ "result": "pass"
+}

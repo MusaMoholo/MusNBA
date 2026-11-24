@@ -1,0 +1,149 @@
+{
+ "kind": "Fully specified0% D42 B successor after U25; completed historical seasons and exact weighted rotation capture",
+ "id": "D42-B",
+ "headliners": [
+  "Better evidence for individual defensive responsibility and player forecasts",
+  "More reliable season forecasts and clear defensive/rotation explanations"
+ ],
+ "progress": {
+  "overall": 0,
+  "B1": 0,
+  "B2": 0,
+  "B3": 0
+ },
+ "weights": {
+  "B1": 30,
+  "B2": 30,
+  "B3": 40
+ },
+ "progress_formula": ".30*B1+.30*B2+.40*B3",
+ "dependencies": {
+  "B1": [
+   "C/A3 and U25 accepted delivery",
+   "S03-S06 evidence",
+   "permitted dated source coverage",
+   "frozen class-appropriate policy"
+  ],
+  "B2": [
+   "C/A3 calendar decisions",
+   "prior-only fits and complete historical regular calendars",
+   "16 origins/four seasons",
+   "exact near-term mixture"
+  ],
+  "B3": [
+   "B1/B2 measured decisions/checkpoints",
+   "independent confirmation/stress support",
+   "stored rotation probability capture"
+  ]
+ },
+ "rungs": {
+  "B1": {
+   "10": "Audit current soft assignment, broad zone history, real NBA aggregate matchup coverage and Rule3 baseline; distinguish delivered mechanics from new research.",
+   "20": "Reconcile recorded on-court fives, direct event credits and matchup aggregates; quantify what can validate primary versus help responsibility and what stays unknown.",
+   "30": "Freeze one distinct shot-context-conditioned responsibility hypothesis versus existing role/size soft assignment; no forced nearest-defender or top-N ground-truth labels.",
+   "40": "Audit dated source/fitted cutoffs, held-out assignment support and missingness; freeze at most3 variants before outcomes.",
+   "50": "Validate responsibility estimates on held-out supported evidence; compare probabilities with baseline and retain uncertainty. Do not use made/missed outcome to choose validation defenders.",
+   "60": "Build prior-only weighted zone opportunity/attempt/make histories from a surviving assignment mechanism and run the one200-game development screen.",
+   "70": "Stress foul-outs, overtime and short rosters; reconcile player/team points, seconds and eligible fives.",
+   "80": "Measure player tiers, defensive expression, margins and non-inferiority with paired uncertainty.",
+   "90": "Confirm or reject each candidate under the unchanged gates; record unsupported comparisons and runtime.",
+   "100": "Evidence, fallback and any required delivery are checked, documented, committed/pushed and summarised."
+  },
+  "B2": {
+   "10": "Reconcile pathway-v1 baseline, schedules and Cup accounting across all 16 historical origins.",
+   "20": "Build strictly prior carry-over/opponent-adjusted starting-rating candidates.",
+   "30": "Screen start ratings by leave-one-season-out, including November cold starts.",
+   "40": "Test memory/gain/drift against persistence without biased per-world rating updates.",
+   "50": "Assess absence-path support; retain no-future-absence fallback when historical evidence is insufficient.",
+   "60": "Consume accepted near-term Expected worlds once per game with validated mixture accounting.",
+   "70": "Run eligible candidates on all 16 origin combinations at 10k worlds.",
+   "80": "Report paired CRPS, dispersion, coverage and persistence by origin with uncertainty.",
+   "90": "Select or reject pathway candidates and freeze interactions for integrated confirmation.",
+   "100": "Results, limitations and any affected PWA delivery are checked, committed/pushed and summarised."
+  },
+  "B3": {
+   "10": "Freeze candidate/control manifests and explicit B1/B2 retain/reject decisions.",
+   "20": "Screen combined effects and component removals on the fixed player-first F4 population.",
+   "30": "Confirm a survivor on all eligible F4 and fixed F1–F3 samples, or record the failed gate.",
+   "40": "Verify second-seed, 10k subset, legal-five, cutoff, accounting and runtime gates or document rejection.",
+   "50": "Score only a prospectively frozen qualifying NEW recipe once under class-appropriate policy; never rescore protected r3. Otherwise retain accepted systems.",
+   "60": "Capture rotation probabilities from ALL retained worlds using exact probability weights, summingfive on court; never estimate from the five deliberately selected replay examples. Add supported defensive evidence explorer separating recorded/inferred/forecast; missing capture stays explicit.",
+   "70": "Reuse delivered U25 control system and conditional analysis selection; validate support/confidence, labels, offline profile limits and responsive screenshots. Do not redo U25 as new B credit.",
+   "80": "Run the final fresh live 10k nightly, audit outputs and deliver the iCloud bundle/data-free shell.",
+   "90": "Update all affected docs and construct the next chunk with headliners, weights and ten-rung ladders.",
+   "100": "Finish smoke/fault, PWA and accounting checks; review, commit/push and summarise outcomes and limitations."
+  }
+ },
+ "bounds": [
+  "Do not repeat rejected C2 zones/S06 or re-label them as new candidates. New defence hypothesis requires distinct evidence, prospective primary/benefit multiplicity, dated sources and a bounded budget before outcomes.",
+  "Before B1 fitting, freeze at most one distinct defence mechanism; at most three declared node variants, one200-game development screen and one disjoint200-game independent screen. Broader confirmation/stress requires a frozen survivor; reject unsupported comparisons honestly.",
+  "B2 first repairs historical Cup-final labels and season-specific calendar/version leakage. Freeze at most three starting-rating/memory candidates before validation; use the16 explicit origins in historical_pathway_panel from completed2022-23 through2025-26 seasons. Full-calendar/postseason calibration cannot be claimed from scheduled-only historical paths.",
+  "Fit carry-over/opponent/drift/absence auxiliaries strictly before each origin. Missing dated absence evidence retains no-hazard fallback; no arbitrary variance multiplier or from-final-results retune.",
+  "B2 selection uses leave-one-season-out; final historical confirmation or protected full-season truth must satisfy a prospectively explicit versioned pathway policy. Incomplete2026-27 final-season truth cannot establish calibrated title probabilities.",
+  "At most10 heavy threads including inner BLAS/OMP/compression. Parallelise disjoint panels/I/O; canonical1k chunks preserve world identity. No agent delegation implied.",
+  "Existing accepted history already shares shots across likely defenders in broad zones. Source audit must identify an actual new mechanism, not relabel the existing history as new work.",
+  "No defender positions exist at each shot in retained ESPN segments. Rank means likelihood, not measured physical proximity; top2 research hook is not proof of production activation.",
+  "Separate primary defence from help only if source evidence can support/validate it; unsupported roles stay unknown. Inferred weights must sumone per eligible shot; exclusions/missing fives explicit.",
+  "For per-origin forecasts all responsibility fits and profile histories precede origin. Hold out games for assignment validation; do not classify a made shot to a weak defender or missed shot to a strong defender based on that outcome.",
+  "U25 is PWA-only and delivered before B; use its design system rather than creating another website. Manual import remains required on both devices.",
+  "Historical season labels are ENDING years2023-26, not calendar-year origins. Exact16 dates are frozen above; none accesses protected2026-27 outcomes. Rotation maps require all weighted worlds, never selected extremes."
+ ],
+ "acceptance": {
+  "B1": "New legal/source-safe mechanism passes player-first node/engine v3 proper-score/coverage gates and independent benefit, or measured rejection retainsr3. No unearned original-programme credit.",
+  "B2": "All16 origins, per-date paired CRPS/dispersion/coverage/persistence with cutoff-safe fitting and exact mixture accounting; qualified version or measured rejection retainspathway-v1.",
+  "B3": "Applicable combined/removal/independent/seed/10k/cutoff/runtime checks; useful stored rotation map whose probabilities sum tofive; final fresh full nightly and tested/published PWA, evidence/docs/checkpoint."
+ },
+ "fallback": "Retain accepted engines on negative/unsupported evidence. An unfinished investigation is not completion. Ship useful rotation/calibration visibility if no model improves. Preserve all prior sources/results and manual device-import limitation.",
+ "first_commands": [
+  "git status --short --branch",
+  "git --no-pager log --oneline -5",
+  ".venv/bin/python scripts/smoke.py",
+  "Read five core docs, U25 completion, Bv2 and C2 fixed-negative reports; inspect scripts/matchups.py, features.matchup_counts, models/v1.3.json before any fit.",
+  "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m unittest tests.test_a1_substitution_engine tests.test_a1_lineup_context tests.test_competitions"
+ ],
+ "first_namespace": "data/derived/experiments/d42_b1_source_audit_v1; aggregate report analysis/experiments/<actualETdate>_b1_source_audit_v1.json; refuse overwrite",
+ "final_nightly": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u scripts/nightly_musnba.py --engine 10000 --sims 10000; authorised online fetch/required rebuild, fresh10k worlds/branch/season and selected replay;≤3600s, independent accounting, both imports/offline/upgrades, inspected1440/960/390/themes, data-free shell only, docs/checkpoint/push and0% successor.",
+ "original_ladder_archive": {
+  "member": "docs/archive/2026-11-23-before-lean/HANDOFF_NEXT.md",
+  "sha256": "3e9eb069bbc0cc941d62a2cc81dda8e6e12bdf6729eaf96d175e4ff305c7def5"
+ },
+ "limits": "Successor planning grants no B execution, promotion or protected-test credit in Chunk C.",
+ "supersedes": {
+  "report": "20261124_chunk_b_successor_v2.json",
+  "sha256": "8d42c0ba162406bfb20e1cadc4d32b115cbc3506b5c4554ab3f71ab6bdc86660"
+ },
+ "historical_pathway_panel": {
+  "season_ending_years": [
+   2023,
+   2024,
+   2025,
+   2026
+  ],
+  "seasons": [
+   "2022-23",
+   "2023-24",
+   "2024-25",
+   "2025-26"
+  ],
+  "origins": [
+   "2022-11-20",
+   "2022-12-25",
+   "2023-02-01",
+   "2023-03-10",
+   "2023-11-20",
+   "2023-12-25",
+   "2024-02-01",
+   "2024-03-10",
+   "2024-11-20",
+   "2024-12-25",
+   "2025-02-01",
+   "2025-03-10",
+   "2025-11-20",
+   "2025-12-25",
+   "2026-02-01",
+   "2026-03-10"
+  ],
+  "selection": "Leave one complete season out; origin and fitted auxiliaries strictly prior; no November/December2026 or later origin",
+  "early_support": "Audit November2022 cold-start/prior support before outcomes. Missing prior history uses the prospectively frozen common uninformative baseline; never future history or silent origin deletion."
+ }
+}

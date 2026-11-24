@@ -1,0 +1,44 @@
+{
+ "kind": "fresh C5 event/zone/box/minute/weighted-rate/path accounting",
+ "day": "2026-11-24",
+ "counts": {
+  "games": 3,
+  "examples": 15,
+  "segments": 3720,
+  "legal_fives": 14880,
+  "worlds": 50000,
+  "cases": 7,
+  "max_minute_error": 3.552713678800501e-14,
+  "max_weighted_zone_error": 0.0,
+  "max_replay_gzip_bytes": 94916
+ },
+ "rate_distributions": 2664,
+ "rate_reports": [
+  {
+   "game": "401909314",
+   "cases_including_game_view": 4,
+   "rate_distributions_checked": 1107,
+   "status": "pass"
+  },
+  {
+   "game": "401909315",
+   "cases_including_game_view": 1,
+   "rate_distributions_checked": 306,
+   "status": "pass"
+  },
+  {
+   "game": "401909316",
+   "cases_including_game_view": 4,
+   "rate_distributions_checked": 1251,
+   "status": "pass"
+  }
+ ],
+ "season_worlds": 30001,
+ "season_probability_mass": 40000,
+ "competition_schema": "nba-competitions-2026-v1",
+ "competition_identity": "e7bbf17b56187569b60f9873d4d2009ed62c0a96addb7dabb4e01df3a4c3732c",
+ "season_sha256": "77e3c2eff2708aad6e3a74fcc420ab1154c6f2899d37c3bbb1f81dfb99af345f",
+ "capture_manifest_sha256": "492e58feabf53f4a4e77a73c8a6ce828356578ec9b8b036ffb8041939ec5efc0",
+ "result": "pass",
+ "protected_scoring": false
+}
