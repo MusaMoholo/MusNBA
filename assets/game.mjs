@@ -55,7 +55,7 @@ function lineupControls(data) {
     const label = !Object.keys(c.choices).length ? 'Expected' : r.selected_players.map(p => `${players.get(p.player_id)?.name || p.player_id}: ${c.choices[p.player_id] ? 'available' : 'unavailable'}`).join(' · ');
     return `<tr><td class="l"><button class="ghost sm" data-lineup-case="${esc(key)}">${esc(label)}</button></td><td>${pct(c.sim.periods.fg.away.win)}</td><td>${pct(c.sim.periods.fg.home.win)}</td><td>${f1(c.sim.periods.fg.total.mean)}</td><td>${c.sim.sims.toLocaleString()}</td></tr>`;
   }).join('')}</tbody></table></div><p class="note">Select a row to use that lineup throughout this game. Expected combines the stored branches with their stated availability weights.</p></details>` : '';
-  return `<section class="panel" data-research-lineups><h3>${data._research ? 'Research lineup selection · not a forecast' : data.worlds ? 'Lineup forecast' : 'Expected lineup forecast'}</h3>
+  return `<section class="panel" data-research-lineups><details class="lineup-disclosure"${Object.keys(r.choices).length?' open':''}><summary>Lineup · ${Object.keys(r.choices).length?'Selected case':'Expected'}</summary><h3>${data._research ? 'Research lineup selection · not a forecast' : data.worlds ? 'Lineup forecast' : 'Expected lineup forecast'}</h3>
     <div class="lineup-controls">${r.selected_players.map(p => {
       const player = players.get(p.player_id), choice = r.choices[p.player_id];
       const identity = `<span class="lineup-person">${playerFace(p.player_id, player.name)}<span><b>${esc(player.name)}</b><small>${esc(team(p.team_id).abbr)} · ${esc(p.status || 'Unknown')} · assumed ${pct(p.probability, 0)} available</small></span></span>`;
@@ -65,7 +65,7 @@ function lineupControls(data) {
         <option value="unavailable"${choice === false ? ' selected' : ''}>Unavailable</option></select>` : ''}</label>`;
     }).join('')}</div>
     <p class="note"><b>${Object.keys(r.choices).length ? 'Selected lineup' : 'Expected lineup'}</b> · ${r.selected_worlds.toLocaleString()} saved worlds. ${data.worlds ? 'Applies across this game: boxes, player sheets, advanced rates and scenarios. Season views use Expected.' : 'Expected only on this device.'} Availability does not guarantee minutes.</p>${comparison}
-    <details><summary>Assumptions &amp; saved games</summary><p class="note">Other uncertain players still vary. Availability probabilities and cross-team independence are unvalidated assumptions. Selectors cover at most one player per team, within its top three by a pre-game offensive contribution proxy. For report-bands-v1 inputs: out 0%, doubtful 25%, questionable/ambiguous 50%, probable 75%, confirmed available 100%. Generic reports use game-specific wording; unlisted availability and recent inactivity remain explicit assumptions. Earlier forecasts retain their original weights. Opening-five shares are simulated, not official starters. ${r.selected_worlds.toLocaleString()} saved worlds; results use the stated branch weights.</p>${r.selected_players.map(p => `<p class="note"><b>${esc(players.get(p.player_id)?.name || p.player_id)}</b> · ${esc(availabilityReason(p.availability_basis))} · assumed ${pct(p.probability, 0)} available.<br>${esc(players.get(p.player_id)?.injury?.comment || 'No report comment retained.')}</p>`).join('')}</details></section>`;
+    <details><summary>Assumptions &amp; saved games</summary><p class="note">Other uncertain players still vary. Availability probabilities and cross-team independence are unvalidated assumptions. Selectors cover at most one player per team, within its top three by a pre-game offensive contribution proxy. For report-bands-v1 inputs: out 0%, doubtful 25%, questionable/ambiguous 50%, probable 75%, confirmed available 100%. Generic reports use game-specific wording; unlisted availability and recent inactivity remain explicit assumptions. Earlier forecasts retain their original weights. Opening-five shares are simulated, not official starters. ${r.selected_worlds.toLocaleString()} saved worlds; results use the stated branch weights.</p>${r.selected_players.map(p => `<p class="note"><b>${esc(players.get(p.player_id)?.name || p.player_id)}</b> · ${esc(availabilityReason(p.availability_basis))} · assumed ${pct(p.probability, 0)} available.<br>${esc(players.get(p.player_id)?.injury?.comment || 'No report comment retained.')}</p>`).join('')}</details></details></section>`;
 }
 
 function wireLineupControls(view, data, rerender, current) {
@@ -147,7 +147,7 @@ export async function render(view, {rest, current}) {
   state.period = period;
   const base = `#/game/${gid}`;
   view.innerHTML = `<a class="crumb" href="#/today/${data.game.date}">‹ ${esc(dayLabel(data.game.date))} slate</a>
-    ${lineupControls(data)}${bezel(data, period, {matchup, scenario, analysis, replay, mode, base})}<div id="game-body"></div>`;
+    ${bezel(data, period, {matchup, scenario, analysis, replay, mode, base})}${lineupControls(data)}<div id="game-body"></div>`;
   wireLineupControls(view, data, rerender, current);
   const body = view.querySelector('#game-body');
   const go = (p, m) => location.replace(`${base}/${p}${m === 'team' ? '/team' : ''}`);
@@ -919,11 +919,10 @@ async function sheet(view, data, pid, current, rerender) {
   const paint = () => {
     const savedAdvanced = paintedSheet ? advancedState(view) : [];
     view.innerHTML = `<a class="crumb" href="#/game/${data.game.id}/${period}">‹ ${esc(team(data.game.away.id).abbr)} @ ${esc(team(data.game.home.id).abbr)} · ${esc(dayLabel(data.game.date))}</a>
-      ${lineupControls(data)}
       <section class="panel"><div class="row">${playerFace(pid, name, 'lg')}<div class="grow"><h2 style="margin:0;font-size:20px">${esc(name)}</h2>
         <p class="note" style="margin:0">${esc(team(tid).name)} · ${esc(p?.pos || actualRow?.pos || '')}${p?.jersey ? ' · #' + esc(p.jersey) : ''} · ${side === 'home' ? 'vs' : '@'} ${esc(team(opp).abbr)} ${p ? statusTag(p.status, p.availability, p.availability_basis) : ''}</p></div>
         ${sim ? `<label class="sr" for="sheet-period">Period</label><select id="sheet-period" class="period">${options}</select>` : ''}
-        <a class="btn ghost" href="#/player/${pid}">Player page</a></div>${tiles}</section>
+        <a class="btn ghost" href="#/player/${pid}">Player page</a></div>${tiles}</section>${lineupControls(data)}
       ${proj ? `${segGroups(STAT_GROUPS.map(([g, ks]) => [g, ks.filter(([k]) => choices.includes(k))]), state.stat, 'data-stat')}<div id="stat-block">${statBlock()}</div>` : ''}
       ${period === 'fg' && !actualRow?.dnp && Number.isFinite(actualRow?.pm) ? `<p class="note">Actual on-court +/−: <b>${signed(actualRow.pm, 0)}</b> · points scored minus allowed while on court.</p>` : ''}
       ${proj && period === 'fg' && data.worlds && !PERCENT_STATS.has(state.stat) ? '<div id="what-if"></div>' : ''}

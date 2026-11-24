@@ -403,3 +403,29 @@ export function wireSortableTables(root) {
     if (prior && headers[prior.column]?.dataset.sortHeading) apply(prior.column, prior.direction);
   });
 }
+
+// Compact representations read stored summaries; no model or distribution is reconstructed.
+export function quantileStrip(d, suffix='') {
+  const q=d?.exact_q;
+  if(!Array.isArray(q)||q.length!==5||!q.every(Number.isFinite)||q.some((v,i)=>i&&v<q[i-1]))return '';
+  const span=q[4]-q[0],x=v=>span?10+180*(v-q[0])/span:100;
+  return `<figure class="quantile-strip"><svg viewBox="0 0 200 32" role="img" aria-label="10th to 90th percentile: ${esc(f1(q[0])+suffix)} to ${esc(f1(q[4])+suffix)}; median ${esc(f1(q[2])+suffix)}"><title>Outer line: middle 80%. Thick band: middle 50%. Dot: median.</title><line class="quantile-range" x1="${x(q[0])}" x2="${x(q[4])}" y1="16" y2="16"/><line class="quantile-middle" x1="${x(q[1])}" x2="${x(q[3])}" y1="16" y2="16"/><circle cx="${x(q[2])}" cy="16" r="5"/></svg><figcaption><span>${f1(q[0])+suffix}</span><span>middle 80%</span><span>${f1(q[4])+suffix}</span></figcaption></figure>`;
+}
+export function probabilityBar(p) {
+  return Number.isFinite(p)&&p>=0&&p<=1?`<span class="probability-bar" aria-hidden="true"><i style="width:${100*p}%"></i></span>`:'';
+}
+export function ratingsPlot(rows) {
+  const data=rows.filter(t=>Number.isFinite(t.ortg)&&Number.isFinite(t.drtg));if(!data.length)return '';
+  const xs=data.map(t=>t.ortg),ys=data.map(t=>t.drtg),loX=Math.min(...xs)-2,hiX=Math.max(...xs)+2,loY=Math.min(...ys)-2,hiY=Math.max(...ys)+2;
+  const x=v=>55+570*(v-loX)/(hiX-loX),y=v=>35+245*(v-loY)/(hiY-loY),avgX=xs.reduce((a,b)=>a+b,0)/xs.length,avgY=ys.reduce((a,b)=>a+b,0)/ys.length;
+  const occupied=[];
+  const placements=new Map(data.slice().sort((a,b)=>a.drtg-b.drtg||a.ortg-b.ortg||String(a.id).localeCompare(String(b.id))).map(t=>{
+    const px=x(t.ortg),py=y(t.drtg),w=team(t.id).abbr.length*8+4;
+    const candidates=[0,-16,16,-32,32,-48,48,-64,64].flatMap(dy=>[{lx:px+10,ly:py+4+dy,anchor:'start'},{lx:px-10,ly:py+4+dy,anchor:'end'}]);
+    const label=candidates.find(c=>{const left=c.anchor==='start'?c.lx:c.lx-w,box={l:left,r:left+w,t:c.ly-12,b:c.ly+3};
+      if(box.l<40||box.r>665||box.t<26||box.b>290||occupied.some(b=>box.l<b.r+3&&box.r>b.l-3&&box.t<b.b+3&&box.b>b.t-3))return false;
+      c.box=box;return true;})||{lx:px+10,ly:py+4,anchor:'start'};
+    if(label.box)occupied.push(label.box);return [t.id,label];
+  }));
+  return `<figure class="ratings-map"><figcaption><strong>Team strength at a glance</strong><span>Right: stronger offence · Up: stronger defence · Dashed lines: displayed-team averages</span></figcaption><svg viewBox="0 0 680 330" role="img" aria-label="Offensive and defensive ratings. Each labelled point links to a team."><line class="map-grid" x1="55" x2="625" y1="${y(avgY)}" y2="${y(avgY)}"/><line class="map-grid" x1="${x(avgX)}" x2="${x(avgX)}" y1="35" y2="280"/><text x="55" y="20">Fewer points allowed / 100</text><text x="625" y="318" text-anchor="end">More points scored / 100</text>${data.map(t=>{const l=placements.get(t.id);return `<a href="#/team/${esc(t.id)}" aria-label="${esc(team(t.id).name)}: offence ${f1(t.ortg)}, defence ${f1(t.drtg)}"><title>${esc(team(t.id).name)} · ORtg ${f1(t.ortg)} · DRtg ${f1(t.drtg)}</title><line class="map-leader" x1="${x(t.ortg)}" y1="${y(t.drtg)}" x2="${l.lx}" y2="${l.ly-4}"/><circle cx="${x(t.ortg)}" cy="${y(t.drtg)}" r="6"/><text x="${l.lx}" y="${l.ly}" text-anchor="${l.anchor}">${esc(team(t.id).abbr)}</text></a>`;}).join('')}</svg></figure>`;
+}
