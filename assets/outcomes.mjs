@@ -4,6 +4,8 @@
 import {api, esc, pct, team} from './ui.mjs';
 import {decodeMinuteCdfs} from './precise-minutes.mjs';
 import {branchWorldSource} from './lineup-worlds.mjs';
+import {derivedMetric, METRIC_INPUTS} from './box-metrics.mjs';
+import {decodeZones, parseZoneVariable, zoneValues, ZONE_VARS} from './shot-zones.mjs';
 import {correlation as weightedCorrelation, distribution as weightedDistribution, grid as weightedGrid,
   gridEdges, selectedMass, weightedMean, weightedShare} from './weighted-worlds.mjs';
 
@@ -34,14 +36,18 @@ export const PLAYER_VARS = [['available', 'Available'], ['unavailable', 'Unavail
   ['ftm', 'Free throws made'], ['stl', 'Steals'], ['blk', 'Blocks'], ['tov', 'Turnovers'], ['fgpct', 'FG% (of attempts)'], ['fga', 'Field-goal attempts'], ['fg3a', 'Three-point attempts'], ['fta', 'Free-throw attempts'],
   ['twoMade', 'Two-pointers made'], ['twoAtt', 'Two-point attempts'], ['twoPct', '2P%'], ['fg3pct', '3P%'], ['ftpct', 'FT%'], ['efg', 'Effective FG%'], ['ts', 'True shooting%'],
   ['threeShare', '3-point attempt rate%'], ['ftRate', 'Free-throw attempt rate%'], ['astTov', 'Assists per turnover'],
-  ['pra', 'Points + rebounds + assists'], ['pr', 'Points + rebounds'], ['pa', 'Points + assists'], ['ra', 'Rebounds + assists'], ['stocks', 'Steals + blocks']];
+  ['pra', 'Points + rebounds + assists'], ['pr', 'Points + rebounds'], ['pa', 'Points + assists'], ['ra', 'Rebounds + assists'], ['stocks', 'Steals + blocks'], ['fantasy', 'NBA fantasy points'], ...ZONE_VARS];
 export const TEAM_VARS = [['win', 'Wins'], ['lose', 'Loses'], ['pts', 'Points'], ['margin', 'Margin'],
   ['q1', 'Q1 points'], ['q2', 'Q2 points'], ['q3', 'Q3 points'], ['q4', 'Q4 points'], ['h1', '1st-half points'], ['h2', '2nd-half points'],
   ['wq1', 'Wins Q1'], ['wq2', 'Wins Q2'], ['wq3', 'Wins Q3'], ['wq4', 'Wins Q4'], ['wh1', 'Wins the 1st half'], ['wh2', 'Wins the 2nd half'],
   ['q1m', 'Margin after Q1'], ['h1m', 'Half-time margin'], ['q3m', 'Margin after Q3'], ['q4m', 'Q4 margin'],
   ['lead1', 'Leads after Q1'], ['leadh', 'Leads at half-time'], ['lead3', 'Leads after Q3'],
   ['comeback', 'Wins from behind at half-time'], ['blown', 'Loses after leading at half-time'], ['wire', 'Leads at every break and wins'],
-  ['sweep', 'Wins every quarter'], ['qwins', 'Quarters won (of 4)']];
+  ['sweep', 'Wins every quarter'], ['qwins', 'Quarters won (of 4)'],
+  ['reb','Rebounds'],['oreb','Offensive rebounds'],['dreb','Defensive rebounds'],['ast','Assists'],['stl','Steals'],['blk','Blocks'],['tov','Player turnovers'],
+  ['fgm','Field goals made'],['fga','Field-goal attempts'],['fg3m','Threes made'],['fg3a','Three-point attempts'],['ftm','Free throws made'],['fta','Free-throw attempts'],
+  ['fgpct','FG%'],['fg3pct','3P%'],['ftpct','FT%'],['twoPct','2P%'],['efg','Effective FG%'],['ts','True shooting%'],['threeShare','3-point attempt rate%'],['ftRate','Free-throw attempt rate%'],['astTov','Assists per turnover'],
+  ['poss','Estimated possessions'],['ortg','Offensive rating estimate'],['drtg','Defensive rating estimate'],['net','Net rating estimate'],['orebShare','Offensive rebound share%'],['drebShare','Defensive rebound share%'],['assist','Assisted field goals%'],['turnover','Turnover rate estimate%'],['steals','Steal rate estimate%'],...ZONE_VARS];
 export const GAME_VARS = [['total', 'Total points'], ['absm', 'Margin either way'], ['ot', 'Goes to overtime'], ['not', 'No overtime'],
   ['t1', 'Q1 total'], ['th1', '1st-half total'], ['th2', '2nd-half total'], ['t4', 'Q4 total'],
   ['changes', 'Leader changes at the breaks'], ['flip', 'Half-time leader loses'], ['close3', 'Within 5 after Q3']];
@@ -117,6 +123,7 @@ export function branchWorldData(source, choices = {}) {
     player: (id, stat) => source.playerValues(id, stat),
     team: (side, q) => source.teamPoints(side, ['q1', 'q2', 'q3', 'q4', 'ot'][q]),
     overtime: () => source.overtimePeriods(),
+    hasZones: source.hasZones, zone: (id,z,stat) => source.zoneValues?.(id,z,stat),
   });
   result.minuteValues = (id, period) => source.playerValues(id, 'min', period);
   return result;
@@ -148,6 +155,8 @@ export function worldData(raw, source = null) {
   }
   const idx = new Map(raw.players.map((p, i) => [p, i]));
   const memo = new Map();
+  const zones = source ? null : decodeZones(raw, W, n, {boxColumn: (w,p,key) => { const j=raw.stats.indexOf(key); return j<0 ? null : lines[(w*n+p)*k+j]; }});
+  const zoneColumn = (i,z,stat) => source ? source.zone?.(raw.players[i],z,stat) : zones?.column(i,z,stat);
   const statCol = (i, s) => {
     const j = raw.stats.indexOf(s), out = new Float64Array(W);
     if (j < 0) return null;
@@ -166,7 +175,7 @@ export function worldData(raw, source = null) {
     for (let w = 0; w < W; w++) out[w] = tp[(w * 2 + s) * 5 + q];
     return out;
   };
-  const W_ = {W, ids: raw.players, side: raw.side.map(s => (s === 0 ? 'home' : 'away')), stats: raw.stats};
+  const W_ = {W, ids: raw.players, side: raw.side.map(s => (s === 0 ? 'home' : 'away')), stats: raw.stats, hasZones: source ? Boolean(source.hasZones) : Boolean(zones)};
   if (source) Object.assign(W_, {weights: source.weights, baseMask: source.baseMask});
   if (minuteView) {
     const slices = {q1: [0], q2: [1], q3: [2], q4: [3], h1: [0, 1], h2: [2, 3], fg: [0, 1, 2, 3, 4]};
@@ -197,11 +206,13 @@ export function worldData(raw, source = null) {
     const key = subj + '|' + v;
     if (memo.has(key)) return memo.get(key);
     let out = null;
+    const zoneSpec = parseZoneVariable(v);
     if (subj.startsWith('p:')) {
       const i = idx.get(subj.slice(2));
       if (i == null) return null;
       const c = s => W_.values(subj, s);
-      if (source && ['plays', 'sits', 'available', 'unavailable'].includes(v)) out = source.player(subj.slice(2), v);
+      if (zoneSpec) out = W_.hasZones ? zoneValues(zoneSpec, (z,stat) => zoneColumn(i,z,stat), c('fga')) : null;
+      else if (source && ['plays', 'sits', 'available', 'unavailable'].includes(v)) out = source.player(subj.slice(2), v);
       else if (v === 'min' && W_.preciseMinutes) out = W_.minuteValues(subj.slice(2), 'fg');
       else if (v === 'plays' || v === 'sits') { const m = c('min'); out = m.map(x => (v === 'plays' ? x > 0 : x === 0) ? 1 : 0); }
       else if (v === 'pra') out = add(c('pts'), c('reb'), c('ast'));
@@ -209,24 +220,18 @@ export function worldData(raw, source = null) {
       else if (v === 'pa') out = add(c('pts'), c('ast'));
       else if (v === 'ra') out = add(c('reb'), c('ast'));
       else if (v === 'stocks') out = add(c('stl'), c('blk'));
-      else if (['twoMade', 'twoAtt'].includes(v)) {
-        const a = c(v === 'twoMade' ? 'fgm' : 'fga'), b = c(v === 'twoMade' ? 'fg3m' : 'fg3a');
-        out = a && b ? a.map((x, w) => x - b[w]) : null;
-      } else if (['fgpct', 'twoPct', 'fg3pct', 'ftpct', 'efg', 'ts', 'threeShare', 'ftRate', 'astTov'].includes(v)) {
-        const spec = {fgpct: ['fgm', 'fga'], twoPct: ['twoMade', 'twoAtt'], fg3pct: ['fg3m', 'fg3a'], ftpct: ['ftm', 'fta'],
-          threeShare: ['fg3a', 'fga'], ftRate: ['fta', 'fga'], astTov: ['ast', 'tov']}[v];
-        let a, b;
-        if (spec) { a = c(spec[0]); b = c(spec[1]); }
-        else if (v === 'efg') { const m = c('fgm'), t = c('fg3m'); a = m && t ? m.map((x, w) => x + .5 * t[w]) : null; b = c('fga'); }
-        else { a = c('pts'); const f = c('fga'), t = c('fta'); b = f && t ? f.map((x, w) => 2 * (x + .44 * t[w])) : null; }
-        out = a && b ? a.map((x, w) => b[w] > 0 ? (v === 'astTov' ? 1 : 100) * x / b[w] : NaN) : null;
-      }
-      else if (v === 'ftm' && !raw.stats.includes('ftm')) { const p_ = c('pts'), m = c('fgm'), t = c('fg3m'); out = p_ && m && t ? p_.map((x, w) => Math.max(0, x - 2 * m[w] - t[w])) : null; }
+      else if (Object.hasOwn(METRIC_INPUTS, v)) out = derivedMetric(v, c) ?? null;
+      else if (v === 'ftm' && !raw.stats.includes('ftm')) { const p_ = c('pts'), m = c('fgm'), t = c('fg3m'); out = p_ && m && t ? p_.map((x, w) => (x - 2 * m[w] - t[w] >= 0 ? x - 2 * m[w] - t[w] : NaN)) : null; }
       else out = statCol(i, v);
     } else if (subj.startsWith('t:')) {
       const side = subj.slice(2), other = side === 'home' ? 'away' : 'home';
       const pts = s => add(teamCol(s, 0), teamCol(s, 1), teamCol(s, 2), teamCol(s, 3), teamCol(s, 4));
-      if (v === 'pts') out = pts(side);
+      const c = key => W_.values(subj,key), opposite = key => W_.values('t:'+other,key);
+      const members = raw.players.map((id,i) => [id,i]).filter(([,i]) => raw.side[i] === (side==='home'?0:1));
+      if (zoneSpec) out = W_.hasZones ? zoneValues(zoneSpec,(z,stat) => add(...members.map(([,i]) => zoneColumn(i,z,stat))),c('fga')) : null;
+      else if (v === 'pts') out = pts(side);
+      else if (Object.hasOwn(METRIC_INPUTS,v)) out = derivedMetric(v,c,opposite) ?? null;
+      else if (raw.stats.includes(v)) out = add(...members.map(([id]) => W_.values('p:'+id,v)));
       else if (v === 'margin' || v === 'win' || v === 'lose') {
         const a = pts(side), b = pts(other);
         out = a.map((x, w) => (v === 'margin' ? x - b[w] : v === 'win' ? (x > b[w] ? 1 : 0) : (x < b[w] ? 1 : 0)));
@@ -470,13 +475,17 @@ export function subjectOptions(data, selected) {
 const VAR_GROUPS = {
   p: [['Availability and participation', ['available', 'unavailable', 'plays', 'sits', 'min']], ['Scoring', ['pts', 'fgm', 'fg3m', 'ftm', 'fga', 'fg3a', 'fta', 'twoMade', 'twoAtt']], ['Rebounding', ['reb', 'oreb', 'dreb']],
       ['Efficiency', ['fgpct', 'twoPct', 'fg3pct', 'ftpct', 'efg', 'ts', 'threeShare', 'ftRate', 'astTov']],
-      ['Combined totals', ['pra', 'pr', 'pa', 'ra', 'stocks']], ['Handling', ['ast', 'tov']], ['Defense', ['stl', 'blk']]],
+      ['Combined totals', ['pra', 'pr', 'pa', 'ra', 'stocks']], ['Handling', ['ast', 'tov']], ['Defense', ['stl', 'blk']], ['Fantasy', ['fantasy']], ['Shooting zones', ZONE_VARS.map(([key]) => key)]],
   t: [['Result', ['win', 'lose', 'margin']], ['Points', ['pts', 'h1', 'h2', 'q1', 'q2', 'q3', 'q4']],
       ['Periods won', ['wq1', 'wq2', 'wq3', 'wq4', 'wh1', 'wh2', 'qwins', 'sweep']],
-      ['Leads', ['q1m', 'h1m', 'q3m', 'q4m', 'lead1', 'leadh', 'lead3']], ['Flow', ['comeback', 'blown', 'wire']]],
+      ['Leads', ['q1m', 'h1m', 'q3m', 'q4m', 'lead1', 'leadh', 'lead3']], ['Flow', ['comeback', 'blown', 'wire']],
+      ['Box totals',['reb','oreb','dreb','ast','stl','blk','tov','fgm','fga','fg3m','fg3a','ftm','fta']],
+      ['Efficiency',['fgpct','twoPct','fg3pct','ftpct','efg','ts','threeShare','ftRate','astTov']],
+      ['Team rates',['poss','ortg','drtg','net','orebShare','drebShare','assist','turnover','steals']],
+      ['Shooting zones',ZONE_VARS.map(([key])=>key)]],
   g: [['Totals', ['total', 'th1', 'th2', 't1', 't4']], ['Margin & flow', ['absm', 'close3', 'changes', 'flip']], ['Overtime', ['ot', 'not']]],
 };
-const PLAYER_INPUTS = {plays: ['min'], sits: ['min'], ftm: ['pts','fgm','fg3m'],
+const PLAYER_INPUTS = {...METRIC_INPUTS, plays: ['min'], sits: ['min'], ftm: ['pts','fgm','fg3m'],
   pra: ['pts','reb','ast'], pr: ['pts','reb'], pa: ['pts','ast'], ra: ['reb','ast'], stocks: ['stl','blk'],
   twoMade: ['fgm','fg3m'], twoAtt: ['fga','fg3a'], twoPct: ['twoMade','twoAtt'],
   fgpct: ['fgm','fga'], fg3pct: ['fg3m','fg3a'], ftpct: ['ftm','fta'], efg: ['fgm','fg3m','fga'],
@@ -484,9 +493,11 @@ const PLAYER_INPUTS = {plays: ['min'], sits: ['min'], ftm: ['pts','fgm','fg3m'],
 export function varOptions(subj, selected, Wd) {
   const kind = subj.startsWith('p:') ? 'p' : subj.startsWith('t:') ? 't' : 'g';
   const available = new Set(Wd.stats);
-  const supports = key => ['available','unavailable'].includes(key) ? Boolean(Wd.weights)
+  const supports = key => parseZoneVariable(key) ? Boolean(Wd.hasZones)
+    : ['available','unavailable'].includes(key) ? Boolean(Wd.weights)
     : available.has(key) || Boolean(PLAYER_INPUTS[key]?.every(supports));
-  const vars = new Map((kind === 'p' ? PLAYER_VARS.filter(([key]) => supports(key)) : kind === 't' ? TEAM_VARS : GAME_VARS));
+  const vars = new Map((kind === 'p' ? PLAYER_VARS.filter(([key]) => supports(key))
+    : kind === 't' ? TEAM_VARS.filter(([key]) => !parseZoneVariable(key) && !Object.hasOwn(METRIC_INPUTS,key) && !['reb','oreb','dreb','ast','stl','blk','tov','fgm','fga','fg3m','fg3a','ftm','fta'].includes(key) || supports(key)) : GAME_VARS));
   const opt = k => `<option value="${k}"${k === selected ? ' selected' : ''}>${esc(vars.get(k))}</option>`;
   return VAR_GROUPS[kind].map(([label, ks]) => { const o = ks.filter(k => vars.has(k)).map(opt).join(''); return o ? `<optgroup label="${esc(label)}">${o}</optgroup>` : ''; }).join('');
 }

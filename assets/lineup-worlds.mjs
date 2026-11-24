@@ -1,5 +1,6 @@
 // Validated stored lineup worlds. Reads and slices saved arrays; never simulates or fits.
 import {branchWeights} from './weighted-worlds.mjs';
+import {decodeZones} from './shot-zones.mjs';
 
 function probabilityFraction(value) {
   if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0 || value >= 1) throw new Error('Invalid selected player probability');
@@ -43,7 +44,7 @@ export function branchWorldSource(fixture) {
     probabilityFraction(p.probability);
   }
   const combinations = new Set(), prepared = [];
-  let roster = null, offset = 0, hasPeriods = null, hasFinalPeriod = null, hasOpening = null;
+  let roster = null, offset = 0, hasPeriods = null, hasFinalPeriod = null, hasOpening = null, hasZones = null;
   for (const record of records) {
     const raw = record.worlds;
     if (!raw || !Array.isArray(record.assignments) || record.assignments.length !== selected.length
@@ -158,7 +159,10 @@ export function branchWorldSource(fixture) {
         if (score[side] !== total) throw new Error('Player and team scores differ');
       }
     }
-    prepared.push({raw, lines, available, played, minuteView, periodLines, periodMinuteView, periods, finalPeriod, opening, offset, assignments});
+    const zones=decodeZones(raw,n,p,{boxColumn:(w,i,stat)=>{const j=raw.stats.indexOf(stat);return j<0?null:lines[(w*p+i)*k+j];}});
+    if(hasZones!=null&&Boolean(zones)!==hasZones)throw new Error('Branches differ in zone data');
+    hasZones=Boolean(zones);
+    prepared.push({raw, lines, available, played, minuteView, periodLines, periodMinuteView, periods, finalPeriod, opening, offset, assignments, zones});
     offset += n;
   }
   const {weights, denominator} = branchWeights(prepared.map((b, i) => ({worlds: b.raw.worlds, weight: records[i].weight})));
@@ -218,8 +222,15 @@ export function branchWorldSource(fixture) {
     }
     return result;
   };
+  const zoneValues=(id,z,stat)=>{
+    if(!hasZones)return null;
+    const i=roster[0].indexOf(id);if(i<0)throw new Error('Unknown zone player');
+    const values=new Float64Array(offset);
+    for(const branch of prepared)values.set(branch.zones.column(i,z,stat),branch.offset);
+    return values;
+  };
   return {worlds: offset, weights, denominator, game: fixture.game, origin: fixture.origin,
     selected, weightAssumptions: fixture.weight_assumptions,
     players: roster[0], side: roster[1], stats: roster[2],
-    playerValues, teamPoints, selection, overtimePeriods};
+    playerValues, teamPoints, selection, overtimePeriods, hasZones, zoneValues};
 }
