@@ -1,0 +1,24 @@
+{
+ "kind": "C2 checkpoint checks; no new model jobs",
+ "smoke_passed": 107,
+ "smoke_checks": 107,
+ "fault_passed": 86,
+ "fault_checks": 107,
+ "fault_exit": 1,
+ "focused_tests": 26,
+ "public_reports_scanned": 37,
+ "raw_player_fields_published": false,
+ "completed_run_rejected": true,
+ "simulation_workers_running": false,
+ "production_changed": false,
+ "pwa_assets_changed": false,
+ "new_bundles_required": false,
+ "real_device_acceptance": "unverified; C1 app update/manual import still required",
+ "protected_evaluation_run": false,
+ "research_decision_sha256": "054ccd10f8c4fa34e8107ffff12b0eb8cf376324c942f2cc4ebbf5244cd48f26",
+ "log_sha256": {
+  "musnba_c2_tests_final_v1.log": "20fabe4a652d003e4d28b9f9b0ce27eefeedc64678763802c257be5c144bf1aa",
+  "musnba_c2_smoke_final_v1.log": "2ec598e444d86fff52bc3bb04f171522acd79b3b978a7a55088dad6177a8f3f9",
+  "musnba_c2_fault_final_v1.log": "cc0c11149aec3e8fac21436b5a24642446c85684d0ff64df91427007f7e048f6"
+ }
+}

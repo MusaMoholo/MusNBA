@@ -1,0 +1,38 @@
+{
+ "kind": "isolated research engine; no promotion",
+ "nominee": "distance",
+ "grade_sha256": "5a58411959304c8ae9ed5cd06221ac87734d731ccca4876e83ef9d696c9e5a4f",
+ "model_version": "folds/c2_court_F4_v2",
+ "training_through": "2025-12-31",
+ "config_sha256": "875f85e967e3a694e8f27a4e9d3af41497e3fa1aad5f24b80a8baeaf3ed5a54f",
+ "aux_sha256": "036a1935856f894a1efbbb0f8bd195795d054b0e3c161455f3e8716d625b06df",
+ "reused_nodes": 13,
+ "retrained_nodes": [
+  "what",
+  "location",
+  "shot_result"
+ ],
+ "dependency_sha256": {
+  "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/config.json": "c3d26beba4f24ab9d3e637e2482214df47e3133466cb8b67856a50216258e0bd",
+  "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/duration.txt": "d3a1363eb29f0c75f86cebcf6178e338f0d380688cb695c8ee955890669876c2",
+  "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/event.txt": "0b1895493702ff8b561b33a6ef26d0c2c009297ae82412f5f14128954bb69dc3",
+  "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/who.txt": "7c6429bb6b63632fb5218d6b89ed0e9412458efee5273e508c64cf254e81d06c",
+  "data/derived/experiments/c2_court_v2/F4_what_distance_s7/receipt.json": "7efa3193b7236a8d1d3a0aa35e2d66dea2b25682b674cfe00861eb5c4841e02d",
+  "data/derived/experiments/c2_court_v2/F4_what_distance_s7/model.txt": "2cf97581b42cf1873980bca2f20e0232c3e618309c59f1bc705cb689e16e1419",
+  "data/derived/experiments/c2_court_v2/F4_location_distance_s7/receipt.json": "0f82f66f1ec60697cdedb5b42937385ea0367e9a347e3611a58a740d2e115300",
+  "data/derived/experiments/c2_court_v2/F4_location_distance_s7/model.txt": "197a76d5a827a4a71dc88a2121bc8d173f4d7235a44a93755df3f97def1ca0d3",
+  "data/derived/experiments/c2_court_v2/F4_shot_result_distance_s7/receipt.json": "7effac5a6914c710faab917c11dd5ad286fae2e4cd53d1ed22f1df0546044ba2",
+  "data/derived/experiments/c2_court_v2/F4_shot_result_distance_s7/model.txt": "8cc4ce865e4c6ee7da5bc2946208921177583edc711c1f48f0efc211b63c6f4c",
+  "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/assisted.txt": "91af823c41d62b099aaa7a6cedb3f1e56248bcd54f956f74280779df03c6e377",
+  "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/assister.txt": "d0c41d84ac695583f6b1ba12326308ea7b0acf7aad9f8c2537e31413c0884ed6",
+  "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/blocked.txt": "832b0da778160550a2f6da60032e9922616017de50863e4e1d9a37979221920d",
+  "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/blocker.txt": "6cd76d419c94b2803a98ea4ba8bcb66ef6aac1a9f90f68da040dc2ef9891ea51",
+  "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/rebound.txt": "1f84a5b8462832f69a89f4ca0b884f6bdf2c80ef2eb23208b1980b812ba91731",
+  "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/rebounder.txt": "9caf8d7237b364f3cb0d47320b574fe7548300d7eb20830cad48ab5b6c4256ac",
+  "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/turnover_type.txt": "83f26e38a86faae5282b46235f214e01a34a311d748e301d83d467c9870c7899",
+  "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/stealer.txt": "cb9758b10a7a8e47e92451fe92654889026a3a599bdf7f7ef99848d51c0dccb0",
+  "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/fouler.txt": "f411d1f33ced5b43c3c4cc261bde1a11fedc4a4610c5b6bed093b12d7f8888f5",
+  "data/models/folds/a1_s02_f4_causal_guarded_diagnostic_F4_all/free_throw.txt": "59734a99151a9e0ad9057b8e5298fe16f622ce9a3a239019c4550b72a0a7da29"
+ },
+ "production_changed": false
+}

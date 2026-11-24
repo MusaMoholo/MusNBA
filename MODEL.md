@@ -131,13 +131,14 @@ D60 authorises report-derived availability bands. New source permissions, protec
 D58/D59: C1 early exports, C2 zones, C3 S06, C4 analysis/replay, C5 competitions/integrated release.
 [HANDOFF](HANDOFF_NEXT.md) owns weights/ladders; planning is not promotion.
 
-**Zones:** start with [NBA basic/advanced shooting areas](https://jr.nba.com/how-to-read-a-shot-chart/), not a bespoke taxonomy.
-Inspect native labels in the permitted NBA source before adding a resumable adapter; the current adapter does not collect shot charts.
-Reconcile NBA/ESPN identities, units/orientation, period/clock and event joins; never assume event IDs match across providers.
-Retain raw data; date filtering does not prove original publication/revision timing. A versioned derived mapping from retained coordinates is an explicitly labelled fallback, independently checked against
-available native labels; missing locations remain unknown. Preserve left/right only with support; keep rare heaves separate.
+**Zones:** [NBA basic/advanced areas](https://jr.nba.com/how-to-read-a-shot-chart/) define the taxonomy.
+C2 derives22 cells, including unknown2/3, from rounded ESPN coordinates; it does not supply native annotations or tracking.
+Three pre-burn-in native games validate units/orientation and mutually unique player/period clocks within1s; event IDs are not interchangeable.
+Fine regions match529/530 native-coordinate pairs and505/530 rounded-coordinate pairs; one native label conflicts with official3PT value.
+Official value remains authoritative. Raw sources/unknowns persist; dates do not prove original publication/revision timing.
+C2's [fixed study](analysis/experiments/20261124_c2_research_decision_v1.json) found no PTS benefit versus either control; retain r3.
 
-Build strictly prior shooter and defender/on-court **opportunities, attempts and makes**, separating shot frequency from conversion.
+Research profiles use strictly prior shooter and defender/on-court **opportunities, attempts and makes**, separating frequency from conversion.
 Use exposure-aware shrinkage to broader parents, fitted before each origin. Audit sums/denominators and assignment weights.
 Distinguish recorded defenders, soft inferred assignments and on-court exposure: shot charts alone do not identify the nearest defender.
 Compare a matched current-representation control and at most three declared node variants: zone-only; zones plus within-zone distance;

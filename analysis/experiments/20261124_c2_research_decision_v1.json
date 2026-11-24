@@ -1,0 +1,113 @@
+{
+ "closed_at": "2026-11-24T03:52:06.648803+00:00",
+ "kind": "completed fixed C2 research attempt; no production promotion",
+ "decision": "retain_r3",
+ "candidate": "distance; exactly one F4 engine nominee",
+ "confirmation": "C2 removed from C4 qualifier. No independent confirmation or protected test launched; frozen reserved panels remain unused for C2. No replacement/retuning search.",
+ "engine": {
+  "games": 200,
+  "arms": 3,
+  "worlds_per_arm_game": 1000,
+  "player_games": 4292,
+  "elapsed_seconds": 4493.189519874999,
+  "controls": {
+   "reference": {
+    "comparison": "analysis/experiments/20261124_c2_engine_vs_reference_v1.json",
+    "comparison_sha256": "7f19e11c18fc49e244520e333c30bc069da5c86eccee9b8a30b8d57504ddde82",
+    "gate": "analysis/experiments/20261124_c2_engine_vs_reference_gate_v1.json",
+    "gate_sha256": "48071d4fa1c047432011b5aaa73ee83ad38da52a509779f0c97479ca4fceb3cb",
+    "decision": "more_precision_or_coverage_needed",
+    "primary": {
+     "path": "players/all/pts/crps",
+     "change": 0.004753903308480911,
+     "ci_95": [
+      -0.0037071408541506476,
+      0.013111155950083562
+     ],
+     "improvement_established": false,
+     "multiplicity": "uncorrected; only one frozen benefit claim can use this directly"
+    },
+    "compatible": false
+   },
+   "bridge": {
+    "comparison": "analysis/experiments/20261124_c2_engine_vs_bridge_v1.json",
+    "comparison_sha256": "efb989f427844be84e671ccbf6d15616e2e0a7fba2ea55a5413d7d4c726b64d2",
+    "gate": "analysis/experiments/20261124_c2_engine_vs_bridge_gate_v1.json",
+    "gate_sha256": "2b9141397777c4a9af151cff98bdfcf5939f154d901226c533a4bfd785417c83",
+    "decision": "more_precision_or_coverage_needed",
+    "primary": {
+     "path": "players/all/pts/crps",
+     "change": 0.0034116432898412263,
+     "ci_95": [
+      -0.003098087778040948,
+      0.00999807462083857
+     ],
+     "improvement_established": false,
+     "multiplicity": "uncorrected; only one frozen benefit claim can use this directly"
+    },
+    "compatible": false
+   }
+  }
+ },
+ "accounting": {
+  "arm_receipts": 600,
+  "worlds": 600000,
+  "lineup_snapshots": 171421700,
+  "post_foul_snapshots": 24233621,
+  "lineup_fives_checked": 342843400,
+  "overtime_worlds": 21678,
+  "max_replayed_player_minute_error": 1.0658141036401503e-14
+ },
+ "observations": [
+  "Conditional conversion benefit was not established beyond seed noise; common WHAT loss improved.",
+  "Full-engine PTS benefit was not established versus either reference.",
+  "No material proper/coverage harm established; remaining compatibility bounds are unresolved, not waived.",
+  "Bench90% point tails remain heavier than nominal in every arm; latent variance and mean/source error are not separately identified.",
+  "Zone-only common conversion loss worsened; this does not show that recognised zones generally harm points forecasts."
+ ],
+ "production_changed": false,
+ "accepted_engine": "engine-v1.3-r3",
+ "pwa_changed": false,
+ "protected_evaluation_run": false,
+ "evidence_sha256": {
+  "analysis/experiments/20261124_c2_frozen_recipe_v1.json": "d07cf1296e38ff231da47904fd9ca75bcc15c90963db2f6520ec3e7606278a8a",
+  "analysis/experiments/20261124_c2_frozen_recipe_v2.json": "b719e898841e67ef182e9a19da38dc231cb8d9eed33a70919be4dbd908d5b66e",
+  "analysis/experiments/20261124_c2_qualification_v3.json": "4589f6345c3f0025c720a08a92cd48153ffece599143fa7a087eb4921c4d7338",
+  "analysis/experiments/20261124_c2_execution_guard_v1.json": "6fdc1dd96b34f413a5744870dae5c4b847b6ae2a422c8a86baff52e8cb9109cd",
+  "analysis/experiments/20261124_c2_ready_panels_v1.json": "c9fcbb31d23178c819308a46a2e8dff6b5d09ffcf6460d48370c3bf9267ce475",
+  "analysis/experiments/20261124_c2_engine_design_v1.json": "205aa9ad48cab51c708a48914912c64a6dcfad8b8a78580761c103b461a54d4e",
+  "analysis/experiments/20261124_c2_engine_runtime_v1.json": "bcd9f140e4ef3b7ac11b0c72aa4a1c4187c0b0fa9d5c87d8ec9029edc5de4d46",
+  "analysis/experiments/20261124_c2_engine_runtime_v2.json": "8bc9e1486f193868844756b3dde900843373b7f86c71057d579afbec17ed8ba5",
+  "analysis/experiments/20261124_c2_source_audit_v1.json": "19aee9e859df51ace75944c752161387100e6994bace93019f85912140d62f13",
+  "analysis/experiments/20261124_c2_geometry_audit_v2.json": "42e71bdd13128f09eb5f17221c1edae5f147b90a9d19550f9bdc8b34de14dca2",
+  "analysis/experiments/20261124_c2_profiles_audit_v1.json": "d73a6d83ff2348eb4aa3b67883f75d037271ccbe663e6bb8eec186c55f3b7c2f",
+  "analysis/experiments/20261124_c2_profiles_audit_v2.json": "7bc764e73f3364949756f1f07e3ab6e2072592440c66959e7bfc335ef1fb44a8",
+  "analysis/experiments/20261124_c2_profile_reproduction_v1.json": "e180cd939dbf8caf5dd3ae3faedc982624f391d03318851fd9b4ad58dbd696ad",
+  "analysis/experiments/20261124_c2_matched_control_preflight_v1.json": "8202bb121ef6055a1e97effe865efb8619ee37d4fe10adc74248fd1065972aa3",
+  "analysis/experiments/20261124_c2_identity_audit_v1.json": "7ecbd5221e4e0a93a2dd656344ebdf2becae8208df1205936b665d2e3a6ace8b",
+  "analysis/experiments/20261124_c2_default_off_parity_v1.json": "3ffd875ff4683722d169002e854ade692931891024668aaa7b5a33487fd9c546",
+  "analysis/experiments/20261124_c2_pre_grade_v1.json": "155db720358c64ff865572d4e2787b7d25218a31231f218c40f6655a454ed800",
+  "analysis/experiments/20261124_c2_node_screen_v2.json": "5a58411959304c8ae9ed5cd06221ac87734d731ccca4876e83ef9d696c9e5a4f",
+  "analysis/experiments/20261124_c2_seed_noise_v1.json": "c0e544d6bb912afe1ec220ad14a589f1a131511e94158236f60461c69c8a6ede",
+  "analysis/experiments/20261124_c2_f4_preparation_v1.json": "311e0cc8138657d410698706125addd0d05d242f1a401991a2f050ac2123e26a",
+  "analysis/experiments/20261124_c2_engine_wiring_v2.json": "38b4e003a3016385bbe0dc5c27a04fdec894b56b8f0dc5facdd1aa3a9f77f236",
+  "analysis/experiments/20261124_c2_engine_development_v2.json": "e3ea654e6524b2f6daa6b709d63c256e23b444b60723d3f42d38c9e2d2422d19",
+  "analysis/experiments/20261124_c2_engine_decision_v1.json": "ffc7e8ce5db8638363461768aa704f05f043361c596371a836b80f35bd958aa8",
+  "analysis/experiments/20261124_c2_world_diagnostics_v1.json": "4a8021c4d0cd6f13d2f11f5481c030d3abe7086eabe5cc8fa2ad2ca9b5814434",
+  "analysis/experiments/20261124_c2_engine_vs_reference_v1.json": "7f19e11c18fc49e244520e333c30bc069da5c86eccee9b8a30b8d57504ddde82",
+  "analysis/experiments/20261124_c2_engine_vs_reference_gate_v1.json": "48071d4fa1c047432011b5aaa73ee83ad38da52a509779f0c97479ca4fceb3cb",
+  "analysis/experiments/20261124_c2_engine_vs_bridge_v1.json": "efb989f427844be84e671ccbf6d15616e2e0a7fba2ea55a5413d7d4c726b64d2",
+  "analysis/experiments/20261124_c2_engine_vs_bridge_gate_v1.json": "2b9141397777c4a9af151cff98bdfcf5939f154d901226c533a4bfd785417c83"
+ },
+ "archive": {
+  "path": "~/Basketball_archive_ops/c2_output_format_20261124_v1",
+  "files": 96,
+  "verified_bytes": 406673802
+ },
+ "limits": [
+  "Actual-participant rosters; no live availability calibration claim.",
+  "Derived rounded-coordinate zones, not native labels or tracking;19 native cells observed in three-game geometry audit.",
+  "Publication/revision timestamps remain unverified.",
+  "A completed unsupported attempt closes this fixed recipe, not the wider court-modelling idea."
+ ]
+}

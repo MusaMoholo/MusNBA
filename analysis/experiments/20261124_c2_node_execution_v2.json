@@ -1,0 +1,7 @@
+{
+ "completed": 36,
+ "elapsed_seconds": 2174.6252182499884,
+ "recipe_sha256": "b719e898841e67ef182e9a19da38dc231cb8d9eed33a70919be4dbd908d5b66e",
+ "threads": 10,
+ "blas_threads": 1
+}

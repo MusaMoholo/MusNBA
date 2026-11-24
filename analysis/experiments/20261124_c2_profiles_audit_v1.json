@@ -1,0 +1,27 @@
+{
+ "source_segments": 1261174,
+ "covered_uses": 1128076,
+ "covered_attempts": 910601,
+ "covered_makes": 429435,
+ "uncovered_uses": 20615,
+ "unknown_attempts": 10,
+ "defender_uses": 5640380,
+ "defender_attempts": 4553005,
+ "rows": 111075,
+ "days": 846,
+ "latest_source_date": "2026-06-13",
+ "league_attempts": 910601,
+ "league_makes": 429435,
+ "elapsed_seconds": 46.91585624999425,
+ "input_sha256": {
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/history/2023/segments.parquet": "813b53edadf92f6e6c607211b1d4c64b312aa9fbe689851110e912419101a76e",
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/history/2024/segments.parquet": "4a7c3c2bce39580cc8e1092ffc215d11bbd49f7bf117b4551eee40337203d2c0",
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/history/2025/segments.parquet": "d9db732172894ed8d3c6e5e99e3cd1c197006da22799413034ce3ce18cc5aee2",
+  "/Users/moholom/Repos/Sports/Basketball/data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+  "data/derived/variants/a1_scheduled_F4_20261122_v3/features/pregame.parquet": "bfd9ed61727c7f288764b87a5f9d517bcb7b4581664ad23a20e2c5606edf619a"
+ },
+ "output_sha256": "ce35bc60b903ff4cc1499ec9fe90128c2db4a2c34d93cc5644f2e0a5402281e8",
+ "source_identity": "input file SHA256 plus original parquet row index; no parser or eligibility change to node control",
+ "profile_code_sha256": "c26b64e1f5005240a3d1858db80313c446a42c091ade8e4a1735a862f55c68bd",
+ "recipe_sha256": "d07cf1296e38ff231da47904fd9ca75bcc15c90963db2f6520ec3e7606278a8a"
+}

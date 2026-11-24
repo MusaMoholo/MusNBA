@@ -1,0 +1,47 @@
+{
+ "kind": "one C2 development decision, not a promotion",
+ "phase_sha256": "e3ea654e6524b2f6daa6b709d63c256e23b444b60723d3f42d38c9e2d2422d19",
+ "controls": {
+  "reference": {
+   "comparison": "analysis/experiments/20261124_c2_engine_vs_reference_v1.json",
+   "comparison_sha256": "7f19e11c18fc49e244520e333c30bc069da5c86eccee9b8a30b8d57504ddde82",
+   "gate": "analysis/experiments/20261124_c2_engine_vs_reference_gate_v1.json",
+   "gate_sha256": "48071d4fa1c047432011b5aaa73ee83ad38da52a509779f0c97479ca4fceb3cb",
+   "decision": "more_precision_or_coverage_needed",
+   "primary": {
+    "path": "players/all/pts/crps",
+    "change": 0.004753903308480911,
+    "ci_95": [
+     -0.0037071408541506476,
+     0.013111155950083562
+    ],
+    "improvement_established": false,
+    "multiplicity": "uncorrected; only one frozen benefit claim can use this directly"
+   },
+   "compatible": false
+  },
+  "bridge": {
+   "comparison": "analysis/experiments/20261124_c2_engine_vs_bridge_v1.json",
+   "comparison_sha256": "efb989f427844be84e671ccbf6d15616e2e0a7fba2ea55a5413d7d4c726b64d2",
+   "gate": "analysis/experiments/20261124_c2_engine_vs_bridge_gate_v1.json",
+   "gate_sha256": "2b9141397777c4a9af151cff98bdfcf5939f154d901226c533a4bfd785417c83",
+   "decision": "more_precision_or_coverage_needed",
+   "primary": {
+    "path": "players/all/pts/crps",
+    "change": 0.0034116432898412263,
+    "ci_95": [
+     -0.003098087778040948,
+     0.00999807462083857
+    ],
+    "improvement_established": false,
+    "multiplicity": "uncorrected; only one frozen benefit claim can use this directly"
+   },
+   "compatible": false
+  }
+ },
+ "source_only_promotion_allowed": false,
+ "independent_confirmation_required": false,
+ "decision": "retain_r3_no_replacement_search",
+ "protected_test_run": false,
+ "production_changed": false
+}

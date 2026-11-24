@@ -1,0 +1,9 @@
+{
+ "nominee": "distance",
+ "seed": 19,
+ "fits": 12,
+ "seconds": 292.21814266600995,
+ "grade_sha256": "5a58411959304c8ae9ed5cd06221ac87734d731ccca4876e83ef9d696c9e5a4f",
+ "threads": 10,
+ "blas_threads": 1
+}

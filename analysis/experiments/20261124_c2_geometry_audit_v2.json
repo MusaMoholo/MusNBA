@@ -1,0 +1,45 @@
+{
+ "kind": "native-vs-derived input audit; no candidate prediction scoring",
+ "pairs": 530,
+ "native_coordinate_fine_agreement": 529,
+ "rounded_coordinate_fine_agreement": 505,
+ "native_cells_observed": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  19
+ ],
+ "unknown_rounded_pairs": 0,
+ "source_sha256": {
+  "data/derived/experiments/c2_source_audit_v1/401468016.parquet": "9bbf24c6af31182d1383eee1a672dc4836eb5c84333e89236aa1680f9b9c3b99",
+  "data/derived/experiments/c2_source_audit_v1/401468017.parquet": "392d220c871288742e368dca72123ec1653b64b9c8e47484a9f071bbc813df1d",
+  "data/derived/experiments/c2_source_audit_v1/401468018.parquet": "88cad32b51190b035cb50cf1391cb7d75c12dffe78e53674e15bbada5569bf91"
+ },
+ "mapper_sha256": "b2c981812977bfc760a131bc719850d3f81393ffc0061e80ea7a39fd068e2101",
+ "limits": [
+  "Three early-season games; not a general accuracy estimate.",
+  "ESPN rounding can cross boundaries; retain derived provenance.",
+  "Native Mid-Range label conflicts with official3PT value in one joined event; no forced relabelling.",
+  "Long frontcourt40ft split is explicitly derived, without an independently observed native AboveTheBreak/BackCourt example."
+ ],
+ "native_disagreement_count": 1,
+ "native_disagreement_cases": "data/derived/experiments/c2_geometry_cases_v2.json",
+ "native_disagreement_cases_sha256": "253a6dbece0ee582bfaab8501cfe5d33767902e0d8c233fe7a74ff138059c1d8",
+ "retained_original_report": "data/derived/experiments/c2_geometry_audit_v1.json",
+ "retained_original_report_sha256": "0c837334ada326614042fdd27e069f046a555ae7deb3d51183ace992cdfcad84"
+}

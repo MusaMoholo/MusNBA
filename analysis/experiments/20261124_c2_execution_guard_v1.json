@@ -1,0 +1,18 @@
+{
+ "frozen_at": "2026-11-24T01:36:22.579726+00:00",
+ "kind": "Execution detail fixed before any candidate validation losses inspected; unchanged recipe/primary/panels",
+ "recipe_sha256": "b719e898841e67ef182e9a19da38dc231cb8d9eed33a70919be4dbd908d5b66e",
+ "secondary_seed": 19,
+ "seed_scope": "Selected survivor and matched control WHAT and SHOT_RESULT on F1-F3; no parameter search. If no statistical benefit, no seed diagnostic is required to conclude unsupported benefit.",
+ "training_noise": "Per node, max of control and candidate seed-only relative-RMS loss changes across three folds. Retain only mean fold-relative benefit beyond noise, pooled2SE evidence and no fold worse than2xnoise with z>2, plus frozen Bonferroni primary. WHAT material harm veto uses same paired/noise comparator.",
+ "primary_bootstrap": "Game clusters, stratified by fixed folds, 10000 resamples seed20261122; decision-weighted pooled delta; one-sided alpha0.05/3 across three node variants.",
+ "input_guard": {
+  "analysis/c2_node_screen.py": "fd294d291c80067ffa88e3e53be1d31692db1f848fb74d905e254d7e10569dd1",
+  "scripts/court_profiles.py": "c84e9c785c1b5598d6b6a6bc52a5211d2198fecea3c6cee0bc475038c952ea8a",
+  "scripts/court_zones.py": "b2c981812977bfc760a131bc719850d3f81393ffc0061e80ea7a39fd068e2101",
+  "scripts/train.py": "db31022469cfb3987ed4423411ebdb9557d81bfe0efc9090bc9b80fc5786bf96",
+  "scripts/nodes.py": "78749b680b889993e83ba26baab51877cd7393ee0a5a3d9f4fdaf9123d3b161f",
+  "data/derived/experiments/c2_profiles_v2/pregame.parquet": "b955b5c715a3e439af82dcd1aef662670e60763a8c2d0de2ec0d7f4a5c9aede9"
+ },
+ "production_changed": false
+}

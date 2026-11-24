@@ -5,40 +5,40 @@ Read [AGENTS](AGENTS.md), this file, [PLAN](PLAN.md), then relevant [MODEL](MODE
 
 ## State
 
-- **C1 complete; C2 next.** Accepted engine-v1.3-r3/D29/Rule3 and report-bands-v1 remain; no learned promotion/protected rescoring.
-- Final generation **2026-11-24T00:42:52Z**:70k new worlds/7branches,5 preserved pre-tip games;130k saved worlds,40k weighted season paths.
-  Qualification731.51s; fresh fetch/rebuild through final1,591.20s. Nine workers plus parent publication observed993.6% CPU.
-- Early hosted imports44/44 laptop,37/37 phone passed44.86s before last queued game; final imports36/36,34/34; upgrade30/30.
-  Smoke107/107; fault86/107/exit1. Retained earliest registry causes one conditional skip; two explicit1k private replays pass exactly.
-  42 focused/19 Node tests;43,740 histograms/5,742 advanced distributions and exact season atoms pass.
-- Shell **6f555cc409f400df6ae2f55dfce64245d0111fbb**, cache79a39706aff8c158075a, published data-free.
+- **C1/C2 complete; C3 next.** Accepted engine-v1.3-r3/D29/Rule3 and report-bands-v1 remain; no learned promotion/protected rescoring.
+- Current generation2026-11-24T00:42:52Z:130k saved game worlds,40k weighted season paths. C1 receipt:
+  `analysis/experiments/20261123_c1_completion_v1.json`.
+- C1 commit e7fa807 pushed; data-free shell6f555cc409f400df6ae2f55dfce64245d0111fbb/cache79a39706aff8c158075a published.
   Both devices need app update/manual import; real-device acceptance remains unverified.
-- Canonical receipt: `analysis/experiments/20261123_c1_completion_v1.json`; attempt/repair/source receipts linked inside.
-  Final run `data/derived/live_runs/2026-11-23-1795480373232797000`; log `/tmp/musnba_c1_nightly_20261123_v3.log`.
-  Fresh inputs/rebuild from v2 were hash-verified unchanged before/after offline qualification. Replacements archived externally.
-- Original programme74%; D42 A65%/B0%. **C10%: C1=100%; C2–C5=0%.** No ledger reset; no compute jobs remain.
+- Retained run `data/derived/live_runs/2026-11-23-1795480373232797000`; log `/tmp/musnba_c1_nightly_20261123_v3.log`.
+  Source/replacement archives are linked in the receipt.
+- Original programme74%; D42 A65%/B0%. **C35%: C1=C2=100%; C3–C5=0%.** Original ledgers unchanged.
 
-## Active C2 — 0%
+## C2 complete — 100%
 
-Owner authorised C1–C5 through delivery. Begin C2's input/source/zone/event-join audit using the commands below;
-then freeze MODEL's finite recipe/ID/cutoff/primary/independence/stream/stress manifest before candidate research.
-Retain raw sources/unknown coordinates; permitted NBA/ESPN only, one polite resumable NBA stream. No protected r3 rescore.
-C2 compares at most three declared node variants and one200-game engine screen against r3; checkpoint the measured decision without promotion.
-C3–C5 retain their existing0% scopes/dependencies/ladders below. Runtime/output changes still require the relevant evidence/release checks.
+Canonical decision: `analysis/experiments/20261124_c2_research_decision_v1.json`. Retain r3; no C2 independent confirmation/protected test or replacement search.
+Fixed200 games/4,292 player-games/three arms: PTS CRPSΔ+0.00475[−0.00371,+0.01311] versus r3;
++0.00341[−0.00310,+0.01000] versus matched causal control. Benefit unsupported;26/27 and25/27 proper bounds established,
+remaining bounds unresolved, no material coverage harm. Bench tails persist across arms; no identified latent-variance correction.
+All600k worlds accounted;342,843,400 legal fives, max minute error1.07e−14.26 tests, smoke107/107, fault86/107/exit1.
 
-## Next actions
+No jobs running. Captures/fits under `data/derived/experiments/c2_court_v2`/`c2_engine_development_v1`; public v2 reports contain aggregates/hash links.
+Rich reports and original controller remain ignored; all96 dependencies backed up/verified at `~/Basketball_archive_ops/c2_output_format_20261124_v1`.
+Output placement correction changes no predictions; runtime v1 preserves actual execution, v2 fixes private report placement.
+Production forecasts/views/bundles/shell are unchanged; C1's separate update/import requirement remains.
 
-1. Begin active C2; C1 has its own completed checkpoint.
-2. Recheck baseline, then audit only inputs/source joins; do not launch a learned fit before freezing the manifest.
-3. Before research, freeze MODEL's bounded recipe/data/ID/cutoff/primary/independence/stream/stress manifest. Do not restart protected r3.
-4. Each module checkpoints independently; C5 ends with the final full nightly, PWA delivery and a fully specified successor.
+## Next actions — C3 successor0%
+
+1. Recover exact S06 recipe from the targeted archive/source; freeze one unchanged policy and causal auxiliary cutoffs before outcomes.
+2. Reuse verified r3 controls where inputs/seeds match. Compose both publication LegalCapture and backtest Observer with the selected policy;
+   each currently replaces it. Prove independent fitting/default-off parity and legal state response before one200-game MIN-primary screen.
+3. C3's ten rungs/dependencies/fallback remain below; no rescue family/blanket bench cuts. C4 confirms survivors; C5 ends with fresh full nightly/PWA delivery.
 
 ```sh
 git status --short --branch
-git --no-pager log --oneline -3
-.venv/bin/python scripts/smoke.py
 .venv/bin/python scripts/check_docs.py
-rg -n 'SHOT_ZONE|shot_zone|zone|shotchart' scripts/fetch_nbastats.py scripts/plays.py scripts/features.py scripts/nodes.py
+rg -n 'S06|SelectedTimeoutPolicy|PlayerFoulPenaltyPolicy' scripts/a1_substitution_engine.py scripts/a1_foul_penalty_engine.py
+tar -xOf docs/archive/20261123_document_history.tar.gz ENGINE_PLAN.md | rg -n -C 8 'S06|substitution'
 ```
 
 ## Executable contract — Chunk C

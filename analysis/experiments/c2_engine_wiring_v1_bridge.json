@@ -1,0 +1,19 @@
+{
+ "run": "c2_engine_wiring_v1_bridge",
+ "fold": "F4",
+ "games": 3,
+ "game_ids": [
+  "401809250",
+  "401810330",
+  "401810342"
+ ],
+ "worlds": 1000,
+ "models": "folds/a1_s02_f4_causal_guarded_diagnostic_F4_all",
+ "config": "models/a1_s02_f4_causal_guarded.json",
+ "rotation": "targets",
+ "pool": 0,
+ "known_starters": false,
+ "simulation_stream": null,
+ "seed_key": "v1.2d_F4",
+ "kind": "conditional actual-participant research; no availability claim"
+}

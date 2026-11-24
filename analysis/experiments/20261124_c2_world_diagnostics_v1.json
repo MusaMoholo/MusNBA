@@ -1,0 +1,1404 @@
+{
+ "kind": "C2 stored-world diagnostics; no fitted factor or promotion rule",
+ "phase_sha256": "e3ea654e6524b2f6daa6b709d63c256e23b444b60723d3f42d38c9e2d2422d19",
+ "games": 200,
+ "arms": {
+  "reference": {
+   "tails": {
+    "all": {
+     "min": {
+      "player_games": 4292,
+      "games": 200,
+      "status": "supported",
+      "missing_outcomes": 0,
+      "low": 0.06500465983224604,
+      "low_ci95": [
+       0.0580660266916413,
+       0.07222369967575545
+      ],
+      "high": 0.06500465983224604,
+      "high_ci95": [
+       0.055645449364674957,
+       0.07484133330138444
+      ],
+      "sd": 5.64914655805814,
+      "sd_ci95": [
+       5.602609230522825,
+       5.693707345634396
+      ],
+      "zero": 0.04705172413793103,
+      "zero_ci95": [
+       0.04053190722712529,
+       0.05392189485776574
+      ]
+     },
+     "pts": {
+      "player_games": 4292,
+      "games": 200,
+      "status": "supported",
+      "missing_outcomes": 0,
+      "low": 0.0696283673941993,
+      "low_ci95": [
+       0.06349265180200964,
+       0.07577464000207888
+      ],
+      "high": 0.06500130342684722,
+      "high_ci95": [
+       0.0580953097644255,
+       0.0721800788749164
+      ],
+      "sd": 5.310209434759967,
+      "sd_ci95": [
+       5.253102577269422,
+       5.3648631917634795
+      ],
+      "zero": 0.11735065237651446,
+      "zero_ci95": [
+       0.10770416068022222,
+       0.12741705438650058
+      ]
+     }
+    },
+    "star": {
+     "min": {
+      "player_games": 290,
+      "games": 167,
+      "status": "supported",
+      "missing_outcomes": 0,
+      "low": 0.04827586206896552,
+      "low_ci95": [
+       0.02573499858142614,
+       0.07368421052631578
+      ],
+      "high": 0.04482758620689655,
+      "high_ci95": [
+       0.020338983050847456,
+       0.07333333333333333
+      ],
+      "sd": 5.295606064835724,
+      "sd_ci95": [
+       5.246173483367581,
+       5.344760016711809
+      ],
+      "zero": 1.7241379310344828e-05,
+      "zero_ci95": [
+       0.0,
+       3.973809866589879e-05
+      ]
+     },
+     "pts": {
+      "player_games": 290,
+      "games": 167,
+      "status": "supported",
+      "missing_outcomes": 0,
+      "low": 0.0653627731588751,
+      "low_ci95": [
+       0.037878209534636754,
+       0.09725424980891362
+      ],
+      "high": 0.031100795755968174,
+      "high_ci95": [
+       0.010203216879972329,
+       0.05689134160397962
+      ],
+      "sd": 8.29625612515387,
+      "sd_ci95": [
+       8.215224545256376,
+       8.380026985035887
+      ],
+      "zero": 0.0006379310344827587,
+      "zero_ci95": [
+       0.0004186851211072665,
+       0.0008884895219712732
+      ]
+     }
+    },
+    "starter": {
+     "min": {
+      "player_games": 1555,
+      "games": 200,
+      "status": "supported",
+      "missing_outcomes": 0,
+      "low": 0.07652733118971061,
+      "low_ci95": [
+       0.06141992457150554,
+       0.09250814332247558
+      ],
+      "high": 0.030868167202572346,
+      "high_ci95": [
+       0.021086261980830672,
+       0.04177377892030849
+      ],
+      "sd": 5.456833328707148,
+      "sd_ci95": [
+       5.427652784977864,
+       5.4850911481472835
+      ],
+      "zero": 0.0007241157556270097,
+      "zero_ci95": [
+       4.412624680459352e-05,
+       0.001735523089396329
+      ]
+     },
+     "pts": {
+      "player_games": 1555,
+      "games": 200,
+      "status": "supported",
+      "missing_outcomes": 0,
+      "low": 0.08214249339097222,
+      "low_ci95": [
+       0.06885051378524486,
+       0.09568910759737315
+      ],
+      "high": 0.05015013736856291,
+      "high_ci95": [
+       0.04022223435782107,
+       0.060854279650690665
+      ],
+      "sd": 6.123881484673536,
+      "sd_ci95": [
+       6.076635865405056,
+       6.170725942168782
+      ],
+      "zero": 0.013131189710610933,
+      "zero_ci95": [
+       0.011512847259726514,
+       0.015061572017766495
+      ]
+     }
+    },
+    "bench": {
+     "min": {
+      "player_games": 2447,
+      "games": 200,
+      "status": "supported",
+      "missing_outcomes": 0,
+      "low": 0.0596648957907642,
+      "low_ci95": [
+       0.05112715242583207,
+       0.06846475117938915
+      ],
+      "high": 0.08908868001634655,
+      "high_ci95": [
+       0.07631322232813058,
+       0.10189578347645191
+      ],
+      "sd": 5.813255186858832,
+      "sd_ci95": [
+       5.738845356772756,
+       5.883975335236998
+      ],
+      "zero": 0.08206579485083776,
+      "zero_ci95": [
+       0.07101867014178957,
+       0.09375393166769387
+      ]
+     },
+     "pts": {
+      "player_games": 2447,
+      "games": 200,
+      "status": "supported",
+      "missing_outcomes": 0,
+      "low": 0.06218151672123735,
+      "low_ci95": [
+       0.055041458604369126,
+       0.06955936907540614
+      ],
+      "high": 0.07845643642447168,
+      "high_ci95": [
+       0.06794015181874305,
+       0.08949043056060772
+      ],
+      "sd": 4.4392598729169634,
+      "sd_ci95": [
+       4.351872597313795,
+       4.52464910341417
+      ],
+      "zero": 0.19741111565181854,
+      "zero_ci95": [
+       0.18115040825266848,
+       0.21433144522468484
+      ]
+     }
+    },
+    "unknown": {
+     "min": {
+      "player_games": 0,
+      "games": 0,
+      "status": "insufficient",
+      "missing_outcomes": 0
+     },
+     "pts": {
+      "player_games": 0,
+      "games": 0,
+      "status": "insufficient",
+      "missing_outcomes": 0
+     }
+    }
+   },
+   "dependence": {
+    "all": {
+     "counts": {
+      "player_games": 3635,
+      "games": 200,
+      "team_games": 400,
+      "teammate_team_games": 400,
+      "teammate_ordered_pairs": 29700,
+      "opponent_games": 200,
+      "opponent_pairs": 16552
+     },
+     "metrics": {
+      "teammate_MIN": {
+       "observed_role_centred_error_product": -1.443494835091196,
+       "observed_ci_95": [
+        -2.0889476058217453,
+        -0.6863556156512792
+       ],
+       "within_world_covariance": -3.2866567843189647,
+       "within_world_ci_95": [
+        -3.3291519131805254,
+        -3.2425847374052053
+       ],
+       "observed_minus_world": 1.8431619492277687,
+       "difference_ci_95": [
+        1.1998197393047596,
+        2.601638085477591
+       ]
+      },
+      "teammate_PTS": {
+       "observed_role_centred_error_product": -2.756266300449791,
+       "observed_ci_95": [
+        -3.1255418573359006,
+        -2.383913266576738
+       ],
+       "within_world_covariance": -2.5267510630589824,
+       "within_world_ci_95": [
+        -2.569394243237098,
+        -2.4851085631066825
+       ],
+       "observed_minus_world": -0.22951523739080848,
+       "difference_ci_95": [
+        -0.5905520570995851,
+        0.1341104309555422
+       ]
+      },
+      "opponent_MIN": {
+       "observed_role_centred_error_product": 0.8697391100683279,
+       "observed_ci_95": [
+        0.32633307239774517,
+        1.552454892364334
+       ],
+       "within_world_covariance": 0.2862135514966278,
+       "within_world_ci_95": [
+        0.27069662771214076,
+        0.30152711019060535
+       ],
+       "observed_minus_world": 0.5835255585717001,
+       "difference_ci_95": [
+        0.040722243014133436,
+        1.2671787715084992
+       ]
+      },
+      "opponent_PTS": {
+       "observed_role_centred_error_product": 0.2146532283262125,
+       "observed_ci_95": [
+        -0.0039320085725904515,
+        0.41598419339669257
+       ],
+       "within_world_covariance": 0.2423483426643758,
+       "within_world_ci_95": [
+        0.23055105394244954,
+        0.2536908651740624
+       ],
+       "observed_minus_world": -0.027695114338163296,
+       "difference_ci_95": [
+        -0.24511977305985236,
+        0.17429897867221736
+       ]
+      }
+     },
+     "status": "supported"
+    },
+    "stars_starters": {
+     "counts": {
+      "player_games": 1827,
+      "games": 199,
+      "team_games": 397,
+      "teammate_team_games": 391,
+      "teammate_ordered_pairs": 7070,
+      "opponent_games": 198,
+      "opponent_pairs": 4229
+     },
+     "metrics": {
+      "teammate_MIN": {
+       "observed_role_centred_error_product": 5.969190057262672,
+       "observed_ci_95": [
+        3.8232060541938115,
+        8.237557915899027
+       ],
+       "within_world_covariance": -1.7439734459092104,
+       "within_world_ci_95": [
+        -1.8512442107096965,
+        -1.6351958465366903
+       ],
+       "observed_minus_world": 7.713163503171883,
+       "difference_ci_95": [
+        5.598378349349227,
+        9.959116127730345
+       ]
+      },
+      "teammate_PTS": {
+       "observed_role_centred_error_product": -3.317791154911312,
+       "observed_ci_95": [
+        -4.885739933502952,
+        -1.753233163823065
+       ],
+       "within_world_covariance": -4.119577698294969,
+       "within_world_ci_95": [
+        -4.221481786102963,
+        -4.02233651621438
+       ],
+       "observed_minus_world": 0.8017865433836571,
+       "difference_ci_95": [
+        -0.7585718821734747,
+        2.3631852012144066
+       ]
+      },
+      "opponent_MIN": {
+       "observed_role_centred_error_product": 4.121783568113615,
+       "observed_ci_95": [
+        2.0792474877994938,
+        6.255853143619239
+       ],
+       "within_world_covariance": 0.3051658928800263,
+       "within_world_ci_95": [
+        0.27050664037710515,
+        0.3392807956756292
+       ],
+       "observed_minus_world": 3.816617675233588,
+       "difference_ci_95": [
+        1.773951495821898,
+        5.944541264165114
+       ]
+      },
+      "opponent_PTS": {
+       "observed_role_centred_error_product": 0.6837809366803533,
+       "observed_ci_95": [
+        -0.5850511543657052,
+        1.8983622824262762
+       ],
+       "within_world_covariance": 0.4387573610638128,
+       "within_world_ci_95": [
+        0.3957121536461274,
+        0.48488074256822183
+       ],
+       "observed_minus_world": 0.24502357561654053,
+       "difference_ci_95": [
+        -1.0212766169235676,
+        1.4545112666650781
+       ]
+      }
+     },
+     "status": "supported"
+    }
+   },
+   "pace": {
+    "observed_error_variance": [
+     22.3103584556,
+     23.16575090559999
+    ],
+    "within_world_variance": [
+     17.410353649999987,
+     17.45051607
+    ],
+    "variance_gap_ci95": [
+     [
+      0.07869680018999,
+      10.098935363938123
+     ],
+     [
+      0.6165809624400024,
+      11.235319179062499
+     ]
+    ],
+    "observed_opponent_error_covariance": 21.955843260599995,
+    "within_world_opponent_covariance": 16.924911405,
+    "covariance_gap_ci95": [
+     0.08410661289374793,
+     10.34949117245312
+    ]
+   },
+   "team_points": {
+    "observed_error_variance": [
+     123.09944950897501,
+     138.05847625960007
+    ],
+    "within_world_variance": [
+     129.12524276500002,
+     126.62266909999992
+    ],
+    "variance_gap_ci95": [
+     [
+      -30.48554635554006,
+      20.51592790570311
+     ],
+     [
+      -16.829111531587518,
+      42.051293287921816
+     ]
+    ],
+    "observed_opponent_error_covariance": 17.8098011421,
+    "within_world_opponent_covariance": 21.945206745,
+    "covariance_gap_ci95": [
+     -20.966234586846255,
+     12.734688554738105
+    ]
+   },
+   "overtime": {
+    "actual": 0.04,
+    "predicted": 0.035894999999999996,
+    "gap_ci95": [
+     -0.033805249999999995,
+     0.02077
+    ]
+   }
+  },
+  "bridge": {
+   "tails": {
+    "all": {
+     "min": {
+      "player_games": 4292,
+      "games": 200,
+      "status": "supported",
+      "missing_outcomes": 0,
+      "low": 0.06500465983224604,
+      "low_ci95": [
+       0.058054077956545054,
+       0.07224171262053981
+      ],
+      "high": 0.06453867660764212,
+      "high_ci95": [
+       0.055180322968395173,
+       0.0744708027751428
+      ],
+      "sd": 5.650585853894189,
+      "sd_ci95": [
+       5.603810211635684,
+       5.695306778373089
+      ],
+      "zero": 0.04708084808946879,
+      "zero_ci95": [
+       0.04054648743103509,
+       0.053956392015869534
+      ]
+     },
+     "pts": {
+      "player_games": 4292,
+      "games": 200,
+      "status": "supported",
+      "missing_outcomes": 0,
+      "low": 0.07072193916113019,
+      "low_ci95": [
+       0.064783911161261,
+       0.07665830047400149
+      ],
+      "high": 0.06362831260268174,
+      "high_ci95": [
+       0.05672997748635494,
+       0.0709932040605734
+      ],
+      "sd": 5.318405454652756,
+      "sd_ci95": [
+       5.261209790489772,
+       5.37401451389536
+      ],
+      "zero": 0.11687581547064305,
+      "zero_ci95": [
+       0.10724083225406976,
+       0.1269450453002565
+      ]
+     }
+    },
+    "star": {
+     "min": {
+      "player_games": 290,
+      "games": 167,
+      "status": "supported",
+      "missing_outcomes": 0,
+      "low": 0.04827586206896552,
+      "low_ci95": [
+       0.02573499858142614,
+       0.07368421052631578
+      ],
+      "high": 0.04827586206896552,
+      "high_ci95": [
+       0.022813688212927757,
+       0.0771709821176736
+      ],
+      "sd": 5.301300673039057,
+      "sd_ci95": [
+       5.251938164381241,
+       5.351543714955917
+      ],
+      "zero": 1.7241379310344828e-05,
+      "zero_ci95": [
+       0.0,
+       3.973809866589879e-05
+      ]
+     },
+     "pts": {
+      "player_games": 290,
+      "games": 167,
+      "status": "supported",
+      "missing_outcomes": 0,
+      "low": 0.062463644190050724,
+      "low_ci95": [
+       0.03551315340432164,
+       0.09365038523964256
+      ],
+      "high": 0.027586206896551724,
+      "high_ci95": [
+       0.006919818637394107,
+       0.05263157894736842
+      ],
+      "sd": 8.33220436199891,
+      "sd_ci95": [
+       8.248385508110236,
+       8.416247655294528
+      ],
+      "zero": 0.0006620689655172414,
+      "zero_ci95": [
+       0.00043681919374247895,
+       0.0009214355617691916
+      ]
+     }
+    },
+    "starter": {
+     "min": {
+      "player_games": 1555,
+      "games": 200,
+      "status": "supported",
+      "missing_outcomes": 0,
+      "low": 0.0752411575562701,
+      "low_ci95": [
+       0.06029489280102764,
+       0.09120315746004187
+      ],
+      "high": 0.02829581993569132,
+      "high_ci95": [
+       0.018808726605922366,
+       0.03896145388158167
+      ],
+      "sd": 5.458788865294319,
+      "sd_ci95": [
+       5.429877665198018,
+       5.487503971129499
+      ],
+      "zero": 0.0007228295819935693,
+      "zero_ci95": [
+       4.282933160285529e-05,
+       0.0017333016466259301
+      ]
+     },
+     "pts": {
+      "player_games": 1555,
+      "games": 200,
+      "status": "supported",
+      "missing_outcomes": 0,
+      "low": 0.08354210876109301,
+      "low_ci95": [
+       0.07012915176445726,
+       0.09724810045983474
+      ],
+      "high": 0.04966651717901059,
+      "high_ci95": [
+       0.03954388926893847,
+       0.060398676870925753
+      ],
+      "sd": 6.127198015659153,
+      "sd_ci95": [
+       6.078834422902762,
+       6.176239853613703
+      ],
+      "zero": 0.012989710610932475,
+      "zero_ci95": [
+       0.01135489657482285,
+       0.014927514941138975
+      ]
+     }
+    },
+    "bench": {
+     "min": {
+      "player_games": 2447,
+      "games": 200,
+      "status": "supported",
+      "missing_outcomes": 0,
+      "low": 0.06048222313036371,
+      "low_ci95": [
+       0.0518393966282165,
+       0.06940451745379876
+      ],
+      "high": 0.0894973436861463,
+      "high_ci95": [
+       0.07667059400164347,
+       0.10264811979742001
+      ],
+      "sd": 5.813862118594142,
+      "sd_ci95": [
+       5.740113458602139,
+       5.884354080067734
+      ],
+      "zero": 0.08211769513690233,
+      "zero_ci95": [
+       0.07107244546455908,
+       0.09381022676950726
+      ]
+     },
+     "pts": {
+      "player_games": 2447,
+      "games": 200,
+      "status": "supported",
+      "missing_outcomes": 0,
+      "low": 0.0635537911487358,
+      "low_ci95": [
+       0.05651104036094076,
+       0.07076649557457988
+      ],
+      "high": 0.07677208151914533,
+      "high_ci95": [
+       0.06626938641486853,
+       0.08779981081858576
+      ],
+      "sd": 4.447267687797288,
+      "sd_ci95": [
+       4.359721730595536,
+       4.533129349262631
+      ],
+      "zero": 0.196665304454434,
+      "zero_ci95": [
+       0.18042720386910696,
+       0.21366642188758148
+      ]
+     }
+    },
+    "unknown": {
+     "min": {
+      "player_games": 0,
+      "games": 0,
+      "status": "insufficient",
+      "missing_outcomes": 0
+     },
+     "pts": {
+      "player_games": 0,
+      "games": 0,
+      "status": "insufficient",
+      "missing_outcomes": 0
+     }
+    }
+   },
+   "dependence": {
+    "all": {
+     "counts": {
+      "player_games": 3635,
+      "games": 200,
+      "team_games": 400,
+      "teammate_team_games": 400,
+      "teammate_ordered_pairs": 29700,
+      "opponent_games": 200,
+      "opponent_pairs": 16552
+     },
+     "metrics": {
+      "teammate_MIN": {
+       "observed_role_centred_error_product": -1.4477590114729466,
+       "observed_ci_95": [
+        -2.0952930963593617,
+        -0.6843738250289637
+       ],
+       "within_world_covariance": -3.2845534030851655,
+       "within_world_ci_95": [
+        -3.328685792315081,
+        -3.237911082309088
+       ],
+       "observed_minus_world": 1.836794391612219,
+       "difference_ci_95": [
+        1.191137140620835,
+        2.6007636097371765
+       ]
+      },
+      "teammate_PTS": {
+       "observed_role_centred_error_product": -2.761480697490766,
+       "observed_ci_95": [
+        -3.130323451873711,
+        -2.38874739817278
+       ],
+       "within_world_covariance": -2.5517929419448055,
+       "within_world_ci_95": [
+        -2.597458824019119,
+        -2.507327392090652
+       ],
+       "observed_minus_world": -0.20968775554596064,
+       "difference_ci_95": [
+        -0.5681305380299748,
+        0.15181380402398914
+       ]
+      },
+      "opponent_MIN": {
+       "observed_role_centred_error_product": 0.8676427107625158,
+       "observed_ci_95": [
+        0.3217123977428161,
+        1.5611459677018469
+       ],
+       "within_world_covariance": 0.2894756011823894,
+       "within_world_ci_95": [
+        0.27276461666287216,
+        0.30652259268254417
+       ],
+       "observed_minus_world": 0.5781671095801264,
+       "difference_ci_95": [
+        0.028980505505267137,
+        1.2726679275169526
+       ]
+      },
+      "opponent_PTS": {
+       "observed_role_centred_error_product": 0.20596961229890504,
+       "observed_ci_95": [
+        -0.00838929682639849,
+        0.40458001974123187
+       ],
+       "within_world_covariance": 0.2396468611391489,
+       "within_world_ci_95": [
+        0.22910141153572158,
+        0.250126063225271
+       ],
+       "observed_minus_world": -0.03367724884024387,
+       "difference_ci_95": [
+        -0.24833162166989856,
+        0.16629329153162964
+       ]
+      }
+     },
+     "status": "supported"
+    },
+    "stars_starters": {
+     "counts": {
+      "player_games": 1827,
+      "games": 199,
+      "team_games": 397,
+      "teammate_team_games": 391,
+      "teammate_ordered_pairs": 7070,
+      "opponent_games": 198,
+      "opponent_pairs": 4229
+     },
+     "metrics": {
+      "teammate_MIN": {
+       "observed_role_centred_error_product": 5.964061583980121,
+       "observed_ci_95": [
+        3.81442946891596,
+        8.244397702294938
+       ],
+       "within_world_covariance": -1.747498976866141,
+       "within_world_ci_95": [
+        -1.853980212116616,
+        -1.642180030990027
+       ],
+       "observed_minus_world": 7.711560560846262,
+       "difference_ci_95": [
+        5.597112827433263,
+        9.96869450586819
+       ]
+      },
+      "teammate_PTS": {
+       "observed_role_centred_error_product": -3.336585945125489,
+       "observed_ci_95": [
+        -4.969584338786969,
+        -1.7313221142091066
+       ],
+       "within_world_covariance": -4.162371261094871,
+       "within_world_ci_95": [
+        -4.262875791164609,
+        -4.064611333727616
+       ],
+       "observed_minus_world": 0.8257853159693824,
+       "difference_ci_95": [
+        -0.8012831931743549,
+        2.4526657515066397
+       ]
+      },
+      "opponent_MIN": {
+       "observed_role_centred_error_product": 4.125507550145337,
+       "observed_ci_95": [
+        2.0853342486459328,
+        6.263729503439322
+       ],
+       "within_world_covariance": 0.3121564764119838,
+       "within_world_ci_95": [
+        0.27984548607145515,
+        0.34455624081644615
+       ],
+       "observed_minus_world": 3.813351073733353,
+       "difference_ci_95": [
+        1.7737534077528485,
+        5.951597800277291
+       ]
+      },
+      "opponent_PTS": {
+       "observed_role_centred_error_product": 0.7249395473468114,
+       "observed_ci_95": [
+        -0.547173729997588,
+        1.9519732093898223
+       ],
+       "within_world_covariance": 0.3718413798194246,
+       "within_world_ci_95": [
+        0.33629571138015396,
+        0.40897310446534796
+       ],
+       "observed_minus_world": 0.3530981675273868,
+       "difference_ci_95": [
+        -0.9175141501855503,
+        1.569845570421844
+       ]
+      }
+     },
+     "status": "supported"
+    }
+   },
+   "pace": {
+    "observed_error_variance": [
+     22.745823996400013,
+     23.521207483899992
+    ],
+    "within_world_variance": [
+     17.465380770000014,
+     17.453110800000005
+    ],
+    "variance_gap_ci95": [
+     [
+      0.4030908357699924,
+      10.486126233549985
+     ],
+     [
+      0.9317009693281241,
+      11.53399480143187
+     ]
+    ],
+    "observed_opponent_error_covariance": 22.3553193136,
+    "within_world_opponent_covariance": 16.95338413,
+    "covariance_gap_ci95": [
+     0.44165041025375124,
+     10.687449703138123
+    ]
+   },
+   "team_points": {
+    "observed_error_variance": [
+     122.361297733775,
+     137.92814322839993
+    ],
+    "within_world_variance": [
+     128.24150483499992,
+     126.29645548999993
+    ],
+    "variance_gap_ci95": [
+     [
+      -29.881136419591833,
+      20.294229650587493
+     ],
+     [
+      -16.977789284324253,
+      42.639691492839994
+     ]
+    ],
+    "observed_opponent_error_covariance": 18.028344741399998,
+    "within_world_opponent_covariance": 22.031347029999996,
+    "covariance_gap_ci95": [
+     -21.163341671511876,
+     13.20311034301
+    ]
+   },
+   "overtime": {
+    "actual": 0.04,
+    "predicted": 0.036745,
+    "gap_ci95": [
+     -0.03293037499999999,
+     0.021630125
+    ]
+   }
+  },
+  "candidate": {
+   "tails": {
+    "all": {
+     "min": {
+      "player_games": 4292,
+      "games": 200,
+      "status": "supported",
+      "missing_outcomes": 0,
+      "low": 0.06547064305684995,
+      "low_ci95": [
+       0.05842956120092379,
+       0.07272310062260638
+      ],
+      "high": 0.06407269338303821,
+      "high_ci95": [
+       0.05462228051619153,
+       0.07421990414662975
+      ],
+      "sd": 5.645448363678849,
+      "sd_ci95": [
+       5.598757242315395,
+       5.689418431112926
+      ],
+      "zero": 0.047071761416588996,
+      "zero_ci95": [
+       0.04054579719059541,
+       0.05395076369793017
+      ]
+     },
+     "pts": {
+      "player_games": 4292,
+      "games": 200,
+      "status": "supported",
+      "missing_outcomes": 0,
+      "low": 0.07019194650802524,
+      "low_ci95": [
+       0.06403321694291923,
+       0.07630826531657309
+      ],
+      "high": 0.06350884006660125,
+      "high_ci95": [
+       0.05666072443633484,
+       0.07061450929496654
+      ],
+      "sd": 5.321794846134918,
+      "sd_ci95": [
+       5.263644655819981,
+       5.377368721250874
+      ],
+      "zero": 0.11671854613233924,
+      "zero_ci95": [
+       0.10714634064846089,
+       0.12673266044377846
+      ]
+     }
+    },
+    "star": {
+     "min": {
+      "player_games": 290,
+      "games": 167,
+      "status": "supported",
+      "missing_outcomes": 0,
+      "low": 0.04827586206896552,
+      "low_ci95": [
+       0.02573499858142614,
+       0.07368421052631578
+      ],
+      "high": 0.04482758620689655,
+      "high_ci95": [
+       0.020338983050847456,
+       0.07333333333333333
+      ],
+      "sd": 5.294680347321436,
+      "sd_ci95": [
+       5.245420668169722,
+       5.344116949624899
+      ],
+      "zero": 1.7241379310344828e-05,
+      "zero_ci95": [
+       0.0,
+       3.973809866589879e-05
+      ]
+     },
+     "pts": {
+      "player_games": 290,
+      "games": 167,
+      "status": "supported",
+      "missing_outcomes": 0,
+      "low": 0.066775897765403,
+      "low_ci95": [
+       0.03903544803116713,
+       0.09914582745153395
+      ],
+      "high": 0.02946708463949843,
+      "high_ci95": [
+       0.008807801195344448,
+       0.054968287526427066
+      ],
+      "sd": 8.326978560613666,
+      "sd_ci95": [
+       8.246790753253011,
+       8.40824648894023
+      ],
+      "zero": 0.000610344827586207,
+      "zero_ci95": [
+       0.0004119718309859155,
+       0.0008321583983422719
+      ]
+     }
+    },
+    "starter": {
+     "min": {
+      "player_games": 1555,
+      "games": 200,
+      "status": "supported",
+      "missing_outcomes": 0,
+      "low": 0.07652733118971061,
+      "low_ci95": [
+       0.06141992457150554,
+       0.09250814332247558
+      ],
+      "high": 0.029581993569131833,
+      "high_ci95": [
+       0.019987105093488073,
+       0.040264137151970227
+      ],
+      "sd": 5.453206009200083,
+      "sd_ci95": [
+       5.423682865347308,
+       5.482302210317098
+      ],
+      "zero": 0.0007299035369774922,
+      "zero_ci95": [
+       4.4861837802485295e-05,
+       0.0017461743637967857
+      ]
+     },
+     "pts": {
+      "player_games": 1555,
+      "games": 200,
+      "status": "supported",
+      "missing_outcomes": 0,
+      "low": 0.07966680514693798,
+      "low_ci95": [
+       0.06657192280625382,
+       0.09308237618768112
+      ],
+      "high": 0.04822757192579399,
+      "high_ci95": [
+       0.03832615720457914,
+       0.05878302010059944
+      ],
+      "sd": 6.133391080041562,
+      "sd_ci95": [
+       6.087102971024759,
+       6.180364412139648
+      ],
+      "zero": 0.01307331189710611,
+      "zero_ci95": [
+       0.011421515996819143,
+       0.015049853016022317
+      ]
+     }
+    },
+    "bench": {
+     "min": {
+      "player_games": 2447,
+      "games": 200,
+      "status": "supported",
+      "missing_outcomes": 0,
+      "low": 0.06048222313036371,
+      "low_ci95": [
+       0.05162816067362451,
+       0.0694560669456067
+      ],
+      "high": 0.08827135267674703,
+      "high_ci95": [
+       0.07528229602959569,
+       0.10155323945646526
+      ],
+      "sd": 5.809183380416948,
+      "sd_ci95": [
+       5.735964062087183,
+       5.880116697160017
+      ],
+      "zero": 0.08209726195341234,
+      "zero_ci95": [
+       0.07104751076501545,
+       0.09378596459894184
+      ]
+     },
+     "pts": {
+      "player_games": 2447,
+      "games": 200,
+      "status": "supported",
+      "missing_outcomes": 0,
+      "low": 0.06457578343154428,
+      "low_ci95": [
+       0.05732251356605104,
+       0.07206447919780977
+      ],
+      "high": 0.07725403051728172,
+      "high_ci95": [
+       0.06684152305789355,
+       0.08802417625671005
+      ],
+      "sd": 4.449896431372486,
+      "sd_ci95": [
+       4.360623067024893,
+       4.537144453311228
+      ],
+      "zero": 0.1963424601552922,
+      "zero_ci95": [
+       0.1800596433348516,
+       0.21326852421836165
+      ]
+     }
+    },
+    "unknown": {
+     "min": {
+      "player_games": 0,
+      "games": 0,
+      "status": "insufficient",
+      "missing_outcomes": 0
+     },
+     "pts": {
+      "player_games": 0,
+      "games": 0,
+      "status": "insufficient",
+      "missing_outcomes": 0
+     }
+    }
+   },
+   "dependence": {
+    "all": {
+     "counts": {
+      "player_games": 3635,
+      "games": 200,
+      "team_games": 400,
+      "teammate_team_games": 400,
+      "teammate_ordered_pairs": 29700,
+      "opponent_games": 200,
+      "opponent_pairs": 16552
+     },
+     "metrics": {
+      "teammate_MIN": {
+       "observed_role_centred_error_product": -1.4483232039804403,
+       "observed_ci_95": [
+        -2.0974618186142364,
+        -0.6854913765544718
+       ],
+       "within_world_covariance": -3.2948855324328177,
+       "within_world_ci_95": [
+        -3.3365665699418754,
+        -3.250543517480037
+       ],
+       "observed_minus_world": 1.8465623284523773,
+       "difference_ci_95": [
+        1.1981950881772272,
+        2.615455587944984
+       ]
+      },
+      "teammate_PTS": {
+       "observed_role_centred_error_product": -2.7726683972244945,
+       "observed_ci_95": [
+        -3.146553809878376,
+        -2.395738819053895
+       ],
+       "within_world_covariance": -2.5569858674404755,
+       "within_world_ci_95": [
+        -2.602256369311498,
+        -2.513083047081737
+       ],
+       "observed_minus_world": -0.21568252978401903,
+       "difference_ci_95": [
+        -0.5815983834842381,
+        0.15436310500654665
+       ]
+      },
+      "opponent_MIN": {
+       "observed_role_centred_error_product": 0.8676584141843905,
+       "observed_ci_95": [
+        0.3211917235712954,
+        1.5571510837046103
+       ],
+       "within_world_covariance": 0.2748288539924276,
+       "within_world_ci_95": [
+        0.26018921544979196,
+        0.2897136536996067
+       ],
+       "observed_minus_world": 0.5928295601919629,
+       "difference_ci_95": [
+        0.04321467784093643,
+        1.2824062354011108
+       ]
+      },
+      "opponent_PTS": {
+       "observed_role_centred_error_product": 0.19278239214173645,
+       "observed_ci_95": [
+        -0.03115329987126117,
+        0.3967871869081749
+       ],
+       "within_world_covariance": 0.22986098364881793,
+       "within_world_ci_95": [
+        0.21909967931579175,
+        0.24046806702004492
+       ],
+       "observed_minus_world": -0.03707859150708148,
+       "difference_ci_95": [
+        -0.2593849468888225,
+        0.16575779534677154
+       ]
+      }
+     },
+     "status": "supported"
+    },
+    "stars_starters": {
+     "counts": {
+      "player_games": 1827,
+      "games": 199,
+      "team_games": 397,
+      "teammate_team_games": 391,
+      "teammate_ordered_pairs": 7070,
+      "opponent_games": 198,
+      "opponent_pairs": 4229
+     },
+     "metrics": {
+      "teammate_MIN": {
+       "observed_role_centred_error_product": 5.9799221552575625,
+       "observed_ci_95": [
+        3.8417760801467344,
+        8.25308040633381
+       ],
+       "within_world_covariance": -1.7611556000465896,
+       "within_world_ci_95": [
+        -1.8615704234157593,
+        -1.6603601321353287
+       ],
+       "observed_minus_world": 7.741077755304152,
+       "difference_ci_95": [
+        5.61879810400008,
+        9.991595851445963
+       ]
+      },
+      "teammate_PTS": {
+       "observed_role_centred_error_product": -3.2406714723590677,
+       "observed_ci_95": [
+        -4.827255651317984,
+        -1.6588364605305754
+       ],
+       "within_world_covariance": -4.183847403026425,
+       "within_world_ci_95": [
+        -4.285518029596874,
+        -4.083943119377953
+       ],
+       "observed_minus_world": 0.943175930667357,
+       "difference_ci_95": [
+        -0.6495436749470938,
+        2.5446679769013367
+       ]
+      },
+      "opponent_MIN": {
+       "observed_role_centred_error_product": 4.124464775507148,
+       "observed_ci_95": [
+        2.0792945619906815,
+        6.270809590044558
+       ],
+       "within_world_covariance": 0.2845417308469741,
+       "within_world_ci_95": [
+        0.2527295486110424,
+        0.31716663724133964
+       ],
+       "observed_minus_world": 3.839923044660174,
+       "difference_ci_95": [
+        1.7950560882001585,
+        5.9842379951470095
+       ]
+      },
+      "opponent_PTS": {
+       "observed_role_centred_error_product": 0.7045755713935783,
+       "observed_ci_95": [
+        -0.5743763970287555,
+        1.9574111996977712
+       ],
+       "within_world_covariance": 0.37659831187329645,
+       "within_world_ci_95": [
+        0.3392826877402505,
+        0.4140712884868146
+       ],
+       "observed_minus_world": 0.32797725952028184,
+       "difference_ci_95": [
+        -0.9498790394123611,
+        1.5734136593309274
+       ]
+      }
+     },
+     "status": "supported"
+    }
+   },
+   "pace": {
+    "observed_error_variance": [
+     22.585125224374988,
+     23.376392819375006
+    ],
+    "within_world_variance": [
+     17.220102695,
+     17.241250175
+    ],
+    "variance_gap_ci95": [
+     [
+      0.5308803850593635,
+      10.496479749464992
+     ],
+     [
+      1.0965730521181216,
+      11.531575179519974
+     ]
+    ],
+    "observed_opponent_error_covariance": 22.203022186874996,
+    "within_world_opponent_covariance": 16.725837075,
+    "covariance_gap_ci95": [
+     0.5728353513343671,
+     10.68823077103749
+    ]
+   },
+   "team_points": {
+    "observed_error_variance": [
+     125.71020609977496,
+     135.94664436597503
+    ],
+    "within_world_variance": [
+     127.39293078500005,
+     126.89281110499995
+    ],
+    "variance_gap_ci95": [
+     [
+      -25.920770195395026,
+      24.780896865843125
+     ],
+     [
+      -18.749853734739983,
+      39.305265267970576
+     ]
+    ],
+    "observed_opponent_error_covariance": 16.614834102674994,
+    "within_world_opponent_covariance": 21.053886685,
+    "covariance_gap_ci95": [
+     -22.10967150212501,
+     13.371084976477489
+    ]
+   },
+   "overtime": {
+    "actual": 0.04,
+    "predicted": 0.035750000000000004,
+    "gap_ci95": [
+     -0.0340255,
+     0.020705
+    ]
+   }
+  }
+ },
+ "fixed_dependence_player_games": 3635,
+ "unknown_prior_roles": 0,
+ "bootstrap": {
+  "unit": "game",
+  "replicates": 10000,
+  "seed": 20261122
+ },
+ "definitions": {
+  "tails": "Expected randomized-PIT mass below0.05/above0.95; no probability or truth clamping.",
+  "dependence": "Same reference-prior role and actual/reference-predicted MIN>=8 eligibility in every arm; role means re-estimated per bootstrap.",
+  "zero": "Saved-world probability of zero minutes/points, conditional on actual-participant rosters."
+ },
+ "limits": [
+  "Source/mean error and latent variance are not identified separately.",
+  "Additional tail/dependence summaries are diagnostics, not replacement benefit claims.",
+  "Cohorts, axes and missingness remain explicit; unknown role is not assigned to bench."
+ ]
+}

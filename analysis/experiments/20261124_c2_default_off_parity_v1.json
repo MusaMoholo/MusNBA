@@ -1,0 +1,34 @@
+{
+ "kind": "inactive optional court decoder; original full chunk replay, no truth scoring",
+ "engine_sha256": "e4a95c02fff1f1774ca3d39f0ed88bac79cb162322096ae391f69bb360657754",
+ "games": [
+  {
+   "game": "401910036",
+   "worlds": 1000,
+   "all_raw_arrays_identical": true,
+   "seconds": 68.15501333400607,
+   "work_plan_sha256": "dbc3c23b39ff97c8ed8eb30f52618bc58555f634ea8748a90944fb2938bffc49",
+   "private_input_sha256": "bdf8b1946c48e9a992a068fd4fe8206a090724ef99a53383207421529035a083"
+  },
+  {
+   "game": "401910042",
+   "worlds": 1000,
+   "all_raw_arrays_identical": true,
+   "seconds": 69.73144116600452,
+   "work_plan_sha256": "e178483041a4a97a35e8c0154a62926bf2cd284ed4d2f78038abf97e40a03198",
+   "private_input_sha256": "e7960c912469425189d7b77a26157df552108dcb70cac682e51b83a3e582bfd9"
+  },
+  {
+   "game": "401910044",
+   "worlds": 1000,
+   "all_raw_arrays_identical": true,
+   "seconds": 68.40174783299153,
+   "work_plan_sha256": "4f487ae2580e52f1d04069fb4532cc3ed265c4264db7e6785e93a73a547e877b",
+   "private_input_sha256": "b6587c053e955bb9cd0370fe617482e4eb3a76f318155eb52e2e67a9a356c632"
+  }
+ ],
+ "workers": 3,
+ "omp_threads": 1,
+ "elapsed_seconds": 69.95488379200106,
+ "protected_accuracy_evaluated": false
+}

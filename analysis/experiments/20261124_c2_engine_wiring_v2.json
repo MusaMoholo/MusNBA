@@ -1,0 +1,99 @@
+{
+ "kind": "fixed C2 three-arm wiring",
+ "manifest_sha256": "bcd9f140e4ef3b7ac11b0c72aa4a1c4187c0b0fa9d5c87d8ec9029edc5de4d46",
+ "game_ids": [
+  "401809250",
+  "401810330",
+  "401810342"
+ ],
+ "worlds": 1000,
+ "arms": 3,
+ "reference_raw_parity": [
+  "401809250",
+  "401810330",
+  "401810342"
+ ],
+ "reference_reuse_enabled": false,
+ "elapsed_seconds": 99.2819415829872,
+ "fresh_arm_jobs": 9,
+ "workers": 9,
+ "production_changed": false,
+ "schema": "c2-engine-evidence-v2",
+ "private_report": "data/derived/experiments/c2_engine_wiring_v1/report.json",
+ "private_report_sha256": "517e2d1f19d238cb584a1698d12228db3d0909e9e6a47dedb69ed7397bb943fd",
+ "prediction_runner": "data/derived/experiments/c2_engine_format_v1_sources/c2_engine_runner.py",
+ "prediction_runner_sha256": "9909c4ab4d3b0d21404aa79ab0f9e69bc4412cc3ee7c72f34298e6b5aa70f4fa",
+ "captures": [
+  {
+   "game": "401809250",
+   "arms": {
+    "reference": {
+     "receipt": "data/derived/experiments/c2_engine_wiring_v1/401809250/reference/receipt.json",
+     "sha256": "1fd73d3f3d31ea00883f5b3d8d5751493d66eaa1e0db20e569bcd3b7ecda762e",
+     "entry_selector": "entry"
+    },
+    "bridge": {
+     "receipt": "data/derived/experiments/c2_engine_wiring_v1/401809250/bridge/receipt.json",
+     "sha256": "daefabae5aba789105ea04842a92598550f130619cf58b6eeb8958635db8287b",
+     "entry_selector": "entry"
+    },
+    "candidate": {
+     "receipt": "data/derived/experiments/c2_engine_wiring_v1/401809250/candidate/receipt.json",
+     "sha256": "3eecb35d6aee8762f7b92397366098d4b1469dd20ff7fda2cbf0d4645799be6b",
+     "entry_selector": "entry"
+    }
+   }
+  },
+  {
+   "game": "401810330",
+   "arms": {
+    "reference": {
+     "receipt": "data/derived/experiments/c2_engine_wiring_v1/401810330/reference/receipt.json",
+     "sha256": "5235455ebef1400d1fbe8f1e8b271bd821b09f78957da0dc0b0aff323667b25a",
+     "entry_selector": "entry"
+    },
+    "bridge": {
+     "receipt": "data/derived/experiments/c2_engine_wiring_v1/401810330/bridge/receipt.json",
+     "sha256": "34e4717462b8fd8eb46da37f4589bb401b19b424030f7339bd90c66628534b11",
+     "entry_selector": "entry"
+    },
+    "candidate": {
+     "receipt": "data/derived/experiments/c2_engine_wiring_v1/401810330/candidate/receipt.json",
+     "sha256": "155922b58e703705acc679b136f7fa3472af22427d12210182fdb80f80c9e990",
+     "entry_selector": "entry"
+    }
+   }
+  },
+  {
+   "game": "401810342",
+   "arms": {
+    "reference": {
+     "receipt": "data/derived/experiments/c2_engine_wiring_v1/401810342/reference/receipt.json",
+     "sha256": "8601ae26ae61d8e6b7d899565642600defeffbc276f1ee7d4bc6c43a59f6f233",
+     "entry_selector": "entry"
+    },
+    "bridge": {
+     "receipt": "data/derived/experiments/c2_engine_wiring_v1/401810342/bridge/receipt.json",
+     "sha256": "2bc8984bc696237d550b6f57e6a9d8dc518ba2552014deabb3f3ca9e04dd0189",
+     "entry_selector": "entry"
+    },
+    "candidate": {
+     "receipt": "data/derived/experiments/c2_engine_wiring_v1/401810342/candidate/receipt.json",
+     "sha256": "a3cebcd7bd664e087f7524541d804a30c808513f67109d957b7d719c0653364d",
+     "entry_selector": "entry"
+    }
+   }
+  }
+ ],
+ "derived_outputs": {
+  "data/derived/experiments/c2_engine_wiring_v1_reference.parquet": "da2c2aeac2f662875f709a58dcd70feb56f394171583bdda561ac85e893a761b",
+  "data/derived/experiments/c2_engine_wiring_v1_reference_players.parquet": "4e6dfbaec7ca2cf3f9157336b2bd866c2ae89e11cbaec3ff32896a7e9c63e357",
+  "analysis/experiments/c2_engine_wiring_v1_reference.json": "60a08d6a107c0ecff13c99c3c1add157c15d5b0459c70d8991466d400db915d0",
+  "data/derived/experiments/c2_engine_wiring_v1_bridge.parquet": "eecd4617da23ca54d687db93c5c22d7142d3e7c6149cdc8421425e24961f7552",
+  "data/derived/experiments/c2_engine_wiring_v1_bridge_players.parquet": "972dd6dd59f8c462d21f51d444a2ea9e66cb7eb5bf32c6b21bc7569fede36de3",
+  "analysis/experiments/c2_engine_wiring_v1_bridge.json": "eb6c2f748c73a316a1c2740d27a819cadce2b7d6d9c658c61fd536de5b0fc361",
+  "data/derived/experiments/c2_engine_wiring_v1_candidate.parquet": "c4670e9efc7d646a4de163d975b9f3d126bbadda5b7d9f23d834ea17819778ee",
+  "data/derived/experiments/c2_engine_wiring_v1_candidate_players.parquet": "18a237a99290441b34f82a71b5d01b48c656d4142efb048bb6ae4fb99f5912d2",
+  "analysis/experiments/c2_engine_wiring_v1_candidate.json": "50974275489a246c09464932b17c26b2ed569e2ac502f757fc9d175da544e7b0"
+ }
+}

@@ -1,0 +1,13 @@
+{
+ "frozen_at": "2026-11-24T01:48:56.096332+00:00",
+ "kind": "Pre-outcome qualification correction; model recipes, data, IDs and engine primary unchanged",
+ "candidate_validation_losses_inspected": false,
+ "training_recipe": "analysis/experiments/20261124_c2_frozen_recipe_v2.json",
+ "training_recipe_sha256": "b719e898841e67ef182e9a19da38dc231cb8d9eed33a70919be4dbd908d5b66e",
+ "supersedes_only": "node_selection fallback forbidding an engine screen solely for unsupported conditional make/miss benefit",
+ "reason": "MODEL explicitly requires common make/miss AND end-to-end proper scores where zone partitions differ. Conditional conversion alone cannot reject improvements in shot frequency/location. A measured whole-engine PTS result is required to close this family; setup failure or a conditional-only null is insufficient.",
+ "node_selection": "Nominate exactly one valid variant with lowest pooled F1-F3 common make/miss loss; fixed ordering zone,distance,defence breaks exact ties. Keep original Bonferroni confidence and seed-noise diagnostics, without claiming a conditional benefit when unsupported. No new variant, hyperparameter, row, panel or source.",
+ "noise": "Seed19 versus7 for nominee/control WHAT and SHOT_RESULT, all F1-F3; fixed max relative-RMS and per-fold harm diagnostics from execution_guard_v1. Report conditional harm/uncertainty and test whole-engine safeguards; node outcomes cannot promote.",
+ "engine": "Exactly one prospective200-game paired F4 development screen on frozen IDs/streams, pooled player PTS CRPS primary, original v3 bounds. No replacement if nominee fails. Independent confirmation remains C4, protected test C5 alone.",
+ "production_changed": false
+}

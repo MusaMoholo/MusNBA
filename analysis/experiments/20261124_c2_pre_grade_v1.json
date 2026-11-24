@@ -1,0 +1,14 @@
+{
+ "frozen_at": "2026-11-24T02:12:52.156797+00:00",
+ "candidate_scores_opened": false,
+ "checks": {
+  "analysis/experiments/20261124_c2_ready_panels_v1.json": "c9fcbb31d23178c819308a46a2e8dff6b5d09ffcf6460d48370c3bf9267ce475",
+  "analysis/experiments/20261124_c2_identity_audit_v1.json": "7ecbd5221e4e0a93a2dd656344ebdf2becae8208df1205936b665d2e3a6ace8b",
+  "analysis/experiments/20261124_c2_profile_reproduction_v1.json": "e180cd939dbf8caf5dd3ae3faedc982624f391d03318851fd9b4ad58dbd696ad",
+  "analysis/experiments/20261124_c2_default_off_parity_v1.json": "3ffd875ff4683722d169002e854ade692931891024668aaa7b5a33487fd9c546"
+ },
+ "reproduced_profile_sha256": "b955b5c715a3e439af82dcd1aef662670e60763a8c2d0de2ec0d7f4a5c9aede9",
+ "original_source_decisions_verified": 36,
+ "default_off_raw_worlds_verified": 3000,
+ "focused_tests_passed": 14
+}

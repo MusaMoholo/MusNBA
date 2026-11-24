@@ -446,6 +446,8 @@ class Engine:
             side, src, how = nodes.OPTIONAL_LINEUP[col]
             v = o(src) if side == 'off' else d(src)
             c[col] = {'mean': np.nanmean, 'max': np.nanmax, 'min': np.nanmin, 'sum': np.nansum}[how](v, 1).astype(np.float32)
+        if getattr(self.m, 'court', None) is not None:
+            c.update(self.m.court.context(P, L_def))
         return c
 
     def _mu(self, g, L_def, actor_glob, rows, L_off=None, actor_slot=None):
@@ -629,9 +631,12 @@ class Engine:
                                         [actor_cols[f"{k[:-len('_fg_shot')]}_fg_{z}"][shot] for z in ('rim', 'paint', 'mid', 'three')]).astype(np.float32)
                            for k in shot_keys}
                 lx = {'zone': zone[shot].astype(np.float32), **at_zone}
-                Pl = m.predict('location', wctx(shot, lx), shot.size) * nodes.LOCATION_MASK[zone[shot]]
+                Pl = m.predict('location', wctx(shot, lx), shot.size) * getattr(m, 'location_mask', nodes.LOCATION_MASK)[zone[shot]]
                 band[shot] = draw(Pl / Pl.sum(1, keepdims=True), rng)
-                loc = {'zone': zone[shot].astype(np.float32), 'distance': m.band_d[band[shot]], 'lateral': m.band_l[band[shot]], **at_zone}
+                court_loc = {}
+                if getattr(m, 'court', None) is not None:
+                    band[shot], court_loc = m.court.decode(band[shot], wctx(shot), rng)
+                loc = {'zone': zone[shot].astype(np.float32), 'distance': m.band_d[band[shot]], 'lateral': m.band_l[band[shot]], **at_zone, **court_loc}
                 for k in shot_keys:
                     mu_shot[k][shot] = at_zone[k]
                 res[shot] = draw(m.predict('shot_result', wctx(shot, loc), shot.size), rng)

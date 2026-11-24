@@ -1,0 +1,346 @@
+{
+ "kind": "C2 input/source audit; no candidate losses inspected",
+ "games": [
+  {
+   "espn_game": "401468016",
+   "nba_game": "0022200001",
+   "date": "2022-10-18",
+   "nba_attempts": 162,
+   "espn_attempts": 162,
+   "exact_clock_pairs": 149,
+   "within_one_second_unique_pairs": 162,
+   "ambiguous_native": 0,
+   "ambiguous_espn": 0,
+   "unmapped_people": 0,
+   "make_agreement": 162,
+   "value_agreement": 162,
+   "coordinate_known_pairs": 162,
+   "coordinate_mae_feet": {
+    "x": 0.23827160493827174,
+    "y": 0.32839506172839505
+   },
+   "coordinate_max_error_feet": {
+    "x": 0.5,
+    "y": 0.8000000000000007
+   },
+   "coarse_zone_agreement": 154,
+   "coarse_zone_confusion": {
+    "above3": {
+     "above3": 52,
+     "corner3": 1,
+     "mid": 0,
+     "paint": 0,
+     "rim": 0
+    },
+    "corner3": {
+     "above3": 0,
+     "corner3": 16,
+     "mid": 0,
+     "paint": 0,
+     "rim": 0
+    },
+    "mid": {
+     "above3": 0,
+     "corner3": 0,
+     "mid": 25,
+     "paint": 4,
+     "rim": 0
+    },
+    "paint": {
+     "above3": 0,
+     "corner3": 0,
+     "mid": 0,
+     "paint": 35,
+     "rim": 0
+    },
+    "rim": {
+     "above3": 0,
+     "corner3": 0,
+     "mid": 0,
+     "paint": 3,
+     "rim": 26
+    }
+   },
+   "basic_counts": {
+    "Above the Break 3": 53,
+    "In The Paint (Non-RA)": 35,
+    "Mid-Range": 29,
+    "Restricted Area": 29,
+    "Left Corner 3": 10,
+    "Right Corner 3": 6
+   },
+   "source": "data/raw/nbastats/shotchartdetail/2022-23/0022200001.json.gz",
+   "source_sha256": "99c21ed373b3b4beeaa744e020070f42a5f21b26ed2db43aaa5c0977516c7305"
+  },
+  {
+   "espn_game": "401468017",
+   "nba_game": "0022200002",
+   "date": "2022-10-18",
+   "nba_attempts": 193,
+   "espn_attempts": 192,
+   "exact_clock_pairs": 177,
+   "within_one_second_unique_pairs": 190,
+   "ambiguous_native": 2,
+   "ambiguous_espn": 2,
+   "unmapped_people": 0,
+   "make_agreement": 190,
+   "value_agreement": 190,
+   "coordinate_known_pairs": 190,
+   "coordinate_mae_feet": {
+    "x": 0.24105263157894743,
+    "y": 0.3015789473684211
+   },
+   "coordinate_max_error_feet": {
+    "x": 0.5,
+    "y": 0.8000000000000007
+   },
+   "coarse_zone_agreement": 177,
+   "coarse_zone_confusion": {
+    "above3": {
+     "above3": 62,
+     "corner3": 2,
+     "mid": 0,
+     "paint": 0,
+     "rim": 0
+    },
+    "corner3": {
+     "above3": 0,
+     "corner3": 20,
+     "mid": 0,
+     "paint": 0,
+     "rim": 0
+    },
+    "mid": {
+     "above3": 0,
+     "corner3": 1,
+     "mid": 14,
+     "paint": 6,
+     "rim": 0
+    },
+    "paint": {
+     "above3": 0,
+     "corner3": 0,
+     "mid": 0,
+     "paint": 22,
+     "rim": 1
+    },
+    "rim": {
+     "above3": 0,
+     "corner3": 0,
+     "mid": 0,
+     "paint": 3,
+     "rim": 59
+    }
+   },
+   "basic_counts": {
+    "Restricted Area": 64,
+    "Above the Break 3": 63,
+    "In The Paint (Non-RA)": 24,
+    "Mid-Range": 21,
+    "Right Corner 3": 12,
+    "Left Corner 3": 8,
+    "Backcourt": 1
+   },
+   "source": "data/raw/nbastats/shotchartdetail/2022-23/0022200002.json.gz",
+   "source_sha256": "7ae17da029e96d699985b2a2a263eb4c04fbcab40c97bb28238a2cdc8671b0a8"
+  },
+  {
+   "espn_game": "401468018",
+   "nba_game": "0022200003",
+   "date": "2022-10-19",
+   "nba_attempts": 180,
+   "espn_attempts": 180,
+   "exact_clock_pairs": 162,
+   "within_one_second_unique_pairs": 178,
+   "ambiguous_native": 2,
+   "ambiguous_espn": 2,
+   "unmapped_people": 0,
+   "make_agreement": 178,
+   "value_agreement": 178,
+   "coordinate_known_pairs": 178,
+   "coordinate_mae_feet": {
+    "x": 0.23146067415730331,
+    "y": 0.3179775280898878
+   },
+   "coordinate_max_error_feet": {
+    "x": 0.5,
+    "y": 0.8000000000000007
+   },
+   "coarse_zone_agreement": 165,
+   "coarse_zone_confusion": {
+    "above3": {
+     "above3": 50,
+     "corner3": 2,
+     "mid": 0,
+     "paint": 0,
+     "rim": 0
+    },
+    "corner3": {
+     "above3": 0,
+     "corner3": 16,
+     "mid": 0,
+     "paint": 0,
+     "rim": 0
+    },
+    "mid": {
+     "above3": 0,
+     "corner3": 0,
+     "mid": 7,
+     "paint": 5,
+     "rim": 0
+    },
+    "paint": {
+     "above3": 0,
+     "corner3": 0,
+     "mid": 0,
+     "paint": 13,
+     "rim": 1
+    },
+    "rim": {
+     "above3": 0,
+     "corner3": 0,
+     "mid": 0,
+     "paint": 5,
+     "rim": 79
+    }
+   },
+   "basic_counts": {
+    "Restricted Area": 86,
+    "Above the Break 3": 51,
+    "In The Paint (Non-RA)": 14,
+    "Mid-Range": 12,
+    "Left Corner 3": 10,
+    "Right Corner 3": 6,
+    "Backcourt": 1
+   },
+   "source": "data/raw/nbastats/shotchartdetail/2022-23/0022200003.json.gz",
+   "source_sha256": "529532581ad424a6d1ba8c0aade14381378d3f8adf2a107e37d8bd8d0478f441"
+  }
+ ],
+ "inventory": [
+  {
+   "path": "/Users/moholom/Repos/Sports/Basketball/data/derived/history/2023/segments.parquet",
+   "sha256": "813b53edadf92f6e6c607211b1d4c64b312aa9fbe689851110e912419101a76e",
+   "games": 1321,
+   "segments": 319259,
+   "shots": 233041,
+   "known_coordinates": 233041,
+   "unknown_coordinates": 0,
+   "recorded_heaves": 0,
+   "coordinate_bounds": {
+    "x": [
+     0.0,
+     50.0
+    ],
+    "y": [
+     -5.0,
+     82.0
+    ]
+   },
+   "zones": {
+    "rim": 65795,
+    "above3": 63972,
+    "paint": 56820,
+    "corner3": 26553,
+    "mid": 19901
+   },
+   "complete_oncourt_shots": 233037
+  },
+  {
+   "path": "/Users/moholom/Repos/Sports/Basketball/data/derived/history/2024/segments.parquet",
+   "sha256": "4a7c3c2bce39580cc8e1092ffc215d11bbd49f7bf117b4551eee40337203d2c0",
+   "games": 1320,
+   "segments": 316989,
+   "shots": 233978,
+   "known_coordinates": 233978,
+   "unknown_coordinates": 0,
+   "recorded_heaves": 0,
+   "coordinate_bounds": {
+    "x": [
+     0.0,
+     50.0
+    ],
+    "y": [
+     -5.0,
+     85.0
+    ]
+   },
+   "zones": {
+    "rim": 65492,
+    "above3": 64812,
+    "paint": 56898,
+    "corner3": 27728,
+    "mid": 19048
+   },
+   "complete_oncourt_shots": 233947
+  },
+  {
+   "path": "/Users/moholom/Repos/Sports/Basketball/data/derived/history/2025/segments.parquet",
+   "sha256": "d9db732172894ed8d3c6e5e99e3cd1c197006da22799413034ce3ce18cc5aee2",
+   "games": 1324,
+   "segments": 321290,
+   "shots": 235223,
+   "known_coordinates": 235223,
+   "unknown_coordinates": 0,
+   "recorded_heaves": 0,
+   "coordinate_bounds": {
+    "x": [
+     0.0,
+     50.0
+    ],
+    "y": [
+     -5.0,
+     86.0
+    ]
+   },
+   "zones": {
+    "above3": 69349,
+    "rim": 61654,
+    "paint": 57768,
+    "corner3": 29602,
+    "mid": 16850
+   },
+   "complete_oncourt_shots": 235218
+  },
+  {
+   "path": "/Users/moholom/Repos/Sports/Basketball/data/derived/history/2026/segments.parquet",
+   "sha256": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+   "games": 1325,
+   "segments": 325668,
+   "shots": 236038,
+   "known_coordinates": 236038,
+   "unknown_coordinates": 0,
+   "recorded_heaves": 1159,
+   "coordinate_bounds": {
+    "x": [
+     0.0,
+     50.0
+    ],
+    "y": [
+     -5.0,
+     88.0
+    ]
+   },
+   "zones": {
+    "above3": 68618,
+    "rim": 62958,
+    "paint": 57349,
+    "corner3": 29930,
+    "mid": 17183
+   },
+   "complete_oncourt_shots": 236036
+  }
+ ],
+ "native_coordinate_transform": {
+  "x": "25 + LOC_X/10",
+  "y": "LOC_Y/10"
+ },
+ "joining": "Game/person crosswalk, then mutually unique player/period clocks within1s; no event-ID equality or outcome/location costs.",
+ "native_schema_source": "https://raw.githubusercontent.com/swar/nba_api/master/src/nba_api/stats/endpoints/shotchartdetail.py",
+ "zone_reference": "https://jr.nba.com/how-to-read-a-shot-chart/",
+ "limits": [
+  "No original publication/revision timestamps in shot-chart payload; fetched UTC is retained.",
+  "LeagueAverages numeric values are whole-season and excluded from all features/fits.",
+  "Observed native labels and derived ESPN coordinates are distinct sources; boundary differences are imprecision, not predictive harm."
+ ]
+}
