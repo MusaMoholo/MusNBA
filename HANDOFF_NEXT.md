@@ -1,4 +1,4 @@
-# Handoff — C03 redesigned; 0% executed
+# Handoff — C03 comparison frozen; 15% accepted
 
 Updated 25 November 2026. [C02 is complete](analysis/experiments/20261125_c02_completion_v1.json); its decision is unchanged.
 [PLAN](PLAN.md) owns strategy, [MODEL](MODEL.md) evidence/evaluation, [AGENTS](AGENTS.md) workflow, [README](README.md) commands.
@@ -6,8 +6,9 @@ Production stays engine-v1.3-r3, report-bands-v1 and team-pathway-v1. No active 
 
 ## C03 — compare several possession models, then develop the strongest
 
-**Status: 0% accepted. Planning only; no C03 implementation, fitting or scoring.** This replaces the unstarted single-hypothesis
-charter prospectively. Closed C01/C02 receipts and criteria stay immutable.
+**Status: checkpoint 1 accepted (15% deliverables); no forecast gain claimed.** The owner authorised execution.
+The [frozen numerical contract](analysis/c03_contract_v1.json) owns exact recipes, budgets and selection. No C03 fitting/scoring yet.
+Baseline smoke passes 118/118; C02 pinned sources and docs pass. Probability, future-input and current-label-mask faults fail closed.
 
 Question: which affordable way of learning possession decisions offers material player/team forecast improvement on the same
 causal information? The focus is opportunity generation: next event, player and action. Joint learning is one option, not the objective.
@@ -90,6 +91,10 @@ retain production, deliver the runnable distinct MVPs and reproducible compariso
 A whole-slate failure triggers review of the bottleneck, representation or data ceiling before another modelling chunk; no fourth
 post-hoc idea or repeated one-recipe tweak. Do not rewrite old decisions or invent a winner to satisfy the desire for progress.
 
+Training uses a common outcome-blind capped sample spanning supported December 2022–December 2025 history: 60k earlier
+events and 15k chronological selection events. A uses separate L2 linear choices, B separate nonlinear heads, C a single
+shared scalar tree scorer over 43 legal alternatives. Defensive-foul FT actor selection stays the common fixed resolver.
+
 At most 10 total heavy threads, counting concurrent fits/workers/inner pools/compression/validation; cap OMP/BLAS/Arrow and reduce
 under memory pressure. Share caches, overlap safe independent work and benchmark the first fit/rollout before estimating cost.
 MVP and finalist work share the same precommitted total budget; any technical rerun preserves the old evidence and explains the fault.
@@ -99,18 +104,13 @@ Version new components; preserve closed evidence/dependencies in place or `~/Bas
 No UI/platform/season scope. A production/input/generation release additionally needs all MODEL/AGENTS checks, affected bundles and
 a fresh full online nightly against the existing 3600-second ceiling. Actual-participant and raw publication/revision limits remain explicit.
 
-### Exact first actions
+### Exact next actions
 
 ```sh
-git status --short --branch
-git --no-pager log --oneline -5
-.venv/bin/python scripts/smoke.py
-ls -t analysis/experiments/ | head -15
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1
-.venv/bin/python analysis/c02_reproduce.py source
-rg -n 'Boundary|COLS|objective|attached|validate_worlds' analysis/c02_data.py analysis/c02_model.py analysis/c02_runtime.py
+.venv/bin/python -m unittest discover -s tests -p 'test_c03_*.py'
 .venv/bin/python scripts/check_docs.py
 ```
 
-Then audit reusable coverage, freeze the three MVP recipes and total selection/compute/stopping contract, and commit/push checkpoint 1.
-No C03 model/data jobs are authorised by this planning update alone.
+After checkpoint-1 commit/push: implement source-bound common arrays, three fit/predict adapters, recorded-context scoring and
+paired20 rollouts. Finish all MVPs before finalist investment. No active C03 jobs yet; private namespace above is unused.

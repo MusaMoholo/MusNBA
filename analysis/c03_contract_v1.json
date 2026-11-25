@@ -1,0 +1,97 @@
+{
+  "chunk": "C03",
+  "version": 1,
+  "status": "frozen before C03 fits or outcome scoring",
+  "population": "exact known B1 200 game IDs; first20 selection rollouts; actual participants and stored simulated rotations; no operational claim",
+  "panel": "analysis/experiments/20261124_b1_development_v2.json",
+  "inputs": "C02 causal-first/prior-position profile and team profile; CONTEXT except season, core LINEUP, elapsed duration; five PROFILE/IN_GAME/grp_code/usage_share/usage_rank/usage_mult_now. All families same arrays and history. No IDs/targets/foul_event in joint inputs.",
+  "opponent_audit": "Only dated team_d_{pace,three,rim,tov,foul,oreb} and causal core defensive lineup aggregates. Source features_report history_only, causal_first_priors, causal_positions required. No body/matchup/implicit defender responsibility. No additional opponent bundle admitted.",
+  "choice": "43 fixed alternatives: slot0..4 x WHAT0..7, then defensive foul, violation/jump ball, team turnover. Event marginal; actor conditional on action; action conditional on actor. Defensive foul FT actor remains unchanged incumbent resolver in every arm.",
+  "support": "event dataset legal reconstructed fives; actions must be nonheave, known zone/label, actor in offensive five. Actorless events retained regardless actor metadata. Exclusions fixed without probabilities; same keys all models. Full-game truth unchanged.",
+  "history": {
+    "from": "2022-12-01",
+    "through": "2025-12-31",
+    "train_through": "2025-09-30",
+    "selection_from": "2025-10-01",
+    "train_cap": 60000,
+    "selection_cap": 15000,
+    "sampling": "smallest uint64 pandas hash of seg_id with hash_key=0123456789123456 per block, then chronological order; outcome blind",
+    "weights": "uniform common event weights; no date tuning",
+    "phase": "context before elapsed clock; player sec_so_far after elapsed; all other counters before event"
+  },
+  "recipes": {
+    "A": {
+      "family": "separate regularised linear softmax",
+      "configuration_count": 1,
+      "epochs": 120,
+      "learning_rate": 0.08,
+      "l2": 0.02,
+      "features": "same common columns per relevant head, training-only mean/std, missing indicators, clip standardised inputs to +/-8; bias. Separate 4-event, grouped5-actor, 8-action heads. Training effective-sample shrinkage implicit in L2 and missing indicators. Select epoch on training-only chronological selection block; refit train+selection at chosen epoch."
+    },
+    "B": {
+      "family": "refreshed separate LightGBM heads",
+      "configuration_count": 1,
+      "rounds_max": 120,
+      "num_leaves": 15,
+      "learning_rate": 0.05,
+      "min_data_in_leaf": 200,
+      "lambda_l2": 20,
+      "max_bin": 63,
+      "selection": "best chronological validation iteration, patience15; refit train+selection",
+      "actor": "group5 softmax objective",
+      "event": "4class",
+      "action": "8class"
+    },
+    "C": {
+      "family": "shared LightGBM legal-outcome scorer",
+      "configuration_count": 1,
+      "rounds_max": 60,
+      "num_leaves": 15,
+      "learning_rate": 0.05,
+      "min_data_in_leaf": 400,
+      "lambda_l2": 20,
+      "max_bin": 63,
+      "selection": "best chronological validation iteration, patience10; refit train+selection",
+      "objective": "single scalar scorer common learned trees over all 43 alternatives; exact group43 softmax loss; diagonal Hessian 2p(1-p). Common context, candidate player features (missing for actorless), choice_type0..10. Shared learned splits/parameters across event/player/action. No truth-dependent masks."
+    }
+  },
+  "fit_seed": 20261125,
+  "max_configs_per_family": 1,
+  "max_finalists": 2,
+  "budget": {
+    "data_passes": "four yearly training builds plus one panel; no new provider",
+    "fits": "one selection and one refit per head (A3/B3/C1), then exactly one independent repeat; no extra recipes",
+    "rollouts": "every mechanically valid MVP first20 x1000 worlds plus shared compatible C02 incumbent control; only shortlisted finalists remaining180; one fresh full1000 replay per family; no extra precision",
+    "threads": "<=10 total heavy; fits10 then rollouts10x1; BLAS/Arrow1",
+    "technical_reruns": "only documented faults; preserve partial artifacts and original receipts; no score-driven change"
+  },
+  "shortlist": {
+    "primary": "player PTS CRPS relative change <= -0.005 on20, both500-world halves <0; point estimates only for promise, not significance",
+    "harms": {
+      "team_points_crps": 0.1,
+      "game_total_crps": 0.15,
+      "game_margin_crps": 0.15,
+      "win_brier": 0.01,
+      "player_min_crps": 0.05,
+      "player_reb_crps": 0.05,
+      "player_ast_crps": 0.05,
+      "player_fg3m_crps": 0.02,
+      "critical_pts_relative_crps": 0.02,
+      "critical_fg3m_relative_crps": 0.02,
+      "coverage80_absolute_change": 0.03
+    },
+    "event": "finite common NLL/Brier; no next-event improvement prerequisite",
+    "runtime": "candidate/control saved per-game generation median ratio <=8; total fixed cap; source/mechanical failures fail closed",
+    "ranking": "eligible ordered playerPTS CRPS gain, retain best2; uncertainty overlap does not force single winner"
+  },
+  "finalist_acceptance": "200 known games only: primary playerPTS >=1% gain and game/week familywise upper<0 across3 initial comparisons; both simulation halves improve; same harm margins require familywise upper below margin; >=100games overall, critical contexts >=30games/200player rows. No independent confirmation or release claim.",
+  "uncertainty": {
+    "resamples": 10000,
+    "seed": 20261125,
+    "units": "whole games and fixed ordinal//7 calendar blocks; pooled and equal-game",
+    "intervals": "descriptive95 plus Bonferroni familywise 98.33333333333333% across initial3 for all decisions; no exposure reset; harms and support conjunctive"
+  },
+  "stopping": "No qualifying20game candidate => bounded negative search, no remaining180. No posthoc alternatives. Independent fresh fits/probabilities and one replay per valid family; independent saved-array score/accounting check.",
+  "production_changed": false,
+  "namespace": "data/derived/experiments/c03_possession_options_v1"
+}
