@@ -108,6 +108,13 @@ The200-game attempt did not qualify: CRPS gain−.01601[-.04124,.00889],MAE8.964
 27/27 proper safeguards clear. `20261124_b1_development_decision_v2.json` owns the rejection; no independent/protected run.
 It is disabled in production. This conditional-on-selected-shots result does not reject wider end-of-period modelling;
 source and actual-participant limits remain, and the owner team-score objective is unmet.
+- B2 repaired three Cup-final83-game errors and future Cup assignments; all4920 regular games now have reconciled regulation/final truth
+in isolated versioned arrays (30 derived period differences; six incomplete feeds checked against retained ESPN summaries). Legacy reports stay immutable.
+All16 origins/four seasons at10k per arm: accepted pathway wins CRPS2.6142, expected80%coverage79.61%, mean dispersion.9891;
+fixed ratings CRPS2.6875/coverage62.19%. Three frozen carry/opponent/memory candidates did not qualify. Best carry gain.01436
+familywise95%[-.02304,.04968], held-out2025–26 gain−.03073; no rescue. `20261124_b2_decision_v1.json` owns per-origin points/wins/persistence.
+Conditional reconstructed regular schedules only: four adjacent seasons are sparse, revision/neutral metadata remain limited, no title calibration.
+Historical Expected unavailable(D40); no invented backfill or injury hazard. Original-source/future-injection/accounting checks precede selection.
 
 ## Saved analysis and competitions
 
@@ -116,6 +123,12 @@ Five positive-mass Expected examples/game: each team's max own margin, each team
 Store original branch/chunk/world IDs/weights. Replay the full original canonical chunk with read-only observers, never that world alone.
 Reconcile events, clocks, boxes, minutes, legal fives and zone counters. No invented tracking/passes/trajectories. Preserve lineup compatibility.
 U25 uses stored full-game player metrics (`periods.fg.advanced`), exact quantiles, probabilities and means; unsupported values stay unavailable.
+
+B3 planned rotation capture: read-only presence at48 regulation minute midpoints (30…2850seconds), all retained worlds/players.
+Use pre-action fives for action time and repaired fives for any post-action gap; no RNG draws. Every world/time has five/team.
+Persist binary world presence; build exact-weighted case/Expected aggregates before serving. Keep stored continuous-minute forecasts separate
+from sampled-time probabilities. Phone imports aggregates; older snapshots explicitly lack capture. Display stored score-study decisions,
+not reconstructed forecasts or claims that visibility met the unachieved team-score objective.
 
 **nba-competitions-2026-v1:**1200 base fixtures/80team +30world-local regular fixtures =1230/82team.
 Group/QF/SF count; Cup final/play-in/playoffs excluded. Known fixtures independently replace slots once in actual date order; contradictions fail closed.

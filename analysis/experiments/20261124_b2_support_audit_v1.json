@@ -1,0 +1,22 @@
+{
+ "kind": "B2 independent chunk/accounting, cutoff and support audit",
+ "cells": 80,
+ "worlds_per_cell": 10000,
+ "chunks": 800,
+ "season_paths": 800000,
+ "known_game_point_histograms": 1013300,
+ "every_world_regular_wins": 1230,
+ "every_world_regular_team_games": 82,
+ "all_receipt_array_hashes_verified": true,
+ "prior_future_injection_checks": 80,
+ "historical_original_expected_available": false,
+ "historical_engine_atoms_supplied": 0,
+ "historical_engine_atoms_consumed": 0,
+ "current_live_exact_mixture_evidence": "20261124_b1_delivery_audit_v1.json +112-check smoke; mixture implementation unchanged,20 relevant integration tests pass",
+ "absence_support": "Retained historical boxes give dated realised DNPs/reasons, not historical report-publication times or complete origin-safe roster/availability forecasts. No absence hazard fitted; no calibration claim.",
+ "protected_accuracy_scored": false,
+ "seconds": 1.0118626250005036,
+ "source_sha256": {
+  "analysis/experiments/20261124_b2_screen_v2.json": "c2b975c6f2e7f6bf998e5c0d33448d9c7195971973057259bbd92b665fea8b35"
+ }
+}

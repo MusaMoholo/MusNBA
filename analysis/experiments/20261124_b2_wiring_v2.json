@@ -1,0 +1,56 @@
+{
+ "kind": "B2 historical paths completed; no candidate score selection performed",
+ "phase": "wiring",
+ "chunks": 3,
+ "worlds": 300,
+ "origins": [
+  "2022-11-20",
+  "2023-11-20",
+  "2024-11-20"
+ ],
+ "arms": [
+  "reference"
+ ],
+ "receipts": [
+  {
+   "path": "data/derived/experiments/d42_b2_runs_v2/wiring/2022-11-20/reference/000.json",
+   "sha256": "df660876179c57c80029c17e747088cd29031660f99dac6467547fa8009d8c8f"
+  },
+  {
+   "path": "data/derived/experiments/d42_b2_runs_v2/wiring/2023-11-20/reference/000.json",
+   "sha256": "af11159a3764745f088401c0005dcb92b42f35c00d63c3c6b8dd5f16a894594c"
+  },
+  {
+   "path": "data/derived/experiments/d42_b2_runs_v2/wiring/2024-11-20/reference/000.json",
+   "sha256": "34e6cfda0cb89b028c34735d2e28da26343b460c27bd50462728dbdb111e0cda"
+  }
+ ],
+ "seconds": 0.9314394579996588,
+ "source_sha256": {
+  "analysis/experiments/20261124_b2_frozen_recipe_v1.json": "a8f5bb1ffa505b8d2f72bca661a9b864a14b53015fe9c3ee89dd4d728ac2ad56",
+  "data/derived/experiments/d42_b2_strength_v1/starts.json": "82058089c0ed382003b1e03f4d39865a9b71df1b69aa6778394cb7f3f62fb582",
+  "analysis/experiments/20261124_b2_prior_fits_v1.json": "51c6a7712d1ef70b6c2e249d36572b107196e0ee358345ac993b68f836aeab06",
+  "analysis/experiments/20261124_b2_score_truth_v3.json": "e544dfe861f71f1629cc368820471775e75c471da1ba5780e2306bada1d123eb",
+  "analysis/b2_score_truth.py": "53d29c69e500beaa7638b8c72854c5f6921df2259fcda3f700622b3098d1c94d",
+  "analysis/experiments/20261124_b2_calendar_audit_v1.json": "37a4e3a89dbcdfd2ba43f509f4b2edbe091ea5a515063815b18aaeaf813b456a",
+  "data/derived/teams.json": "130aa5358d49b944c2b5bee7e9a163f1e53285e93dae57262f039ca1636b7ecc",
+  "analysis/b2_runner.py": "f7e32fc7f0c576e8c550be42d9a50ef001875048b07cf4214ee1070a3a8cebc6",
+  "analysis/b2_paths.py": "9cdbb37793fb68ad750b800a594e34d8392a112b532979f55f1434c40289aa67",
+  "analysis/b2_prepare.py": "175bdcc486ca1b193368e65b1e381af16336acd8f4921269089dfcc85917a008",
+  "analysis/b2_calendar_audit.py": "b17783550a63b37397a986abb922a45e4be1806bb56e7906a5170f68fc25fc74",
+  "scripts/competitions.py": "1eca9522859cbf55b10cc5a9f0441cb8083d347b0ff62099002be44a240fc0f7",
+  "scripts/competition_rules.py": "5d2827521f88fcc71af7387773aaaf4a75c92d396ca040518cb1703b4368e656",
+  "scripts/pathway.py": "97afe9b90396fb7f27f999f38e3f192dcd13cd928fc8f6fbce41825890d92857",
+  "scripts/projection.py": "5dc538ac2c7614cfdeb56da2b27a1218bec4e6ceffce16dc929d5f6accf2e878",
+  "data/derived/experiments/d42_b2_calendar_audit_v1/2023.parquet": "21d257ce464976c66ba9164095d01315bfadbbacd5c2010bd193a96e9352091b",
+  "data/derived/experiments/d42_b2_score_truth_v3/2023.parquet": "21f4a2bed65f771a8ee1e3a66ed1a6aa1975d85b920f98048cdb29807af281fe",
+  "data/derived/experiments/d42_b2_calendar_audit_v1/2024.parquet": "c82dbf38ee1dd82f426fb14f8eb4af9f918533c2882def3b75670bca216bec6d",
+  "data/derived/experiments/d42_b2_score_truth_v3/2024.parquet": "04264ca422ba4639be8b82fb750a358ff52d8876ccf2ef36f4dbf5354cab4f1e",
+  "data/derived/experiments/d42_b2_calendar_audit_v1/2025.parquet": "3336a11c13fa7a2b787801c60b6d5b659e81ce9b95c70e8a9b9e0f487fddffb4",
+  "data/derived/experiments/d42_b2_score_truth_v3/2025.parquet": "b6d8e020eebdaeb112bf684b82b95ce608b26e3d3ee67ef5da40f885016dfc82",
+  "data/derived/experiments/d42_b2_calendar_audit_v1/2026.parquet": "d0909fec75876ad0b8f2a1952215652488be1c02b2212dfefc7b4131d460834b",
+  "data/derived/experiments/d42_b2_score_truth_v3/2026.parquet": "454e1590aed7b0a9fc0424e48e5dc5d03fb9356d6de5b72081d83eee7dad9793"
+ },
+ "protected_scoring": false,
+ "production_changed": false
+}

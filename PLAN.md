@@ -15,11 +15,12 @@ C2 shooting and C3/C4 S06 attempts closed without promotion; no qualifier or pro
 The owner requested a full **PWA-only** interaction/visual sweep before B: clean selection/navigation and rich truthful visual analysis.
 U25 changed no models or B progress. App shell, both imports/offline/upgrades and lean0% successor handoff are delivered.
 
-## Active chunk — D42 B30%
+## Active chunk — D42 B60%
 
 `20261124_chunk_b_successor_v4.json` is the refined bounded plan; HANDOFF gives executable rungs/dependencies/commands/fallback.
-B1=100%,B2=B3=0%: fixed200-game buzzer recipe rejected; owner accuracy targets did not pass despite27 proper safeguards.
-`20261124_b1_completion_v1.json` owns research and fresh nightly/PWA delivery. Team-score objective remains unmet; next B2 calendar audit.
+B1=100%,B2=100%,B3=0%: fixed200-game buzzer recipe rejected; owner accuracy targets did not pass despite27 proper safeguards.
+`20261124_b1_completion_v1.json` owns research and fresh nightly/PWA delivery. Team-score objective remains unmet.
+B2 corrected historical calendars/score endpoints; all16×10k five-arm comparisons complete, no nominee qualified. `20261125_b2_completion_v1.json` owns release evidence; B3 follows its checkpoint.
 
 |Module|Weight|Outcome|
 |---|---:|---|
@@ -32,26 +33,9 @@ Already inferred broad-zone history is not new work. “Nearest” requires actu
 New responsibility estimates must retain uncertainty and avoid outcome-based assignment. No C2/S06 rescue or r3 protected rescore.
 Measured rejection may close research; unfinished work cannot. Retain accepted models on rejection, explicitly mark team-score objective unmet and carry it forward with evidence.
 
-## Original programme — unchanged74%
+## Planning convention
 
-S13 deferred; authorised ceiling95%. Separate ledgers grant no automatic S11/S12/S14 credit.
-
-|Task|Weight|State|
-|---|---:|---|
-|S01 baseline|6%|Complete|
-|S02 integrity|6%|Complete|
-|S03 lost signal|8%|Complete; defence remains open|
-|S04 defence|12%|Complete negative screens|
-|S05 minutes|8%|Complete; D29|
-|S06 substitutions|12%|Original/current-r3 attempts complete; retainr3|
-|S07 availability|6%|Complete fallback; calibration open|
-|S08 Expected/lineups|6%|Complete|
-|S09 timing/form|10%|Complete; form0|
-|S10 season calibration|8%|0%; B2|
-|S11 integration|5%|0%; B3|
-|S12 visibility|3%|0%; remaining acceptance independent|
-|S13 past forecasts|5%|Deferred D40|
-|S14 final delivery|5%|0%; remaining integration|
-
-D42A: A1(30%)/A2(35%)/A3(35%) complete. B=.30B1+.30B2+.40B3, currently30%.
-Each module checkpoints before dependent work; every development chunk ends with full fresh nightly, tested PWA and fully specified successor.
+From25 November2026, work continues solely through chunks. The unfinished S-item queue and its74%/95% ledger are retired,
+not completed. Historical decisions/evidence retain their identifiers in Git; they create no automatic future tasks.
+D42A is complete; B=.30B1+.30B2+.40B3. Each module checkpoints before dependent work.
+Every development chunk ends with a fresh full nightly, tested PWA and fully specified0% successor.

@@ -1,0 +1,366 @@
+{
+ "kind": "B2 prior-only ratings/auxiliaries; no forecast outcomes",
+ "origins": 16,
+ "arms": 5,
+ "fit_rows": 80,
+ "future_injection_checks": 80,
+ "latest_dates": {
+  "2022-11-20": {
+   "reference": {
+    "latest_fit_date": "2022-11-19",
+    "previous_latest_fit_date": null
+   },
+   "persistence": {
+    "latest_fit_date": "2022-11-19",
+    "previous_latest_fit_date": null
+   },
+   "carry8": {
+    "latest_fit_date": "2022-11-19",
+    "previous_latest_fit_date": null
+   },
+   "opponent8": {
+    "latest_fit_date": "2022-11-19",
+    "previous_latest_fit_date": null
+   },
+   "opponent40": {
+    "latest_fit_date": "2022-11-19",
+    "previous_latest_fit_date": null
+   }
+  },
+  "2022-12-25": {
+   "reference": {
+    "latest_fit_date": "2022-12-23",
+    "previous_latest_fit_date": null
+   },
+   "persistence": {
+    "latest_fit_date": "2022-12-23",
+    "previous_latest_fit_date": null
+   },
+   "carry8": {
+    "latest_fit_date": "2022-12-23",
+    "previous_latest_fit_date": null
+   },
+   "opponent8": {
+    "latest_fit_date": "2022-12-23",
+    "previous_latest_fit_date": null
+   },
+   "opponent40": {
+    "latest_fit_date": "2022-12-23",
+    "previous_latest_fit_date": null
+   }
+  },
+  "2023-02-01": {
+   "reference": {
+    "latest_fit_date": "2023-01-31",
+    "previous_latest_fit_date": null
+   },
+   "persistence": {
+    "latest_fit_date": "2023-01-31",
+    "previous_latest_fit_date": null
+   },
+   "carry8": {
+    "latest_fit_date": "2023-01-31",
+    "previous_latest_fit_date": null
+   },
+   "opponent8": {
+    "latest_fit_date": "2023-01-31",
+    "previous_latest_fit_date": null
+   },
+   "opponent40": {
+    "latest_fit_date": "2023-01-31",
+    "previous_latest_fit_date": null
+   }
+  },
+  "2023-03-10": {
+   "reference": {
+    "latest_fit_date": "2023-03-09",
+    "previous_latest_fit_date": null
+   },
+   "persistence": {
+    "latest_fit_date": "2023-03-09",
+    "previous_latest_fit_date": null
+   },
+   "carry8": {
+    "latest_fit_date": "2023-03-09",
+    "previous_latest_fit_date": null
+   },
+   "opponent8": {
+    "latest_fit_date": "2023-03-09",
+    "previous_latest_fit_date": null
+   },
+   "opponent40": {
+    "latest_fit_date": "2023-03-09",
+    "previous_latest_fit_date": null
+   }
+  },
+  "2023-11-20": {
+   "reference": {
+    "latest_fit_date": "2023-11-19",
+    "previous_latest_fit_date": null
+   },
+   "persistence": {
+    "latest_fit_date": "2023-11-19",
+    "previous_latest_fit_date": null
+   },
+   "carry8": {
+    "latest_fit_date": "2023-11-19",
+    "previous_latest_fit_date": "2023-04-09"
+   },
+   "opponent8": {
+    "latest_fit_date": "2023-11-19",
+    "previous_latest_fit_date": "2023-04-09"
+   },
+   "opponent40": {
+    "latest_fit_date": "2023-11-19",
+    "previous_latest_fit_date": "2023-04-09"
+   }
+  },
+  "2023-12-25": {
+   "reference": {
+    "latest_fit_date": "2023-12-23",
+    "previous_latest_fit_date": null
+   },
+   "persistence": {
+    "latest_fit_date": "2023-12-23",
+    "previous_latest_fit_date": null
+   },
+   "carry8": {
+    "latest_fit_date": "2023-12-23",
+    "previous_latest_fit_date": "2023-04-09"
+   },
+   "opponent8": {
+    "latest_fit_date": "2023-12-23",
+    "previous_latest_fit_date": "2023-04-09"
+   },
+   "opponent40": {
+    "latest_fit_date": "2023-12-23",
+    "previous_latest_fit_date": "2023-04-09"
+   }
+  },
+  "2024-02-01": {
+   "reference": {
+    "latest_fit_date": "2024-01-31",
+    "previous_latest_fit_date": null
+   },
+   "persistence": {
+    "latest_fit_date": "2024-01-31",
+    "previous_latest_fit_date": null
+   },
+   "carry8": {
+    "latest_fit_date": "2024-01-31",
+    "previous_latest_fit_date": "2023-04-09"
+   },
+   "opponent8": {
+    "latest_fit_date": "2024-01-31",
+    "previous_latest_fit_date": "2023-04-09"
+   },
+   "opponent40": {
+    "latest_fit_date": "2024-01-31",
+    "previous_latest_fit_date": "2023-04-09"
+   }
+  },
+  "2024-03-10": {
+   "reference": {
+    "latest_fit_date": "2024-03-09",
+    "previous_latest_fit_date": null
+   },
+   "persistence": {
+    "latest_fit_date": "2024-03-09",
+    "previous_latest_fit_date": null
+   },
+   "carry8": {
+    "latest_fit_date": "2024-03-09",
+    "previous_latest_fit_date": "2023-04-09"
+   },
+   "opponent8": {
+    "latest_fit_date": "2024-03-09",
+    "previous_latest_fit_date": "2023-04-09"
+   },
+   "opponent40": {
+    "latest_fit_date": "2024-03-09",
+    "previous_latest_fit_date": "2023-04-09"
+   }
+  },
+  "2024-11-20": {
+   "reference": {
+    "latest_fit_date": "2024-11-19",
+    "previous_latest_fit_date": null
+   },
+   "persistence": {
+    "latest_fit_date": "2024-11-19",
+    "previous_latest_fit_date": null
+   },
+   "carry8": {
+    "latest_fit_date": "2024-11-19",
+    "previous_latest_fit_date": "2024-04-14"
+   },
+   "opponent8": {
+    "latest_fit_date": "2024-11-19",
+    "previous_latest_fit_date": "2024-04-14"
+   },
+   "opponent40": {
+    "latest_fit_date": "2024-11-19",
+    "previous_latest_fit_date": "2024-04-14"
+   }
+  },
+  "2024-12-25": {
+   "reference": {
+    "latest_fit_date": "2024-12-23",
+    "previous_latest_fit_date": null
+   },
+   "persistence": {
+    "latest_fit_date": "2024-12-23",
+    "previous_latest_fit_date": null
+   },
+   "carry8": {
+    "latest_fit_date": "2024-12-23",
+    "previous_latest_fit_date": "2024-04-14"
+   },
+   "opponent8": {
+    "latest_fit_date": "2024-12-23",
+    "previous_latest_fit_date": "2024-04-14"
+   },
+   "opponent40": {
+    "latest_fit_date": "2024-12-23",
+    "previous_latest_fit_date": "2024-04-14"
+   }
+  },
+  "2025-02-01": {
+   "reference": {
+    "latest_fit_date": "2025-01-31",
+    "previous_latest_fit_date": null
+   },
+   "persistence": {
+    "latest_fit_date": "2025-01-31",
+    "previous_latest_fit_date": null
+   },
+   "carry8": {
+    "latest_fit_date": "2025-01-31",
+    "previous_latest_fit_date": "2024-04-14"
+   },
+   "opponent8": {
+    "latest_fit_date": "2025-01-31",
+    "previous_latest_fit_date": "2024-04-14"
+   },
+   "opponent40": {
+    "latest_fit_date": "2025-01-31",
+    "previous_latest_fit_date": "2024-04-14"
+   }
+  },
+  "2025-03-10": {
+   "reference": {
+    "latest_fit_date": "2025-03-09",
+    "previous_latest_fit_date": null
+   },
+   "persistence": {
+    "latest_fit_date": "2025-03-09",
+    "previous_latest_fit_date": null
+   },
+   "carry8": {
+    "latest_fit_date": "2025-03-09",
+    "previous_latest_fit_date": "2024-04-14"
+   },
+   "opponent8": {
+    "latest_fit_date": "2025-03-09",
+    "previous_latest_fit_date": "2024-04-14"
+   },
+   "opponent40": {
+    "latest_fit_date": "2025-03-09",
+    "previous_latest_fit_date": "2024-04-14"
+   }
+  },
+  "2025-11-20": {
+   "reference": {
+    "latest_fit_date": "2025-11-19",
+    "previous_latest_fit_date": null
+   },
+   "persistence": {
+    "latest_fit_date": "2025-11-19",
+    "previous_latest_fit_date": null
+   },
+   "carry8": {
+    "latest_fit_date": "2025-11-19",
+    "previous_latest_fit_date": "2025-04-13"
+   },
+   "opponent8": {
+    "latest_fit_date": "2025-11-19",
+    "previous_latest_fit_date": "2025-04-13"
+   },
+   "opponent40": {
+    "latest_fit_date": "2025-11-19",
+    "previous_latest_fit_date": "2025-04-13"
+   }
+  },
+  "2025-12-25": {
+   "reference": {
+    "latest_fit_date": "2025-12-23",
+    "previous_latest_fit_date": null
+   },
+   "persistence": {
+    "latest_fit_date": "2025-12-23",
+    "previous_latest_fit_date": null
+   },
+   "carry8": {
+    "latest_fit_date": "2025-12-23",
+    "previous_latest_fit_date": "2025-04-13"
+   },
+   "opponent8": {
+    "latest_fit_date": "2025-12-23",
+    "previous_latest_fit_date": "2025-04-13"
+   },
+   "opponent40": {
+    "latest_fit_date": "2025-12-23",
+    "previous_latest_fit_date": "2025-04-13"
+   }
+  },
+  "2026-02-01": {
+   "reference": {
+    "latest_fit_date": "2026-01-31",
+    "previous_latest_fit_date": null
+   },
+   "persistence": {
+    "latest_fit_date": "2026-01-31",
+    "previous_latest_fit_date": null
+   },
+   "carry8": {
+    "latest_fit_date": "2026-01-31",
+    "previous_latest_fit_date": "2025-04-13"
+   },
+   "opponent8": {
+    "latest_fit_date": "2026-01-31",
+    "previous_latest_fit_date": "2025-04-13"
+   },
+   "opponent40": {
+    "latest_fit_date": "2026-01-31",
+    "previous_latest_fit_date": "2025-04-13"
+   }
+  },
+  "2026-03-10": {
+   "reference": {
+    "latest_fit_date": "2026-03-09",
+    "previous_latest_fit_date": null
+   },
+   "persistence": {
+    "latest_fit_date": "2026-03-09",
+    "previous_latest_fit_date": null
+   },
+   "carry8": {
+    "latest_fit_date": "2026-03-09",
+    "previous_latest_fit_date": "2025-04-13"
+   },
+   "opponent8": {
+    "latest_fit_date": "2026-03-09",
+    "previous_latest_fit_date": "2025-04-13"
+   },
+   "opponent40": {
+    "latest_fit_date": "2026-03-09",
+    "previous_latest_fit_date": "2025-04-13"
+   }
+  }
+ },
+ "path": "data/derived/experiments/d42_b2_strength_v1/starts.json",
+ "sha256": "82058089c0ed382003b1e03f4d39865a9b71df1b69aa6778394cb7f3f62fb582",
+ "recipe_sha256": "a8f5bb1ffa505b8d2f72bca661a9b864a14b53015fe9c3ee89dd4d728ac2ad56",
+ "candidate_results_opened": false,
+ "protected_scoring": false
+}

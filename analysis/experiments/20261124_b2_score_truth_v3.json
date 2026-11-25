@@ -1,0 +1,261 @@
+{
+ "kind": "B2 original-scoreboard score reconciliation; no forecast outcomes",
+ "seasons": [
+  {
+   "season": 2023,
+   "games": 1230,
+   "regulation_period_end_differences": [
+    {
+     "game": "401468281",
+     "side": "home",
+     "derived": 104,
+     "original_scoreboard": 106
+    },
+    {
+     "game": "401468304",
+     "side": "home",
+     "derived": 115,
+     "original_scoreboard": 117
+    },
+    {
+     "game": "401468511",
+     "side": "away",
+     "derived": 110,
+     "original_scoreboard": 108
+    },
+    {
+     "game": "401468786",
+     "side": "home",
+     "derived": 89,
+     "original_scoreboard": 113
+    },
+    {
+     "game": "401468786",
+     "side": "away",
+     "derived": 85,
+     "original_scoreboard": 119
+    },
+    {
+     "game": "401469046",
+     "side": "away",
+     "derived": 115,
+     "original_scoreboard": 116
+    },
+    {
+     "game": "401469149",
+     "side": "away",
+     "derived": 129,
+     "original_scoreboard": 131
+    },
+    {
+     "game": "401469200",
+     "side": "away",
+     "derived": 136,
+     "original_scoreboard": 139
+    }
+   ],
+   "truth": "data/derived/experiments/d42_b2_score_truth_v3/2023.parquet",
+   "sha256": "21f4a2bed65f771a8ee1e3a66ed1a6aa1975d85b920f98048cdb29807af281fe",
+   "summary_games": [
+    "401468786",
+    "401469149",
+    "401469200"
+   ],
+   "source_sha256": {
+    "data/raw/hoopr/play_by_play_2023.parquet": "f3fac3a58cf1be8813f1f4332edb7fc8d83936df703892a700095d62f71da886",
+    "data/derived/history/2023/player_periods.csv.gz": "d549a82d8704e95218379b945bef5ddb1bf4fa59db0e0b7e479e37f408281342",
+    "data/raw/b2_score_summaries_20261124_v1/401468786.json.gz": "9f8663ca62792b3a33d3a0eb87b74c4d47875bdda575cc7a4e46fed84ccee26f",
+    "data/raw/b2_score_summaries_20261124_v1/401469149.json.gz": "a881f7db4616eb969c82192b8fce78fa019faebb1a89d7d56433403b41672c69",
+    "data/raw/b2_score_summaries_20261124_v1/401469200.json.gz": "eb5c86e1d817be7203e16ca080d08d962c7a2a0aa3deaa1f551acb11bc942bcc"
+   }
+  },
+  {
+   "season": 2024,
+   "games": 1230,
+   "regulation_period_end_differences": [
+    {
+     "game": "401584717",
+     "side": "home",
+     "derived": 120,
+     "original_scoreboard": 113
+    },
+    {
+     "game": "401616465",
+     "side": "home",
+     "derived": 116,
+     "original_scoreboard": 111
+    },
+    {
+     "game": "401585363",
+     "side": "home",
+     "derived": 91,
+     "original_scoreboard": 95
+    },
+    {
+     "game": "401585387",
+     "side": "home",
+     "derived": 103,
+     "original_scoreboard": 106
+    },
+    {
+     "game": "401585411",
+     "side": "home",
+     "derived": 118,
+     "original_scoreboard": 121
+    },
+    {
+     "game": "401585412",
+     "side": "home",
+     "derived": 131,
+     "original_scoreboard": 133
+    },
+    {
+     "game": "401585413",
+     "side": "home",
+     "derived": 114,
+     "original_scoreboard": 116
+    },
+    {
+     "game": "401585413",
+     "side": "away",
+     "derived": 90,
+     "original_scoreboard": 93
+    }
+   ],
+   "truth": "data/derived/experiments/d42_b2_score_truth_v3/2024.parquet",
+   "sha256": "04264ca422ba4639be8b82fb750a358ff52d8876ccf2ef36f4dbf5354cab4f1e",
+   "summary_games": [
+    "401585363"
+   ],
+   "source_sha256": {
+    "data/raw/hoopr/play_by_play_2024.parquet": "bda57bcb4f8aae57428979ac4a0f766f67c52c770d85b0e7fcf7237a333704b0",
+    "data/derived/history/2024/player_periods.csv.gz": "7f1bfaab40aceab115081cd2ae6db4b6e8694f69cc1f2c4585d2d2f10ee1bb90",
+    "data/raw/b2_score_summaries_20261124_v1/401585363.json.gz": "0c5cdaefc0c1385fbafef41d27d218cad6aef2955e534b2876e71ce1e18e8aa9"
+   }
+  },
+  {
+   "season": 2025,
+   "games": 1230,
+   "regulation_period_end_differences": [
+    {
+     "game": "401704638",
+     "side": "away",
+     "derived": 139,
+     "original_scoreboard": 140
+    },
+    {
+     "game": "401704805",
+     "side": "away",
+     "derived": 112,
+     "original_scoreboard": 110
+    }
+   ],
+   "truth": "data/derived/experiments/d42_b2_score_truth_v3/2025.parquet",
+   "sha256": "b6d8e020eebdaeb112bf684b82b95ce608b26e3d3ee67ef5da40f885016dfc82",
+   "summary_games": [],
+   "source_sha256": {
+    "data/raw/hoopr/play_by_play_2025.parquet": "71d7d02671268f793f13a13d1a8a271cba1241cd9ba28c3a363a3f16ad56acc7",
+    "data/derived/history/2025/player_periods.csv.gz": "8f513a5802292f4427f80022f4e57ae718a50ae880ef07f8ad2f9c06beebaf63"
+   }
+  },
+  {
+   "season": 2026,
+   "games": 1230,
+   "regulation_period_end_differences": [
+    {
+     "game": "401810087",
+     "side": "home",
+     "derived": 116,
+     "original_scoreboard": 112
+    },
+    {
+     "game": "401810087",
+     "side": "away",
+     "derived": 127,
+     "original_scoreboard": 123
+    },
+    {
+     "game": "401810102",
+     "side": "away",
+     "derived": 120,
+     "original_scoreboard": 126
+    },
+    {
+     "game": "401810150",
+     "side": "away",
+     "derived": 99,
+     "original_scoreboard": 101
+    },
+    {
+     "game": "401810372",
+     "side": "away",
+     "derived": 91,
+     "original_scoreboard": 93
+    },
+    {
+     "game": "401810469",
+     "side": "home",
+     "derived": null,
+     "original_scoreboard": 138
+    },
+    {
+     "game": "401810469",
+     "side": "away",
+     "derived": null,
+     "original_scoreboard": 110
+    },
+    {
+     "game": "401810547",
+     "side": "away",
+     "derived": 123,
+     "original_scoreboard": 125
+    },
+    {
+     "game": "401810560",
+     "side": "away",
+     "derived": 82,
+     "original_scoreboard": 91
+    },
+    {
+     "game": "401810577",
+     "side": "away",
+     "derived": 113,
+     "original_scoreboard": 115
+    },
+    {
+     "game": "401810633",
+     "side": "away",
+     "derived": 98,
+     "original_scoreboard": 105
+    },
+    {
+     "game": "401810760",
+     "side": "away",
+     "derived": 101,
+     "original_scoreboard": 105
+    }
+   ],
+   "truth": "data/derived/experiments/d42_b2_score_truth_v3/2026.parquet",
+   "sha256": "454e1590aed7b0a9fc0424e48e5dc5d03fb9356d6de5b72081d83eee7dad9793",
+   "summary_games": [
+    "401810102",
+    "401810469"
+   ],
+   "source_sha256": {
+    "data/raw/hoopr/play_by_play_2026.parquet": "f7051c5c0c5b605419fcc0e0c13dd90df7803f96dab290554c1ef737433a98b2",
+    "data/derived/history/2026/player_periods.csv.gz": "ef35bb5c33c46e6a194cea30075d9974ead5d44be96c6074b60f6dac49e69c28",
+    "data/raw/b2_score_summaries_20261124_v1/401810102.json.gz": "20808a1e68374f8efaddaa026a1acaee820f3fc657c3e52f0e6442c0daff7666",
+    "data/raw/b2_score_summaries_20261124_v1/401810469.json.gz": "6eddcc037ff50d6e273614364f2763493044ad8d28bd0098845b7f38cd2f5e89"
+   }
+  }
+ ],
+ "regular_games": 4920,
+ "derived_period_differences": 30,
+ "method": "Order original scoreboards by period/clock/sequence (late-logged earlier plays cannot overwrite period ends). Q4/final checked against final box totals. Six incomplete feeds use retained ESPN summaries; a verified four-period final equals regulation. No clamping, imputation or outcome-driven exclusions.",
+ "setup_repair": "Initial audit sorted by feed sequence alone; incomplete V1 namespace/source retained. No candidate results were opened.",
+ "old_source_preserved": true,
+ "workers": 4,
+ "inner_threads": 1,
+ "protected_scoring": false,
+ "source_sha256": "53d29c69e500beaa7638b8c72854c5f6921df2259fcda3f700622b3098d1c94d"
+}

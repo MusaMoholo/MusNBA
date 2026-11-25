@@ -1,0 +1,73 @@
+{
+ "kind": "B2 fixed16-origin five-arm10k queue; held-out scoring unopened",
+ "origins": [
+  "2022-11-20",
+  "2022-12-25",
+  "2023-02-01",
+  "2023-03-10",
+  "2023-11-20",
+  "2023-12-25",
+  "2024-02-01",
+  "2024-03-10",
+  "2024-11-20",
+  "2024-12-25",
+  "2025-02-01",
+  "2025-03-10",
+  "2025-11-20",
+  "2025-12-25",
+  "2026-02-01",
+  "2026-03-10"
+ ],
+ "arms": [
+  "reference",
+  "persistence",
+  "carry8",
+  "opponent8",
+  "opponent40"
+ ],
+ "worlds": 10000,
+ "chunk_worlds": 1000,
+ "source_sha256": {
+  "analysis/experiments/20261124_b2_frozen_recipe_v1.json": "a8f5bb1ffa505b8d2f72bca661a9b864a14b53015fe9c3ee89dd4d728ac2ad56",
+  "data/derived/experiments/d42_b2_strength_v1/starts.json": "82058089c0ed382003b1e03f4d39865a9b71df1b69aa6778394cb7f3f62fb582",
+  "analysis/experiments/20261124_b2_prior_fits_v1.json": "51c6a7712d1ef70b6c2e249d36572b107196e0ee358345ac993b68f836aeab06",
+  "analysis/experiments/20261124_b2_calendar_audit_v1.json": "37a4e3a89dbcdfd2ba43f509f4b2edbe091ea5a515063815b18aaeaf813b456a",
+  "data/derived/teams.json": "130aa5358d49b944c2b5bee7e9a163f1e53285e93dae57262f039ca1636b7ecc",
+  "analysis/b2_runner.py": "55ab54221d5483ac570ab9c195930de04cedf3310d094878f89bfb688415be43",
+  "analysis/b2_paths.py": "17d45698b3976b7bbc06f2d4f74a66785cfd0459e3c413c55fe7b1fea6e9f343",
+  "analysis/b2_prepare.py": "175bdcc486ca1b193368e65b1e381af16336acd8f4921269089dfcc85917a008",
+  "analysis/b2_calendar_audit.py": "b17783550a63b37397a986abb922a45e4be1806bb56e7906a5170f68fc25fc74",
+  "scripts/competitions.py": "1eca9522859cbf55b10cc5a9f0441cb8083d347b0ff62099002be44a240fc0f7",
+  "scripts/competition_rules.py": "5d2827521f88fcc71af7387773aaaf4a75c92d396ca040518cb1703b4368e656",
+  "scripts/pathway.py": "97afe9b90396fb7f27f999f38e3f192dcd13cd928fc8f6fbce41825890d92857",
+  "scripts/projection.py": "5dc538ac2c7614cfdeb56da2b27a1218bec4e6ceffce16dc929d5f6accf2e878",
+  "data/derived/experiments/d42_b2_calendar_audit_v1/2023.parquet": "21d257ce464976c66ba9164095d01315bfadbbacd5c2010bd193a96e9352091b",
+  "data/derived/history/2023/player_periods.csv.gz": "d549a82d8704e95218379b945bef5ddb1bf4fa59db0e0b7e479e37f408281342",
+  "data/derived/experiments/d42_b2_calendar_audit_v1/2024.parquet": "c82dbf38ee1dd82f426fb14f8eb4af9f918533c2882def3b75670bca216bec6d",
+  "data/derived/history/2024/player_periods.csv.gz": "7f1bfaab40aceab115081cd2ae6db4b6e8694f69cc1f2c4585d2d2f10ee1bb90",
+  "data/derived/experiments/d42_b2_calendar_audit_v1/2025.parquet": "3336a11c13fa7a2b787801c60b6d5b659e81ce9b95c70e8a9b9e0f487fddffb4",
+  "data/derived/history/2025/player_periods.csv.gz": "8f513a5802292f4427f80022f4e57ae718a50ae880ef07f8ad2f9c06beebaf63",
+  "data/derived/experiments/d42_b2_calendar_audit_v1/2026.parquet": "d0909fec75876ad0b8f2a1952215652488be1c02b2212dfefc7b4131d460834b",
+  "data/derived/history/2026/player_periods.csv.gz": "ef35bb5c33c46e6a194cea30075d9974ead5d44be96c6074b60f6dac49e69c28"
+ },
+ "independent_origins": [
+  "2025-11-20",
+  "2025-12-25",
+  "2026-02-01",
+  "2026-03-10"
+ ],
+ "development_origins": [
+  "2022-11-20",
+  "2022-12-25",
+  "2023-02-01",
+  "2023-03-10",
+  "2023-11-20",
+  "2023-12-25",
+  "2024-02-01",
+  "2024-03-10",
+  "2024-11-20",
+  "2024-12-25",
+  "2025-02-01",
+  "2025-03-10"
+ ]
+}

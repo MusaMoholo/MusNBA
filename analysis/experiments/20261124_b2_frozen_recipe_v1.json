@@ -1,0 +1,103 @@
+{
+ "kind": "B2 prospectively frozen starting-strength/memory study; no candidate results opened",
+ "frozen_at": "2026-11-24T16:00:45.808157+00:00",
+ "variants": {
+  "carry8": {
+   "starting": "carry",
+   "n_cap": 20,
+   "scale": 1.0
+  },
+  "opponent8": {
+   "starting": "opponent",
+   "n_cap": 20,
+   "scale": 1.0
+  },
+  "opponent40": {
+   "starting": "opponent",
+   "n_cap": 40,
+   "scale": 1.0
+  }
+ },
+ "reference": {
+  "id": "team-pathway-v1",
+  "kind": "team-pathway",
+  "label": "Team pathway v1 — per-world offensive and defensive ratings, updated after every simulated game; spread calibrated walk-forward on 2022-26 (M12 first cut: slightly wide in November)",
+  "K": 8,
+  "sigma": 11.0,
+  "scale": 1.0,
+  "start_scale": 0.4,
+  "n_cap": 20,
+  "home_court": 2.0,
+  "team_sd": 11.25,
+  "team_rho": 0.35,
+  "ot_share": 0.10416666666666667
+ },
+ "persistence_control": {
+  "starting": "reference",
+  "scale": 0.0,
+  "n_cap": 20
+ },
+ "fixed_auxiliary": {
+  "prior_equivalent_games": 8,
+  "offseason_retention": 0.5,
+  "ridge": 8,
+  "home_court": 2,
+  "posterior_scale_unchanged": 0.4,
+  "sigma_unchanged": 11,
+  "early2022": "Common league-centred zero offsets; no2021-22 data is invented."
+ },
+ "policy": {
+  "version": "pathway-b2-v1-20261124",
+  "primary": "mean final-team-wins CRPS across all16 origins; each season/origin/team equal",
+  "candidates": 3,
+  "development": "First12 origins/seasons ending2023-25; leave-one-season-out selection within these three only.",
+  "independent": "All four2025-26 origins withheld until unchanged nominee selected on development. Other candidates cannot replace a failed nominee.",
+  "nominee": "Minimum development mean CRPS among candidates with mean gain>=.05 and no date mean CRPS harm>.10; deterministic lexical ties. No development survivor means retain v1.",
+  "uncertainty": "10000 paired complete-season block resamples, seed20261124; retain all four dates and30 teams in each season block. Four seasons are sparse/dependent evidence, not independent960 team-starts.",
+  "multiplicity": "All16 inference uses simultaneous Bonferroni95% intervals for three frozen candidates (quantiles .0083333/.9916667). No switched primary.",
+  "acceptance": "Unchanged nominee: all16 mean CRPS gain>=.05 and familywise lower>0; independent2025-26 mean gain>0; no MM-DD mean CRPS harm>.10, no coverage80 shortfall increase>.03, dispersion-distance-to1 not worse by>.10. Report persistence and team-points CRPS/bias; no pooled cancellation hides dates.",
+  "per_origin_uncertainty": "Paired canonical1k-world chunk bootstrap describes Monte Carlo precision only; generalisation intervals use whole historical seasons. No team or world iid claim.",
+  "promotion_limit": "Only conditional regular-season calibration from reconstructed schedules; no historical title/postseason certification. Unknown schedule revision timestamps, neutral metadata and absent injury history remain explicit.",
+  "release": "No new production parameter until all16/source/accounting/cutoff/exact-mixture/runtime gates and B3 integration pass. Failure closes this fixed study, retains pathway-v1 and records unmet objectives."
+ },
+ "origins": [
+  "2022-11-20",
+  "2022-12-25",
+  "2023-02-01",
+  "2023-03-10",
+  "2023-11-20",
+  "2023-12-25",
+  "2024-02-01",
+  "2024-03-10",
+  "2024-11-20",
+  "2024-12-25",
+  "2025-02-01",
+  "2025-03-10",
+  "2025-11-20",
+  "2025-12-25",
+  "2026-02-01",
+  "2026-03-10"
+ ],
+ "worlds": 10000,
+ "chunk_worlds": 1000,
+ "historical_calendar": "20261124_b2_calendar_audit_v1.json; unknown November Cup matchups drawn inside each world; Cup finals excluded from regular counts.",
+ "absence": "No supported dated future injury process; no hazard in every arm.",
+ "near_term": "No original possession forecasts retained at these historical origins (D40). Do not backfill/fabricate Expected. Historical paths use no engine atoms; exact live Expected coupling remains independently checked on current saved branches, without outcome scoring.",
+ "inference": "Season ratings use only sources/fits before each origin. Cross-validation selects frozen hyperparameters, never an origin-specific future input.",
+ "format_sources": [
+  "https://www.nba.com/news/2023-in-season-tournament-debut-official-release",
+  "https://www.nba.com/grizzlies/emiratesnbacup",
+  "https://cdn-uat.nba.com/news/board-of-governors-in-game-flopping-penalty-permanent",
+  "https://www.nba.com/news/2025-nba-cup-group-draw-results"
+ ],
+ "protected_scoring": false,
+ "production_changed": false,
+ "source_sha256": {
+  "analysis/b2_prepare.py": "175bdcc486ca1b193368e65b1e381af16336acd8f4921269089dfcc85917a008",
+  "analysis/b2_calendar_audit.py": "b17783550a63b37397a986abb922a45e4be1806bb56e7906a5170f68fc25fc74",
+  "analysis/experiments/20261124_b2_calendar_audit_v1.json": "37a4e3a89dbcdfd2ba43f509f4b2edbe091ea5a515063815b18aaeaf813b456a",
+  "scripts/pathway.py": "97afe9b90396fb7f27f999f38e3f192dcd13cd928fc8f6fbce41825890d92857",
+  "scripts/competitions.py": "1eca9522859cbf55b10cc5a9f0441cb8083d347b0ff62099002be44a240fc0f7",
+  "scripts/competition_rules.py": "5d2827521f88fcc71af7387773aaaf4a75c92d396ca040518cb1703b4368e656"
+ }
+}

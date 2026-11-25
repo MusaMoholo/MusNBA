@@ -1,10 +1,10 @@
-# Handoff — B1 complete; next B2 at0%
+# Handoff — B2 research rejected; delivery active
 
-Updated24 November2026. Main checkpoint: `git log -1`; B1 research/delivery checkpoint precedes B2.
+Updated25 November2026. Main checkpoint: `git log -1`; B1 research/delivery checkpoint precedes B2.
 
 ## Current state
 
-U25/C/D42A100%; D42B30% (B1=100%,B2=B3=0%); original programme74%. No protected job launched.
+U25/C/D42A100%; D42B60% (B1=100%,B2=100%,B3=0%); legacy S-item queue retired by owner. No protected job launched.
 Accepted engine-v1.3-r3/D29/Rule3/report-bands-v1 and pathway-v1 parameters remain. C2/S06 fixed attempts closed without promotion;
 no qualifier/rescue/r3 protected rescore. MODEL owns methods/limits; PLAN owns original ledger.
 
@@ -16,15 +16,20 @@ Full online nightly999.7s/3600s, source-exact, required rebuild/fresh50k live wo
 Log`/tmp/musnba_b1_nightly_v1.log`; live namespace`data/derived/live_runs/2026-11-24-1795534215245819000`.
 Smoke112/112; deliberate fault exits1;51 targeted tests,2664 rate checks, phone44/44 and laptop48/48 published-PWA offline checks pass.
 Inspected1440/960/390 in both themes. Shell unchanged/data-free cachec9886c91a5e9bc0b926a (U25 deployment); no separate website/CI workflows.
-Both devices require manual iCloud import; real-device acceptance remains unverified. No jobs remain; owner8766/review8767 stay running.
-U25/C history remains in their completion JSONs/Git. No automatic S11/S12/S14 credit.
+Both devices require manual iCloud import; real-device acceptance remains unverified. B1 jobs ended; owner8766/review8767 stay running.
+U25/C history remains in completion JSONs/Git. Plan only chunks; unfinished S items are retired, not completed.
 
-## Active chunk — D42 B30%; next B2 at0%
+## Active chunk — D42 B60%; B3=0%
 
-First open action: B2 historical calendar/Cup-final and November2022 cold-start audit, before fitting/selecting any candidate.
+B2 complete: `20261125_b2_completion_v1.json` owns all research/release receipts and the fully specified B3 successor.
+No nominee qualified; retain pathway-v1. Full online nightly997.5s, source-exact; fresh31-chunk season exact,20 targeted tests,
+2664 rate checks, phone44/44/laptop48/48 offline checks; smoke/fault pass. No app/model activation.
+Log`/tmp/musnba_b2_nightly_v1.log`; no heavy jobs remain. First action after B2 commit/push: B3 read-only rotation capture and stored evidence.
+B3 source code: scripts/world_detail.py, lineup_forecast.py, live_forecast.py; app: scripts/webapp/explore.mjs.
+Keep3 old canonical chunks for bit-exact parity. Preserve snapshots/views/bundles/shell before replacement.
 Headliners: materially closer real-life team scores through better possessions; reliable season paths with visible scoring/rotation evidence.
 Canonical bounded specification: `20261124_chunk_b_successor_v4.json`.
-Weights B1=30%,B2=30%,B3=40%; overall=.30B1+.30B2+.40B3; current100/0/0 gives30%.
+Weights B1=30%,B2=30%,B3=40%; overall=.30B1+.30B2+.40B3; current100/100/0 gives60%.
 B1 depends on accepted C/A3/U25, existing soft-assignment/zone history, dated evidence and frozen policy. B2 depends on correct historical calendars,
 prior-only auxiliary fits,16 origins and exact near-term mixtures. B3 follows checkpointed B1/B2 decisions and stored rotation capture.
 Rotation probabilities must use all retained worlds with exact weights, never the five deliberately selected replay examples; missing capture stays explicit.

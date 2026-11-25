@@ -37,7 +37,7 @@ Planning-only requests stay planning-only; honour explicit stops. Read-only/docs
 ## Scope and progress
 
 Before executing a multi-step chunk, HANDOFF must have dependencies, weights totalling 100%, ten concrete 10% rungs/module,
-acceptance/fallback, first commands and final nightly. Progress is the fixed weighted sum. Keep original programme and D42 ledgers separate.
+acceptance/fallback, first commands and final nightly. Progress is the fixed weighted sum. Use chunk ledgers only; the owner retired the unfinished S-item queue on25 November2026.
 Print overall/active-module bars at every new 10% module or 5% overall boundary; report long-job counts at each 10%.
 Estimate time only from measured logs. Launched work earns no acceptance credit. Construct a fully specified 0% successor at closure.
 
@@ -61,7 +61,7 @@ Estimate time only from measured logs. Launched work earns no acceptance credit.
 
 ## Every checkpoint
 
-Complete each S task/D42 module with its own checkpoint before starting the next. Session stops also checkpoint resumable state.
+Complete each chunk module with its own checkpoint before starting the next. Session stops also checkpoint resumable state.
 
 1. Review all five core docs. Update affected state/scope/design/evidence/behaviour/commands before committing; avoid repeated review narratives.
    HANDOFF owns exact running command/session/log/namespace, resume rules, blockers and next actions.

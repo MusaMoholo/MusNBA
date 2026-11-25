@@ -1,0 +1,194 @@
+{
+ "kind": "B2 completed fixed research rejection and release checkpoint",
+ "B1_percent": 100,
+ "B2_percent": 100,
+ "B3_percent": 0,
+ "chunk_B_percent": 60,
+ "decision": "retain_pathway_v1",
+ "production_model_changed": false,
+ "team_score_objective_met": false,
+ "protected_scoring": false,
+ "legacy_S_queue": "Retired by owner25 November2026; not completed, no continuing S tasks.",
+ "rungs": {
+  "10": "Reconciled16 calendars and three Cup finals",
+  "20": "Frozen80 strictly prior starts/injection checks",
+  "30": "LOSO/cold starts screened",
+  "40": "Three memory/start candidates versus accepted and persistence",
+  "50": "No dated future-absence support; retain no hazard",
+  "60": "Historical Expected missing under D40; live exact mixtures independently accounted, no invented backfill",
+  "70": "All16 origins/five arms/10k;800 canonical chunks",
+  "80": "Origin/date/full-season uncertainty and points/wins/persistence measured",
+  "90": "No development nominee; retained pathway-v1 without rescue",
+  "100": "Full nightly/fresh season/smoke/fault/accounting/offline imports; checkpoint"
+ },
+ "study": {
+  "origins": 16,
+  "season_paths": 800000,
+  "candidate_variants": 3,
+  "best_all16_gain": 0.014357423416666654,
+  "familywise_ci95": [
+   -0.023043794124999947,
+   0.049676952958333256
+  ],
+  "heldout_gain": -0.030725058833333263,
+  "limit": "Conditional reconstructed regular-season calendars; four adjacent seasons, no title certification/historical Expected/injury hazard."
+ },
+ "setup_repairs": "Original reference wiring found score-order/period source defects before candidate outcomes; failed v1/v2 source namespaces retained. Six authorized original ESPN summaries completed truth. No accuracy-driven retune.",
+ "targeted_tests": 20,
+ "nightly": {
+  "kind": "Module checkpoint full online nightly measured result",
+  "ended": "2026-11-24T16:34:49.449038+00:00",
+  "exit_code": 0,
+  "seconds": 997.5471837500008,
+  "limit_seconds": 3600,
+  "within_limit": true,
+  "source_exact": true,
+  "changed_sources": [],
+  "start_sha256": "672735f87c0022e19bb8a6cf6a93fd77a1f103b139bf51fe81680cc5687be533"
+ },
+ "fresh_season": {
+  "kind": "Fresh full accepted season generation, empty explicit namespace; no cache reuse or scoring",
+  "worlds": 30001,
+  "probability_mass": 40000,
+  "fresh_chunks": 31,
+  "reused_chunks": 0,
+  "jobs": 9,
+  "inner_threads": 1,
+  "seconds": 14.561494125000081,
+  "namespace": "data/derived/experiments/20261124_b2_fresh_season_v1",
+  "identity": "e7bbf17b56187569b60f9873d4d2009ed62c0a96addb7dabb4e01df3a4c3732c",
+  "every_published_value_exact": true,
+  "input_sha256": {
+   "/Users/moholom/Repos/Sports/Basketball/data/snapshots/2026-11-24/season.json": "77e3c2eff2708aad6e3a74fcc420ab1154c6f2899d37c3bbb1f81dfb99af345f",
+   "/Users/moholom/Repos/Sports/Basketball/data/snapshots/2026-11-24/stats.json": "ad732d0a1b2a28f367bae5d2095f94141b93702293cae930711c7a4d41ec10df",
+   "/Users/moholom/Repos/Sports/Basketball/data/snapshots/2026-11-24/season_engine_worlds.npz": "1917eceed781b4a47d4c833ebe29d6b830601e0084245001a328a4c3d333057c"
+  },
+  "protected_scoring": false,
+  "result": "pass"
+ },
+ "accounting": {
+  "kind": "fresh C5 event/zone/box/minute/weighted-rate/path accounting",
+  "day": "2026-11-24",
+  "counts": {
+   "games": 3,
+   "examples": 15,
+   "segments": 3720,
+   "legal_fives": 14880,
+   "worlds": 50000,
+   "cases": 7,
+   "max_minute_error": 3.552713678800501e-14,
+   "max_weighted_zone_error": 0.0,
+   "max_replay_gzip_bytes": 94917
+  },
+  "rate_distributions": 2664,
+  "rate_reports": [
+   {
+    "game": "401909314",
+    "cases_including_game_view": 4,
+    "rate_distributions_checked": 1107,
+    "status": "pass"
+   },
+   {
+    "game": "401909315",
+    "cases_including_game_view": 1,
+    "rate_distributions_checked": 306,
+    "status": "pass"
+   },
+   {
+    "game": "401909316",
+    "cases_including_game_view": 4,
+    "rate_distributions_checked": 1251,
+    "status": "pass"
+   }
+  ],
+  "season_worlds": 30001,
+  "season_probability_mass": 40000,
+  "competition_schema": "nba-competitions-2026-v1",
+  "competition_identity": "e7bbf17b56187569b60f9873d4d2009ed62c0a96addb7dabb4e01df3a4c3732c",
+  "season_sha256": "77e3c2eff2708aad6e3a74fcc420ab1154c6f2899d37c3bbb1f81dfb99af345f",
+  "capture_manifest_sha256": "492e58feabf53f4a4e77a73c8a6ce828356578ec9b8b036ffb8041939ec5efc0",
+  "result": "pass",
+  "protected_scoring": false
+ },
+ "verification": {
+  "kind": "Real smoke and deliberate in-memory fault exit evidence",
+  "checks": [
+   {
+    "name": "smoke",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "seconds": 74.06739104200005,
+    "summary": "112/112 checks passed",
+    "log": "/tmp/musnba_20261124_b2_smoke_v1.log",
+    "sha256": "f104bc58c339de8bb7fa34fda64537d6c514582e0d3f62d1aa25fa70ef54fd0f"
+   },
+   {
+    "name": "fault",
+    "exit_code": 1,
+    "expected_exit_code": 1,
+    "seconds": 71.28081925000015,
+    "summary": "91/112 checks passed",
+    "log": "/tmp/musnba_20261124_b2_fault_v1.log",
+    "sha256": "7b58d291dfec437f6bb5e18f9cee996a9d7406e735bba1982859e87e0ef1b619"
+   }
+  ],
+  "status": "pass"
+ },
+ "pwa": {
+  "phone": {
+   "checks": 44,
+   "log": "/tmp/musnba_b2_phone_v1.log",
+   "sha256": "b307698c07d6e1322630ce252de0915d4fc49f23fa5085b63bbf9c41cf5d2ebd",
+   "offline": true,
+   "legacy": true
+  },
+  "laptop": {
+   "checks": 48,
+   "log": "/tmp/musnba_b2_laptop_v1.log",
+   "sha256": "71c7e5850497232cb29dfddd066600e2a6c14115a5018039222fc3d067d839e3",
+   "offline": true,
+   "legacy": true
+  }
+ },
+ "app": "No app asset/model change; existing published U25 shell. Both devices import manually; real-device acceptance unverified.",
+ "successor": {
+  "module": "B3",
+  "percent": 0,
+  "weight": 40,
+  "plan": "20261124_chunk_b_successor_v4.json",
+  "dependencies": [
+   "B1/B2 committed rejected decisions",
+   "accepted r3/pathway-v1",
+   "all-world read-only rotation capture"
+  ],
+  "scope": "No qualified model: close inapplicable combined/independent/stress/protected gates explicitly. Deliver exact-weighted all-world regulation rotation map, stored score-study evidence, responsive PWA, fresh full online nightly, accounting, successor and checkpoint.",
+  "capture": "48 regulation minute midpoints; pre-action five and repaired five in post-action gap. No RNG; all worlds, exact weights, five/team/time. Legacy missing explicit.",
+  "first_commands": [
+   "rg -n \"WorldDetail|store_zones\" scripts/world_detail.py scripts/lineup_forecast.py scripts/live_forecast.py",
+   "rg -n \"exploreView|CAPABILITIES\" scripts/webapp/explore.mjs scripts/webapp/pwa-storage.mjs"
+  ],
+  "acceptance": "Old raw arrays identical on3 canonical1k chunks; exact weighted maps sumfive/team/time, case/Expected source bound; actual/stored/inferred distinctions; both imports/offline/legacy;1440/960/390 both themes/screenshots; published data-free shell; fresh online nightly<=3600s and independent fresh season/accounting; smoke/fault/docs; commit/push.",
+  "fallback": "Retain accepted models, no accuracy credit for visibility. Repair app/capture failures before closure.",
+  "final_nightly": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u scripts/nightly_musnba.py --engine 10000 --sims 10000"
+ },
+ "reports_sha256": {
+  "20261124_b2_prior_fits_v1.json": "51c6a7712d1ef70b6c2e249d36572b107196e0ee358345ac993b68f836aeab06",
+  "20261124_b2_screen_v2.json": "c2b975c6f2e7f6bf998e5c0d33448d9c7195971973057259bbd92b665fea8b35",
+  "20261124_b2_smoke_fault_v1.json": "1b5d1b9e1d04bf43ff3471b5505c01c1aef5b93442cb8ab3c00c6552632ecb48",
+  "20261124_b2_frozen_recipe_v1.json": "a8f5bb1ffa505b8d2f72bca661a9b864a14b53015fe9c3ee89dd4d728ac2ad56",
+  "20261124_b2_fresh_capture_v1.json": "492e58feabf53f4a4e77a73c8a6ce828356578ec9b8b036ffb8041939ec5efc0",
+  "20261124_b2_calendar_audit_v1.json": "37a4e3a89dbcdfd2ba43f509f4b2edbe091ea5a515063815b18aaeaf813b456a",
+  "20261124_b2_runtime_v2.json": "449624f8be3b7462371376b83a71a4477730da9fdb9471fc126d39d0c6e962a8",
+  "20261124_b2_selection_v1.json": "5c98324930c3ce1545d1ef8bf6c7bf01b294b51fe4094dc0c80454d71a576fa6",
+  "20261124_b2_archive_v1.json": "c754ddf691d3346f69597b2cb7ebf1175988d4d46a5a60f530cb5dbe559e8361",
+  "20261124_b2_support_audit_v1.json": "f89fabf49f0e97458aefd47c68b9b71b72e7e49e0dcde941b4c3d3fe28056b0f",
+  "20261124_b2_runtime_v1.json": "0e79158831fb8d010dab78f18d7eb4b89bddd5e91aba7fbb09618193a6de6d05",
+  "20261124_b2_nightly_result_v1.json": "3e8feeb22ed9da309bfc4b68dbbe08bf64440210bc5ff0493ca0a4d34b463869",
+  "20261124_b2_decision_v1.json": "0436525a3d49d37707cb3e9d181851342c7727f03dd51df7c868ad56ce199b6d",
+  "20261124_b2_score_truth_v3.json": "e544dfe861f71f1629cc368820471775e75c471da1ba5780e2306bada1d123eb",
+  "20261124_b2_delivery_audit_v1.json": "a1405fcaacc20e3a47398cb3d9abfa20ac647b982ddbf712b5f963e4399e3caf",
+  "20261124_b2_wiring_v2.json": "990bd25f088bc0bc88d2258379c9608333b561a41af26621652f06f740995710",
+  "20261124_b2_nightly_start_v1.json": "672735f87c0022e19bb8a6cf6a93fd77a1f103b139bf51fe81680cc5687be533",
+  "20261124_b2_fresh_season_v1.json": "0a8d69b31b6150b3ce8776264d3e5719ef899a689d4c53b88ef8b2856844ef2d"
+ }
+}
