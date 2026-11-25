@@ -88,7 +88,9 @@ Browser tests should use bounded calls, explicit document/data readiness and iso
 C01's development comparison is frozen in [the versioned contract](analysis/c01_contract_v1.json). It specifies shared schemas,
 baseline recipes, scores, contexts, support, numerical priority/harm signals and stopping. These are research-ranking rules, not
 production promotion criteria. The new deterministic scorer has a separate pairwise arithmetic reference; synthetic/fault passes
-establish logic only. Historical source timing and baseline age differences remain explicit limitations.
+establish logic only. Common benchmark scores use the same actual-participant keys and native units, pairing both sides/all
+players within each game and reporting calendar-block sensitivity. Shared incumbent minutes do not validate independent minutes
+prediction; the older baseline fit ceiling prevents attributing every difference to model architecture. Source timing remains limited.
 
 Start with a common schema and exact population/period/availability semantics for incumbent and baselines. Score player MIN/PTS/REB/
 AST/3PM distributions by prior role/support and team points/total/margin/wins together. Report CRPS or an appropriate proper probability

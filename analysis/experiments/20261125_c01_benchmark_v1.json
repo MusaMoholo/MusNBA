@@ -1,0 +1,3361 @@
+{
+  "kind": "C01 common development benchmark, not promotion",
+  "summary": {
+    "models": {
+      "incumbent": {
+        "game/margin": {
+          "games": 200,
+          "rows": 200,
+          "pooled": {
+            "crps": 8.38955850500003,
+            "absolute_error": 11.580385000000001,
+            "bias": -0.276375000000001,
+            "covered50": 0.52,
+            "covered80": 0.8,
+            "covered95": 0.945,
+            "width50": 19.025,
+            "width80": 36.455,
+            "width95": 57.58,
+            "tail_low": 0.07,
+            "tail_high": 0.045
+          },
+          "equal_game": {
+            "crps": 8.38955850500003,
+            "absolute_error": 11.580385,
+            "bias": -0.27637500000000126,
+            "covered50": 0.52,
+            "covered80": 0.8,
+            "covered95": 0.945,
+            "width50": 19.025,
+            "width80": 36.455,
+            "width95": 57.58,
+            "tail_low": 0.07,
+            "tail_high": 0.045
+          },
+          "simulation_half_change": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 0.011952180000000036,
+            "ci95_game": [
+              -0.07076899649999989,
+              0.09266709849999978
+            ],
+            "ci95_calendar_week": [
+              -0.08663357551222733,
+              0.10837404057262588
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "game/total": {
+          "games": 200,
+          "rows": 200,
+          "pooled": {
+            "crps": 9.885161265000043,
+            "absolute_error": 14.294735000000001,
+            "bias": 2.1556650000000155,
+            "covered50": 0.475,
+            "covered80": 0.78,
+            "covered95": 0.96,
+            "width50": 22.875,
+            "width80": 43.715,
+            "width95": 67.67,
+            "tail_low": 0.06,
+            "tail_high": 0.03
+          },
+          "equal_game": {
+            "crps": 9.885161265000043,
+            "absolute_error": 14.294735000000003,
+            "bias": 2.1556650000000155,
+            "covered50": 0.475,
+            "covered80": 0.78,
+            "covered95": 0.96,
+            "width50": 22.875,
+            "width80": 43.715,
+            "width95": 67.67,
+            "tail_low": 0.06,
+            "tail_high": 0.03
+          },
+          "simulation_half_change": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": -0.012724859999999963,
+            "ci95_game": [
+              -0.10962217250000005,
+              0.0844521150000001
+            ],
+            "ci95_calendar_week": [
+              -0.1016760481353344,
+              0.07506257843137243
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "player/ast": {
+          "games": 200,
+          "rows": 4292,
+          "pooled": {
+            "crps": 0.9197721381640306,
+            "absolute_error": 1.342481593662628,
+            "bias": -0.02073648648648597,
+            "covered50": 0.6773066169617894,
+            "covered80": 0.8918918918918919,
+            "covered95": 0.9701770736253494,
+            "width50": 2.0510251630941285,
+            "width80": 3.8928238583411,
+            "width95": 5.769338303821063,
+            "tail_low": 0.010717614165890028,
+            "tail_high": 0.04636533084808947
+          },
+          "equal_game": {
+            "crps": 0.930957739484911,
+            "absolute_error": 1.35764444452129,
+            "bias": -0.021751923199586746,
+            "covered50": 0.6756172257372433,
+            "covered80": 0.8905942716299416,
+            "covered95": 0.9694750196555474,
+            "width50": 2.074961463502126,
+            "width80": 3.9341032954907997,
+            "width95": 5.824616169537235,
+            "tail_low": 0.011099116777515619,
+            "tail_high": 0.0472919049424414
+          },
+          "simulation_half_change": {
+            "games": 200,
+            "rows": 4292,
+            "supported_for_overall_ranking": true,
+            "change": -0.00021490121155638472,
+            "ci95_game": [
+              -0.002462270980256091,
+              0.0020048080709120617
+            ],
+            "ci95_calendar_week": [
+              -0.002888291516154676,
+              0.0021932951008860734
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "player/fg3m": {
+          "games": 200,
+          "rows": 4292,
+          "pooled": {
+            "crps": 0.587829248369062,
+            "absolute_error": 0.8872218080149115,
+            "bias": 0.02810810810810839,
+            "covered50": 0.7777260018639329,
+            "covered80": 0.9233457595526561,
+            "covered95": 0.978331780055918,
+            "width50": 1.369291705498602,
+            "width80": 2.534249767008388,
+            "width95": 3.739049394221808,
+            "tail_low": 0.0030288909599254427,
+            "tail_high": 0.03564771668219944
+          },
+          "equal_game": {
+            "crps": 0.5943771624254914,
+            "absolute_error": 0.8958140960231391,
+            "bias": 0.02709350137489214,
+            "covered50": 0.7757270990805949,
+            "covered80": 0.9230612098530524,
+            "covered95": 0.9783287223363234,
+            "width50": 1.3857428127703297,
+            "width80": 2.563960331453616,
+            "width95": 3.77461234526661,
+            "tail_low": 0.0033130198685118596,
+            "tail_high": 0.035918198621790666
+          },
+          "simulation_half_change": {
+            "games": 200,
+            "rows": 4292,
+            "supported_for_overall_ranking": true,
+            "change": -0.00029652749301025354,
+            "ci95_game": [
+              -0.0018803036001623608,
+              0.001308555580717135
+            ],
+            "ci95_calendar_week": [
+              -0.0017369506989022053,
+              0.0011044801151614192
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "player/min": {
+          "games": 200,
+          "rows": 4292,
+          "pooled": {
+            "crps": 3.588132124135859,
+            "absolute_error": 4.870980834495813,
+            "bias": -0.02272250698974818,
+            "covered50": 0.49976700838769805,
+            "covered80": 0.7833178005591799,
+            "covered95": 0.9144920782851818,
+            "width50": 7.639550459284805,
+            "width80": 14.428973505307706,
+            "width95": 21.677704751948127,
+            "tail_low": 0.06500465983224604,
+            "tail_high": 0.06547064305684995
+          },
+          "equal_game": {
+            "crps": 3.6083107378027437,
+            "absolute_error": 4.905171844850188,
+            "bias": -0.028996932617879077,
+            "covered50": 0.49729722991666436,
+            "covered80": 0.7801437702612571,
+            "covered95": 0.9130987045468482,
+            "width50": 7.655055182969375,
+            "width80": 14.453281747503144,
+            "width95": 21.713933198482454,
+            "tail_low": 0.06578994053886582,
+            "tail_high": 0.06617616838038926
+          },
+          "simulation_half_change": {
+            "games": 200,
+            "rows": 4292,
+            "supported_for_overall_ranking": true,
+            "change": 0.006964395731497035,
+            "ci95_game": [
+              -0.0005019170238463353,
+              0.014394887964479765
+            ],
+            "ci95_calendar_week": [
+              0.0013414368996750466,
+              0.012556698749299763
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "player/pts": {
+          "games": 200,
+          "rows": 4292,
+          "pooled": {
+            "crps": 3.1780309238117566,
+            "absolute_error": 4.497336672879777,
+            "bias": 0.10045037278658192,
+            "covered50": 0.5468313140726934,
+            "covered80": 0.8147716682199441,
+            "covered95": 0.9478098788443616,
+            "width50": 7.018406337371855,
+            "width80": 13.412861136999068,
+            "width95": 20.22879776328052,
+            "tail_low": 0.037977632805219014,
+            "tail_high": 0.05684995340167754
+          },
+          "equal_game": {
+            "crps": 3.2035689948934465,
+            "absolute_error": 4.5339984336348085,
+            "bias": 0.08475550268707256,
+            "covered50": 0.5459406822255864,
+            "covered80": 0.814676378297613,
+            "covered95": 0.9473408483181924,
+            "width50": 7.094074506003568,
+            "width80": 13.540102891271697,
+            "width95": 20.408463074004715,
+            "tail_low": 0.03832065127033036,
+            "tail_high": 0.05720434649618102
+          },
+          "simulation_half_change": {
+            "games": 200,
+            "rows": 4292,
+            "supported_for_overall_ranking": true,
+            "change": -0.003295009319664494,
+            "ci95_game": [
+              -0.009973603830268072,
+              0.0033534751152984443
+            ],
+            "ci95_calendar_week": [
+              -0.008245083656255195,
+              0.001169835254119954
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "player/reb": {
+          "games": 200,
+          "rows": 4292,
+          "pooled": {
+            "crps": 1.3235092896085798,
+            "absolute_error": 1.8994941752096923,
+            "bias": -0.013531453867659917,
+            "covered50": 0.5938956197576887,
+            "covered80": 0.8513513513513513,
+            "covered95": 0.9624883504193849,
+            "width50": 2.8567101584342964,
+            "width80": 5.441286113699907,
+            "width95": 8.221808014911463,
+            "tail_low": 0.023299161230195712,
+            "tail_high": 0.05079217148182665
+          },
+          "equal_game": {
+            "crps": 1.3330803265631332,
+            "absolute_error": 1.9129173611384684,
+            "bias": -0.014708784765672922,
+            "covered50": 0.5943803812287193,
+            "covered80": 0.8506614609188978,
+            "covered95": 0.9620731036243387,
+            "width50": 2.8852581651870537,
+            "width80": 5.488856700971044,
+            "width95": 8.28990678814447,
+            "tail_low": 0.0238894693384867,
+            "tail_high": 0.0509066710350165
+          },
+          "simulation_half_change": {
+            "games": 200,
+            "rows": 4292,
+            "supported_for_overall_ranking": true,
+            "change": 0.001025943150046599,
+            "ci95_game": [
+              -0.002063607980625665,
+              0.004013507803304625
+            ],
+            "ci95_calendar_week": [
+              -0.0016084242673508645,
+              0.0036637796680864393
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "team/points": {
+          "games": 200,
+          "rows": 400,
+          "pooled": {
+            "crps": 6.414921292500023,
+            "absolute_error": 8.9648175,
+            "bias": 1.0778325000000089,
+            "covered50": 0.5425,
+            "covered80": 0.8125,
+            "covered95": 0.945,
+            "width50": 15.1425,
+            "width80": 28.8875,
+            "width95": 44.14,
+            "tail_low": 0.0575,
+            "tail_high": 0.04
+          },
+          "equal_game": {
+            "crps": 6.414921292500023,
+            "absolute_error": 8.9648175,
+            "bias": 1.0778325000000089,
+            "covered50": 0.5425,
+            "covered80": 0.8125,
+            "covered95": 0.945,
+            "width50": 15.1425,
+            "width80": 28.8875,
+            "width95": 44.14,
+            "tail_low": 0.0575,
+            "tail_high": 0.04
+          },
+          "simulation_half_change": {
+            "games": 200,
+            "rows": 400,
+            "supported_for_overall_ranking": true,
+            "change": 0.009014750000000018,
+            "ci95_game": [
+              -0.0351353955,
+              0.05237223874999995
+            ],
+            "ci95_calendar_week": [
+              -0.04103153128519145,
+              0.060989254634995674
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "joint": {
+          "energy": 10.104039380343238,
+          "win_brier": 0.205625955,
+          "win_log_loss_smoothed": 0.5992341751204583,
+          "ties_probability": 0.0,
+          "negative_score_probability": 0.0,
+          "covariance": 21.945206745,
+          "raw_log_loss_infinite_games": 0,
+          "raw_log_loss_mean": 0.5991934857835283,
+          "energy_shift_sensitivity": 0.023125530808009644,
+          "win_reliability": {
+            "(-0.001, 0.2]": {
+              "games": 4,
+              "probability": 0.16649999999999998,
+              "won": 0.0
+            },
+            "(0.2, 0.4]": {
+              "games": 43,
+              "probability": 0.3306511627906977,
+              "won": 0.3488372093023256
+            },
+            "(0.4, 0.6]": {
+              "games": 82,
+              "probability": 0.4975975609756098,
+              "won": 0.5365853658536586
+            },
+            "(0.6, 0.8]": {
+              "games": 61,
+              "probability": 0.6872786885245902,
+              "won": 0.8032786885245902
+            },
+            "(0.8, 1.0]": {
+              "games": 10,
+              "probability": 0.8566,
+              "won": 0.8
+            }
+          }
+        }
+      },
+      "player_rate": {
+        "game/margin": {
+          "games": 200,
+          "rows": 200,
+          "pooled": {
+            "crps": 9.706075665000041,
+            "absolute_error": 13.290885000000001,
+            "bias": -0.649205000000002,
+            "covered50": 0.67,
+            "covered80": 0.925,
+            "covered95": 1.0,
+            "width50": 30.94,
+            "width80": 58.685,
+            "width95": 89.255,
+            "tail_low": 0.015,
+            "tail_high": 0.005
+          },
+          "equal_game": {
+            "crps": 9.706075665000043,
+            "absolute_error": 13.290885000000001,
+            "bias": -0.6492050000000014,
+            "covered50": 0.67,
+            "covered80": 0.925,
+            "covered95": 1.0,
+            "width50": 30.94,
+            "width80": 58.685,
+            "width95": 89.255,
+            "tail_low": 0.015,
+            "tail_high": 0.005
+          },
+          "simulation_half_change": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 0.10523669999999985,
+            "ci95_game": [
+              0.0019031825000000427,
+              0.20987442149999982
+            ],
+            "ci95_calendar_week": [
+              0.029551586316921043,
+              0.19417714417428505
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "game/total": {
+          "games": 200,
+          "rows": 200,
+          "pooled": {
+            "crps": 12.37818218500005,
+            "absolute_error": 17.060615,
+            "bias": -0.6629349999999866,
+            "covered50": 0.55,
+            "covered80": 0.79,
+            "covered95": 0.97,
+            "width50": 31.235,
+            "width80": 59.7,
+            "width95": 91.735,
+            "tail_low": 0.03,
+            "tail_high": 0.05
+          },
+          "equal_game": {
+            "crps": 12.378182185000053,
+            "absolute_error": 17.060615,
+            "bias": -0.6629349999999866,
+            "covered50": 0.55,
+            "covered80": 0.79,
+            "covered95": 0.97,
+            "width50": 31.235,
+            "width80": 59.7,
+            "width95": 91.735,
+            "tail_low": 0.03,
+            "tail_high": 0.05
+          },
+          "simulation_half_change": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": -1.2580000000301794e-05,
+            "ci95_game": [
+              -0.12067753250000042,
+              0.11890421299999948
+            ],
+            "ci95_calendar_week": [
+              -0.09509882834809835,
+              0.10278996449999915
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "player/ast": {
+          "games": 200,
+          "rows": 4292,
+          "pooled": {
+            "crps": 0.9431748184995387,
+            "absolute_error": 1.3803604380242311,
+            "bias": -0.04453238583410946,
+            "covered50": 0.6745107176141659,
+            "covered80": 0.9009785647716683,
+            "covered95": 0.972739981360671,
+            "width50": 2.114165890027959,
+            "width80": 4.033783783783784,
+            "width95": 5.971109040074557,
+            "tail_low": 0.005125815470643057,
+            "tail_high": 0.044967381174277725
+          },
+          "equal_game": {
+            "crps": 0.9549750541945727,
+            "absolute_error": 1.3964243289620277,
+            "bias": -0.04699421148684747,
+            "covered50": 0.6726810368060891,
+            "covered80": 0.8994240191163206,
+            "covered95": 0.9720843196005927,
+            "width50": 2.1386392380857977,
+            "width80": 4.073140281976646,
+            "width95": 6.0254574085201655,
+            "tail_low": 0.005390951119121128,
+            "tail_high": 0.045497847823488605
+          },
+          "simulation_half_change": {
+            "games": 200,
+            "rows": 4292,
+            "supported_for_overall_ranking": true,
+            "change": 0.0019529962721342021,
+            "ci95_game": [
+              -0.00010132477095825295,
+              0.0040124118460420745
+            ],
+            "ci95_calendar_week": [
+              0.00019746734952044915,
+              0.0037397477576377406
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "player/fg3m": {
+          "games": 200,
+          "rows": 4292,
+          "pooled": {
+            "crps": 0.6011664068033585,
+            "absolute_error": 0.91600605778192,
+            "bias": 0.004350419384902418,
+            "covered50": 0.7840167753960857,
+            "covered80": 0.9261416589002796,
+            "covered95": 0.9790307548928239,
+            "width50": 1.4384902143522833,
+            "width80": 2.6258154706430568,
+            "width95": 3.853681267474371,
+            "tail_low": 0.001863932898415657,
+            "tail_high": 0.037045666356011184
+          },
+          "equal_game": {
+            "crps": 0.6080844244841854,
+            "absolute_error": 0.9250640561779653,
+            "bias": 0.0035993977396150427,
+            "covered50": 0.7825446281195001,
+            "covered80": 0.9259519018395582,
+            "covered95": 0.9789132209163794,
+            "width50": 1.4567033324472012,
+            "width80": 2.6580858339092335,
+            "width95": 3.8917512201477655,
+            "tail_low": 0.002028299916457811,
+            "tail_high": 0.037155819243392986
+          },
+          "simulation_half_change": {
+            "games": 200,
+            "rows": 4292,
+            "supported_for_overall_ranking": true,
+            "change": 0.00015605964585274943,
+            "ci95_game": [
+              -0.001318445856461643,
+              0.0016089418276576675
+            ],
+            "ci95_calendar_week": [
+              -0.0010764954378288379,
+              0.0013750808736633664
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "player/min": {
+          "games": 200,
+          "rows": 4292,
+          "pooled": {
+            "crps": 3.588132124135859,
+            "absolute_error": 4.870980834495813,
+            "bias": -0.02272250698974818,
+            "covered50": 0.49976700838769805,
+            "covered80": 0.7833178005591799,
+            "covered95": 0.9144920782851818,
+            "width50": 7.639550459284805,
+            "width80": 14.428973505307706,
+            "width95": 21.677704751948127,
+            "tail_low": 0.06500465983224604,
+            "tail_high": 0.06547064305684995
+          },
+          "equal_game": {
+            "crps": 3.6083107378027437,
+            "absolute_error": 4.905171844850188,
+            "bias": -0.028996932617879077,
+            "covered50": 0.49729722991666436,
+            "covered80": 0.7801437702612571,
+            "covered95": 0.9130987045468482,
+            "width50": 7.655055182969375,
+            "width80": 14.453281747503144,
+            "width95": 21.713933198482454,
+            "tail_low": 0.06578994053886582,
+            "tail_high": 0.06617616838038926
+          },
+          "simulation_half_change": {
+            "games": 200,
+            "rows": 4292,
+            "supported_for_overall_ranking": true,
+            "change": 0.006964395731497035,
+            "ci95_game": [
+              -0.0005019170238463353,
+              0.014394887964479765
+            ],
+            "ci95_calendar_week": [
+              0.0013414368996750466,
+              0.012556698749299763
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "player/pts": {
+          "games": 200,
+          "rows": 4292,
+          "pooled": {
+            "crps": 3.27278806873254,
+            "absolute_error": 4.6554396551724135,
+            "bias": -0.030891658900277435,
+            "covered50": 0.5281919850885368,
+            "covered80": 0.7968313140726934,
+            "covered95": 0.9475768872320597,
+            "width50": 7.087837837837838,
+            "width80": 13.581547064305685,
+            "width95": 20.58201304753029,
+            "tail_low": 0.04217148182665424,
+            "tail_high": 0.05521901211556384
+          },
+          "equal_game": {
+            "crps": 3.3030160502419217,
+            "absolute_error": 4.695750753671075,
+            "bias": -0.05516083848937379,
+            "covered50": 0.5270938615772174,
+            "covered80": 0.79476078775703,
+            "covered95": 0.946818434192021,
+            "width50": 7.162446946658801,
+            "width80": 13.70186191563959,
+            "width95": 20.753055686407635,
+            "tail_low": 0.043086915236680144,
+            "tail_high": 0.055782349664645105
+          },
+          "simulation_half_change": {
+            "games": 200,
+            "rows": 4292,
+            "supported_for_overall_ranking": true,
+            "change": 0.0019510857409133337,
+            "ci95_game": [
+              -0.004999966384154627,
+              0.008748269648025369
+            ],
+            "ci95_calendar_week": [
+              -0.005266086502100417,
+              0.009133797870695627
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "player/reb": {
+          "games": 200,
+          "rows": 4292,
+          "pooled": {
+            "crps": 1.3632413704566697,
+            "absolute_error": 1.9504902143522835,
+            "bias": -0.03971808014911381,
+            "covered50": 0.5915657036346692,
+            "covered80": 0.8487884436160298,
+            "covered95": 0.9631873252562908,
+            "width50": 2.9168219944082012,
+            "width80": 5.57502329916123,
+            "width95": 8.441053122087604,
+            "tail_low": 0.023998136067101584,
+            "tail_high": 0.048462255358807084
+          },
+          "equal_game": {
+            "crps": 1.3744384707425887,
+            "absolute_error": 1.9659088285210586,
+            "bias": -0.04344984460877049,
+            "covered50": 0.591769461363944,
+            "covered80": 0.8479669167025388,
+            "covered95": 0.96246575625751,
+            "width50": 2.947233711492803,
+            "width80": 5.624756365228961,
+            "width95": 8.511656465156424,
+            "tail_low": 0.02457901590303327,
+            "tail_high": 0.048202913452654796
+          },
+          "simulation_half_change": {
+            "games": 200,
+            "rows": 4292,
+            "supported_for_overall_ranking": true,
+            "change": 0.0027587399813606694,
+            "ci95_game": [
+              -0.000222062908092304,
+              0.00567508649649236
+            ],
+            "ci95_calendar_week": [
+              -0.0005877689628546814,
+              0.006495267305196617
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "team/points": {
+          "games": 200,
+          "rows": 400,
+          "pooled": {
+            "crps": 7.759440022500034,
+            "absolute_error": 10.501817500000001,
+            "bias": -0.33146749999999564,
+            "covered50": 0.6325,
+            "covered80": 0.89,
+            "covered95": 0.96,
+            "width50": 22.055,
+            "width80": 41.8875,
+            "width95": 63.96,
+            "tail_low": 0.0275,
+            "tail_high": 0.0375
+          },
+          "equal_game": {
+            "crps": 7.759440022500034,
+            "absolute_error": 10.501817500000001,
+            "bias": -0.3314674999999958,
+            "covered50": 0.6325,
+            "covered80": 0.89,
+            "covered95": 0.96,
+            "width50": 22.055,
+            "width80": 41.8875,
+            "width95": 63.96,
+            "tail_low": 0.0275,
+            "tail_high": 0.0375
+          },
+          "simulation_half_change": {
+            "games": 200,
+            "rows": 400,
+            "supported_for_overall_ranking": true,
+            "change": -0.011945609999999935,
+            "ci95_game": [
+              -0.06900849049999991,
+              0.043067121500000055
+            ],
+            "ci95_calendar_week": [
+              -0.06521668000304578,
+              0.044770029590905175
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "joint": {
+          "energy": 12.207454255090092,
+          "win_brier": 0.23415135625000003,
+          "win_log_loss_smoothed": 0.6588658310405715,
+          "ties_probability": 0.015015,
+          "negative_score_probability": 0.0,
+          "covariance": 5.895988895,
+          "raw_log_loss_infinite_games": 0,
+          "raw_log_loss_mean": 0.6588920443714337,
+          "energy_shift_sensitivity": 0.03722420978105235,
+          "win_reliability": {
+            "(-0.001, 0.2]": {
+              "games": 5,
+              "probability": 0.12319999999999998,
+              "won": 0.2
+            },
+            "(0.2, 0.4]": {
+              "games": 40,
+              "probability": 0.304375,
+              "won": 0.4
+            },
+            "(0.4, 0.6]": {
+              "games": 87,
+              "probability": 0.49436206896551727,
+              "won": 0.6091954022988506
+            },
+            "(0.6, 0.8]": {
+              "games": 62,
+              "probability": 0.6818870967741935,
+              "won": 0.6612903225806451
+            },
+            "(0.8, 1.0]": {
+              "games": 6,
+              "probability": 0.8555,
+              "won": 0.8333333333333334
+            }
+          }
+        }
+      },
+      "team_strength": {
+        "game/margin": {
+          "games": 200,
+          "rows": 200,
+          "pooled": {
+            "crps": 8.898037550185757,
+            "absolute_error": 12.285901561401392,
+            "bias": 1.4623071100082405,
+            "covered50": 0.485,
+            "covered80": 0.765,
+            "covered95": 0.92,
+            "width50": 17.807364605417934,
+            "width80": 36.108364400012206,
+            "width95": 56.673587331213604,
+            "tail_low": 0.09,
+            "tail_high": 0.035
+          },
+          "equal_game": {
+            "crps": 8.898037550185755,
+            "absolute_error": 12.28590156140139,
+            "bias": 1.46230711000824,
+            "covered50": 0.485,
+            "covered80": 0.765,
+            "covered95": 0.92,
+            "width50": 17.807364605417934,
+            "width80": 36.108364400012206,
+            "width95": 56.673587331213604,
+            "tail_low": 0.09,
+            "tail_high": 0.035
+          },
+          "simulation_half_change": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 0.004465368075184859,
+            "ci95_game": [
+              -0.07353792796995552,
+              0.08624036573966617
+            ],
+            "ci95_calendar_week": [
+              -0.09307851563438596,
+              0.1008983900525601
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "game/total": {
+          "games": 200,
+          "rows": 200,
+          "pooled": {
+            "crps": 10.176282567786886,
+            "absolute_error": 14.451729580848538,
+            "bias": 3.099529795900082,
+            "covered50": 0.505,
+            "covered80": 0.835,
+            "covered95": 0.99,
+            "width50": 26.41993124641098,
+            "width80": 49.775851060633705,
+            "width95": 79.92569792137598,
+            "tail_low": 0.03,
+            "tail_high": 0.025
+          },
+          "equal_game": {
+            "crps": 10.176282567786886,
+            "absolute_error": 14.451729580848538,
+            "bias": 3.0995297959000823,
+            "covered50": 0.505,
+            "covered80": 0.835,
+            "covered95": 0.99,
+            "width50": 26.41993124641098,
+            "width80": 49.77585106063372,
+            "width95": 79.925697921376,
+            "tail_low": 0.03,
+            "tail_high": 0.025
+          },
+          "simulation_half_change": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": -0.06850637600921593,
+            "ci95_game": [
+              -0.16609252013488374,
+              0.028488538139313898
+            ],
+            "ci95_calendar_week": [
+              -0.176477975699608,
+              0.03863928182720457
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "team/points": {
+          "games": 200,
+          "rows": 400,
+          "pooled": {
+            "crps": 6.789234657601296,
+            "absolute_error": 9.551506627125796,
+            "bias": 1.5497648979500411,
+            "covered50": 0.4825,
+            "covered80": 0.795,
+            "covered95": 0.955,
+            "width50": 15.972212089574269,
+            "width80": 31.170147599816325,
+            "width95": 47.14588865286249,
+            "tail_low": 0.055,
+            "tail_high": 0.035
+          },
+          "equal_game": {
+            "crps": 6.789234657601296,
+            "absolute_error": 9.551506627125796,
+            "bias": 1.5497648979500411,
+            "covered50": 0.4825,
+            "covered80": 0.795,
+            "covered95": 0.955,
+            "width50": 15.972212089574269,
+            "width80": 31.170147599816325,
+            "width95": 47.14588865286249,
+            "tail_low": 0.055,
+            "tail_high": 0.035
+          },
+          "simulation_half_change": {
+            "games": 200,
+            "rows": 400,
+            "supported_for_overall_ranking": true,
+            "change": -0.0065805104669135915,
+            "ci95_game": [
+              -0.050326682898628385,
+              0.03672444362815173
+            ],
+            "ci95_calendar_week": [
+              -0.05691324879696887,
+              0.041208588146310406
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "joint": {
+          "energy": 10.616024963228272,
+          "win_brier": 0.21233497999999998,
+          "win_log_loss_smoothed": 0.6162350098141419,
+          "ties_probability": 0.0,
+          "negative_score_probability": 0.0,
+          "covariance": 47.9966823361853,
+          "raw_log_loss_infinite_games": 0,
+          "raw_log_loss_mean": 0.6162583524236064,
+          "energy_shift_sensitivity": 0.025625685835290683,
+          "win_reliability": {
+            "(-0.001, 0.2]": {
+              "games": 1,
+              "probability": 0.155,
+              "won": 0.0
+            },
+            "(0.2, 0.4]": {
+              "games": 41,
+              "probability": 0.30721951219512195,
+              "won": 0.2926829268292683
+            },
+            "(0.4, 0.6]": {
+              "games": 58,
+              "probability": 0.5075172413793103,
+              "won": 0.5517241379310345
+            },
+            "(0.6, 0.8]": {
+              "games": 80,
+              "probability": 0.6955,
+              "won": 0.7125
+            },
+            "(0.8, 1.0]": {
+              "games": 20,
+              "probability": 0.8628500000000001,
+              "won": 0.75
+            }
+          }
+        }
+      }
+    },
+    "paired_changes": {
+      "player_rate": {
+        "game/margin": {
+          "pooled": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 1.3165171600000127,
+            "ci95_game": [
+              0.7317569257500126,
+              1.8890326423750121
+            ],
+            "ci95_calendar_week": [
+              0.8300812347821824,
+              1.895764907188093
+            ],
+            "calendar_blocks": 16
+          },
+          "equal_game": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 1.3165171600000127,
+            "ci95_game": [
+              0.7317569257500126,
+              1.8890326423750121
+            ],
+            "ci95_calendar_week": [
+              0.8300812347821824,
+              1.895764907188093
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "game/total": {
+          "pooled": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 2.493020920000008,
+            "ci95_game": [
+              1.6802882015000071,
+              3.3121502926250086
+            ],
+            "ci95_calendar_week": [
+              1.6415871613231452,
+              3.5270119179587938
+            ],
+            "calendar_blocks": 16
+          },
+          "equal_game": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 2.493020920000008,
+            "ci95_game": [
+              1.6802882015000071,
+              3.3121502926250086
+            ],
+            "ci95_calendar_week": [
+              1.6415871613231452,
+              3.5270119179587938
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "player/ast": {
+          "pooled": {
+            "games": 200,
+            "rows": 4292,
+            "supported_for_overall_ranking": true,
+            "change": 0.023402680335508123,
+            "ci95_game": [
+              0.013191556296468954,
+              0.03386963742234211
+            ],
+            "ci95_calendar_week": [
+              0.01063278269662546,
+              0.03750762710515808
+            ],
+            "calendar_blocks": 16
+          },
+          "equal_game": {
+            "games": 200,
+            "rows": 4292,
+            "supported_for_overall_ranking": true,
+            "change": 0.02401731470966162,
+            "ci95_game": [
+              0.013203529467854878,
+              0.03537737571607796
+            ],
+            "ci95_calendar_week": [
+              0.01073078770543636,
+              0.03863948336255234
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "player/fg3m": {
+          "pooled": {
+            "games": 200,
+            "rows": 4292,
+            "supported_for_overall_ranking": true,
+            "change": 0.013337158434296587,
+            "ci95_game": [
+              0.008377070818363818,
+              0.01851914182899815
+            ],
+            "ci95_calendar_week": [
+              0.009090259392074519,
+              0.017300677884927583
+            ],
+            "calendar_blocks": 16
+          },
+          "equal_game": {
+            "games": 200,
+            "rows": 4292,
+            "supported_for_overall_ranking": true,
+            "change": 0.013707262058693987,
+            "ci95_game": [
+              0.008630289401791311,
+              0.019010668061185818
+            ],
+            "ci95_calendar_week": [
+              0.009150437581929259,
+              0.018070936472484932
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "player/min": {
+          "pooled": {
+            "games": 200,
+            "rows": 4292,
+            "supported_for_overall_ranking": true,
+            "change": 0.0,
+            "ci95_game": [
+              0.0,
+              0.0
+            ],
+            "ci95_calendar_week": [
+              0.0,
+              0.0
+            ],
+            "calendar_blocks": 16
+          },
+          "equal_game": {
+            "games": 200,
+            "rows": 4292,
+            "supported_for_overall_ranking": true,
+            "change": 0.0,
+            "ci95_game": [
+              0.0,
+              0.0
+            ],
+            "ci95_calendar_week": [
+              0.0,
+              0.0
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "player/pts": {
+          "pooled": {
+            "games": 200,
+            "rows": 4292,
+            "supported_for_overall_ranking": true,
+            "change": 0.09475714492078341,
+            "ci95_game": [
+              0.05991587477146708,
+              0.1291475147383408
+            ],
+            "ci95_calendar_week": [
+              0.06768522341016567,
+              0.12165847286594705
+            ],
+            "calendar_blocks": 16
+          },
+          "equal_game": {
+            "games": 200,
+            "rows": 4292,
+            "supported_for_overall_ranking": true,
+            "change": 0.09944705534847509,
+            "ci95_game": [
+              0.06323623823023795,
+              0.1349815891399229
+            ],
+            "ci95_calendar_week": [
+              0.0702050913654477,
+              0.1271577471809605
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "player/reb": {
+          "pooled": {
+            "games": 200,
+            "rows": 4292,
+            "supported_for_overall_ranking": true,
+            "change": 0.03973208084808977,
+            "ci95_game": [
+              0.026245708225432342,
+              0.05368605983807583
+            ],
+            "ci95_calendar_week": [
+              0.02385397673541036,
+              0.05931038972598862
+            ],
+            "calendar_blocks": 16
+          },
+          "equal_game": {
+            "games": 200,
+            "rows": 4292,
+            "supported_for_overall_ranking": true,
+            "change": 0.041358144179455575,
+            "ci95_game": [
+              0.02669771878346774,
+              0.05660443877376019
+            ],
+            "ci95_calendar_week": [
+              0.024329500143233394,
+              0.06295352525633977
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "team/points": {
+          "pooled": {
+            "games": 200,
+            "rows": 400,
+            "supported_for_overall_ranking": true,
+            "change": 1.3445187300000112,
+            "ci95_game": [
+              0.9847901433750108,
+              1.7004003138125103
+            ],
+            "ci95_calendar_week": [
+              0.9355599870779008,
+              1.8646127426717274
+            ],
+            "calendar_blocks": 16
+          },
+          "equal_game": {
+            "games": 200,
+            "rows": 400,
+            "supported_for_overall_ranking": true,
+            "change": 1.3445187300000112,
+            "ci95_game": [
+              0.9847901433750108,
+              1.7004003138125103
+            ],
+            "ci95_calendar_week": [
+              0.9355599870779008,
+              1.8646127426717274
+            ],
+            "calendar_blocks": 16
+          }
+        }
+      },
+      "team_strength": {
+        "game/margin": {
+          "pooled": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 0.5084790451857251,
+            "ci95_game": [
+              0.07265291646910563,
+              0.9617556701561113
+            ],
+            "ci95_calendar_week": [
+              0.020381336191500416,
+              1.0215366604457132
+            ],
+            "calendar_blocks": 16
+          },
+          "equal_game": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 0.5084790451857251,
+            "ci95_game": [
+              0.07265291646910563,
+              0.9617556701561113
+            ],
+            "ci95_calendar_week": [
+              0.020381336191500416,
+              1.0215366604457132
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "game/total": {
+          "pooled": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 0.291121302786843,
+            "ci95_game": [
+              -0.16091752519017932,
+              0.7290873767955435
+            ],
+            "ci95_calendar_week": [
+              -0.29104396043178304,
+              0.8008330743701578
+            ],
+            "calendar_blocks": 16
+          },
+          "equal_game": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 0.291121302786843,
+            "ci95_game": [
+              -0.16091752519017932,
+              0.7290873767955435
+            ],
+            "ci95_calendar_week": [
+              -0.29104396043178304,
+              0.8008330743701578
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "team/points": {
+          "pooled": {
+            "games": 200,
+            "rows": 400,
+            "supported_for_overall_ranking": true,
+            "change": 0.37431336510127217,
+            "ci95_game": [
+              0.1626603694996027,
+              0.5859751429477529
+            ],
+            "ci95_calendar_week": [
+              0.18773790439608734,
+              0.5558268160085611
+            ],
+            "calendar_blocks": 16
+          },
+          "equal_game": {
+            "games": 200,
+            "rows": 400,
+            "supported_for_overall_ranking": true,
+            "change": 0.37431336510127217,
+            "ci95_game": [
+              0.1626603694996027,
+              0.5859751429477529
+            ],
+            "ci95_calendar_week": [
+              0.18773790439608734,
+              0.5558268160085611
+            ],
+            "calendar_blocks": 16
+          }
+        }
+      }
+    },
+    "contexts": {
+      "player_rate": {
+        "role": {
+          "game/margin/all": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 1.3165171600000127,
+            "ci95_game": [
+              0.7317569257500126,
+              1.8890326423750121
+            ],
+            "ci95_calendar_week": [
+              0.8300812347821824,
+              1.895764907188093
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "game/total/all": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 2.493020920000008,
+            "ci95_game": [
+              1.6802882015000071,
+              3.3121502926250086
+            ],
+            "ci95_calendar_week": [
+              1.6415871613231452,
+              3.5270119179587938
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/ast/bench": {
+            "games": 200,
+            "rows": 2447,
+            "supported_for_overall_ranking": true,
+            "change": 0.024150985288108145,
+            "ci95_game": [
+              0.011393802627796467,
+              0.03809656931160053
+            ],
+            "ci95_calendar_week": [
+              0.008355401099217279,
+              0.04188461363344058
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/ast/star": {
+            "games": 167,
+            "rows": 290,
+            "supported_for_overall_ranking": true,
+            "change": 0.04075385517241394,
+            "ci95_game": [
+              -0.015788327011733445,
+              0.09683290425610755
+            ],
+            "ci95_calendar_week": [
+              -0.019234599426834354,
+              0.09895313657009253
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/ast/starter": {
+            "games": 200,
+            "rows": 1555,
+            "supported_for_overall_ranking": true,
+            "change": 0.018989212218649635,
+            "ci95_game": [
+              -7.698157509191761e-05,
+              0.03782783100814575
+            ],
+            "ci95_calendar_week": [
+              -0.0037518310023205706,
+              0.04149680785996021
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/fg3m/bench": {
+            "games": 200,
+            "rows": 2447,
+            "supported_for_overall_ranking": true,
+            "change": 0.017123795259501716,
+            "ci95_game": [
+              0.01091538840080988,
+              0.023559926709256912
+            ],
+            "ci95_calendar_week": [
+              0.011509649423415634,
+              0.023164620716430707
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/fg3m/star": {
+            "games": 167,
+            "rows": 290,
+            "supported_for_overall_ranking": true,
+            "change": -0.004059544827586346,
+            "ci95_game": [
+              -0.028411079366394944,
+              0.02022195931917012
+            ],
+            "ci95_calendar_week": [
+              -0.03203855969267882,
+              0.02372243055446191
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/fg3m/starter": {
+            "games": 200,
+            "rows": 1555,
+            "supported_for_overall_ranking": true,
+            "change": 0.010622781350482505,
+            "ci95_game": [
+              0.0018053810514921645,
+              0.019530302641938297
+            ],
+            "ci95_calendar_week": [
+              0.0008032211093269699,
+              0.019020219877340566
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/min/bench": {
+            "games": 200,
+            "rows": 2447,
+            "supported_for_overall_ranking": true,
+            "change": 0.0,
+            "ci95_game": [
+              0.0,
+              0.0
+            ],
+            "ci95_calendar_week": [
+              0.0,
+              0.0
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/min/star": {
+            "games": 167,
+            "rows": 290,
+            "supported_for_overall_ranking": true,
+            "change": 0.0,
+            "ci95_game": [
+              0.0,
+              0.0
+            ],
+            "ci95_calendar_week": [
+              0.0,
+              0.0
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/min/starter": {
+            "games": 200,
+            "rows": 1555,
+            "supported_for_overall_ranking": true,
+            "change": 0.0,
+            "ci95_game": [
+              0.0,
+              0.0
+            ],
+            "ci95_calendar_week": [
+              0.0,
+              0.0
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/pts/bench": {
+            "games": 200,
+            "rows": 2447,
+            "supported_for_overall_ranking": true,
+            "change": 0.09730357417245718,
+            "ci95_game": [
+              0.06420955834307791,
+              0.13116480281025955
+            ],
+            "ci95_calendar_week": [
+              0.06691746949933455,
+              0.13101411231972676
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/pts/star": {
+            "games": 167,
+            "rows": 290,
+            "supported_for_overall_ranking": true,
+            "change": 0.22830743448275737,
+            "ci95_game": [
+              -0.006422494482819066,
+              0.4555629487295213
+            ],
+            "ci95_calendar_week": [
+              0.013629623303913305,
+              0.42556323689174275
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/pts/starter": {
+            "games": 200,
+            "rows": 1555,
+            "supported_for_overall_ranking": true,
+            "change": 0.0658435138263666,
+            "ci95_game": [
+              0.008720251492219238,
+              0.12311925437604058
+            ],
+            "ci95_calendar_week": [
+              0.016707210192093907,
+              0.10947597157485438
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/reb/bench": {
+            "games": 200,
+            "rows": 2447,
+            "supported_for_overall_ranking": true,
+            "change": 0.04692630404577065,
+            "ci95_game": [
+              0.029090747730303748,
+              0.06625016649766555
+            ],
+            "ci95_calendar_week": [
+              0.025992750893758874,
+              0.07715849946579578
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/reb/star": {
+            "games": 167,
+            "rows": 290,
+            "supported_for_overall_ranking": true,
+            "change": 0.030497062068965793,
+            "ci95_game": [
+              -0.009536807413194332,
+              0.07187722708498216
+            ],
+            "ci95_calendar_week": [
+              -0.008444176839492255,
+              0.07504797962159274
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/reb/starter": {
+            "games": 200,
+            "rows": 1555,
+            "supported_for_overall_ranking": true,
+            "change": 0.030133297106109597,
+            "ci95_game": [
+              0.006981171436054238,
+              0.05408967584923273
+            ],
+            "ci95_calendar_week": [
+              0.008359858827886016,
+              0.05365293350984782
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "team/points/all": {
+            "games": 200,
+            "rows": 400,
+            "supported_for_overall_ranking": true,
+            "change": 1.3445187300000112,
+            "ci95_game": [
+              0.9847901433750108,
+              1.7004003138125103
+            ],
+            "ci95_calendar_week": [
+              0.9355599870779008,
+              1.8646127426717274
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          }
+        },
+        "minute_band": {
+          "game/margin/all": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 1.3165171600000127,
+            "ci95_game": [
+              0.7317569257500126,
+              1.8890326423750121
+            ],
+            "ci95_calendar_week": [
+              0.8300812347821824,
+              1.895764907188093
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "game/total/all": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 2.493020920000008,
+            "ci95_game": [
+              1.6802882015000071,
+              3.3121502926250086
+            ],
+            "ci95_calendar_week": [
+              1.6415871613231452,
+              3.5270119179587938
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/ast/12-24": {
+            "games": 200,
+            "rows": 1716,
+            "supported_for_overall_ranking": true,
+            "change": 0.025993363636363873,
+            "ci95_game": [
+              0.01065720120167711,
+              0.04196450406684512
+            ],
+            "ci95_calendar_week": [
+              0.0077860555904908256,
+              0.04681286157086803
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/ast/24+": {
+            "games": 200,
+            "rows": 1959,
+            "supported_for_overall_ranking": true,
+            "change": 0.02213376824910678,
+            "ci95_game": [
+              0.004142381061147948,
+              0.03993480824725608
+            ],
+            "ci95_calendar_week": [
+              0.0023908491070260417,
+              0.03980223169969569
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/ast/<12": {
+            "games": 184,
+            "rows": 617,
+            "supported_for_overall_ranking": true,
+            "change": 0.02022632090761795,
+            "ci95_game": [
+              0.0030241514683018752,
+              0.0395281914766675
+            ],
+            "ci95_calendar_week": [
+              0.0011279271363302385,
+              0.04845641598735086
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/fg3m/12-24": {
+            "games": 200,
+            "rows": 1716,
+            "supported_for_overall_ranking": true,
+            "change": 0.017859960372960653,
+            "ci95_game": [
+              0.01030687030097354,
+              0.02570797951642625
+            ],
+            "ci95_calendar_week": [
+              0.01072349231768385,
+              0.024992050020241956
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/fg3m/24+": {
+            "games": 200,
+            "rows": 1959,
+            "supported_for_overall_ranking": true,
+            "change": 0.010242460949464141,
+            "ci95_game": [
+              0.0019253164838425674,
+              0.018796721907317362
+            ],
+            "ci95_calendar_week": [
+              0.0013364183584698716,
+              0.01818035003687531
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/fg3m/<12": {
+            "games": 184,
+            "rows": 617,
+            "supported_for_overall_ranking": true,
+            "change": 0.010584134521880423,
+            "ci95_game": [
+              0.0048558002200003066,
+              0.016509031410086805
+            ],
+            "ci95_calendar_week": [
+              0.005164999096141414,
+              0.01576177000623901
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/min/12-24": {
+            "games": 200,
+            "rows": 1716,
+            "supported_for_overall_ranking": true,
+            "change": 0.0,
+            "ci95_game": [
+              0.0,
+              0.0
+            ],
+            "ci95_calendar_week": [
+              0.0,
+              0.0
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/min/24+": {
+            "games": 200,
+            "rows": 1959,
+            "supported_for_overall_ranking": true,
+            "change": 0.0,
+            "ci95_game": [
+              0.0,
+              0.0
+            ],
+            "ci95_calendar_week": [
+              0.0,
+              0.0
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/min/<12": {
+            "games": 184,
+            "rows": 617,
+            "supported_for_overall_ranking": true,
+            "change": 0.0,
+            "ci95_game": [
+              0.0,
+              0.0
+            ],
+            "ci95_calendar_week": [
+              0.0,
+              0.0
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/pts/12-24": {
+            "games": 200,
+            "rows": 1716,
+            "supported_for_overall_ranking": true,
+            "change": 0.09958401515151614,
+            "ci95_game": [
+              0.059514437594139984,
+              0.13908948955822178
+            ],
+            "ci95_calendar_week": [
+              0.05766946109237567,
+              0.14244422918711444
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/pts/24+": {
+            "games": 200,
+            "rows": 1959,
+            "supported_for_overall_ranking": true,
+            "change": 0.09751740071465015,
+            "ci95_game": [
+              0.03356102635666565,
+              0.16175879618081254
+            ],
+            "ci95_calendar_week": [
+              0.03993491062847386,
+              0.154523023502907
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/pts/<12": {
+            "games": 184,
+            "rows": 617,
+            "supported_for_overall_ranking": true,
+            "change": 0.07256873257698714,
+            "ci95_game": [
+              0.030649556581544737,
+              0.11636979555564544
+            ],
+            "ci95_calendar_week": [
+              0.04425094729248805,
+              0.10263902164688014
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/reb/12-24": {
+            "games": 200,
+            "rows": 1716,
+            "supported_for_overall_ranking": true,
+            "change": 0.043153057109557455,
+            "ci95_game": [
+              0.022445873915676845,
+              0.06645245542110881
+            ],
+            "ci95_calendar_week": [
+              0.021281041387787376,
+              0.07389958419851818
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/reb/24+": {
+            "games": 200,
+            "rows": 1959,
+            "supported_for_overall_ranking": true,
+            "change": 0.030800839203675604,
+            "ci95_game": [
+              0.011880996578892957,
+              0.05041870852997457
+            ],
+            "ci95_calendar_week": [
+              0.008768363299284827,
+              0.05311299359195775
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/reb/<12": {
+            "games": 184,
+            "rows": 617,
+            "supported_for_overall_ranking": true,
+            "change": 0.05857471799027585,
+            "ci95_game": [
+              0.03082220858499946,
+              0.08945669934898512
+            ],
+            "ci95_calendar_week": [
+              0.03548014528020101,
+              0.0897774610778396
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "team/points/all": {
+            "games": 200,
+            "rows": 400,
+            "supported_for_overall_ranking": true,
+            "change": 1.3445187300000112,
+            "ci95_game": [
+              0.9847901433750108,
+              1.7004003138125103
+            ],
+            "ci95_calendar_week": [
+              0.9355599870779008,
+              1.8646127426717274
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          }
+        },
+        "month": {
+          "game/margin/2026-01": {
+            "games": 60,
+            "rows": 60,
+            "supported_for_overall_ranking": false,
+            "change": 1.7632349333333475,
+            "ci95_game": [
+              0.7738445233333465,
+              2.8075528662500147
+            ],
+            "ci95_calendar_week": [
+              0.9050589038461656,
+              2.842091727272741
+            ],
+            "calendar_blocks": 5,
+            "context_support": true
+          },
+          "game/margin/2026-02": {
+            "games": 52,
+            "rows": 52,
+            "supported_for_overall_ranking": false,
+            "change": 0.411354596153859,
+            "ci95_game": [
+              -0.9194835014422945,
+              1.608128627884628
+            ],
+            "ci95_calendar_week": [
+              -0.10386640624998783,
+              0.8907816500000145
+            ],
+            "calendar_blocks": 4,
+            "context_support": true
+          },
+          "game/margin/2026-03": {
+            "games": 64,
+            "rows": 64,
+            "supported_for_overall_ranking": false,
+            "change": 1.559065578125012,
+            "ci95_game": [
+              0.6539099714843861,
+              2.4099081804687628
+            ],
+            "ci95_calendar_week": [
+              1.1969765468750133,
+              1.9191100476190583
+            ],
+            "calendar_blocks": 5,
+            "context_support": true
+          },
+          "game/margin/2026-04": {
+            "games": 24,
+            "rows": 24,
+            "supported_for_overall_ranking": false,
+            "change": 1.5141125000000109,
+            "ci95_game": [
+              -0.38595345208332366,
+              3.361679970833343
+            ],
+            "ci95_calendar_week": [
+              -0.16385499999999217,
+              4.269951571428585
+            ],
+            "calendar_blocks": 3,
+            "context_support": false
+          },
+          "game/total/2026-01": {
+            "games": 60,
+            "rows": 60,
+            "supported_for_overall_ranking": false,
+            "change": 1.8880175333333427,
+            "ci95_game": [
+              0.5085733354166776,
+              3.4944064520833398
+            ],
+            "ci95_calendar_week": [
+              0.29439271153847196,
+              3.2849555757575826
+            ],
+            "calendar_blocks": 5,
+            "context_support": true
+          },
+          "game/total/2026-02": {
+            "games": 52,
+            "rows": 52,
+            "supported_for_overall_ranking": false,
+            "change": 1.8909775961538529,
+            "ci95_game": [
+              0.7637751576923157,
+              3.069343073557698
+            ],
+            "ci95_calendar_week": [
+              1.2347837500000096,
+              2.6082666250000064
+            ],
+            "calendar_blocks": 4,
+            "context_support": true
+          },
+          "game/total/2026-03": {
+            "games": 64,
+            "rows": 64,
+            "supported_for_overall_ranking": false,
+            "change": 2.5497741718750095,
+            "ci95_game": [
+              1.249693021875008,
+              3.8751658156250066
+            ],
+            "ci95_calendar_week": [
+              1.609026746031754,
+              3.716634328125008
+            ],
+            "calendar_blocks": 5,
+            "context_support": true
+          },
+          "game/total/2026-04": {
+            "games": 24,
+            "rows": 24,
+            "supported_for_overall_ranking": false,
+            "change": 5.158614583333342,
+            "ci95_game": [
+              1.7710086166666752,
+              8.61425527395834
+            ],
+            "ci95_calendar_week": [
+              1.0943815714285807,
+              11.412124714285715
+            ],
+            "calendar_blocks": 3,
+            "context_support": false
+          },
+          "player/ast/2026-01": {
+            "games": 60,
+            "rows": 1290,
+            "supported_for_overall_ranking": false,
+            "change": 0.004374910852713378,
+            "ci95_game": [
+              -0.009789493743654164,
+              0.01912524097575131
+            ],
+            "ci95_calendar_week": [
+              -0.0011853157543389378,
+              0.00996267982832638
+            ],
+            "calendar_blocks": 5,
+            "context_support": true
+          },
+          "player/ast/2026-02": {
+            "games": 52,
+            "rows": 1118,
+            "supported_for_overall_ranking": false,
+            "change": 0.015082288908765774,
+            "ci95_game": [
+              -0.002962552369818599,
+              0.03246147577189552
+            ],
+            "ci95_calendar_week": [
+              -0.011361882405744986,
+              0.03215145653761886
+            ],
+            "calendar_blocks": 4,
+            "context_support": true
+          },
+          "player/ast/2026-03": {
+            "games": 64,
+            "rows": 1383,
+            "supported_for_overall_ranking": false,
+            "change": 0.043900582067968416,
+            "ci95_game": [
+              0.0279189489154866,
+              0.05972533355778914
+            ],
+            "ci95_calendar_week": [
+              0.023106813131313346,
+              0.0673246980360068
+            ],
+            "calendar_blocks": 5,
+            "context_support": true
+          },
+          "player/ast/2026-04": {
+            "games": 24,
+            "rows": 501,
+            "supported_for_overall_ranking": false,
+            "change": 0.034379570858283706,
+            "ci95_game": [
+              -0.014385424697630626,
+              0.09383775964393444
+            ],
+            "ci95_calendar_week": [
+              -0.00906262499999982,
+              0.10968720740740763
+            ],
+            "calendar_blocks": 3,
+            "context_support": false
+          },
+          "player/fg3m/2026-01": {
+            "games": 60,
+            "rows": 1290,
+            "supported_for_overall_ranking": false,
+            "change": 0.009997344186046694,
+            "ci95_game": [
+              0.0012626415827928306,
+              0.01860896109183229
+            ],
+            "ci95_calendar_week": [
+              0.001915121212121394,
+              0.016895103448276046
+            ],
+            "calendar_blocks": 5,
+            "context_support": true
+          },
+          "player/fg3m/2026-02": {
+            "games": 52,
+            "rows": 1118,
+            "supported_for_overall_ranking": false,
+            "change": 0.01086315742397163,
+            "ci95_game": [
+              0.002963676223169782,
+              0.018716174132524077
+            ],
+            "ci95_calendar_week": [
+              0.00510645924225053,
+              0.017873261923377865
+            ],
+            "calendar_blocks": 4,
+            "context_support": true
+          },
+          "player/fg3m/2026-03": {
+            "games": 64,
+            "rows": 1383,
+            "supported_for_overall_ranking": false,
+            "change": 0.01581662906724532,
+            "ci95_game": [
+              0.007042728312724666,
+              0.024636144803023674
+            ],
+            "ci95_calendar_week": [
+              0.012702689488243593,
+              0.018247018223234837
+            ],
+            "calendar_blocks": 5,
+            "context_support": true
+          },
+          "player/fg3m/2026-04": {
+            "games": 24,
+            "rows": 501,
+            "supported_for_overall_ranking": false,
+            "change": 0.02061297804391249,
+            "ci95_game": [
+              -0.0012835495313986164,
+              0.04425559459954727
+            ],
+            "ci95_calendar_week": [
+              -0.00567056296296274,
+              0.08469298437500017
+            ],
+            "calendar_blocks": 3,
+            "context_support": false
+          },
+          "player/min/2026-01": {
+            "games": 60,
+            "rows": 1290,
+            "supported_for_overall_ranking": false,
+            "change": 0.0,
+            "ci95_game": [
+              0.0,
+              0.0
+            ],
+            "ci95_calendar_week": [
+              0.0,
+              0.0
+            ],
+            "calendar_blocks": 5,
+            "context_support": true
+          },
+          "player/min/2026-02": {
+            "games": 52,
+            "rows": 1118,
+            "supported_for_overall_ranking": false,
+            "change": 0.0,
+            "ci95_game": [
+              0.0,
+              0.0
+            ],
+            "ci95_calendar_week": [
+              0.0,
+              0.0
+            ],
+            "calendar_blocks": 4,
+            "context_support": true
+          },
+          "player/min/2026-03": {
+            "games": 64,
+            "rows": 1383,
+            "supported_for_overall_ranking": false,
+            "change": 0.0,
+            "ci95_game": [
+              0.0,
+              0.0
+            ],
+            "ci95_calendar_week": [
+              0.0,
+              0.0
+            ],
+            "calendar_blocks": 5,
+            "context_support": true
+          },
+          "player/min/2026-04": {
+            "games": 24,
+            "rows": 501,
+            "supported_for_overall_ranking": false,
+            "change": 0.0,
+            "ci95_game": [
+              0.0,
+              0.0
+            ],
+            "ci95_calendar_week": [
+              0.0,
+              0.0
+            ],
+            "calendar_blocks": 3,
+            "context_support": false
+          },
+          "player/pts/2026-01": {
+            "games": 60,
+            "rows": 1290,
+            "supported_for_overall_ranking": false,
+            "change": 0.08405478759689977,
+            "ci95_game": [
+              0.03151204985568673,
+              0.13768806451580312
+            ],
+            "ci95_calendar_week": [
+              0.04992282053175812,
+              0.12363442279792818
+            ],
+            "calendar_blocks": 5,
+            "context_support": true
+          },
+          "player/pts/2026-02": {
+            "games": 52,
+            "rows": 1118,
+            "supported_for_overall_ranking": false,
+            "change": 0.07600223524150328,
+            "ci95_game": [
+              0.01728194715057028,
+              0.13293484839387923
+            ],
+            "ci95_calendar_week": [
+              0.041473871401152176,
+              0.10613502847571255
+            ],
+            "calendar_blocks": 4,
+            "context_support": true
+          },
+          "player/pts/2026-03": {
+            "games": 64,
+            "rows": 1383,
+            "supported_for_overall_ranking": false,
+            "change": 0.1331224880694148,
+            "ci95_game": [
+              0.07738723681098733,
+              0.19122421939324433
+            ],
+            "ci95_calendar_week": [
+              0.08321411694915308,
+              0.17880131970995433
+            ],
+            "calendar_blocks": 5,
+            "context_support": true
+          },
+          "player/pts/2026-04": {
+            "games": 24,
+            "rows": 501,
+            "supported_for_overall_ranking": false,
+            "change": 0.058259660678643466,
+            "ci95_game": [
+              -0.12052936169371685,
+              0.2139454233700552
+            ],
+            "ci95_calendar_week": [
+              -0.07458104444444381,
+              0.18587882812499976
+            ],
+            "calendar_blocks": 3,
+            "context_support": false
+          },
+          "player/reb/2026-01": {
+            "games": 60,
+            "rows": 1290,
+            "supported_for_overall_ranking": false,
+            "change": 0.017115472093023526,
+            "ci95_game": [
+              -0.0029735953001559894,
+              0.03730604457771716
+            ],
+            "ci95_calendar_week": [
+              0.010407604145078013,
+              0.022332640324963363
+            ],
+            "calendar_blocks": 5,
+            "context_support": true
+          },
+          "player/reb/2026-02": {
+            "games": 52,
+            "rows": 1118,
+            "supported_for_overall_ranking": false,
+            "change": 0.03534621556350652,
+            "ci95_game": [
+              0.018998741021147784,
+              0.05214354047437924
+            ],
+            "ci95_calendar_week": [
+              0.008902264501160318,
+              0.05504554924874819
+            ],
+            "calendar_blocks": 4,
+            "context_support": true
+          },
+          "player/reb/2026-03": {
+            "games": 64,
+            "rows": 1383,
+            "supported_for_overall_ranking": false,
+            "change": 0.033992754880694455,
+            "ci95_game": [
+              0.015497879858772603,
+              0.05269836288202271
+            ],
+            "ci95_calendar_week": [
+              0.016804533050847788,
+              0.05268933554083918
+            ],
+            "calendar_blocks": 5,
+            "context_support": true
+          },
+          "player/reb/2026-04": {
+            "games": 24,
+            "rows": 501,
+            "supported_for_overall_ranking": false,
+            "change": 0.12359697205588867,
+            "ci95_game": [
+              0.048704709385880056,
+              0.2047021459699435
+            ],
+            "ci95_calendar_week": [
+              0.0099046875000007,
+              0.19564571111111143
+            ],
+            "calendar_blocks": 3,
+            "context_support": false
+          },
+          "team/points/2026-01": {
+            "games": 60,
+            "rows": 120,
+            "supported_for_overall_ranking": false,
+            "change": 1.257106650000011,
+            "ci95_game": [
+              0.6371878516666772,
+              1.936584919166677
+            ],
+            "ci95_calendar_week": [
+              0.45763024038462635,
+              2.1742235317460428
+            ],
+            "calendar_blocks": 5,
+            "context_support": true
+          },
+          "team/points/2026-02": {
+            "games": 52,
+            "rows": 104,
+            "supported_for_overall_ranking": false,
+            "change": 0.7696962980769337,
+            "ci95_game": [
+              0.19197448798077943,
+              1.324341400240394
+            ],
+            "ci95_calendar_week": [
+              0.5142111339285816,
+              1.0102857333333455
+            ],
+            "calendar_blocks": 4,
+            "context_support": true
+          },
+          "team/points/2026-03": {
+            "games": 64,
+            "rows": 128,
+            "supported_for_overall_ranking": false,
+            "change": 1.4405029453125118,
+            "ci95_game": [
+              0.9020121158203247,
+              1.969519932812512
+            ],
+            "ci95_calendar_week": [
+              1.1761339285714394,
+              1.7293894385965038
+            ],
+            "calendar_blocks": 5,
+            "context_support": true
+          },
+          "team/points/2026-04": {
+            "games": 24,
+            "rows": 48,
+            "supported_for_overall_ranking": false,
+            "change": 2.552539625000012,
+            "ci95_game": [
+              1.0293080916666781,
+              4.127211353125011
+            ],
+            "ci95_calendar_week": [
+              0.7723409285714418,
+              5.583099642857152
+            ],
+            "calendar_blocks": 3,
+            "context_support": false
+          }
+        },
+        "rest_group": {
+          "game/margin/both": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 1.3165171600000127,
+            "ci95_game": [
+              0.7317569257500126,
+              1.8890326423750121
+            ],
+            "ci95_calendar_week": [
+              0.8300812347821824,
+              1.895764907188093
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "game/total/both": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 2.493020920000008,
+            "ci95_game": [
+              1.6802882015000071,
+              3.3121502926250086
+            ],
+            "ci95_calendar_week": [
+              1.6415871613231452,
+              3.5270119179587938
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/ast/1": {
+            "games": 64,
+            "rows": 808,
+            "supported_for_overall_ranking": false,
+            "change": 0.004507638613861525,
+            "ci95_game": [
+              -0.01952281470095402,
+              0.028696014226381236
+            ],
+            "ci95_calendar_week": [
+              -0.02298754361749202,
+              0.03131625423605048
+            ],
+            "calendar_blocks": 15,
+            "context_support": true
+          },
+          "player/ast/2+": {
+            "games": 189,
+            "rows": 3484,
+            "supported_for_overall_ranking": true,
+            "change": 0.02778476808266382,
+            "ci95_game": [
+              0.0155496720129085,
+              0.040189914337515655
+            ],
+            "ci95_calendar_week": [
+              0.015028901132351849,
+              0.041190298918267976
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/fg3m/1": {
+            "games": 64,
+            "rows": 808,
+            "supported_for_overall_ranking": false,
+            "change": 0.012904787128713102,
+            "ci95_game": [
+              0.0019889406020150917,
+              0.023398127983666858
+            ],
+            "ci95_calendar_week": [
+              0.000594432518793677,
+              0.025355693734610045
+            ],
+            "calendar_blocks": 15,
+            "context_support": true
+          },
+          "player/fg3m/2+": {
+            "games": 189,
+            "rows": 3484,
+            "supported_for_overall_ranking": true,
+            "change": 0.013437432835821113,
+            "ci95_game": [
+              0.007828888144509232,
+              0.019112191459849378
+            ],
+            "ci95_calendar_week": [
+              0.009338441519672688,
+              0.017047835355899172
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/min/1": {
+            "games": 64,
+            "rows": 808,
+            "supported_for_overall_ranking": false,
+            "change": 0.0,
+            "ci95_game": [
+              0.0,
+              0.0
+            ],
+            "ci95_calendar_week": [
+              0.0,
+              0.0
+            ],
+            "calendar_blocks": 15,
+            "context_support": true
+          },
+          "player/min/2+": {
+            "games": 189,
+            "rows": 3484,
+            "supported_for_overall_ranking": true,
+            "change": 0.0,
+            "ci95_game": [
+              0.0,
+              0.0
+            ],
+            "ci95_calendar_week": [
+              0.0,
+              0.0
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/pts/1": {
+            "games": 64,
+            "rows": 808,
+            "supported_for_overall_ranking": false,
+            "change": 0.08292301980198094,
+            "ci95_game": [
+              0.006042753134637349,
+              0.15663709091106878
+            ],
+            "ci95_calendar_week": [
+              0.035629385722900586,
+              0.14172973080363205
+            ],
+            "calendar_blocks": 15,
+            "context_support": true
+          },
+          "player/pts/2+": {
+            "games": 189,
+            "rows": 3484,
+            "supported_for_overall_ranking": true,
+            "change": 0.09750168369690063,
+            "ci95_game": [
+              0.05879137913196914,
+              0.13487050540376536
+            ],
+            "ci95_calendar_week": [
+              0.06680988121323261,
+              0.1265072625757339
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/reb/1": {
+            "games": 64,
+            "rows": 808,
+            "supported_for_overall_ranking": false,
+            "change": 0.03678404455445569,
+            "ci95_game": [
+              0.006524173398035332,
+              0.06888621454976745
+            ],
+            "ci95_calendar_week": [
+              0.009783091813953667,
+              0.06595291957280418
+            ],
+            "calendar_blocks": 15,
+            "context_support": true
+          },
+          "player/reb/2+": {
+            "games": 189,
+            "rows": 3484,
+            "supported_for_overall_ranking": true,
+            "change": 0.04041578157290502,
+            "ci95_game": [
+              0.026051430480159798,
+              0.05577720028941334
+            ],
+            "ci95_calendar_week": [
+              0.023215254132569987,
+              0.0611320876991676
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "team/points/1": {
+            "games": 64,
+            "rows": 75,
+            "supported_for_overall_ranking": false,
+            "change": 1.5120620533333462,
+            "ci95_game": [
+              0.7445441575851656,
+              2.3657302261410385
+            ],
+            "ci95_calendar_week": [
+              0.8590330969869983,
+              2.25538092747447
+            ],
+            "calendar_blocks": 15,
+            "context_support": true
+          },
+          "team/points/2+": {
+            "games": 189,
+            "rows": 325,
+            "supported_for_overall_ranking": true,
+            "change": 1.3058548861538568,
+            "ci95_game": [
+              0.9052677589107749,
+              1.7096997462458992
+            ],
+            "ci95_calendar_week": [
+              0.867032210681112,
+              1.8625974837968384
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          }
+        },
+        "side": {
+          "game/margin/both": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 1.3165171600000127,
+            "ci95_game": [
+              0.7317569257500126,
+              1.8890326423750121
+            ],
+            "ci95_calendar_week": [
+              0.8300812347821824,
+              1.895764907188093
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "game/total/both": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 2.493020920000008,
+            "ci95_game": [
+              1.6802882015000071,
+              3.3121502926250086
+            ],
+            "ci95_calendar_week": [
+              1.6415871613231452,
+              3.5270119179587938
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/ast/away": {
+            "games": 200,
+            "rows": 2129,
+            "supported_for_overall_ranking": true,
+            "change": 0.023991890558948094,
+            "ci95_game": [
+              0.008093692988953073,
+              0.04001764571206228
+            ],
+            "ci95_calendar_week": [
+              -0.0017822212649789492,
+              0.051429731750173784
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/ast/home": {
+            "games": 200,
+            "rows": 2163,
+            "supported_for_overall_ranking": true,
+            "change": 0.022822731853906777,
+            "ci95_game": [
+              0.008468100663514718,
+              0.03774295780071423
+            ],
+            "ci95_calendar_week": [
+              0.009813668199235162,
+              0.036965458410667784
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/fg3m/away": {
+            "games": 200,
+            "rows": 2129,
+            "supported_for_overall_ranking": true,
+            "change": 0.011050383278534737,
+            "ci95_game": [
+              0.004154056578057594,
+              0.018172674580017912
+            ],
+            "ci95_calendar_week": [
+              0.005230225999160661,
+              0.017085425072076915
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/fg3m/home": {
+            "games": 200,
+            "rows": 2163,
+            "supported_for_overall_ranking": true,
+            "change": 0.015587987979658111,
+            "ci95_game": [
+              0.008337428603336708,
+              0.022792138445271636
+            ],
+            "ci95_calendar_week": [
+              0.008798459101745322,
+              0.02210208592313844
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/min/away": {
+            "games": 200,
+            "rows": 2129,
+            "supported_for_overall_ranking": true,
+            "change": 0.0,
+            "ci95_game": [
+              0.0,
+              0.0
+            ],
+            "ci95_calendar_week": [
+              0.0,
+              0.0
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/min/home": {
+            "games": 200,
+            "rows": 2163,
+            "supported_for_overall_ranking": true,
+            "change": 0.0,
+            "ci95_game": [
+              0.0,
+              0.0
+            ],
+            "ci95_calendar_week": [
+              0.0,
+              0.0
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/pts/away": {
+            "games": 200,
+            "rows": 2129,
+            "supported_for_overall_ranking": true,
+            "change": 0.09876671629873231,
+            "ci95_game": [
+              0.047550084260498456,
+              0.1488762666129837
+            ],
+            "ci95_calendar_week": [
+              0.05950177433159065,
+              0.14060162796302128
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/pts/home": {
+            "games": 200,
+            "rows": 2163,
+            "supported_for_overall_ranking": true,
+            "change": 0.09081059963014394,
+            "ci95_game": [
+              0.045943369030423384,
+              0.13507010582888762
+            ],
+            "ci95_calendar_week": [
+              0.047696654700814564,
+              0.12509927285307962
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/reb/away": {
+            "games": 200,
+            "rows": 2129,
+            "supported_for_overall_ranking": true,
+            "change": 0.03663545937059683,
+            "ci95_game": [
+              0.01921510139975945,
+              0.054534808892897066
+            ],
+            "ci95_calendar_week": [
+              0.01746397059556837,
+              0.05742580549326678
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "player/reb/home": {
+            "games": 200,
+            "rows": 2163,
+            "supported_for_overall_ranking": true,
+            "change": 0.042780026814609635,
+            "ci95_game": [
+              0.025518801932862805,
+              0.061108889612321034
+            ],
+            "ci95_calendar_week": [
+              0.023493252426763613,
+              0.06564742388283622
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "team/points/away": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 1.1130395350000106,
+            "ci95_game": [
+              0.6631771628750102,
+              1.5556485248750107
+            ],
+            "ci95_calendar_week": [
+              0.6355471259262314,
+              1.6178412939708624
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "team/points/home": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 1.5759979250000118,
+            "ci95_game": [
+              1.0734144570000117,
+              2.0928591177500113
+            ],
+            "ci95_calendar_week": [
+              0.9816482161360184,
+              2.2922627124506607
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          }
+        }
+      },
+      "team_strength": {
+        "role": {
+          "game/margin/all": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 0.5084790451857251,
+            "ci95_game": [
+              0.07265291646910563,
+              0.9617556701561113
+            ],
+            "ci95_calendar_week": [
+              0.020381336191500416,
+              1.0215366604457132
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "game/total/all": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 0.291121302786843,
+            "ci95_game": [
+              -0.16091752519017932,
+              0.7290873767955435
+            ],
+            "ci95_calendar_week": [
+              -0.29104396043178304,
+              0.8008330743701578
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "team/points/all": {
+            "games": 200,
+            "rows": 400,
+            "supported_for_overall_ranking": true,
+            "change": 0.37431336510127217,
+            "ci95_game": [
+              0.1626603694996027,
+              0.5859751429477529
+            ],
+            "ci95_calendar_week": [
+              0.18773790439608734,
+              0.5558268160085611
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          }
+        },
+        "minute_band": {
+          "game/margin/all": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 0.5084790451857251,
+            "ci95_game": [
+              0.07265291646910563,
+              0.9617556701561113
+            ],
+            "ci95_calendar_week": [
+              0.020381336191500416,
+              1.0215366604457132
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "game/total/all": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 0.291121302786843,
+            "ci95_game": [
+              -0.16091752519017932,
+              0.7290873767955435
+            ],
+            "ci95_calendar_week": [
+              -0.29104396043178304,
+              0.8008330743701578
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "team/points/all": {
+            "games": 200,
+            "rows": 400,
+            "supported_for_overall_ranking": true,
+            "change": 0.37431336510127217,
+            "ci95_game": [
+              0.1626603694996027,
+              0.5859751429477529
+            ],
+            "ci95_calendar_week": [
+              0.18773790439608734,
+              0.5558268160085611
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          }
+        },
+        "month": {
+          "game/margin/2026-01": {
+            "games": 60,
+            "rows": 60,
+            "supported_for_overall_ranking": false,
+            "change": 0.32078491022294314,
+            "ci95_game": [
+              -0.3786567725659394,
+              1.0341318981147531
+            ],
+            "ci95_calendar_week": [
+              -0.47890555112041494,
+              1.071475234096046
+            ],
+            "calendar_blocks": 5,
+            "context_support": true
+          },
+          "game/margin/2026-02": {
+            "games": 52,
+            "rows": 52,
+            "supported_for_overall_ranking": false,
+            "change": 0.6602826088484927,
+            "ci95_game": [
+              -0.19520559703922497,
+              1.5204911250136002
+            ],
+            "ci95_calendar_week": [
+              -0.14320332590313228,
+              1.5098182750398437
+            ],
+            "calendar_blocks": 4,
+            "context_support": true
+          },
+          "game/margin/2026-03": {
+            "games": 64,
+            "rows": 64,
+            "supported_for_overall_ranking": false,
+            "change": 0.5379245727433081,
+            "ci95_game": [
+              -0.18933217566847654,
+              1.2908056784554147
+            ],
+            "ci95_calendar_week": [
+              -0.07119380365841824,
+              1.4255268542454067
+            ],
+            "calendar_blocks": 5,
+            "context_support": true
+          },
+          "game/margin/2026-04": {
+            "games": 24,
+            "rows": 24,
+            "supported_for_overall_ranking": false,
+            "change": 0.5702852545031275,
+            "ci95_game": [
+              -0.9603113257983977,
+              2.6136271908837907
+            ],
+            "ci95_calendar_week": [
+              -0.9260639537308568,
+              2.942196925203313
+            ],
+            "calendar_blocks": 3,
+            "context_support": false
+          },
+          "game/total/2026-01": {
+            "games": 60,
+            "rows": 60,
+            "supported_for_overall_ranking": false,
+            "change": 0.4127881025909168,
+            "ci95_game": [
+              -0.339753875371656,
+              1.1650711659498183
+            ],
+            "ci95_calendar_week": [
+              -0.3300056644864024,
+              1.115432383984944
+            ],
+            "calendar_blocks": 5,
+            "context_support": true
+          },
+          "game/total/2026-02": {
+            "games": 52,
+            "rows": 52,
+            "supported_for_overall_ranking": false,
+            "change": 1.138981467140776,
+            "ci95_game": [
+              0.3214459294043751,
+              1.9877936284099949
+            ],
+            "ci95_calendar_week": [
+              0.4074999640668175,
+              1.9705503626746785
+            ],
+            "calendar_blocks": 4,
+            "context_support": true
+          },
+          "game/total/2026-03": {
+            "games": 64,
+            "rows": 64,
+            "supported_for_overall_ranking": false,
+            "change": 0.2949076456166596,
+            "ci95_game": [
+              -0.3920385209335072,
+              0.9381706082597647
+            ],
+            "ci95_calendar_week": [
+              -0.10361297347522122,
+              0.6938643006680173
+            ],
+            "calendar_blocks": 5,
+            "context_support": true
+          },
+          "game/total/2026-04": {
+            "games": 24,
+            "rows": 24,
+            "supported_for_overall_ranking": false,
+            "change": -1.8601729670363734,
+            "ci95_game": [
+              -3.6170899774574963,
+              -0.1793698108012333
+            ],
+            "ci95_calendar_week": [
+              -4.840105244605794,
+              0.7999240041825709
+            ],
+            "calendar_blocks": 3,
+            "context_support": false
+          },
+          "team/points/2026-01": {
+            "games": 60,
+            "rows": 120,
+            "supported_for_overall_ranking": false,
+            "change": 0.38895053861921114,
+            "ci95_game": [
+              0.021006080568927252,
+              0.7579497742934836
+            ],
+            "ci95_calendar_week": [
+              0.08257944105951698,
+              0.8046423491999717
+            ],
+            "calendar_blocks": 5,
+            "context_support": true
+          },
+          "team/points/2026-02": {
+            "games": 52,
+            "rows": 104,
+            "supported_for_overall_ranking": false,
+            "change": 0.64528009266381,
+            "ci95_game": [
+              0.21646638042006291,
+              1.0901915396980488
+            ],
+            "ci95_calendar_week": [
+              0.4620518989513186,
+              0.9598149925896502
+            ],
+            "calendar_blocks": 4,
+            "context_support": true
+          },
+          "team/points/2026-03": {
+            "games": 64,
+            "rows": 128,
+            "supported_for_overall_ranking": false,
+            "change": 0.3237677949236162,
+            "ci95_game": [
+              -0.01394306360700264,
+              0.6575468553638555
+            ],
+            "ci95_calendar_week": [
+              0.12011273644545845,
+              0.5043669683910582
+            ],
+            "calendar_blocks": 5,
+            "context_support": true
+          },
+          "team/points/2026-04": {
+            "games": 24,
+            "rows": 48,
+            "supported_for_overall_ranking": false,
+            "change": -0.11458595793865796,
+            "ci95_game": [
+              -0.790302185522903,
+              0.6014402914998868
+            ],
+            "ci95_calendar_week": [
+              -0.4019166111590314,
+              1.3298054576547187
+            ],
+            "calendar_blocks": 3,
+            "context_support": false
+          }
+        },
+        "rest_group": {
+          "game/margin/both": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 0.5084790451857251,
+            "ci95_game": [
+              0.07265291646910563,
+              0.9617556701561113
+            ],
+            "ci95_calendar_week": [
+              0.020381336191500416,
+              1.0215366604457132
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "game/total/both": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 0.291121302786843,
+            "ci95_game": [
+              -0.16091752519017932,
+              0.7290873767955435
+            ],
+            "ci95_calendar_week": [
+              -0.29104396043178304,
+              0.8008330743701578
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "team/points/1": {
+            "games": 64,
+            "rows": 75,
+            "supported_for_overall_ranking": false,
+            "change": 0.15378546468843501,
+            "ci95_game": [
+              -0.33228994620919416,
+              0.6545774185665754
+            ],
+            "ci95_calendar_week": [
+              -0.2540783830349872,
+              0.6031529440458762
+            ],
+            "calendar_blocks": 15,
+            "context_support": true
+          },
+          "team/points/2+": {
+            "games": 189,
+            "rows": 325,
+            "supported_for_overall_ranking": true,
+            "change": 0.42520441904269624,
+            "ci95_game": [
+              0.1805913982564829,
+              0.6756925343920575
+            ],
+            "ci95_calendar_week": [
+              0.1821122749880983,
+              0.6641056175476822
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          }
+        },
+        "side": {
+          "game/margin/both": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 0.5084790451857251,
+            "ci95_game": [
+              0.07265291646910563,
+              0.9617556701561113
+            ],
+            "ci95_calendar_week": [
+              0.020381336191500416,
+              1.0215366604457132
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "game/total/both": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 0.291121302786843,
+            "ci95_game": [
+              -0.16091752519017932,
+              0.7290873767955435
+            ],
+            "ci95_calendar_week": [
+              -0.29104396043178304,
+              0.8008330743701578
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "team/points/away": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 0.4057876754571803,
+            "ci95_game": [
+              0.10603832676482174,
+              0.7236268933455509
+            ],
+            "ci95_calendar_week": [
+              0.11886630529424667,
+              0.6966928935784326
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          },
+          "team/points/home": {
+            "games": 200,
+            "rows": 200,
+            "supported_for_overall_ranking": true,
+            "change": 0.34283905474536414,
+            "ci95_game": [
+              -0.00210485389488962,
+              0.689704151911889
+            ],
+            "ci95_calendar_week": [
+              0.06611605400284486,
+              0.673170326591743
+            ],
+            "calendar_blocks": 16,
+            "context_support": true
+          }
+        }
+      }
+    },
+    "unsupported_rows": 0
+  },
+  "games": 200,
+  "worlds": 1000,
+  "player_rows_per_model": 21460,
+  "population": "actual_participant",
+  "production_changed": false,
+  "reserved_or_protected_outcomes_opened": false,
+  "baseline_age_limitation": "One immutable recipe each; no panel-driven hyperparameter search, calibration, clipping, variance multipliers or revised acceptance. New fits and priors use only allowed training rows strictly earlier than origin. Fixed training ceiling 2025-12-31 for all 200 games avoids reserved outcomes. This age restriction is disclosed in comparisons; incumbent causal feature rows may include later prior history.",
+  "jobs": 10,
+  "inner_threads": 1,
+  "seconds": 13.437566832999437,
+  "checkpoint": 2,
+  "capability_progress_percent": 50,
+  "accuracy_gain": "No model change; comparison measures incumbency on previously explored conditional games",
+  "training": {
+    "training_games": 4117,
+    "player_games": 87960,
+    "unsupported_player_rows": 182,
+    "latest_training_date": "2025-12-31",
+    "cutoff": "2025-12-31",
+    "excluded_non_regular_cup_ids": [
+      "401607495",
+      "401734908",
+      "401809839"
+    ]
+  },
+  "team_residual_games": 500,
+  "verification": {
+    "kind": "C01 independent score and deterministic worker/resume check",
+    "games": 200,
+    "score_rows_checked": 45320,
+    "serial_and_two_workers_identical": true,
+    "cached_resume_hashes_verified": true,
+    "source_signature": "b93a7b196e3fffa57a1c55ca6ec6918dbc2f73bda449c7e38b8346b7a6614d5b"
+  },
+  "private_namespace": "data/derived/experiments/c01_benchmark_v1",
+  "plan_sha256": "b93a7b196e3fffa57a1c55ca6ec6918dbc2f73bda449c7e38b8346b7a6614d5b",
+  "report_sha256": "46fad369ac8efc3d2941c2d458f08114856c04ffef586a6d9528425a93a145f4",
+  "targeted_tests": {
+    "passed": 27,
+    "scope": "Independent numerical, cutoff, ordering, truth and provenance faults"
+  },
+  "decision": "Retain incumbent; neither fixed challenger improves the common-panel probability scores; age/shared-minute limitations prevent pure architecture attribution"
+}

@@ -65,7 +65,9 @@ export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM
 
 Source verification needs the retained private data. It checks hashes and independently reconciles private fixtures; it does not
 fit, simulate or measure forecast accuracy. The full legacy-test inventory is retained privately with the checkpoint manifest.
-Statistical comparison remains the next checkpoint in HANDOFF.
+The conditional statistical comparison is recorded in HANDOFF. `analysis/c01_benchmark.py` provides ordered `prepare`, `wiring`,
+`development` and `verify` stages; the completed namespace is immutable and stages refuse overwrite. It compares the incumbent
+with fixed player-rate/team-strength challengers; it does not promote either model. Connected diagnosis is in progress.
 
 For a qualified production/input/generation release:
 
