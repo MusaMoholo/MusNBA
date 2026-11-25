@@ -1,4 +1,4 @@
-# Handoff — C04 frozen; 15% accepted
+# Handoff — C04 models delivered; 50% accepted
 
 Updated 25 November 2026. [AGENTS](AGENTS.md) owns the changed working culture, [PLAN](PLAN.md) strategy,
 [MODEL](MODEL.md) evidence, [README](README.md) commands. C03 remains a completed negative search.
@@ -14,47 +14,28 @@ not establish joint forecast benefit. No favoured model or guaranteed accuracy g
 The [frozen numerical contract](analysis/c04_contract_v1.json) owns recipes, exact features/dates, budgets, thresholds and stopping.
 First establish a learnable causal task; then compare complete games. Infrastructure is supporting cost, not fallback product success.
 
-### Committed model capability
+### Frozen design and committed capability
 
-- Full supported chronological minute-history/roster dataset, no arbitrary training-row cap, same admitted information for every family.
-- Three working joint-minute distribution models: A learns corrections to the dated role allocator; B directly learns nonlinear minute
-  quantiles with historically learned joint dependence; C resamples analogous whole-team role/minute allocations. These are distinct
-  pre-game modelling architectures, not three settings of an event head. Closed-form A, training-only converged B and exact C get a credible fit.
-- All three must fit, predict and drive legal event worlds. Reuse source guards, rotation fitter, incumbent event/conversion mechanics,
-  scorers and independent accounting. No standalone trace workbench, UI, new provider or platform work.
-- Deliver the reusable joint-role/rotation model library, honest comparative evidence and independently reproduced finalists or a
-  bounded negative decision that distinguishes predictable-minute failure from failure to translate minute gains into joint forecasts.
+The contract freezes three distinct joint-minute architectures: learned residual correction (A), nonlinear quantile forecasts with
+empirical joint dependence (B), and whole-team historical roster analogues (C). All use full supported history and prior-only own/roster
+features. Final mean fits precede December 2025; December calibrates uncertainty. Same actual-participant information and exact native
+player keys throughout. No arbitrary training-row cap or outcome-driven recipe changes.
 
-### Evidence and decision
+All three must fit, predict and generate legal event worlds. Reuse source guards, fixed event/conversion/foul/clocks, rotation/scoring
+infrastructure and native stored controls. A bridge control passes native minutes through the same decoder to expose translation.
+No shot/point/possession targets, quotas, market fit or variance inflation. Minutes obey legal 0–48/player and 240/team constraints.
 
-All statistical inputs precede origin. Training spans supported December 2022–December 2025 history; model iteration selection uses
-October–November 2025 after fitting through June 2025; final means fit through November, joint residual/PIT calibration uses December.
-Only historical seasons 2023–2026 are read. Earlier games may update dated features before each evaluation origin; they do not become
-fresh tests. Current starters/minutes/labels never enter prediction. Roster membership is the same actual-participant conditional
-information used by the incumbent; no operational availability or original pre-tip claim.
-
-Use exactly the known B1 200 games, first 2 for wiring and first 20 for complete-game selection. First compare regulation-minute
-distributions cheaply against stored incumbent draws on all 200. A model needs at least 2% lower minute error with game/week
-selection-adjusted intervals below zero and acceptable critical-player/coverage behaviour. At most two pass, ordered by minute error.
-All mechanically valid families still deliver first 2 ×1,000-world adapters; no knowledge-only completion.
-
-Schedule translation is a named confound. A bridge control sends incumbent minute draws through the exact same new rotation decoder.
-Compare candidates with both the native stored incumbent and bridge control. Hold event/duration/conversion/foul/rebound policies fixed.
-No predicted full-game shots/points/possessions, quotas, market fit, output corrections or arbitrary variance inflation. Minute totals
-are legal time constraints: 0–48 per player and 240 per team in regulation, plus legal generated overtime.
-
-Only minute-screen survivors proceed to 20 games. Require at least 0.5% lower player-points distribution error against both controls,
-both simulation halves improving, and frozen player/team harm/runtime limits. Expand only qualifying finalists to fixed 200 ×1,000;
-require at least 1% player-points gain, familywise game/week support and acceptable minutes/threes/rebounds/assists, critical players,
-team scores/totals/margins/wins and coverage. All initial comparisons remain in multiplicity; development gains are never fresh confirmation.
-A research survivor requires separately frozen independent release evidence; no automatic promotion or production refresh.
+First screen all 200 known games' minute distributions. At most two models earning 2% lower minute CRPS with familywise game/week support,
+critical-player safety and acceptable 80%-interval coverage proceed. Valid models still deliver first two wiring games. Survivors alone
+get first 20 ×1,000 worlds and must improve player PTS by 0.5% against native/bridge controls with acceptable harms. Qualifiers alone
+expand to fixed 200 for 1% benefit, uncertainty and joint player/team checks. Development never becomes independent confirmation.
 
 ### Four checkpoints — commit/push before dependent work
 
 |Checkpoint|Weight|Required acceptance|
 |---|---:|---|
 |1. Freeze decisive comparison|15%|Changed culture/charter, full-history causal target/features, three credible recipes and exact budget/selection rules; invalid minutes, future/same-day history and current-label faults fail. Baseline smoke/docs pass. No fitting before commit/push.|
-|2. Learnable task and working models|35%|All full-history fits/predictions; training-only convergence/neutral-baseline evidence; all 200 minute screen; first 2 legal event-world adapters and bridge control; complete trial ledger and frozen shortlist.|
+|2. Learnable task and working models|35%|All full-history fits/predictions; training-only convergence/neutral-baseline evidence; all 200 minute screen; first 2 legal event-world adapters and bridge control; complete trial ledger and frozen shortlist. Accepted.|
 |3. Complete-game decision|35%|Survivors on20 then conditional 200, proper joint player/team scoring against both references, source/legal/accounting/worker/resume and selection-aware uncertainty. If none survives, independently verify the bounded negative; no unchanged-model ritual rerun.|
 |4. Reproduce and deliver|15%|Independent fits/probabilities/minute draws/world replay and decision; reusable model commands/artifacts; honest forecast gain versus accepted deliverables; replace HANDOFF with next concrete 0% charter.|
 
@@ -72,13 +53,27 @@ repairs without recipe/criterion changes. Private namespace `data/derived/experi
 If dated minute skill fails, say these models did not recover it. If minutes improve while full games fail, report the translation/joint
 failure. If native and bridge disagree, keep that confound visible. No class-wide impossibility claim or fourth post-hoc model.
 
-Baseline smoke has passed 118/118. Exact next actions:
+### Accepted evidence and exact next action
+
+Checkpoint 1 committed/pushed as `e0e0752`. Full data: 96,632 causal rows, 81,164 through 2025, 4,292 player-games on known 200.
+All models fit; B's seven quantile fits converge below the training budget. [Minute screen](analysis/experiments/20261125_c04_minute_screen_v1.json):
+CRPS reductions are 8.45%/11.50%/5.94% for A/B/C, but 80%-interval coverage is 71.4%/68.2%/73.9% versus 78.7% native.
+All fail coverage; shortlist empty. No 20/200 game expansion. These are conditional development component gains, not calibrated game
+improvement or operational confirmation.
+
+[Trial ledger](analysis/experiments/20261125_c04_trials_v1.json) retains two pre-fit reader repairs, unchanged criteria and all fits.
+Independent checks reproduce 1,256,216 source lag/truth values and 51,504 minute/half scores plus coverage. First two wiring games deliver
+8,000 legal worlds and 3,270 independently checked game/half scores. The old decoder has mean target errors about 0.4–0.6 minutes for
+challengers and rare errors near 16 minutes; this is separate from the pre-decoder calibration failure. Retain both limitations.
+
+No active jobs. Logs: `/tmp/c04_data_v3.log`, `/tmp/c04_fits.log`, `/tmp/c04_screen.log`, `/tmp/c04_wiring.log`, `/tmp/c04_audit.log`.
+Private namespace holds data/models/draws/completed game receipts. Baseline smoke 118/118; C04 tests 7/7; docs pass.
+Exact next: commit/push checkpoint 2; independently reproduce failed eligibility from saved minute rows/coverage and audit both decoder
+controls for checkpoint 3, then commit/push. Only after that run:
 
 ```sh
-.venv/bin/python -m unittest discover -s tests -p 'test_c04_*.py'
-.venv/bin/python scripts/check_docs.py
-git diff --check
+export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1
+.venv/bin/python analysis/c04_reproduce.py run --output data/derived/experiments/c04_reproduction_v1
 ```
 
-Then present this charter at high level, commit/push checkpoint 1, and implement the full-history data and three frozen models.
-Checkpoint 1 is accepted: no C04 data/model jobs have started. Source inspection/schema reads only; baseline log `/tmp/c04_baseline_smoke.log`.
+Report component gains, calibration failure and end-to-end/release status separately; replace this charter with next 0% work.

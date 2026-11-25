@@ -106,6 +106,20 @@ Completed data/fits/scores refuse overwrite; generation resumes only hash-verifi
 before a technical rerun. `finalists` replaces `mvp` only for the frozen shortlist; no eligible candidate means expansion is forbidden.
 These commands neither promote nor publish. Private fits/arrays/worlds remain ignored; aggregate receipts record the bounded decision.
 
+C04 adds three full-history joint-role/minute models. Use the same thread caps and isolated research scope:
+
+```sh
+.venv/bin/python analysis/c04_data.py verify
+.venv/bin/python analysis/c04_reproduce.py source
+.venv/bin/python analysis/c04_models.py all
+.venv/bin/python analysis/c04_screen.py
+.venv/bin/python analysis/c04_rollout.py wiring --jobs 2
+.venv/bin/python analysis/c04_reproduce.py run --output <new-private-directory>
+```
+
+Completed stages refuse overwrite. `short`/`final` generation fails closed without eligible models. Native captures stay immutable;
+new fits/draws/worlds stay ignored. These commands neither promote nor publish; MODEL owns results/limits.
+
 For a qualified production/input/generation release:
 
 ```sh

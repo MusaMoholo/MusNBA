@@ -1,0 +1,145 @@
+{
+  "sources": {
+    "analysis/c04_contract_v1.json": "8453b65180aa31e831580d07094eaddf4d825ee42b32e56f7937c538ce07e9e1",
+    "analysis/c04_data.py": "dfe97d7392528d4feb3a26556c1bd7a63d9cd6cbbac16335e693cf42d341af62",
+    "analysis/c04_core.py": "1de6aedefb9894a6905042ebfe7a518f1085492a7392bb7bacc3db83c4af4ef4",
+    "scripts/minutes.py": "94dd0ed25e536708c75cd4cf1f386bf2f9fa35f2c334d83cbdd031d4448ba2d0",
+    "data/derived/experiments/c01_benchmark_v1/plan.json": "b93a7b196e3fffa57a1c55ca6ec6918dbc2f73bda449c7e38b8346b7a6614d5b",
+    "data/derived/history/2023/on_court.parquet": "ba9b4b13e16e5b839e5530905497d2d00d231413ea40f39ee46855f3ebce8c3b",
+    "data/derived/history/2023/segments.parquet": "813b53edadf92f6e6c607211b1d4c64b312aa9fbe689851110e912419101a76e",
+    "data/derived/history/2024/on_court.parquet": "5461947edb052ef9e62b4a70ba49e57a0f98d929f4a19167f03aad3972457f95",
+    "data/derived/history/2024/segments.parquet": "4a7c3c2bce39580cc8e1092ffc215d11bbd49f7bf117b4551eee40337203d2c0",
+    "data/derived/history/2025/on_court.parquet": "5bbabab60114aa3f7fa096d7708be96f47177c541debcae88059da6b1adb77e9",
+    "data/derived/history/2025/segments.parquet": "d9db732172894ed8d3c6e5e99e3cd1c197006da22799413034ce3ce18cc5aee2",
+    "data/derived/history/2026/on_court.parquet": "1b0ffaf53490c3fda4edd28ac427766a0af3a1bfe86f1fece240cd63ed1e8410",
+    "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc"
+  },
+  "features": [
+    "n_history",
+    "last1",
+    "mean3",
+    "mean10",
+    "sd10",
+    "ewm5",
+    "ewm20",
+    "start5",
+    "start20",
+    "days_since",
+    "team_changed",
+    "healthy",
+    "cap",
+    "priority",
+    "start_share",
+    "missed",
+    "k_back",
+    "alloc",
+    "roster_n",
+    "healthy_sum",
+    "healthy_rank",
+    "mean10_sum",
+    "alloc_gap"
+  ],
+  "source_reads": [
+    {
+      "year": 2023,
+      "rows": 18662,
+      "games": 893,
+      "predicate": [
+        [
+          "date_et",
+          ">=",
+          "2022-12-01"
+        ],
+        [
+          "date_et",
+          "<=",
+          "2026-04-12"
+        ],
+        [
+          "season_type",
+          "==",
+          2
+        ]
+      ],
+      "flagged_reconstructed_minute_games": 77
+    },
+    {
+      "year": 2024,
+      "rows": 25836,
+      "games": 1204,
+      "predicate": [
+        [
+          "date_et",
+          ">=",
+          "2022-12-01"
+        ],
+        [
+          "date_et",
+          "<=",
+          "2026-04-12"
+        ],
+        [
+          "season_type",
+          "==",
+          2
+        ]
+      ],
+      "flagged_reconstructed_minute_games": 119
+    },
+    {
+      "year": 2025,
+      "rows": 25981,
+      "games": 1215,
+      "predicate": [
+        [
+          "date_et",
+          ">=",
+          "2022-12-01"
+        ],
+        [
+          "date_et",
+          "<=",
+          "2026-04-12"
+        ],
+        [
+          "season_type",
+          "==",
+          2
+        ]
+      ],
+      "flagged_reconstructed_minute_games": 127
+    },
+    {
+      "year": 2026,
+      "rows": 26154,
+      "games": 1207,
+      "predicate": [
+        [
+          "date_et",
+          ">=",
+          "2022-12-01"
+        ],
+        [
+          "date_et",
+          "<=",
+          "2026-04-12"
+        ],
+        [
+          "season_type",
+          "==",
+          2
+        ]
+      ],
+      "flagged_reconstructed_minute_games": 142
+    }
+  ],
+  "training_rows": 81164,
+  "selection_rows": 6466,
+  "calibration_rows": 4219,
+  "panel_rows": 4292,
+  "total_rows": 96632,
+  "rows_sha256": "3153ea37bfe1533b192e60e1021dea1c5718df8ca3614b1381be8ba45a7b4d31",
+  "seconds": 27.038054915999965,
+  "source_population": "actual participants with original reconstructed regulation seconds, reconciliation flags retained; no current starter/label features",
+  "production_changed": false
+}

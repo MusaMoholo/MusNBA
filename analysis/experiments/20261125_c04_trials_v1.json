@@ -1,0 +1,239 @@
+{
+  "kind": "C04 complete initial trial ledger",
+  "contract": "analysis/c04_contract_v1.json",
+  "recipes": {
+    "A": {
+      "configurations": 1,
+      "fit": {
+        "family": "A",
+        "training_through": "2025-12-31",
+        "full_mean_fit_rows": 76945,
+        "selection_fit_rows": 70479,
+        "selection_rows": 6466,
+        "joint_calibration_rows": 4219,
+        "code_sha256": "533d59b75b763a7000cad0c084e42bd481414abd49d7f465132d7bd8dcd9b7fd",
+        "contract_sha256": "8453b65180aa31e831580d07094eaddf4d825ee42b32e56f7937c538ce07e9e1",
+        "data_sha256": "00fc2ecc4a76fc46c6d030599dc2cc96a748dd21c39d38900d25d17c9a247649",
+        "training_credibility": {
+          "minute_mae": 4.407784114002759,
+          "neutral_240_per_roster_mae": 8.572892156971804,
+          "dated_allocator_mae": 4.8635940329936895,
+          "relative_gain_vs_neutral": 0.48584631262179356,
+          "rows": 6466
+        },
+        "capacity": "closed-form ridge lambda100; all rows; no optimisation cap",
+        "hashes": {
+          "ridge.json": "a3b4fe4748f7f0ec6416d4e7033d5d5cfcc47c74f75b52d5289961bd5ae37068",
+          "residuals.json": "e9da027abcfd64b20470c84cedb780035c9124e106740ddd1a425097dcdea239"
+        },
+        "seconds": 0.8343472910019045,
+        "selection_only_before_panel": true,
+        "production_changed": false
+      },
+      "minute_screen": {
+        "eligible": false,
+        "checks": {
+          "minute_gain": true,
+          "game_week_support": true,
+          "critical_harm": true,
+          "coverage80": false
+        }
+      }
+    },
+    "B": {
+      "configurations": 1,
+      "fit": {
+        "family": "B",
+        "training_through": "2025-12-31",
+        "full_mean_fit_rows": 76945,
+        "selection_fit_rows": 70479,
+        "selection_rows": 6466,
+        "joint_calibration_rows": 4219,
+        "code_sha256": "533d59b75b763a7000cad0c084e42bd481414abd49d7f465132d7bd8dcd9b7fd",
+        "contract_sha256": "8453b65180aa31e831580d07094eaddf4d825ee42b32e56f7937c538ce07e9e1",
+        "data_sha256": "00fc2ecc4a76fc46c6d030599dc2cc96a748dd21c39d38900d25d17c9a247649",
+        "quantile_fits": [
+          {
+            "q": 0.02,
+            "rounds": 237,
+            "selection_pinball": 0.30543725692020685,
+            "budget_bound": false,
+            "learning_curve": {
+              "1": 0.41529774612819964,
+              "101": 0.3094406810063768,
+              "201": 0.30568075439145703,
+              "237": 0.30543725692020685
+            }
+          },
+          {
+            "q": 0.1,
+            "rounds": 310,
+            "selection_pinball": 0.9853654795942014,
+            "budget_bound": false,
+            "learning_curve": {
+              "1": 1.8332135610240965,
+              "101": 1.0164134910298466,
+              "201": 0.9867357400134357,
+              "301": 0.9854742856044267,
+              "310": 0.9853654795942014
+            }
+          },
+          {
+            "q": 0.25,
+            "rounds": 371,
+            "selection_pinball": 1.7223355110218501,
+            "budget_bound": false,
+            "learning_curve": {
+              "1": 3.532882998109407,
+              "101": 1.757569831165388,
+              "201": 1.726172661620302,
+              "301": 1.7237981124132626,
+              "371": 1.7223355110218501,
+              "401": 1.7225805697404517
+            }
+          },
+          {
+            "q": 0.5,
+            "rounds": 346,
+            "selection_pinball": 2.1242070773423114,
+            "budget_bound": false,
+            "learning_curve": {
+              "1": 4.300771151899391,
+              "101": 2.1570558260783885,
+              "201": 2.127075139275224,
+              "301": 2.12567565658739,
+              "346": 2.1242070773423114,
+              "401": 2.124637290691575
+            }
+          },
+          {
+            "q": 0.75,
+            "rounds": 447,
+            "selection_pinball": 1.6935837646244734,
+            "budget_bound": false,
+            "learning_curve": {
+              "1": 3.1118174123531337,
+              "101": 1.7206824419036477,
+              "201": 1.6990515322592004,
+              "301": 1.695232603528156,
+              "401": 1.6938533506248723,
+              "447": 1.6935837646244734,
+              "501": 1.6941778096540063
+            }
+          },
+          {
+            "q": 0.9,
+            "rounds": 222,
+            "selection_pinball": 0.9376737616620316,
+            "budget_bound": false,
+            "learning_curve": {
+              "1": 1.5322098783675375,
+              "101": 0.9528655783543434,
+              "201": 0.9380179219586997,
+              "222": 0.9376737616620316
+            }
+          },
+          {
+            "q": 0.98,
+            "rounds": 266,
+            "selection_pinball": 0.261882889963681,
+            "budget_bound": false,
+            "learning_curve": {
+              "1": 0.3658978885879882,
+              "101": 0.2654394618811216,
+              "201": 0.26204705295916464,
+              "266": 0.261882889963681,
+              "301": 0.2620089668824743
+            }
+          }
+        ],
+        "training_credibility": {
+          "minute_mae": 4.23014713778839,
+          "neutral_240_per_roster_mae": 8.572892156971804,
+          "dated_allocator_mae": 4.8635940329936895,
+          "relative_gain_vs_neutral": 0.5065670884068835,
+          "rows": 6466
+        },
+        "hashes": {
+          "q0.txt": "d4ab6d8f42a70505b742637d1630912d9b8b1c669346a0be5d7a93218cf4a4bc",
+          "q1.txt": "8a4af08ea47febc9efe2ef1b758859176695d3052575c65acf5d29f3f3aa4aba",
+          "q2.txt": "4963a87dba0618b8fb350689dbc57a8abf242ccebf9a9468fc4da5ad8274b9c4",
+          "q3.txt": "514aa36a496c52e2186a8a84804bfb2ddc03f8c72ecabff8ac199d33f3efa6bf",
+          "q4.txt": "6fbdb67a5c5e395cf5c940edcfec392e355c12603cf70c781a16b18a41d5d088",
+          "q5.txt": "0f181c62f52858f8ec5c72ee7b0983459e72f0c86e3d4bf91e6ae038778f7e08",
+          "q6.txt": "2a2cb8a1795e68d45431e8ff4398755ab6bc98b4b5b67a28dd3116c56421c408",
+          "pits.json": "034e0fd836c0d15ca80e07f2c0a1d818d73af17cf116c710f8e58eede5a6b427"
+        },
+        "seconds": 29.358754958000645,
+        "selection_only_before_panel": true,
+        "production_changed": false
+      },
+      "minute_screen": {
+        "eligible": false,
+        "checks": {
+          "minute_gain": true,
+          "game_week_support": true,
+          "critical_harm": true,
+          "coverage80": false
+        }
+      }
+    },
+    "C": {
+      "configurations": 1,
+      "fit": {
+        "family": "C",
+        "training_through": "2025-12-31",
+        "full_mean_fit_rows": 76945,
+        "selection_fit_rows": 70479,
+        "selection_rows": 6466,
+        "joint_calibration_rows": 4219,
+        "code_sha256": "533d59b75b763a7000cad0c084e42bd481414abd49d7f465132d7bd8dcd9b7fd",
+        "contract_sha256": "8453b65180aa31e831580d07094eaddf4d825ee42b32e56f7937c538ce07e9e1",
+        "data_sha256": "00fc2ecc4a76fc46c6d030599dc2cc96a748dd21c39d38900d25d17c9a247649",
+        "training_credibility": {
+          "minute_mae": 4.530485960987004,
+          "neutral_240_per_roster_mae": 8.572892156971804,
+          "dated_allocator_mae": 4.8635940329936895,
+          "relative_gain_vs_neutral": 0.47153354106960976,
+          "rows": 6466
+        },
+        "team_library_size": 7602,
+        "hashes": {
+          "analogues.json": "db5c0b05c287062f52c6dca9c3fbdb41d7219deb5625e1cf6fd39716c97590a4"
+        },
+        "seconds": 22.350572292001743,
+        "selection_only_before_panel": true,
+        "production_changed": false
+      },
+      "minute_screen": {
+        "eligible": false,
+        "checks": {
+          "minute_gain": true,
+          "game_week_support": true,
+          "critical_harm": true,
+          "coverage80": false
+        }
+      }
+    }
+  },
+  "shortlist": [],
+  "wiring_games": 2,
+  "new_wiring_worlds": 8000,
+  "technical_faults": [
+    {
+      "stage": "data preparation before fits/scores",
+      "reason": "Reader incorrectly required observed reconstructed minute sums to equal240; preserved unscaled truth and quality flags instead of dropping panel games.",
+      "retained_namespace": "data/derived/experiments/c04_joint_roles_preparation_fault_v1",
+      "recipes_or_decision_changed": false
+    },
+    {
+      "stage": "data preparation before fits/scores",
+      "reason": "Two source participants differ from pinned native support; align evaluated roster to exact native IDs, retain original prior history updates.",
+      "retained_namespace": "data/derived/experiments/c04_joint_roles_support_fault_v1",
+      "recipes_or_decision_changed": false
+    }
+  ],
+  "component_result": "All3 improve minute CRPS with familywise game/week support; all3 fail fixed coverage-distance limit. No20/200 expansion.",
+  "engine_result": "Legal first2 wiring games, not end-to-end accuracy qualification",
+  "production_changed": false
+}

@@ -194,6 +194,13 @@ C03 [closes](analysis/experiments/20261125_c03_completion_v1.json) after [fresh 
 all three model files/probabilities match exactly, independent probability scores agree within 7e-16, and each freshly fitted
 single-worker 1,000-world replay matches every original multi-worker array. Deliverables are complete; forecast gains are not demonstrated.
 
+C04's [joint-role screen](analysis/experiments/20261125_c04_minute_screen_v1.json), 200 known games/4,292 player-games, finds
+predictable minute skill: regulation-minute CRPS falls from 3.522 native to 3.224/3.117/3.313 for residual/nonlinear/analogue models.
+Lower is better; nonlinear change −0.405 minutes has 95% game interval −0.481 to −0.329 and familywise game/week support. However 80%
+intervals cover only 71.4%/68.2%/73.9%, versus 78.7% native. All fail frozen coverage; no expanded game comparison or promotion.
+These are dated actual-participant development component gains, not calibrated game/operational gains. Source minute gaps remain
+unscaled/flagged. Two-game wiring is mechanical evidence; old rotation-fitter tail errors remain a translation limitation.
+
 The B1 component audit remains reusable source evidence. The long-shot recipe failed
 (`20261124_b1_development_decision_v2.json`). A substitution attempt improved minutes without establishing required game compatibility
 (`20261124_c4_s06_independent_decision_v1.json`). Neither identifies the best next intervention.
