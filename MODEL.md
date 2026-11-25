@@ -137,8 +137,20 @@ actual games: about 26% to 41% of the observed association. This is not predicti
 current r3 remeasurement. Observational context, rating noise and uncertainty matter; forcing the ratio to 100% is not a valid goal.
 The broader defence change also improved historical probability scores; its remaining headroom must be re-established fairly.
 
-`analysis/experiments/20261124_b1_source_audit_v2.json`: known 200-game conditional panel, team CRPS 6.4149, MAE 8.9648,
-bias +1.0778 (95% −.1470 to 2.2897). Component/player breakdowns already exist; reuse them. The long-shot recipe failed
+C01 [benchmark](analysis/experiments/20261125_c01_benchmark_v1.json) reuses the known B1 panel: 200 games, 400 team-games,
+4,292 actual-participant player-games. Team-points CRPS (distribution error in points; lower is better) is 6.415 incumbent,
+6.789 team-strength and 7.759 player-rate. Team-strength's extra error is 0.374 points (95% game interval .163–.586).
+Older baseline history/shared minutes prevent pure architecture attribution; no production gain is claimed.
+
+[Connected diagnostics](analysis/experiments/20261125_c01_localisation_v1.json): giving the fixed rate model real minutes reduces
+player-points CRPS by 0.605 points (95% .549–.665) but worsens team-points CRPS by 0.294 (.115–.487). Real minutes plus shot attempts
+reduce player error by 1.487 (1.407–1.572); team CRPS 6.568 still does not establish a gain over the incumbent. These are separate,
+outcome-informed information diagnostics, not deployable gains or additive causal shares. Preserve joint team behaviour when improving players.
+On identical recorded histories, shared and independently accumulated candidate features agree. The actor-time phase difference
+has small one-step score impact; the opponent-defence coefficient gap is unresolved with game uncertainty. Zone replay is a separate
+scenario, not original incumbent zones. These findings do not justify a clock/defence coefficient fix by assumption.
+
+The B1 component audit remains reusable source evidence. The long-shot recipe failed
 (`20261124_b1_development_decision_v2.json`). A substitution attempt improved minutes without establishing required game compatibility
 (`20261124_c4_s06_independent_decision_v1.json`). Neither identifies the best next intervention.
 `20261124_b2_decision_v1.json`: three season-strength candidates did not qualify; historical schedule/exposure limits remain.

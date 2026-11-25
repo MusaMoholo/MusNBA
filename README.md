@@ -60,14 +60,17 @@ C01 now has separate synthetic/fault and pinned-source checks:
 ```sh
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1
 .venv/bin/python -m unittest discover -s tests -p 'test_c01_*.py'
-.venv/bin/python analysis/c01_workbench.py verify
+.venv/bin/python analysis/c01_run.py source
+.venv/bin/python analysis/c01_run.py reproduce --jobs 10
+.venv/bin/python analysis/c01_run.py ledger-audit
 ```
 
-Source verification needs the retained private data. It checks hashes and independently reconciles private fixtures; it does not
-fit, simulate or measure forecast accuracy. The full legacy-test inventory is retained privately with the checkpoint manifest.
-The conditional statistical comparison is recorded in HANDOFF. `analysis/c01_benchmark.py` provides ordered `prepare`, `wiring`,
-`development` and `verify` stages; the completed namespace is immutable and stages refuse overwrite. It compares the incumbent
-with fixed player-rate/team-strength challengers; it does not promote either model. Connected diagnosis is in progress.
+`source` checks pinned hashes/private fixtures without fitting or simulation. `reproduce` creates a fresh ignored namespace and
+recreates fits, baseline draws, oracle/event scores and aggregate conclusions from pinned inputs; incumbent/zone worlds are reused
+as inputs. Completed experiment stages refuse overwrite. The legacy-test inventory stays private with the foundation manifest.
+`ledger-capture --request PATH` requires all artifact hashes and model/input/report/retrieval/generation times; see
+[the capture API](analysis/c01_ledger.py). Unknown/late evidence fails closed. Historical snapshots are never backfilled as originals.
+The separate browser/release commands above cover UI/delivery; research commands do not publish or promote a model.
 
 For a qualified production/input/generation release:
 

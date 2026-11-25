@@ -1,4 +1,4 @@
-# Handoff — C01 benchmark delivered; connected diagnosis next
+# Handoff — C01 connected diagnosis delivered; final reproduction next
 
 Updated 25 November 2026. C01 conditional research benchmark complete; no production change, forecast refresh or app release. Incumbent: engine-v1.3-r3, its accepted rotations/foul/timing rules, report-bands-v1 availability and team-pathway-v1.
 PWA/bundles unchanged. Owner 8766/review 8767 remain local servers; Git owns the checkpoint identity.
@@ -9,19 +9,24 @@ No old task or future chunk is an obligation. The first chunk below is the sole 
 
 ## Active chunk: C01 — rebuild measurement and locate the largest accuracy bottleneck
 
-**Status: checkpoints 1–2 accepted; 50% of committed capability delivered. Production accuracy gain: none claimed.**
+**Status: checkpoints 1–3 accepted; 85% of committed capability delivered. Production accuracy gain: none claimed.**
 
-Accepted [contract](analysis/c01_contract_v1.json), [foundation](analysis/experiments/20261125_c01_checkpoint1_v1.json) and
-[benchmark](analysis/experiments/20261125_c01_benchmark_v1.json). On 200 explored games, team-points CRPS (a distribution error in
-points; lower is better) is 6.415 incumbent, 7.759 player-rate and 6.789 team-strength. The latter's extra error is .374 points,
-95% whole-game interval .163–.586. Shared minutes and older baseline history limit architecture attribution. All 45,320 score rows
-agree with independent arithmetic; serial/two-worker repeats agree. Twenty-seven targeted tests and 118/118 baseline checks pass.
+Accepted [contract](analysis/c01_contract_v1.json), [foundation](analysis/experiments/20261125_c01_checkpoint1_v1.json),
+[benchmark](analysis/experiments/20261125_c01_benchmark_v1.json) and [connected diagnosis](analysis/experiments/20261125_c01_localisation_v1.json).
+[MODEL](MODEL.md) holds measured results and limitations. All 45,320 benchmark scores agree with independent arithmetic;
+119 shared and 118 candidate features have no mismatches on identical recorded histories. The separate actor timing phase has
+small measured score impact. Forty-six targeted checks and 118/118 baseline checks pass.
 
-Private namespaces: `data/derived/experiments/c01_accuracy_workbench_v2` and `data/derived/experiments/c01_benchmark_v1`.
-No running jobs. All 200 games support official box accounting; 501/49,002 segments have actors outside recorded fives, requiring
-row-level event support. Stored worlds lack zone counts. No historical operational population is certified.
-Initial adapter v1 stays immutable; original dependencies are at `~/Basketball_archive_ops/20261125_c01_initial_adapter_v1`.
-Continue directly through checkpoints 3–4; report accepted percentages and do not stop at another intermediate checkpoint.
+Private namespaces: `data/derived/experiments/c01_accuracy_workbench_v2`, `c01_benchmark_v1` and `c01_diagnostics_v2` under the
+same experiments directory. No running jobs. Full 200 diagnosis execution took 1238s, ten workers ×1; log:
+`/private/tmp/musnba-c01-diagnostic-development-v2.log`. Localisation: `/private/tmp/musnba-c01-localisation-v1.log`.
+Twenty replay/oracle receipts were reused after a candidate-group decoder repair; v1 and archived dependencies remain immutable.
+One fresh single-worker 1k replay exactly matches the ten-worker arrays/oracles in `data/derived/experiments/c01_replay_worker_check_v1`.
+All 200 games support official box accounting; 501/49,002 segments have actors outside recorded fives. Original worlds lack zone
+counts; the separately labelled stored-schedule replay supplies them. No historical operational population is certified.
+Initial adapter dependencies remain at `~/Basketball_archive_ops/20261125_c01_initial_adapter_v1`; corrected group-guard sources
+are preserved at `~/Basketball_archive_ops/20261125_c01_diagnostic_group_guard_v1`.
+Finish checkpoint 4 directly; report accepted percentages and do not stop before C01 closes.
 
 Question: which observable/input/model failures create the largest recoverable player and team error, and how much value does
 our complex generator add over credible simpler alternatives?
@@ -57,7 +62,7 @@ Dependencies are sequential; overlap independent source/fixture work and bounded
 |---|---:|---|---|
 |1. Truth and comparison contract — accepted|20%|Test inventory by failure mode/independence/cost; shared game/player/event schema; source/cutoff/exposure manifest; explicit definitions of possessions, periods, scoring and forecast populations; prospective numerical scoring/diagnostic contract|Known accounting cases cover ordinary games, OT, technical FT, DNP/unknown and broken clocks/IDs. Valid fixtures reconcile; deliberate corruption/leakage and known-bad forecasts fail for the intended reason. Map legacy tests to retain/replace/remove; replace their real coverage before removal. Record support and unsupported fields for all 200 games. Freeze baseline recipes and evaluation settings before scores.|
 |2. Common benchmark and challengers — accepted|30%|Independent reference scorer and small deterministic unit/property suite; one runner/scorer for incumbent, a prior-only player-rate model with documented shared minutes input, and a regularised direct team-strength model with joint residual uncertainty; cached per-game/player outputs|Same IDs/origins/truth/metric semantics. Team baseline is team-only diagnostic; player baseline sums its own players. Self-comparison gives zero; perfect/known-bad forecasts and outside-support/missing-data cases score correctly. Repeated seeds/workers reproduce; independent calculation agrees; report 200-game support, simulation noise and wall time. All fit/residual inputs pass cutoff injection.|
-|3. Connected error localisation|35%|Training/runtime feature parity on identical recorded history; observed-context next-event scoring versus free-running evaluation; per-player/team/context error budget; realised-input diagnostic adapters for minutes/on-court support and opportunity counts; distributions/joint checks|Source scoring identities remain exact. Oracle scope/estimand and unsupported cases are explicit; diagnostics are not live forecasts or additive causal attributions. Show how conclusions change across predeclared contexts and simulation noise. Reproduce on the wiring panel and complete the fixed 200-game analysis.|
+|3. Connected error localisation — accepted|35%|Training/runtime feature parity on identical recorded history; observed-context next-event scoring versus free-running evaluation; per-player/team/context error budget; realised-input diagnostic adapters for minutes/on-court support and opportunity counts; distributions/joint checks|Source scoring identities remain exact. Oracle scope/estimand and unsupported cases are explicit; diagnostics are not live forecasts or additive causal attributions. Show how conclusions change across predeclared contexts and simulation noise. Reproduce on the wiring panel and complete the fixed 200-game analysis.|
 |4. Repeatable operation and next decision|15%|Separate fast unit, source/integration, statistical and browser/release commands with explicit scope; one documented command recreates the comparison from pinned inputs; prospective ledger captures model/input/report/retrieval times and pre-tip provenance; ranked bottlenecks and next charter|An independent run reproduces aggregate conclusions; ledger never overwrites original forecasts, uses only truly captured pre-tip state, and fails closed on unknown timing. Select the next bottleneck with effect/support/cost/uncertainty and architecture alternatives. Deliver working tools and a concrete 0% successor; keep later plans provisional.|
 
 Baseline recipes are frozen in the linked contract: shrunk player rates with shared incumbent minutes; ridge team strength with
@@ -83,20 +88,23 @@ An incomplete workbench remains incomplete. No model-promotion, season-tuning or
 
 ### First actions and release boundary
 
-Checkpoint 3 first actions: use the pinned benchmark; implement source-bound observed-context prediction/parity, realised-input
-adapters and connected defence/zone/joint error analysis in new modules. Preserve completed source dependencies before any
-replacement. Existing signatures must never silently accept changed code. Source verification uses all four thread caps:
+Checkpoint4 first actions: verify sources, reproduce fits/baseline samples/oracles/event scores/conclusions in a new namespace,
+then validate prospective capture and select the successor. Existing signatures never silently accept changed code.
 
 ```sh
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1
 .venv/bin/python -m unittest discover -s tests -p 'test_c01_*.py'
-.venv/bin/python analysis/c01_workbench.py verify
+.venv/bin/python analysis/c01_run.py source
+.venv/bin/python -u analysis/c01_run.py reproduce --jobs 10
+.venv/bin/python analysis/c01_run.py ledger-audit
 .venv/bin/python scripts/check_docs.py
 ```
 
-Benchmark stages `analysis/c01_benchmark.py prepare`, `wiring`, `development`, `verify` have completed in order; their immutable
-receipts refuse overwrite. Do not rerun them in place. Keep foundation `verify` repeatable. Start diagnosis on the first 20 IDs,
-then all 200; no reserved/protected outcome reads or panel tuning. Production remains unchanged throughout isolated research.
+Completed benchmark/diagnostic stages refuse overwrite. `reproduce` makes a fresh private namespace; incumbent/zone worlds
+are pinned inputs, while fits, baseline draws and oracle/event scores are recreated. Standalone ledger code rejects unknown/late
+timing and historical backfill. Full independent reproduction, ledger integration acceptance and the next decision remain pending;
+prepared code/test passes alone do not earn the final 15%. Production stays unchanged in isolated research.
+
 Pure research checkpoints need targeted tests/fault injection/accounting, not a production nightly. A generation/provenance hook
 change must pass integration checks and one fresh full release nightly at chunk end, before it becomes live:
 `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u scripts/nightly_musnba.py --engine 10000 --sims 10000`.
