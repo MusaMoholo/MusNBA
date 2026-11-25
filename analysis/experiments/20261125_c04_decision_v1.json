@@ -1,0 +1,148 @@
+{
+  "kind": "C04 independent component-skill and calibration-stop audit",
+  "games": 200,
+  "player_games": 4292,
+  "independent_arithmetic": {
+    "A": {
+      "crps_change": -0.29770189649892265,
+      "relative_change": -0.08452444447576735,
+      "coverage80": 0.7141192917054986,
+      "coverage80_distance_deterioration": 0.0731593662628145,
+      "coverage_rule_passed": false,
+      "independent_familywise_game": [
+        -0.37644080505675415,
+        -0.21765614171136954
+      ],
+      "source_quality_sensitivity": {
+        "reconciled": {
+          "games": 175,
+          "player_games": 3761,
+          "native_crps": 3.539869196524136,
+          "candidate_crps": 3.240433914083985,
+          "native_coverage80": 0.7859611805370912,
+          "candidate_coverage80": 0.7115128955065142,
+          "interpretation": "diagnostic only; fixed all200 decision unchanged"
+        },
+        "flagged": {
+          "games": 25,
+          "player_games": 531,
+          "native_crps": 3.3960854968785976,
+          "candidate_crps": 3.1106609347016345,
+          "native_coverage80": 0.7966101694915254,
+          "candidate_coverage80": 0.7325800376647834,
+          "interpretation": "diagnostic only; fixed all200 decision unchanged"
+        }
+      },
+      "critical_coverage80": 0.7517241379310344
+    },
+    "B": {
+      "crps_change": -0.40502496919642605,
+      "relative_change": -0.11499594366966548,
+      "coverage80": 0.6824324324324325,
+      "coverage80_distance_deterioration": 0.10484622553588063,
+      "coverage_rule_passed": false,
+      "independent_familywise_game": [
+        -0.49743093890180795,
+        -0.3139335194542258
+      ],
+      "source_quality_sensitivity": {
+        "reconciled": {
+          "games": 175,
+          "player_games": 3761,
+          "native_crps": 3.539869196524136,
+          "candidate_crps": 3.1395870257561587,
+          "native_coverage80": 0.7859611805370912,
+          "candidate_coverage80": 0.679606487636267,
+          "interpretation": "diagnostic only; fixed all200 decision unchanged"
+        },
+        "flagged": {
+          "games": 25,
+          "player_games": 531,
+          "native_crps": 3.3960854968785976,
+          "candidate_crps": 2.957467938436604,
+          "native_coverage80": 0.7966101694915254,
+          "candidate_coverage80": 0.7024482109227872,
+          "interpretation": "diagnostic only; fixed all200 decision unchanged"
+        }
+      },
+      "critical_coverage80": 0.7172413793103448
+    },
+    "C": {
+      "crps_change": -0.20922109322751056,
+      "relative_change": -0.05940270077430312,
+      "coverage80": 0.7388164026095061,
+      "coverage80_distance_deterioration": 0.048462255358806994,
+      "coverage_rule_passed": false,
+      "independent_familywise_game": [
+        -0.30232788443118686,
+        -0.11923118032512774
+      ],
+      "source_quality_sensitivity": {
+        "reconciled": {
+          "games": 175,
+          "player_games": 3761,
+          "native_crps": 3.539869196524136,
+          "candidate_crps": 3.338166064089504,
+          "native_coverage80": 0.7859611805370912,
+          "candidate_coverage80": 0.7359744748737038,
+          "interpretation": "diagnostic only; fixed all200 decision unchanged"
+        },
+        "flagged": {
+          "games": 25,
+          "player_games": 531,
+          "native_crps": 3.3960854968785976,
+          "candidate_crps": 3.133615720897757,
+          "native_coverage80": 0.7966101694915254,
+          "candidate_coverage80": 0.7589453860640302,
+          "interpretation": "diagnostic only; fixed all200 decision unchanged"
+        }
+      },
+      "critical_coverage80": 0.7275862068965517
+    }
+  },
+  "decision": "No candidate advances: meaningful dated minute skill recovered, frozen uncertainty-coverage rule fails for every family. No end-to-end improvement established.",
+  "shortlist": [],
+  "expanded_game_accuracy_panel": false,
+  "what_is_ruled_out": "Lack of usable signal in these dated minute/role features cannot explain all earlier model failures; all3 improve proper minute scores with full-slate game/week support.",
+  "what_remains_unresolved": "Why joint uncertainty is too narrow after legal projection; schedule decoder separately distorts some target tails. Neither model-class impossibility nor successful player-points/team translation established.",
+  "decoder_diagnostic": {
+    "bridge": {
+      "mean_absolute_minutes": 0.17218972236704594,
+      "max_absolute_minutes": 0.5000000000000036
+    },
+    "A": {
+      "mean_absolute_minutes": 0.5265810001505616,
+      "max_absolute_minutes": 15.976789995194906
+    },
+    "B": {
+      "mean_absolute_minutes": 0.5014923832439565,
+      "max_absolute_minutes": 16.703846057474742
+    },
+    "C": {
+      "mean_absolute_minutes": 0.581991534765403,
+      "max_absolute_minutes": 16.28877272727273
+    }
+  },
+  "history_audit": {
+    "rows": 96632,
+    "independent_lag_truth_values_checked": 1256216,
+    "maximum_difference": 3.552713678800501e-14,
+    "future_and_current_outcomes_excluded": true
+  },
+  "minute_audit": {
+    "games": 200,
+    "scalar_half_scores_checked": 51504,
+    "maximum_difference": 2.4868995751603507e-14,
+    "coverage_independently_verified": true,
+    "all_joint_targets_legal": true
+  },
+  "world_audit": {
+    "games": 2,
+    "new_worlds_checked": 8000,
+    "scalar_half_scores_checked": 3270,
+    "maximum_difference": 8.526512829121202e-14,
+    "all_world_accounting_passed": true
+  },
+  "source_sha256": "a35deb7fa60a36a29a2cc2788020b97ed25e1e01b35406873c9f0aba986ac22a",
+  "production_changed": false
+}

@@ -199,7 +199,8 @@ predictable minute skill: regulation-minute CRPS falls from 3.522 native to 3.22
 Lower is better; nonlinear change −0.405 minutes has 95% game interval −0.481 to −0.329 and familywise game/week support. However 80%
 intervals cover only 71.4%/68.2%/73.9%, versus 78.7% native. All fail frozen coverage; no expanded game comparison or promotion.
 These are dated actual-participant development component gains, not calibrated game/operational gains. Source minute gaps remain
-unscaled/flagged. Two-game wiring is mechanical evidence; old rotation-fitter tail errors remain a translation limitation.
+unscaled/flagged. The [independent audit](analysis/experiments/20261125_c04_decision_v1.json) reproduces eligibility and confirms the same
+gain/undercoverage pattern on 175 reconciled games. Two-game wiring is mechanical evidence; old rotation-fitter tail errors remain a translation limitation.
 
 The B1 component audit remains reusable source evidence. The long-shot recipe failed
 (`20261124_b1_development_decision_v2.json`). A substitution attempt improved minutes without establishing required game compatibility

@@ -1,4 +1,4 @@
-# Handoff — C04 models delivered; 50% accepted
+# Handoff — C04 models delivered; 85% accepted
 
 Updated 25 November 2026. [AGENTS](AGENTS.md) owns the changed working culture, [PLAN](PLAN.md) strategy,
 [MODEL](MODEL.md) evidence, [README](README.md) commands. C03 remains a completed negative search.
@@ -55,21 +55,19 @@ failure. If native and bridge disagree, keep that confound visible. No class-wid
 
 ### Accepted evidence and exact next action
 
-Checkpoint 1 committed/pushed as `e0e0752`. Full data: 96,632 causal rows, 81,164 through 2025, 4,292 player-games on known 200.
-All models fit; B's seven quantile fits converge below the training budget. [Minute screen](analysis/experiments/20261125_c04_minute_screen_v1.json):
-CRPS reductions are 8.45%/11.50%/5.94% for A/B/C, but 80%-interval coverage is 71.4%/68.2%/73.9% versus 78.7% native.
-All fail coverage; shortlist empty. No 20/200 game expansion. These are conditional development component gains, not calibrated game
-improvement or operational confirmation.
+Checkpoints 1/2 committed/pushed as `e0e0752`/`ae40636`. All three full-history models fit and improve the proper minute score;
+all fail the frozen uncertainty-coverage limit. [Minute screen](analysis/experiments/20261125_c04_minute_screen_v1.json) owns exact results.
+No 20/200 game expansion. These are conditional development component gains, not calibrated game improvement or operational confirmation.
 
-[Trial ledger](analysis/experiments/20261125_c04_trials_v1.json) retains two pre-fit reader repairs, unchanged criteria and all fits.
-Independent checks reproduce 1,256,216 source lag/truth values and 51,504 minute/half scores plus coverage. First two wiring games deliver
-8,000 legal worlds and 3,270 independently checked game/half scores. The old decoder has mean target errors about 0.4–0.6 minutes for
-challengers and rare errors near 16 minutes; this is separate from the pre-decoder calibration failure. Retain both limitations.
+The [independent decision audit](analysis/experiments/20261125_c04_decision_v1.json) reproduces simultaneous intervals and the stop.
+Both score gains and undercoverage persist on 175 games with exactly reconciled source minutes; source gaps do not explain the pattern.
+Existing audits check 1,256,216 lag/truth values, 51,504 minute/half scores and coverage, 8,000 legal wiring worlds and 3,270 game/half scores.
+The decoder's mean target error is about 0.5 minutes for challengers, with rare errors near 16 minutes, separate from pre-decoder coverage.
+[Trial ledger](analysis/experiments/20261125_c04_trials_v1.json) retains all recipes, capacity evidence and two pre-fit reader repairs.
 
 No active jobs. Logs: `/tmp/c04_data_v3.log`, `/tmp/c04_fits.log`, `/tmp/c04_screen.log`, `/tmp/c04_wiring.log`, `/tmp/c04_audit.log`.
 Private namespace holds data/models/draws/completed game receipts. Baseline smoke 118/118; C04 tests 7/7; docs pass.
-Exact next: commit/push checkpoint 2; independently reproduce failed eligibility from saved minute rows/coverage and audit both decoder
-controls for checkpoint 3, then commit/push. Only after that run:
+Exact next: commit/push checkpoint 3, then run fresh independent fits, all-200 minute draws and single-worker world reproduction:
 
 ```sh
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1
