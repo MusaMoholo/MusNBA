@@ -33,6 +33,12 @@ Historical receipts, configurations and qualification contracts are evidence, ne
   Reuse accepted infrastructure; freeze the slate, fair inputs, selection/multiplicity and total budget before outcomes. Minor
   parameter changes do not count as alternatives. Reject losers cheaply; do not fully build a favourite before comparing options.
   Cosmetic UI, more tests or knowledge alone cannot fulfil a promised working capability.
+- Write the chain from measured error to admissible predictive signal to end-to-end benefit. Oracle headroom alone is insufficient.
+  Every experiment names its decisive contrast and remaining confounds. Prefer a plain supervised task before complex integration.
+- Give challengers a credible chance: common supported history, strong baselines and training-only convergence/learning evidence.
+  Speed alone cannot justify a smaller/different information package; record unequal resources and limit attribution explicitly.
+- Reuse infrastructure; new tools must directly enable the modelling decision. They are supporting cost, never fallback product success.
+  After a loss, state what was ruled out, what remains unresolved and which next experiment would distinguish those explanations.
 - Keep one main bottleneck in progress. Evidence determines the next chunk; later directions stay provisional.
   Make routine choices independently. Ask only for genuine product/source decisions unavailable in connected evidence.
 - Explain results in high-level English: what was measured, units, sample size, whether higher/lower is better, change and uncertainty.

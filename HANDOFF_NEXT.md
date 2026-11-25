@@ -1,79 +1,84 @@
-# Handoff — C03 complete; C04 at 0%
+# Handoff — C04 frozen; 15% accepted
 
-Updated 25 November 2026. C03 closes as a bounded negative search: no demonstrated forecast gain, no qualifying finalist, no production
-change. [Completion receipt](analysis/experiments/20261125_c03_completion_v1.json) owns accepted deliverables/reproduction;
-[MODEL](MODEL.md) owns numerical results/limits, [PLAN](PLAN.md) strategy, [README](README.md) commands, [AGENTS](AGENTS.md) workflow.
-Production remains engine-v1.3-r3, report-bands-v1 and team-pathway-v1. Owner 8766 stays running; review uses 8767. No active jobs.
+Updated 25 November 2026. [AGENTS](AGENTS.md) owns the changed working culture, [PLAN](PLAN.md) strategy,
+[MODEL](MODEL.md) evidence, [README](README.md) commands. C03 remains a completed negative search.
+Production stays engine-v1.3-r3, report-bands-v1 and team-pathway-v1. Owner 8766 stays running; review uses 8767.
 
-## C04 — architecture/data-ceiling audit before another learner
+## C04 — learn joint player roles/minutes, then earn complete-game gains
 
-**Status: 0% accepted; no C04 implementation, collection, fitting or simulation started.** C02 and all three C03 models failed to
-show end-to-end benefit. Their finite samples/capacity and legacy-package differences cannot establish a model-class or data ceiling.
-Do not start a third local learner tweak or assume that clocks, opponents, joint learning or more trees are the answer.
+The owner authorised redesign, presentation and execution. This replaces the unstarted trace-workbench charter prospectively.
+Question: can information available before a game predict player minutes better, and do those improvements survive coherent player/team
+simulation? C01's real-minute headroom motivates the target; it does not prove predictability. Earlier substitution improvements did
+not establish joint forecast benefit. No favoured model or guaranteed accuracy gain.
 
-Question: which observed information/support or state-dynamics limitation has enough evidenced headroom to justify the next model
-comparison? Separate missing/changed information, recorded-context probability errors and feedback through generated states before
-choosing another architecture. This is an attribution/representation audit, not a promotion or accuracy-improvement claim.
+The [frozen numerical contract](analysis/c04_contract_v1.json) owns recipes, exact features/dates, budgets, thresholds and stopping.
+First establish a learnable causal task; then compare complete games. Infrastructure is supporting cost, not fallback product success.
 
-### Committed capability and bounded decision
+### Committed model capability
 
-Deliver a runnable source-to-state/event-trace comparison workbench, extending the existing choice library and source guards. It must
-replay selected complete games, retain causal state/lineup/history and decision probabilities, reconcile emitted choices to saved
-player/team boxes, compare recorded-state and generated-state populations, and expose lineage/support differences by feature family.
-Provide CLI commands, immutable manifests, independent checks and replayable private traces. Reuse C01/C02 parity/scorers and C03
-adapters; no new generic infrastructure phase, standalone dashboard or duplicate source rebuild.
+- Full supported chronological minute-history/roster dataset, no arbitrary training-row cap, same admitted information for every family.
+- Three working joint-minute distribution models: A learns corrections to the dated role allocator; B directly learns nonlinear minute
+  quantiles with historically learned joint dependence; C resamples analogous whole-team role/minute allocations. These are distinct
+  pre-game modelling architectures, not three settings of an event head. Closed-form A, training-only converged B and exact C get a credible fit.
+- All three must fit, predict and drive legal event worlds. Reuse source guards, rotation fitter, incumbent event/conversion mechanics,
+  scorers and independent accounting. No standalone trace workbench, UI, new provider or platform work.
+- Deliver the reusable joint-role/rotation model library, honest comparative evidence and independently reproduced finalists or a
+  bounded negative decision that distinguishes predictable-minute failure from failure to translate minute gains into joint forecasts.
 
-Deliver one evidence-based decision: prioritise a dated-data/coverage challenge, a transition/generator architecture challenge, or
-report insufficient attribution and specify the missing evidence. A selected priority is not a proven gain. A no-headroom or unresolved
-result must still deliver the working trace/replay capability; do not relabel it major product progress.
+### Evidence and decision
 
-### Evidence boundaries and controls
+All statistical inputs precede origin. Training spans supported December 2022–December 2025 history; model iteration selection uses
+October–November 2025 after fitting through June 2025; final means fit through November, joint residual/PIT calibration uses December.
+Only historical seasons 2023–2026 are read. Earlier games may update dated features before each evaluation origin; they do not become
+fresh tests. Current starters/minutes/labels never enter prediction. Roster membership is the same actual-participant conditional
+information used by the incumbent; no operational availability or original pre-tip claim.
 
-- Use only the same exposed 200 B1 games, their existing common causal arrays, pinned source events/profiles, C01 diagnostics,
-  C03 event scores, paired20 worlds and independent negative audit. Old games remain development; no reserved/protected outcomes,
-  new provider, market fitting or historical publication-time invention. No new fits or candidate recipes in this diagnostic chunk.
-- Freeze three diagnostic views before new traces: source/feature lineage and support; probabilities on identical recorded states;
-  generated-state visitation and opportunity/conversion/minute accounting. Hold control and frozen C03-B recipes fixed. Distinguish
-  training sample/history, missing inputs and representation changes; do not claim a causal decomposition from associations.
-- Trace only the first two frozen wiring IDs, control and C03-B, 1,000 worlds/arm/game, with existing seeds/schedules. Retain full
-  state/probability traces for the first 16 world IDs and aggregate visitation for all 1,000. Replayed terminal arrays must equal C03.
-  These reruns collect missing transition evidence; they are not another forecast test or a production refresh.
-- Use first-game independent 1,000-world replays per arm for reproduction: maximum 6,000 new diagnostic worlds total. No other
-  generation/precision extensions. Store private traces under `data/derived/experiments/c04_state_ceiling_v1`; aggregates under
-  `analysis/experiments/<actualETdate>_c04_*.json`. Preserve raw responses and completed namespaces.
-- Source truth/state may diagnose headroom but never enter deployable predictions. Missing shot-clock/tracking/defender truth stays
-  missing. No outcome-dependent inference masks, total targets/quotas, output repairs or variance inflation. Duration, conversion,
-  foul/FT/rebound resolution and rotations stay fixed; availability/actual-participant limitations remain explicit.
+Use exactly the known B1 200 games, first 2 for wiring and first 20 for complete-game selection. First compare regulation-minute
+distributions cheaply against stored incumbent draws on all 200. A model needs at least 2% lower minute error with game/week
+selection-adjusted intervals below zero and acceptable critical-player/coverage behaviour. At most two pass, ordered by minute error.
+All mechanically valid families still deliver first 2 ×1,000-world adapters; no knowledge-only completion.
 
-### Four checkpoints — sequential acceptance, commit and push
+Schedule translation is a named confound. A bridge control sends incumbent minute draws through the exact same new rotation decoder.
+Compare candidates with both the native stored incumbent and bridge control. Hold event/duration/conversion/foul/rebound policies fixed.
+No predicted full-game shots/points/possessions, quotas, market fit, output corrections or arbitrary variance inflation. Minute totals
+are legal time constraints: 0–48 per player and 240 per team in regulation, plus legal generated overtime.
 
-|Checkpoint|Weight|Acceptance and dependencies|
+Only minute-screen survivors proceed to 20 games. Require at least 0.5% lower player-points distribution error against both controls,
+both simulation halves improving, and frozen player/team harm/runtime limits. Expand only qualifying finalists to fixed 200 ×1,000;
+require at least 1% player-points gain, familywise game/week support and acceptable minutes/threes/rebounds/assists, critical players,
+team scores/totals/margins/wins and coverage. All initial comparisons remain in multiplicity; development gains are never fresh confirmation.
+A research survivor requires separately frozen independent release evidence; no automatic promotion or production refresh.
+
+### Four checkpoints — commit/push before dependent work
+
+|Checkpoint|Weight|Required acceptance|
 |---|---:|---|
-|1. Freeze attribution audit|15%|Reuse source/exposure inventory; freeze exact common keys, views/features, native units, support, materiality/uncertainty and decision rule before new trace outcomes. Identify which contrasts are diagnostic rather than causal. Source/future-input/label-mask faults fail. Commit/push before generation.|
-|2. Working trace/replay capability|35%|Both arms replay both pinned games; causal trace interface, legal clocks/fives/fouls and event/box identities; terminal arrays equal original C03. Deliberate altered-trace and probability faults fail. Versioned reusable commands and manifests.|
-|3. Matched audit and bounded decision|35%|All 200 recorded-state/context comparison plus paired20 saved-score linkage and two-game generated-state audit. Quantify support, sampling/history/package limits and block sensitivity; choose one justified priority or unresolved result by frozen rules. No post-hoc recipes or extrapolated operational skill.|
-|4. Reproduce and hand over|15%|Fresh single-worker first-game replay per arm, independently accumulated source/state/accounting summaries and decision reproduction; working capability delivered, honest accuracy status, next concrete 0% charter.|
+|1. Freeze decisive comparison|15%|Changed culture/charter, full-history causal target/features, three credible recipes and exact budget/selection rules; invalid minutes, future/same-day history and current-label faults fail. Baseline smoke/docs pass. No fitting before commit/push.|
+|2. Learnable task and working models|35%|All full-history fits/predictions; training-only convergence/neutral-baseline evidence; all 200 minute screen; first 2 legal event-world adapters and bridge control; complete trial ledger and frozen shortlist.|
+|3. Complete-game decision|35%|Survivors on20 then conditional 200, proper joint player/team scoring against both references, source/legal/accounting/worker/resume and selection-aware uncertainty. If none survives, independently verify the bounded negative; no unchanged-model ritual rerun.|
+|4. Reproduce and deliver|15%|Independent fits/probabilities/minute draws/world replay and decision; reusable model commands/artifacts; honest forecast gain versus accepted deliverables; replace HANDOFF with next concrete 0% charter.|
 
-Accepted deliverable progress is 15/50/85/100%; launched jobs earn no credit. At every checkpoint run affected checks and docs checks,
-refresh canonical homes, inspect staged changes, commit and push before dependent work. If source/support or attribution fails, retain
-that failure and the working audit interface; never invent missing truth or nominate a mechanism merely to fill the next charter.
+Accepted deliverable progress is 15/50/85/100%; launched jobs earn no credit. Refresh affected canonical docs and relevant checks at each
+checkpoint; inspect staged changes, commit and push. A negative search must name what it ruled out and the remaining confound.
 
-### Compute and exact first actions
+### Compute, failure route and exact first actions
 
-At most ten heavy threads total, BLAS/OMP/Arrow explicitly capped; no fitting, nested pools, production refresh, season or UI scope.
-One generation stream per replay worker; benchmark first trace before estimating time. Bound trace storage to 4GiB; fail with retained
-partial evidence if exceeded, without dropping inconvenient rows. Existing source caches and completed controls are immutable.
+At most ten total heavy threads: fitting 10 then generation 10×1; BLAS/OMP/Arrow1; pool shutdown before parent work. No extra recipes,
+selection or precision extensions. Maximum 606,000 new worlds includes conditional finalists and independent replays; reuse native
+incumbent worlds honestly. Benchmark first fit/game; estimate only from measured logs. Preserve failed stages for justified technical
+repairs without recipe/criterion changes. Private namespace `data/derived/experiments/c04_joint_roles_v1`; aggregates
+`analysis/experiments/<actualETdate>_c04_*.json`. Completed evidence and raw sources are immutable.
+
+If dated minute skill fails, say these models did not recover it. If minutes improve while full games fail, report the translation/joint
+failure. If native and bridge disagree, keep that confound visible. No class-wide impossibility claim or fourth post-hoc model.
+
+Baseline smoke has passed 118/118. Exact next actions:
 
 ```sh
-git status --short --branch
-git --no-pager log --oneline -5
-.venv/bin/python scripts/smoke.py
-ls -t analysis/experiments/ | head -15
-export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1
-.venv/bin/python analysis/c03_reproduce.py source
-.venv/bin/python -m unittest discover -s tests -p 'test_c03_*.py'
+.venv/bin/python -m unittest discover -s tests -p 'test_c04_*.py'
 .venv/bin/python scripts/check_docs.py
+git diff --check
 ```
 
-Then read the C03 completion/negative-audit receipts and the existing context/ZoneObserver interfaces; freeze C04's numerical
-attribution contract and exact trace schema, not a preferred replacement model. No C04 jobs are active or required to close C03.
+Then present this charter at high level, commit/push checkpoint 1, and implement the full-history data and three frozen models.
+Checkpoint 1 is accepted: no C04 data/model jobs have started. Source inspection/schema reads only; baseline log `/tmp/c04_baseline_smoke.log`.

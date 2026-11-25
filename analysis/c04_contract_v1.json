@@ -1,0 +1,126 @@
+{
+  "chunk": "C04",
+  "version": 1,
+  "question": "Can full-history dated joint player-role/minute forecasts improve player-points distributions while preserving team forecasts?",
+  "status": "prospectively frozen before C04 data jobs, fits or scores",
+  "basis": "C01 realised-minute headroom is a priority signal, not proof of predictability. C03 altered/capped learner packages leave attribution unresolved. Challenge the pre-game joint role/minute architecture, keep possession heads fixed.",
+  "population": "known B1 200 actual-participant games, all remain development; no operational availability claim; first2 wiring, first20 shortlist, fixed200 finalist",
+  "history": {
+    "sources": "NBA canonical regular-season on_court seasons2023..2026 excluding Cup finals; existing pinned source guards and C01 accepted games",
+    "from": "2022-12-01",
+    "selection_fit_through": "2025-06-30",
+    "selection_from": "2025-10-01",
+    "selection_through": "2025-11-30",
+    "final_mean_fit_through": "2025-11-30",
+    "joint_calibration_from": "2025-12-01",
+    "joint_calibration_through": "2025-12-31",
+    "training_sample_cap": null,
+    "evaluated_feature_updates": "source history before each origin, through latest known panel origin, seasons2023..2026 only; other earlier historical games may update lag features but are never scored as fresh tests; same-day outcomes excluded",
+    "fits": "one frozen recipe per family; tree iterations selected only on Oct-Nov2025 then fixed refit; no outcome-driven recipe repair"
+  },
+  "features": {
+    "own": [
+      "n_history",
+      "last1",
+      "mean3",
+      "mean10",
+      "sd10",
+      "ewm5",
+      "ewm20",
+      "start5",
+      "start20",
+      "days_since",
+      "team_changed",
+      "healthy",
+      "cap",
+      "priority",
+      "start_share",
+      "missed",
+      "k_back",
+      "alloc"
+    ],
+    "roster": [
+      "roster_n",
+      "healthy_sum",
+      "healthy_rank",
+      "mean10_sum",
+      "alloc_gap"
+    ],
+    "origin": "current roster membership conditional on actual participants is common to all arms; all minute/starter values and team assignments used as features strictly earlier than origin; current starter/pos/target forbidden",
+    "missing": "first-game minutes10,spread6,start0,days365,history0; explicit n_history; fixed before scores",
+    "team_representation": "C sees all same features through12 equally spaced prior-alloc rank positions plus roster_n; training-only standardisation; A/B receive own and roster summaries; no player IDs"
+  },
+  "recipes": {
+    "A": {
+      "name": "learned residual correction to dated role allocator",
+      "learner": "ridge linear residual(reg-alloc), standardised features, intercept unpenalised,lambda100; closed-form, no iteration cap",
+      "distribution": "December out-of-sample whole-team residual vectors sorted by prior alloc, interpolated by normalised role rank to roster size, added to predicted means, then common bounded240-minute projection"
+    },
+    "B": {
+      "name": "direct nonlinear minute distribution with joint empirical dependence",
+      "learner": "seven LightGBM quantile regressions at .02,.10,.25,.50,.75,.90,.98; all supported training rows; max1500 rounds, early stopping60 on Oct-Nov quantile loss; leaves31,min_leaf100,lr.03,l2=10,max_bin127,seed20261125,threads10",
+      "distribution": "sorted quantiles with fixed0/48 endpoints; inverse empirical December whole-team PIT copula, prior-alloc rank alignment and bounded240 projection; PIT from held-out December predictions, no arbitrary spread inflation"
+    },
+    "C": {
+      "name": "joint roster-role analogue bootstrap",
+      "learner": "nearest64 historical team-games in standardised12-rank full feature profiles; uniform mixture of whole observed regulation-minute vectors, aligned by prior role rank; training-only scaler",
+      "distribution": "entire historical joint minute vectors retain coach-allocation dependence, rank interpolation for roster sizes and common bounded240 projection; final library includes pre2026 calibration history; no learning on panel outcomes"
+    }
+  },
+  "seed": 20261125,
+  "max_recipe_configurations": 1,
+  "library_deliverable": "three runnable joint-minute forecasters and legal rotation adapters, full-history source/lag dataset, common proper player/team scoring and independent fit/world reproduction; no standalone workbench phase",
+  "causal_tests": [
+    "future or same-day history injection cannot change origin features",
+    "current-label/starter/target inputs refused",
+    "invalid minute vectors and fewer-than5 rosters refused",
+    "probability/quantile/artifact/rotation/resume faults fail closed"
+  ],
+  "minute_screen": {
+    "games": 200,
+    "worlds": 1000,
+    "baseline": "first1000 native pinned incumbent regulation-minute draws; compare same player keys and unscaled reconstructed regulation truth",
+    "primary": "regulation-minute CRPS >=2% lower and both game/week Bonferroni3 upper<0",
+    "critical": "prior usage>=.25, point relative minuteCRPS harm<=2%; coverage80 distance from.8 deterioration<=.03",
+    "shortlist": "at most2 passing families ordered minuteCRPS; no replacements after outcomes",
+    "training_credibility": "report heldout Oct-Nov improvement vs240/roster_n, convergence/budget-bound status and fit coverage. No arbitrary sample cap. Failed convergence/support cannot establish architectural ceiling."
+  },
+  "integration": {
+    "decoder": "same stored forecasted rotation shapes for all arms, Gaussian smoothing sigma3 ten-second bins; existing independent offset fitter bin10,iters160,tol.5; bounded legal targets; fit errors retained",
+    "bridge_control": "native incumbent per-world regulation-minute draws passed through identical new schedule decoder; required to expose schedule-translation effects",
+    "native_control": "reuse pinned original C01 captures on all200; no regenerated unchanged control ritual; simulation seed c02-possession-v1 for all new arms, same fixed event/conversion/foul/clocks, original source profiles",
+    "wiring": "all mechanically valid families and bridge control first2 x1000 even if minute screen fails, to deliver runnable models; native control retained",
+    "cheap_game_panel": "only up to2 minute-screen survivors continue to first20 x1000; first2 reused; no advancement by minute score alone",
+    "finalist_panel": "only practical complete-game survivors expand to fixed200 x1000; no score-driven extension; maximum2",
+    "projection": "Euclidean bounded simplex:0<=regminutes<=48,sum240; legal time constraint, never a scoring/shot/point quota; no full-game count targets"
+  },
+  "game_shortlist": {
+    "benefit": "player PTS CRPS >=.5% lower vs BOTH native and bridge, both500-world halves lower",
+    "harm_point_limits": {
+      "team/points": 0.1,
+      "game/total": 0.15,
+      "game/margin": 0.15,
+      "player/min": 0.05,
+      "player/reb": 0.05,
+      "player/ast": 0.05,
+      "player/fg3m": 0.02,
+      "win_brier": 0.01,
+      "critical_pts_relative": 0.02,
+      "critical_fg3m_relative": 0.02,
+      "coverage80_distance_deterioration": 0.03
+    },
+    "runtime": "candidate median generation/bridge ratio<=2; finite exact common scores/support; no next-event learner changes"
+  },
+  "final_acceptance": "known200 research gain only: playerPTS >=1% better vs BOTH references, both simulation halves improve, whole-game/week Bonferroni6 upper<0; harm confidence upper below same practical limits for both references; critical contexts>=30games/200player rows, >=100games overall; coverage80 deterioration confidence bound<=.03. No automatic production promotion.",
+  "uncertainty": "10000 seed20261125 paired whole-game and fixed ordinal//7 week-block bootstraps; pooled and equal-game;95% descriptive and Bonferroni3 minute/6 dual-reference game intervals. Full slate/exposure counts, no reset after selection.",
+  "budget": {
+    "data": "one full chronological lag pass, source-guarded; same full supported history for all",
+    "fits": "A one selection diagnostic/final ridge; B7 selection+7fixed refit; C one scaler/library; one independent repeat per family; no extra trials",
+    "worlds": "first2x4 new arms=8000; up to2 survivors+bridge first20, then200; at most606000 total including up to4000 independent replays; native200 reused. No new providers/protected outcomes. Engineering preflight16worlds/arm unscored allowed.",
+    "threads": "ten total heavy; fits10 then workers10x1; BLAS/Arrow1; source I/O may overlap within cap; pool shutdown before parent work",
+    "technical_faults": "preserve failed stage/logs; only demonstrated implementation repairs, unchanged recipes/criteria/budget; no posthoc new model"
+  },
+  "decision_limits": "If minute predictions fail, conclude these recipes do not establish recoverable minute skill. If minutes improve but game forecasts do not, diagnose translation/joint effects and do not claim product gain. Native/bridge disagreements remain visible. Negative work must eliminate a stated explanation or isolate the remaining confound; no model-class impossibility claim.",
+  "namespace": "data/derived/experiments/c04_joint_roles_v1",
+  "production_changed": false
+}

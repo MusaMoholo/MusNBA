@@ -13,20 +13,20 @@ tests, deployment and development workflow. Preserve a working product while rep
 is not itself progress. Player improvements must also preserve joint team behaviour. Diagnostics expose possible value;
 only predictions from dated information can establish recoverable skill.
 
-## Short term — audit architecture/data limits before another learner
+## Short term — prove predictable skill, then test the whole game
 
-C01 delivered the comparison workbench; C02 delivered causal actor/action training, a simple role baseline and a swappable pure
-possession runtime with independent reproduction. MODEL owns their results/limits. The incumbent remains live; reuse those capabilities.
+C02/C03 delivered working possession learners without forecast gains. Their limited/mismatched training packages cannot establish
+an architecture or data ceiling. Stop treating plausible mechanisms and reusable infrastructure as sufficient reasons for another chunk.
 
-C03 compared regularised linear, separate nonlinear and shared-choice possession models on common causal information/history.
-All three working alternatives failed the frozen 20-game player/team shortlist. No forecast gain is demonstrated; production stays live.
-Independent fits, probability scores and full-game replays reproduce the bounded negative search. Next, audit information/support
-and generated-state dynamics before another local learner. Deliver a reusable source/state trace and replay workbench, and choose
-one evidence-supported priority or explicitly report unresolved attribution. No replacement architecture is presumed best.
-MODEL owns numerical results/limits; HANDOFF owns executable acceptance. A whole-slate failure does not justify another post-hoc recipe.
+C04 challenges joint player-role/minute forecasting. C01's realised-minute diagnostic motivates this target but does not prove that
+minutes are predictable. First learn a clear dated supervised target on full supported history; compare residual correction, direct
+nonlinear distributions and joint historical roster analogues. Then require player-points gains and acceptable team outcomes from legal
+event worlds. A common schedule decoder and native incumbent reference expose translation effects instead of bundling them into skill.
 
-Team/player shots and scores must emerge from legal events; no predicted full-game total may steer simulation. Evaluate player
-accuracy and joint team uncertainty together. Independent qualification remains separate from research completion.
+The cultural change is explicit: measured error → admissible predictive signal → credible competing models → end-to-end benefit.
+Each experiment must distinguish explanations. Use full supported information, training-only convergence checks and strong baselines;
+record remaining confounds. Infrastructure serves a decision. No failed search becomes major product progress through acceptance credit.
+MODEL owns results/limits; HANDOFF owns the frozen executable contract. Accuracy gains remain uncertain and production qualification separate.
 
 ## Medium term — spend effort where it can change results
 
