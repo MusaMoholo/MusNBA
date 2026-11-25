@@ -1,0 +1,117 @@
+{
+  "kind": "C04 fresh full-history fits/joint-minute draws/worker worlds and independent decision reproduction",
+  "fits": {
+    "A": {
+      "fitted_files_identical": true,
+      "training_credibility": {
+        "minute_mae": 4.407784114002759,
+        "neutral_240_per_roster_mae": 8.572892156971804,
+        "dated_allocator_mae": 4.8635940329936895,
+        "relative_gain_vs_neutral": 0.48584631262179356,
+        "rows": 6466
+      }
+    },
+    "B": {
+      "fitted_files_identical": true,
+      "training_credibility": {
+        "minute_mae": 4.23014713778839,
+        "neutral_240_per_roster_mae": 8.572892156971804,
+        "dated_allocator_mae": 4.8635940329936895,
+        "relative_gain_vs_neutral": 0.5065670884068835,
+        "rows": 6466
+      }
+    },
+    "C": {
+      "fitted_files_identical": true,
+      "training_credibility": {
+        "minute_mae": 4.530485960987004,
+        "neutral_240_per_roster_mae": 8.572892156971804,
+        "dated_allocator_mae": 4.8635940329936895,
+        "relative_gain_vs_neutral": 0.47153354106960976,
+        "rows": 6466
+      }
+    }
+  },
+  "minute_forecast_values_exact": 12876000,
+  "minute_games": 200,
+  "replays": {
+    "bridge": {
+      "all_arrays_exact": true,
+      "worlds": 1000,
+      "seconds": 51.85817579200011,
+      "decoder_fit": {
+        "mean_absolute_minutes": 0.17286871976344464,
+        "p95_absolute_minutes": 0.42499999205271183,
+        "max_absolute_minutes": 0.5
+      }
+    },
+    "A": {
+      "all_arrays_exact": true,
+      "worlds": 1000,
+      "seconds": 57.43256795799971,
+      "decoder_fit": {
+        "mean_absolute_minutes": 0.4643506338771457,
+        "p95_absolute_minutes": 2.1879334455002417,
+        "max_absolute_minutes": 15.943565373444315
+      }
+    },
+    "B": {
+      "all_arrays_exact": true,
+      "worlds": 1000,
+      "seconds": 57.1685783339999,
+      "decoder_fit": {
+        "mean_absolute_minutes": 0.42875177159287653,
+        "p95_absolute_minutes": 1.9597749895763867,
+        "max_absolute_minutes": 16.703846057474742
+      }
+    },
+    "C": {
+      "all_arrays_exact": true,
+      "worlds": 1000,
+      "seconds": 58.671626208000816,
+      "decoder_fit": {
+        "mean_absolute_minutes": 0.5655183696969698,
+        "p95_absolute_minutes": 2.7993333333333297,
+        "max_absolute_minutes": 13.166333333333338
+      }
+    }
+  },
+  "independent_decision": {
+    "A": {
+      "crps_change": -0.29770189649892265,
+      "relative_change": -0.08452444447576735,
+      "coverage80": 0.7141192917054986,
+      "coverage80_distance_deterioration": 0.0731593662628145,
+      "coverage_rule_passed": false
+    },
+    "B": {
+      "crps_change": -0.40502496919642605,
+      "relative_change": -0.11499594366966548,
+      "coverage80": 0.6824324324324325,
+      "coverage80_distance_deterioration": 0.10484622553588063,
+      "coverage_rule_passed": false
+    },
+    "C": {
+      "crps_change": -0.20922109322751056,
+      "relative_change": -0.05940270077430312,
+      "coverage80": 0.7388164026095061,
+      "coverage80_distance_deterioration": 0.048462255358806994,
+      "coverage_rule_passed": false
+    }
+  },
+  "minute_shortlist": [],
+  "accounting": {
+    "games": 2,
+    "new_worlds_checked": 8000,
+    "scalar_half_scores_checked": 3270,
+    "maximum_difference": 8.526512829121202e-14,
+    "all_world_accounting_passed": true
+  },
+  "source": {
+    "pinned_sources_passed": true,
+    "games": 200
+  },
+  "seconds": 294.6807262910006,
+  "retained_inputs": "immutable source-derived lag cache, native incumbent captures and original forecast rotation shapes; all new role fits/minute draws and replay worlds fresh",
+  "production_changed": false
+}

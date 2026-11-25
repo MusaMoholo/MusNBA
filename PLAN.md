@@ -18,10 +18,11 @@ only predictions from dated information can establish recoverable skill.
 C02/C03 delivered working possession learners without forecast gains. Their limited/mismatched training packages cannot establish
 an architecture or data ceiling. Stop treating plausible mechanisms and reusable infrastructure as sufficient reasons for another chunk.
 
-C04 challenges joint player-role/minute forecasting. C01's realised-minute diagnostic motivates this target but does not prove that
-minutes are predictable. First learn a clear dated supervised target on full supported history; compare residual correction, direct
-nonlinear distributions and joint historical roster analogues. Then require player-points gains and acceptable team outcomes from legal
-event worlds. A common schedule decoder and native incumbent reference expose translation effects instead of bundling them into skill.
+C04 demonstrates predictable joint-role/minute signal across three full-history models, while all fail the frozen uncertainty-coverage
+rule. Complete-game gain remains unproven. The old schedule decoder also distorts some minute targets. MODEL owns numerical results.
+C05 must preserve learned skill through a calibrated joint law and faithful legal rotations before testing player-points/team benefit.
+Compare distinct uncertainty architectures with common dated means/data, and validate the final returned distribution after every
+constraint. Retain both native and decoder controls. No arbitrary spread inflation, criterion rescue or presumed winning model.
 
 The cultural change is explicit: measured error → admissible predictive signal → credible competing models → end-to-end benefit.
 Each experiment must distinguish explanations. Use full supported information, training-only convergence checks and strong baselines;

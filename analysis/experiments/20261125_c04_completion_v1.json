@@ -1,0 +1,159 @@
+{
+  "kind": "C04 complete: predictable minute skill recovered, uncertainty/calibration blocks game qualification",
+  "created_at": "2026-11-25T19:23:02.373515+00:00",
+  "chunk": "C04",
+  "complete": true,
+  "forecast_effect": {
+    "component": "conditional regulation-minute distributions on200 known games/4292player-games",
+    "native_crps_minutes": 3.522080486246461,
+    "candidate_crps_minutes": {
+      "A": 3.224378589747538,
+      "B": 3.1170555170500345,
+      "C": 3.3128593930189503
+    },
+    "relative_error_reductions": {
+      "A": 0.08452444447576735,
+      "B": 0.11499594366966548,
+      "C": 0.05940270077430312
+    },
+    "best_change_minutes": {
+      "games": 200,
+      "rows": 4292,
+      "supported_for_overall_ranking": true,
+      "change": -0.40502496919642605,
+      "ci95_game": [
+        -0.48058284292268205,
+        -0.32912997829394197
+      ],
+      "ci95_calendar_week": [
+        -0.5369279483082963,
+        -0.299244635086661
+      ],
+      "calendar_blocks": 16,
+      "familywise_game": [
+        -0.497430938901808,
+        -0.3139335194542258
+      ],
+      "familywise_week": [
+        -0.5729896754591841,
+        -0.276435825611396
+      ],
+      "families_counted": 3
+    },
+    "gain_supported_in_both_halves_and_equal_game": true,
+    "calibration": "All3 fail original coverage rule:80% intervals cover71.4%,68.2%,73.9% vs78.7% native. No criteria change or expansion.",
+    "end_to_end_player_points_team_gain": "Not demonstrated; stopped before expanded complete-game accuracy panel. Two wiring games are mechanical evidence only.",
+    "independent_confirmation": false
+  },
+  "model_release": {
+    "production": "engine-v1.3-r3 / report-bands-v1 / team-pathway-v1",
+    "changed": false,
+    "research": "three runnable minute models with measured component skill, blocked on calibration; no promotion",
+    "published_assets": false,
+    "manual_import_required": false
+  },
+  "accepted_deliverables_percent": 100,
+  "checkpoints": [
+    {
+      "id": 1,
+      "weight": 15,
+      "accepted": true
+    },
+    {
+      "id": 2,
+      "weight": 35,
+      "accepted": true
+    },
+    {
+      "id": 3,
+      "weight": 35,
+      "accepted": true
+    },
+    {
+      "id": 4,
+      "weight": 15,
+      "accepted": true
+    }
+  ],
+  "preceding_checkpoint_commits": {
+    "culture_and_freeze": "e0e0752",
+    "full_models_and_wiring": "ae40636",
+    "independent_skill_and_stop": "78e45c4"
+  },
+  "culture_change": [
+    "Measured error -> admissible predictable signal -> credible distinct models -> end-to-end benefit",
+    "Use full supported common history and training-only capacity/convergence evidence; log unequal packages",
+    "Validate the final returned distribution after constraints/decoders; tools/test passes are supporting cost",
+    "Negative decisions identify what was ruled out and the remaining confound, instead of defaulting to another mechanism"
+  ],
+  "capabilities_delivered": [
+    "Full chronological source/roster/lag minute dataset, original truth preserved and reconstruction flags explicit; no arbitrary training sample cap",
+    "Closed-form residual correction, converged nonlinear quantile/copula law and whole-team roster analogue model; same causal information and native support",
+    "Common joint-minute legality and probabilistic scoring, native and shared-decoder controls, legal event-world adapters for all models",
+    "Complete attempted-recipe/fault ledger,200game proper minute scoring and calibration, both simulation halves/equal-game and whole-game/week familywise uncertainty",
+    "Independent lag/target reconstruction, score/coverage/world accounting, meaningful causal/artifact/stopping/resume faults, fresh fits/all200 draws and exact single-worker full-game replay"
+  ],
+  "evidence_scope": {
+    "known_development_games": 200,
+    "player_games": 4292,
+    "minute_worlds_per_model_game": 1000,
+    "full_causal_rows": 96632,
+    "training_rows_through_2025": 81164,
+    "source_read_scope": "existing historical seasons2023..2026, prior-feature updates before origin; no protected/reserved outcomes or new providers",
+    "new_legal_wiring_worlds": 8000,
+    "new_independent_replay_worlds": 4000,
+    "expanded_game_accuracy_games": 0,
+    "private_namespaces": [
+      "data/derived/experiments/c04_joint_roles_v1",
+      "data/derived/experiments/c04_reproduction_v1"
+    ],
+    "population": "dated actual-participant conditional hindcast; no original-pre-tip or operational-availability claim"
+  },
+  "validation": {
+    "baseline_smoke": "118/118 before changes",
+    "c04_targeted_and_fault_tests": 8,
+    "c03_regression_tests": 11,
+    "c02_regression_tests": 26,
+    "history_audit": {
+      "rows": 96632,
+      "independent_lag_truth_values_checked": 1256216,
+      "maximum_difference": 3.552713678800501e-14,
+      "future_and_current_outcomes_excluded": true
+    },
+    "minute_audit": {
+      "games": 200,
+      "scalar_half_scores_checked": 51504,
+      "maximum_difference": 2.4868995751603507e-14,
+      "coverage_independently_verified": true,
+      "all_joint_targets_legal": true
+    },
+    "world_audit": {
+      "games": 2,
+      "new_worlds_checked": 8000,
+      "scalar_half_scores_checked": 3270,
+      "maximum_difference": 8.526512829121202e-14,
+      "all_world_accounting_passed": true
+    },
+    "fresh_fit_files_identical": true,
+    "fresh_minute_values_exact": 12876000,
+    "four_single_worker_game_replays_exact": true,
+    "docs_checks": "passed before final commit",
+    "production_refresh": "not applicable; isolated research, no production model/input/generation/assets changed"
+  },
+  "bounded_conclusion": {
+    "ruled_in": "Dated role/minute information supports meaningful proper-score improvement, across3 architectures and source-quality sensitivities.",
+    "blocked": "Uncertainty too narrow after legal allocation; frozen coverage rule fails.",
+    "remaining_confound": "Standalone-law undercoverage cause unresolved; old decoder distorts some target tails. Screen compares standalone forecasts with native realised-world minutes; substitutions/fouls can alter delivered minutes, so final-game calibration is unproven.",
+    "next_decision": "Prospective joint-law calibration plus faithful target-to-rotation delivery, not another mean learner or relaxed C04 criteria."
+  },
+  "evidence_receipts": {
+    "20261125_c04_data_v1.json": "468e2cbe6aab6019cbba12d86e054e98622f6ce1e11e09e1532802a4dc1eb342",
+    "20261125_c04_minute_screen_v1.json": "fc53a581296f5a57d1a832d83a8da12d9a816d9025eb94796fa7e2021ef91e8c",
+    "20261125_c04_trials_v1.json": "f96ce580f4dac394851e37d3d5775da31c0d019b430b6c82e66c9ef1dc6f7ac6",
+    "20261125_c04_wiring_v1.json": "7f7792c25bc3611bbff33ccc90dde454fbcbd0f8034ec967bcb8a57359b88b33",
+    "20261125_c04_decision_v1.json": "93be75b424d99cf90532209065d0fdb4e1eca08fa668f5b2bd88dbdedcae5e77",
+    "20261125_c04_supplement_v1.json": "247b95e9b77ee8ae1d192135542d875e09390a6e13ab243e06d7dd40afe1461f",
+    "20261125_c04_reproduction_v1.json": "4b576b62f79ee7aa9bcb89c23f933230eef0d4b8832b75e2be15f1346d4ffaa7"
+  },
+  "next_chunk": "C05 final joint-minute laws/faithful rotations,0% accepted; no C05 work started"
+}

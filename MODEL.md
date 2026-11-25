@@ -178,21 +178,11 @@ C02 closes in its [completion receipt](analysis/experiments/20261125_c02_complet
 probability/scoring reproduction agree with the frozen run; a fresh-fit single-worker 1k game matches the ten-worker candidate arrays
 exactly. The delivered research adapter generates shots/points from events, with no aggregate targets. Production is unchanged.
 
-C03's [frozen three-family comparison](analysis/c03_contract_v1.json) uses common causal player/team/history inputs and 43 legal
-next outcomes. [Event scores](analysis/experiments/20261125_c03_events_v1.json) cover 47,284 supported choices on 200 known games;
-all candidates lose to the incumbent. The [paired20 comparison](analysis/experiments/20261125_c03_mvp_v1.json) covers 427 player-games,
-1,000 worlds/arm/game. Player-points CRPS changes (points; lower better) are +0.0214 linear, +0.0156 separate nonlinear and +0.1436
-shared scorer. The strongest nonlinear path's 95% game interval is −0.0213 to +0.0529; team-points change +0.1824 exceeds its +0.1
-practical limit. No family meets primary promise or team harm rules; no finalist expands. All three initial comparisons count in
-familywise game/week uncertainty; only four week blocks limit precision. This is a bounded development negative search, not a model-class
-ceiling or operational confirmation. Production remains unchanged. The capped sample, finite model capacity and older incumbent
-package limit attribution; diagnostics and legal/accounting checks do not establish forecast improvement.
-The [independent negative audit](analysis/experiments/20261125_c03_negative_audit_v1.json) reproduces the failed primary/team decision
-and selection-adjusted game intervals; 80,000 saved worlds pass independent accounting and 47,076 scalar/half-score checks.
-
-C03 [closes](analysis/experiments/20261125_c03_completion_v1.json) after [fresh independent reproduction](analysis/experiments/20261125_c03_reproduction_v1.json):
-all three model files/probabilities match exactly, independent probability scores agree within 7e-16, and each freshly fitted
-single-worker 1,000-world replay matches every original multi-worker array. Deliverables are complete; forecast gains are not demonstrated.
+C03's [frozen comparison](analysis/c03_contract_v1.json) delivers three working possession interfaces and a bounded
+negative search. All three recipes lose the recorded-event and paired20 player/team comparisons; no finalist or production gain.
+The [completion receipt](analysis/experiments/20261125_c03_completion_v1.json) and [independent reproduction](analysis/experiments/20261125_c03_reproduction_v1.json)
+preserve original criteria, selection-aware game/week intervals, exact fresh fits/probabilities/world replay and accounting. The capped
+training sample, finite capacity and incumbent package differences limit attribution; this is not a model-class ceiling.
 
 C04's [joint-role screen](analysis/experiments/20261125_c04_minute_screen_v1.json), 200 known games/4,292 player-games, finds
 predictable minute skill: regulation-minute CRPS falls from 3.522 native to 3.224/3.117/3.313 for residual/nonlinear/analogue models.
@@ -201,6 +191,12 @@ intervals cover only 71.4%/68.2%/73.9%, versus 78.7% native. All fail frozen cov
 These are dated actual-participant development component gains, not calibrated game/operational gains. Source minute gaps remain
 unscaled/flagged. The [independent audit](analysis/experiments/20261125_c04_decision_v1.json) reproduces eligibility and confirms the same
 gain/undercoverage pattern on 175 reconciled games. Two-game wiring is mechanical evidence; old rotation-fitter tail errors remain a translation limitation.
+
+C04 [closes](analysis/experiments/20261125_c04_completion_v1.json) with [fresh reproduction](analysis/experiments/20261125_c04_reproduction_v1.json):
+all model files and 12,876,000 minute values match exactly; four 1,000-world single-worker replays match every original array.
+Component gains persist under equal-game weighting and both simulation halves; calibration blocks promotion.
+The minute screen assesses standalone forecasts against native realised-world minutes. Later scheduling, substitutions and fouls can
+alter delivered minutes; final game-minute calibration is unproven.
 
 The B1 component audit remains reusable source evidence. The long-shot recipe failed
 (`20261124_b1_development_decision_v2.json`). A substitution attempt improved minutes without establishing required game compatibility

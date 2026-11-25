@@ -37,6 +37,7 @@ Historical receipts, configurations and qualification contracts are evidence, ne
   Every experiment names its decisive contrast and remaining confounds. Prefer a plain supervised task before complex integration.
 - Give challengers a credible chance: common supported history, strong baselines and training-only convergence/learning evidence.
   Speed alone cannot justify a smaller/different information package; record unequal resources and limit attribution explicitly.
+- Validate the final returned distribution after constraints, roster mapping and decoders.
 - Reuse infrastructure; new tools must directly enable the modelling decision. They are supporting cost, never fallback product success.
   After a loss, state what was ruled out, what remains unresolved and which next experiment would distinguish those explanations.
 - Keep one main bottleneck in progress. Evidence determines the next chunk; later directions stay provisional.

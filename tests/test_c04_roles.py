@@ -63,3 +63,17 @@ class InferenceAndResumeFaultTests(unittest.TestCase):
         with TemporaryDirectory() as folder:
             root=Path(folder);(root/'A').mkdir();(root/'A/ridge.json').write_text('{}');(root/'A/fit.json').write_text(json.dumps({'contract_sha256':sha256_file(CONTRACT),'hashes':{'ridge.json':'0'*64}}))
             with self.assertRaises(ContractError):Predictor('A',root)
+
+    def test_resume_refuses_modified_sources_and_game(self):
+        from tempfile import TemporaryDirectory
+        from pathlib import Path
+        from unittest.mock import patch
+        from analysis import c04_rollout as r
+        import json
+        with TemporaryDirectory() as folder:
+            root=Path(folder);(root/'data.json').write_text(json.dumps({'game_ids':['g']}));(root/'minute_screen.json').write_text(json.dumps({'shortlist':[]}));(root/'wiring_plan.json').write_text(json.dumps({'sources':{'x':'old'}}))
+            with patch.object(r.data,'WORK',root),patch.object(r.data,'verify',return_value={}),patch.object(r,'signature',return_value={'x':'new'}):
+                with self.assertRaisesRegex(ContractError,'resume sources changed'):r.run('wiring',1)
+            (root/'wiring_plan.json').write_text(json.dumps({'sources':{'x':'new'}}));game=root/'games/g';game.mkdir(parents=True);(game/'A.npz').write_bytes(b'modified');(game/'receipt.json').write_text(json.dumps({'arms':['native','bridge','A','B','C'],'hashes':{'A.npz':'0'*64}}))
+            with patch.object(r.data,'WORK',root),patch.object(r.data,'verify',return_value={}),patch.object(r,'signature',return_value={'x':'new'}):
+                with self.assertRaisesRegex(ContractError,'completed role game changed'):r.run('wiring',1)
