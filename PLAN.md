@@ -25,6 +25,8 @@ Compare the incumbent with a transparent player-rate baseline and a direct team-
 Separate availability/minutes, opportunities, player allocation/conversion and error accumulated through simulated game states.
 Connect next-event predictions in observed contexts to complete simulated games. Carefully labelled outcome-informed diagnostics
 estimate where better information could help; they never count as deployable forecasts.
+Explicitly test opponent defence and shot-zone response: whether opponents change shot opportunities, locations and success enough,
+alongside turnovers, fouls and rebounds. Defence is already present; its strength and accuracy need measurement, not an assumption of adequacy.
 
 Deliver a repeatable workbench, independent reference tests, source/exposure manifests, competing forecasts, prospective capture
 and an evidence-backed next decision. Reuse existing captures/audits; no production-model promotion is promised in this foundation chunk.
@@ -38,6 +40,7 @@ expensive complete-game confirmation.
 |---|---|---|
 |Knowing participation/minutes removes much error|Better dated roster/absence inputs and joint role/minute forecasts|Reusable causal input coverage and validated availability/minutes training/evaluation pipeline|
 |Timing/opportunity counts dominate|Possession/restart/clock state and opportunity modelling|Audited state-transition representation and independently checked event/opportunity model|
+|Opponent or zone effects are too weak or inaccurate|Shared team defence, lineup/likely-defender effects and zone-specific opportunity/conversion models|Reusable opponent/zone features and response tests, with honest source limits and end-to-end comparison|
 |Observed-context event probabilities are weak|Player/team/context strength, shrinkage and event-rate modelling|Shared causal feature/training interface with measured component skill and reusable baselines|
 |One-step predictions look sound but full games drift|Joint dynamics, shared game/team factors or an alternative coherent generator|A swappable coherent challenger and rollout diagnostics, rather than more isolated patches|
 |Simple baselines beat the engine broadly|Challenge the architecture immediately|A fair, reproducible alternative modelling path; no obligation to preserve the sixteen-node design|

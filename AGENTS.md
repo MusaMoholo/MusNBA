@@ -31,6 +31,9 @@ Historical receipts, configurations and qualification contracts are evidence, ne
   modelling decision. Cosmetic UI work cannot compensate for a failed model. Knowledge alone cannot fulfil a promised capability.
 - Keep one main bottleneck in progress. Evidence determines the next chunk; later directions stay provisional.
   Make routine choices independently. Ask only for genuine product/source decisions unavailable in connected evidence.
+- Explain results in high-level English: what was measured, units, sample size, whether higher/lower is better, change and uncertainty.
+  Explain unfamiliar metrics/parameters; distinguish test passes, diagnostic responses and forecast accuracy. Label illustrative numbers.
+  Present chunk plans and closing status as high-level bullet points.
 
 ## Chunks and checkpoints
 

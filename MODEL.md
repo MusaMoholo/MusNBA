@@ -22,6 +22,11 @@ allocation, independently fitted world rotations, legal foul-outs/exhaustion and
 were not promoted. It has no explicit 24/14-second shot-clock state or team-strength rating in possession nodes. Neither omission
 alone proves an accuracy defect; quantify consequences.
 
+This does not mean opponent-blind scoring. Fitted nodes already use opposing lineup defence, likely-defender/zone shooting-allowed
+features and, in selected nodes, opposing team style. Broad shot locations cover rim, paint, midrange, corner three and above-break
+three; defender shooting-allowed history combines the two three-point areas. These inputs can affect opportunities and conversion;
+feature presence alone does not prove useful or sufficiently strong effects.
+
 `report-bands-v1` availability probabilities and independence assumptions are uncalibrated. Up to one important uncertain player
 per team creates two/four explicit branches. Expected retains exact mass; world count is not probability mass.
 Runtime uses 10k worlds/branch in deterministic 1k chunks.
@@ -113,6 +118,12 @@ Learn/calibrate them on prior data and connect them coherently to player events;
 or unsupported spread multiplier. Stronger complexity earns its place through end-to-end evidence and manageable runtime.
 
 ## Evidence worth knowing, not repeating by default
+
+The older 200-game defence comparison (`20261120T120827Z_compare_defence_F4.json`) measured predicted scoring per 100 possessions
+against prior offensive and opponent defensive ratings. The opponent-defence coefficient rose from .440 to .686 versus 1.685 in
+actual games: about 26% to 41% of the observed association. This is not prediction accuracy, a causal share of all defence, or a
+current r3 remeasurement. Observational context, rating noise and uncertainty matter; forcing the ratio to 100% is not a valid goal.
+The broader defence change also improved historical probability scores; its remaining headroom must be re-established fairly.
 
 `analysis/experiments/20261124_b1_source_audit_v2.json`: known 200-game conditional panel, team CRPS 6.4149, MAE 8.9648,
 bias +1.0778 (95% −.1470 to 2.2897). Component/player breakdowns already exist; reuse them. The long-shot recipe failed

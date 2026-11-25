@@ -52,6 +52,11 @@ Baseline recipes freeze at checkpoint 1: prior shrunk player rates with document
 where supported. Residual uncertainty uses rolling/cross-fitted prior errors. Shared minutes are labelled; neither comparator invents
 play-by-play or claims independent minutes validation.
 
+Checkpoint 3 explicitly covers opponent defence and shot zones: prior-strength-adjusted predicted versus observed scoring response,
+zone attempt shares/conversion, turnovers, fouls and rebounds, with game-level uncertainty and support. Recheck MODEL's historical
+defence diagnostic on the common panel; do not target a coefficient of 100% by decree. Controlled opponent/lineup swaps hold offence
+and seeds fixed and test sensitivity only; real-game comparisons establish predictive value. Freeze these diagnostics at checkpoint 1.
+
 Use MODEL’s common player/event/joint-team metrics and population/uncertainty definitions; means alone cannot establish skill.
 The connected workbench and independently checked test architecture, not a copy of existing mean-component tables or a higher test count, are the acceptance targets. All test/gate designs may be replaced prospectively; existing green checks are not presumed sufficient.
 
