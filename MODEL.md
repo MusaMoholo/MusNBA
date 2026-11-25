@@ -83,7 +83,7 @@ Real-source fixture data stays private/ignored with immutable hash manifests. So
 Retire duplicate, brittle or incumbent-behaviour-locking tests only after identifying their real protection and replacing it where needed.
 Browser tests should use bounded calls, explicit document/data readiness and isolated fixtures rather than fragile navigation/count chains.
 
-## Evaluation to build and then freeze
+## Evaluation contracts
 
 C01's development comparison is frozen in [the versioned contract](analysis/c01_contract_v1.json). It specifies shared schemas,
 baseline recipes, scores, contexts, support, numerical priority/harm signals and stopping. These are research-ranking rules, not
@@ -149,6 +149,12 @@ outcome-informed information diagnostics, not deployable gains or additive causa
 On identical recorded histories, shared and independently accumulated candidate features agree. The actor-time phase difference
 has small one-step score impact; the opponent-defence coefficient gap is unresolved with game uncertainty. Zone replay is a separate
 scenario, not original incumbent zones. These findings do not justify a clock/defence coefficient fix by assumption.
+
+C01 is closed in the [completion receipt](analysis/experiments/20261125_c01_workbench_v1.json). A fresh independent run recreated
+fits, baseline draws, oracle/event scores and all 200-game aggregate conclusions exactly; retained incumbent/zone worlds remained
+pinned inputs. One fresh single-worker replay also matched ten-worker arrays. The standalone immutable ledger passed actual-clock
+CLI integration and unknown/late/backdating rejection on synthetic artifacts only: zero real certified entries, no live capture hook.
+The next question is predictable joint opportunity improvement with causal current profiles, not a demonstrated gain from knowing outcomes.
 
 The B1 component audit remains reusable source evidence. The long-shot recipe failed
 (`20261124_b1_development_decision_v2.json`). A substitution attempt improved minutes without establishing required game compatibility

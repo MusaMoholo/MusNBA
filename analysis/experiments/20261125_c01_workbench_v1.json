@@ -1,0 +1,356 @@
+{
+  "kind": "C01 complete: reusable accuracy workbench and bounded modelling decision",
+  "created_at": "2026-11-25T16:00:28.838957+00:00",
+  "chunk": "C01",
+  "complete": true,
+  "capability_accepted_percent": 100,
+  "checkpoints": [
+    {
+      "id": 1,
+      "weight": 20,
+      "accepted": true,
+      "commit": "06ef1bb"
+    },
+    {
+      "id": 2,
+      "weight": 30,
+      "accepted": true,
+      "commit": "07986e6"
+    },
+    {
+      "id": 3,
+      "weight": 35,
+      "accepted": true,
+      "commit": "b77d22c"
+    },
+    {
+      "id": 4,
+      "weight": 15,
+      "accepted": true
+    }
+  ],
+  "capability_delivered": [
+    "Immutable source/exposure/cutoff manifests and population schemas",
+    "Common proper scoring and independent truth/arithmetic/fault checks",
+    "Frozen prior-rate and direct-team baselines with cached outputs",
+    "Connected observed-context, independent-history parity, real-input, defence/zone and joint diagnostics",
+    "Single source/reproduce operation entry point and strict immutable prospective ledger"
+  ],
+  "bounded_modelling_decision": "Retain engine-v1.3-r3. Neither fixed simple challenger beats it on the common development panel; no production promotion. Current-information opportunity predictability is the next uncertainty to resolve.",
+  "forecast_skill_change": {
+    "production_gain": "None claimed",
+    "production_engine_changed": false,
+    "new_model_promoted": false,
+    "qualification_population": "Previously explored actual-participant development; not new confirmation or original operational forecasting"
+  },
+  "benchmark": {
+    "incumbent": {
+      "game/margin": 8.38955850500003,
+      "game/total": 9.885161265000043,
+      "player/ast": 0.9197721381640306,
+      "player/fg3m": 0.587829248369062,
+      "player/min": 3.588132124135859,
+      "player/pts": 3.1780309238117566,
+      "player/reb": 1.3235092896085798,
+      "team/points": 6.414921292500023
+    },
+    "player_rate": {
+      "game/margin": 9.706075665000041,
+      "game/total": 12.37818218500005,
+      "player/ast": 0.9431748184995387,
+      "player/fg3m": 0.6011664068033585,
+      "player/min": 3.588132124135859,
+      "player/pts": 3.27278806873254,
+      "player/reb": 1.3632413704566697,
+      "team/points": 7.759440022500034
+    },
+    "team_strength": {
+      "game/margin": 8.898037550185757,
+      "game/total": 10.176282567786886,
+      "team/points": 6.789234657601296
+    }
+  },
+  "ranked_bottlenecks": [
+    {
+      "rank": 1,
+      "bottleneck": "Current-information joint opportunity forecast and allocation",
+      "evidence": {
+        "real_minutes_and_attempts_player_pts_crps_change_vs_rate": {
+          "games": 200,
+          "rows": 4292,
+          "supported_for_overall_ranking": true,
+          "change": -1.4865350500932057,
+          "ci95_game": [
+            -1.5715278427339563,
+            -1.406905592138818
+          ],
+          "ci95_calendar_week": [
+            -1.598944158150374,
+            -1.3932167340446908
+          ],
+          "calendar_blocks": 16
+        },
+        "team_pts_change_vs_incumbent": {
+          "games": 200,
+          "rows": 400,
+          "supported_for_overall_ranking": true,
+          "change": 0.1528218824999983,
+          "ci95_game": [
+            -0.2653463658750018,
+            0.5746494243749984
+          ],
+          "ci95_calendar_week": [
+            -0.18659737686062985,
+            0.4964030649408205
+          ],
+          "calendar_blocks": 16
+        }
+      },
+      "support": "200 games,4292 player-games,400 team-games",
+      "uncertainty": "Largest measured information headroom, not a demonstrated recoverable live gain. Known attempts include both team volume and player allocation; the older comparator history confounds architecture attribution.",
+      "cost": "Reusable labels/current-feature learners first; cheap recoverability screen before any coherent-engine experiment. Benchmark new work, no promised runtime.",
+      "architecture_alternatives": [
+        "Shared team/game opportunities with conditional player allocation",
+        "A coherent count-based challenger to incumbent event/actor modelling"
+      ],
+      "decision": "Next chunk builds the causal opportunity training/evaluation capability and tests recoverability; no assumed mechanism winner."
+    },
+    {
+      "rank": 2,
+      "bottleneck": "Minutes and operational participation information",
+      "evidence": {
+        "player_pts_change_vs_rate": {
+          "games": 200,
+          "rows": 4292,
+          "supported_for_overall_ranking": true,
+          "change": -0.605170895386769,
+          "ci95_game": [
+            -0.6646284792669402,
+            -0.5489015375564559
+          ],
+          "ci95_calendar_week": [
+            -0.6655658715746189,
+            -0.5557471723126872
+          ],
+          "calendar_blocks": 16
+        },
+        "team_pts_change_vs_rate": {
+          "games": 200,
+          "rows": 400,
+          "supported_for_overall_ranking": true,
+          "change": 0.29367784749999776,
+          "ci95_game": [
+            0.1146142528124976,
+            0.4869412791249978
+          ],
+          "ci95_calendar_week": [
+            0.11750563727930606,
+            0.5079632470721415
+          ],
+          "calendar_blocks": 16
+        }
+      },
+      "support": "Same200 conditional games;0 certified historical operational forecasts",
+      "uncertainty": "Knowing real minutes helps individual scores but hurts simple-model team scores. Availability/DNP skill is unsupported. Gains are not additive with the opportunity diagnostic.",
+      "cost": "Joint modelling and genuine publication/retrieval capture needed; avoid a standalone minutes correction.",
+      "decision": "Hold incumbent minutes fixed in the next opportunity screen; retain ledger for future eligible captures."
+    },
+    {
+      "rank": 3,
+      "bottleneck": "Opponent defence and zone conversion",
+      "evidence": {
+        "supported": true,
+        "games": 200,
+        "team_games": 400,
+        "observed_opponent_coefficient": 1.0553384421519623,
+        "predicted_opponent_coefficient": 0.858108943940275,
+        "predicted_minus_observed": -0.19722949821168723,
+        "association_not_causal": true,
+        "ci95_game": {
+          "observed": [
+            0.5038911969709462,
+            1.6266919987991493
+          ],
+          "predicted": [
+            0.7415709221391963,
+            0.9725177357388187
+          ],
+          "difference": [
+            -0.7661539285417689,
+            0.3593105437196722
+          ],
+          "full_rank_bootstraps": 10000
+        },
+        "ci95_calendar_week": {
+          "observed": [
+            0.5658930146178275,
+            1.6205184340460483
+          ],
+          "predicted": [
+            0.7261020631327367,
+            1.0098830355822914
+          ],
+          "difference": [
+            -0.7888578052190577,
+            0.3154261443041683
+          ],
+          "full_rank_bootstraps": 10000
+        },
+        "ratio_predicted_over_observed": 0.8131125614930577
+      },
+      "support": "400 team-games; source-supported zone counts, separate replay scenarios",
+      "uncertainty": "Opponent coefficient gap includes zero; new covariates are not comparable as progress from the old41-percent ratio. Zone discrepancies do not establish end-to-end recoverable error.",
+      "cost": "Lower implementation cost does not establish a useful accuracy intervention.",
+      "decision": "No forced defence loading, global bias offset or long-shot rescue."
+    },
+    {
+      "rank": 4,
+      "bottleneck": "Actor timing phase and clock representation",
+      "evidence": {
+        "games": 200,
+        "denominator": 35175.0,
+        "mean": 4.296043921724838e-05,
+        "supported_for_ranking": true,
+        "ci95_game": [
+          1.3749143192941669e-05,
+          7.16156527201006e-05
+        ],
+        "ci95_calendar_week": [
+          1.9562589730864098e-05,
+          6.722740856830149e-05
+        ]
+      },
+      "support": "35175 supported shots; all200 games;119 shared/118 candidate features agree at recorded start",
+      "uncertainty": "Measured one-step phase effect is small; a missing explicit shot clock alone is not an accuracy defect.",
+      "cost": "Small local change, but no material game-level recovery established.",
+      "decision": "Do not make this the next modelling chunk."
+    }
+  ],
+  "no_precision_extension": "Oracle predictability, information age and joint dependence are the unresolved limits; more of the same exposed games would not identify recoverable information. Choose the current-information training/measurement capability, not an invented winner.",
+  "validation": {
+    "baseline_smoke": {
+      "passed": 118,
+      "total": 118
+    },
+    "targeted_synthetic_property_fault_tests": 46,
+    "source_cli": "passed",
+    "independent_reproduction": {
+      "kind": "C01 independent fresh-fit/sample/event/oracle reproduction",
+      "games": 200,
+      "worlds_per_game": 1000,
+      "fresh_player_team_and_conversion_fits_identical": true,
+      "all_baseline_sample_arrays_identical": true,
+      "max_oracle_score_difference": 0.0,
+      "max_benchmark_summary_difference": 0.0,
+      "max_localisation_summary_difference": 0.0,
+      "all_recorded_context_tables_reproduced": true,
+      "retained_incumbent_and_zone_worlds": "Reused, SHA256 verified; no claim of fresh engine generation",
+      "training": {
+        "training_games": 4117,
+        "player_games": 87960,
+        "unsupported_player_rows": 182,
+        "latest_training_date": "2025-12-31",
+        "cutoff": "2025-12-31",
+        "excluded_non_regular_cup_ids": [
+          "401607495",
+          "401734908",
+          "401809839"
+        ]
+      },
+      "jobs": 10,
+      "inner_threads": 1,
+      "seconds": 119.17819112500001,
+      "production_changed": false,
+      "sources": {
+        "benchmark_plan": "b93a7b196e3fffa57a1c55ca6ec6918dbc2f73bda449c7e38b8346b7a6614d5b",
+        "diagnostic_plan": "a8ad708fd5cc2ad3b39fae96b4e0a177b162cad7a8fff92e5a76d75eaa448ac4",
+        "localisation": "16394d9a9d1db862bf07e6b4318c64a17cd33ca0b80539e1d4ef826ee33937be",
+        "reproducer": "bca5e561bb4e5c248723a95a434166a0cab62a04fa1a1a7a04209ae0e2273183"
+      }
+    },
+    "ledger_cli_integration": {
+      "kind": "Actual-clock CLI ledger integration using synthetic artifacts, not NBA forecast evidence",
+      "synthetic_entries": 2,
+      "real_certified_entries": 0,
+      "original_forecast_unchanged": true,
+      "unknown_publication_rejected": true,
+      "late_capture_and_backdating_rejected": true,
+      "rejected_attempts_created_no_entries": true,
+      "capture_api_and_audit_cli_passed": true,
+      "production_generation_hook_changed": false,
+      "production_changed": false,
+      "test_request_sha256": "89d1e97842fe2b457766bd5840c81375394c9da8ba59952dd892fb78c96de129",
+      "source_sha256": "62734293cac19fa39e3530cac0afaccf50326ef007568b177693fc8f11197b1c"
+    },
+    "replay_worker_check": {
+      "kind": "Independent worker/resume replay verification",
+      "game_id": "401809250",
+      "worlds": 1000,
+      "ten_vs_one_worker_arrays_identical": true,
+      "oracle_scores_identical": true,
+      "all_generation_boundaries_passed": true,
+      "source_signature": "a8ad708fd5cc2ad3b39fae96b4e0a177b162cad7a8fff92e5a76d75eaa448ac4",
+      "original_receipt_sha256": "9611466879411a50f4ec5c77fad7db69d1f433f1cb47ce098efad8a00d1268af",
+      "repeat_receipt_sha256": "bfdf4b3c5c7151b800733f76addfc4bdcab3ffb9ba34b3867939c23850d2fdc3",
+      "repeat_array_digest": "060a5ee68483d49c952bc1bd248fc044184326e547c20f958a01e30f597bdb1e",
+      "seconds": 55.660790666999674,
+      "production_changed": false
+    }
+  },
+  "evidence": {
+    "analysis/experiments/20261125_c01_checkpoint1_v1.json": "e4d074406e476856cdb2ee09dd48c080a63c3ebd0900a9545ee32ab13204922e",
+    "analysis/experiments/20261125_c01_benchmark_v1.json": "aa9ca74f6391362cfc2963ac39c59a87e99c3ea429fb072f5a5d2a07cd1fcda5",
+    "analysis/experiments/20261125_c01_localisation_v1.json": "c8a6026b89c32c7a1d8186f61da40fa25d6d727748c60afc9a2b75692c9ed38b"
+  },
+  "code_sha256": {
+    "analysis/c01_baselines.py": "2e2aa5b2200edd8476e8a07ebd32f3decc5ad7c554f121e05e5a0d567c5d23a9",
+    "analysis/c01_benchmark.py": "9c0a19d866a41eef8ee126f91616b71a0aa79ed53eba7c3a15f99cff7d05d01b",
+    "analysis/c01_contexts.py": "9265a6d8e3b452dd8d007d90dedfba47c8b354276ae69e15c794399457679204",
+    "analysis/c01_contract_v1.json": "838d3af38117ebada64f713116b8a0d77e18cae90a50e2ee1348f1977a44fca5",
+    "analysis/c01_core.py": "2a69c32111d0620c69b1faabc38d25c3ba486a8800e38f06168597f438816f6d",
+    "analysis/c01_diagnostic_recipe_v1.json": "7ca71055740c6771161d229c001851054fc4eb731595dcceb0f5acff87efb2e7",
+    "analysis/c01_diagnostics.py": "7483512120f8d51663985c43d69b71c30562178f62fec5c488ab78befbbc37ea",
+    "analysis/c01_ledger.py": "32dd3515c1757ce7f52c947870cd40ce7b21fc4b6a9b225eabf4ab36bc621a0d",
+    "analysis/c01_ledger_integration.py": "62734293cac19fa39e3530cac0afaccf50326ef007568b177693fc8f11197b1c",
+    "analysis/c01_localise.py": "cdb1f0f7dc4a4345cddc4a67caab9e9d07aa5c16a6d5ab20dec89c12a737fb58",
+    "analysis/c01_metrics.py": "b7e19989699fe2bbeec0824e4c2c502833b5c7fd6f8c840431d5f4bc8f058939",
+    "analysis/c01_replay_verify.py": "5d14bafd38e413e7a884f30fbf11195df2518c529add332d18544fad28af02ef",
+    "analysis/c01_reproduce.py": "bca5e561bb4e5c248723a95a434166a0cab62a04fa1a1a7a04209ae0e2273183",
+    "analysis/c01_run.py": "26a1d3b487d2551c7e3e3edae828a94072d7f481cd1ca3a9cc7075dca413cd49",
+    "analysis/c01_workbench.py": "d0faece32c489c3aa6edae3418369f11463c79d8f2df7f64558a74fe71d31ced",
+    "tests/test_c01_benchmark.py": "6f2dfabf81d688062d290a55b0d8ef3d445351bca6a342f6824e159b54aca6bd",
+    "tests/test_c01_contract.py": "ac1b21f6465cfacbbf2413d5df7ec7de7d6d9e5bb2efc4958638c8417d7d9f07",
+    "tests/test_c01_diagnostics.py": "1063a38c67077e51d8b415382c350f2215957033d579037d43cb2b561512b402",
+    "tests/test_c01_ledger.py": "02877870103eb2fa8773e9ae942c5ab2ff1ca554343a98bb7e641c2a0286259d",
+    "tests/test_c01_localise.py": "92f8b101ef7010bdd095bc974b5c108a83e3099507d1fa180f04c559aceb0fe5",
+    "tests/test_c01_reproduce.py": "f21608d42a2ba18d54eef89cec564b876160ef0d2568cd3661e6a573e4b0d185"
+  },
+  "private_namespaces": [
+    "data/derived/experiments/c01_accuracy_workbench_v2",
+    "data/derived/experiments/c01_benchmark_v1",
+    "data/derived/experiments/c01_diagnostics_v2",
+    "data/derived/experiments/c01_independent_reproduction_v1",
+    "data/derived/experiments/c01_ledger_integration_v1",
+    "data/derived/experiments/c01_replay_worker_check_v1"
+  ],
+  "setup_repairs_preserved": [
+    "Initial explicit-DNP blank-count interpretation: v1 retained, corrected before new forecast scores",
+    "Observed candidate-group decoder: interleaved rebounder rows valid; v1 retained, twenty unchanged replay/oracle receipts reused after generation-function hash checks"
+  ],
+  "limits": [
+    "Actual-participant support, no certified historical operational injury/roster timing",
+    "Older fit histories/shared minutes limit architecture attribution",
+    "Recorded fives are inferred;501 actor/five mismatches remain explicit",
+    "Realised-input diagnostics are not deployable or additive causal effects",
+    "Zone replay uses stored simulated schedules; not original incumbent zone captures",
+    "Ledger integration uses synthetic fixtures;0 certified real entries, no live hook activated"
+  ],
+  "reserved_or_protected_research_outcomes_opened": false,
+  "new_provider_requests": 0,
+  "production_changed": false,
+  "nightly_required": false,
+  "nightly_scope_reason": "Isolated research and standalone ledger; no production model/input/generation hook change",
+  "pwa_assets_changed": false,
+  "manual_import_required": false,
+  "next_chunk": "C02 at0 percent; current-information joint opportunity training and recoverability"
+}

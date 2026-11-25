@@ -1,112 +1,106 @@
-# Handoff — C01 connected diagnosis delivered; final reproduction next
+# Handoff — C01 complete; C02 ready at 0%
 
-Updated 25 November 2026. C01 conditional research benchmark complete; no production change, forecast refresh or app release. Incumbent: engine-v1.3-r3, its accepted rotations/foul/timing rules, report-bands-v1 availability and team-pathway-v1.
-PWA/bundles unchanged. Owner 8766/review 8767 remain local servers; Git owns the checkpoint identity.
+Updated 25 November 2026. **C01 is 100% complete: all four capability checkpoints accepted. No production accuracy gain claimed.**
+The [completion receipt](analysis/experiments/20261125_c01_workbench_v1.json) records the decision, validation, hashes and private namespaces.
+[MODEL](MODEL.md) holds results/limitations; [README](README.md) holds the working source/reproduction/ledger commands.
+No jobs remain running. Independent reproduction and ledger integration are complete, not pending work.
 
-[PLAN](PLAN.md) is the new strategy; [MODEL](MODEL.md) defines evidence and limitations; [AGENTS](AGENTS.md) defines the new workflow.
-Old roadmaps and the unstarted possession-fix plan are removed. Historical measurements/configurations remain evidence only.
-No old task or future chunk is an obligation. The first chunk below is the sole detailed executable plan; its successors are conditional.
+Incumbent remains engine-v1.3-r3 with accepted rotations/foul/timing rules, report-bands-v1 and team-pathway-v1.
+No production model/input/generation hook, PWA asset or bundle changed; no refresh, publication or manual import is needed.
+Owner server 8766 stays running; review uses 8767. Git owns checkpoint identities.
+[PLAN](PLAN.md) holds conditional strategy; [AGENTS](AGENTS.md) holds workflow rules. Historical receipts are evidence, never a backlog.
 
-## Active chunk: C01 — rebuild measurement and locate the largest accuracy bottleneck
+## Next chunk: C02 — current-information joint opportunity training and recoverability
 
-**Status: checkpoints 1–3 accepted; 85% of committed capability delivered. Production accuracy gain: none claimed.**
+**Status: 0% accepted. This charter is ready; no C02 fitting or evaluation has begun.**
 
-Accepted [contract](analysis/c01_contract_v1.json), [foundation](analysis/experiments/20261125_c01_checkpoint1_v1.json),
-[benchmark](analysis/experiments/20261125_c01_benchmark_v1.json) and [connected diagnosis](analysis/experiments/20261125_c01_localisation_v1.json).
-[MODEL](MODEL.md) holds measured results and limitations. All 45,320 benchmark scores agree with independent arithmetic;
-119 shared and 118 candidate features have no mismatches on identical recorded histories. The separate actor timing phase has
-small measured score impact. Forty-six targeted checks and 118/118 baseline checks pass.
+Question: with incumbent minutes held fixed, can dated player/team information predict materially better joint shot opportunities,
+including team volume and player allocation, while preserving player/team probability accuracy and coherent worlds?
+C01 exposed information headroom, not its predictable fraction. Its older baseline histories confound architecture comparisons;
+knowing real minutes improved individuals while damaging team scores. Do not assume that a clock change, defence loading,
+standalone minutes correction or a particular learner is the answer.
 
-Private namespaces: `data/derived/experiments/c01_accuracy_workbench_v2`, `c01_benchmark_v1` and `c01_diagnostics_v2` under the
-same experiments directory. No running jobs. Full 200 diagnosis execution took 1238s, ten workers ×1; log:
-`/private/tmp/musnba-c01-diagnostic-development-v2.log`. Localisation: `/private/tmp/musnba-c01-localisation-v1.log`.
-Twenty replay/oracle receipts were reused after a candidate-group decoder repair; v1 and archived dependencies remain immutable.
-One fresh single-worker 1k replay exactly matches the ten-worker arrays/oracles in `data/derived/experiments/c01_replay_worker_check_v1`.
-All 200 games support official box accounting; 501/49,002 segments have actors outside recorded fives. Original worlds lack zone
-counts; the separately labelled stored-schedule replay supplies them. No historical operational population is certified.
-Initial adapter dependencies remain at `~/Basketball_archive_ops/20261125_c01_initial_adapter_v1`; corrected group-guard sources
-are preserved at `~/Basketball_archive_ops/20261125_c01_diagnostic_group_guard_v1`.
-Finish checkpoint 4 directly; report accepted percentages and do not stop before C01 closes.
+### Committed deliverables and decision
 
-Question: which observable/input/model failures create the largest recoverable player and team error, and how much value does
-our complex generator add over credible simpler alternatives?
+- A reusable, source-bound opportunity dataset/feature pipeline: dated player/team labels, exact scoring/count identities,
+  causal profile lineage, support/missingness and fit/evaluation exposure manifests. No invented tracking or publication history.
+- A working chronological probabilistic fit/predict/evaluate path, with current-information baselines, shared game/team dependence,
+  conditional player allocation and independent coherence/accounting checks. Cached fits/forecasts must be reusable by later engines.
+  A feature audit or ranked list alone cannot earn completion.
+- One bounded modelling decision: whether a frozen opportunity challenger earns further independent qualification, or the incumbent
+  remains preferred. At most two training-selected recipes; compare shared team/game factors plus allocation with a coherent count
+  alternative before preserving or replacing event/actor modelling by habit. Freeze the actual recipes before candidate scores.
+  No production promotion is promised. The full dataset/training/scoring capability remains required if the modelling hypothesis fails.
 
-Committed advance: one repeatable, source-bound accuracy workbench with common scoring, competing baselines, connected event/game
-diagnostics and an immutable prospective forecast ledger. An aggregate audit or a ranked list without working tools is insufficient.
-No production model change is required or authorised by a diagnostic win. Do not begin by assuming `other`, long shots or any
-previous favourite is the answer. Reuse prior source reconciliation and retained worlds instead of repeating them.
+The chunk makes us better by turning outcome-informed headroom into a test of information that could actually be available at tip,
+and by making player improvements answer to team outcomes. Availability forecasting, conversion changes, season tuning and UI
+redesign are outside this chunk; later work stays conditional.
 
-### Evidence and compute boundary
+### Evidence boundary and dependencies
 
-- Historical diagnostic panel: the exact 200 IDs in `analysis/experiments/20261124_b1_development_v2.json` → `game_ids`.
-  They are known development games, not fresh validation. Hash IDs/receipts and enumerate all exclusions before new model scores.
-  Reuse compatible incumbent captures from that study's control lineage; replay only for missing diagnostics/source compatibility.
-- Fit each new baseline/auxiliary strictly before its evaluation origin, including opponent ratings, residual distributions,
-  normalization, missing-value priors and any calibration. Training-only chronological selection; no panel-driven baseline tuning.
-- Inventory earlier chronological folds for future confirmation, but do not select a production recipe on them in this chunk.
-  Inventory prior exposure; do not open reserved confirmation/protected outcomes. No protected 2026–27 scoring or incumbent rescore.
-- Keep separate populations for original pre-tip forecasts, causal hindcasts, actual-participant diagnostics and realised-input oracles.
-  Historical operational support is measured, not assumed. Missing injury/roster publication evidence cannot be supplied by final participants.
-- Use ≤10 total heavy threads with explicit inner caps; canonical 1k simulation chunks and deterministic seeds. Benchmark first.
-  Start on 20 fixed games (first 20 of the frozen ID order) for wiring/noise, then all 200. Diagnostics use 1k worlds only where new
-  generation is needed; reuse larger stored worlds fairly or use an explicitly common deterministic prefix. No broad parameter sweep.
-- Initial namespace v1 is retained; active namespace v2 above also refuses overwrite. Aggregate completion receipt:
-  `analysis/experiments/<actualETdate>_c01_workbench_v1.json`. Private row arrays/fits stay under data.
+- Reuse C01's exact 200 exposed development IDs from `analysis/experiments/20261124_b1_development_v2.json` → `game_ids`.
+  First 20 in frozen order are wiring; full 200 are development, never fresh confirmation. Pin source/candidate inputs and support
+  before scoring. Reuse audited C01 truth, scorer, incumbent worlds and deterministic common prefixes where compatible.
+- New raw training outcomes stop at 31 December 2025. All fits, normalization, hyperparameter choice, residual laws and calibration
+  precede their evaluation origins. Evaluation may use stored dated pre-tip player/team profiles from the allowed panel only after
+  their causal lineage is checked. Apply the same information age to challengers and comparison features; disclose residual differences.
+  If current profiles cannot be evidenced without forbidden outcomes, narrow the conditional claim and deliver the source capability.
+- No reserved/protected outcomes, protected incumbent rescore or new provider. Do not rebuild current features by opening other
+  post-cutoff games. Any later confirmation requires a separate prospectively frozen contract and audited prior exposure.
+  Sources remain ESPN/sportsdataverse/NBA Stats under existing collection limits; no collection is implied by this charter.
+- Keep actual-participant diagnosis separate from operational availability/DNP forecasting. Shared incumbent minutes do not test
+  independent minutes skill. Preserve the prospective ledger; zero real certified captures at C01 closure is an explicit limitation.
+- Score distributions for player points/opportunities and joint team points/total/margin/wins, not just marginal means or signed bias.
+  Predeclare critical-player/context support, calibration and dependence checks. Historical uncertainty clusters whole games and
+  calendar blocks; simulation worlds are not additional real games. Markets remain diagnostic references only.
 
-### Modular checkpoints — each commits, pushes and refreshes docs
+### Modular checkpoints — sequential acceptance, commit and push
 
-Weights are 20/30/35/15; accepted checkpoints determine capability progress. Accuracy improvement is a separate measured result.
-Dependencies are sequential; overlap independent source/fixture work and bounded fitting/I/O.
+Weights total 100%; report accepted capability separately from measured forecast gains. Each checkpoint refreshes affected live
+docs, inspects staged changes and commits/pushes before dependent work. Independent source/fixture I/O may overlap safely.
 
-|Checkpoint|Weight|Concrete deliverables|Acceptance before its commit/push|
+|Checkpoint|Weight|Deliverables|Acceptance|
 |---|---:|---|---|
-|1. Truth and comparison contract — accepted|20%|Test inventory by failure mode/independence/cost; shared game/player/event schema; source/cutoff/exposure manifest; explicit definitions of possessions, periods, scoring and forecast populations; prospective numerical scoring/diagnostic contract|Known accounting cases cover ordinary games, OT, technical FT, DNP/unknown and broken clocks/IDs. Valid fixtures reconcile; deliberate corruption/leakage and known-bad forecasts fail for the intended reason. Map legacy tests to retain/replace/remove; replace their real coverage before removal. Record support and unsupported fields for all 200 games. Freeze baseline recipes and evaluation settings before scores.|
-|2. Common benchmark and challengers — accepted|30%|Independent reference scorer and small deterministic unit/property suite; one runner/scorer for incumbent, a prior-only player-rate model with documented shared minutes input, and a regularised direct team-strength model with joint residual uncertainty; cached per-game/player outputs|Same IDs/origins/truth/metric semantics. Team baseline is team-only diagnostic; player baseline sums its own players. Self-comparison gives zero; perfect/known-bad forecasts and outside-support/missing-data cases score correctly. Repeated seeds/workers reproduce; independent calculation agrees; report 200-game support, simulation noise and wall time. All fit/residual inputs pass cutoff injection.|
-|3. Connected error localisation — accepted|35%|Training/runtime feature parity on identical recorded history; observed-context next-event scoring versus free-running evaluation; per-player/team/context error budget; realised-input diagnostic adapters for minutes/on-court support and opportunity counts; distributions/joint checks|Source scoring identities remain exact. Oracle scope/estimand and unsupported cases are explicit; diagnostics are not live forecasts or additive causal attributions. Show how conclusions change across predeclared contexts and simulation noise. Reproduce on the wiring panel and complete the fixed 200-game analysis.|
-|4. Repeatable operation and next decision|15%|Separate fast unit, source/integration, statistical and browser/release commands with explicit scope; one documented command recreates the comparison from pinned inputs; prospective ledger captures model/input/report/retrieval times and pre-tip provenance; ranked bottlenecks and next charter|An independent run reproduces aggregate conclusions; ledger never overwrites original forecasts, uses only truly captured pre-tip state, and fails closed on unknown timing. Select the next bottleneck with effect/support/cost/uncertainty and architecture alternatives. Deliver working tools and a concrete 0% successor; keep later plans provisional.|
+|1. Causal data and frozen comparison|25%|Opportunity labels/features with dated lineage, current-information fairness audit, independent fixtures and a versioned C02 contract|Exact game/player keys, count/point/minute identities, explicit exclusions/missingness. Deliberate future-input and corrupted-label faults fail at the intended boundary. Before candidate outcomes, freeze recipes, primary useful gain, numerical team/critical-player harm margins, support/calibration requirements, multiplicity, precision and stopping. No fitting before this checkpoint is committed/pushed.|
+|2. Working learners and recoverability screen|25%|Chronological probabilistic training/prediction, current-information baselines and common cached scoring; separate team volume from conditional player allocation with fixed minutes|Training-only selection of at most two recipes. Complete the frozen 20/200 comparison with uncertainty, simulation-noise sensitivity and supported contexts; independently reconcile joint draws. Actual labels/oracles cannot enter live features. Judge predictable benefit and team harm together; an oracle improvement alone cannot pass.|
+|3. Coherent adapter or completed negative route|35%|Reusable joint opportunity sampler/adapter, exact player/team accounting and full diagnostic comparison. If the frozen screen passes, connect one challenger to coherent event worlds on 20 then 200 games|Legal clocks/fives/fouls, exact counts/weights and deterministic workers/resume. Use 1k worlds/game for a justified engine experiment; no conversion/clock patch to rescue results. If the screen fails, finish the full data/fit/joint-sampling/scoring API, independent accounting and bounded negative decision; no expensive unchanged production run.|
+|4. Independent operation and decision|15%|Fresh fit/sample/scoring reproduction, documented commands, capability/skill decision and next concrete 0% charter|Independent aggregates agree; source/cutoff and meaningful fault checks pass. Report practical effect, support, cost and uncertainty. Retain incumbent unless separate release evidence qualifies a change; a failed model does not waive the promised working capability.|
 
-Baseline recipes are frozen in the linked contract: shrunk player rates with shared incumbent minutes; ridge team strength with
-paired chronological residuals. All new training/auxiliary outcomes stop at 31 December 2025 to avoid reserved outcomes. Disclose
-that age restriction versus the incumbent's later prior-feature history; a difference cannot alone identify the value of architecture.
-Neither comparator invents play-by-play or claims independent minutes validation.
+Numerical research priorities and practical harm limits must be frozen in checkpoint 1 from product stakes and outcome-blind
+precision checks. C01 signals are evidence for choosing the question, not automatic C02 promotion criteria. Never revise limits,
+populations or recipes after seeing candidate outcomes to rescue a result.
 
-Checkpoint 3 explicitly covers opponent defence and shot zones: prior-strength-adjusted predicted versus observed scoring response,
-zone attempt shares/conversion, turnovers, fouls and rebounds, with game-level uncertainty and support. Recheck MODEL's historical
-defence diagnostic on the common panel; do not target a coefficient of 100% by decree. Controlled opponent/lineup swaps hold offence
-and seeds fixed and test sensitivity only; real-game comparisons establish predictive value. Freeze these diagnostics at checkpoint 1.
+### Compute, failure routes and release boundary
 
-Use MODEL’s common player/event/joint-team metrics and population/uncertainty definitions; means alone cannot establish skill.
-The connected workbench and independently checked test architecture, not a copy of existing mean-component tables or a higher test count, are the acceptance targets. All test/gate designs may be replaced prospectively; existing green checks are not presumed sufficient.
+Use at most ten total heavy threads, including compression/validation and inner pools. Cap OMP/OpenBLAS/MKL/vecLib separately;
+cap Arrow pools, preserve canonical seeds/1k grouping, and wait for pool shutdown before large parent work. Benchmark wiring first;
+estimate runtimes only from measured logs. No broad sweep or precision extension without the frozen stopping rule.
+Private fits/rows/worlds: new `data/derived/experiments/c02_opportunities_v1`; aggregate receipts:
+`analysis/experiments/<actualETdate>_c02_*.json`. Refuse overwrites; preserve replaced dependencies at `~/Basketball_archive_ops`.
+Record any detached log, namespace, completed count, blocker and exact resume command here before a session stops.
 
-### Failure routes and stopping
+No recoverable gain: keep incumbent, deliver the complete reusable pipeline and explain the measured data/model ceiling.
+Insufficient support or precision: state the unresolved decision and choose the source/measurement capability that resolves it;
+no invented winner, repeated local tweaks or cosmetic fallback. Unsupported operational timing remains conditional research,
+with future original forecasts eligible only through genuine pre-tip capture.
 
-Unsupported historical operational inputs: deliver the conditional track and prospective capture with explicit source gaps/denominators;
-no pre-tip skill claim. Unsupported oracle: implement/test the supported adapter and observable-context diagnosis; no fabricated result.
-If uncertainty prevents ranking a bottleneck, run a predeclared precision extension on development data within measured limits;
-otherwise choose the source/measurement capability that resolves the ambiguity. No invented winner, endless sweeps or unrelated UI fallback.
-An incomplete workbench remains incomplete. No model-promotion, season-tuning or cosmetic redesign in C01.
+Isolated research needs targeted tests, leakage/fault/accounting and reproducibility. A production model/input/generation change
+additionally needs prospectively frozen release evidence, affected views/bundles, full smoke/fault/accounting and one fresh full
+online nightly: current ET-day 10k worlds/branch and fresh season worlds, measured against the existing 3600-second ceiling.
+Cache-only reuse is not fresh generation. UI publication/browser checks apply only if assets change; none are planned.
 
-### First actions and release boundary
-
-Checkpoint4 first actions: verify sources, reproduce fits/baseline samples/oracles/event scores/conclusions in a new namespace,
-then validate prospective capture and select the successor. Existing signatures never silently accept changed code.
+### Exact first actions
 
 ```sh
+git status --short --branch
+git --no-pager log --oneline -5
+.venv/bin/python scripts/smoke.py
+ls -t analysis/experiments/ | head -15
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1
-.venv/bin/python -m unittest discover -s tests -p 'test_c01_*.py'
 .venv/bin/python analysis/c01_run.py source
-.venv/bin/python -u analysis/c01_run.py reproduce --jobs 10
-.venv/bin/python analysis/c01_run.py ledger-audit
+rg -n 'SourceBoundary|load_game|profile|cutoff|opportun' analysis/c01_contexts.py analysis/c01_baselines.py analysis/c01_core.py
 .venv/bin/python scripts/check_docs.py
 ```
 
-Completed benchmark/diagnostic stages refuse overwrite. `reproduce` makes a fresh private namespace; incumbent/zone worlds
-are pinned inputs, while fits, baseline draws and oracle/event scores are recreated. Standalone ledger code rejects unknown/late
-timing and historical backfill. Full independent reproduction, ledger integration acceptance and the next decision remain pending;
-prepared code/test passes alone do not earn the final 15%. Production stays unchanged in isolated research.
-
-Pure research checkpoints need targeted tests/fault injection/accounting, not a production nightly. A generation/provenance hook
-change must pass integration checks and one fresh full release nightly at chunk end, before it becomes live:
-`OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u scripts/nightly_musnba.py --engine 10000 --sims 10000`.
-That means authorised online fetch/rebuild, current ET-day 10k worlds/branch, fresh season, ≤3600 seconds, independent accounting,
-full smoke/fault and affected bundles. PWA assets publish only if actually changed. No UI change is planned.
+Then implement the source-bound label/feature manifest, independent fixtures and frozen C02 comparison contract. Read only relevant
+MODEL/source code and retained C01 manifests. Commit/push checkpoint 1 before fitting; no historical plan supplies extra tasks.

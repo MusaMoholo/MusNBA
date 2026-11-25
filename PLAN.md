@@ -11,25 +11,27 @@ product use in [README](README.md). Only the next chunk is fixed. Everything bey
 
 Nothing technical is exempt from review: architecture, data/labels, features, evaluation metrics, promotion policy, unit/integration
 tests, deployment and development workflow. Preserve a working product while replacements earn their cost; rewriting everything
-is not itself progress. Recent shooting, substitution and season-strength changes did not establish broad accuracy gains. One conditional 200-game audit showed team bias +1.08 points against mean absolute error 8.96: cancelling
-average bias alone would leave most individual-game error. Player cohorts also differ. Those results do not identify the dominant cause.
-We need a connected explanation of error and strong competing baselines before choosing another narrow intervention.
+is not itself progress. Recent shooting, substitution and season-strength changes did not establish broad accuracy gains.
+C01's connected comparison shows why player improvements must answer to joint team behaviour. Diagnostics expose possible value;
+only predictions from dated information can establish recoverable skill. Use that distinction before choosing a narrow intervention.
 
-## Short term — establish the accuracy workbench
+## Short term — test predictable joint opportunity improvements
 
-The next chunk builds a reusable benchmark and diagnosis system and challenges the measuring system itself.
-Inventory tests by real failure mode, independently verify truth/scoring, and replace brittle or self-confirming checks. Separate data
-validity, engine correctness, predictive skill and delivery reliability; a green inherited smoke suite certifies none of the others.
-This is not another descriptive audit or predetermined clock fix.
-Compare the incumbent with a transparent player-rate baseline and a direct team-strength baseline on identical, time-correct inputs.
-Separate availability/minutes, opportunities, player allocation/conversion and error accumulated through simulated game states.
-Connect next-event predictions in observed contexts to complete simulated games. Carefully labelled outcome-informed diagnostics
-estimate where better information could help; they never count as deployable forecasts.
-Explicitly test opponent defence and shot-zone response: whether opponents change shot opportunities, locations and success enough,
-alongside turnovers, fouls and rebounds. Defence is already present; its strength and accuracy need measurement, not an assumption of adequacy.
+C01 delivered the working comparison/diagnosis system, independent checks, competing baselines and prospective capture API.
+Its measured results and limits live in MODEL. The incumbent remains preferred to the fixed simple challengers; no production
+accuracy gain is claimed. Reuse the workbench rather than rebuilding another audit.
 
-Deliver a repeatable workbench, independent reference tests, source/exposure manifests, competing forecasts, prospective capture
-and an evidence-backed next decision. Reuse existing captures/audits; no production-model promotion is promised in this foundation chunk.
+Next, test whether dated current player/team information can improve joint shot opportunities with incumbent minutes held fixed.
+Build reusable labels, causal features and chronological probabilistic learners; distinguish team volume from player allocation.
+Outcome-informed diagnostics exposed headroom but did not identify the fraction predictable before tip, and older comparator
+histories limit architecture attribution. Better individual forecasts must also preserve team probability accuracy and dependence.
+
+Cheap recoverability evidence determines whether to connect one challenger to coherent event worlds. Shared game/team factors,
+conditional allocation and a coherent count alternative compete fairly; preserving the sixteen-node architecture is not a goal.
+No clock change, forced defence loading or standalone minutes correction follows automatically from the diagnostics.
+The committed data/training/scoring capability must work even if the challenger fails. Separate truth, mechanics, skill and
+operational checks; synthetic passes alone establish no NBA forecast improvement. Qualification on independent evidence remains
+separate from research completion, and operational claims require genuine pre-tip captures.
 
 ## Medium term — spend effort where it can change results
 
