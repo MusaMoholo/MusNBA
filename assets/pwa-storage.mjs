@@ -2,7 +2,7 @@
 // visible only at commit (one 'active' pointer); failed imports leave the previous data intact.
 export const DB_NAME = 'musnba-data-v1';
 const LOCK = 'musnba-import';
-const CAPABILITIES = new Set(['player-icons-v1', 'minute-cdf-player-v2', 'lineup-forecast-v1', 'early-delivery-v1', 'shot-zones-v1', 'visible-worlds-v1', 'competitions-2026-v1']);
+const CAPABILITIES = new Set(['player-icons-v1', 'minute-cdf-player-v2', 'lineup-forecast-v1', 'early-delivery-v1', 'shot-zones-v1', 'visible-worlds-v1', 'competitions-2026-v1', 'rotation-midpoints-v1', 'research-evidence-v1']);
 export const REQUIRED = ['/api/meta', '/api/players'];
 const KEY = /^\/(api\/[a-z0-9_-]+(?:\/[A-Za-z0-9_.-]+)*|logos\/\d+(?:-dark)?\.png|player-icons\/\d+\.png)$/;
 
