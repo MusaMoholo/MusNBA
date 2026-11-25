@@ -1,0 +1,98 @@
+{
+  "chunk": "C02",
+  "version": 1,
+  "scope": "Pure possession actor/action learning; research only; team counts/scores emerge",
+  "panel_receipt": "analysis/experiments/20261124_b1_development_v2.json",
+  "population": "known 200 actual-participant development games; first20 wiring; not fresh confirmation",
+  "training_from": "2024-10-01",
+  "training_through": "2025-12-31",
+  "selection_through": "2025-09-30",
+  "early_stop_from": "2025-10-01",
+  "profiles": "data/derived/variants/a1_causal_base_20261122_v4/features/pregame.parquet",
+  "forbidden": [
+    "full-game shot/point/possession targets in prediction",
+    "remaining-quota features",
+    "score offsets/rescaling/clamps",
+    "market fitting",
+    "new reserved/protected outcomes",
+    "body/position from current boxes",
+    "new provider"
+  ],
+  "candidate": {
+    "heads": [
+      "who",
+      "what"
+    ],
+    "who_objective": "exact five-candidate softmax negative log likelihood; diagonal Hessian 2p(1-p)",
+    "what_objective": "8-class multiclass",
+    "rounds_max": 300,
+    "early_stopping_rounds": 30,
+    "learning_rate": 0.04,
+    "num_leaves": 15,
+    "min_data_in_leaf": 200,
+    "lambda_l2": 10,
+    "max_bin": 63,
+    "seed": 20261125,
+    "half_life_days": 365,
+    "temperature": 1,
+    "feature_fraction": 1,
+    "bagging_fraction": 1,
+    "features": "causal base player PROFILE and relative usage/shot/assist/oreb shares/ranks; recorded history; CONTEXT except season/team-style plus causal team-style; core lineup aggregates. No IDs, body, mu, final totals or remaining budgets.",
+    "history_phase": "actor sec_so_far includes current sampled elapsed duration, matching runtime; other counts precede current event"
+  },
+  "baseline": "causal usage_share among five; profile action mix with training-only fallback and floor1e-6, row normalisation; no full-game count prediction",
+  "screen": {
+    "metric": "joint who+what log loss nats per supported recorded action; lower better",
+    "minimum_games": 100,
+    "minimum_events": 10000,
+    "minimum_relative_gain": 0.005,
+    "paired_ci95_upper_must_be_below": 0,
+    "brier_max_harm": 0.002,
+    "comparison": "candidate vs unchanged incumbent on identical supported action keys; also report profile baseline",
+    "multiplicity": "one frozen challenger; no development recipe selection"
+  },
+  "rollout": {
+    "wiring_games": 20,
+    "development_games": 200,
+    "worlds": 1000,
+    "seed_namespace": "c02-possession-v1",
+    "control": "fresh unchanged incumbent with identical source profiles/stored simulated schedules/seeds; original retained incumbent separately diagnostic",
+    "mandatory": "paired20 wiring even if recorded-context screen fails, to deliver and validate real engine adapter; remaining180 only if frozen screen passes",
+    "primary": "player PTS CRPS >=1% lower with both paired game/week95% upper<0",
+    "harm_limits": {
+      "team_points_crps": 0.1,
+      "game_total_crps": 0.15,
+      "game_margin_crps": 0.15,
+      "win_brier": 0.01,
+      "critical_player_relative_crps": 0.02,
+      "coverage80_absolute_change": 0.03
+    },
+    "harm_acceptance": "both game/week95% upper below practical positive margins; critical prior-usage>=.25 player PTS/3PM; contexts>=30games/200player rows; insufficient precision is unresolved, not safe",
+    "release": "research survivor only; independent prospective qualification and full release evidence required before production"
+  },
+  "uncertainty": "10000 paired whole-game and fixed7day calendar-block bootstrap seed20261125; both500-world halves; no optional precision extension",
+  "failure_route": "retain incumbent; finish complete source-bound dataset/fit/predict/runtime-adapter/scoring/reproduction capability including paired20; no knowledge-only completion",
+  "compute": "<=10 total heavy threads; fitting10 then shutdown; generation10x1; BLAS/Arrow1; immutable private namespaces; no parameter sweep",
+  "checkpoints": [
+    {
+      "id": 1,
+      "weight": 25,
+      "deliver": "source-bound event data, cutoff/probability fault tests, frozen contract"
+    },
+    {
+      "id": 2,
+      "weight": 25,
+      "deliver": "train/refit cached heads and baseline; full200 recorded-context screen"
+    },
+    {
+      "id": 3,
+      "weight": 35,
+      "deliver": "working pure possession runtime adapter and paired20/conditional200 legal rollouts"
+    },
+    {
+      "id": 4,
+      "weight": 15,
+      "deliver": "independent fit/prediction/accounting reproduction; bounded decision; next0charter"
+    }
+  ]
+}

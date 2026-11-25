@@ -8,6 +8,9 @@ and release policy are all reviewable. Past qualification is provenance, not pro
 
 The primary task is a pre-game probability distribution over coherent play-by-play worlds: participation/minutes, events,
 player boxes, periods, scores and winners must describe the same games. Accurate outcomes and calibrated uncertainty both matter.
+The owner requires possession-level generation: team shots/points emerge from events, with no separately predicted full-game
+targets, remaining-quota features or aggregate steering. Historical player/team context may inform event probabilities. Coaching
+rotation/minutes priors are explicit assumptions under legal time budgets; they are not a precedent for shot/score budgets.
 Observed-context next-event prediction is a separate, useful diagnostic; good next-event scores do not establish good complete-game
 forecasts. Live in-game prediction is not currently certified. Season forecasts are downstream consumers of game uncertainty.
 

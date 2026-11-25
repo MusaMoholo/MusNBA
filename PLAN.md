@@ -21,13 +21,13 @@ C01 delivered the working comparison/diagnosis system, independent checks, compe
 Its measured results and limits live in MODEL. The incumbent remains preferred to the fixed simple challengers; no production
 accuracy gain is claimed. Reuse the workbench rather than rebuilding another audit.
 
-Next, test whether dated current player/team information can improve joint shot opportunities with incumbent minutes held fixed.
-Build reusable labels, causal features and chronological probabilistic learners; distinguish team volume from player allocation.
+Next, test whether dated player/lineup/team information improves who acts and what happens within possessions, with incumbent
+rotation rules held fixed. Build reusable event labels, causal features, chronological learners and swappable probability heads.
 Outcome-informed diagnostics exposed headroom but did not identify the fraction predictable before tip, and older comparator
 histories limit architecture attribution. Better individual forecasts must also preserve team probability accuracy and dependence.
 
-Cheap recoverability evidence determines whether to connect one challenger to coherent event worlds. Shared game/team factors,
-conditional allocation and a coherent count alternative compete fairly; preserving the sixteen-node architecture is not a goal.
+Recorded-context evidence precedes expensive rollout. The model must generate player and team outcomes through legal possessions;
+full-game shot/score forecasts cannot steer events. Alternative possession architectures may compete; the sixteen-node design is reviewable.
 No clock change, forced defence loading or standalone minutes correction follows automatically from the diagnostics.
 The committed data/training/scoring capability must work even if the challenger fails. Separate truth, mechanics, skill and
 operational checks; synthetic passes alone establish no NBA forecast improvement. Qualification on independent evidence remains
