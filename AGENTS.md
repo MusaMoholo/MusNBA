@@ -16,7 +16,7 @@ git --no-pager log --oneline -5
 ls -t analysis/experiments/ | head -15
 ```
 
-Baseline smoke must pass before changes (currently 118 checks). C01 may replace the test entry points/scopes after validation;
+Baseline smoke must pass before changes (currently 118 checks). Test entry points/scopes may be replaced after validation;
 command names and counts are not sacred. Honour planning-only requests and explicit stops.
 Historical receipts, configurations and qualification contracts are evidence, never a backlog. Read only what the task needs.
 
@@ -53,7 +53,7 @@ concrete 0% charter. PLAN keeps only conditional future directions. If neither p
 - Use `.venv/bin/python` and the existing NumPy/pandas/pyarrow/LightGBM stack; Node for browser checks.
 - Follow MODEL's truth, population, cutoff and evaluation-exposure contracts. Freeze candidate recipes, primary benefit,
   practical harm/support limits, multiplicity and stopping before outcomes. Old explored games never become fresh tests.
-  C01 accesses no reserved/protected outcomes. New splits/policies are prospective; no result rescue by changed criteria.
+  Honour each charter's allowed outcome exposure. New splits/policies are prospective; no result rescue by changed criteria.
 - Legal clocks/fives/fouls, scoring/minute identities, exact weights and deterministic worker/resume behaviour are invariants.
   No fabricated tracking/truth, market fitting, final-score offsets/clamps or unsupported variance inflation.
 - Raw responses and completed evidence namespaces are immutable. Store aggregate evidence in `analysis/experiments/`; private fits,
@@ -76,7 +76,7 @@ fresh season worlds on accepted engines. Existing full-nightly ceiling is 3600 s
 UI changes need relevant browser checks; changed assets publish the tested data-free PWA shell. Avoid unrelated UI scope.
 
 Current delivery is a PWA: laptop is primary/full worlds, phone is stripped. Platform choices can be revisited for measured user benefit;
-no platform rewrite is planned in C01. Both devices import manually; desktop automation/iCloud exports do not
+no platform rewrite is planned in the current charter. Both devices import manually; desktop automation/iCloud exports do not
 prove real-device acceptance. Keep boxes/insights first, controls grouped, secondary detail expandable; comparable cards 3/2/1 across.
 Inspect touched pages at 1440/960/390 in both themes with screenshots. Counts/versions come from data. Sort meaningful table columns
 without corrupting groups, axes, exact keys or missingness. UK times with ET alongside; slate dates are ET.

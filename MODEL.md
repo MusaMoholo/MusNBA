@@ -77,7 +77,7 @@ Observed player defence maps are on-court exposure. No outcome-based assignment,
 Passing one layer never establishes the others. The inherited 118-check smoke suite is an operational regression signal,
 not an accuracy certificate. Existing tests/gates must be inventoried by failure mode and evidence independence before reuse.
 
-Rebuild tests around hand-reconciled source fixtures and independent reference scorers; avoid checking a helper against itself.
+Use hand-reconciled source fixtures and independent reference scorers; avoid checking a helper against itself.
 Use property/metamorphic tests for conservation, player/team relabelling, legal bounds, worker/resume independence and future-input
 injection. Known-good and deliberately bad forecasts must exercise scoring/ranking/acceptance behaviour, including zero-probability
 log loss, missing support and values outside histogram support. Synthetic tests validate arithmetic/logic, not NBA predictive skill.
@@ -88,12 +88,10 @@ Browser tests should use bounded calls, explicit document/data readiness and iso
 
 ## Evaluation contracts
 
-C01's development comparison is frozen in [the versioned contract](analysis/c01_contract_v1.json). It specifies shared schemas,
-baseline recipes, scores, contexts, support, numerical priority/harm signals and stopping. These are research-ranking rules, not
-production promotion criteria. The new deterministic scorer has a separate pairwise arithmetic reference; synthetic/fault passes
-establish logic only. Common benchmark scores use the same actual-participant keys and native units, pairing both sides/all
-players within each game and reporting calendar-block sensitivity. Shared incumbent minutes do not validate independent minutes
-prediction; the older baseline fit ceiling prevents attributing every difference to model architecture. Source timing remains limited.
+C01's [versioned contract](analysis/c01_contract_v1.json) defines its closed research comparison, not production promotion policy.
+New experiments freeze their own recipes, benefit/harm/support criteria and stopping before outcomes. Common scores require the
+same keys/truth and native units, keeping both sides/all players within each game and reporting calendar-block sensitivity.
+Independent arithmetic and synthetic faults establish scoring logic, not NBA predictive skill.
 
 Start with a common schema and exact population/period/availability semantics for incumbent and baselines. Score player MIN/PTS/REB/
 AST/3PM distributions by prior role/support and team points/total/margin/wins together. Report CRPS or an appropriate proper probability
@@ -105,9 +103,9 @@ and joint dependence; use exact scoring identities rather than multiplying margi
 Realised-input diagnostics must declare what was fixed, what changed and interactions. Do not sum their gains as independent causal effects.
 
 Development is exploratory within logged exposure; confirmation uses an unchanged recipe on an independent chronological block.
-Track prior inspection: reorganising does not make old folds fresh. Protected 2026–27 exposures remain consumed as recorded;
-C01 must not access protected/reserved outcomes. Future splits may change prospectively, preserving selection/monitoring/audit
-boundaries. Never rescore an explored candidate under revised criteria and call it independent evidence.
+Track prior inspection: reorganising does not make old folds fresh. Protected 2026–27 exposures remain consumed as recorded.
+Honour each charter's outcome boundary; later splits change prospectively, preserving selection/monitoring/audit separation.
+Never rescore an explored candidate under revised criteria and call it independent evidence.
 
 Before any new promotion, freeze the candidate class, useful primary gain, practical critical-player/team harm limits, support,
 calibration/joint requirements, multiplicity, precision/stopping rules and runtime/integration checks. Set numerical margins from
@@ -132,13 +130,16 @@ Team/context priors, hierarchical shared game factors, different learners or a r
 Learn/calibrate them on prior data and connect them coherently to player events; no market fitting, arbitrary final-score correction
 or unsupported spread multiplier. Stronger complexity earns its place through end-to-end evidence and manageable runtime.
 
+Separately fitted conditional probabilities already define a joint law when multiplied along the event/actor/action chain.
+A shared-learning claim requires common learned parameters or another explicit statistical coupling. Its legal next-choice law and
+derived conditional probabilities must agree, including actorless outcomes. Compare architectures on identical supported information,
+history and feature phase with declared capacity/selection budgets; keep legacy-package comparisons distinct. Joint learning has no
+presumed accuracy advantage. A current-event label may condition a later head only after that event is sampled, never a joint input/mask.
+
 ## Evidence worth knowing, not repeating by default
 
-The older 200-game defence comparison (`20261120T120827Z_compare_defence_F4.json`) measured predicted scoring per 100 possessions
-against prior offensive and opponent defensive ratings. The opponent-defence coefficient rose from .440 to .686 versus 1.685 in
-actual games: about 26% to 41% of the observed association. This is not prediction accuracy, a causal share of all defence, or a
-current r3 remeasurement. Observational context, rating noise and uncertainty matter; forcing the ratio to 100% is not a valid goal.
-The broader defence change also improved historical probability scores; its remaining headroom must be re-established fairly.
+The historical defence comparison (`20261120T120827Z_compare_defence_F4.json`) measured an opponent-rating association ratio
+of about 41%. It is not current r3 accuracy or a causal share of defence; forcing it to 100% is not a modelling goal.
 
 C01 [benchmark](analysis/experiments/20261125_c01_benchmark_v1.json) reuses the known B1 panel: 200 games, 400 team-games,
 4,292 actual-participant player-games. Team-points CRPS (distribution error in points; lower is better) is 6.415 incumbent,
@@ -153,11 +154,9 @@ On identical recorded histories, shared and independently accumulated candidate 
 has small one-step score impact; the opponent-defence coefficient gap is unresolved with game uncertainty. Zone replay is a separate
 scenario, not original incumbent zones. These findings do not justify a clock/defence coefficient fix by assumption.
 
-C01 is closed in the [completion receipt](analysis/experiments/20261125_c01_workbench_v1.json). A fresh independent run recreated
-fits, baseline draws, oracle/event scores and all 200-game aggregate conclusions exactly; retained incumbent/zone worlds remained
-pinned inputs. One fresh single-worker replay also matched ten-worker arrays. The standalone immutable ledger passed actual-clock
-CLI integration and unknown/late/backdating rejection on synthetic artifacts only: zero real certified entries, no live capture hook.
-The next question is predictable joint opportunity improvement with causal current profiles, not a demonstrated gain from knowing outcomes.
+C01's [completion receipt](analysis/experiments/20261125_c01_workbench_v1.json) records independent fit/scoring reproduction and
+worker replay; retained incumbent/zone worlds were pinned inputs. Its forecast ledger passed timing/fault integration on synthetic
+artifacts only: zero real certified entries, no live hook. Outcome-informed headroom does not establish causal predictability.
 
 C02's [frozen actor/action screen](analysis/experiments/20261125_c02_screen_v1.json) tests 200 known development games and 43,697
 supported actions. Combined negative log probability (nats/action; lower better) is 3.19137 incumbent, 3.20253 candidate and 3.31416

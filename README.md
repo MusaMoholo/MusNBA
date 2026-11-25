@@ -55,7 +55,7 @@ node analysis/pwa_import_check.mjs --url <shell-url> --bundle <bundle.musnba.gz>
 The inherited smoke/fault commands remain regression checks; the C01 inventory records their protection and gaps. A passing count is not predictive validation.
 Use 8767 for review; owner 8766 stays running. Pure docs/research checkpoints do not trigger a full production refresh.
 
-C01 now has separate synthetic/fault and pinned-source checks:
+C01 provides separate synthetic/fault and pinned-source checks:
 
 ```sh
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1

@@ -3,33 +3,32 @@
 Build a play-by-play forecasting system whose player outcomes, team scores and uncertainty earn trust against real games.
 Measured predictive skill is the goal; coherence and a usable product are necessary supporting properties.
 
-This is a fresh operating plan. Previous roadmaps, percentages and unfinished tasks are removed. The current executable charter
-lives only in [HANDOFF_NEXT](HANDOFF_NEXT.md); model/evidence definitions in [MODEL](MODEL.md), rules in [AGENTS](AGENTS.md),
-product use in [README](README.md). Only the next chunk is fixed. Everything beyond it changes when the evidence changes.
+The only detailed next charter lives in [HANDOFF_NEXT](HANDOFF_NEXT.md); model/evidence definitions in [MODEL](MODEL.md), rules in
+[AGENTS](AGENTS.md), product use in [README](README.md). Previous roadmaps have no authority; later directions remain conditional.
 
 ## Why change the approach
 
 Nothing technical is exempt from review: architecture, data/labels, features, evaluation metrics, promotion policy, unit/integration
 tests, deployment and development workflow. Preserve a working product while replacements earn their cost; rewriting everything
-is not itself progress. Recent shooting, substitution and season-strength changes did not establish broad accuracy gains.
-C01's connected comparison shows why player improvements must answer to joint team behaviour. Diagnostics expose possible value;
-only predictions from dated information can establish recoverable skill. Use that distinction before choosing a narrow intervention.
+is not itself progress. Player improvements must also preserve joint team behaviour. Diagnostics expose possible value;
+only predictions from dated information can establish recoverable skill.
 
 ## Short term — compare possession learners on fair causal inputs
 
 C01 delivered the comparison workbench; C02 delivered causal actor/action training, a simple role baseline and a swappable pure
-possession runtime with independent reproduction. Measured results and limitations live in MODEL. Neither chunk established a new
-production accuracy gain; the incumbent remains live. Reuse those capabilities instead of repeating a descriptive audit.
+possession runtime with independent reproduction. MODEL owns their results/limits. The incumbent remains live; reuse those capabilities.
 
-The next question is joint event/actor/action learning under a fair information and history comparison. C02 changed the feature
-bundle, training coverage and learner together, so its failure cannot identify the best architecture. Admit qualified causal opponent
-information and the full supported earlier history, then compare joint training with a matched separately trained control.
-Both approaches can represent joint probabilities; predictive results must earn a preference.
+The next question is whether sharing learned information across event/player/action choices helps under an equal-information,
+equal-history comparison. C02 changed the feature bundle, training coverage and learner together, so its failure cannot identify the
+best architecture. Build the full supported causal dataset, a genuine shared-parameter choice learner and a strong separately trained
+control. Compare both with the incumbent; either new path may earn further qualification under rules fixed before outcomes.
 
-The product boundary is possession-level generation: team/player shots and scores emerge from legal events. No separately predicted
-full-game total may steer the simulation. Minutes/rotation priors model coaching choices under legal time budgets. Evaluate player
-accuracy, team scores/margins/wins and uncertainty together. Build a reusable joint training/sampling/rollout capability even if the
-candidate fails; independent qualification remains separate from research completion and requires audited information timing.
+The reusable advance must include both trained alternatives, their legal choice/decoder interface, simulator adapters and independent
+reproduction. A failed joint hypothesis still leaves a complete alternative modelling platform. More reports or a relabelled factorisation
+cannot fulfil that commitment. The detailed next charter lives only in HANDOFF; later directions remain conditional.
+
+Team/player shots and scores must emerge from legal events; no predicted full-game total may steer simulation. Evaluate player
+accuracy and joint team uncertainty together. Independent qualification remains separate from research completion.
 
 ## Medium term — spend effort where it can change results
 
