@@ -1,0 +1,82 @@
+{
+ "kind": "Inherited-product strategy and documentation reset; no chunk implementation",
+ "date": "2026-11-25",
+ "authority": "Owner: replace all roadmaps; only next chunk static; whole project including evaluation/unit tests is open to redesign.",
+ "base_commit": "9103634f47bce0515de802d34264059b7047ad1d",
+ "removed_legacy_plans": [
+  "analysis/experiments/20261123_chunk_c_plan_v1.json",
+  "analysis/experiments/20261123_chunk_c_plan_v2.json",
+  "analysis/experiments/20261124_chunk_b_successor_v1.json",
+  "analysis/experiments/20261124_chunk_b_successor_v2.json",
+  "analysis/experiments/20261124_chunk_b_successor_v3.json",
+  "analysis/experiments/20261124_chunk_b_successor_v4.json",
+  "analysis/experiments/20261125_chunk_d_successor_v1.json"
+ ],
+ "rewritten_core_docs_sha256": {
+  "AGENTS.md": "2f8a122a82e93613f418a2b3ec307b7bc87b2cd01f5e6dbfe45d4a931116cda2",
+  "HANDOFF_NEXT.md": "3229b65f6eb175dcd5fb18086df83d4ebd436d5da2dbee3c532a902603d1882a",
+  "PLAN.md": "9556ab68dc6c439d9fd61438f6d34e30f15bc9e6f81f85132f30359642710ccd",
+  "MODEL.md": "ba11d39df63954ad9a9166bc811f3816f67fa62f3d3bd7e6b7af100be4e624eb",
+  "README.md": "9529c7e31c4409b0029f755056b935a2f003a1ad82cc64e46a225ecedac74cc9"
+ },
+ "next_chunk": {
+  "id": "C01",
+  "state": "planned_only",
+  "percent": 0,
+  "charter": "HANDOFF_NEXT.md",
+  "checkpoints": [
+   {
+    "name": "Truth, test inventory and independent comparison contract",
+    "weight": 20
+   },
+   {
+    "name": "Common benchmark, independent scorers and credible baselines",
+    "weight": 30
+   },
+   {
+    "name": "Training/runtime parity and connected error localisation",
+    "weight": 35
+   },
+   {
+    "name": "Repeatable workbench, prospective ledger and next decision",
+    "weight": 15
+   }
+  ],
+  "future_chunks": "Conditional directions only; choose and specify the successor at closure."
+ },
+ "changes": [
+  "No inherited task queue, percentages or predetermined possession tweak.",
+  "Architecture, source preparation, targets, models, metrics, tests, promotion policy and workflow all reviewable.",
+  "Separate truth/causality, mechanical correctness, predictive skill and operational reliability.",
+  "Every chunk precommits a substantial reusable accuracy capability plus a bounded modelling decision; no cosmetic consolation.",
+  "Appropriate research checks per checkpoint; full production refresh only at a relevant release boundary."
+ ],
+ "runtime_tree_unchanged": {
+  "scripts": "0a33a0bc3cf12def1e7c673cda29da6ecabe7445",
+  "models": "723c2b5f24e431bcc21ca240e0ae1835cae7437e",
+  "basketball_common.py": "e36bf0c582d4b7d20c260427291534510d59c55b"
+ },
+ "model_or_data_experiments_started": false,
+ "new_forecast_or_app_release": false,
+ "manual_import_needed_for_this_reset": false,
+ "historical_evidence": "Aggregate results/configurations and three immutable qualification documents retained as reproduction inputs, not current plans or automatic policy. Historical entrypoints requiring removed plans are reproduced from their recorded commit.",
+ "validation": {
+  "baseline_smoke": {
+   "exit_code": 0,
+   "checks": 118,
+   "log": "/tmp/musnba_strategy_reset_smoke_20261125_v1.log",
+   "sha256": "e00345096578423a8aef951a60266aac0ff4e3a6117c78ea0a11f3d1842a40a6",
+   "meaning": "Inherited regression baseline only, not predictive validation or endorsement of its design."
+  },
+  "docs_check": {
+   "exit_code": 0,
+   "output": "AGENTS.md              979 / 1,300 words\nHANDOFF_NEXT.md      1,128 / 1,800 words\nMODEL.md             1,264 / 2,400 words\nPLAN.md                810 / 1,300 words\nREADME.md              686 / 1,400 words\nLive total: 8/8 files; 7,483/9,000 words; 21 local links; 44 archived originals; 0 errors"
+  },
+  "implementation_of_new_test_design": false
+ },
+ "method_sources": [
+  "https://sites.stat.washington.edu/raftery/Research/PDF/Gneiting2007jasa.pdf",
+  "https://otexts.com/fpp3/toolbox.html"
+ ],
+ "checkpoint": "Git owns final commit/push identity."
+}
