@@ -10,15 +10,28 @@ No production model/input/generation hook, PWA asset or bundle changed; no refre
 Owner server 8766 stays running; review uses 8767. Git owns checkpoint identities.
 [PLAN](PLAN.md) holds conditional strategy; [AGENTS](AGENTS.md) holds workflow rules. Historical receipts are evidence, never a backlog.
 
-## Next chunk: C02 — current-information joint opportunity training and recoverability
+## Next chunk: C02 — predict team shot volumes and player shares together
 
-**Status: 0% accepted. This charter is ready; no C02 fitting or evaluation has begun.**
+**Status: 0% accepted. Planning complete; no C02 implementation, fitting or evaluation has begun.**
 
 Question: with incumbent minutes held fixed, can dated player/team information predict materially better joint shot opportunities,
 including team volume and player allocation, while preserving player/team probability accuracy and coherent worlds?
 C01 exposed information headroom, not its predictable fraction. Its older baseline histories confound architecture comparisons;
 knowing real minutes improved individuals while damaging team scores. Do not assume that a clock change, defence loading,
 standalone minutes correction or a particular learner is the answer.
+
+### Intended change and why it matters
+
+- Predict distributions for each team's two-point attempts, three-point attempts and free-throw attempts from evidenced pre-tip
+  profiles, including recent opportunity rates, team/opponent style and rest where supported.
+- Learn how players share those opportunities, conditional on the same incumbent world minutes used by the comparisons.
+  Every sampled player count is a nonnegative integer and sums exactly to its team's count for that attempt type.
+- Learn joint variation from earlier games: some game conditions move several players together, while teammates compete for
+  a given team's attempts. Estimate that dependence; do not inflate uncertainty by an arbitrary multiplier.
+
+Better opportunity forecasts could improve player points and threes while preserving plausible team totals, margins and wins.
+C01's outcome-informed tests justify investigating this route; they do not establish a predictable gain. The guaranteed advance
+is a trainable, reusable joint opportunity module, its dated dataset and its evaluation tools, including a working joint sampler.
 
 ### Committed deliverables and decision
 
@@ -28,8 +41,8 @@ standalone minutes correction or a particular learner is the answer.
   conditional player allocation and independent coherence/accounting checks. Cached fits/forecasts must be reusable by later engines.
   A feature audit or ranked list alone cannot earn completion.
 - One bounded modelling decision: whether a frozen opportunity challenger earns further independent qualification, or the incumbent
-  remains preferred. At most two training-selected recipes; compare shared team/game factors plus allocation with a coherent count
-  alternative before preserving or replacing event/actor modelling by habit. Freeze the actual recipes before candidate scores.
+  remains preferred. Freeze one transparent rate baseline and one joint count/allocation challenger, with learner/shrinkage selection
+  confined to earlier training folds. This count-based path competes with the incumbent event/actor architecture; no broad recipe sweep.
   No production promotion is promised. The full dataset/training/scoring capability remains required if the modelling hypothesis fails.
 
 The chunk makes us better by turning outcome-informed headroom into a test of information that could actually be available at tip,
@@ -54,6 +67,20 @@ redesign are outside this chunk; later work stays conditional.
   Predeclare critical-player/context support, calibration and dependence checks. Historical uncertainty clusters whole games and
   calendar blocks; simulation worlds are not additional real games. Markets remain diagnostic references only.
 
+### Comparison and success decision
+
+- Compare the retained incumbent, a simple forecast using dated current opportunity profiles, and the joint challenger. Share
+  information age, supported player keys, world minutes, seeds and simulation counts wherever applicable. This controls the stale-profile
+  ambiguity in C01's fixed baseline; any remaining difference in model training history stays explicit.
+- In the cheap count screen, both new methods use the same frozen prior-only conversion law to turn attempts into points.
+  Score opportunity counts directly and player/team points together. These are conditional count forecasts, not legal play-by-play worlds.
+- The primary benefit is better player-points probability accuracy; count scores explain its mechanism. Team points, totals,
+  margins/wins, critical players and uncertainty calibration have precommitted practical harm limits. Freeze numerical margins and
+  support before fitting/scoring. A smaller opportunity error alone cannot select a winner.
+- Only a passing screen earns one bounded simulation adapter. Learned opportunity rates influence legal event/actor choices;
+  preserve the incumbent conversion and timing rules. Do not force sampled full-game count targets into a game, rescale completed
+  boxes or add final-score offsets. Check whether the benefit survives actual simulated games before recommending qualification.
+
 ### Modular checkpoints — sequential acceptance, commit and push
 
 Weights total 100%; report accepted capability separately from measured forecast gains. Each checkpoint refreshes affected live
@@ -62,13 +89,15 @@ docs, inspects staged changes and commits/pushes before dependent work. Independ
 |Checkpoint|Weight|Deliverables|Acceptance|
 |---|---:|---|---|
 |1. Causal data and frozen comparison|25%|Opportunity labels/features with dated lineage, current-information fairness audit, independent fixtures and a versioned C02 contract|Exact game/player keys, count/point/minute identities, explicit exclusions/missingness. Deliberate future-input and corrupted-label faults fail at the intended boundary. Before candidate outcomes, freeze recipes, primary useful gain, numerical team/critical-player harm margins, support/calibration requirements, multiplicity, precision and stopping. No fitting before this checkpoint is committed/pushed.|
-|2. Working learners and recoverability screen|25%|Chronological probabilistic training/prediction, current-information baselines and common cached scoring; separate team volume from conditional player allocation with fixed minutes|Training-only selection of at most two recipes. Complete the frozen 20/200 comparison with uncertainty, simulation-noise sensitivity and supported contexts; independently reconcile joint draws. Actual labels/oracles cannot enter live features. Judge predictable benefit and team harm together; an oracle improvement alone cannot pass.|
+|2. Working learners and recoverability screen|25%|Chronological probabilistic training/prediction, current-information baseline, joint challenger and common cached scoring; separate team volume from player allocation with fixed minutes|Complete the frozen 20/200 comparison with uncertainty, simulation-noise sensitivity and supported contexts; independently reconcile joint draws. Actual labels/oracles cannot enter live features. Judge predictable benefit and team harm together; an oracle improvement alone cannot pass.|
 |3. Coherent adapter or completed negative route|35%|Reusable joint opportunity sampler/adapter, exact player/team accounting and full diagnostic comparison. If the frozen screen passes, connect one challenger to coherent event worlds on 20 then 200 games|Legal clocks/fives/fouls, exact counts/weights and deterministic workers/resume. Use 1k worlds/game for a justified engine experiment; no conversion/clock patch to rescue results. If the screen fails, finish the full data/fit/joint-sampling/scoring API, independent accounting and bounded negative decision; no expensive unchanged production run.|
 |4. Independent operation and decision|15%|Fresh fit/sample/scoring reproduction, documented commands, capability/skill decision and next concrete 0% charter|Independent aggregates agree; source/cutoff and meaningful fault checks pass. Report practical effect, support, cost and uncertainty. Retain incumbent unless separate release evidence qualifies a change; a failed model does not waive the promised working capability.|
 
 Numerical research priorities and practical harm limits must be frozen in checkpoint 1 from product stakes and outcome-blind
 precision checks. C01 signals are evidence for choosing the question, not automatic C02 promotion criteria. Never revise limits,
 populations or recipes after seeing candidate outcomes to rescue a result.
+Report capability at 25%, 50%, 85% and 100% only after acceptance; also report long-job completed counts. Planning earns no C02
+checkpoint credit. A research survivor is eligible for a later frozen qualification, not an automatic app release.
 
 ### Compute, failure routes and release boundary
 
