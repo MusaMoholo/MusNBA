@@ -1,0 +1,36 @@
+{
+ "kind": "Three complete original1k chunks; every old raw field bit-exact plus independent interval/count checks",
+ "jobs": 3,
+ "inner_threads": 1,
+ "checks": [
+  {
+   "game": "401909314",
+   "worlds": 1000,
+   "old_fields_exact": true,
+   "independent_interval_capture_exact": true,
+   "weighted_counts_exact": true,
+   "source_sha256": "43a02e6d75e6310ad86cd347618993382db88e95306bc9151a82c9eaaa6c002c",
+   "seconds": 68.34294149999982
+  },
+  {
+   "game": "401909315",
+   "worlds": 1000,
+   "old_fields_exact": true,
+   "independent_interval_capture_exact": true,
+   "weighted_counts_exact": true,
+   "source_sha256": "7598394508b72945345d9afc291401dda7479f2ccdf438428fbdfdaa6d5c5f39",
+   "seconds": 69.90634320800018
+  },
+  {
+   "game": "401909316",
+   "worlds": 1000,
+   "old_fields_exact": true,
+   "independent_interval_capture_exact": true,
+   "weighted_counts_exact": true,
+   "source_sha256": "a9cb24e00253866b142abfb25acfb41f293ad974b822211e484821eb0b3192bb",
+   "seconds": 69.20744041700004
+  }
+ ],
+ "result": "pass",
+ "protected_scoring": false
+}

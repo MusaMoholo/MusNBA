@@ -1,41 +1,41 @@
-# Scope and progress
+# Chunks and product direction
 
-State/actions: [HANDOFF](HANDOFF_NEXT.md). Rules: [AGENTS](AGENTS.md). Methods: [MODEL](MODEL.md). App: [README](README.md).
+Live actions: [HANDOFF](HANDOFF_NEXT.md). Rules: [AGENTS](AGENTS.md). Design/evidence: [MODEL](MODEL.md). App: [README](README.md).
 
-Players and possessions should produce believable player distributions and team sums, tested against real results.
-Today:10k possession worlds/branch; tomorrow onward: evolving team pathways. Laptop PWA is primary; phone is stripped.
+Players and possessions should produce accurate player distributions and team sums against real results.
+Today uses possession worlds; tomorrow onward uses evolving team pathways. Laptop PWA is primary; phone is stripped.
 
-## Current work
+## Chunk B — complete100%
 
-C1–C5 and D42A are100%; accepted engine-v1.3-r3/report-bands-v1/pathway-v1 parameters remain.
-C2 shooting and C3/C4 S06 attempts closed without promotion; no qualifier or protected rescore.
-`20261124_c5_completion_v1.json` owns C delivery. Original C ladders/weights remain in Git2c1488a and frozen plan JSON.
+B1/B2/B3 are100%, weighted30/30/40. `20261125_chunk_b_completion_v1.json` owns completion/release evidence;
+`20261124_chunk_b_successor_v4.json` preserves the original bounded plan. No qualifying prediction-accuracy gain:
+the fixed long-shot recipe and three starting-strength/memory variants were rejected. Accepted r3/pathway-v1 remain.
+Team-score objective is unmet; this measured research rejection does not prove wider ideas cannot help.
 
-**U25 dashboard polish is complete100%**; `20261124_u25_completion_v1.json` owns release evidence.
-The owner requested a full **PWA-only** interaction/visual sweep before B: clean selection/navigation and rich truthful visual analysis.
-U25 changed no models or B progress. App shell, both imports/offline/upgrades and lean0% successor handoff are delivered.
+Delivered: all-world exact-weighted regulation rotation probabilities, player curves/quarter maps and sortable roster;
+saved score-study decisions/errors/uncertainty, explicit observed/inferred/forecast limits and a tested/published PWA.
+Both devices require manual app update/import; real-device acceptance remains unverified.
 
-## Active chunk — D42 B60%
+## Next chunk D — planned0%
 
-`20261124_chunk_b_successor_v4.json` is the refined bounded plan; HANDOFF gives executable rungs/dependencies/commands/fallback.
-B1=100%,B2=100%,B3=0%: fixed200-game buzzer recipe rejected; owner accuracy targets did not pass despite27 proper safeguards.
-`20261124_b1_completion_v1.json` owns research and fresh nightly/PWA delivery. Team-score objective remains unmet.
-B2 corrected historical calendars/score endpoints; all16×10k five-arm comparisons complete, no nominee qualified. `20261125_b2_completion_v1.json` owns release evidence; B3 follows its checkpoint.
+- Improve real-life score predictions through a demonstrated possession-control/clock correction, preserving player accuracy.
+- Make saved forecast misses easier to understand by showing player/team errors against actual results, with timing/support explicit.
+
+`20261125_chunk_d_successor_v1.json` fully specifies dependencies, exact panels, ten rungs/module, acceptance/fallback, first commands,
+compute and final nightly. HANDOFF gives executable next actions. No D experiment has started.
 
 |Module|Weight|Outcome|
 |---|---:|---|
-|B1 possession accuracy|30%|Bring team scores materially closer to real results through diagnosed input/model/decision improvements; preserve accurate player distributions.|
-|B2 season|30%|Test starting strength/memory at16 historical origins; improve accuracy and realistic uncertainty only with evidence.|
-|B3 integration/visibility|40%|Independently confirm team-score improvement; show scoring/rotation/defence evidence and deliver the PWA.|
+|D1 possession mechanism|45%|Reconcile source control/clock meanings; test one new supported mechanism with≤3 frozen variants against owner accuracy/player safeguards.|
+|D2 confirmation/product/delivery|55%|Independently qualify an unchanged survivor or retainr3, deliver useful saved-forecast error visibility and the complete checked PWA.|
 
-Owner priority: demonstrably closer real-world team scores from robust possessions. HANDOFF/current successor owns the target and metrics; UI-only work cannot fulfil it.
-Already inferred broad-zone history is not new work. “Nearest” requires actual positions we lack; primary/help roles remain unknown without support.
-New responsibility estimates must retain uncertainty and avoid outcome-based assignment. No C2/S06 rescue or r3 protected rescore.
-Measured rejection may close research; unfinished work cannot. Retain accepted models on rejection, explicitly mark team-score objective unmet and carry it forward with evidence.
+D2 depends on checkpointed D1; progress=.45D1+.55D2, currently0/0=0%.
+Source ambiguity is not demonstrated harm. No failed-recipe rescue, arbitrary variance/bias correction, protectedr3 rescore or invented tracking.
+Only a newly qualified recipe receives the protected2026–27 test once. Historical forecast backfill remains deferred(D40).
+Measured rejection can close research; incomplete investigation cannot. Accuracy credit requires qualified measured improvement;
+UI visibility alone cannot satisfy that goal. Each development module closes with a fresh full nightly/checks/checkpoint/push.
 
 ## Planning convention
 
-From25 November2026, work continues solely through chunks. The unfinished S-item queue and its74%/95% ledger are retired,
-not completed. Historical decisions/evidence retain their identifiers in Git; they create no automatic future tasks.
-D42A is complete; B=.30B1+.30B2+.40B3. Each module checkpoints before dependent work.
-Every development chunk ends with a fresh full nightly, tested PWA and fully specified0% successor.
+From25 November2026, continue solely through chunks. The unfinished S-item queue and old74%/95% ledger are retired, not completed.
+Historical evidence keeps its identifiers in Git; it creates no automatic future task. Completed A/C/U25 history remains in completion receipts/Git.

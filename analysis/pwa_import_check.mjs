@@ -28,7 +28,7 @@ ws.addEventListener('message', e => {
   if (m.id && pending.has(m.id)) { const p = pending.get(m.id); pending.delete(m.id); m.error ? p.reject(new Error(m.error.message)) : p.resolve(m.result); }
   else if (m.method === 'Runtime.exceptionThrown') errors.push(m.params.exceptionDetails.exception?.description || m.params.exceptionDetails.text);
 });
-const send = (method, params = {}, sessionId) => new Promise((resolve, reject) => { const id = ++seq; pending.set(id, {resolve, reject}); ws.send(JSON.stringify({id, method, params, ...(sessionId ? {sessionId} : {})})); });
+const send = (method, params = {}, sessionId) => new Promise((resolve, reject) => { const id = ++seq; const timer=setTimeout(()=>{pending.delete(id);reject(new Error('DevTools timeout: '+method));},45000); pending.set(id, {resolve:value=>{clearTimeout(timer);resolve(value);},reject:error=>{clearTimeout(timer);reject(error);}}); ws.send(JSON.stringify({id, method, params, ...(sessionId ? {sessionId} : {})})); });
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const {targetId} = await send('Target.createTarget', {url: 'about:blank'});
 const {sessionId: s} = await send('Target.attachToTarget', {targetId, flatten: true});
@@ -757,8 +757,38 @@ if(args['require-c5']) {
     const t=document.querySelector('[data-condition-team]').value,expected=h.stageSummary(paths,h.conditionMask(paths,t,'title'));
     return document.querySelector('.competition-support').textContent.includes(expected.count.toLocaleString()+' matching paths');
   })()`));
+  const c5Origin=await evaluate('performance.timeOrigin');
   await send('Page.reload',{},s);
-  check('C5 competitions survive offline reload',await waitFor(`document.querySelectorAll('[data-competition-stages] tbody tr').length===30`));
+  check('C5 competitions survive offline reload',await waitFor(`performance.timeOrigin!==${JSON.stringify(c5Origin)}&&document.querySelectorAll('[data-competition-stages] tbody tr').length===30`,60000));
+}
+if(args['require-b3']) {
+  const gid=String(args['require-b3']);
+  await evaluate(`location.hash=${JSON.stringify('/game/'+gid+'/analysis')}`);
+  check('B3 rotation tab available offline',await waitFor(`!!document.querySelector('[data-analysis-tab="rotation"]')`));
+  await evaluate(`document.querySelector('[data-analysis-tab="rotation"]').click()`);
+  check('B3 stored all-world map, exact weights and time controls work offline',await waitFor(`!!document.querySelector('[data-rotation-table]')`) && await evaluate(`(async()=>{
+    const ui=await import('./assets/ui.mjs'),R=await import('./assets/rotation-map.mjs'),g=await ui.api('game/'+${JSON.stringify(gid)}),sim=g.projection.sim,m=sim.rotation_map;
+    if(!R.validateRotation(m,sim)||m.worlds!==sim.sims||m.probability_mass!==(sim.probability_mass||sim.sims))return false;
+    const slider=document.querySelector('[data-rotation-time]');slider.value='47';slider.dispatchEvent(new Event('input'));
+    if(!document.querySelector('[data-rotation-clock]').textContent.includes('00:30'))return false;
+    document.querySelector('[data-subject-kind="player"]').click();return !!document.querySelector('.rotation-curve svg');
+  })()`));
+  if(args.profile==='laptop') {
+    const chosen=await evaluate(`(async()=>{const ui=await import('./assets/ui.mjs'),g=await ui.api('game/'+${JSON.stringify(gid)}),id=g.projection.sim.lineups.selected_players[0].player_id;for(const side of ['home','away']){const p=g.projection.sim[side].players.find(p=>p.id===id);if(p)return {name:p.name,side};}})()`);
+    await evaluate(`{const team=document.querySelector('[data-analysis-team]');team.value=${JSON.stringify(chosen.side)};team.dispatchEvent(new Event('change'));const select=document.querySelector('[data-lineup]');select.value='unavailable';select.dispatchEvent(new Event('change',{bubbles:true}));}`);
+    check('B3 forced-unavailable rotation uses matching stored case offline',await waitFor(`document.querySelector('[data-lineup]')?.value==='unavailable'&&!document.querySelector('[data-lineup]').disabled&&[...document.querySelectorAll('[data-rotation-table] tbody tr:not(.grp)')].some(r=>r.cells[0].textContent===${JSON.stringify(chosen.name)}&&r.cells[1].dataset.sortValue==='0')`));
+  }
+  const oldOrigin=await evaluate('performance.timeOrigin');
+  await send('Page.reload',{},s);
+  check('B3 rotation capture survives offline reload',await waitFor(`performance.timeOrigin!==${JSON.stringify(oldOrigin)}&&!!document.querySelector('[data-rotation-map]')&&(async()=>{const ui=await import('./assets/ui.mjs');return !!ui.meta()?.latest;})()`,60000));
+  if(args['legacy-b3']) {
+    await evaluate(`location.hash=${JSON.stringify('/game/'+String(args['legacy-b3'])+'/analysis')}`);
+    const ready=await waitFor(`document.querySelector('[data-rotation-analysis]')?.textContent.includes('Unavailable in this older snapshot')&&!!document.querySelector('[data-analysis-tab="rotation"]')`,60000);
+    if(ready)await evaluate(`document.querySelector('[data-analysis-tab="rotation"]').click()`);
+    check('B3 legacy missing capture stays explicit offline',ready,ready?'':await evaluate(`document.querySelector('#view')?.textContent.slice(0,600)`));
+  }
+  await evaluate(`location.hash='/about'`);
+  check('B3 saved rejected studies and unmet goal render offline',await waitFor(`document.querySelectorAll('[data-research-evidence] [data-study]').length===2&&document.querySelector('[data-research-evidence]').textContent.includes('Prediction accuracy goal remains open')`));
 }
 check('storage module loads offline', repeat === 'ok', repeat === 'ok' ? '' : repeat);
 if (args.out) { const shot = await send('Page.captureScreenshot', {format: 'png'}, s); writeFileSync(join(args.out, 'pwa-offline-standings.png'), Buffer.from(shot.data, 'base64')); }

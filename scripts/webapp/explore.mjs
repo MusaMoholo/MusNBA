@@ -1,6 +1,7 @@
 // Discover every supported stored advanced distribution in the current lineup context.
 import {ADVANCED_METRICS, api, esc, f1, pct, histogram, team, quantileStrip} from './ui.mjs';
 import {courtMap, zoneTable, wireCourt, observedMap} from './court.mjs';
+import {rotationView} from './rotation-map.mjs';
 import {scenarioMetricKey} from './box-metrics.mjs';
 export function metricSearch(metrics, text) {
   const terms = String(text || '').toLowerCase().split(/\s+/).filter(Boolean);
@@ -14,13 +15,13 @@ export async function exploreView(root, data, current, initialSubject = null) {
     {id:`t:${side}`,name:team(data.game[side].id).name,side,kind:'team',values:sim[side].advanced},
     ...sim[side].players.map(p=>({id:`p:${p.id}`,name:p.name,side,starter:p.starter,kind:'player',values:p.periods?.fg?.advanced})),
   ]);
-  let selected=subjects.find(s=>s.id===(initialSubject||selectionMemory.get(data.game.id)))||subjects[0],query='',paintCourt=null;
+  let selected=subjects.find(s=>s.id===(initialSubject||selectionMemory.get(data.game.id)))||subjects[0],query='',paintCourt=null,paintRotation=null;
   root.classList.add('analysis-view');
   const subjectOptions=()=>subjects.filter(s=>s.side===selected.side).map(s=>`<option value="${esc(s.id)}"${s.id===selected.id?' selected':''}>${esc(s.name)}</option>`).join('');
-  root.innerHTML=`<section class="panel analysis-header"><h2>Game analysis</h2><p class="note">Choose a team, then explore its overview or one player. Your lineup selection applies throughout.</p><div class="analysis-picker"><label>Team<select data-analysis-team>${['away','home'].map(side=>`<option value="${side}"${side===selected.side?' selected':''}>${esc(team(data.game[side].id).name)}</option>`).join('')}</select></label><div><span class="seg-label">Explore</span><div class="seg" role="group" aria-label="Analysis subject"><button data-subject-kind="team" aria-pressed="${selected.kind==='team'}">Team overview</button><button data-subject-kind="player" aria-pressed="${selected.kind==='player'}">Player</button></div></div><label data-player-picker>Player<select data-metric-subject aria-label="Player">${subjectOptions()}</select></label></div><div class="seg analysis-tools" role="group" aria-label="Analysis tool">${data.court?'<button data-analysis-tab="shooting">Shooting zones</button>':''}<button data-analysis-tab="metrics">Metrics</button></div></section><section class="panel" data-analysis-metrics><div class="metric-search"><h3 class="grow">Explore the numbers</h3><label>Find a metric<input type="search" data-metric-query placeholder="Shooting, rebounds, rating…" aria-label="Find a metric"></label></div><p class="note" data-metric-count></p><div class="metric-catalogue" data-metric-cards></div></section><div data-court-analysis></div>`;
+  root.innerHTML=`<section class="panel analysis-header"><h2>Game analysis</h2><p class="note">Choose a team, then explore its overview or one player. Your lineup selection applies throughout.</p><div class="analysis-picker"><label>Team<select data-analysis-team>${['away','home'].map(side=>`<option value="${side}"${side===selected.side?' selected':''}>${esc(team(data.game[side].id).name)}</option>`).join('')}</select></label><div><span class="seg-label">Explore</span><div class="seg" role="group" aria-label="Analysis subject"><button data-subject-kind="team" aria-pressed="${selected.kind==='team'}">Team overview</button><button data-subject-kind="player" aria-pressed="${selected.kind==='player'}">Player</button></div></div><label data-player-picker>Player<select data-metric-subject aria-label="Player">${subjectOptions()}</select></label></div><div class="seg analysis-tools" role="group" aria-label="Analysis tool">${data.court?'<button data-analysis-tab="shooting">Shooting zones</button>':''}<button data-analysis-tab="metrics">Metrics</button><button data-analysis-tab="rotation">Rotations</button></div></section><section class="panel" data-analysis-metrics><div class="metric-search"><h3 class="grow">Explore the numbers</h3><label>Find a metric<input type="search" data-metric-query placeholder="Shooting, rebounds, rating…" aria-label="Find a metric"></label></div><p class="note" data-metric-count></p><div class="metric-catalogue" data-metric-cards></div></section><div data-court-analysis></div><div data-rotation-analysis></div>`;
   const get=s=>root.querySelector(s);
   function chooseTool(tool) {
-    get('[data-analysis-metrics]').hidden=tool!=='metrics';get('[data-court-analysis]').hidden=tool!=='shooting';
+    get('[data-analysis-metrics]').hidden=tool!=='metrics';get('[data-court-analysis]').hidden=tool!=='shooting';get('[data-rotation-analysis]').hidden=tool!=='rotation';
     root.querySelectorAll('[data-analysis-tab]').forEach(button=>{const active=button.dataset.analysisTab===tool;button.classList.toggle('on',active);button.setAttribute('aria-pressed',String(active));});
   }
   root.querySelectorAll('[data-analysis-tab]').forEach(button=>button.onclick=()=>chooseTool(button.dataset.analysisTab));
@@ -49,11 +50,11 @@ export async function exploreView(root, data, current, initialSubject = null) {
     select.value=selected.id;get('[data-player-picker]').hidden=selected.kind!=='player';
     root.querySelectorAll('[data-subject-kind]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.subjectKind===selected.kind)));
   };
-  const selectSubject=id=>{selected=subjects.find(s=>s.id===id)||subjects[0];selectionMemory.set(data.game.id,selected.id);syncPicker();paint();paintCourt?.();};
+  const selectSubject=id=>{selected=subjects.find(s=>s.id===id)||subjects[0];selectionMemory.set(data.game.id,selected.id);syncPicker();paint();paintCourt?.();paintRotation?.();};
   get('[data-metric-subject]').onchange=e=>selectSubject(e.target.value);
   get('[data-analysis-team]').onchange=e=>selectSubject('t:'+e.target.value);
   root.querySelectorAll('[data-subject-kind]').forEach(b=>b.onclick=()=>selectSubject(b.dataset.subjectKind==='team'?'t:'+selected.side:subjects.find(s=>s.side===selected.side&&s.kind==='player')?.id));
-  syncPicker();paint();
+  syncPicker();paint();paintRotation=rotationView(get('[data-rotation-analysis]'),data,()=>selected);
   if (data.court) {
     const court=await api(data.court.path||`game/${data.game.id}/court`);
     if(!current())return;
@@ -64,7 +65,7 @@ export async function exploreView(root, data, current, initialSubject = null) {
     const chosen=Object.values(court.cases||{}).find(c=>Object.keys(c.choices||{}).length===Object.keys(choices).length&&Object.entries(choices).every(([pid,value])=>c.choices?.[pid]===value))||(!Object.keys(choices).length?court.expected:null);
     if(!chosen){el.innerHTML='<section class="panel"><h2>Shooting zones</h2><p class="note">This saved court summary is unavailable for the selected lineup.</p></section>';return;}
     let metric='mix',display='projected';
-    el.innerHTML=`<section class="panel"><h2>Shooting zones · <span data-court-name></span></h2><div class="replay-controls"><label>Source<select data-court-display><option value="projected">Forecast shots</option>${court.observed?'<option value="offense">Observed shots taken</option><option value="defense">Observed opponent exposure</option>':''}</select></label><label data-court-colour>Colour<select data-court-metric><option value="mix">Share of attempts</option><option value="fg">Make percentage</option></select></label></div><p class="note">Forecast and observed regions keep their own geometry. The team/player selection above applies to both.</p><div data-court-body></div><details><summary>Source, unknowns and spatial support</summary><p class="note">${esc(court.spatial_precision)} ${esc(court.missingness)}</p></details></section>`;
+    el.innerHTML=`<section class="panel"><h2>Shooting zones · <span data-court-name></span></h2><div class="replay-controls"><label>Source<select data-court-display><option value="projected">Forecast shots</option>${court.observed?'<option value="offense">Observed shots taken</option><option value="defense">Observed opponent exposure</option>':''}</select></label><label data-court-colour>Colour<select data-court-metric><option value="mix">Share of attempts</option><option value="fg">Make percentage</option></select></label></div><p class="note">Forecasts show simulated shots. Observed maps show recorded shots; opponent exposure means shots faced while on court, not a verified personal defender. Primary/help roles and physical proximity are unknown. The team/player selection above applies to both.</p><div data-court-body></div><details><summary>Source, unknowns and spatial support</summary><p class="note">${esc(court.spatial_precision)} ${esc(court.missingness)}</p></details></section>`;
     paintCourt=()=>{
       el.querySelector('[data-court-name]').textContent=selected.name;
       el.querySelector('[data-court-colour]').hidden=display!=='projected';

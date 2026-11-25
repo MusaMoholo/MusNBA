@@ -132,7 +132,9 @@ def replay_saved_chunk(folder: Path, node_models: str) -> bool:
     eng.m.median = saved['median']
     raw = lineup_forecast.simulate(eng,g,first['stop']-first['start'],int(first['seed']))['raw']
     with np.load(capture,allow_pickle=False) as z:
-        return set(raw)==set(z.files) and all(np.array_equal(raw[k],z[k] if k in ('player_ids','side')
+        from scripts.rotation_maps import validate
+        validate(raw)
+        return set(z.files).issubset(raw) and not (set(raw)-set(z.files)-{'rotation_presence'}) and all(np.array_equal(raw[k],z[k] if k in ('player_ids','side')
                     else z[k][first['start']:first['stop']]) for k in z.files)
 
 

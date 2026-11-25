@@ -1,0 +1,182 @@
+{
+ "kind": "Independent public Pages byte verification of every served shell asset",
+ "cache": "d53f1efb71da73c3de0e",
+ "commit": "404950970ba9e2f0fd2d4ba30267c17dfc012fc9",
+ "deployment": "https://github.com/MusaMoholo/MusNBA/actions/runs/45620469351",
+ "url": "https://musamoholo.github.io/MusNBA/",
+ "files": [
+  {
+   "path": "_headers",
+   "sha256": "33ca8659fc96e94344b75f27d02c2605aada6b9134992a1ef64cee4c942381af",
+   "bytes": 163
+  },
+  {
+   "path": "apple-touch-icon.png",
+   "sha256": "d5095a9f3fce31a20a657232d350a5c9661ec1f7a57cdcac5cd5d32d625b1980",
+   "bytes": 13130
+  },
+  {
+   "path": "assets/about.mjs",
+   "sha256": "e9c898bfe63097a19eec4d90f9eb8072b4d23f245be546761dd2f76f433f381a",
+   "bytes": 8721
+  },
+  {
+   "path": "assets/app.mjs",
+   "sha256": "9d3ab9bd7af06376fed56050c3bc688c5ce394a05d03164eb793d8d2beac6e56",
+   "bytes": 9873
+  },
+  {
+   "path": "assets/box-metrics.mjs",
+   "sha256": "48c4bd1c6a6734a6ba867b9418eb952c486a3948c64c22b6e00a6837687c32b5",
+   "bytes": 3674
+  },
+  {
+   "path": "assets/competition-paths.mjs",
+   "sha256": "79cb009b16254dafad9c2f326fb8cc742349204295dea0232f4ed2c8408876bd",
+   "bytes": 3700
+  },
+  {
+   "path": "assets/competitions.mjs",
+   "sha256": "1e6eae65374aa2b9d51aede53dcbab6030c350d09cc5d990e444098ca4b1d7f7",
+   "bytes": 8058
+  },
+  {
+   "path": "assets/court.mjs",
+   "sha256": "5ef5aa9d904654726bb920a61a8523df812cd632836573169f476f0af6074f01",
+   "bytes": 7544
+  },
+  {
+   "path": "assets/explore.mjs",
+   "sha256": "d2c1b4391e1c4bf136454f04363db9186114db2845b06f1e24a436f34548b334",
+   "bytes": 10879
+  },
+  {
+   "path": "assets/game.mjs",
+   "sha256": "5d7c22c6c0f328b6b0514cc100b115f917c2f16bd0bd110c13d56149eb3c19d2",
+   "bytes": 82270
+  },
+  {
+   "path": "assets/lab.mjs",
+   "sha256": "0c809cdc37565c3846e33270b9ecc5ca86b4099fee951081c0a3d684b3f4967e",
+   "bytes": 8442
+  },
+  {
+   "path": "assets/league.mjs",
+   "sha256": "c1d12ed793c4d6d40d1144fd3a29140acfcb777291e7916ada0c3a7a292de7cd",
+   "bytes": 35321
+  },
+  {
+   "path": "assets/lineup-worlds.mjs",
+   "sha256": "2e4d0e5c74261a388a10bbf4a29ece58c0a39230a095ca6a4a1b03d239d6e599",
+   "bytes": 14436
+  },
+  {
+   "path": "assets/outcomes.mjs",
+   "sha256": "d5ea0354511adc0e07e46a8c5ff8f711516fb64330031e0ca7259f05840cdee1",
+   "bytes": 35003
+  },
+  {
+   "path": "assets/players.mjs",
+   "sha256": "dfac21f5dacf6001d181a5f8d9ef152a3db51011f299bacf1bb46ea743d5121c",
+   "bytes": 24397
+  },
+  {
+   "path": "assets/precise-minutes.mjs",
+   "sha256": "48697b27ed7fe1b7abd4b37707fd54f07d510a9bcb88a152e8086a2a590f765d",
+   "bytes": 5233
+  },
+  {
+   "path": "assets/pwa-storage.mjs",
+   "sha256": "35245fd6f0ec9765038a037828b056dd702fc4c51366825e8e68861a08a0fcee",
+   "bytes": 10979
+  },
+  {
+   "path": "assets/pwa.mjs",
+   "sha256": "f87f5cfbcaee86d6d7b2cb7783fcaabf471efb27d6faf0df9d06d53ea87516d6",
+   "bytes": 7046
+  },
+  {
+   "path": "assets/replay.mjs",
+   "sha256": "f4062ea6f562494444b0dfb9dafe1f244a934b6036a8b28d34fa586f68666e6f",
+   "bytes": 11609
+  },
+  {
+   "path": "assets/rotation-map.mjs",
+   "sha256": "cd1ffcb72953bb51c846f1499c64d900c052b4b3846fde09c27f864db473a98e",
+   "bytes": 6486
+  },
+  {
+   "path": "assets/scenario.mjs",
+   "sha256": "71e4c8b51babc9df9d5f77d43c13018f2f5f0fe2ba4332ea85bb1716d61300e0",
+   "bytes": 35839
+  },
+  {
+   "path": "assets/season.mjs",
+   "sha256": "39914fbd9eedea6d39ce505851eb22a4922f9058c2a7531257315307ce703b46",
+   "bytes": 9809
+  },
+  {
+   "path": "assets/shot-zones.mjs",
+   "sha256": "dc9a30b84e7481e9dff4e2712014a03c30d272922eca19c017bb01aa3985a879",
+   "bytes": 2972
+  },
+  {
+   "path": "assets/spotlight.mjs",
+   "sha256": "3f58c5e3987b2bd4d379a791e0d21c424920794a438bbce04fb4521fb38e3b29",
+   "bytes": 7559
+  },
+  {
+   "path": "assets/static-api.mjs",
+   "sha256": "db8dc5874dc4326da665c5178c9df0b6d77631dd2cbbcadf2fcfd2328c6ef5e7",
+   "bytes": 865
+  },
+  {
+   "path": "assets/today.mjs",
+   "sha256": "3f9e9bf3b039619e91ac7e8bd225cc73d6b58c44e59f09a21178820678bdd4d4",
+   "bytes": 12638
+  },
+  {
+   "path": "assets/ui.mjs",
+   "sha256": "73122b9a372c71173821c94e81fed5744a1d002f5faee54dc4820d0114de300e",
+   "bytes": 30752
+  },
+  {
+   "path": "assets/weighted-worlds.mjs",
+   "sha256": "8e8fe7dcdfda9105295364531db86aa08243ad3475292fbfeb96acd298de7e5d",
+   "bytes": 10916
+  },
+  {
+   "path": "icon-192.png",
+   "sha256": "936b32273a31605321225b1eb5d0fb10b1a627c3fbbef26da9af9becd54a8c4e",
+   "bytes": 13881
+  },
+  {
+   "path": "icon-512.png",
+   "sha256": "de25a9ad23c6a075a2105dc54edc00f1c7b3a8d155835e0ed73c7f65247fa062",
+   "bytes": 23793
+  },
+  {
+   "path": "icon.svg",
+   "sha256": "ef026659abe0de129a2a5f80c85ffe002bdf4714f9c0e8527c8f96c7ef678628",
+   "bytes": 368
+  },
+  {
+   "path": "index.html",
+   "sha256": "7bc86ff91e2e650f8ae50c3f7910daf018c5586f1eb1e1a8c917e3698b76fa4a",
+   "bytes": 63334
+  },
+  {
+   "path": "manifest.webmanifest",
+   "sha256": "396aeba810ce0cc815d0d3e8e3dad797c533be40cfdf295a7f8cb25d6879fe52",
+   "bytes": 574
+  },
+  {
+   "path": "sw.js",
+   "sha256": "3fb43b85b6ff539495e8d524f70263b59f310724847f67fbd54ae5a5e4e23eb4",
+   "bytes": 1978
+  }
+ ],
+ "data_free": true,
+ "repository_workflow_added": false,
+ "result": "pass"
+}

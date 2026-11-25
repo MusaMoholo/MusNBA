@@ -1,0 +1,24 @@
+{
+ "kind": "Real smoke and deliberate in-memory fault exit evidence",
+ "checks": [
+  {
+   "name": "smoke",
+   "exit_code": 0,
+   "expected_exit_code": 0,
+   "seconds": 85.82507174999955,
+   "summary": "118/118 checks passed",
+   "log": "/tmp/musnba_20261125_b3_smoke_v1.log",
+   "sha256": "e00345096578423a8aef951a60266aac0ff4e3a6117c78ea0a11f3d1842a40a6"
+  },
+  {
+   "name": "fault",
+   "exit_code": 1,
+   "expected_exit_code": 1,
+   "seconds": 82.9072532909995,
+   "summary": "96/118 checks passed",
+   "log": "/tmp/musnba_20261125_b3_fault_v1.log",
+   "sha256": "779583c988b28d35ed153b654bdc894c49f934fd0e395943d17a16e2a6d07584"
+  }
+ ],
+ "status": "pass"
+}

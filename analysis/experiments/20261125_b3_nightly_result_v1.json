@@ -1,0 +1,11 @@
+{
+ "kind": "Module checkpoint full online nightly measured result",
+ "ended": "2026-11-25T13:13:41.227824+00:00",
+ "exit_code": 254,
+ "seconds": 477.7418080000002,
+ "limit_seconds": 3600,
+ "within_limit": true,
+ "source_exact": true,
+ "changed_sources": [],
+ "start_sha256": "1b695e473eb6fb09ad98e3289e1fadbed8165e114eabfa44cfbb6f33da5e79ca"
+}

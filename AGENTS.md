@@ -15,7 +15,7 @@ git --no-pager log --oneline -5
 ls -t analysis/experiments/ | head -15
 ```
 
-Smoke must pass before changes (112 checks at this checkpoint). Follow HANDOFF's first open action.
+Smoke must pass before changes (118 checks at this checkpoint). Follow HANDOFF's first open action.
 Planning-only requests stay planning-only; honour explicit stops. Read-only/docs work needs no review server.
 
 ## Owner and product

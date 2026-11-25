@@ -101,7 +101,7 @@ def replay_chunk(eng,folder,selection,branch_id,start,stop,output):
     finally:eng.world_observer=previous
     raw=record['raw']
     with np.load(source,allow_pickle=False) as expected:
-        if not set(expected.files).issubset(raw) or set(raw)-set(expected.files)-{'zone_fga','zone_fgm'}:raise ValueError('original replay raw fields differ')
+        if not set(expected.files).issubset(raw) or set(raw)-set(expected.files)-{'zone_fga','zone_fgm','rotation_presence'}:raise ValueError('original replay raw fields differ')
         for key in expected.files:
             value=expected[key] if key in ('player_ids','side') else expected[key][start:stop]
             if not np.array_equal(raw[key],value):raise ValueError(f'original full-chunk raw parity differs:{key}')

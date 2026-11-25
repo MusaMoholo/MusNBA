@@ -29,7 +29,7 @@ sys.path.insert(0, str(ROOT))
 from basketball_common import ARCHIVE_ROOT, LOGOS, VIEWS, WEB, archive_paths, packed  # noqa: E402
 from scripts.player_icons import ICONS as PLAYER_ICONS, catalogue as player_icons
 
-MODULES = ['app', 'ui', 'today', 'game', 'league', 'players', 'lab', 'season', 'about', 'spotlight', 'outcomes', 'scenario', 'pwa', 'pwa-storage', 'static-api', 'weighted-worlds', 'precise-minutes', 'lineup-worlds', 'box-metrics', 'shot-zones', 'court', 'replay', 'explore', 'competitions', 'competition-paths']
+MODULES = ['app', 'ui', 'today', 'game', 'league', 'players', 'lab', 'season', 'about', 'spotlight', 'outcomes', 'scenario', 'pwa', 'pwa-storage', 'static-api', 'weighted-worlds', 'precise-minutes', 'lineup-worlds', 'box-metrics', 'shot-zones', 'court', 'replay', 'explore', 'competitions', 'competition-paths', 'rotation-map']
 ICONS = ['icon.svg', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png']
 BOOT = "<script type=\"module\" id=\"boot\">import {boot} from './assets/app.mjs'; boot();</script>"
 STATIC_BOOT = ("<script type=\"module\" id=\"boot\">import {boot} from './assets/app.mjs'; "

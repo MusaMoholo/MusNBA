@@ -96,6 +96,8 @@ def simulate(eng, g, worlds, seed):
            **{'box_' + key: value for key, value in st.box.items()}}
     if detail is not None:
         raw.update(zone_fga=detail.attempts, zone_fgm=detail.makes)
+        if hasattr(detail,'rotation_presence'):
+            raw['rotation_presence']=detail.rotation_presence
     for side in (0, 1):
         if not np.array_equal(raw['box_pts'][:, g.side == side].sum(1), raw['team_points'][:, side]):
             raise ValueError('saved player/team points differ')
@@ -160,6 +162,9 @@ def assemble(g, selected, records, runtime, provenance):
         expectation = {'mu_home': float(mass.mean(points['home'].sum(1))), 'mu_away': float(mass.mean(points['away'].sum(1))),
                        'pace': float(mass.mean(raw['possessions'].mean(1)))}
         summary = forecast_output.game(g.game, teams, points, raw['final_period'] - 4, len(weights), expectation, runtime['id'], weights)
+        from scripts.rotation_maps import summarise
+        rotation=summarise(raw,weights)
+        if rotation is not None:summary['rotation_map']=rotation
         for side in g.sides:
             for player in summary[side]['players']:
                 j = g.ids.index(player['id'])
@@ -174,6 +179,8 @@ def assemble(g, selected, records, runtime, provenance):
     identity = {'game': g.game['game_id'], 'origin': g.input_before, 'runtime': runtime, 'selected': chosen,
                 'branches': descriptors, 'provenance': provenance}
     source_id = hashlib.sha256(packed(identity).encode()).hexdigest()
+    for case in cases.values():
+        if 'rotation_map' in case['sim']:case['sim']['rotation_map']['source_id']=source_id
     payload = {'schema': 1, 'game': g.game['game_id'], 'origin': g.input_before, 'engine': runtime['id'],
                'model': runtime['models'], 'source_id': source_id, 'selected_players': chosen,
                'weight_assumptions': 'Uncalibrated independent availability probabilities; other uncertain players still vary.',

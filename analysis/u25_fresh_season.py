@@ -7,11 +7,11 @@ from basketball_common import read_json,write_json,sha256_file,DERIVED
 from scripts import competitions,projection,forecast_output,master_fixtures
 if __name__=='__main__':
     import argparse
-    parser=argparse.ArgumentParser();parser.add_argument('--prefix',default='20261124_u25');prefix=parser.parse_args().prefix
+    parser=argparse.ArgumentParser();parser.add_argument('--prefix',default='20261124_u25');parser.add_argument('--day');args=parser.parse_args();prefix=args.prefix
     if not prefix.replace('_','').isalnum():raise ValueError('simple immutable prefix required')
     out=ROOT/f'analysis/experiments/{prefix}_fresh_season_v1.json';namespace=ROOT/f'data/derived/experiments/{prefix}_fresh_season_v1'
     assert not out.exists() and not namespace.exists()
-    day='2026-11-24';snap=ROOT/'data/snapshots'/day;stored=read_json(snap/'season.json');st=read_json(snap/'stats.json')
+    day=args.day or read_json(ROOT/'data/views/api/meta.json')['latest'];snap=ROOT/'data/snapshots'/day;stored=read_json(snap/'season.json');st=read_json(snap/'stats.json')
     files=[snap/f for f in ('season.json','stats.json','season_engine_worlds.npz')];before={str(p):sha256_file(p) for p in files}
     with np.load(snap/'season_engine_worlds.npz') as z:weights=z['weights'];engine={k:z[k] for k in z.files if k!='weights'}
     teams=read_json(DERIVED/'teams.json');master=master_fixtures.load();t=time.monotonic()

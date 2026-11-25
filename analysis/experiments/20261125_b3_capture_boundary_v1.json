@@ -1,0 +1,21 @@
+{
+ "kind": "Demonstrated capture-only fractional-clock boundary repair before acceptance",
+ "failed_sources": {
+  "scripts/world_detail.py": "41ba6c7de79e31db13034d9ab0238e0ebeca6c975822ee19088b8b785be45924",
+  "scripts/webapp/rotation-map.mjs": "cd1ffcb72953bb51c846f1499c64d900c052b4b3846fde09c27f864db473a98e"
+ },
+ "archive": "/Users/moholom/Basketball_archive_ops/archive_20261125T131417Z_6693",
+ "counterexample": {
+  "period": 1,
+  "before_clock": 690.3,
+  "action_seconds": 0.3,
+  "after_clock": 690.0,
+  "old_elapsed_action": 30.000000000000046,
+  "canonical_elapsed_action": 30.0
+ },
+ "fix": "Use the identical clock subtraction stored in event records; half-open intervals stay exact. No tolerance, clamp or RNG.",
+ "nightly_attempt": "20261125_b3_nightly_result_v1.json",
+ "accepted_worlds": 0,
+ "old_namespace_retained": "data/derived/live_runs/2026-11-25-1795612229333791000",
+ "model_changed": false
+}

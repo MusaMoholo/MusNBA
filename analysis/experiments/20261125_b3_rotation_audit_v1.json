@@ -1,0 +1,113 @@
+{
+ "kind": "All retained binary rotation worlds, independently summed by branch rational weights and selected cases",
+ "day": "2026-11-25",
+ "games": [
+  {
+   "game": "401909317",
+   "worlds": 40000,
+   "cases": 9,
+   "sample_cells": 63360000,
+   "source_id": "1378b2ef70c28132aaf9bf0aaade789d80821251ca1eb4cec6f36461c69cac9b",
+   "raw_sha256": {
+    "data/snapshots/2026-11-25/lineups/401909317/branches/branch-000.npz": "ae011b7213a8d34dc075cc07a412739aac2407c9d64b50dc4bab6e3c67dfc98c",
+    "data/snapshots/2026-11-25/lineups/401909317/branches/branch-001.npz": "1b5cd6518293f5b0aebc3411d2f9dcb62e0ec391c1eacdebbea3c5d274f4f4cb",
+    "data/snapshots/2026-11-25/lineups/401909317/branches/branch-002.npz": "3df60f600357320b86a439f73457bbec38f43b0269643600a145fc5a07d6fce6",
+    "data/snapshots/2026-11-25/lineups/401909317/branches/branch-003.npz": "5d306d8490744caf3cc6db29392eb304b9176f7d0fb550b9556c07c62ce76e0c"
+   },
+   "all_counts_probabilities_and_fives_exact": true
+  },
+  {
+   "game": "401909318",
+   "worlds": 10000,
+   "cases": 1,
+   "sample_cells": 14880000,
+   "source_id": "fd28d6bca29b8e97b89905ba957528013f51e4f747c6869daf99aa5a1f5b1ec7",
+   "raw_sha256": {
+    "data/snapshots/2026-11-25/lineups/401909318/capture.npz": "99b92a95e2cab0ea3c7d0ff8486b76f8bd144725b6f428a02d6d2f5582bdc2ea"
+   },
+   "all_counts_probabilities_and_fives_exact": true
+  },
+  {
+   "game": "401909319",
+   "worlds": 20000,
+   "cases": 3,
+   "sample_cells": 29760000,
+   "source_id": "ec875c2fb995adc9f0a15c141f51d0ed86fc854a12ebb9f31a0367580dc2204d",
+   "raw_sha256": {
+    "data/snapshots/2026-11-25/lineups/401909319/branches/branch-000.npz": "68eda1c7a5ea6a44ef983d96b0528c8219f24f762cd73299c888ea4facc08af8",
+    "data/snapshots/2026-11-25/lineups/401909319/branches/branch-001.npz": "892d203db66fa1b002e6a52176e8dbd15ec116f0a41393b7f400b133b1333e11"
+   },
+   "all_counts_probabilities_and_fives_exact": true
+  },
+  {
+   "game": "401909320",
+   "worlds": 10000,
+   "cases": 1,
+   "sample_cells": 12000000,
+   "source_id": "685135c3a55d718db1aa91801357a4fcbd1d5a91f2c3f01dbbc62b5ca1de8456",
+   "raw_sha256": {
+    "data/snapshots/2026-11-25/lineups/401909320/capture.npz": "6cf99507c567a01fe61fff31b395e8ae6fcb3e9c4b9491c9a9b4c739eec9d535"
+   },
+   "all_counts_probabilities_and_fives_exact": true
+  },
+  {
+   "game": "401909321",
+   "worlds": 10000,
+   "cases": 1,
+   "sample_cells": 14400000,
+   "source_id": "81cce19881f2d0c5956b9b1943fe26c61dc0c070b7ff52738dfa25130d28b260",
+   "raw_sha256": {
+    "data/snapshots/2026-11-25/lineups/401909321/capture.npz": "9165e9ba21bd82004caa9cf0c2d198c68f27d84af70c2e7fefb30c23aa67d55c"
+   },
+   "all_counts_probabilities_and_fives_exact": true
+  },
+  {
+   "game": "401909322",
+   "worlds": 10000,
+   "cases": 1,
+   "sample_cells": 16800000,
+   "source_id": "60943c6627a28c22e4f5b50d960c72e7c2b200c622e4ec28365096efd4c89e9a",
+   "raw_sha256": {
+    "data/snapshots/2026-11-25/lineups/401909322/capture.npz": "06492f5b726077f8e6333cf0900dfd7c40af4e73391b304cb21cb58b0e8b0b45"
+   },
+   "all_counts_probabilities_and_fives_exact": true
+  },
+  {
+   "game": "401909323",
+   "worlds": 10000,
+   "cases": 1,
+   "sample_cells": 15840000,
+   "source_id": "faf7705baf6079ae64df29be78ccdba6fff9ac7901a4a3c101c3c0bb8cd5f1a9",
+   "raw_sha256": {
+    "data/snapshots/2026-11-25/lineups/401909323/capture.npz": "94e23eebfc9cacd8e7d45ddb1d4209a91dde44a769f68f5caf8afaeb4e67ed6d"
+   },
+   "all_counts_probabilities_and_fives_exact": true
+  },
+  {
+   "game": "401909324",
+   "worlds": 20000,
+   "cases": 3,
+   "sample_cells": 27840000,
+   "source_id": "916cdfaf8f8f0ed1cdb7f7b9c4fccf7341a05dab12163da9f798ddbd0c8fff56",
+   "raw_sha256": {
+    "data/snapshots/2026-11-25/lineups/401909324/branches/branch-000.npz": "bd8cea61b63bbe984c4c6609e75ab235b6ef9ee6123511b7d513254d410bb19d",
+    "data/snapshots/2026-11-25/lineups/401909324/branches/branch-001.npz": "a14e98fa9344432cf07d8c6a276f016a6ea0682a44923a2b69a89c7939a3c8c4"
+   },
+   "all_counts_probabilities_and_fives_exact": true
+  },
+  {
+   "game": "401909325",
+   "worlds": 20000,
+   "cases": 3,
+   "sample_cells": 25920000,
+   "source_id": "002d352e041e323ac1ad7be460cde396c9ee5ed2f8b839f6f8eaa553c0d7e289",
+   "raw_sha256": {
+    "data/snapshots/2026-11-25/lineups/401909325/branches/branch-000.npz": "c434cdf707ce9a7438d0ca3fff4c5b80f8bd4736e347e602a2413d65261c82df",
+    "data/snapshots/2026-11-25/lineups/401909325/branches/branch-001.npz": "9adc1801b29a9e0aca684d1b910747a86e4f4d581c15d162d065a88ffc38d54e"
+   },
+   "all_counts_probabilities_and_fives_exact": true
+  }
+ ],
+ "worlds": 150000,
+ "result": "pass"
+}

@@ -37,9 +37,9 @@ def archive(prefix,runtime):
     print(f'Preserved and byte-verified{len(inventory)} files at{destination}',flush=True)
 
 
-def nightly(prefix,decision):
-    start=ROOT/f'analysis/experiments/{prefix}_nightly_start_v1.json'
-    finish=ROOT/f'analysis/experiments/{prefix}_nightly_result_v1.json'
+def nightly(prefix,decision,version='v1'):
+    start=ROOT/f'analysis/experiments/{prefix}_nightly_start_{version}.json'
+    finish=ROOT/f'analysis/experiments/{prefix}_nightly_result_{version}.json'
     if start.exists() or finish.exists():raise FileExistsError('fresh immutable nightly receipt required')
     archive_path=ROOT/f'analysis/experiments/{prefix}_archive_v1.json'
     read_json(archive_path)
@@ -67,9 +67,10 @@ if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('action',choices=['archive','nightly'])
     parser.add_argument('--prefix',default='20261124_b1')
+    parser.add_argument('--version',choices=['v1','v2'],default='v1')
     parser.add_argument('--runtime',type=Path,default=ROOT/'analysis/experiments/20261124_b1_runtime_v2.json')
     parser.add_argument('--decision',type=Path,default=ROOT/'analysis/experiments/20261124_b1_development_decision_v2.json')
     args=parser.parse_args()
     if not args.prefix.replace('_','').isalnum():raise ValueError('simple immutable prefix required')
     if args.action=='archive':archive(args.prefix,args.runtime)
-    else:nightly(args.prefix,args.decision)
+    else:nightly(args.prefix,args.decision,args.version)

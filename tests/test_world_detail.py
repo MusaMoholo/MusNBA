@@ -7,7 +7,7 @@ from scripts import shot_zones
 class WorldDetailTests(unittest.TestCase):
  def fixture(self):
   g,st,lineups,_=fixtures.Rule3Tests().fixture(2)
-  capture=WorldDetail([0]);capture.begin(g,st)
+  capture=WorldDetail([0],capture_rotations=False);capture.begin(g,st)
   active=np.array([0,1]);capture.before_segment(g,st,active,lineups)
   before=lineups.copy();offense=lineups[:,0].copy();defense=lineups[:,1].copy();offense[0,0]=5
   for team in [0,1]:st.minutes[0,before[0,team],0]+=10/60

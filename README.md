@@ -27,7 +27,10 @@ season winner; future games have no player predictions. Dates are ET; times show
 Analysis selects **team → team overview/player → that roster**, grouped by starters/bench. Shooting/metric tabs retain selection;
 lineup changes preserve compatible player selection. Forecast maps use five pooled court zones; observed shots use recorded coordinates/22regions.
 Opponent exposure means shots faced while on court, not a verified personal defender. Historical maps use the last10 recorded team games before origin.
-New volume bars, quantile strips, competition progression bars and ratings scatter use saved values; missing samples stay unavailable.
+Analysis → Rotations shows all-world on-court probabilities at48 regulation minute midpoints, with quarter/time controls, a player curve and roster map.
+The lineup selection applies; exact weights sum to five per team/time. Sampled probabilities differ from continuous minutes; older capture stays unavailable.
+About → Latest model studies shows saved score errors, uncertainty and adoption decisions. The accuracy goal remains open.
+Charts use saved values; missing samples stay unavailable.
 Lineup assumptions are expandable; selected cases open clearly. Tabs support arrow/Home/End keys; controls support keyboard/focus/44px touch targets.
 Tables remain sortable with exact keys, missing-last order and roster groups. Charts retain ordered axes and show values alongside colour.
 

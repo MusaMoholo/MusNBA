@@ -76,6 +76,11 @@ def project(task):
 
 
 def _store(g, folder, raw, summary, weights, source_id, pieces, provenance, runtime, selected, *, complete=True):
+    from scripts.rotation_maps import summarise
+    if 'rotation_map' not in summary:
+        rotation=summarise(raw,weights)
+        if rotation is not None:summary['rotation_map']=rotation
+    if 'rotation_map' in summary:summary['rotation_map']['source_id']=source_id
     encoded = player_worlds.pack_capture(raw)
     players = {'ids': raw['player_ids'], 'side': raw['side'],
                'lines': np.frombuffer(base64.b64decode(encoded['lines']), np.uint8).reshape(len(raw['minutes']), g.n, -1),

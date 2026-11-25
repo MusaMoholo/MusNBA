@@ -1,0 +1,80 @@
+{
+ "kind": "fresh C5 event/zone/box/minute/weighted-rate/path accounting",
+ "day": "2026-11-25",
+ "counts": {
+  "games": 9,
+  "examples": 45,
+  "segments": 11296,
+  "legal_fives": 45184,
+  "worlds": 150000,
+  "cases": 23,
+  "max_minute_error": 3.552713678800501e-14,
+  "max_weighted_zone_error": 0.0,
+  "max_replay_gzip_bytes": 99476
+ },
+ "rate_distributions": 8379,
+ "rate_reports": [
+  {
+   "game": "401909317",
+   "cases_including_game_view": 10,
+   "rate_distributions_checked": 3276,
+   "status": "pass"
+  },
+  {
+   "game": "401909318",
+   "cases_including_game_view": 1,
+   "rate_distributions_checked": 315,
+   "status": "pass"
+  },
+  {
+   "game": "401909319",
+   "cases_including_game_view": 4,
+   "rate_distributions_checked": 1251,
+   "status": "pass"
+  },
+  {
+   "game": "401909320",
+   "cases_including_game_view": 1,
+   "rate_distributions_checked": 261,
+   "status": "pass"
+  },
+  {
+   "game": "401909321",
+   "cases_including_game_view": 1,
+   "rate_distributions_checked": 306,
+   "status": "pass"
+  },
+  {
+   "game": "401909322",
+   "cases_including_game_view": 1,
+   "rate_distributions_checked": 351,
+   "status": "pass"
+  },
+  {
+   "game": "401909323",
+   "cases_including_game_view": 1,
+   "rate_distributions_checked": 333,
+   "status": "pass"
+  },
+  {
+   "game": "401909324",
+   "cases_including_game_view": 4,
+   "rate_distributions_checked": 1179,
+   "status": "pass"
+  },
+  {
+   "game": "401909325",
+   "cases_including_game_view": 4,
+   "rate_distributions_checked": 1107,
+   "status": "pass"
+  }
+ ],
+ "season_worlds": 64950,
+ "season_probability_mass": 80000,
+ "competition_schema": "nba-competitions-2026-v1",
+ "competition_identity": "38e964650fe7048cff952133724227eef0a1ec1d534421111ebebc7dfddb9845",
+ "season_sha256": "95693af9e0a56f4ed3fa31c0aabb25c120493caf7dcfb566eeba7272a5b3c070",
+ "capture_manifest_sha256": "63a64683ad5394adf422c6807e84a764b81eeb9681f0d4c3d76dd7a13638ee2d",
+ "result": "pass",
+ "protected_scoring": false
+}

@@ -108,6 +108,8 @@ The200-game attempt did not qualify: CRPS gain−.01601[-.04124,.00889],MAE8.964
 27/27 proper safeguards clear. `20261124_b1_development_decision_v2.json` owns the rejection; no independent/protected run.
 It is disabled in production. This conditional-on-selected-shots result does not reject wider end-of-period modelling;
 source and actual-participant limits remain, and the owner team-score objective is unmet.
+B1 setup also exposed different meanings of `other`: newly inferred source possession versus a retained-ball runtime violation.
+This is a source/state ambiguity, not demonstrated score harm; reconcile event types before proposing a correction.
 - B2 repaired three Cup-final83-game errors and future Cup assignments; all4920 regular games now have reconciled regulation/final truth
 in isolated versioned arrays (30 derived period differences; six incomplete feeds checked against retained ESPN summaries). Legacy reports stay immutable.
 All16 origins/four seasons at10k per arm: accepted pathway wins CRPS2.6142, expected80%coverage79.61%, mean dispersion.9891;
@@ -124,11 +126,12 @@ Store original branch/chunk/world IDs/weights. Replay the full original canonica
 Reconcile events, clocks, boxes, minutes, legal fives and zone counters. No invented tracking/passes/trajectories. Preserve lineup compatibility.
 U25 uses stored full-game player metrics (`periods.fg.advanced`), exact quantiles, probabilities and means; unsupported values stay unavailable.
 
-B3 planned rotation capture: read-only presence at48 regulation minute midpoints (30…2850seconds), all retained worlds/players.
+B3 rotation-midpoints-v1: read-only presence at48 regulation minute midpoints (30…2850seconds), all retained worlds/players.
 Use pre-action fives for action time and repaired fives for any post-action gap; no RNG draws. Every world/time has five/team.
-Persist binary world presence; build exact-weighted case/Expected aggregates before serving. Keep stored continuous-minute forecasts separate
+Persist binary world presence in raw branch/canonical captures; build exact-weighted case/Expected aggregates before serving. Keep stored continuous-minute forecasts separate
 from sampled-time probabilities. Phone imports aggregates; older snapshots explicitly lack capture. Display stored score-study decisions,
-not reconstructed forecasts or claims that visibility met the unachieved team-score objective.
+not reconstructed forecasts or claims that visibility met the unachieved team-score objective. Three original1k chunks preserve every old raw array exactly; independent interval/count checks pass.
+Use the stored event-clock subtraction for boundary coordinates; adding elapsed seconds separately can duplicate a fractional-clock midpoint.
 
 **nba-competitions-2026-v1:**1200 base fixtures/80team +30world-local regular fixtures =1230/82team.
 Group/QF/SF count; Cup final/play-in/playoffs excluded. Known fixtures independently replace slots once in actual date order; contradictions fail closed.
@@ -143,6 +146,6 @@ Finals home follows record/H2H/opposite-conference/drawing; source precedence: `
 Unpublished postseason dates use two-day/global-round slots. Synthetic nonnegative conditional OT preserves pathway tied-game winner probability;
 never clamps. Saved engine final scores remain exact; combined engine OT period count unknown. Cup ties use regulation, standings differential final.
 Initial postseason/OT uncalibrated. `20261124_c5_completion_v1.json` owns accepted mechanical/release evidence and earlier failed attempts.
-2025–26 hoopR labels include Cup final401809839 (NY/SA83games); C5 priors exclude it. Audit historical Cup finals/calendar leakage before B2.
+Current Cup priors exclude the2025–26 final; B2 historical reconciliation is recorded above.
 
 D40 historical forecast backfill remains deferred; reconstruction needs pre-origin inputs **and fits**, immutable originals and explicit versioning.

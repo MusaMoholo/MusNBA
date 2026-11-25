@@ -3,17 +3,24 @@ import numpy as np
 
 SCHEMA='visible-worlds-v1'
 class WorldDetail:
-    def __init__(self,selected=()):
+    def __init__(self,selected=(),capture_rotations=True):
         self.selected=tuple(sorted(set(map(int,selected))))
+        self.capture_rotations=capture_rotations
 
     def begin(self,g,st):
         if any(w<0 or w>=st.W for w in self.selected):raise ValueError('selected world outside original full chunk')
         self.attempts=np.zeros((st.W,g.n,5,5),dtype=np.uint16)
         self.makes=np.zeros_like(self.attempts)
         self.events={w:[] for w in self.selected};self.before={}
+        if self.capture_rotations:
+            self.rotation_presence=np.zeros((st.W,g.n,48),dtype=np.uint8)
+            self.rotation_seen=np.zeros((st.W,48),dtype=bool)
 
     def before_segment(self,g,st,active,lineups):
         self.before={}
+        if self.capture_rotations:
+            self.rotation_period=st.period[active].copy()
+            self.rotation_clock=st.clock[active].copy()
         selected=np.flatnonzero(np.isin(active,self.selected))
         for row in selected:
             w=int(active[row])
@@ -21,6 +28,20 @@ class WorldDetail:
                 'minutes':st.minutes[w].sum(1).copy(),'box':{k:v[w].sum(1).copy() for k,v in st.box.items()}}
 
     def after_segment(self,g,st,active,record):
+        if self.capture_rotations:
+            start=(self.rotation_period-1)*720+720-self.rotation_clock
+            action=(self.rotation_period-1)*720+720-(self.rotation_clock-record['secs'])
+            end=(self.rotation_period-1)*720+720-st.clock[active]
+            after=np.empty_like(record['lineups'])
+            rows=np.arange(len(active));off=record['off']
+            after[rows,off]=record['offense'];after[rows,1-off]=record['defense']
+            ticks=np.arange(30,2880,60)
+            for lo,hi,fives in ((start,action,record['lineups']),(action,end,after)):
+                r,t=np.nonzero((ticks>=lo[:,None])&(ticks<hi[:,None])&(self.rotation_period[:,None]<=4))
+                worlds=active[r]
+                if self.rotation_seen[worlds,t].any():raise ValueError('duplicate rotation time capture')
+                self.rotation_seen[worlds,t]=True
+                self.rotation_presence[worlds[:,None],fives[r].reshape(-1,10),t[:,None]]=1
         shots=record['shot'];made=shots[record['res'][shots]>=1]
         pidx=np.minimum(st.period[active]-1,4)
         for values,rows in ((self.attempts,shots),(self.makes,made)):
@@ -54,6 +75,10 @@ class WorldDetail:
         for stat,values in [('fg3a',self.attempts),('fg3m',self.makes)]:
             if not np.array_equal(values[:,:,:,3:].sum(3),st.box[stat]):raise ValueError('zone three-point totals differ')
         if not st.done.all():raise ValueError('detail capture requires all original worlds to finish')
+        if self.capture_rotations:
+            if not self.rotation_seen.all():raise ValueError('missing regulation rotation time')
+            for side in (0,1):
+                if not (self.rotation_presence[:,g.side==side].sum(1)==5).all():raise ValueError('rotation capture must have five per team/time')
         # This independent reconstruction trusts neither engine package summaries nor UI accumulation.
         self.audit={}
         for w,events in self.events.items():

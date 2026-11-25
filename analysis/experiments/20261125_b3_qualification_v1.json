@@ -1,0 +1,25 @@
+{
+ "kind": "B3 frozen integration fallback and capture acceptance",
+ "decisions": {
+  "analysis/experiments/20261124_b1_development_decision_v2.json": "d69bde49edc7a9eb2dda9e60917768495d3fbcc99b2525dc2690960738825ff2",
+  "analysis/experiments/20261124_b2_decision_v1.json": "0436525a3d49d37707cb3e9d181851342c7727f03dd51df7c868ad56ce199b6d"
+ },
+ "qualified_components": [],
+ "production_engine": "engine-v1.3-r3",
+ "production_pathway": "team-pathway-v1",
+ "team_score_objective_met": false,
+ "rungs": {
+  "10": "Both fixed studies rejected; control manifests unchanged.",
+  "20": "No qualified component to combine or remove; gated off, no rescue.",
+  "30": "No qualified combined recipe to confirm; independent engine panel unopened.",
+  "40": "No new model stress/seed recipe eligible; mechanical capture must instead preserve3 old complete1k chunks exactly.",
+  "50": "No new protected qualification; retain accepted r3/pathway, no protected rescore."
+ },
+ "mechanical_policy": {
+  "version": "rotation-midpoints-v1-20261125",
+  "capture": "Every world/player at48 elapsed regulation minute midpoints30..2850. Pre-action five through action, repaired five in post-action gap. No random calls. Binary full world presence retained in canonical raw captures.",
+  "aggregation": "Float64 exact integer-weighted world counts for every stored lineup case and Expected; five/team/time, unavailable probability0, source IDs checked. Phone aggregates only; missing legacy explicit. Sampled probabilities are not continuous minute forecasts.",
+  "compatibility": "Old arrays bit-exact on3 original canonical1k chunks and worker-independent; no runtime fitted model changes.",
+  "delivery": "Saved research scores/intervals and rejected decisions, observed/inferred/forecast distinctions.1440/960/390 both themes/screenshots, both bundles/offline/legacy, data-free published shell, fresh online full nightly<=3600s/10k branch and fresh season, independent accounting, smoke/fault, lean docs/checkpoint/push."
+ }
+}

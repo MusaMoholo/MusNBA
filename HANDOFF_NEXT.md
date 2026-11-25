@@ -1,77 +1,75 @@
-# Handoff — B2 research rejected; delivery active
+# Handoff — Chunk B complete; Chunk D ready at0%
 
-Updated25 November2026. Main checkpoint: `git log -1`; B1 research/delivery checkpoint precedes B2.
+Updated25 November2026. Main checkpoint: `git log -1`; each module checkpoints before dependent work.
 
 ## Current state
 
-U25/C/D42A100%; D42B60% (B1=100%,B2=100%,B3=0%); legacy S-item queue retired by owner. No protected job launched.
-Accepted engine-v1.3-r3/D29/Rule3/report-bands-v1 and pathway-v1 parameters remain. C2/S06 fixed attempts closed without promotion;
-no qualifier/rescue/r3 protected rescore. MODEL owns methods/limits; PLAN owns original ledger.
+Chunk B100% (B1=100%,B2=100%,B3=100%, weights30/30/40). `20261125_chunk_b_completion_v1.json` owns release hashes/checks/limits.
+B1 and B2 fixed studies rejected; no qualifying accuracy gain. Owner team-score objective remains unmet.
+Accepted engine-v1.3-r3/D29/Rule3/report-bands-v1 and pathway-v1 remain; no rescue or protected rescore.
+MODEL owns measured results/methods. Only chunks continue: unfinished S-item queue/old74% ledger retired by owner, not completed.
 
-`20261124_b1_completion_v1.json` owns research/release hashes, exact iCloud bundles, corrected setup attempts and verification.
-One fixed200-game buzzer recipe failed owner accuracy targets despite27/27 proper safeguards; retainr3, team-score objective unmet.
-MODEL owns measured limits. No rescue/retune, independent/broader/seed/10k/protected candidate run qualified; independent outcomes remain unopened.
-Research namespace`data/derived/experiments/d42_b1_buzzer_v2`; frozen recipe/runtime and receipts remain immutable.
-Full online nightly999.7s/3600s, source-exact, required rebuild/fresh50k live worlds/final bundles; fresh31-chunk season reproduces stored results.
-Log`/tmp/musnba_b1_nightly_v1.log`; live namespace`data/derived/live_runs/2026-11-24-1795534215245819000`.
-Smoke112/112; deliberate fault exits1;51 targeted tests,2664 rate checks, phone44/44 and laptop48/48 published-PWA offline checks pass.
-Inspected1440/960/390 in both themes. Shell unchanged/data-free cachec9886c91a5e9bc0b926a (U25 deployment); no separate website/CI workflows.
-Both devices require manual iCloud import; real-device acceptance remains unverified. B1 jobs ended; owner8766/review8767 stay running.
-U25/C history remains in completion JSONs/Git. Plan only chunks; unfinished S items are retired, not completed.
+B3 delivers all-world exact-weighted regulation rotation maps/curves/roster probabilities and saved model-study evidence in the PWA.
+Legacy capture remains unavailable. Final shell d7b1d54b0dc225da253b, gh-pagesf81028e; public assets verified.
+Both devices need app update/manual iCloud import. Browser automation does not prove real-device acceptance.
+No heavy jobs remain. Owner8766 and review8767 stay running; they were restored after finding no listener this session.
+Final fresh online nightly2172.2s/3600, required rebuild,150k worlds/15branches/9games, fresh season and bundles passed.
+118/118 checks passed; deliberate fault fails as intended. Exact independent rotation/case/season/box/rate accounting and both imports/offline/upgrades pass.
+Nightly log`/tmp/musnba_b3_nightly_v2.log`; namespace`data/derived/live_runs/2026-11-25-1795612751429159000`.
+Interruptedv1/failed source remain inventoried in completion/boundary receipts; no acceptance credit or model criterion change.
 
-## Active chunk — D42 B60%; B3=0%
+## Next chunk — D0%; do not resume old S items
 
-B2 complete: `20261125_b2_completion_v1.json` owns all research/release receipts and the fully specified B3 successor.
-No nominee qualified; retain pathway-v1. Full online nightly997.5s, source-exact; fresh31-chunk season exact,20 targeted tests,
-2664 rate checks, phone44/44/laptop48/48 offline checks; smoke/fault pass. No app/model activation.
-Log`/tmp/musnba_b2_nightly_v1.log`; no heavy jobs remain. First action after B2 commit/push: B3 read-only rotation capture and stored evidence.
-B3 source code: scripts/world_detail.py, lineup_forecast.py, live_forecast.py; app: scripts/webapp/explore.mjs.
-Keep3 old canonical chunks for bit-exact parity. Preserve snapshots/views/bundles/shell before replacement.
-Headliners: materially closer real-life team scores through better possessions; reliable season paths with visible scoring/rotation evidence.
-Canonical bounded specification: `20261124_chunk_b_successor_v4.json`.
-Weights B1=30%,B2=30%,B3=40%; overall=.30B1+.30B2+.40B3; current100/100/0 gives60%.
-B1 depends on accepted C/A3/U25, existing soft-assignment/zone history, dated evidence and frozen policy. B2 depends on correct historical calendars,
-prior-only auxiliary fits,16 origins and exact near-term mixtures. B3 follows checkpointed B1/B2 decisions and stored rotation capture.
-Rotation probabilities must use all retained worlds with exact weights, never the five deliberately selected replay examples; missing capture stays explicit.
+Plain-language outcomes: improve real-life score predictions by fixing demonstrated possession/control/clock mistakes;
+make saved player/team forecast misses clear to see. The accuracy outcome is conditional on evidence; the error-view deliverable is required.
+Bounded specification: `analysis/experiments/20261125_chunk_d_successor_v1.json` (0%; no D experiment launched).
+Dependencies: completed B checkpoint, accepted r3/pathway, retained original ESPN event/box/period sources,
+strictly prior auxiliary fits, unchanged owner team-score-v1 contract and promotion-v3 safeguards.
+D2 follows checkpointed D1. Weights D1=45%,D2=55%; progress=.45D1+.55D2; current0/0=0%.
 
-| Rung | B2 pathway30% | B3 integration/visibility40% |
+|Rung|D1 possession mechanism45%|D2 confirmation/product/delivery55%|
 |---:|---|---|
-|10|Reconcile16 historical calendars/Cup finals.|Freeze candidate/control decisions/manifests.|
-|20|Build prior-only carry-over/opponent starts.|Fixed F4 combined/component removals.|
-|30|Leave-one-season-out/cold-start screen.|Independent F4/F1–F3 confirmation or rejection.|
-|40|Test memory/gain/drift versus persistence.|Second-seed/10k/legal/cutoff/runtime gates.|
-|50|Check dated absence support; no-hazard fallback.|Only new qualified recipe protected once; retainr3 otherwise.|
-|60|Consume each near-term Expected once.|Stored rotation probabilities sumfive; responsive map.|
-|70|10k worlds at all16 origins.|Stored score-error/rotation evidence; PWA checks.|
-|80|Per-origin CRPS/dispersion/coverage/persistence.|Fresh full nightly/accounting/bundles/shell.|
-|90|Freeze pathway choice and interactions.|Docs and fully specified0% successor.|
-|100|Evidence/limits/affected delivery/checkpoint/push.|Smoke/fault/PWA/accounting/checkpoint/push.|
+|10|Inventory pre-F4 possession endings/violations/team turnovers/clocks.|Freeze control/nominee/no-nominee and all applicable gates.|
+|20|Reconcile original event order, periods, points and control; quantify support/harm.|Unchanged disjoint200-game F4 confirmation, or close gate after rejection.|
+|30|Select one supported new mechanism; freeze≤3 variants/policy/panels before outcomes.|Player-first and same owner CRPS/bias/MAE/RMSE/v3 grading.|
+|40|Default-off implementation/source fixtures; exact raw parity and legal accounting.|Only survivor: F1–F3 fixed100/fold,30 second-seed games,3×10k stress.|
+|50|Benchmark1k chunks; freeze runtime/source/input/seed queue.|Only new qualified recipe protected once; retainr3 otherwise.|
+|60|Paired200-game development at1k/arm, player tiers first.|Store existing-forecast vs observed-result errors and timing/support.|
+|70|Independent player/team/period/clock/world accounting and context errors.|Sortable player/team error view; missing truth and unsupported detail explicit.|
+|80|Team-score primary/bias and v3 safeguards; fixed choice, no rescue.|Fresh full online nightly, affected forecasts/views/bundles/data-free shell.|
+|90|Freeze unchanged survivor or measured rejection/limits.|Both profiles/offline/upgrades/legacy/screenshots; docs and0% successor.|
+|100|Fresh full nightly/checks/docs/checkpoint/push before D2.|Smoke/fault/docs/staged review/checkpoint/push and high-level outcome.|
 
-B1's ten-rung resolution is in its completion receipt; original ladder/owner team-score contract remains in the frozen B successor.
-Its accuracy objective carries forward unmet. No score shifting/scaling, market fitting, C2/S06 rescue or protectedr3 rescore.
-B2 first audits historical Cup-final labels/calendar leakage; ≤3 prospectively frozen start/memory candidates. Four completed seasons2022–23 through2025–26;
-Nov20/Dec25 in starting year, Feb1/Mar10 in ending year (16 exact dates in successor JSON), leave-one-season-out selection.
-Audit November2022 cold-start support; freeze common prior before outcomes. No future priors, dropped origins or Nov/Dec2026 tests. All auxiliary fits precede origin; missing absence evidence retains no hazard.
-Incomplete2026–27 truth cannot establish full-season/title calibration. No arbitrary variance multiplier or protectedr3 rescore.
+D1 first audits `other`: source newly inferred possession and retained-ball runtime violations need not mean the same thing.
+That ambiguity is not demonstrated scoring harm. Do not revive the failed B1 long-shot recipe, C2 or substitution attempts.
+All training/auxiliary fits precede origin; freeze candidate class/version/multiplicity before grading. No future fits, market fitting,
+score shifts/scales or invented tracking. Missing source support can close a measured audit, not an unfinished investigation.
 
-Acceptance: B1 must pass the prospective owner team-score contract and existing player-first safeguards; otherwise retainr3 and record the objective unmet.
-B2 all16 origins with per-date paired uncertainty and exact mixtures under explicit pathway policy, or measured rejection retainspathway-v1.
-B3 applicable combined/removal/confirmation/seed/stress/runtime gates, useful rotation-map visibility, fresh full nightly and tested/published PWA.
-Failed research retains accepted engines and records the gap; visibility alone cannot satisfy the team-score objective. Unfinished investigations cannot close. Each module checkpoints before the next.
-Use ≤10 heavy threads including inner OMP/BLAS/compression; identify independent compute/I/O first. No agent delegation implied.
+Acceptance: team-points CRPS gain≥.05 with simultaneous95% lower>0; MAE/RMSE do not increase.
+If control bias95% excludes0, reduce its magnitude≥25%; otherwise candidate absolute signed bias≤1 point/team.
+All27 proper safeguards/25 coverage vetoes under frozenv3, with player tiers first. Only unchanged qualifying nominee reaches independent,
+earlier-fold/seed/10k/runtime and once-only protected gates; final independent acceptance precedes activation.
+Fallback: retainr3/pathway on measured rejection and carry accuracy goal unmet. Useful saved-forecast error visibility and checked PWA
+remain required. Historical forecast backfill stays deferred(D40); use existing snapshots, separate pre-tip/after-tip/retrospective/unknown.
 
-First commands:
+First commands after five core docs:
 
 ```sh
 git status --short --branch
 git --no-pager log --oneline -5
 .venv/bin/python scripts/smoke.py
-OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m unittest tests.test_competitions
-rg -n 'def team_games|def state_before|def start_ratings|def play' scripts/season_backtest.py scripts/pathway.py scripts/competitions.py
+ls -t analysis/experiments/ | head -15
+rg -n 'violations keep|nxt_off|nxt_start|START_TYPES|other' scripts/engine.py scripts/possessions.py scripts/nodes.py
+.venv/bin/python -m unittest tests.test_rotation_maps tests.test_world_detail
 ```
 
-Read all five core docs and bounded reports. First B2 immutable namespace:
-`data/derived/experiments/d42_b2_calendar_audit_v1`; report `<actualETdate>_b2_calendar_audit_v1.json`; refuse overwrites.
-Final nightly: `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u scripts/nightly_musnba.py --engine 10000 --sims 10000`.
-Require authorised online fetch/rebuild, fresh10k worlds/branch/season and selected replay,≤3600s, independent accounting,
-both profile imports/offline/upgrades, inspected1440/960/390/themes, data-free shell, five docs/checkpoint/push and0% successor.
+First action: create bounded outcome-blind pre-F4 source audit, not candidate fitting.
+Namespace`data/derived/experiments/chunk_d_possession_audit_v1`; report`<actualETdate>_d1_source_audit_v1.json`; refuse overwrite.
+Frozen successor lists exact200 development/200 unopened confirmation IDs and resume/promotion limits.
+Use≤10 heavy threads total including inner OMP/BLAS/compression; benchmark new work, shared canonical1k queue, detached logs.
+
+Final nightly for each development module:
+`OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -u scripts/nightly_musnba.py --engine 10000 --sims 10000`.
+Require authorised online fetch/rebuild, current ET-day10k worlds/branch and fresh10k season,≤3600s/source-exact;
+independent fresh-season/rotation/box/accounting, smoke/fault, both imports/offline/upgrades/legacy,1440/960/390/themes/screenshots,
+data-free published shell/no repository CI workflows, lean five docs/checkpoint/push and fully specified0% successor.

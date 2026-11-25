@@ -966,6 +966,8 @@ def build(views_root: Path = VIEWS) -> dict:
     if out.exists():
         shutil.rmtree(out)
     api = out / 'api'
+    from scripts import research_evidence
+    write_json(api/'research.json',research_evidence.build())
 
     def game_core(r):
         side = lambda s: {'id': r[s + '_id'], 'abbr': r[s + '_abbr'],
@@ -1285,7 +1287,7 @@ def build(views_root: Path = VIEWS) -> dict:
         'dates': {d: len(by_date.get(d, [])) for d in slate_dates},
         'teams': teams, 'model': latest['meta']['model'], 'availability_policy': latest['meta'].get('availability_policy'),
         'player_icons': player_icons(),
-        'required_capabilities': (['competitions-2026-v1'] if season_latest.get('competitions') else []) + ['player-icons-v1'] + (['shot-zones-v1'] if any((api/'game').glob('*/court.json')) else []) + (['visible-worlds-v1'] if any((api/'game').glob('*/replay.json')) else []) + (['early-delivery-v1'] if latest['meta'].get('delivery', {}).get('state') == 'partial' else []) + (['minute-cdf-player-v2', 'lineup-forecast-v1'] if any(p['sim'].get('lineups') for p in projections.values()) else []),
+        'required_capabilities': ['research-evidence-v1'] + (['rotation-midpoints-v1'] if any(p['sim'].get('rotation_map') for p in projections.values()) else []) + (['competitions-2026-v1'] if season_latest.get('competitions') else []) + ['player-icons-v1'] + (['shot-zones-v1'] if any((api/'game').glob('*/court.json')) else []) + (['visible-worlds-v1'] if any((api/'game').glob('*/replay.json')) else []) + (['early-delivery-v1'] if latest['meta'].get('delivery', {}).get('state') == 'partial' else []) + (['minute-cdf-player-v2', 'lineup-forecast-v1'] if any(p['sim'].get('lineups') for p in projections.values()) else []),
         'data': {'finals': len(finals), 'last_final': max((r['date_et'] for r in finals), default=None),
                  'games': len(master), 'collected_run': registry and read_json(DERIVED / 'players.json')['run']}})
 
