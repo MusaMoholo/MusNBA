@@ -1,0 +1,7 @@
+{
+  "scope": "C02 numerical scoring implementation frozen before candidate fitting or outcomes",
+  "primary": "Sum of actor-choice negative log probability and action negative log probability conditional on the observed actor, on identical supported action keys",
+  "brier": "Sum of actor Brier and observed-actor conditional action Brier. A composite proper conditional score, not a flat40-class joint Brier",
+  "screen_support": "C02 candidate what action keys must exist in all three models' actor and action scores; missing keys fail closed. No outcome-based exclusions",
+  "interpretation": "Causal base profiles for new learners versus unchanged incumbent feature path; differences test the full research package, not architecture alone"
+}

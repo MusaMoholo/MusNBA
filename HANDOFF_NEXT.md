@@ -57,7 +57,7 @@ At most10 total heavy threads: fitting10, generation10 workers×1, never overlap
 Benchmark20 wiring before estimating full work. Canonical seeds/1k groups; evaluate both500 halves; whole-game and calendar-block
 uncertainty. One recipe, no rescue sweep or optional precision extension. No production refresh for a negative research result.
 
-Private namespace: `data/derived/experiments/c02_possession_v1`; aggregate receipts under `analysis/experiments/<actualETdate>_c02_*.json`.
+Private namespace: `data/derived/experiments/c02_possession_v2`; aggregate receipts under `analysis/experiments/<actualETdate>_c02_*.json`.
 Completed evidence is immutable. Keep row arrays/fits/worlds ignored; preserve replaced dependencies in `~/Basketball_archive_ops`.
 If the screen fails, retain incumbent and complete the reusable data/fit/adapter/scoring/reproduction path, including paired20 integration.
 Insufficient precision remains unresolved. Never redefine harm/support after outcomes. Any eventual production release requires separate
@@ -69,8 +69,12 @@ prospective qualification and all MODEL/AGENTS release checks, including a fresh
 2. Fit only the frozen recipe, complete recorded-context screen, document and commit/push checkpoint2 before rollout.
 3. Run paired20 wiring, then conditional remaining180; complete independent verification and close the chunk.
 
-Checkpoint1: [data receipt](analysis/experiments/20261125_c02_data_v1.json); 1704 training games, 200 known development games.
-Cached actor/action keys and missingness are explicit; 6 C02 boundary tests and31 inherited integrity tests pass, including causal
+Checkpoint1: [data receipt](analysis/experiments/20261125_c02_data_v2.json); 1704 training games, 200 known development games.
+Cached actor/action keys and missingness are explicit; 11 C02 boundary/probability tests and31 inherited integrity tests pass, including causal
 first-season/same-day/position safeguards. Source signature verification passes. No candidate predictions have been produced.
-Data build log: `/private/tmp/musnba-c02-data-v1.log`; no job running. Next: implement `analysis/c02_model.py`, fit the fixed recipe,
-then score the200 recorded-context games. Do not start rollout until checkpoint2 is committed/pushed.
+A pre-scoring repair removed an inherited cross-row median: roles now use only the current five, tested against extreme future-row
+injection. Original v1 data and interrupted/unqualified fit remain intact; dependencies are archived at
+`~/Basketball_archive_ops/20261125_c02_relative_boundary_v1`. Criteria unchanged; no development predictions preceded repair.
+Data log: `/private/tmp/musnba-c02-data-v2.log`; no job running. Next commands:
+`OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 .venv/bin/python -u analysis/c02_model.py fit`,
+then `analysis/c02_model.py screen` with the same interpreter/caps. Implementation and composite-score semantics are frozen before fitting. Do not start rollout until checkpoint2 is committed/pushed.

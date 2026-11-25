@@ -18,7 +18,7 @@ from analysis import c01_contexts as old,c01_benchmark as bench
 from basketball_common import sha256_file
 from scripts import nodes
 
-WORK=ROOT/'data/derived/experiments/c02_possession_v1'
+WORK=ROOT/'data/derived/experiments/c02_possession_v2'
 CONTRACT=ROOT/'analysis/c02_contract_v1.json'
 PROFILE=ROOT/read(CONTRACT)['profiles']
 START='2024-10-01';CUTOFF='2025-12-31'
@@ -27,6 +27,12 @@ COMMON=[c for c in nodes.CONTEXT if c!='season']+nodes.LINEUP+['shot_time']
 WHO=list(dict.fromkeys(nodes.PROFILE+nodes.IN_GAME+['grp_code','usage_share','usage_rank','usage_mult_now']+COMMON+['foul_event']))
 WHAT=list(dict.fromkeys(COMMON+[f'actor_{c}' for c in nodes.PROFILE+nodes.IN_GAME+['grp_code','usage_share','usage_rank','usage_mult_now']]))
 COLS={'who':WHO,'what':WHAT}
+ORIGINAL_RELATIVE=nodes.Chain._relative
+
+def causal_relative(chain):
+    """Only the current five may supply missing role shares; never other rows."""
+    chain._relative_missing_policy='lineup_median'
+    ORIGINAL_RELATIVE(chain)
 
 class Boundary(old.SourceBoundary):
     def read(self,path,*args,**kwargs):
@@ -58,12 +64,12 @@ def build(ids,mode):
     def packed(self,name,kind,X,y,rows,classes=None,profile=None):
         out=pack(self,name,kind,X,y,rows,classes,profile);out['seg_id']=rows.seg_id.to_numpy();return out
     paths=[ROOT/f'data/derived/history/{y}/segments.parquet' for y in range(2023,2027)] if mode=='training' else [ROOT/'data/derived/history/2026/segments.parquet']
-    with access.installed(),patch.object(nodes,'segment_files',return_value=paths),patch.object(nodes.Chain,'_pack',packed):
+    with access.installed(),patch.object(nodes,'segment_files',return_value=paths),patch.object(nodes.Chain,'_pack',packed),patch.object(nodes.Chain,'_relative',causal_relative):
         chain=nodes.Chain(pregame=PROFILE)
         supported=chain.seg.actor.notna() & pd.DataFrame({i:chain.seg.actor.eq(chain.seg[f'off_{i}']) for i in range(1,6)}).any(axis=1)
         actor_support=pd.Series(supported.to_numpy(),index=chain.seg.seg_id)
         summary={'segments':len(chain.seg),'games':chain.seg.game_id.nunique(),'actor_outside_five':int((chain.seg.actor.notna()&~supported).sum()),
-                 'earliest_date':str(chain.seg.date_et.min()),'latest_date':str(chain.seg.date_et.max())}
+                 'earliest_date':str(chain.seg.date_et.min()),'latest_date':str(chain.seg.date_et.max()),'relative_policy':'current-five median, tie-symmetric rank; all-unknown remains missing'}
         result={}
         for name in ('who','what'):
             d=chain.dataset(name);groups=d.get('group',d.get('seg_id'))
@@ -106,7 +112,7 @@ def prepare():
           'sources':source,'artifacts':artifacts,'game_ids':ids,'wiring_ids':ids[:20],'references':p['references'],'features':COLS,
           'data':summaries,'source_reads':access,'protected_or_reserved_outcomes_opened':False,'production_changed':False}
     create_json(WORK/'data.json',plan)
-    create_json(ROOT/'analysis/experiments/20261125_c02_data_v1.json',{k:v for k,v in plan.items() if k not in ('source_reads','references','game_ids','wiring_ids')})
+    create_json(ROOT/'analysis/experiments/20261125_c02_data_v2.json',{k:v for k,v in plan.items() if k not in ('source_reads','references','game_ids','wiring_ids')})
     print('C02 source dataset ready; no model fit or scores',flush=True)
 
 
