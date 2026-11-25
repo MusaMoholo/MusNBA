@@ -90,7 +90,8 @@ recreates probability/scoring results, checks source-feature parity and repeats 
 Rollout verifies completed game receipts when resuming an interrupted run. Private artifacts stay under ignored
 `data/derived/experiments/`; each chunk's receipt records its namespace. These commands neither change the live model nor publish/import app data.
 
-C03 compares three frozen possession families through a common 43-choice law. Research commands use the same thread caps:
+C03 delivered three frozen possession families through a common 43-choice law; all failed the development shortlist.
+The reproducible research library uses the same thread caps:
 
 ```sh
 .venv/bin/python analysis/c03_data.py verify

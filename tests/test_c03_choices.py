@@ -118,3 +118,14 @@ class ResumeFaultTests(unittest.TestCase):
             (game/'A.npz').write_bytes(b'modified artifact');(game/'receipt.json').write_text(json.dumps({'hashes':{'A.npz':'0'*64}}))
             with patch.object(run.data,'WORK',root),patch.object(run.data,'verify',return_value={}),patch.object(run,'signature',return_value={'x':'new'}):
                 with self.assertRaisesRegex(ContractError,'completed game changed'):run.run('mvp',1)
+
+    def test_no_finalist_expansion_after_negative_search(self):
+        from tempfile import TemporaryDirectory
+        from pathlib import Path
+        from unittest.mock import patch
+        from analysis import c03_rollout as run
+        import json
+        with TemporaryDirectory() as folder:
+            root=Path(folder);(root/'data.json').write_text(json.dumps({'game_ids':['g']}));(root/'mvp.json').write_text(json.dumps({'shortlist':[]}))
+            with patch.object(run.data,'WORK',root),patch.object(run.data,'verify',return_value={}),patch.object(run,'signature',return_value={}):
+                with self.assertRaisesRegex(ContractError,'expansion forbidden'):run.run('finalists',1)

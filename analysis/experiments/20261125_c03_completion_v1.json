@@ -1,0 +1,111 @@
+{
+  "kind": "C03 complete: three working possession MVPs; bounded negative forecast comparison",
+  "created_at": "2026-11-25T18:10:19.931939+00:00",
+  "chunk": "C03",
+  "complete": true,
+  "forecast_effect": {
+    "demonstrated_product_gain": false,
+    "all_three_failed_frozen_shortlist": true,
+    "eligible_finalists": [],
+    "expanded_games": 0,
+    "interpretation": "No candidate earns further qualification. Player/team forecast gains not demonstrated; finite recipes/sample/capacity do not establish a model-class or data ceiling."
+  },
+  "model_release": {
+    "production": "engine-v1.3-r3 / report-bands-v1 / team-pathway-v1",
+    "changed": false,
+    "research_status": "three reproducible rejected MVP recipes; no promotion",
+    "published_assets": false,
+    "manual_import_required": false
+  },
+  "accepted_deliverables_percent": 100,
+  "checkpoints": [
+    {
+      "id": 1,
+      "weight": 15,
+      "accepted": true
+    },
+    {
+      "id": 2,
+      "weight": 35,
+      "accepted": true
+    },
+    {
+      "id": 3,
+      "weight": 35,
+      "accepted": true
+    },
+    {
+      "id": 4,
+      "weight": 15,
+      "accepted": true
+    }
+  ],
+  "preceding_checkpoint_commits": {
+    "freeze": "e3c3d98",
+    "working_mvps_and_comparison": "0439b53",
+    "independent_negative_audit": "ce9228b"
+  },
+  "capability_delivered": [
+    "Immutable source-bound common event arrays spanning supported December2022-December2025 history, outcome-blind sampling and explicit causal opponent/support lineage",
+    "Reusable43-choice interface with consistent event/actor/action decoding and no current-label inference masks",
+    "Runnable regularised linear, refreshed separate nonlinear and genuinely shared-choice scalar-tree learners, training-only selection/refit and isolated legal event-world adapters",
+    "Complete three-recipe/trial ledger, known200 recorded-context scores, paired20 player/team proper scores, game/week selection-aware uncertainty and frozen shortlist",
+    "Independent raw-event feature/label parity, saved-world/score accounting, meaningful source/probability/lineup/clock/foul/fit/resume/stopping faults, fresh independent fits/probabilities and single-worker full-game replay for every family"
+  ],
+  "evidence_scope": {
+    "known_development_games": 200,
+    "supported_recorded_choices": 47284,
+    "rollout_games": 20,
+    "player_games": 427,
+    "worlds_per_game_per_arm": 1000,
+    "new_mvp_worlds": 80000,
+    "new_independent_replay_worlds": 3000,
+    "unscored_mechanical_preflight_worlds": 64,
+    "new_reserved_or_protected_outcomes_opened": false,
+    "reused_inputs": "Pinned historical source caches, actual-participant roster/simulated rotations, fixed duration/conversion/foul/rebound/minutes policies and legacy incumbent; common control exactly reproduces retained C02 arrays",
+    "independent_confirmation": false
+  },
+  "validation": {
+    "baseline_smoke": "118/118 before changes",
+    "c02_regression_tests": 26,
+    "c03_targeted_and_fault_tests": 11,
+    "independent_feature_values": 13239520,
+    "feature_mismatches": 0,
+    "saved_world_accounting": {
+      "games": 20,
+      "arms": [
+        "A",
+        "B",
+        "C",
+        "control"
+      ],
+      "worlds": 80000,
+      "scalar_and_half_scores_checked": 47076,
+      "maximum_score_difference": 7.638334409421077e-14,
+      "all_saved_accounting_passed": true
+    },
+    "fresh_fit_probability_max_difference": 0.0,
+    "all_three_full_game_replays_exact": true,
+    "docs_checks": "passed; repeated before final commit",
+    "production_refresh": "not applicable: isolated research; no production inputs/model/generation/assets changed"
+  },
+  "evidence_receipts": {
+    "20261125_c03_data_v1.json": "23c55ea7e0f9705d3a234cb15ad17fb769b4746876fd3e6727f4b42114d7680c",
+    "20261125_c03_events_v1.json": "a78eef49cfd2572b4d3c849a9609256908943dfa7d7ddf78d51d56d51405fbcc",
+    "20261125_c03_mvp_v1.json": "2fc6861a7644d34c943467d440eddf0715562ba80c79e44109114ca494c86703",
+    "20261125_c03_trials_v2.json": "ea558702ab0fe7a99fb856eb7038d65fd7de84c3a6205af21a2a685bcebfca44",
+    "20261125_c03_negative_audit_v1.json": "1adccaff5f4c0f900ce43e8fd4b46efd9af1e714dc46aa525cb9e0274c68842e",
+    "20261125_c03_reproduction_v1.json": "c0dd921f2d6e8f310bb04833b1764b7c81e2075263cb4969599f377cacf16204"
+  },
+  "private_namespaces": {
+    "research": "data/derived/experiments/c03_possession_options_v1",
+    "independent": "data/derived/experiments/c03_reproduction_v1"
+  },
+  "limitations": [
+    "Known development/selection panel only, not operational forecasting or fresh confirmation",
+    "Twenty rollout games and four calendar blocks limit uncertainty; no full200 expansion after frozen rejection",
+    "Capped common history sample and capacity differ from the legacy incumbent package; no general architecture or data-ceiling claim",
+    "Two logged pre-score loader faults fixed without changing candidates, supported keys, budget or selection rules"
+  ],
+  "next_chunk": "C04 source/state/transition architecture-data audit,0% accepted; no C04 jobs started"
+}

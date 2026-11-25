@@ -190,6 +190,10 @@ package limit attribution; diagnostics and legal/accounting checks do not establ
 The [independent negative audit](analysis/experiments/20261125_c03_negative_audit_v1.json) reproduces the failed primary/team decision
 and selection-adjusted game intervals; 80,000 saved worlds pass independent accounting and 47,076 scalar/half-score checks.
 
+C03 [closes](analysis/experiments/20261125_c03_completion_v1.json) after [fresh independent reproduction](analysis/experiments/20261125_c03_reproduction_v1.json):
+all three model files/probabilities match exactly, independent probability scores agree within 7e-16, and each freshly fitted
+single-worker 1,000-world replay matches every original multi-worker array. Deliverables are complete; forecast gains are not demonstrated.
+
 The B1 component audit remains reusable source evidence. The long-shot recipe failed
 (`20261124_b1_development_decision_v2.json`). A substitution attempt improved minutes without establishing required game compatibility
 (`20261124_c4_s06_independent_decision_v1.json`). Neither identifies the best next intervention.

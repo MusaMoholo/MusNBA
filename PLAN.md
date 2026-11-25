@@ -13,14 +13,16 @@ tests, deployment and development workflow. Preserve a working product while rep
 is not itself progress. Player improvements must also preserve joint team behaviour. Diagnostics expose possible value;
 only predictions from dated information can establish recoverable skill.
 
-## Short term — compare several possession MVPs before choosing a path
+## Short term — audit architecture/data limits before another learner
 
 C01 delivered the comparison workbench; C02 delivered causal actor/action training, a simple role baseline and a swappable pure
 possession runtime with independent reproduction. MODEL owns their results/limits. The incumbent remains live; reuse those capabilities.
 
 C03 compared regularised linear, separate nonlinear and shared-choice possession models on common causal information/history.
 All three working alternatives failed the frozen 20-game player/team shortlist. No forecast gain is demonstrated; production stays live.
-Finish independent reproduction of this bounded negative search, then review the architecture/data ceiling before another local learner.
+Independent fits, probability scores and full-game replays reproduce the bounded negative search. Next, audit information/support
+and generated-state dynamics before another local learner. Deliver a reusable source/state trace and replay workbench, and choose
+one evidence-supported priority or explicitly report unresolved attribution. No replacement architecture is presumed best.
 MODEL owns numerical results/limits; HANDOFF owns executable acceptance. A whole-slate failure does not justify another post-hoc recipe.
 
 Team/player shots and scores must emerge from legal events; no predicted full-game total may steer simulation. Evaluate player

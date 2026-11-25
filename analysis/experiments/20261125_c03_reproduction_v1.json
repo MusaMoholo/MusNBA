@@ -1,0 +1,131 @@
+{
+  "kind": "C03 fresh fits/probabilities, independent event scores and saved world accounting, exact single-worker replay",
+  "fits": {
+    "A": {
+      "max_probability_difference": 0.0,
+      "max_independent_score_difference": 5.551115123125783e-16,
+      "selected_rounds_identical": true,
+      "model_hashes_identical": true
+    },
+    "B": {
+      "max_probability_difference": 0.0,
+      "max_independent_score_difference": 6.661338147750939e-16,
+      "selected_rounds_identical": true,
+      "model_hashes_identical": true
+    },
+    "C": {
+      "max_probability_difference": 0.0,
+      "max_independent_score_difference": 6.661338147750939e-16,
+      "selected_rounds_identical": true,
+      "model_hashes_identical": true
+    }
+  },
+  "replays": {
+    "A": {
+      "game_id": "401809250",
+      "worlds": 1000,
+      "exact_all_arrays": true,
+      "head_calls": {
+        "event": 247855,
+        "who": 208099,
+        "what": 208099
+      },
+      "seconds": 36.24135816600028
+    },
+    "B": {
+      "game_id": "401809250",
+      "worlds": 1000,
+      "exact_all_arrays": true,
+      "head_calls": {
+        "event": 242745,
+        "who": 220660,
+        "what": 220660
+      },
+      "seconds": 78.39854254100283
+    },
+    "C": {
+      "game_id": "401809250",
+      "worlds": 1000,
+      "exact_all_arrays": true,
+      "head_calls": {
+        "event": 242438,
+        "who": 221534,
+        "what": 221534
+      },
+      "seconds": 44.24836612500076
+    }
+  },
+  "accounting": {
+    "games": 20,
+    "arms": [
+      "A",
+      "B",
+      "C",
+      "control"
+    ],
+    "worlds": 80000,
+    "scalar_and_half_scores_checked": 47076,
+    "maximum_score_difference": 7.638334409421077e-14,
+    "all_saved_accounting_passed": true
+  },
+  "decision_reproduced": true,
+  "independent_primary_arithmetic": {
+    "A": {
+      "player_pts_relative_change": 0.0072944140756633705,
+      "primary_mean_promise": false,
+      "eligible": false,
+      "failed_checks": [
+        "primary",
+        "halves",
+        "team/points",
+        "game/total",
+        "critical/pts",
+        "coverage80"
+      ]
+    },
+    "B": {
+      "player_pts_relative_change": 0.005335899556692986,
+      "primary_mean_promise": false,
+      "eligible": false,
+      "failed_checks": [
+        "primary",
+        "halves",
+        "team/points",
+        "game/total",
+        "game/margin"
+      ]
+    },
+    "C": {
+      "player_pts_relative_change": 0.04896396671547418,
+      "primary_mean_promise": false,
+      "eligible": false,
+      "failed_checks": [
+        "primary",
+        "halves",
+        "team/points",
+        "game/total",
+        "game/margin",
+        "player/fg3m",
+        "critical/pts",
+        "critical/fg3m",
+        "coverage80"
+      ]
+    }
+  },
+  "shortlist": [],
+  "feature_parity": {
+    "games": 200,
+    "events": 47284,
+    "feature_values_checked": 13239520,
+    "mismatches": 0,
+    "max_absolute_difference": 3.814697265625e-06,
+    "independent_history_and_label_checks": true
+  },
+  "source_checks": {
+    "source_checks_passed": true,
+    "games": 200
+  },
+  "seconds": 240.72523383299995,
+  "retained_inputs": "same immutable causal training caches, known panel, stored rotations, fixed conversion/rotation engine; all candidate fits/probabilities and replay worlds fresh",
+  "production_changed": false
+}
