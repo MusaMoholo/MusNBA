@@ -1,0 +1,51 @@
+{
+  "kind": "C01 checkpoint 1; truth/support and prospective comparison contract",
+  "created_at": "2026-11-25T15:01:04.049993+00:00",
+  "contract": "analysis/c01_contract_v1.json",
+  "contract_sha256": "838d3af38117ebada64f713116b8a0d77e18cae90a50e2ee1348f1977a44fca5",
+  "manifest": "data/derived/experiments/c01_accuracy_workbench_v2/manifest.json",
+  "manifest_sha256": "df434b74561987d6837454ab4d8451612aca8a94e6dec0d5dfa46d61e4ad05e1",
+  "games": 200,
+  "game_ids_sha256": "cc07a66be17dac8988d62f3685153b2601e9d0440c3efcc377835daaefe1ff4b",
+  "wiring_games": 20,
+  "retained_worlds_per_game": 1000,
+  "retained_references_verified": 200,
+  "conditional_box_supported_games": 200,
+  "strict_event_supported_games": 19,
+  "operational_supported_games": 0,
+  "source_issue_counts": {
+    "actor outside offensive five": 181
+  },
+  "actor_outside_offensive_five_events": 501,
+  "source_segments": 49002,
+  "dnp_blank_count_rows": 961,
+  "unsupported_capture_fields": [
+    "per-zone simulated attempts/makes",
+    "explicit 24/14-second shot clock",
+    "verified defender positions"
+  ],
+  "test_modules_inventoried": 99,
+  "static_smoke_call_sites": 61,
+  "tests_retired": 0,
+  "fixture_games": 2,
+  "exposure": {
+    "development": "Previously explored B1/C2/C3 panel; no fresh evidence",
+    "F1_F3": "Previously exposed historical folds; metadata inventory only, not fresh confirmation",
+    "reserved_confirmation_outcomes_opened": false,
+    "protected_outcomes_opened": false,
+    "new_baseline_or_incumbent_scores": false,
+    "training_launched": false
+  },
+  "production_changed": false,
+  "compute": {
+    "io_threads": 4,
+    "arrow_threads": 1,
+    "fitting_or_simulation": false
+  },
+  "supersedes": {
+    "receipt": "analysis/experiments/20261125_c01_contract_v1.json",
+    "reason": "First adapter counted explicit DNP blank statistics as unknown game truth. Correct DNP interpretation and add row-level actor/clock/missingness support. No model scores or recipe changes.",
+    "preserved_sources": "/Users/moholom/Basketball_archive_ops/20261125_c01_initial_adapter_v1/manifest.json"
+  },
+  "seconds": 3.553818833999685
+}

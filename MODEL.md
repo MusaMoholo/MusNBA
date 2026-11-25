@@ -52,6 +52,11 @@ Keep four populations explicit:
 |Actual-participant/real-context replay|Conditional model diagnosis; not availability/DNP or pre-game operational validation|
 |Realised-input oracle/intervention|Information/error headroom under its stated assumptions; not deployable skill or general causal proof|
 
+Explicit DNP evidence establishes zero participation/counts even if the provider leaves that box blank; retain the raw missingness.
+An unknown participation record cannot receive that interpretation. Rounded box minutes and reconstructed on-court seconds are
+different observations. Event actors outside the reconstructed offensive five fail strict context validation; retain the mismatch
+and declare supported rows rather than inventing a lineup or discarding otherwise reconciled game truth.
+
 Historical reconstruction is a source/feasibility decision, not permanently forbidden or automatically valid. Audit what can really
 be reconstructed. Prospective immutable capture is required where historical information timing cannot be recovered.
 
@@ -79,6 +84,11 @@ Retire duplicate, brittle or incumbent-behaviour-locking tests only after identi
 Browser tests should use bounded calls, explicit document/data readiness and isolated fixtures rather than fragile navigation/count chains.
 
 ## Evaluation to build and then freeze
+
+C01's development comparison is frozen in [the versioned contract](analysis/c01_contract_v1.json). It specifies shared schemas,
+baseline recipes, scores, contexts, support, numerical priority/harm signals and stopping. These are research-ranking rules, not
+production promotion criteria. The new deterministic scorer has a separate pairwise arithmetic reference; synthetic/fault passes
+establish logic only. Historical source timing and baseline age differences remain explicit limitations.
 
 Start with a common schema and exact population/period/availability semantics for incumbent and baselines. Score player MIN/PTS/REB/
 AST/3PM distributions by prior role/support and team points/total/margin/wins together. Report CRPS or an appropriate proper probability

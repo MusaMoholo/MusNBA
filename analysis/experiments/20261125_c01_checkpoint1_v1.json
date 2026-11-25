@@ -1,0 +1,81 @@
+{
+  "kind": "C01 checkpoint 1 accepted deliverables; no accuracy result",
+  "created_at": "2026-11-25T15:02:40.515304+00:00",
+  "checkpoint": 1,
+  "capability_weight_percent": 20,
+  "chunk_complete": false,
+  "accuracy_gain": "Not measured; no new forecast scores or training",
+  "source_receipt": "analysis/experiments/20261125_c01_contract_v2.json",
+  "source_receipt_sha256": "ae02b45362e86ab599310b05d20800fe25cff1cd5465674b4d7698ca1b7ac78d",
+  "private_manifest": "data/derived/experiments/c01_accuracy_workbench_v2/manifest.json",
+  "private_manifest_sha256": "df434b74561987d6837454ab4d8451612aca8a94e6dec0d5dfa46d61e4ad05e1",
+  "validation": {
+    "baseline_smoke": {
+      "command": ".venv/bin/python scripts/smoke.py",
+      "passed": 118,
+      "total": 118,
+      "exit_code": 0,
+      "scope": "Required baseline regression before changes; not forecast accuracy"
+    },
+    "fast_synthetic_and_fault": {
+      "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 .venv/bin/python -m unittest discover -s tests -p 'test_c01_*.py'",
+      "passed": 19,
+      "exit_code": 0,
+      "tests": [
+        "test_regulation_hand_totals_and_exact_minutes",
+        "test_overtime_is_300_seconds_and_adds_25_team_minutes",
+        "test_technical_ft_has_no_extra_possession_and_must_be_evidenced",
+        "test_dnp_unknown_and_conflicts_stay_different",
+        "test_explicit_dnp_blank_box_does_not_exclude_game_unknown_stays_missing",
+        "test_scoring_and_rebound_corruption_fail_at_source_boundary",
+        "test_duplicate_foreign_player_and_event_ids_fail",
+        "test_clock_gaps_period_gaps_and_duplicate_fives_fail",
+        "test_minutes_corruption_and_unknown_do_not_get_rescaled",
+        "test_hand_weighted_score_and_outside_support",
+        "test_perfect_known_bad_and_self_comparison",
+        "test_independent_pairwise_reference_and_metamorphic_properties",
+        "test_missing_is_unsupported_and_bad_distributions_raise",
+        "test_discrete_rank_intervals_zero_weights_and_infinite_log_loss",
+        "test_each_auxiliary_rejects_same_day_future_and_missing_dates",
+        "test_timestamp_proof_fails_closed_and_rejects_backwards_retrieval",
+        "test_immutable_evidence_creation_and_order_sensitive_panel_hash",
+        "test_parquet_reader_never_returns_out_of_panel_rows",
+        "test_capture_and_receipt_corruption_fail_at_hash_boundary"
+      ],
+      "measured_test_seconds": 0.061
+    },
+    "source_verify": {
+      "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 .venv/bin/python analysis/c01_workbench.py verify",
+      "exit_code": 0,
+      "scope": "All pinned hashes plus separate direct arithmetic over private ordinary/OT/technical fixtures"
+    },
+    "docs": {
+      "command": ".venv/bin/python scripts/check_docs.py",
+      "exit_code": 0,
+      "errors": 0
+    },
+    "diff_check": {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  },
+  "source_support": {
+    "games": 200,
+    "conditional_box_supported_games": 200,
+    "strict_event_supported_games": 19,
+    "operational_supported_games": 0,
+    "actor_outside_offensive_five_events": 501,
+    "source_segments": 49002,
+    "dnp_blank_count_rows": 961
+  },
+  "limitations": [
+    "Actual-participant population, no certified historical operational inputs",
+    "Full strict event context fails when actor is outside reconstructed five; metric-specific support required",
+    "Stored captures lack per-zone counts",
+    "New baselines have fixed training ceiling; disclose feature-age difference before architecture conclusions"
+  ],
+  "next_action": "Implement common benchmark and two frozen challengers; first 20 wiring IDs, then 200. No panel tuning or reserved/protected outcome access.",
+  "production_changed": false,
+  "nightly_or_publication_required": false,
+  "manual_import_required": false
+}

@@ -52,8 +52,20 @@ node analysis/browser_check.mjs --base http://127.0.0.1:8767
 node analysis/pwa_import_check.mjs --url <shell-url> --bundle <bundle.musnba.gz> --profile laptop
 ```
 
-The inherited smoke/fault commands are regression checks pending the new test inventory; a passing count is not predictive validation.
+The inherited smoke/fault commands remain regression checks; the C01 inventory records their protection and gaps. A passing count is not predictive validation.
 Use 8767 for review; owner 8766 stays running. Pure docs/research checkpoints do not trigger a full production refresh.
+
+C01 now has separate synthetic/fault and pinned-source checks:
+
+```sh
+export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1
+.venv/bin/python -m unittest discover -s tests -p 'test_c01_*.py'
+.venv/bin/python analysis/c01_workbench.py verify
+```
+
+Source verification needs the retained private data. It checks hashes and independently reconciles private fixtures; it does not
+fit, simulate or measure forecast accuracy. The full legacy-test inventory is retained privately with the checkpoint manifest.
+Statistical comparison remains the next checkpoint in HANDOFF.
 
 For a qualified production/input/generation release:
 

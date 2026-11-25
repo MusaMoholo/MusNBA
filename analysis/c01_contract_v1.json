@@ -1,0 +1,86 @@
+{
+  "version": "c01-accuracy-contract-v1",
+  "purpose": "Development-only measurement and architecture challenge; no model promotion or production changes.",
+  "panel": {
+    "receipt": "analysis/experiments/20261124_b1_development_v2.json",
+    "ids_key": "game_ids",
+    "count": 200,
+    "wiring": "First 20 IDs in the frozen receipt order, without replacement or reordering.",
+    "exposure": "All 200 are previously explored development games. No fresh-test claim.",
+    "outcome_access": "Reader predicates admit only these IDs, or training dates through 2025-12-31 in seasons 2023-2026. No reserved/protected outcomes, no generic current-season loader.",
+    "exclusions": "Enumerate source and metric-specific support before new scores. Never silently drop a game or pair. Compare a metric only on explicitly identical supported keys; report every missing key and denominator. No outcome-driven exclusion.",
+    "prior_folds": "F1-F3 are previously exposed historical folds, not fresh confirmation. Inventory metadata only in C01; no outcomes or model selection there."
+  },
+  "populations": {
+    "original_pre_tip": "Immutable forecast with recorded capture, model/input and report publication/retrieval times all before recorded tip. Unknown timing fails closed.",
+    "causal_hindcast": "Historical reconstruction requires dated evidence for every claimed operational input. Not an original forecast.",
+    "actual_participant": "Retained incumbent uses actual participants and causal prior features; does not validate availability, DNP selection or original pre-tip minutes information.",
+    "realised_input": "Outcome-informed diagnostic fixes a declared minutes/on-court/opportunity input. Not deployable, and gains are not additive causal effects."
+  },
+  "schema": {
+    "game": ["game_id", "date_et", "home", "away", "tip_utc", "population", "source_hashes", "fit_through", "input_as_of", "exposure"],
+    "player": ["game_id", "team", "player", "participation", "minutes", "pts", "reb", "ast", "fg3m", "fgm", "fga", "fg3a", "ftm", "fta", "oreb", "dreb"],
+    "event": ["game_id", "event_index", "period", "poss", "offense", "defense", "start_clock", "action_clock", "end_clock", "lineup_off", "lineup_def", "actor", "end_type", "zone", "made", "points", "source_scope"],
+    "forecast": ["game_id", "model", "population", "origin", "world_index", "weight", "support", "source_hashes", "seed"],
+    "missing": "null/NaN plus support reason; never replace unknown participation/minutes/points or an unsupported zone with zero.",
+    "keys": "Digit-string source IDs; unique game IDs, unique game/team/player box keys, unique event_index per game. Both source team IDs must differ. Player team is keyed by game, never assumed permanent.",
+    "participation": "played when explicit DNP=false and positive source minutes; dnp when explicit DNP=true with zero/absent minutes and zero/absent counts; otherwise unknown/conflict. Unknown is not DNP. Retained world absence is not truth.",
+    "minutes": "Primary truth is reconstructed on-court seconds / 60 with source scope; rounded box minutes remain a separate diagnostic. DNP primary truth is zero only with explicit evidence. Check five-player seconds against 240 + 25 per overtime; flag discrepancies, do not scale truth.",
+    "periods": "Four 720-second quarters, then 300-second overtime periods. Full-game forecasts include all OT. Regulation and period diagnostics stay separate. World capture's fifth slot pools overtime; it is not a single OT period.",
+    "possessions": "Distinct recorded (game_id, offense, poss) IDs, using the retained miss-clock segment convention. Offensive rebounds/non-shooting defensive fouls can continue the same possession. Technical FT do not imply a possession. Box FGA-OREB+TOV+0.44*FTA is an estimate, never interchangeable truth.",
+    "scoring": "PTS = 2*FGM + 3PM + FTM; REB = OREB + DREB. Player points sum to official team points; periods sum to game. Segment points can omit technical/other scoring: retain official-minus-segment residual explicitly; only independently evidenced technical points are labelled technical. No balancing offsets.",
+    "events": "Unknown end_type, geometry, actor or fives are unsupported for the affected metric; preserve them in overall source accounting. On-court roles are inferred exposure, not tracking or verified primary/help defence."
+  },
+  "baselines": {
+    "selection": "One immutable recipe each; no panel-driven hyperparameter search, calibration, clipping, variance multipliers or revised acceptance. New fits and priors use only allowed training rows strictly earlier than origin. Fixed training ceiling 2025-12-31 for all 200 games avoids reserved outcomes. This age restriction is disclosed in comparisons; incumbent causal feature rows may include later prior history.",
+    "incumbent": "Reuse hashed B1 reference lineage, models folds/v1.2d_F4_all with accepted r3 timing/fouls/target rotations. Exactly first 1000 stored worlds. No regenerated control when compatible captures exist.",
+    "player_rate": {
+      "training": "Regular NBA games in retained seasons 2023-2026, date <= 2025-12-31, known counting stats and positive reconstructed minutes. Exponential age weighting, half-life 180 days at fixed ceiling. Rates for 2PM, 3PM, FTM, OREB, DREB and AST; PTS and REB derived exactly.",
+      "shrinkage": "200 equivalent minutes at the training-only league per-minute rate. For each rate independently draw Gamma(shape=weighted count+200*league rate, rate=weighted minutes+200), then Poisson(rate*shared world minutes). Missing player history uses the same league prior, flagged separately.",
+      "minutes": "Use the identical incumbent player IDs and per-world full-game minutes. Shared minutes are a conditional input, not an independently validated minutes/availability forecast. Player samples sum to their own team samples. No invented event trace.",
+      "seed": "SHA256 of c01-player-rate-v1, game_id and canonical 1000-world chunk; fixed stat/player ordering; no worker seed."
+    },
+    "team_strength": {
+      "training": "Regular NBA source-verified paired home/away full scores with prior-only offensive/defensive points per 100 segment possessions, pace and rest. Fit ceiling 2025-12-31. No current/protected or reserved outcome read.",
+      "priors": "For each team EWMA numerator/exposure with half-life 180 days, shrink 20 equivalent games toward prior league. Build chronological rows before the game's ET day, including same-day exclusion. Missing priors use training-only league values with missingness flags; minimum 200 prior games to fit.",
+      "mean": "Direct ridge regression of the paired full scores. Fixed features: intercept, home offence, away defence, away offence, home defence, mean prior possessions, home rest, away rest and missingness flags. Standardise continuous columns on training rows only. Ridge penalty 10 on non-intercept coefficients. No parameter selection on panel. Rest capped at 7 only as a defined input feature.",
+      "uncertainty": "Expanding monthly chronological refits within training dates produce paired out-of-sample home/away errors. Use latest 500 prior residual games, minimum 100. Sample a whole residual vector with a shared random sign for a symmetric joint error law; preserve covariance, no scale inflation or final-score corrections. Unsupported residual support blocks distribution scoring.",
+      "scope": "Team-only diagnostic with continuous score draws; does not claim coherent player/event worlds. Report impossible-score probability if present; no clamp. Baseline priors are frozen at training ceiling; rest uses evidenced historical schedule only.",
+      "seed": "SHA256 of c01-team-strength-v1, game_id and canonical 1000-world chunk; independent of worker/order."
+    }
+  },
+  "scores": {
+    "primary": "Player MIN/PTS/REB/AST/3PM and team points/total/margin empirical CRPS, in each quantity's native units; lower is better. Do not average unlike units into an unexplained score.",
+    "crps": "sum(w_i*abs(x_i-y)) - 0.5*sum(w_i*w_j*abs(x_i-x_j)); nonnegative finite weights must sum exactly to 1 within 1e-12. No finite-support clipping. Reference uses independent pairwise arithmetic on small fixtures.",
+    "secondary": "Mean absolute error and signed forecast-minus-actual bias in native units; 50/80/95% interval coverage AND width; midpoint distribution rank bounds [F(y-),F(y)] for discrete truth; tail counts outside 5/95 percentiles. Missing truth is unsupported, not zero loss.",
+    "win": "Brier score and raw log loss in nats (zero probability of observed outcome is infinite, never silently clipped); separately report Jeffreys-smoothed Monte Carlo log loss using (wins+0.5)/(worlds+1), plus fixed probability bins [0,.2,.4,.6,.8,1]. Team-only ties contribute half probability; report their frequency.",
+    "joint": "Bivariate home/away energy score in points, covariance, margin/total CRPS and tail frequencies. Energy reference exact on small fixtures; deterministic cyclic-pair estimate at 1000 worlds with shifts 1..32 and a second disjoint shift set 33..64 for numerical sensitivity.",
+    "events": "Multiclass raw log loss (infinite for zero true-class probability), Brier, class support, reliability by fixed probability quintiles. Durations: absolute seconds error and distribution score on supported timing contexts. Never compare losses across different class populations.",
+    "weights": "One game is the uncertainty unit. Team scores average the two sides within each game. Player scores report both pooled player-game and equal-game means, separately by prior role. No players/worlds treated as independent NBA games."
+  },
+  "diagnostics": {
+    "contexts": "Home/away; fixed calendar months; prior role star usage>=.25, otherwise starter prior start_share>=.5, otherwise bench, missing prior -> unknown; prior minutes <12,12-24,>=24; prior rest 1 versus >=2; periods regulation/OT; start_clock <=4, (4,24], >24 seconds; five named zones plus unsupported. No outcome-defined context used for forecast selection.",
+    "defence": "For observed and predicted points per 100 source possessions separately, regress on identical prior offence and opposing defence ratings plus intercept/home/rest. Report opponent coefficient and their paired difference with whole-game uncertainty; ratio only if observed coefficient CI excludes zero. Never target ratio=1 by decree. Prior ratings follow team baseline cutoff/support rules.",
+    "zones": "Rim/paint/mid/corner3/above3 attempt share and conditional make rate, plus FGA/3PA/FTA/TOV/OREB/DREB/PF per 100 possessions. Report unsupported geometry/counts and scoring residuals. Controlled opponent and lineup swaps keep offence/seeds fixed: sensitivity only; recorded opponents establish predictive value.",
+    "parity": "Compare training Chain and runtime _context feature values on identical supported recorded histories, with explicit mapping/NaN equality and max errors. No separate reconstructed histories passed off as parity. Unsupported state is listed.",
+    "event_to_game": "Score observed-context node probabilities on the same panel and compare with free-running distributions. Separate actor/allocation, action/location, conversion, timing and rebound/turnover opportunity errors; do not multiply marginal means when covariance matters.",
+    "oracles": "Separate adapters fix realised full-game player minutes, evidenced on-court context, or source opportunity counts. Declare each estimand, frozen engine pieces and source coverage. Arithmetic rate-times-minutes sensitivity is distinct from a re-simulated coherent oracle. Unsupported intervention fails closed. Do not sum gains as causal shares.",
+    "accounting": "Exact symmetric pace/efficiency difference identity and scoring-source identity may describe signed error; neither is a causal explanation or forecast correction. Include player/team error and joint uncertainty together."
+  },
+  "uncertainty_and_decision": {
+    "bootstrap": "10000 paired whole-game resamples, seed 20261125; keep both sides/all players together. Also fixed 7-day ET calendar block bootstrap, same seed, to expose time dependence. Percentile 95% intervals; both estimates reported.",
+    "support": "Overall ranking requires >=100 games. A context requires >=30 games and >=200 relevant player-events/attempts where applicable; descriptive smaller cells remain labelled insufficient. Coefficients need full-rank design and >=100 supported team-games.",
+    "materiality": "Diagnostic priority signals: >=0.10 point reduction in team CRPS, >=1% player CRPS reduction within each stat, or >=0.10 minute reduction in minutes CRPS. Practical harm flags: +0.10 team CRPS, +2% critical-player stat CRPS, or absolute 80%-coverage change >.03 away from .80. These rank research, never authorise promotion.",
+    "multiplicity": "Two fixed baselines and named diagnostic families only. Report every metric/context including contradictions. Exploratory intervals are descriptive, not familywise confirmation. No winning-cell production decision.",
+    "noise": "Exactly 1000 common-prefix worlds. Compare two disjoint 500-world halves at equal sample size and report paired score variability; do not call half-sample differences model effects. Bootstrap evaluates NBA sample uncertainty separately.",
+    "stopping": "Wiring first20 then fixed200. No fresh engine worlds unless required fields are absent; any necessary generation uses 1000-world chunks and frozen seeds. One bounded precision extension only: up to 200 additional already-exposed development games with identical recipes, registered IDs before scores; otherwise choose measurement/source work when ranking is unresolved. No reserved/protected rescue.",
+    "compute": "At most 10 total heavy threads, explicit OMP/OPENBLAS/MKL/VECLIB caps of 1 for workers; at most 10 single-thread processes, with parent/pool shutdown before further heavy work. Benchmark first20; report actual wall time, never promise an unmeasured duration."
+  },
+  "acceptance": {
+    "contract": "All 200 games have enumerated support/exclusions, immutable source/receipt hashes, no new model scores; independent synthetic accounting and scorer fixtures pass, including deliberate corruption/leakage/known-bad forecasts. Inventory every legacy test module and every static smoke assertion by protection/independence/cost/scope; no test removed here.",
+    "benchmark": "Same IDs, origins, truth and metric semantics; reproducible worker/order/resume outputs; independent arithmetic agrees; cutoff injection rejects every fit/prior/residual/normalisation leakage path; all missingness and baseline age differences disclosed.",
+    "diagnosis": "Working connected adapters and complete fixed-panel analysis with source identities, scope, uncertainty and honest support. A descriptive audit alone is insufficient.",
+    "operation": "One pinned command recreates comparisons; independently repeated aggregate conclusions; immutable prospective ledger fails closed on missing or late timing and cannot overwrite captures. Separate fast/source/statistical/browser commands. Research remains isolated from live generation.",
+    "release": "No production change, nightly, app publication or data import for this research checkpoint. Any later live generation/provenance hook needs the charter's release evidence before activation."
+  }
+}
