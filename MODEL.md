@@ -178,6 +178,16 @@ C02 closes in its [completion receipt](analysis/experiments/20261125_c02_complet
 probability/scoring reproduction agree with the frozen run; a fresh-fit single-worker 1k game matches the ten-worker candidate arrays
 exactly. The delivered research adapter generates shots/points from events, with no aggregate targets. Production is unchanged.
 
+C03's [frozen three-family comparison](analysis/c03_contract_v1.json) uses common causal player/team/history inputs and 43 legal
+next outcomes. [Event scores](analysis/experiments/20261125_c03_events_v1.json) cover 47,284 supported choices on 200 known games;
+all candidates lose to the incumbent. The [paired20 comparison](analysis/experiments/20261125_c03_mvp_v1.json) covers 427 player-games,
+1,000 worlds/arm/game. Player-points CRPS changes (points; lower better) are +0.0214 linear, +0.0156 separate nonlinear and +0.1436
+shared scorer. The strongest nonlinear path's 95% game interval is −0.0213 to +0.0529; team-points change +0.1824 exceeds its +0.1
+practical limit. No family meets primary promise or team harm rules; no finalist expands. All three initial comparisons count in
+familywise game/week uncertainty; only four week blocks limit precision. This is a bounded development negative search, not a model-class
+ceiling or operational confirmation. Production remains unchanged. The capped sample, finite model capacity and older incumbent
+package limit attribution; diagnostics and legal/accounting checks do not establish forecast improvement.
+
 The B1 component audit remains reusable source evidence. The long-shot recipe failed
 (`20261124_b1_development_decision_v2.json`). A substitution attempt improved minutes without establishing required game compatibility
 (`20261124_c4_s06_independent_decision_v1.json`). Neither identifies the best next intervention.

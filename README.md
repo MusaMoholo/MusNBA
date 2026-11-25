@@ -90,6 +90,21 @@ recreates probability/scoring results, checks source-feature parity and repeats 
 Rollout verifies completed game receipts when resuming an interrupted run. Private artifacts stay under ignored
 `data/derived/experiments/`; each chunk's receipt records its namespace. These commands neither change the live model nor publish/import app data.
 
+C03 compares three frozen possession families through a common 43-choice law. Research commands use the same thread caps:
+
+```sh
+.venv/bin/python analysis/c03_data.py verify
+.venv/bin/python analysis/c03_reproduce.py source
+.venv/bin/python analysis/c03_model.py all
+.venv/bin/python analysis/c03_evaluate.py
+.venv/bin/python analysis/c03_rollout.py mvp --jobs 10
+.venv/bin/python analysis/c03_reproduce.py run --output <new-private-directory>
+```
+
+Completed data/fits/scores refuse overwrite; generation resumes only hash-verified completed games. Inspect interrupted partial games
+before a technical rerun. `finalists` replaces `mvp` only for the frozen shortlist; no eligible candidate means expansion is forbidden.
+These commands neither promote nor publish. Private fits/arrays/worlds remain ignored; aggregate receipts record the bounded decision.
+
 For a qualified production/input/generation release:
 
 ```sh

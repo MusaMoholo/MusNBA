@@ -18,13 +18,10 @@ only predictions from dated information can establish recoverable skill.
 C01 delivered the comparison workbench; C02 delivered causal actor/action training, a simple role baseline and a swappable pure
 possession runtime with independent reproduction. MODEL owns their results/limits. The incumbent remains live; reuse those capabilities.
 
-C02 changed the feature bundle, training coverage and learner together. Its narrow comparison limits attribution. The next chunk
-compares small working alternatives on the same causal information/history before choosing where to invest: simple regularised
-role/context choices, refreshed separate nonlinear learners and shared possession-choice learning. No family is the assumed winner.
-
-Use common infrastructure, cheap complete-game comparisons and a fixed total budget to reject weak paths, then develop at most two
-credible finalists. Retain runnable MVPs and independent reproduction. A stronger development candidate still needs independent
-qualification; a round where all lose is a negative search, not a major product advance. Detailed recipes/stages live only in HANDOFF.
+C03 compared regularised linear, separate nonlinear and shared-choice possession models on common causal information/history.
+All three working alternatives failed the frozen 20-game player/team shortlist. No forecast gain is demonstrated; production stays live.
+Finish independent reproduction of this bounded negative search, then review the architecture/data ceiling before another local learner.
+MODEL owns numerical results/limits; HANDOFF owns executable acceptance. A whole-slate failure does not justify another post-hoc recipe.
 
 Team/player shots and scores must emerge from legal events; no predicted full-game total may steer simulation. Evaluate player
 accuracy and joint team uncertainty together. Independent qualification remains separate from research completion.

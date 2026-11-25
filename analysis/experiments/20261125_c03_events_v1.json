@@ -1,0 +1,269 @@
+{
+  "models": {
+    "A": {
+      "events": 47284,
+      "games": 200,
+      "nll": 3.4134042323369913,
+      "joint_brier": 0.957085811835732,
+      "event_nll": 0.3401629923603088,
+      "contexts": {
+        "branch/0": {
+          "events": 43697,
+          "nll": 3.475709552703569,
+          "brier": 0.9629632807303748
+        },
+        "branch/1": {
+          "events": 3044,
+          "nll": 2.5615767902944526,
+          "brier": 0.8730803941306592
+        },
+        "branch/2": {
+          "events": 254,
+          "nll": 3.1931695969002414,
+          "brier": 0.9559813639068572
+        },
+        "branch/3": {
+          "events": 289,
+          "nll": 3.158548685347704,
+          "brier": 0.9541974484411627
+        },
+        "margin_band/close": {
+          "events": 19359,
+          "nll": 3.39891265582702,
+          "brier": 0.955900774841128
+        },
+        "margin_band/other": {
+          "events": 27925,
+          "nll": 3.4234505145091148,
+          "brier": 0.9579073384670137
+        }
+      },
+      "reliability": {
+        "(0.0, 0.1]": {
+          "rows": 37944,
+          "confidence": 0.07727768008901464,
+          "correct": 0.09042272823107737
+        },
+        "(0.1, 0.2]": {
+          "rows": 9291,
+          "confidence": 0.11754167181962341,
+          "correct": 0.1581099989236896
+        },
+        "(0.2, 0.4]": {
+          "rows": 49,
+          "confidence": 0.20972360739512358,
+          "correct": 0.4897959183673469
+        }
+      }
+    },
+    "B": {
+      "events": 47284,
+      "games": 200,
+      "nll": 3.2277882021895974,
+      "joint_brier": 0.9405002330715507,
+      "event_nll": 0.2501602929200403,
+      "contexts": {
+        "branch/0": {
+          "events": 43697,
+          "nll": 3.287756160021358,
+          "brier": 0.9542845156338934
+        },
+        "branch/1": {
+          "events": 3044,
+          "nll": 2.259730222733916,
+          "brier": 0.742676218172022
+        },
+        "branch/2": {
+          "events": 254,
+          "nll": 5.178531433034116,
+          "brier": 1.0745121110160412
+        },
+        "branch/3": {
+          "events": 289,
+          "nll": 2.6425281864598635,
+          "brier": 0.8221801265995264
+        },
+        "margin_band/close": {
+          "events": 19359,
+          "nll": 3.2160699513075945,
+          "brier": 0.939263952939311
+        },
+        "margin_band/other": {
+          "events": 27925,
+          "nll": 3.235911876990839,
+          "brier": 0.9413572839965295
+        }
+      },
+      "reliability": {
+        "(0.0, 0.1]": {
+          "rows": 26235,
+          "confidence": 0.08385779067946729,
+          "correct": 0.0880884314846579
+        },
+        "(0.1, 0.2]": {
+          "rows": 18413,
+          "confidence": 0.12215764142218093,
+          "correct": 0.13387280725574321
+        },
+        "(0.2, 0.4]": {
+          "rows": 1831,
+          "confidence": 0.25906771415866164,
+          "correct": 0.2878208629164391
+        },
+        "(0.4, 0.6]": {
+          "rows": 407,
+          "confidence": 0.4899568209076848,
+          "correct": 0.5626535626535627
+        },
+        "(0.6, 0.8]": {
+          "rows": 342,
+          "confidence": 0.7095405978146099,
+          "correct": 0.8187134502923976
+        },
+        "(0.8, 1.0]": {
+          "rows": 56,
+          "confidence": 0.8216017954010331,
+          "correct": 0.7857142857142857
+        }
+      }
+    },
+    "C": {
+      "events": 47284,
+      "games": 200,
+      "nll": 3.4243599144823085,
+      "joint_brier": 0.9563133879706908,
+      "event_nll": 0.2844234130746056,
+      "contexts": {
+        "branch/0": {
+          "events": 43697,
+          "nll": 3.466986775751958,
+          "brier": 0.9632662944105308
+        },
+        "branch/1": {
+          "events": 3044,
+          "nll": 2.6550909230938236,
+          "brier": 0.8463155054209032
+        },
+        "branch/2": {
+          "events": 254,
+          "nll": 4.592189911594238,
+          "brier": 1.0169811197518652
+        },
+        "branch/3": {
+          "events": 289,
+          "nll": 4.0553634910229714,
+          "brier": 1.0103023080656357
+        },
+        "margin_band/close": {
+          "events": 19359,
+          "nll": 3.416886414027741,
+          "brier": 0.955777405854238
+        },
+        "margin_band/other": {
+          "events": 27925,
+          "nll": 3.4295409169997657,
+          "brier": 0.9566849574529613
+        }
+      },
+      "reliability": {
+        "(0.0, 0.1]": {
+          "rows": 44386,
+          "confidence": 0.05904842715579228,
+          "correct": 0.08874419862118686
+        },
+        "(0.1, 0.2]": {
+          "rows": 1218,
+          "confidence": 0.13939718460921455,
+          "correct": 0.14039408866995073
+        },
+        "(0.2, 0.4]": {
+          "rows": 1680,
+          "confidence": 0.2406918344402909,
+          "correct": 0.4017857142857143
+        }
+      }
+    },
+    "control": {
+      "events": 47284,
+      "games": 200,
+      "nll": 3.1946954012455566,
+      "brier_note": "legacy conditional chain true-label probability only; joint candidate Brier diagnostic, not paired vs control"
+    }
+  },
+  "changes": {
+    "A": {
+      "games": 200,
+      "rows": 47284,
+      "supported_for_overall_ranking": true,
+      "change": 0.2187088310914349,
+      "ci95_game": [
+        0.21348284064172882,
+        0.22409938718367173
+      ],
+      "ci95_calendar_week": [
+        0.2124417813161816,
+        0.225918973424296
+      ],
+      "calendar_blocks": 16,
+      "familywise_game": [
+        0.21212092702397184,
+        0.22528262332512836
+      ],
+      "familywise_week": [
+        0.2112675948622926,
+        0.22782441924200586
+      ],
+      "families_counted": 3
+    },
+    "B": {
+      "games": 200,
+      "rows": 47284,
+      "supported_for_overall_ranking": true,
+      "change": 0.03309280094404027,
+      "ci95_game": [
+        0.03041851206459384,
+        0.035727896782737883
+      ],
+      "ci95_calendar_week": [
+        0.030579020334430954,
+        0.03546157683798972
+      ],
+      "calendar_blocks": 16,
+      "familywise_game": [
+        0.029883791865909493,
+        0.03633980173093987
+      ],
+      "familywise_week": [
+        0.029957623369873416,
+        0.03589934293557249
+      ],
+      "families_counted": 3
+    },
+    "C": {
+      "games": 200,
+      "rows": 47284,
+      "supported_for_overall_ranking": true,
+      "change": 0.2296645132367524,
+      "ci95_game": [
+        0.2230512481820636,
+        0.2362900292112209
+      ],
+      "ci95_calendar_week": [
+        0.22355817817798532,
+        0.23624837317692282
+      ],
+      "calendar_blocks": 16,
+      "familywise_game": [
+        0.22163877771577636,
+        0.23791913286576236
+      ],
+      "familywise_week": [
+        0.22246573685726298,
+        0.237728980426275
+      ],
+      "families_counted": 3
+    }
+  },
+  "population": "known200, source-supported next choices; no confirmation",
+  "production_changed": false
+}
