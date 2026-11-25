@@ -1,97 +1,103 @@
-# Handoff — C03 planned; 0% executed
+# Handoff — C03 redesigned; 0% executed
 
-Updated 25 November 2026. [C02 is complete](analysis/experiments/20261125_c02_completion_v1.json).
-Homes: [MODEL](MODEL.md) evidence/contracts, [PLAN](PLAN.md) strategy, [README](README.md) commands, [AGENTS](AGENTS.md) workflow.
-Production remains engine-v1.3-r3, report-bands-v1 and team-pathway-v1. No active jobs, publication or import. Owner 8766 stays running; review uses 8767.
+Updated 25 November 2026. [C02 is complete](analysis/experiments/20261125_c02_completion_v1.json); its decision is unchanged.
+[PLAN](PLAN.md) owns strategy, [MODEL](MODEL.md) evidence/evaluation, [AGENTS](AGENTS.md) workflow, [README](README.md) commands.
+Production stays engine-v1.3-r3, report-bands-v1 and team-pathway-v1. No active jobs. Owner 8766 stays running; review uses 8767.
 
-## C03 — learn complete possession choices on equal information
+## C03 — compare several possession models, then develop the strongest
 
-**Status: 0% accepted. Planning only; no C03 implementation, fitting or scoring has begun.**
+**Status: 0% accepted. Planning only; no C03 implementation, fitting or scoring.** This replaces the unstarted single-hypothesis
+charter prospectively. Closed C01/C02 receipts and criteria stay immutable.
 
-Question: does sharing what the model learns across event type, player choice and action improve the next-event probabilities
-and the player/team outcomes generated from them, when competing models receive the same dated information and training history?
+Question: which affordable way of learning possession decisions offers material player/team forecast improvement on the same
+causal information? The focus is opportunity generation: next event, player and action. Joint learning is one option, not the objective.
+C01 showed information headroom; C02's narrower input/history/learner package lost without isolating the cause. Reuse that work.
 
-C02 changed training coverage, features and learners together. C03 extends its actor/action replacement path to complete
-event/actor/action choice under a controlled comparison. Measured opportunity headroom and unresolved attribution justify the test;
-neither proves joint learning will win.
+### Chunk design and committed deliverables
 
-### What we will build and why this is a substantial advance
+- Reuse C01/C02 source guards, causal features, scoring, simulation mechanics and reproduction. Add only shared support needed by
+  the candidate comparison; no new standalone infrastructure phase beyond the first checkpoint.
+- Build three small working alternatives on the same supported decisions, dated player/lineup/opponent/context features and history.
+  Each must fit, predict and drive legal event worlds; seeds or minor settings do not count as distinct approaches.
+- Compare all valid MVPs cheaply before investing in one or two finalists. Keep the unchanged incumbent as the common reference.
+  Freeze a maximum of two training-only configurations per family and one selected MVP recipe per family before development scoring.
+- Deliver the reusable candidate library/common choice interface and fair comparison records. Develop and independently reproduce
+  only qualifying finalists. Do not polish or rebuild losing prototypes after the stopping rule rejects them.
 
-- A reusable dataset covering the full supported earlier history, with dated player, lineup, opponent and game-state features.
-  Qualify at least a supported opponent/lineup feature family; all admitted features have the same meaning during fitting and simulation.
-  This removes C02's shorter-history/different-information ambiguity for the two new learners.
-- One structured next-choice model that shares learned parameters across event/player/action alternatives. It returns one probability
-  law over the legal next outcomes, including actorless team events. Event/player/action probabilities derived from it must agree.
-  Multiplying independently fitted heads or placing them behind one command does not fulfil this deliverable.
-- A matched model that learns those decisions separately, using the same recorded decisions, dated features, origins, selection
-  allowance and declared capacity/compute budget. Select it using training-only evidence. Keep the unchanged incumbent
-  as a third reference; its different information/training path cannot isolate architecture.
-- Working simulator adapters, common player/team scoring and a command that independently refits, regenerates probabilities and
-  repeats event worlds. Both new models must be usable from data through full games even if neither improves accuracy.
+Engineering acceptance requires runnable, tested outputs. It does not imply major product progress: if no model improves forecasts,
+report a completed negative search and no demonstrated product gain. A missing committed deliverable leaves the chunk unfinished.
 
-Completion requires this working causal training/choice/simulation capability. An audit, renamed model or negative report alone
-cannot complete C03. Accuracy itself cannot be guaranteed.
+### The three MVP families
 
-### Possession boundary and bounded experiment
+|Option|Smallest credible implementation|Question it tests|
+|---|---|---|
+|A. Simple role/context choice|Regularised probabilistic event/player/action choices using dated role rates, lineup competition and qualified opponent/context features; explicit shrinkage/missing support|Can a simpler, strongly regularised model use the available information better?|
+|B. Refreshed separate learners|Nonlinear event, actor and action learners trained separately on the full supported common information/history; comparable selection allowance|Does a stronger version of the existing decision structure recover the opportunity error?|
+|C. Shared possession-choice learner|One parameter-sharing scorer over legal next outcomes, with consistent event/player/action probabilities derived from it, including actorless events|Does sharing learned effects across decisions improve predictions?|
 
-The model answers what happens next, which player is involved and which action follows, using only information available then.
-Shots and scores accumulate from legal events. No full-game target/quota, output repair, market fit or arbitrary uncertainty
-multiplier. Historical team/opponent context is input, never a desired outcome. Keep duration, conversion, rebound/foul resolution and rotations fixed.
+Use the existing NumPy/pandas/LightGBM stack. Exact features, legal labels, learner settings, capacity/compute budgets and decoder
+are frozen at checkpoint 1. All families get the same training/selection origins and admitted information. Record capacity differences;
+use matched subsets/ablations only if prospectively included. The legacy incumbent's different history remains explicit.
+Separately fitted conditionals already describe a joint law; multiplying them is not a new shared learner.
 
-Freeze one shared-parameter learner recipe and one matched separate-head recipe; use the existing NumPy/pandas/LightGBM stack.
-Specify the finite legal choice space, actorless/missing-label support, common feature phase, decoder and comparable capacity before outcomes.
-Any tuning is bounded, training-only and equally available to both paths. No development rescue sweep.
+### Pure possession boundary
 
-Three arms: unchanged incumbent, matched separate learner, shared learner. The architecture comparison is shared versus matched;
-the product comparison asks whether either new model earns further qualification versus the incumbent. Predeclare both eligibility
-routes and multiplicity so a matched-model win is legitimate and a joint-model loss stays a loss.
+All MVPs predict the next event from current state and dated information. Shots, points and winners emerge from the generated events.
+No full-game shot/point/possession targets, remaining quotas, output repairs, market fitting or arbitrary uncertainty inflation.
+Historical team/opponent information is permitted as context. Keep duration, conversion, rebound/foul resolution and rotations fixed.
+Missing tracking is not invented; opponent exposure is not verified personal defender responsibility.
 
-### Evidence, success and stopping
+### Evidence, selection and stopping
 
-- Use the exact 200 exposed development IDs in `analysis/experiments/20261124_b1_development_v2.json`, first 20 for wiring.
-  They are known development games, never fresh confirmation. Training may span supported December 2022–31 December 2025 history.
-  Fit features/priors/assignments/normalisation/calibration strictly before each origin. No reserved/protected outcomes or new providers.
-- Reuse retained causal-first/prior-position profiles and C02's guards. Audit any opponent/assignment lineage before admitting it.
-  Prefer supported historical lineup exposure when personal defender truth is unavailable; no invented tracking. Both new learners
-  get the identical qualified bundle, support and history. Exclusions/missingness are frozen before scores, never chosen by losses.
-- Evaluate the joint next-choice probability and calibration on identical supported keys. Also report event, actor and action
-  contributions. Freeze useful numerical gains, harm/support margins, class handling,
-  multiplicity, seeds, selection folds, precision and stopping in the C03 contract at checkpoint 1, before any candidate fitting/scoring.
-- Player-points distribution accuracy is the main full-game benefit; also score minutes, threes, rebounds/assists and joint team
-  points/totals/margins/wins, critical-player harms and interval calibration. Define practical limits prospectively under MODEL.
-  Event-score improvement alone cannot qualify a game model. Whole-game/calendar-block uncertainty and simulation-half sensitivity apply.
-- Require three-arm 20-game integration at 1,000 worlds per arm regardless of the event-screen outcome. Expand to the fixed 200
-  only for predeclared survivors and required controls. Stop failed recipes; no extra worlds or revised criteria to rescue them.
-  Research survival means eligibility for later independent qualification, never an automatic production release.
+- Use the exact 200 exposed development IDs in `analysis/experiments/20261124_b1_development_v2.json`, first 20 for short rollouts.
+  They remain known development, never independent confirmation. Training may span supported December 2022–31 December 2025 history.
+  Every feature, prior, assignment, normalisation, calibration and fit precedes its origin. No reserved/protected outcomes or new providers.
+- Reuse causal-first/prior-position profiles. Audit opponent-feature lineage before admission; all MVPs receive the same qualified
+  bundle and support. Freeze exclusions/missingness before scores. Validate feature phase and forbid current-label-dependent inputs/masks.
+- Freeze numerical useful gains, practical player/team harms, support/calibration requirements, multiplicity, shortlist rule, maximum
+  finalists, precision and stopping before fitting/scoring. Keep a complete recipe/trial ledger, including failed implementations and
+  training-only selection. No development-driven recipe changes, replacements or budget extensions.
+- Score next-event probability/calibration and branch/context errors for each MVP. Give every mechanically valid MVP a 20-game,
+  1,000-world/game rollout with the common incumbent control. Complete-game player/team results inform the shortlist; a next-event
+  score alone neither establishes game improvement nor selects a product winner. Source-invalid or mechanically invalid MVPs fail closed with the reason retained.
+- Shortlist at most two candidates with predeclared practical promise and acceptable harm/runtime. Being least bad is insufficient.
+  If early evidence cannot distinguish two credible paths, carry both within the fixed cap instead of declaring a winner from noise.
+  Expand only finalists and required controls to the fixed 200 at 1,000 worlds/game. Reuse audited compatible control worlds honestly.
+- Primary game benefit is player-points distribution accuracy, with minutes/threes/rebounds/assists, critical-player harms and joint
+  team points/totals/margins/wins/calibration judged together. Whole-game/calendar-block uncertainty and both simulation halves apply.
+  All initial MVP comparisons count in selection/multiplicity; selection-panel gains never become fresh confirmation.
+
+A predeclared survivor can be recommended for independent qualification. Production changes still require separately frozen independent
+release evidence; if no eligible untouched evidence exists, retain research status. No automatic promotion of the best development score.
 
 ### Four checkpoints — sequential acceptance, commit and push
 
-|Checkpoint|Weight|Required deliverable and acceptance|
+|Checkpoint|Weight|Required acceptance|
 |---|---:|---|
-|1. Equal information and frozen design|20%|Full supported data/feature manifest, qualified opponent information, explicit legal labels/choice space and both recipes. Meaningful future-input, label-dependent-mask and invalid-choice faults fail. Numerical benefit/harm/support/multiplicity/stopping rules frozen before fitting.|
-|2. Working shared and separate learners|35%|Reusable chronological fit/predict/sample interface for both paths; genuine parameter sharing in the joint learner. Same information/history and declared capacity; independent probability arithmetic and full 200 recorded-context comparison, including calibration/branch/context support. No panel tuning.|
-|3. Complete possession integration|30%|Adapters for both learned paths; training/runtime feature and decoder parity; fresh three-arm 20-game worlds with legal clocks/fives/fouls, exact player/team identities and deterministic seeds/resume. Conditional expansion follows the frozen screen; all outcomes emerge from events.|
-|4. Independent operation and decision|15%|Fresh independent fits, probabilities, sampled choices and worker/world reproduction; documented reusable commands; accuracy and capability accepted separately; bounded architecture/product decisions and next concrete 0% charter.|
+|1. Reuse and freeze the comparison|15%|Only necessary common data/feature support; three distinct recipes and budgets; exact choice/population/selection contract. Meaningful future-input/invalid-probability/label-mask faults fail. No fitting before commit/push.|
+|2. Working MVPs and cheap comparison|35%|Fit/predict adapters for all three families, independent probability/feature checks, recorded-context scores and 20-game event-generated rollouts for valid MVPs. Same information/support; complete trial ledger. Shortlist at most two by the frozen rule.|
+|3. Finalist development and full comparison|35%|Finalists get robust integration, proper player/team scoring on 200 known games, legal/accounting/worker/resume checks and selection-aware uncertainty. If none qualifies, finish the working MVP library and independently check the negative comparison; no expensive unchanged-model rerun.|
+|4. Reproduce and deliver the decision|15%|Fresh independent finalist fits/probabilities/world replay, or fresh reproduction of the bounded negative search. Reusable candidate commands/artifacts; report product gain, research result and accepted deliverables separately; next concrete 0% charter.|
 
-Accepted progress is 20/55/85/100%, separate from measured skill. Planning and launched jobs earn no credit.
-Refresh affected canonical docs, inspect staged data/secrets and commit/push each checkpoint before dependent work. Report long-job
-completed counts. At a stop, record exact command/log/session/namespace, counts, blockers and the next action here.
+Accepted deliverable progress is 15/50/85/100%; launched jobs earn no credit. Refresh affected live docs, inspect staged changes and
+commit/push before dependent work. Report long-job completed counts. Session stops record exact commands/logs/session/namespace,
+counts, blockers and next action. No arbitrary deadline or unsupported runtime promise.
 
-### Failure route, compute and release
+### Failure route, compute and scope
 
-If the shared learner loses but the matched model qualifies, retain the shared result and follow the predeclared matched-model route.
-If both fail, keep production and still finish the full dataset, both working learners, choice interface, simulator adapters and
-independent reproduction. Insufficient support/precision stays unresolved; a source gap must narrow claims, never fabricate evidence.
-If any promised capability cannot yet run, the chunk remains unfinished. No cosmetic fallback or third local patch.
+If a finalist earns all frozen requirements, deliver its research/qualification package and measured limitations. If none wins,
+retain production, deliver the runnable distinct MVPs and reproducible comparison, and explicitly report no demonstrated forecast gain.
+A whole-slate failure triggers review of the bottleneck, representation or data ceiling before another modelling chunk; no fourth
+post-hoc idea or repeated one-recipe tweak. Do not rewrite old decisions or invent a winner to satisfy the desire for progress.
 
-Use at most 10 total heavy threads, including inner pools/compression/validation; cap OMP/BLAS/Arrow, avoid nested pools, and shut
-fitting down before large worker jobs. Benchmark wiring before estimating time. Preserve canonical seeds/1k chunks. New private
-namespace: `data/derived/experiments/c03_joint_possession_v1`; aggregate receipts: `analysis/experiments/<actualETdate>_c03_*.json`.
-Keep closed C01/C02 evidence reproducible; version new components and preserve replaced dependencies at `~/Basketball_archive_ops`.
+At most 10 total heavy threads, counting concurrent fits/workers/inner pools/compression/validation; cap OMP/BLAS/Arrow and reduce
+under memory pressure. Share caches, overlap safe independent work and benchmark the first fit/rollout before estimating cost.
+MVP and finalist work share the same precommitted total budget; any technical rerun preserves the old evidence and explains the fault.
+Private namespace: `data/derived/experiments/c03_possession_options_v1`; aggregates: `analysis/experiments/<actualETdate>_c03_*.json`.
+Version new components; preserve closed evidence/dependencies in place or `~/Basketball_archive_ops`.
 
-Research stays isolated. A later production/input/generation release needs separate prospective qualification and all MODEL/AGENTS
-release checks, including affected forecasts/bundles and a fresh full online nightly against the existing 3600-second ceiling.
-No UI/platform or season work is planned. Raw revision/publication timing and actual-participant conditioning remain limitations.
+No UI/platform/season scope. A production/input/generation release additionally needs all MODEL/AGENTS checks, affected bundles and
+a fresh full online nightly against the existing 3600-second ceiling. Actual-participant and raw publication/revision limits remain explicit.
 
 ### Exact first actions
 
@@ -106,5 +112,5 @@ rg -n 'Boundary|COLS|objective|attached|validate_worlds' analysis/c02_data.py an
 .venv/bin/python scripts/check_docs.py
 ```
 
-Then audit source/feature coverage, define the joint choice/decoder and matched comparison, and freeze the C03 contract. Commit/push
-checkpoint 1 before fitting. The plan alone supplies no acceptance credit and creates no later-chunk obligations.
+Then audit reusable coverage, freeze the three MVP recipes and total selection/compute/stopping contract, and commit/push checkpoint 1.
+No C03 model/data jobs are authorised by this planning update alone.

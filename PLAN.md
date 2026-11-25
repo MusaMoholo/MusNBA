@@ -13,19 +13,18 @@ tests, deployment and development workflow. Preserve a working product while rep
 is not itself progress. Player improvements must also preserve joint team behaviour. Diagnostics expose possible value;
 only predictions from dated information can establish recoverable skill.
 
-## Short term — compare possession learners on fair causal inputs
+## Short term — compare several possession MVPs before choosing a path
 
 C01 delivered the comparison workbench; C02 delivered causal actor/action training, a simple role baseline and a swappable pure
 possession runtime with independent reproduction. MODEL owns their results/limits. The incumbent remains live; reuse those capabilities.
 
-The next question is whether sharing learned information across event/player/action choices helps under an equal-information,
-equal-history comparison. C02 changed the feature bundle, training coverage and learner together, so its failure cannot identify the
-best architecture. Build the full supported causal dataset, a genuine shared-parameter choice learner and a strong separately trained
-control. Compare both with the incumbent; either new path may earn further qualification under rules fixed before outcomes.
+C02 changed the feature bundle, training coverage and learner together. Its narrow comparison limits attribution. The next chunk
+compares small working alternatives on the same causal information/history before choosing where to invest: simple regularised
+role/context choices, refreshed separate nonlinear learners and shared possession-choice learning. No family is the assumed winner.
 
-The reusable advance must include both trained alternatives, their legal choice/decoder interface, simulator adapters and independent
-reproduction. A failed joint hypothesis still leaves a complete alternative modelling platform. More reports or a relabelled factorisation
-cannot fulfil that commitment. The detailed next charter lives only in HANDOFF; later directions remain conditional.
+Use common infrastructure, cheap complete-game comparisons and a fixed total budget to reject weak paths, then develop at most two
+credible finalists. Retain runnable MVPs and independent reproduction. A stronger development candidate still needs independent
+qualification; a round where all lose is a negative search, not a major product advance. Detailed recipes/stages live only in HANDOFF.
 
 Team/player shots and scores must emerge from legal events; no predicted full-game total may steer simulation. Evaluate player
 accuracy and joint team uncertainty together. Independent qualification remains separate from research completion.
@@ -64,10 +63,13 @@ until the game engine earns more skill. Richer spatial/in-game prediction follow
 
 ## How chunks make progress
 
-Every charter has one bottleneck, a bounded modelling decision and a precommitted major reusable capability. The capability must
-serve the accuracy goal directly: better causal data, measurement, representation, training or deployment reliability.
-A failed hypothesis does not justify cosmetic consolation work. A failed model is not an accuracy improvement, and an unfinished
-capability does not become complete because an experiment ended. Scientific gains are uncertain; engineering acceptance is explicit.
+Each modelling chunk is a bounded comparison of distinct MVPs for one bottleneck, followed by finalist delivery. Freeze the candidate
+slate, practical promise/harm limits, selection budget, multiplicity and stopping before outcomes. Concentrate effort after evidence
+of promise; build only shared infrastructure necessary for the experiment. Substantial reusable deliverables remain mandatory.
+
+Report engineering acceptance, scientific conclusions and forecast gains separately. More green checks or a rejected model do not
+prove major product progress. When all approaches lose, state that result and revisit the bottleneck/data/representation before
+another chunk; do not fund another isolated recipe or expand the slate after seeing losses. Accuracy gains remain uncertain.
 
 Each of 3–5 checkpoints ends with validation, lean docs, commit and push. Report skill separately from capability completion.
 Keep one main question in progress; freeze candidate evidence rules before outcomes. Change the next charter, not a failed result’s meaning. If two consecutive modelling chunks deliver no meaningful end-to-end gain, prioritise an

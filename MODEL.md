@@ -115,6 +115,11 @@ Unresolved evidence is not demonstrated harm or proof of safety. Known material 
 more evidence or a research-only result. New policies are versioned; old decisions/thresholds are never rewritten retrospectively.
 The three files under `docs/protocols/` are frozen historical reproduction inputs used by old tools, not the new operating policy.
 
+For multiple MVPs, freeze the initial family/configuration slate, equal training-only selection allowances, shortlist rule, maximum
+finalists and total compute/stopping budget before outcomes. Log every attempted recipe, including failures. Include all development
+comparisons in multiplicity/selection-aware uncertainty; selecting a finalist does not reset exposure. Short complete-game tests can
+inform the shortlist, but their games remain selection data. A best development score is not independently confirmed improvement.
+
 The measurement basis is [proper probability scoring](https://sites.stat.washington.edu/raftery/Research/PDF/Gneiting2007jasa.pdf)
 and [chronological forecast evaluation](https://otexts.com/fpp3/toolbox.html#time-series-cross-validation). The specific architecture,
 thresholds and bottleneck choices remain empirical product decisions.

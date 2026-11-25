@@ -28,7 +28,11 @@ Historical receipts, configurations and qualification contracts are evidence, ne
   The existing architecture is an incumbent, not a requirement. Simple baselines and alternative coherent models must compete fairly.
   Do not spend chunks on a plausible mechanism without evidence of material recoverable error.
 - Accuracy gains cannot be guaranteed. Every charter must precommit a substantial reusable accuracy capability as well as a bounded
-  modelling decision. Cosmetic UI work cannot compensate for a failed model. Knowledge alone cannot fulfil a promised capability.
+  modelling decision. Capability delivery alone is not major product progress. If forecasts do not improve, say so plainly.
+- Model chunks compare several credible, distinct working MVPs for one bottleneck before developing one or two finalists.
+  Reuse accepted infrastructure; freeze the slate, fair inputs, selection/multiplicity and total budget before outcomes. Minor
+  parameter changes do not count as alternatives. Reject losers cheaply; do not fully build a favourite before comparing options.
+  Cosmetic UI, more tests or knowledge alone cannot fulfil a promised working capability.
 - Keep one main bottleneck in progress. Evidence determines the next chunk; later directions stay provisional.
   Make routine choices independently. Ask only for genuine product/source decisions unavailable in connected evidence.
 - Explain results in high-level English: what was measured, units, sample size, whether higher/lower is better, change and uncertainty.
@@ -46,7 +50,9 @@ Estimate time only from measured logs.
 Each checkpoint: relevant tests/accounting, refresh affected canonical docs, inspect staged changes, commit and push before dependent work.
 Session stops checkpoint resumable commands, log/session/namespace, completed counts, blockers and the exact next action.
 At chunk closure: state skill change, capability delivered, limitations and model/release status; replace HANDOFF with the next
-concrete 0% charter. PLAN keeps only conditional future directions. If neither promised outcome is earned, the chunk is unfinished.
+concrete 0% charter. PLAN keeps only conditional future directions. Missing committed deliverables leave the chunk unfinished.
+A completed negative search is reported as such, never relabelled a major product advance because engineering checkpoints passed.
+Lead closure reports with forecast effect and model/release status; give deliverable completion separately.
 
 ## Evidence and safety
 
