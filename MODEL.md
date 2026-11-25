@@ -187,6 +187,8 @@ practical limit. No family meets primary promise or team harm rules; no finalist
 familywise game/week uncertainty; only four week blocks limit precision. This is a bounded development negative search, not a model-class
 ceiling or operational confirmation. Production remains unchanged. The capped sample, finite model capacity and older incumbent
 package limit attribution; diagnostics and legal/accounting checks do not establish forecast improvement.
+The [independent negative audit](analysis/experiments/20261125_c03_negative_audit_v1.json) reproduces the failed primary/team decision
+and selection-adjusted game intervals; 80,000 saved worlds pass independent accounting and 47,076 scalar/half-score checks.
 
 The B1 component audit remains reusable source evidence. The long-shot recipe failed
 (`20261124_b1_development_decision_v2.json`). A substitution attempt improved minutes without establishing required game compatibility

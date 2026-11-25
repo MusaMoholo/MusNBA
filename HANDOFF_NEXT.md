@@ -1,4 +1,4 @@
-# Handoff — C03 executing; 50% accepted
+# Handoff — C03 executing; 85% accepted
 
 Updated 25 November 2026. [PLAN](PLAN.md) owns strategy, [MODEL](MODEL.md) evidence/evaluation,
 [AGENTS](AGENTS.md) workflow, [README](README.md) commands. Production remains engine-v1.3-r3,
@@ -36,7 +36,7 @@ search. Deliverable acceptance and accuracy gains are separate. No improvement m
 |---|---:|---|
 |1. Freeze comparison|15%|Common interface, three distinct recipes, exact budget/population/decision contract; future-input/probability/label-mask faults; commit/push before fitting. Accepted.|
 |2. Working MVP comparison|35%|All fit/predict adapters; independent probability/features; recorded-event scores; legal paired20; complete trial ledger; frozen shortlist. Accepted.|
-|3. Finalist comparison|35%|Qualifiers: robust200 integration/player-team uncertainty, worker/resume/accounting; otherwise finish working library and independently check negative comparison, no unchanged-model expansion.|
+|3. Finalist comparison|35%|Qualifiers: robust200 integration/player-team uncertainty, worker/resume/accounting; otherwise finish working library and independently check negative comparison, no unchanged-model expansion. Accepted negative route.|
 |4. Reproduce/deliver|15%|Fresh independent fits/probabilities/full-game replay per family, reusable commands, honest result, next concrete 0% charter.|
 
 Each checkpoint requires relevant checks, affected live docs, staged inspection, commit and push before dependent work.
@@ -56,9 +56,10 @@ and [complete trial ledger](analysis/experiments/20261125_c03_trials_v2.json) re
 No active jobs. Completed command: `.venv/bin/python analysis/c03_rollout.py mvp --jobs 9`, log `/tmp/c03_mvp.log`, session 95422 finished.
 All 20 receipts exist under the private namespace. No expansion to remaining180 is permitted; source/signature guards remain active.
 
-Exact next action after checkpoint-2 commit/push: independently recompute primary and team differences/shortlist from saved rows and
-retain the bounded negative decision; validate source/worker/resume faults and common-control identities for checkpoint 3. Then commit/push.
-After that, run fresh independent reproduction:
+Checkpoint 2 committed/pushed as `0439b53`. The [independent negative audit](analysis/experiments/20261125_c03_negative_audit_v1.json)
+recomputes all primary/team means, both halves and selection-adjusted game intervals from saved rows. All three fail primary promise,
+both halves and the team harm limit independently. Modified source/completed-game resume faults fail closed. No finalist integration
+or unchanged-model expansion is warranted. Exact next action after checkpoint-3 commit/push: fresh independent reproduction:
 
 ```sh
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1

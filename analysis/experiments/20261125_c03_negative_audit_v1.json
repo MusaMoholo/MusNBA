@@ -1,0 +1,136 @@
+{
+  "kind": "C03 independent saved-row and familywise-interval bounded negative audit",
+  "games": 20,
+  "player_games": 427,
+  "world_accounting": {
+    "games": 20,
+    "arms": [
+      "A",
+      "B",
+      "C",
+      "control"
+    ],
+    "worlds": 80000,
+    "scalar_and_half_scores_checked": 47076,
+    "maximum_score_difference": 7.638334409421077e-14,
+    "all_saved_accounting_passed": true
+  },
+  "feature_parity": {
+    "games": 200,
+    "events": 47284,
+    "feature_values_checked": 13239520,
+    "mismatches": 0,
+    "max_absolute_difference": 3.814697265625e-06,
+    "independent_history_and_label_checks": true
+  },
+  "independent_arithmetic": {
+    "A": {
+      "player/pts": {
+        "rows": 427,
+        "games": 20,
+        "control_crps": 2.932330423887602,
+        "candidate_crps": 2.9537200562061035,
+        "change": 0.02138963231850169,
+        "relative_change": 0.00729441407566338,
+        "half1_change": 0.008382444964871283,
+        "half2_change": 0.0343751288056211,
+        "independent_familywise_game": [
+          -0.02099678804917759,
+          0.0666720173754727
+        ]
+      },
+      "team/points": {
+        "rows": 40,
+        "games": 20,
+        "control_crps": 6.454040825000026,
+        "candidate_crps": 7.644423200000027,
+        "change": 1.1903823750000018,
+        "relative_change": 0.18443985826507334,
+        "half1_change": 1.1979151999999997,
+        "half2_change": 1.1814998999999995,
+        "independent_familywise_game": [
+          0.5318087375000005,
+          1.8050975975000023
+        ]
+      },
+      "primary_promise_passed": false,
+      "both_halves_improve": false,
+      "team_points_practical_harm_passed": false
+    },
+    "B": {
+      "player/pts": {
+        "rows": 427,
+        "games": 20,
+        "control_crps": 2.932330423887602,
+        "candidate_crps": 2.947977044496501,
+        "change": 0.015646620608899122,
+        "relative_change": 0.005335899556692956,
+        "half1_change": 0.015266098360656066,
+        "half2_change": 0.016068880562060794,
+        "independent_familywise_game": [
+          -0.03078961935705951,
+          0.060957059393066046
+        ]
+      },
+      "team/points": {
+        "rows": 40,
+        "games": 20,
+        "control_crps": 6.454040825000026,
+        "candidate_crps": 6.636447150000024,
+        "change": 0.18240632499999837,
+        "relative_change": 0.028262344466963865,
+        "half1_change": 0.2571544000000001,
+        "half2_change": 0.10871910000000007,
+        "independent_familywise_game": [
+          0.02131590749999777,
+          0.3590589793750016
+        ]
+      },
+      "primary_promise_passed": false,
+      "both_halves_improve": false,
+      "team_points_practical_harm_passed": false
+    },
+    "C": {
+      "player/pts": {
+        "rows": 427,
+        "games": 20,
+        "control_crps": 2.932330423887602,
+        "candidate_crps": 3.0759089531616066,
+        "change": 0.1435785292740046,
+        "relative_change": 0.04896396671547411,
+        "half1_change": 0.14238637002341914,
+        "half2_change": 0.14513434192037522,
+        "independent_familywise_game": [
+          0.044240594318957153,
+          0.2377327647026949
+        ]
+      },
+      "team/points": {
+        "rows": 40,
+        "games": 20,
+        "control_crps": 6.454040825000026,
+        "candidate_crps": 8.407066625000024,
+        "change": 1.953025799999999,
+        "relative_change": 0.30260512025812775,
+        "half1_change": 1.9746401000000011,
+        "half2_change": 1.9335814999999998,
+        "independent_familywise_game": [
+          0.7954672499999988,
+          3.08553553625
+        ]
+      },
+      "primary_promise_passed": false,
+      "both_halves_improve": false,
+      "team_points_practical_harm_passed": false
+    }
+  },
+  "all_three_fail_primary_halves_and_team_harm": true,
+  "shortlist": [],
+  "expanded_games": 0,
+  "complete_working_mvp_library": true,
+  "recipe_count": 3,
+  "release": "retain engine-v1.3-r3; research negative search; no product gain demonstrated",
+  "source_sha256": "1574054e08b7b740de5a4b3491ea41dcd0e41c70fab93b9db53c5da684732747",
+  "mvp_receipt_sha256": "2fc6861a7644d34c943467d440eddf0715562ba80c79e44109114ca494c86703",
+  "production_changed": false
+}
