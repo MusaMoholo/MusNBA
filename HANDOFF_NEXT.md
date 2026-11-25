@@ -6,7 +6,7 @@ hold evidence. Incumbent engine-v1.3-r3, availability and season engines remain 
 
 ## Active chunk C02 — learn who acts and what happens within possessions
 
-**Status: checkpoints1–2 accepted — 50% capability complete. Authorised to finish the whole chunk.** The owner requires a pure possession model: player/team shot counts,
+**Status: checkpoints1–3 accepted — 85% capability complete. Authorised to finish the whole chunk.** The owner requires a pure possession model: player/team shot counts,
 points and winners emerge from legal events. Historical team context may inform event probabilities; full-game count/score forecasts
 must never guide, constrain or repair the events. Minutes/rotation priors model coaching choices under the legal regulation budget;
 they do not justify a shot budget. The previous unstarted count-first charter is replaced before any C02 fitting/scoring.
@@ -76,9 +76,16 @@ Pre-scoring source repair: inherited global medians were replaced by current-fiv
 passes. Original v1 data/interrupted fit stay unqualified and immutable; source archive:
 `~/Basketball_archive_ops/20261125_c02_relative_boundary_v1`. No development predictions preceded repair; criteria unchanged.
 
-Private active namespace `data/derived/experiments/c02_possession_v2`. No active jobs. Logs:
-`/private/tmp/musnba-c02-data-v2.log`, `/private/tmp/musnba-c02-fit-v2.log`,
-`/private/tmp/musnba-c02-screen-v2.log`, `/private/tmp/musnba-c02-parity-v2.log`.
-Next: implement the isolated pure-possession runtime adapter, test its exact feature wiring and deliberate corruption boundaries,
-then run fresh paired20×1k control/candidate worlds. The failed screen forbids expanding to200 or promoting this recipe.
-Commit/push checkpoint3 before fresh independent fit/prediction/accounting/worker reproduction and final decision.
+Private active namespace `data/derived/experiments/c02_possession_v2`. No active jobs. Checkpoint2 is `c66c417`.
+[Paired integration](analysis/experiments/20261125_c02_rollout_v1.json): all20 control/candidate pairs,1000 worlds/arm,
+40000 new worlds,263.99 seconds at10×1. Every legal-state/scoring/minute boundary passed. Independent saved-array arithmetic
+checked23538 scalar/half scores; maximum difference7.64e-14. There are no shot/score targets, count quotas or output repairs.
+Twenty-game player/team probability errors do not establish a gain; this sample is wiring, not qualification.
+
+Twenty-three C02 synthetic/property/fault tests pass. Working commands and research scope are in README.
+Logs: `/private/tmp/musnba-c02-fit-v2.log`, `/private/tmp/musnba-c02-screen-v2.log`,
+`/private/tmp/musnba-c02-parity-v2.log`, `/private/tmp/musnba-c02-rollout-v2.log`.
+Exact next action: implement/run a fresh independent fit, baseline/prediction/scoring and worker replay in
+`data/derived/experiments/c02_reproduction_v1`, with the same four thread caps. Use10 threads for fitting, shut down that work
+before any one-worker replay. Reproduce source feature parity and cached score conclusions; do not run a second200-game engine
+experiment or change this failed recipe. Finish checkpoint4, report capability/accuracy separately, and replace this with the next0charter.

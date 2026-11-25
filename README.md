@@ -72,6 +72,21 @@ as inputs. Completed experiment stages refuse overwrite. The legacy-test invento
 [the capture API](analysis/c01_ledger.py). Unknown/late evidence fails closed. Historical snapshots are never backfilled as originals.
 The separate browser/release commands above cover UI/delivery; research commands do not publish or promote a model.
 
+C02 trains possession-level actor/action probability heads; shots and scores emerge from simulated events. Its isolated research
+commands are:
+
+```sh
+.venv/bin/python analysis/c02_data.py verify
+.venv/bin/python analysis/c02_model.py fit
+.venv/bin/python analysis/c02_model.py screen
+.venv/bin/python analysis/c02_parity.py
+.venv/bin/python analysis/c02_rollout.py run --jobs 10
+```
+
+Use the same four inner-thread caps above. Fitting uses ten threads; rollout uses ten workers with one each; run them sequentially.
+Completed stages refuse overwrite. Rollout verifies completed game receipts when resuming an interrupted run. Private artifacts
+stay in the HANDOFF namespace. These commands neither change the live model nor publish/import app data.
+
 For a qualified production/input/generation release:
 
 ```sh

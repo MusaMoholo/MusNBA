@@ -165,6 +165,11 @@ role baseline. Candidate error rises 0.01116 (95% game interval 0.00921–0.0130
 no promotion or expansion beyond 20 wiring games. Candidate causal input features match independent event-history reconstruction
 on 49,002 segments. The smaller training window/different feature/learner package limits attribution; this is not a possession-model ceiling.
 
+The [paired C02 integration](analysis/experiments/20261125_c02_rollout_v1.json) generated 1,000 worlds per arm on 20 games
+(427 player-games). Player-points CRPS change is +0.0109 points (95% game interval −0.0192 to +0.0427); team-points change is
++0.1168 (−0.0266 to +0.2585). These are wiring results, with insufficient support for qualification. All counts/scores emerge
+from events. Schedule and rotation rules are shared; different simulated fouls can change realised player minutes between arms.
+
 The B1 component audit remains reusable source evidence. The long-shot recipe failed
 (`20261124_b1_development_decision_v2.json`). A substitution attempt improved minutes without establishing required game compatibility
 (`20261124_c4_s06_independent_decision_v1.json`). Neither identifies the best next intervention.
