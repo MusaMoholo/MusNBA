@@ -15,23 +15,21 @@ is not itself progress. Recent shooting, substitution and season-strength change
 C01's connected comparison shows why player improvements must answer to joint team behaviour. Diagnostics expose possible value;
 only predictions from dated information can establish recoverable skill. Use that distinction before choosing a narrow intervention.
 
-## Short term — test predictable joint opportunity improvements
+## Short term — compare possession learners on fair causal inputs
 
-C01 delivered the working comparison/diagnosis system, independent checks, competing baselines and prospective capture API.
-Its measured results and limits live in MODEL. The incumbent remains preferred to the fixed simple challengers; no production
-accuracy gain is claimed. Reuse the workbench rather than rebuilding another audit.
+C01 delivered the comparison workbench; C02 delivered causal actor/action training, a simple role baseline and a swappable pure
+possession runtime with independent reproduction. Measured results and limitations live in MODEL. Neither chunk established a new
+production accuracy gain; the incumbent remains live. Reuse those capabilities instead of repeating a descriptive audit.
 
-Next, test whether dated player/lineup/team information improves who acts and what happens within possessions, with incumbent
-rotation rules held fixed. Build reusable event labels, causal features, chronological learners and swappable probability heads.
-Outcome-informed diagnostics exposed headroom but did not identify the fraction predictable before tip, and older comparator
-histories limit architecture attribution. Better individual forecasts must also preserve team probability accuracy and dependence.
+The next question is joint event/actor/action learning under a fair information and history comparison. C02 changed the feature
+bundle, training coverage and learner together, so its failure cannot identify the best architecture. Admit qualified causal opponent
+information and the full supported earlier history, then compare joint training with a matched separately trained control.
+Both approaches can represent joint probabilities; predictive results must earn a preference.
 
-Recorded-context evidence precedes expensive rollout. The model must generate player and team outcomes through legal possessions;
-full-game shot/score forecasts cannot steer events. Alternative possession architectures may compete; the sixteen-node design is reviewable.
-No clock change, forced defence loading or standalone minutes correction follows automatically from the diagnostics.
-The committed data/training/scoring capability must work even if the challenger fails. Separate truth, mechanics, skill and
-operational checks; synthetic passes alone establish no NBA forecast improvement. Qualification on independent evidence remains
-separate from research completion, and operational claims require genuine pre-tip captures.
+The product boundary is possession-level generation: team/player shots and scores emerge from legal events. No separately predicted
+full-game total may steer the simulation. Minutes/rotation priors model coaching choices under legal time budgets. Evaluate player
+accuracy, team scores/margins/wins and uncertainty together. Build a reusable joint training/sampling/rollout capability even if the
+candidate fails; independent qualification remains separate from research completion and requires audited information timing.
 
 ## Medium term — spend effort where it can change results
 

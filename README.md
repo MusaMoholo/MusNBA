@@ -77,6 +77,7 @@ commands are:
 
 ```sh
 .venv/bin/python analysis/c02_data.py verify
+.venv/bin/python analysis/c02_reproduce.py source
 .venv/bin/python analysis/c02_model.py fit
 .venv/bin/python analysis/c02_model.py screen
 .venv/bin/python analysis/c02_parity.py
@@ -84,8 +85,10 @@ commands are:
 ```
 
 Use the same four inner-thread caps above. Fitting uses ten threads; rollout uses ten workers with one each; run them sequentially.
-Completed stages refuse overwrite. Rollout verifies completed game receipts when resuming an interrupted run. Private artifacts
-stay in the HANDOFF namespace. These commands neither change the live model nor publish/import app data.
+A complete independent repeat uses `.venv/bin/python analysis/c02_reproduce.py run --output <new-private-directory>`; it refits,
+recreates probability/scoring results, checks source-feature parity and repeats one full game. Completed stages refuse overwrite.
+Rollout verifies completed game receipts when resuming an interrupted run. Private artifacts stay under ignored
+`data/derived/experiments/`; each chunk's receipt records its namespace. These commands neither change the live model nor publish/import app data.
 
 For a qualified production/input/generation release:
 

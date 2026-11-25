@@ -170,6 +170,10 @@ The [paired C02 integration](analysis/experiments/20261125_c02_rollout_v1.json) 
 +0.1168 (−0.0266 to +0.2585). These are wiring results, with insufficient support for qualification. All counts/scores emerge
 from events. Schedule and rotation rules are shared; different simulated fouls can change realised player minutes between arms.
 
+C02 closes in its [completion receipt](analysis/experiments/20261125_c02_completion_v1.json). Fresh independent training and
+probability/scoring reproduction agree with the frozen run; a fresh-fit single-worker 1k game matches the ten-worker candidate arrays
+exactly. The delivered research adapter generates shots/points from events, with no aggregate targets. Production is unchanged.
+
 The B1 component audit remains reusable source evidence. The long-shot recipe failed
 (`20261124_b1_development_decision_v2.json`). A substitution attempt improved minutes without establishing required game compatibility
 (`20261124_c4_s06_independent_decision_v1.json`). Neither identifies the best next intervention.

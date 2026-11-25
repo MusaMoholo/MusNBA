@@ -1,0 +1,243 @@
+{
+  "kind": "C02 complete: pure possession learning capability and bounded negative modelling decision",
+  "chunk": "C02",
+  "complete": true,
+  "capability_accepted_percent": 100,
+  "created_at": "2026-11-25T16:47:07.027325+00:00",
+  "checkpoints": [
+    {
+      "id": 1,
+      "weight": 25,
+      "accepted": true
+    },
+    {
+      "id": 2,
+      "weight": 25,
+      "accepted": true
+    },
+    {
+      "id": 3,
+      "weight": 35,
+      "accepted": true
+    },
+    {
+      "id": 4,
+      "weight": 15,
+      "accepted": true
+    }
+  ],
+  "checkpoint_commits": {
+    "data": "82bb944",
+    "source_repair_and_implementation_freeze": "9c8d96f",
+    "learners_and_screen": "c66c417",
+    "integration": "2fde32b"
+  },
+  "capability_delivered": [
+    "Versioned source-bound actor/action datasets with strictly dated causal profiles and current-five-only missing role handling",
+    "Chronological exact conditional-softmax actor training and multiclass action training, with fixed early stopping/refit and profile baseline",
+    "Independent raw-history feature parity over all200 known games; zero mismatches",
+    "Swappable research runtime heads using the same causal features; no full-game target/count/quota inputs",
+    "Fresh paired legal event-world generation, player/team proper scoring, independent saved-world/accounting and fresh-fit/worker reproduction"
+  ],
+  "bounded_decision": "Reject this frozen challenger for further qualification; retain engine-v1.3-r3. No development tuning or expansion after the failed event screen.",
+  "skill_change": {
+    "production_gain": "None demonstrated",
+    "incumbent_changed": false,
+    "recorded_context": {
+      "kind": "C02 frozen recorded-context screen; known development only",
+      "models": {
+        "incumbent": {
+          "events": 43697,
+          "games": 200,
+          "joint_log_loss_nats": 3.191373307978647,
+          "conditional_head_brier_sum": 1.5301422060140977,
+          "who_loss": 1.5405534132050682,
+          "what_loss": 1.6508198947735784
+        },
+        "candidate": {
+          "events": 43697,
+          "games": 200,
+          "joint_log_loss_nats": 3.2025341865663877,
+          "conditional_head_brier_sum": 1.5347786479788534,
+          "who_loss": 1.5476635403592827,
+          "what_loss": 1.6548706462071048
+        },
+        "profile": {
+          "events": 43697,
+          "games": 200,
+          "joint_log_loss_nats": 3.3141626711425762,
+          "conditional_head_brier_sum": 1.5762678707326867,
+          "who_loss": 1.5697712381025855,
+          "what_loss": 1.7443914330399906
+        }
+      },
+      "changes_vs_incumbent": {
+        "candidate": {
+          "loss": {
+            "games": 200,
+            "rows": 43697,
+            "supported_for_overall_ranking": true,
+            "change": 0.011160878587741327,
+            "ci95_game": [
+              0.00920805045525759,
+              0.013087664143620793
+            ],
+            "ci95_calendar_week": [
+              0.008949168111703243,
+              0.013497660169250405
+            ],
+            "calendar_blocks": 16
+          },
+          "brier": {
+            "games": 200,
+            "rows": 43697,
+            "supported_for_overall_ranking": true,
+            "change": 0.004636441964755857,
+            "ci95_game": [
+              0.0038137586610240536,
+              0.00543823974025772
+            ],
+            "ci95_calendar_week": [
+              0.0038140863580362412,
+              0.005451086570334073
+            ],
+            "calendar_blocks": 16
+          }
+        },
+        "profile": {
+          "loss": {
+            "games": 200,
+            "rows": 43697,
+            "supported_for_overall_ranking": true,
+            "change": 0.12278936316392956,
+            "ci95_game": [
+              0.11773549223605143,
+              0.12793161612033127
+            ],
+            "ci95_calendar_week": [
+              0.11702906670945402,
+              0.12920685182705316
+            ],
+            "calendar_blocks": 16
+          },
+          "brier": {
+            "games": 200,
+            "rows": 43697,
+            "supported_for_overall_ranking": true,
+            "change": 0.046125664718589206,
+            "ci95_game": [
+              0.04393740337908399,
+              0.048332277702304895
+            ],
+            "ci95_calendar_week": [
+              0.0434112422856482,
+              0.049151629668961784
+            ],
+            "calendar_blocks": 16
+          }
+        }
+      },
+      "candidate_relative_log_loss_gain": -0.0034972024613474026,
+      "screen_passed": false,
+      "next_rollout_games": 20,
+      "composite_brier_definition": "sum of actor and observed-actor conditional action Brier scores; not a flat40-class Brier",
+      "population": "same supported actor/action keys, actual participants and recorded histories; no operational skill claim",
+      "fit_sha256": "cd17e26d050c23664125dc607832bf3600abc297cb4b003852555065673689da",
+      "scorer_sha256": "d40b82c20340294ac38993195e04d2268da938e48c461144f216b28a249bb42b",
+      "production_changed": false
+    },
+    "rollout": "20 wiring games; no established player/team improvement; insufficient support for qualification"
+  },
+  "validation": {
+    "baseline_smoke": "118/118 before changes",
+    "targeted_c02_tests": 26,
+    "inherited_integrity_tests": 31,
+    "source_cli": "passed",
+    "independent_reproduction": {
+      "kind": "C02 independent fresh-fit/event-score/feature/worker reproduction",
+      "games": 200,
+      "same_training_selected_rounds": true,
+      "fresh_model_files_identical": true,
+      "maximum_prediction_difference": 0.0,
+      "maximum_independent_event_score_difference": 4.440892098500626e-16,
+      "maximum_screen_summary_difference": 3.469446951953614e-17,
+      "independent_feature_mismatches": 0,
+      "saved_world_accounting": {
+        "games": 20,
+        "scalar_and_half_scores_checked": 23538,
+        "max_score_difference": 7.638334409421077e-14,
+        "all_saved_world_identities_passed": true
+      },
+      "single_worker_fresh_fit_replay_identical": true,
+      "replay_game_id": "401809250",
+      "replay_worlds": 1000,
+      "replay_head_calls": {
+        "candidate": {
+          "who": 226031,
+          "what": 221010
+        }
+      },
+      "seconds": 191.04926358300145,
+      "retained_inputs": "Immutable source-derived dataset caches, stored simulated rotations, and incumbent recorded-context probabilities; new candidate/profile fits and probabilities; one new full-game replay",
+      "source_sha256": "ea7c0e11cd707c44b37f979931558517f641497ff3f79c356ca7290481d9f38c",
+      "production_changed": false
+    }
+  },
+  "generation": {
+    "new_paired_full_game_worlds": 40000,
+    "fresh_reproduction_worlds": 1000,
+    "technical_preflight_worlds": 32,
+    "no_full_game_targets_or_repairs": true
+  },
+  "source_repair": {
+    "issue": "Inherited global median for missing within-five roles could borrow later rows; found before any development predictions",
+    "repair": "Each five supplies its own median; tie-symmetric ranks; all-unknown stays missing",
+    "old_namespace": "data/derived/experiments/c02_possession_v1",
+    "archive": "/Users/moholom/Basketball_archive_ops/20261125_c02_relative_boundary_v1",
+    "v1_fit": "interrupted; disqualified; no development scores",
+    "criteria_unchanged": true,
+    "contract_sha256": "df9718378c7fa29d45eb20dcae7cbd5b6bd35677629585976af5dbe6814b334b"
+  },
+  "limits": [
+    "Known development actual-participant panel; no fresh confirmation or operational availability claim",
+    "New head package has a shorter training history and different causal feature bundle than the incumbent; no architecture-ceiling conclusion",
+    "Recorded incumbent screen follows established recorded-start conventions; the new heads match elapsed actor-runtime exposure",
+    "Retained simulated schedules are fixed; legal foul responses can change realised minutes between arms; this is separate from original retained forecast worlds",
+    "Unsupported actors outside recorded fives and missing profiles stay explicit; raw revision/publication timing is not certified",
+    "No real certified prospective forecast capture or live model release is established by these research runs"
+  ],
+  "evidence_sha256": {
+    "analysis/experiments/20261125_c02_data_v2.json": "8b23a8b91cab33b38dcdea88fc1d2dfc45da3bdd7a2d5be29f7cd440982cc888",
+    "analysis/experiments/20261125_c02_screen_v1.json": "72ab770bac10393aeced9ef3f09376a5e40f782e55b0800aca2f6193973adb0b",
+    "analysis/experiments/20261125_c02_feature_parity_v1.json": "0c3bdf65c76e11bae4b3298eb942152f03ff5c3ba81241f3cc66add1345928b0",
+    "analysis/experiments/20261125_c02_rollout_v1.json": "9398ec62d37ed8e93f254d58720afb87074ec63d85dd045bd423540a51c4f18f"
+  },
+  "code_and_contract_sha256": {
+    "analysis/c02_accounting.py": "227311d7138a9d75da8ef3ebd7f7bb40006e004545d7a6db9373a77cd9a56454",
+    "analysis/c02_contract_v1.json": "df9718378c7fa29d45eb20dcae7cbd5b6bd35677629585976af5dbe6814b334b",
+    "analysis/c02_data.py": "28adcdeffb285e13eb09445b71e0016aec4e023dc6a4d2aca83a4e82245143ac",
+    "analysis/c02_features.py": "aabbe6071ea9551bb617928e4ca10439fd86a85ab34f145b4b94a33be0925491",
+    "analysis/c02_model.py": "d40b82c20340294ac38993195e04d2268da938e48c461144f216b28a249bb42b",
+    "analysis/c02_parity.py": "158741ae99fddc8d79cbe34aa923e6fd073d7f65ad6aaa0e54f8939b49aa7a76",
+    "analysis/c02_reproduce.py": "ea7c0e11cd707c44b37f979931558517f641497ff3f79c356ca7290481d9f38c",
+    "analysis/c02_rollout.py": "4685eb8250e1775fa65de8150122520525a2b0d4e70f07ff5891e8e95bdf0cf5",
+    "analysis/c02_runtime.py": "cee3399e8ba209ca73af5bbe25fe4e3c36bb53ac5a2c51ce64a2856b4e531062",
+    "analysis/c02_scoring_recipe_v1.json": "93c22cfb9a986d464f32694dc70643dc2fe7c706d775d17baf1947cd53c5d2ba",
+    "tests/test_c02_accounting.py": "f13b41a8c8d854883feec72e246bec8f9f2a2f992d5474d7818ea24d18521886",
+    "tests/test_c02_features.py": "14f889cc49c1cb945940ceb8e691530fcea0fde66f9f47ae8901d0628b5382c2",
+    "tests/test_c02_possession.py": "1726ee945625df387e6e2dda145f24387d426408f5b4d1b84d0e08fe8eac0e4d",
+    "tests/test_c02_reproduce.py": "b961f4da0347db30790e8a11e49b1b80e28c22cd358613694b7cd1209bdae462",
+    "tests/test_c02_runtime.py": "6d62b0481cfa854de8d8351a9a0b543fb3c8939da9dc7e3561b2aeaba2bb9d66"
+  },
+  "private_namespaces": [
+    "data/derived/experiments/c02_possession_v2",
+    "data/derived/experiments/c02_possession_v1 (retained, unqualified)",
+    "data/derived/experiments/c02_reproduction_v1"
+  ],
+  "protected_or_reserved_outcomes_opened": false,
+  "new_provider_requests": 0,
+  "production_changed": false,
+  "pwa_assets_changed": false,
+  "manual_import_required": false,
+  "next_chunk": "C03 at0%; fair causal comparison of joint possession learning; no execution begun"
+}
