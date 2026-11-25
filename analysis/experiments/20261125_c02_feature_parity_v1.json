@@ -1,0 +1,897 @@
+{
+  "kind": "C02 runtime feature view versus cached datasets; independent raw-event histories",
+  "games": 200,
+  "recorded_segments": 49002,
+  "unsupported_roster_segments": 0,
+  "features": {
+    "who/games_eff": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/min_avg": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/start_share": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/off_segs_eff": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/usage": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/shot_share": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/tov_share": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/foul_drawn_share": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/live_tov_share": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/assisted_share": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/ft_pct": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/fta_per_use": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/ast_rate": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/oreb_pct": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/dreb_pct": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/stl_rate": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/blk_rate": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/pf_rate": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/shots_eff": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/mix_rim": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/mix_paint": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/mix_mid": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/mix_corner3": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/mix_above3": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/fg_rim": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/fg_paint": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/fg_mid": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/fg_corner3": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/fg_above3": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/usage_mult_q1": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/usage_mult_q2": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/usage_mult_q3": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/usage_mult_q4": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/min_share_q1": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/min_share_q2": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/min_share_q3": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/min_share_q4": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/sec_so_far": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 7.62939453125e-06
+    },
+    "who/uses_so_far": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/fga_so_far": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/made_so_far": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/pts_so_far": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/pf_so_far": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/ast_so_far": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/grp_code": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/usage_share": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/usage_rank": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/usage_mult_now": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/period": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/start_clock": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/sec_left_game": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/margin": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/fouls_def": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/fouls_off": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/off_home": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/season_type": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/start_code": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/team_o_pace": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/team_o_three": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/team_o_rim": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/team_o_tov": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/team_o_foul": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/team_o_oreb": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/team_d_pace": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/team_d_three": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/team_d_rim": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/team_d_tov": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/team_d_foul": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/team_d_oreb": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/off_rest": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/def_rest": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/season_day": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/clutch": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/off_usage_sum": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 1.1920928955078125e-07
+    },
+    "who/off_usage_max": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/off_ast_sum": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 1.1920928955078125e-07
+    },
+    "who/off_three_sum": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 4.76837158203125e-07
+    },
+    "who/off_oreb_sum": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 2.9802322387695312e-08
+    },
+    "who/off_bigs": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/off_min_mean": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 3.814697265625e-06
+    },
+    "who/def_blk_sum": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 1.4901161193847656e-08
+    },
+    "who/def_blk_max": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/def_stl_sum": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 1.4901161193847656e-08
+    },
+    "who/def_dreb_sum": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 1.1920928955078125e-07
+    },
+    "who/def_pf_sum": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 1.4901161193847656e-08
+    },
+    "who/def_bigs": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/def_min_mean": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 3.814697265625e-06
+    },
+    "who/shot_time": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "who/foul_event": {
+      "rows": 222550,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/period": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/start_clock": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/sec_left_game": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/margin": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/fouls_def": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/fouls_off": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/off_home": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/season_type": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/start_code": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/team_o_pace": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/team_o_three": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/team_o_rim": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/team_o_tov": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/team_o_foul": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/team_o_oreb": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/team_d_pace": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/team_d_three": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/team_d_rim": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/team_d_tov": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/team_d_foul": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/team_d_oreb": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/off_rest": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/def_rest": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/season_day": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/clutch": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/off_usage_sum": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 1.1920928955078125e-07
+    },
+    "what/off_usage_max": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/off_ast_sum": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 1.1920928955078125e-07
+    },
+    "what/off_three_sum": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 4.76837158203125e-07
+    },
+    "what/off_oreb_sum": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 2.9802322387695312e-08
+    },
+    "what/off_bigs": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/off_min_mean": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 3.814697265625e-06
+    },
+    "what/def_blk_sum": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 1.4901161193847656e-08
+    },
+    "what/def_blk_max": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/def_stl_sum": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 1.4901161193847656e-08
+    },
+    "what/def_dreb_sum": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 1.1920928955078125e-07
+    },
+    "what/def_pf_sum": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 1.4901161193847656e-08
+    },
+    "what/def_bigs": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/def_min_mean": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 3.814697265625e-06
+    },
+    "what/shot_time": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_games_eff": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_min_avg": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_start_share": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_off_segs_eff": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_usage": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_shot_share": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_tov_share": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_foul_drawn_share": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_live_tov_share": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_assisted_share": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_ft_pct": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_fta_per_use": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_ast_rate": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_oreb_pct": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_dreb_pct": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_stl_rate": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_blk_rate": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_pf_rate": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_shots_eff": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_mix_rim": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_mix_paint": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_mix_mid": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_mix_corner3": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_mix_above3": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_fg_rim": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_fg_paint": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_fg_mid": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_fg_corner3": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_fg_above3": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_usage_mult_q1": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_usage_mult_q2": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_usage_mult_q3": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_usage_mult_q4": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_min_share_q1": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_min_share_q2": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_min_share_q3": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_min_share_q4": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_sec_so_far": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 7.62939453125e-06
+    },
+    "what/actor_uses_so_far": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_fga_so_far": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_made_so_far": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_pts_so_far": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_pf_so_far": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_ast_so_far": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_grp_code": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_usage_share": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_usage_rank": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    },
+    "what/actor_usage_mult_now": {
+      "rows": 43697,
+      "mismatches": 0,
+      "max_abs_error": 0.0
+    }
+  },
+  "mismatches": 0,
+  "view_sha256": "aabbe6071ea9551bb617928e4ca10439fd86a85ab34f145b4b94a33be0925491",
+  "parity_source_sha256": "158741ae99fddc8d79cbe34aa923e6fd073d7f65ad6aaa0e54f8939b49aa7a76",
+  "no_candidate_predictions": true
+}

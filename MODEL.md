@@ -159,6 +159,12 @@ pinned inputs. One fresh single-worker replay also matched ten-worker arrays. Th
 CLI integration and unknown/late/backdating rejection on synthetic artifacts only: zero real certified entries, no live capture hook.
 The next question is predictable joint opportunity improvement with causal current profiles, not a demonstrated gain from knowing outcomes.
 
+C02's [frozen actor/action screen](analysis/experiments/20261125_c02_screen_v1.json) tests 200 known development games and 43,697
+supported actions. Combined negative log probability (nats/action; lower better) is 3.19137 incumbent, 3.20253 candidate and 3.31416
+role baseline. Candidate error rises 0.01116 (95% game interval 0.00921–0.01309; week 0.00895–0.01350). It fails the frozen screen;
+no promotion or expansion beyond 20 wiring games. Candidate causal input features match independent event-history reconstruction
+on 49,002 segments. The smaller training window/different feature/learner package limits attribution; this is not a possession-model ceiling.
+
 The B1 component audit remains reusable source evidence. The long-shot recipe failed
 (`20261124_b1_development_decision_v2.json`). A substitution attempt improved minutes without establishing required game compatibility
 (`20261124_c4_s06_independent_decision_v1.json`). Neither identifies the best next intervention.

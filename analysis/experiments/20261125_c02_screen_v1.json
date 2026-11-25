@@ -1,0 +1,103 @@
+{
+  "kind": "C02 frozen recorded-context screen; known development only",
+  "models": {
+    "incumbent": {
+      "events": 43697,
+      "games": 200,
+      "joint_log_loss_nats": 3.191373307978647,
+      "conditional_head_brier_sum": 1.5301422060140977,
+      "who_loss": 1.5405534132050682,
+      "what_loss": 1.6508198947735784
+    },
+    "candidate": {
+      "events": 43697,
+      "games": 200,
+      "joint_log_loss_nats": 3.2025341865663877,
+      "conditional_head_brier_sum": 1.5347786479788534,
+      "who_loss": 1.5476635403592827,
+      "what_loss": 1.6548706462071048
+    },
+    "profile": {
+      "events": 43697,
+      "games": 200,
+      "joint_log_loss_nats": 3.3141626711425762,
+      "conditional_head_brier_sum": 1.5762678707326867,
+      "who_loss": 1.5697712381025855,
+      "what_loss": 1.7443914330399906
+    }
+  },
+  "changes_vs_incumbent": {
+    "candidate": {
+      "loss": {
+        "games": 200,
+        "rows": 43697,
+        "supported_for_overall_ranking": true,
+        "change": 0.011160878587741327,
+        "ci95_game": [
+          0.00920805045525759,
+          0.013087664143620793
+        ],
+        "ci95_calendar_week": [
+          0.008949168111703243,
+          0.013497660169250405
+        ],
+        "calendar_blocks": 16
+      },
+      "brier": {
+        "games": 200,
+        "rows": 43697,
+        "supported_for_overall_ranking": true,
+        "change": 0.004636441964755857,
+        "ci95_game": [
+          0.0038137586610240536,
+          0.00543823974025772
+        ],
+        "ci95_calendar_week": [
+          0.0038140863580362412,
+          0.005451086570334073
+        ],
+        "calendar_blocks": 16
+      }
+    },
+    "profile": {
+      "loss": {
+        "games": 200,
+        "rows": 43697,
+        "supported_for_overall_ranking": true,
+        "change": 0.12278936316392956,
+        "ci95_game": [
+          0.11773549223605143,
+          0.12793161612033127
+        ],
+        "ci95_calendar_week": [
+          0.11702906670945402,
+          0.12920685182705316
+        ],
+        "calendar_blocks": 16
+      },
+      "brier": {
+        "games": 200,
+        "rows": 43697,
+        "supported_for_overall_ranking": true,
+        "change": 0.046125664718589206,
+        "ci95_game": [
+          0.04393740337908399,
+          0.048332277702304895
+        ],
+        "ci95_calendar_week": [
+          0.0434112422856482,
+          0.049151629668961784
+        ],
+        "calendar_blocks": 16
+      }
+    }
+  },
+  "candidate_relative_log_loss_gain": -0.0034972024613474026,
+  "screen_passed": false,
+  "next_rollout_games": 20,
+  "composite_brier_definition": "sum of actor and observed-actor conditional action Brier scores; not a flat40-class Brier",
+  "population": "same supported actor/action keys, actual participants and recorded histories; no operational skill claim",
+  "fit_sha256": "cd17e26d050c23664125dc607832bf3600abc297cb4b003852555065673689da",
+  "scorer_sha256": "d40b82c20340294ac38993195e04d2268da938e48c461144f216b28a249bb42b",
+  "production_changed": false
+}

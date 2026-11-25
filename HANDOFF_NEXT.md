@@ -6,7 +6,7 @@ hold evidence. Incumbent engine-v1.3-r3, availability and season engines remain 
 
 ## Active chunk C02 — learn who acts and what happens within possessions
 
-**Status: checkpoint1 accepted — 25% capability complete. Authorised to finish the whole chunk.** The owner requires a pure possession model: player/team shot counts,
+**Status: checkpoints1–2 accepted — 50% capability complete. Authorised to finish the whole chunk.** The owner requires a pure possession model: player/team shot counts,
 points and winners emerge from legal events. Historical team context may inform event probabilities; full-game count/score forecasts
 must never guide, constrain or repair the events. Minutes/rotation priors model coaching choices under the legal regulation budget;
 they do not justify a shot budget. The previous unstarted count-first charter is replaced before any C02 fitting/scoring.
@@ -63,18 +63,22 @@ If the screen fails, retain incumbent and complete the reusable data/fit/adapter
 Insufficient precision remains unresolved. Never redefine harm/support after outcomes. Any eventual production release requires separate
 prospective qualification and all MODEL/AGENTS release checks, including a fresh full online nightly.
 
-### Exact next actions
+### Current accepted evidence and exact next actions
 
-1. Build source-bound actor/action data and synthetic boundary tests, freeze the contract and source manifest; commit/push checkpoint1.
-2. Fit only the frozen recipe, complete recorded-context screen, document and commit/push checkpoint2 before rollout.
-3. Run paired20 wiring, then conditional remaining180; complete independent verification and close the chunk.
+Checkpoint1: [corrected data](analysis/experiments/20261125_c02_data_v2.json), 1704 training/200 development games.
+Checkpoint2: [screen](analysis/experiments/20261125_c02_screen_v1.json) fails; retain incumbent. Candidate joint actor/action loss
+is0.01116 nats/event worse (95% game interval0.00921–0.01309) across43697 supported actions. This tests the frozen smaller
+training-window/feature/learner package; it does not establish an architecture ceiling. No development tuning is permitted.
+[Independent feature parity](analysis/experiments/20261125_c02_feature_parity_v1.json): all49002 segments, zero mismatches.
+Sixteen C02 tests and31 inherited integrity tests pass. Source signatures verify. Fit took115.36 seconds with10 training threads.
 
-Checkpoint1: [data receipt](analysis/experiments/20261125_c02_data_v2.json); 1704 training games, 200 known development games.
-Cached actor/action keys and missingness are explicit; 11 C02 boundary/probability tests and31 inherited integrity tests pass, including causal
-first-season/same-day/position safeguards. Source signature verification passes. No candidate predictions have been produced.
-A pre-scoring repair removed an inherited cross-row median: roles now use only the current five, tested against extreme future-row
-injection. Original v1 data and interrupted/unqualified fit remain intact; dependencies are archived at
-`~/Basketball_archive_ops/20261125_c02_relative_boundary_v1`. Criteria unchanged; no development predictions preceded repair.
-Data log: `/private/tmp/musnba-c02-data-v2.log`; no job running. Next commands:
-`OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 .venv/bin/python -u analysis/c02_model.py fit`,
-then `analysis/c02_model.py screen` with the same interpreter/caps. Implementation and composite-score semantics are frozen before fitting. Do not start rollout until checkpoint2 is committed/pushed.
+Pre-scoring source repair: inherited global medians were replaced by current-five medians and symmetric ranks; future-row fault
+passes. Original v1 data/interrupted fit stay unqualified and immutable; source archive:
+`~/Basketball_archive_ops/20261125_c02_relative_boundary_v1`. No development predictions preceded repair; criteria unchanged.
+
+Private active namespace `data/derived/experiments/c02_possession_v2`. No active jobs. Logs:
+`/private/tmp/musnba-c02-data-v2.log`, `/private/tmp/musnba-c02-fit-v2.log`,
+`/private/tmp/musnba-c02-screen-v2.log`, `/private/tmp/musnba-c02-parity-v2.log`.
+Next: implement the isolated pure-possession runtime adapter, test its exact feature wiring and deliberate corruption boundaries,
+then run fresh paired20×1k control/candidate worlds. The failed screen forbids expanding to200 or promoting this recipe.
+Commit/push checkpoint3 before fresh independent fit/prediction/accounting/worker reproduction and final decision.
