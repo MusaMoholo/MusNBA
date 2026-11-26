@@ -1,0 +1,63 @@
+{
+  "kind": "C06 independent bounded negative decision",
+  "independent_decision": {
+    "games": 200,
+    "actions": 43697,
+    "six_laws_independently_scored": true,
+    "decisions": {
+      "A": {
+        "all_checks_independently_matched": true,
+        "eligible": false,
+        "nll": 1.540171791772603,
+        "native_change": -0.0003816214324647719,
+        "failed_checks": [
+          "native/benefit",
+          "training_convergence",
+          "native/support"
+        ]
+      },
+      "B": {
+        "all_checks_independently_matched": true,
+        "eligible": false,
+        "nll": 1.563500961946354,
+        "native_change": 0.0229475487412861,
+        "failed_checks": [
+          "native/benefit",
+          "nonstar_context",
+          "close",
+          "native/support"
+        ]
+      },
+      "C": {
+        "all_checks_independently_matched": true,
+        "eligible": false,
+        "nll": 1.5406160634023771,
+        "native_change": 6.265019730928849e-05,
+        "failed_checks": [
+          "native/benefit",
+          "training_convergence",
+          "native/support"
+        ]
+      }
+    }
+  },
+  "stopping_fault": "no eligible actor: expansion forbidden",
+  "no_expansion_stage_created": true,
+  "expanded_game_accuracy_games": 0,
+  "original_event_worlds": 8000,
+  "final_fit_reproduction_pending": true,
+  "model_release": "unchanged production; no qualifying actor model",
+  "ruled_out": "The three trained full-history common-information actor laws do not establish the frozen useful gain over the incumbent. Full-history nonlinear laws remove the older candidate gap but are effectively tied with incumbent; the converged conditional-linear law is worse.",
+  "limits": "Both nonlinear selection fits hit1500rounds. Common causal features and actor-time phase differ from incumbent. No architecture/data/predictability ceiling, no proven explanation of C05 critical harm, no fresh chronological or operational claim.",
+  "distinguishing_actor_experiment_if_revisited": "A prospectively frozen training-only extended-convergence comparison crossed with native-information parity would separate under-optimisation from information-package limits; not a C06 rescue or executable backlog.",
+  "next_priority": "Use the actual C05 overall player-point signal: compare coherent whole-game, team and player expert-selection architectures with earlier-only learning to retain bench gains while protecting critical players. C07 at0% after C06 reproduction/closure.",
+  "evidence_sha256": {
+    "events.json": "c92000a8dcd8f5d024ff81bd50a1ef36e1a2ff1eed1151b323aeaff26e9ae23d",
+    "events.parquet": "9a1526697c6f087bdf4c6e2a4f8c7ed63585eeae87a6ff60d4cc6f0abeb98507",
+    "probabilities.npz": "478a2f409c11b36e5251b33df7bac225086c5a420a5cf56b77f2064a71e1930c",
+    "independent_decision.json": "0c60524ff42892e0bb54e4b42a9edd0780be84c4d1efda05d9c375cba67029f9",
+    "wiring.json": "e6b47498467027ea9ab93512551c802133a1aaa91423cfc3537793c391536b27",
+    "wiring_audit.json": "073f55db93fb68e281f0cc98747e38f6b372f9474fbd72489ac532a5a0f84baa"
+  },
+  "production_changed": false
+}

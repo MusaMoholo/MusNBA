@@ -6,7 +6,7 @@ engine-v1.3-r3/report-bands-v1/team-pathway-v1. No release/publication/manual im
 
 ## C06 — full-history competition for on-court scoring opportunity
 
-**50% deliverables validated: checkpoint1 pushed as6ae89db; checkpoint2 ready for commit/push.** [Exact frozen contract](analysis/c06_contract_v1.json) specifies the common uncapped information, one recipe per family, selection/critical limits and total budget. Baseline smoke118/118 and three synthetic law/label/future faults pass. Question: does a fair full-history actor-probability competition improve the allocation
+**85% deliverables validated: checkpoint1 pushed as6ae89db; checkpoint2 pushed ased86450; checkpoint3 ready for commit/push.** [Exact frozen contract](analysis/c06_contract_v1.json) specifies the common uncapped information, one recipe per family, selection/critical limits and total budget. Baseline smoke118/118 and three synthetic law/label/future faults pass. Question: does a fair full-history actor-probability competition improve the allocation
 of player opportunities, including high-usage players, and then improve coherent player/team forecasts? C05 improves bench players
 most; its34 high-usage player-games gain little minute accuracy and worsen point forecasts. That does not identify the cause.
 C01's extra actual-attempt headroom is diagnostic only. C02/C03's capped/mismatched learners did not establish an architecture/data
@@ -83,7 +83,14 @@ Both trees reach1500rounds; B converges. The fixed200 actor screen returns no el
 Two-game wiring completed in290seconds:8000fresh worlds,3270independent scalar/half-score checks, all accounting passes.
 [Wiring audit](analysis/experiments/20261126_c06_wiring_audit_v1.json) and [returned laws](analysis/experiments/20261126_c06_delivered2_v1.json)
 retain mechanical evidence only. Namespace `data/derived/experiments/c06_actor_full_history_v1`; no active jobs. Logs copied into private `logs/`.
-Next: inspect/stage, commit/push checkpoint2. Then checkpoint3 independently records the bounded stop: no paired20/200 expansion.
-Checkpoint4 freshly repeats final fits from frozen training-only recipes, all probabilities and3worker replays; selection optimisation
-is retained as audited input, not claimed rerun. C07 must prioritise a meaningful architecture/data challenge; extending an old failed
-actor recipe cannot be relabelled product progress.
+[Independent stop](analysis/experiments/20261126_c06_stop_v1.json) repeats all decision checks and deliberately calls the actual
+paired20 entry point: it rejects the empty shortlist before creating any stage. No expanded game accuracy panel is permitted.
+Next: inspect/stage, commit/push checkpoint3, then run final-fit/probability/worker reproduction:
+
+```sh
+PYTHONUNBUFFERED=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 .venv/bin/python analysis/c06_reproduce.py > /tmp/c06_reproduce.log 2>&1
+```
+
+Fresh final fits use the exact frozen training-only recipes; selection optimisation is retained as audited input, not claimed rerun.
+After reproduction, close C06 as a completed negative search, update live docs, and freeze C07 at0% around coherent expert combination
+of native forecasts and the measured C05 role signal. No C07 fitting/generation is authorised by the current C06 charter.

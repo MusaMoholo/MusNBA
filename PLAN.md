@@ -20,10 +20,11 @@ an architecture or data ceiling. Stop treating plausible mechanisms and reusable
 
 C04 recovers dated minute skill; C05 carries calibrated standalone minute skill into improved overall player points on20 known
 games but fails the high-usage-player harm limit. Neither earns release. MODEL owns all numbers and limits.
-C06 challenges the capped-history/learner confound in on-court opportunity allocation: three conditional actor models, identical
-uncapped supported history and dated inputs, then final coherent player/team distributions. Native minutes stay fixed to isolate
-actor effects. High-usage harm may reflect role, opportunity, timing or sampling; the actor hypothesis is unproven. No criterion
-rescue, arbitrary spread change or presumption that more data wins. Future combination with learned minutes depends on evidence.
+C06's three full-history conditional actor laws fail useful-gain requirements; two nonlinear fits remain budget-bound. The actor
+replacement hypothesis has not explained C05's high-usage harm. Further actor work needs convergence/information parity evidence,
+not another isolated head recipe. The next priority is a coherent ensemble architecture: native forecasts have strengths that the
+learned role law may need to retain. Compare whole-game, team and player selection using earlier-only learning and fixed guards;
+measured C05 signal is the motivation, not a guaranteed win. No criteria rescue, arbitrary spread change or presumed winning model.
 
 The cultural change is explicit: measured error → admissible predictive signal → credible competing models → end-to-end benefit.
 Each experiment must distinguish explanations. Use full supported information, training-only convergence checks and strong baselines;
