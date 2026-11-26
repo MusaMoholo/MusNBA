@@ -92,6 +92,19 @@ The minute screen gates `short`; the paired20 decision gates `final`. Fits use t
 prediction precedes its target origin. Source hashes gate resume; inspect and retain partial failures before a technical rerun.
 These commands neither promote a model nor publish/import app data. MODEL owns numerical results and limitations.
 
+C06 tests full-history on-court actor choice with fixed native minute inputs:
+
+```sh
+.venv/bin/python analysis/c06_data.py verify
+.venv/bin/python analysis/c06_evaluate.py
+.venv/bin/python analysis/c06_rollout.py wiring --jobs 2
+.venv/bin/python analysis/c06_reproduce.py --output data/derived/experiments/c06_reproduction_v1
+```
+
+Data preparation and fits are exclusive stages (`c06_data.py prepare`, `c06_model.py all`). `short`/`final` require frozen survivors.
+Use `PYTHONUNBUFFERED=1` for live fit progress and the same thread caps. Reproduction supports provenance-checked `--resume` after
+retained technical faults; completed evidence refuses overwrite. C05's rejected minute law stays outside the C06 comparison.
+
 For a qualified production/input/generation release:
 
 ```sh

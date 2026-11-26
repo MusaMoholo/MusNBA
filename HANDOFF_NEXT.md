@@ -1,4 +1,4 @@
-# Handoff — C05 complete; C06 at 0%
+# Handoff — C06 in progress
 
 Updated26November2026. MODEL owns numerical evidence and limitations; PLAN strategy, README commands, AGENTS workflow.
 [C05 completion](analysis/experiments/20261126_c05_completion_v1.json) records minute/player-point skill into legal games but fails the critical-player harm guardrail. Production remains
@@ -6,7 +6,7 @@ engine-v1.3-r3/report-bands-v1/team-pathway-v1. No release/publication/manual im
 
 ## C06 — full-history competition for on-court scoring opportunity
 
-**Checkpoint 1 ready for acceptance; no C06 data/fits/outcomes.** [Exact frozen contract](analysis/c06_contract_v1.json) specifies the common uncapped information, one recipe per family, selection/critical limits and total budget. Baseline smoke118/118 and three synthetic law/label/future faults pass. Question: does a fair full-history actor-probability competition improve the allocation
+**50% deliverables validated: checkpoint1 pushed as6ae89db; checkpoint2 ready for commit/push.** [Exact frozen contract](analysis/c06_contract_v1.json) specifies the common uncapped information, one recipe per family, selection/critical limits and total budget. Baseline smoke118/118 and three synthetic law/label/future faults pass. Question: does a fair full-history actor-probability competition improve the allocation
 of player opportunities, including high-usage players, and then improve coherent player/team forecasts? C05 improves bench players
 most; its34 high-usage player-games gain little minute accuracy and worsen point forecasts. That does not identify the cause.
 C01's extra actual-attempt headroom is diagnostic only. C02/C03's capped/mismatched learners did not establish an architecture/data
@@ -76,4 +76,14 @@ ls -t analysis/experiments/ | head -15
 .venv/bin/python scripts/check_docs.py
 ```
 
-Next: inspect/stage and commit/push checkpoint1, then build all supported actor rows without sampling, fit all three families sequentially, record convergence and score the fixed200 component panel. No active jobs. C06 private namespace is not yet created.
+Current state: all3fits complete,718986selection-fit actions/65084selection/827097final. A/B/C fit times409/53/548seconds.
+Both trees reach1500rounds; B converges. The fixed200 actor screen returns no eligible family. MODEL owns numerical results;
+[events](analysis/experiments/20261126_c06_events_v1.json), [source parity](analysis/experiments/20261126_c06_parity_v1.json) and
+[independent decision](analysis/experiments/20261126_c06_decision_v1.json) preserve evidence. Six synthetic/fault tests pass.
+Two-game wiring completed in290seconds:8000fresh worlds,3270independent scalar/half-score checks, all accounting passes.
+[Wiring audit](analysis/experiments/20261126_c06_wiring_audit_v1.json) and [returned laws](analysis/experiments/20261126_c06_delivered2_v1.json)
+retain mechanical evidence only. Namespace `data/derived/experiments/c06_actor_full_history_v1`; no active jobs. Logs copied into private `logs/`.
+Next: inspect/stage, commit/push checkpoint2. Then checkpoint3 independently records the bounded stop: no paired20/200 expansion.
+Checkpoint4 freshly repeats final fits from frozen training-only recipes, all probabilities and3worker replays; selection optimisation
+is retained as audited input, not claimed rerun. C07 must prioritise a meaningful architecture/data challenge; extending an old failed
+actor recipe cannot be relabelled product progress.

@@ -1,0 +1,87 @@
+{
+  "sources": {
+    "analysis/c03_contract_v1.json": "5ddb8ab46dfa762a60901183d92c802a95dc8bc8765c4b8cc058244ce076edf2",
+    "analysis/c03_data.py": "f0eaf4e31006f1feb3a88b8929e256befa1bd2730690a6eca046ad96f7272cc9",
+    "analysis/c03_choices.py": "34668f821569478b8db60d8554f2d69cc7e9f3669cabe91026bbaea639ff8cad",
+    "data/derived/variants/a1_causal_base_20261122_v4/features/pregame.parquet": "c63b535d8ed34aaedbaa2869f204555ff117be82a4abfe729a4e5bd2f7650b94",
+    "data/derived/variants/a1_causal_base_20261122_v4/features/team_pregame.parquet": "ebb3f3205e75d68a868a2a98c7ea804865143ca3d623147d92b4b2156b358bb9",
+    "data/derived/variants/a1_causal_base_20261122_v4/features/features_report.json": "ad47c02874aa946c8f64b0485248d7b44c64a6b2d229ec6e958f1f70280b7775",
+    "scripts/nodes.py": "78749b680b889993e83ba26baab51877cd7393ee0a5a3d9f4fdaf9123d3b161f",
+    "scripts/features.py": "16d57e2cf0440d2cbeeaa224ada40f1ea7b68fba3f25a37f8114e8640dada9ff",
+    "analysis/c02_data.py": "28adcdeffb285e13eb09445b71e0016aec4e023dc6a4d2aca83a4e82245143ac",
+    "analysis/c01_contexts.py": "9265a6d8e3b452dd8d007d90dedfba47c8b354276ae69e15c794399457679204",
+    "data/derived/experiments/c01_benchmark_v1/plan.json": "b93a7b196e3fffa57a1c55ca6ec6918dbc2f73bda449c7e38b8346b7a6614d5b",
+    "data/derived/history/2023/segments.parquet": "813b53edadf92f6e6c607211b1d4c64b312aa9fbe689851110e912419101a76e",
+    "data/derived/history/2024/segments.parquet": "4a7c3c2bce39580cc8e1092ffc215d11bbd49f7bf117b4551eee40337203d2c0",
+    "data/derived/history/2025/segments.parquet": "d9db732172894ed8d3c6e5e99e3cd1c197006da22799413034ce3ce18cc5aee2",
+    "data/derived/history/2026/segments.parquet": "07ba8c78756a2175058363a92f3c444c03e0fa5a852117c59371c7ecb06155fc",
+    "analysis/c06_contract_v1.json": "ff1bdcadebd49aab85cd86d9002c6af2f694dd0b06b96e2fdcf566e7081c4336",
+    "analysis/c06_data.py": "37ef325e2f45e146913e7482401b17aec28839c2804038f8df094c63b967cb2e",
+    "analysis/c06_core.py": "15e5ba2a8edb7a4d01d68a3d41a825755de2232311fec70d413a5ce6209aab19"
+  },
+  "blocks": [
+    {
+      "year": 2023,
+      "supported": 208603,
+      "excluded_actions": 2020,
+      "games": 893,
+      "first": "2022-12-01",
+      "last": "2023-04-09",
+      "actor_actions": 193667,
+      "train": 193667,
+      "selection": 0,
+      "final": 193667
+    },
+    {
+      "year": 2024,
+      "supported": 280749,
+      "excluded_actions": 2914,
+      "games": 1204,
+      "first": "2023-10-24",
+      "last": "2024-04-14",
+      "actor_actions": 260277,
+      "train": 260277,
+      "selection": 0,
+      "final": 260277
+    },
+    {
+      "year": 2025,
+      "supported": 286198,
+      "excluded_actions": 3115,
+      "games": 1215,
+      "first": "2024-10-22",
+      "last": "2025-04-13",
+      "actor_actions": 265042,
+      "train": 265042,
+      "selection": 0,
+      "final": 265042
+    },
+    {
+      "year": 2026,
+      "supported": 117529,
+      "excluded_actions": 1840,
+      "games": 489,
+      "first": "2025-10-21",
+      "last": "2025-12-31",
+      "actor_actions": 108111,
+      "train": 0,
+      "selection": 65084,
+      "final": 108111
+    }
+  ],
+  "panel": {
+    "events": 43697,
+    "games": 200
+  },
+  "artifacts": {
+    "year2023.npz": "e4b6455ad9bd48a67d87f40ba1663d1586834d7f0684b58da65369d14cd01592",
+    "year2024.npz": "393c14f748be5520937605f0b6f5990beb3e727f089bf6f2c69e4ffa0a804883",
+    "year2025.npz": "77c8eae21f2d7f0611283fb93c5c67b5bbe3514d0f21179640a15ab4f000c562",
+    "year2026.npz": "c9e961680ffbdc42cdb107006ff4b1ad78c4485513b76949258a7674078506f7",
+    "panel.npz": "fb6e39d193d6a83002eb883eaf6f62d2723967ae15d7b30c00df8f5dacc97dcf"
+  },
+  "sample_cap": null,
+  "sorted_slots": "C03 builder sorts exact seg_id then player string; all five source-player candidates retained",
+  "production_changed": false,
+  "seconds": 22.221497540998826
+}

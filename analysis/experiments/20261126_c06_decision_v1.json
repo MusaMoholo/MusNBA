@@ -1,0 +1,41 @@
+{
+  "games": 200,
+  "actions": 43697,
+  "six_laws_independently_scored": true,
+  "decisions": {
+    "A": {
+      "all_checks_independently_matched": true,
+      "eligible": false,
+      "nll": 1.540171791772603,
+      "native_change": -0.0003816214324647719,
+      "failed_checks": [
+        "native/benefit",
+        "training_convergence",
+        "native/support"
+      ]
+    },
+    "B": {
+      "all_checks_independently_matched": true,
+      "eligible": false,
+      "nll": 1.563500961946354,
+      "native_change": 0.0229475487412861,
+      "failed_checks": [
+        "native/benefit",
+        "nonstar_context",
+        "close",
+        "native/support"
+      ]
+    },
+    "C": {
+      "all_checks_independently_matched": true,
+      "eligible": false,
+      "nll": 1.5406160634023771,
+      "native_change": 6.265019730928849e-05,
+      "failed_checks": [
+        "native/benefit",
+        "training_convergence",
+        "native/support"
+      ]
+    }
+  }
+}

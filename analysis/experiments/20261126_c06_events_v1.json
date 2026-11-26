@@ -1,0 +1,509 @@
+{
+  "models": {
+    "A": {
+      "actions": 43697,
+      "games": 200,
+      "nll": 1.540171791772603,
+      "brier": 0.7708782446472592,
+      "star_known_actions": 43697,
+      "star_brier": 0.0889405270188082,
+      "star_calibration_gap": -0.004212250079528958,
+      "contexts": {
+        "close": {
+          "actions": 17986,
+          "games": 200,
+          "nll": 1.534144979067254
+        },
+        "nonstar_context": {
+          "actions": 25801,
+          "games": 200,
+          "nll": 1.5527676876010155
+        },
+        "star_known": {
+          "actions": 43697,
+          "games": 200,
+          "nll": 1.540171791772603
+        }
+      },
+      "reliability": {
+        "(0.2, 0.3]": {
+          "rows": 24639,
+          "confidence": 0.2658982304709123,
+          "correct": 0.27123665733187224
+        },
+        "(0.3, 0.4]": {
+          "rows": 16569,
+          "confidence": 0.33498691393100394,
+          "correct": 0.3420846158488744
+        },
+        "(0.4, 0.5]": {
+          "rows": 2077,
+          "confidence": 0.4350051554590403,
+          "correct": 0.483389504092441
+        },
+        "(0.5, 0.7]": {
+          "rows": 409,
+          "confidence": 0.5456651081696412,
+          "correct": 0.589242053789731
+        },
+        "(0.7, 1.0]": {
+          "rows": 3,
+          "confidence": 0.711660679191643,
+          "correct": 1.0
+        }
+      }
+    },
+    "B": {
+      "actions": 43697,
+      "games": 200,
+      "nll": 1.563500961946354,
+      "brier": 0.7808968772631604,
+      "star_known_actions": 43697,
+      "star_brier": 0.09033388302817515,
+      "star_calibration_gap": -0.0021723298041828225,
+      "contexts": {
+        "close": {
+          "actions": 17986,
+          "games": 200,
+          "nll": 1.5586107856465312
+        },
+        "nonstar_context": {
+          "actions": 25801,
+          "games": 200,
+          "nll": 1.5760411024846026
+        },
+        "star_known": {
+          "actions": 43697,
+          "games": 200,
+          "nll": 1.563500961946354
+        }
+      },
+      "reliability": {
+        "(0.2, 0.3]": {
+          "rows": 29207,
+          "confidence": 0.2649553772328789,
+          "correct": 0.2672989351867703
+        },
+        "(0.3, 0.4]": {
+          "rows": 13384,
+          "confidence": 0.33102313497312136,
+          "correct": 0.33495218170950386
+        },
+        "(0.4, 0.5]": {
+          "rows": 1026,
+          "confidence": 0.4286324513613557,
+          "correct": 0.4220272904483431
+        },
+        "(0.5, 0.7]": {
+          "rows": 80,
+          "confidence": 0.5364161390747928,
+          "correct": 0.5
+        }
+      }
+    },
+    "C": {
+      "actions": 43697,
+      "games": 200,
+      "nll": 1.5406160634023771,
+      "brier": 0.7710199516847621,
+      "star_known_actions": 43697,
+      "star_brier": 0.08894921372019585,
+      "star_calibration_gap": -0.004394001748484917,
+      "contexts": {
+        "close": {
+          "actions": 17986,
+          "games": 200,
+          "nll": 1.5344177943028081
+        },
+        "nonstar_context": {
+          "actions": 25801,
+          "games": 200,
+          "nll": 1.5532038960350294
+        },
+        "star_known": {
+          "actions": 43697,
+          "games": 200,
+          "nll": 1.5406160634023771
+        }
+      },
+      "reliability": {
+        "(0.2, 0.3]": {
+          "rows": 24606,
+          "confidence": 0.26554242883799867,
+          "correct": 0.27237259205071934
+        },
+        "(0.3, 0.4]": {
+          "rows": 16447,
+          "confidence": 0.3354454982815139,
+          "correct": 0.33902839423603087
+        },
+        "(0.4, 0.5]": {
+          "rows": 2114,
+          "confidence": 0.4365920305255243,
+          "correct": 0.4735099337748344
+        },
+        "(0.5, 0.7]": {
+          "rows": 524,
+          "confidence": 0.5570197443375573,
+          "correct": 0.566793893129771
+        },
+        "(0.7, 1.0]": {
+          "rows": 6,
+          "confidence": 0.7293464441619014,
+          "correct": 0.8333333333333334
+        }
+      }
+    },
+    "native": {
+      "actions": 43697,
+      "games": 200,
+      "nll": 1.5405534132050682,
+      "brier": 0.7709605357722163,
+      "star_known_actions": 43697,
+      "star_brier": 0.08888925147292258,
+      "star_calibration_gap": 0.00042899259128807005,
+      "contexts": {
+        "close": {
+          "actions": 17986,
+          "games": 200,
+          "nll": 1.5349062568591199
+        },
+        "nonstar_context": {
+          "actions": 25801,
+          "games": 200,
+          "nll": 1.5536958715144438
+        },
+        "star_known": {
+          "actions": 43697,
+          "games": 200,
+          "nll": 1.5405534132050682
+        }
+      },
+      "reliability": {
+        "(0.2, 0.3]": {
+          "rows": 22061,
+          "confidence": 0.2662046686380844,
+          "correct": 0.2667603463124972
+        },
+        "(0.3, 0.4]": {
+          "rows": 17224,
+          "confidence": 0.33823839648893483,
+          "correct": 0.32710171853228054
+        },
+        "(0.4, 0.5]": {
+          "rows": 3344,
+          "confidence": 0.4367916501710863,
+          "correct": 0.4339114832535885
+        },
+        "(0.5, 0.7]": {
+          "rows": 1013,
+          "confidence": 0.567012663679339,
+          "correct": 0.5399802566633761
+        },
+        "(0.7, 1.0]": {
+          "rows": 55,
+          "confidence": 0.7322280407907545,
+          "correct": 0.6727272727272727
+        }
+      }
+    },
+    "uniform": {
+      "actions": 43697,
+      "games": 200,
+      "nll": 1.6094379124340994,
+      "brier": 0.8000000000000005,
+      "star_known_actions": 43697,
+      "star_brier": 0.09821269194681558,
+      "star_calibration_gap": -0.05309288967205986,
+      "contexts": {
+        "close": {
+          "actions": 17986,
+          "games": 200,
+          "nll": 1.6094379124341
+        },
+        "nonstar_context": {
+          "actions": 25801,
+          "games": 200,
+          "nll": 1.6094379124340998
+        },
+        "star_known": {
+          "actions": 43697,
+          "games": 200,
+          "nll": 1.6094379124340994
+        }
+      },
+      "reliability": {
+        "(0.0, 0.2]": {
+          "rows": 43697,
+          "confidence": 0.19999999999999996,
+          "correct": 0.1968098496464288
+        }
+      }
+    },
+    "usage": {
+      "actions": 43697,
+      "games": 200,
+      "nll": 1.5697712381025855,
+      "brier": 0.7836245275198697,
+      "star_known_actions": 43697,
+      "star_brier": 0.09126160473517293,
+      "star_calibration_gap": -0.014113217104684734,
+      "contexts": {
+        "close": {
+          "actions": 17986,
+          "games": 200,
+          "nll": 1.5663087635655712
+        },
+        "nonstar_context": {
+          "actions": 25801,
+          "games": 200,
+          "nll": 1.581637079212704
+        },
+        "star_known": {
+          "actions": 43697,
+          "games": 200,
+          "nll": 1.5697712381025855
+        }
+      },
+      "reliability": {
+        "(0.2, 0.3]": {
+          "rows": 39158,
+          "confidence": 0.25735105176750567,
+          "correct": 0.27866591756473774
+        },
+        "(0.3, 0.4]": {
+          "rows": 4539,
+          "confidence": 0.3183327796676431,
+          "correct": 0.3696849526327385
+        }
+      }
+    }
+  },
+  "changes": {
+    "A": {
+      "native": {
+        "games": 200,
+        "rows": 43697,
+        "supported_for_overall_ranking": true,
+        "change": -0.00038162143246477207,
+        "ci95_game": [
+          -0.0012261483304402555,
+          0.0004596816733687851
+        ],
+        "ci95_calendar_week": [
+          -0.0013578226659425418,
+          0.0006371187975310151
+        ],
+        "calendar_blocks": 16,
+        "familywise_game": [
+          -0.0015380934727008448,
+          0.0007627246782341162
+        ],
+        "familywise_week": [
+          -0.0017059756508025915,
+          0.0009968419230837063
+        ],
+        "families_counted": 6
+      },
+      "usage": {
+        "games": 200,
+        "rows": 43697,
+        "supported_for_overall_ranking": true,
+        "change": -0.029599446329982463,
+        "ci95_game": [
+          -0.032139047608235376,
+          -0.02711571583478707
+        ],
+        "ci95_calendar_week": [
+          -0.03169606355499732,
+          -0.027810630793835132
+        ],
+        "calendar_blocks": 16,
+        "familywise_game": [
+          -0.03299650145036193,
+          -0.02628262722679473
+        ],
+        "familywise_week": [
+          -0.03256268367691685,
+          -0.027248696461689436
+        ],
+        "families_counted": 6
+      }
+    },
+    "B": {
+      "native": {
+        "games": 200,
+        "rows": 43697,
+        "supported_for_overall_ranking": true,
+        "change": 0.022947548741286104,
+        "ci95_game": [
+          0.020636315380630495,
+          0.025381514511799635
+        ],
+        "ci95_calendar_week": [
+          0.02116021336247294,
+          0.025189275023896517
+        ],
+        "calendar_blocks": 16,
+        "familywise_game": [
+          0.019784753961500354,
+          0.026250590097360964
+        ],
+        "familywise_week": [
+          0.020604297030496613,
+          0.026072991707805436
+        ],
+        "families_counted": 6
+      },
+      "usage": {
+        "games": 200,
+        "rows": 43697,
+        "supported_for_overall_ranking": true,
+        "change": -0.00627027615623159,
+        "ci95_game": [
+          -0.007445151854613643,
+          -0.005107750101250499
+        ],
+        "ci95_calendar_week": [
+          -0.007160251692825563,
+          -0.005365216822564887
+        ],
+        "calendar_blocks": 16,
+        "familywise_game": [
+          -0.007892013153006838,
+          -0.0047346461234469665
+        ],
+        "familywise_week": [
+          -0.00742918056309002,
+          -0.005022774510397214
+        ],
+        "families_counted": 6
+      }
+    },
+    "C": {
+      "native": {
+        "games": 200,
+        "rows": 43697,
+        "supported_for_overall_ranking": true,
+        "change": 6.265019730928835e-05,
+        "ci95_game": [
+          -0.0008256044254741295,
+          0.0009525521180411609
+        ],
+        "ci95_calendar_week": [
+          -0.0009260454825962821,
+          0.0010188383991881146
+        ],
+        "calendar_blocks": 16,
+        "familywise_game": [
+          -0.0011352229180336037,
+          0.001261424901053491
+        ],
+        "familywise_week": [
+          -0.0012617882301445263,
+          0.0013419764280706026
+        ],
+        "families_counted": 6
+      },
+      "usage": {
+        "games": 200,
+        "rows": 43697,
+        "supported_for_overall_ranking": true,
+        "change": -0.029155174700208408,
+        "ci95_game": [
+          -0.031690352248113285,
+          -0.026656450802471792
+        ],
+        "ci95_calendar_week": [
+          -0.03137855694050055,
+          -0.027304887168021232
+        ],
+        "calendar_blocks": 16,
+        "familywise_game": [
+          -0.03250434188612274,
+          -0.025767342562874856
+        ],
+        "familywise_week": [
+          -0.032369751123575555,
+          -0.02672796676551617
+        ],
+        "families_counted": 6
+      }
+    }
+  },
+  "eligible": {
+    "A": {
+      "eligible": false,
+      "checks": {
+        "native/benefit": false,
+        "native/support": false,
+        "usage/benefit": true,
+        "usage/support": true,
+        "population": true,
+        "critical_brier": true,
+        "critical_calibration": true,
+        "nonstar_context": true,
+        "close": true,
+        "training_convergence": false
+      }
+    },
+    "B": {
+      "eligible": false,
+      "checks": {
+        "native/benefit": false,
+        "native/support": false,
+        "usage/benefit": true,
+        "usage/support": true,
+        "population": true,
+        "critical_brier": true,
+        "critical_calibration": true,
+        "nonstar_context": false,
+        "close": false,
+        "training_convergence": true
+      }
+    },
+    "C": {
+      "eligible": false,
+      "checks": {
+        "native/benefit": false,
+        "native/support": false,
+        "usage/benefit": true,
+        "usage/support": true,
+        "population": true,
+        "critical_brier": true,
+        "critical_calibration": true,
+        "nonstar_context": true,
+        "close": true,
+        "training_convergence": false
+      }
+    }
+  },
+  "shortlist": [],
+  "kind": "C06 conditional actor screen, known development only",
+  "probabilities_sha256": "478a2f409c11b36e5251b33df7bac225086c5a420a5cf56b77f2064a71e1930c",
+  "scores_sha256": "9a1526697c6f087bdf4c6e2a4f8c7ed63585eeae87a6ff60d4cc6f0abeb98507",
+  "training": {
+    "A": {
+      "train_actions": 718986,
+      "selection_actions": 65084,
+      "final_actions": 827097,
+      "converged": false,
+      "seconds": 408.9836908750003
+    },
+    "B": {
+      "train_actions": 718986,
+      "selection_actions": 65084,
+      "final_actions": 827097,
+      "converged": true,
+      "seconds": 53.4301485420001
+    },
+    "C": {
+      "train_actions": 718986,
+      "selection_actions": 65084,
+      "final_actions": 827097,
+      "converged": false,
+      "seconds": 547.8219315829992
+    }
+  },
+  "production_changed": false
+}
