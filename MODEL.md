@@ -182,8 +182,13 @@ reuse the200 exposed games/4292player-games. The learned whole-team mixture redu
 95% game interval−0.383 to−0.257; familywise game/week upper bounds remain below0). Coverage50/80/95 is46.7%/76.5%/92.5%; critical80
 coverage80.3%, all within C05's prospectively frozen tolerances. Empirical and latent laws fail calibration and stop. Common ridge
 means use full history and chronological out-of-time residuals; mixture weight55.0% learned on prior December only. Native80coverage78.7%.
-[Independent arithmetic](analysis/experiments/20261126_c05_decision_v1.json) agrees, including source-quality sensitivity. This is a
-conditional development component result; complete-game/final-world uncertainty and production qualification are unresolved.
+[Independent arithmetic](analysis/experiments/20261126_c05_decision_v1.json) agrees, including source-quality sensitivity. The [paired20 screen](analysis/experiments/20261126_c05_short_v1.json) improves player-points CRPS2.942→2.853 (−3.0%; change−0.089points,
+95% game interval−0.141 to−0.031), versus decoder bridge2.917 (−2.2%). However34 critical player-games/19games worsen2.49% versus
+native and2.09% versus bridge, above the frozen2% point limit. Small subgroup support limits precision; the rule still stops200game
+expansion. [Independent audit](analysis/experiments/20261126_c05_short_independent_v1.json) reproduces that decision and44000worlds.
+[Returned minute coverage](analysis/experiments/20261126_c05_delivered20_v1.json) is43.6%/77.3%/93.4% at50/80/95, so standalone
+calibration does not automatically survive event-boundary substitutions/fouls/OT. These are exposed development signals, not a
+qualified overall product gain. Production remains unchanged; fresh reproduction is pending.
 
 The B1 component audit remains reusable source evidence. The long-shot recipe failed
 (`20261124_b1_development_decision_v2.json`). A substitution attempt improved minutes without establishing required game compatibility

@@ -1,0 +1,382 @@
+{
+  "games": 20,
+  "returned_distributions": {
+    "A": {
+      "game/margin": {
+        "rows": 2,
+        "crps": 3.62305650000003,
+        "mae": 2.7765000000000004,
+        "coverage50": 1.0,
+        "coverage80": 1.0,
+        "coverage95": 1.0
+      },
+      "game/total": {
+        "rows": 2,
+        "crps": 9.404617500000048,
+        "mae": 15.654500000000013,
+        "coverage50": 0.5,
+        "coverage80": 1.0,
+        "coverage95": 1.0
+      },
+      "player/ast": {
+        "rows": 42,
+        "crps": 0.614998261904766,
+        "mae": 1.006404761904762,
+        "coverage50": 0.8809523809523809,
+        "coverage80": 0.9761904761904762,
+        "coverage95": 1.0
+      },
+      "player/fg3m": {
+        "rows": 42,
+        "crps": 0.6436842619047651,
+        "mae": 1.0235952380952382,
+        "coverage50": 0.7619047619047619,
+        "coverage80": 0.8809523809523809,
+        "coverage95": 1.0
+      },
+      "player/min": {
+        "rows": 42,
+        "crps": 3.5960225062008084,
+        "mae": 5.234023063448108,
+        "coverage50": 0.2619047619047619,
+        "coverage80": 0.6666666666666666,
+        "coverage95": 0.8809523809523809
+      },
+      "player/pts": {
+        "rows": 42,
+        "crps": 3.4178841666666804,
+        "mae": 5.0435,
+        "coverage50": 0.5,
+        "coverage80": 0.7619047619047619,
+        "coverage95": 0.9285714285714286
+      },
+      "player/reb": {
+        "rows": 42,
+        "crps": 1.281420547619053,
+        "mae": 1.9185000000000003,
+        "coverage50": 0.5952380952380952,
+        "coverage80": 0.8333333333333334,
+        "coverage95": 0.9761904761904762
+      },
+      "team/points": {
+        "rows": 4,
+        "crps": 4.8608647500000215,
+        "mae": 7.827250000000014,
+        "coverage50": 0.5,
+        "coverage80": 1.0,
+        "coverage95": 1.0
+      }
+    },
+    "B": {
+      "game/margin": {
+        "rows": 2,
+        "crps": 3.7633990000000352,
+        "mae": 3.1490000000000005,
+        "coverage50": 1.0,
+        "coverage80": 1.0,
+        "coverage95": 1.0
+      },
+      "game/total": {
+        "rows": 2,
+        "crps": 9.442245000000039,
+        "mae": 15.40400000000001,
+        "coverage50": 0.5,
+        "coverage80": 1.0,
+        "coverage95": 1.0
+      },
+      "player/ast": {
+        "rows": 42,
+        "crps": 0.6113834761904803,
+        "mae": 0.9873333333333336,
+        "coverage50": 0.8571428571428571,
+        "coverage80": 0.9523809523809523,
+        "coverage95": 1.0
+      },
+      "player/fg3m": {
+        "rows": 42,
+        "crps": 0.6541510952380984,
+        "mae": 1.0346666666666668,
+        "coverage50": 0.7380952380952381,
+        "coverage80": 0.8809523809523809,
+        "coverage95": 1.0
+      },
+      "player/min": {
+        "rows": 42,
+        "crps": 3.5815147092686317,
+        "mae": 5.178064212255795,
+        "coverage50": 0.3333333333333333,
+        "coverage80": 0.7142857142857143,
+        "coverage95": 0.8571428571428571
+      },
+      "player/pts": {
+        "rows": 42,
+        "crps": 3.4363807142857272,
+        "mae": 5.084904761904762,
+        "coverage50": 0.5238095238095238,
+        "coverage80": 0.7619047619047619,
+        "coverage95": 0.9285714285714286
+      },
+      "player/reb": {
+        "rows": 42,
+        "crps": 1.2797326428571485,
+        "mae": 1.925928571428572,
+        "coverage50": 0.6666666666666666,
+        "coverage80": 0.8809523809523809,
+        "coverage95": 0.9761904761904762
+      },
+      "team/points": {
+        "rows": 4,
+        "crps": 4.822428000000022,
+        "mae": 7.702000000000009,
+        "coverage50": 0.5,
+        "coverage80": 1.0,
+        "coverage95": 1.0
+      }
+    },
+    "C": {
+      "game/margin": {
+        "rows": 20,
+        "crps": 7.370900000000032,
+        "mae": 9.920100000000001,
+        "coverage50": 0.6,
+        "coverage80": 0.9,
+        "coverage95": 0.95
+      },
+      "game/total": {
+        "rows": 20,
+        "crps": 10.560916400000039,
+        "mae": 15.59180000000001,
+        "coverage50": 0.4,
+        "coverage80": 0.75,
+        "coverage95": 0.95
+      },
+      "player/ast": {
+        "rows": 427,
+        "crps": 0.8076268922716673,
+        "mae": 1.2023302107728338,
+        "coverage50": 0.7517564402810304,
+        "coverage80": 0.9250585480093677,
+        "coverage95": 0.9859484777517564
+      },
+      "player/fg3m": {
+        "rows": 427,
+        "crps": 0.5674412014051555,
+        "mae": 0.8823536299765807,
+        "coverage50": 0.7845433255269321,
+        "coverage80": 0.9297423887587822,
+        "coverage95": 0.9859484777517564
+      },
+      "player/min": {
+        "rows": 427,
+        "crps": 3.2008361435562893,
+        "mae": 4.569754269975378,
+        "coverage50": 0.43559718969555034,
+        "coverage80": 0.7728337236533958,
+        "coverage95": 0.9344262295081968
+      },
+      "player/pts": {
+        "rows": 427,
+        "crps": 2.85342947540985,
+        "mae": 4.076529274004684,
+        "coverage50": 0.6252927400468384,
+        "coverage80": 0.8477751756440282,
+        "coverage95": 0.9648711943793911
+      },
+      "player/reb": {
+        "rows": 427,
+        "crps": 1.3075101873536357,
+        "mae": 1.885536299765808,
+        "coverage50": 0.5971896955503513,
+        "coverage80": 0.8711943793911007,
+        "coverage95": 0.9601873536299765
+      },
+      "team/points": {
+        "rows": 40,
+        "crps": 6.499725950000024,
+        "mae": 9.367300000000004,
+        "coverage50": 0.425,
+        "coverage80": 0.8,
+        "coverage95": 0.95
+      }
+    },
+    "bridge": {
+      "game/margin": {
+        "rows": 20,
+        "crps": 7.299288150000029,
+        "mae": 9.73415,
+        "coverage50": 0.6,
+        "coverage80": 0.9,
+        "coverage95": 0.95
+      },
+      "game/total": {
+        "rows": 20,
+        "crps": 10.561857250000042,
+        "mae": 15.534450000000003,
+        "coverage50": 0.45,
+        "coverage80": 0.75,
+        "coverage95": 0.9
+      },
+      "player/ast": {
+        "rows": 427,
+        "crps": 0.824819578454337,
+        "mae": 1.2203091334894616,
+        "coverage50": 0.7283372365339579,
+        "coverage80": 0.9203747072599532,
+        "coverage95": 0.9812646370023419
+      },
+      "player/fg3m": {
+        "rows": 427,
+        "crps": 0.5675408711943827,
+        "mae": 0.8804262295081967,
+        "coverage50": 0.7915690866510539,
+        "coverage80": 0.9344262295081968,
+        "coverage95": 0.990632318501171
+      },
+      "player/min": {
+        "rows": 427,
+        "crps": 3.46230494651938,
+        "mae": 4.829382050740461,
+        "coverage50": 0.5081967213114754,
+        "coverage80": 0.8126463700234192,
+        "coverage95": 0.9227166276346604
+      },
+      "player/pts": {
+        "rows": 427,
+        "crps": 2.9165069344262435,
+        "mae": 4.13747775175644,
+        "coverage50": 0.6042154566744731,
+        "coverage80": 0.8407494145199064,
+        "coverage95": 0.955503512880562
+      },
+      "player/reb": {
+        "rows": 427,
+        "crps": 1.3392158782201464,
+        "mae": 1.917672131147541,
+        "coverage50": 0.5901639344262295,
+        "coverage80": 0.8594847775175644,
+        "coverage95": 0.9601873536299765
+      },
+      "team/points": {
+        "rows": 40,
+        "crps": 6.460594875000022,
+        "mae": 9.341125000000003,
+        "coverage50": 0.45,
+        "coverage80": 0.825,
+        "coverage95": 0.95
+      }
+    },
+    "native": {
+      "game/margin": {
+        "rows": 20,
+        "crps": 7.40015120000003,
+        "mae": 9.962700000000002,
+        "coverage50": 0.6,
+        "coverage80": 0.9,
+        "coverage95": 0.95
+      },
+      "game/total": {
+        "rows": 20,
+        "crps": 10.494532800000043,
+        "mae": 15.359600000000006,
+        "coverage50": 0.4,
+        "coverage80": 0.75,
+        "coverage95": 0.95
+      },
+      "player/ast": {
+        "rows": 427,
+        "crps": 0.8320614496487163,
+        "mae": 1.230615925058548,
+        "coverage50": 0.7142857142857143,
+        "coverage80": 0.9110070257611241,
+        "coverage95": 0.9789227166276346
+      },
+      "player/fg3m": {
+        "rows": 427,
+        "crps": 0.5738713723653429,
+        "mae": 0.8885386416861827,
+        "coverage50": 0.7822014051522248,
+        "coverage80": 0.927400468384075,
+        "coverage95": 0.9882903981264637
+      },
+      "player/min": {
+        "rows": 427,
+        "crps": 3.4665169555269073,
+        "mae": 4.839083103911219,
+        "coverage50": 0.5011709601873536,
+        "coverage80": 0.8149882903981265,
+        "coverage95": 0.927400468384075
+      },
+      "player/pts": {
+        "rows": 427,
+        "crps": 2.942010482435611,
+        "mae": 4.176679156908665,
+        "coverage50": 0.5995316159250585,
+        "coverage80": 0.8337236533957846,
+        "coverage95": 0.9531615925058547
+      },
+      "player/reb": {
+        "rows": 427,
+        "crps": 1.3358119718969617,
+        "mae": 1.9171803278688524,
+        "coverage50": 0.5971896955503513,
+        "coverage80": 0.8688524590163934,
+        "coverage95": 0.955503512880562
+      },
+      "team/points": {
+        "rows": 40,
+        "crps": 6.468635150000023,
+        "mae": 9.261950000000002,
+        "coverage50": 0.425,
+        "coverage80": 0.8,
+        "coverage95": 0.95
+      }
+    }
+  },
+  "translation": {
+    "bridge": {
+      "schedule_error_sum": 1553.8533232419366,
+      "schedule_error_values": 427000,
+      "schedule_error_max": 0.01333332459131853,
+      "returned_vs_schedule_sum": 152245.58793179234,
+      "regulation_only_difference_sum": 109112.0207316906,
+      "regulation_only_values": 411916,
+      "schedule_error_mean": 0.003639000757006877,
+      "returned_vs_schedule_mean": 0.3565470443367502,
+      "regulation_only_difference_mean": 0.2648890082727804
+    },
+    "A": {
+      "schedule_error_sum": 0.0,
+      "schedule_error_values": 42000,
+      "schedule_error_max": 0.0,
+      "returned_vs_schedule_sum": 12322.61467255454,
+      "regulation_only_difference_sum": 8984.333626760017,
+      "regulation_only_values": 40824,
+      "schedule_error_mean": 0.0,
+      "returned_vs_schedule_mean": 0.2933955874417748,
+      "regulation_only_difference_mean": 0.22007479979325928
+    },
+    "B": {
+      "schedule_error_sum": 0.0,
+      "schedule_error_values": 42000,
+      "schedule_error_max": 0.0,
+      "returned_vs_schedule_sum": 12640.609859722012,
+      "regulation_only_difference_sum": 9197.404637628952,
+      "regulation_only_values": 40803,
+      "schedule_error_mean": 0.0,
+      "returned_vs_schedule_mean": 0.30096690142195265,
+      "regulation_only_difference_mean": 0.2254100099901711
+    },
+    "C": {
+      "schedule_error_sum": 0.0,
+      "schedule_error_values": 427000,
+      "schedule_error_max": 0.0,
+      "returned_vs_schedule_sum": 149912.56137785365,
+      "regulation_only_difference_sum": 104962.40844972996,
+      "regulation_only_values": 411232,
+      "schedule_error_mean": 0.0,
+      "returned_vs_schedule_mean": 0.3510832819153481,
+      "regulation_only_difference_mean": 0.25523891246238123
+    }
+  },
+  "scope": "Exact scheduled targets do not imply exact returned game minutes: event-boundary substitutions, fouls and OT remain explicit. No result-selected trimming."
+}

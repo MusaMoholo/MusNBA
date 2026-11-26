@@ -1,0 +1,26 @@
+{
+  "known_games": 20,
+  "world_accounting": {
+    "games": 20,
+    "new_worlds_checked": 44000,
+    "scalar_half_scores_checked": 21243,
+    "maximum_difference": 7.815970093361102e-14,
+    "all_world_accounting_passed": true
+  },
+  "decisions": {
+    "C": {
+      "eligible": false,
+      "player_points_relative_effect": {
+        "native": -0.030109004558143915,
+        "bridge": -0.021627741827674685
+      },
+      "failed_checks": [
+        "native/critical/pts",
+        "bridge/critical/pts"
+      ],
+      "all_checks_independently_match": true
+    }
+  },
+  "accuracy_scope": "development selection only, no independent chronological confirmation",
+  "production_changed": false
+}

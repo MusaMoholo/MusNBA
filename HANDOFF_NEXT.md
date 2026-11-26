@@ -7,7 +7,7 @@ Production remains engine-v1.3-r3, report-bands-v1 and team-pathway-v1. Owner 87
 
 ## C05 — preserve learned minute skill through calibrated joint laws and faithful rotations
 
-**50% deliverables ready: checkpoint1 pushed as5aec1ee; checkpoint2 validated for commit.** Exact recipes and numerical gates are frozen in [C05 contract](analysis/c05_contract_v1.json). Baseline smoke118/118, C04 source and8 tests pass. Exact decoder passes random/boundary and deliberate illegal-law/target-corruption checks. C04 demonstrates admissible role/minute signal on known development games,
+**85% deliverables ready: checkpoint1 pushed as5aec1ee; checkpoint2 pushed asd801829; checkpoint3 independently validated for commit.** Exact recipes and numerical gates are frozen in [C05 contract](analysis/c05_contract_v1.json). Baseline smoke118/118, C04 source and8 tests pass. Exact decoder passes random/boundary and deliberate illegal-law/target-corruption checks. C04 demonstrates admissible role/minute signal on known development games,
 with unacceptably narrow intervals. That failure precedes the rotation decoder. Separately, the old offset decoder sometimes misses
 forecasted targets by many minutes. Freeze a new comparison prospectively; never change C04's failed coverage rule or promote its models.
 
@@ -82,7 +82,11 @@ Two-game wiring completed in230seconds:8000new worlds; independent accounting ch
 identities. Challenger schedules match their quantised targets exactly; bridge error stays under0.012minutes. Final engine-minute
 differences from sampled schedules remain explicit. [Wiring audit](analysis/experiments/20261126_c05_wiring_audit_v1.json) and
 [returned-law diagnostic](analysis/experiments/20261126_c05_delivered2_v1.json) retain the checks; two games do not establish skill.
-Namespace `data/derived/experiments/c05_joint_role_laws_v1`; no active jobs. Two technical failures are retained separately in
-[C05 faults](analysis/experiments/20261126_c05_faults_v1.json); private `logs/` retains run logs.
-Next: inspect/stage, commit/push checkpoint2. Only then run `analysis/c05_rollout.py short --jobs 10`; C alone is eligible.
-Checkpoint3 requires paired20 outcome/uncertainty decision and conditional200, or frozen bounded stop. No production/publication.
+Namespace `data/derived/experiments/c05_joint_role_laws_v1`; no active jobs. Paired20 completed in263seconds generation;
+[independent audit](analysis/experiments/20261126_c05_short_independent_v1.json) checks44000new worlds/21243 scalar scores.
+Overall player-points improvement passes but critical-player point harm fails both reference limits, so shortlist is empty.
+[Final returned-law diagnostic](analysis/experiments/20261126_c05_delivered20_v1.json) retains minute/box calibration and translation.
+Two technical failures remain preserved in [C05 faults](analysis/experiments/20261126_c05_faults_v1.json); private `logs/` retains logs.
+Next: inspect/stage, commit/push checkpoint3. Then run `.venv/bin/python analysis/c05_reproduce.py` with inner thread caps1:
+fresh chronological fits,all200draws,four1k single-worker replays and independent decision. No200game expansion is permitted.
+After reproduction, close C05 with capability/component/screen/release outcomes separate and freeze evidence-led C06 at0%.
