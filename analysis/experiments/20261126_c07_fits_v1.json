@@ -1,0 +1,48 @@
+{
+  "training_games": 41,
+  "training_through": "2026-01-21",
+  "code_sha256": "182c31ed9a468a62960a616aef27503dd58e4f5922070b1845fac50a035c79aa",
+  "contract_sha256": "4f0b4150b71f39a3672b087f47e14267264ed06e16f78872b90621b3442b143e",
+  "data_sha256": "8fc3650634cb8090f1e07a3db9f2bb4ae0345d901a18584362e5df36118ec55b",
+  "models_sha256": "51aaab275293d5641c874e1ab18c5f1f6d07fb3cc9449262d873eafcee2092e0",
+  "training": {
+    "A": {
+      "converged": true,
+      "role_mass": 0.9850053343650215,
+      "training_composite": 1.0412652601366392,
+      "native_composite": 1.0598829552394262,
+      "role_composite": 1.0412695745850453,
+      "pool_composite": 1.0457790541222909
+    },
+    "B": {
+      "converged": true,
+      "iterations": 11,
+      "gradient_inf": 4.440892098527e-08,
+      "training_regularised_composite": 1.0409919962200433,
+      "initial_composite": 1.0446905804377447,
+      "curve": [
+        1.0443147516475613,
+        1.042742912945263,
+        1.0417988986118314,
+        1.0412692566610031,
+        1.0410031007736795,
+        1.040997529155559,
+        1.0409924580645713,
+        1.040992066009807,
+        1.0409919975297715,
+        1.040991996235733,
+        1.0409919962200433
+      ]
+    },
+    "C": {
+      "converged": true,
+      "iterations": 6,
+      "gradient_inf": 1.2103972046872968e-08,
+      "training_bce_regularised": 0.6812955718039758,
+      "constant_bce": 0.6830948955874232,
+      "players": 876
+    }
+  },
+  "seconds": 1.5414239590027137,
+  "production_changed": false
+}

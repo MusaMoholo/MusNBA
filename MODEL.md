@@ -146,29 +146,14 @@ presumed accuracy advantage. A current-event label may condition a later head on
 The historical defence comparison (`20261120T120827Z_compare_defence_F4.json`) measured an opponent-rating association ratio
 of about 41%. It is not current r3 accuracy or a causal share of defence; forcing it to 100% is not a modelling goal.
 
-C01's [benchmark](analysis/experiments/20261125_c01_benchmark_v1.json) covers200 known B1 games/4292 actual-participant
-player-games. Team-points CRPS is6.415 incumbent,6.789 team-strength,7.759 player-rate (lower better,points). Historical package
-differences prevent architecture attribution. [Oracle diagnostics](analysis/experiments/20261125_c01_localisation_v1.json) reduce
-player-points error0.605 with actual minutes but worsen team error0.294: outcome-informed headroom, not deployable/additive gains.
-The [C01 completion](analysis/experiments/20261125_c01_workbench_v1.json) records reproduction; its forecast ledger has zero real
-certified entries and no live hook. Synthetic timing/fault checks do not establish operational forecasting performance.
-
-C02's [screen](analysis/experiments/20261125_c02_screen_v1.json) loses recorded-event log probability by0.01116nats/action
-(95% game interval0.00921–0.01309); its [20-game wiring](analysis/experiments/20261125_c02_rollout_v1.json) changes player-points
-CRPS+0.0109 and team-points+0.1168, neither a demonstrated gain. [C02 closes](analysis/experiments/20261125_c02_completion_v1.json)
-with exact fresh fits/worker replay; its smaller/mismatched training package limits attribution.
-
-C03's [three-family comparison](analysis/c03_contract_v1.json) loses all recorded-event and paired20 player/team screens.
-[Completion](analysis/experiments/20261125_c03_completion_v1.json) and [reproduction](analysis/experiments/20261125_c03_reproduction_v1.json)
-preserve unchanged criteria, multiplicity and exact fresh fits/world replay. Capped data/capacity and incumbent package differences
-remain confounds; neither C02 nor C03 establishes a model-class or data ceiling. Production is unchanged.
-
-C04's [screen](analysis/experiments/20261125_c04_minute_screen_v1.json) finds minute skill across three full-history models on200 known
-games/4292player-games: CRPS3.522native versus3.224/3.117/3.313 (lower better,minutes). Best change−0.405 has95% game interval−0.481to−0.329.
-However80%intervals cover71.4%/68.2%/73.9%, versus78.7%native; all fail frozen calibration. [Completion](analysis/experiments/20261125_c04_completion_v1.json)
-and [reproduction](analysis/experiments/20261125_c04_reproduction_v1.json) match fits,12876000minute values and four1kworld replays.
-These are conditional development component gains. Old decoder tail errors and later substitutions/fouls limit translation;
-no expanded game qualification or production promotion.
+C01's [benchmark](analysis/experiments/20261125_c01_benchmark_v1.json) and [oracle diagnostics](analysis/experiments/20261125_c01_localisation_v1.json)
+show minute/opportunity headroom, not deployable gains; its ledger has no real certified entries. C02's
+[completion](analysis/experiments/20261125_c02_completion_v1.json) and C03's [completion](analysis/experiments/20261125_c03_completion_v1.json)
+record losing possession learners with capped/mismatched packages; neither establishes an architecture ceiling. C04's
+[minute screen](analysis/experiments/20261125_c04_minute_screen_v1.json) recovers predictable minute skill but fails calibration across
+all three models. [Reproduction](analysis/experiments/20261125_c04_reproduction_v1.json) matches all fits, minute draws and worker replays.
+Old decoder tail errors and later substitutions/fouls limit translation. These are historical conditional development results;
+production is unchanged and historical receipts are not a backlog.
 
 C05's [comparison](analysis/c05_contract_v1.json) evaluates 200 known games and 4,292 player-games. The learned mixture reduces
 regulation-minute CRPS from 3.522 to 3.202 (9.1%; lower is better). Change −0.320 minutes has a 95% game interval of −0.383 to −0.257,
@@ -196,9 +181,12 @@ worlds, mechanical evidence only. [Fresh reproduction](analysis/experiments/2026
 models, 655,455 probabilities and three 1,000-world replays. Training-only selection recipes are retained inputs. C06 is a completed
 negative search with no qualified forecast gain or release.
 
-The B1 component audit remains reusable source evidence. The long-shot recipe failed
-(`20261124_b1_development_decision_v2.json`). A substitution attempt improved minutes without establishing required game compatibility
-(`20261124_c4_s06_independent_decision_v1.json`). Neither identifies the best next intervention.
-`20261124_b2_decision_v1.json`: three season-strength candidates did not qualify; historical schedule/exposure limits remain.
-`20261125_chunk_b_completion_v1.json` records the inherited app/runtime release and independent accounting/import checks.
-Rotation maps use all weighted worlds; selected replay examples are illustrations. These receipts are evidence, never work to resume.
+C07's [frozen comparison](analysis/c07_contract_v1.json) learns whole-game, team and player expert selection on 41 earlier games,
+then evaluates 159 known later games. All three fits converge. The global gate chooses 98.5% role mass on training data; this is
+not forecast evidence. The [training objective audit](analysis/experiments/20261126_c07_training_math_v1.json) matches direct weighted
+scores. [Two-game wiring](analysis/experiments/20261126_c07_wiring_audit_v1.json) verifies exact mass, source-world mapping, conservation
+and weighted scores. Each returned law has 1,000 worlds; extra retained members cannot count as a Monte Carlo accuracy advantage.
+The fixed twenty-game accuracy comparison is pending. Production remains unchanged.
+
+Older B1 role/shot/rotation diagnostics and B2 season comparisons remain immutable evidence under `analysis/experiments/`.
+They impose no executable work. The inherited app/runtime remains operational; selected replays illustrate mechanics, not probabilities.

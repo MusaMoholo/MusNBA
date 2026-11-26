@@ -1,0 +1,30 @@
+{
+  "games": 41,
+  "arms": [
+    "N",
+    "H",
+    "V",
+    "R"
+  ],
+  "new_worlds_in_stage_members": 103000,
+  "total_unique_member_new_worlds": 103000,
+  "seconds": 843.4209909160018,
+  "sources": {
+    "N": {
+      "data": "8fc3650634cb8090f1e07a3db9f2bb4ae0345d901a18584362e5df36118ec55b",
+      "generator": "d7a8b292330d73d66af5efd6e6fd3852fc2fda2f01dc1023b56f50245af52e14"
+    },
+    "H": {
+      "data": "8fc3650634cb8090f1e07a3db9f2bb4ae0345d901a18584362e5df36118ec55b",
+      "generator": "d7a8b292330d73d66af5efd6e6fd3852fc2fda2f01dc1023b56f50245af52e14"
+    },
+    "V": {
+      "data": "8fc3650634cb8090f1e07a3db9f2bb4ae0345d901a18584362e5df36118ec55b",
+      "generator": "d7a8b292330d73d66af5efd6e6fd3852fc2fda2f01dc1023b56f50245af52e14"
+    },
+    "R": {
+      "data": "8fc3650634cb8090f1e07a3db9f2bb4ae0345d901a18584362e5df36118ec55b",
+      "generator": "d7a8b292330d73d66af5efd6e6fd3852fc2fda2f01dc1023b56f50245af52e14"
+    }
+  }
+}

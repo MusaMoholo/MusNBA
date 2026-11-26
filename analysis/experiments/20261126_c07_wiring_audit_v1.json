@@ -1,0 +1,8 @@
+{
+  "games": 2,
+  "returned_worlds_checked": 10000,
+  "scalar_and_half_scores_checked": 3345,
+  "maximum_difference": 1.5933920849420247e-12,
+  "mass_and_source_mappings_checked": 6,
+  "all_conservation_passed": true
+}

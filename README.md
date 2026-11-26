@@ -105,6 +105,18 @@ Data preparation and fits are exclusive stages (`c06_data.py prepare`, `c06_mode
 Use `PYTHONUNBUFFERED=1` for live fit progress and the same thread caps. Reproduction supports provenance-checked `--resume` after
 retained technical faults; completed evidence refuses overwrite. C05's rejected minute law stays outside the C06 comparison.
 
+C07 learns coherent combinations of native and role-informed worlds on a fixed earlier-only date split:
+
+```sh
+.venv/bin/python -c "from analysis.c07_data import verify; verify()"
+.venv/bin/python analysis/c07_evaluate.py wiring --jobs 2
+.venv/bin/python analysis/c07_audit.py wiring
+.venv/bin/python analysis/c07_reproduce.py --output data/derived/experiments/c07_reproduction_v1
+```
+
+Use `c07_members.py prepare` once, then `train --jobs 10`, followed by `c07_model.py`. `short` evaluates the fixed twenty games;
+`final` fails closed without qualified survivors. Returned laws retain exact weights and 1,000 worlds. All research stages refuse overwrite.
+
 For a qualified production/input/generation release:
 
 ```sh

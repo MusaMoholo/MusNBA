@@ -6,7 +6,7 @@ No active jobs. Owner 8766 stays running; review 8767.
 
 ## C07 — preserve role skill through coherent forecast combination
 
-**Checkpoint1 ready for acceptance; no C07 fitting/generation.** Baseline smoke118/118, prior12tests and weighted-law faults pass. [Exact contract](analysis/c07_contract_v1.json) freezes recipes,41/159split,7comparison multiplicity and806000world ceiling. Question: can a learned combination of complete native and role-informed
+**50% deliverables validated: checkpoint1 pushed as a3b8803; checkpoint2 ready for commit/push.** Baseline smoke118/118, prior12tests and weighted-law faults pass. [Exact contract](analysis/c07_contract_v1.json) freezes recipes,41/159split,7comparison multiplicity and806000world ceiling. Question: can a learned combination of complete native and role-informed
 worlds retain C05's player-point gain while protecting high-usage players and joint team outcomes? This challenges the replacement
 architecture: a useful role model need not replace the incumbent uniformly. It is not another actor-head tweak, a C05 criterion
 relaxation, or a claim that C06 establishes an actor-model ceiling. Major forecast improvement remains an aim, not a promise.
@@ -84,6 +84,11 @@ ls -t analysis/experiments/ | head -15
 .venv/bin/python scripts/check_docs.py
 ```
 
-Then read C05/C06 completion/decision receipts and inventory reusable member worlds, model cutoffs and stored rotation inputs.
-Verify the 41/159 date split using metadata only. Freeze C07's exact contract and noise/weight/future-input fault tests before new
-fitting or generation. Next: commit/push checkpoint1, then generate the41training-member archive with10workers×one thread before fitting the gates. No active jobs.
+Training archive:41games,103000new worlds,843seconds. All3gates converge using only earlier games. Wiring generates8000new member
+worlds in263seconds; [independent audit](analysis/experiments/20261126_c07_wiring_audit_v1.json) checks10000returned worlds and3345scalar/half scores,
+exact masses/source mappings and conservation. [Training arithmetic](analysis/experiments/20261126_c07_training_math_v1.json) independently
+matches the fitted composite objective. Seven synthetic/fault tests pass. These are capability/mechanical results, not accuracy gains.
+Namespace `data/derived/experiments/c07_coherent_experts_v1`; no active jobs. Logs under private `logs/`.
+Next: inspect/stage, commit/push checkpoint2, then run `analysis/c07_evaluate.py short --jobs 10` with inner thread caps1 and log
+`/tmp/c07_short.log`. All3converged families plus fixed pool enter the frozen first20evaluation games. Run `analysis/c07_audit.py short`;
+only precommitted qualifiers may expand. Partial stages fail closed; retain faults before technical resumption.

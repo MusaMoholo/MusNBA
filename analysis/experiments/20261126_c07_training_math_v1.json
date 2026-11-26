@@ -1,0 +1,7 @@
+{
+  "training_games_audited": 1,
+  "contrasts": 3,
+  "maximum_composite_difference": 2.866595849582154e-13,
+  "direct_weighted_composite_matches_moment_objective": true,
+  "scope": "arithmetic verification on prior training members, not predictive accuracy"
+}

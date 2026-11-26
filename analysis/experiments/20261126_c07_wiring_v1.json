@@ -1,0 +1,16 @@
+{
+  "games": 2,
+  "training_converged_slate": [
+    "A",
+    "B",
+    "C"
+  ],
+  "sources": {
+    "analysis/c07_evaluate.py": "a41ceab08cd30108b0a7c427e07f9154d32e2cfa1efda86572727c5356d5ac05",
+    "analysis/c07_model.py": "182c31ed9a468a62960a616aef27503dd58e4f5922070b1845fac50a035c79aa",
+    "analysis/c07_score.py": "42b0660c7cb84fb17a79f890c51d5e2815687d86ec4fe0f95cc63da879a2657d",
+    "analysis/c07_core.py": "f52cc142b5b3b503ac35c7ae74f3094cb491b79006ab46a76496c7dccb186871",
+    "fit": "931bfe38051396b056af840a401feef121053168fed269e0031448eb3f91f89d"
+  },
+  "production_changed": false
+}
