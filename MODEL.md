@@ -155,50 +155,45 @@ all three models. [Reproduction](analysis/experiments/20261125_c04_reproduction_
 Old decoder tail errors and later substitutions/fouls limit translation. These are historical conditional development results;
 production is unchanged and historical receipts are not a backlog.
 
-C05's [comparison](analysis/c05_contract_v1.json) evaluates 200 known games and 4,292 player-games. The learned mixture reduces
-regulation-minute CRPS from 3.522 to 3.202 (9.1%; lower is better). Change −0.320 minutes has a 95% game interval of −0.383 to −0.257,
-with familywise game/week support. Coverage at 50/80/95% is 46.7/76.5/92.5%; critical-player 80% coverage is 80.3%, within frozen
-standalone limits. Other laws fail calibration. [Independent scoring](analysis/experiments/20261126_c05_decision_v1.json) agrees.
-
+C05's [comparison](analysis/c05_contract_v1.json) evaluates 200 known games and 4,292 player-games. Learned-mixture regulation-minute
+CRPS falls from 3.522 to 3.202 (9.1%; lower is better), with 95% game interval for change −0.383 to −0.257 minutes. Coverage at
+50/80/95% is 46.7/76.5/92.5%; critical-player 80% coverage is 80.3%, within frozen limits. Other laws fail calibration.
 The [20-game integration](analysis/experiments/20261126_c05_short_v1.json), 427 player-games, improves player-points CRPS from 2.942
-to 2.853 (3.0%; change −0.089 points, 95% game interval −0.141 to −0.031), versus decoder control 2.917 (2.2%). However, 34 critical
-player-games worsen 2.49% versus native and 2.09% versus control, exceeding the frozen 2% limit. Small subgroup support limits
-precision; expansion still stops. [Independent accounting](analysis/experiments/20261126_c05_short_independent_v1.json) verifies
-44,000 worlds. Returned minute coverage is 43.6/77.3/93.4%: standalone calibration does not automatically survive substitutions,
-fouls and overtime. [Fresh reproduction](analysis/experiments/20261126_c05_reproduction_v1.json) matches fitted files, 12,876,000
-minute values and four 1,000-world replays. C05 is a conditional development gain with a qualification block; production unchanged.
+to 2.853 (3.0%; change −0.089 points, 95% game interval −0.141 to −0.031). However, 34 critical player-games worsen 2.49% versus
+native and 2.09% versus decoder control, exceeding 2%. Expansion stops despite limited precision. Returned minute coverage differs
+from standalone calibration after substitutions/fouls/OT. [Independent accounting](analysis/experiments/20261126_c05_short_independent_v1.json)
+agrees; [fresh reproduction](analysis/experiments/20261126_c05_reproduction_v1.json) matches fits, minute draws and four world replays.
+C05 establishes conditional development skill with a qualification block; production unchanged.
 
 C06's [actor screen](analysis/experiments/20261126_c06_events_v1.json) covers 43,697 actions in 200 known games. Actor negative log
-probability (nats/action; lower is better) is 1.54055 native, 1.54017 pointwise trees, 1.56350 conditional logit, 1.54062 grouped trees,
-and 1.56977 usage baseline. Best change −0.00038 (95% game interval −0.00123 to +0.00046) fails the frozen −0.005 useful-gain threshold
-and familywise support. All stop. Each final fit uses 827,097 common historical actions; both trees hit 1,500 selection rounds,
-so nonlinear convergence remains unresolved. The converged linear law loses. Incumbent/common features and actor-time phase differ;
-no architecture ceiling or explanation of C05's critical-player harm is established.
+probability (nats/action; lower is better) is 1.54055 native, 1.54017 pointwise trees, 1.56350 conditional logit, 1.54062 grouped trees.
+Best change −0.00038 (95% game interval −0.00123 to +0.00046) fails the −0.005 useful-gain threshold and familywise support. All stop.
+Final fits use 827,097 common historical actions; both trees hit 1,500 selection rounds, leaving nonlinear convergence unresolved.
+The converged linear law loses. Incumbent/common features and actor-time phase differ; no architecture ceiling or explanation of
+C05's critical-player harm is established. [Source parity](analysis/experiments/20261126_c06_parity_v1.json) and
+[independent scoring](analysis/experiments/20261126_c06_decision_v1.json) agree. All three adapters generate legal wiring worlds.
+[Fresh reproduction](analysis/experiments/20261126_c06_reproduction_v1.json) matches fits, 655,455 probabilities and three world replays.
+Training-only selection recipes remain retained inputs. C06 is a completed negative search without qualified gain or release.
 
-[Source parity](analysis/experiments/20261126_c06_parity_v1.json) matches 19,226,680 feature values and all actor labels;
-[independent scoring](analysis/experiments/20261126_c06_decision_v1.json) agrees. All three adapters generate 8,000 checked wiring
-worlds, mechanical evidence only. [Fresh reproduction](analysis/experiments/20261126_c06_reproduction_v1.json) matches all final
-models, 655,455 probabilities and three 1,000-world replays. Training-only selection recipes are retained inputs. C06 is a completed
-negative search with no qualified forecast gain or release.
+C07's [frozen comparison](analysis/c07_contract_v1.json) fits three coherent expert selectors on 41 earlier games. All converge;
+player selection fails the fixed 20-game screen. The [159-game comparison](analysis/experiments/20261126_c07_final_v1.json),
+3,416 player-games, reduces player-points CRPS from 3.207 native to 3.129 team selection (2.43%), 3.131 whole-game (2.37%) and 3.146
+fixed 50/50 pool (1.90%). Lower is better. Team-selector change −0.0779 points has 95% game interval −0.1035 to −0.0518; seven-comparison
+familywise game/week intervals also exclude zero. Both simulation halves improve. High-usage points improve 3.51% on 234 player-games
+across 131 games; the upper harm bound is +0.36%, below 2%. This broader panel does not reverse C05's stopped decision.
 
-C07's [frozen comparison](analysis/c07_contract_v1.json) fits three coherent expert selectors on41 earlier games. All converge;
-player-level selection fails the fixed20screen. The [159-game comparison](analysis/experiments/20261126_c07_final_v1.json),
-3,416 player-games, reduces player-points CRPS from3.207 native to3.129 team selection (2.43%),3.131 whole-game (2.37%) and3.146
-fixed50/50pool (1.90%). Lower is better. Team-selector change−0.0779points has95% game interval−0.1035 to−0.0518; seven-comparison
-familywise game/week intervals also exclude zero. Both simulation halves improve. High-usage points improve3.51% on234player-games
-across131games; the upper harm bound is+0.36%, below2%. This broader panel does not reverse C05's stopped decision.
-
-**No C07 candidate qualifies; production unchanged.** Team selection worsens team-points CRPS by0.0464points (95%game interval
-+0.0033 to+0.0891). Its familywise upper bound0.1036 exceeds the0.1harm margin; game-total upper0.2142 exceeds0.15. Its80% total
-coverage is76.1% versus76.7% native; the deterioration upper bound3.77percentage points exceeds3. Whole-game selection also fails
-team/total/calibration safety. The fixed pool clears score safeguards but not margin-coverage precision: upper deterioration5.16points.
+**No C07 candidate qualifies; production unchanged.** Team selection worsens team-points CRPS by 0.0464 points (95% game interval
++0.0033 to +0.0891). Its familywise upper bound 0.1036 exceeds the 0.1 harm margin; game-total upper 0.2142 exceeds 0.15. Its 80% total
+coverage is 76.1% versus 76.7% native; the deterioration upper bound 3.77 percentage points exceeds 3. Whole-game selection also fails
+team/total/calibration safety. The fixed pool clears score safeguards but not margin-coverage precision: upper deterioration 5.16 points.
 These are failed safety demonstrations, not proof that every permitted harm is exceeded. Learned gains over the pool lack required
-familywise support. Scores concern known historical participants and explored games, not fresh confirmation or pre-tip availability.
+familywise support. Known historical participants and explored games cannot establish fresh confirmation or pre-tip availability.
 
-Returned laws use1,000exactly weighted legal worlds each, with fixed half masses and source mappings. Independent training/scoring
-arithmetic and [final audit](analysis/experiments/20261126_c07_final_audit_v1.json) agree on656000returned worlds;51source files rehash exactly.
-Fresh fit/world reproduction remains required before closure. Production
-remains engine-v1.3-r3/report-bands-v1/team-pathway-v1.
+[Independent accounting](analysis/experiments/20261126_c07_final_audit_v1.json) checks 656,000 returned world records, 219,402 scalar/half
+scores, exact mass/conservation and source mappings. Every returned law has 1,000 worlds. All 51 retained source files rehash exactly.
+[Fresh reproduction](analysis/experiments/20261126_c07_reproduction_v1.json) matches all three fits, 438 player-gate probabilities, all
+returned distributions and four single-worker world replays. Total new event worlds: 604,000 against the 806,000 ceiling. C07 delivers
+coherent expert selection and weighted validation, with conditional player skill but no qualified product-wide gain or release.
 
 Older B1 role/shot/rotation diagnostics and B2 season comparisons remain immutable evidence under `analysis/experiments/`.
 They impose no executable work. The inherited app/runtime remains operational; selected replays illustrate mechanics, not probabilities.

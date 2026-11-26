@@ -1,0 +1,175 @@
+{
+  "kind": "C07 complete: conditional player gains, no qualified product-wide forecast gain",
+  "chunk": "C07",
+  "complete": true,
+  "forecast_effect": {
+    "known_development_games": 159,
+    "player_games": 3416,
+    "native_pts_crps": 3.2068562833723546,
+    "candidate_pts_crps": {
+      "A": 3.1308508791033915,
+      "B": 3.1289756361462344,
+      "pool": 3.14580206908664
+    },
+    "units": "CRPS in points, lower is better; evaluates the full distribution, not a percentage change in actual scores",
+    "best_relative_change_native": -0.024285668063746223,
+    "best_change_uncertainty": {
+      "games": 159,
+      "rows": 3416,
+      "supported_for_overall_ranking": true,
+      "change": -0.0778806472261199,
+      "ci95_game": [
+        -0.10347323304365427,
+        -0.0518058113938966
+      ],
+      "ci95_calendar_week": [
+        -0.10642845676658176,
+        -0.048711330352157654
+      ],
+      "calendar_blocks": 13,
+      "familywise_game": [
+        -0.11277484526343079,
+        -0.0419994492255179
+      ],
+      "familywise_week": [
+        -0.1178803367091073,
+        -0.038655253582672126
+      ],
+      "families_counted": 7,
+      "equal_game_change": -0.07714424597329497
+    },
+    "critical_player_pts": {
+      "games": 131,
+      "rows": 234,
+      "supported_for_overall_ranking": true,
+      "change": -0.15357758475218777,
+      "ci95_game": [
+        -0.2796315766812205,
+        -0.028919352126636808
+      ],
+      "ci95_calendar_week": [
+        -0.24547481534354226,
+        -0.060271497478257115
+      ],
+      "calendar_blocks": 13,
+      "familywise_game": [
+        -0.32584512911324276,
+        0.015788339730354185
+      ],
+      "familywise_week": [
+        -0.2748027909567552,
+        -0.026210918447483925
+      ],
+      "families_counted": 7,
+      "relative_change": -0.03510004731020235,
+      "relative_upper": 0.0036084137693608636,
+      "context_support": true
+    },
+    "qualified_models": [],
+    "failed_checks": {
+      "B": [
+        "team/points",
+        "game/total",
+        "coverage80",
+        "learned_pool_gain"
+      ],
+      "A": [
+        "team/points",
+        "game/total",
+        "coverage80",
+        "learned_pool_gain"
+      ],
+      "pool": [
+        "coverage80"
+      ]
+    },
+    "overall_conclusion": "Conditional player-points gains survive both simulation halves and multiplicity-aware game/week uncertainty, but no candidate demonstrates all practical team/calibration safety requirements. Learned benefit over fixed pool lacks required familywise support. No live product prediction improvement released."
+  },
+  "model_release": {
+    "production": "engine-v1.3-r3 / report-bands-v1 / team-pathway-v1",
+    "production_changed": false,
+    "published_assets": false,
+    "manual_import_required": false
+  },
+  "accepted_deliverables_percent": 100,
+  "checkpoint_weights": [
+    15,
+    35,
+    35,
+    15
+  ],
+  "preceding_checkpoint_commits": [
+    "a3b8803",
+    "e0f6ac0",
+    "c42eeaf"
+  ],
+  "capabilities_delivered": [
+    "Three runnable earlier-only coherent expert selectors: whole-game, team-level and player-level; strong fixed-pool control",
+    "Chronological immutable member archive; native/both-role/home-role/away-role/player-gated legal possession worlds",
+    "Exact weighted final player/team proper scoring with common 1000-world budgets, half mass and source mappings",
+    "Fixed20 shortlist and paired159 decision with seven-comparison game/week uncertainty, critical-player, team, calibration and joint safeguards",
+    "Fresh frozen-recipe gate fits, exact returned weights/arrays and four independent single-worker member replays"
+  ],
+  "validation": {
+    "baseline_smoke": "118/118 before C07 changes",
+    "prior_c05_c06_tests": 12,
+    "c07_targeted_and_fault_tests": 8,
+    "final_accounting": {
+      "games": 159,
+      "returned_worlds_checked": 656000,
+      "scalar_and_half_scores_checked": 219402,
+      "maximum_difference": 3.255173908200959e-12,
+      "mass_and_source_mappings_checked": 477,
+      "all_conservation_passed": true
+    },
+    "retained_source_files_verified": 51,
+    "fresh_gate_file_exact": true,
+    "fresh_player_gate_probabilities_exact": 438,
+    "fresh_returned_world_records_exact": 656000,
+    "replay_worlds": 4000,
+    "all_four_single_worker_replays_exact": true,
+    "original_new_worlds": 600000,
+    "total_new_worlds": 604000,
+    "world_ceiling": 806000,
+    "independent_decision_all_checks_match": true,
+    "meaningful_faults": "source mutation, changed model/member hashes, future fit/features, invalid weights, world identity and empty shortlist; actual entrypoints reject faults",
+    "docs_checks": "Required before closing commit; enforced by local commit hook"
+  },
+  "evidence_scope": {
+    "population": "Actual historical participants; all games previously explored development, not pre-tip operational availability or independent confirmation",
+    "gate_train_games": 41,
+    "gate_fit_through": "2026-01-21",
+    "evaluation_from": "2026-01-22",
+    "member_fit_through": "2025-12-31",
+    "private_namespaces": [
+      "data/derived/experiments/c07_coherent_experts_v1",
+      "data/derived/experiments/c07_reproduction_v1"
+    ],
+    "protected_outcomes_opened": false,
+    "new_provider_used": false,
+    "retained_inputs": "Immutable training member forecasts and fixed C05 member models/native captures; gates freshly fit and new member worlds regenerated. No fresh-test claim.",
+    "attribution_limits": "Selectors differ in level, representation and loss; whole-game/team mixtures reuse coherent members, player selection regenerates with the common engine."
+  },
+  "bounded_conclusion": {
+    "ruled_out": "These frozen selectors and fixed pool do not qualify as safe product-wide improvements on this development panel. C05 critical-player harm does not recur in the expanded C07 averages; old C05 decision remains unchanged.",
+    "unresolved": "Team-score/calibration safety precision and a useful advantage for learned gating over simple pooling. No architecture ceiling or general impossibility claim.",
+    "conditional_discriminator": "If coherent selection is revisited, prospectively separate fixed-pool calibration from learned-selection value on a new declared development population, with unchanged old decisions and a stronger team/dependence hypothesis.",
+    "next_bottleneck": "Challenge actual-participant conditioning through dated participation/full-roster minutes. First quantify supported cohort/absence error and supervised learnability; no claim this explains or repairs C07 conditional losses."
+  },
+  "next_chunk": "C08 at 0%; concrete charter in HANDOFF, no implementation/fits/generation",
+  "evidence_sha256": {
+    "20261126_c07_data_v1.json": "7a0d8e75a6e90effd5477e1154e4fa8686dc3b1555ace41ce0452fb2275b0da5",
+    "20261126_c07_final_audit_v1.json": "45780bd9a9f335286ef49c9da43b2ad7fdfd801e993af1e5986162e7efcb85ed",
+    "20261126_c07_final_v1.json": "5442e4938fe4f1b8bc32ed60bd7c0107c3bd527a5ceab14267d5232b706fa8fd",
+    "20261126_c07_fits_v1.json": "76f3d68af262d1043d759143d84fc9045bbb926ac4badb039acf989041bf794c",
+    "20261126_c07_reproduction_v1.json": "095a5595870a1ad6c1430a4afeab2584be119ddb745af50a724e2f37a023607f",
+    "20261126_c07_short_audit_v1.json": "91bcb9fc21953711af4270f9f97d9b5b2629c00a34b248b415501b413730a7f1",
+    "20261126_c07_short_v1.json": "3a8fc34d037450335cb0cbdcb29eadcaad18f7e991ca7c36c12b52f1c7470116",
+    "20261126_c07_source_bytes_v1.json": "2aa4fe6ecbdac099df51cb0e148918316b6056fe1ea4c1c997714789ed165819",
+    "20261126_c07_train_members_v1.json": "28b8b2957591085a1f4fad1563dc72f95c7b4b1076e028ddaa46a06f07fbf842",
+    "20261126_c07_training_math_v1.json": "6246deb07321f9ef5f19e2e943c6fa24e4240221e1d42f18ee0224b0729ceaa2",
+    "20261126_c07_wiring_audit_v1.json": "7525d90de57af58549239c759df361f6262e4c6f25cf22aef5c9c77990dbfb8c",
+    "20261126_c07_wiring_members_v1.json": "7e47189b2b7ceed9153dc452dc0a23bd91224f30ed7a0d4e4431f1db0c8ee996",
+    "20261126_c07_wiring_v1.json": "1570b9ed58d6eb88785301c270f4e8b250e3347ab856a87fb39bb769e3d2efb1"
+  }
+}

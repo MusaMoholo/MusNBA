@@ -1,90 +1,103 @@
-# Handoff — C07 final decision; reproduction pending
+# Handoff — C07 complete; C08 at 0%
 
-Updated 26 November 2026. MODEL owns numerical evidence/limits, PLAN strategy, README commands, AGENTS workflow.
-Production remains engine-v1.3-r3/report-bands-v1/team-pathway-v1; no publication/import. Owner8766 stays running; review8767.
+Updated 26 November 2026. [MODEL](MODEL.md) owns forecast results/limits, [PLAN](PLAN.md) strategy,
+[README](README.md) commands and [AGENTS](AGENTS.md) workflow. [C07 completion](analysis/experiments/20261126_c07_completion_v1.json) records 2.43% lower player-points error on 159 known games,
+but no candidate clears every team/calibration safeguard. C07 is complete; all four checkpoints accepted, production unchanged.
+Production remains engine-v1.3-r3/report-bands-v1/team-pathway-v1. No active jobs or new app import. Owner port 8766 stays running; review on 8767.
 
-## C07 — preserve role skill through coherent forecast combination
+## C08 — dated participation and whole-roster minute forecasts
 
-**85% deliverables accepted, checkpoint3 ready to commit; earlier pushes a3b8803/e0f6ac0.** Baseline smoke118/118 and targeted/fault tests pass. [Exact contract](analysis/c07_contract_v1.json) freezes recipes,41/159split,7comparison multiplicity and806000world ceiling. Question: can a learned combination of complete native and role-informed
-worlds retain C05's player-point gain while protecting high-usage players and joint team outcomes? A useful role model need not replace the incumbent uniformly. This does not relax C05 criteria or establish an actor-model ceiling.
+**0% accepted; no C08 implementation, fits or generation.** Question: can dated participation forecasts improve unconditional
+player minutes/points and joint team forecasts without using the realised participant list? C07 evaluates known historical
+participants; that cannot certify pre-tip availability. Current report-band probabilities are uncalibrated; the retained
+[coverage gate](analysis/experiments/20261122_a1_s07_dated_cohort_gate.json) found zero dated development report origins. This source/population
+challenge addresses a product gap; it does not explain away C07's result or relax any failed rule.
 
-### Committed capability and credible alternatives
+The chain to test is explicit: measured absence/roster error → predictable signal in prior participation/role history → calibrated
+joint participation/minute laws → better returned player/team distributions. Establish the error and learnability on a plain
+supervised participation task before expensive worlds. Neither oracle-minute headroom nor a new dataset proves forecast improvement.
 
-Deliver three runnable coherent expert-combination models, a chronological member-forecast archive, exact weighted player/team
-proper scoring, and independent fit/weight/world reproduction. Every generated world must still arise from legal possession events.
-Reuse C05's fixed learned role law, exact decoder, source guards, native captures and C06's matched scoring/accounting. Hold all
-possession heads fixed. No UI/provider/availability work, new workbench phase, full-game shot/score targets, offsets or spread inflation.
+### Committed capability and three MVPs
 
-Compare distinct selection levels, with exact recipes frozen at checkpoint 1:
+Deliver a reusable dated cohort/participation dataset with explicit source support, three runnable joint participation/minute laws,
+legal event-world adapters, final player/team proper scoring and independent fit/draw/world reproduction. Add a source-timed capture
+adapter using the existing ledger API; report real certified entries separately from synthetic tests. No standalone workbench,
+UI, provider expansion, event-head refit, aggregate score/shot targets or unsupported spread change.
 
-- **A: whole-game stacking.** Learn a global probability mixture of complete native and both-team role-informed worlds using prior
-  joint player/team proper scores. Retain a fixed 50/50 pool as a strong simple baseline; learning must earn its complexity.
-- **B: team expert selection.** Learn dated team-context probabilities for using native or learned-role rotations before simulating
-  the joint game. Include home-only/away-only role members: team interactions must emerge inside the shared event engine.
-- **C: player role selection.** Learn prior-role/reliability gates between native and learned minute draws, then enforce legal joint
-  time and generate complete event worlds. Score the law after projection, scheduling, substitutions, fouls and overtime.
+Reuse existing participation/cohort helpers in `scripts/a1_availability_cohort.py`, baseline checks in
+`scripts/a1_availability_baseline.py`, C04/C05 causal history/minute machinery, C07 weighted scoring/accounting and C01 ledger.
+Historical receipts are evidence, not operating instructions; do not run their broad default folds or current-season loaders.
 
-All see common eligible history, inputs and training truths. The contract freezes losses, capacity, selection allowances and
-resource differences. Selector levels, losses and representations differ, limiting pure causal attribution.
+Compare distinct working packages, with exact features/capacity and numerical rules frozen at checkpoint 1:
 
-### Chronology, decisive contrast and acceptance
+- **A: shrunk participation-state model.** Learn player/run-length participation probabilities from prior explicit play/DNP labels,
+  then use dated conditional minute allocation with uncertainty.
+- **B: nonlinear supervised hurdle model.** Learn participation from common dated role/absence history, then conditional minutes. Train all
+  supported rows, use training-only chronological selection and record convergence.
+- **C: joint team analogue law.** Learn from prior whole-team participation/role patterns, retaining roster dependence rather than
+  multiplying marginal probabilities. Map only through forecasted roles and legal eligible-player constraints.
 
-- Existing 2023–2026 sources and B1's exposed 200 games only; no protected/reserved outcomes, fresh-test claim or new provider.
-  Members use fits/calibration through 31 December 2025. Learn combination parameters only from the **41 B1 games dated through
-  21 January 2026**; evaluate the fixed **159 games from 22 January onward**. Split by date, never reference-list order; same-day
-  outcomes cannot enter features or fitting. All 200 were previously explored; this is causal development, not confirmation.
-- Preserve original truth/gap flags and actual-participant conditioning. No operational availability claim. Every feature, fit,
-  normalisation and gate precedes its evaluated origin. Fixed model-member generation may be reused after source/hash verification;
-  earlier exposed C05 scores are not new evidence. Generating members for C07 does not reopen C05's failed decision.
-- Decisive contrast: whole-game versus team versus player use of the same predictable role signal and strong incumbent. Measure
-  high-usage players, bench players and team dependence together. Learned weights must come from earlier games, not a blend chosen
-  to make the known development panel pass.
-- Before new forecasts/outcomes, freeze numerical primary benefit, calibration/joint harms, critical support, multiplicity over all
-  initial candidates/baselines, precision, shortlist and stopping. Target at least **1% player-point proper-score improvement versus
-  native**, both simulation halves, whole-game/week uncertainty, and no practical critical-player/team harm. Start from C05's
-  numerical harm limits; freeze the final exact policy prospectively. A simple baseline win counts honestly; it cannot prove learned
-  gating helps. No automatic production promotion or changed meaning for C05/C06 results.
-- Reject cheaply using training-only credibility and first two legal wiring games, then a fixed first 20 evaluation games. Only
-  at most two qualified finalists expand to all 159; retain native and simple-pool controls. Validate the final returned weighted
-  distribution with exact mass, common support and independent arithmetic. Extra Monte Carlo draws cannot masquerade as model skill.
+All receive the same supported historical information and training examples. Hold the dated conditional minute law and
+event/performance heads common so participation effects remain visible. C07 research gains are not automatically operational inputs. Retain strong
+no-report/native-fallback and simple participation baselines. Maximum two training-only configurations/family, no replacement
+candidate or development-driven repair. Deliver every mechanically valid two-game adapter, even after a component loss.
 
-### Four sequential checkpoints
+### Truth, timing and exposure boundaries
+
+- Existing ESPN/sportsdataverse/NBA Stats only; historical seasons 2023–2026 and the exposed B1 game IDs for development. No protected
+  2026–27 outcomes, generic current-season outcome reader or fresh-test claim. Use at most 159 known B1 evaluation games; freeze exact training/selection dates and
+  common support before fitting; every feature, normalisation, state and fit precedes its forecast origin.
+- Explicit DNP evidence establishes zero participation/counts, including source blanks covered by that flag. Positive reconstructed
+  seconds establish play only after reconciliation. Missing/contradictory records stay unknown; never convert absent rows to DNP.
+  Reconcile IDs, date/team assignments, game minutes, stat identities, duplicates and source conflicts independently.
+- A prior-box cohort is a dated diagnostic, not a verified official pre-tip roster. Quantify stale members, additions, missed actual
+  participants and unknown-label forecast mass. Preserve omitted positive players and source gaps in accounting; no convenient
+  target-based exclusions or roster-oracle claim. Source eligibility must be fixed before candidate forecasts.
+- Injury/report features require original publication/retrieval evidence before tip. A source event date alone is insufficient.
+  If historical reports lack timing, compare explicitly labelled no-report laws and keep reports out of every arm. The prospective
+  capture adapter must fail closed on late/unknown times; do not backfill historical forecasts as originals or claim operational
+  validation from synthetic captures. Real capture/outcome support may require later games and remains a separate reported limit.
+- Score participation probabilities after the legal available-roster sampler, not only standalone classifier outputs. Every world
+  needs five distinct eligible players, legal fouls/clocks and 240 team regulation minutes plus overtime. Conditioning on legal
+  rosters must retain exact probability semantics. Never splice player boxes or invent replacement players.
+
+### Decision and four checkpoints
+
+Before outcomes, freeze useful participation Brier/log-loss benefit, unconditional MIN/PTS proper-score gain, calibration, critical
+players, roster/label support limits, team/win harms, multiplicity, precision and stopping. Begin from C07's practical player/team
+harm margins, but freeze the policy for this broader population prospectively; old decisions remain unchanged. Unknown support
+cannot count as safety. Compare all actual-player and explicit-zero outcomes on common keys, plus separate roster-coverage failures.
+Only at most two qualified paths expand from fixed 20 games to the frozen final panel. No automatic production promotion.
 
 |Checkpoint|Weight|Acceptance|
 |---|---:|---|
-|1. Freeze coherent comparison|15%|Reuse/source/split inventory, exact recipes/losses/gates/budget, meaningful future-label/weight/illegal-law faults; commit/push before fits/worlds.|
-|2. Deliver competing MVPs|35%|Three working learned models, dated training members, training-only credibility, exact weighted scoring and all wiring adapters; freeze shortlist.|
-|3. End-to-end decision|35%|Qualified paired20/conditional159 player/team/critical/uncertainty comparison, otherwise independently audited bounded stop.|
-|4. Reproduce and deliver|15%|Fresh fits/weights/worker replay and independent decision; separate capability/component/game/release status; next concrete 0% charter.|
+|1. Source population and freeze|15%|Reuse inventory, immutable source/label/cohort/timing audit, measured baseline error, exact recipes/splits/gates/budget; meaningful future-label/DNP/cohort faults; commit/push before fits.|
+|2. Working joint participation laws|35%|All three full-history models, training-only credibility, final constrained participation/minute scoring and all first two legal adapters; freeze shortlist.|
+|3. End-to-end decision|35%|Qualified paired 20-game/conditional final player/team/critical/coverage comparison, otherwise independently audited bounded stop; real capture counts separate.|
+|4. Reproduce and deliver|15%|Fresh fits/probabilities/worker replay, independent source/decision accounting, separate capability/forecast/release conclusions and next concrete 0% charter.|
 
-Each checkpoint ends with relevant tests/accounting, live docs, staged inspection, commit and push before dependent work. Progress
-15/50/85/100% counts accepted deliverables. Missing models/reproduction leaves the chunk unfinished. If all lose, report a completed
-negative search, retain the incumbent, and distinguish insufficient calibration support from integration/dependence failure.
+Every checkpoint: relevant tests/accounting, lean live docs, staged inspection, commit and push before dependent work. Progress
+15/50/85/100% measures accepted deliverables. Missing promised models/adapters/reproduction leaves C08 unfinished. If source support
+or forecast gains fail, retain that conclusion and distinguish membership ambiguity from participation prediction and allocation
+failure. If no admissible cohort can support the promised models, checkpoint the source blocker; do not declare capability delivery.
+Engineering alone is not major product progress. Release needs separately frozen evidence and the full online nightly.
 
 ### Compute and exact first actions
 
-Ten heavy threads total; fits up to10 then workers10×1, BLAS/Arrow1. Maximum **806000 new event worlds**, including training members,
-all candidate/configuration attempts, wiring, finalists and independent repeats. Reuse audited native/C05 worlds honestly; no budget
-extension. One chronological gate fit per frozen configuration and one independent final-recipe repeat. Benchmark runtime; no estimate
-is inherited. Private namespace `data/derived/experiments/c07_coherent_experts_v1`; aggregate receipts under `analysis/experiments/`.
-No production/input/asset change or full nightly is authorised by this charter alone.
+Ten heavy threads total; fits up to 10 then workers 10×1, BLAS/Arrow 1. At most 606,000 new event worlds including controls, all attempts,
+wiring, finalists and independent replays. One supported chronological data build, frozen family fits and one independent final
+repeat. Reuse audited artifacts honestly; no budget extension. Private namespace `data/derived/experiments/c08_dated_participation_v1`;
+aggregate receipts under `analysis/experiments/`. No production/input/asset changes or full nightly authorised by this charter alone.
 
 ```sh
 git status --short --branch
 git --no-pager log --oneline -5
 .venv/bin/python scripts/smoke.py
 ls -t analysis/experiments/ | head -15
-.venv/bin/python -m unittest discover -s tests -p 'test_c05_*.py'
-.venv/bin/python -m unittest discover -s tests -p 'test_c06_*.py'
+.venv/bin/python -m unittest discover -s tests -p 'test_c07_*.py'
 .venv/bin/python scripts/check_docs.py
 ```
 
-All gates converge. The fixed20screen qualifies B,A and pool; C fails critical-player threes. The fixed159comparison now finishes
-with **no qualified candidate**, despite player-point gains. MODEL owns effect sizes/uncertainty. No criteria change or release.
-[Final audit](analysis/experiments/20261126_c07_final_audit_v1.json) agrees:656000returned worlds,219402scalar/half checks,477source mappings.
-Audit session11734 and generation85761 exited; log `/tmp/c07_final_audit.log`.
-Eight targeted/fault tests pass;51retained source files rehash exactly. Namespace `data/derived/experiments/c07_coherent_experts_v1`.
-Next: inspect/stage and commit/push checkpoint3. Only then run `analysis/c07_reproduce.py`
-with inner thread caps1, fresh gate fits and four single-worker member replays; log `/tmp/c07_reproduce.log`, fresh output
-`data/derived/experiments/c07_reproduction_v1`. Preserve faults before technical resumption. Then close C07 and replace this charter
-with C08 at0%: dated participation/full-roster forecasts, with source limits and actual-participant conditioning explicit.
+Read C07 completion/decision evidence, inventory the reusable label/cohort/capture APIs and inspect source schemas/timing metadata.
+Do not open protected outcomes. Freeze the C08 contract, support policy and faults before new fitting or simulation. C08 is ready
+for execution; it has not begun.

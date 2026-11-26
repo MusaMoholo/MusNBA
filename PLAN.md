@@ -22,7 +22,7 @@ C04 recovers dated minute skill; C05 carries calibrated standalone minute skill 
 games but fails the high-usage-player harm limit. Neither earns release. MODEL owns all numbers and limits.
 C06's three full-history conditional actor laws fail useful-gain requirements; two nonlinear fits remain budget-bound. The actor
 replacement hypothesis has not explained C05's high-usage harm. Further actor work needs convergence/information parity evidence,
-not another isolated head recipe. C07 coherent selection improves overall player points on159known games and clears critical-player harm limits, but no candidate
+not another isolated head recipe. C07 coherent selection improves overall player points on 159 known games and clears critical-player harm limits, but no candidate
 clears all team/calibration safety requirements; learned selection lacks decisive benefit over a simple pool. Production stays fixed.
 C08 challenges the actual-participant input boundary through dated participation/full-roster forecasts. First measure supported
 absence/cohort error and supervised learnability; do not presume it explains C07 conditional calibration or rescues its decision.
@@ -64,14 +64,7 @@ until the game engine earns more skill. Richer spatial/in-game prediction follow
 
 ## How chunks make progress
 
-Each modelling chunk is a bounded comparison of distinct MVPs for one bottleneck, followed by finalist delivery. Freeze the candidate
-slate, practical promise/harm limits, selection budget, multiplicity and stopping before outcomes. Concentrate effort after evidence
-of promise; build only shared infrastructure necessary for the experiment. Substantial reusable deliverables remain mandatory.
-
-Report engineering acceptance, scientific conclusions and forecast gains separately. More green checks or a rejected model do not
-prove major product progress. When all approaches lose, state that result and revisit the bottleneck/data/representation before
-another chunk; do not fund another isolated recipe or expand the slate after seeing losses. Accuracy gains remain uncertain.
-
-Each of 3–5 checkpoints ends with validation, lean docs, commit and push. Report skill separately from capability completion.
-Keep one main question in progress; freeze candidate evidence rules before outcomes. Change the next charter, not a failed result’s meaning. If two consecutive modelling chunks deliver no meaningful end-to-end gain, prioritise an
-architecture/data-ceiling challenge over a third local tweak. Production qualification remains independent of research completion.
+AGENTS owns checkpoint, validation and delivery rules. Select one measured bottleneck, compare distinct credible models and report
+capability separately from forecast gains. After two chunks without meaningful end-to-end gains, prioritise a data/architecture
+challenge over another local tweak. A failed decision stays failed; the next charter changes. Production qualification remains
+independent of research completion.

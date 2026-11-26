@@ -72,50 +72,21 @@ as inputs. Completed experiment stages refuse overwrite. The legacy-test invento
 [the capture API](analysis/c01_ledger.py). Unknown/late evidence fails closed. Historical snapshots are never backfilled as originals.
 The separate browser/release commands above cover UI/delivery; research commands do not publish or promote a model.
 
-Research stages are isolated from serving/release. C02/C03 deliver possession learners; C04 delivers full-history joint-minute
-forecasters. Their `analysis/c02_reproduce.py`, `analysis/c03_reproduce.py`, and `analysis/c04_reproduce.py` each provide `source`
-and `run --output <new-private-directory>`. Use the same thread caps, immutable source guards and recorded contracts.
-Completed stages refuse overwrite; expansion fails closed without eligible candidates. Private fits/draws/worlds remain ignored.
-Aggregate receipts in MODEL record decisions and exact namespaces; old comparisons remain development evidence.
+Research is isolated from serving/release. Completed stages refuse overwrite; expansion requires the frozen survivors. Private
+fits, draws and worlds remain ignored. MODEL links numerical decisions; contracts/receipts retain exact recipes and namespaces.
 
-C05 compares three chronological uncertainty laws around common dated role means and preserves targets through legal rotations:
+|Completed research|Fresh reproduction command after `.venv/bin/python`|
+|---|---|
+|C02/C03 possession learners; C04 joint minutes|`analysis/c02_reproduce.py`, `analysis/c03_reproduce.py`, `analysis/c04_reproduce.py`: each has `source` and `run --output <new-private-directory>`|
+|C05 minute uncertainty and exact rotations|`analysis/c05_reproduce.py --output data/derived/experiments/c05_reproduction_v1`|
+|C06 full-history actor choice|`analysis/c06_reproduce.py --output data/derived/experiments/c06_reproduction_v1`|
+|C07 coherent expert selection|`analysis/c07_reproduce.py --output data/derived/experiments/c07_reproduction_v1`|
 
-```sh
-.venv/bin/python analysis/c05_models.py
-.venv/bin/python analysis/c05_screen.py
-.venv/bin/python analysis/c05_rollout.py wiring --jobs 2
-.venv/bin/python analysis/c05_rollout.py short --jobs 10
-.venv/bin/python analysis/c05_reproduce.py --output data/derived/experiments/c05_reproduction_v1
-```
-
-The minute screen gates `short`; the paired20 decision gates `final`. Fits use the audited C04 row cache. Every calibration
-prediction precedes its target origin. Source hashes gate resume; inspect and retain partial failures before a technical rerun.
-These commands neither promote a model nor publish/import app data. MODEL owns numerical results and limitations.
-
-C06 tests full-history on-court actor choice with fixed native minute inputs:
-
-```sh
-.venv/bin/python analysis/c06_data.py verify
-.venv/bin/python analysis/c06_evaluate.py
-.venv/bin/python analysis/c06_rollout.py wiring --jobs 2
-.venv/bin/python analysis/c06_reproduce.py --output data/derived/experiments/c06_reproduction_v1
-```
-
-Data preparation and fits are exclusive stages (`c06_data.py prepare`, `c06_model.py all`). `short`/`final` require frozen survivors.
-Use `PYTHONUNBUFFERED=1` for live fit progress and the same thread caps. Reproduction supports provenance-checked `--resume` after
-retained technical faults; completed evidence refuses overwrite. C05's rejected minute law stays outside the C06 comparison.
-
-C07 learns coherent combinations of native and role-informed worlds on a fixed earlier-only date split:
-
-```sh
-.venv/bin/python -c "from analysis.c07_data import verify; verify()"
-.venv/bin/python analysis/c07_evaluate.py wiring --jobs 2
-.venv/bin/python analysis/c07_audit.py wiring
-.venv/bin/python analysis/c07_reproduce.py --output data/derived/experiments/c07_reproduction_v1
-```
-
-Use `c07_members.py prepare` once, then `train --jobs 10`, followed by `c07_model.py`. `short` evaluates the fixed twenty games;
-`final` fails closed without qualified survivors. Returned laws retain exact weights and 1,000 worlds. All research stages refuse overwrite.
+Use the thread caps above and a fresh output directory. Source hashes guard retained inputs; preserve partial faults before technical
+resumption. C06 supports provenance-checked `--resume`; other stages need their recorded exclusive namespace. Reproduction does not
+make explored games fresh evidence or promote a model. C07 checks weighted player/team distributions, fresh gates and four world
+replays. Its source check is `.venv/bin/python -c "from analysis.c07_data import verify; verify()"`; independent final accounting is
+`analysis/c07_audit.py final` (completed evidence refuses overwrite). C08's executable first actions and boundaries live only in HANDOFF.
 
 For a qualified production/input/generation release:
 

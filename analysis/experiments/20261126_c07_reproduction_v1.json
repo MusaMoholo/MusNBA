@@ -1,0 +1,141 @@
+{
+  "fresh_gate_model_file_exact": true,
+  "training_gates": {
+    "A": {
+      "converged": true,
+      "role_mass": 0.9850053343650215,
+      "training_composite": 1.0412652601366392,
+      "native_composite": 1.0598829552394262,
+      "role_composite": 1.0412695745850453,
+      "pool_composite": 1.0457790541222909
+    },
+    "B": {
+      "converged": true,
+      "iterations": 11,
+      "gradient_inf": 4.440892098527e-08,
+      "training_regularised_composite": 1.0409919962200433,
+      "initial_composite": 1.0446905804377447,
+      "curve": [
+        1.0443147516475613,
+        1.042742912945263,
+        1.0417988986118314,
+        1.0412692566610031,
+        1.0410031007736795,
+        1.040997529155559,
+        1.0409924580645713,
+        1.040992066009807,
+        1.0409919975297715,
+        1.040991996235733,
+        1.0409919962200433
+      ]
+    },
+    "C": {
+      "converged": true,
+      "iterations": 6,
+      "gradient_inf": 1.2103972046872968e-08,
+      "training_bce_regularised": 0.6812955718039758,
+      "constant_bce": 0.6830948955874232,
+      "players": 876
+    }
+  },
+  "returned_world_weights_and_arrays_exact": 656000,
+  "player_gate_probabilities_exact": 438,
+  "replays": {
+    "H": {
+      "all_arrays_exact": true,
+      "new_worlds": 1000,
+      "info": {
+        "scheduled_target_error_max": 0.0,
+        "selected_role_sides": [
+          0
+        ],
+        "stored_schedule_error": 0.056666644414264056
+      }
+    },
+    "V": {
+      "all_arrays_exact": true,
+      "new_worlds": 1000,
+      "info": {
+        "scheduled_target_error_max": 0.0,
+        "selected_role_sides": [
+          1
+        ],
+        "stored_schedule_error": 0.056666644414264056
+      }
+    },
+    "R": {
+      "all_arrays_exact": true,
+      "new_worlds": 1000,
+      "info": {
+        "scheduled_target_error_max": 0.0,
+        "selected_role_sides": [
+          0,
+          1
+        ],
+        "stored_schedule_error": 0.056666644414264056
+      }
+    },
+    "C": {
+      "all_arrays_exact": true,
+      "new_worlds": 1000,
+      "info": {
+        "scheduled_target_error_max": 0.0,
+        "selected_role_sides": [
+          0,
+          1
+        ],
+        "stored_schedule_error": 0.056666644414264056
+      }
+    }
+  },
+  "original_new_worlds": 600000,
+  "total_new_worlds_including_replay": 604000,
+  "independent_decision": {
+    "game_accounting": {
+      "games": 159,
+      "returned_worlds_checked": 656000,
+      "scalar_and_half_scores_checked": 219402,
+      "maximum_difference": 3.255173908200959e-12,
+      "mass_and_source_mappings_checked": 477,
+      "all_conservation_passed": true
+    },
+    "decisions": {
+      "B": {
+        "relative_pts_change_native": -0.024285668063746324,
+        "all_checks_independently_match": true,
+        "eligible": false,
+        "failed_checks": [
+          "team/points",
+          "game/total",
+          "coverage80",
+          "learned_pool_gain"
+        ]
+      },
+      "A": {
+        "relative_pts_change_native": -0.023700907540837868,
+        "all_checks_independently_match": true,
+        "eligible": false,
+        "failed_checks": [
+          "team/points",
+          "game/total",
+          "coverage80",
+          "learned_pool_gain"
+        ]
+      },
+      "pool": {
+        "relative_pts_change_native": -0.01903864997077742,
+        "all_checks_independently_match": true,
+        "eligible": false,
+        "failed_checks": [
+          "coverage80"
+        ]
+      }
+    },
+    "shortlist": [],
+    "retained_source_files_verified": 51,
+    "independent_confirmation": false
+  },
+  "seconds": 275.33676508400094,
+  "retained_inputs": "Immutable training member forecasts and fixed C05 member models/native captures; gates freshly fit and new member worlds regenerated. No fresh-test claim.",
+  "production_changed": false
+}
