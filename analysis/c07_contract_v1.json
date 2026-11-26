@@ -1,0 +1,74 @@
+{
+  "chunk": "C07",
+  "version": 1,
+  "status": "frozen before C07 fitting/member generation or new combination scores",
+  "question": "Can whole-game/team/player expert combination retain role signal without critical-player/team harm?",
+  "namespace": "data/derived/experiments/c07_coherent_experts_v1",
+  "population": "all B1 games remain exposed actual-participant development; no operational availability or independent confirmation",
+  "split": {
+    "training_through": "2026-01-21",
+    "training_games": 41,
+    "evaluation_from": "2026-01-22",
+    "evaluation_games": 159,
+    "order": "date_et then game_id, never original reference order",
+    "wiring": "first2 evaluation",
+    "short": "first20 evaluation",
+    "final": "all159; at most2 families plus fixed pool if qualified"
+  },
+  "member_fits_through": "2025-12-31",
+  "members": {
+    "N": "original native full coherent captures, retained immutable",
+    "R": "C05 fixed mixture role law for both teams through exact decoder; all event heads fixed",
+    "H": "role home, original native rotation away; joint event engine",
+    "V": "original native rotation home, role away; joint event engine"
+  },
+  "recipes": {
+    "A": {
+      "name": "global whole-game proper-score stacking",
+      "fit": "One scalar role mass w in[0,1]; minimise average training-game composite exact mixture CRPS over N/R with bounded scalar optimisation xatol1e-12; one configuration.",
+      "objective": "0.5*mean playerPTS CRPS/3 +0.25*mean criticalPTS CRPS/4 +0.25*mean teamPTS CRPS/6; critical prior_usage>=.25; games without critical players use all-player PTS in that term. No current-outcome feature."
+    },
+    "B": {
+      "name": "dated team-context expert selection",
+      "fit": "Shared logistic team gate with intercept and3 features: max prior_usage, mean log1p(n_history), mean absolute difference native/role forecast minute means. Training-only scaler, sd1 if constant. Independent home/away expert draws give masses[(1-h)(1-a),h(1-a),(1-h)a,ha] over N/H/V/R. Minimise same training composite CRPS +.1/2*sum(slopes\u00b2), intercept unpenalised; L-BFGS-B maxiter500,ftol1e-12,gtol1e-7,maxls40; zero slopes/intercept0 start; no alternate configuration."
+    },
+    "C": {
+      "name": "player reliability gate followed by constrained event generation",
+      "fit": "Logistic classification of whether R assigns lower playerPTS CRPS than N on41training games. Features prior_usage,log1p(n_history),absolute native/role minute-mean disagreement; training-only scaler; intercept unpenalised,l2=.1 slopes. L-BFGS-B same500/ftol/gtol/maxls. At generation sample independent per-player Bernoulli gates, choose native/role predicted minute draws, bounded240 projection, balanced-second quantisation and shared exact decoder; all points emerge from events. One configuration."
+    }
+  },
+  "fairness": "All models have same41game earlier outcomes/causal player and roster information; representations, training losses and gate granularities differ deliberately. N/R forecast draws are model inputs, never realised game minutes. Global A is a simple learner. These package comparisons do not isolate granularity alone.",
+  "baseline": "fixed50/50 whole-world N/R pool, same returned1000 weighted worlds. Baseline may qualify if it beats native under all same safeguards; learned complexity is not credited without improving on pool.",
+  "weighted_return": "Every forecast returns1000worlds, two500world halves; deterministic per-member half permutations, counts by balanced apportionment with min1 for positive masses, exact component mass/count weight, ESS>=990. Native/C uniform weights. Score final returned empirical law, not full4000member union. Weighted proper-score training uses all1000/member; evaluation has no extra-world-count advantage. No spliced player/team boxes.",
+  "capacity": "Training objectives/curves/constant baselines and optimizer status retained; converged iff success or gradient_inf<=1e-5. If optimisation fails, deliver model but forbid expansion. All3 first2 wiring regardless cheap loss. No tuning after evaluation.",
+  "primary": {
+    "short": "PTS CRPS >=.5% better vs native; both halves improve; original C05 point harm limits; pool diagnostic, not an alternate rescue. Up to2 learned qualifiers ranked native gain; qualified fixed pool retained as explicit baseline hypothesis.",
+    "final": "PTS CRPS >=1% better vs native, both halves improve, familywise game/week upper<0; all harm confidence bounds within limits; >=100games, critical>=30games/200player rows. Learned model must additionally beat fixed pool by>=.25% and familywise game/week upper<0 to claim learning gain; if only pool qualifies report/prefer baseline. No automatic production release."
+  },
+  "harm_limits": {
+    "team/points": 0.1,
+    "game/total": 0.15,
+    "game/margin": 0.15,
+    "player/min": 0.05,
+    "player/reb": 0.05,
+    "player/ast": 0.05,
+    "player/fg3m": 0.02,
+    "win_brier": 0.01,
+    "critical_pts_relative": 0.02,
+    "critical_fg3m_relative": 0.02,
+    "coverage80_distance_deterioration": 0.03
+  },
+  "calibration": "80% coverage distance from.8 deterioration<=.03 for player min/pts, team points,total,margin; short point and final confidence upper. Also report50/95 and critical coverage, without posthoc alternate gate.",
+  "joint": "score points/totals/margins/wins Brier+energy; final energy point harm<=.15points and win Brier confidence harm<=.01. PlayerMIN/PTS/REB/AST/3PM and criticalPTS/3PM with C05 limits. Short energy harm<=.15.",
+  "multiplicity": "7 prospectively counted contrasts: A/B/C/pool versus native, A/B/C versus pool. Bonferroni7 whole-game and fixed calendar-week confidence;10000bootstrap seed20261125. Full initial slate remains counted after shortlist. Equal-game and both500halves reported. All are development, not fresh.",
+  "runtime": "Benchmark new member generation and pooling separately; no cached/native wall-time ratio claim. Report expected fresh-generation expert cost; no production qualification without prospective runtime/nightly evidence.",
+  "budget": {
+    "event_worlds_max": 806000,
+    "fits": "one configuration per family, one fresh gate-fit repeat; prior member fits retained honestly",
+    "threads": "max10total heavy, event workers10x1, BLAS/Arrow1, pool shutdown before heavy parent work",
+    "archive": "train N/H/V/R on41 plus evaluation members only first2/20/qualified159; C worlds only after training gate. Reuse20 existing C05R training captures after verifying hashes; original native retained. Include technical retries and4fresh member replays inside hard budget.",
+    "faults": "Exclusive outputs; hash-guarded resume; retain technical failures and permit only demonstrated implementation repairs with unchanged recipes/criteria/budget."
+  },
+  "deliverables": "3 learned coherent expert laws, chronological member archive, exact weighted proper scoring and mass/noise checks, final returned player/team/critical comparison, independent fresh gate fits/weights/four member-world worker replays; no tools-only product success.",
+  "decision_limits": "No result rescue for C05/C06. A negative comparison rules out these trained combinations only;41calibration games may not support contextual gates. Native reference source/feature differences and C05 timing law remain confounds. Production unchanged absent a separate prospectively frozen release."
+}

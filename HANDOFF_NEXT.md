@@ -6,7 +6,7 @@ No active jobs. Owner 8766 stays running; review 8767.
 
 ## C07 — preserve role skill through coherent forecast combination
 
-**0% accepted; no C07 implementation/fits/generation.** Question: can a learned combination of complete native and role-informed
+**Checkpoint1 ready for acceptance; no C07 fitting/generation.** Baseline smoke118/118, prior12tests and weighted-law faults pass. [Exact contract](analysis/c07_contract_v1.json) freezes recipes,41/159split,7comparison multiplicity and806000world ceiling. Question: can a learned combination of complete native and role-informed
 worlds retain C05's player-point gain while protecting high-usage players and joint team outcomes? This challenges the replacement
 architecture: a useful role model need not replace the incumbent uniformly. It is not another actor-head tweak, a C05 criterion
 relaxation, or a claim that C06 establishes an actor-model ceiling. Major forecast improvement remains an aim, not a promise.
@@ -86,4 +86,4 @@ ls -t analysis/experiments/ | head -15
 
 Then read C05/C06 completion/decision receipts and inventory reusable member worlds, model cutoffs and stored rotation inputs.
 Verify the 41/159 date split using metadata only. Freeze C07's exact contract and noise/weight/future-input fault tests before new
-fitting or generation. C07 is ready for execution; it has not begun.
+fitting or generation. Next: commit/push checkpoint1, then generate the41training-member archive with10workers×one thread before fitting the gates. No active jobs.
