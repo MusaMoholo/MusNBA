@@ -1,0 +1,123 @@
+{
+  "chunk": "C05",
+  "version": 1,
+  "question": "Can dated common means and three learned joint uncertainty laws retain minute skill and honest final-law calibration, then improve player points without team harm?",
+  "status": "frozen before new fits/draws/outcomes; C04 outcomes previously exposed",
+  "basis": "C01 realised-minute headroom is a priority signal, not proof of predictability. C03 altered/capped learner packages leave attribution unresolved. Challenge the pre-game joint role/minute architecture, keep possession heads fixed.",
+  "population": "known B1 200 actual-participant games, all remain development; no operational availability claim; first2 wiring, first20 shortlist, fixed200 finalist",
+  "history": {
+    "sources": "NBA canonical regular-season on_court seasons2023..2026 excluding Cup finals; existing pinned source guards and C01 accepted games",
+    "from": "2022-12-01",
+    "selection_fit_through": "2024-06-30",
+    "selection_from": "2025-12-01",
+    "selection_through": "2025-12-31",
+    "final_mean_fit_through": "2025-11-30",
+    "joint_calibration_from": "2024-07-01",
+    "joint_calibration_through": "2025-12-31",
+    "training_sample_cap": null,
+    "evaluated_feature_updates": "source history before each origin, through latest known panel origin, seasons2023..2026 only; other earlier historical games may update lag features but are never scored as fresh tests; same-day outcomes excluded",
+    "fits": "Shared ridge lambda100, closed form using all common features/history; fit origins2024-06-30,2025-06-30,2025-11-30. Residuals July2024-June2025 use first; July-Nov2025 second; December third. One recipe each; no search or convergence cap. C mixture weight learned only on December with earlier residual library, then final libraries include December."
+  },
+  "features": {
+    "own": [
+      "n_history",
+      "last1",
+      "mean3",
+      "mean10",
+      "sd10",
+      "ewm5",
+      "ewm20",
+      "start5",
+      "start20",
+      "days_since",
+      "team_changed",
+      "healthy",
+      "cap",
+      "priority",
+      "start_share",
+      "missed",
+      "k_back",
+      "alloc"
+    ],
+    "roster": [
+      "roster_n",
+      "healthy_sum",
+      "healthy_rank",
+      "mean10_sum",
+      "alloc_gap"
+    ],
+    "origin": "current roster membership conditional on actual participants is common to all arms; all minute/starter values and team assignments used as features strictly earlier than origin; current starter/pos/target forbidden",
+    "missing": "first-game minutes10,spread6,start0,days365,history0; explicit n_history; fixed before scores",
+    "team_representation": "C sees all same features through12 equally spaced prior-alloc rank positions plus roster_n; training-only standardisation; A/B receive own and roster summaries; no player IDs"
+  },
+  "recipes": {
+    "A": {
+      "name": "whole-team chronological empirical residual law",
+      "recipe": "Same ridge means for ABC. Sample one whole-team residual(reg-legal mean), prior-alloc rank aligned, rank interpolate to roster size, bounded Euclidean240 projection; quantise to balanced seconds. All historical team residuals, no arbitrary spread."
+    },
+    "B": {
+      "name": "learned bounded latent logistic joint law",
+      "recipe": "Clip actual and legal mean minutes to[.25,47.75] ONLY for logit coordinates; canonical12 rank-interpolated logit residual vectors. Learn full12x12 mean/covariance, unbiased covariance, eigendecompose with only negative numerical eigenvalues set0. Gaussian latent draw, rank map, add logit means then solve additive logistic offset for bounded240 minutes directly; balanced-second quantisation. Source truth/scoring stays unchanged."
+    },
+    "C": {
+      "name": "learned whole-team mixture of A and dated legacy-family law",
+      "recipe": "Whole-team mixture. Legacy-family independent normal residuals around same ridge means, player residual SD estimated by dated alloc bands0,4,..48 using same chronological residual population; no arbitrary floor/inflation, missing bands use pooledSD. Both laws bounded240 and quantised. Learn one mixture weight by minimising summed proper CRPS on all December team-games,1000 draws/component, analytic convex quadratic in weight with endpoint clipping[0,1]; fixed seeds. Final all-family libraries include December. Weight is learned parameter, not additional candidate slate."
+    }
+  },
+  "seed": 20261125,
+  "max_recipe_configurations": 1,
+  "library_deliverable": "Three fitted runnable uncertainty laws, exact-time legal schedule decoder, common minute/player/team proper scoring, independent fit/draw/world reproduction. Supporting engineering alone is not major product progress.",
+  "causal_tests": [
+    "future or same-day history injection cannot change origin features",
+    "current-label/starter/target inputs refused",
+    "invalid minute vectors and fewer-than5 rosters refused",
+    "probability/quantile/artifact/rotation/resume faults fail closed"
+  ],
+  "minute_screen": {
+    "games": 200,
+    "worlds": 1000,
+    "baseline": "first1000 native pinned incumbent regulation-minute draws; compare same player keys and unscaled reconstructed regulation truth",
+    "primary": "After legal law/quantisation: CRPS >=2% lower than native, both halves improve, game/week Bonferroni3 upper<0;>=100games/2000player rows",
+    "critical": "usage>=.25 minuteCRPS point harm<=2%; overall coverage80 in[.76,.84], coverage50 in[.45,.55], coverage95 in[.92,.98]; critical coverage80 in[.73,.87]; equal-game/source-quality/roster-size sensitivities reported",
+    "shortlist": "at most2 passing families ranked CRPS; no replacement or altered rules after outcomes",
+    "training_credibility": "report heldout Oct-Nov improvement vs240/roster_n, convergence/budget-bound status and fit coverage. No arbitrary sample cap. Failed convergence/support cannot establish architectural ceiling."
+  },
+  "integration": {
+    "decoder": "Exact second-resolution McNaughton five-lane wrap scheduling, no self-overlap since targets<=48; balanced largest-remainder quantisation<1second/player,exact14400seconds. Original forecasted timing centres determine ordering; FFT circular phase maximises on-time overlap as preference. No claim of realistic substitution timing. Both native bridge and challengers use same decoder; generated fouls/OT remain engine-driven, final returned minutes separately scored.",
+    "bridge_control": "native incumbent per-world regulation-minute draws passed through identical new schedule decoder; required to expose schedule-translation effects",
+    "native_control": "reuse pinned original C01 captures on all200; no regenerated unchanged control ritual; simulation seed c02-possession-v1 for all new arms, same fixed event/conversion/foul/clocks, original source profiles",
+    "wiring": "all mechanically valid families and bridge control first2 x1000 even if minute screen fails, to deliver runnable models; native control retained",
+    "cheap_game_panel": "only up to2 minute-screen survivors continue to first20 x1000; first2 reused; no advancement by minute score alone",
+    "finalist_panel": "only practical complete-game survivors expand to fixed200 x1000; no score-driven extension; maximum2",
+    "projection": "Euclidean bounded simplex:0<=regminutes<=48,sum240; legal time constraint, never a scoring/shot/point quota; no full-game count targets"
+  },
+  "game_shortlist": {
+    "benefit": "player PTS CRPS >=.5% lower vs BOTH native and bridge, both500-world halves lower",
+    "harm_point_limits": {
+      "team/points": 0.1,
+      "game/total": 0.15,
+      "game/margin": 0.15,
+      "player/min": 0.05,
+      "player/reb": 0.05,
+      "player/ast": 0.05,
+      "player/fg3m": 0.02,
+      "win_brier": 0.01,
+      "critical_pts_relative": 0.02,
+      "critical_fg3m_relative": 0.02,
+      "coverage80_distance_deterioration": 0.03
+    },
+    "runtime": "candidate median generation/bridge ratio<=2; finite exact common scores/support; no next-event learner changes"
+  },
+  "final_acceptance": "known200 research gain only: playerPTS >=1% better vs BOTH references, both simulation halves improve, whole-game/week Bonferroni6 upper<0; harm confidence upper below same practical limits for both references; critical contexts>=30games/200player rows, >=100games overall; coverage80 deterioration confidence bound<=.03. No automatic production promotion.",
+  "uncertainty": "10000 seed20261125 paired whole-game and fixed ordinal//7 week-block bootstraps; pooled and equal-game;95% descriptive and Bonferroni3 minute/6 dual-reference game intervals. Full slate/exposure counts, no reset after selection.",
+  "budget": {
+    "data": "one full chronological lag pass, source-guarded; same full supported history for all",
+    "fits": "3 shared chronological closed-form mean fits; ABC residual/moment libraries and one learned mixture parameter; one fresh full repeat. No extra trials.",
+    "worlds": "606000 maximum new event worlds including wiring and repeat; all200 x1000 minute draws per family, native controls reused; four first-game repeat arms included. Training uncertainty draws are not event worlds.",
+    "threads": "ten total heavy; fits10 then workers10x1; BLAS/Arrow1; source I/O may overlap within cap; pool shutdown before parent work",
+    "technical_faults": "Preserve logs/partial namespaces; only demonstrable implementation repairs with unchanged recipes/criteria/budget. Source/data/code hashes gate resume. No posthoc candidate or tuning."
+  },
+  "decision_limits": "If minute predictions fail, conclude these recipes do not establish recoverable minute skill. If minutes improve but game forecasts do not, diagnose translation/joint effects and do not claim product gain. Native/bridge disagreements remain visible. Negative work must eliminate a stated explanation or isolate the remaining confound; no model-class impossibility claim.",
+  "namespace": "data/derived/experiments/c05_joint_role_laws_v1",
+  "production_changed": false
+}

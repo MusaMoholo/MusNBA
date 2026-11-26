@@ -1,13 +1,13 @@
 # Handoff — C04 complete; C05 at 0%
 
-Updated 25 November 2026. [C04 completion](analysis/experiments/20261125_c04_completion_v1.json) records a component gain with a
+Updated 26 November 2026. [C04 completion](analysis/experiments/20261125_c04_completion_v1.json) records a component gain with a
 calibration block: all three models improve minute-distribution scores; none earns complete-game expansion. [MODEL](MODEL.md) owns
 numbers/limits, [PLAN](PLAN.md) strategy, [AGENTS](AGENTS.md) culture/workflow and [README](README.md) commands.
 Production remains engine-v1.3-r3, report-bands-v1 and team-pathway-v1. No active jobs. Owner 8766 stays running; review 8767.
 
 ## C05 — preserve learned minute skill through calibrated joint laws and faithful rotations
 
-**0% accepted; no C05 implementation/fits/generation.** C04 demonstrates admissible role/minute signal on known development games,
+**Checkpoint 1 ready for acceptance; no C05 fits/draws/outcomes.** Exact recipes and numerical gates are frozen in [C05 contract](analysis/c05_contract_v1.json). Baseline smoke118/118, C04 source and8 tests pass. Exact decoder passes random/boundary and deliberate illegal-law/target-corruption checks. C04 demonstrates admissible role/minute signal on known development games,
 with unacceptably narrow intervals. That failure precedes the rotation decoder. Separately, the old offset decoder sometimes misses
 forecasted targets by many minutes. Freeze a new comparison prospectively; never change C04's failed coverage rule or promote its models.
 
@@ -75,5 +75,4 @@ ls -t analysis/experiments/ | head -15
 .venv/bin/python scripts/check_docs.py
 ```
 
-Then read C04's completion/decision and decoder error receipts, inspect full returned-law transformations, and freeze C05's exact
-numerical contract. No C05 work is required to close C04.
+Next: implement the frozen chronological shared means and three uncertainty laws; run training-only diagnostics before the fixed200 minute screen. Decoder uses original timing as a preference; realistic substitution timing remains unproven. Private namespace/logs will retain every stage. No active jobs.
