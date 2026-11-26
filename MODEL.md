@@ -181,12 +181,24 @@ worlds, mechanical evidence only. [Fresh reproduction](analysis/experiments/2026
 models, 655,455 probabilities and three 1,000-world replays. Training-only selection recipes are retained inputs. C06 is a completed
 negative search with no qualified forecast gain or release.
 
-C07's [frozen comparison](analysis/c07_contract_v1.json) learns whole-game, team and player expert selection on 41 earlier games,
-then evaluates 159 known later games. All three fits converge. The global gate chooses 98.5% role mass on training data; this is
-not forecast evidence. The [training objective audit](analysis/experiments/20261126_c07_training_math_v1.json) matches direct weighted
-scores. [Two-game wiring](analysis/experiments/20261126_c07_wiring_audit_v1.json) verifies exact mass, source-world mapping, conservation
-and weighted scores. Each returned law has 1,000 worlds; extra retained members cannot count as a Monte Carlo accuracy advantage.
-The fixed twenty-game accuracy comparison is pending. Production remains unchanged.
+C07's [frozen comparison](analysis/c07_contract_v1.json) fits three coherent expert selectors on41 earlier games. All converge;
+player-level selection fails the fixed20screen. The [159-game comparison](analysis/experiments/20261126_c07_final_v1.json),
+3,416 player-games, reduces player-points CRPS from3.207 native to3.129 team selection (2.43%),3.131 whole-game (2.37%) and3.146
+fixed50/50pool (1.90%). Lower is better. Team-selector change−0.0779points has95% game interval−0.1035 to−0.0518; seven-comparison
+familywise game/week intervals also exclude zero. Both simulation halves improve. High-usage points improve3.51% on234player-games
+across131games; the upper harm bound is+0.36%, below2%. This broader panel does not reverse C05's stopped decision.
+
+**No C07 candidate qualifies; production unchanged.** Team selection worsens team-points CRPS by0.0464points (95%game interval
++0.0033 to+0.0891). Its familywise upper bound0.1036 exceeds the0.1harm margin; game-total upper0.2142 exceeds0.15. Its80% total
+coverage is76.1% versus76.7% native; the deterioration upper bound3.77percentage points exceeds3. Whole-game selection also fails
+team/total/calibration safety. The fixed pool clears score safeguards but not margin-coverage precision: upper deterioration5.16points.
+These are failed safety demonstrations, not proof that every permitted harm is exceeded. Learned gains over the pool lack required
+familywise support. Scores concern known historical participants and explored games, not fresh confirmation or pre-tip availability.
+
+Returned laws use1,000exactly weighted legal worlds each, with fixed half masses and source mappings. Independent training/scoring
+arithmetic and [final audit](analysis/experiments/20261126_c07_final_audit_v1.json) agree on656000returned worlds;51source files rehash exactly.
+Fresh fit/world reproduction remains required before closure. Production
+remains engine-v1.3-r3/report-bands-v1/team-pathway-v1.
 
 Older B1 role/shot/rotation diagnostics and B2 season comparisons remain immutable evidence under `analysis/experiments/`.
 They impose no executable work. The inherited app/runtime remains operational; selected replays illustrate mechanics, not probabilities.

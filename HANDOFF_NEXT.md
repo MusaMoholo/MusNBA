@@ -1,15 +1,12 @@
-# Handoff — C06 complete; C07 at 0%
+# Handoff — C07 final decision; reproduction pending
 
 Updated 26 November 2026. MODEL owns numerical evidence/limits, PLAN strategy, README commands, AGENTS workflow.
-[C05 completion](analysis/experiments/20261126_c05_completion_v1.json) records minute/player-point gains with critical-player harm blocking qualification. [C06 completion](analysis/experiments/20261126_c06_completion_v1.json) records no useful actor gain. Production remains engine-v1.3-r3/report-bands-v1/team-pathway-v1; no publication/import needed.
-No active jobs. Owner 8766 stays running; review 8767.
+Production remains engine-v1.3-r3/report-bands-v1/team-pathway-v1; no publication/import. Owner8766 stays running; review8767.
 
 ## C07 — preserve role skill through coherent forecast combination
 
-**50% deliverables validated: checkpoint1 pushed as a3b8803; checkpoint2 ready for commit/push.** Baseline smoke118/118, prior12tests and weighted-law faults pass. [Exact contract](analysis/c07_contract_v1.json) freezes recipes,41/159split,7comparison multiplicity and806000world ceiling. Question: can a learned combination of complete native and role-informed
-worlds retain C05's player-point gain while protecting high-usage players and joint team outcomes? This challenges the replacement
-architecture: a useful role model need not replace the incumbent uniformly. It is not another actor-head tweak, a C05 criterion
-relaxation, or a claim that C06 establishes an actor-model ceiling. Major forecast improvement remains an aim, not a promise.
+**85% deliverables accepted, checkpoint3 ready to commit; earlier pushes a3b8803/e0f6ac0.** Baseline smoke118/118 and targeted/fault tests pass. [Exact contract](analysis/c07_contract_v1.json) freezes recipes,41/159split,7comparison multiplicity and806000world ceiling. Question: can a learned combination of complete native and role-informed
+worlds retain C05's player-point gain while protecting high-usage players and joint team outcomes? A useful role model need not replace the incumbent uniformly. This does not relax C05 criteria or establish an actor-model ceiling.
 
 ### Committed capability and credible alternatives
 
@@ -27,10 +24,8 @@ Compare distinct selection levels, with exact recipes frozen at checkpoint 1:
 - **C: player role selection.** Learn prior-role/reliability gates between native and learned minute draws, then enforce legal joint
   time and generate complete event worlds. Score the law after projection, scheduling, substitutions, fouls and overtime.
 
-All see the same eligible history, roster/role/performance inputs and training truths; native and learned inputs remain explicitly
-identified. Freeze fitting losses, capacity, maximum two training-only configurations/family, strong-baseline policy and any unequal
-resource/representation choices before outcomes. Different selector levels change dependence; loss/representation differences still
-limit pure causal attribution. Do not build one favourite fully before the three working MVPs compete.
+All see common eligible history, inputs and training truths. The contract freezes losses, capacity, selection allowances and
+resource differences. Selector levels, losses and representations differ, limiting pure causal attribution.
 
 ### Chronology, decisive contrast and acceptance
 
@@ -84,11 +79,12 @@ ls -t analysis/experiments/ | head -15
 .venv/bin/python scripts/check_docs.py
 ```
 
-Training archive:41games,103000new worlds,843seconds. All3gates converge using only earlier games. Wiring generates8000new member
-worlds in263seconds; [independent audit](analysis/experiments/20261126_c07_wiring_audit_v1.json) checks10000returned worlds and3345scalar/half scores,
-exact masses/source mappings and conservation. [Training arithmetic](analysis/experiments/20261126_c07_training_math_v1.json) independently
-matches the fitted composite objective. Seven synthetic/fault tests pass. These are capability/mechanical results, not accuracy gains.
-Namespace `data/derived/experiments/c07_coherent_experts_v1`; no active jobs. Logs under private `logs/`.
-Next: inspect/stage, commit/push checkpoint2, then run `analysis/c07_evaluate.py short --jobs 10` with inner thread caps1 and log
-`/tmp/c07_short.log`. All3converged families plus fixed pool enter the frozen first20evaluation games. Run `analysis/c07_audit.py short`;
-only precommitted qualifiers may expand. Partial stages fail closed; retain faults before technical resumption.
+All gates converge. The fixed20screen qualifies B,A and pool; C fails critical-player threes. The fixed159comparison now finishes
+with **no qualified candidate**, despite player-point gains. MODEL owns effect sizes/uncertainty. No criteria change or release.
+[Final audit](analysis/experiments/20261126_c07_final_audit_v1.json) agrees:656000returned worlds,219402scalar/half checks,477source mappings.
+Audit session11734 and generation85761 exited; log `/tmp/c07_final_audit.log`.
+Eight targeted/fault tests pass;51retained source files rehash exactly. Namespace `data/derived/experiments/c07_coherent_experts_v1`.
+Next: inspect/stage and commit/push checkpoint3. Only then run `analysis/c07_reproduce.py`
+with inner thread caps1, fresh gate fits and four single-worker member replays; log `/tmp/c07_reproduce.log`, fresh output
+`data/derived/experiments/c07_reproduction_v1`. Preserve faults before technical resumption. Then close C07 and replace this charter
+with C08 at0%: dated participation/full-roster forecasts, with source limits and actual-participant conditioning explicit.

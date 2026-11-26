@@ -10,6 +10,18 @@ from analysis.c01_core import ContractError
 from basketball_common import sha256_file
 
 
+def verify_fingerprints(tree,root=ROOT):
+    import re
+    checked=0
+    for key,value in tree.items():
+        if isinstance(value,dict):checked+=verify_fingerprints(value,root)
+        elif isinstance(value,str) and re.fullmatch('[0-9a-f]{64}',value) and '/' in key:
+            path=Path(root)/key
+            if not path.is_file() or sha256_file(path)!=value:raise ContractError('retained source bytes changed:'+key)
+            checked+=1
+    return checked
+
+
 def reference_crps(x,y,w):
     order=np.argsort(x);v=np.asarray(x)[order];p=np.asarray(w)[order];cuts=np.unique(np.r_[v,y]);idx=np.searchsorted(v,cuts[:-1],side='right');cdf=np.r_[0,np.cumsum(p)][idx]
     return float(np.sum((cdf-(cuts[:-1]>=y))**2*np.diff(cuts)))
@@ -82,7 +94,7 @@ def decision(stage):
         elif full:checks['shortlist']='pool' in read(data.WORK/'short_decision.json')['shortlist']
         if set(checks)!=set(z['checks']) or any(bool(value)!=z['checks'][key] for key,value in checks.items()):raise ContractError('independent expert decision differs')
         results[f]={'relative_pts_change_native':float(relative),'all_checks_independently_match':True,'eligible':bool(all(checks.values())),'failed_checks':[k for k,v in checks.items() if not v]}
-    return {'game_accounting':audit(ids),'decisions':results,'shortlist':report['shortlist'],'independent_confirmation':False}
+    return {'game_accounting':audit(ids),'decisions':results,'shortlist':report['shortlist'],'retained_source_files_verified':verify_fingerprints(data.verify()['sources']),'independent_confirmation':False}
 
 if __name__=='__main__':
     stage=sys.argv[1] if len(sys.argv)>1 else 'wiring';p=data.verify();r=audit(p['eval_ids'][:2]) if stage=='wiring' else decision(stage);create_json(data.WORK/f'{stage}_audit.json',r);create_json(ROOT/f'analysis/experiments/20261126_c07_{stage}_audit_v1.json',r);print(r)

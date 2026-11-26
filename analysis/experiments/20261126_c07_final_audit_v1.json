@@ -1,0 +1,45 @@
+{
+  "game_accounting": {
+    "games": 159,
+    "returned_worlds_checked": 656000,
+    "scalar_and_half_scores_checked": 219402,
+    "maximum_difference": 3.255173908200959e-12,
+    "mass_and_source_mappings_checked": 477,
+    "all_conservation_passed": true
+  },
+  "decisions": {
+    "B": {
+      "relative_pts_change_native": -0.024285668063746324,
+      "all_checks_independently_match": true,
+      "eligible": false,
+      "failed_checks": [
+        "team/points",
+        "game/total",
+        "coverage80",
+        "learned_pool_gain"
+      ]
+    },
+    "A": {
+      "relative_pts_change_native": -0.023700907540837868,
+      "all_checks_independently_match": true,
+      "eligible": false,
+      "failed_checks": [
+        "team/points",
+        "game/total",
+        "coverage80",
+        "learned_pool_gain"
+      ]
+    },
+    "pool": {
+      "relative_pts_change_native": -0.01903864997077742,
+      "all_checks_independently_match": true,
+      "eligible": false,
+      "failed_checks": [
+        "coverage80"
+      ]
+    }
+  },
+  "shortlist": [],
+  "retained_source_files_verified": 51,
+  "independent_confirmation": false
+}

@@ -1,0 +1,44 @@
+{
+  "game_accounting": {
+    "games": 20,
+    "returned_worlds_checked": 100000,
+    "scalar_and_half_scores_checked": 34050,
+    "maximum_difference": 3.255173908200959e-12,
+    "mass_and_source_mappings_checked": 60,
+    "all_conservation_passed": true
+  },
+  "decisions": {
+    "A": {
+      "relative_pts_change_native": -0.029006484769063867,
+      "all_checks_independently_match": true,
+      "eligible": true,
+      "failed_checks": []
+    },
+    "B": {
+      "relative_pts_change_native": -0.029726896932171676,
+      "all_checks_independently_match": true,
+      "eligible": true,
+      "failed_checks": []
+    },
+    "C": {
+      "relative_pts_change_native": -0.023496762443352748,
+      "all_checks_independently_match": true,
+      "eligible": false,
+      "failed_checks": [
+        "critical/fg3m"
+      ]
+    },
+    "pool": {
+      "relative_pts_change_native": -0.022482189244650508,
+      "all_checks_independently_match": true,
+      "eligible": true,
+      "failed_checks": []
+    }
+  },
+  "shortlist": [
+    "B",
+    "A",
+    "pool"
+  ],
+  "independent_confirmation": false
+}

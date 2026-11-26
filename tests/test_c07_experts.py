@@ -69,3 +69,13 @@ class WeightedBoundaryTests(unittest.TestCase):
             (root/'fit.json').write_text(json.dumps({'training':{f:{'converged':True} for f in 'ABC'}}));(root/'short_decision.json').write_text(json.dumps({'shortlist':[]}))
             with patch.object(ev.data,'WORK',root),patch.object(ev.data,'verify',return_value={}):
                 with self.assertRaisesRegex(ContractError,'expansion forbidden'):ev.run('final',1)
+
+    def test_retained_source_bytes_fault(self):
+        from tempfile import TemporaryDirectory
+        from pathlib import Path
+        from basketball_common import sha256_file
+        from analysis.c07_audit import verify_fingerprints
+        with TemporaryDirectory() as tmp:
+            root=Path(tmp);(root/'inputs').mkdir();p=root/'inputs/source.bin';p.write_bytes(b'original');expected={'nested':{'inputs/source.bin':sha256_file(p)}}
+            self.assertEqual(verify_fingerprints(expected,root),1);p.write_bytes(b'changed')
+            with self.assertRaisesRegex(ContractError,'source bytes changed'):verify_fingerprints(expected,root)
