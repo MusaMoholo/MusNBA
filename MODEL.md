@@ -188,7 +188,7 @@ native and2.09% versus bridge, above the frozen2% point limit. Small subgroup su
 expansion. [Independent audit](analysis/experiments/20261126_c05_short_independent_v1.json) reproduces that decision and44000worlds.
 [Returned minute coverage](analysis/experiments/20261126_c05_delivered20_v1.json) is43.6%/77.3%/93.4% at50/80/95, so standalone
 calibration does not automatically survive event-boundary substitutions/fouls/OT. These are exposed development signals, not a
-qualified overall product gain. Production remains unchanged; fresh reproduction is pending.
+qualified overall product gain. [Fresh reproduction](analysis/experiments/20261126_c05_reproduction_v1.json) matches all fitted files,12876000minute values and four1000world single-worker replays exactly. C05 closes research-only; production unchanged.
 
 The B1 component audit remains reusable source evidence. The long-shot recipe failed
 (`20261124_b1_development_decision_v2.json`). A substitution attempt improved minutes without establishing required game compatibility

@@ -1,0 +1,110 @@
+{
+  "chunk": "C05",
+  "complete": true,
+  "kind": "Calibrated minute skill reaches overall player points but critical-player harm blocks expansion; research-only",
+  "forecast_effect": {
+    "minute_known_games": 200,
+    "player_games": 4292,
+    "native_minute_crps": 3.522080486246461,
+    "mixture_minute_crps": 3.202318348835051,
+    "relative_minute_error_reduction": 0.0907884,
+    "minute_change_ci95_game": [
+      -0.38329727557106735,
+      -0.2573267203591934
+    ],
+    "standalone_coverage50_80_95": [
+      0.46691519105312207,
+      0.7651444547996272,
+      0.9249767008387698
+    ],
+    "paired_game_screen_games": 20,
+    "paired_game_player_rows": 427,
+    "player_pts_crps_native": 2.942010482435611,
+    "player_pts_crps_control": 2.9165069344262435,
+    "player_pts_crps_mixture": 2.85342947540985,
+    "player_pts_relative_change_native": -0.03010900455814409,
+    "player_pts_relative_change_control": -0.021627741827674643,
+    "player_pts_change_ci95_game_native": [
+      -0.14137273926645458,
+      -0.03083468259478688
+    ],
+    "critical_player_games": 34,
+    "critical_games": 19,
+    "critical_pts_relative_harm_native": 0.02485552858189822,
+    "critical_pts_relative_harm_control": 0.020861633730865182,
+    "frozen_harm_limit": 0.02,
+    "shortlist": [],
+    "expanded200": false,
+    "conclusion": "Overall component and development-screen gains, no qualified end-to-end product improvement. Critical-player harm point limit fails; small subgroup is imprecise. No criterion relaxation or C05 expansion."
+  },
+  "model_release": {
+    "production_changed": false,
+    "production": "engine-v1.3-r3 / report-bands-v1 / team-pathway-v1",
+    "published_assets": false,
+    "manual_import_required": false
+  },
+  "accepted_deliverables_percent": 100,
+  "checkpoint_weights": [
+    15,
+    35,
+    35,
+    15
+  ],
+  "preceding_checkpoint_commits": [
+    "5aec1ee",
+    "d801829",
+    "3b536eb"
+  ],
+  "capabilities_delivered": [
+    "Three runnable common-mean joint uncertainty laws, all full-history chronological residuals, training-only learned mixture weight",
+    "Exact second-resolution legal five-player decoder, native bridge and original forecast timing preferences; no claim of realistic stint structure",
+    "All200 final legal/quantised minute distributions, matched proper scores and calibration; paired20 final returned player/team distributions, critical/halves/game-week multiplicity accounting",
+    "Fresh chronological fit files and12876000 minute values exact; four fresh1000world single-worker replays all arrays exact; independent scoring/decision/source-quality audits"
+  ],
+  "validation": {
+    "baseline_smoke": "118/118 before changes",
+    "c04_targeted_tests": 8,
+    "c05_synthetic_and_fault_tests": 6,
+    "minute_scalar_half_scores_checked": 51504,
+    "world_scalar_half_scores_checked": 21243,
+    "new_worlds_original": 44000,
+    "fresh_single_worker_replay_worlds": 4000,
+    "all_world_accounting_passed": true,
+    "new_event_worlds_total": 48000,
+    "fresh_fit_hashes_exact": true,
+    "all4fresh_worker_replays_exact": true,
+    "docs_checks": "pass before final commit",
+    "technical_faults": "Two pre-screen repairs plus repeated receipt writer collision. Every failed artifact/log retained; no criteria or model recipe changes. Final audit resumed without new fits/worlds."
+  },
+  "evidence_boundaries": {
+    "all_known_development": true,
+    "no_independent_confirmation": true,
+    "population": "actual-participant conditional hindcast, not availability/pre-tip operational validation",
+    "private_namespaces": [
+      "data/derived/experiments/c05_joint_role_laws_v1",
+      "data/derived/experiments/c05_reproduction_v1",
+      "data/derived/experiments/c05_fault02_joint_role_laws_v1"
+    ],
+    "source_truth_gaps_retained": true
+  },
+  "bounded_conclusion": {
+    "ruled_in": "Learnable minute uncertainty can retain meaningful proper-score gain and pass precommitted standalone calibration; overall player-point gain can survive legal event integration.",
+    "blocked": "High-usage-player point harm exceeds frozen point limits; no expansion/release. Final returned minute calibration also differs from standalone law.",
+    "unresolved": "Only34critical player-games; source support and role/opportunity/timing interactions remain confounded. No general architecture or data ceiling claim.",
+    "next_decision": "Full-history common-information conditional actor probability competition, keeping native minute inputs fixed; challenge capped-training confound before another local uncertainty adjustment."
+  },
+  "evidence_sha256": {
+    "20261126_c05_decision_v1.json": "a1eb4c7e09269f487c340da31a41b6729f94d5010d334eaeb0f92028045b2342",
+    "20261126_c05_delivered20_v1.json": "01a638222c42f75644cbc2a13bb367fa56de8e40099a5a0ccf58b71044842261",
+    "20261126_c05_delivered2_v1.json": "f95aeb2711b7d3cbb917dfb358ff7ae7874b25800021b7c4e0df312a3b7f6b76",
+    "20261126_c05_faults_v1.json": "d29a396ec1bf5f79c8c8ede390c0a85f3c528cce930a9d05847e9632125f7910",
+    "20261126_c05_fit_v1.json": "c73a53fdd9419ebd98db11369525094cb3448fc89102e60acb9c854b8c596b9b",
+    "20261126_c05_minute_screen_v1.json": "e084e89be3ae05ff5b6d5cf7bc52fc33e59fc653b08126bdde1a33b075fe58f6",
+    "20261126_c05_reproduction_fault_v1.json": "c94b2feb901e73914735352d98d1ad66e6b023c6117ddc14a9c55dc1d35223bb",
+    "20261126_c05_reproduction_v1.json": "2c06aaed7c04c2223c9f3da774d16143964d1e1ec450a0321d0c40f862d44844",
+    "20261126_c05_short_independent_v1.json": "ea7a710ba2bd8a8f27fc9637e5bd73d32d14cc9484177d63e5921cf7ad816c47",
+    "20261126_c05_short_v1.json": "0a54c928df1bda5579795f09d7b5dcdc9687e439723ba704251a4acdce002e80",
+    "20261126_c05_wiring_audit_v1.json": "d325e628c02da8acdb07bab327624761722bebb273f7b95d96de80989e5af4a2",
+    "20261126_c05_wiring_v1.json": "61c1f85342ac5518ef29d389c30a927acf349351e61e9a14d1050c4609e93c98"
+  }
+}

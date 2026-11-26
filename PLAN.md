@@ -18,11 +18,12 @@ only predictions from dated information can establish recoverable skill.
 C02/C03 delivered working possession learners without forecast gains. Their limited/mismatched training packages cannot establish
 an architecture or data ceiling. Stop treating plausible mechanisms and reusable infrastructure as sufficient reasons for another chunk.
 
-C04 demonstrates predictable joint-role/minute signal across three full-history models, while all fail the frozen uncertainty-coverage
-rule. Complete-game gain remains unproven. The old schedule decoder also distorts some minute targets. MODEL owns numerical results.
-C05 carries overall minute/player-point skill into legal games but fails its high-usage-player harm guardrail. The next challenge must distinguish uneven role information from per-minute opportunity allocation before another local uncertainty tweak.
-Compare distinct uncertainty architectures with common dated means/data, and validate the final returned distribution after every
-constraint. Retain both native and decoder controls. No arbitrary spread inflation, criterion rescue or presumed winning model.
+C04 recovers dated minute skill; C05 carries calibrated standalone minute skill into improved overall player points on20 known
+games but fails the high-usage-player harm limit. Neither earns release. MODEL owns all numbers and limits.
+C06 challenges the capped-history/learner confound in on-court opportunity allocation: three conditional actor models, identical
+uncapped supported history and dated inputs, then final coherent player/team distributions. Native minutes stay fixed to isolate
+actor effects. High-usage harm may reflect role, opportunity, timing or sampling; the actor hypothesis is unproven. No criterion
+rescue, arbitrary spread change or presumption that more data wins. Future combination with learned minutes depends on evidence.
 
 The cultural change is explicit: measured error → admissible predictive signal → credible competing models → end-to-end benefit.
 Each experiment must distinguish explanations. Use full supported information, training-only convergence checks and strong baselines;

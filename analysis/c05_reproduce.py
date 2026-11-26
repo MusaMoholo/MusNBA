@@ -26,10 +26,19 @@ def independent_decision():
     return out
 
 
-def run(output):
+def run(output,resume=False):
     data.verify();output=Path(output).resolve()
     if not output.is_relative_to(ROOT/'data'):raise ContractError('private reproduction must stay under ignored data')
-    start=time.monotonic();meta=models.fit(output);old=read(data.WORK/'fit.json')
+    start=time.monotonic()
+    if output.exists():
+        if not resume:raise FileExistsError(output)
+        meta=read(output/'fit.json')
+        from basketball_common import sha256_file
+        if meta['code_sha256']!=sha256_file(ROOT/'analysis/c05_models.py') or meta['contract_sha256']!=sha256_file(models.CONTRACT) or meta['data_sha256']!=sha256_file(models.data.WORK/'data.json'):raise ContractError('fresh-fit resume provenance changed')
+    else:
+        if resume:raise ContractError('no fresh fit to resume')
+        meta=models.fit(output)
+    old=read(data.WORK/'fit.json')
     if meta['hashes']!=old['hashes']:raise ContractError('fresh model differs')
     fresh={f:models.Predictor(f,output) for f in 'ABC'};rows=pd.read_parquet(models.data.WORK/'rows.parquet');plan=data.verify();count=0
     for j,ref in enumerate(plan['references']):
@@ -43,12 +52,19 @@ def run(output):
         if (j+1)%50==0:print('C05 fresh draws identical',j+1,'/200',flush=True)
     rollout.init();gid=plan['game_ids'][0];replays={}
     for arm in ('bridge','A','B','C'):
-        arrays,times,errors,_=rollout.generate(gid,(arm,),fresh=fresh)
+        path=output/f'{arm}_replay.npz'
+        if resume and path.exists():
+            with np.load(path,allow_pickle=False) as z:arrays={arm:{k:z[k] for k in z.files}}
+            replay={'all_arrays_exact':True,'worlds':1000,'resumed_existing_fresh_replay':True}
+        else:
+            arrays,times,errors,_=rollout.generate(gid,(arm,),fresh=fresh)
+            with path.open('xb') as stream:np.savez_compressed(stream,**arrays[arm])
+            replay={'all_arrays_exact':True,'worlds':1000,'seconds':times[arm],'decoder_error':errors[arm],'resumed_existing_fresh_replay':False}
         with np.load(data.WORK/'games'/gid/f'{arm}.npz',allow_pickle=False) as z:
             if set(z.files)!=set(arrays[arm]) or any(not np.array_equal(z[k],arrays[arm][k]) for k in z.files):raise ContractError('single-worker replay differs')
-        with (output/f'{arm}_replay.npz').open('xb') as stream:np.savez_compressed(stream,**arrays[arm])
-        replays[arm]={'all_arrays_exact':True,'worlds':1000,'seconds':times[arm],'decoder_error':errors[arm]};print('C05 worker replay exact',arm,flush=True)
-    result={'kind':'C05 fresh fit/draw/world reproduction','fresh_fit_hashes_exact':True,'minute_values_exact':count,'replays':replays,'minute_accounting':audit.minute_audit(),'world_accounting':audit.world_audit(plan['game_ids'][:2]),'independent_decision':independent_decision(),'seconds':time.monotonic()-start,'production_changed':False};create_json(output/'reproduction.json',result);create_json(ROOT/'analysis/experiments/20261126_c05_reproduction_v1.json',result)
+        from analysis.c02_accounting import check_arrays
+        check_arrays(arrays[arm]);replays[arm]=replay;print('C05 worker replay exact',arm,flush=True)
+    result={'kind':'C05 fresh fit/draw/world reproduction','fresh_fit_hashes_exact':True,'minute_values_exact':count,'replays':replays,'minute_accounting':audit.minute_audit(output/'minute_audit.json'),'world_accounting':audit.world_audit(plan['game_ids'][:2]),'independent_decision':independent_decision(),'seconds':time.monotonic()-start,'production_changed':False};create_json(output/'reproduction.json',result);create_json(ROOT/'analysis/experiments/20261126_c05_reproduction_v1.json',result)
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--output',type=Path,default=ROOT/'data/derived/experiments/c05_reproduction_v1');a=p.parse_args();run(a.output)
+    p=argparse.ArgumentParser();p.add_argument('--output',type=Path,default=ROOT/'data/derived/experiments/c05_reproduction_v1');p.add_argument('--resume',action='store_true');a=p.parse_args();run(a.output,a.resume)

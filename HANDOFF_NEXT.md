@@ -1,92 +1,80 @@
-# Handoff — C05 in progress
+# Handoff — C05 complete; C06 at 0%
 
-Updated 26 November 2026. [C04 completion](analysis/experiments/20261125_c04_completion_v1.json) records a component gain with a
-calibration block: all three models improve minute-distribution scores; none earns complete-game expansion. [MODEL](MODEL.md) owns
-numbers/limits, [PLAN](PLAN.md) strategy, [AGENTS](AGENTS.md) culture/workflow and [README](README.md) commands.
-Production remains engine-v1.3-r3, report-bands-v1 and team-pathway-v1. Owner 8766 stays running; review 8767.
+Updated26November2026. MODEL owns numerical evidence and limitations; PLAN strategy, README commands, AGENTS workflow.
+[C05 completion](analysis/experiments/20261126_c05_completion_v1.json) records minute/player-point skill into legal games but fails the critical-player harm guardrail. Production remains
+engine-v1.3-r3/report-bands-v1/team-pathway-v1. No release/publication/manual import. Owner8766 stays running; review8767.
 
-## C05 — preserve learned minute skill through calibrated joint laws and faithful rotations
+## C06 — full-history competition for on-court scoring opportunity
 
-**85% deliverables ready: checkpoint1 pushed as5aec1ee; checkpoint2 pushed asd801829; checkpoint3 independently validated for commit.** Exact recipes and numerical gates are frozen in [C05 contract](analysis/c05_contract_v1.json). Baseline smoke118/118, C04 source and8 tests pass. Exact decoder passes random/boundary and deliberate illegal-law/target-corruption checks. C04 demonstrates admissible role/minute signal on known development games,
-with unacceptably narrow intervals. That failure precedes the rotation decoder. Separately, the old offset decoder sometimes misses
-forecasted targets by many minutes. Freeze a new comparison prospectively; never change C04's failed coverage rule or promote its models.
+**0% accepted; no C06 data/fits/outcomes.** Question: does a fair full-history actor-probability competition improve the allocation
+of player opportunities, including high-usage players, and then improve coherent player/team forecasts? C05 improves bench players
+most; its34 high-usage player-games gain little minute accuracy and worsen point forecasts. That does not identify the cause.
+C01's extra actual-attempt headroom is diagnostic only. C02/C03's capped/mismatched learners did not establish an architecture/data
+ceiling. This chunk challenges that confound with common full supported history and a plain supervised conditional-actor task.
+It does not relax C05's failed rule or expand its rejected model.
 
-Question: can a complete joint-minute forecast retain C04's skill, express honest uncertainty after constraints, and improve player
-points without harming joint team outcomes? Score the distribution actually returned to consumers after every transform.
+### Committed capability and fair MVPs
 
-### Committed capability and three-model comparison
+Deliver an uncapped source-keyed actor dataset, three trained runnable conditional actor laws and legal event-world adapters,
+with training-only convergence evidence, full200 recorded-context proper scoring, final player/team scoring and independent
+fit/probability/world reproduction. Reuse C03 source/choice builders, C02 causal runtime view, C01 scorers and retained controls.
+No new provider, UI, event/action/conversion refit, availability claim, standalone workbench or production change.
 
-Deliver three runnable joint uncertainty models around the same dated role-mean information, a faithful legal rotation decoder,
-proper minute/player/team comparisons, and independent fit/draw/world reproduction. Reuse C04 data, models, source guards and scorers.
-No standalone workbench, event-head refit, UI or provider work. Tools alone cannot establish forecast gain.
+All three receive identical historical examples and dated common C03 context/player information. Compare (A) independently trained
+nonlinear Bernoulli player-actor probabilities normalised over the five; (B) regularised conditional-logit actor choice with
+lineup-relative features/context interactions; (C) nonlinear grouped-softmax actor choice. All define one positive probability law
+over five eligible players. A's training objective differs from B/C; evaluation always scores the normalised returned law.
+One recipe per family; no outcome-driven fourth recipe. Retain fixed causal usage-share and uniform baselines plus incumbent.
+Exact capacity/selection/regularisation, numerical gates and budget must be frozen at checkpoint1 before C06 data/fits/scores.
 
-Compare distinct uncertainty laws, with exact recipes/capacity frozen at checkpoint 1: (A) whole-team empirical residual resampling
-trained/scored after legal allocation; (B) a learned latent joint distribution mapped directly into bounded team-minute allocations;
-(C) a whole-team probability mixture of the learned role model and a dated legacy-family minute law. Learn parameters/weights from
-prior outcomes; no arbitrary spread multiplier. Minor spread settings do not count as separate approaches. All see identical eligible
-histories/mean information, with maximum two training-only configurations per family and one selected recipe before development scoring.
+### Evidence, decisive contrast and limits
 
-The shared decoder must preserve sampled player targets within one second while assigning five distinct eligible players throughout
-regulation. Use explicit constrained scheduling and independent accounting; retain original forecasted timing shapes as preferences.
-Calibrate/evaluate the returned legal law, including roster-size mapping and quantisation. Preserve a bridge control through the same
-decoder and the original native forecasts so translation effects remain visible. Generated fouls/overtime remain legal and explicit.
-
-### Evidence and stopping
-
-- Use only existing historical seasons 2023–2026 and the exposed B1 200 IDs; no protected/reserved outcomes, new provider or fresh-test
-  claim. Keep original source truth/gap flags. Actual-participant membership remains conditional, not validated pre-tip availability.
-- Every fit, mean/residual calibration, normalisation and feature precedes evaluated origin. Generate chronological training residuals
-  where needed; future-trained mean predictions cannot masquerade as out-of-time calibration. Freeze dates/selection before new scores.
-- Before development outcomes, freeze numerical proper-score benefit, interval/reliability requirements, critical/player/team harms,
-  support, multiplicity, precision and stopping. Retain C04/native references and account for all three initial comparisons. No criterion
-  rescue or replacement fourth model. Training-only uncertainty tuning is recorded fully; no development-driven changes.
-- Screen all 200 minute distributions after legal allocation/decoder. Prove both skill and uncertainty; point accuracy alone is insufficient.
-  Deliver first two ×1,000-world legal wiring adapters for valid families. At most two qualified paths proceed to first 20 then fixed 200
-  at 1,000 worlds/game; require player-points benefit against native and bridge, plus minutes/threes/rebounds/assists, critical players,
-  scores/totals/margins/wins/coverage, whole-game/week uncertainty and both simulation halves. No automatic production release.
+- Existing seasons2023–2026 only, history2022-12-01 through2025-12-31. Chronological selection Oct–Nov2025; final pre2026 refit
+  includes December with selected iterations fixed. Common uncapped supported history, no speed-motivated sampling.
+- Reuse only exposed B1's200 IDs for development. Source-supported nonheave shot/fouled/turnover actions whose actor is in the
+  reconstructed offensive five; exact keys/truth common to every model. Actorless outcomes and defensive-foul actor resolution
+  remain incumbent. No protected/reserved outcomes, fresh-test claim or operational participation claim.
+- Primary component score is log probability of the actual actor (lower better), compared on identical keys with native incumbent
+  and usage baseline. Also Brier score, star-actor reliability, support by game/week/role/close context, final probabilities after
+  normalisation and training/runtime parity. Do not infer box gains from next-event gains.
+- Freeze component benefit, calibration/critical-player harms, support, multiplicity3, shortlist<=2, point/uncertainty limits and
+  stopping before outcomes. All three get first2×1000 legal wiring. Only qualified actors reach first20, then conditional200,
+  preserving native and compatible-replay controls. Reuse audited compatible control worlds honestly; no unchanged production rerun.
+- Fixed native rotation inputs in every C06 arm isolate actor effects; C05's rejected minute law is not an eligible challenger.
+  Events sample actors; scores/counts emerge from events. No full-game shot/score targets or aggregate steering.
+- Decisive contrast: same actor information/history, distinct probability learners. Common reduced information versus the incumbent
+  remains an explicit package confound. A loss cannot establish an NBA predictability ceiling. A gain is known-development only;
+  independent chronological/operational release evidence remains separate.
 
 ### Four sequential checkpoints
 
 |Checkpoint|Weight|Acceptance|
 |---|---:|---|
-|1. Freeze final-object comparison|15%|Exact dated recipes/data/support/decision/total budget; reuse inventory; meaningful future-input, illegal-law and target-to-schedule faults; commit/push before fits.|
-|2. Working calibrated laws|35%|All three fit/predict; training-only capacity evidence; exact-time decoder and bridge tests; all 200 minute-law comparison and first-two-game adapters; frozen shortlist.|
-|3. End-to-end decision|35%|Qualified 20/conditional 200 native/bridge comparison with proper joint scoring and uncertainty; otherwise independent bounded stop. No repeated unchanged production refresh.|
-|4. Reproduce/deliver|15%|Fresh fits/draws/worker replay and independent decision; working models delivered; component/end-to-end/release status separate; next concrete 0% charter.|
+|1. Freeze fair architecture/data challenge|15%|Reuse inventory, exact numerical recipes/gates/budget, source/label/probability/expansion faults; commit/push before data/fits.|
+|2. Deliver full-history actor laws|35%|All examples used, three fits and training-only convergence, matched recorded-context scoring, independent source/feature checks and all three first2 wiring adapters; frozen shortlist.|
+|3. Returned-world decision|35%|Qualified paired20/conditional200 full player/team/critical/uncertainty comparison, otherwise independent bounded stop; no criterion changes.|
+|4. Reproduce and hand over|15%|Fresh fit/probability/worker reproduction; honest capability/component/game/release conclusions; lean live docs and next evidence-led C07 charter at0%.|
 
-Every checkpoint: affected tests/docs, staged inspection, commit and push before dependent work. Progress 15/50/85/100% counts accepted
-deliverables only. If calibration and skill cannot coexist under the frozen comparison, retain that result and identify whether the
-remaining limit is data support, the law or translation. No impossibility claim or engineering-as-product success.
+At each checkpoint: proportionate tests/accounting, refresh docs, inspect staged changes, commit/push before dependent work.
+Progress15/50/85/100% measures accepted deliverables. Missing promised models/adapters/reproduction leaves the chunk unfinished.
+Major forecast improvement cannot be promised; a negative search must be called negative and isolate the remaining confound.
 
 ### Compute and exact first actions
 
-Ten heavy threads total; fits 10 then workers 10×1, BLAS/Arrow1. At most four chronological mean-fit origins and the frozen family fits,
-plus one independent repeat. Maximum 606,000 new worlds including wiring/finalists/replays; native controls reused honestly. No budget
-extensions. Private namespace `data/derived/experiments/c05_joint_role_laws_v1`; aggregate receipts under `analysis/experiments/`.
-No production/input/asset changes or nightly refresh are authorised by this charter alone.
+Ten heavy threads maximum, BLAS/Arrow1; fitting10 then workers10×1, no nested pools. One yearly source pass, one recipe per family
+with training-only selection/final refit and one independent repeat; at most606000 new event worlds including wiring/replays.
+Stop before extra fitting or simulations beyond the frozen budget. Private namespace `data/derived/experiments/c06_actor_full_history_v1`;
+aggregate receipts `analysis/experiments/20261126_c06_*`. Preserve technical failures and source-hash-guarded resume.
 
 ```sh
 git status --short --branch
 git --no-pager log --oneline -5
 .venv/bin/python scripts/smoke.py
 ls -t analysis/experiments/ | head -15
+.venv/bin/python -m unittest discover -s tests -p 'test_c05_*.py'
 .venv/bin/python analysis/c04_reproduce.py source
-.venv/bin/python -m unittest discover -s tests -p 'test_c04_*.py'
 .venv/bin/python scripts/check_docs.py
 ```
 
-Current state: all three laws fitted; all200 minute laws scored. Only C passes the unchanged screen. Independent score/coverage audit
-passes51504 scalar checks. [Minute result](analysis/experiments/20261126_c05_minute_screen_v1.json) and
-[independent decision](analysis/experiments/20261126_c05_decision_v1.json) record the evidence; MODEL owns the numerical summary.
-Two-game wiring completed in230seconds:8000new worlds; independent accounting checks3270 scalar/half scores and all legal
-identities. Challenger schedules match their quantised targets exactly; bridge error stays under0.012minutes. Final engine-minute
-differences from sampled schedules remain explicit. [Wiring audit](analysis/experiments/20261126_c05_wiring_audit_v1.json) and
-[returned-law diagnostic](analysis/experiments/20261126_c05_delivered2_v1.json) retain the checks; two games do not establish skill.
-Namespace `data/derived/experiments/c05_joint_role_laws_v1`; no active jobs. Paired20 completed in263seconds generation;
-[independent audit](analysis/experiments/20261126_c05_short_independent_v1.json) checks44000new worlds/21243 scalar scores.
-Overall player-points improvement passes but critical-player point harm fails both reference limits, so shortlist is empty.
-[Final returned-law diagnostic](analysis/experiments/20261126_c05_delivered20_v1.json) retains minute/box calibration and translation.
-Two technical failures remain preserved in [C05 faults](analysis/experiments/20261126_c05_faults_v1.json); private `logs/` retains logs.
-Next: inspect/stage, commit/push checkpoint3. Then run `.venv/bin/python analysis/c05_reproduce.py` with inner thread caps1:
-fresh chronological fits,all200draws,four1k single-worker replays and independent decision. No200game expansion is permitted.
-After reproduction, close C05 with capability/component/screen/release outcomes separate and freeze evidence-led C06 at0%.
+Then inspect C05 completion, critical-player/role evidence and C03 data/model/runtime interfaces. Freeze C06 contract before building
+uncapped arrays. No C06 work is required to close C05.

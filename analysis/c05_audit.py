@@ -12,7 +12,7 @@ from analysis.c01_workbench import read,create_json
 from analysis.c01_core import ContractError
 from basketball_common import sha256_file
 
-def minute_audit():
+def minute_audit(output=None):
     p=read(data.WORK/'minute_screen.json');scores=pd.read_parquet(data.WORK/'minute_scores.parquet');plan=data.verify();maximum=0.;count=0
     for ref in plan['references']:
         gid=ref['game_id'];path=data.WORK/'minute_draws'/f'{gid}.npz'
@@ -29,7 +29,7 @@ def minute_audit():
                     if d>1e-10:raise ContractError('independent minute score differs')
                 lo,hi=np.quantile(a,[.1,.9],method='inverted_cdf')
                 if bool(lo<=r.truth<=hi)!=bool(r.covered80):raise ContractError('independent minute coverage differs')
-    result={'games':200,'scalar_half_scores_checked':count,'maximum_difference':maximum,'coverage_independently_verified':True,'all_joint_targets_legal':True};create_json(data.WORK/'minute_audit.json',result);return result
+    result={'games':200,'scalar_half_scores_checked':count,'maximum_difference':maximum,'coverage_independently_verified':True,'all_joint_targets_legal':True};create_json(Path(output) if output is not None else data.WORK/'minute_audit.json',result);return result
 
 def world_audit(ids):
     count=0;maximum=0.;worlds=0

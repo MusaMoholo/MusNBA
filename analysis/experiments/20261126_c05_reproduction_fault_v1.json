@@ -1,0 +1,10 @@
+{
+  "chunk":"C05",
+  "fault":"Fresh fits, all200 minute draws and all4 fresh single-worker replays matched. Final repeated minute audit then tried exclusive creation of an already completed audit receipt and correctly refused overwrite.",
+  "repair":"Separate optional audit receipt destination; explicit provenance-checked --resume accepts only unchanged fresh fit hashes, regenerates the same minute draws, verifies retained fresh replay arrays against originals, and writes a new audit receipt in the reproduction namespace.",
+  "retained":"data/derived/experiments/c05_joint_role_laws_v1/logs/c05_reproduce_fault03.log and original immutable minute_audit.json; fresh fit/replay files in data/derived/experiments/c05_reproduction_v1",
+  "additional_fits":0,
+  "additional_event_worlds":0,
+  "recipes_or_criteria_changed":false,
+  "completed_evidence_overwritten":false
+}
