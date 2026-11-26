@@ -146,43 +146,22 @@ presumed accuracy advantage. A current-event label may condition a later head on
 The historical defence comparison (`20261120T120827Z_compare_defence_F4.json`) measured an opponent-rating association ratio
 of about 41%. It is not current r3 accuracy or a causal share of defence; forcing it to 100% is not a modelling goal.
 
-C01 [benchmark](analysis/experiments/20261125_c01_benchmark_v1.json) reuses the known B1 panel: 200 games, 400 team-games,
-4,292 actual-participant player-games. Team-points CRPS (distribution error in points; lower is better) is 6.415 incumbent,
-6.789 team-strength and 7.759 player-rate. Team-strength's extra error is 0.374 points (95% game interval .163–.586).
-Older baseline history/shared minutes prevent pure architecture attribution; no production gain is claimed.
+C01's [benchmark](analysis/experiments/20261125_c01_benchmark_v1.json) covers200 known B1 games/4292 actual-participant
+player-games. Team-points CRPS is6.415 incumbent,6.789 team-strength,7.759 player-rate (lower better,points). Historical package
+differences prevent architecture attribution. [Oracle diagnostics](analysis/experiments/20261125_c01_localisation_v1.json) reduce
+player-points error0.605 with actual minutes but worsen team error0.294: outcome-informed headroom, not deployable/additive gains.
+The [C01 completion](analysis/experiments/20261125_c01_workbench_v1.json) records reproduction; its forecast ledger has zero real
+certified entries and no live hook. Synthetic timing/fault checks do not establish operational forecasting performance.
 
-[Connected diagnostics](analysis/experiments/20261125_c01_localisation_v1.json): giving the fixed rate model real minutes reduces
-player-points CRPS by 0.605 points (95% .549–.665) but worsens team-points CRPS by 0.294 (.115–.487). Real minutes plus shot attempts
-reduce player error by 1.487 (1.407–1.572); team CRPS 6.568 still does not establish a gain over the incumbent. These are separate,
-outcome-informed information diagnostics, not deployable gains or additive causal shares. Preserve joint team behaviour when improving players.
-On identical recorded histories, shared and independently accumulated candidate features agree. The actor-time phase difference
-has small one-step score impact; the opponent-defence coefficient gap is unresolved with game uncertainty. Zone replay is a separate
-scenario, not original incumbent zones. These findings do not justify a clock/defence coefficient fix by assumption.
+C02's [screen](analysis/experiments/20261125_c02_screen_v1.json) loses recorded-event log probability by0.01116nats/action
+(95% game interval0.00921–0.01309); its [20-game wiring](analysis/experiments/20261125_c02_rollout_v1.json) changes player-points
+CRPS+0.0109 and team-points+0.1168, neither a demonstrated gain. [C02 closes](analysis/experiments/20261125_c02_completion_v1.json)
+with exact fresh fits/worker replay; its smaller/mismatched training package limits attribution.
 
-C01's [completion receipt](analysis/experiments/20261125_c01_workbench_v1.json) records independent fit/scoring reproduction and
-worker replay; retained incumbent/zone worlds were pinned inputs. Its forecast ledger passed timing/fault integration on synthetic
-artifacts only: zero real certified entries, no live hook. Outcome-informed headroom does not establish causal predictability.
-
-C02's [frozen actor/action screen](analysis/experiments/20261125_c02_screen_v1.json) tests 200 known development games and 43,697
-supported actions. Combined negative log probability (nats/action; lower better) is 3.19137 incumbent, 3.20253 candidate and 3.31416
-role baseline. Candidate error rises 0.01116 (95% game interval 0.00921–0.01309; week 0.00895–0.01350). It fails the frozen screen;
-no promotion or expansion beyond 20 wiring games. Candidate causal input features match independent event-history reconstruction
-on 49,002 segments. The smaller training window/different feature/learner package limits attribution; this is not a possession-model ceiling.
-
-The [paired C02 integration](analysis/experiments/20261125_c02_rollout_v1.json) generated 1,000 worlds per arm on 20 games
-(427 player-games). Player-points CRPS change is +0.0109 points (95% game interval −0.0192 to +0.0427); team-points change is
-+0.1168 (−0.0266 to +0.2585). These are wiring results, with insufficient support for qualification. All counts/scores emerge
-from events. Schedule and rotation rules are shared; different simulated fouls can change realised player minutes between arms.
-
-C02 closes in its [completion receipt](analysis/experiments/20261125_c02_completion_v1.json). Fresh independent training and
-probability/scoring reproduction agree with the frozen run; a fresh-fit single-worker 1k game matches the ten-worker candidate arrays
-exactly. The delivered research adapter generates shots/points from events, with no aggregate targets. Production is unchanged.
-
-C03's [frozen comparison](analysis/c03_contract_v1.json) delivers three working possession interfaces and a bounded
-negative search. All three recipes lose the recorded-event and paired20 player/team comparisons; no finalist or production gain.
-The [completion receipt](analysis/experiments/20261125_c03_completion_v1.json) and [independent reproduction](analysis/experiments/20261125_c03_reproduction_v1.json)
-preserve original criteria, selection-aware game/week intervals, exact fresh fits/probabilities/world replay and accounting. The capped
-training sample, finite capacity and incumbent package differences limit attribution; this is not a model-class ceiling.
+C03's [three-family comparison](analysis/c03_contract_v1.json) loses all recorded-event and paired20 player/team screens.
+[Completion](analysis/experiments/20261125_c03_completion_v1.json) and [reproduction](analysis/experiments/20261125_c03_reproduction_v1.json)
+preserve unchanged criteria, multiplicity and exact fresh fits/world replay. Capped data/capacity and incumbent package differences
+remain confounds; neither C02 nor C03 establishes a model-class or data ceiling. Production is unchanged.
 
 C04's [joint-role screen](analysis/experiments/20261125_c04_minute_screen_v1.json), 200 known games/4,292 player-games, finds
 predictable minute skill: regulation-minute CRPS falls from 3.522 native to 3.224/3.117/3.313 for residual/nonlinear/analogue models.
@@ -197,6 +176,14 @@ all model files and 12,876,000 minute values match exactly; four 1,000-world sin
 Component gains persist under equal-game weighting and both simulation halves; calibration blocks promotion.
 The minute screen assesses standalone forecasts against native realised-world minutes. Later scheduling, substitutions and fouls can
 alter delivered minutes; final game-minute calibration is unproven.
+
+C05's [frozen comparison](analysis/c05_contract_v1.json) and [minute screen](analysis/experiments/20261126_c05_minute_screen_v1.json)
+reuse the200 exposed games/4292player-games. The learned whole-team mixture reduces minute CRPS3.522→3.202 (−9.1%; change−0.320minutes,
+95% game interval−0.383 to−0.257; familywise game/week upper bounds remain below0). Coverage50/80/95 is46.7%/76.5%/92.5%; critical80
+coverage80.3%, all within C05's prospectively frozen tolerances. Empirical and latent laws fail calibration and stop. Common ridge
+means use full history and chronological out-of-time residuals; mixture weight55.0% learned on prior December only. Native80coverage78.7%.
+[Independent arithmetic](analysis/experiments/20261126_c05_decision_v1.json) agrees, including source-quality sensitivity. This is a
+conditional development component result; complete-game/final-world uncertainty and production qualification are unresolved.
 
 The B1 component audit remains reusable source evidence. The long-shot recipe failed
 (`20261124_b1_development_decision_v2.json`). A substitution attempt improved minutes without establishing required game compatibility

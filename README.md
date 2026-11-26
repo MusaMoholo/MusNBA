@@ -72,53 +72,25 @@ as inputs. Completed experiment stages refuse overwrite. The legacy-test invento
 [the capture API](analysis/c01_ledger.py). Unknown/late evidence fails closed. Historical snapshots are never backfilled as originals.
 The separate browser/release commands above cover UI/delivery; research commands do not publish or promote a model.
 
-C02 trains possession-level actor/action probability heads; shots and scores emerge from simulated events. Its isolated research
-commands are:
+Research stages are isolated from serving/release. C02/C03 deliver possession learners; C04 delivers full-history joint-minute
+forecasters. Their `analysis/c02_reproduce.py`, `analysis/c03_reproduce.py`, and `analysis/c04_reproduce.py` each provide `source`
+and `run --output <new-private-directory>`. Use the same thread caps, immutable source guards and recorded contracts.
+Completed stages refuse overwrite; expansion fails closed without eligible candidates. Private fits/draws/worlds remain ignored.
+Aggregate receipts in MODEL record decisions and exact namespaces; old comparisons remain development evidence.
+
+C05 compares three chronological uncertainty laws around common dated role means and preserves targets through legal rotations:
 
 ```sh
-.venv/bin/python analysis/c02_data.py verify
-.venv/bin/python analysis/c02_reproduce.py source
-.venv/bin/python analysis/c02_model.py fit
-.venv/bin/python analysis/c02_model.py screen
-.venv/bin/python analysis/c02_parity.py
-.venv/bin/python analysis/c02_rollout.py run --jobs 10
+.venv/bin/python analysis/c05_models.py
+.venv/bin/python analysis/c05_screen.py
+.venv/bin/python analysis/c05_rollout.py wiring --jobs 2
+.venv/bin/python analysis/c05_rollout.py short --jobs 10
+.venv/bin/python analysis/c05_reproduce.py --output data/derived/experiments/c05_reproduction_v1
 ```
 
-Use the same four inner-thread caps above. Fitting uses ten threads; rollout uses ten workers with one each; run them sequentially.
-A complete independent repeat uses `.venv/bin/python analysis/c02_reproduce.py run --output <new-private-directory>`; it refits,
-recreates probability/scoring results, checks source-feature parity and repeats one full game. Completed stages refuse overwrite.
-Rollout verifies completed game receipts when resuming an interrupted run. Private artifacts stay under ignored
-`data/derived/experiments/`; each chunk's receipt records its namespace. These commands neither change the live model nor publish/import app data.
-
-C03 delivered three frozen possession families through a common 43-choice law; all failed the development shortlist.
-The reproducible research library uses the same thread caps:
-
-```sh
-.venv/bin/python analysis/c03_data.py verify
-.venv/bin/python analysis/c03_reproduce.py source
-.venv/bin/python analysis/c03_model.py all
-.venv/bin/python analysis/c03_evaluate.py
-.venv/bin/python analysis/c03_rollout.py mvp --jobs 10
-.venv/bin/python analysis/c03_reproduce.py run --output <new-private-directory>
-```
-
-Completed data/fits/scores refuse overwrite; generation resumes only hash-verified completed games. Inspect interrupted partial games
-before a technical rerun. `finalists` replaces `mvp` only for the frozen shortlist; no eligible candidate means expansion is forbidden.
-These commands neither promote nor publish. Private fits/arrays/worlds remain ignored; aggregate receipts record the bounded decision.
-
-C04 adds three full-history joint-role/minute models. Use the same thread caps and isolated research scope:
-
-```sh
-.venv/bin/python analysis/c04_data.py verify
-.venv/bin/python analysis/c04_reproduce.py source
-.venv/bin/python analysis/c04_models.py all
-.venv/bin/python analysis/c04_screen.py
-.venv/bin/python analysis/c04_rollout.py wiring --jobs 2
-.venv/bin/python analysis/c04_reproduce.py run --output <new-private-directory>
-```
-
-Completed stages refuse overwrite. `short`/`final` generation fails closed without eligible models. Native captures stay immutable;
-new fits/draws/worlds stay ignored. These commands neither promote nor publish; MODEL owns results/limits.
+The minute screen gates `short`; the paired20 decision gates `final`. Fits use the audited C04 row cache. Every calibration
+prediction precedes its target origin. Source hashes gate resume; inspect and retain partial failures before a technical rerun.
+These commands neither promote a model nor publish/import app data. MODEL owns numerical results and limitations.
 
 For a qualified production/input/generation release:
 

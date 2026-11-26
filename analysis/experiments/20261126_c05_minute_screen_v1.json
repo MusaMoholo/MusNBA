@@ -1,0 +1,404 @@
+{
+  "models": {
+    "A": {
+      "player_games": 4292,
+      "crps": 3.2129229845759637,
+      "mae": 4.451080661696179,
+      "half1": 3.2146803298229263,
+      "half2": 3.2165336360671017,
+      "coverage50": 0.43126747437092267,
+      "coverage80": 0.7269338303821062,
+      "coverage95": 0.9047064305684995,
+      "width80": 11.795786735010871,
+      "energy": 18.780853466129702
+    },
+    "B": {
+      "player_games": 4292,
+      "crps": 3.216626186944711,
+      "mae": 4.456800838769804,
+      "half1": 3.2192134602050326,
+      "half2": 3.2196345904007457,
+      "coverage50": 0.4755358807082945,
+      "coverage80": 0.7534948741845293,
+      "coverage95": 0.896551724137931,
+      "width80": 12.76578129853992,
+      "energy": 18.79733354377604
+    },
+    "C": {
+      "player_games": 4292,
+      "crps": 3.202318348835051,
+      "mae": 4.455435337061199,
+      "half1": 3.2063711503261882,
+      "half2": 3.2040170761105933,
+      "coverage50": 0.46691519105312207,
+      "coverage80": 0.7651444547996272,
+      "coverage95": 0.9249767008387698,
+      "width80": 12.736307859583722,
+      "energy": 18.730178073633475
+    },
+    "native": {
+      "player_games": 4292,
+      "crps": 3.522080486246461,
+      "mae": 4.7801523268675,
+      "half1": 3.5216723681364908,
+      "half2": 3.5286297175385566,
+      "coverage50": 0.5020969245107176,
+      "coverage80": 0.7872786579683131,
+      "coverage95": 0.9165890027958994,
+      "width80": 14.229982498471811,
+      "energy": 20.382655280621524
+    }
+  },
+  "changes": {
+    "A": {
+      "overall": {
+        "games": 200,
+        "rows": 4292,
+        "supported_for_overall_ranking": true,
+        "change": -0.30915750167049694,
+        "ci95_game": [
+          -0.37353455300933025,
+          -0.24710411292017387
+        ],
+        "ci95_calendar_week": [
+          -0.3893110111638495,
+          -0.22942742156877166
+        ],
+        "calendar_blocks": 16,
+        "familywise_game": [
+          -0.38561620036946515,
+          -0.23128667303880943
+        ],
+        "familywise_week": [
+          -0.4056304473608641,
+          -0.21082935419555912
+        ],
+        "families_counted": 3
+      },
+      "relative_change": -0.08777695537559141,
+      "critical": {
+        "games": 167,
+        "rows": 290,
+        "supported_for_overall_ranking": true,
+        "change": -0.3388722818145419,
+        "ci95_game": [
+          -0.48449153264892264,
+          -0.19394275563057395
+        ],
+        "ci95_calendar_week": [
+          -0.4899432837275775,
+          -0.16963987052909113
+        ],
+        "calendar_blocks": 16,
+        "familywise_game": [
+          -0.5179854685961148,
+          -0.16013364377282613
+        ],
+        "familywise_week": [
+          -0.5218556246360558,
+          -0.13037570109774735
+        ],
+        "families_counted": 3
+      },
+      "critical_coverage80": 0.7517241379310344,
+      "equal_game_change": -0.30379237595329106,
+      "by_roster_size": {
+        "7": {
+          "rows": 21,
+          "crps": 3.372186561904768,
+          "coverage80": 0.7142857142857143
+        },
+        "8": {
+          "rows": 88,
+          "crps": 4.140809520833341,
+          "coverage80": 0.625
+        },
+        "9": {
+          "rows": 675,
+          "crps": 3.2293422867654407,
+          "coverage80": 0.7229629629629629
+        },
+        "10": {
+          "rows": 1200,
+          "crps": 3.189928435000009,
+          "coverage80": 0.7375
+        },
+        "11": {
+          "rows": 781,
+          "crps": 3.620113000938976,
+          "coverage80": 0.677336747759283
+        },
+        "12": {
+          "rows": 720,
+          "crps": 3.2453750169907494,
+          "coverage80": 0.7208333333333333
+        },
+        "13": {
+          "rows": 481,
+          "crps": 2.6676321770616855,
+          "coverage80": 0.7920997920997921
+        },
+        "14": {
+          "rows": 266,
+          "crps": 2.743820127568931,
+          "coverage80": 0.7631578947368421
+        },
+        "15": {
+          "rows": 60,
+          "crps": 2.8328771922222304,
+          "coverage80": 0.75
+        }
+      }
+    },
+    "B": {
+      "overall": {
+        "games": 200,
+        "rows": 4292,
+        "supported_for_overall_ranking": true,
+        "change": -0.3054542993017494,
+        "ci95_game": [
+          -0.36855836847692786,
+          -0.24261815635971862
+        ],
+        "ci95_calendar_week": [
+          -0.3831246397703572,
+          -0.226826335914467
+        ],
+        "calendar_blocks": 16,
+        "familywise_game": [
+          -0.3829716120205651,
+          -0.22778083757991227
+        ],
+        "familywise_week": [
+          -0.4012707863746718,
+          -0.21047602980164512
+        ],
+        "families_counted": 3
+      },
+      "relative_change": -0.0867255306897535,
+      "critical": {
+        "games": 167,
+        "rows": 290,
+        "supported_for_overall_ranking": true,
+        "change": -0.35482067244672605,
+        "ci95_game": [
+          -0.4938272511808153,
+          -0.21955185721634016
+        ],
+        "ci95_calendar_week": [
+          -0.5034754149101835,
+          -0.19092411820407643
+        ],
+        "calendar_blocks": 16,
+        "familywise_game": [
+          -0.5242538558749763,
+          -0.19016535320562367
+        ],
+        "familywise_week": [
+          -0.5310246121509339,
+          -0.1536896535469931
+        ],
+        "families_counted": 3
+      },
+      "critical_coverage80": 0.8241379310344827,
+      "equal_game_change": -0.29977752583919715,
+      "by_roster_size": {
+        "7": {
+          "rows": 21,
+          "crps": 3.611377398412703,
+          "coverage80": 0.5714285714285714
+        },
+        "8": {
+          "rows": 88,
+          "crps": 4.016265395075764,
+          "coverage80": 0.6818181818181818
+        },
+        "9": {
+          "rows": 675,
+          "crps": 3.2295849092345748,
+          "coverage80": 0.7837037037037037
+        },
+        "10": {
+          "rows": 1200,
+          "crps": 3.2139338691388963,
+          "coverage80": 0.7841666666666667
+        },
+        "11": {
+          "rows": 781,
+          "crps": 3.625088428339744,
+          "coverage80": 0.7144686299615877
+        },
+        "12": {
+          "rows": 720,
+          "crps": 3.226771421898157,
+          "coverage80": 0.7583333333333333
+        },
+        "13": {
+          "rows": 481,
+          "crps": 2.6672776233541318,
+          "coverage80": 0.7525987525987526
+        },
+        "14": {
+          "rows": 266,
+          "crps": 2.737099065288229,
+          "coverage80": 0.706766917293233
+        },
+        "15": {
+          "rows": 60,
+          "crps": 2.905008050555563,
+          "coverage80": 0.6333333333333333
+        }
+      }
+    },
+    "C": {
+      "overall": {
+        "games": 200,
+        "rows": 4292,
+        "supported_for_overall_ranking": true,
+        "change": -0.31976213741140935,
+        "ci95_game": [
+          -0.38329727557106735,
+          -0.2573267203591934
+        ],
+        "ci95_calendar_week": [
+          -0.3993089736092549,
+          -0.2426625372004896
+        ],
+        "calendar_blocks": 16,
+        "familywise_game": [
+          -0.396154968037683,
+          -0.24206201746691464
+        ],
+        "familywise_week": [
+          -0.4153177340864839,
+          -0.22681163006484475
+        ],
+        "families_counted": 3
+      },
+      "relative_change": -0.0907878563990981,
+      "critical": {
+        "games": 167,
+        "rows": 290,
+        "supported_for_overall_ranking": true,
+        "change": -0.32700833641224086,
+        "ci95_game": [
+          -0.46928429821311646,
+          -0.1886690207288024
+        ],
+        "ci95_calendar_week": [
+          -0.4771264585844772,
+          -0.16842155755448615
+        ],
+        "calendar_blocks": 16,
+        "familywise_game": [
+          -0.5001219841011258,
+          -0.15649107695258796
+        ],
+        "familywise_week": [
+          -0.5085773065724467,
+          -0.13461894563025734
+        ],
+        "families_counted": 3
+      },
+      "critical_coverage80": 0.803448275862069,
+      "equal_game_change": -0.3144884006198091,
+      "by_roster_size": {
+        "7": {
+          "rows": 21,
+          "crps": 3.3423393190476247,
+          "coverage80": 0.7142857142857143
+        },
+        "8": {
+          "rows": 88,
+          "crps": 4.122257743560613,
+          "coverage80": 0.6363636363636364
+        },
+        "9": {
+          "rows": 675,
+          "crps": 3.2318800541728483,
+          "coverage80": 0.7659259259259259
+        },
+        "10": {
+          "rows": 1200,
+          "crps": 3.180665626583343,
+          "coverage80": 0.7708333333333334
+        },
+        "11": {
+          "rows": 781,
+          "crps": 3.5915319937686827,
+          "coverage80": 0.7195902688860435
+        },
+        "12": {
+          "rows": 720,
+          "crps": 3.22521310236112,
+          "coverage80": 0.7541666666666667
+        },
+        "13": {
+          "rows": 481,
+          "crps": 2.6732810656271755,
+          "coverage80": 0.8316008316008316
+        },
+        "14": {
+          "rows": 266,
+          "crps": 2.7512370086466262,
+          "coverage80": 0.8157894736842105
+        },
+        "15": {
+          "rows": 60,
+          "crps": 2.804459998333343,
+          "coverage80": 0.8166666666666667
+        }
+      }
+    }
+  },
+  "eligible": {
+    "A": {
+      "eligible": false,
+      "checks": {
+        "minute_gain": true,
+        "game_week_support": true,
+        "halves": true,
+        "support": true,
+        "critical_harm": true,
+        "coverage50": false,
+        "coverage80": false,
+        "coverage95": false,
+        "critical_coverage80": true
+      }
+    },
+    "B": {
+      "eligible": false,
+      "checks": {
+        "minute_gain": true,
+        "game_week_support": true,
+        "halves": true,
+        "support": true,
+        "critical_harm": true,
+        "coverage50": true,
+        "coverage80": false,
+        "coverage95": false,
+        "critical_coverage80": true
+      }
+    },
+    "C": {
+      "eligible": true,
+      "checks": {
+        "minute_gain": true,
+        "game_week_support": true,
+        "halves": true,
+        "support": true,
+        "critical_harm": true,
+        "coverage50": true,
+        "coverage80": true,
+        "coverage95": true,
+        "critical_coverage80": true
+      }
+    }
+  },
+  "games": 200,
+  "worlds": 1000,
+  "production_changed": false,
+  "shortlist": [
+    "C"
+  ]
+}

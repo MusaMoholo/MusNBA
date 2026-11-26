@@ -1,0 +1,98 @@
+{
+  "A": {
+    "checks_independently_matched": [
+      "minute_gain",
+      "halves",
+      "support",
+      "critical_harm",
+      "coverage50",
+      "coverage80",
+      "coverage95",
+      "critical_coverage80"
+    ],
+    "change_minutes": -0.3091575016704969,
+    "coverage": {
+      "50": 0.43126747437092267,
+      "80": 0.7269338303821062,
+      "95": 0.9047064305684995
+    },
+    "critical_coverage80": 0.7517241379310344,
+    "source_quality": {
+      "reconciled": {
+        "rows": 3761,
+        "crps_change": -0.3092364014696202,
+        "coverage80": 0.7248072321191172
+      },
+      "flagged": {
+        "rows": 531,
+        "crps_change": -0.3085986652401709,
+        "coverage80": 0.7419962335216572
+      }
+    },
+    "eligibility": false
+  },
+  "B": {
+    "checks_independently_matched": [
+      "minute_gain",
+      "halves",
+      "support",
+      "critical_harm",
+      "coverage50",
+      "coverage80",
+      "coverage95",
+      "critical_coverage80"
+    ],
+    "change_minutes": -0.3054542993017494,
+    "coverage": {
+      "50": 0.4755358807082945,
+      "80": 0.7534948741845293,
+      "95": 0.896551724137931
+    },
+    "critical_coverage80": 0.8241379310344827,
+    "source_quality": {
+      "reconciled": {
+        "rows": 3761,
+        "crps_change": -0.3049973385519571,
+        "coverage80": 0.7490029247540547
+      },
+      "flagged": {
+        "rows": 531,
+        "crps_change": -0.3086908894711819,
+        "coverage80": 0.7853107344632768
+      }
+    },
+    "eligibility": false
+  },
+  "C": {
+    "checks_independently_matched": [
+      "minute_gain",
+      "halves",
+      "support",
+      "critical_harm",
+      "coverage50",
+      "coverage80",
+      "coverage95",
+      "critical_coverage80"
+    ],
+    "change_minutes": -0.31976213741140935,
+    "coverage": {
+      "50": 0.46691519105312207,
+      "80": 0.7651444547996272,
+      "95": 0.9249767008387698
+    },
+    "critical_coverage80": 0.803448275862069,
+    "source_quality": {
+      "reconciled": {
+        "rows": 3761,
+        "crps_change": -0.3217835677285931,
+        "coverage80": 0.7636266950279181
+      },
+      "flagged": {
+        "rows": 531,
+        "crps_change": -0.30544462437388,
+        "coverage80": 0.775894538606403
+      }
+    },
+    "eligibility": true
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "chunk":"C05",
+  "technical_repairs":[
+    {"id":1,"fault":"Reusable joint energy scorer enforces dimension2; minute diagnostic uses full roster dimension","resolution":"Generalise diagnostic norm arithmetic to full roster, same mathematical score, no acceptance criterion uses diagnostic energy","retained":"data/derived/experiments/c05_fault02_joint_role_laws_v1/fault01_minute_draws; /tmp/c05_screen.log"},
+    {"id":2,"fault":"Dated alloc exactly48 enters digitize band13; SD library allocated only bands0..12","resolution":"Allocate all14 bands, unsupported bands use prospectively frozen pooled residual SD; add exact48 test; repeat same fits/seeds","retained":"data/derived/experiments/c05_fault02_joint_role_laws_v1; /tmp/c05_screen_v2.log; /tmp/c05_fit.log"}
+  ],
+  "recipes_changed":false,
+  "criteria_changed":false,
+  "outcome_driven_tuning":false,
+  "event_worlds_in_failed_attempts":0,
+  "remaining_confound":"Common ridge mean differs from C04 nonlinear best; three laws isolate uncertainty conditional on same ridge information, not an optimal-mean ceiling. Exact schedule preserves minutes but realism of stint timing is unproven."
+}

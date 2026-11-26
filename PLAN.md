@@ -20,7 +20,7 @@ an architecture or data ceiling. Stop treating plausible mechanisms and reusable
 
 C04 demonstrates predictable joint-role/minute signal across three full-history models, while all fail the frozen uncertainty-coverage
 rule. Complete-game gain remains unproven. The old schedule decoder also distorts some minute targets. MODEL owns numerical results.
-C05 must preserve learned skill through a calibrated joint law and faithful legal rotations before testing player-points/team benefit.
+C05 now has a calibrated minute-screen survivor and an exact-time legal decoder; its pending decision is player-points/team benefit.
 Compare distinct uncertainty architectures with common dated means/data, and validate the final returned distribution after every
 constraint. Retain both native and decoder controls. No arbitrary spread inflation, criterion rescue or presumed winning model.
 

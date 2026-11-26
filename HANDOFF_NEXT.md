@@ -1,13 +1,13 @@
-# Handoff — C04 complete; C05 at 0%
+# Handoff — C05 in progress
 
 Updated 26 November 2026. [C04 completion](analysis/experiments/20261125_c04_completion_v1.json) records a component gain with a
 calibration block: all three models improve minute-distribution scores; none earns complete-game expansion. [MODEL](MODEL.md) owns
 numbers/limits, [PLAN](PLAN.md) strategy, [AGENTS](AGENTS.md) culture/workflow and [README](README.md) commands.
-Production remains engine-v1.3-r3, report-bands-v1 and team-pathway-v1. No active jobs. Owner 8766 stays running; review 8767.
+Production remains engine-v1.3-r3, report-bands-v1 and team-pathway-v1. Owner 8766 stays running; review 8767.
 
 ## C05 — preserve learned minute skill through calibrated joint laws and faithful rotations
 
-**Checkpoint 1 ready for acceptance; no C05 fits/draws/outcomes.** Exact recipes and numerical gates are frozen in [C05 contract](analysis/c05_contract_v1.json). Baseline smoke118/118, C04 source and8 tests pass. Exact decoder passes random/boundary and deliberate illegal-law/target-corruption checks. C04 demonstrates admissible role/minute signal on known development games,
+**50% deliverables ready: checkpoint1 pushed as5aec1ee; checkpoint2 validated for commit.** Exact recipes and numerical gates are frozen in [C05 contract](analysis/c05_contract_v1.json). Baseline smoke118/118, C04 source and8 tests pass. Exact decoder passes random/boundary and deliberate illegal-law/target-corruption checks. C04 demonstrates admissible role/minute signal on known development games,
 with unacceptably narrow intervals. That failure precedes the rotation decoder. Separately, the old offset decoder sometimes misses
 forecasted targets by many minutes. Freeze a new comparison prospectively; never change C04's failed coverage rule or promote its models.
 
@@ -75,4 +75,14 @@ ls -t analysis/experiments/ | head -15
 .venv/bin/python scripts/check_docs.py
 ```
 
-Next: implement the frozen chronological shared means and three uncertainty laws; run training-only diagnostics before the fixed200 minute screen. Decoder uses original timing as a preference; realistic substitution timing remains unproven. Private namespace/logs will retain every stage. No active jobs.
+Current state: all three laws fitted; all200 minute laws scored. Only C passes the unchanged screen. Independent score/coverage audit
+passes51504 scalar checks. [Minute result](analysis/experiments/20261126_c05_minute_screen_v1.json) and
+[independent decision](analysis/experiments/20261126_c05_decision_v1.json) record the evidence; MODEL owns the numerical summary.
+Two-game wiring completed in230seconds:8000new worlds; independent accounting checks3270 scalar/half scores and all legal
+identities. Challenger schedules match their quantised targets exactly; bridge error stays under0.012minutes. Final engine-minute
+differences from sampled schedules remain explicit. [Wiring audit](analysis/experiments/20261126_c05_wiring_audit_v1.json) and
+[returned-law diagnostic](analysis/experiments/20261126_c05_delivered2_v1.json) retain the checks; two games do not establish skill.
+Namespace `data/derived/experiments/c05_joint_role_laws_v1`; no active jobs. Two technical failures are retained separately in
+[C05 faults](analysis/experiments/20261126_c05_faults_v1.json); private `logs/` retains run logs.
+Next: inspect/stage, commit/push checkpoint2. Only then run `analysis/c05_rollout.py short --jobs 10`; C alone is eligible.
+Checkpoint3 requires paired20 outcome/uncertainty decision and conditional200, or frozen bounded stop. No production/publication.

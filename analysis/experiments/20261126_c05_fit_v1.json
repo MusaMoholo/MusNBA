@@ -1,0 +1,28 @@
+{
+  "code_sha256": "35b531d57cc9961fe37715b4f065c74532bf8eef650f7aa00a9da51bc7ed7932",
+  "contract_sha256": "04dc272eaaf5e46ad54a89aeceb1bdce8f1bd5feafb6ad26eb9a57b6d35ec6a4",
+  "data_sha256": "00fc2ecc4a76fc46c6d030599dc2cc96a748dd21c39d38900d25d17c9a247649",
+  "hashes": {
+    "model.json": "b9ba60f7dd2f5540a482e49ed317e18780bd1fe1e4f53a7f21b4023127b95783",
+    "chronological_means.json": "e035169d4a7e254424420faa86915bb547f5673e3848af3ae3fead335bcee240"
+  },
+  "training_rows_by_origin": {
+    "2024-06-30": 44498,
+    "2025-06-30": 70479,
+    "2025-11-30": 76945
+  },
+  "residual_team_games": 3408,
+  "selection_team_games": 390,
+  "all_residual_predictions_precede_origin": true,
+  "shared_mean": "ridge100 exact closed form; no capped iterations or training subsampling",
+  "training_minute_mae": 4.379520806205412,
+  "training_only_mixture_weight_A": 0.5497719295009981,
+  "selection_crps": {
+    "A": 3.1331361400568856,
+    "legacy": 3.138461671533539,
+    "mixture": 3.1222915380008867
+  },
+  "latent_min_cov_eigenvalue": 0.05947141966276679,
+  "seconds": 13.276459374999831,
+  "production_changed": false
+}
