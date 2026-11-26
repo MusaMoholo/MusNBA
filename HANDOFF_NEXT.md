@@ -6,7 +6,7 @@ engine-v1.3-r3/report-bands-v1/team-pathway-v1. No release/publication/manual im
 
 ## C06 — full-history competition for on-court scoring opportunity
 
-**0% accepted; no C06 data/fits/outcomes.** Question: does a fair full-history actor-probability competition improve the allocation
+**Checkpoint 1 ready for acceptance; no C06 data/fits/outcomes.** [Exact frozen contract](analysis/c06_contract_v1.json) specifies the common uncapped information, one recipe per family, selection/critical limits and total budget. Baseline smoke118/118 and three synthetic law/label/future faults pass. Question: does a fair full-history actor-probability competition improve the allocation
 of player opportunities, including high-usage players, and then improve coherent player/team forecasts? C05 improves bench players
 most; its34 high-usage player-games gain little minute accuracy and worsen point forecasts. That does not identify the cause.
 C01's extra actual-attempt headroom is diagnostic only. C02/C03's capped/mismatched learners did not establish an architecture/data
@@ -25,7 +25,7 @@ nonlinear Bernoulli player-actor probabilities normalised over the five; (B) reg
 lineup-relative features/context interactions; (C) nonlinear grouped-softmax actor choice. All define one positive probability law
 over five eligible players. A's training objective differs from B/C; evaluation always scores the normalised returned law.
 One recipe per family; no outcome-driven fourth recipe. Retain fixed causal usage-share and uniform baselines plus incumbent.
-Exact capacity/selection/regularisation, numerical gates and budget must be frozen at checkpoint1 before C06 data/fits/scores.
+Capacity, selection, regularisation and numerical gates are frozen in the contract before data/fits/scores.
 
 ### Evidence, decisive contrast and limits
 
@@ -76,5 +76,4 @@ ls -t analysis/experiments/ | head -15
 .venv/bin/python scripts/check_docs.py
 ```
 
-Then inspect C05 completion, critical-player/role evidence and C03 data/model/runtime interfaces. Freeze C06 contract before building
-uncapped arrays. No C06 work is required to close C05.
+Next: inspect/stage and commit/push checkpoint1, then build all supported actor rows without sampling, fit all three families sequentially, record convergence and score the fixed200 component panel. No active jobs. C06 private namespace is not yet created.

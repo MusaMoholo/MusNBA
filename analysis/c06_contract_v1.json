@@ -1,0 +1,117 @@
+{
+  "chunk": "C06",
+  "version": 1,
+  "question": "Do full-history conditional actor probability models improve on-court opportunities and coherent player/team forecasts, including critical players?",
+  "status": "frozen before C06 data/fits/development scores",
+  "basis": "C05 reduces overall playerPTS CRPS3.0% on paired20 but fails high-usage player harm. Bench gains dominate; critical minute gain is small. Actor allocation is a competing explanation, not proven cause. C02/C03 capped history/capacity cannot establish a model-class ceiling. Challenge that confound with a common uncapped conditional-actor task.",
+  "population": "known B1 200 exposed development actual-participant games; actor-supported actions, no operational availability claim",
+  "history": {
+    "from": "2022-12-01",
+    "train_through": "2025-09-30",
+    "selection_from": "2025-10-01",
+    "selection_through": "2025-11-30",
+    "final_fit_through": "2025-12-31",
+    "sampling": null,
+    "sources": "existing C03 Boundary/build year2023..2026, causal first priors/positions/history-only flags; no new provider/protected outcome",
+    "fits": "one selection and final fit per family, plus one independent repeat; no hyperparameter search"
+  },
+  "features": {
+    "context": "exact analysis.c03_choices.CONTEXT",
+    "players": "exact analysis.c03_choices.PLAYER",
+    "runtime_phase": "pre-event context plus sampled elapsed shot_time; player sec_so_far after elapsed, all other counters before event, same as C03 and C02 View",
+    "inputs": "No label/actor/current outcome/ID/target may enter features. Current offensive five actual participants common conditioning, not a participation forecast. Context/own feature arrays identical for all families; linear representation adds deterministic usage_share x standardised context interactions.",
+    "linear_transform": "Training-only nanmean/nanstd, sd1 for constant/missing, missing indicators, standardised values clip[-8,8], player and context columns. Concatenate context*centred usage_share interactions; intercept cancels overfive. All tree families see the raw same information and may learn interactions."
+  },
+  "recipes": {
+    "A": {
+      "name": "pointwise nonlinear actor probability then legal normalisation",
+      "objective": "LightGBM binary actor0/1 on all five players per supported action; predicted probabilities normalised overfive. Select iteration by returned five-player actor NLL, not binary row loss.",
+      "rounds_max": 1500,
+      "early_stopping": 60,
+      "num_leaves": 31,
+      "learning_rate": 0.03,
+      "min_data_in_leaf": 100,
+      "lambda_l2": 10,
+      "max_bin": 127,
+      "num_threads": 10,
+      "seed": 20261126
+    },
+    "B": {
+      "name": "regularised full-information conditional logit",
+      "objective": "Group-five softmax NLL plus lambda.001/2*sum(weights^2); all full-batch examples; scipy L-BFGS-B maxiter500,ftol1e-10,gtol1e-6,maxls40. Selection fit reports chronological heldout NLL; no selection tuning. Final refit same convergence budget. Must have gradient infinity norm<=1e-4 or optimiser convergence flag; otherwise no architectural ceiling or advance claim.",
+      "maxiter": 500,
+      "l2": 0.001
+    },
+    "C": {
+      "name": "nonlinear conditional grouped-softmax actor law",
+      "objective": "Single shared LightGBM scalar scorer per candidate, exact group-five softmax gradient p-y, diagonal Hessian2p(1-p), custom returned actor NLL selection. Same tree capacity and raw features as A.",
+      "rounds_max": 1500,
+      "early_stopping": 60,
+      "num_leaves": 31,
+      "learning_rate": 0.03,
+      "min_data_in_leaf": 100,
+      "lambda_l2": 10,
+      "max_bin": 127,
+      "num_threads": 10,
+      "seed": 20261126
+    }
+  },
+  "seed": 20261125,
+  "max_recipe_configurations": 1,
+  "library_deliverable": "Uncapped actor dataset, three fitted actor laws and legal-world adapters, matched supervised scoring, source/runtime parity/faults, independent fresh fits/probabilities/worker worlds. Tests/tools alone are not major forecast improvement.",
+  "causal_tests": [
+    "future or same-day history injection cannot change origin features",
+    "current-label/starter/target inputs refused",
+    "invalid minute vectors and fewer-than5 rosters refused",
+    "probability/quantile/artifact/rotation/resume faults fail closed"
+  ],
+  "integration": {
+    "rotation": "Original pinned native schedules and compatible engine inputs held fixed in every arm; no C05 decoder/minute model. Generated fouls/OT can change realised minutes; score final returned law.",
+    "adapter": "Replace who probabilities only for sampled non-defensive-foul action actor stage. Return log probabilities, temporarily set temperature1, restore on exit/exception. Actor is sampled; no aggregate quota or score target.",
+    "wiring": "all mechanically valid3families first2x1000; audited controls reused; no model expansion credit for wiring",
+    "short": "only actor-screen qualified maximum2 continue to first20x1000; require original dual-reference C05 game-shortlist criteria. Do not expand C05 rejected recipe.",
+    "final": "only paired20 qualifiers expand to fixed200; require final1%playerPTS benefit, familywise6 game/week upper<0, harm confidence bounds,critical support>=30games/200rows,calibration/halves/runtime. Original C05 limits retained as new prospectively frozen C06 policy; no retrospective change."
+  },
+  "game_shortlist": {
+    "benefit": "player PTS CRPS >=.5% lower vs BOTH native and bridge, both500-world halves lower",
+    "harm_point_limits": {
+      "team/points": 0.1,
+      "game/total": 0.15,
+      "game/margin": 0.15,
+      "player/min": 0.05,
+      "player/reb": 0.05,
+      "player/ast": 0.05,
+      "player/fg3m": 0.02,
+      "win_brier": 0.01,
+      "critical_pts_relative": 0.02,
+      "critical_fg3m_relative": 0.02,
+      "coverage80_distance_deterioration": 0.03
+    },
+    "runtime": "candidate median generation/control ratio<=8; both native and compatible controls required. Retained control timing from original receipt is reported as unequal measurement if unavailable; compare new measured paired adapter reference on first2 only."
+  },
+  "final_acceptance": "known200 research gain only: playerPTS >=1% better vs BOTH references, both simulation halves improve, whole-game/week Bonferroni6 upper<0; harm confidence upper below same practical limits for both references; critical contexts>=30games/200player rows, >=100games overall; coverage80 deterioration confidence bound<=.03. No automatic production promotion.",
+  "uncertainty": "10000 paired whole-game and calendar-week draws, seed20261125. Bonferroni6 actor comparisons (3families x2references), final game dual-reference same6. Selection does not reset exposure. Report pooled/equal-game, both simulation halves, original support/gaps; no fresh-test claim.",
+  "budget": {
+    "data": "one uncapped yearly source pass, retained causal arrays and exact support/key checks; no downsampling",
+    "fits": "A/C one selection+final, B one selection+final, one fresh independent repeat; no extra configurations. Training-only selection dates and capacity frozen before outcomes.",
+    "worlds": 606000,
+    "threads": "max10total; fits10, workers10x1, BLAS/Arrow1, pool shutdown before heavy parent scoring",
+    "technical_faults": "Retain failures; resume only exact hashes/code/recipes. Demonstrated implementation repairs only; no development-driven tuning/criterion change."
+  },
+  "decision_limits": "Component loss stops fullgame expansion after first2 wiring. If component gains fail to improve boxes, retain that translation failure. If all lose with common full history, rule out these trained packages only; source information/remaining heads still confound architecture attribution. C05 negative guardrail unchanged. No automatic production release.",
+  "namespace": "data/derived/experiments/c06_actor_full_history_v1",
+  "production_changed": false,
+  "baselines": {
+    "uniform": "probability.2 each",
+    "usage": "normalise positive dated usage_share; floor1e-8 strictly for numerical support",
+    "native": "pinned incumbent who model observed-context probabilities on exactly matched seg_id/player order; original native fullgame captures retained",
+    "control": "compatible C02 event engine with original native stored schedules; reuse audited existing controls on first20, generate only new required games if finalist"
+  },
+  "support": "Use C03 source builder exact supported actions y<40; conditional sampled action stage only. Native incumbent who foul_event==0; align sorted player/seg keys. All original game truth remains unchanged. Actorless/defensive-foul actors and all other heads stay incumbent.",
+  "actor_screen": {
+    "primary": "NLL change<=-0.005nats/action versus native and versus usage, both whole-game/week Bonferroni6 upper<0 (3families x2references); >=100games/20000actions",
+    "critical": "Star actor is prior usage>=.25; group star probability=sum eligible star probabilities. Star-event Brier point harm<=.005 vs native; absolute star-event calibration gap<=.03; nonstar and close-margin(|margin|<=5) actor NLL harm<=.01nats vs native. These contexts defined from causal features, never current labels for membership.",
+    "training_credibility": "All supported history used; selection/final learner curves and convergence/budget-bound status. Trees cannot advance if best iteration is at maximum budget without early stopping; linear requires declared convergence. Failed convergence is an unresolved capacity limit.",
+    "shortlist": "maximum2 passing families ordered native actor NLL; no replacements. All three mechanically valid adapters first2x1000 regardless component loss."
+  }
+}
