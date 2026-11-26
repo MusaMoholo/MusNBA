@@ -22,9 +22,9 @@ C04 recovers dated minute skill; C05 carries calibrated standalone minute skill 
 games but fails the high-usage-player harm limit. Neither earns release. MODEL owns all numbers and limits.
 C06's three full-history conditional actor laws fail useful-gain requirements; two nonlinear fits remain budget-bound. The actor
 replacement hypothesis has not explained C05's high-usage harm. Further actor work needs convergence/information parity evidence,
-not another isolated head recipe. The next priority is a coherent ensemble architecture: native forecasts have strengths that the
-learned role law may need to retain. Compare whole-game, team and player selection using earlier-only learning and fixed guards;
-measured C05 signal is the motivation, not a guaranteed win. No criteria rescue, arbitrary spread change or presumed winning model.
+not another isolated head recipe. C07 will compare coherent whole-game, team and player expert selection, with earlier-only learning
+and fixed guards. Native strengths may need to be retained alongside the measured C05 role signal; a gain is not guaranteed.
+No criteria rescue, arbitrary spread change or presumed winning model.
 
 The cultural change is explicit: measured error → admissible predictive signal → credible competing models → end-to-end benefit.
 Each experiment must distinguish explanations. Use full supported information, training-only convergence checks and strong baselines;

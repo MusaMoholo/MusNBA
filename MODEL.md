@@ -170,28 +170,31 @@ and [reproduction](analysis/experiments/20261125_c04_reproduction_v1.json) match
 These are conditional development component gains. Old decoder tail errors and later substitutions/fouls limit translation;
 no expanded game qualification or production promotion.
 
-C05's [frozen comparison](analysis/c05_contract_v1.json) and [minute screen](analysis/experiments/20261126_c05_minute_screen_v1.json)
-reuse the200 exposed games/4292player-games. The learned whole-team mixture reduces minute CRPS3.522→3.202 (−9.1%; change−0.320minutes,
-95% game interval−0.383 to−0.257; familywise game/week upper bounds remain below0). Coverage50/80/95 is46.7%/76.5%/92.5%; critical80
-coverage80.3%, all within C05's prospectively frozen tolerances. Empirical and latent laws fail calibration and stop. Common ridge
-means use full history and chronological out-of-time residuals; mixture weight55.0% learned on prior December only. Native80coverage78.7%.
-[Independent arithmetic](analysis/experiments/20261126_c05_decision_v1.json) agrees, including source-quality sensitivity. The [paired20 screen](analysis/experiments/20261126_c05_short_v1.json) improves player-points CRPS2.942→2.853 (−3.0%; change−0.089points,
-95% game interval−0.141 to−0.031), versus decoder bridge2.917 (−2.2%). However34 critical player-games/19games worsen2.49% versus
-native and2.09% versus bridge, above the frozen2% point limit. Small subgroup support limits precision; the rule still stops200game
-expansion. [Independent audit](analysis/experiments/20261126_c05_short_independent_v1.json) reproduces that decision and44000worlds.
-[Returned minute coverage](analysis/experiments/20261126_c05_delivered20_v1.json) is43.6%/77.3%/93.4% at50/80/95, so standalone
-calibration does not automatically survive event-boundary substitutions/fouls/OT. These are exposed development signals, not a
-qualified overall product gain. [Fresh reproduction](analysis/experiments/20261126_c05_reproduction_v1.json) matches all fitted files,12876000minute values and four1000world single-worker replays exactly. C05 closes research-only; production unchanged.
+C05's [comparison](analysis/c05_contract_v1.json) evaluates 200 known games and 4,292 player-games. The learned mixture reduces
+regulation-minute CRPS from 3.522 to 3.202 (9.1%; lower is better). Change −0.320 minutes has a 95% game interval of −0.383 to −0.257,
+with familywise game/week support. Coverage at 50/80/95% is 46.7/76.5/92.5%; critical-player 80% coverage is 80.3%, within frozen
+standalone limits. Other laws fail calibration. [Independent scoring](analysis/experiments/20261126_c05_decision_v1.json) agrees.
 
-C06's [full-history actor screen](analysis/experiments/20261126_c06_events_v1.json) scores43697supported actions/200known games.
-Actor negative log probability (nats/action,lower better) is1.54055native,1.54017pointwise trees,1.56350conditional logit,
-1.54062grouped trees,1.56977usage baseline. Best change−0.00038 (95% game interval−0.00123to+0.00046) fails the frozen−0.005
-useful-gain threshold and familywise6 game/week support. All three stop; both tree fits also reach1500selection rounds, so
-nonlinear convergence is unresolved. Each final fit uses827097common historical actions; no sample cap. The converged linear law loses.
-[Independent source parity](analysis/experiments/20261126_c06_parity_v1.json) matches19226680feature values/43697actor labels;
-[independent arithmetic](analysis/experiments/20261126_c06_decision_v1.json) reproduces every eligibility check. Common causal
-information differs from the incumbent's feature package and actor-time phase; neither an actor-model ceiling nor a causal explanation
-of C05's critical-player harm is established. Two-game wiring delivers all3adapters/8000fresh worlds with independent accounting; mechanical evidence only. Fresh final-fit/probability/worker reproduction remains pending; no qualified forecast gain/release.
+The [20-game integration](analysis/experiments/20261126_c05_short_v1.json), 427 player-games, improves player-points CRPS from 2.942
+to 2.853 (3.0%; change −0.089 points, 95% game interval −0.141 to −0.031), versus decoder control 2.917 (2.2%). However, 34 critical
+player-games worsen 2.49% versus native and 2.09% versus control, exceeding the frozen 2% limit. Small subgroup support limits
+precision; expansion still stops. [Independent accounting](analysis/experiments/20261126_c05_short_independent_v1.json) verifies
+44,000 worlds. Returned minute coverage is 43.6/77.3/93.4%: standalone calibration does not automatically survive substitutions,
+fouls and overtime. [Fresh reproduction](analysis/experiments/20261126_c05_reproduction_v1.json) matches fitted files, 12,876,000
+minute values and four 1,000-world replays. C05 is a conditional development gain with a qualification block; production unchanged.
+
+C06's [actor screen](analysis/experiments/20261126_c06_events_v1.json) covers 43,697 actions in 200 known games. Actor negative log
+probability (nats/action; lower is better) is 1.54055 native, 1.54017 pointwise trees, 1.56350 conditional logit, 1.54062 grouped trees,
+and 1.56977 usage baseline. Best change −0.00038 (95% game interval −0.00123 to +0.00046) fails the frozen −0.005 useful-gain threshold
+and familywise support. All stop. Each final fit uses 827,097 common historical actions; both trees hit 1,500 selection rounds,
+so nonlinear convergence remains unresolved. The converged linear law loses. Incumbent/common features and actor-time phase differ;
+no architecture ceiling or explanation of C05's critical-player harm is established.
+
+[Source parity](analysis/experiments/20261126_c06_parity_v1.json) matches 19,226,680 feature values and all actor labels;
+[independent scoring](analysis/experiments/20261126_c06_decision_v1.json) agrees. All three adapters generate 8,000 checked wiring
+worlds, mechanical evidence only. [Fresh reproduction](analysis/experiments/20261126_c06_reproduction_v1.json) matches all final
+models, 655,455 probabilities and three 1,000-world replays. Training-only selection recipes are retained inputs. C06 is a completed
+negative search with no qualified forecast gain or release.
 
 The B1 component audit remains reusable source evidence. The long-shot recipe failed
 (`20261124_b1_development_decision_v2.json`). A substitution attempt improved minutes without establishing required game compatibility

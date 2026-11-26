@@ -1,0 +1,122 @@
+{
+  "kind": "C06 complete: full-history conditional actor search delivers no useful forecast gain",
+  "chunk": "C06",
+  "complete": true,
+  "forecast_effect": {
+    "known_development_games": 200,
+    "supported_actions": 43697,
+    "native_actor_nll": 1.5405534132050682,
+    "candidate_actor_nll": {
+      "A": 1.540171791772603,
+      "B": 1.563500961946354,
+      "C": 1.5406160634023771
+    },
+    "units": "negative log probability, nats per action, lower is better",
+    "best_change": {
+      "games": 200,
+      "rows": 43697,
+      "supported_for_overall_ranking": true,
+      "change": -0.00038162143246477207,
+      "ci95_game": [
+        -0.0012261483304402555,
+        0.0004596816733687851
+      ],
+      "ci95_calendar_week": [
+        -0.0013578226659425418,
+        0.0006371187975310151
+      ],
+      "calendar_blocks": 16,
+      "familywise_game": [
+        -0.0015380934727008448,
+        0.0007627246782341162
+      ],
+      "familywise_week": [
+        -0.0017059756508025915,
+        0.0009968419230837063
+      ],
+      "families_counted": 6
+    },
+    "useful_gain_threshold_nats": -0.005,
+    "qualified_families": [],
+    "expanded_game_accuracy_games": 0,
+    "end_to_end_gain": "Not demonstrated; stopped after two mechanical wiring games. No live product prediction improvement from C06."
+  },
+  "model_release": {
+    "production": "engine-v1.3-r3 / report-bands-v1 / team-pathway-v1",
+    "production_changed": false,
+    "published_assets": false,
+    "manual_import_required": false
+  },
+  "accepted_deliverables_percent": 100,
+  "checkpoint_weights": [
+    15,
+    35,
+    35,
+    15
+  ],
+  "preceding_checkpoint_commits": [
+    "6ae89db",
+    "ed86450",
+    "eeca14f"
+  ],
+  "capabilities_delivered": [
+    "Uncapped source-keyed conditional-actor dataset:718986selection-fit actions,65084chronological selection actions,827097final historical actions; same information/history for all families",
+    "Three runnable actor laws: normalised Bernoulli trees, converged conditional logit, grouped-softmax trees; all normalised laws scored after transforms",
+    "Matched200game supervised scoring, native/usage/uniform references, star calibration, game/week multiplicity and actual fail-closed expansion gate",
+    "All three legal event-world adapters with fixed native schedules, retained native/compatible controls, exact accounting; no aggregate shot/score targets",
+    "Independent raw source feature/actor reconstruction, fresh frozen-recipe final fits, exact actor probabilities, single-worker replays and decision reproduction"
+  ],
+  "validation": {
+    "baseline_smoke": "118/118 before C06 changes",
+    "c06_targeted_and_fault_tests": 6,
+    "c05_regression_tests": 6,
+    "source_feature_values_checked": 19226680,
+    "source_actor_labels_checked": 43697,
+    "source_feature_mismatches": 0,
+    "original_new_worlds": 8000,
+    "fresh_replay_worlds": 3000,
+    "new_worlds_total": 11000,
+    "world_scalar_half_scores_checked": 3270,
+    "world_accounting_passed": true,
+    "fresh_final_model_files_exact": true,
+    "fresh_actor_probability_values_exact": 655455,
+    "all3single_worker_replays_exact": true,
+    "independent_decision_all_checks_match": true,
+    "expansion_fault": "actual short entrypoint rejects empty shortlist before creating a stage",
+    "docs_checks": "pass before closing commit"
+  },
+  "evidence_scope": {
+    "population": "actual-participant conditional development; not operational availability or independent confirmation",
+    "private_namespaces": [
+      "data/derived/experiments/c06_actor_full_history_v1",
+      "data/derived/experiments/c06_reproduction_v1"
+    ],
+    "fitting": "One training-only selection and final fit per family. Fresh final fit repeat uses audited frozen selection recipes; selection optimisation is retained input, not claimed rerun.",
+    "training_convergence": {
+      "A": false,
+      "B": true,
+      "C": false
+    },
+    "all_history_common_uncapped": true,
+    "protected_or_reserved_outcomes_opened": false
+  },
+  "bounded_conclusion": {
+    "ruled_out": "These three trained full-history actor packages do not deliver the frozen useful gain over the incumbent; all beat usage but nonlinear laws are effectively tied with native. The converged conditional logit loses.",
+    "unresolved": "Both nonlinear fits hit1500selection rounds; incumbent/common information packages and actor-time phase differ. No architecture/data/predictability ceiling, and no established explanation of C05 critical-player harm.",
+    "conditional_discriminator": "If actor work resumes later, prospectively cross training-only convergence continuation with native-information parity; do not call C06 rescued.",
+    "selected_next_bottleneck": "C05 has actual overall player-point signal but critical-player harm. C07 compares coherent whole-game/team/player expert combination with earlier-only learned gates, fixed guards and final returned-world evaluation."
+  },
+  "next_chunk": "C07 at0%; no implementation/fits/generation started",
+  "evidence_sha256": {
+    "20261126_c06_data_v1.json": "44469d6d3a78414e79f439491e3467d41d43e13651be1295c377c0505110c113",
+    "20261126_c06_decision_v1.json": "0c60524ff42892e0bb54e4b42a9edd0780be84c4d1efda05d9c375cba67029f9",
+    "20261126_c06_delivered2_v1.json": "70cbf43d794b81842c8cf977dd7b7e02eed6232a88f4dc07eb3b33f272813ba6",
+    "20261126_c06_events_v1.json": "c92000a8dcd8f5d024ff81bd50a1ef36e1a2ff1eed1151b323aeaff26e9ae23d",
+    "20261126_c06_fits_v1.json": "9a6b63cfd836238f89230fe0562b77fe729a88c1970037d4bc52631498ba6e6a",
+    "20261126_c06_parity_v1.json": "d5f55dfb424987f79d5b0f0b6f1ba9614c478c6802dae35b0de5942bb511fb34",
+    "20261126_c06_reproduction_v1.json": "5567803e970698d7506fa95a258b0474b52148c52d6ddad7e8f3aeef3cdaffeb",
+    "20261126_c06_stop_v1.json": "50eaf5b6c5d082a70a34f7d156f737ee10c424485ef4a64eb3ce9ddaf24988e4",
+    "20261126_c06_wiring_audit_v1.json": "073f55db93fb68e281f0cc98747e38f6b372f9474fbd72489ac532a5a0f84baa",
+    "20261126_c06_wiring_v1.json": "e6b47498467027ea9ab93512551c802133a1aaa91423cfc3537793c391536b27"
+  }
+}

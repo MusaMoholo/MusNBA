@@ -1,0 +1,83 @@
+{
+  "kind": "C06 fresh uncapped fits/probabilities/worker worlds and independent decision",
+  "fits": {
+    "A": {
+      "model_files_exact": true,
+      "converged": false
+    },
+    "B": {
+      "model_files_exact": true,
+      "converged": true
+    },
+    "C": {
+      "model_files_exact": true,
+      "converged": false
+    }
+  },
+  "actor_probability_values_exact": 655455,
+  "single_worker_replays": {
+    "A": {
+      "all_arrays_exact": true,
+      "new_worlds": 1000
+    },
+    "B": {
+      "all_arrays_exact": true,
+      "new_worlds": 1000
+    },
+    "C": {
+      "all_arrays_exact": true,
+      "new_worlds": 1000
+    }
+  },
+  "independent_decision": {
+    "games": 200,
+    "actions": 43697,
+    "six_laws_independently_scored": true,
+    "decisions": {
+      "A": {
+        "all_checks_independently_matched": true,
+        "eligible": false,
+        "nll": 1.540171791772603,
+        "native_change": -0.0003816214324647719,
+        "failed_checks": [
+          "native/benefit",
+          "training_convergence",
+          "native/support"
+        ]
+      },
+      "B": {
+        "all_checks_independently_matched": true,
+        "eligible": false,
+        "nll": 1.563500961946354,
+        "native_change": 0.0229475487412861,
+        "failed_checks": [
+          "native/benefit",
+          "nonstar_context",
+          "close",
+          "native/support"
+        ]
+      },
+      "C": {
+        "all_checks_independently_matched": true,
+        "eligible": false,
+        "nll": 1.5406160634023771,
+        "native_change": 6.265019730928849e-05,
+        "failed_checks": [
+          "native/benefit",
+          "training_convergence",
+          "native/support"
+        ]
+      }
+    }
+  },
+  "world_accounting": {
+    "games": 2,
+    "new_worlds_checked": 8000,
+    "scalar_half_scores_checked": 3270,
+    "maximum_difference": 6.394884621840902e-14,
+    "all_world_accounting_passed": true
+  },
+  "retained_inputs": "Source-derived actor arrays, audited training-only selection decisions/frozen final recipes, native worlds and compatible controls; all final challenger fits, probabilities and replay worlds fresh. Selection optimisation itself is not repeated.",
+  "seconds": -19837.455333209,
+  "production_changed": false
+}
